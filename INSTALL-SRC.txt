@@ -149,4 +149,5 @@
  
            or
 
-           netstat -nt -l
+           netstat -nt -l | grep 8080 (Linux)
+           netstat -an | grep 8080 (Solaris)
