@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.23 2003/09/03 10:55:53 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.24 2003/09/03 16:23:57 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -59,7 +59,7 @@ foldersTree.treeID = "t2"
 <xsl:with-param name="parentPath"><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/></xsl:with-param>
 <xsl:with-param name="lenyaarea"><xsl:value-of select="$lenyaarea"/></xsl:with-param>
 </xsl:apply-templates>
-</xsl:template>    
+</xsl:template>
 
 <xsl:template name="getLabels">
    <xsl:choose>

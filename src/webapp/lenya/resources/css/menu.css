@@ -1,51 +1,115 @@
-table.menu a {color: #3360AA; text-decoration:none; background-color: transparent;}
-table.menu a:hover {color: #FF3333; background-color: transparent;}
-table.menu a:visited{color: #6688AA; background-color: transparent;} 
-table.menu a:visited:hover {color: #FF3333; background-color: transparent;} 
+table.menu a { color: #3360AA; text-decoration:none; background-color: transparent; }
+table.menu a:hover { color: #FF3333; background-color: transparent; }
+table.menu a:visited { color: #6688AA; background-color: transparent; } 
+table.menu a:visited:hover { color: #FF3333; background-color: transparent; } 
 
 table.menu img {border:0px}
 
 
-#navTopBG    { height: 21px; background-image: 
-               url('/lenya/lenya/menu/images/menu-bg.gif'); 
-               background-repeat: repeat-x; padding-top: 1px }
-#navBlue     { height: 6px; background-image: 
-               url('/lenya/lenya/menu/images/unten.gif'); 
-               background-repeat: repeat-x; padding-top: 1px }
-#menuSearch, #menuHelp, #menuFile, #menuDebug  {position:absolute; display:block; visibility:hidden; width:100px; top:55px;}
-	#menuFile {left:14px;}
-	#menuSearch {left:117px;}
-	#menuHelp {left:220px;}
-	#menuDebug {left:323px;}
+#navTopBG {
+	height: 21px;
+	background-image: url('/lenya/lenya/menu/images/menu-bg.gif'); 
+	background-repeat: repeat-x;
+	padding-top: 1px;
+	font-size: 10pt;
+}
 
+#navBlue {
+	height: 6px;
+	background-image: url('/lenya/lenya/menu/images/unten.gif');
+    background-repeat: repeat-x;
+    padding-top: 1px
+}
+               
+#menuSearch, #menuHelp, #menuFile, #menuDebug  {
+	position:absolute;
+	display:block;
+	visibility:hidden;
+	width:170px;
+	top:56px;
+	overflow: hidden;
+}
 
-table.menu .menuOutline {border:1px #999999 solid; border-bottom:2px #999999 solid; background:#EEEEEE; color: black;}
-table.menu .menuBg      { background-color: #EEEEEE; background-repeat: repeat; background-attachment: 
-               scroll; background-image: 
-               url('/lenya/lenya/menu/images/bottombg.gif'); 
-               border: 1px solid #FFFFFF; background-position: 0%; color: black;}
-table.menu .mI, .mI:visited {
-	display:block; 
-	padding:4px;
+#menuFile {left:14px;}
+#menuSearch {left:117px;}
+#menuHelp {left:220px;}
+#menuDebug {left:323px;}
+
+/*
+.menuOutline {
+	border: 1px #999999 solid;
+	border-bottom: 2px #999999 solid;
+	background:#EEEEEE;
+	color: black;
+}
+*/
+
+.menuOutline {
+	border: 1px solid #999999;
+	padding: 2px;
+	border-top: 0px;
+	background-color: #EEEEEE;
+
+/*
+	background-image: url('/lenya/lenya/menu/images/transparent_background_2.gif');
+	background-position: 3px 3px;
+	background-repeat: no-repeat;
+*/	
+}
+
+.menuBg {
+
+/*	width: 150; */
+	padding: 2px;
+	background-color: #EEEEEE;
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-image: url('/lenya/lenya/menu/images/bottombg.gif');
+	
+/*	border: 1px solid #FFFFFF; */
+	background-position: 0%;
+	color: black;
+}
+
+.menuBg .mI, .menuBg .mI:visited {
+	display:block;
+	padding: 2px 4px;
 	font:11px verdana, arial, sans-serif; 
 	color:#444444; 
-	padding-top:2px; 
-	padding-bottom:2px; 
 	background-color: transparent;
 }
 
-table.menu  .mI:hover {background:#FFFFFF; color: black;}
+.lenya-menubar-separator {
+	height: 1px;
+	margin: 3px 0px;
+	background-color: #EEEEEE;
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-image: url('/lenya/lenya/menu/images/dotted.gif');
+	background-position: 0% 50%;
+}
 
-table.menu span.mI { color: #AAAAAA; background-color: transparent;}
+.menuBg .mI:hover {
+	background:#FFFFFF;
+	color: black;
+}
 
-table.menu .click {cursor:pointer}
-table.menu .alenya {
+.menuBg span.mI {
+	color: #AAAAAA;
+	background-color: transparent;
+}
+
+.menuBg .click {
+	cursor:pointer
+}
+
+.menuBg a {
 	color: #0066FF;
 	text-decoration: none;
 	background-color: transparent;
 }
 
-table.menu .alenya:visited {
+.menuBg a:visited {
 	color: #0066FF;
 	text-decoration: none;
 	background-color: transparent;

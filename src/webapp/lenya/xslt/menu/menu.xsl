@@ -110,7 +110,7 @@
     <div style="float:left; width:10px">&#160;</div>
     
     <div id="nav{@label}" class="click" style="float:left; width:46px">
-      <font size="-1" face="verdana"><b>&#160;<xsl:value-of select="@name"/></b></font>
+      <b>&#160;<xsl:value-of select="@name"/></b>
     </div>
     
     <div style="float:left; width:46px">&#160;</div>
@@ -119,7 +119,9 @@
   
   
   <xsl:template match="menu" mode="menu">
+  	
     <div id="menu{@label}" class="menuOutline">
+
       <div class="menuBg">
         <xsl:for-each select="block">
           <xsl:for-each select="item">
@@ -138,13 +140,13 @@
           </xsl:for-each>
           
           <xsl:if test="position() != last()">
-            <div style="height: 2px; background-color: #EEEEEE; background-repeat: repeat; background-attachment: scroll; background-image: url('/lenya/lenya/menu/images/dotted.gif'); background-position: 0% 50%">
-              <div style="background:#EEEEEE"><img src="/lenya/lenya/menu/images/pixel.gif" height="1" alt="" />
-              </div>
+            <div class="lenya-menubar-separator">
+              <img src="/lenya/lenya/menu/images/pixel.gif" height="1" alt="" />
             </div>
           </xsl:if>
         </xsl:for-each>
       </div>
+      
     </div>
   </xsl:template>
   

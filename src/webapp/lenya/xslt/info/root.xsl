@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.24 2003/09/03 10:55:53 andreas Exp $
+ $Id: root.xsl,v 1.25 2003/09/03 16:23:57 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -31,7 +31,6 @@
 // (Highlights selection if highlight is available.)
 function loadSynchPage(srclink) 
 {
-
 	var docObj;
 	var linkID;
 	linkID = findIDbyLink(srclink);
@@ -55,7 +54,6 @@ function findIDbyLink(srclink)
       (indexOfEntries[i].hreference == undefined || indexOfEntries[i].hreference.split('?')[0] != srclink)
       ;
       i++) {
-//      alert(indexOfEntries[i].link);
   }
   //FIXME: extend to allow for mapping of index.html to index_defaultlanguage.html
   if (i >= nEntries) {
@@ -111,7 +109,8 @@ function findIDbyLink(srclink)
       </div>
   <script>
  	initializeDocument();
-  loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documenturl"/>');
+ 	<xsl:variable name="language-suffix"><xsl:if test="$chosenlanguage != $defaultlanguage">_<xsl:value-of select="$chosenlanguage"/></xsl:if></xsl:variable>
+  loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/><xsl:value-of select="$language-suffix"/>.html');
    </script>
     </div>
 </div>
@@ -133,7 +132,7 @@ function findIDbyLink(srclink)
 <xsl:template name="activate">
 	<xsl:param name="tablanguage"/>
 	<xsl:variable name="docidwithoutlanguage"><xsl:value-of select="substring-before($documentid, '_')"/></xsl:variable>
-   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/>.html?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:attribute>
+   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/>.html?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:attribute>
    <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
 
