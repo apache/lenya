@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: targets.xml,v 1.28 2004/03/13 12:34:17 gregor Exp $ -->
+<!-- $Id: targets.xml,v 1.29 2004/08/11 18:52:17 gregor Exp $ -->
 
 <project name="Ant Test Project" default="test" basedir=".">
 
@@ -81,11 +81,11 @@
 
 
 <target name="notification">
-	<property name="notification.from" value="andreas@apache.org"/>
+	<property name="notification.from" value="lenya@127.0.0.1"/>
 	<property name="notification.tolist" value=""/>
 	<property name="notification.subject" value=""/>
 	<property name="notification.message" value=""/>
-	<property name="mail.mailhost" value="mail.wyona.com"/>
+	<property name="mail.mailhost" value="localhost"/>
 	
 	<echo>Sending Mail</echo>
 	<echo>From:     [${notification.from}]</echo>
