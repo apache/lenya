@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -31,14 +32,12 @@ public class IterativeHTMLCrawler{
     if(args.length != 1){
     //if(args.length != 4){
       System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
-      //System.err.println("Usage: IterativeHTMLCrawler startURL scope url_list_file html_dump_directory (http://127.0.0.1:8080/index.html http://127.0.0.1:8080/ /home/wyona/url_list.txt /home/wyona/html_dump)");
       return;
       }
  
     try{
       CrawlerEnvironment ce=new CrawlerEnvironment(args[0]);
       new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),ce.resolvePath(ce.getHTDocsDumpDir())).crawl(new URL(ce.getBaseURL()),ce.getScopeURL());
-      //new IterativeHTMLCrawler(args[2],args[3]).crawl(new URL(args[0]),args[1]);
       }
     catch(MalformedURLException e){
       System.err.println(e);
@@ -57,7 +56,6 @@ public class IterativeHTMLCrawler{
   public void crawl(URL start,String scope){
     scopeURL=new String[1];
     scopeURL[0]=scope;
-    //scopeURL[0]="http://www.wyona.com/";
 
     String seedURL=start.toString();
     this.rootURL = seedURL.substring(0, seedURL.indexOf("/", 8));    
@@ -65,35 +63,37 @@ public class IterativeHTMLCrawler{
     urlsToCrawl=new java.util.Vector();
     urlsToCrawlLowerCase=new java.util.TreeSet();
 
-    urlsToCrawl.add(start);
-    urlsToCrawlLowerCase.add(start.toString().toLowerCase());
-    dumpHTML(start);
+    String currentURLPath = start.toString().substring(0, start.toString().lastIndexOf("/"));
+    try{
+      if(addURL(start.getFile(),currentURLPath) != null){
+        dumpHTDoc(start);
+        }
+      }
+    catch(MalformedURLException e){
+      System.err.println(".crawl(): ERROR: "+e);
+     }
 
     int currentPosition=0;
     while(currentPosition < urlsToCrawl.size()){
-      System.out.println(".crawl(): INFO: Current Position: "+currentPosition+", Current Array Size: "+urlsToCrawl.size());
-
-
       URL currentURL=(URL)urlsToCrawl.elementAt(currentPosition);
-      String currentURLPath = currentURL.toString().substring(0, currentURL.toString().lastIndexOf("/"));
-      System.out.println(".crawl(): Current URL: "+currentURL.toString());
+      currentURLPath = currentURL.toString().substring(0, currentURL.toString().lastIndexOf("/"));
+
+      System.out.println(".crawl(): INFO: Current Array Size: "+urlsToCrawl.size()+", Current Position: "+currentPosition+", Current URL: "+currentURL.toString());
 
       java.util.List urlsWithinPage=parsePage(currentURL.toString());
       if(urlsWithinPage != null){
         java.util.Iterator iterator=urlsWithinPage.iterator();
         while(iterator.hasNext()){
           String urlCandidate=(String)iterator.next();
-          if(filterURL(urlCandidate,currentURLPath,urlsToCrawlLowerCase)){
-            try{
-              URL urlToCrawl=new URL(parseHREF(urlCandidate,urlCandidate.toLowerCase(),currentURLPath)); //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
-              System.out.println(".crawl(): ADDED: "+urlToCrawl); 
-              urlsToCrawl.add(urlToCrawl);
-              urlsToCrawlLowerCase.add(urlToCrawl.toString().toLowerCase());
-              dumpHTML(urlToCrawl);
+          try{
+            //System.out.println(".crawl(): DEBUG: URL candidate: "+urlCandidate);
+            URL urlToCrawl=null;
+            if((urlToCrawl=addURL(urlCandidate,currentURLPath)) != null){
+              dumpHTDoc(urlToCrawl);
               }
-            catch(MalformedURLException e){
-              System.err.println(".crawl(): "+e);
-              }
+            }
+          catch(MalformedURLException e){
+            System.err.println(".crawl(): ERROR: "+e);
             }
           }
         }
@@ -105,24 +105,40 @@ public class IterativeHTMLCrawler{
 
 
     try{
-    java.io.PrintWriter out=new java.io.PrintWriter(new java.io.FileOutputStream(url_list_file));
-    System.out.println("\n\n\n");
-    System.out.println(".crawl(): URLs to crawl:");
-    for(int i=0;i<urlsToCrawl.size();i++){
-      System.out.println(".crawl(): URL to crawl: "+(URL)urlsToCrawl.elementAt(i));
-      out.println(""+(URL)urlsToCrawl.elementAt(i));
-      }
-    out.close();
+      java.io.PrintWriter out=new java.io.PrintWriter(new java.io.FileOutputStream(url_list_file));
+      System.out.println("\n\n\n");
+      System.out.println(".crawl(): URLs to crawl:");
+      for(int i=0;i<urlsToCrawl.size();i++){
+        System.out.println(".crawl(): INFO: URL to crawl: "+(URL)urlsToCrawl.elementAt(i));
+        out.println(""+(URL)urlsToCrawl.elementAt(i));
+        }
+      out.close();
       }
     catch(java.io.FileNotFoundException e){
-      System.err.println(".crawl(): "+e);
+      System.err.println(".crawl(): ERROR: "+e);
       }
+    }
+/**
+ *
+ */
+  public URL addURL(String urlCandidate,String currentURLPath) throws MalformedURLException{
+    URL url=new URL(parseHREF(urlCandidate,urlCandidate.toLowerCase(),currentURLPath)); //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
+    if(filterURL(urlCandidate,currentURLPath,urlsToCrawlLowerCase)){
+      urlsToCrawl.add(url);
+      urlsToCrawlLowerCase.add(url.toString().toLowerCase());
+      System.out.println(".addURL(): INFO: URL added: "+url); 
+      return url;
+      }
+
+    System.out.println(".addURL(): INFO: URL not added: "+urlCandidate);
+    return null;
     }
 /**
  * @return ok, 404
  */
   public java.util.List parsePage(String urlString){
-    System.out.println(".parsePage(): Parse page: "+urlString);
+    System.out.println(".parsePage(): INFO: Parse page: "+urlString);
+
     String status = "ok";
         try {
             URL currentURL = new java.net.URL(urlString);
@@ -184,9 +200,13 @@ public class IterativeHTMLCrawler{
     if(handler.getRobotFollow()){
       java.util.List links = handler.getLinks();
       System.out.println(".handleHTML(): Number of links found : " + links.size());
+
+/*
       for(int i = 0; i < links.size(); i++){
-        System.out.println(".handleHTML(): "+(String)links.get(i));
+        System.out.println(".handleHTML(): DEBUG: "+(String)links.get(i));
         }
+*/
+
       if(true){
         return links;
         }
@@ -209,7 +229,7 @@ public class IterativeHTMLCrawler{
  *
  */
   public boolean filterURL(String url,String currentURLPath,java.util.TreeSet links){
-    //System.out.println(".filterURL(): URL to filter: "+url);
+    //System.out.println(".filterURL(): DEBUG: Filtering URL: "+url+" ("+currentURLPath+")");
 
     String urlLowCase = url.toLowerCase();
 
@@ -263,7 +283,7 @@ public class IterativeHTMLCrawler{
         } else if (urlLowCase.startsWith("javascript:")) {
             // handle javascript:...
             //url = parseJavaScript(url, urlLowCase);
-            System.err.println(".parseHREF(): parseJavaScript is not implemented yet");
+            System.err.println(".parseHREF(): WARN: parseJavaScript() is not implemented yet");
         } else if (urlLowCase.startsWith("#")) {
             // internal anchor... ignore.
             url = null;
@@ -310,40 +330,70 @@ public class IterativeHTMLCrawler{
 /**
  *
  */
-  public void dumpHTML(URL url){
-    System.out.println(".dumpHTML(): "+url);
+  public void dumpHTDoc(URL url){
+    String ext=getExtension(url);
 
-    try{
-      HttpURLConnection httpConnection=(HttpURLConnection)url.openConnection();
-      java.io.InputStream in=httpConnection.getInputStream();
-      byte[] buffer=new byte[1024];
-      int bytes_read;
-      java.io.ByteArrayOutputStream bufferOut=new java.io.ByteArrayOutputStream();
-      while((bytes_read=in.read(buffer)) != -1){
-        bufferOut.write(buffer,0,bytes_read);
-        }
-      byte[] sresponse=bufferOut.toByteArray();
-      httpConnection.disconnect();
-
-      saveToFile(html_dump_directory+url.getFile(),sresponse);
+    String filename=html_dump_directory+url.getFile();
+    File file=new File(filename);
+    if(filename.charAt(filename.length()-1) == '/'){
+      file=new File(filename+"index.html");
+      ext=getExtension(file);
       }
-    catch(Exception e){
-     System.err.println(".dumpHTML(): "+e);
-     }
+
+    //System.out.println(".dumpHTDoc(): DEBUG: Extension: "+ext); 
+
+    if(ext.equals("html") || ext.equals("htm") || ext.equals("txt") || ext.equals("pdf")){
+      try{
+        File parent=new File(file.getParent());
+        if(!parent.exists()){
+          System.out.println(".dumpHTDoc(): INFO: Directory will be created: "+parent.getAbsolutePath());
+          parent.mkdirs();
+          }
+        FileOutputStream out=new FileOutputStream(file.getAbsolutePath());
+          HttpURLConnection httpConnection=(HttpURLConnection)url.openConnection();
+          java.io.InputStream in=httpConnection.getInputStream();
+          byte[] buffer=new byte[1024];
+          int bytes_read;
+          while((bytes_read=in.read(buffer)) != -1){
+            out.write(buffer,0,bytes_read);
+            }
+          httpConnection.disconnect();
+        out.close();
 
 
+
+// In certain cases (e.g. large zip files) buffering generates an OutOfMemoryException (JVM has 60MB by default)
 /*
-    org.wyona.net.WGet wget=new org.wyona.net.WGet();
-    byte[] response=wget.download(url);
-    wget.setDirectoryPrefix("/home/wmi/site85_html");
-    wget.saveToFile(url.getFile(),response);
+        HttpURLConnection httpConnection=(HttpURLConnection)url.openConnection();
+        java.io.InputStream in=httpConnection.getInputStream();
+        byte[] buffer=new byte[1024];
+        int bytes_read;
+        java.io.ByteArrayOutputStream bufferOut=new java.io.ByteArrayOutputStream();
+        while((bytes_read=in.read(buffer)) != -1){
+          bufferOut.write(buffer,0,bytes_read);
+          }
+        byte[] sresponse=bufferOut.toByteArray();
+        httpConnection.disconnect();
+
+        saveToFile(html_dump_directory+url.getFile(),sresponse);
 */
+
+
+        System.out.println(".dumpHTDoc(): INFO: URL dumped: "+url);
+        }
+      catch(Exception e){
+        System.err.println(".dumpHTDoc(): ERROR: "+e);
+        System.out.println(".dumpHTDoc(): ERROR: URL not dumped: "+url);
+        }
+      }
+    else{
+      System.out.println(".dumpHTDoc(): INFO: URL not dumped: "+url);
+      }
     }
 /**
  *
  */
   public void saveToFile(String filename,byte[] bytes) throws FileNotFoundException, IOException{
-    System.out.println(".saveToFile(): "+filename);
     File file=new File(filename);
     if(filename.charAt(filename.length()-1) == '/'){
       file=new File(filename+"index.html");
@@ -353,9 +403,35 @@ public class IterativeHTMLCrawler{
       System.out.println(".saveToFile(): Directory will be created: "+parent.getAbsolutePath());
       parent.mkdirs();
       }
-    //log.debug(".saveToFile(): Filename: "+file.getAbsolutePath());
     FileOutputStream out=new FileOutputStream(file.getAbsolutePath());
     out.write(bytes);
     out.close();
+
+    //System.out.println(".saveToFile(): DEBUG: File saved: "+filename);
+    }
+/**
+ *
+ */
+  public String getExtension(URL url){
+    return getExtension(new File(url.getPath()));
+/*
+    StringTokenizer st=new StringTokenizer(url.getPath(),".");
+    String extension=null;
+    while(st.hasMoreElements()){
+      extension=st.nextToken();
+      }
+    return extension;
+*/
+    }
+/**
+ *
+ */
+  public String getExtension(File file){
+    StringTokenizer st=new StringTokenizer(file.getPath(),".");
+    String extension=null;
+    while(st.hasMoreElements()){
+      extension=st.nextToken();
+      }
+    return extension;
     }
   }
