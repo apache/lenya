@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: archive.xsl,v 1.6 2003/07/25 16:46:08 edith Exp $
+ $Id: archive.xsl,v 1.7 2003/07/29 17:57:20 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -14,6 +14,7 @@
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
+  <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
 
@@ -56,6 +57,8 @@
   <xsl:template name="task-parameters">
     <xsl:param name="prefix" select="'task.'"/>
     <input type="hidden" name="{$prefix}properties.node.firstdocumentid" value="{$document-id}"/>
+    <input type="hidden" name="{$prefix}properties.firstarea" value="{$area}"/>
+    <input type="hidden" name="{$prefix}properties.secarea" value="archive"/>
   </xsl:template>
 
 </xsl:stylesheet>
