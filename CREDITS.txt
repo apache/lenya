@@ -32,10 +32,10 @@ the ways the Lenya community pays back.
  Inactive Committers:
  --------------------
 
-* Jürgen Bigalke      wrote some creators.
+* Juergen Bigalke      wrote some creators.
 * Memo Birgi
 * Marc Liyanage       wrote the first Lenya build system way back.
-* Felix Mäder
+* Felix Maeder
 * Rene Niedermowe
 * Giacomo Pati        helped to port the predecessor of Lenya to Cocoon.
 * Thorsten Scherler
