@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: live-sites.xml,v 1.3 2004/07/27 19:41:17 thorsten Exp $ -->
+<!-- $Id: live-sites.xml,v 1.4 2004/08/10 22:26:03 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -42,6 +42,7 @@ If you want to suggest additional sites for inclusion, please send an email to t
   <li><link href="http://gurit.ch">Gurit Heberlein Group</link></li>
   <li><link href="http://www.ingenieurbuero-metzing.de/">Ingenieurbüro Metzing</link></li>
   <li><link href="http://www.krista-sager.de/">Krista Sager (german MP)</link></li>
+  <li><link href="http://www.nok-afghanistan.com/">National Olympic Committee Of The Islamic Republic Of Afghanistan</link></li>
   <li><link href="http://netcom.no">Netcom AS</link></li>
   <li><link href="ext:nzz">Neue Zürcher Zeitung (daily swiss newspaper)</link></li>
   <li><link href="http://oscom.org/matrix/">OSCOM CMS matrix</link></li>  
