@@ -58,7 +58,6 @@ function executeUsecase() {
 	var usecase = usecaseResolver.resolve(usecaseName);
 	
 	var flowHelper = new Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper();
-	var situation = flowHelper.getSituation(cocoon);
 	var envelope = flowHelper.getPageEnvelope(cocoon);
 	var document = envelope.getDocument();
 	
