@@ -26,14 +26,10 @@
   </xsl:template>
   
   <xsl:template match="users">
-    <form method="post">
-      <xsl:attribute name="action"></xsl:attribute>
-      <table>
-	<tr><td>User ID</td><td>Full Name</td><td>Groups</td></tr>
-	<xsl:apply-templates select="user"/>
-      </table>
-
-    </form>
+    <table>
+      <tr><td>User ID</td><td>Full Name</td><td>Groups</td></tr>
+      <xsl:apply-templates select="user"/>
+    </table>
   </xsl:template>
   
   <xsl:template match="user">
@@ -41,7 +37,26 @@
       <td><xsl:value-of select="id"/></td>
       <td><xsl:value-of select="fullName"/></td>
       <xsl:apply-templates select="groups"/>
-      <td><input type="submit" value="Edit"/><input type="submit" value="Delete"/></td>
+      <td>
+	<form method="GET">
+	  <input type="hidden" name="lenya.usecase" value="user-modify"/>
+	  <input type="hidden" name="lenya.step" value="showscreen"/>
+	  <input type="hidden" name="user-id">
+	    <xsl:attribute name="value"><xsl:value-of select="id"/></xsl:attribute>
+	  </input>
+	  <input type="submit" value="Edit"/>
+	</form>
+      </td>
+      <td>
+	<form method="GET">
+	  <input type="hidden" name="lenya.usecase" value="user-delete"/>
+	  <input type="hidden" name="lenya.step" value="showscreen"/>
+	  <input type="hidden" name="user-id">
+	    <xsl:attribute name="value"><xsl:value-of select="id"/></xsl:attribute>
+	  </input>
+	  <input type="submit" value="Delete"/>
+	</form>
+      </td>
     </tr>
 
   </xsl:template>
