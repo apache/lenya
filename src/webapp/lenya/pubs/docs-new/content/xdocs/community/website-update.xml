@@ -21,7 +21,7 @@
   <li><code>cd $LENYA_HOME</code></li>
   <li><code>ant export-forrest -Dpublication=docs-new</code></li>
   <li>Copy the pages from <code>$LENYA_HOME/build/lenya/export/docs-new/build/site</code> to <code>cocoon-site/site/lenya</code></li>
-  <li>Copy the Javadoc (ant javadoc, ant install, cp)</li>
+  <li>Create and copy the Javadoc (ant javadocs, ant install, cp)</li>
   <li>Add, remove, commit to <code>cocoon-site</code></li>
   <li>Login to <code>daedalus.apache.org</code></li>
   <li><code>daedalus@apache.org &gt; umask 0002</code></li>
