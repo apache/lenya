@@ -8,33 +8,31 @@ Page
    |
    +--root.xsl                            (the root element)
    |
-   +--htmlHead.xsl                        (the &#139;head&#155;)
+   +--HTMLhead.xsl                        (the &#139;head&#155;)
    |
-   +--head.xsl                            (the background, searchbox, etc.)
+   +--head.xsl                            (the searchbox, etc.)
+   |
+   +--foot.xsl                            (copyright, date, etc.)
    |
    +--navigation.xsl                      (the main navigation on the left)
+   | 
+   +--variables.xsl                       (definition of variables used in different stylesheets)
    | 
    +--Front
    |    |
    |    +--body.xsl                       (the sructure/tables of the page) 
    |    |
-   |    +--service.xsl                    (the service part of the third column) 
+   |    +--services.xsl                   (the service part of the third column) 
    |    |
-   |    +--Authoring
+   |    +--Authoring ?
    |    |    | 
-   |    |    +--main.xsl                  (all the includes and imports)
-   |    |    |
-   |    |    +--headlines.xsl             (the headlines)
-   |    |    |
-   |    |    +--headlines_xopus.xsl       (the headlines for the editor xopus)
-   |    |    |
-   |    |    +--webperls.xsl              (the webperls)
-   |    |    |
-   |    |    +--webperls_xopus.xsl        (the webperls for the editor xopus)
+   |    |    +--?
    |    |
    |    +--Live
    |         |
    |         +--main.xsl                  (all the includes and imports)
+   |         |
+   |         +--page.xsl                  (page layout)
    |         |
    |         +--headlines.xsl             (the articles on the front)
    |         |
@@ -42,45 +40,35 @@ Page
    |
    +--Section
    |    |
-   |    +--body.xsl                       (the sructure/tables of the page) 
+   |    +--navigationLogic.xsl            (the navigation for the different sections) 
    |    |
-   |    +--Authoring
+   |    +--xinclude.xsl                   (gets the articles for the section page) 
+   |    |
+   |    +--Authoring ?
    |    |    |
-   |    |    +--main.xsl                  (all the includes and imports)
-   |    |    |
-   |    |    +--articleOverview.xsl       (the articles overview)
-   |    |    |
-   |    |    +--articleOverview_xopus.xsl (the articles overview for the editor xopus)
+   |    |    +--?               
    |    |
    |    +--Live
    |         |
    |         +--main.xsl                  (all the includes and imports)
    |         |
-   |         +--articleOverview.xsl       (the articles in the section)
+   |         +--page.xsl                  (the page layout of the section)
+   |         |
+   |         +--articles.xsl              (the articles in the section)
    |
    +--Article
    |    |
-   |    +--body.xsl                       (the sructure/tables of the page)
-   |    |
-   |    +--head.xsl                       (the background, searchbox, etc., overwrites head in Page)
-   |    |
-   |    +--Authoring
+   |    +--Authoring ?
    |    |    |
-   |    |    +--main.xsl                  (all the includes and imports)
-   |    |    |
-   |    |    +--content.xsl               (the article)
-   |    |    |
-   |    |    +--content_xopus.xsl         (the article for the editor xopus)
-   |    |    |
-   |    |    +--relatedContent.xsl        (the related content)
-   |    |    |
-   |    |    +--relatesContent_xopus.xsl  (the related content for the editor xopus)
+   |    |    +--?                  
    |    |
    |    +--Live
    |         |
    |         +--main.xsl                  (all the includes and imports)
    |         |
-   |         +--content.xsl               (the article)
+   |         +--page.xsl                  (the layout of the article page)
+   |         |
+   |         +--articles.xsl              (the article)
    |         |
    |         +--relatedContent.xsl        (the related content)
 
