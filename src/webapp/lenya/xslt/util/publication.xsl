@@ -22,7 +22,7 @@ This&#160;Publication
 <br />
 &#160;&#160;&#160;Collection&#160;Types
 <br />
-&#160;&#160;&#160;Use&#160;Cases
+&#160;&#160;&#160;<a href="#lenya:tests">Use&#160;Cases/Tests</a>
 <br />
 &#160;&#160;&#160;Features
 <br />
@@ -44,6 +44,10 @@ This&#160;Publication
 <p>
   <xsl:apply-templates select="lenya:readme"/>
 </p>
+
+<p>
+  <xsl:apply-templates select="lenya:tests"/>
+</p>
 </td>
 </tr>
 </table>
@@ -53,6 +57,18 @@ This&#160;Publication
 
 <xsl:template match="lenya:readme">
   <xsl:copy-of select="*"/>
+</xsl:template>
+
+<xsl:template match="lenya:tests">
+<a name="lenya:tests" />
+<h3>Tests</h3>
+<ol>
+  <xsl:apply-templates select="lenya:test"/>
+</ol>
+</xsl:template>
+
+<xsl:template match="lenya:test">
+  <li><xsl:apply-templates/></li>
 </xsl:template>
 
 </xsl:stylesheet>

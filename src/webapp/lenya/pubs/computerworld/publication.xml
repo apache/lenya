@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.7 2003/03/06 20:45:53 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.8 2003/03/10 18:14:19 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>Computerworld</lenya:name>
@@ -51,4 +51,27 @@ Add target.reset.excludes
 31.1.2003/fm
 ]]>
 </lenya:readme>
+
+<lenya:tests>
+  <lenya:test>Check Frontpage (Authoring Home)</lenya:test>
+  <lenya:test>Menu File: New Article</lenya:test>
+  <lenya:test>Check Article Overview (-P !!!)</lenya:test>
+  <lenya:test>Check Article</lenya:test>
+  <lenya:test>Upload Teaser Image</lenya:test>
+  <lenya:test>Upload Abstract Image</lenya:test>
+  <lenya:test>Add Caption in Upload Dialog</lenya:test>
+  <lenya:test>Edit Article with Bitflux (Title, Caption)</lenya:test>
+  <lenya:test>Publish Article</lenya:test>
+  <lenya:test>Check Published Article</lenya:test>
+  <lenya:test>Check Frontpage (Authoring Home)</lenya:test>
+  <lenya:test>Edit Headlines (Move up and down)</lenya:test>
+  <lenya:test>Edit Magazines (Text)</lenya:test>
+  <lenya:test>Upload Magazines Image</lenya:test>
+  <lenya:test>Publish Headlines</lenya:test>
+  <lenya:test>Check published Headlines</lenya:test>
+  <lenya:test>Publish Magazines</lenya:test>
+  <lenya:test>Check published Magazines</lenya:test>
+  <lenya:test>Check Wrapper (Static XHTML pages, authoring/impressum/index.html)</lenya:test>
+  <lenya:test>Check 404</lenya:test>
+</lenya:tests>
 </lenya:publication>
