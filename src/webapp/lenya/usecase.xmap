@@ -419,11 +419,18 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/copy.xsp" type="serverpages"/>
             <map:transform src="xslt/info/copy.xsl"/>
+<!--
             <map:call resource="style-cms-page"/>
+-->
+            <map:serialize type="html"/>
           </map:match>
           
           <map:match pattern="copy" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+            <map:act type="session-propagator">
+              <map:parameter name="org.apache.lenya.cms.info.documentid" value="{request-param:documentid}"/>
+              <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
           </map:match>
           
         </map:match>
@@ -434,11 +441,18 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/cut.xsp" type="serverpages"/>
             <map:transform src="xslt/info/cut.xsl"/>
+<!--
             <map:call resource="style-cms-page"/>
+-->
+            <map:serialize type="html"/>
           </map:match>
           
           <map:match pattern="cut" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+            <map:act type="session-propagator">
+              <map:parameter name="org.apache.lenya.cms.info.documentid" value="{request-param:documentid}"/>
+              <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
           </map:match>
           
         </map:match>
@@ -523,14 +537,19 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/paste.xsp" type="serverpages"/>
             <map:transform src="xslt/info/paste.xsl"/>
+<!--
             <map:call resource="style-cms-page"/>
+-->
+            <map:serialize type="html"/>
           </map:match>
           
           <map:match pattern="paste" type="step">
             <map:act type="task">
               <map:parameter name="publication-id" value="{../../1}"/>
-              <map:redirect-to uri="{request:requestURI}" session="true"/>
+              <map:parameter name="task-id" value="{request-param:task-id}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
             </map:act>
+
           </map:match>
           
         </map:match>
@@ -541,7 +560,10 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/rename.xsp" type="serverpages"/>
             <map:transform src="xslt/info/rename.xsl"/>
+<!--
             <map:call resource="style-cms-page"/>
+-->
+            <map:serialize type="html"/>
           </map:match>
           
           <map:match pattern="rename" type="step">
