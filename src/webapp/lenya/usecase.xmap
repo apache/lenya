@@ -512,6 +512,11 @@
             </map:call>
           </map:match>
 
+          <map:match pattern="showdots" type="step">
+            <map:generate src="cocoon://{../../1}/lenya-image-upload/{../../2}/{../../3}"/>
+            <map:serialize  type="html"/>
+          </map:match>
+
           <map:match pattern="upload" type="step">
             <map:act type="upload">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
