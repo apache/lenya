@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.16 2003/08/25 21:10:05 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.17 2003/08/26 22:48:02 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -33,6 +33,13 @@
       </map:match>
       <map:match pattern="*/">
         <map:redirect-to uri="feeds/all/index.html"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- WebDAV -->
+    <map:pipeline>
+      <map:match pattern="webdav/**">
+        <map:mount src="webdav.xmap" uri-prefix="webdav" check-reload="yes"/>
       </map:match>
     </map:pipeline>
 
@@ -121,36 +128,6 @@
       <map:handle-errors type="500"/>
     </map:pipeline>
     <!-- /BX Editor: Entries -->
-
-    <!-- WebDAV -->
-    <map:pipeline type="noncaching">
-      <map:match pattern="*/entries/**/propfind-depth-*.xml">
-        <map:generate type="directory" src="content/{1}/entries/{2}/"/>
-        <map:transform src="../../xslt/util/propfind.xsl">
-          <map:parameter name="depth" value="{3}"/>
-          <map:parameter name="href" value="/lenya/blog/{1}/entries/{2}/"/>
-        </map:transform>
-        <map:serialize type="xml" status-code="207"/>
-      </map:match>
-      <map:match pattern="*/entries/**/">
-        <map:select type="request-method">
-          <map:when test="PROPFIND">
-            <map:generate type="directory" src="content/{1}/entries/{2}/"/>
-            <map:transform src="../../xslt/util/propfind.xsl">
-              <map:parameter name="depth" value="{request-header:Depth}"/>
-              <map:parameter name="href" value="/lenya/blog/{1}/entries/{2}/"/>
-            </map:transform>
-            <map:serialize type="xml" status-code="207"/>
-          </map:when>
-          <map:otherwise> <!-- GET -->
-            <map:generate type="directory" src="content/{1}/entries/{2}/"/>
-            <map:serialize type="xml"/>
-          </map:otherwise>
-        </map:select>
-      </map:match>
-      <map:handle-errors type="500"/>
-    </map:pipeline>
-    <!-- WebDAV -->
 
     <!-- Feeds -->
     <map:pipeline>
