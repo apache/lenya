@@ -1,0 +1,675 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+<!-- =========================== Components ================================ -->
+
+ <map:components>
+
+  <map:generators default="file">
+   <map:generator  name="file"        src="org.apache.cocoon.generation.FileGenerator" label="content"
+                   pool-max="32" pool-min="16" pool-grow="4"/>
+   <map:generator  name="directory"   src="org.apache.cocoon.generation.DirectoryGenerator" label="content"/>
+   <map:generator  name="imagedirectory"   src="org.apache.cocoon.generation.ImageDirectoryGenerator" label="content"/>
+   <map:generator  name="serverpages" src="org.apache.cocoon.generation.ServerPagesGenerator" label="content"/>
+   <map:generator  name="request"     src="org.apache.cocoon.generation.RequestGenerator"/>
+   <map:generator  name="status"      src="org.apache.cocoon.generation.StatusGenerator"/>
+   <map:generator  name="extractor"   src="org.apache.cocoon.generation.FragmentExtractorGenerator"/>
+   <map:generator  name="script"      src="org.apache.cocoon.generation.ScriptGenerator"/>
+   <map:generator  name="velocity"    src="org.apache.cocoon.generation.VelocityGenerator"/>
+   <map:generator  name="jsp"         src="org.apache.cocoon.generation.JspGenerator"/>
+   <map:generator  name="stream"      src="org.apache.cocoon.generation.StreamGenerator"/>
+  <map:generator name="html" src="org.apache.cocoon.generation.HTMLGenerator" label="content"/>
+</map:generators>
+
+  <map:transformers default="xslt">
+   <map:transformer     name="xslt"      src="org.apache.cocoon.transformation.TraxTransformer"
+                        pool-max="32" pool-min="16" pool-grow="4">
+    <use-request-parameters>false</use-request-parameters>
+    <use-browser-capabilities-db>false</use-browser-capabilities-db>
+   </map:transformer>
+   <map:transformer     name="log"       src="org.apache.cocoon.transformation.LogTransformer"/>
+   <map:transformer     name="sql"       src="org.apache.cocoon.transformation.SQLTransformer"/>
+   <map:transformer     name="extractor" src="org.apache.cocoon.transformation.FragmentExtractorTransformer"/>
+   <map:transformer     name="i18n"      src="org.apache.cocoon.transformation.I18nTransformer">
+    <catalogue-name>messages</catalogue-name>
+    <catalogue-location>translations</catalogue-location>
+   </map:transformer>
+   <map:transformer     name="xinclude"  src="org.apache.cocoon.transformation.XIncludeTransformer"/>
+   <map:transformer     name="cinclude"  src="org.apache.cocoon.transformation.CIncludeTransformer"/>
+   <map:transformer     name="filter"  src="org.apache.cocoon.transformation.FilterTransformer"/>
+   <map:transformer     name="writeDOMsession"  src="org.apache.cocoon.transformation.WriteDOMSessionTransformer"/>
+   <map:transformer     name="readDOMsession"  src="org.apache.cocoon.transformation.ReadDOMSessionTransformer"/>
+  <map:transformer name="xt" src="org.apache.cocoon.transformation.XTTransformer"/>
+</map:transformers>
+
+  <map:readers default="resource">
+   <map:reader name="resource"       src="org.apache.cocoon.reading.ResourceReader"/>
+   <map:reader name="jsp"	     src="org.apache.cocoon.reading.JSPReader"/>
+  </map:readers>
+
+  <map:serializers default="html">
+   <map:serializer name="links"                               src="org.apache.cocoon.serialization.LinkSerializer"/>
+   <!--<map:serializer name="xml"    mime-type="text/xml"         src="org.apache.cocoon.serialization.XMLSerializer"
+                   pool-max="32" pool-min="16" pool-grow="4"/>-->
+   <map:serializer name="html"   mime-type="text/html"        src="org.apache.cocoon.serialization.HTMLSerializer"/>
+<!--
+   <map:serializer name="vrml"   mime-type="model/vrml"       src="org.apache.cocoon.serialization.TextSerializer"/>
+   <map:serializer name="wap"    mime-type="text/vnd.wap.wml" src="org.apache.cocoon.serialization.XMLSerializer">
+    <doctype-public>-//WAPFORUM//DTD WML 1.1//EN</doctype-public>
+    <doctype-system>http://www.wapforum.org/DTD/wml_1.1.xml</doctype-system>
+    <encoding>ASCII</encoding>
+    <omit-xml-declaration>yes</omit-xml-declaration>
+   </map:serializer>
+-->
+</map:serializers>
+
+  <map:selectors default="browser">
+   <map:selector name="browser" src="org.apache.cocoon.selection.BrowserSelector">
+    <!-- # NOTE: The appearance indicates the search order. This is very important since
+         #       some words may be found in more than one browser description. (MSIE is
+         #       presented as "Mozilla/4.0 (Compatible; MSIE 4.01; ...")
+    -->
+    <browser name="explorer" useragent="MSIE"/>
+    <browser name="pocketexplorer" useragent="MSPIE"/>
+    <browser name="handweb" useragent="HandHTTP"/>
+    <browser name="avantgo" useragent="AvantGo"/>
+    <browser name="imode" useragent="DoCoMo"/>
+    <browser name="opera" useragent="Opera"/>
+    <browser name="lynx" useragent="Lynx"/>
+    <browser name="java" useragent="Java"/>
+    <browser name="wap" useragent="Nokia"/>
+    <browser name="wap" useragent="UP"/>
+    <browser name="wap" useragent="Wapalizer"/>
+    <browser name="mozilla5" useragent="Mozilla/5"/>
+    <browser name="mozilla5" useragent="Netscape6/"/>
+    <browser name="netscape" useragent="Mozilla"/>
+   </map:selector>
+   <map:selector name="parameter" src="org.apache.cocoon.selection.ParameterSelector"/>
+  </map:selectors>
+
+  <map:matchers default="wildcard">
+   <map:matcher name="wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>
+   <map:matcher name="regexp" src="org.apache.cocoon.matching.RegexpURIMatcher"/>
+   <map:matcher name="request" src="org.apache.cocoon.matching.RequestParamMatcher"/>
+   <map:matcher name="sessionstate" src="org.apache.cocoon.matching.WildcardSessionAttributeMatcher">
+      <attribute-name>org.apache.cocoon.SessionState</attribute-name>
+   </map:matcher>
+   <map:matcher name="next-page" src="org.apache.cocoon.matching.WildcardParameterValueMatcher">
+      <parameter-name>next-state</parameter-name>
+   </map:matcher>
+   <map:matcher name="referer-match" src="org.apache.cocoon.matching.WildcardHeaderMatcher">
+      <header-name>referer</header-name>
+   </map:matcher>
+  </map:matchers>
+
+  <map:actions>
+   <map:action name="add-employee" src="org.apache.cocoon.acting.DatabaseAddAction"/>
+   <map:action name="del-employee" src="org.apache.cocoon.acting.DatabaseDeleteAction"/>
+   <map:action name="upd-employee" src="org.apache.cocoon.acting.DatabaseUpdateAction"/>
+   <map:action name="lang-select" src="org.apache.cocoon.acting.LangSelect"/>
+   <map:action name="locale" src="org.apache.cocoon.acting.LocaleAction"/>
+   <map:action name="request" src="org.apache.cocoon.acting.RequestParamAction"/>
+   <map:action name="form-validator" src="org.apache.cocoon.acting.FormValidatorAction"/>
+   <map:action name="session-state" src="org.apache.cocoon.acting.SessionStateAction"/>
+   <map:action name="session-isvalid" src="org.apache.cocoon.acting.SessionIsValidAction"/>
+   <map:action name="resource-exists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
+  </map:actions>
+
+ </map:components>
+
+<!-- =========================== Views =================================== -->
+
+ <map:views>
+  <map:view name="content" from-label="content">
+   <map:serialize type="xml"/>
+  </map:view>
+
+  <map:view name="links" from-position="last">
+   <map:serialize type="links"/>
+  </map:view>
+
+ </map:views>
+
+<!-- =========================== Resources ================================= -->
+
+ <map:resources>
+  <map:resource name="slides">
+   <map:generate src="docs/samples/slides/slides.xml"/>
+   <map:transform src="stylesheets/slides/slides-navigation.xsl">
+    <map:parameter name="use-request-parameters" value="true"/>
+    <map:parameter name="use-browser-capabilities-db" value="true"/>
+   </map:transform>
+   <map:transform src="stylesheets/slides/slides-apachecon.xsl"/>
+   <map:serialize/>
+  </map:resource>
+
+  <map:resource name="dynamic-page">
+     <map:generate type="serverpages" src="{target}.xsp"/>
+     <map:transform src="stylesheets/dynamic-page2html.xsl">
+       <map:parameter name="view-source" value="{target}.xsp"/>
+     </map:transform>
+     <map:serialize/>
+  </map:resource>
+
+  <map:resource name="dynamic-page1">
+     <map:act type="session-state">
+        <map:parameter name="new-state" value="{../next-state}"/>
+        <map:redirect-to resource="dynamic-page" target="{../target}/state{../../../org.apache.cocoon.SessionState}{../../next-state}"/>
+     </map:act>
+  </map:resource>
+
+  <map:resource name="dynamic-page2">
+     <map:act type="session-state">
+        <map:parameter name="new-state" value="1"/>
+        <map:redirect-to resource="dynamic-page" target="{../target}1"/>
+     </map:act>
+  </map:resource>
+
+  <map:resource name="simple-page">
+     <map:generate type="file" src="{target}.xml"/>
+     <map:transform src="stylesheets/page/simple-page2html.xsl">
+        <map:parameter name="view-source" value="{target}.xml"/>
+     </map:transform>
+     <map:serialize/>
+  </map:resource>
+ </map:resources>
+
+<!-- ========================== Action sets ================================ -->
+
+ <map:action-sets>
+  <map:action-set name="employee">
+   <map:act type="add-employee" action="Add"/>
+   <map:act type="del-employee" action="Delete"/>
+   <map:act type="upd-employee" action="Update"/>
+  </map:action-set>
+ </map:action-sets>
+
+<!-- =========================== Pipelines ================================= -->
+
+ <map:pipelines>
+
+  <!-- Utility for viewing source xml or html-->
+  <map:pipeline>
+   <!-- sample use of regexp equivalent to "**.source" using wildcard
+        this also shows the '\{' notation to escape sitemap values substitution -->
+   <map:match pattern="(.*)\.s\{1}ource" type="regexp">
+    <map:generate src="cocoon:/{1}" />
+    <map:transform src="stylesheets/simple-xml2html.xsl"/>
+    <map:serialize/>
+   </map:match>
+  </map:pipeline>
+
+  <!-- site builder pipeline -->
+  <map:pipeline>
+   <map:match pattern="sitebuilder**">
+    <map:mount uri-prefix="sitebuilder/" src="sitebuilder/" check-reload="yes"/>
+   </map:match>
+  </map:pipeline>
+
+  <!-- sub-sitemap example pipeline -->
+  <map:pipeline>
+   <map:match pattern="sub/**">
+    <map:mount uri-prefix="sub" src="sub/" check-reload="yes"/>
+   </map:match>
+
+   <map:handle-errors>
+    <map:transform src="stylesheets/system/error2html.xsl"/>
+    <map:serialize status-code="500"/>
+   </map:handle-errors>
+  </map:pipeline>
+
+  <!-- protected webapp example pipeline -->
+  <map:pipeline>
+   <map:match pattern="protected/**">
+    <map:mount uri-prefix="protected" src="protected/" check-reload="yes"/>
+   </map:match>
+  </map:pipeline>
+
+  <!-- i18n examples pipeline -->
+  <map:pipeline>
+   <map:match pattern="i18n/**">
+    <map:mount uri-prefix="i18n" src="i18n/" check-reload="yes"/>
+   </map:match>
+  </map:pipeline>
+
+  <!-- C2 documentation pipeline -->
+  <map:pipeline>
+   <map:match pattern="documents/index">
+     <map:redirect-to uri="index.html"/>
+   </map:match>
+   <map:match pattern="documents/**">
+     <map:mount uri-prefix="documents" src="documentation/" check-reload="yes"/>
+   </map:match>
+  </map:pipeline>
+
+  <!-- "automount" setup
+  This causes directories added under "mount"
+  (even with Cocoon already running) to be activated automagically
+  if they contain a sitemap.xmap, without having to modify the main
+  sitemap.xmap
+  -->
+  <map:pipeline>
+    <map:match pattern="mount/*/**">
+      <map:mount uri-prefix="mount/{1}" src="mount/{1}/" check-reload="yes"/>
+    </map:match>
+  </map:pipeline>
+
+  <map:pipeline>   
+   <map:match pattern="">
+    <map:redirect-to uri="welcome"/>
+   </map:match>
+
+   <map:match pattern="welcome">
+    <map:generate src="docs/samples/samples.xml"/>
+    <!--
+    <map:select>
+      <map:when test="wap">
+        <map:transform src="stylesheets/simple-samples2html.xsl"/>
+      </map:when>
+      <map:when test="netscape">
+        <map:transform src="stylesheets/simple-samples2html.xsl"/>
+      </map:when>
+      <map:otherwise>
+        <map:transform src="stylesheets/simple-samples2html.xsl"/>
+      </map:otherwise>
+    </map:select>
+    -->
+    <map:transform src="stylesheets/simple-samples2html.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <!-- ================  Hello  =========================== -->
+
+   <map:match pattern="hello.html">
+    <map:generate src="docs/samples/hello-page.xml"/>
+    <map:transform src="stylesheets/page/simple-page2html.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <map:match pattern="hello.wml">
+    <map:generate src="docs/samples/hello-page.xml"/>
+    <map:transform src="stylesheets/page/simple-page2wml.xsl"/>
+    <map:serialize type="wap"/>
+   </map:match>
+
+   <map:match pattern="hello.vml">
+    <map:generate src="docs/samples/hello-page.xml"/>
+    <map:transform src="stylesheets/page/simple-page2vml.xsl"/>
+    <map:serialize type="xml"/>
+   </map:match>
+
+   <map:match pattern="hello.wrl">
+    <map:generate src="docs/samples/hello-page.xml"/>
+    <map:transform src="stylesheets/page/simple-page2vrml.xsl"/>
+    <map:serialize type="vrml"/>
+   </map:match>
+
+   <map:match pattern="redirect">
+    <map:act type="request">
+     <map:parameter name="parameters" value="true"/>
+
+     <map:redirect-to uri="{dest}"/>
+    </map:act>
+   </map:match>
+
+   <!-- ================  Sites  =========================== -->
+
+   <map:match pattern="sites/*.apache.org">
+    <map:generate src="docs/samples/sites/{1}_apache_org.xml"/>
+    <map:transform src="stylesheets/sites/{1}_apache_org-html.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="sites/images/*.gif">
+    <map:read src="resources/images/{1}.gif" mime-type="image/gif"/>
+   </map:match>
+
+   <!-- ================  NEWS  =========================== -->
+
+   <map:match pattern="slashdot/slashdot.xml">
+    <map:generate src="http://slashdot.org/slashdot.xml"/>
+    <map:transform src="stylesheets/news/slashdot.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="slashdot/**.gif">
+    <map:read src="http://images.slashdot.org/topics/{1}.gif" mime-type="image/gif"/>
+   </map:match>
+
+   <map:match pattern="slashdot/**.jpg">
+    <map:read src="http://images.slashdot.org/topics/{1}.jpg" mime-type="image/jpg"/>
+   </map:match>
+
+   <map:match pattern="news/**.gif">
+    <map:read src="http://images.slashdot.org/topics/{1}.gif" mime-type="image/gif"/>
+   </map:match>
+
+   <map:match pattern="news/**.jpg">
+    <map:read src="http://images.slashdot.org/topics/{1}.jpg" mime-type="image/jpg"/>
+   </map:match>
+
+   <map:match pattern="moreover/moreover.xml">
+    <map:generate src="http://www.moreover.com/cgi-local/page?o=xml&amp;c=Developer%20news"/>
+    <map:transform src="stylesheets/news/moreover.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="isyndicate/news.xml">
+    <map:generate src="http://headlines.isyndicate.com/pages/cui/news.xml"/>
+    <map:transform src="stylesheets/news/isyndicate.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="news/aggregate.xml">
+    <map:aggregate element="page" ns="http://foo.bar.com/myspace">
+     <map:part src="cocoon:/slashdot/slashdot.xml" element="slashdot" ns="http://foo.bar.com/slashdot"/>
+     <map:part src="cocoon:/moreover/moreover.xml" element="moreover" ns="http://foo.bar.com/moreover"/>
+     <map:part src="cocoon:/isyndicate/news.xml" element="isyndicate" ns="http://foo.bar.com/isyndicate"/>
+    </map:aggregate>
+    <map:transform src="stylesheets/news/news.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <!-- ==============  Catalog  ========================== -->
+
+   <map:match pattern="**/samples/catalog-demo">
+    <map:generate src="docs/samples/catalog/test.xml"/>
+    <map:transform src="docs/samples/catalog/style.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <map:match pattern="catalog-demo">
+    <map:generate src="docs/samples/catalog/test.xml"/>
+    <map:transform src="docs/samples/catalog/style.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <!-- ================  Static  =========================== -->
+
+   <map:match pattern="scripts/*">
+    <map:generate type="script" src="docs/samples/scripts/{1}"/>
+    <map:transform src="stylesheets/page/simple-page2html.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <map:match pattern="jsp/*.htm">
+    <map:read type="jsp" src="/docs/samples/jsp/{1}.jsp" mime-type="text/html" />
+   </map:match>
+
+   <map:match pattern="jsp/*">
+    <map:generate type="jsp" src="/docs/samples/jsp/{1}.jsp"/>
+    <map:transform src="stylesheets/page/simple-page2html.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <map:match pattern="templates/*">
+    <map:generate type="velocity" src="templates/{1}">
+	<map:parameter name="name" value="Velocity"/>
+	<map:parameter name="project" value="Cocoon"/>
+    </map:generate>
+    <map:transform src="stylesheets/page/simple-page2html.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <map:match pattern="slides/slides">
+    <map:redirect-to resource="slides"/>
+   </map:match>
+
+   <map:match pattern="slides/">
+    <map:redirect-to resource="slides"/>
+   </map:match>
+
+   <map:match pattern="slides/style">
+    <map:read src="resources/styles/slides-apachecon.css" mime-type="text/css"/>
+   </map:match>
+
+   <map:match pattern="style">
+    <map:read src="resources/styles/slides-apachecon.css" mime-type="text/css"/>
+   </map:match>
+
+   <map:match pattern="slides/**.gif">
+    <map:read src="docs/samples/{1}.gif" mime-type="image/gif"/>
+   </map:match>
+
+   <map:match pattern="slides/**.jpg">
+    <map:read src="docs/samples/{1}.jpg" mime-type="image/jpg"/>
+   </map:match>
+
+   <map:match pattern="slides/**.png">
+    <map:read src="docs/samples/{1}.png" mime-type="image/png"/>
+   </map:match>
+
+   <!-- =========================== Dynamic ================================ -->
+   <map:match pattern="xsp/*">
+    <map:generate type="serverpages" src="docs/samples/xsp/{1}.xsp"/>
+    <map:transform src="stylesheets/dynamic-page2html.xsl">
+        <map:parameter name="view-source" value="docs/samples/xsp/{1}.xsp"/>
+    </map:transform>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="xsp-plain/*">
+    <map:generate type="serverpages" src="docs/samples/xsp/{1}.xsp"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="sql/*">
+    <map:generate src="docs/samples/sql/{1}.xml"/>
+    <map:transform type="sql">
+      <map:parameter name="use-connection" value="personnel"/>
+    </map:transform>
+    <map:transform src="stylesheets/simple-sql2html.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <!-- ========================== Forms ================================= -->
+   <map:match pattern="forms/employee">
+     <map:act set="employee">
+       <map:parameter name="descriptor" value="context://docs/samples/forms/employee.xml"/>
+       <map:generate type="serverpages" src="docs/samples/forms/employee.xsp"/>
+       <map:transform src="stylesheets/dynamic-page2html.xsl">
+          <map:parameter name="view-source" value="docs/samples/forms/employee.xsp"/>
+       </map:transform>
+       <map:serialize/>
+     </map:act>
+   </map:match>
+
+   <map:match pattern="forms/*">
+     <map:generate type="serverpages" src="docs/samples/forms/{1}.xsp"/>
+     <map:transform src="stylesheets/dynamic-page2html.xsl">
+        <map:parameter name="view-source" value="docs/samples/forms/{1}.xsp"/>
+     </map:transform>
+     <map:serialize/>
+   </map:match>
+
+   <!-- ======================= FormValidation ============================= -->
+
+   <map:match pattern="formvalidation/test">
+     <map:act type="form-validator">
+        <map:parameter name="descriptor" value="context:///docs/samples/formvalidation/descriptor.xml"/>
+        <map:parameter name="validate-set" value="car-reservation"/>
+    <map:redirect-to resource="dynamic-page" target="docs/samples/formvalidation/OK"/>
+     </map:act>
+      <map:redirect-to resource="dynamic-page" target="docs/samples/formvalidation/ERROR"/>
+   </map:match>
+
+
+
+   <!-- ========================== Session ================================= -->
+   <map:match pattern="session">
+    <map:redirect-to uri="session/sessionpage.xsp"/>
+   </map:match>
+
+   <map:match pattern="session/*.xsp*">
+     <map:generate type="serverpages" src="docs/samples/session/{1}.xsp"/>
+     <map:transform src="stylesheets/dynamic-page2html.xsl">
+        <map:parameter name="view-source" value="docs/samples/session/{1}.xsp"/>
+     </map:transform>
+     <map:serialize/>
+   </map:match>
+
+  <!-- ========================== session state ================================= -->
+
+  <map:match pattern="session-state/example">
+      <map:act type="session-isvalid">
+
+        <map:match type="sessionstate" pattern="1">
+           <map:match type="next-page" pattern="1">
+        	      <map:redirect-to resource="dynamic-page1" target="docs/samples/session-state"/>
+           </map:match>
+           <map:match type="next-page" pattern="2">
+        	      <map:redirect-to resource="dynamic-page1" target="docs/samples/session-state"/>
+           </map:match>
+        </map:match>
+
+        <map:match type="sessionstate" pattern="2">
+           <map:match type="next-page" pattern="1">
+        	      <map:redirect-to resource="dynamic-page1" target="docs/samples/session-state"/>
+           </map:match>
+           <map:match type="next-page" pattern="2">
+        	      <map:redirect-to resource="dynamic-page1" target="docs/samples/session-state"/>
+           </map:match>
+        </map:match>
+
+        <map:redirect-to resource="dynamic-page2" target="docs/samples/session-state/state0"/>
+      </map:act>
+      <map:redirect-to resource="dynamic-page" target="docs/samples/session-state/start"/>
+  </map:match>
+
+   <!-- ========================== referer ================================= -->
+
+  <map:match pattern="referer/*">
+     <map:match type="referer-match" pattern="http://localhost:8080/cocoon/referer/a">
+        <map:redirect-to resource="simple-page" target="docs/samples/referer/a/{../1}"/>
+     </map:match>
+     <map:match type="referer-match" pattern="http://localhost:8080/cocoon/referer/b">
+        <map:redirect-to resource="simple-page" target="docs/samples/referer/b/{../1}"/>
+     </map:match>
+
+     <map:redirect-to resource="simple-page" target="docs/samples/referer/a/a"/>
+  </map:match>
+
+   <!-- ========================== Stream ================================= -->
+   <map:match pattern="request1">
+     <map:generate type="stream">
+       <map:parameter name="form-name" value="Foo"/>
+     </map:generate>
+     <map:serialize type="xml"/>
+   </map:match>
+
+   <map:match pattern="Order">
+     <map:generate src="docs/samples/stream/OrderPage.xml"/>
+     <map:transform src="stylesheets/dynamic-page2html.xsl"/>
+     <map:serialize type="html"/>
+   </map:match>
+
+   <!-- ========================== XSP Sources ============================== -->
+   <map:match pattern="view-source/*">
+    <map:read src="docs/samples/slides/{1}" mime-type="text/plain"/>
+   </map:match>
+
+   <map:match pattern="view-source">
+    <map:generate type="serverpages" src="docs/samples/slides/view-source.xsp"/>
+    <map:serialize/>
+   </map:match>
+
+
+   <!-- ========================== SOAP ============================== -->
+   <map:match pattern="soap/*.xsp">
+    <map:generate type="serverpages" src="docs/samples/soap/{1}.xml"/>
+    <map:transform src="docs/samples/soap/{1}.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="soap/service/*.xsp">
+    <map:generate type="serverpages" src="docs/samples/soap/service/{1}.xml"/>
+    <map:serialize type="xml"/>
+   </map:match>
+
+   <!-- ======================== XScript Samples ========================= -->
+   <map:match pattern="xscript/soap-getquote1">
+     <map:generate type="serverpages" src="docs/samples/xscript/soap-getquote1.xsp"/>
+     <map:transform src="docs/samples/xscript/soap-getquote1.xsl"/>
+     <map:transform src="stylesheets/dynamic-page2html.xsl">
+       <map:parameter name="view-source" value="docs/samples/xscript/soap-getquote1.xsp"/>
+     </map:transform>
+     <map:serialize/>
+   </map:match>
+
+   <map:match pattern="xscript/*">
+     <map:generate type="serverpages" src="docs/samples/xscript/{1}.xsp"/>
+     <map:transform src="stylesheets/dynamic-page2html.xsl">
+       <map:parameter name="view-source" value="docs/samples/xscript/{1}.xsp"/>
+     </map:transform>
+     <map:serialize/>
+   </map:match>
+
+   <!-- ========================== Tidy Samples ============================== -->
+   
+   <map:match pattern="yahoo">
+    <map:generate type="html" src="http://www.yahoo.com">
+      <map:parameter name="xpath" value="//form/table[3]/tr/td/table[2]"/>
+    </map:generate>
+    <map:transform src="stylesheets/news/news.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <!-- ========================= Parent Component Manager ================================ -->
+   <map:match pattern="parentcm">
+    <map:generate type="parentcm" src="{1}"/>
+    <map:transform src="stylesheets/parentcm/time.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <!-- ========================= Server ================================ -->
+   <map:match pattern="request">
+    <map:generate type="request"/>
+    <map:serialize type="xml"/>
+   </map:match>
+
+   <map:match pattern="generror">
+    <map:generate src="docs/samples/error-giving-page.xml"/>
+    <map:transform src="stylesheets/simple-samples2html.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="status">
+    <map:generate type="status" src="status"/>
+    <map:transform src="stylesheets/system/status2html.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:match pattern="sites/styles/**.css">
+    <map:read src="resources/styles/{1}.css" mime-type="text/css"/>
+   </map:match>
+
+   <map:match pattern="images/**.gif">
+    <map:read src="resources/images/{1}.gif" mime-type="image/gif"/>
+   </map:match>
+
+   <map:match pattern="images/**.jpg">
+    <map:read src="resources/images/{1}.jpg" mime-type="image/jpg"/>
+   </map:match>
+
+   <map:match pattern="images/**.png">
+    <map:read src="resources/images/{1}.png" mime-type="image/png"/>
+   </map:match>
+
+   <map:match pattern="**/">
+    <map:generate type="directory" src="{1}"/>
+    <map:transform src="stylesheets/system/directory2html.xsl"/>
+    <map:serialize/>
+   </map:match>
+
+   <map:handle-errors>
+    <map:transform src="stylesheets/system/error2html.xsl"/>
+    <map:serialize status-code="500"/>
+   </map:handle-errors>
+
+  </map:pipeline>
+ </map:pipelines>
+
+</map:sitemap>
+
+<!-- end of file -->
