@@ -22,7 +22,7 @@ public class Role {
         this.name = name;
     }
     
-    private String name;
+    protected String name;
     
 	private Set groups = new HashSet();
 
