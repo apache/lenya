@@ -4,6 +4,7 @@
        language="java"
        xmlns:xsp="http://apache.org/xsp"
        xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       xmlns:xsp-session="http://apache.org/xsp/session/2.0"
        xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
        xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
        >
@@ -15,6 +16,8 @@
 
 <usecase:submit>
   <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
+  <publication-id><xsp-session:get-attribute name="org.apache.lenya.cms.cocoon.acting.Authenticator.id"/></publication-id>
+  <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
   
 	<not:users>
 	<xsp:logic>
