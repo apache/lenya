@@ -92,7 +92,7 @@ public class AntTask
      * @param arguments A map mapping the command-line arguments to their values.
      * @param properties A map mapping the project properties to their values.
      */
-    public void executeAntTarget(File buildFile, String target, Map arguments,
+    public void executeAntTarget(File publicationDirectory, File buildFile, String target, Map arguments,
         Map properties) throws ExecutionException {
             
         Project project = new Project();
@@ -118,9 +118,11 @@ public class AntTask
              */
             
             project.init();
-            project.setBaseDir(buildFile.getParentFile());
+            project.setBaseDir(publicationDirectory);
             ProjectHelper helper = ProjectHelper.getProjectHelper();
             helper.parse(project, buildFile);
+            
+            project.setUserProperty(PUBLICATION_DIRECTORY, publicationDirectory.getAbsolutePath());
             
             for (Iterator keys = properties.keySet().iterator(); keys.hasNext(); ) {
                 String key = (String) keys.next();
@@ -144,6 +146,7 @@ public class AntTask
         
     }
     
+    public static final String PUBLICATION_DIRECTORY = "pub.dir";
     public static final String BUILDFILE = "buildfile";
     public static final String TARGET = "target";
     public static final String ANT_PREFIX = "ant";
@@ -159,6 +162,7 @@ public class AntTask
      */
     public void execute(String servletContextPath) throws ExecutionException {
         
+        File publicationDirectory;
         File buildFile;
         String target;
         Map arguments;
@@ -172,7 +176,7 @@ public class AntTask
 
             PublishingEnvironment environment
                 = new PublishingEnvironment(servletContextPath, publicationId);
-            File publicationDirectory = environment.getPublicationDirectory();
+            publicationDirectory = environment.getPublicationDirectory();
             buildFile = new File(publicationDirectory, relativeBuildFilePath);
 
             target = getParameters().getParameter(TARGET, null);
@@ -188,7 +192,7 @@ public class AntTask
             throw new ExecutionException(e);
         }
         
-        executeAntTarget(buildFile, target, arguments, properties);
+        executeAntTarget(publicationDirectory, buildFile, target, arguments, properties);
         
     }
 }
