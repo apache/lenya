@@ -161,6 +161,9 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      * @throws IOException if an error occurs.
      */
     protected void saveResource(File resourceFile, Part part) throws IOException {
+        FileOutputStream out = null;
+        InputStream in = null;
+        
         if (!resourceFile.exists()) {
             boolean created = resourceFile.createNewFile();
             if (!created) {
@@ -170,14 +173,14 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
 	    try {
             byte[] buf = new byte[4096];
-            FileOutputStream out = new FileOutputStream(resourceFile);
-                InputStream in = part.getInputStream();
-                int read = in.read(buf);
+            out = new FileOutputStream(resourceFile);
+            in = part.getInputStream();
+            int read = in.read(buf);
 
-                while (read > 0) {
-                    out.write(buf, 0, read);
-                    read = in.read(buf);
-                }
+            while (read > 0) {
+                out.write(buf, 0, read);
+                read = in.read(buf);
+            }
         } catch (final FileNotFoundException e) {
             getLogger().error("file not found" +e.toString());
             throw new IOException(e.toString());
@@ -187,6 +190,11 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         } catch (Exception e) {
             getLogger().error("Exception" +e.toString());
             throw new IOException(e.toString());
+        } finally {
+            if (in != null)
+                in.close();
+            if (out != null)
+                out.close();
         }
     }
 
