@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: copy-mixed-content.xsl,v 1.7 2004/04/26 14:57:25 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -142,6 +142,8 @@
 
 <xsl:template name="search-and-replace">
 <xsl:param name="string"/>
+<xsl:variable name="apos">'</xsl:variable>
+<xsl:variable name="quot">"</xsl:variable>
 
 <xsl:choose>
 <xsl:when test="contains($string, '&lt;')">
@@ -153,7 +155,15 @@
 <xsl:when test="contains($string, '&amp;')">
   <xsl:call-template name="search-and-replace"><xsl:with-param name="string" select="substring-before($string, '&amp;')"/></xsl:call-template>&amp;amp;<xsl:call-template name="search-and-replace"><xsl:with-param name="string" select="substring-after($string, '&amp;')"/></xsl:call-template>
 </xsl:when>
-<!-- FIXME: &quot; and &apos; -->
+<xsl:when test="contains($string, '&#160;')">
+  <xsl:call-template name="search-and-replace"><xsl:with-param name="string" select="substring-before($string, '&#160;')"/></xsl:call-template>&amp;#160;<xsl:call-template name="search-and-replace"><xsl:with-param name="string" select="substring-after($string, '&#160;')"/></xsl:call-template>
+</xsl:when>
+<xsl:when test="contains($string, $quot)">
+  <xsl:call-template name="search-and-replace"><xsl:with-param name="string" select="substring-before($string, $quot)"/></xsl:call-template>&amp;quot;<xsl:call-template name="search-and-replace"><xsl:with-param name="string" select="substring-after($string, $quot)"/></xsl:call-template>
+</xsl:when>
+<xsl:when test="contains($string, $apos)">
+  <xsl:call-template name="search-and-replace"><xsl:with-param name="string" select="substring-before($string, $apos)"/></xsl:call-template>&amp;apos;<xsl:call-template name="search-and-replace"><xsl:with-param name="string" select="substring-after($string, $apos)"/></xsl:call-template>
+</xsl:when>
 <xsl:otherwise>
   <xsl:value-of select="$string"/>
 </xsl:otherwise>
