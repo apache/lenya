@@ -360,7 +360,7 @@ width="24" height="16" border="0" /></td>
 <td align="right" valign="top" class="footer">
 <!-- Admin interface link -->
 <xsl:call-template name="admin-url">
-<xsl:with-param name="prefix" select="'http://www.oscom.org:8080/lenya/oscom/authoring'"/>
+<xsl:with-param name="prefix" select="'http://zurich.oscom.org:8080/lenya/oscom/authoring'"/>
 </xsl:call-template>
 <!-- /Admin interface link --></td>
 </tr>

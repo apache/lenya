@@ -8,7 +8,7 @@
 
 <xsl:template name="admin-url">
 <xsl:param name="prefix"/>
-<a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/matrix/<xsl:value-of select="/lenya/cmsbody/oscom/system/id"/>.html</xsl:attribute>Apache Lenya</a>
+<a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/matrix/<xsl:value-of select="/lenya/cmsbody/oscom/system/id"/>.html</xsl:attribute>Edit</a>
 </xsl:template>
  
 <xsl:template name="body">
