@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.1 2003/08/05 16:27:41 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.2 2003/08/13 13:14:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,8 +67,16 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.AccessControllerResolver;
 import org.apache.lenya.cms.ac2.Authorizer;
+import org.apache.lenya.cms.ac2.DefaultAccessController;
+import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.ac2.usecase.UsecaseAuthorizer;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -94,7 +102,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
         Attributes attributes = attr;
 
-        if (localName.equals(ITEM_ELEMENT)) {
+        if (authorizer != null && localName.equals(ITEM_ELEMENT)) {
             String usecase = attr.getValue(NAMESPACE, USECASE_ATTRIBUTE);
 
             // filter item if usecase not allowed 
@@ -102,12 +110,12 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                 getLogger().debug("Found usecase [" + usecase + "]");
 
                 try {
-                    if (!authorizer.authorizeUsecase(webappUrl, usecase)) {
+                    if (!authorizer.authorizeUsecase(webappUrl, usecase, roles, publication)) {
                         int hrefIndex = attributes.getIndex("href");
                         if (hrefIndex > -1) {
                             attributes = new AttributesImpl(attr);
                             ((AttributesImpl) attributes).removeAttribute(hrefIndex);
-                        } 
+                        }
                     }
                 } catch (AccessControlException e) {
                     throw new SAXException(e);
@@ -122,6 +130,9 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     private UsecaseAuthorizer authorizer;
     private ComponentSelector selector = null;
     private String webappUrl;
+    private Role[] roles;
+    private Publication publication;
+    private AccessControllerResolver acResolver;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
@@ -131,16 +142,37 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
         getLogger().debug("Setting up transformer");
 
-        ComponentSelector selector = null;
+        selector = null;
+        acResolver = null;
         authorizer = null;
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
         try {
-            selector = (ComponentSelector) manager.lookup(Authorizer.ROLE + "Selector");
-            authorizer = (UsecaseAuthorizer) selector.select(UsecaseAuthorizer.TYPE);
+            roles = PolicyAuthorizer.getRoles(request);
+            publication = PublicationFactory.getPublication(objectModel);
+            selector =
+                (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            acResolver =
+                (AccessControllerResolver) selector.select(
+                    AccessControllerResolver.DEFAULT_RESOLVER);
+            getLogger().debug("Resolved AC resolver [" + acResolver + "]");
+
+            String webappUrl = ServletHelper.getWebappURI(request);
+            AccessController accessController = acResolver.resolveAccessController(webappUrl);
+
+            if (accessController instanceof DefaultAccessController) {
+                DefaultAccessController defaultAccessController =
+                    (DefaultAccessController) accessController;
+                Authorizer[] authorizers = defaultAccessController.getAuthorizers();
+                for (int i = 0; i < authorizers.length; i++) {
+                    if (authorizers[i] instanceof UsecaseAuthorizer) {
+                        authorizer = (UsecaseAuthorizer) authorizers[i];
+                    }
+                }
+            }
+
             getLogger().debug("Using authorizer [" + authorizer + "]");
-            authorizer.setup(request);
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
@@ -152,8 +184,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     public void dispose() {
         getLogger().debug("Disposing transformer");
         if (selector != null) {
-            if (authorizer != null) {
-                selector.release(authorizer);
+            if (acResolver != null) {
+                selector.release(acResolver);
             }
             manager.release(selector);
         }
