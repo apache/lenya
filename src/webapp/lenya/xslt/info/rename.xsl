@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.13 2003/12/08 14:40:52 egli Exp $
+ $Id: rename.xsl,v 1.14 2004/01/16 14:51:04 gregor Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -35,7 +35,29 @@
     <div class="lenya-box">
       <div class="lenya-box-title">Rename Document</div>
       <div class="lenya-box-body">
-        <form method="get">
+        <script Language="JavaScript">
+function validRequired(formField,fieldLabel)
+{
+	var result = true;
+	
+	if (formField.value.match(".*[\\s\\/]+.*"))
+	{
+		alert('Please enter a valid value for the "' + fieldLabel +'" field.');
+		formField.focus();
+		result = false;
+	}
+	
+}
+
+function validateForm(theForm)
+{
+	if (!validRequired(theForm["properties.node.secdocumentid"],"New Document ID"))
+		return false;
+
+	return true;
+}
+</script>
+           <form method="get" onsubmit="return validateForm(this)">
           <xsl:attribute name="action"></xsl:attribute>
           <input type="hidden" name="task-id" value="{$task-id}"/>
           <xsl:call-template name="task-parameters">
