@@ -9,7 +9,7 @@
 <menu>
   <xsp-lenya:util/>
 
-  <live_uri>/live<xsp:expr>xsp_lenya_pub_url</xsp:expr></live_uri>
+  <live_uri><xsp:expr>xsp_lenya_pub_url</xsp:expr></live_uri>
 
     <xsp:logic>
       String sourcesParameter = "sources=" + xsp_lenya_pub_url.replaceFirst("\\.html", ".xml");
@@ -20,7 +20,9 @@
     <menu name="File" label="File">
       <block>
         <item><xsp:attribute name="href">xopus2<xsp:expr>xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+<!--
         <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
+-->
       </block>
       <separator>
         <item>-----------------</item>
