@@ -72,7 +72,7 @@ public class IPRangeManager extends ItemManager {
     /**
      * Add the given IP range
      *
-    * @param user IP range that is to be added
+    * @param range IP range that is to be added
     */
     public void add(IPRange range) {
         super.add(range);
@@ -81,7 +81,7 @@ public class IPRangeManager extends ItemManager {
     /**
      * Remove the given IP range
      *
-    * @param user IP range that is to be removed
+    * @param range IP range that is to be removed
     */
     public void remove(IPRange range) {
         super.remove(range);

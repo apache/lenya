@@ -66,7 +66,7 @@ import org.apache.lenya.net.InetAddressUtil;
  * 
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: IPRange.java,v 1.4 2003/07/24 16:23:53 michi Exp $
+ * @version $Id: IPRange.java,v 1.5 2003/08/04 13:48:03 egli Exp $
  */
 public abstract class IPRange extends AbstractGroupable {
 
@@ -129,8 +129,10 @@ public abstract class IPRange extends AbstractGroupable {
     
     /**
      * Sets the network address.
+     * 
      * @param address A string, e.g. 192.168.0.32
-     * @throws UnknownHostException when the conversion of the String to an
+     * 
+     * @throws AccessControlException when the conversion of the String to an
      * InetAddress failed.
      */
     public void setNetworkAddress(String address) throws AccessControlException {
@@ -139,8 +141,10 @@ public abstract class IPRange extends AbstractGroupable {
     
     /**
      * Sets the network address.
+     * 
      * @param address A byte array of the length 4.
-     * @throws UnknownHostException when the conversion of the byte array to an
+     * 
+     * @throws AccessControlException when the conversion of the byte array to an
      * InetAddress failed.
      */
     public void setNetworkAddress(byte[] address) throws AccessControlException {
@@ -163,8 +167,10 @@ public abstract class IPRange extends AbstractGroupable {
     
     /**
      * Sets the subnet mask.
+     * 
      * @param mask A string, e.g. 192.168.0.32
-     * @throws UnknownHostException when the conversion of the String to an
+     * 
+     * @throws AccessControlException when the conversion of the String to an
      * InetAddress failed.
      */
     public void setSubnetMask(String mask) throws AccessControlException {
@@ -173,8 +179,10 @@ public abstract class IPRange extends AbstractGroupable {
     
     /**
      * Sets the subnet mask.
+     * 
      * @param mask A byte array of the length 4.
-     * @throws UnknownHostException when the conversion of the byte array to an
+     * 
+     * @throws AccessControlException when the conversion of the byte array to an
      * InetAddress failed.
      */
     public void setSubnetMask(byte[] mask) throws AccessControlException {
