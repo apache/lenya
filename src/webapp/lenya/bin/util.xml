@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<project default="main" basedir=".">
+
+
+
+<target name="main" description="Says Hi">
+  <echo>Hi</echo>
+</target>
+
+
+
+
+<target name="init">
+  <echo message="INFO: Init"/>
+
+  <property name="lenya.dir" value="../../../.."/>
+<!--
+  <property name="lenya.dir" value="/home/michi/src/lenya-0.8-dev-src-20030325022718"/>
+-->
+
+
+  <!-- Dummy arguments -->
+  <property name="password" value="levi"/>
+  <!-- /Dummy arguments -->
+
+  <property name="lenya.dir.web-inf" value="${lenya.dir}/build/lenya/webapp/WEB-INF"/>
+
+  <path id="class.path">
+    <pathelement path="${lenya.dir.web-inf}/classes"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xercesImpl-2.1.0.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xml-apis.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xalan-2.4.1.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/log4j-1.2.3.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/excalibur-io-1.1.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/lucene-1.3-dev1.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/websphinx.jar"/>
+  </path>
+</target>
+
+<target name="passwd" description="Generate a password" depends="init">
+  <echo>INFO: Generate a password (${password})</echo>
+
+  <java classname="org.lenya.cms.ac.Password">
+    <arg value="${password}"/>
+    <classpath refid="class.path"/>
+  </java>
+</target>
+
+
+
+
+</project>
