@@ -81,17 +81,15 @@
   <!-- Prepares the build webapp directory                          -->
   <!-- ============================================================ -->
   <target name="build-cocoon" depends="init">
-    <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
     <echo>Building Cocoon with our properties</echo>
     <copy todir="${cocoon.src.dir}" filtering="off">
       <fileset dir="${src.cocoon.properties.dir}"/>
     </copy>
     <ant dir="${cocoon.src.dir}" inheritall="false"/>
-    <xpatch file="${cocoon.webapp.dir}/sitemap.xmap" 
-            includes="src/confpatch/*.xmap"/> 
   </target>
 
   <target name="prepare-cocoon" depends="build-cocoon">
+    <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/web.xml</echo>
@@ -110,6 +108,9 @@
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
+
+    <xpatch file="${build.webapp}/sitemap.xmap" 
+            includes="src/confpatch/*.xmap"/> 
 
     <!-- patch cocoon.xconf -->
     <echo>INFO: patching cocoon.xconf with XSLT stylesheet</echo>
