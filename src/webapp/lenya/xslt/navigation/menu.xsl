@@ -27,19 +27,34 @@
 <xsl:template match="nav:node">
   <xsl:choose>
     <xsl:when test="starts-with($url, @basic-url)">
-      <xsl:call-template name="item-selected"/>
+      <div class="menublock-selected-{count(ancestor-or-self::nav:node)}">
+        <xsl:call-template name="item"/>
+        <xsl:apply-templates select="nav:node"/>
+      </div>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:call-template name="item"/>
+      <div class="menublock-{count(ancestor-or-self::nav:node)}">
+        <xsl:call-template name="item"/>
+        <xsl:apply-templates select="nav:node"/>
+      </div>
     </xsl:otherwise>
   </xsl:choose>
-  
-  <xsl:apply-templates select="nav:node"/>
-  
 </xsl:template>
 
 
 <xsl:template name="item">
+  <xsl:choose>
+    <xsl:when test="substring(@href, (string-length(@href) - string-length($url)) + 1) = $url">
+      <xsl:call-template name="item-selected"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="item-default"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+
+<xsl:template name="item-default">
   <div class="menuitem-{count(ancestor-or-self::nav:node)}">
     <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
   </div>

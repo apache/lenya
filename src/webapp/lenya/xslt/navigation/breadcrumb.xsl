@@ -28,24 +28,25 @@
   
   <xsl:if test="starts-with($url, @basic-url)">
     <xsl:call-template name="separator"/>
-    <xsl:call-template name="step">
-      <xsl:with-param name="href" select="''"/>
-    </xsl:call-template>
+    <xsl:call-template name="step"/>
+    <xsl:apply-templates select="nav:node"/>
   </xsl:if>
   
 </xsl:template>
 
 
 <xsl:template name="step">
-  <xsl:call-template name="label"/>
+  <xsl:choose>
+    <xsl:when test="substring(@href, (string-length(@href) - string-length($url)) + 1) = $url">
+      <xsl:apply-templates select="nav:label"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
     
-<xsl:template name="label">
-  <a href="@href"><xsl:apply-templates select="nav:label"/></a>
-</xsl:template>
-
-
 <xsl:template match="nav:label">
   <xsl:apply-templates select="node()"/>
 </xsl:template>
