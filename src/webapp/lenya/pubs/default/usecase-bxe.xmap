@@ -72,11 +72,11 @@
             <map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=xml"/>
             
   <!--      Instead of an xsl we use the xhtml file to provide the basic layout
-            <map:parameter name="BX_xslfile" value="{2}.xsl"/>
+            <map:parameter name="BX_xslfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=xsl"/>
   -->
             <map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html"/>
             <map:parameter name="BX_validationfile" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}.rng"/>
-            <map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/page.css"/>
+            <map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/{page-envelope:document-type}-bxeng.css"/>
             <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin"/>
           </map:transform>
           <map:serialize type="xml"/>
@@ -125,12 +125,10 @@
       
       </map:match> <!-- uri pattern -->
       
-      <!--
       <map:match type="step" pattern="xsl">
-        <map:generate src="xslt/content-bxeng.xsl"/>
+        <map:generate src="xslt/{page-envelope:document-type}2xhtml.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
-      -->
       
       </map:match> <!-- usecase -->
 
