@@ -8,10 +8,10 @@
   </factories>
 
   <targets>
-    <cocoon id="cocoon">
-      <filename>${context-root}/WEB-INF/logs/cocoon.log</filename>
+    <cocoon id="core">
+      <filename>${context-root}/WEB-INF/logs/core.log</filename>
       <format type="cocoon">
-        %7.7{priority} %{time}   [%8.8{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
+        %7.7{priority} %{time}   [%{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
       </format>
       <append>true</append>
       <rotation type="revolving" init="1" max="4">
@@ -22,11 +22,11 @@
       </rotation>
     </cocoon>
 
-    <cocoon id="root">
-      <filename>${context-root}/WEB-INF/logs/root.log</filename>
+    <cocoon id="sitemap">
+      <filename>${context-root}/WEB-INF/logs/sitemap.log</filename>
      
       <format type="cocoon">
-        %7.7{priority} %{time}   [%8.8{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
+        %7.7{priority} %{time}   [%{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
       </format>
       <append>true</append>
       <rotation type="revolving" init="1" max="4">
@@ -37,10 +37,10 @@
       </rotation>
     </cocoon>
 
-    <cocoon id="components">
-      <filename>${context-root}/WEB-INF/logs/components.log</filename>
+    <cocoon id="access">
+      <filename>${context-root}/WEB-INF/logs/access.log</filename>
       <format type="cocoon">
-        %7.7{priority} %{time}   [%8.8{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
+        %7.7{priority} %{time}   [%{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
       </format>
       <append>true</append>
       <rotation type="revolving" init="1" max="4">
@@ -50,29 +50,36 @@
         </or>
       </rotation>
     </cocoon>
-
-    <priority-filter id="filter" log-level="ERROR">
-      <servlet>
-        <format type="extended">%7.7{priority} %5.5{time}: %{message}\n%{throwable}</format>
-      </servlet>
+   
+    <priority-filter id="error" log-level="ERROR">
+      <cocoon>
+        <filename>${context-root}/WEB-INF/logs/error.log</filename>
+        <format type="cocoon">
+          %7.7{priority} %{time}   [%{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
+        </format>
+        <append>true</append>
+        <rotation type="revolving" init="1" max="4">
+          <or>
+            <size>100m</size>
+            <time>01:00:00</time>
+          </or>
+        </rotation>
+      </cocoon>
     </priority-filter>
   </targets>
 
   <categories>
-    <category name="cocoon" log-level="ERROR">
-      <log-target id-ref="cocoon"/>
+    <category name="core" log-level="DEBUG">
+      <log-target id-ref="core"/>
+      <log-target id-ref="error"/>
     </category>
-    <category name="root" log-level="ERROR">
-      <log-target id-ref="root"/>
-      <category name="store" log-level="ERROR">
-         <log-target id-ref="components"/>
-         <log-target id-ref="filter"/>
-      </category>
-
-      <category name="xslt" log-level="ERROR">
-         <log-target id-ref="components"/>
-         <log-target id-ref="filter"/>
-      </category>
+    <category name="sitemap" log-level="DEBUG">
+      <log-target id-ref="sitemap"/>
+      <log-target id-ref="error"/>
     </category>
+    <category name="access" log-level="DEBUG">
+      <log-target id-ref="access"/>
+      <log-target id-ref="error"/>
+    </category> 
   </categories>
 </logkit>
