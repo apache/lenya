@@ -12,7 +12,7 @@ function group_change_profile(groupId) {
 	// at the moment the loop is executed only once (no form validation)
 	
     while (true) {
-	    sendPageAndWait("groups/profile.xml", {
+	    sendPageAndWait("groups/" + groupId + "/profile.xml", {
 	    	"group-id" : groupId,
 	    	"name" : name,
 	    	"description" : description,
@@ -73,7 +73,7 @@ function group_change_members(groupId) {
     }
     
     while (true) {
-	    sendPageAndWait("groups/members.xml", {
+	    sendPageAndWait("groups/" + groupId + "/members.xml", {
 	    	"group-id" : groupId,
 	    	"users" : otherUsers,
 	    	"group-users" : groupUsers,

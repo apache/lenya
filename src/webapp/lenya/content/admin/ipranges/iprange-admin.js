@@ -86,7 +86,15 @@ function iprange_change_profile(iprangeId, newRange) {
 	
     while (true) {
     
-	    sendPageAndWait("ipranges/profile.xml", {
+    	var url;
+    	if (newRange) {
+    		url = "ipranges/profile.xml";
+    	}
+    	else {
+    		url = "ipranges/" + iprangeId + "/profile.xml";
+    	}
+    
+	    sendPageAndWait(url, {
 	    	"iprange-id" : iprangeId,
 	    	"name" : name,
 	    	"description" : description,
@@ -180,49 +188,6 @@ function iprange_add_iprange() {
     iprange_change_profile("", true);
 }
 
-function temp() {
-    var ipRangeManager = getIPRangeManager();
-	var ipRangeId = "";
-	var name = "";
-	var description = "";
-	var message = "";
-	
-	while (true) {
-		sendPageAndWait("ipranges/profile.xml", {
-			"page-title" : "Add IP range",
-			"iprange-id" : ipRangeId,
-	    	"name" : name,
-	    	"description" : description,
-	    	"message" : message,
-	    	"new-iprange" : true
-		});
-		
-	    if (cocoon.request.get("cancel")) {
-	    	break;
-	    }
-	    
-		message = "";
-		ipRangeId = cocoon.request.get("iprange-id");
-		name = cocoon.request.get("name");
-		description = cocoon.request.get("description");
-		
-		var existingIPRange = ipRangeManager.getIPRange(ipRangeId);
-		if (existingIPRange != null) {
-			message = "This IP range already exists.";
-		}
-		else {
-			var configDir = ipRangeManager.getConfigurationDirectory();
-			var range = new Packages.org.apache.lenya.cms.ac.FileIPRange(configDir, ipRangeId);
-			range.setName(name);
-			range.setDescription(description);
-			range.save();
-			ipRangeManager.add(range);
-			break;
-		}
-	}
-   	sendPage("redirect.html", { "url" : "../ipranges.html" });
-}
-
 //
 // Delete IP range.
 //
@@ -270,7 +235,7 @@ function iprange_change_groups(iprangeId) {
     }
     
     while (true) {
-	    sendPageAndWait("ipranges/groups.xml", {
+	    sendPageAndWait("ipranges/" + iprangeId + "/groups.xml", {
 	    	"iprange-id" : iprangeId,
 	    	"groups" : groups,
 	    	"iprange-groups" : rangeGroups
