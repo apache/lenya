@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.5 2003/08/12 23:58:27 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.6 2003/08/13 00:51:31 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -106,7 +106,10 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
         getLogger().error(".act(): File: " + file.getAbsolutePath());
 
-        if(request.getParameter("save") != null) {
+        if(request.getParameter("cancel") != null) {
+            getLogger().error(".act(): Cancel editing");
+            return null;
+        } else {
             if(file.isFile()) {
                 getLogger().error(".act(): Save modifications to " + file.getAbsolutePath());
 
@@ -117,16 +120,27 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     while (params.hasMoreElements()) {
                         String name = (String) params.nextElement();
                         getLogger().debug(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
-                        if (name.indexOf("element.") == 0) {
+                        if (name.indexOf("element.") == 0) { // Update Element
                             String xpath = name.substring(8, name.indexOf("["));
                             String tagID = name.substring(name.indexOf("[") + 1, name.indexOf("]"));
                             xpath = xpath + "[@tagID=\"" + tagID + "\"]";
-                            getLogger().error(".act(): XPath: " + xpath);
+                            getLogger().error(".act() Update Element: XPath: " + xpath);
                             setNodeValue(document, request.getParameter(name), xpath);
+                        } else if (name.equals("insert")) { // Insert Element
+                            getLogger().error(".act(): Insert Element: " + request.getParameter("insert"));
+                        } else if (name.equals("delete")) { // Delete Element
+                            getLogger().error(".act(): Delete Element: " + request.getParameter("delete"));
                         }
                     }
+
                     DocumentHelper.writeDocument(document, file);
-                    return null;
+
+                    if(request.getParameter("save") != null) {
+                        getLogger().error(".act(): Save");
+                        return null;
+                    } else {
+                        return new HashMap();
+                    }
                 } catch (Exception e) {
                     getLogger().error(".act(): Exception: " + e.getMessage(), e);
                     return new HashMap();
@@ -135,25 +149,6 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                 getLogger().error(".act(): No such file: " + file.getAbsolutePath());
                 return new HashMap();
             }
-        } else if(request.getParameter("insert") != null) {
-            getLogger().error(".act(): Insert");
-            Enumeration params = request.getParameterNames();
-            while (params.hasMoreElements()) {
-                String name = (String) params.nextElement();
-                getLogger().error(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
-            }
-            return new HashMap();
-        } else if(request.getParameter("delete") != null) {
-            getLogger().error(".act(): Delete");
-            Enumeration params = request.getParameterNames();
-            while (params.hasMoreElements()) {
-                String name = (String) params.nextElement();
-                getLogger().error(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
-            }
-            return new HashMap();
-        } else { // cancel
-            getLogger().error(".act(): Cancel editing");
-            return null;
         }
     }
 
