@@ -55,8 +55,10 @@
       </values>
     </component-instance>
 
-    <component-instance name="xopus" class="org.apache.lenya.cms.cocoon.components.modules.input.XopusModule">
-      <context name="{$xopus-context}"/>
+    <component-instance name="xopus" class="org.apache.cocoon.components.modules.input.DefaultsMetaModule">
+      <values>
+        <context><xsl:value-of select="$xopus-context"/></context>
+      </values>
     </component-instance>
 
     <component-instance logger="core.modules.input" name="forrest" class="org.apache.cocoon.components.modules.input.ChainMetaModule">
