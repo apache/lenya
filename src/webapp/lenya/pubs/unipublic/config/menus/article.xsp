@@ -51,6 +51,7 @@
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rco/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Checkout&#160;XML</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rci/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Checkin&#160;XML</item>
+        <item><xsp:attribute name="href">/wyona-cms/scratchpad/rollback.xml</xsp:attribute>Rollback</item>
       </block>
       <block>
         <item>-----------------</item>

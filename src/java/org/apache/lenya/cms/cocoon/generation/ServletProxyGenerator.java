@@ -9,9 +9,12 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 //import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpRequest;
+import org.apache.cocoon.environment.http.HttpSession;
+import org.apache.cocoon.environment.Cookie;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 import org.xml.sax.InputSource;
@@ -102,7 +105,7 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
             log.warn("HTTP method:"+submitMethod);
             }
 
-          // Forward InputStream to Servlet
+          // Forward "InputStream", Parameters, QueryString to Servlet
           URL url=createURL(httpRequest);
           //URL url=new URL(this.src.getSystemId());
           //URL url=new URL("http://127.0.0.1:8080/wyona-cms/servlet/HelloWorld");
@@ -118,22 +121,48 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
                 ((PostMethod)httpMethod).setParameter(paramName,paramValues[i]);
                 }
               }
+            //postMethod.setRequestBody("LeviVanya");
             }
           else if(submitMethod.equals("GET")){
             httpMethod=new org.apache.commons.httpclient.methods.GetMethod();
             httpMethod.setQueryString(httpRequest.getQueryString());
             }
 
-          //postMethod.setRequestBody("LeviVanya");
+          // Forward Session
+          HttpSession httpSession=(HttpSession)httpRequest.getSession(false);
+          if(httpSession != null){
+            Enumeration attributes=httpSession.getAttributeNames();
+            while(attributes.hasMoreElements()){
+              String attributeName=(String)attributes.nextElement();
+              log.warn("SESSION Attribute: name="+attributeName+" value="+httpSession.getAttribute(attributeName));
+              }
+            }
+          Cookie[] cookies=httpRequest.getCookies();
+          org.apache.commons.httpclient.Cookie[] transferedCookies=new org.apache.commons.httpclient.Cookie[cookies.length];
+          for(int i=0;i<cookies.length;i++){
+            log.warn("COOKIE: "+cookies[i].getPath()+" "+cookies[i].getName()+" "+cookies[i].getDomain()+" "+cookies[i].getValue());
+            transferedCookies[i]=new org.apache.commons.httpclient.Cookie(cookies[i].getDomain(),cookies[i].getName(),cookies[i].getValue());
+            log.warn("COOKIE transfered: "+transferedCookies[i]);
+            }
 
+          // Send request to servlet
           httpMethod.setRequestHeader("Content-type","text/plain");
           httpMethod.setPath(url.getPath());
 
           HttpClient httpClient=new HttpClient();
+          if(transferedCookies.length > 0){
+            HttpState httpState=new HttpState();
+            httpState.addCookies(transferedCookies);
+            httpClient.setState(httpState);
+            }
           httpClient.startSession(url);
           httpClient.executeMethod(httpMethod);
           byte[] sresponse=httpMethod.getResponseBody();
           log.warn("Response: "+new String(sresponse));
+          org.apache.commons.httpclient.Cookie[] tcookies=httpClient.getState().getCookies();
+          for(int i=0;i<tcookies.length;i++){
+            log.warn("tCOOKIE: "+tcookies[i]);
+            }
           httpClient.endSession();
 
 
@@ -146,7 +175,7 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
           this.contentHandler.startDocument();
           AttributesImpl attr=new AttributesImpl();
           this.start("servletproxygenerator",attr);
-          this.data(":generate(): "+e);
+          this.data(".generate(): "+e);
           this.end("servletproxygenerator");
           this.contentHandler.endDocument();
 
