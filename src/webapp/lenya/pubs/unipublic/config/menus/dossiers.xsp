@@ -19,7 +19,7 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/"</xsp:expr></xsp:attribute>New&#160;Dossier</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/wyona/ParentChildScreenNewArticle?parentid=/dossiers/"+year+"&amp;doctype=Dossier"</xsp:expr></xsp:attribute>New&#160;Dossier</item>
       </block>
       <separator>
         <item>-----------</item>

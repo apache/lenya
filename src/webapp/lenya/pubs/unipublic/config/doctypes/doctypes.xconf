@@ -13,4 +13,13 @@
 -->
   <creator src="ch.unizh.unipublic.wyona.cms.authoring.NewArticleCreator"/>
 </doc>
+
+<doc type="Dossier">
+    <creator src="org.wyona.cms.authoring.DefaultCreator">
+    <!-- <prefix>d-</prefix> -->
+    <index>/index</index>
+    <sample>Dossier.xml</sample>
+    <!-- <sampleMeta>Meta.xml</sampleMeta> -->
+  </creator>
+</doc>
 </doctypes>

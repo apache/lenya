@@ -56,5 +56,8 @@
         </branch>
       </branch>
     </branch>
+    <branch relURI="dossiers" doctype="Channel" menuName="Dossiers">
+      <branch relURI="2002" doctype="Year" menuName="2002"/>
+    </branch>
   </branch>
 </tree>
