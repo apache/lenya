@@ -125,32 +125,38 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             getLogger().debug("Obtaining requiring resources of [" + resource + "]");
         }
 
+        Document[] resources;
         SiteTree tree = getTree(resource);
 
         SiteTreeNode node = tree.getNode(resource.getId());
-        List preOrder = node.preOrder();
+        if (node != null) {
+            List preOrder = node.preOrder();
 
-        // remove original resource (does not require itself)
-        preOrder.remove(0);
+            // remove original resource (does not require itself)
+            preOrder.remove(0);
 
-        Document[] resources = new Document[preOrder.size()];
+            resources = new Document[preOrder.size()];
 
-        try {
-            for (int i = 0; i < resources.length; i++) {
-                SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
-                resources[i] = resource.getIdentityMap().get(resource.getPublication(),
-                        resource.getArea(),
-                        descendant.getAbsoluteId());
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("    Descendant: [" + resources[i] + "]");
+            try {
+                for (int i = 0; i < resources.length; i++) {
+                    SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
+                    resources[i] = resource.getIdentityMap().get(resource.getPublication(),
+                            resource.getArea(),
+                            descendant.getAbsoluteId());
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("    Descendant: [" + resources[i] + "]");
+                    }
                 }
+            } catch (PublicationException e) {
+                throw new SiteException(e);
             }
-        } catch (PublicationException e) {
-            throw new SiteException(e);
-        }
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Obtaining requiring resources completed.");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Obtaining requiring resources completed.");
+            }
+        }
+        else {
+            resources = new Document[0];
         }
 
         return resources;
