@@ -71,6 +71,17 @@ This sitemap creates default navigation components.
 
     
     <!-- navigation element -->  
+    <!-- pattern: {pub-id}/admin/{nav-element}/{url}.xml -->
+    <map:match pattern="*/admin/*/**.xml">
+      <map:generate src="cocoon:/{1}/admin/sitetree/{3}.xml"/>
+      <map:call resource="fallback-transformation">
+        <map:parameter name="publication-id" value="{1}"/>
+        <map:parameter name="url" value="{3}"/>
+        <map:parameter name="stylesheet" value="admin-{2}"/>
+      </map:call>
+    </map:match>
+    
+    <!-- navigation element -->  
     <!-- pattern: {pub-id}/{area}/{nav-element}/{url}.xml -->
     <map:match pattern="*/*/*/**.xml">
       <map:generate src="cocoon:/{1}/{2}/sitetree/{4}.xml"/>
