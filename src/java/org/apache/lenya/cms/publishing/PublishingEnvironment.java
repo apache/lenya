@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.17 2003/04/25 14:16:46 michi Exp $
+ * $Id: PublishingEnvironment.java,v 1.18 2003/05/13 15:57:33 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -108,7 +108,9 @@ public class PublishingEnvironment implements Configurable {
             Configuration configuration = builder.buildFromFile(configurationFile);
             configure(configuration);
         } catch (Exception e) {
-            log.error("Cannot load publishing configuration! ", e);
+            log.warn("Did not load publishing configuration from publication.xconf (file is missing). " + 
+            "That means you can't access all PublishingEnvironment parameters and you should only" +
+            "use the AntTask.");
         }
     }
 
