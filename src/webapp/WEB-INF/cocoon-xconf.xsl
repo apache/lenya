@@ -231,10 +231,6 @@
       class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"
       role="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"/>
 
-  <component logger="lenya.usecase.unitofwork"
-      class="org.apache.lenya.cms.usecase.UnitOfWork"
-      role="org.apache.lenya.cms.usecase.UnitOfWorkImpl"/>
-      
   <usecases>
 
      <!--+
