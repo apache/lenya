@@ -5,17 +5,14 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
-import org.apache.lenya.cms.publication.Label;
-
 /**
  * A test case testing org.apache.lenya.cms.publishing.DefaultSiteTree
  *
- * @version CVS $Id: DefaultSiteTreeTestCase.java,v 1.1 2003/05/08 08:38:19 egli Exp $
+ * @version CVS $Id: DefaultSiteTreeTestCase.java,v 1.2 2003/05/30 15:00:02 andreas Exp $
  */
 public final class DefaultSiteTreeTestCase extends TestCase {
     private DefaultSiteTree sitetree;
-    
+
     /**
      * The main program for the DefaultSiteTreeTestCase class
      *
@@ -37,25 +34,29 @@ public final class DefaultSiteTreeTestCase extends TestCase {
     /**
      *
      */
-     public DefaultSiteTreeTestCase(String test) {
-         super(test);
-	 try {
-	     sitetree = new DefaultSiteTree("");
-	     
-	 } catch (Exception e) {
-	     System.err.println(e);
-	 }
-     }
-    
+    public DefaultSiteTreeTestCase(String test) {
+        super(test);
+        try {
+            sitetree = new DefaultSiteTree("");
+
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
     /**
      * Test if username exists
      */
     public void testNodeAddition() {
-	Label label = new Label("Foo", null);
-	Label[] labels = { label };
-	sitetree.addNode("/tutorial", "foo", labels);
-	// read the new sitetree and assert that it contains the new node
+        Label label = new Label("Foo", null);
+        Label[] labels = { label };
+        try {
+            sitetree.addNode("/tutorial", "foo", labels);
+        } catch (SiteTreeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace(System.err);
+        }
+        // read the new sitetree and assert that it contains the new node
 
     }
 }
-
