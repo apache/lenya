@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.26 2003/08/22 12:42:47 gregor Exp $
+ $Id: info.xsl,v 1.27 2003/08/22 19:05:33 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -160,12 +160,12 @@
               <input type="hidden" name="lenya.usecase" value="asset"/>
               <input type="hidden" name="lenya.step" value="remove"/>
               <input type="hidden" name="task-id" value="remove-asset"/>
-              <input type="hidden" name="properties.asset.document-id">
+              <input type="hidden" name="properties.remove.asset.document-id">
                 <xsl:attribute name="value">
                   <xsl:value-of select="../lenya-info:documentid"/>
                 </xsl:attribute>
               </input>
-              <input type="hidden" name="properties.asset.name">
+              <input type="hidden" name="properties.remove.asset.name">
                 <xsl:attribute name="value">
                   <xsl:value-of select="."/>
                 </xsl:attribute>
