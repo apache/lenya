@@ -23,6 +23,6 @@
 <!-- FIXME? -->
   <export>
     <destination href="resources/export/pending"/>
-    <substitution regexp="s/\/lenya\/forum//g"/>
+    <substitution regexp="/lenya/forum" replacement=""/>
   </export>
 </publication>

@@ -24,6 +24,6 @@
   </replication>
   <export>
     <destination href="resources/export/pending"/>
-    <substitution regexp="s/\/lenya\/unipublic//g"/>
+    <substitution regexp="/lenya/unipublic" replacement=""/>
   </export>
 </publication>
