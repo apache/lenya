@@ -41,11 +41,11 @@
       </div>
       <table class="lenya-body" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td class="lenya-content">
-            <xsl:copy-of select="page:body/node()[local-name() != 'div' or @class != 'lenya-sidebar']"/>
-          </td>
           <td class="lenya-sidebar">
             <xsl:copy-of select="//xhtml:div[@class = 'lenya-sidebar']/node()"/>
+          </td>
+          <td class="lenya-content">
+            <xsl:copy-of select="page:body/node()[local-name() != 'div' or @class != 'lenya-sidebar']"/>
           </td>
         </tr>
       </table>
