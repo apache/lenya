@@ -17,7 +17,7 @@ Apache Lenya is a Cocoon subproject under incubation.
 Apache Lenya is a Java-based <link href="http://www.opensource.org">Open-Source</link>
 Content Management System. It
 is based on open standards such as <link href="http://www.w3c.org/XML/">XML</link> and <link href="http://www.w3c.org/TR/xslt">XSLT</link>. One of its core
-components is <link href="http://xml.apache.org/cocoon/">Cocoon</link> from the
+components is <link href="http://cocoon.apache.org">Cocoon</link> from the
 <link href="http://www.apache.org">Apache Software Foundation</link>.
 </p>
 		<p>
