@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// $Id: tree.js,v 1.14 2004/03/29 07:20:04 egli Exp $
+// $Id$
 //**************************************************************** 
 // TreeView by Marcelino Martins http://www.treeview.net
 //**************************************************************** 
@@ -1144,4 +1144,36 @@ function initializeDocument()
       SetCookie('highlightedTreeviewLink', '')
   }
 } 
+
+// Load a page as if a node on the tree was clicked (synchronize frames)
+// (Highlights selection if highlight is available.)
+function loadSynchPage(srclink) 
+{
+        var docObj;
+        var linkID;
+        linkID = findIDbyLink(srclink);
+        docObj = findObj(linkID);
+        docObj.forceOpeningOfAncestorFolders();
+        clickOnLink(linkID,docObj.srclink,'basefrm');
+        
+  //Scroll the tree window to show the selected node
+  //Other code in these functions needs to be changed to work with
+  //frameless pages, but this code should, I think, simply be removed
+  //document.body.scrollTop = docObj.navObj.offsetTop
+}
+
+function findIDbyLink(srclink)
+{
+  var i=0;
+  
+  for (i = 0; i < nEntries && (indexOfEntries[i].link == undefined || indexOfEntries[i].link.split('?')[0] != srclink) && (indexOfEntries[i].hreference == undefined || indexOfEntries[i].hreference.split('?')[0] != srclink); i++) {
+  }
+  //FIXME: extend to allow for mapping of index.html to index_defaultlanguage.html
+  if (i >= nEntries) {
+     return 1; //example: node removed in DB
+  }
+  else {
+    return i;
+  }
+}
  

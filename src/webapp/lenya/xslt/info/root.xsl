@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: root.xsl,v 1.34 2004/04/29 09:38:22 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -45,44 +45,6 @@
         <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js"/>
         <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js"/>
         <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/sitetree.js?language={$chosenlanguage}"/>
-        <script language="JavaScript">// Load a page as if a node on the tree was clicked (synchronize frames)
-// (Highlights selection if highlight is available.)
-function loadSynchPage(srclink) 
-{
-        var docObj;
-        var linkID;
-        linkID = findIDbyLink(srclink);
-        docObj = findObj(linkID);
-        docObj.forceOpeningOfAncestorFolders();
-        clickOnLink(linkID,docObj.srclink,'basefrm');
-        
-  //Scroll the tree window to show the selected node
-  //Other code in these functions needs to be changed to work with
-  //frameless pages, but this code should, I think, simply be removed
-  //document.body.scrollTop = docObj.navObj.offsetTop
-}
-
-function findIDbyLink(srclink)
-{
-<![CDATA[
-  var i=0;
-  
-  for (i = 0; i < nEntries &&
-      (indexOfEntries[i].link == undefined || indexOfEntries[i].link.split('?')[0] != srclink) &&
-      (indexOfEntries[i].hreference == undefined || indexOfEntries[i].hreference.split('?')[0] != srclink)
-      ;
-      i++) {
-  }
-  //FIXME: extend to allow for mapping of index.html to index_defaultlanguage.html
-  if (i >= nEntries) {
-     return 1; //example: node removed in DB
-  }
-  else {
-    return i;
-  }
-]]>
-}
-        </script>
       </head>
 
       <body>
