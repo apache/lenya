@@ -47,6 +47,13 @@
     </map:pipeline>
 
     <map:pipeline>
+      <map:match pattern="">
+        <map:read src="resources/publication/html/live/index.html" mime-type="text/html"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:read src="resources/publication/html/live/index.html" mime-type="text/html"/>
+      </map:match>
+
       <map:match pattern="magazin/gesundheit/*/*/index.xml">
         <map:generate src="docs/publication/live/channel0/section0/articles/{1}/{2}/index.xml"/>
         <map:serialize type="xml"/>
