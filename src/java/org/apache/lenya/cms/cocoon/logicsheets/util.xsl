@@ -21,6 +21,7 @@
         <xsp:include>org.apache.cocoon.environment.Source</xsp:include>
         <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+        <xsp:include>org.apache.lenya.cms.publication.PublicationFactory</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PageEnvelope</xsp:include>
       </xsp:structure>
       
@@ -53,7 +54,7 @@
         
         xspUtilServletContextPath = path;
         xspUtilPublicationPath = publicationPath;
-        xspUtilPublication = new Publication(publicationId, path);
+        xspUtilPublication = PublicationFactory.getPublication(publicationId, path);
     }
     
     Date xsp_lenya_server_time = new Date();

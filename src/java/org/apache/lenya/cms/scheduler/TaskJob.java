@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.20 2003/05/30 21:01:47 andreas Exp $
+ * $Id: TaskJob.java,v 1.21 2003/06/02 17:27:14 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,6 +66,7 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.w3c.dom.Element;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -184,7 +185,7 @@ public class TaskJob
         String contextPath = map.get(Task.PARAMETER_SERVLET_CONTEXT);
         String publicationId = map.get(Task.PARAMETER_PUBLICATION_ID);
         
-        Publication publication = new Publication(publicationId, contextPath);
+        Publication publication = PublicationFactory.getPublication(publicationId, contextPath);
         TaskManager manager = new TaskManager(publication.getDirectory().getAbsolutePath());
         Task task = manager.getTask(taskId);
 
