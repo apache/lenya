@@ -55,15 +55,14 @@ import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.file.FileAccessController;
-import org.apache.lenya.cms.publication.DefaultDocument;
+import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
-import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.TestPageEnvelope;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
@@ -110,6 +109,7 @@ public class WorkflowTest extends TestCase {
     }
 
     private static final String variableName = "is-live";
+    protected static final String URL = "/authoring/index.html";
 
     /**
      * Tests the workflow.
@@ -117,24 +117,26 @@ public class WorkflowTest extends TestCase {
      * @throws WorkflowException when something went wrong.
      * @throws AccessControlException when something went wrong.
      * @throws PageEnvelopeException when something went wrong.
+     * @throws DocumentBuildException when something went wrong.
      */
     public void testWorkflow()
         throws
             DocumentTypeBuildException,
             WorkflowException,
             AccessControlException,
-            PageEnvelopeException {
+            PageEnvelopeException,
+            DocumentBuildException {
 
         Publication publication = PublicationHelper.getPublication();
-        Document document = new DefaultDocument(publication, "index");
+        String url = "/" + publication.getId() + URL;
+        Document document = DefaultDocumentBuilder.getInstance().buildDocument(publication, url);
 
         File configDir = new File(publication.getDirectory(), ItemManager.PATH);
         assertTrue(configDir.exists());
 
         File configurationDirectory = new File(publication.getDirectory(), "config/ac");
         FileAccessController accessController = new FileAccessController(configurationDirectory);
-        PageEnvelope envelope = new TestPageEnvelope(publication, "index.html");
-        Policy policy = ((FileAccessController) accessController).getPolicy(envelope);
+        Policy policy = ((FileAccessController) accessController).getPolicy(publication, URL);
 
         DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
         String workflowId = type.getWorkflowFileName();
