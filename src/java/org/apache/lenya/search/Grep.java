@@ -1,6 +1,6 @@
 
 /*
- * $Id: Grep.java,v 1.1 2003/09/25 13:59:08 gregor Exp $
+ * $Id: Grep.java,v 1.2 2003/09/30 09:03:28 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,83 +45,109 @@
 
 package org.apache.lenya.search;
 
-import java.util.regex.*;
-import java.io.*;
-import java.nio.*;
-import java.nio.charset.*;
-import java.nio.channels.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.CharBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-
+/**
+ * 
+ * Utility class to provide a subset of the grep functionality. 
+ *  
+ * @version $Revision: 1.2 $
+ */
 public class Grep {
 
-	// Charset and decoder for ISO-8859-15
-	private static Charset charset = Charset.forName("ISO-8859-15");
-	private static CharsetDecoder decoder = charset.newDecoder();
+    // Charset and decoder for ISO-8859-15
+    private static Charset charset = Charset.forName("ISO-8859-15");
+    private static CharsetDecoder decoder = charset.newDecoder();
 
-	// The input pattern that we're looking for
-	private static Pattern pattern;
+    /**
+     * Check if the given file contains the pattern
+     * 
+     * @param file the file which is to be searched for the pattern
+     * @param pattern the pattern that is being searched.
+     * 
+     * @return true if the file contains the string, false otherwise.
+     * 
+     * @throws IOException
+     */
+    public static boolean containsPattern(File file, Pattern pattern)
+        throws IOException {
 
-	// Compile the pattern from the command line
-	//
-	private static void compile(String pat) {
-	   try {
-	      pattern = Pattern.compile(pat);
-	   } catch (PatternSyntaxException x) {
-	      System.err.println(x.getMessage());
-	      System.exit(1);
-	   }
-	}
+        // Open the file and then get a channel from the stream
+        FileInputStream fis = new FileInputStream(file);
+        FileChannel fc = fis.getChannel();
 
-	// Search for occurrences of the input pattern in the given file
-	//
-	private static void grep(File f) throws IOException {
+        // Get the file's size and then map it into memory
+        int sz = (int)fc.size();
+        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, sz);
 
-	   // Open the file and then get a channel from the stream
-	   FileInputStream fis = new FileInputStream(f);
-	   FileChannel fc = fis.getChannel();
+        // Decode the file into a char buffer
+        CharBuffer cb = decoder.decode(bb);
 
-	   // Get the file's size and then map it into memory
-	   int sz = (int)fc.size();
-	   MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, sz);
+        // Perform the search
+        Matcher pm = pattern.matcher(cb); // Pattern matcher
 
-	   // Decode the file into a char buffer
-	   CharBuffer cb = decoder.decode(bb);
+        boolean result = pm.find();
 
-	   // Perform the search
-	   Matcher pm = pattern.matcher(cb);			// Pattern matcher
-	   if (pm.matches()) {
-	      System.out.print(f + " matches");
-	   }
+        // Close the channel and the stream
+        fc.close();
+        fis.close();
 
-	   // Close the channel and the stream
-	   fc.close();
-	}
+        return result;
+    }
 
-// Array matches;
+    /**
+     * Find all files below the given file which contain the given pattern.
+     * 
+     * @param file the file where to start the search for the pattern.
+     * @param pattern the pattern to search for.
+     * 
+     * @return an array of files which contain the pattern
+     * 
+     * @throws IOException if any of the files could not be opened.
+     */
+    private static List find_internal(File file, Pattern pattern)
+        throws IOException {
+        ArrayList fileList = new ArrayList();
 
-  public static void main(String[] args){
-     if(args.length == 0){
-        return;
-     }
-     System.out.print(args[0] +" " + args[1]);
-     compile(args[0]);
-     find(new File(args[1]));
-  }
+        if (file.isDirectory()) {
+            String[] children = file.list();
+            for (int i = 0; i < children.length; i++) {
+                fileList.addAll(
+                    find_internal(
+                        new File(file.getAbsolutePath(), children[i]),
+                        pattern));
+            }
+        } else if (file.isFile() && containsPattern(file, pattern)) {
+            fileList.add(file);
+        }
+        return fileList;
+    }
 
-  public static void find(File fileOrDir){
-     if(fileOrDir.isDirectory()){
-       String[] filesAndDirs=fileOrDir.list();
-       for(int i=0;i<filesAndDirs.length;i++){
-         find(new File(fileOrDir.getAbsolutePath()+"/"+filesAndDirs[i]));
-       }
-     }
-     else if(fileOrDir.isFile()){
-		try {
-		grep(fileOrDir);
-		} catch (IOException x) {
-		System.err.println(fileOrDir + ": " + x);
-		}     }
-     else{
-     }  
-  }      
- }
+    /**
+     * Find all files below the given file which contain the given search string.
+     * 
+     * @param file the where to start the search
+     * @param searchString the string to search for.
+     * 
+     * @return an array of files which contain the search string.
+     * 
+     * @throws IOException if any of the files could not be opened.
+     */
+    public static File[] find(File file, String searchString)
+        throws IOException {
+        Pattern pattern = Pattern.compile(searchString);
+        List fileList = find_internal(file, pattern);
+        return (File[])fileList.toArray(new File[fileList.size()]);
+    }
+}
