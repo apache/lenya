@@ -109,8 +109,10 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 <tr>
 <td width="135" align="right" valign="top">
 <table border="0" cellpadding="0" cellspacing="0" width="115">
+
 <tr>
-<td><img height="25" src="{$img-unipub}/m_gesund.gif" border="0" alt="gesundheit" width="115"/></td>
+<!--<td><img height="25" src="{$img-unipub}/m_gesund.gif" border="0" alt="gesundheit" width="115"/></td>-->
+<td><a href="{$unipublic}/magazin/gesundheit/2002/"><img height="25" src="{$img-unipub}/m_gesund.gif" border="0" name="gesund" alt="Gesundheit" width="115"/></a></td>
 </tr>
 
 <tr>
@@ -118,7 +120,10 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 </tr>
 
 <tr>
+<td><img height="25" src="{$img-unipub}/m_geist.gif" border="0" alt="geist" width="115"/></td>
+<!--
 <td><a href="{$unipublic}/magazin/gesellschaft/2002/"><img height="25" src="{$img-unipub}/m_geist.gif" border="0" name="geist" alt="geist &#38; gesellschaft" width="115"/></a></td>
+-->
 </tr>
 
 <tr>

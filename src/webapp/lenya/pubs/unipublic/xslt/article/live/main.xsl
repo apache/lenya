@@ -20,6 +20,10 @@
 
 <xsl:call-template name="styles"/>
 
+<!--
+   seite = 'http://www.unipublic.unizh.ch/unipublic.win.css';
+-->
+
 <script type="text/javascript" language="JavaScript">
 <xsl:comment>
 <!--antiframe-->
@@ -27,7 +31,7 @@ if (top.frames.length &#62; 0) {top.location.href = self.location;}
 
 <!-- CSS Triage-->
 if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
-   seite = 'http://www.unipublic.unizh.ch/unipublic.win.css';
+   seite = '<xsl:value-of select="$unipublic"/>/unipublic.win.css';
    document.write('&#60;link rel="stylesheet" type="text/css" href="'+seite+'"&#62;');
 }
 </xsl:comment>
