@@ -9,6 +9,16 @@
        xmlns:xsp-scheduler="http://apache.org/cocoon/lenya/xsp/scheduler/1.0"
        xmlns:xsp-request="http://apache.org/xsp/request/2.0"
        >
+       
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.workflow.CMSVersion</xsp:include>
+    <xsp:include>org.apache.lenya.cms.workflow.WorkflowFactory</xsp:include>
+    <xsp:include>org.apache.lenya.workflow.impl.History</xsp:include>
+    <xsp:include>org.apache.lenya.workflow.impl.Version</xsp:include>
+  </xsp:structure>
 
   <usecase:publish>
     
@@ -50,7 +60,7 @@
 		  if (userId != null) {
 				UserManager userManager = (UserManager)
 					<input:get-attribute module="access-control" as="object" name="user-manager"/>;
-				User user = userManager.getUser(userId);	
+				User user = userManager.getUser(userId);
 				<not:user>
 					<xsp:attribute name="id"><xsp:expr>user.getId()</xsp:expr></xsp:attribute>
 					<xsp:attribute name="name"><xsp:expr>user.getName()</xsp:expr></xsp:attribute>
