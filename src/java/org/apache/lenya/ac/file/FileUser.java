@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileUser.java,v 1.3 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: FileUser.java,v 1.4 2004/04/28 12:48:43 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -74,6 +74,7 @@ public class FileUser extends AbstractUser implements Item {
         setEmail(config.getChild(EMAIL).getValue(""));
         setEncryptedPassword(config.getChild(PASSWORD).getValue(null));
 
+        removeFromAllGroups();
         Configuration[] groups = config.getChildren(GROUPS);
 
         if (groups.length == 1) {
