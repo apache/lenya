@@ -51,11 +51,7 @@ import org.apache.cocoon.acting.AbstractConfigurableAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.cocoon.util.PostInputStream;
-
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.cocoon.xml.dom.DOMUtil;
 
@@ -70,7 +66,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.12 2003/08/20 16:31:32 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.13 2003/09/03 12:04:53 egli Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
