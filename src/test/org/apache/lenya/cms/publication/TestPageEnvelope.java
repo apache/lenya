@@ -54,16 +54,17 @@ public class TestPageEnvelope extends PageEnvelope {
     /**
      * Constructs a test page envelope.
      * @param publication The publication.
-     * @param url The url.
+     * @param url The document url (starting with a slash).
      * @throws PageEnvelopeException when something goes wrong.
      */
     public TestPageEnvelope(Publication publication, String url)
         throws PageEnvelopeException {
-        setPublication(publication);
-        setDocumentUrl(url);
-        setDocumentId(computeDocumentId(url));
-        DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
-        setDocumentPath(mapper.getFile(publication, getArea(), getDocumentId(), "de"));
+        setContext("");
+        try {
+            setDocument(DefaultDocumentBuilder.getInstance().buildDocument(publication, url));
+        } catch (DocumentBuildException e) {
+            throw new PageEnvelopeException(e);
+        }
     }
 
 }
