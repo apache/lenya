@@ -96,9 +96,6 @@ public class PageEnvelope {
      * to figure out the document-id we simply need to trim the parts
      * before and including "area" and after and including '.'
      *
-     * Also if the requestURI contains a "foo/index" we assume that
-     * the document-id is foo, i.e. we also trin "index"
-     *
      * @param requestURI a <code>String</code> value
      * @return a <code>String</code> value
      */
@@ -120,14 +117,6 @@ public class PageEnvelope {
 	if (startOfSuffix >= 0) {
 	    documentIds.set(documentIds.size()-1, lastPartOfDocumentId.substring(0, startOfSuffix));
 	    log.debug("w/oSuffix: " + lastPartOfDocumentId.substring(0, startOfSuffix));
-	}
-
-	// Another part of the heuristics is that if the last part of
-	// the document-id is "index" it is to be removed.
-	lastPartOfDocumentId = (String)documentIds.get(documentIds.size()-1);
-	int startOfIndex = lastPartOfDocumentId.indexOf("index");
-	if (startOfIndex >= 0) {
-	    documentIds.set(documentIds.size()-1, lastPartOfDocumentId.substring(0, startOfIndex));
 	}
 
 	log.debug("documentIds: " + documentIds);
