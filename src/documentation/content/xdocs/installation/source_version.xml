@@ -199,7 +199,6 @@
 
           <ul>
             <li><code>cocoon.src.dir=$COCOON_HOME</code></li>
-            <li><code>tomcat.home.dir=$TOMCAT_HOME</code></li>
           </ul>
         </li>
 
