@@ -11,6 +11,8 @@
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/system_name[@tagID='{system_name/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="system_name" /></xsl:attribute></input></content>
 </node>
 
+<xsl:apply-templates select="editor"/>
+
 <node name="Description" select="/system/description[@tagID='{description/@tagID}']">
   <content>
     <textarea name="&lt;xupdate:update select=&quot;/system/description[@tagID='{description/@tagID}']&quot;&gt;" cols="40" rows="5">
@@ -59,6 +61,16 @@
 <xsl:apply-templates select="features"/>
 </xsl:template>
 
+
+<xsl:template match="editor">
+<node name="Editor Name" select="/system/editor/name[@tagID='{name/@tagID}']">
+  <content><input type="text" name="&lt;xupdate:update select=&quot;/system/editor/name[@tagID='{name/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="name" /></xsl:attribute></input></content>
+</node>
+
+<node name="Editor E-Mail" select="/system/editor/email[@tagID='{email/@tagID}']">
+  <content><input type="text" name="&lt;xupdate:update select=&quot;/system/editor/email[@tagID='{email/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="email" /></xsl:attribute></input></content>
+</node>
+</xsl:template>
 
 <xsl:template match="programming-language">
 <node name="Programming Language" select="/system/programming-language[@tagID='{@tagID}']">
