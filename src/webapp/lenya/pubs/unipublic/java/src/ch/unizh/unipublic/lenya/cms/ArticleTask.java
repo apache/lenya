@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleTask.java,v 1.11 2003/02/20 13:40:40 gregor Exp $
+ * $Id: ArticleTask.java,v 1.12 2003/02/25 15:21:24 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -195,7 +195,7 @@ public class ArticleTask extends AbstractTask {
             log.info("the article  " + id + " is already on the frontpage");
             newArticleElement.setText(title);
         } else {
-            newArticleElement = documentHelper.createElement(elementName);
+            newArticleElement = DocumentHelper.createElement(elementName);
             newArticleElement.addAttribute("channel", channel);
             newArticleElement.addAttribute("section", section);
             newArticleElement.addAttribute("year", year);
@@ -226,11 +226,11 @@ public class ArticleTask extends AbstractTask {
         throws Exception {
         //get the date
         Calendar cal = new GregorianCalendar();
-        String year = Integer.toString(cal.get(cal.YEAR));
-        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MONTH) + 1));
-        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.DAY_OF_MONTH)));
-        String hour = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.HOUR_OF_DAY)));
-        String minute = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MINUTE)));
+        String year = Integer.toString(cal.get(Calendar.YEAR));
+        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MONTH) + 1));
+        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+        String hour = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
+        String minute = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MINUTE)));
         String millis = getMillis();
 
         //read the article 
@@ -246,7 +246,7 @@ public class ArticleTask extends AbstractTask {
 
         DocumentHelper documentHelper = new DocumentHelper();
 
-        dateE = documentHelper.makeElement(doc,
+        dateE = DocumentHelper.makeElement(doc,
                 "/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head/dateline/story.date");
         dateE.clearContent();
 
@@ -285,9 +285,9 @@ public class ArticleTask extends AbstractTask {
         throws Exception {
         //get the date
         Calendar cal = new GregorianCalendar();
-        String year = Integer.toString(cal.get(cal.YEAR));
-        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MONTH) + 1));
-        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.DAY_OF_MONTH)));
+        String year = Integer.toString(cal.get(Calendar.YEAR));
+        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MONTH) + 1));
+        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
 
         //read the article
         Document doc = new SAXReader().read("file:" + filename);
@@ -295,7 +295,7 @@ public class ArticleTask extends AbstractTask {
         DocumentHelper documentHelper = new DocumentHelper();
 
         //get the RevisionDate Node
-        Element dateE = documentHelper.makeElement(doc,
+        Element dateE = DocumentHelper.makeElement(doc,
                 "/NewsML/NewsItem/NewsManagement/RevisionDate");
         dateE.clearContent();
 
@@ -305,7 +305,7 @@ public class ArticleTask extends AbstractTask {
         dateE.addAttribute("day", day);
 
         //get the RevisionId Node
-        Element revIdE = documentHelper.makeElement(doc,
+        Element revIdE = DocumentHelper.makeElement(doc,
                 "/NewsML/NewsItem/Identification/NewsIdentifier/RevisionId");
         String id = revIdE.getText();
 

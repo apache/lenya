@@ -1,5 +1,5 @@
 /*
- * $Id: InsertDossierTask.java,v 1.4 2003/02/20 13:40:40 gregor Exp $
+ * $Id: InsertDossierTask.java,v 1.5 2003/02/25 15:21:52 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -121,7 +121,7 @@ public class InsertDossierTask extends AbstractTask {
                 log.info("the dossier " + dossierId + " is already on the frontpage");
                 newDossierElement.setText(title);
             } else {
-                newDossierElement = documentHelper.createElement("dossier");
+                newDossierElement = DocumentHelper.createElement("dossier");
                 newDossierElement.setText(title);
                 newDossierElement.setAttributeValue("id", dossierId);
 
