@@ -12,9 +12,11 @@
    [unix] 
    export JAVA_HOME=/usr/local/j2sdk1.4.2
 
-3) Start up Tomcat, e.g.
+3) Copy endorsed libraries
+
+4) Start up Tomcat, e.g.
 
    [unix]
    /usr/local/jakarta-tomcat-4.1.24-LE-jdk14/bin/startup.sh
 
-4) Open http://localhost:8080/lenya/ with your browser
+5) Open http://localhost:8080/lenya/ with your browser
