@@ -26,17 +26,15 @@
       <p>A usecase in Lenya means a user triggered action. In most cases, a usecase is triggered by a CMS menu option on
       a specific document of the publication. This document is the object of the usecases' action (such as edit, delete, publish, ...).</p>
       <p>There are usecases which are independent of a specific document, such as the <code>ac.logout</code> usecase. In that case it does 
-      not matter on what document the usecase is triggered. The part of the request which specifies the document is simple ignored
+      not matter on what document the usecase is triggered. The part of the request which specifies the document is simply ignored
       by usecases that are document independent.</p>
-      <p>The CMS menus trigger usecases by setting the lenya.usecase request parameter on the current document. If for example
-      the user selects the Publish option from the Workflow menu, a request will be triggered such as:
+      <p>The CMS menus trigger usecases by setting the <code>lenya.usecase</code> request parameter on the current document. If for example
+      the user selects the <em>Publish</em> option from the <em>Workflow</em> menu, a request will be triggered such as:
       
 <code>
-      GET http://www.server.com/lenya/default/authoring/tutorial.html?&amp;lenya.event=publish&amp;lenya.usecase=publish
+      GET http://www.server.com/lenya/default/authoring/tutorial.html?&amp;lenya.usecase=publish
 </code></p>
-      <p>The <code>lenya.event</code> parameter belongs to the Lenya workflow framework and can be ignored here. I can even be left
-      out and the usecase will still work fine, but workflow actions will not be triggered.</p>
-      <p>The Lenya <code>global-sitemap.xmap</code> will redirect requests with a lenya.usecase request parameter to the 
+      <p>The Lenya <code>global-sitemap.xmap</code> will redirect requests with a <code>lenya.usecase</code> request parameter to the 
       <code>$LENYA_WEBAPP/lenya/usecase.xmap</code>
       sub-sitemap. From version 1.4 on, the following pipeline in this sitemap is used to recognonize usecases which are implemented 
       in Java using the new 1.4 usecase framework:</p>
@@ -54,7 +52,7 @@
 	traditional way using the <code>usecase</code> and <code>step</code> matchers 
 	(<code>org.apache.cocoon.matching.WildcardRequestParameterMatcher</code>). In order for this to work
 	correctly, there should be a <code>lenya.step</code> parameter in the request.</p>
-	<p>If the usecase could be resolved successfully into an avalon component, processing will continue in the 
+	<p>If the usecase could be resolved successfully into an Avalon component, processing will continue in the 
 	<code>$LENYA_WEBAPP/lenya/usecases/usecase.xmap</code> (as opposed to <code>$LENYA_WEBAPP/lenya/usecase.xmap</code>) with
 	the new JX and Java based 1.4 usecase framework.</p>
       <p>
