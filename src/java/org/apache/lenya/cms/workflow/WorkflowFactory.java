@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.18 2003/08/12 13:18:59 egli Exp $
+$Id: WorkflowFactory.java,v 1.19 2003/08/15 13:13:00 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,14 +57,17 @@ package org.apache.lenya.cms.workflow;
 
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.impl.History;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
 
 import java.io.File;
@@ -148,6 +151,8 @@ public class WorkflowFactory {
      * @param roles The roles of the situation.
      * @return A situation.
      * @throws WorkflowException when something went wrong.
+     * @deprecated Use another buildSituation() method, because this method does add
+     * the identity to the situation.
      */
     public Situation buildSituation(Role[] roles) throws WorkflowException {
         return new CMSSituation(roles);
@@ -161,13 +166,34 @@ public class WorkflowFactory {
      */
     public Situation buildSituation(Map objectModel) throws WorkflowException {
         Request request = ObjectModelHelper.getRequest(objectModel);
+        return buildSituation(request);
+    }
+    
+    /**
+     * Creates a situation for a request.
+     * @param request The request.
+     * @return A workflow situation.
+     * @throws WorkflowException when something went wrong.
+     */
+    public Situation buildSituation(Request request) throws WorkflowException {
         Role[] roles;
         try {
             roles = PolicyAuthorizer.getRoles(request);
         } catch (AccessControlException e) {
             throw new WorkflowException(e);
         }
-        return buildSituation(roles);
+        
+        CMSSituation situation = (CMSSituation) buildSituation(roles);
+        Session session = request.getSession(false);
+        if (session == null) {
+            throw new WorkflowException("Session not initialized!");
+        }
+        Identity identity = Identity.getIdentity(session);
+        if (identity == null) {
+            throw new WorkflowException("Session does not contain identity!");
+        }
+        situation.setIdentity(identity);
+        return situation;
     }
 
     /**
@@ -178,6 +204,15 @@ public class WorkflowFactory {
      */
     public static void initHistory(Document document, String workflowId) throws WorkflowException {
         new CMSHistory(document).initialize(workflowId);
+    }
+    
+    /**
+     * Returns the workflow history of a document.
+     * @param document A document.
+     * @return A workflow history.
+     */
+    public static History getHistory(Document document) {
+        return new CMSHistory(document);
     }
 
     /**
