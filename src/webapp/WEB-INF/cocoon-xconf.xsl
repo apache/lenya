@@ -22,6 +22,7 @@
 
 <xsl:param name="hsqldb-server-port"/>
 <xsl:param name="xopus-context"/>
+<xsl:param name="xopus-path"/>
 
 <xsl:template match="markup-languages/xsp-language/target-language[@name = 'java']">
   <xsl:copy>
@@ -56,6 +57,7 @@
     <component-instance name="xopus" class="org.apache.cocoon.components.modules.input.DefaultsMetaModule">
       <values>
         <context><xsl:value-of select="$xopus-context"/></context>
+        <path><xsl:value-of select="$xopus-path"/></path>
       </values>
     </component-instance>
 

@@ -109,6 +109,7 @@
         >
       <param name="hsqldb-server-port" expression="${hsqldb-server.port}"/>
       <param name="xopus-context" expression="${xopus.context}"/>
+      <param name="xopus-path" expression="${xopus.path}"/>
       <outputproperty name="indent" value="yes"/>
     </xslt>
     

@@ -225,6 +225,7 @@
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/publish.xsl"/>
+            <!-- This transformer can cause trouble with WebLogic Server on AIX -->
             <map:transform src="cocoon://scheduler/{../../1}/{page-envelope:area}/{../../3}.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
@@ -312,7 +313,7 @@
         <map:match pattern="xopus" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
-              <map:act type="resource-exists" src="../../ROOT/{xopus:context}/xopus/xopus.js"> <!-- Check for Xopus -->
+              <map:act type="resource-exists" src="{xopus:path}/{xopus:context}/xopus/xopus.js"> <!-- Check for Xopus -->
               
                 <map:act type="reserved-checkout">
                   <map:generate type="serverpages" src="content/rc/{exception}.xsp">
@@ -338,6 +339,13 @@
                 <!-- NOTE: IE or Xopus doesn't appreciate the DTD which is being inserted by Cocoon -->
                 <map:serialize type="html-no-dtd"/>
               </map:act>
+              <!--
+              <map:generate type="request">
+                <map:parameter name="xopuscontext" value="{xopus:context}"/>
+                <map:parameter name="xopuspath" value="{xopus:path}"/>
+              </map:generate>
+              <map:serialize type="xml"/>
+	      -->
               <map:generate src="resources/misc/xopus/download.xhtml"/>
               <map:call resource="style-cms-page"/>
             </map:match>
