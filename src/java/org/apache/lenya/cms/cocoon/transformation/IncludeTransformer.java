@@ -1,5 +1,5 @@
 /*
- * $Id: IncludeTransformer.java,v 1.11 2003/04/24 13:52:38 gregor Exp $
+ * $Id: IncludeTransformer.java,v 1.12 2003/05/30 09:37:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,8 +49,8 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.excalibur.source.Source;
 //import org.apache.cocoon.transformation.AbstractDOMTransformer;
-import org.apache.lenya.cms.cocoon.transformation.AbstractDOMTransformer;
 
 import org.w3c.dom.Document;
 
@@ -86,8 +86,8 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
 
     protected Document transform(Document doc) {
         try {
-            org.apache.cocoon.environment.Source input_source = this.resolver.resolve("");
-            String sitemapPath = input_source.getSystemId();
+            Source input_source = this.resolver.resolveURI("");
+            String sitemapPath = input_source.getURI();
             getLogger().debug("Absolute SITEMAP Directory: " + sitemapPath);
 
             String href = this.parameters.getParameter("href", null);

@@ -1,5 +1,5 @@
 /*
- * $Id: EditorAction.java,v 1.13 2003/04/24 13:52:38 gregor Exp $
+ * $Id: EditorAction.java,v 1.14 2003/05/30 09:37:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,7 +52,6 @@ import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
 
 import java.io.BufferedReader;
@@ -64,12 +63,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.excalibur.source.Source;
 
 
 /**
  * DOCUMENT ME!
  *
- * @author Martin Lüthi
+ * @author Martin L?thi
  * @version 2002.01.27
  */
 public class EditorAction extends AbstractComplementaryConfigurableAction implements Configurable {
@@ -128,8 +128,8 @@ public class EditorAction extends AbstractComplementaryConfigurableAction implem
             // get the Document and copy it to the temporary file
             getLogger().debug("**** saving ****");
 
-            Source source = resolver.resolve("cocoon:/performrequest");
-            getLogger().debug("======= URL:" + source.getSystemId());
+            Source source = resolver.resolveURI("cocoon:/performrequest");
+            getLogger().debug("======= URL:" + source.getURI());
 
             BufferedReader in = new BufferedReader(new InputStreamReader(source.getInputStream()));
             BufferedWriter out = new BufferedWriter(new FileWriter(tempFile));

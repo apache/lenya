@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.19 2003/04/24 13:52:38 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.20 2003/05/30 09:37:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,12 +49,12 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
+import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.sax.SAXParser;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.xml.sax.InputSource;
@@ -74,9 +74,9 @@ import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
 
 /**
- * $Id: EditorMainAction.java,v 1.19 2003/04/24 13:52:38 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.20 2003/05/30 09:37:16 egli Exp $
  *
- * @author Martin Lüthi
+ * @author Martin L?thi
  * @version 2002.01.22
  */
 public class EditorMainAction extends AbstractComplementaryConfigurableAction
@@ -129,8 +129,8 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
             // get the Document and copy it to the temporary file
             getLogger().debug("**** saving ****");
 
-            Source source = resolver.resolve("cocoon:/saveedit");
-            getLogger().debug("======= URL:" + source.getSystemId());
+            Source source = resolver.resolveURI("cocoon:/saveedit");
+            getLogger().debug("======= URL:" + source.getURI());
 
             String editFile = (String) session.getAttribute(
                     "org.apache.lenya.cms.editor.HTMLForm.editFile");
@@ -229,8 +229,8 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
                 boolean success = new File(tf.getParent()).mkdirs();
 
                 // get the Document and copy it to the temporary file
-                Source source = resolver.resolve("cocoon:/" + request.getSitemapURI() + ".temp");
-                getLogger().debug("======= URL:" + source.getSystemId());
+                Source source = resolver.resolveURI("cocoon:/" + request.getSitemapURI() + ".temp");
+                getLogger().debug("======= URL:" + source.getURI());
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                             source.getInputStream()));

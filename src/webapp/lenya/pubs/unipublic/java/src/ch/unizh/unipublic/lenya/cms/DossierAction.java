@@ -1,5 +1,5 @@
 /*
- * $Id: DossierAction.java,v 1.11 2003/04/24 13:54:03 gregor Exp $
+ * $Id: DossierAction.java,v 1.12 2003/05/30 09:38:01 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,6 +51,7 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.excalibur.source.Source;
 
 import org.apache.log4j.Category;
 
@@ -105,8 +106,8 @@ public class DossierAction extends AbstractComplementaryConfigurableAction {
             "\n--------------------------");
 
         // Get Source
-        org.apache.cocoon.environment.Source inputSource = sourceResolver.resolve("");
-        String publicationPath = inputSource.getSystemId();
+        Source inputSource = sourceResolver.resolveURI("");
+        String publicationPath = inputSource.getURI();
 
         // Remove "file:" protocol
         publicationPath = publicationPath.substring(5);

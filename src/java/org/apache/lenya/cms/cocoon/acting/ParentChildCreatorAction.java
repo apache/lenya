@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.29 2003/04/24 13:52:38 gregor Exp $
+ * $Id: ParentChildCreatorAction.java,v 1.30 2003/05/30 09:37:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,6 +66,7 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.excalibur.source.Source;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -120,8 +121,8 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
-        org.apache.cocoon.environment.Source input_source = resolver.resolve("");
-        String sitemapParentPath = input_source.getSystemId();
+        Source input_source = resolver.resolveURI("");
+        String sitemapParentPath = input_source.getURI();
         sitemapParentPath = sitemapParentPath.substring(5); // Remove "file:" protocol
 
         getLogger().debug(".act(): PARENT PATH OF SITEMAP: " + sitemapParentPath);
