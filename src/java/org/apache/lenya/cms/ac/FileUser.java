@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.6 2003/06/03 16:30:16 egli Exp $
+ * $Id: FileUser.java,v 1.7 2003/06/04 13:16:42 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -87,6 +87,24 @@ public class FileUser extends User {
 		this.publication = publication;
 	}
 	
+
+	/**
+	 * @param publication
+	 * @param id
+	 * @param fullName
+	 * @param email
+	 * @param password
+	 */
+	public FileUser(
+		Publication publication,
+		String id,
+		String fullName,
+		String email,
+		String password) {
+		super(id, fullName, email, password);
+		this.publication = publication;	
+	}
+
 	public FileUser(Publication publication, Configuration config)
 		throws ConfigurationException {
 		id = config.getAttribute(ID_ATTRIBUTE);
