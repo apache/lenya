@@ -8,7 +8,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   >
   
-  <xsl:import href="../util/page-util.xsl"/>
+  <xsl:import href="../../../../../xslt/util/page-util.xsl"/>
 
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
