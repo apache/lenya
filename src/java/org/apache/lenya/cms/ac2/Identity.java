@@ -1,5 +1,5 @@
 /*
-$Id: Identity.java,v 1.10 2003/08/11 16:06:17 andreas Exp $
+$Id: Identity.java,v 1.11 2003/08/15 13:09:26 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.cocoon.environment.Session;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac.User;
@@ -197,6 +198,16 @@ public class Identity implements Identifiable {
       */
      public boolean contains(Identifiable identifiable) {
          return identifiables.contains(identifiable);
+     }
+     
+     /**
+      * Fetches the identity from a session.
+      * @param session The session.
+      * @return An identity.
+      */
+     public static Identity getIdentity(Session session) {
+         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+         return identity;
      }
 
 }
