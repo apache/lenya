@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationTask.java,v 1.7 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.task;
 
@@ -31,6 +31,10 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
+import org.apache.lenya.cms.rc.FileReservedCheckInException;
+import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.rc.RevisionControlException;
+import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
@@ -275,4 +279,86 @@ public abstract class PublicationTask extends AbstractTask {
         return roles;
     }
 
+    private RevisionController revisionController;
+
+    /**
+     * Returns the revision controller.
+     * @return A revision controller.
+     * @throws ExecutionException
+     * @throws IOException when something went wrong.
+     */
+    protected RevisionController getRevisionController() throws RevisionControlException, ExecutionException {
+        if (revisionController == null) {
+            File publicationDir = publication.getDirectory();
+            RCEnvironment rcEnvironment;
+            try {
+                File servletContext = publication.getServletContext();
+                rcEnvironment = RCEnvironment.getInstance(servletContext.getCanonicalPath());
+            } catch (IOException e) {
+                throw new RevisionControlException(e);
+            }
+
+            File rcmlDirectory = new File(publicationDir, rcEnvironment.getRCMLDirectory());
+            File backupDirectory = new File(publicationDir, rcEnvironment.getBackupDirectory());
+
+            revisionController =
+                new RevisionController(
+                    rcmlDirectory.getAbsolutePath(),
+                    backupDirectory.getAbsolutePath(),
+                    publicationDir.getAbsolutePath());
+        }
+        return revisionController;
+    }
+
+    /**
+     * Returns the revision file path of a document.
+     * @param document The document.
+     * @return A string.
+     * @throws IOException when something went wrong.
+     */
+    protected String getRevisionFilePath(Document document) throws IOException {
+        String path = document.getFile().getCanonicalPath()
+        .substring(publication.getDirectory().getCanonicalPath().length());
+        return path;
+    }
+
+
+    /**
+     * Checks if the document can be checked out.
+     * @param document The document
+     * @return A boolean value.
+     * @throws ExecutionException when something went wrong.
+     * @throws IOException when something went wrong.
+     * @throws Exception when something went wrong.
+     */
+    protected boolean canCheckOut(Document document) throws ExecutionException, IOException, Exception{
+        String userId = getParameters().getParameter(PARAMETER_USER_ID);
+        String path = getRevisionFilePath(document);
+        return getRevisionController().canCheckOut(path, userId);
+    }
+    
+    /**Checks in a document and creates a revision, if backup is true.
+     * @param document
+     * @param backup A boolean Value
+     * @throws FileReservedCheckInException when something went wrong.
+     * @throws Exception when something went wrong.
+     */
+    protected void reservedCheckIn(Document document, boolean backup)
+            throws FileReservedCheckInException, Exception {
+        String userId = getParameters().getParameter(PARAMETER_USER_ID);
+        String path = getRevisionFilePath(document);
+        getRevisionController().reservedCheckIn(path, userId, backup);
+    }
+
+    /**
+     * Checks out a document.
+     * @param document The document
+     * @throws IOException when something went wrong. 
+     * @throws Exception when something went wrong.
+     */
+    protected void reservedCheckOut(Document document) throws IOException, Exception {
+        String userId = getParameters().getParameter(PARAMETER_USER_ID);
+        String path = getRevisionFilePath(document);
+        getRevisionController().reservedCheckOut(path, userId);
+    }
 }
