@@ -1,5 +1,5 @@
 /*
-$Id: TaskAction.java,v 1.24 2003/08/25 09:53:24 andreas Exp $
+$Id: TaskAction.java,v 1.25 2003/08/25 15:39:50 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,9 @@ $Id: TaskAction.java,v 1.24 2003/08/25 09:53:24 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
+import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -67,7 +65,8 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.cocoon.task.CocoonTaskWrapper;
-import org.apache.lenya.cms.task.*;
+import org.apache.lenya.cms.task.TaskWrapper;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,36 +75,8 @@ import java.util.Map;
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class TaskAction extends AbstractComplementaryConfigurableAction {
-    private String taskId = null;
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    public String getTaskId() {
-        return taskId;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
-     */
-    public void configure(Configuration configuration) throws ConfigurationException {
-        super.configure(configuration);
-
-        try {
-            taskId = configuration.getChild("task").getAttribute(TaskManager.TASK_ID_ATTRIBUTE);
-            getLogger().debug("CONFIGURATION:\ntask id = " + taskId);
-        } catch (ConfigurationException e) {
-            getLogger().debug("CONFIGURATION:\nNo task id provided");
-        }
-    }
-
+public class TaskAction extends AbstractAction {
+    
     /**
      * DOCUMENT ME!
      *
@@ -127,7 +98,7 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         Parameters parameters)
         throws java.lang.Exception {
 
-        DefaultTaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
+        TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
         wrapper.execute();
 
         Request request = ObjectModelHelper.getRequest(objectModel);
