@@ -80,8 +80,14 @@
   <!-- ============================================================ -->
   <!-- Prepares the build webapp directory                          -->
   <!-- ============================================================ -->
-  <!-- build cocoon unless this is a gump build -->
-  <target name="build-cocoon" depends="init" unless="gump.skipcocoonbuild">
+  <target name="check-cocoon" depends="init" unless="gump.skipcocoonbuild">
+    <echo>Check if Cocoon has been built: ${cocoon.src.dir}/build/webapp</echo>
+    <available file="${cocoon.src.dir}/build/webapp" type="dir" property="cocoon.build.webapp.dir.exists"/>
+    <!--<fail unless="cocoon.build.webapp.dir.exists" message="Cocoon needs to be built first!"/>-->
+    <antcall target="build-cocoon"/>
+  </target>
+
+  <target name="build-cocoon" depends="init" unless="cocoon.build.webapp.dir.exists">
     <echo>Building Cocoon with our properties</echo>
     <copy todir="${cocoon.src.dir}" filtering="off">
       <fileset dir="${src.cocoon.properties.dir}"/>
@@ -89,7 +95,8 @@
     <ant dir="${cocoon.src.dir}" inheritall="false"/>
   </target>
 
-  <target name="prepare-cocoon" depends="build-cocoon" unless="gump.skipcocoonbuild">
+  <!-- Prepare cocoon unless this is a gump build -->
+  <target name="prepare-cocoon" depends="check-cocoon" unless="gump.skipcocoonbuild">
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
