@@ -29,14 +29,19 @@
 <xsl:template match="@menuName">
   <xsl:attribute name="label"><xsl:value-of select="."/></xsl:attribute>
 </xsl:template>
-    
+
+<!--    
 <xsl:template match="branch[not(branch)]/@relURI">
-  <xsl:attribute name="href"><xsl:value-of select="."/>bla.html</xsl:attribute>
+  <xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute>
+</xsl:template>
+-->
+    
+<xsl:template match="@relURI[not(string() = '')]">
+  <xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute>
 </xsl:template>
     
-<xsl:template match="@relURI">
-</xsl:template>
-    
+<xsl:template match="@relURI"/>
+
 <xsl:template match="@doctype"/>
 
 </xsl:stylesheet> 

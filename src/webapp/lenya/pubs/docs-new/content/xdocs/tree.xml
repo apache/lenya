@@ -51,21 +51,20 @@
       <branch relURI="" doctype="XDoc" menuName="Page envelope" />
       <branch relURI="" doctype="XDoc" menuName="XHTML templating" />
       <branch relURI="" doctype="XDoc" menuName="Metadata" />
-      <branch relURI="" doctype="XDoc" menuName="Tasks">
-        <branch relURI="" doctype="XDoc" menuName="The task concept" />
-        <branch relURI="" doctype="XDoc" menuName="Defining tasks" />
+      <branch relURI="tasks/" doctype="XDoc" menuName="Tasks">
+        <branch relURI="concept.html" doctype="XDoc" menuName="The Task Concept" />
+        <branch relURI="" doctype="XDoc" menuName="Defining Tasks" />
         <branch relURI="" doctype="XDoc"
-        menuName="The TaskAction: Triggering a Task from the Sitemap" />
+        menuName="The TaskAction" />
         <branch relURI="" doctype="XDoc" menuName="Scheduling a Task" />
         <branch relURI="" doctype="XDoc" menuName="Included tasks">
-          <branch relURI="" doctype="XDoc"
-          menuName="The DefaultFilePublisher Task" />
-          <branch relURI="" doctype="XDoc"
-          menuName="The StaticHTMLExporter Task" />
+          <branch relURI="anttask.html" doctype="XDoc" menuName="AntTask" />
+          <branch relURI="" doctype="XDoc" menuName="DefaultFilePublisher" />
+          <branch relURI="" doctype="XDoc" menuName="StaticHTMLExporter" />
           <branch relURI="" doctype="XDoc" menuName="The MailTask" />
         </branch>
         <branch relURI="" doctype="XDoc"
-        menuName="Developing Your Own Tasks" />
+        menuName="Developing Tasks" />
       </branch>
     </branch>
     <branch relURI="" doctype="XDoc" menuName="Components ">
