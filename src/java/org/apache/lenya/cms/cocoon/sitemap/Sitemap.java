@@ -1,5 +1,5 @@
 /*
-$Id: Sitemap.java,v 1.10 2003/07/23 13:21:19 gregor Exp $
+$Id: Sitemap.java,v 1.11 2003/08/28 14:08:12 egli Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,6 @@ import java.io.File;
  * @version 2002.3.18
  */
 public class Sitemap {
-    private File file = null;
     private Document doc = null;
 
     /**
@@ -81,7 +80,6 @@ public class Sitemap {
      * @throws Exception DOCUMENT ME!
      */
     public Sitemap(File file) throws Exception {
-        this.file = file;
         doc = new SAXReader().read("file:" + file.getAbsolutePath());
     }
 

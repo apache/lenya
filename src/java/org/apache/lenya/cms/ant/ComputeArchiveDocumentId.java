@@ -1,5 +1,5 @@
 /*
-$Id: ComputeArchiveDocumentId.java,v 1.1 2003/07/28 12:37:55 edith Exp $
+$Id: ComputeArchiveDocumentId.java,v 1.2 2003/08/28 14:08:12 egli Exp $
 <License>
 
  ============================================================================
@@ -82,7 +82,6 @@ public class ComputeArchiveDocumentId extends ComputeNewDocumentId {
 	 * @return String The document id of the destination.
 	 */
 	protected String compute(String firstdocumentid, String secdocumentid) {
-		String documentid= "";
 		StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
 		int l = st.countTokens();
 		for (int i = 0; i < l-1; i++) {

@@ -1,5 +1,5 @@
 /*
-$Id: User.java,v 1.22 2003/07/22 17:01:34 andreas Exp $
+$Id: User.java,v 1.23 2003/08/28 14:06:32 egli Exp $
 <License>
 
  ============================================================================
@@ -59,9 +59,6 @@ import org.apache.lenya.cms.ac2.*;
 
 import org.apache.log4j.Category;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  *
  * @author  nobby
@@ -71,8 +68,7 @@ public abstract class User extends AbstractGroupable implements Identifiable {
     private static Category log = Category.getInstance(User.class);
     private String email;
     private String encryptedPassword;
-    private Set groups = new HashSet();
-
+    
     /**
      * Creates a new User.
      */

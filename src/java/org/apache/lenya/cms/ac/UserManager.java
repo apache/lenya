@@ -1,5 +1,5 @@
 /*
-$Id: UserManager.java,v 1.13 2003/07/23 13:21:15 gregor Exp $
+$Id: UserManager.java,v 1.14 2003/08/28 14:06:32 egli Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: UserManager.java,v 1.13 2003/07/23 13:21:15 gregor Exp $
 */
 package org.apache.lenya.cms.ac;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
 
 import java.util.HashMap;
@@ -71,7 +69,6 @@ import java.util.Map;
  *
  */
 public class UserManager extends ItemManager {
-    static private Category log = Category.getInstance(UserManager.class);
     protected static final String SUFFIX = ".iml";
     private static Map instances = new HashMap();
 

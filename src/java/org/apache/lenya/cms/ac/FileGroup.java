@@ -1,5 +1,5 @@
 /*
-$Id: FileGroup.java,v 1.11 2003/07/24 10:25:57 michi Exp $
+$Id: FileGroup.java,v 1.12 2003/08/28 14:06:32 egli Exp $
 <License>
 
  ============================================================================
@@ -60,8 +60,6 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
 
 
@@ -71,8 +69,6 @@ import java.io.File;
  *
  */
 public class FileGroup extends Group implements Item {
-    private static Category log = Category.getInstance(FileGroup.class);
-
     /**
      * @see org.apache.lenya.cms.ac.Group#delete()
      */

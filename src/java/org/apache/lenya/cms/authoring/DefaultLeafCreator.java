@@ -1,5 +1,5 @@
 /*
-$Id: DefaultLeafCreator.java,v 1.12 2003/07/31 17:08:17 egli Exp $
+$Id: DefaultLeafCreator.java,v 1.13 2003/08/28 14:08:12 egli Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: DefaultLeafCreator.java,v 1.12 2003/07/31 17:08:17 egli Exp $
 */
 package org.apache.lenya.cms.authoring;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
 
 /**
@@ -65,9 +63,6 @@ import java.io.File;
  * @author Christian Egli
  */
 public class DefaultLeafCreator extends DefaultCreator {
-    private static Category log =
-        Category.getInstance(DefaultLeafCreator.class);
-
     /**
      * Return the child type.
      *

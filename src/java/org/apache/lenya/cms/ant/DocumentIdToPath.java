@@ -121,7 +121,6 @@ public class DocumentIdToPath extends PublicationTask {
       String path = pathMapper.getPath(documentid, ""); 
 	  log("path " + path);
 
-	  int l = path.length();
 	  int index = path.lastIndexOf("/");
 	  String dir = path.substring(0, index);
 	  log("dir " + dir);

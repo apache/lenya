@@ -1,5 +1,5 @@
 /*
-$Id: LDAPUser.java,v 1.13 2003/08/21 12:40:01 andreas Exp $
+$Id: LDAPUser.java,v 1.14 2003/08/28 14:06:32 egli Exp $
 <License>
 
  ============================================================================
@@ -64,9 +64,6 @@ import org.apache.log4j.Category;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import java.util.Hashtable;
 import java.util.Properties;
 

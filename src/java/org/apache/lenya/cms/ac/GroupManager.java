@@ -1,5 +1,5 @@
 /*
-$Id: GroupManager.java,v 1.9 2003/07/30 15:05:12 egli Exp $
+$Id: GroupManager.java,v 1.10 2003/08/28 14:06:32 egli Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: GroupManager.java,v 1.9 2003/07/30 15:05:12 egli Exp $
 */
 package org.apache.lenya.cms.ac;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -69,7 +67,6 @@ import java.util.Map;
  *
  */
 public final class GroupManager extends ItemManager {
-    private static Category log = Category.getInstance(GroupManager.class);
     protected static final String SUFFIX = ".gml";
     private static Map instances = new HashMap();
 
