@@ -212,7 +212,7 @@
             <item wf:event="restore" uc:usecase="restore" uc:step="showscreen" href="?">Restore</item>
         	}
         	else {
-            <item>Restore</item>
+            <item><i18n:text>Restore</i18n:text></item>
         	}
       	}
         </xsp:logic>
