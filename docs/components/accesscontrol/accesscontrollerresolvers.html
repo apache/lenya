@@ -172,10 +172,13 @@
 <a href="authorizers.html">Authorizers</a>
 </div>
 <div class="menuitem">
-<a href="policymanagers.html">Policy&nbsp;Managers</a>
+<a href="policymanagers.html">Policies and Policy&nbsp;Managers</a>
 </div>
 <div class="menuitem">
 <a href="accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="faq.html">FAQ</a>
 </div>
 </div>
 </div>
@@ -215,47 +218,51 @@
 <a name="N101C9"></a><a name="Introduction"></a>
 <h3>Introduction</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>An AccessControllerResolver resolves the appropriate AccessController for a URL.</p>
+<p>
+	In Lenya, the <em>AccessController</em> is chosen dynamically,
+	depending on the requested URL.
+	An <em>AccessControllerResolver</em> resolves the appropriate
+	<em>AccessController</em> for a URL.</p>
 </div>
 
 
-<a name="N101D3"></a><a name="Defining+the+Roles+in+lenya.roles"></a>
+<a name="N101DC"></a><a name="Defining+the+Roles+in+lenya.roles"></a>
 <h3>Defining the Roles in lenya.roles</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>To obtain an AccessControllerResolver, the AccessControllerResolverSelector is
-		used. A component which wants to obtain an AccessController asks the
-		selector for the <span class="codefrag">composable</span> AccessControllerResolver.
-		The <span class="codefrag">composable</span> AccessControllerResolver itself uses the
-		selector to obtain its child AccessControllerResolvers.
+<p>To obtain an <em>AccessControllerResolver</em>, the <em>AccessControllerResolverSelector</em> is
+		used. A component which wants to obtain an <em>AccessController</em> asks the
+		selector for the <em>ComposableAccessControllerResolver</em>.
+		The <em>ComposableAccessControllerResolver</em> itself uses the
+		selector to obtain its child <em>AccessControllerResolver</em>s.
 		</p>
-<pre class="code">&lt;role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
+<pre class="code">&lt;role name="org.apache.lenya.ac.AccessControllerResolverSelector"
     shorthand="access-controller-resolvers"
     default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector"&gt;
   &lt;hint shorthand="configurable"
-      class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"/&gt;
+      class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"/&gt;
   &lt;hint shorthand="publication"
-      class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/&gt;
+      class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"/&gt;
   &lt;hint shorthand="composable"
-      class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/&gt;
+      class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"/&gt;
 &lt;/role&gt;</pre>
 </div>
 
 
-<a name="N101E8"></a><a name="Declaring+the+Access+Controller+Resolvers+in+cocoon.xconf"></a>
+<a name="N101FD"></a><a name="Declaring+the+Access+Controller+Resolvers+in+cocoon.xconf"></a>
 <h3>Declaring the Access Controller Resolvers in cocoon.xconf</h3>
 <div style="margin-left: 0 ; border: 2px">
 <pre class="code">&lt;access-controller-resolvers&gt;
   &lt;component-instance logger="lenya.ac.accesscontrollerresolver.publication"
-    class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
+    class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"
     name="publication"&gt;
   &lt;/component-instance&gt;
   &lt;component-instance logger="lenya.ac.accesscontrollerresolver.global"
-    class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+    class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"
     name="global"&gt;
     &lt;access-controller type="global"/&gt;
   &lt;/component-instance&gt;
   &lt;component-instance logger="lenya.ac.accesscontrollerresolver.composable"
-    class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+    class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"
     name="composable"&gt;
     &lt;resolver type="publication"/&gt;
     &lt;resolver type="global"/&gt;
@@ -264,54 +271,71 @@
 </div>
 
 
-<a name="N101F4"></a><a name="Publication+Access+Controller+Resolver"></a>
+<a name="N10209"></a><a name="Publication+Access+Controller+Resolver"></a>
 <h3>Publication Access Controller Resolver</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>The PublicationAccessControllerResolver looks for a <span class="codefrag">config/ac.xconf</span>
-		file inside the publication. If you want to use multiple AccessControllers
-		within your Lenya installation, just declare them in the <span class="codefrag">
-		cocoon-xconf.xsl</span> file and choose the type in the <span class="codefrag">
-		config/ac.xconf</span> file:</p>
+<p>The <em>PublicationAccessControllerResolver</em> looks for a <span class="codefrag">config/ac.xconf</span>
+    file inside the publication. If you want to use multiple <em>AccessController</em>s
+    within your Lenya installation, just declare them in the <span class="codefrag">
+    cocoon-xconf.xsl</span> file and choose the type in the <span class="codefrag">config/ac.xconf</span> file.
+    The <span class="codefrag">type</span> attribute selects an <em>AccessController</em>
+    from the definitions in <span class="codefrag">cocoon.xconf</span>.
+  </p>
+<p>
+		You have to configure the complete <em>AccessController</em> in this file. For instance,
+		if you want to use a <em>BypassableAccessController</em> together with
+		a certain set of components, you declare it as follows:</p>
 <pre class="code">&lt;?xml version="1.0"?&gt;
-&lt;access-controller type="publication-file"&gt;
-  &lt;authorizer type="usecase"&gt;
-    &lt;config-file
-        src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/&gt;
-  &lt;/authorizer&gt;
-  &lt;accreditable-manager&gt;
+&lt;access-controller type="bypassable"&gt;
+  
+  &lt;accreditable-manager type="file"&gt;
     &lt;parameter name="directory"
-        value="context:///lenya/pubs/default/config/ac/passwd"/&gt;
+        value="context:///lenya/pubs/mypub/config/ac/passwd"/&gt;
   &lt;/accreditable-manager&gt;
-&lt;/access-controller&gt;</pre>
-<p>As you see here, you can put additional configuration code inside the 
-		<span class="codefrag">&lt;access-controller&gt;</span> element. This allows you to use
-		the same AccessController type for multiple publications with different
-		configurations.</p>
+  
+  &lt;policy-manager type="document"&gt;
+    &lt;policy-manager type="file"&gt;
+      &lt;parameter name="directory"
+          value="context:///lenya/pubs/mypub/config/ac/policies"/&gt;
+    &lt;/policy-manager&gt;
+  &lt;/policy-manager&gt;
+  
+  &lt;authorizer type="policy"/&gt;
+  
+  &lt;authorizer type="usecase"&gt;
+    &lt;parameter name="configuration"
+        value="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/&gt;
+  &lt;/authorizer&gt;
+  
+  &lt;authorizer type="workflow"/&gt;
+  
+&lt;/access-controller&gt;
+</pre>
 </div>
 
 
-<a name="N10212"></a><a name="Configurable+Access+Controller+Resolver"></a>
+<a name="N10239"></a><a name="Configurable+Access+Controller+Resolver"></a>
 <h3>Configurable Access Controller Resolver</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>The ConfigurableAccessControllerResolver can be configured with an
-		AccessController directly inside <span class="codefrag">cocoon.xconf</span>:</p>
+<p>The <em>ConfigurableAccessControllerResolver</em> can be configured with an
+		<em>AccessController</em> directly inside <span class="codefrag">cocoon.xconf</span>:</p>
 <pre class="code">&lt;component-instance logger="lenya.ac.accesscontrollerresolver"
-    class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+    class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"
     name="global"&gt;
   &lt;access-controller type="global"/&gt;
 &lt;/component-instance&gt; </pre>
 </div>
 
 
-<a name="N10224"></a><a name="Composable+Access+Controller+Resolver"></a>
+<a name="N10251"></a><a name="Composable+Access+Controller+Resolver"></a>
 <h3>Composable Access Controller Resolver</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>The ComposableAccessControllerResolver is configured with a list of
-		AccessControllerResolvers. Each one of these resolvers is invoked until one
-		is successful. If no resolver finds an AccessController, the
-		ComposableAccessControllerResolver returns <span class="codefrag">null</span>.</p>
+<p>The <em>ComposableAccessControllerResolver</em> is configured with a list of
+		<em>AccessControllerResolver</em>s. Each one of these resolvers is invoked until one
+		is successful. If no resolver finds an <em>AccessController</em>, the
+		<em>ComposableAccessControllerResolver</em> returns <span class="codefrag">null</span>.</p>
 <pre class="code">&lt;component-instance logger="lenya.ac.accesscontrollerresolver"
-    class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+    class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"
     name="composable"&gt;
   &lt;resolver type="publication"/&gt;
   &lt;resolver type="global"/&gt;

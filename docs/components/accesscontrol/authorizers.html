@@ -166,10 +166,13 @@
 </div>
 </div>
 <div class="menuitem">
-<a href="policymanagers.html">Policy&nbsp;Managers</a>
+<a href="policymanagers.html">Policies and Policy&nbsp;Managers</a>
 </div>
 <div class="menuitem">
 <a href="accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="faq.html">FAQ</a>
 </div>
 </div>
 </div>
@@ -209,26 +212,41 @@
 <a name="N101C9"></a><a name="Introduction"></a>
 <h3>Introduction</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>An authorizer checks if an identity is authorized to invoke a certain request. The DelegatingAuthorizerAction tries to resolve an AccessController for the URL. If an AccessController could be resolved, its Authorizer is used to authorize the request. If no AccessController could be found, the access to the request is granted for free.</p>
+<p>An <em>Authorizer</em> checks if an <em>Identity</em> is authorized
+	to invoke a certain request.
+	</p>
+<p>
+	The <em>DelegatingAuthorizerAction</em> tries to
+	resolve an <em>AccessController</em> for the URL. If an <em>AccessController</em>
+	could be resolved, its <span class="codefrag">authorize(Request)</span> method is used to authorize the request.
+	If no <span class="codefrag">AccessController</span> could be found, the access to the request
+	is granted for free.</p>
+<p>
+	  The <em>DefaultAccessController</em> delegates the authorization to its
+	  <em>Authorizer</em>s. Only when all <em>Authorizer</em>s return <span class="codefrag">true</span>,
+	  the request is authorized.
+	</p>
 </div>
 	
 	
-<a name="N101D3"></a><a name="PolicyAuthorizer"></a>
+<a name="N101FA"></a><a name="PolicyAuthorizer"></a>
 <h3>PolicyAuthorizer</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>A PolicyAuthorizer uses policies for authorizing.</p>
+<p>A <em>PolicyAuthorizer</em> uses <em>Policies</em> for authorizing. It returnes <span class="codefrag">true</span>,
+		when the current <em>Identity</em> has at least one <em>Role</em> for the requested URL.</p>
 </div>
 	
 	
-<a name="N101DD"></a><a name="UsecaseAuthorizer"></a>
+<a name="N10213"></a><a name="UsecaseAuthorizer"></a>
 <h3>UsecaseAuthorizer</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>This authorizer looks for the <span class="codefrag">lenya.usecase</span> request
-			parameter and checks the usecase policy file for the roles that are
+<p>This <em>Authorizer</em> looks for the <span class="codefrag">lenya.usecase</span> request
+			parameter and checks the usecase policy file for the <em>Role</em>s that are
 			allowed to execute this usecase. The location of this file is defined
-			using the <span class="codefrag">&lt;config-file&gt;</span> tag:</p>
+			using the <span class="codefrag">configuration</span> parameter which points to a URL:</p>
 <pre class="code">&lt;authorizer type="usecase"&gt;
-  &lt;config-file src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/&gt;
+  &lt;parameter name="configuration"
+      value="context:///lenya/pubs/mypub/config/ac/usecase-policies.xml"/&gt;
 &lt;/authorizer&gt;</pre>
 <p>The usecase policy file might look as follows:</p>
 <pre class="code">&lt;?xml version="1.0"?&gt;
@@ -236,14 +254,17 @@
   &lt;usecase id="create"&gt;
     &lt;role id="editor"/&gt;
   &lt;/usecase&gt;
+  &lt;usecase id="rename"&gt;
+    &lt;role id="editor"/&gt;
+  &lt;/usecase&gt;
 &lt;/usecases&gt;</pre>
 </div>
 	
 	
-<a name="N101FA"></a><a name="WorkflowAuthorizer"></a>
+<a name="N10236"></a><a name="WorkflowAuthorizer"></a>
 <h3>WorkflowAuthorizer</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>The WorkflowAuthorizer is responsible for protecting workflow
+<p>The <em>WorkflowAuthorizer</em> is responsible for protecting workflow
 			transitions. Therefore it</p>
 <ul>
 			
@@ -251,10 +272,12 @@
 			
 <li>determines the current state of the workflow instance, and</li>
 			
-<li>checks if the event may be invoked by one of the current roles in this
+<li>checks if the event may be invoked by one of the current <em>Role</em>s in this
 				state.</li>
 		
 </ul>
+<p>The <em>WorkflowAuthorizer</em> has no configuration options:</p>
+<pre class="code">&lt;authorizer type="workflow"/&gt;</pre>
 </div>
 	
   

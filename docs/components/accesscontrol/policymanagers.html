@@ -2,7 +2,7 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Policy Managers</title>
+<title>Policies and Policy Managers</title>
 <link type="text/css" href="../../../skin/page.css" rel="stylesheet">
 </head>
 <body text="#000000" bgcolor="#FFFFFF">
@@ -152,27 +152,33 @@
 <a href="authorizers.html">Authorizers</a>
 </div>
 <div class="menupage">
-<div class="menupagetitle">Policy&nbsp;Managers</div>
+<div class="menupagetitle">Policies and Policy&nbsp;Managers</div>
 <div class="menupageitemgroup">
 <div class="menupageitem">
-<a href="#Introduction">Introduction</a>
+<a href="#Policies">Policies</a>
 </div>
 <div class="menupageitem">
-<a href="#InheritingPolicyManager">InheritingPolicyManager</a>
+<a href="#Policy+Managers">Policy Managers</a>
 </div>
 <div class="menupageitem">
-<a href="#FilePolicyManager">FilePolicyManager</a>
+<a href="#Inheriting+Policy+Manager">Inheriting Policy Manager</a>
 </div>
 <div class="menupageitem">
-<a href="#PublicationFilePolicyManager">PublicationFilePolicyManager</a>
+<a href="#File+Policy+Manager">File Policy Manager</a>
 </div>
 <div class="menupageitem">
-<a href="#SitemapPolicyManager">SitemapPolicyManager</a>
+<a href="#Document+Policy+Manager+Wrapper">Document Policy Manager Wrapper</a>
+</div>
+<div class="menupageitem">
+<a href="#Sitemap+Policy+Manager">Sitemap Policy Manager</a>
 </div>
 </div>
 </div>
 <div class="menuitem">
 <a href="accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="faq.html">FAQ</a>
 </div>
 </div>
 </div>
@@ -202,26 +208,65 @@
 <table cellspacing="0" cellpadding="0" class="title">
 <tr>
 <td valign="middle">
-<h1>Policy Managers</h1>
+<h1>Policies and Policy Managers</h1>
 </td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="policymanagers.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" border="0"><br>
           PDF</a></td>
 </tr>
 </table>
+    
+
+<a name="N101C9"></a><a name="Policies"></a>
+<h3>Policies</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+  A <span class="codefrag">Policy</span> assigns <span class="codefrag">Role</span>s to <span class="codefrag">Accreditable</span>s.
+</p>
+<p>
+  There is a common policy definition XML schema which is handled by the
+  <span class="codefrag">PolicyBuilder</span>. It can be used together with the
+  <span class="codefrag">FilePolicyManager</span> and the <span class="codefrag">SitemapPolicyManager</span>.
+</p>
+<p>Here is an example of a policy definition:</p>
+<pre class="code">
+&lt;policy xmlns="http://apache.org/cocoon/lenya/ac/1.0"&gt;
+
+  &lt;user id="lenya"&gt;
+    &lt;role id="editor"/&gt;
+    &lt;role id="reviewer"/&gt;
+  &lt;/group&gt;
+
+  &lt;group id="reviewer"&gt;
+    &lt;role id="reviewer"/&gt;
+  &lt;/group&gt;
+  
+  &lt;ip-range id="localhost"&gt;
+    &lt;role id="editor"/&gt;
+  &lt;/ip-range&gt;
+  
+  &lt;world&gt;
+    &lt;role id="visitor"/&gt;
+  &lt;/world&gt;
+
+&lt;/policy&gt; 
+</pre>
+</div>
 	
 
-<a name="N101C9"></a><a name="Introduction"></a>
-<h3>Introduction</h3>
+<a name="N101EF"></a><a name="Policy+Managers"></a>
+<h3>Policy Managers</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>A PolicyManager is used to resolve the policy for a certain URL. Lenya ships with the following PolicyManagers:</p>
+<p>A <em>PolicyManager</em> is used to resolve the policy for a certain URL.
+	Lenya ships with the following <em>PolicyManager</em>s:</p>
 </div>
 	
 	
-<a name="N101D3"></a><a name="InheritingPolicyManager"></a>
-<h3>InheritingPolicyManager</h3>
+<a name="N101FF"></a><a name="Inheriting+Policy+Manager"></a>
+<h3>Inheriting Policy Manager</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>This PolicyManager merges the policies of all steps in the URL. For each
+<p>This is an abstract base class. It merges the policies
+		  of all steps in the URL. For each
 			URL, a <em>url policy</em> and a <em>subtree policy</em> can be defined.
-			The InheritingPolicyManager adds the credentials of</p>
+			The <em>InheritingPolicyManager</em> adds the credentials of</p>
 <ul>
 			
 <li>the subtree policies for all parent directories of the requested page,</li>
@@ -244,43 +289,101 @@
 <li>subtree policy of <span class="codefrag">/lenya/news</span>
 </li>
 			
-<li>subtree policy of <span class="codefrag">/lenya/news/index</span>
+<li>subtree policy of <span class="codefrag">/lenya/news/index.html</span>
 </li>
 			
-<li>url policy of <span class="codefrag">/lenya/news/index</span>
+<li>url policy of <span class="codefrag">/lenya/news/index.html</span>
 </li>
 		
 </ul>
 </div>
 	
 	
-<a name="N10211"></a><a name="FilePolicyManager"></a>
-<h3>FilePolicyManager</h3>
+<a name="N10240"></a><a name="File+Policy+Manager"></a>
+<h3>File Policy Manager</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>The FilePolicyManager is an InheritingPolicyManager. The policies are defined by policy files that are arranged as a directory tree that reflects the URI space, e.g.:
+<p>The <em>FilePolicyManager</em> is an <em>InheritingPolicyManager</em>.
+		The policies are defined by policy files that are arranged as a
+		directory tree that reflects the URI space, e.g.:
 			</p>
 <pre class="code">/subtree-policy.acml
 /lenya/subtree-policy.acml
 /lenya/news/index.html/subtree-policy.acml
 /lenya/news/index.html/url-policy.acml</pre>
 <p>If a certain policy file does not exist (like /lenya/news in the above example), an empty policy is used instead.</p>
+<p>The <em>FilePolicyManager</em> needs a <span class="codefrag">directory</span> parameter
+			which contains a URL pointing to the policies directory:</p>
+<pre class="code">&lt;policy-manager type="file"&gt;
+  &lt;parameter name="directory"
+      value="context:///lenya/pubs/mypub/config/ac/policies"/&gt;
+&lt;/policy-manager&gt;</pre>
 </div>
 	
 	
-<a name="N10223"></a><a name="PublicationFilePolicyManager"></a>
-<h3>PublicationFilePolicyManager</h3>
+<a name="N10266"></a><a name="Document+Policy+Manager+Wrapper"></a>
+<h3>Document Policy Manager Wrapper</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>This PolicyManager does the same as the FilePolicyManager, except that
-			the current publication is determined and the policy files are resolved
-			relatively to the <span class="codefrag">publication/config/ac/policies</span> directory.</p>
+<p>This <em>InheritingPolicyManager</em> subclass is used together with another
+  		<em>InheritingPolicyManager.</em>
+		  It is able to apply a single policy to all versions of a document
+		  (languages, print version, ...). E.&nbsp;g., if you define
+		</p>
+<ul>
+<li>
+<span class="codefrag">/foo/bar/subtree-policy.xml</span>
+</li>
+</ul>
+<p>
+		  and you use the <em>DefaultDocumentBuilder</em>,
+		  this policy is applied to the URLs
+		</p>
+<ul>
+		  
+<li>
+<span class="codefrag">/foo/bar.html</span>
+</li>
+		  
+<li>
+<span class="codefrag">/foo/bar_de.html</span>
+</li>
+		  
+<li>
+<span class="codefrag">/foo/bar_en.print.html</span>
+</li>
+		  
+<li>...</li>
+		
+</ul>
+<p>To configure the <em>DefaultDocumentBuilder</em>, just put the
+		declaration of the wrapped <em>PolicyManager</em> inside the
+		<em>DefaultDocumentBuilder</em> declaration:</p>
+<pre class="code">&lt;policy-manager type="document"&gt;
+  &lt;policy-manager type="file"&gt;
+    &lt;parameter name="directory"
+        value="context:///lenya/pubs/mypub/config/ac/policies"/&gt;
+  &lt;/policy-manager&gt;
+&lt;/policy-manager&gt;</pre>
 </div>
 	
 	
-<a name="N10230"></a><a name="SitemapPolicyManager"></a>
-<h3>SitemapPolicyManager</h3>
+<a name="N102A4"></a><a name="Sitemap+Policy+Manager"></a>
+<h3>Sitemap Policy Manager</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>The SitemapPolicyManager uses the policy sitemap to resolve the policy
-			for a certain URL.</p>
+<p>The <em>SitemapPolicyManager</em> uses the policy sitemap to resolve the policy
+			for a certain URL. For this purpose it sends a request of the form
+    </p>
+<pre class="code">cocoon://{publication-id}/policies{url}.acml
+
+Example:
+cocoon://mypub/policies/authoring/foo/bar_de.html.acml
+</pre>
+<p>
+			which is processed by <span class="codefrag">global-sitemap.xmap</span> and forwarded
+			to <span class="codefrag">lenya/pubs/{publication-id}/policies-sitemap.xmap</span>.
+			The request is supposed to return a valid policy XML document.
+	</p>
+<p>The configuration of the <em>SitemapPolicyManager</em> is very simple:</p>
+<pre class="code">&lt;policy-manager type="sitemap"/&gt;</pre>
 </div>
 		
   

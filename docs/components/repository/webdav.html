@@ -207,11 +207,11 @@ Configure and compile mod_dav:
 <pre class="code">
 
 wget http://www.webdav.org/mod_dav/mod_dav-1.0.3-1.3.6.tar.gz
-cd /home/michiii/src/mod_dav-1.0.3-1.3.6
-./configure --with-apache=/home/michiii/src/apache_1.3.24
+cd /usr/local/src/mod_dav-1.0.3-1.3.6
+./configure --with-apache=/usr/local/src/apache_1.3.24
 make
 make install
-cd /home/michiii/src/apache_1.3.24
+cd /usr/local/src/apache_1.3.24
 find . -name "*dav*" -print
 ./configure --prefix=/usr/local/apache --activate-module=src/modules/dav/libdav.a
 (./configure --prefix=/usr/local/apache --enable-module=proxy --activate-module=src/modules/dav/libdav.a)
@@ -226,8 +226,8 @@ You need to reconfigure <span class="codefrag">httpd.conf</span>, e.g.:
 </p>
 <pre class="code">
 
-DAVLockDB /home/michiii/build/apache/logs/DavLock
-&lt;Directory "/home/michiii/build/apache/htdocs"&gt;
+DAVLockDB /usr/local/apache/logs/DavLock
+&lt;Directory "/usr/local/build/apache/htdocs"&gt;
 Dav On
 
 </pre>
@@ -261,10 +261,10 @@ Configure and compile Apache:
 </p>
 <pre class="code">
 
-./configure --prefix=/home/michiii/build/apache2 --with-dav --enable-dav
+./configure --prefix=/usr/local/apache2 --with-dav --enable-dav
 make 
 make install
-/home/michiii/build/apache2/bin/httpd -l | grep dav
+/usr/local/apache2/bin/httpd -l | grep dav
 
 </pre>
 <p>
@@ -272,8 +272,8 @@ You need to reconfigure Apache:
 </p>
 <pre class="code">
 
-DAVLockDB /home/michiii/build/apache2/logs/DavLock
-&lt;Directory "/home/michiii/build/apache2/htdocs"&gt;
+DAVLockDB /usr/local/apache2/logs/DavLock
+&lt;Directory "/usr/local/apache2/htdocs"&gt;
 Dav On
 &lt;/Directory&gt;
 
@@ -330,7 +330,7 @@ One needs to configure <span class="codefrag">Domain.xml</span>
 <pre class="code">
 
 &lt;contentstore classname="slidestore.reference.FileContentStore"&gt;
-  &lt;parameter name="rootpath"&gt;/home/michiii/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/notimes/content/authoring/articles&lt;/parameter&gt;
+  &lt;parameter name="rootpath"&gt;/usr/local/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/notimes/content/authoring/articles&lt;/parameter&gt;
   ...
 
 </pre>
@@ -355,7 +355,7 @@ One needs to configure <span class="codefrag">Domain.xml</span>
 <div style="margin-left: 0 ; border: 2px">
 <pre class="code">
 
-cd /home/michiii/build/axis-1_1RC2
+cd /usr/local/axis-1_1RC2
 java -cp lib/axis.jar org.apache.axis.utils.tcpmon
 
 Enter "Listen Port# 3333" for instance

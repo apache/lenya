@@ -155,7 +155,7 @@
 <a href="#Declaring+the+Roles+in+lenya.roles">Declaring the Roles in lenya.roles</a>
 </div>
 <div class="menupageitem">
-<a href="#UserAuthenticator">UserAuthenticator</a>
+<a href="#The+UserAuthenticator">The UserAuthenticator</a>
 </div>
 </div>
 </div>
@@ -163,10 +163,13 @@
 <a href="authorizers.html">Authorizers</a>
 </div>
 <div class="menuitem">
-<a href="policymanagers.html">Policy&nbsp;Managers</a>
+<a href="policymanagers.html">Policies and Policy&nbsp;Managers</a>
 </div>
 <div class="menuitem">
 <a href="accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="faq.html">FAQ</a>
 </div>
 </div>
 </div>
@@ -206,23 +209,27 @@
 <a name="N101C9"></a><a name="Introduction"></a>
 <h3>Introduction</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>An authenticator is used to identify a client.</p>
+<p>
+	An authenticator is used to identify a client.
+	It is supposed to setup the <em>Identity</em> object which is attached
+	to the session.
+	</p>
 </div>
 
 
-<a name="N101D3"></a><a name="Declaring+the+Roles+in+lenya.roles"></a>
+<a name="N101D6"></a><a name="Declaring+the+Roles+in+lenya.roles"></a>
 <h3>Declaring the Roles in lenya.roles</h3>
 <div style="margin-left: 0 ; border: 2px">
-<pre class="code">&lt;role name="org.apache.lenya.cms.ac2.Authenticator"
+<pre class="code">&lt;role name="org.apache.lenya.ac.Authenticator"
     shorthand="authenticator"
-    default-class="org.apache.lenya.cms.ac2.UserAuthenticator"/&gt;</pre>
+    default-class="org.apache.lenya.ac.impl.UserAuthenticator"/&gt;</pre>
 </div>
 
 	
-<a name="N101DF"></a><a name="UserAuthenticator"></a>
-<h3>UserAuthenticator</h3>
+<a name="N101E2"></a><a name="The+UserAuthenticator"></a>
+<h3>The UserAuthenticator</h3>
 <div style="margin-left: 0 ; border: 2px">
-<p>The UserAuthenticator uses the request parameters</p>
+<p>The <em>UserAuthenticator</em> uses the request parameters</p>
 <ul>
 			
 <li>
@@ -233,10 +240,16 @@
 </li>
 		
 </ul>
-<p>to authenticate or reject a user.</p>
+<p>to authenticate or reject a user. It is configured in <span class="codefrag">cocoon.xconf</span>
+		as follows:</p>
 <pre class="code">&lt;component logger="lenya.ac.authenticator"
-    class="org.apache.lenya.cms.ac2.UserAuthenticator"
-    role="org.apache.lenya.cms.ac2.Authenticator"/&gt;</pre>
+    class="org.apache.lenya.ac.impl.UserAuthenticator"
+    role="org.apache.lenya.ac.Authenticator"/&gt;</pre>
+<p>
+      When a valid username/password combination is entered, the previous
+      user is removed from the session <em>Identity</em> object
+      and the current user is added.
+    </p>
 </div>
 
   
