@@ -4,17 +4,13 @@
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-  xmlns:xsp-cookie="http://apache.org/xsp/cookie/2.0"
   xmlns:xsp-session="http://apache.org/xsp/session/2.0"
   create-session="true">
   
 <page>
   <info>
-    <xsp:logic>
-      String secdocumentid= <xsp-cookie:getValue name="org.apache.lenya.cms.info.targett2"/>;
-    </xsp:logic>
-    <first-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.documentid"/></first-document-id>
-    <sec-document-id><xsp:expr>secdocumentid</xsp:expr></sec-document-id>
+    <first-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.firstdocid"/></first-document-id>
+    <sec-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/></sec-document-id>
     <task-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.action"/></task-id>
     <request-uri><xsp-request:get-uri/></request-uri>
   </info>

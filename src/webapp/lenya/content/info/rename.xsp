@@ -13,23 +13,23 @@
   </xsp:structure>
 
 <page>
-<info>
-  <xsp:logic>
-    String firstdocumentid =(String)<xsp-session:get-attribute name="org.apache.lenya.cms.info.documentid"/>;
-    String lastid="";
-    StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
-    int l = st.countTokens();
-    for (int i = 1; i &lt; l; i++) {
-      st.nextToken();
-    }
-    lastid= st.nextToken();
-  </xsp:logic>
+  <info>
+    <xsp:logic>
+      String firstdocumentid =(String)<xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/>;
+      String lastid="";
+      StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
+      int l = st.countTokens();
+      for (int i = 1; i &lt; l; i++) {
+        st.nextToken();
+      }
+      lastid= st.nextToken();
+    </xsp:logic>
 
-  <request-uri><xsp-request:get-uri/></request-uri>
-  <last-id><xsp:expr>lastid</xsp:expr></last-id>
-  <first-document-id><xsp:expr>firstdocumentid</xsp:expr></first-document-id>
-  <task-id>renameDocument</task-id>
-</info>
+    <request-uri><xsp-request:get-uri/></request-uri>
+    <last-id><xsp:expr>lastid</xsp:expr></last-id>
+    <first-document-id><xsp:expr>firstdocumentid</xsp:expr></first-document-id>
+    <task-id>renameDocument</task-id>
+  </info>
 </page>
 
 </xsp:page>
