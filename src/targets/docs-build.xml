@@ -26,7 +26,7 @@
   <!-- Set a variable if javadoc is already up-to-date -->
   <target name="javadocs_check">
     <uptodate property="javadocs.notrequired" targetfile="${dist.bin.javadocs}/packages.html" >
-      <srcfiles dir="${build.src}" includes="**/*.java"/>
+      <srcfiles dir="${src.java.dir}" includes="**/*.java"/>
     </uptodate>
   </target>
 
@@ -35,7 +35,7 @@
     <echo message="-------------------------------------------------------------"/>
     <echo message="  Not rebuilding Javadocs, as they are up-to-date:"/>
     <echo message="  ${dist.bin.javadocs}/packages.html is more recent than"/>
-    <echo message="  ${build.src}/**/*.java"/>
+    <echo message="  ${src.java.dir}/**/*.java"/>
     <echo message="-------------------------------------------------------------"/>
   </target>
 
@@ -43,7 +43,7 @@
   <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done" unless="javadocs.notrequired" description="Generates the API documentation">
     <mkdir dir="${dist.bin.javadocs}"/>
     <javadoc packagenames="${packages}"
-             sourcepath="${build.src}"
+             sourcepath="${src.java.dir}"
              destdir="${dist.bin.javadocs}"
              author="true"
              version="true"

@@ -51,7 +51,6 @@
   <property name="target.vm"      value="1.4"/>
 
   <property name="packages"      value="*.*"/>
-  <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
 
   <property name="today"         value="${TODAY}"/>
 
@@ -104,6 +103,7 @@
   -->
   <property name="src.webapp.dir" value="src/webapp"/>
   <property name="tools.tasks.dest" value="tools/anttasks"/>
+  <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
   <!-- cocoon build properties directory -->
   <property name="src.cocoon.properties.dir" value="src/cocoon"/>
   <!-- hsqldb database config files directory -->
@@ -114,6 +114,7 @@
   <taskdef name="bulkCopy"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
   <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
   <taskdef name="xpatch"          classpath="${tools.tasks.dest}" classname="XConfToolTask"/>
+
 
   <!-- Set up classpath -->
   <path id="classpath">
