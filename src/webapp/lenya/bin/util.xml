@@ -22,6 +22,7 @@
 
   <!-- Dummy arguments -->
   <property name="password" value="levi"/>
+  <property name="jtidy-in.html" value="index.html"/>
   <!-- /Dummy arguments -->
 
   <property name="lenya.dir.web-inf" value="${lenya.dir}/build/lenya/webapp/WEB-INF"/>
@@ -67,8 +68,11 @@
   <echo>INFO: JTidy</echo>
 
   <java classname="org.apache.lenya.util.TidyCommandLine">
-    <arg value="file:/home/michiii/src/lenya/src/webapp/lenya/resources/misc/midas/midas.html"/>
-    <arg value="midas.xhtml"/>
+    <arg value="${jtidy-in.html}"/>
+<!--
+    <arg value="file:///home/michi/html/index.html"/>
+-->
+    <arg value="jtidy-out.xhtml"/>
     <arg value="error.log"/>
     <classpath refid="class.path"/>
   </java>
