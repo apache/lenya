@@ -26,8 +26,11 @@
   <li>Features</li>
 </ul>
 <div class="lenya-publication-item"><a href="../index.html">Other&#160;Publications</a></div>
-<div class="lenya-publication-item"><a href="../docs-new/index.html">New&#160;Documentation</a></div>
+<div class="lenya-publication-item"><a href="../docs-new/docs/index.html">Documentation</a></div>
+<!--
 <div class="lenya-publication-item"><a href="../docs/index.html">Deprecated&#160;Documentation</a></div>
+-->
+<div class="lenya-publication-item"><a href="http://wiki.cocoondev.org/Wiki.jsp?page=Lenya">Wiki&#160;Documentation</a></div>
 </div>
 
 <div class="lenya-frontpage">
