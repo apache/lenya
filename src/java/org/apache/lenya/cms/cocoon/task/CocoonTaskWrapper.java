@@ -1,5 +1,5 @@
 /*
-$Id: CocoonTaskWrapper.java,v 1.5 2003/08/31 10:55:46 andreas Exp $
+$Id: CocoonTaskWrapper.java,v 1.6 2003/10/27 09:52:50 andreas Exp $
 <License>
 
  ============================================================================
@@ -118,6 +118,9 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
 		initialize(taskId, publication, webappUrl, taskParameters);
 
 		String eventName = request.getParameter(WorkflowInvoker.EVENT_REQUEST_PARAMETER);
+		if (eventName == null) {
+			eventName = request.getParameter(WorkflowInvoker.LENYA_EVENT_REQUEST_PARAMETER);
+		}
 		if (eventName != null) {
 			Session session = request.getSession(false);
 			if (session == null) {

@@ -1,5 +1,5 @@
 /*
- * $Id: WorkflowInvoker.java,v 1.7 2003/10/26 17:29:55 andreas Exp $ <License>
+ * $Id: WorkflowInvoker.java,v 1.8 2003/10/27 09:52:50 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -76,6 +76,7 @@ public class WorkflowInvoker extends ParameterWrapper {
 	public static final String PREFIX = "workflow";
 
 	public static final String EVENT_REQUEST_PARAMETER = "workflow.event";
+	public static final String LENYA_EVENT_REQUEST_PARAMETER = "lenya.event";
 
 	/**
 	 * Ctor.
