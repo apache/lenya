@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.15 2003/08/14 13:48:53 andreas Exp $
+$Id: Document.java,v 1.16 2003/08/27 12:45:17 egli Exp $
 <License>
 
  ============================================================================
@@ -112,13 +112,18 @@ public interface Document {
 
     /**
      * Returns the language of this document.
+     * Each document has one language associated to it. 
      * @return A string denoting the language.
      */
     String getLanguage();
 
 	/**
 	 * Returns all the languages this document is available in.
-	 * @return An array of strings denoting the languages.
+     * A document has one associated language (@see Document#getLanguage)
+     * but there are possibly a number of other languages for which a 
+     * document with the same document-id is also available in. 
+     * 
+ 	 * @return An array of strings denoting the languages.
      * 
      * @throws DocumentException if an error occurs
 	 */
