@@ -384,9 +384,6 @@
       <!-- ************************************************************** -->
 
 
-
-
-	
 	<map:match pattern="upload" type="usecase">
 
 	  <map:match pattern="showscreen" type="step">
@@ -414,7 +411,20 @@
 	    <map:serialize/>
 	  </map:match>
 	</map:match>
-	        <!--Rollback-->
+
+        <map:match pattern="asset" type="usecase">
+
+          <map:match pattern="showscreen" type="step">
+            <map:call resource="cms-screen">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="serverpage" value="authoring/asset.xsp"/>
+              <map:parameter name="stylesheet" value="authoring/asset.xsl"/>
+            </map:call>
+          </map:match>
+
+        </map:match>
+
+        <!--Rollback-->
         <map:match pattern="rollback" type="usecase">
           
           <map:match pattern="showscreen" type="step">
