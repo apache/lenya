@@ -59,8 +59,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         this.sourceUrl = sourceUrl;
         this.situation = situation;
 
-        initParameters();
-
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Invoking usecase on URL: [" + sourceUrl + "]");
         }
@@ -114,7 +112,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * Adds an error message.
      * @param message The message.
      */
-    protected void addErrorMessage(String message) {
+    public void addErrorMessage(String message) {
         errorMessages.add(message);
     }
 
@@ -122,7 +120,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * Adds an error message.
      * @param messages The messages.
      */
-    protected void addErrorMessages(String[] messages) {
+    public void addErrorMessages(String[] messages) {
         for (int i = 0; i < messages.length; i++) {
             addErrorMessage(messages[i]);
         }
@@ -132,7 +130,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * Adds an info message.
      * @param message The message.
      */
-    protected void addInfoMessage(String message) {
+    public void addInfoMessage(String message) {
         infoMessages.add(message);
     }
 
@@ -336,8 +334,17 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     /**
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
-    public void initialize() throws Exception {
+    public final void initialize() throws Exception {
         super.initialize();
+        doInitialize();
+        initParameters();
+    }
+
+    /**
+     * Does the actual initialization. Template method.
+     * @throws Exception if an error occurs.
+     */
+    protected void doInitialize() throws Exception {
         Map objectModel = ContextHelper.getObjectModel(this.context);
         Situation situation;
         try {
