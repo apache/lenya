@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DeactivateResourcesTask.java,v 1.3 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id: DeactivateResourcesTask.java,v 1.4 2004/08/16 12:00:55 andreas Exp $  */
 
 package org.apache.lenya.cms.ant;
 
@@ -75,7 +75,7 @@ public class DeactivateResourcesTask extends PublicationTask {
 			if (node != null) {
 				labels = node.getLabels();
 			}
-			if (node == null | (labels != null && labels.length < 1)) {
+			if (node == null || (labels != null && labels.length < 1)) {
 
 				DocumentBuilder builder = publication.getDocumentBuilder();
 				String url = builder.buildCanonicalUrl(publication, area, documentid, language);
