@@ -96,7 +96,7 @@
     
     <map:resource name="usecase-create">
       <map:call resource="cms-screen">
-        <map:parameter name="publication-id" value="{../publication-id}"/>
+        <map:parameter name="publication-id" value="{publication-id}"/>
         <map:parameter name="serverpage" value="authoring/create.xsp"/>
         <map:parameter name="stylesheet" value="authoring/create.xsl"/>
       </map:call>
