@@ -9,8 +9,6 @@ package org.lenya.lucene.index;
 import java.io.File;
 import java.util.Date;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.index.IndexWriter;
 
 import org.lenya.lucene.IndexConfiguration;
 import org.lenya.util.DebugConfiguration;
@@ -19,7 +17,6 @@ import org.lenya.xml.DOMUtil;
 import org.lenya.xml.XPath;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  *

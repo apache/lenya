@@ -6,22 +6,16 @@
 
 package org.lenya.lucene.index;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.InterruptedException;
 import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URL;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;

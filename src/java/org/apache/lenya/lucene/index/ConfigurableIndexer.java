@@ -54,36 +54,21 @@ package org.lenya.lucene.index;
  * <http://www.apache.org/>.
  */
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.index.*;
-import org.apache.lucene.document.Document;
 
 import java.io.File;
-import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Date;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.lenya.lucene.index.ConfigurableDocumentCreator;
 import org.lenya.xml.DocumentHelper;
 
 import org.w3c.dom.Element;
-
-import org.xml.sax.SAXException;
 
 public class ConfigurableIndexer
     extends AbstractIndexer {

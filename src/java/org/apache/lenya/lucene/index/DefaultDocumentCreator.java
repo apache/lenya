@@ -7,10 +7,6 @@
 package org.lenya.lucene.index;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
-import java.lang.InterruptedException;
-import org.apache.lucene.document.DateField;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.lenya.lucene.parser.HTMLParser;

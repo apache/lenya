@@ -6,12 +6,8 @@
 
 package org.lenya.lucene.parser;
 
-import java.io.IOException;
-import java.io.PipedReader;
-import java.io.PipedWriter;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
