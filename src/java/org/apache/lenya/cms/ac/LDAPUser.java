@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.2 2003/06/18 18:55:29 egli Exp $
+ * $Id: LDAPUser.java,v 1.3 2003/06/19 14:00:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,6 +49,7 @@
 
 package org.apache.lenya.cms.ac;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -80,6 +81,8 @@ public class LDAPUser extends FileUser {
     private static Category log = Category.getInstance(LDAPUser.class);
 
     public static final String LDAP_ID = "ldapid";
+    public static final String CONFIG_PATH =
+        File.separator + "config" + File.separator + "ac" + File.separator;
 
     private static String PROVIDER_URL = "provider-url";
     private static String MGR_DN = "mgr-dn";
@@ -105,6 +108,12 @@ public class LDAPUser extends FileUser {
         String ldapId) {
         super(publication, id, null, email, null);
         this.ldapId = ldapId;
+        try {
+            readProperties();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -116,6 +125,12 @@ public class LDAPUser extends FileUser {
         throws ConfigurationException {
         super(publication, config);
         ldapId = config.getChild(LDAP_ID).getValue();
+        try {
+            readProperties();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /* (non-Javadoc)
@@ -216,13 +231,29 @@ public class LDAPUser extends FileUser {
         // change request to the full name.
     }
 
+    /* 
+     * The LDAPUser doesn't store any passwords as they are handled by LDAP
+     */
+    public void setPassword(String plainTextPassword) {
+        encryptedPassword = null;
+    }
+
+    /* 
+     * The LDAPUser doesn't store any passwords as they are handled by LDAP
+     */
+    protected void setEncryptedPassword(String encryptedPassword) {
+        encryptedPassword = null;
+    }
+
     private LdapContext bind(String principal, String credentials)
         throws NamingException {
         Hashtable env = new Hashtable();
 
         System.setProperty(
             "javax.net.ssl.trustStore",
-            defaultProperties.getProperty(KEY_STORE));
+            getPublication().getDirectory().getAbsolutePath()
+                + CONFIG_PATH
+                + defaultProperties.getProperty(KEY_STORE));
 
         env.put(
             Context.INITIAL_CONTEXT_FACTORY,
@@ -247,18 +278,18 @@ public class LDAPUser extends FileUser {
         ctx.close();
     }
 
-    private void readProperties() {
+    private void readProperties() throws IOException {
         // create and load default properties
+        File propertiesFile =
+            new File(
+                getPublication().getDirectory(),
+                CONFIG_PATH + "ldap.properties");
         if (defaultProperties == null) {
             defaultProperties = new Properties();
             FileInputStream in;
-            try {
-                in = new FileInputStream("ldap.properties");
-                defaultProperties.load(in);
-                in.close();
-            } catch (IOException e) {
-                log.error("Could not load properties", e);
-            }
+            in = new FileInputStream(propertiesFile);
+            defaultProperties.load(in);
+            in.close();
         }
     }
 }
