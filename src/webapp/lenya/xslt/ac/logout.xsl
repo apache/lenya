@@ -7,10 +7,10 @@
     xmlns="http://www.w3.org/1999/xhtml"
     >
 
-<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes"/>
 
 <xsl:param name="publication_name"/>
-<xsl:variable name="copyright">copyright &#169; 2003 Lenya, Apache Software Foundation</xsl:variable>
+<xsl:variable name="copyright">copyright &#169; 2003-2004 Apache Software Foundation</xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates/>
@@ -18,7 +18,7 @@
 
 <xsl:template match="page">
   <page:page>
-    <page:title><xsl:call-template name="html-title"/> <!-- FIXME: <xsl:value-of select="$publication_name"/> --></page:title>
+    <page:title><xsl:call-template name="html-title"/></page:title>
     <page:body>
      <h2><xsl:value-of select="$publication_name"/></h2>
 
@@ -36,7 +36,7 @@
 </xsl:template>
 
 <xsl:template name="html-title">
-LOGOUT
+LOGOUT from <xsl:value-of select="$publication_name"/>
 </xsl:template>
 
 <xsl:template match="logout">

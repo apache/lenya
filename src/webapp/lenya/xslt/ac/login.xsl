@@ -6,11 +6,11 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
     
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
+  <xsl:output indent="yes" version="1.0"/>
   
   <xsl:param name="publication_name"/>
   
-  <xsl:variable name="copyright">copyright &#169; 2003 Apache Lenya, Apache Software Foundation</xsl:variable>
+  <xsl:variable name="copyright">copyright &#169; 2003-2004 Apache Software Foundation</xsl:variable>
   
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -20,8 +20,8 @@
   <xsl:template match="page">
     <page:page>
       <page:title>
-        <xsl:call-template name="html-title"/>  <!-- FIXME: <xsl:value-of select="$publication_name"/> -->
-      </page:title>
+        <xsl:call-template name="html-title"/> 
+       </page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
         <p>
@@ -34,22 +34,16 @@
   </xsl:template>
   
   
-  <xsl:template name="html-title">LOGIN</xsl:template>
+  <xsl:template name="html-title">LOGIN to <xsl:value-of select="$publication_name"/></xsl:template>
   
   
   <xsl:template match="login">
     <p>
         <xsl:apply-templates select="authentication_failed"/>
         <xsl:apply-templates select="protected_destination"/>
-<!--
-        <xsl:apply-templates select="no_protected_destination"/>
--->
         <xsl:apply-templates select="current_username"/>
         <xsl:apply-templates select="no_username_yet"/>
         <xsl:apply-templates select="authenticator"/>
-<!--
-        <xsl:apply-templates select="no_authenticator_id_yet"/>
--->
     </p>
         <p>
           <b>NOTE:</b> try user &quot;lenya&quot; and password &quot;levi&quot;
@@ -100,12 +94,6 @@
     <br/>No username yet
   </xsl:template>
     
-    
-  <xsl:template match="no_authenticator_id_yet">
-    <br/>No authenticator id yet
-  </xsl:template>
-    
-    
   <xsl:template match="protected_destination">
     <br/>Request for protected uri: <a>
       <xsl:attribute name="href">
@@ -115,14 +103,7 @@
     </a>
   </xsl:template>
   
-  
-  <xsl:template match="no_protected_destination">
-    <br/>
-    <font color="red">Exception:</font> No protected destination
-  </xsl:template>
-    
-    
-  <xsl:template match="authentication_failed">
+    <xsl:template match="authentication_failed">
     <br/>
     <font color="red">Authentication failed</font>
   </xsl:template>
