@@ -31,9 +31,7 @@
         <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
       </head>
       <body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
-        
         <xsl:apply-templates select="xhtml:div[@id = 'lenya-menubar']"/>
-      
         <div id="lenya-cmsbody">
           <xso:apply-templates select="xhtml:html/xhtml:body/node()"/>
         </div>
