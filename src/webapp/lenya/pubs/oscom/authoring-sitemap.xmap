@@ -172,7 +172,10 @@
         <map:generate src="cocoon:/authoring/{1}.xml"/>
         <map:select>
           <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Generic/Authoring/main.xsl"/>
+<!--
             <map:transform src="stylesheets/publication/Page/Generic/Authoring/main_xopus.xsl"/>
+-->
           </map:when>
           <map:otherwise>
             <map:transform src="stylesheets/publication/Page/Generic/Authoring/main.xsl"/>
