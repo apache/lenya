@@ -1,7 +1,23 @@
 <?xml version="1.0"?>
 
-<access-controller type="publication-file">
-  <accreditable-manager>
+<access-controller type="bypassable">
+  
+  <accreditable-manager type="file">
     <parameter name="directory" value="context:///lenya/pubs/docs-new/config/ac/passwd"/>
   </accreditable-manager>
+  
+  <policy-manager type="document">
+    <policy-manager type="file">
+      <parameter name="directory" value="context:///lenya/pubs/docs-new/config/ac/policies"/>
+    </policy-manager>
+  </policy-manager>
+  
+  <authorizer type="policy"/>
+  
+  <authorizer type="usecase">
+  	<parameter name="configuration" value="context:///lenya/pubs/docs-new/config/ac/usecase-policies.xml"/>
+  </authorizer>
+  
+  <authorizer type="workflow"/>
+  
 </access-controller>
