@@ -1,5 +1,5 @@
 /*
- * $Id: CacheMap.java,v 1.2 2003/07/23 13:21:14 gregor Exp $
+ * $Id: CacheMap.java,v 1.3 2004/02/17 09:41:54 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -53,10 +53,7 @@ import org.apache.log4j.Category;
 /**
  * A map with a maximum capacity. When the map is full, the oldest entry is removed.
  * 
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author <a href="mailto:andreas@apache.org"/>
  */
 public class CacheMap extends HashMap {
     
