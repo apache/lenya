@@ -6,5 +6,6 @@
   <password type="md5">8e07dafd13495561db9063ebe4db4b27</password>
   <groups>
     <group>editor</group>
+    <group>reviewer</group>
   </groups>
 </identity>
