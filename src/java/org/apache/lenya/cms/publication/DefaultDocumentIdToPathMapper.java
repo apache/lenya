@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentIdToPathMapper.java,v 1.13 2003/09/04 17:04:01 andreas Exp $
+$Id: DefaultDocumentIdToPathMapper.java,v 1.14 2003/09/30 09:08:05 egli Exp $
 <License>
 
  ============================================================================
@@ -62,21 +62,32 @@ import java.io.File;
  *
  *
  */
-public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
+public class DefaultDocumentIdToPathMapper
+    implements DocumentIdToPathMapper, PathToDocumentIdMapper {
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
      */
-    public File getFile(Publication publication, String area, String documentId, String language) {
-        File file = new File(getDirectory(publication, area, documentId), getFilename(language));
+    public File getFile(
+        Publication publication,
+        String area,
+        String documentId,
+        String language) {
+        File file =
+            new File(
+                getDirectory(publication, area, documentId),
+                getFilename(language));
         return file;
     }
 
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
-	 */
-    public File getDirectory(Publication publication, String area, String documentId) {
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+     */
+    public File getDirectory(
+        Publication publication,
+        String area,
+        String documentId) {
         assert documentId.startsWith("/");
         // remove leading slash
         documentId = documentId.substring(1);
@@ -116,5 +127,27 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
         }
         return "index" + languageSuffix + ".xml";
     }
-    
+
+    public String getDocumentId(
+        Publication publication,
+        String area,
+        File file)
+        throws DocumentDoesNotExistException {
+
+        String fileName = file.getAbsolutePath();
+        String contentDirName =
+            publication.getContentDirectory(area).getAbsolutePath();
+        if (fileName.startsWith(contentDirName)) {
+            // trim everything up to the documentId
+            String relativeFileName =
+                fileName.substring(contentDirName.length());
+            // trim everything after the documentId
+            return relativeFileName.substring(
+                0,
+                relativeFileName.lastIndexOf("/"));
+        } else {
+            throw new DocumentDoesNotExistException(
+                "No document associated with file" + fileName);
+        }
+    }
 }
