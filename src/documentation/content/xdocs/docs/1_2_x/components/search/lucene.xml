@@ -68,25 +68,31 @@ crawler.xconf needs to have the following elements:
   <scope-url href="http://lenya.apache.org/"/>
 
   <uri-list src="work/search/lucene/uris.txt"/>
-  <htdocs-dump-dir src="work/search/lucene/htdocs_dump/cocoon.apache.org"/>
+  <htdocs-dump-dir src="work/search/lucene/htdocs_dump/lenya.apache.org"/>
 
-  <!-- <robots src="robots.txt" domain="cocoon.apache.org"/> -->
+  <!-- <robots src="robots.txt" domain="lenya.apache.org"/> -->
 </crawler>
 ]]>
 </source>
+<ul>
+    <li>user-agent is the HTTP user agent that will be used for the crawler</li>
+    <li>base-url is the start URL for the crawler</li>
+    <li>scope-url limits the scope of the crawl to that site, or subdirectory</li>
+    <li>uri-list is a reference to a file that will contain all URLs found during the crawl</li>
+    <li>htdocs-dump-dir specifies the directory that will contain the crawled site</li>
+    <li>robots specifies an (optional) robots file that follows the <link href="http://www.robotstxt.org/wc/norobots.html">Robot Exclusion Standard</link></li>
+</ul>
 <p>
-the robots element is optional.
-</p>
-<p>
-In case you don't have access to the server and want to disallow certain  URLs from being crawled, then
-you can also define a "robots.txt" on the crawler side, e.g.
+If you want to fine-tune the crawling (and do not have access to the remote server to put a robots.txt there), then
+you can specify exlusions in a local robots.txt file:
 </p>
 <source>
 <![CDATA[
-# cocoon.apache.org
+# lenya.apache.org
 
 User-agent: *
 Disallow: /there_seems_to_be_a_bug_within_websphinx_Robot_Exclusion.html
+
 #Disallow:
 
 User-agent: lenya
