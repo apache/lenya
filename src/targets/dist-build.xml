@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.16 2004/06/11 14:15:23 roku Exp $ -->
+<!-- $Id$ -->
 
 <project name="dist">
 
@@ -109,9 +109,8 @@
 
     <copy todir="${dist.src.dir}">
       <fileset dir=".">
-        <exclude name="build.properties"/>
+        <exclude name="local.build.properties"/>
         <exclude name=".classpath"/>
-        <exclude name=".cvsignore"/>
         <exclude name=".project"/>
       </fileset>
     </copy>
