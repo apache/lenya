@@ -70,7 +70,7 @@
       <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
       <!-- NOTE: rendertype seems to be 'edit' or 'view' -->
       <map:match pattern="lenya-document-*/*/*/**.xml">
-        <map:mount check-reload="true" reload-method="synchron" src="fallback://doctypes.xmap" uri-prefix="lenya-document-"/>
+        <map:mount check-reload="true" reload-method="synchron" src="{fallback:doctypes.xmap}" uri-prefix="lenya-document-"/>
       </map:match>
     </map:pipeline>
 
