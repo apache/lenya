@@ -18,7 +18,7 @@ components is <a href="http://cocoon.apache.org">Cocoon</a> from the
 Lenya supports inline WYSIWYG editors. Your site editors do
 not have to learn XML. This is possible thanks to the support
 of XML, XSLT and XML Schema on the client side.
-An adminstration interface allows advanced users to
+An administration interface allows advanced users to
 monitor the CMS, and perform configuration tasks.
 </p>
 		
