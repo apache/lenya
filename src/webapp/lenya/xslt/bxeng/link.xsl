@@ -16,7 +16,7 @@
 -->
 
 <!--
- $Id: link.xsl,v 1.11 2004/08/25 14:40:21 andreas Exp $
+ $Id: link.xsl,v 1.12 2004/08/25 14:48:22 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -162,12 +162,6 @@
     </page:page>
 </xsl:template>
 
-<xsl:template name="activate">
-        <xsl:param name="tablanguage"/>
-        <xsl:variable name="docidwithoutlanguage"><xsl:value-of select="substring-before($documentid, '_')"/></xsl:variable>
-   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.usecase=bxeng&amp;lenya.step=link-show</xsl:attribute>
-   <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
-</xsl:template>
 
 <xsl:template name="selecttab">
   <xsl:text>?lenya.usecase=</xsl:text>
@@ -178,40 +172,45 @@
   <xsl:text>&amp;lenya.step=link-show</xsl:text>
 </xsl:template>
 
-  <xsl:template name="languagetabs">
-    <xsl:param name="tablanguages"/>
-    <xsl:choose>
-      <xsl:when test="not(contains($tablanguages,','))">
-        <xsl:call-template name="languagetab">
-          <xsl:with-param name="tablanguage">
-            <xsl:value-of select="$tablanguages"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="head">
-          <xsl:value-of select = "substring-before($tablanguages,',')" />
-        </xsl:variable>
-        <xsl:variable name="tail">
-          <xsl:value-of select = "substring-after($tablanguages,',')" />
-        </xsl:variable>
-        <xsl:call-template name="languagetab">
-          <xsl:with-param name="tablanguage"><xsl:value-of select="$head"/></xsl:with-param>
-        </xsl:call-template>
-        <xsl:call-template name="languagetabs">
-          <xsl:with-param name="tablanguages"><xsl:value-of select="$tail"/></xsl:with-param>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
 
-  <xsl:template name="languagetab">
-    <xsl:param name="tablanguage"/>
-    <td><a id="{$tablanguage}">
-        <xsl:call-template name="activate">
-          <xsl:with-param name="tablanguage"><xsl:value-of select="$tablanguage"/></xsl:with-param>
-        </xsl:call-template>
-      </a></td>
-  </xsl:template>
- 
- </xsl:stylesheet> 
+<xsl:template name="languagetabs">
+  <xsl:param name="tablanguages"/>
+  <xsl:choose>
+    <xsl:when test="not(contains($tablanguages,','))">
+      <xsl:call-template name="languagetab">
+        <xsl:with-param name="tablanguage">
+          <xsl:value-of select="$tablanguages"/>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:variable name="head" select="substring-before($tablanguages,',')" />
+      <xsl:variable name="tail" select="substring-after($tablanguages,',')" />
+      <xsl:call-template name="languagetab">
+        <xsl:with-param name="tablanguage" select="$head"/>
+      </xsl:call-template>
+      <xsl:call-template name="languagetabs">
+        <xsl:with-param name="tablanguages" select="$tail"/>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+
+<xsl:template name="languagetab">
+  <xsl:param name="tablanguage"/>
+  <td><a id="{$tablanguage}">
+      <xsl:call-template name="activate">
+        <xsl:with-param name="tablanguage" select="$tablanguage"/>
+      </xsl:call-template>
+    </a></td>
+</xsl:template>
+
+
+<xsl:template name="activate">
+  <xsl:param name="tablanguage"/>
+  <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.usecase=bxeng&amp;lenya.step=link-show</xsl:attribute>
+  <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
+</xsl:template>
+
+</xsl:stylesheet> 
