@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+>
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
+  </xsp:structure>
+  
+<missing-language>    
+
+    <current-language><input:get-attribute module="page-envelope" as="string" name="document-language"/></current-language>
+    <available-languages>
+      <xsp:logic>
+	Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+	try {
+	  String[] availableLanguages = doc.getLanguages();
+	  for (int i = 0; i &lt; availableLanguages.length; i++) {
+	    String language = availableLanguages[i];
+	  <xsp:content>
+	    <available-language><xsp:expr>language</xsp:expr></available-language>
+	  </xsp:content>
+	  }
+	} catch (DocumentException e) {}
+      </xsp:logic>
+    </available-languages>
+
+  </missing-language>
+</xsp:page>
