@@ -34,6 +34,15 @@ Edit Document <b><xsl:value-of select="$docid"/></b> (Document Type: <xsl:value-
 </tr>
 </table>
 </form>
+
+<a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>:
+<ul>
+<li>&amp;lt; instead of &lt; (left angle bracket <b>must</b> be escaped)</li>
+<li>&amp;amp; instead of &amp; (ampersand <b>must</b> be escaped)</li>
+<li>&amp;gt; instead of > (right angle bracket)</li>
+<li>&amp;apos; instead of ' (single-quote)</li>
+<li>&amp;quot; instead of " (double-quote)</li>
+</ul>
 </body>
 </html>
 </xsl:template>
