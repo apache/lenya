@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.44 2003/09/25 09:31:33 andreas Exp $
+ $Id: info.xsl,v 1.45 2003/10/03 12:36:01 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -341,7 +341,7 @@
 
 
 <xsl:template match="lenya-info:items[@type='user' or @type='group' or @type='iprange']">
-  <select name="accreditable_id" class="lenya-form-element">
+  <select name="accreditable_id" style="width: 200px;">
     <xsl:apply-templates/>
   </select>
 </xsl:template>
@@ -372,7 +372,9 @@
 		</xsl:choose>
 	</xsl:variable>
   <tr>
-  	<td/>
+  	<td>
+  	  <xsl:if test="@type = 'parent' and not(preceding-sibling::lenya-info:credential[@type = 'parent'])">Inherited&#160;Rights:</xsl:if>
+  	</td>
   	<td>
   		<span style="color: {normalize-space($color)}">
   		<xsl:value-of select="@accreditable-id"/>
