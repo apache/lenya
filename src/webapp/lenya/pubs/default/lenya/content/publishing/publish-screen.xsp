@@ -11,21 +11,13 @@
 
 <usecase:publish>
 
-  <xsp:logic>
-      String url = <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
-      String replacementString = "/index.xml";
-      String source = url.replaceFirst("\\.html", replacementString);
-      if (source.startsWith("/")) {
-        source = source.substring(1);
-      }
-  </xsp:logic>
-
   <usecase:document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></usecase:document-id>
   <usecase:uris><xsp-request:get-uri/></usecase:uris>
-  <usecase:sources><xsp:expr>source</xsp:expr></usecase:sources>
+  <usecase:sources><input:get-attribute module="page-envelope" as="string" name="document-path"/></usecase:sources>
   <usecase:publication-id><input:get-attribute module="page-envelope" name="publication-id" as="string"/></usecase:publication-id>
   <usecase:context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></usecase:context-prefix>
   <usecase:area><input:get-attribute module="page-envelope" name="area" as="string"/></usecase:area>
+  <usecase:language><input:get-attribute module="page-envelope" name="document-language" as="string"/></usecase:language>
   
   <!-- FIXME: this should be defined in the workflow schema -->
   <usecase:task-id>publish</usecase:task-id>
