@@ -16,6 +16,7 @@
 </xsl:when>
 <xsl:when test="$depth='1'">
   <xsl:apply-templates select="dir:directory/dir:directory"/>
+  <xsl:apply-templates select="dir:directory/dir:file"/>
 </xsl:when>
 <xsl:when test="$depth='infinity'">
   Depth "infinity" not implemented yet!
@@ -39,7 +40,7 @@
 <D:prop>
 <lp1:resourcetype><D:collection/></lp1:resourcetype>
 <lp1:creationdate>2003-07-21T13:03:09Z</lp1:creationdate>
-<lp1:getlastmodified>Mon, 21 Jul 2003 13:03:09 GMT</lp1:getlastmodified>
+<lp1:getlastmodified><xsl:value-of select="@date"/>  (<xsl:value-of select="@lastModified"/>)</lp1:getlastmodified>
 <lp1:getetag>"945fd7-4f-5c287d40"</lp1:getetag>
 <D:supportedlock>
 <D:lockentry>
@@ -53,6 +54,47 @@
 </D:supportedlock>
 <D:lockdiscovery/>
 <D:getcontenttype>httpd/unix-directory</D:getcontenttype>
+</D:prop>
+<D:status>HTTP/1.1 200 OK</D:status>
+</D:propstat>
+</D:response>
+</xsl:template>
+
+<xsl:template match="dir:file">
+<D:response xmlns:D="DAV:" xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/">
+<xsl:if test="$depth='0'">
+<D:href><xsl:value-of select="$href"/></D:href>
+</xsl:if>
+<xsl:if test="$depth='1'">
+<D:href><xsl:value-of select="$href"/><xsl:value-of select="@name"/></D:href>
+</xsl:if>
+<D:propstat>
+<D:prop>
+<!--
+<D:size><xsl:value-of select="@size"/>D</D:size>
+-->
+<!--
+<D:space-used-bytes><xsl:value-of select="@size"/></D:space-used-bytes>
+-->
+<lp1:resourcetype/>
+<lp1:creationdate>2003-07-21T13:03:09Z</lp1:creationdate>
+<lp1:getlastmodified><xsl:value-of select="@date"/> (<xsl:value-of select="@lastModified"/>)</lp1:getlastmodified>
+<lp1:getetag>"945fd7-4f-5c287d40"</lp1:getetag>
+<!--
+<lp1:size><xsl:value-of select="@size"/>lp1</lp1:size>
+-->
+<D:supportedlock>
+<D:lockentry>
+<D:lockscope><D:exclusive/></D:lockscope>
+<D:locktype><D:write/></D:locktype>
+</D:lockentry>
+<D:lockentry>
+<D:lockscope><D:shared/></D:lockscope>
+<D:locktype><D:write/></D:locktype>
+</D:lockentry>
+</D:supportedlock>
+<D:lockdiscovery/>
+<D:getcontenttype>text/xml</D:getcontenttype>
 </D:prop>
 <D:status>HTTP/1.1 200 OK</D:status>
 </D:propstat>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: webdav.xmap,v 1.1 2003/08/26 22:48:02 michi Exp $ -->
+<!-- CVS: $Id: webdav.xmap,v 1.2 2003/08/26 23:25:11 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -40,6 +40,14 @@
             <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>
+      </map:match>
+      <map:handle-errors type="500"/>
+    </map:pipeline>
+
+    <map:pipeline type="noncaching">
+      <map:match pattern="entries/**.xml">
+        <map:generate src="content/authoring/entries/{1}.xml"/>
+        <map:serialize type="xml"/>
       </map:match>
       <map:handle-errors type="500"/>
     </map:pipeline>
