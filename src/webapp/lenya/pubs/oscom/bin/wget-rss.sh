@@ -2,44 +2,45 @@
 
 PARENT_DIR=`dirname $0`
 echo $PARENT_DIR
+PORT=48080
 
 cd $PARENT_DIR
 cd ../docs/publication/live/rss-rdf
 
-wget -t 1 -O slashdot.rdf.tmp http://localhost:8080/wyona-cms/oscom/http/slashdot.rdf
+wget -t 1 -O slashdot.rdf.tmp http://localhost:$PORT/wyona-cms/oscom/http/slashdot.rdf
 ERROR=`grep -l "xmlns:error" slashdot.rdf.tmp`
 if [ $ERROR ];then
-  echo "ERROR: http://localhost:8080/wyona-cms/oscom/http/slashdot.rdf"
+  echo "ERROR: http://localhost:$PORT/wyona-cms/oscom/http/slashdot.rdf"
   rm slashdot.rdf.tmp
 else
   echo "NO ERROR"
   mv slashdot.rdf.tmp slashdot.rdf
 fi
 
-wget -t 1 -O fm.rdf.tmp http://localhost:8080/wyona-cms/oscom/http/fm.rdf
+wget -t 1 -O fm.rdf.tmp http://localhost:$PORT/wyona-cms/oscom/http/fm.rdf
 ERROR=`grep -l "xmlns:error" fm.rdf.tmp`
 if [ $ERROR ];then
-  echo "ERROR: http://localhost:8080/wyona-cms/oscom/http/fm.rdf"
+  echo "ERROR: http://localhost:$PORT/wyona-cms/oscom/http/fm.rdf"
   rm fm.rdf.tmp
 else
   echo "NO ERROR"
   mv fm.rdf.tmp fm.rdf
 fi
 
-wget -t 1 -O cmsinfo.rdf.tmp http://localhost:8080/wyona-cms/oscom/http/cmsinfo.rdf
+wget -t 1 -O cmsinfo.rdf.tmp http://localhost:$PORT/wyona-cms/oscom/http/cmsinfo.rdf
 ERROR=`grep -l "xmlns:error" cmsinfo.rdf.tmp`
 if [ $ERROR ];then
-  echo "ERROR: http://localhost:8080/wyona-cms/oscom/http/cmsinfo.rdf"
+  echo "ERROR: http://localhost:$PORT/wyona-cms/oscom/http/cmsinfo.rdf"
   rm cmsinfo.rdf.tmp
 else
   echo "NO ERROR"
   mv cmsinfo.rdf.tmp cmsinfo.rdf
 fi
 
-wget -t 1 -O cmswatch.xml.tmp http://localhost:8080/wyona-cms/oscom/http/cmswatch.xml
+wget -t 1 -O cmswatch.xml.tmp http://localhost:$PORT/wyona-cms/oscom/http/cmswatch.xml
 ERROR=`grep -l "xmlns:error" cmswatch.xml.tmp`
 if [ $ERROR ];then
-  echo "ERROR: http://localhost:8080/wyona-cms/oscom/http/cmswatch.xml"
+  echo "ERROR: http://localhost:$PORT/wyona-cms/oscom/http/cmswatch.xml"
   rm cmswatch.xml.tmp
 else
   echo "NO ERROR"

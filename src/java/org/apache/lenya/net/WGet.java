@@ -1,9 +1,12 @@
 package org.wyona.net;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -12,8 +15,10 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Category;
+/*
 import org.apache.regexp.RE;
 import org.apache.regexp.RESyntaxException;
+*/
 
 /**
  * @author Michael Wechner
@@ -46,8 +51,7 @@ public class WGet{
           }
         }
       System.out.println(wget);
-      byte[] response=wget.download(new URL(args[0]),"s/\\/wyona-cms\\/unipublic//g");
-      //wget.saveToFile(new URL(args[0]).getFile(),response);
+      byte[] response=wget.download(new URL(args[0]),"s/\\/wyona-cms\\/oscom//g");
       //System.out.println(".main(): Response from remote server:\n\n"+new String(response));
       }
     catch(MalformedURLException e){
@@ -75,8 +79,22 @@ public class WGet{
   public byte[] download(URL url,String prefixSubstitute) throws IOException, HttpException{
     log.debug(".download(): "+url);
 
+    if(true){
+      return downloadUsingHttpClient(url,prefixSubstitute);
+      }
+/*
+    if(true){
+      return downloadUsingWgetAndSed(url,prefixSubstitute);
+      }
+*/
 
-
+    return null;
+    }
+/**
+ *
+ */
+  public byte[] downloadUsingWgetAndSed(URL url,String prefixSubstitute) throws IOException, HttpException{
+    log.debug(".downloadUsingWgetAndSed(): "+url);
 
     String command="/usr/bin/wget "+"-P"+directory_prefix+" "+"--page-requisites"+" "+url;
     //String command="/usr/bin/wget "+"-P"+directory_prefix+" "+"--convert-links"+" "+"--page-requisites"+" "+url;
@@ -85,11 +103,136 @@ public class WGet{
       byte[] wget_response=runProcess(command);
 
 
-      log.info("SED");
-      File file=new File(directory_prefix+"/127.0.0.1"+url.getFile());
-      //File file=new File(directory_prefix+"/127.0.0.1:8080"+url.getFile());
-      command="/usr/bin/sed --expression="+prefixSubstitute+" "+file.getAbsolutePath();
+      substitutePrefix(directory_prefix+"/127.0.0.1:48080"+url.getFile(),prefixSubstitute);
+      //substitutePrefix(directory_prefix+"/127.0.0.1"+url.getFile(),prefixSubstitute);
+
+
+
+      }
+    catch(Exception e){
+      log.error(".downloadUsingWgetAndSed(): "+e);
+      }
+
+    return null;
+    }
+/**
+ *
+ */
+  public byte[] downloadUsingHttpClient(URL url,String prefixSubstitute) throws IOException, HttpException{
+    log.debug(".downloadUsingHttpClient(): "+url);
+
+
+/*
+    HttpURLConnection httpConnection=(HttpURLConnection)url.openConnection();
+    InputStream in=httpConnection.getInputStream();
+    byte[] buffer=new byte[1024];
+    int bytes_read;
+    ByteArrayOutputStream bufferOut=new ByteArrayOutputStream();
+    while((bytes_read=in.read(buffer)) != -1){
+      bufferOut.write(buffer,0,bytes_read);
+      }
+    byte[] sresponse=bufferOut.toByteArray();
+    httpConnection.disconnect();
+*/
+    
+/*
+    HttpClient httpClient=new HttpClient();
+
+    HttpMethod httpMethod=new GetMethod();
+    //httpMethod.setRequestHeader("Content-type","text/plain");
+    httpMethod.setPath(url.getPath());
+
+    httpClient.startSession(url);
+    httpClient.executeMethod(httpMethod);
+    byte[] sresponse=httpMethod.getResponseBody();
+    httpClient.endSession();
+*/
+
+
+    byte[] sresponse=getResource(url);
+    log.debug(".downloadUsingHttpClient(): Response from remote server: "+new String(sresponse));
+
+    File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
+    saveToFile(file.getAbsolutePath(),sresponse);
+
+    substitutePrefix(file.getAbsolutePath(),prefixSubstitute);
+
+    getLinks(url);
+
+    return sresponse;
+    }
+/**
+ *
+ */
+  public byte[] getResource(URL url) throws IOException, HttpException{
+    log.debug(".getResource(): "+url);
+
+
+    HttpURLConnection httpConnection=(HttpURLConnection)url.openConnection();
+    InputStream in=httpConnection.getInputStream();
+    byte[] buffer=new byte[1024];
+    int bytes_read;
+    ByteArrayOutputStream bufferOut=new ByteArrayOutputStream();
+    while((bytes_read=in.read(buffer)) != -1){
+      bufferOut.write(buffer,0,bytes_read);
+      }
+    byte[] sresponse=bufferOut.toByteArray();
+    httpConnection.disconnect();
+    
+/*
+    HttpClient httpClient=new HttpClient();
+
+    HttpMethod httpMethod=new GetMethod();
+    //httpMethod.setRequestHeader("Content-type","text/plain");
+    httpMethod.setPath(url.getPath());
+
+    httpClient.startSession(url);
+    httpClient.executeMethod(httpMethod);
+    byte[] sresponse=httpMethod.getResponseBody();
+    httpClient.endSession();
+*/
+
+    //log.debug(".getResource(): Response from remote server: "+new String(sresponse));
+    return sresponse;
+    }
+/**
+ *
+ */
+  public URL[] getLinks(URL url) throws IOException, HttpException{
+    log.debug(".getLinks(): "+url);
+
+    java.io.BufferedReader br=null;
+    try{
+      String linkViewQuery="cocoon-view=links";
+      String sURL = url.getFile();
+      URL links = new URL(url, sURL + ((sURL.indexOf("?") == -1) ? "?" : "&") + linkViewQuery);
+      java.net.URLConnection links_url_connection = links.openConnection();
+      java.io.InputStream is = links_url_connection.getInputStream();
+      br = new java.io.BufferedReader(new java.io.InputStreamReader(is));
+      String line;
+      while((line = br.readLine()) != null){
+        log.debug(".getLinks(): Link: "+line);
+        }
+      }
+    catch(Exception e){
+      log.error(".getLinks(): "+e);
+      }
+
+    return null;
+    }
+/**
+ *
+ */
+  public byte[] substitutePrefix(String filename,String prefixSubstitute) throws IOException, HttpException{
+    log.debug(".substitutePrefix(): "+filename+" "+prefixSubstitute);
+
+    try{
+      //File file=new File(directory_prefix+"/127.0.0.1"+url.getFile());
+      //File file=new File(directory_prefix+"/127.0.0.1:48080"+url.getFile());
+      File file=new File(filename);
+      String command="/usr/bin/sed --expression="+prefixSubstitute+" "+file.getAbsolutePath();
       byte[] wget_response_sed=runProcess(command);
+
       java.io.ByteArrayInputStream bain=new java.io.ByteArrayInputStream(wget_response_sed);
       FileOutputStream fout=new FileOutputStream(file.getAbsolutePath());
       int bytes_read=0;
@@ -99,23 +242,10 @@ public class WGet{
         }
       }
     catch(Exception e){
-      log.error(".download(): "+e);
+      log.error(".substitutePrefix(): "+e);
       }
 
-
-    HttpClient httpClient=new HttpClient();
-
-    HttpMethod httpMethod=new GetMethod();
-    httpMethod.setRequestHeader("Content-type","text/plain");
-    httpMethod.setPath(url.getPath());
-
-    httpClient.startSession(url);
-    httpClient.executeMethod(httpMethod);
-    byte[] sresponse=httpMethod.getResponseBody();
-    httpClient.endSession();
-
-    //log.debug(".download(): Response from remote server: "+new String(sresponse));
-    return sresponse;
+    return null;
     }
 /**
  *
@@ -127,17 +257,20 @@ public class WGet{
  *
  */
   public void saveToFile(String filename,byte[] bytes) throws FileNotFoundException, IOException{
-    File file=new File(directory_prefix+filename);
+    File file=new File(filename);
     File parent=new File(file.getParent());
     if(!parent.exists()){
+      log.info(".saveToFile(): Directory will be created: "+parent.getAbsolutePath());
       parent.mkdirs();
       }
+    log.debug(".saveToFile(): Filename: "+file.getAbsolutePath());
     FileOutputStream out=new FileOutputStream(file.getAbsolutePath());
     out.write(bytes);
     }
 /**
  *
  */
+/*
   public String grep(String pattern,String string){
     try{
       RE regexp=new RE(pattern);
@@ -157,6 +290,7 @@ public class WGet{
       return null;
       }
     }
+*/
 /**
  *
 */
@@ -171,7 +305,9 @@ public class WGet{
     while((bytes_read=in.read(buffer)) != -1){
       baout.write(buffer,0,bytes_read);
       }
-    log.debug(".download(): InputStream: %%%S"+baout.toString()+"E%%%");
+    if(baout.toString().length() > 0){
+      log.debug(".runProcess(): %%%InputStream:START"+baout.toString()+"END:InputStream%%%");
+      }
 
 
     java.io.InputStream in_e=process.getErrorStream();
@@ -179,7 +315,9 @@ public class WGet{
     while((bytes_read=in_e.read(buffer)) != -1){
       baout_e.write(buffer,0,bytes_read);
       }
-    log.error(".download(): ErrorStream: ###S"+baout_e.toString()+"E###");
+    if(baout_e.toString().length() > 0){
+      log.error(".runProcess(): ###ErrorStream:START"+baout_e.toString()+"END:ErrorStream###");
+      }
 
     return baout.toByteArray();
     }

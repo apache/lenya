@@ -18,9 +18,7 @@
         <item href="xopus2/index.html">Edit&#160;with&#160;Xopus2</item>
         <item href="/wyona-cms/bitfluxeditor/index.html?url-xml=/wyona-cms/oscom/bitflux/home.xml&amp;url-xslt=/wyona-cms/oscom/bitflux/home.xsl&amp;url-xsd=/wyona-cms/oscom/bitflux/home.xsd&amp;url-css=/wyona-cms/oscom/bitflux/home.css&amp;url-post=/wyona-cms/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
         <item href="wyona/publishScreen?uris=/wyona-cms/oscom/index.html&amp;sources=/home.xml&amp;server-port=1969">Publish</item>
-<!--
-        <item href="wyona/publishScreen?docid=/wyona-cms/oscom/index.html">Export&#160;Live</item>
--->
+        <item href="wyona/publishScreen?uris=/wyona-cms/oscom/index.html">Export&#160;Live</item>
       </block>
       <separator>
         <item>-----------------</item>

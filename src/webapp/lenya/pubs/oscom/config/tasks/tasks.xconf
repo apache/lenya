@@ -34,5 +34,10 @@
     <label>Command Line</label>
     <parameter name="command" value="date"/>
   </task>
+  
+  <task id="downloadRSS" class="org.wyona.cms.task.CommandLineTask">
+    <label>Download RSS</label>
+    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/oscom/bin/wget-rss.sh"/>
+  </task>
 
 </tasks>

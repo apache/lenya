@@ -9,6 +9,8 @@
   <sch:publication name="oscom">
     <sch:jobs>
 
+
+<!-- Say Hello -->
       <sch:job>
         <sch:task>
           <sch:parameter name="sources" value="/weekly-column-body.xml"/>
@@ -40,6 +42,9 @@
         </sch:trigger>
       </sch:job>
 
+
+<!-- Print the Date -->
+<!--
       <sch:job>
         <sch:task>
           <sch:parameter name="sources" value="/weekly-column-body.xml"/>
@@ -60,7 +65,53 @@
           <sch:parameter name="expression" value="47 * * * * ?"/>
         </sch:trigger>
       </sch:job>
+-->
+
+
+<!-- Download the various RSS -->
+<!--
+      <sch:job>
+        <sch:task>
+          <sch:parameter name="id" value="downloadRSS"/>
+          <sch:parameter name="server-uri" value="http://www.wyona.org"/>
+          <sch:parameter name="publication-id" value="oscom"/>
+          <sch:parameter name="server-port" value="1313"/>
+          <sch:parameter name="servlet-context" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
+        </sch:task>
+        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="group" value="oscom"/>
+        <sch:parameter name="id" value="job_01037570742551"/>
+        <sch:parameter name="documentUri" value="index.html"/>
+        <sch:trigger type="repeated">
+          <sch:parameter name="expression" value="0 0,10,20,30,40,50 * * * ?"/>
+        </sch:trigger>
+      </sch:job>
+-->
+
+
+<!-- Export the OSCOM Homepage -->
+<!--
+      <sch:job>
+        <sch:task>
+          <sch:parameter name="id" value="export"/>
+          <sch:parameter name="server-uri" value="http://127.0.0.1"/>
+          <sch:parameter name="publication-id" value="oscom"/>
+          <sch:parameter name="server-port" value="48080"/>
+          <sch:parameter name="servlet-context" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
+          <sch:parameter name="uris" value="/wyona-cms/oscom/index.html,/wyona-cms/oscom/weekly-column.html"/>
+        </sch:task>
+        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="group" value="oscom"/>
+        <sch:parameter name="id" value="job_01037570742550"/>
+        <sch:parameter name="documentUri" value="index.html"/>
+        <sch:trigger type="repeated">
+          <sch:parameter name="expression" value="0 3,13,23,33,43,53 * * * ?"/>
+        </sch:trigger>
+      </sch:job>
+-->
 
     </sch:jobs>
   </sch:publication>
+
+
 </sch:scheduler>

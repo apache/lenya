@@ -34,7 +34,7 @@ import org.wyona.cms.publishing.PublishingEnvironment;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.12 2002/11/22 10:12:19 ah Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.13 2002/11/30 00:05:43 michicms Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -78,23 +78,12 @@ public class LoadQuartzServlet extends HttpServlet {
         // FIXME: Read from file. This is just an example yet
         Date startTime = null;
         try{
-          //org.dom4j.Document doc_conf=new org.dom4j.io.SAXReader().read("file:"+this.servletContextPath+"/wyona/cms/docs/cms/scheduler.xconf");
-          org.dom4j.Document doc_conf
-            = new org.dom4j.io.SAXReader().read(
-            "file:"+this.servletContextPath+schedulerConfigurations);
+          org.dom4j.Document doc_conf = new org.dom4j.io.SAXReader().read("file:"+this.servletContextPath+schedulerConfigurations);
 
-          // Add Cron Job (seconds,minutes,hours,day of month,months,day of week)
-          //sched.addJob("no_pub_id","no_doc_id","org.wyona.cms.scheduler.CommandLineJob","0 * * * * ?");
-          //scheduler.addJob("no_pub_id","no_doc_id","org.wyona.cms.scheduler.HelloWorldJob","30 * * * * ?");
           }
         catch(NumberFormatException e){
           log.error(".process(): " , e);
           }
-/*
-        catch(ClassNotFoundException e){
-          log.error(".process(): "+e);
-          }
-*/
         catch(org.dom4j.DocumentException e){
           log.error(".process(): "+e);
           }

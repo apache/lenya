@@ -17,7 +17,7 @@ public class CommandLineTask extends AbstractTask{
  * Execute the task. All parameters must have been set with init(). 
  */
   public void execute(String path) {
-    String command=getParameters().getParameter("command","pwd");
+    String command=getParameters().getParameter("command","echo \"Exception: No command parameter\"");
     log.debug(".execute(): " + command);
 
     try{
@@ -31,7 +31,7 @@ public class CommandLineTask extends AbstractTask{
         baout.write(buffer,0,bytes_read);
         }
       if(baout.toString().length() > 0){
-        log.debug(".execute(): InputStream: %%%S"+baout.toString()+"E%%%");
+        log.debug(".execute(): %%%InputStream:S"+baout.toString()+"END:InputStream%%%");
         }
 
       java.io.InputStream in_e=process.getErrorStream();
@@ -40,7 +40,7 @@ public class CommandLineTask extends AbstractTask{
         baout_e.write(buffer,0,bytes_read);
         }
       if(baout_e.toString().length() > 0){
-        log.error(".execute(): ErrorStream: ###S"+baout_e.toString()+"E###");
+        log.error(".execute(): ###ErrorStream:START"+baout_e.toString()+"END:ErrorStream###");
         }
       }
     catch(java.io.IOException e){
