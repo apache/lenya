@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: atomapi.xmap,v 1.5 2003/09/11 17:56:16 michi Exp $ -->
+<!-- CVS: $Id: atomapi.xmap,v 1.6 2003/09/11 18:00:34 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -32,11 +32,14 @@
         <map:select type="request-parameter">
            <map:parameter name="parameter-name" value="atom-all"/>
           <map:when test="">
-            <map:generate src="content/search-results.xml"/>
+            <map:generate src="http://127.0.0.1:8080/lenya/blog/live/feeds/all/index.xml"/>
+<!--            <map:generate src="cocoon://authoring/feeds/all/index.xml"/> -->
+            <map:transform src="xslt/atomapi/search.xsl"/>
             <map:serialize type="xml"/>
           </map:when>
           <map:otherwise>
-            <map:generate src="sitemap.xmap"/>
+            <map:generate src="cocoon://authoring/feeds/all/index.xml"/>
+            <map:transform src="xslt/atomapi/search.xsl"/>
             <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>

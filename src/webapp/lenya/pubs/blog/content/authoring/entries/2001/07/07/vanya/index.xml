@@ -16,7 +16,7 @@
     </echo:contributor>
     <!-- and another couple contributors could go here -->
 
-    <echo:link>http://bob.blog/28</echo:link>
+    <echo:link>http://127.0.0.1:8080/lenya/blog/</echo:link>
     <echo:id>2001/07/07/vanya</echo:id>
 
     <echo:created>2003-02-05T12:29:29Z</echo:created>
