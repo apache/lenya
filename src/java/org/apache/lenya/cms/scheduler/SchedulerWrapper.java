@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.20 2003/08/29 11:35:21 andreas Exp $
+$Id: SchedulerWrapper.java,v 1.21 2003/08/29 12:53:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -316,6 +316,7 @@ public class SchedulerWrapper {
      */
     protected void writeSnapshot(String jobGroup) throws SchedulerException {
 
+        log.debug("Writing job snapshot for group [" + jobGroup + "]");
         File jobsFile = getJobsFile(jobGroup);
 
         try {
@@ -323,7 +324,7 @@ public class SchedulerWrapper {
 
             if (!directory.exists()) {
                 directory.mkdirs();
-                log.info("Creating job snapshot directory: " + directory.getPath());
+                log.debug("Creating job snapshot directory: " + directory.getPath());
             }
 
             jobsFile.createNewFile();
@@ -432,7 +433,8 @@ public class SchedulerWrapper {
         for (int nameIndex = 0; nameIndex < jobNames.length; nameIndex++) {
             JobDetail jobDetail = getScheduler().getJobDetail(jobNames[nameIndex], jobGroup);
 
-            Element jobElement = createJob(jobDetail).save(helper, jobDetail);
+            ServletJob job = ServletJobFactory.createJob(jobDetail.getJobClass());
+            Element jobElement = job.save(helper, jobDetail);
             jobsElement.appendChild(jobElement);
 
             Trigger trigger = getTrigger(jobNames[nameIndex], jobGroup);
@@ -443,23 +445,6 @@ public class SchedulerWrapper {
             }
         }
         return jobsElement;
-    }
-
-    /**
-     * Creates a job.
-     * @param jobDetail The job information.
-     * @return A servlet job.
-     */
-    protected ServletJob createJob(JobDetail jobDetail) {
-        Class cl = jobDetail.getJobClass();
-
-        try {
-            return (ServletJob) cl.newInstance();
-        } catch (Exception e) {
-            log.error("Creating job failed: ", e);
-
-            return null;
-        }
     }
 
     /**
