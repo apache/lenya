@@ -126,7 +126,7 @@
             </xsl:if>
 	    <xsl:if test="$insertimage = 'true'">
 	      <tr>
-		<td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/></td>
+		<td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
 	      </tr>
 	    </xsl:if>
 	    <tr><td>&#160;</td></tr>
@@ -187,7 +187,7 @@
 		</tr>
 		<xsl:if test="$insertimage = 'true'">
 		  <tr>
-		    <td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/></td>
+		    <td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
 		  </tr>
 		</xsl:if>
 		<tr><td>&#160;</td></tr>
