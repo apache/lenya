@@ -1,7 +1,47 @@
+/*
+ * $Id: ReTokenizeFile.java,v 1.5 2003/02/07 12:14:22 ah Exp $
+ * <License>
+ * The Apache Software License
+ *
+ * Copyright (c) 2002 wyona. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice, this
+ *    list of conditions and the following disclaimer in the documentation and/or
+ *    other materials provided with the distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this software must
+ *    display the following acknowledgment: "This product includes software developed
+ *    by wyona (http://www.wyona.org)"
+ *
+ * 4. The name "wyona" must not be used to endorse or promote products derived from
+ *    this software without prior written permission. For written permission, please
+ *    contact contact@wyona.org
+ *
+ * 5. Products derived from this software may not be called "wyona" nor may "wyona"
+ *    appear in their names without prior written permission of wyona.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
+ *    "This product includes software developed by wyona (http://www.wyona.org)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY wyona "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
+ * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
+ * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. wyona WILL NOT BE LIABLE FOR ANY DAMAGES
+ * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL wyona BE LIABLE
+ * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF wyona HAS
+ * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. wyona WILL NOT BE LIABLE FOR ANY
+ * THIRD PARTY CLAIMS AGAINST YOU.
+ *
+ * Wyona includes software developed by the Apache Software Foundation, W3C,
+ * DOM4J Project, BitfluxEditor and Xopus.
+ * </License>
+ */
 package org.wyona.lucene;
-
-import java.io.File;
-import java.io.*;
 
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
@@ -9,117 +49,155 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
 import org.wyona.lucene.html.HTMLParser;
 
+import java.io.*;
+import java.io.File;
+
+
 /**
+ * DOCUMENT ME!
  *
+ * @author $author$
+ * @version $Revision: 1.5 $
  */
-public class ReTokenizeFile{
-/**
- *
- */
-  public static void main(String[] args){
-    if(args.length < 2){
-      System.err.println("Usage: ReTokenizeFile filename word1 word2 ...");
-      return;
-      }
- 
-    try{
-      String[] words=new String[args.length-1]; //{"Cocoon","Wyona"};
-      for(int i=1;i<args.length;i++){
-        words[i-1]=args[i];
+public class ReTokenizeFile {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param args DOCUMENT ME!
+     */
+    public static void main(String[] args) {
+        if (args.length < 2) {
+            System.err.println("Usage: ReTokenizeFile filename word1 word2 ...");
+
+            return;
         }
 
-      String s=null;
+        try {
+            String[] words = new String[args.length - 1]; //{"Cocoon","Wyona"};
 
-/*
-      s=new ReTokenizeFile().reTokenize(new File(args[0]));
-*/
-      s=new ReTokenizeFile().getExcerpt(new File(args[0]),words);
-      System.err.println(".main(): Excerpt: "+s);
-      }
-    catch(Exception e){
-      System.err.println(".main(): "+e);
-      }
-    }
-/**
- *
- */
-  public String reTokenize(File file) throws Exception{
-    //System.out.println("ReTokenizeFile.reTokenize(File): Re-tokenize "+file);
-    TokenStream ts=new StandardAnalyzer().tokenStream(new HTMLParser(file).getReader());
+            for (int i = 1; i < args.length; i++) {
+                words[i - 1] = args[i];
+            }
 
-    Token token=null;
-    while((token=ts.next()) != null){
-      System.out.println("ReTokenizeFile.reTokenize(File): "+token.termText()+" "+token.startOffset()+" "+token.endOffset()+" "+token.type());
-      }
+            String s = null;
 
-    return file.getAbsolutePath();
-    }
-/**
- *
- */
-  public String getExcerpt(File file,String[] words) throws FileNotFoundException, IOException{
-    if(file.getName().substring(file.getName().length()-4).equals(".pdf")){
-      file=new File(file.getAbsolutePath()+".txt");
-      }
-
-    //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Get excerpt from "+file);
-
-    java.io.Reader reader=new HTMLParser(file).getReader();
-    char[] chars=new char[1024];
-    int chars_read;
-    java.io.Writer writer=new java.io.StringWriter();
-    while((chars_read=reader.read(chars)) > 0){
-      writer.write(chars,0,chars_read);
-      }
-    String html=writer.toString();
-
-/*
-    InputStream in=new FileInputStream(file.getAbsolutePath());
-    byte[] buffer=new byte[1024];
-    int bytes_read;
-    ByteArrayOutputStream bufferOut=new ByteArrayOutputStream();
-    while((bytes_read=in.read(buffer)) != -1){
-      bufferOut.write(buffer,0,bytes_read);
-      }
-    in.close();
-    String html=bufferOut.toString();
-*/
-
-
-    //if(true) return html;
-
-    int index=-1;
-    for(int i=0;i<words.length;i++){
-      index=html.toLowerCase().indexOf(words[i].toLowerCase());
-      if(index >= 0){
-        //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Word matched: "+words[i]);
-
-        int offset=100;
-        int start=index-offset;
-        if(start < 0) start=0;
-        int end=index+words[i].length()+offset;
-        if(end >= html.length()) end=html.length()-1;
-
-        return html.substring(start,end);
+            /*
+                  s=new ReTokenizeFile().reTokenize(new File(args[0]));
+            */
+            s = new ReTokenizeFile().getExcerpt(new File(args[0]), words);
+            System.err.println(".main(): Excerpt: " + s);
+        } catch (Exception e) {
+            System.err.println(".main(): " + e);
         }
-      }
-
-    //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): No word matches: "+index);
-    return null;
     }
-/**
- *
- */
-  public String emphasizeAsXML(String string,String[] words){
-    String emphasizedString="... Hello <word>World</word>! ...";
-    for(int i=0;i<words.length;i++){
-      int index=string.toLowerCase().indexOf(words[i].toLowerCase());
-      if(index >= 0){
-        emphasizedString=string.substring(0,index)+"<word>"+words[i]+"</word>"+string.substring(index+words[i].length());
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param file DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public String reTokenize(File file) throws Exception {
+        //System.out.println("ReTokenizeFile.reTokenize(File): Re-tokenize "+file);
+        TokenStream ts = new StandardAnalyzer().tokenStream(new HTMLParser(file).getReader());
+
+        Token token = null;
+
+        while ((token = ts.next()) != null) {
+            System.out.println("ReTokenizeFile.reTokenize(File): " + token.termText() + " " +
+                token.startOffset() + " " + token.endOffset() + " " + token.type());
         }
-      }
 
-    return "<excerpt>"+emphasizedString+"</excerpt>";
-    //return "<excerpt>... hallo <word>Levi</word>. Wie sp&auml;t ist es? Gute ...</excerpt>";
+        return file.getAbsolutePath();
     }
-  }
+
+    /**
+     *
+     */
+    public String getExcerpt(File file, String[] words)
+        throws FileNotFoundException, IOException {
+        if (file.getName().substring(file.getName().length() - 4).equals(".pdf")) {
+            file = new File(file.getAbsolutePath() + ".txt");
+        }
+
+        //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Get excerpt from "+file);
+        java.io.Reader reader = new HTMLParser(file).getReader();
+        char[] chars = new char[1024];
+        int chars_read;
+        java.io.Writer writer = new java.io.StringWriter();
+
+        while ((chars_read = reader.read(chars)) > 0) {
+            writer.write(chars, 0, chars_read);
+        }
+
+        String html = writer.toString();
+
+        /*
+            InputStream in=new FileInputStream(file.getAbsolutePath());
+            byte[] buffer=new byte[1024];
+            int bytes_read;
+            ByteArrayOutputStream bufferOut=new ByteArrayOutputStream();
+            while((bytes_read=in.read(buffer)) != -1){
+              bufferOut.write(buffer,0,bytes_read);
+              }
+            in.close();
+            String html=bufferOut.toString();
+        */
+
+        //if(true) return html;
+        int index = -1;
+
+        for (int i = 0; i < words.length; i++) {
+            index = html.toLowerCase().indexOf(words[i].toLowerCase());
+
+            if (index >= 0) {
+                //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Word matched: "+words[i]);
+                int offset = 100;
+                int start = index - offset;
+
+                if (start < 0) {
+                    start = 0;
+                }
+
+                int end = index + words[i].length() + offset;
+
+                if (end >= html.length()) {
+                    end = html.length() - 1;
+                }
+
+                return html.substring(start, end);
+            }
+        }
+
+        //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): No word matches: "+index);
+        return null;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param string DOCUMENT ME!
+     * @param words DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String emphasizeAsXML(String string, String[] words) {
+        String emphasizedString = "... Hello <word>World</word>! ...";
+
+        for (int i = 0; i < words.length; i++) {
+            int index = string.toLowerCase().indexOf(words[i].toLowerCase());
+
+            if (index >= 0) {
+                emphasizedString = string.substring(0, index) + "<word>" + words[i] + "</word>" +
+                    string.substring(index + words[i].length());
+            }
+        }
+
+        return "<excerpt>" + emphasizedString + "</excerpt>";
+
+        //return "<excerpt>... hallo <word>Levi</word>. Wie sp&auml;t ist es? Gute ...</excerpt>";
+    }
+}

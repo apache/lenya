@@ -1,15 +1,53 @@
 /*
- * ArticlePublisher.java
+ * $Id: ArticleTask.java,v 1.4 2003/02/07 12:14:05 ah Exp $
+ * <License>
+ * The Apache Software License
  *
- * Created on January 18, 2003, 11:25 AM
+ * Copyright (c) 2002 wyona. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice, this
+ *    list of conditions and the following disclaimer in the documentation and/or
+ *    other materials provided with the distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this software must
+ *    display the following acknowledgment: "This product includes software developed
+ *    by wyona (http://www.wyona.org)"
+ *
+ * 4. The name "wyona" must not be used to endorse or promote products derived from
+ *    this software without prior written permission. For written permission, please
+ *    contact contact@wyona.org
+ *
+ * 5. Products derived from this software may not be called "wyona" nor may "wyona"
+ *    appear in their names without prior written permission of wyona.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
+ *    "This product includes software developed by wyona (http://www.wyona.org)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY wyona "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
+ * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
+ * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. wyona WILL NOT BE LIABLE FOR ANY DAMAGES
+ * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL wyona BE LIABLE
+ * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF wyona HAS
+ * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. wyona WILL NOT BE LIABLE FOR ANY
+ * THIRD PARTY CLAIMS AGAINST YOU.
+ *
+ * Wyona includes software developed by the Apache Software Foundation, W3C,
+ * DOM4J Project, BitfluxEditor and Xopus.
+ * </License>
  */
-
 package ch.computerworld.wyona.cms;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
+
 import org.apache.cocoon.Constants;
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.Redirector;
@@ -17,321 +55,376 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedOutputStream; 
-import java.io.FileOutputStream;
+import org.apache.log4j.Category;
 
-import java.net.URL;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Date;
-import java.util.List;
-
-import org.dom4j.DocumentHelper;
 import org.dom4j.Document;
+import org.dom4j.DocumentFactory;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.XPath;
+
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-import org.dom4j.io.OutputFormat;
 
-import org.wyona.xml.DOM4JUtil;
-import org.wyona.util.DateUtil;
-import org.apache.log4j.Category;
-import org.dom4j.DocumentFactory;
-import org.dom4j.XPath;
 import org.wyona.cms.publishing.DefaultFilePublisher;
 import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.task.AbstractTask;
 
+import org.wyona.util.DateUtil;
+
+import org.wyona.xml.DOM4JUtil;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+
+import java.net.URL;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
 
 /**
+ * DOCUMENT ME!
  *
- * @author  gjr
+ * @author gjr
  */
+public class ArticleTask extends AbstractTask {
+    static Category log = Category.getInstance(ArticleTask.class);
 
-
-public class ArticleTask
-    extends AbstractTask {
-    
-    static Category log=Category.getInstance(ArticleTask.class);
-
-    public void prepareArticle(
-        String publicationPath,
-        String authoringPath,
-        String[] sources) {
-
-	String absoluteAuthoringPath = publicationPath + authoringPath + "/";
+    /**
+     * DOCUMENT ME!
+     *
+     * @param publicationPath DOCUMENT ME!
+     * @param authoringPath DOCUMENT ME!
+     * @param sources DOCUMENT ME!
+     */
+    public void prepareArticle(String publicationPath, String authoringPath, String[] sources) {
+        String absoluteAuthoringPath = publicationPath + authoringPath + "/";
 
         for (int i = 0; i < sources.length; i++) {
             File sourceFile = new File(absoluteAuthoringPath + sources[i]);
+
             try {
-                setRevisionDateAndId(absoluteAuthoringPath + sources[i]); 
+                setRevisionDateAndId(absoluteAuthoringPath + sources[i]);
+
                 addToHeadlines(sources[i], absoluteAuthoringPath);
+
                 boolean published = setFirstPublishedDate(absoluteAuthoringPath + sources[i]);
+
                 log.info("Article prepared: " + sourceFile);
             }
-            catch (Exception e) {
-                log.error("EXCEPTION: Article not prepared ("
-                    + sourceFile + "): ", e);
+             catch (Exception e) {
+                log.error("EXCEPTION: Article not prepared (" + sourceFile + "): ", e);
             }
         }
-                
     }
 
-
-    /** insert the article in the frontpage
+    /**
+     * insert the article in the frontpage
+     *
      * @param docId id to determine the article
      * @param domainPath path for the different domain (authoring or live)
+     *
+     * @throws Exception DOCUMENT ME!
      */
-
-
-    private void addToHeadlines(String docId, String domainPath) throws Exception{
-
+    private void addToHeadlines(String docId, String domainPath)
+        throws Exception {
         File articleFile = new File(domainPath + docId);
+
         log.debug("\nArticle file: " + articleFile.getPath());
-        
+
         Document articleDocument = new SAXReader().read(articleFile);
-        
-        String headlinePath =
-            "/article" +
-            "/head" +
-            "/title";
-        
+
+        String headlinePath = "/article" + "/head" + "/title";
+
         DocumentFactory factory = DocumentFactory.getInstance();
+
         XPath headlineXPath = factory.createXPath(headlinePath);
+
         List nodes = headlineXPath.selectNodes(articleDocument, headlineXPath);
+
         Element headlineElement = (Element) nodes.get(0);
+
         String title = headlineElement.getText();
-        
+
         // article's id format, e.g. /news/article.xml 
         // FIXME: should be readen from the article, but now:
-        StringTokenizer st=new StringTokenizer(docId,"/");
-        st.nextToken();
-        String id=st.nextToken();
-        id=id.substring(0,id.length()-4); // Remove ".xml" extension
+        StringTokenizer st = new StringTokenizer(docId, "/");
 
-        String headlines_filename=domainPath + ComputerworldEnvironment.headlinesFile;
-        log.debug(".addToHeadline(): "+headlines_filename);
-        Document headlinesDocument = getDocument(domainPath + ComputerworldEnvironment.headlinesFile);
+        st.nextToken();
+
+        String id = st.nextToken();
+
+        id = id.substring(0, id.length() - 4); // Remove ".xml" extension
+
+        String headlines_filename = domainPath + ComputerworldEnvironment.headlinesFile;
+
+        log.debug(".addToHeadline(): " + headlines_filename);
+
+        Document headlinesDocument = getDocument(domainPath +
+                ComputerworldEnvironment.headlinesFile);
+
         insertElement(headlinesDocument, "/articles", "article", id, title);
+
         writeDocument(domainPath + ComputerworldEnvironment.headlinesFile, headlinesDocument);
-                
     }
-    
+
     void writeDocument(String fileName, Document document) {
         // write the headlines
-        File parent=new File(new File(fileName).getParent());
-        if(!parent.exists()){
+        File parent = new File(new File(fileName).getParent());
+
+        if (!parent.exists()) {
             parent.mkdirs();
         }
 
         OutputFormat format = OutputFormat.createPrettyPrint();
+
         try {
-          XMLWriter writer = new XMLWriter(
-                             new BufferedOutputStream(
-                             new FileOutputStream(fileName)), format);
-          writer.write(document);
-          writer.close();
+            XMLWriter writer = new XMLWriter(new BufferedOutputStream(
+                        new FileOutputStream(fileName)), format);
+
+            writer.write(document);
+
+            writer.close();
         } catch (Exception e) {
-          log.debug(e);
-        }                                                                                                                                     
-    }                                                                                                                                       
+            log.debug(e);
+        }
+    }
 
     protected Document getDocument(String filePath) {
         //headlines in domain 
         // FIXME    headlinesPath=domainPath+conf.getChild("headlines").getAttribute("href");
         String filename = filePath;
+
         log.debug("filename: " + filename);
-        
+
         try {
             Document document = new SAXReader().read("file:" + filename);
+
             return document;
         }
-        catch(Exception e) {
+         catch (Exception e) {
             log.error("Can't get document: ", e);
+
             return null;
         }
     }
-    
-    protected void insertElement(
-            Document document,
-            String parentXPath,
-            String elementName,
-            String id,
-            String title) {
-                
-        DocumentHelper documentHelper = new DocumentHelper();
-                
-        Element newArticleElement
-            = (Element) document.selectSingleNode(
-                parentXPath + "/" + elementName + "[@id='" + id + "']"); 
-        
-        if (newArticleElement != null) {
-          log.info("the article  "+id+" is already on the frontpage");
-          newArticleElement.setText(title);
-        } else {
-          newArticleElement = documentHelper.createElement(elementName);
-          newArticleElement.addAttribute("id", id);
-          newArticleElement.setText(title);
-          Element articlesElement = (Element) document.selectSingleNode(parentXPath); 
-          List children = articlesElement.elements();
-          if (children.size() > 0)
-            children.add(0, newArticleElement);
-          else
-            children.add(newArticleElement);
-        }
 
+    protected void insertElement(Document document, String parentXPath, String elementName,
+        String id, String title) {
+        DocumentHelper documentHelper = new DocumentHelper();
+
+        Element newArticleElement
+             = (Element) document.selectSingleNode(parentXPath + "/" + elementName + "[@id='" + id +
+                "']");
+
+        if (newArticleElement != null) {
+            log.info("the article  " + id + " is already on the frontpage");
+
+            newArticleElement.setText(title);
+        } else {
+            newArticleElement = documentHelper.createElement(elementName);
+
+            newArticleElement.addAttribute("id", id);
+
+            newArticleElement.setText(title);
+
+            Element articlesElement = (Element) document.selectSingleNode(parentXPath);
+
+            List children = articlesElement.elements();
+
+            if (children.size() > 0) {
+                children.add(0, newArticleElement);
+            }
+            else {
+                children.add(newArticleElement);
+            }
+        }
     }
 
-    
-    /** set the published date to the article, only one time 
-     *  @param filename Filename of the article
+    /**
+     * set the published date to the article, only one time
+     *
+     * @param filename Filename of the article
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
      */
-
-
-    private boolean setFirstPublishedDate(String filename) throws Exception{
-
+    private boolean setFirstPublishedDate(String filename)
+        throws Exception {
         //get the date
-        Calendar cal=new GregorianCalendar();
+        Calendar cal = new GregorianCalendar();
+
         String year = Integer.toString(cal.get(cal.YEAR));
-        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MONTH)+1));
+
+        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MONTH) + 1));
+
         String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.DAY_OF_MONTH)));
-        String hour=DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.HOUR_OF_DAY)));
-        String minute=DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MINUTE)));
+
+        String hour = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.HOUR_OF_DAY)));
+
+        String minute = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MINUTE)));
+
         String millis = getMillis();
 
         //read the article 
-        Document doc=new SAXReader().read("file:"+filename);
+        Document doc = new SAXReader().read("file:" + filename);
 
         //get the PublishedDate Node
-        Element dateE=(Element)doc.selectSingleNode("/article/head/dateline/story.date"); 
-        if(dateE != null){
-          log.debug(".setFirstPublishedDate(): already set");
-          return false;
-          } 
+        Element dateE = (Element) doc.selectSingleNode("/article/head/dateline/story.date");
+
+        if (dateE != null) {
+            log.debug(".setFirstPublishedDate(): already set");
+
+            return false;
+        }
 
         DocumentHelper documentHelper = new DocumentHelper();
 
-        dateE = documentHelper.makeElement(doc, "/article/head/dateline/story.date"); 
-        dateE.clearContent();
+        dateE = documentHelper.makeElement(doc, "/article/head/dateline/story.date");
 
+        dateE.clearContent();
 
         //set the PublishedDate
         dateE.addAttribute("year", year);
+
         dateE.addAttribute("month", month);
+
         dateE.addAttribute("day", day);
+
         dateE.addAttribute("hour", hour);
+
         dateE.addAttribute("minute", minute);
+
         dateE.addAttribute("millis", millis);
-        dateE.addAttribute("norm", day+"."+month+"."+year);  
+
+        dateE.addAttribute("norm", day + "." + month + "." + year);
 
         //write the article
         OutputFormat format = OutputFormat.createPrettyPrint();
+
         try {
-        XMLWriter writer = new XMLWriter( 
-                           new BufferedOutputStream(
-                           new FileOutputStream(filename)), format);
-        writer.write(doc);
-        writer.close();
+            XMLWriter writer = new XMLWriter(new BufferedOutputStream(
+                        new FileOutputStream(filename)), format);
+
+            writer.write(doc);
+
+            writer.close();
         } catch (Exception e) {
-        log.debug(e);
+            log.debug(e);
         }
 
         return true;
-    }                                                                                                                                       
+    }
 
-
-    /** set the revision date and the compute the revision id
-     * @param filename Filename of the article 
+    /**
+     * set the revision date and the compute the revision id
+     *
+     * @param filename Filename of the article
+     *
+     * @throws Exception DOCUMENT ME!
      */
-
-
-    private void setRevisionDateAndId(String filename) throws Exception{
+    private void setRevisionDateAndId(String filename)
+        throws Exception {
         //get the date
-        Calendar cal=new GregorianCalendar();
+        Calendar cal = new GregorianCalendar();
+
         String year = Integer.toString(cal.get(cal.YEAR));
-        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MONTH)+1));
+
+        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MONTH) + 1));
+
         String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.DAY_OF_MONTH)));
 
         //read the article
-        Document doc=new SAXReader().read("file:"+filename);
+        Document doc = new SAXReader().read("file:" + filename);
 
         DocumentHelper documentHelper = new DocumentHelper();
 
         //write the article
         OutputFormat format = OutputFormat.createPrettyPrint();
+
         try {
-        XMLWriter writer = new XMLWriter(
-                           new BufferedOutputStream(
-                           new FileOutputStream(filename)), format);
-        writer.write(doc);
-        writer.close();
+            XMLWriter writer = new XMLWriter(new BufferedOutputStream(
+                        new FileOutputStream(filename)), format);
+
+            writer.write(doc);
+
+            writer.close();
         } catch (Exception e) {
-        log.debug(e);
+            log.debug(e);
         }
-    }                                                                                                                                       
-
-
-    /**
-     *
-     */
-
-
-  public synchronized String getMillis(){
-    String millis = Long.toString(new Date().getTime());
-    // wait to be sure the milliseconds are not used more than once
-    try {
-      this.wait(1);
-      } catch (InterruptedException e) {
-      }
-    return millis;
     }
 
-  
-    /** Execute the task.
-    *
-    */
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public synchronized String getMillis() {
+        String millis = Long.toString(new Date().getTime());
 
- 
-   public void execute(String contextPath) {
+        // wait to be sure the milliseconds are not used more than once
+        try {
+            this.wait(1);
+        } catch (InterruptedException e) {
+        }
+
+        return millis;
+    }
+
+    /**
+     * Execute the task.
+     *
+     * @param contextPath DOCUMENT ME!
+     */
+    public void execute(String contextPath) {
         try {
             String publicationId = getParameters().getParameter("publication-id");
-            String publicationPath = PublishingEnvironment.getPublicationPath(contextPath, publicationId);
+
+            String publicationPath = PublishingEnvironment.getPublicationPath(contextPath,
+                    publicationId);
 
             Parameters taskParameters = new Parameters();
 
-            PublishingEnvironment environment = new PublishingEnvironment(contextPath,
-                publicationId);
+            PublishingEnvironment environment = new PublishingEnvironment(contextPath, publicationId);
 
             // read default parameters from PublishingEnvironment
             taskParameters.setParameter("authoring-path", environment.getAuthoringPath());
+
             taskParameters.setParameter("tree-authoring-path", environment.getTreeAuthoringPath());
+
             taskParameters.setParameter("live-path", environment.getLivePath());
+
             taskParameters.setParameter("tree-live-path", environment.getTreeLivePath());
 
             taskParameters.merge(getParameters());
+
             parameterize(taskParameters);
 
             String sourcesString = getParameters().getParameter("sources");
-            StringTokenizer st = new StringTokenizer(sourcesString,",");
-            String sources[] = new String[st.countTokens()];
+
+            StringTokenizer st = new StringTokenizer(sourcesString, ",");
+
+            String[] sources = new String[st.countTokens()];
+
             int i = 0;
+
             while (st.hasMoreTokens()) {
                 sources[i++] = st.nextToken();
             }
 
-            prepareArticle(
-                publicationPath,
-                getParameters().getParameter("authoring-path"),
-                sources);
-	} catch (Exception e) {
-	    log.error("Preparing article failed: ", e);
-	}
+            prepareArticle(publicationPath, getParameters().getParameter("authoring-path"), sources);
+        } catch (Exception e) {
+            log.error("Preparing article failed: ", e);
+        }
     }
-  
 }

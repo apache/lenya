@@ -1,158 +1,254 @@
-package org.wyona.cms.cocoon.generation;  
+/*
+ * $Id: TestProxyGeneratorServlet.java,v 1.3 2003/02/07 12:14:09 ah Exp $
+ * <License>
+ * The Apache Software License
+ *
+ * Copyright (c) 2002 wyona. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice, this
+ *    list of conditions and the following disclaimer in the documentation and/or
+ *    other materials provided with the distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this software must
+ *    display the following acknowledgment: "This product includes software developed
+ *    by wyona (http://www.wyona.org)"
+ *
+ * 4. The name "wyona" must not be used to endorse or promote products derived from
+ *    this software without prior written permission. For written permission, please
+ *    contact contact@wyona.org
+ *
+ * 5. Products derived from this software may not be called "wyona" nor may "wyona"
+ *    appear in their names without prior written permission of wyona.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
+ *    "This product includes software developed by wyona (http://www.wyona.org)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY wyona "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
+ * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
+ * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. wyona WILL NOT BE LIABLE FOR ANY DAMAGES
+ * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL wyona BE LIABLE
+ * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF wyona HAS
+ * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. wyona WILL NOT BE LIABLE FOR ANY
+ * THIRD PARTY CLAIMS AGAINST YOU.
+ *
+ * Wyona includes software developed by the Apache Software Foundation, W3C,
+ * DOM4J Project, BitfluxEditor and Xopus.
+ * </License>
+ */
+package org.wyona.cms.cocoon.generation;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Cookie;
 
-import java.io.PrintWriter;
-import java.io.IOException;
-import java.util.Enumeration;
 
 //import org.apache.log4j.Category;
 
 /**
+ * DOCUMENT ME!
+ *
  * @author Michael Wechner
  * @author Christian Egli
  * @version 2002.8.27
  */
 public class TestProxyGeneratorServlet extends HttpServlet {
-  //static Category log=Category.getInstance(TestProxyGeneratorServlet.class);
-/**
- *
- */
-  public void init(ServletConfig config) throws ServletException{
-    super.init(config);
+    //static Category log=Category.getInstance(TestProxyGeneratorServlet.class);
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
     }
-/**
- *
- */
-  public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-    //log.debug("GET");
-    response.setContentType("text/xml");
-    PrintWriter writer = response.getWriter();
-    writer.print("<?xml version=\"1.0\"?>");
-    writer.print("<servlet class=\""+this.getClass().getName()+"\">");
-    writer.print("<request method=\"GET\">");
-    writer.print(getRequestInfo(request));
-    writer.print(getParameters(request));
-    writer.print(getSession(request));
-    writer.print(getCookies(request));
-    writer.print("</request>");
-    writer.print("</servlet>");
-    }
-/**
- *
- */
-  public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-    //log.debug("POST");
-    response.setContentType("text/xml");
-    PrintWriter writer = response.getWriter();
-    writer.print("<?xml version=\"1.0\"?>");
-    writer.print("<servlet class=\""+this.getClass().getName()+"\">");
-    writer.print("<request method=\"POST\">");
-    writer.print(getRequestInfo(request));
-    writer.print(getParameters(request));
-    writer.print(getSession(request));
-    writer.print(getCookies(request));
-    writer.print("</request>");
-    writer.print("</servlet>");
-    }
-/**
- *
- */
-  public String getRequestInfo(HttpServletRequest request){
-    StringBuffer sb=new StringBuffer("");
-    sb.append("<URI>"+request.getRequestURI()+"</URI>");
-    sb.append("<servername>"+request.getServerName()+"</servername>");
-    sb.append("<serverport>"+request.getServerPort()+"</serverport>");
-    return sb.toString();
-    }
-/**
- *
- */
-  public String getParameters(HttpServletRequest request){
-    StringBuffer sb=new StringBuffer("");
-    Enumeration parameters=request.getParameterNames();
-    boolean hasParameters=parameters.hasMoreElements();
-    if(hasParameters){
-      sb.append("<parameters>");
-      }
-    while(parameters.hasMoreElements()){
-      String name=(String)parameters.nextElement();
-      String[] values=request.getParameterValues(name);
-      sb.append("<parameter name=\""+name+"\">");
-      for(int i=0;i<values.length;i++){
-        sb.append("<value>"+values[i]+"</value>");
-        }
-      sb.append("</parameter>");
-      }
-    if(hasParameters){
-      sb.append("</parameters>");
-      }
-    return sb.toString();
-    }
-/**
- *
- */
-  public String getSession(HttpServletRequest request){
-    StringBuffer sb=new StringBuffer("");
 
-    //HttpSession session=request.getSession(true);
-    HttpSession session=request.getSession(false);
-    if(session != null){
-      sb.append("<session>");
-      Enumeration attributes=session.getAttributeNames();
-      if(!attributes.hasMoreElements()){
-        sb.append("<noattributes/>");
-        }
-      while(attributes.hasMoreElements()){
-        String attributeName=(String)attributes.nextElement();
-        sb.append("<attribute name=\""+attributeName+"\">");
-        sb.append(""+session.getAttribute(attributeName));
-        sb.append("</attribute>");
-        }
-      sb.append("</session>");
-      }
-    else{
-      sb.append("<nosession/>");
-      }
-    return sb.toString();
-    }
-/**
- *
- */
-  public String getCookies(HttpServletRequest request){
-    StringBuffer sb=new StringBuffer("");
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     * @param response DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ServletException DOCUMENT ME!
+     */
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws IOException, ServletException {
+        //log.debug("GET");
+        response.setContentType("text/xml");
 
-    Cookie[] cookies=request.getCookies();
-    if(cookies != null){
-      if(cookies.length > 0){
-        sb.append("<cookies>");
-        for(int i=0;i<cookies.length;i++){
-          sb.append("<cookie>");
-          sb.append("<comment>"+cookies[i].getComment()+"</comment>");
-          sb.append("<domain>"+cookies[i].getDomain()+"</domain>");
-          sb.append("<maxage>"+cookies[i].getMaxAge()+"</maxage>");
-          sb.append("<name>"+cookies[i].getName()+"</name>");
-          sb.append("<path>"+cookies[i].getPath()+"</path>");
-          sb.append("<secure>"+cookies[i].getSecure()+"</secure>");
-          sb.append("<value>"+cookies[i].getValue()+"</value>");
-          sb.append("<version>"+cookies[i].getVersion()+"</version>");
-          sb.append("</cookie>");
-          }
-        sb.append("</cookies>");
+        PrintWriter writer = response.getWriter();
+        writer.print("<?xml version=\"1.0\"?>");
+        writer.print("<servlet class=\"" + this.getClass().getName() + "\">");
+        writer.print("<request method=\"GET\">");
+        writer.print(getRequestInfo(request));
+        writer.print(getParameters(request));
+        writer.print(getSession(request));
+        writer.print(getCookies(request));
+        writer.print("</request>");
+        writer.print("</servlet>");
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     * @param response DOCUMENT ME!
+     *
+     * @throws ServletException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
+     */
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        //log.debug("POST");
+        response.setContentType("text/xml");
+
+        PrintWriter writer = response.getWriter();
+        writer.print("<?xml version=\"1.0\"?>");
+        writer.print("<servlet class=\"" + this.getClass().getName() + "\">");
+        writer.print("<request method=\"POST\">");
+        writer.print(getRequestInfo(request));
+        writer.print(getParameters(request));
+        writer.print(getSession(request));
+        writer.print(getCookies(request));
+        writer.print("</request>");
+        writer.print("</servlet>");
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getRequestInfo(HttpServletRequest request) {
+        StringBuffer sb = new StringBuffer("");
+        sb.append("<URI>" + request.getRequestURI() + "</URI>");
+        sb.append("<servername>" + request.getServerName() + "</servername>");
+        sb.append("<serverport>" + request.getServerPort() + "</serverport>");
+
+        return sb.toString();
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getParameters(HttpServletRequest request) {
+        StringBuffer sb = new StringBuffer("");
+        Enumeration parameters = request.getParameterNames();
+        boolean hasParameters = parameters.hasMoreElements();
+
+        if (hasParameters) {
+            sb.append("<parameters>");
         }
-      else{
-        sb.append("<nocookies/>");
+
+        while (parameters.hasMoreElements()) {
+            String name = (String) parameters.nextElement();
+            String[] values = request.getParameterValues(name);
+            sb.append("<parameter name=\"" + name + "\">");
+
+            for (int i = 0; i < values.length; i++) {
+                sb.append("<value>" + values[i] + "</value>");
+            }
+
+            sb.append("</parameter>");
         }
-      }
-    else{
-      sb.append("<nocookies/>");
-      }
-    return sb.toString();
+
+        if (hasParameters) {
+            sb.append("</parameters>");
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getSession(HttpServletRequest request) {
+        StringBuffer sb = new StringBuffer("");
+
+        //HttpSession session=request.getSession(true);
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            sb.append("<session>");
+
+            Enumeration attributes = session.getAttributeNames();
+
+            if (!attributes.hasMoreElements()) {
+                sb.append("<noattributes/>");
+            }
+
+            while (attributes.hasMoreElements()) {
+                String attributeName = (String) attributes.nextElement();
+                sb.append("<attribute name=\"" + attributeName + "\">");
+                sb.append("" + session.getAttribute(attributeName));
+                sb.append("</attribute>");
+            }
+
+            sb.append("</session>");
+        } else {
+            sb.append("<nosession/>");
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getCookies(HttpServletRequest request) {
+        StringBuffer sb = new StringBuffer("");
+
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            if (cookies.length > 0) {
+                sb.append("<cookies>");
+
+                for (int i = 0; i < cookies.length; i++) {
+                    sb.append("<cookie>");
+                    sb.append("<comment>" + cookies[i].getComment() + "</comment>");
+                    sb.append("<domain>" + cookies[i].getDomain() + "</domain>");
+                    sb.append("<maxage>" + cookies[i].getMaxAge() + "</maxage>");
+                    sb.append("<name>" + cookies[i].getName() + "</name>");
+                    sb.append("<path>" + cookies[i].getPath() + "</path>");
+                    sb.append("<secure>" + cookies[i].getSecure() + "</secure>");
+                    sb.append("<value>" + cookies[i].getValue() + "</value>");
+                    sb.append("<version>" + cookies[i].getVersion() + "</version>");
+                    sb.append("</cookie>");
+                }
+
+                sb.append("</cookies>");
+            } else {
+                sb.append("<nocookies/>");
+            }
+        } else {
+            sb.append("<nocookies/>");
+        }
+
+        return sb.toString();
     }
 }

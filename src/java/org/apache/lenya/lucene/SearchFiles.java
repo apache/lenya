@@ -1,136 +1,144 @@
-package org.wyona.lucene;
-
-/* ====================================================================
- * The Apache Software License, Version 1.1
+/*
+ * $Id: SearchFiles.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * <License>
+ * The Apache Software License
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
- * reserved.
+ * Copyright (c) 2002 wyona. All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
+ * 2. Redistributions in binary form must reproduce the above copyright notice, this
+ *    list of conditions and the following disclaimer in the documentation and/or
+ *    other materials provided with the distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
- *       "This product includes software developed by the
- *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ * 3. All advertising materials mentioning features or use of this software must
+ *    display the following acknowledgment: "This product includes software developed
+ *    by wyona (http://www.wyona.org)"
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Lucene" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The name "wyona" must not be used to endorse or promote products derived from
+ *    this software without prior written permission. For written permission, please
+ *    contact contact@wyona.org
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Lucene", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "wyona" nor may "wyona"
+ *    appear in their names without prior written permission of wyona.
  *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- * ====================================================================
+ * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
+ *    "This product includes software developed by wyona (http://www.wyona.org)"
  *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * <http://www.apache.org/>.
+ * THIS SOFTWARE IS PROVIDED BY wyona "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
+ * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
+ * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. wyona WILL NOT BE LIABLE FOR ANY DAMAGES
+ * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL wyona BE LIABLE
+ * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF wyona HAS
+ * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. wyona WILL NOT BE LIABLE FOR ANY
+ * THIRD PARTY CLAIMS AGAINST YOU.
+ *
+ * Wyona includes software developed by the Apache Software Foundation, W3C,
+ * DOM4J Project, BitfluxEditor and Xopus.
+ * </License>
  */
-
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
+package org.wyona.lucene;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.search.Searcher;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Hits;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Searcher;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 class SearchFiles {
-  public static void main(String[] args) {
-    if(args.length != 1){
-      System.err.println("Usage: swx.eservices.lucene.SearchFiles \"directory_where_index_is_located\"");
-      return;
-      }
+    /**
+     * DOCUMENT ME!
+     *
+     * @param args DOCUMENT ME!
+     */
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.err.println(
+                "Usage: swx.eservices.lucene.SearchFiles \"directory_where_index_is_located\"");
 
-    File index_directory=new File(args[0]);
-    if(!index_directory.exists()){
-      System.err.println("Exception: No such directory: "+index_directory.getAbsolutePath());
-      return;
-      }
+            return;
+        }
 
-    try {
-      Searcher searcher = new IndexSearcher(index_directory.getAbsolutePath());
-      Analyzer analyzer = new StandardAnalyzer();
+        File index_directory = new File(args[0]);
 
-      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-      while (true) {
-	System.out.print("Query: ");
-	String line = in.readLine();
+        if (!index_directory.exists()) {
+            System.err.println("Exception: No such directory: " +
+                index_directory.getAbsolutePath());
 
-	if (line.length() == -1)
-	  break;
+            return;
+        }
 
-	Query query = QueryParser.parse(line, "contents", analyzer);
-	System.out.println("Searching for: " + query.toString("contents"));
+        try {
+            Searcher searcher = new IndexSearcher(index_directory.getAbsolutePath());
+            Analyzer analyzer = new StandardAnalyzer();
 
-	Hits hits = searcher.search(query);
-	System.out.println(hits.length() + " total matching documents");
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-	final int HITS_PER_PAGE = 10;
-	for (int start = 0; start < hits.length(); start += HITS_PER_PAGE) {
-	  int end = Math.min(hits.length(), start + HITS_PER_PAGE);
-	  for (int i = start; i < end; i++) {
-	    Document doc = hits.doc(i);
-	    String path = doc.get("path");
-	    if (path != null) {
-              System.out.println(i + ". " + path);
-	    } else {
-              String url = doc.get("url");
-	      if (url != null) {
-		System.out.println(i + ". " + url);
-		System.out.println("   - " + doc.get("title"));
-	      } else {
-		System.out.println(i + ". " + "No path nor URL for this document");
-	      }
-	    }
-	  }
+            while (true) {
+                System.out.print("Query: ");
 
-	  if (hits.length() > end) {
-	    System.out.print("more (y/n) ? ");
-	    line = in.readLine();
-	    if (line.length() == 0 || line.charAt(0) == 'n')
-	      break;
-	  }
-	}
-      }
-      searcher.close();
+                String line = in.readLine();
 
-    } catch (Exception e) {
-      System.out.println(" caught a " + e.getClass() +
-			 "\n with message: " + e.getMessage());
+                if (line.length() == -1) {
+                    break;
+                }
+
+                Query query = QueryParser.parse(line, "contents", analyzer);
+                System.out.println("Searching for: " + query.toString("contents"));
+
+                Hits hits = searcher.search(query);
+                System.out.println(hits.length() + " total matching documents");
+
+                final int HITS_PER_PAGE = 10;
+
+                for (int start = 0; start < hits.length(); start += HITS_PER_PAGE) {
+                    int end = Math.min(hits.length(), start + HITS_PER_PAGE);
+
+                    for (int i = start; i < end; i++) {
+                        Document doc = hits.doc(i);
+                        String path = doc.get("path");
+
+                        if (path != null) {
+                            System.out.println(i + ". " + path);
+                        } else {
+                            String url = doc.get("url");
+
+                            if (url != null) {
+                                System.out.println(i + ". " + url);
+                                System.out.println("   - " + doc.get("title"));
+                            } else {
+                                System.out.println(i + ". " + "No path nor URL for this document");
+                            }
+                        }
+                    }
+
+                    if (hits.length() > end) {
+                        System.out.print("more (y/n) ? ");
+                        line = in.readLine();
+
+                        if ((line.length() == 0) || (line.charAt(0) == 'n')) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            searcher.close();
+        } catch (Exception e) {
+            System.out.println(" caught a " + e.getClass() + "\n with message: " + e.getMessage());
+        }
     }
-  }
 }
