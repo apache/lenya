@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentIdToPathMapper.java,v 1.9 2003/07/24 12:48:42 andreas Exp $
+$Id: DefaultDocumentIdToPathMapper.java,v 1.10 2003/08/07 07:14:55 egli Exp $
 <License>
 
  ============================================================================
@@ -72,9 +72,10 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
         return file;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFiles(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
-     */
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+	 */
     public File getDirectory(Publication publication, String area, String documentId) {
         assert documentId.startsWith("/");
         // remove leading slash
