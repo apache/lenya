@@ -38,16 +38,4 @@
     <parameter name="target" value="deactivateDocument"/>
   </task>
 
-  <task id="moveUpNode" class="org.apache.lenya.cms.task.MoveSiteTreeNodeTask">
-    <label>moveUpNode</label>
-    <parameter name="treePath" value="content/authoring/sitetree.xml"/>
-    <parameter name="org.apache.lenya.cms.info.direction" value="up"/>
-  </task>
-
-  <task id="moveDownNode" class="org.apache.lenya.cms.task.MoveSiteTreeNodeTask">
-    <label>moveDownNode</label>
-    <parameter name="treePath" value="content/authoring/sitetree.xml"/>
-    <parameter name="org.apache.lenya.cms.info.direction" value="down"/>
-  </task>
-
 </tasks>

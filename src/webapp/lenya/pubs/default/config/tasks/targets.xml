@@ -104,6 +104,8 @@
       />
 </target>
 
+<taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
+
 <target name="create">
     
   <property name="create.parent-id" value=""/>
@@ -127,7 +129,6 @@
     <echo>init the workflow history with document-id: ${create.parent-id}/${create.child-id}</echo>      
     <echo>with document-type: ${create.doctype}</echo>      
     <echo>with language: ${create.language}</echo>      
- <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
   <init-history
       documentid="${create.parent-id}/${create.child-id}"
       documenttype="${create.doctype}"
@@ -300,6 +301,23 @@
   <echo>Delete Workflow (To Do)</echo>
   <!-- To Do -->
  
+</target>
+
+
+<target name="initworkflow">
+    <echo>init the workflow history</echo>
+    <echo>document-id: ${initworkflow.document-id}</echo>      
+    <echo>document-type: ${initworkflow.document-type}</echo>      
+    <echo>language: ${initworkflow.language}</echo>      
+    <echo>user-id: ${initworkflow.user-id}</echo>      
+    <echo>machine-ip: ${initworkflow.machine-ip}</echo>      
+  <init-history
+      documentid="${initworkflow.document-id}"
+      documenttype="${initworkflow.document-type}"
+      language="${initworkflow.language}"
+      userid="${initworkflow.user-id}"
+      machineip="${initworkflow.machine-ip}"
+      />
 </target>
 
 </project>
