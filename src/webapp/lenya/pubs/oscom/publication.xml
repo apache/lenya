@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.9 2003/04/26 23:16:05 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.10 2003/07/09 13:12:29 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>OSCOM</lenya:name>
@@ -13,8 +13,8 @@ This publication implements the CMS matrix used at <a href="http://www.oscom.org
 <lenya:license></lenya:license>
 <lenya:readme>
 <ol>
-  <li><a href="index.html">Reader`s View</a> (Live)</li>
   <li><a href="authoring/">Editor`s View</a> (Authoring)</li>
+  <li><a href="live/index.html">Reader`s View</a> (Live)</li>
 </ol>
 
 <h3>Deployment</h3>
