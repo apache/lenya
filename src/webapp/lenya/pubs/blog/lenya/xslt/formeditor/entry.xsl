@@ -32,8 +32,8 @@
 <xsl:apply-templates select="echo:summary"/>
 <xsl:apply-templates select="echo:content"/>
 
-<node name="Content (text/xhtml)">
-  <action><insert name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;&lt;p&gt;Append new content&lt;/p&gt;&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/></action>
+<node name="Content Block (application/xhtml+xml)">
+  <action><insert name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;application/xhtml+xml&lt;/xupdate:attribute&gt;&lt;p&gt;Append new content&lt;/p&gt;&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/></action>
 </node>
 <!--
 <node name="Content (text/plain as CDATA)">
@@ -68,11 +68,11 @@
 </xsl:template>
 
 
-<xsl:template match="echo:content[@type='text/xhtml']">
-<node name="Content (text/xhtml)">
-  <action><insert name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;&lt;p&gt;Insert before new content&lt;/p&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;"/></action>
+<xsl:template match="echo:content[@type='application/xhtml+xml']">
+<node name="Content Block (application/xhtml+xml)">
+  <action><insert name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;application/xhtml+xml&lt;/xupdate:attribute&gt;&lt;p&gt;Insert before new content&lt;/p&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;"/></action>
 </node>
-<node name="Content (text/xhtml)" select="/echo:entry/echo:content[@tagID='{@tagID}']">
+<node name="Content Block (application/xhtml+xml)" select="/echo:entry/echo:content[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
     <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">

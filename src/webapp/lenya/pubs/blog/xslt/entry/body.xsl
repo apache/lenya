@@ -27,7 +27,7 @@
   <i><xsl:copy-of select="node()"/></i>
 </xsl:template>
 
-<xsl:template match="echo:content[@type='text/xhtml']">
+<xsl:template match="echo:content[@type='application/xhtml+xml']">
   <xsl:copy-of select="node()"/>
 </xsl:template>
 

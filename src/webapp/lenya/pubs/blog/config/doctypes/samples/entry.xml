@@ -17,7 +17,7 @@
     <echo:issued>2003-02-05T08:29:29-04:00</echo:issued>
     <echo:modified>2003-02-05T12:29:29Z</echo:modified>
 
-    <echo:content type="text/xhtml">
+    <echo:content type="application/xhtml+xml">
       <p><i>Hello</i>, <b>weblog</b> <a href="http://www.apache.org">world</a>!</p>
     </echo:content>
 
