@@ -1,5 +1,4 @@
 /*
-$Id: Publication.java,v 1.8 2003/07/23 13:21:26 gregor Exp $
 <License>
 
  ============================================================================
@@ -55,17 +54,35 @@ $Id: Publication.java,v 1.8 2003/07/23 13:21:26 gregor Exp $
 */
 package org.apache.lenya.lucene;
 
+import java.util.StringTokenizer;
 
 /**
- * DOCUMENT ME!
+ * Parameters to do a search by Lucene and display results
  *
- * @author $author$
- * @version $Revision: 1.8 $
+ * @author Michael Wechner
+ * @version $Id: Publication.java,v 1.9 2003/11/14 12:02:52 michi Exp $
  */
 public class Publication {
     public String id = null;
     public String name = null;
     public String indexDir = null;
+    public String searchFields = null;
     public String excerptDir = null;
     public String prefix = null;
+
+    /**
+     *
+     */
+    public String[] getFields() {
+        String[] fields = null;
+        if (searchFields != null) {
+            StringTokenizer st = new StringTokenizer(searchFields, ",");
+            int length = st.countTokens();
+            fields = new String[length];
+            for (int i = 0; i < length; i++) {
+                fields[i] = st.nextToken();
+            }
+        }
+        return fields;
+    }
 }

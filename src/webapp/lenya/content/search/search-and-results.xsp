@@ -114,6 +114,7 @@
           pubs[i].id = parameters.getParameter("pub"+i+"-id","@ID@");
           pubs[i].name = parameters.getParameter("pub"+i+"-name","@NAME@");
           pubs[i].indexDir = parameters.getParameter("pub"+i+"-index-dir","@INDEX-DIR@");
+          pubs[i].searchFields = parameters.getParameter("pub"+i+"-search-fields","title,contents");
           pubs[i].excerptDir = parameters.getParameter("pub"+i+"-excerpt-dir","@EXCERPT-DIR@");
           pubs[i].prefix = parameters.getParameter("pub"+i+"-prefix","@PREFIX@");
       }
@@ -191,6 +192,18 @@
          <publication><xsp:attribute name="pid"><xsp:expr>pubs[i].id</xsp:expr></xsp:attribute>
            <name><xsp:expr>pubs[i].name</xsp:expr></name>
            <index-dir><xsp:expr>pubs[i].indexDir</xsp:expr></index-dir>
+           <search-fields>
+               <xsp:logic>
+               String[] searchFields = pubs[i].getFields();
+               if (searchFields != null) {
+                   for (int k = 0; k &lt; searchFields.length; k++) {
+                       <field><xsp:expr>searchFields[k]</xsp:expr></field>
+                   }
+               } else {
+                   <xsp:content><xsp:expr>pubs[i].searchFields</xsp:expr></xsp:content><exception>.getFields() returned null</exception>
+               }
+               </xsp:logic>
+           </search-fields>
            <excerpt-dir><xsp:expr>pubs[i].excerptDir</xsp:expr></excerpt-dir>
            <prefix><xsp:expr>pubs[i].prefix</xsp:expr></prefix>
          </publication>
