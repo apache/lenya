@@ -1,5 +1,5 @@
 /*
-$Id: PublicationTask.java,v 1.7 2003/07/15 14:46:09 egli Exp $
+$Id: PublicationTask.java,v 1.8 2003/10/22 16:28:26 egli Exp $
 <License>
 
  ============================================================================
@@ -83,6 +83,15 @@ public abstract class PublicationTask extends Task {
     protected File getPublicationDirectory() {
         return new File(
             getProject().getProperty(AntTask.PUBLICATION_DIRECTORY));
+    }
+    
+    /**
+     * Return the context prefix.
+     * 
+     * @return the context-prefix
+     */
+    protected String getContextPrefix() {
+    	return getProject().getProperty(AntTask.CONTEXT_PREFIX);
     }
 
     /**

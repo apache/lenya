@@ -1,5 +1,5 @@
 /*
-$Id: AntTask.java,v 1.16 2003/07/09 13:44:51 egli Exp $
+$Id: AntTask.java,v 1.17 2003/10/22 16:28:26 egli Exp $
 <License>
 
  ============================================================================
@@ -76,7 +76,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Map;
 
-
 /**
  * An object of this class is used to execute Ant tasks.
  * The task parameters are:
@@ -103,15 +102,24 @@ public class AntTask extends AbstractTask {
      * @param arguments A map mapping the command-line arguments to their values.
      * @param properties A map mapping the project properties to their values.
      * @param servletContextPath The context-path of the servlet
+     * @param contextPrefix The context-prefix of the servlet 
      * @param publicationId The publication-id
      * @param publicationDirectory The directory of the publication
      * @param logFile The file where the log should go to
      * 
      * @throws ExecutionException if the execution failed
      */
-    public void executeAntTarget(String servletContextPath, String publicationId,
-        File publicationDirectory, File buildFile, String target, Map arguments, Map properties,
-        File logFile) throws ExecutionException {
+    public void executeAntTarget(
+        String servletContextPath,
+        String contextPrefix,
+        String publicationId,
+        File publicationDirectory,
+        File buildFile,
+        String target,
+        Map arguments,
+        Map properties,
+        File logFile)
+        throws ExecutionException {
         Project project = new Project();
         project.setCoreLoader(getClass().getClassLoader());
 
@@ -125,7 +133,9 @@ public class AntTask extends AbstractTask {
                 logDirectory.mkdirs();
             }
 
-            project.setUserProperty("XmlLogger.file", logFile.getAbsolutePath());
+            project.setUserProperty(
+                "XmlLogger.file",
+                logFile.getAbsolutePath());
 
             XmlLogger logger = new XmlLogger();
             project.addBuildListener(logger);
@@ -137,13 +147,18 @@ public class AntTask extends AbstractTask {
             ProjectHelper helper = ProjectHelper.getProjectHelper();
             helper.parse(project, buildFile);
 
-            project.setUserProperty(PUBLICATION_DIRECTORY, publicationDirectory.getAbsolutePath());
+            project.setUserProperty(
+                PUBLICATION_DIRECTORY,
+                publicationDirectory.getAbsolutePath());
             project.setUserProperty(PUBLICATION_ID, publicationId);
             project.setUserProperty(SERVLET_CONTEXT_PATH, servletContextPath);
+			project.setUserProperty(CONTEXT_PREFIX, contextPrefix);
 
-            for (Iterator keys = properties.keySet().iterator(); keys.hasNext();) {
-                String key = (String) keys.next();
-                project.setUserProperty(key, (String) properties.get(key));
+            for (Iterator keys = properties.keySet().iterator();
+                keys.hasNext();
+                ) {
+                String key = (String)keys.next();
+                project.setUserProperty(key, (String)properties.get(key));
             }
 
             if (target == null) {
@@ -170,19 +185,24 @@ public class AntTask extends AbstractTask {
     protected File getDefaultLogFile(File publicationDirectory) {
         Calendar now = new GregorianCalendar();
 
-        return new File(publicationDirectory, LOG_PATH + dateFormat.format(now.getTime()) + ".xml");
+        return new File(
+            publicationDirectory,
+            LOG_PATH + dateFormat.format(now.getTime()) + ".xml");
     }
 
-    public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
+    public static final DateFormat dateFormat =
+        new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
     public static final String PUBLICATION_DIRECTORY = "pub.dir";
     public static final String PUBLICATION_ID = "pub.id";
     public static final String SERVLET_CONTEXT_PATH = "servlet.context";
+    public static final String CONTEXT_PREFIX = "context.prefix";
     public static final String BUILDFILE = "buildfile";
     public static final String TARGET = "target";
     public static final String ANT_PREFIX = "ant";
     public static final String PROPERTIES_PREFIX = "properties";
     public static final String DEFAULT_BUILDFILE = "config/tasks/targets.xml";
-    public static final String LOG_PATH = "logs/tasks/".replace('/', File.separatorChar);
+    public static final String LOG_PATH =
+        "logs/tasks/".replace('/', File.separatorChar);
     public static final String PARAMETER_LOGFILE = "logfile";
 
     /**
@@ -195,6 +215,7 @@ public class AntTask extends AbstractTask {
     public void execute(String servletContextPath) throws ExecutionException {
         String publicationId;
         File publicationDirectory;
+        String contextPrefix;
         File buildFile;
         String target;
         Map arguments;
@@ -202,16 +223,25 @@ public class AntTask extends AbstractTask {
         File logFile;
 
         try {
-            String buildFileName = getParameters().getParameter("buildfile", DEFAULT_BUILDFILE)
-                                       .replace('/', File.separatorChar);
+            String buildFileName =
+                getParameters().getParameter(
+                    "buildfile",
+                    DEFAULT_BUILDFILE).replace(
+                    '/',
+                    File.separatorChar);
 
-            publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
+            publicationId =
+                getParameters().getParameter(PARAMETER_PUBLICATION_ID);
+            contextPrefix = getParameters().getParameter(PARAMETER_CONTEXT_PREFIX);
+            
 
             if (publicationId.equals("")) {
                 publicationDirectory = new File(".");
                 buildFile = new File(buildFileName);
             } else {
-                PublishingEnvironment environment = new PublishingEnvironment(servletContextPath,
+                PublishingEnvironment environment =
+                    new PublishingEnvironment(
+                        servletContextPath,
                         publicationId);
                 publicationDirectory = environment.getPublicationDirectory();
                 buildFile = new File(publicationDirectory, buildFileName);
@@ -224,18 +254,29 @@ public class AntTask extends AbstractTask {
             NamespaceMap antMap = new NamespaceMap(parametersMap, ANT_PREFIX);
             arguments = antMap.getMap();
 
-            NamespaceMap propertiesMap = new NamespaceMap(parametersMap, PROPERTIES_PREFIX);
+            NamespaceMap propertiesMap =
+                new NamespaceMap(parametersMap, PROPERTIES_PREFIX);
             properties = propertiesMap.getMap();
 
             // set logfile
-            String logFilename = getParameters().getParameter(PARAMETER_LOGFILE,
+            String logFilename =
+                getParameters().getParameter(
+                    PARAMETER_LOGFILE,
                     getDefaultLogFile(publicationDirectory).getAbsolutePath());
             logFile = new File(logFilename);
         } catch (ParameterException e) {
             throw new ExecutionException(e);
         }
 
-        executeAntTarget(servletContextPath, publicationId, publicationDirectory, buildFile,
-            target, arguments, properties, logFile);
+        executeAntTarget(
+            servletContextPath,
+            contextPrefix,
+            publicationId,
+            publicationDirectory,
+            buildFile,
+            target,
+            arguments,
+            properties,
+            logFile);
     }
 }
