@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.16 2003/04/24 13:52:39 gregor Exp $
+ * $Id: PublishingEnvironment.java,v 1.17 2003/04/25 14:16:46 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,8 +59,7 @@ import java.io.File;
  */
 public class PublishingEnvironment implements Configurable {
     static Category log = Category.getInstance(PublishingEnvironment.class);
-    public static final String CONFIGURATION_FILE =
-	"config" + File.separator + "publishing" + File.separator + "publisher.xconf";
+    public static final String CONFIGURATION_FILE = "config" + File.separator + "publishing" + File.separator + "publisher.xconf";
     public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs" + File.separator;
     public static final String PUBLICATION_PATH = "publication-path";
     public static final String PARAMETER_AUTHORING_PATH = "authoring-path";
@@ -262,13 +261,13 @@ public class PublishingEnvironment implements Configurable {
     }
 
     /**
-     * Set replacement string, which was read from publication.xconf
+     * Set replacement string, which was read from publisher.xconf
      */
     protected void setSubstituteReplacementExpression(String replacement) {
         substituteReplacement = replacement;
     }
     /**
-     * Get the replacement string, which was read from publication.xconf
+     * Get the replacement string, which was read from publisher.xconf
      *
      * @return The replacement string
      */
