@@ -11,21 +11,20 @@
 </doc>
 
 <doc type="Article">
-<!--
-  <creator src="org.lenya.cms.authoring.DefaultCreator"/>
--->
-  <creator src="ch.unizh.unipublic.lenya.cms.authoring.NewArticleCreator"/>
+  <creator src="org.lenya.cms.authoring.DefaultBranchCreator">
+    <sample-name>Article.xml</sample-name>
+  </creator>
   <tasks>
     <task id="publish-article"/>
   </tasks>
 </doc>
 
 <doc type="Dossier">
-    <creator src="org.lenya.cms.authoring.DefaultCreator">
+    <creator src="org.lenya.cms.authoring.DefaultBranchCreator">
     <!-- <prefix>d-</prefix> -->
-    <index>/index</index>
-    <sample>Dossier.xml</sample>
-    <!-- <sampleMeta>Meta.xml</sampleMeta> -->
+    <resource-name>/index</resource-name>
+    <sample-name>Dossier.xml</sample-name>
+    <!-- <sample-meta-name>Meta.xml</sample-meta-name> -->
   </creator>
   <tasks>
     <task id="publish"/>
