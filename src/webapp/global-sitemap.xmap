@@ -627,6 +627,10 @@
         <map:transform src="lenya/xslt/util/welcome.xsl"/>
         <map:call resource="style-cms-page"/>
       </map:match>
+      <map:match pattern="about.html">
+        <map:generate src="lenya/content/about.xml"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
     </map:pipeline>
 
     <!-- Search with Lucene -->

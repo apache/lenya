@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page:page  
+   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
+
+<page:title>Apache Lenya 1.2</page:title>
+<page:body>
+<div class="lenya-box">
+<p>
+This software consists of voluntary contributions made by many individuals
+on behalf of the <br /><a href="http://www.apache.org/">Apache Software Foundation</a> 
+and was originally created by <a href="mailto:michi@apache.org">Michael Wechner</a>.
+<br /><br />
+Apache Lenya includes software developed by the <a href="http://www.apache.org/">Apache Software Foundation</a>, 
+<a href="http://w3c.org">W3C</a>, <br /><a href="http://dom4j.org">DOM4J</a>, 
+<a href="http://bitfluxeditor.org">BitfluxEditor</a>, and <a href="http://sf.net/projects/websphinx">WebSHPINX</a>.
+<br /><br /> 
+Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+</p>
+<form>
+<input type="button" value="Back" onClick="history.go(-1)"/>
+</form>		
+</div>
+      </page:body>
+    </page:page>

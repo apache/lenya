@@ -75,7 +75,8 @@
         <item href="http://wiki.cocoondev.org/Wiki.jsp?page=Lenya">Wiki&#160;Documentation</item>
       </block>
       <block>
-        <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute>About&#160;Apache&#160;Lenya</item>
       </block>
     </menu>
 
