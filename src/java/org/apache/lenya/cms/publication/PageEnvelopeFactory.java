@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeFactory.java,v 1.4 2003/07/23 13:21:11 gregor Exp $
+$Id: PageEnvelopeFactory.java,v 1.5 2003/08/12 15:18:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -84,9 +84,8 @@ public class PageEnvelopeFactory {
      */
     public static PageEnvelopeFactory getInstance() {
         if (instance == null) {
-            return new PageEnvelopeFactory();
+            instance = new PageEnvelopeFactory();
         }
-
         return instance;
     }
 
