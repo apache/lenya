@@ -30,39 +30,107 @@
   </header>
 
   <body>
+  	<section id="introduction">
+  		<title>Introduction</title>
+  	
+  		<p>
+  			This document explains how to install Lenya from source.
+  			There are different ways to install and run Lenya:
+  			<br/>
+  			Choose between
+  			<ol>
+  				<li>running Lenya standalone using the built-in Jetty servlet container</li>
+  				<li>using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
+  				<!--<li>creating a webapp for Tomcat (and other servlet containers) to be deployed manually on a remote server</li>-->
+  			</ol>
+  		</p>
+  		
+  		<p>
+  			Please note that you can use other servlet
+        	containers as well, but Jetty and Tomcat are the tested ones.
+        </p>
+        
+        <p>
+  			In all cases, you will need to meet the following prerequisites,
+  			that describe the setup that is tested and recommended. 
+  		</p>
+  	
+  	</section>
     <section id="prerequisites">
       <title>Prerequisites</title>
 
-      <p>
-        The following list describes the setup that is tested and
-        recommended.  Please note that you can use other servlet
-        containers as well, but Jetty and Tomcat are the tested ones.
-      </p>
-
       <ul>
+      	      	
         <li>
           <p>
             <strong>Java 2 Platform, Standard Edition</strong>
             <br/>
-            version: 1.4.2 or newer, 1.5.x not tested.
+            version 1.4.2 or newer, 1.5.x is not tested yet.
             <br/>
-            source: <link href="site:java">http://java.sun.com/j2se/1.4.2/download.html</link>
+            Get it from <link href="site:java">http://java.sun.com/j2se/1.4.2/download.html</link>
+          </p>
+        </li>
+        
+        <li>
+      		<p>
+      		<strong>Recommended: Create a directory</strong> to better organise the various source files
+      		<br/>
+      		In this document, we will assume the name <code>src/</code> for that directory. It is important to not have
+      		spaces in any of the directory names (so on Windows, make sure you don't create <code>src/</code> in
+      		<code>My Documents</code> but rather directly in <code>c:\</code>).
+      		This directory will contain the Lenya distribution as well as Cocoon.
+      		</p>
+      		
+      		<p>
+      		After expanding the	downloaded archives or after a <link href="site:subversion">svn checkout</link>,
+      		the directory structure should look like this:
+      		</p>
+      		
+      		<source>
+            your_home/ (or c:\ on Windows, NOT My Documents)
+              `-- src/
+                   |-- lenya-1.2.x/            $LENYA_HOME
+                   `-- cocoon-2.1.6/           $COCOON_HOME
+                        `-- build/
+                             `-- webapp/       $COCOON_WEBAPP
+     		</source>
+     		
+     		<p>
+     		The directories inside cocoon-2.1.6/ will be created when you build Cocoon. 
+     		The variables will later be used in the local.build.properties file that configures the Lenya build process.
+      		</p>
+      		
+      	</li>
+      	
+      	<li>
+          <p>
+            <strong>Get Apache Lenya</strong>
+            <br/>
+            (see <link href="site:download">Download Lenya</link>)
+            <br/>
+            Extract the downloaded Lenya archive in the
+            <code>src/</code> directory described above. This will create <code>lenya-1.2.x/</code> inside <code>src/</code>.
+            If you use <link href="site:subversion">Subversion</link>, checkout Lenya inside the
+            <code>src/</code> directory. 
           </p>
         </li>
 
         <li>
           <p>
-            <strong>Apache Cocoon</strong>
+            <strong>Get Apache Cocoon</strong>
             <br/>
             version: 2.1.6
             <br/>
-            source: <link href="site:cocoon/mirror">http://cocoon.apache.org/mirror.cgi</link>
+            Get it from <link href="site:cocoon/mirror">http://cocoon.apache.org/mirror.cgi</link><br/>
+            Unpack Coccon in <code>src/</code>.
           </p>
 
+			<br/>
+			
           <p>
-            Note that Cocoon is needed when building the source
+            Note that Cocoon is needed to build the source
             version of Lenya, but the resulting Lenya webapp is
-            completely self contained and therefore it does not need
+            completely self contained and therefore  does not need
             the Cocoon webapp to be installed. See the <link
             href="site:wiki/lenya/FAQ">FAQ</link>
             for details of configuration changes required when running
@@ -70,77 +138,14 @@
           </p>
         </li>
 
+        
         <li>
           <p>
-            <strong>(optional) Apache Tomcat</strong> for JDK 1.4
-            <br/>
-            version: 5.0.28 or newer, 5.5.x not tested.
-            <br/>
-            source: <link href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</link>
+            <strong>Build Cocoon</strong>
           </p>
 
           <p>
-            Note that Lenya ships with <link
-            href="site:jetty">Jetty</link> and
-            therefore does not need a servlet container to be installed.
-          </p>
-        </li>
-      </ul>
-    </section>
-
-
-    <section>
-      <title>Standalone Installation (using the built-in Jetty)</title>
-
-      <ol>
-        <li>
-          <p>
-            <strong>Get the Java SDK</strong> (see <link
-            href="#prerequisites">Prerequisites</link>)
-          </p>
-        </li>
-
-        <li>
-          <p>
-            <strong>Get Apache Cocoon</strong> (see <link
-            href="#prerequisites">Prerequisites</link>)
-          </p>
-        </li>
-
-        <li>
-          <p>
-            <strong>Get Apache Lenya</strong> (see <link
-            href="site:download">Download Lenya</link>)
-          </p>
-        </li>
-
-        <li>
-          <p>
-            Extract the downloaded Lenya archive to the
-            <code>lenya-1.2.x</code> directory as described below. If
-            you use <link href="site:subversion">Subversion</link>, create your Lenya checkout inside the
-            <code>src</code> directory as described below.  It is
-            recommended to use the following directory structure for an
-            easier build experience.
-          </p>
-
-          <source>
-            your_home/ (or c:\ on Windows, NOT My Documents)
-              `-- src/
-                   |-- lenya-1.2.x/            $LENYA_HOME
-                   `-- cocoon-2.1.6/           $COCOON_HOME
-                        `-- build/
-                             `-- webapp/       $COCOON_WEBAPP
-          </source>
-        </li>
-
-        <li>
-          <p>
-            <strong>Copy the Cocoon build properties supplied by Lenya</strong>
-          </p>
-
-          <p>
-            Copy the files
+       		Copy the Cocoon build properties supplied by Lenya
           </p>
 
           <ul>
@@ -175,10 +180,21 @@
             $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
           </source>
         </li>
+        
+      </ul>
+      
+      
+    </section>
+
+
+    <section>
+      <title>1: Standalone Installation (using the built-in Jetty)</title>
+
+      <ol>
 
         <li>
           <p>
-            <strong>Configure Lenya</strong>
+            <strong>Configure Lenya to point to Coccon</strong>
           </p>
 
           <p>
@@ -273,21 +289,21 @@
     </section>
 
     <section>
-      <title>Installation with Apache Tomcat</title>
-
-      <p>
-        Installing Lenya with Tomcat is mostly the same
-        procedure. Follow Steps 1-6, then do the steps below.
-      </p>
+      <title>2: Installation with Apache Tomcat</title>
 
       <ol>
-        <li>
-          <p>
-            <strong>get Apache Tomcat</strong> (see <link
-            href="#prerequisites">Prerequisites</link>)
-          </p>
-        </li>
 
+		<li>
+          <p>
+            <strong>Get Apache Tomcat</strong> for JDK 1.4
+            <br/>
+            version: 5.0.28 or newer, 5.5.x not tested.
+            <br/>
+            Get it from  <link href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</link>
+          </p>
+
+        </li>
+        
         <li>
           <p>
             <strong>Install Apache Tomcat</strong>
@@ -303,14 +319,14 @@
 
             <br/>
 
-            Basically this is setting the <code>JAVA_HOME</code>
-            environment variable and running the Tomcat
+            Basically you only need to set the <code>JAVA_HOME</code>
+            environment variable and run the Tomcat
             installer. Decide to run Tomcat as a Windows
             NT/2000/XP-Service.
           </p>
 
           <warning>
-            Make sure you do not install at a location with spaces in
+            Make sure you do not install Tomcat at a location with spaces in
             the path.
           </warning>
         </li>
