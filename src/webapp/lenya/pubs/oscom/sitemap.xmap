@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.6 2002/11/15 13:45:40 ah Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.7 2003/02/16 20:31:40 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -32,6 +32,12 @@
     </map:actions>
   </map:components>
 
+  <map:views>
+    <map:view name="first" from-position="first">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+
   <map:resources>
     <map:resource name="login">
       <map:generate type="serverpages" src="../../docs/cms/access-control/identify.xsp"/>
@@ -45,6 +51,38 @@
 
 
   <map:pipelines>
+
+
+    <map:pipeline>
+      <map:match pattern="search-oscom/lucene.xml">
+        <map:generate type="serverpages" src="../../docs/cms/search-and-results.xsp">
+          <map:parameter name="index-dir" value="resources/publication/search/lucene/index"/>
+          <map:parameter name="excerpt-dir" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/resources/cms/misc/lucene/htdocs_dump_regression_test"/>
+          <map:parameter name="max-hits-per-page" value="3"/>
+          <map:parameter name="max-pages" value="7"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>    
+
+    <map:pipeline>
+      <map:match pattern="search-oscom/lucene*">
+        <map:aggregate element="oscom">
+          <map:part src="cocoon:/search-oscom/lucene.xml{1}"/>
+        </map:aggregate>
+        <map:transform src="../../stylesheets/cms/Page/Search/sort.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Search/Live/main.xsl"/>
+<!--
+        <map:transform src="stylesheets/cms/search-and-results.xsl"/>
+-->
+<!--
+        <map:transform src="../../stylesheets/cms/Page/Search/search-and-results.xsl"/>
+-->
+        <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>    
+
+
     <map:pipeline>
       <map:match pattern="introduction.html">
         <map:read src="resources/publication/html/documentation/index.html" mime-type="text/html"/>

@@ -225,7 +225,7 @@ border="0" /></td>
 </td>
 
 <td height="21" class="topnavigation" align="left">
-  <a href="/Board/" class="navigationwhite">Board</a>
+  <a href="/Organization/" class="navigationwhite">Organization</a>
 </td>
 <td height="21" width="19" align="left">
   <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />

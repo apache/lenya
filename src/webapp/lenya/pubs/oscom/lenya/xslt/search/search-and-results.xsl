@@ -4,13 +4,19 @@
 
 <xsl:import href="../../../../stylesheets/cms/Page/Search/search-and-results.xsl"/>
 
-<xsl:template match="search-and-results">
+<xsl:template match="/">
 <html>
 <head>
-  <title>Search</title>
+  <title>Search OSCOM (powered by Lucene)</title>
 </head>
 <body>
-<h1>OSCOM Search Interface -- powered by Lucene</h1>
+<h1>Search OSCOM (powered by Lucene)</h1>
+<xsl:apply-templates select="search-and-results"/>
+</body>
+</html>
+</xsl:template>
+
+<xsl:template match="search-and-results">
   <form>
 <table bgcolor="#dddddd">
 <tr><td>
@@ -72,8 +78,6 @@
 
   <xsl:apply-templates select="search/exception"/>
   <xsl:apply-templates select="results"/>
-</body>
-</html>
 </xsl:template>
 
 <!--
