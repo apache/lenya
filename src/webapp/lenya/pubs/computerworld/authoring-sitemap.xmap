@@ -252,7 +252,7 @@
 					<map:part src="docs/publication/authoring/preview.xml"/>
 					<map:part src="docs/publication/authoring/small-preview.xml"/>
 					<map:part src="docs/publication/authoring/sitetree.xml"/>
-					<map:part src="cocoon:/all-headlines"/>
+					<map:part src="cocoon:/selected-headlines"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Authoring/main.xsl" label="content">
 					<map:parameter name="id" value="/index.html"/>
@@ -268,7 +268,9 @@
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Authoring/overview.xsl"/>
 				<map:serialize type="html"/>
-			</map:match>			
+			</map:match>
+
+
 			<!-- Include ALL articles -->
 			<map:match pattern="all-headlines">
 				<map:generate type="directory" src="docs/publication/authoring/news/"/>
@@ -278,7 +280,19 @@
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
+
+                        <!-- Include only articles specified in headlines.xml -->
+                        <map:match pattern="selected-headlines">
+                                <map:generate src="docs/publication/authoring/headlines.xml"/>
+                                <map:transform src="stylesheets/publication/Page/Authoring/selected-xinclude.xsl" label="gregor"/>
+                                <map:transform type="xlink">
+                                        <map:parameter name="href" value="docs/publication/authoring/headlines.xml"/>
+                                </map:transform>
+                                <map:serialize type="xml"/>
+                        </map:match>
 		</map:pipeline>
+
+
 		<!-- Used to build the bitflux stylesheets for headlines dynamically  -->
 		<map:pipeline>
 			<map:match pattern="headlines.xml">
@@ -390,7 +404,7 @@
 					<map:part src="docs/publication/authoring/news/{1}.xml"/>
 					<map:part src="docs/publication/authoring/small-preview.xml"/>
 					<map:part src="docs/publication/authoring/sitetree.xml"/>
-					<map:part src="cocoon:/all-headlines"/>
+					<map:part src="cocoon:/selected-headlines"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Authoring/article.xsl">
 					<map:parameter name="id" value="/news/"/>
