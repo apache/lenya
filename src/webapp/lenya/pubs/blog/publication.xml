@@ -15,10 +15,10 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xml,v 1.15 2004/04/05 12:43:11 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.16 2004/04/10 08:15:29 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
-<lenya:pub-version>1.0-dev</lenya:pub-version>
+<lenya:pub-version>1.0</lenya:pub-version>
 <lenya:lenya-version>1.2</lenya:lenya-version>
 <lenya:cocoon-version>2.1.4</lenya:cocoon-version>
 <lenya:name>Lenya's Weblog</lenya:name>
