@@ -91,12 +91,20 @@ public class WorkflowMenuTransformer
             String event = attr.getValue(EVENT_ATTRIBUTE);
             
             // filter item if command not allowed 
-            if (event != null && !containsEvent(event)) {
+            if (event != null) {
                 passed = false;
                 AttributesImpl attributes = new AttributesImpl(attr);
                 int hrefIndex = attributes.getIndex("href");
-                if (hrefIndex > -1) {
-                    attributes.removeAttribute(hrefIndex);
+                if (!containsEvent(event)) {
+                    if (hrefIndex > -1) {
+                        attributes.removeAttribute(hrefIndex);
+                    }
+                }
+                else {
+                    if (hrefIndex > -1) {
+                        String href = attributes.getValue("href");
+                        attributes.setValue(hrefIndex, href + "&lenya.event=" + event);
+                    }
                 }
                 super.startElement(uri, localName, raw, attributes);
             }
