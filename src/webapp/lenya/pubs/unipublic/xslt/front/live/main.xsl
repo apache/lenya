@@ -122,44 +122,7 @@
       <td width="5" bgcolor="#CCCC99" height="5"></td>
     </tr>
 
-    <tr>
-      <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-
-      <!--<td align="right" width="150" bgcolor="#CCCC99" valign="bottom"><a href="magazin/gesellschaft/2002/0515/"><img src="{$unipublic}/magazin/gesellschaft/2002/0515/bild-headline.gif" width="80" height="60" border="0" alt="Bruckner"/></a></td>-->
-
-<!--
-      <td align="right" width="150" bgcolor="#CCCC99" valign="bottom"><a href="{Article/@href}/"><img src="{$unipublic}/{Aricle/@href}/bild-headline.jpg" width="80" height="60" border="0" alt="Bruckner"/></a></td>
--->
-      <td align="right" width="150" bgcolor="#CCCC99" valign="bottom"><a href="{Article/@href}/"><img src="{Aricle/@href}/bild-headline.jpg" width="80" height="60" border="0" alt="Bruckner"/></a></td>
-
-      <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="1" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td align="right" width="150" bgcolor="#CCCC99"><img src="{$unipublic}/campus/uni-news/2002/0520/bild-headline.jpg" width="80" height="60" border="0" alt="ZB"/></td>
-      <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-    </tr>
-
-    <tr>
-      <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="150" valign="top" bgcolor="white" class="tsr-text">
-
-
-        <p><a href="{Article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[1]/body.head/hedline/hl1"/></span></a><br />
-          <xsl:apply-templates select="Article[1]/body.head/abstract"/>(<xsl:apply-templates select="Article[1]/body.head/dateline/story.date/@norm"/>)</p>
-
-
-      </td>
-      <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="1" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="150" valign="top" bgcolor="white" class="tsr-text">
-
-
-        <p><a href="{Article[2]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[2]/body.head/hedline/hl1"/> </span></a><br />
-
-          <xsl:apply-templates select="Article[2]/body.head/abstract"/>(<xsl:apply-templates select="Article[2]/body.head/dateline/story.date/@norm"/>)</p>
-
-      </td>
-      <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-    </tr>
+    <xsl:apply-templates select="../Articles" mode="top"/>
 
     <tr>
       <td width="5"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
@@ -193,7 +156,7 @@
                 <td width="4" bgcolor="white">&#160;</td>
                 <td bgcolor="white" class="tsr-text">
 
-                  <p><a href="{@href}/"><img src="{$unipublic}/campus/uni-news/2002/0513/bild-headline.jpg" width="80" height="60" border="0" alt="unijournal" align="right"/></a><span class="tsr-title"><a href="{@href}/"><xsl:apply-templates select="body.head/hedline/hl1"/></a> </span><br />
+                  <p><a href="{@href}/"><img src="{$unipublic}/{@href}/{body.head/media/media-reference/@source}" width="80" height="60" border="0" alt="{body.head/media/media-reference/@alternate-text}" align="right"/></a><span class="tsr-title"><a href="{@href}/"><xsl:apply-templates select="body.head/hedline/hl1"/></a> </span><br />
                     <xsl:apply-templates select="body.head/abstract"/></p>
 
                   </td>
@@ -209,6 +172,37 @@
       </table>
     </xsl:if>
   </xsl:for-each>
+</xsl:template>
+
+<xsl:template match="Articles" mode="top">
+  <tr>
+    <xsl:for-each select="Article">
+      <xsl:if test="position()&#60;=2">
+        <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+        <td align="right" width="150" bgcolor="#CCCC99" valign="bottom"><a href="{@href}/"><img src="{$unipublic}/{@href}/{body.head/media/media-reference/@source}" width="80" height="60" border="0" alt="{body.head/media/media-reference/@alternate-text}"/></a></td>
+        <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+      </xsl:if>
+    </xsl:for-each>
+  </tr>
+
+  <tr>
+    <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+    <td width="150" valign="top" bgcolor="white" class="tsr-text">
+
+     <p><a href="{Article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[1]/body.head/hedline/hl1"/></span></a><br />
+      <xsl:apply-templates select="Article[1]/body.head/abstract"/>(<xsl:apply-templates select="Article[1]/body.head/dateline/story.date/@norm"/>)</p>
+
+    </td>
+    <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+    <td width="1" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+    <td width="150" valign="top" bgcolor="white" class="tsr-text">
+
+     <p><a href="{Article[2]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[2]/body.head/hedline/hl1"/> </span></a><br />
+      <xsl:apply-templates select="Article[2]/body.head/abstract"/>(<xsl:apply-templates select="Article[2]/body.head/dateline/story.date/@norm"/>)</p>
+
+    </td>
+    <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+  </tr>
 </xsl:template>
 
 <xsl:template match="FirstColumn">
