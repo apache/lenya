@@ -85,7 +85,7 @@ function validateForm(theForm)
             <input type="hidden" name="properties.create.ipaddress" value="{/parent-child/ip-address}"/>
             <table class="lenya-table-noborder">
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Document ID</i18n:text>:</td><td>hidden value="<xsl:value-of select="/parent-child/document-id"/>"</td>
+                <td class="lenya-form-caption"><i18n:text>Document ID</i18n:text>:</td><td><xsl:value-of select="/parent-child/document-id"/></td>
               </tr>
               <tr>
                 <td class="lenya-form-caption"><i18n:text>Navigation Title</i18n:text>*:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
