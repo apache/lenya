@@ -12,8 +12,7 @@
   <live_uri>/live<xsp:expr>xsp_lenya_pub_url</xsp:expr></live_uri>
 
     <xsp:logic>
-      String sourcesParameter = "sources=" +
-      xsp_lenya_pub_url.replaceFirst("\\.html", ".xml");
+      String sourcesParameter = "sources=" + xsp_lenya_pub_url.replaceFirst("\\.html", ".xml");
       String urisParameter = "uris=" + xsp_lenya_pub_url;
     </xsp:logic>
     
@@ -54,23 +53,15 @@
 
     <menu name="Debug" label="Debug">
       <block>
+        <item><xsp:attribute name="href">../xopus<xsp:expr>xsp_lenya_pub_url.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
+        <item href="../xopus/xdoc.xsd">View&#160;Xopus&#160;XSD</item>
+        <item href="../xopus/xdoc.xsl">View&#160;Xopus&#160;XSLT</item>
       </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
-      <block>
-        <item>View&#160;Xopus&#160;XSLT</item>
-        <item>View&#160;Xopus&#160;XSD</item>
-      </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
       <separator>
         <item>-----------------</item>
       </separator>
       <block>
         <item>Hello World</item>
-        <item><xsp:expr>xsp_lenya_context_prefix</xsp:expr></item>
       </block>
     </menu>
   </menus>
