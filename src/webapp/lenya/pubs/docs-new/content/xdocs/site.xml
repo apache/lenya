@@ -75,6 +75,12 @@
         <link-management href="link-management/" label="Link Management">
           <link-management-1 href="link-management.html" label="Link Management"/>
         </link-management>
+        <meta-data href="metadata/" label="Meta Data">
+          <meta-data-1 href="metadata.html" label="Meta Data Handling"/>
+	</meta-data>
+        <multilingual href="multilingual/" label="Multilingual Documents">
+          <multilingual-1 href="multilingual.html" label="Multilingual Document Handling"/>
+	</multilingual>
 				<node-40 href="tasks/" label="Tasks">
 					<node-41 href="concept.html" label="The Task Concept"/>
 					<node-42 href="defining.html" label="Defining Tasks"/>
