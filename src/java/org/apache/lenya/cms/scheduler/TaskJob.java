@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.31 2003/08/28 10:15:14 andreas Exp $
+$Id: TaskJob.java,v 1.32 2003/08/29 11:36:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,7 +64,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.DefaultTaskWrapper;
@@ -96,13 +95,12 @@ public class TaskJob extends ServletJob {
     /**
      * Get the parameters.
      * 
-     * @param servletContextPath ther servlet-context
      * @param request the request
      * 
      * @return the parameters
      * @throws SchedulerException when something went wrong.
      */
-    protected Parameters getParameters(String servletContextPath, HttpServletRequest request)
+    protected Map getParameters(HttpServletRequest request)
         throws SchedulerException {
         
         Map parameterMap = request.getParameterMap();
@@ -140,9 +138,9 @@ public class TaskJob extends ServletJob {
     public JobDataMap createJobData(String servletContextPath, HttpServletRequest request)
         throws SchedulerException {
         log.debug("Creating job data map:");
-        Parameters parameters = getParameters(servletContextPath, request);
-        return new JobDataMap(Parameters.toProperties(parameters));
-
+        JobDataMap map = super.createJobData(servletContextPath, request);
+        map.putAll(getParameters(request));
+        return map;
     }
 
     /**
@@ -170,51 +168,34 @@ public class TaskJob extends ServletJob {
      * Loads a job details object from an XML element. 
      *
      * @param jobElement The XML element.
-     * @param servletContext The servlet context.
      * @param jobGroup The job group the job belongs to.
+     * @param servletContextPath The servlet context path.
+     * @throws SchedulerException when something went wrong.
      *
      * @return A job details object.
      */
-    public JobDetail load(Element jobElement, String servletContext, String jobGroup) {
+    public JobDetail load(Element jobElement, String jobGroup, String servletContextPath) throws SchedulerException {
+        JobDetail jobDetail = super.load(jobElement, jobGroup, servletContextPath);
+        
         NamespaceHelper helper = SchedulerWrapper.getNamespaceHelper();
 
-        // replace servlet-context parameter with actual servlet context
+        JobDataMap map = new JobDataMap();
         /*
-        taskMap.put(AbstractTask.PARAMETER_SERVLET_CONTEXT, servletContext);
-        debugString =
-            debugString
-                + "\nReplacing: "
-                + AbstractTask.PARAMETER_SERVLET_CONTEXT
-                + " = "
-                + servletContext;
-        */
-
-        JobDataMapWrapper jobMap = new JobDataMapWrapper(SchedulerWrapper.JOB_PREFIX);
+        NamespaceMap mapWrapper = new NamespaceMap(map, SchedulerWrapper.JOB_PREFIX);
+        
         Element[] parameterElements = helper.getChildren(jobElement, "parameter");
 
         for (int i = 0; i < parameterElements.length; i++) {
             String key = parameterElements[i].getAttribute("name");
             String value = parameterElements[i].getAttribute("value");
-            jobMap.put(key, value);
+            mapWrapper.put(key, value);
             log.debug("Setting job parameter: [" + key + "] = [" + value + "]");
         }
-
-        Class cl = null;
-        String jobId = jobMap.get(SchedulerWrapper.JOB_ID);
-
-        try {
-            cl = Class.forName(jobMap.get(SchedulerWrapper.JOB_CLASS));
-        } catch (Exception e) {
-            log.error("Cannot load job: ", e);
-        }
-
-        JobDetail jobDetail = new JobDetail(jobId, jobGroup, cl);
-        
-        JobDataMap jobDataMap = jobMap.getMap();
+        */
         DefaultTaskWrapper wrapper = new DefaultTaskWrapper(helper, jobElement);
-        jobDataMap.putAll(Parameters.toProperties(wrapper.getParameters()));
-        jobDetail.setJobDataMap(jobDataMap);
-
+        wrapper.getTaskParameters().setServletContextPath(servletContextPath);
+        map.putAll(wrapper.getParameters());
+        jobDetail.setJobDataMap(map);
         return jobDetail;
     }
 
@@ -223,32 +204,32 @@ public class TaskJob extends ServletJob {
      *
      * @param jobDetail DOCUMENT ME!
      * @param helper namespace helper
+     * @param webappUrl The webapp URL.
+     * @throws SchedulerException when something went wrong.
      *
      * @return DOCUMENT ME!
      */
-    public Element save(NamespaceHelper helper, JobDetail jobDetail) {
+    public Element save(NamespaceHelper helper, JobDetail jobDetail) throws SchedulerException {
         
-        log.debug("Saving job");
-        
-        Element jobElement = helper.createElement("job");
+        Element jobElement = super.save(helper, jobDetail);
         JobDataMap map = jobDetail.getJobDataMap();
         
         DefaultTaskWrapper wrapper = new DefaultTaskWrapper(map);
         jobElement.appendChild(wrapper.save(helper));
-
-        JobDataMapWrapper jobMap = new JobDataMapWrapper(map, SchedulerWrapper.JOB_PREFIX);
+/*
+        NamespaceMap jobMap = new NamespaceMap(map, SchedulerWrapper.JOB_PREFIX);
 
         // job parameters
-        Parameters jobParameters = jobMap.getParameters();
-        String[] names = jobParameters.getNames();
+        Map jobParameters = jobMap.getMap();
 
-        for (int i = 0; i < names.length; i++) {
+        for (Iterator i = jobParameters.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
             Element parameterElement = helper.createElement("parameter");
             jobElement.appendChild(parameterElement);
-            parameterElement.setAttribute("name", names[i]);
-            parameterElement.setAttribute("value", jobMap.get(names[i]));
+            parameterElement.setAttribute("name", key);
+            parameterElement.setAttribute("value", (String) jobMap.get(key));
         }
-
+*/
         return jobElement;
     }
 }
