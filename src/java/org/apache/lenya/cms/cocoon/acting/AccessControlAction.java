@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlAction.java,v 1.8 2004/02/17 10:13:57 andreas Exp $
+$Id: AccessControlAction.java,v 1.9 2004/02/17 10:49:20 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.ConfigurableServiceableAction;
+import org.apache.cocoon.acting.ConfigurableComposerAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -73,7 +73,7 @@ import org.apache.lenya.util.ServletHelper;
 /**
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public abstract class AccessControlAction extends ConfigurableServiceableAction {
+public abstract class AccessControlAction extends ConfigurableComposerAction {
 
     private AccessController accessController;
 

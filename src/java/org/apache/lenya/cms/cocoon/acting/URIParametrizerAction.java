@@ -1,5 +1,5 @@
 /*
-$Id: URIParametrizerAction.java,v 1.19 2004/02/17 10:13:57 andreas Exp $
+$Id: URIParametrizerAction.java,v 1.20 2004/02/17 10:50:27 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,7 @@ package org.apache.lenya.cms.cocoon.acting;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.ConfigurableServiceableAction;
+import org.apache.cocoon.acting.ConfigurableComposerAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -72,9 +72,9 @@ import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
  * The <code>src</code> attribute is the URI to parameterize.
  *
  * @author $Author: andreas $
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
-public class URIParametrizerAction extends ConfigurableServiceableAction {
+public class URIParametrizerAction extends ConfigurableComposerAction {
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
