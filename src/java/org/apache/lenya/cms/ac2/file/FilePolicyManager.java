@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.15 2003/08/13 13:10:56 andreas Exp $
+$Id: FilePolicyManager.java,v 1.16 2003/08/13 18:43:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -243,10 +243,10 @@ public class FilePolicyManager
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
-
-        String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
-        File policyFile = new File(getPoliciesDirectory(), path);
-        return policyFile.toURI().toString();
+        
+        String policyUri = "file://" + getPoliciesDirectory().getAbsolutePath() + "/" + url + "/" + policyFilename;
+        getLogger().debug("Computing policy URI [" + policyUri + "]");
+        return policyUri; 
     }
 
     /**
