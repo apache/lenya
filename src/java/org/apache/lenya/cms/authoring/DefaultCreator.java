@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.9 2003/02/26 13:07:52 egli Exp $
+ * $Id: DefaultCreator.java,v 1.10 2003/02/26 16:26:42 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -160,6 +160,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         Document doc = DocumentHelper.readDocument(new URL("file:" + doctypeSample));
 
 	// transform the xml if needed
+        log.debug("transform sample file: ");
 	transformXML(doc, id, childType, childName, parameters);
 	// write the document (create the path, i.e. the parent
         // directory first if needed)
@@ -169,6 +170,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         }
 	
         // Write file
+        log.debug("write file: " + filename);
         FileOutputStream out = new FileOutputStream(filename);
         new DOMWriter(out).printWithoutFormatting(doc);
         out.close();
