@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLFormSaveAction.java,v 1.50 2004/06/29 10:22:31 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -45,7 +45,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
-import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
