@@ -28,6 +28,7 @@
     <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
     <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
     <publication><xsp:expr>publication</xsp:expr></publication>
+    <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
   </url-info>
 
   <xsp:logic>
