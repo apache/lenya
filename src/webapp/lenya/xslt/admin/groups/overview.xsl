@@ -76,7 +76,7 @@
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption" valign="top">Machines:</td>
+              <td class="lenya-entry-caption" valign="top">IP Ranges:</td>
               <td>
                 <xsl:apply-templates select="machines"/>
               </td>
