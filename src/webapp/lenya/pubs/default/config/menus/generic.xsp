@@ -180,7 +180,7 @@
         <xsp:logic>
           if (isDocument &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
-            <item uc:usecase="rename" uc:step="showscreen" href="?"><i18n:text>Rename URL</i18n:text></item>
+            <item uc:usecase="site.changeNodeID" href="?"><i18n:text>Rename URL</i18n:text></item>
           }
           else {
             <item>Rename URL</item>
