@@ -7,8 +7,10 @@
 package org.apache.lenya.cms.publication;
 
 /**
- *
- * @author  andreas
+ * A CMS page.
+ * It is not sure if this class will be used.
+ * 
+ * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public interface Page {
     

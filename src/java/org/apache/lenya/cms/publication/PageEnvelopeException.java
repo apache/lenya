@@ -1,5 +1,5 @@
 /*
- * $Id: PageEnvelopeException.java,v 1.3 2003/05/07 17:18:59 andreas Exp $
+ * $Id: PageEnvelopeException.java,v 1.4 2003/05/28 14:32:38 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,6 +43,11 @@
  */
 package org.apache.lenya.cms.publication;
 
+/**
+ * This exception is thrown when the creation of a {@link PageEnvelope} object fails.
+ * 
+ * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
+ */
 public class PageEnvelopeException
     extends Exception {
 

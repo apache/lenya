@@ -10,8 +10,9 @@ import java.io.File;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 
 /**
- *
- * @author  andreas
+ * A publication.
+ * 
+ * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class Publication {
     
@@ -32,18 +33,32 @@ public class Publication {
     
     private String id;
     
+    /**
+     * Returns the publication ID.
+     * @return A string value.
+     */
     public String getId() {
         return id;
     }
     
     private PublishingEnvironment environment;
     
+    /**
+     * Returns the publishing environment of this publication.
+     * @return A {@link PublishingEnvironment} object.
+     * @deprecated It is planned to decouple the environments from the publication.
+     */
     public PublishingEnvironment getEnvironment() {
         return environment;
     }
     
     private File servletContext;
     
+    /**
+     * Returns the servlet context this publication belongs to
+     * (usually, the <code>webapps/lenya</code> directory).
+     * @return A <code>File</code> object.
+     */
     public File getServletContext() {
         return servletContext;
     }
@@ -52,6 +67,7 @@ public class Publication {
     
     /**
      * Returns the publication directory.
+     * @return A <code>File</code> object.
      */
     public File getDirectory() {
         return new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
