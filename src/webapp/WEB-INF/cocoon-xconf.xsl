@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cocoon-xconf.xsl,v 1.44 2004/04/22 10:01:31 gregor Exp $ -->
+<!-- $Id: cocoon-xconf.xsl,v 1.45 2004/07/20 07:38:16 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -93,10 +93,10 @@
     <component-instance logger="core.modules.input.sitetree" name="sitetree"
         class="org.apache.lenya.cms.cocoon.components.modules.input.SitetreeModule"/>
         
-    <component-instance logger="core.modules.input.sitetree" name="fallback"
+    <component-instance logger="core.modules.input.fallback" name="fallback"
         class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule"/>
                 
-    <component-instance logger="core.modules.input.sitetree" name="resource-exists"
+    <component-instance logger="core.modules.input.resourceexists" name="resource-exists"
         class="org.apache.lenya.cms.cocoon.components.modules.input.ResourceExistsModule"/>
                 
     <component-instance name="date-i18n" logger="core.modules.input" class="org.apache.cocoon.components.modules.input.DateInputModule">
