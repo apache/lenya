@@ -205,7 +205,9 @@ function ListFind(list, value) {
 	      <input type="hidden" name="properties.insert.asset.language" value="{/usecase:asset/usecase:language}"/>
 	      <table class="lenya-table-noborder">
 		<tr>
-		  <td class="lenya-form-caption">Asset:</td>
+		  <td class="lenya-form-caption">
+		  <xsl:choose><xsl:when test="$insertimage = 'true'">Image:</xsl:when>
+	    <xsl:otherwise>Asset:</xsl:otherwise></xsl:choose></td>
 		  <td class="lenya-form-caption">
 		    <select name="properties.asset.data" class="lenya-form-element">
 		      <xsl:apply-templates select="usecase:assets/usecase:asset"/>
