@@ -69,37 +69,34 @@
     </xsp:logic>
 
     <menus>
-      <menu i18n:attr="name" name="File" label="File">
+      <menu i18n:attr="name" name="File">
 	<block>
 	  <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
 	</block>
       </menu>
       
-      <menu i18n:attr="name" name="Edit" label="Search">
+      <menu i18n:attr="name" name="Edit">
         
         <block info="false">
-	  <!-- XSLT not finished yet -->
-          <!--<item uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>Edit with Forms</i18n:text></item>-->
           <item uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>Edit with one Form</i18n:text></item>
         </block>
       </menu>
       
-      <menu i18n:attr="name" name="Workflow" label="Help">
+      <menu i18n:attr="name" name="Workflow">
       </menu>
 
-      <menu i18n:attr="name" name="Help" label="Debug">
-	<block>
-	  <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
-	  <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
-	</block>
-  <block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
-	</block>
-
+      <menu i18n:attr="name" name="Help">
+        <block>
+          <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+          <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
+        </block>
+        <block>
+          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
+          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
+        </block>
         <block>
           <item uc:usecase="view-logs" uc:step="overview" href="?"><i18n:text>View Task Logs</i18n:text></item>
-	</block>
+        </block>
       </menu>
     </menus>
     

@@ -34,7 +34,7 @@
   </xsp:structure>
   
   <menu>
-          
+
     <xsp:logic>
       String projectid = parameters.getParameter("projectid","null");
       
@@ -69,9 +69,7 @@
     </xsp:logic>
     
     <menus>
-      <menu i18n:attr="name" name="File" label="File">
-        <block>
-          <menu name="New">
+      <menu i18n:attr="name" name="File">
             <block>
           
           <xsp:logic>
@@ -86,8 +84,6 @@
         }
             }
           </xsp:logic>
-            </block>
-          </menu>
         </block>
         <block>
           <xsp:logic>
@@ -133,17 +129,13 @@
         </block>
       </menu>
       
-      <menu i18n:attr="name" name="Edit" label="Search">
+      <menu i18n:attr="name" name="Edit">
         
         <block info="false">
-          <menu name="Edit Body">
-            <block>
-              <item wf:event="edit" uc:usecase="kupu" uc:step="open" href="?"><i18n:text>With Kupu</i18n:text></item>
-              <item wf:event="edit" uc:usecase="bxe" uc:step="open" href="?"><i18n:text>With BXE</i18n:text></item>
-              <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
-              <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>With one Form</i18n:text></item>
-            </block>
-          </menu>
+          <item wf:event="edit" uc:usecase="kupu" uc:step="open" href="?"><i18n:text>With Kupu</i18n:text></item>
+          <item wf:event="edit" uc:usecase="bxe" uc:step="open" href="?"><i18n:text>With BXE</i18n:text></item>
+          <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
+          <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>With one Form</i18n:text></item>
         </block>
         <block info="false">
           <item wf:event="edit" uc:usecase="info-meta" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/info-<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute><i18n:text>Edit Metadata</i18n:text></item>
@@ -254,7 +246,7 @@
         
       </menu>
       
-      <menu i18n:attr="name" name="Workflow" label="Help">
+      <menu i18n:attr="name" name="Workflow">
           <xsp:logic>
       {
         if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
@@ -281,10 +273,10 @@
           </xsp:logic>
       </menu>
 
-      <menu i18n:attr="name" name="Help" label="Debug">
+      <menu i18n:attr="name" name="Help">
         <block>
-          <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
-          <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
+        <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+        <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
         </block>
         <block>
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
