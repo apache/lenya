@@ -188,7 +188,11 @@
   <component logger="lenya.ac.authenticator"
       class="org.apache.lenya.cms.ac2.UserAuthenticator"
       role="org.apache.lenya.cms.ac2.Authenticator"/>
-
+      
+  <component logger="lenya.ac.cache"
+     	class="org.apache.lenya.cms.ac2.cache.SourceCacheImpl"
+     	role="org.apache.lenya.cms.ac2.cache.SourceCache"/>
+      
   </xsl:copy>
 </xsl:template>
 
