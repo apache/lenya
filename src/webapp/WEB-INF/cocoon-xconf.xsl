@@ -276,6 +276,10 @@
     <component-instance name="admin.deleteGroup" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteGroup">
       <view template="admin/deleteGroup" menu="true"/>
     </component-instance>
+    <component-instance name="admin.ipRanges" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRanges">
+      <view template="admin/ipRanges" menu="true"/>
+    </component-instance>
+
     <!--
     <component-instance name="admin.addIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddIPRange"/>
     <component-instance name="admin.ipRangeProfileProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeProfile"/>
