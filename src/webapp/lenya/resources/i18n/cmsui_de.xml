@@ -92,6 +92,7 @@
   <!-- publish screen --> 
   <message key="Publish">Veröffentlichen</message>    
   <message key="Source File(s)">Quelldatei(en)</message>
+  <message key="publish complete subtree">den gesamten Teilbaum veröffentlichen</message>
    
   <!-- logn screen -->        
   <message key="login-to-pub">Anmelden an {0} Publikation</message>    
