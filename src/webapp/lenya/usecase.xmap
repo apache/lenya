@@ -68,7 +68,7 @@
       <map:transform src="xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:serialize type="xhtml-iso-8859-1"/>
+      <map:serialize type="xhtml"/>
     </map:resource>
     
     <map:resource name="cms-screen-xml">
@@ -553,7 +553,6 @@
         <map:match pattern="edit" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
-
               <map:act type="reserved-checkout">
                 <map:generate type="serverpages" src="content/rc/{exception}.xsp">
                   <map:parameter name="user" value="{user}"/>
@@ -563,8 +562,6 @@
                 <map:transform src="xslt/rc/rco-exception.xsl"/>
                 <map:call resource="style-cms-page"/>
               </map:act>
-
-
               <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
               <map:transform src="xslt/authoring/edit/numberTags.xsl"/>
               <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
@@ -729,8 +726,23 @@
 
         <!-- This is the generic asset upload matcher -->
         <map:match pattern="asset" type="usecase">
-
           <map:match pattern="showscreen" type="step">
+            <map:select type="request-parameter">  
+              <map:parameter name="parameter-name" value="insert"/>
+              <map:when test="true">
+                <map:act type="reserved-checkout">
+                  <map:generate type="serverpages" src="content/rc/{exception}.xsp">
+                    <map:parameter name="user" value="{user}"/>
+                    <map:parameter name="filename" value="{filename}"/>
+                    <map:parameter name="date" value="{date}"/>
+                  </map:generate>
+                  <map:transform src="xslt/rc/rco-exception.xsl"/>
+                  <map:call resource="style-cms-page"/>
+                </map:act>
+              </map:when>
+              <map:otherwise>
+              </map:otherwise>
+            </map:select>
             <map:call resource="cms-screen">
               <map:parameter name="publication-id" value="{../../1}"/>
               <map:parameter name="serverpage" value="authoring/asset.xsp"/>
@@ -759,7 +771,7 @@
           <map:match pattern="insert" type="step">
             <map:act type="task">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
-              <map:redirect-to session="true" uri="{request:requestURI}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
             </map:act>
           </map:match>
 
@@ -768,8 +780,19 @@
               <map:parameter name="task-id" value="{request-param:task-id}"/>
               <map:act type="task">
                 <map:parameter name="task-id" value="{request-param:task-id}"/>
-                <map:redirect-to session="true" uri="{request:requestURI}"/>
+                <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
               </map:act>
+            </map:act>
+            <map:act type="reserved-checkin">
+              <map:parameter name="backup" value="false"/>
+              <map:generate src="content/rc/{exception}.xsp" type="serverpages">
+                <map:parameter name="user" value="{user}"/>
+                <map:parameter name="filename" value="{filename}"/>
+                <map:parameter name="checkType" value="{checkType}"/>
+                <map:parameter name="date" value="{date}"/>
+              </map:generate>
+              <map:transform src="xslt/rc/rco-exception.xsl"/>
+              <map:serialize/>
             </map:act>
             <map:generate src="{fallback:content/authoring/asset.xsp}" type="serverpages"/>
             <map:transform src="{fallback:xslt/authoring/asset.xsl}">
