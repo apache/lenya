@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTree.java,v 1.2 2003/05/12 12:57:19 egli Exp $
+ * $Id: SiteTree.java,v 1.3 2003/05/13 12:28:53 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,18 +45,16 @@ package org.apache.lenya.cms.publication;
 
 import java.util.Map;
 
-import org.w3c.dom.Node;
-
 public interface SiteTree {
 
-    public void addNode(String parentid, String id, Label[] labels);
-
-    public void addNode(String parentid, String id, Label[] labels,
-			String href, String suffix, boolean link);
-
-    public void addNode(Node node);
-
-    public void deleteNode(String id);
-
-    public Node getNode(String documentId);
+    void addNode(String parentid, String id, Label[] labels);
+    
+    void addNode(String parentid, String id, Label[] labels,
+		 String href, String suffix, boolean link);
+    
+    void addNode(SiteTreeNode node);
+    
+    void deleteNode(String id);
+    
+    SiteTreeNode getNode(String documentId);
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.3 2003/05/12 12:57:19 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.4 2003/05/13 12:28:53 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -77,8 +77,6 @@ public class DefaultSiteTree
     static Category log = Category.getInstance(DefaultSiteTree.class);
     
     public static final String NAMESPACE_URI = "http://www.lenya.org/2003/sitetree";
-    public static final String NODE_NAME = "node";
-    public static final String LABEL_NAME = "label";
 
     private Document document = null;
     private File treefile = null;
@@ -155,23 +153,23 @@ public class DefaultSiteTree
 //         }
 
         // Add node
-	Element child = helper.createElement(NODE_NAME);
-	child.setAttribute("id", id);
+	Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
+	child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
  	if (href != null && href.length() > 0) {
- 	    child.setAttribute("href", href);
+ 	    child.setAttribute(SiteTreeNodeImpl.HREF_ATTRIBUTE_NAME, href);
  	}
 	if (suffix != null && suffix.length() > 0) {
-	    child.setAttribute("suffix", suffix);
+	    child.setAttribute(SiteTreeNodeImpl.SUFFIX_ATTRIBUTE_NAME, suffix);
 	}
 	if (link == true) {
-	    child.setAttribute("link", "true");
+	    child.setAttribute(SiteTreeNodeImpl.LINK_ATTRIBUTE_NAME, "true");
 	}
 	for (int i = 0; i < labels.length; i++) {
 	    String labelName = labels[i].getLabel();
-	    Element label = helper.createElement(LABEL_NAME, labelName);
+	    Element label = helper.createElement(SiteTreeNodeImpl.LABEL_NAME, labelName);
 	    String labelLanguage = labels[i].getLanguage();
 	    if (labelLanguage != null && labelLanguage.length() > 0) {
-		label.setAttribute("xml:lang", labelLanguage);
+		label.setAttribute(SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME, labelLanguage);
 	    }
 	    child.appendChild(label);
 	}
@@ -180,55 +178,25 @@ public class DefaultSiteTree
 	log.debug("Tree has been modified: " + root);
     }
 
-    public void addNode(Node node) {
-        // Get parent element
-	String parentId = "FIXME:"; // node.getParentId();
-        StringTokenizer st = new StringTokenizer(parentId, "/");
-	ArrayList ids = new ArrayList();
-	while (st.hasMoreTokens()) {
-	    ids.add(st.nextToken());
-	}
-
-	Element root = document.getDocumentElement();
-	
-	Node parentNode = findNode(root, ids);
-
-        if (parentNode == null) {
-            log.error("No nodes: " + parentId + ". No child added");
-	    
-            return;
-        }
-	
-	log.debug("PARENT ELEMENT: " + parentNode);
-	
-//         // Check if child already exists
-//         String newChildXPath = xpath_string + "/" + "node";
-//         log.debug("CHECK: " + newChildXPath);
-	
-//         if (doc.selectSingleNode(newChildXPath + "[@id='" + id + "']") != null) {
-//             log.error("Exception: XPath exists: " + newChildXPath + "[@id='" + id + "']");
-//             log.error("No child added");
-	    
-//             return;
-//         }
-
-        // Add node
-	parentNode.appendChild(node.cloneNode(true));
-	log.debug("Tree has been modified: " + root);
+    public void addNode(SiteTreeNode node) {
+	this.addNode(node.getParentId(), node.getId(), node.getLabels(),
+		     node.getHref(), node.getSuffix(), node.hasLink());
     }
 
     public void deleteNode(String id) {}
 
-    public Node getNode(String documentId) {
+    public SiteTreeNode getNode(String documentId) {
         StringTokenizer st = new StringTokenizer(documentId, "/");
 	ArrayList ids = new ArrayList();
 	while (st.hasMoreTokens()) {
 	    ids.add(st.nextToken());
 	}
 
-	Element root = document.getDocumentElement();
-	
-	return findNode(root, ids);
+	Node node = findNode(document.getDocumentElement(), ids);
+	if (node == null) {
+	    return null;
+	}
+	return new SiteTreeNodeImpl(node);
     }
 
     public void serialize()
