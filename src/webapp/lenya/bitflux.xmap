@@ -10,7 +10,12 @@
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-    <map:actions/>
+    <map:actions>
+      <map:action name="reserved-checkout" src="org.wyona.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+        <rcmlDirectory href="pubs/unipublic/docs/publication/rcml"/>
+        <backupDirectory href="pubs/unipublic/docs/publication/rcbak"/>
+      </map:action>
+    </map:actions>
     <map:selectors/>
   </map:components>
 
@@ -18,14 +23,27 @@
 
   <map:pipelines>
 
-  <map:pipeline>
+    <map:pipeline>
       <map:match pattern="index.html">
+        <map:act type="reserved-checkout">
+          <map:parameter name="filename" value="pubs/unipublic/docs/publication/authoring/magazin/gesundheit/2002/0465/index.xml"/>
+          <map:generate type="serverpages" src="docs/cms/revision-control/{exception}.xsp">
+            <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="date" value="{date}"/>
+          </map:generate>
+          <map:transform src="stylesheets/cms/Page/rco-exception.xsl"/>
+          <map:serialize type="html"/>
+        </map:act>
+
         <map:read src="resources/cms/misc/bitfluxeditor/index.html" mime-type="text/html"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>
+
+
     <map:pipeline>
       <map:match pattern="**.html">
         <map:read src="resources/cms/misc/bitfluxeditor/{1}.html" mime-type="text/xml"/>

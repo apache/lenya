@@ -11,6 +11,7 @@ import java.io.StringReader;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.excalibur.io.IOUtil;
 import org.apache.avalon.framework.component.ComponentException;
@@ -23,6 +24,7 @@ import org.apache.cocoon.components.parser.Parser;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.ProcessingException;
@@ -30,18 +32,24 @@ import org.apache.cocoon.serialization.Serializer;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.cocoon.util.PostInputStream;
 import org.apache.cocoon.xml.dom.DOMStreamer;
+
 import org.dom4j.io.DOMReader;
 import org.dom4j.io.XMLWriter;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import org.wyona.cms.ac.Identity;
+import org.wyona.cms.rc.RevisionController;
 
 /**
  * Interfaces with Bitflux editor: handles the requests and replies to them
  *
  * @author Michael Wechner
- * @version 0.1
+ * @version 2003.1.6
  */
 public class BitfluxAction extends ConfigurableComposerAction {
 
@@ -50,6 +58,9 @@ public class BitfluxAction extends ConfigurableComposerAction {
   private String xsdRoot=null;
   private String tempRoot=null;
   private Map relRootDirs = new HashMap();
+
+  private String rcmlDirectory=null;
+  private String backupDirectory=null;
 
   /**
    * Gets the configuration from the sitemap
@@ -70,6 +81,10 @@ public class BitfluxAction extends ConfigurableComposerAction {
     relRootDirs.put("xsl", xslRoot);
     relRootDirs.put("xsd", xsdRoot);
     relRootDirs.put("temp", tempRoot);
+
+    // Revision Control Parameters
+    rcmlDirectory=conf.getChild("rcmlDirectory").getAttribute("href");
+    backupDirectory=conf.getChild("backupDirectory").getAttribute("href");
     }
 
   public java.util.Map act (Redirector redirector, 
@@ -180,11 +195,31 @@ public class BitfluxAction extends ConfigurableComposerAction {
       os.close();
     }
       
+
     // save to permanent file, if needed
-    if ("checkin".equals(reqType)) {
+    if("checkin".equals(reqType)){
+      getLogger().debug(".act(): Save to permanent file: "+permFile);
+
+      RevisionController rc=new RevisionController(sitemapPath+rcmlDirectory,sitemapPath+backupDirectory);
+      try{
+        Session session=httpReq.getSession(false);
+        if(session == null){
+          throw new Exception("No session");
+          }
+        Identity identity=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
+        rc.reservedCheckIn(permFile.getAbsolutePath(),identity.getUsername(),true);
+
         FileUtil.copyFile(tempFile, permFile);
-    }
+        }
+      catch(Exception e){
+        getLogger().error(".act(): Exception during checkin: "+permFile);
+        return null;
+        }
+      //FileUtil.copyFile(tempFile, permFile);
+      }
+
+
       
     return sitemapParams;
-  }
+    }
 }

@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
+
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-	<map:components>
-		<map:generators default="file"/>
-		<map:transformers default="xslt"/>
-		<map:readers default="resource"/>
-		<map:serializers default="html"/>
-		<map:matchers default="wildcard"/>
-		<map:actions>
-			<map:action name="xopushandler" src="org.wyona.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.xopus-handler">
-				<xml href="docs/publication/authoring"/>
-				<xsl href="stylesheets/publication"/>
-				<xsd href="docs/publication/doctypes/schemas"/>
-				<temp href="temp"/>
-			</map:action>
-		</map:actions>
-	</map:components>
+
+<map:components>
+<map:generators default="file"/>
+<map:transformers default="xslt"/>
+<map:readers default="resource"/>
+<map:serializers default="html"/>
+<map:matchers default="wildcard"/>
+<map:actions>
+  <map:action name="xopushandler" src="org.wyona.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.bitflux-handler">
+    <xml href="docs/publication/authoring"/>
+    <xsl href="stylesheets/publication"/>
+    <xsd href="docs/publication/doctypes/schemas"/>
+    <temp href="temp"/>
+    <rcmlDirectory href="docs/publication/rcml"/>
+    <backupDirectory href="docs/publication/rcbak"/>
+  </map:action>
+</map:actions>
+</map:components>
+
+
+
+
+
 	<map:pipelines>
 		<!-- Called from config.xml  -->
 		<!-- Used for Bitflux specific pre- and post-processing of the xml (for all doctypes)  -->
