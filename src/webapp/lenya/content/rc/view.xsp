@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: view.xsp,v 1.13 2004/03/24 13:19:04 edith Exp $ -->
+<!-- $Id$ -->
 
  <xsp:page
        language="java"
@@ -40,7 +40,7 @@
       String rootDir=publication.getEnvironment().getPublicationPath();
       String servletContextPath = publication.getServletContext().getCanonicalPath();
 
-      String contextPath = publication.CONTENT_PATH;
+      String contextPath = "content";
       String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
       String documentPath = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
       String filename = "/" + contextPath + "/" + area + "/" + documentPath;    
