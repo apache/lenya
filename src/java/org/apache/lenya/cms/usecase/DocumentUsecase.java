@@ -19,13 +19,12 @@ package org.apache.lenya.cms.usecase;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.workflow.Situation;
 
 /**
  * 
  * Extends AbstractUsecase with document helper methods
  */
-public class DocumentUsecase extends AbstractUsecase {
+public class DocumentUsecase extends WorkflowUsecase {
 
     /**
      * Ctor.
@@ -34,15 +33,11 @@ public class DocumentUsecase extends AbstractUsecase {
         super();
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setup(java.lang.String,
-     *      org.apache.lenya.workflow.Situation)
-     */
-    public void setup(String sourceUrl, Situation situation) {
-        super.setup(sourceUrl, situation);
+    protected void doInitialize() {
+        super.doInitialize();
         try {
             this.sourceDocument = getUnitOfWork().getIdentityMap().getFactory().getFromURL(
-                    sourceUrl);
+                    getSourceURL());
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }

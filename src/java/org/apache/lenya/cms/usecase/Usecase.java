@@ -19,7 +19,6 @@ package org.apache.lenya.cms.usecase;
 import java.util.List;
 
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.workflow.Situation;
 
 /**
  * Usecase interface.
@@ -66,14 +65,6 @@ public interface Usecase {
      * parameters are set.
      */
     void advance();
-    
-    /**
-     * Passes the source URL and the workflow situation to the usecase.
-     * @param sourceUrl The URL the usecase was invoked on.
-     * @param situation The workflow situation.
-     * 
-     */
-    void setup(String sourceUrl, Situation situation);
     
     /**
      * Checks the conditions before a form is displayed.

@@ -29,14 +29,7 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * Abstract usecase implementation.
@@ -51,35 +44,10 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     public AbstractUsecase() {
     }
 
-    private Situation situation;
-
-    /**
-     * Sets the source URL and the workflow situation of the usecase.
-     * @param sourceUrl The URL the usecase was invoked on.
-     * @param situation The workflow situation.
-     * 
-     */
-    public void setup(String sourceUrl, Situation situation) {
-        this.sourceUrl = sourceUrl;
-        this.situation = situation;
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Invoking usecase on URL: [" + sourceUrl + "]");
-        }
-    }
-
     /**
      * Override to initialize parameters.
      */
     protected void initParameters() {
-    }
-
-    /**
-     * Returns the workflow situation.
-     * @return A situation.
-     */
-    protected Situation getSituation() {
-        return this.situation;
     }
 
     private String sourceUrl = null;
@@ -365,20 +333,17 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
 
     /**
      * Does the actual initialization. Template method.
-     * @throws Exception if an error occurs.
      */
-    protected void doInitialize() throws Exception {
+    protected void doInitialize() {
         Map objectModel = ContextHelper.getObjectModel(this.context);
-        Situation situation;
-        try {
-            situation = WorkflowHelper.buildSituation(objectModel);
-        } catch (WorkflowException e) {
-            throw new RuntimeException(e);
-        }
         Request request = ObjectModelHelper.getRequest(objectModel);
         String webappUri = ServletHelper.getWebappURI(request);
         
-        setup(webappUri, situation);
+        this.sourceUrl = webappUri;
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Invoking usecase on URL: [" + this.sourceUrl + "]");
+        }
     }
 
     /**
@@ -393,33 +358,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      */
     protected void deleteParameter(String name) {
         this.parameters.remove(name);
-    }
-
-    /**
-     * Triggers a workflow event on a document.
-     * @param event The event.
-     * @param document The document.
-     */
-    protected void triggerWorkflow(String event, Document document) {
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        try {
-            WorkflowInstance instance = factory.buildInstance(document);
-            Event[] events = instance.getExecutableEvents(getSituation());
-            Event executableEvent = null;
-            for (int i = 0; i < events.length; i++) {
-                if (events[i].getName().equals(event)) {
-                    executableEvent = events[i];
-                }
-            }
-
-            if (executableEvent == null) {
-                throw new RuntimeException("The event [" + event
-                        + "] is not executable on document [" + document + "]");
-            }
-            instance.invoke(getSituation(), executableEvent);
-        } catch (WorkflowException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }
