@@ -1,6 +1,4 @@
-
 /*
- * $Id: Grep.java,v 1.3 2003/10/02 12:33:58 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,10 +57,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 
  * Utility class to provide a subset of the grep functionality. 
+ *
+ * @author Gregor Rothfuss
+ * @author Christian Egli
  *  
- * @version $Revision: 1.3 $
+ * @version $Id: Grep.java,v 1.4 2004/01/18 12:23:52 michi Exp $
  */
 public class Grep {
 
