@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.9 2003/08/25 17:42:08 edith Exp $
+$Id: SiteTreeNode.java,v 1.10 2003/09/12 17:35:02 egli Exp $
 <License>
 
  ============================================================================
@@ -60,11 +60,11 @@ package org.apache.lenya.cms.publication;
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  *
- * @author $Author: edith $
- * @version $Revision: 1.9 $
+ * @author $Author: egli $
+ * @version $Revision: 1.10 $
  */
 public interface SiteTreeNode {
-	
+
     /**
      * Get the parent-id of this node.
      * 
@@ -72,101 +72,102 @@ public interface SiteTreeNode {
      */
     String getParentId();
 
-	/**
-	 * Get the absolute parent-id of this node.
-	 * 
-	 * @return  the absolute parent-id.
-	 */
+    /**
+     * Get the absolute parent-id of this node.
+     * 
+     * @return  the absolute parent-id.
+     */
     String getAbsoluteParentId();
 
-	/**
-	 * Get the id of this node.
-	 * 
-	 * @return the node id.
-	 */
+    /**
+     * Get the id of this node.
+     * 
+     * @return the node id.
+     */
     String getId();
 
-	/**
-	 * Get all labels for this node (independent of their language attribute).
-	 * 
-	 * @return an <code>Array</code> of labels.
-	 */
+    /**
+     * Get all labels for this node (independent of their language attribute).
+     * 
+     * @return an <code>Array</code> of labels.
+     */
     Label[] getLabels();
 
-	/**
-	 * Get the label for a specific language.
-	 * 
-	 * @param xmlLanguage the language for which the label is requested.
-	 * 
-	 * @return a <code>Label</code>
-	 */
+    /**
+     * Get the label for a specific language.
+     * 
+     * @param xmlLanguage the language for which the label is requested.
+     * 
+     * @return a <code>Label</code> if there is one for the given language, 
+     * null otherwise. 
+     */
     Label getLabel(String xmlLanguage);
-    
-	/**
-	 * Add a label to this node iff the node does not have this label already.
-	 * 
-	 * @param label the label to be added.
-	 */
-	void addLabel(Label label);
 
-	/**
-	 * Remove a label from this node.
-	 * 
-	 * @param label the label to be removed.
-	 */
-	void removeLabel(Label label);
+    /**
+     * Add a label to this node iff the node does not have this label already.
+     * 
+     * @param label the label to be added.
+     */
+    void addLabel(Label label);
 
-	/**
-	 * Get the href of this node.
-	 * 
-	 * @return the href.
-	 */
+    /**
+     * Remove a label from this node.
+     * 
+     * @param label the label to be removed.
+     */
+    void removeLabel(Label label);
+
+    /**
+     * Get the href of this node.
+     * 
+     * @return the href.
+     */
     String getHref();
 
-	/**
-	 * Get the suffix of this node.
-	 * 
-	 * @return the suffix.
-	 */
+    /**
+     * Get the suffix of this node.
+     * 
+     * @return the suffix.
+     */
     String getSuffix();
 
-	/**
-	 * Check whether this node has a link.
-	 * 
-	 * @return true if this node has a link.
-	 */
+    /**
+     * Check whether this node has a link.
+     * 
+     * @return true if this node has a link.
+     */
     boolean hasLink();
 
-	/**
-	 * Get the sitetreenodes, which are children of this node
-	 * 
-	 * @return the children.
-	 */
-	SiteTreeNode[] getChildren();
+    /**
+     * Get the sitetreenodes, which are children of this node
+     * 
+     * @return the children.
+     */
+    SiteTreeNode[] getChildren();
 
-	/**
-	 * Remove the children of the node
-	 * 
-	 * @return the removed node
-	 */
-	SiteTreeNode[] removeChildren();
-		
-	/**
-	 * Call the visit method of the visitor, that mean
-	 * the operation that shall be perfoemed on this node
-	 * (Visitor pattern)
-	 * @param visitor The visitor.
+    /**
+     * Remove the children of the node
+     * 
+     * @return the removed node
+     */
+    SiteTreeNode[] removeChildren();
+
+    /**
+     * Call the visit method of the visitor, that mean
+     * the operation that shall be perfoemed on this node
+     * (Visitor pattern)
+     * @param visitor The visitor.
      * 
      * @throws DocumentException if an error occurs
-	 */
-	void accept (SiteTreeNodeVisitor visitor) throws DocumentException;
-	
-	/**
-	 * Traverse the node ant its children and call the
-	 * accept method.
-	 * @param visitor The visitor.
+     */
+    void accept(SiteTreeNodeVisitor visitor) throws DocumentException;
+
+    /**
+     * Traverse the node ant its children and call the
+     * accept method.
+     * @param visitor The visitor.
      * 
      * @throws DocumentException if an error occurs
-	 */
-	void acceptSubtree (SiteTreeNodeVisitor visitor) throws DocumentException;
+     */
+    void acceptSubtree(SiteTreeNodeVisitor visitor) throws DocumentException;
 }
