@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.9 2003/03/06 20:45:41 gregor Exp $
+ * $Id: PublishingEnvironment.java,v 1.10 2003/04/03 19:23:46 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -145,12 +145,19 @@ public class PublishingEnvironment implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the publication directory.
      *
      * @return DOCUMENT ME!
      */
     public String getPublicationPath() {
         return publicationPath;
+    }
+    
+    /**
+     * Returns the publication directory.
+     */
+    public File getPublicationDirectory() {
+        return new File(getPublicationPath());
     }
 
     protected void setPublicationPath(String path) {
