@@ -297,7 +297,7 @@ public class SchedulerStore {
     /**
      * Returns the job elements of a publication.
      * @param publication
-     * @return
+     * @return An array of elements
      * @throws SchedulerException when something went wrong.
      */
     protected Element[] getJobElements(Publication publication) throws SchedulerException {

@@ -35,14 +35,14 @@ import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Deactivate a document.
  */
 public class Deactivate extends PublicationTask {
 
-    private static final Category log = Category.getInstance(Deactivate.class);
+    private static final Logger log = Logger.getLogger(Deactivate.class);
 
     public static final String PARAMETER_DOCUMENT_ID = "document-id";
     public static final String PARAMETER_DOCUMENT_LANGUAGE = "document-language";

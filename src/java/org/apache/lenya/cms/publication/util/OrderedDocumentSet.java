@@ -48,7 +48,6 @@ import org.apache.lenya.cms.site.SiteManager;
  * implies d <strong>&lt; </strong>f</li>
  * </ul>
  * 
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
  */
 public class OrderedDocumentSet extends DocumentSet {
 
@@ -162,7 +161,7 @@ public class OrderedDocumentSet extends DocumentSet {
 
     /**
      * Checks if the dependence relation is irreflexive.
-     * @return
+     * @return A boolean value
      * @throws PublicationException
      */
     protected boolean isIrreflexive() throws PublicationException {

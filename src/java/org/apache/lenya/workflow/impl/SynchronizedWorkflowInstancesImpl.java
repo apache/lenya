@@ -87,7 +87,7 @@ public class SynchronizedWorkflowInstancesImpl extends AbstractLogEnabled implem
     /**
      * Returns all executable events.
      * @param situation
-     * @return
+     * @return An array of events
      * @throws WorkflowException
      * @see org.apache.lenya.workflow.WorkflowInstance#getExecutableEvents(org.apache.lenya.workflow.Situation)
      */
