@@ -84,7 +84,6 @@
     		<map:parameter name="stylesheet" value="{stylesheet}"/>
     	</map:call>
       <map:call resource="style-cms-page"/>
-      <map:serialize/>
     </map:resource>
     
     
