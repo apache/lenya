@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
-<frontpage>
-<articles>
-  <article channel="magazin" section="gesundheit" year="2002" dir="0508" href="magazin/gesundheit/2002/0508"/>
-  <article channel="magazin" section="gesundheit" year="2002" dir="0465" href="magazin/gesundheit/2002/0465"/>
-  <article channel="magazin" section="geist" year="2002" dir="0470" href="magazin/geist/2002/0470"/>
-  <article channel="magazin" section="umwelt" year="2002" dir="0385" href="magazin/umwelt/2002/0385"/>
-  <article channel="magazin" section="recht" year="2002" dir="0413" href="magazin/recht/2002/0413"/>
-</articles>
-
-</frontpage>
+<Frontpage>
+<Articles>
+  <Article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
+  <Article channel="magazin" section="gesundheit" year="2002" dir="0465"/>
+  <Article channel="magazin" section="geist" year="2002" dir="0470"/>
+  <Article channel="magazin" section="umwelt" year="2002" dir="0385"/>
+  <Article channel="magazin" section="recht" year="2002" dir="0413"/>
+</Articles>
+</Frontpage>

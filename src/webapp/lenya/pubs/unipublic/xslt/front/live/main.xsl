@@ -61,7 +61,11 @@ function aboWindow() {
 <tr>
 <td width="135" align="right" valign="top">
 
+<xsl:apply-templates select="/Page/Content/FirstColumn/MainNavigation"/>
+
+<!--
 <xsl:call-template name="navigation"/>
+-->
 
 </td>
 <td width="315" valign="top">
@@ -90,8 +94,8 @@ function aboWindow() {
 
 
 
-<p><a href="{articles/article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="articles/article[1]/body.head/hedline/hl1"/></span></a><br />
-<xsl:apply-templates select="articles/article[1]/body.head/abstract"/>(<xsl:apply-templates select="articles/article[1]/body.head/dateline/story.date/@norm"/>)</p>
+<p><a href="{/Page/Content/MainColumn/Articles/Article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="/Page/Content/MainColumn/Articles/Article[1]/body.head/hedline/hl1"/></span></a><br />
+<xsl:apply-templates select="/Page/Content/MainColumn/Articles/Article[1]/body.head/abstract"/>(<xsl:apply-templates select="/Page/Content/MainColumn/Articles/Article[1]/body.head/dateline/story.date/@norm"/>)</p>
 
 
 </td>
@@ -99,9 +103,9 @@ function aboWindow() {
 <td width="1" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
 <td width="150" valign="top" bgcolor="white" class="tsr-text">
 
-<p><a href="{articles/article[2]/@href}/"><span class="tsr-title"><xsl:apply-templates select="articles/article[2]/body.head/hedline/hl1"/> </span></a><br />
+<p><a href="{/Page/Content/MainColumn/Articles/Article[2]/@href}/"><span class="tsr-title"><xsl:apply-templates select="/Page/Content/MainColumn/Articles/Article[2]/body.head/hedline/hl1"/> </span></a><br />
 
-<xsl:apply-templates select="articles/article[2]/body.head/abstract"/>(<xsl:apply-templates select="articles/article[2]/body.head/dateline/story.date/@norm"/>)</p>
+<xsl:apply-templates select="/Page/Content/MainColumn/Articles/Article[2]/body.head/abstract"/>(<xsl:apply-templates select="/Page/Content/MainColumn/Articles/Article[2]/body.head/dateline/story.date/@norm"/>)</p>
 
 </td>
 <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
@@ -119,7 +123,7 @@ function aboWindow() {
 
 <br />
  
-<xsl:for-each select="articles/article">
+<xsl:for-each select="/Page/Content/MainColumn/Articles/Article">
 <xsl:if test="position()>=3">
 <xsl:variable name="section"><xsl:value-of select="@section"/></xsl:variable>
 
@@ -159,6 +163,12 @@ function aboWindow() {
 
 </td>
 <td width="135" valign="top">
+
+<!--Service und Newsletter -->
+
+<xsl:apply-templates select="/Page/Content/LastColumn/Services"/>
+
+<!--
 <table border="0" cellpadding="0" cellspacing="0" width="126">
 <tr>
 <td><img height="25" width="115" src="{$img-unipub}/s_agenda.gif" border="0" alt="agenda"/></td>
@@ -207,7 +217,13 @@ function aboWindow() {
 </a></td>
 </tr>
 </table>
+-->
 
+<!-- Webperlen-->
+
+<xsl:apply-templates select="/Page/Content/LastColumn/Webperls"/>
+
+<!--
 <table border="0" cellpadding="0" cellspacing="0" width="135">
 <tr>
 <td bgcolor="#CCCCFF" width="5"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
@@ -237,6 +253,8 @@ Ausgew&#228;hlte Werke in historisch-kritischer Ausgabe</p>
 <td bgcolor="#CCCCFF" width="5"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
 </tr>
 </table>
+-->
+
 </td>
 </tr>
 

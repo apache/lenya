@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <MainNavigation>
   <Channels>
-    <Channel name="Magazin">
+    <Channel name="magazin">
       <Sections>
         <Section id="gesundheit">Gesundheit</Section>
         <Section id="geist">Geist &#38; Gesellschaft</Section>
@@ -9,13 +9,13 @@
         <Section id="recht">Recht &#38; Wirtschaft</Section>
       </Sections>
     </Channel>
-    <Channel name="Campus">
+    <Channel name="campus">
       <Sections>
         <Section id="uni-news">Uni-News</Section>
-        <Section id="portraits">Portraits</Section>
-        <Section id="lorbeeren">Lorbeeren</Section>
-        <Section id="berufungen">Berufungen</Section>
-        <Section id="publikationen">Publikationen</Section>
+        <Section id="portrait">Portraits</Section>
+        <Section id="lorbeer">Lorbeeren</Section>
+        <Section id="beruf">Berufungen</Section>
+        <Section id="publik">Publikationen</Section>
       </Sections>
     </Channel>
   </Channels>
