@@ -49,7 +49,17 @@
       <block>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=cut&amp;lenya.step=showscreen</xsp:attribute>Cut</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=copy&amp;lenya.step=showscreen</xsp:attribute>Copy</item>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=paste&amp;lenya.step=showscreen</xsp:attribute>Paste</item>
+        
+        <xsp:logic>
+        	String clipboard = (String) <input:get-attribute module="session-attr" as="object" name="org.apache.lenya.cms.info.firstdocid"/>;
+        	if (clipboard != null &amp;&amp; !"".equals(clipboard)) {
+		        <xsp:content><item href="?lenya.usecase=paste&amp;lenya.step=showscreen">Paste</item></xsp:content>
+        	}
+        	else {
+		        <xsp:content><item>Paste</item></xsp:content>
+        	}
+        </xsp:logic>
+        
       </block>
       <block>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=rename&amp;lenya.step=showscreen</xsp:attribute>Rename</item>
