@@ -37,7 +37,6 @@ import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 
 /**
