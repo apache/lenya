@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>campsite</id>
+  <editor email="Douglas.Arellanes@mdlf.org">Douglas Arellanes</editor>
+  <system_name>Campsite</system_name>
+  <description>
+CAMPSITE is a Unicode-based, mulitlingual web-content-management system designed for medium-to-large-size news publications. Issues, copy flow, back archives, as well as subscription management are fully implemented features. At the core of CAMPSITE is CAMPFIRE, the Java Editor supporting Unicode, which allows contributors and editors to publish content and control layout online in their native alphabets. Formatting can be altered in a similar way as in editors such as Wordpad, that is, no HTML knowledge is necessary for formatting text.
+  </description>
+  <main_url>http://www.campware.org</main_url>
+  <license>
+    <license_name>GNU General Public License</license_name>
+    <license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+  </license>
+</system>
