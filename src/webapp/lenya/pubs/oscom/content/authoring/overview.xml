@@ -4,7 +4,10 @@
 
 <xi:include xml:base="cocoon:" href="/authoring/navigation.xml"/>
 
+<xi:include xml:base="cocoon:" href="authoring/overview-body.xml#xpointer(/wyona/cmsbody/oscom/system)"/>
+<!--
 <xi:include xml:base="http://alpha.oscom.org" href="/list/index.xml#xpointer(/oscom/system)"/>
+-->
 <!--
 <xi:include xml:base="http://www.oscom.org" href="/syndication/overviews.xml#xpointer(/oscom/system)"/>
 -->

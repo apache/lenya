@@ -43,8 +43,12 @@
    <td>&#160;</td>
    <td>&#160;</td>
    <td>&#160;</td>
-   <td><font size="-1"><a href="{license/license_url}"><xsl:value-of select="license/license_name"/></a></font></td>
+   <td><font size="-1"><a><xsl:apply-templates select="license/license_url"/><xsl:value-of select="license/license_name"/></a></font></td>
   </tr>
+</xsl:template>
+
+<xsl:template match="license_url">
+<xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute>
 </xsl:template>
  
 </xsl:stylesheet>  
