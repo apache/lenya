@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.20 2003/05/07 17:34:03 edith Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.21 2003/05/08 12:38:38 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -19,6 +19,13 @@
       <map:action name="uriparametrizer"
 	src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction"
 	logger="sitemap.action.uriparametrizer"/>
+      <map:action name="default-create"
+	src="org.apache.lenya.cms.cocoon.acting.DefaultCreatorAction"
+	logger="sitemap.action.default-create">
+        <tree-authoring href="content/authoring/sitetree.xml"/>
+        <docs href="content/authoring"/>
+        <doctypes href="config/doctypes/"/>
+      </map:action>
     </map:actions>
   </map:components>
 
@@ -58,7 +65,7 @@
             </map:act>
             <map:redirect-to uri="publishScreen?status=failed" session="true"/>
 <!--
-            <map:redirect-to uri="?usecase=publish&amp;step=showscreen" session="true"/>
+            <map:redirect-to uri="?lenya.usecase=publish&amp;lenya.step=showscreen" session="true"/>
 -->
           </map:act>
         </map:match>
@@ -81,6 +88,39 @@
       </map:match>
     </map:pipeline>
     
+    <map:pipeline>
+      <map:match type="usecase" pattern="create">
+
+	<map:match type="step" pattern="showscreen">
+	  <!-- use publication-specific schema if available -->
+	  <map:act type="resource-exists" src="content/authoring/create.xsp">
+	    <map:generate type="serverpages" src="content/authoring/create.xsp"/>
+	    <map:transform src="xslt/authoring/create.xsl"/>
+	    <map:serialize />
+	  </map:act>
+	  
+	  <!-- use default schema if available -->
+	  <map:generate type="serverpages" src="../../content/authoring/create.xsp"/>
+	  <map:transform src="../../xslt/authoring/create.xsl"/>
+	  <map:serialize />
+	</map:match>
+
+	<map:match type="step" pattern="create">
+	  <map:act type="default-create">
+	    <!-- if the action suceeds it returns the referer and we -->
+	    <!-- simply redirect to it. -->
+	    <map:redirect-to uri="{parent_uri}"/>
+	  </map:act>
+	  <!-- otherwise the action could not validate some of the -->
+	  <!-- input and we present the upload form again -->
+	    <map:generate type="serverpages" src="content/authoring/create.xsp"/>
+	    <map:transform src="xslt/authoring/create.xsl"/>
+	  <map:serialize />
+	</map:match>
+
+      </map:match>
+    </map:pipeline>
+
     <map:pipeline>
     <map:match pattern="**.html">
       <map:act type="page-envelope">
