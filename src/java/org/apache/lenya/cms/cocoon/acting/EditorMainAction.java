@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.16 2003/03/06 20:45:41 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.17 2003/03/18 07:39:26 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,7 +49,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
-import org.apache.cocoon.components.parser.Parser;
+import org.apache.excalibur.xml.sax.SAXParser;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -75,7 +75,7 @@ import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
 
 /**
- * $Id: EditorMainAction.java,v 1.16 2003/03/06 20:45:41 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.17 2003/03/18 07:39:26 michi Exp $
  *
  * @author Martin Lüthi
  * @version 2002.01.22
@@ -153,7 +153,7 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
             getLogger().debug("----- Contents of the StringBuffer (trans): " + trans.toString());
 
             // check well-formedness
-            Parser parser = (Parser) this.manager.lookup(Parser.ROLE); // get the cocoon parser
+            SAXParser parser = (SAXParser) this.manager.lookup(SAXParser.ROLE); // get the cocoon parser
 
             try {
                 InputSource iS = new InputSource(new CharArrayReader(trans.toString().toCharArray()));
@@ -161,9 +161,8 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
                 if (iS == null) {
                     getLogger().error("----- InputStream is null!");
                 } else {
-                    parser.setContentHandler(new AbstractXMLConsumer() {
-                        }); // the parser must have a content handler, it will not be used
-                    parser.parse(iS);
+                    //parser.setContentHandler(new AbstractXMLConsumer() { }); // the parser must have a content handler, it will not be used
+                    parser.parse(iS, new org.xml.sax.helpers.DefaultHandler());
                 }
             } catch (SAXException saxE) { // this is the exception we want to catch
                 xmlErrorFlag = "X"; // set the flag for signalling to the page's stylesheet (body.xsl)
