@@ -5,6 +5,9 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:variable name="tablecolor">orange</xsl:variable>
+<!-- context_prefix is just a temporary setting, will be given by general logicsheet -->
+<xsl:variable name="context_prefix">/wyona-cms/oscom</xsl:variable>
+<xsl:variable name="images"><xsl:value-of select="$context_prefix"/>/images</xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates/>
@@ -23,17 +26,17 @@
     </tr>
 
     <tr>
-      <td colspan="8" height="5"><img src="images/pixel.gif" alt="." width="1" height="1"/></td>
+      <td colspan="8" height="5"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
     </tr>
 
     <tr>
-      <td bgcolor="{$tablecolor}" colspan="8" height="2"><img src="images/pixel.gif" alt="." width="1" height="1"/></td>
+      <td bgcolor="{$tablecolor}" colspan="8" height="2"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
     </tr>
 
     <tr>
     <td valign="top" width="120">
     <font face="verdana" size="-1">
-    <a href="index.html">Home</a><br />
+    <a href="{$context_prefix}/index.html">Home</a><br />
     Conferences<br />
     &#160;&#160;<a href="http://www.oscom.org/conferences/zurich2002/">Z&#252;rich</a><br />
     &#160;&#160;San Francisco<br />
@@ -41,14 +44,14 @@
     CMF/S Overview<br />
     Editor Overview<br />
     Glossary<br />
-    <a href="mailing-lists.html">Mailing Lists</a><br />
-    <a href="board.html">Board</a><br />
+    <a href="{$context_prefix}/mailing-lists.html">Mailing Lists</a><br />
+    <a href="{$context_prefix}/board.html">Board</a><br />
     </font>
     </td>
 
-    <td width="8"><img src="images/pixel.gif" alt="." width="1" height="1"/></td>
-    <td bgcolor="{$tablecolor}" width="1"><img src="images/pixel.gif" alt="." width="1" height="1"/></td>
-    <td width="8"><img src="images/pixel.gif" alt="." width="1" height="1"/></td>
+    <td width="8"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
+    <td bgcolor="{$tablecolor}" width="1"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
+    <td width="8"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
 
     <td valign="top" width="460">
       <xsl:call-template name="body"/>
@@ -58,8 +61,8 @@
 -->
     </td>
 
-    <td width="9"><img src="images/pixel.gif" alt="." width="1" height="1"/></td>
-    <td bgcolor="{$tablecolor}" width="1"><img src="images/pixel.gif" alt="." width="1" height="1"/></td>
+    <td width="9"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
+    <td bgcolor="{$tablecolor}" width="1"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
 
     <td valign="top" width="150">
       <xsl:apply-templates select="news"/>
