@@ -18,6 +18,7 @@
 <p>
 Download the Apache Web Server and WebDAV module source code from the Apache website, e.g. <code>apache_1.3.24.tar.gz</code> and <code>mod_dav-1.0.3-1.3.6.tar.gz</code>.
 Configure and compile mod_dav:
+</p>
 <source>
 <![CDATA[
 cd /home/michiii/src/mod_dav-1.0.3-1.3.6
@@ -32,10 +33,10 @@ make
 make install
 ]]>
 </source>
-</p>
 
 <p>
 You need to reconfigure <code>httpd.conf</code>, e.g.:
+</p>
 <source>
 <![CDATA[
 DAVLockDB /home/michiii/build/apache/logs/DavLock
@@ -43,7 +44,6 @@ DAVLockDB /home/michiii/build/apache/logs/DavLock
 Dav On
 ]]>
 </source>
-</p>
 
 <p>
 To see the files open "Konqueror" and type <code>webdav://127.0.0.1:8080</code>.
@@ -51,11 +51,11 @@ To see the files open "Konqueror" and type <code>webdav://127.0.0.1:8080</code>.
 
 <p>
 More info on <code>mod_dav</code> can be found at
+</p>
 <ul>
 <li><link href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</link></li>
 <li><link href="http://www.ibiblio.org/pub/Linux/docs/HOWTO/other-formats/html_single/Apache-WebDAV-LDAP-HOWTO.html">Apache and DAV with LDAP and SSL</link></li>
 </ul>
-</p>
 </section>
 
 <section>
@@ -64,6 +64,7 @@ More info on <code>mod_dav</code> can be found at
 Download the Apache Web Server source code from the Apache website, e.g. <code>httpd-2.0.46.tar.gz</code>.
 The mod_dav module is inlcuded with the Apache 2 distribution.
 Configure and compile Apache:
+</p>
 <source>
 <![CDATA[
 ./configure --prefix=/home/michiii/build/apache2 --with-dav --enable-dav
@@ -72,10 +73,10 @@ make install
 /home/michiii/build/apache2/bin/httpd -l | grep dav
 ]]>
 </source>
-</p>
 
 <p>
 You need to reconfigure Apache:
+</p>
 <source>
 <![CDATA[
 DAVLockDB /home/michiii/build/apache2/logs/DavLock
@@ -84,17 +85,16 @@ Dav On
 </Directory>
 ]]>
 </source>
-</p>
 
 <p>
 More info on <code>mod_dav</code> can be found at
+</p>
 
 <ul>
 <li><link href="http://apacheworld.org/ty24/site.chapter13.html">http://apacheworld.org/ty24/site.chapter13.html</link></li>
 <li><link href="http://httpd.apache.org/docs-2.0/mod/mod_dav.html">http://httpd.apache.org/docs-2.0/mod/mod_dav.html</link></li>
 <li><link href="http://www.informit.com/isapi/product_id~%7BA27264B1-CE7A-47A4-8CC5-DA14003AD454%7D/element_id~%7B35D4A98B-60C6-45BE-853C-239742BA0FD9%7D/st~%7BEA04B5C6-6D59-4670-AC88-4982C49B746D%7D/content/articlex.asp">Apache and DAV</link></li>
 </ul>
-</p>
 </section>
 
 <section>
@@ -103,6 +103,7 @@ More info on <code>mod_dav</code> can be found at
 Point your WebDAV client to <code>http://127.0.0.1:8080/webdav/</code>.
 The webdav context is DAV enabled, but has been set up in read-only mode for safety reasons.
 It can be put in read-write mode by editing the web application descriptor file <code>/webapps/webdav/WEB-INF/web.xml</code>.
+</p>
 <source>
 <![CDATA[
 <!-- Uncomment this to enable read and write access -->
@@ -112,7 +113,6 @@ It can be put in read-write mode by editing the web application descriptor file 
 </init-param>
 ]]>
 </source>
-</p>
 </section>
 
 <section>
@@ -120,6 +120,7 @@ It can be put in read-write mode by editing the web application descriptor file 
 <p>
 Point your WebDAV client to <code>http://127.0.0.1:8080/slide/</code>.
 One needs to configure <code>Domain.xml</code>
+</p>
 <source>
 <![CDATA[
 <contentstore classname="slidestore.reference.FileContentStore">
@@ -127,7 +128,6 @@ One needs to configure <code>Domain.xml</code>
   ...
 ]]>
 </source>
-</p>
 </section>
 
 <!--

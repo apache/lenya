@@ -19,6 +19,7 @@
 <p>
 The Menubars can be found within the directory <code>config/menus</code>.
 Add the "New MyDocument" menu item to the appropriate menubar:
+</p>
 
 <source>
 <![CDATA[
@@ -29,7 +30,6 @@ Add the "New MyDocument" menu item to the appropriate menubar:
     </block>
 ]]>
 </source>
-</p>
 
 </section>
 
@@ -38,6 +38,7 @@ Add the "New MyDocument" menu item to the appropriate menubar:
 
 <p>
 The pipelines of the usecases are located within <code>usecase.xmap</code>:
+</p>
 
 <source>
 <![CDATA[
@@ -61,7 +62,6 @@ The pipelines of the usecases are located within <code>usecase.xmap</code>:
 </map:pipeline>
 ]]>
 </source>
-</p>
 
 </section>
 
@@ -71,6 +71,7 @@ The pipelines of the usecases are located within <code>usecase.xmap</code>:
 
 <p>
 The file <code>doctypes.xconf</code> is supposed to be located within the directory <code>config/doctypes</code>.
+</p>
 
 <source>
 <![CDATA[
@@ -89,7 +90,6 @@ The file <code>doctypes.xconf</code> is supposed to be located within the direct
 </doctypes>
 ]]>
 </source>
-</p>
 
 </section>
 
@@ -98,6 +98,7 @@ The file <code>doctypes.xconf</code> is supposed to be located within the direct
 
 <p>
 The sample documents are located within the directory <code>config/doctypes/samples</code>.
+</p>
 
 <source>
 <![CDATA[
@@ -116,7 +117,6 @@ The sample documents are located within the directory <code>config/doctypes/samp
       <hl1>Local OSCOM Sprint @ Zurich, Switzerland</hl1>
 ]]>
 </source>
-</p>
 
 </section>
 
