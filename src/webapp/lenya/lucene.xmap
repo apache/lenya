@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lucene.xmap,v 1.17 2004/03/18 16:06:18 michi Exp $ -->
+<!-- $Id: lucene.xmap,v 1.18 2004/03/18 16:52:27 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -47,7 +47,7 @@
           <map:parameter name="pub0-id" value="{1}"/>
           <map:parameter name="pub0-name" value="{1}"/>
           <map:parameter name="pub0-index-dir" value="pubs/{1}/work/search/lucene/index/{2}/index"/>
-          <map:parameter name="pub0-search-fields" value="title,contents"/>
+          <map:parameter name="pub0-search-fields" value="contents,title"/>
           <map:parameter name="pub0-excerpt-dir" value="pubs/{1}/work/search/lucene/htdocs_dump/{2}"/>
           <map:parameter name="pub0-prefix" value=""/>
         </map:generate>
