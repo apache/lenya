@@ -22,6 +22,10 @@
   </installation>
   
   <documentation href="docs/" label="Documentation">
+   <user-guide href="user-guide/" label="User Guide">
+      <logout href="login-logout.html" label="Login/Logout"/>
+   </user-guide>
+   <integrator-dev-guide label="Integrator/Dev Guide">
     <components href="components/" label="Components">
       <uri-parametrizer href="URIParametrizer.html" label="URI Parametrizer"/>
       <pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
@@ -65,6 +69,7 @@
     </misc>
     <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
     <javadoc-error href="javadoc-error.html"/>
+   </integrator-dev-guide>
   </documentation>
   
   <community href="community/" label="Community">
