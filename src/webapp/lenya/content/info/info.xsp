@@ -28,7 +28,6 @@
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
   </xsp:structure>                                                                                                                          
 
-
 <lenya-info:info>
   <lenya-info:overview>
         <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
@@ -55,6 +54,13 @@
    		<wf:version date="(?)" event="publish" state="review" user="gregor"/>
   </lenya-info:workflow>  
   <rc:revisions>
+  
+  <xsp:logic>
+    String docid = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
+    Session session=request.getSession(true);
+    session.setAttribute("org.apache.lenya.cms.info.target",docid);
+</xsp:logic>
+  
 <!--
     <xsp:logic>
       <xsp:content><documentId><xsp:expr>docId</xsp:expr></documentId></xsp:content>
