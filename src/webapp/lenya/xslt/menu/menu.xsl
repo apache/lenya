@@ -121,39 +121,45 @@
     <div id="menu{@label}" class="menuOutline">
     	
       <div class="menuBg">
-        <xsl:for-each select="block">
-          <xsl:for-each select="item">
-            <xsl:choose>
-              <xsl:when test="@href">
-                <a class="mI">
-                  <xsl:attribute name="href">
-                    <xsl:value-of select="@href"/>
-                    <xsl:apply-templates select="@*[local-name() != 'href']"/>
-                    <xsl:text/>
-                    <xsl:if test="$infoarea = 'true'">
-                    	<xsl:choose>
-                    		<xsl:when test="contains(@href, '?')"><xsl:text>&amp;</xsl:text></xsl:when>
-                    		<xsl:otherwise><xsl:text>?</xsl:text></xsl:otherwise>
-                      </xsl:choose>
-                   		<xsl:text>lenya.area=info</xsl:text>
-                    </xsl:if>
-                  </xsl:attribute><xsl:value-of select="."/></a>
-              </xsl:when>
-              <xsl:otherwise>
-                <span class="mI"><xsl:value-of select="."/></span>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:for-each>
-          
-          <xsl:if test="position() != last()">
-            <div class="lenya-menubar-separator">
-              <img src="/lenya/lenya/menu/images/pixel.gif" height="1" alt="" />
-            </div>
-          </xsl:if>
-        </xsl:for-each>
+      	<xsl:apply-templates select="block[not(@info = 'false') and $infoarea = 'true' or not(@authoring = 'false') and $infoarea != 'true']"/>
       </div>
       
     </div>
+  </xsl:template>
+  
+  <!-- match blocks with not area='false' -->
+  <xsl:template match="block">
+		<xsl:apply-templates select="item[not(@info = 'false') and $infoarea = 'true' or not(@authoring = 'false') and $infoarea != 'true']"/>
+		
+		<xsl:if test="position() != last()">
+			<div class="lenya-menubar-separator">
+				<img src="/lenya/lenya/menu/images/pixel.gif" height="1" alt="" />
+			</div>
+		</xsl:if>
+  </xsl:template>
+  	
+  <!-- match items with not area='false' -->
+  <xsl:template match="item">
+		<xsl:choose>
+			<xsl:when test="@href">
+				<a class="mI">
+					<xsl:attribute name="href">
+						<xsl:value-of select="@href"/>
+						<xsl:apply-templates select="@*[local-name() != 'href']"/>
+						<xsl:text/>
+						<xsl:if test="$infoarea = 'true'">
+							<xsl:choose>
+								<xsl:when test="contains(@href, '?')"><xsl:text>&amp;</xsl:text></xsl:when>
+								<xsl:otherwise><xsl:text>?</xsl:text></xsl:otherwise>
+							</xsl:choose>
+							 <xsl:text>lenya.area=info</xsl:text>
+						</xsl:if>
+					</xsl:attribute><xsl:value-of select="."/></a>
+			</xsl:when>
+			<xsl:otherwise>
+				<span class="mI"><xsl:value-of select="."/></span>
+			</xsl:otherwise>
+		</xsl:choose>
   </xsl:template>
   
   
