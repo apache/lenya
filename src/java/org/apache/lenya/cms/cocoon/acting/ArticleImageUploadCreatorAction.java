@@ -275,6 +275,7 @@ public class ArticleImageUploadCreatorAction
 
 	OutputStream out =
 	    new BufferedOutputStream(new FileOutputStream(metaDataFilePathName));
+
 	XMLWriter writer = new XMLWriter(out, OutputFormat.createPrettyPrint());
 	writer.write(document);
 	writer.close();
@@ -349,7 +350,11 @@ public class ArticleImageUploadCreatorAction
 	// write it back to the file
 	OutputStream out =
 	    new BufferedOutputStream(new FileOutputStream(requestingDocumentPath));
-	XMLWriter writer = new XMLWriter(out, OutputFormat.createPrettyPrint());
+	OutputFormat outputFormat = new OutputFormat();
+	outputFormat.setNewlines(true);
+	outputFormat.setTrimText(false);
+	outputFormat.setExpandEmptyElements(false);
+	XMLWriter writer = new XMLWriter(out, outputFormat);
 	writer.write(document);
 	writer.close();
     }
