@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <context type="dontShow">
+         <!-- inline elements -->       
+         <element name="abbr" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="acronym" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="big" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="button" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="dfn" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="input" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="kbd" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="label" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="q" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="samp" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="select" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="small" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="span" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="textarea" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="tt" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="var" ns="http://www.w3.org/1999/xhtml"/>
+         <!-- block elements --> 
+         <element name="address" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="blockquote" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="div" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="dl" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="fieldset" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="form" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="h1" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="h5" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="h6" ns="http://www.w3.org/1999/xhtml"/>         
+         <element name="asset" ns="http://apache.org/cocoon/lenya/page-envelope/1.0"/> 
+         <element name="pre" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="table" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="ol" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="ul" ns="http://www.w3.org/1999/xhtml"/>
+         <!-- attributes --> 
+         <attribute name="id"/>      
+         <attribute name="style"/>      
+         <attribute name="xml:lang"/>      
+    </context>
