@@ -787,6 +787,15 @@
         </map:match>
       </map:pipeline>
 
+      <!-- Internal usecases -->
+      <map:pipeline internal-only="true">
+        <map:match type="usecase" pattern="*">
+          <map:match pattern="*/**">
+            <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+          </map:match>
+        </map:match>
+      </map:pipeline>
+
       <!-- Usecases -->
       <map:pipeline>
         <map:match type="usecase" pattern="*">
