@@ -152,7 +152,8 @@ public class MailTask
                                 Text text = (Text) firstChild;
                                 String key = element.getLocalName();
                                 if (Arrays.asList(keys).contains(key)) {
-                                    taskParameters.setParameter(key, getValue(text));
+                                    //taskParameters.setParameter(key, getValue(text));
+                                    taskParameters.setParameter(key,  text.getNodeValue());
                                 }
                             }
                         }
