@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: entry.rng,v 1.11 2004/05/11 07:38:44 gregor Exp $ -->
+<!-- $Id: entry.rng,v 1.12 2004/05/16 14:29:04 gregor Exp $ -->
 
 <grammar xmlns:echo="http://purl.org/atom/ns#" ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
@@ -44,13 +44,13 @@
         <data type="anyURI"/>
       </element>
       <element name="echo:created">
-        <data type="NMTOKEN"/>
+        <data type="dateTime"/>
       </element>
       <element name="echo:issued">
-        <data type="NMTOKEN"/>
+        <data type="dateTime"/>
       </element>
       <element name="echo:modified">
-        <data type="NMTOKEN"/>
+        <data type="dateTime"/>
       </element>
       <element name="echo:content">
         <attribute name="type"/>
