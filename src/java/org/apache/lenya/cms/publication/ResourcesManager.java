@@ -1,5 +1,5 @@
 /*
-$Id: ResourcesManager.java,v 1.3 2003/08/22 18:57:30 egli Exp $
+$Id: ResourcesManager.java,v 1.4 2003/08/27 16:37:25 egli Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,7 @@ $Id: ResourcesManager.java,v 1.3 2003/08/22 18:57:30 egli Exp $
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import java.io.FilenameFilter;
+import java.io.FileFilter;
 
 /**
  * Manager for resources of a CMS document.
@@ -68,6 +68,7 @@ public class ResourcesManager {
     private File resourcesPath = null;
 
     public static final String RESOURCES_PREFIX = "resources";
+    public static final String RESOURCES_META_SUFFIX = ".meta";
 
     /**
      * Create a new instance of Resources.
@@ -102,12 +103,27 @@ public class ResourcesManager {
     public File[] getResources() {
 
         // filter the meta files out. We only want to see the "real" resources.
-        FilenameFilter filter = new FilenameFilter() {
+        FileFilter filter = new FileFilter() {
 
-            public boolean accept(File dir, String name) {
-                return !name.endsWith(".meta");
+            public boolean accept(File file) {
+                return file.isFile() && !file.getName().endsWith(RESOURCES_META_SUFFIX);
             }
         };
         return resourcesPath.listFiles(filter);
+    }
+    
+    /**
+     * Get the meta data for all resources for the associated document.
+     * 
+     * @return all meta data files for the resources for the associated document.
+     */
+    public File[] getMetaFiles() {
+		FileFilter filter = new FileFilter() {
+			
+			public boolean accept(File file) {
+				return file.isFile() && file.getName().endsWith(RESOURCES_META_SUFFIX);
+			}
+		};
+		return resourcesPath.listFiles(filter);
     }
 }
