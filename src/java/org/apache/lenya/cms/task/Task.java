@@ -1,5 +1,5 @@
 /*
-$Id: Task.java,v 1.16 2003/08/25 15:40:55 andreas Exp $
+$Id: Task.java,v 1.17 2003/10/22 16:32:55 egli Exp $
 <License>
 
  ============================================================================
@@ -89,7 +89,7 @@ public interface Task extends Parameterizable {
 
     /**
      * The part of the URI that precedes the publication
-     * ID:<br/><code>http://www.yourhost.com:8080<strong>/lenya/</strong>publication/index.html</code>
+     * ID:<br/><code>http://www.yourhost.com:8080<strong>/lenya</strong>/publication/index.html</code>
      */
     String PARAMETER_CONTEXT_PREFIX = "context-prefix";
 

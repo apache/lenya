@@ -1,5 +1,5 @@
 /*
-$Id: DefaultTaskWrapper.java,v 1.7 2003/09/19 19:21:15 andreas Exp $
+$Id: DefaultTaskWrapper.java,v 1.8 2003/10/22 16:32:55 egli Exp $
 <License>
 
  ============================================================================
@@ -187,7 +187,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
         taskParameters.setParameter(
             Task.PARAMETER_SERVLET_CONTEXT,
             publication.getServletContext().getAbsolutePath());
-        taskParameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath() + "/");
+        taskParameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath());
         taskParameters.setParameter(
             Task.PARAMETER_SERVER_PORT,
             Integer.toString(request.getServerPort()));
