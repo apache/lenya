@@ -24,6 +24,7 @@
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
 >
 
 <menu>
