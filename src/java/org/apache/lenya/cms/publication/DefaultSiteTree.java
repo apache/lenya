@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.23 2003/07/23 13:21:11 gregor Exp $
+$Id: DefaultSiteTree.java,v 1.24 2003/07/25 16:42:45 edith Exp $
 <License>
 
  ============================================================================
@@ -84,7 +84,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -422,6 +422,33 @@ public class DefaultSiteTree implements SiteTree {
 			} else {
  				parentNode.insertBefore(insertNode,nextNode);
 			}
+	}
+
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#importSubtree(org.apache.lenya.cms.publication.SiteTreeNode, org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String)
+	 */
+	public void importSubtree(SiteTreeNode newParent, SiteTreeNode subtreeRoot, String newid) throws SiteTreeException{
+		assert subtreeRoot != null;
+		assert newParent != null;
+        String parentId = parentId=newParent.getAbsoluteParentId()+"/"+newParent.getId();
+		String id = newid;
+
+		this.addNode(parentId, id, subtreeRoot.getLabels(), subtreeRoot.getHref(), subtreeRoot.getSuffix(),
+			 subtreeRoot.hasLink());
+		newParent = this.getNode(parentId+"/"+id);                  
+		if (newParent == null) {
+			throw new SiteTreeException("The added node  " + newParent.toString() + " not found");
+		}
+		SiteTreeNode[] children = subtreeRoot.getChildren();
+		if (children == null) {
+			log.info("The node " + subtreeRoot.toString() + " has no children");
+			return;
+		} else {
+			for (int i = 0; i < children.length; i++) {
+				SiteTreeNode node=children[i];
+				importSubtree(newParent,children[i],children[i].getId());
+			}
+		}	
 	}
 
     /**
