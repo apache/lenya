@@ -17,108 +17,109 @@
  
 /* Helper method to add all request parameters to a usecase */
 function passRequestParameters(flowHelper, usecase) {
-	var names = cocoon.request.getParameterNames();
-	while (names.hasMoreElements()) {
-	    var name = names.nextElement();
-		if (!name.equals("lenya.usecase")
-			&& !name.equals("lenya.continuation")
-			&& !name.equals("submit")) {
-			
-			var value = flowHelper.getRequest(cocoon).get(name);
-			
-			var string = new Packages.java.lang.String();
-			if (string.getClass().isInstance(value)) {
-				usecase.setParameter(name, value);
-			}
-			else {
-				usecase.setPart(name, value);
-			}
-			
-		}
-	}
+    var names = cocoon.request.getParameterNames();
+    while (names.hasMoreElements()) {
+        var name = names.nextElement();
+        if (!name.equals("lenya.usecase")
+            && !name.equals("lenya.continuation")
+            && !name.equals("submit")) {
+            
+            var value = flowHelper.getRequest(cocoon).get(name);
+            
+            var string = new Packages.java.lang.String();
+            if (string.getClass().isInstance(value)) {
+                usecase.setParameter(name, value);
+            }
+            else {
+                usecase.setPart(name, value);
+            }
+            
+        }
+    }
 }
 
 
 function selectView(usecaseName) { 
-	var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
-	var view = "view/" + usecaseView;
-	return view;
+    var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
+    var view = "view/" + usecaseView;
+    return view;
 }
 
 
 /* Returns the query string to attach to the target URL. This is used in the site area. */
 function getTargetQueryString(usecaseName) {
-	var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
-	var queryString = "";
-	if (isTabUsecase) {
-		queryString = "?lenya.usecase=" + usecaseName;
-	}
-	return queryString;
+    var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
+    var queryString = "";
+    if (isTabUsecase) {
+        queryString = "?lenya.usecase=" + usecaseName;
+    }
+    return queryString;
 }
 
 
 function executeUsecase() {
-	var usecaseName = cocoon.request.getParameter("lenya.usecase");
-	var usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-	var usecase = usecaseResolver.resolve(usecaseName);
+    var usecaseName = cocoon.request.getParameter("lenya.usecase");
+    var usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
+    var usecase = usecaseResolver.resolve(usecaseName);
 
-	var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
-	var request = flowHelper.getRequest(cocoon);
-	var sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
-	usecase.setSourceURL(sourceUrl);
-	
-	usecase.setName(usecaseName);
-	
-	var success = false;
-	
-	passRequestParameters(flowHelper, usecase);
-	usecase.checkPreconditions();
+    var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
+    var request = flowHelper.getRequest(cocoon);
+    var sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
+    usecase.setSourceURL(sourceUrl);
+    
+    usecase.setName(usecaseName);
+    
+    var success = false;
+    
+    passRequestParameters(flowHelper, usecase);
+    usecase.checkPreconditions();
 
     if (usecase.isInteractive()) {
-		var view = selectView(usecaseName);
-		var ready = false;
-		while (!ready) {
-		
-			cocoon.sendPageAndWait(view, {
-			    "usecase" : usecase
-			});
-			
-			passRequestParameters(flowHelper, usecase);
-			usecase.advance();
-			
-			if (cocoon.request.getParameter("submit")) {
-				usecase.checkExecutionConditions();
-				if (usecase.getErrorMessages().isEmpty()) {
-					usecase.execute();
-					if (usecase.getErrorMessages().isEmpty()) {
-						usecase.checkPostconditions();
-						if (usecase.getErrorMessages().isEmpty()) {
-							ready = true;
-							success = true;
-						}
-					}
-				}
-			}
-			else if (cocoon.request.getParameter("cancel")) {
-				ready = true;
-			}
-		}
-	}
-	else {
-		usecase.execute();
-		if (usecase.getErrorMessages().isEmpty()) {
-			usecase.checkPostconditions();
-			if (usecase.getErrorMessages().isEmpty()) {
-				success = true;
-			}
-		}
-	}
-	
-	var url = request.getContextPath() + usecase.getTargetURL(success) + getTargetQueryString(usecaseName);
+        var view = selectView(usecaseName);
+        var ready = false;
+        while (!ready) {
+        
+            cocoon.sendPageAndWait(view, {
+                "usecase" : usecase
+            });
+            
+            passRequestParameters(flowHelper, usecase);
+            usecase.advance();
+            
+            if (cocoon.request.getParameter("submit")) {
+                usecase.checkExecutionConditions();
+                if (usecase.getErrorMessages().isEmpty()) {
+                    usecase.execute();
+                    if (usecase.getErrorMessages().isEmpty()) {
+                        usecase.checkPostconditions();
+                        if (usecase.getErrorMessages().isEmpty()) {
+                            ready = true;
+                            success = true;
+                        }
+                    }
+                }
+            }
+            else if (cocoon.request.getParameter("cancel")) {
+                ready = true;
+            }
+        }
+    }
+    else {
+        usecase.execute();
+        if (usecase.getErrorMessages().isEmpty()) {
+            usecase.checkPostconditions();
+            if (usecase.getErrorMessages().isEmpty()) {
+                success = true;
+            }
+        }
+    }
+    
+    var url = request.getContextPath() + usecase.getTargetURL(success) + getTargetQueryString(usecaseName);
 
-        /* done with usecase component, tell usecaseResolver to release it */
-        usecaseResolver.release(usecase);
+    /* done with usecase component, tell usecaseResolver to release it */
+    usecaseResolver.release(usecase);
+    cocoon.releaseComponent(usecaseResolver);
 
-	cocoon.redirectTo(url);
-	
+    cocoon.redirectTo(url);
+    
 }
