@@ -1,5 +1,5 @@
 /*
- * $Id: UserManager.java,v 1.6 2003/06/11 08:33:46 egli Exp $
+ * $Id: UserManager.java,v 1.7 2003/06/24 16:50:10 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,68 +59,108 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
 
 /**
+ * Describe class <code>UserManager</code> here.
+ *
  * @author egli
  * 
- * 
+ *
  */
 public class UserManager extends ItemManager {
-	static Category log = Category.getInstance(UserManager.class);
+    static private Category log = Category.getInstance(UserManager.class);
 
-	protected static final String SUFFIX = ".iml";
+    protected static final String SUFFIX = ".iml";
 
-	private static Map instances = new HashMap(); 
+    private static Map instances = new HashMap();
 
-	private UserManager(Publication publication)
-		throws AccessControlException {
-
-		super(publication);
-	}
-
-	public static UserManager instance(Publication publication)
-		throws AccessControlException {
-			
-		assert publication != null;
-		if (!instances.containsKey(publication))
-			instances.put(publication, new UserManager(publication));
-		return (UserManager) instances.get(publication);
-	}
-
-	public Iterator getUsers() {
-		return super.getItems();
-	}
-
-	public void add(User user) {
-		super.add(user);
-	}
-
-	public void remove(User user) {
-		super.remove(user);
-	}
-
-	public User getUser(String userId) {
-		User user = null;
-		Iterator iter = getUsers();
-		while (iter.hasNext()) {
-			User element = (User) iter.next();
-			if (element.getId().equals(userId)) {
-				user = element;
-				break;
-			}
-		}
-		return user;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.apache.lenya.cms.ac.ItemManager#getFileFilter()
+	/**
+	 * Create a UserManager
+	 * 
+	 * @param publication for which the UserManager should be instanciated.
+	 * @throws AccessControlException if the UserManager could not be 
+	 * 	instantiated.
 	 */
-	protected FileFilter getFileFilter() {
-		FileFilter filter = new FileFilter() {
+    protected UserManager(Publication publication)
+        throws AccessControlException {
 
-			public boolean accept(File pathname) {
-				return (pathname.getName().endsWith(SUFFIX));
-			}
-		};
-		return filter;
-	}
+        super(publication);
+    }
+
+    /**
+     * Describe <code>instance</code> method here.
+     *
+     * @param publication a <code>Publication</code> value
+     * @return an <code>UserManager</code> value
+     * @exception AccessControlException if an error occurs
+     */
+    public static UserManager instance(Publication publication)
+        throws AccessControlException {
+
+        assert publication != null;
+        if (!instances.containsKey(publication))
+            instances.put(publication, new UserManager(publication));
+        return (UserManager) instances.get(publication);
+    }
+
+    /**
+     * Get all users.
+     *
+     * @return an Iterator to iterate over all users
+     */
+    public Iterator getUsers() {
+        return super.getItems();
+    }
+
+    /**
+     * Add the given user
+     * 
+    * @param user User that is to be added
+    */
+    public void add(User user) {
+        super.add(user);
+    }
+
+    /**
+     * Remove the given user
+     * 
+    * @param user User that is to be removed
+    */
+    public void remove(User user) {
+        super.remove(user);
+    }
+
+    /**
+     * Get the user with the given user id.
+     * 
+     * @param userId user id of requested user
+     * @return the requested user or null if there is 
+     * no user with the given user id 
+     */
+    public User getUser(String userId) {
+        User user = null;
+        Iterator iter = getUsers();
+        while (iter.hasNext()) {
+            User element = (User) iter.next();
+            if (element.getId().equals(userId)) {
+                user = element;
+                break;
+            }
+        }
+        return user;
+    }
+
+    /**
+     * Get a filefilter which filters for all user files.
+     *
+     * @return a <code>FileFilter</code> which filters for all user files.
+     */
+    protected FileFilter getFileFilter() {
+        FileFilter filter = new FileFilter() {
+
+            public boolean accept(File pathname) {
+                return (pathname.getName().endsWith(SUFFIX));
+            }
+        };
+        return filter;
+    }
 
 }

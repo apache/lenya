@@ -1,5 +1,5 @@
 /*
- * $Id: GroupManager.java,v 1.2 2003/06/02 17:17:37 egli Exp $
+ * $Id: GroupManager.java,v 1.3 2003/06/24 16:50:10 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -64,22 +64,31 @@ import org.apache.log4j.Category;
  * 
  */
 public class GroupManager extends ItemManager {
-	static Category log = Category.getInstance(GroupManager.class);
+	static private Category log = Category.getInstance(GroupManager.class);
 
 	protected static final String SUFFIX = ".gml";
 
 	private static Map instances = new HashMap();
 
 	/**
-	 * @param publication
-	 * @throws AccessControlException
+	 * Create a GroupManager
+	 * 
+	 * @param publication for which the GroupManager is to be created
+	 * @throws AccessControlException if no GroupManager could be instanciated
 	 */
-	private GroupManager(Publication publication)
+	protected GroupManager(Publication publication)
 		throws AccessControlException {
 		super(publication);
 	}
 
-
+	/**
+	 * Return the <code>GroupManager</code> for the given publication.
+	 * The <code>GroupManager</code> is a singleton.
+	 * 
+	 * @param publication for which the GroupManager is requested
+	 * @return a <code>GroupManager</code>
+	 * @throws AccessControlException if no GroupManager could be instanciated
+	 */
 	public static GroupManager instance(Publication publication)
 		throws AccessControlException {
 		if (!instances.containsKey(publication))
@@ -87,18 +96,39 @@ public class GroupManager extends ItemManager {
 		return (GroupManager) instances.get(publication);
 	}
 
+	/**
+	 * Get all groups
+	 * 
+	 * @return an <code>Iterator</code>
+	 */
 	public Iterator getGroups() {
 		return super.getItems();
 	}
 
+	/**
+	 * Add a group to this manager
+	 * 
+	 * @param group the group to be added
+	 */
 	public void add(Group group) {
 		super.add(group);
 	}
-
+	
+	/**
+	 * Remove a group from this manager
+	 * 
+	 * @param group the group to be removed
+	 */
 	public void remove(Group group) {
 		super.remove(group);
 	}
-
+	
+	/**
+	 * Get the group with the given group name.
+	 *  
+	 * @param groupName the name of the requested group
+	 * @return a <code>Group</code> or null if there is no group with the given name
+	 */
 	public Group getGroup(String groupName) {
 		Group group = null;
 		Iterator iter = getGroups();
@@ -111,8 +141,10 @@ public class GroupManager extends ItemManager {
 		return group;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.apache.lenya.cms.ac.ItemManager#getFileFilter()
+	/**
+	 * Get a Filefilter that returns only group files
+	 * 
+	 * @return a <code>FileFilter</code>
 	 */
 	protected FileFilter getFileFilter() {
 		FileFilter filter = new FileFilter() {
