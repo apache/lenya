@@ -65,6 +65,7 @@
         <map:serialize type="xhtml-iso-8859-1"/>
         </map:act>
         <map:generate src="../../resources/misc/bxeng/download.xhtml"/>
+        <map:call resource="style-cms-page"/>
         <map:serialize type="html"/>
       </map:match>
       

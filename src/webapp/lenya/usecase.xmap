@@ -384,6 +384,7 @@
 	        <map:serialize type="html"/>
               </map:act>
               <map:generate src="resources/misc/epoz/download.xhtml"/>
+              <map:call resource="style-cms-page"/>
               <map:serialize type="html"/>
             </map:match>
           </map:match>
