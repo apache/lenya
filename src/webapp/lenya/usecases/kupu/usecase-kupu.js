@@ -20,7 +20,7 @@ importClass(Packages.java.util.ArrayList);
 importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
 importClass(Packages.org.apache.lenya.cms.publication.DocumentHelper);
 importClass(Packages.org.apache.lenya.cms.publication.PublicationHelper);
-importClass(Packages.org.apache.lenya.cms.publication.ResourcesManager);
+importClass(Packages.org.apache.lenya.cms.publication.DefaultResourcesManager);
 
 /**
  * Kupu usecase flow.
@@ -64,7 +64,7 @@ function publication_image_library() {
     for(var i=0; i<allDocs.length; i++) {
         if(allDocs[i].getId().equals(pageEnvelope.getDocument().getId()))
             continue;
-        var resourcesMgr = new ResourcesManager(allDocs[i]);
+        var resourcesMgr = new DefaultResourcesManager(allDocs[i]);
         var imageResources = resourcesMgr.getImageResources();
         
         for(var j=0; j<imageResources.length; j++) {
