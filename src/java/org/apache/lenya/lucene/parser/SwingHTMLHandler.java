@@ -71,7 +71,7 @@ import org.apache.log4j.Category;
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: SwingHTMLHandler.java,v 1.8 2003/12/02 22:24:57 michi Exp $
+ * @version $Id: SwingHTMLHandler.java,v 1.9 2003/12/02 22:29:46 michi Exp $
  */
 public class SwingHTMLHandler extends ParserCallback {
     Category log = Category.getInstance(SwingHTMLHandler.class);
@@ -119,7 +119,7 @@ public class SwingHTMLHandler extends ParserCallback {
      * @return DOCUMENT ME!
      */
     public String getKeywords() {
-        log.error("Keywords: " + keywordsBuffer.toString());
+        log.debug("Keywords: " + keywordsBuffer.toString());
 
         return keywordsBuffer.toString();
     }
@@ -287,7 +287,7 @@ public class SwingHTMLHandler extends ParserCallback {
 
         if ((nameObject != null) && (valueObject != null)) {
             String name = (String) nameObject;
-            log.error("Meta tag found: name = " + name);
+            log.debug("Meta tag found: name = " + name);
 
             if (name.equals(LUCENE_TAG_NAME)) {
                 String tagName = (String) valueObject;
@@ -303,9 +303,9 @@ public class SwingHTMLHandler extends ParserCallback {
         Object contentObject = attributes.getAttribute(HTML.Attribute.CONTENT);
         if ((nameObject != null) && (contentObject != null)) {
             String name = (String) nameObject;
-            log.error("Meta tag found: name = " + name);
+            log.debug("Meta tag found: name = " + name);
             if (name.equals("keywords")) {
-                log.error("Keywords found ...");
+                log.debug("Keywords found ...");
                 keywordsBuffer = new StringBuffer((String) contentObject);
             }
         }
@@ -430,7 +430,7 @@ public class SwingHTMLHandler extends ParserCallback {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.8 $
+     * @version $Revision: 1.9 $
      */
     public class TagStack {
         private List tags = new ArrayList();
@@ -503,7 +503,7 @@ public class SwingHTMLHandler extends ParserCallback {
          * DOCUMENT ME!
          *
          * @author $author$
-         * @version $Revision: 1.8 $
+         * @version $Revision: 1.9 $
          */
         public class UnderflowException extends Exception {
             /**
