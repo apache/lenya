@@ -1,73 +1,69 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-
-<xsp:page 
-    language="java" 
-    xmlns:xsp="http://apache.org/xsp"
-    xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-    xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
-    xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
-    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
-    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
-    xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
->
-
+<xsp:page
+  language="java"
+  xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  >
+  
   <menu>
-
     <xsp:logic>
-      String bitflux_prefix = <xsp-request:get-context-path/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/bitflux";
-      String domain_prefix_bitflux = "" + <xsp-request:get-context-path/>;
-      String replacementString = "/index.xml";
-      String xmlSource = <input:get-attribute module="page-envelope" as="string" name="document-url"/>.replaceFirst(".html", replacementString);
+      String bitflux_prefix = <xsp-request:get-context-path/> + "/" + <input:get-attribute as="string" module="page-envelope" name="publication-id"/> + "/bitflux";
+      String domain_prefix_bitflux = "" + <xsp-request:get-context-path/>; String replacementString = "/index.xml";
+      String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst(".html", replacementString);
       String sourcesParameter = "sources=" + xmlSource;
-      String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
+      String urisParameter = "uris=" + <input:get-attribute as="string" module="page-envelope" name="document-url"/>;
     </xsp:logic>
-    
-    <tabs>
-      <tab><xsp:attribute name="href"><input:get-attribute module="page-envelope" as="string" name="document-url"/></xsp:attribute><xsp:attribute name="name">Authoring</xsp:attribute></tab>
-      <tab><xsp:attribute name="href"><input:get-attribute module="page-envelope" as="string" name="document-url"/></xsp:attribute><xsp:attribute name="name">Live</xsp:attribute></tab>
-    </tabs>  
-
+        
     <menus>
-      <menu name="File" label="File">
-	<block>
-	  <item uc:usecase="create-workflow" uc:step="showscreen"><xsp:attribute name="href">?doctype=simple</xsp:attribute>New Document (simple)</item>
-	  <item uc:usecase="create-workflow" uc:step="showscreen"><xsp:attribute name="href">?doctype=xhtml</xsp:attribute>New Document (xhtml)</item>
+      
+      <menu label="File" name="File">
+        <block>
+          <item uc:step="showscreen" uc:usecase="create-workflow">
+            <xsp:attribute name="href">?doctype=simple</xsp:attribute>New Document (simple)</item>
+          <item uc:step="showscreen" uc:usecase="create-workflow">
+            <xsp:attribute name="href">?doctype=xhtml</xsp:attribute>New Document (xhtml)</item>
         </block>
         <block>
-	  <item wf:event="approve" href="?lenya.usecase=transition">Approve</item>
-	  <item wf:event="publish"><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
+          <item href="?lenya.usecase=transition" wf:event="approve">Approve</item>
+          <item wf:event="publish">
+            <xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
         </block>
         <block>
-	  <item href="?lenya.usecase=logout">Logout</item>
-	</block>
+          <item href="?lenya.usecase=logout">Logout</item>
+        </block>
       </menu>
       
-      <menu name="Edit" label="Search">
-	<block>
-	  <item uc:usecase="midas" wf:event="edit" href="?lenya.step=open">Edit&#160;with&#160;Midas</item>
-	  <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/authoring/xopus2<xsp:expr>xmlSource</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
-	  <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/bitflux/index.html?url-xml=<xsp:expr>bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+<xsp-request:get-context-path/>+"/authoring"+<input:get-attribute module="page-envelope" as="string" name="document-url"/></xsp:expr></xsp:attribute>Edit with Bitflux</item>	  
-	</block>
+      <menu label="Search" name="Edit">
+        <block>
+          <item href="?lenya.step=open" uc:usecase="midas" wf:event="edit">Edit&#160;with&#160;Midas</item>
+          <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/authoring/xopus2<xsp:expr>xmlSource</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
+          <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/bitflux/index.html?url-xml=<xsp:expr>bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+<xsp-request:get-context-path/>+"/authoring"+<input:get-attribute as="string" module="page-envelope" name="document-url"/></xsp:expr></xsp:attribute>Edit with Bitflux</item>
+        </block>
       </menu>
       
-      <menu name="Tools" label="Help">
-	<block>
-<item><xsp:attribute name="href">../xopus<xsp:expr><input:get-attribute module="page-envelope" as="string" name="document-url"/>.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
-	  <item href="../xopus/simple.xsd">View&#160;Xopus&#160;XSD</item>
-	  <item href="../xopus/simple.xsl">View&#160;Xopus&#160;XSLT</item>
-    <item href="?lenya.usecase=view-logs&amp;lenya.step=overview">View Task Logs</item>
-    <item href="?lenya.usecase=schedule&amp;lenya.step=showscreen">Scheduler</item>
-	  <item><xsp:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Rollback</item>
-	</block>
+      <menu label="Help" name="Tools">
+        <block>
+          <item><xsp:attribute name="href">../xopus<xsp:expr><input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
+          <item href="../xopus/simple.xsd">View&#160;Xopus&#160;XSD</item>
+          <item href="../xopus/simple.xsl">View&#160;Xopus&#160;XSLT</item>
+          <item href="?lenya.usecase=view-logs&amp;lenya.step=overview">View Task Logs</item>
+          <item href="?lenya.usecase=schedule&amp;lenya.step=showscreen">Scheduler</item>
+          <item><xsp:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Rollback</item>
+        </block>
       </menu>
-
-      <menu name="Help" label="Debug">
-	<block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
-	  <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
-	</block>
+      
+      <menu label="Debug" name="Help">
+        <block>
+          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
+          <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
+        </block>
       </menu>
+      
     </menus>
-    
   </menu>
 </xsp:page>
