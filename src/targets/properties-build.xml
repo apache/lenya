@@ -35,7 +35,7 @@
   <property file="build.properties"/>
 
   <!-- Project version and name -->
-  <property name="version" value="1.2.1-dev"/>
+  <property name="version" value="1.4-dev"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
   <property name="distname" value="apache-${ant.project.name}-${version}"/>
 
