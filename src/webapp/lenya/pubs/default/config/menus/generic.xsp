@@ -31,7 +31,8 @@
     <menus>
       <menu name="File" label="File">
 <block>
-	  <item><xsp:attribute name="href"><!--<xsp:expr>xsp_lenya_pub_url</xsp:expr>-->?lenya.usecase=midas&amp;lenya.step=open</xsp:attribute>Edit&#160;with&#160;Midas</item>
+	  <item><xsp:attribute name="href">?lenya.usecase=midas&amp;lenya.step=open</xsp:attribute>Edit&#160;with&#160;Midas</item>
+	  <item>Edit&#160;with&#160;Mozile</item>
 	  <item><xsp:attribute name="href">xopus2<xsp:expr>xsp_lenya_pub_url</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
 	  <item><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/xdoc.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/xdoc.xsd&amp;url-css="+bitflux_prefix+"/css/xdoc.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+xsp_lenya_context_prefix+"/authoring"+xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit with Bitflux</item>	  
 	  <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
