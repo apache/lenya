@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.9 2003/08/05 16:29:06 andreas Exp $
+$Id: CMSHistory.java,v 1.10 2003/08/15 13:11:59 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,9 @@ $Id: CMSHistory.java,v 1.9 2003/08/05 16:29:06 andreas Exp $
 */
 package org.apache.lenya.cms.workflow;
 
+import org.apache.lenya.cms.ac.Machine;
+import org.apache.lenya.cms.ac.User;
+import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.workflow.Event;
@@ -89,6 +92,13 @@ public class CMSHistory extends History {
     }
 
     private Document document;
+    
+    public static final String IDENTITY_ELEMENT = "identity";
+    public static final String USER_ELEMENT = "user";
+    public static final String MACHINE_ELEMENT = "machine";
+    public static final String ID_ATTRIBUTE = "id";
+    public static final String NAME_ATTRIBUTE = "name";
+    public static final String IP_ATTRIBUTE = "ip-address";
 
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.workflow.History#createVersionElement(org.apache.lenya.xml.NamespaceHelper, org.apache.lenya.workflow.impl.StateImpl, org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.Event)
@@ -97,13 +107,50 @@ public class CMSHistory extends History {
         Situation situation, Event event) {
         Element element = super.createVersionElement(helper, state, situation, event);
 
-        // TODO: add identity
+        CMSSituation cmsSituation = (CMSSituation) situation;
+        Identity identity = cmsSituation.getIdentity();
+        
+        Element identityElement = helper.createElement(IDENTITY_ELEMENT);
+        element.appendChild(identityElement);
+        
+        User user = identity.getUser();
+        if (user != null) {
+            identityElement.appendChild(generateUserElement(helper, user));
+        }
 
-        /*
-        User user = ((CMSSituation) situation).getUser();
-        element.setAttribute(USER_ATTRIBUTE, user.getId());
-        */
+        Machine machine = identity.getMachine();
+        if (machine != null) {
+            identityElement.appendChild(generateMachineElement(helper, machine));
+        }
+
         return element;
+    }
+    
+    /**
+     * Creates an XML element describing the user.
+     * @param helper The namespace helper of the document.
+     * @param user The user.
+     * @return An XML element.
+     */
+    protected Element generateUserElement(NamespaceHelper helper, User user) {
+        Element userElement = null;
+        userElement = helper.createElement(USER_ELEMENT);
+        userElement.setAttribute(ID_ATTRIBUTE, user.getId());
+        userElement.setAttribute(NAME_ATTRIBUTE, user.getName());
+        return userElement;
+    }
+    
+    /**
+     * Creates an XML element describing the machine.
+     * @param helper The namespace helper of the document.
+     * @param machine The machine.
+     * @return An XML element.
+     */
+    protected Element generateMachineElement(NamespaceHelper helper, Machine machine) {
+        Element machineElement = null;
+        machineElement = helper.createElement(MACHINE_ELEMENT);
+        machineElement.setAttribute(IP_ATTRIBUTE, machine.getIp());
+        return machineElement;
     }
 	
 	/**
