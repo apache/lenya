@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentIndexTransformer.java,v 1.7 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.transformation;
 
@@ -92,7 +92,10 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
         throws ProcessingException, SAXException, IOException {
         try {
-            parameterize(parameters);
+
+        	super.setup(resolver, objectModel, src, parameters);
+
+        	parameterize(parameters);
 
             PageEnvelope envelope = null;
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
