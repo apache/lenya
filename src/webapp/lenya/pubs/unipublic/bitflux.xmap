@@ -37,7 +37,7 @@
     <!-- Article -->
     <map:pipeline>
       <map:match pattern="*/*/*/*/index.xml">
-        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="stylesheets/article.xsl">
@@ -95,7 +95,7 @@
       <!-- Save Article -->
       <map:match pattern="save/*/*/*/*">
         <map:act type="xopushandler">
-          <map:parameter name="save-filename" value="{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="save-filename" value="{1}/{2}/{3}/{4}/index.xml"/>
           <!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
           <map:generate src="{reqFilePath}"/>
           <map:transform src="xopus_response.xsl">
