@@ -4,8 +4,8 @@
     <lenya:meta>
         <dc:title>The Simple Document Doctype</dc:title>
         <dc:creator>Andreas Hartmann,Felix Maeder</dc:creator>
-        <dc:subject/>
-        <dc:description/>
+        <dc:subject>DC Subject<dc:subject/>
+        <dc:description>DC Description<dc:description/>
         <dc:publisher/>
         <dc:contributor/>
         <dc:date>First published date</dc:date>
@@ -13,10 +13,10 @@
         <dc:format/>
         <dc:identifier/>
         <dc:source/>
-        <dc:language/>
+        <dc:language>en</dc:language>
         <dc:relation/>
         <dc:coverage/>
-        <dc:rights/>
+        <dc:rights>DC Rights</dc:rights/>
     </lenya:meta>
     <lenya:header>
         <lenya:document-title>The Simple Document Doctype</lenya:document-title>

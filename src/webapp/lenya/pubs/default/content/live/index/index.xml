@@ -2,10 +2,10 @@
 <simple-document xmlns="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     <!-- the root element indicates the doctype -->
     <lenya:meta>
-        <dc:title></dc:title>
+        <dc:title>DC Title</dc:title>
         <dc:creator>Christian Egli</dc:creator>
-        <dc:subject/>
-        <dc:description/>
+        <dc:subject>DC Subject<dc:subject/>
+        <dc:description>DC Description<dc:description/>
         <dc:publisher/>
         <dc:contributor/>
         <dc:date>2003-5-21</dc:date>
@@ -13,14 +13,14 @@
         <dc:format/>
         <dc:identifier/>
         <dc:source/>
-        <dc:language/>
+        <dc:language>en</dc:language>
         <dc:relation/>
         <dc:coverage/>
-        <dc:rights/>
+        <dc:rights>DC Rights</dc:rights/>
     </lenya:meta>
     <lenya:header>
         <lenya:document-title>Default Publication</lenya:document-title>
-        <lenya:abstract></lenya:abstract>
+        <lenya:abstract>Abstract that can be used on an overview page</lenya:abstract>
     </lenya:header>
   <body>
     <p>Hello and welcome to the Lenya default publication!</p>
