@@ -236,7 +236,7 @@ implements Disposable {
                                      // add prefix   
                                         newAttrs.setValue(
                                                 i,
-                                                sslPrefix + documentId);
+                                                sslPrefix + documentId + languageExtension + ".html");
                                     }
                                     else {
                                         // check for live mount point
