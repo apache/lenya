@@ -15,7 +15,10 @@
  *
  */
 
-/* $Id: SimpleLinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor Exp $  */
+/*
+ * $Id: SimpleLinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
+ * Exp $
+ */
 
 package org.apache.lenya.cms.cocoon.transformation;
 
@@ -57,16 +60,17 @@ import org.apache.log4j.Category;
 
 /**
  * This is a simple transformer which rewrites &lt;a
- * href="/lenya/unicom/authoring/doctypes/2columns.html"&gt;
- * to &lt;a
- * href="/lenya/unicom/$AREA/doctypes/2columns.html"&gt;.
+ * href="/context/publication/authoring/doctypes/2columns.html"&gt; to &lt;a
+ * href="/context/publication/$AREA/doctypes/2columns.html"&gt;.
  * 
- * It also checks if the target of the link really exists if the area is 
+ * It also checks if the target of the link really exists if the area is
  * "live". If the link target doesn't exist the link will be inactive.
  * 
- * Ideally this transformer could be replaced by the
- * LinkRewrittingTransformer that Forrest uses if we employ the same
- * scheme for internal links.
+ * Furthermore, you can define the live-prefix in your publication.xconf, and
+ * the transformer will use it for rewriting the live links if it is available.
+ * 
+ * Ideally this transformer could be replaced by the LinkRewrittingTransformer
+ * that Forrest uses if we employ the same scheme for internal links.
  */
 public class SimpleLinkRewritingTransformer extends AbstractSAXTransformer
 implements Disposable {
@@ -86,9 +90,12 @@ implements Disposable {
     private Identity identity;
     private String urlPrefix;
     private String sslPrefix;
+    private String liveMountPoint;
 
     /**
-     * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
+     *      java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(
         SourceResolver resolver,
@@ -110,6 +117,8 @@ implements Disposable {
             envelope.getContext() + "/" + envelope.getPublication().getId();
         
         sslPrefix = envelope.getPublication().getSSLPrefix();
+
+        liveMountPoint = envelope.getPublication().getLiveMountPoint();
 
         StringBuffer uribuf = new StringBuffer();
 
@@ -178,9 +187,11 @@ implements Disposable {
         throws SAXException {
         AttributesImpl newAttrs = null;
 
-        // FIXME: This pattern is extremely similar to the pattern in 
-        // org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper and has the 
-        // same problems. See DocumentReferencesHelper#getInternalLinkPattern().
+        // FIXME: This pattern is extremely similar to the pattern in
+        // org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper and
+        // has the
+        // same problems. See
+        // DocumentReferencesHelper#getInternalLinkPattern().
         Pattern pattern =
             Pattern.compile(
                 envelope.getContext()
@@ -198,7 +209,8 @@ implements Disposable {
 
                     Matcher matcher = pattern.matcher(value);
                     if (matcher.find()) {
-                        // yes, this is an internal link that we need to rewrite
+                        // yes, this is an internal link that we need to
+                        // rewrite
                         if (newAttrs == null)
                             newAttrs = new AttributesImpl(attrs);
 
@@ -208,37 +220,47 @@ implements Disposable {
                         }
 
                         String documentId = matcher.group(1);
-                        if (areaIsLive()
-                            && !documentIsLive(documentId, languageExtension)) {
-                            // check for SSL here:
-                            //if ssl, add prefix, if not, ignore A
-                            try {
-                                String url = urlPrefix + documentId;
-                                Policy policy = policyManager.getPolicy(accreditableManager, url);
-                                if (policy.isSSLProtected()) {
-                                        log.debug(" live is SSL protected");
-                                 // add prefix   
-                                    newAttrs.setValue(
-                                            i,
-                                            sslPrefix + documentId);
-                                } else {
-                                        log.debug(" live is NOT SSL protected");
-                                    ignoreAElement = true;
-                                }
-                            }
-                            catch (AccessControlException e) {
-                              throw new SAXException(e);
-                            }
+                        
+                        if (areaIsLive()) {
+                            if (!documentIsLive(documentId, languageExtension)) {
+                                // deactivate the link if the link target is not live
+                                ignoreAElement = true;                                
+                            } else {
+                                // document is live
+                                //if ssl, add prefix, if not, check for live mount point and apply if present
+                                try {
+                                    String url = urlPrefix + documentId;
+                                    Policy policy = policyManager.getPolicy(accreditableManager, url);
+                                    if (policy.isSSLProtected()) {
+                                            log.debug(" live is SSL protected");
+                                     // add prefix   
+                                        newAttrs.setValue(
+                                                i,
+                                                sslPrefix + documentId);
+                                    }
+                                    else {
+                                        // check for live mount point
+                                        newAttrs.setValue(
+                                        i,
+                                        getNewHrefValue(languageExtension, documentId));
+                                    }
+                                    
+                                    }
+                                    catch (AccessControlException e) {
+                                      throw new SAXException(e);
+                                    }
 
+                            }
                         } else {
-                            // check for SSL here, too
-                            // if ssl, add prefix to newhrefvalue, if not, take just newhrefvalue
+                            // authoring area
+                            // if ssl, add prefix to newhrefvalue, if not, take
+                            // just newhrefvalue
                             try {
                                 String url = urlPrefix + documentId;
                                 String finalurl;
                                 Policy policy = policyManager.getPolicy(accreditableManager, url);
                                 if (policy.isSSLProtected()) {
-                                 // add prefix   
+                                 // add prefix
                                         log.debug(" authoring is SSL protected");
                                         log.debug(" ssl prefix: " + sslPrefix);
                                         finalurl = sslPrefix + documentId + languageExtension + ".html";
@@ -271,8 +293,11 @@ implements Disposable {
         }
     }
 
-    /** (non-Javadoc)
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
+     *      java.lang.String, java.lang.String)
      */
     public void endElement(String uri, String name, String qname)
         throws SAXException {
@@ -327,8 +352,25 @@ implements Disposable {
     private String getNewHrefValue(
         String languageExtension,
         String documentId) {
-        // FIXME: this should really use the documentBuilder to
-        // build the url 
+        /*
+         * FIXME: this should really use the documentBuilder to build the url
+         */
+        
+        // the mount point is enabled, use it for live links
+        if (!liveMountPoint.equals("") && areaIsLive()) {
+            // dont prepend / because the documentid is already /document
+            if (liveMountPoint.equals("/")) {
+                return documentId
+                + languageExtension
+                + ".html";
+            }
+            return liveMountPoint    
+            + documentId
+            + languageExtension
+            + ".html";
+        }
+        
+        // no mount point is defined
         return baseURI
             + "/"
             + envelope.getDocument().getArea()

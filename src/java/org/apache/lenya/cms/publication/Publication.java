@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publication.java,v 1.46 2004/03/16 11:12:16 gregor Exp $  */
+/* $Id: Publication.java,v 1.47 2004/04/04 15:25:53 gregor Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -43,6 +43,7 @@ public interface Publication {
     String DEFAULT_LANGUAGE_ATTR = "default";
     String BREADCRUMB_PREFIX = "breadcrumb-prefix";
     String SSL_PREFIX = "ssl-prefix";
+    String LIVE_MOUNT_POINT = "live-mount-point";
     String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
     String PUBLICATION_PREFIX_URI = "lenya/pubs";
     String CONFIGURATION_PATH = "config";
@@ -135,6 +136,17 @@ public interface Publication {
      * @return the SSL prefix
      */
     String getSSLPrefix();
+
+    /**
+     * Get the Live mount point. The live mount point is used to rewrite links that are of the form 
+     * /contextprefix/publication/area/documentid to /livemountpoint/documentid
+     * 
+     * This is useful if you serve your live area through mod_proxy. to enable this functionality, set
+     * the Live mount point to / or something else. An empty mount point disables the feature.
+     * 
+     * @return the Live mount point
+     */
+    String getLiveMountPoint();
 
     /**
      * Get the sitetree for a specific area of this publication. 

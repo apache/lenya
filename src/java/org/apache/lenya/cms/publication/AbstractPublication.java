@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractPublication.java,v 1.16 2004/03/16 11:12:16 gregor Exp $  */
+/* $Id: AbstractPublication.java,v 1.17 2004/04/04 15:25:53 gregor Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -46,6 +46,7 @@ public abstract class AbstractPublication implements Publication {
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
     private String sslprefix = null;
+    private String livemountpoint = null;
     private HashMap siteTrees = new HashMap();
     private boolean hasSitetree = true;
 
@@ -137,7 +138,8 @@ public abstract class AbstractPublication implements Publication {
         breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
 
         sslprefix = config.getChild(SSL_PREFIX).getValue("");
-        log.debug("ssl prefix from config: " + sslprefix);
+
+        livemountpoint = config.getChild(LIVE_MOUNT_POINT).getValue("");
 
     }
 
@@ -258,9 +260,20 @@ public abstract class AbstractPublication implements Publication {
      * @return the SSL prefix
      */
     public String getSSLPrefix() {
-        log.debug("ssl prefix passed to caller: " + sslprefix);
-
         return sslprefix;
+    }
+
+    /**
+     * Get the Live mount point. The live mount point is used to rewrite links that are of the form 
+     * /contextprefix/publication/area/documentid to /livemountpoint/documentid
+     * 
+     * This is useful if you serve your live area through mod_proxy. to enable this functionality, set
+     * the Live mount point to / or something else. An empty mount point disables the feature.
+     * 
+     * @return the Live mount point
+     */
+    public String getLiveMountPoint() {
+        return livemountpoint;
     }
 
     /**

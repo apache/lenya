@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xconf,v 1.7 2004/03/16 11:12:16 gregor Exp $ -->
+<!-- $Id: publication.xconf,v 1.8 2004/04/04 15:25:53 gregor Exp $ -->
 
 <publication>
   <languages>
@@ -26,4 +26,6 @@
   <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
   <breadcrumb-prefix/>
   <ssl-prefix/>
+  <!-- enable to rewrite live urls 
+  <live-mount-point>/</live-mount-point> -->    
 </publication>
