@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SitemapPolicyManager.java,v 1.3 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id: SitemapPolicyManager.java,v 1.4 2004/04/28 12:46:37 andreas Exp $  */
 
 package org.apache.lenya.cms.ac;
 
@@ -96,12 +96,16 @@ public class SitemapPolicyManager
         return manager;
     }
 
-    /**
+    /* (non-Javadoc)
      * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
      */
     public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
-        // TODO Auto-generated method stub
-        
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
+     */
+    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
     }
 
 }

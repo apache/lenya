@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentPolicyManagerWrapper.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id: DocumentPolicyManagerWrapper.java,v 1.5 2004/04/28 12:46:37 andreas Exp $  */
 
 package org.apache.lenya.cms.ac;
 
@@ -284,6 +284,13 @@ public class DocumentPolicyManagerWrapper
             getLogger().debug("Disposing [" + this +"]");
         }
 
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
+     */
+    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
+        getPolicyManager().accreditableAdded(manager, accreditable);
     }
 
 }
