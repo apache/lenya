@@ -202,8 +202,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                 Node child = children.item(i);
 
                 if ((child.getNodeType() == Node.ELEMENT_NODE)
-                        && child.getNodeName().equals(LABEL_NAME)
-                        && child.getFirstChild().getNodeValue().equals(label.getLabel())) {
+                        && child.getNodeName().equals(LABEL_NAME)) {
 
                     Node languageAttribute = child.getAttributes()
                             .getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
