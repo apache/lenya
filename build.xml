@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.13 2002/01/22 13:42:15 giacomo Exp $
+   @version CVS $Id: build.xml,v 1.14 2002/01/22 13:54:35 giacomo Exp $
 
 -->
 
@@ -179,7 +179,8 @@
 
     <property name="today"         value="${TODAY}"/>
     <echo message="Today is ${today}"/>
-    <property name="snapshot.bin.tarfile" value="${dist.root}/${fullname}-${SNAPSHOT_STAMP}.tar"/>
+    <property name="snapshot.bin.tarfile" value="${dist.root}/${fullname}-bin-${SNAPSHOT_STAMP}.tar"/>
+    <property name="snapshot.src.tarfile" value="${dist.root}/${fullname}-src-${SNAPSHOT_STAMP}.tar"/>
 
     <available file="${tools.jar}" property="tools.jar.present"/>
   </target>
@@ -406,7 +407,7 @@
       <fileset dir="${dist.root}/${fullname}"/>
     </copy>
 
-    <tar tarfile="${snapshot.bin.tarfile}" basedir="${dist.root}" includes="${fullname}-${SNAPSHOT_STAMP}/**"/>
+    <tar tarfile="${snapshot.bin.tarfile}" basedir="${dist.root}" includes="${fullname}-bin-${SNAPSHOT_STAMP}/**"/>
 
     <gzip zipfile="${snapshot.bin.tarfile}.gz" src="${snapshot.bin.tarfile}"/>
     <delete file="${snapshot.bin.tarfile}"/>
@@ -426,6 +427,7 @@
     <copy todir="${dist.src.dir}">
       <fileset dir=".">
         <include name="README"/>
+        <include name="INSTALL*"/>
         <include name="build.properties.sample"/>
         <include name="src/**"/>
         <include name="${lib.dir}/**"/>
@@ -441,6 +443,25 @@
 
   </target>
 
+
+  <!--
+  The dist target prepares the binary distribution tarball for
+  end users. It forces a complete rebuild of everything through its
+  dependency on the "clean" target in order to prevent garbage
+  like the cocoon logfiles from ending up in the distribution tarball.
+  -->
+  <target name="snapshot-src" depends="dist-src" description="Builds a tar ball containing the sources for developers">
+
+    <copy todir="${dist.src.dir}-${SNAPSHOT_STAMP}">
+      <fileset dir="${dist.src.dir}"/>
+    </copy>
+
+    <tar tarfile="${snapshot.src.tarfile}" basedir="${dist.root}" includes="${fullname}-src-${SNAPSHOT_STAMP}/**"/>
+
+    <gzip zipfile="${snapshot.src.tarfile}.gz" src="${snapshot.src.tarfile}"/>
+    <delete file="${snapshot.src.tarfile}"/>
+
+  </target>
 
   <!-- ============================================================ -->
   <!-- Install webapp                                               -->
