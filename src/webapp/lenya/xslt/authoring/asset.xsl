@@ -3,6 +3,7 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
   xmlns="http://www.w3.org/1999/xhtml"
   disable-output-escaping="yes"
   exclude-result-prefixes="lenya-info wf rc dc usecase"
@@ -140,7 +141,12 @@ function check(fileinput) {
 	      </tr>
 	    </xsl:if>
 	    <tr>
-	      <td class="lenya-form-caption">Select File:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
+	      <td class="lenya-form-caption">Select 
+	      <xsl:choose>
+	        <xsl:when test="$insertimage = 'true'">Image</xsl:when>
+	        <xsl:otherwise>File</xsl:otherwise>
+	      </xsl:choose>
+	      :</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <tr>
@@ -153,12 +159,10 @@ function check(fileinput) {
 	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights" value="All rights reserved."/></td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
-            <xsl:if test="$insert = 'true'">
+	    <xsl:if test="$insertimage = 'true'">
               <tr>
                 <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
               </tr>
-            </xsl:if>
-	    <xsl:if test="$insertimage = 'true'">
 	      <tr>
 		<td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
 	      </tr>
@@ -204,7 +208,7 @@ function check(fileinput) {
 		<tr>
 		  <td class="lenya-form-caption">
 		  <xsl:choose><xsl:when test="$insertimage = 'true'">Image:</xsl:when>
-	    <xsl:otherwise>Asset:</xsl:otherwise></xsl:choose></td>
+	    <xsl:otherwise>File:</xsl:otherwise></xsl:choose></td>
 		  <td class="lenya-form-caption">
 		    <select name="properties.asset.data" class="lenya-form-element">
 		      <xsl:apply-templates select="usecase:assets/usecase:asset"/>
@@ -213,9 +217,12 @@ function check(fileinput) {
 		</tr>
 		<tr><td>&#160;</td></tr>
 		<tr>
-		  <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
+		  <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title" value=""/></td>
 		</tr>
 		<xsl:if test="$insertimage = 'true'">
+          <tr>
+            <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
+          </tr>
 		  <tr>
 		    <td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
 		  </tr>
@@ -237,7 +244,17 @@ function check(fileinput) {
   </xsl:template>
 
   <xsl:template match="usecase:assets/usecase:asset">
-      <option><xsl:value-of select="."/></option>
+      <xsl:choose>
+          <!-- filter non-images for image upload -->
+          <xsl:when test="$insertimage = 'true'">
+            <xsl:if test="contains(., 'jpg') or contains(., 'gif')">
+              <option><xsl:value-of select="."/></option>
+            </xsl:if>             
+          </xsl:when>
+          <xsl:otherwise>
+            <option><xsl:value-of select="."/></option>  
+          </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
   
   
