@@ -1,5 +1,5 @@
 /*
-$Id: ConfigurableAccessControllerResolver.java,v 1.2 2003/08/11 16:03:19 andreas Exp $
+$Id: ConfigurableAccessControllerResolver.java,v 1.3 2003/08/28 10:06:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -76,7 +76,6 @@ public class ConfigurableAccessControllerResolver
         AccessController accessController = null;
 
         try {
-            boolean authorized;
             accessController =
                 (AccessController) getManager().lookup(
                     AccessController.ROLE + "/" + accessControllerType);

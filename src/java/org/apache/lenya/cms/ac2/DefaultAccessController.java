@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.13 2003/08/15 09:49:47 andreas Exp $
+$Id: DefaultAccessController.java,v 1.14 2003/08/28 10:06:44 andreas Exp $
 <License>
 
  ============================================================================
@@ -121,7 +121,6 @@ public class DefaultAccessController
 
         boolean authorized = false;
 
-        Session session = request.getSession(true);
         if (hasAuthorizers()) {
             Authorizer[] authorizers = getAuthorizers();
             int i = 0;

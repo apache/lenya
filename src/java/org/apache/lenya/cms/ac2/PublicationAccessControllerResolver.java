@@ -1,5 +1,5 @@
 /*
-$Id: PublicationAccessControllerResolver.java,v 1.7 2003/08/13 17:02:04 andreas Exp $
+$Id: PublicationAccessControllerResolver.java,v 1.8 2003/08/28 10:07:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -196,8 +196,6 @@ public class PublicationAccessControllerResolver
                 Configuration configuration =
                     new DefaultConfigurationBuilder().buildFromFile(configurationFile);
                 String type = configuration.getAttribute(TYPE_ATTRIBUTE);
-
-                boolean authorized;
 
                 accessController =
                     (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
