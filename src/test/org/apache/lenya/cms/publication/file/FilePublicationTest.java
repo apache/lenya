@@ -26,7 +26,6 @@ import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
@@ -110,8 +109,8 @@ public class FilePublicationTest extends TestCase {
         Publication publication = PublicationHelper.getPublication();
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
 
-        Document sourceDocument = map.get(sourceArea, sourceDocumentId, sourceLanguage);
-        Document destinationDocument = map.get(destinationArea, destinationDocumentId,
+        Document sourceDocument = map.getFactory().get(sourceArea, sourceDocumentId, sourceLanguage);
+        Document destinationDocument = map.getFactory().get(destinationArea, destinationDocumentId,
                 destinationLanguage);
 
         publication.copyDocument(sourceDocument, destinationDocument);

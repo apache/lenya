@@ -36,7 +36,7 @@ public class TestPageEnvelope extends PageEnvelope {
 
         try {
             DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            setDocument(map.get(url));
+            setDocument(map.getFactory().getFromURL(url));
         } catch (DocumentBuildException e) {
             throw new PageEnvelopeException(e);
         }

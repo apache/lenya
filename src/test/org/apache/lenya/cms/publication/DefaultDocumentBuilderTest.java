@@ -67,6 +67,6 @@ public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
 	protected Document getDocument(DocumentTestSet set) throws DocumentBuildException {
 		Publication pub = PublicationHelper.getPublication();
 
-		return getIdentityMap().get(pub.getId() + "/" + set.getArea() + set.getUrl());
+		return getIdentityMap().getFactory().getFromURL(pub.getId() + "/" + set.getArea() + set.getUrl());
 	}
 }

@@ -30,7 +30,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.file.FileItemManager;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Document;
@@ -41,7 +40,6 @@ import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
@@ -95,7 +93,7 @@ public class WorkflowTest extends AccessControlTest {
         Publication publication = PublicationHelper.getPublication();
         String url = "/" + publication.getId() + URL;
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
-        Document document = map.get(url);
+        Document document = map.getFactory().getFromURL(url);
 
         File configDir = new File(publication.getDirectory(), "config" + File.separator + "ac"
                 + File.separator + "passwd");
