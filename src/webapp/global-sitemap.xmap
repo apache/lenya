@@ -425,12 +425,12 @@
       <!-- {publication-id}/{area}/{file} -->
       <map:match pattern="*/*/**">
         <map:act type="resource-exists-enhanced">
-          <map:parameter name="url" value="lenya/pubs/{1}/resources/{2}/{3}"/>
+          <map:parameter name="url" value="fallback://resources/{2}/{3}"/>
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
         </map:act>
         <map:act type="resource-exists-enhanced">
-          <map:parameter name="url" value="lenya/pubs/{1}/resources/shared/{3}"/>
+          <map:parameter name="url" value="fallback://resources/shared/{3}"/>
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="lenya/resources-shared.xmap" check-reload="true" reload-method="synchron"/>
         </map:act>
@@ -438,7 +438,7 @@
       
       <!-- Enter the actual publication -->
       <map:match pattern="*/**">
-        <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="{1}" src="fallback://sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
       <map:handle-errors>

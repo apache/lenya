@@ -34,7 +34,7 @@
           </map:transform>
           <map:serialize type="text" mime-type="text/css"/>
         </map:act>
-        <map:read src="pubs/{1}/resources/shared/css/{3}.css" mime-type="text/css" />
+        <map:read src="fallback://resources/shared/css/{3}.css" mime-type="text/css" />
       </map:match>
       
           <!-- matches pub-id/area/javascript/**.js -->
@@ -44,7 +44,7 @@
 
           <!-- matches pub-id/area/**.jpg -->
           <map:match pattern="*/*/**.jpg">
-            <map:read src="pubs/{1}/resources/shared/{3}.jpg" mime-type="image/jpeg" />
+            <map:read src="fallback://resources/shared/{3}.jpg" mime-type="image/jpeg" />
           </map:match>
 
           <!-- matches pub-id/area/**.JPG -->
@@ -59,7 +59,7 @@
 
           <!-- matches pub-id/area/**.png -->
           <map:match pattern="*/*/**.png">
-            <map:read src="pubs/{1}/resources/shared/{3}.png" mime-type="image/png" />
+            <map:read src="fallback://resources/shared/{3}.png" mime-type="image/png" />
           </map:match>
 
           <!-- matches pub-id/area/**.tar.gz -->

@@ -42,6 +42,18 @@
   </xsl:copy>
 </xsl:template>
 
+
+<xsl:template match="source-factories">
+  <xsl:copy>
+    <xsl:copy-of select="@*"/>
+    <xsl:apply-templates/>
+    
+    <component-instance class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory" name="fallback"/>
+    
+  </xsl:copy>
+</xsl:template>
+
+
 <xsl:template match="input-modules">
      
   <xsl:copy>

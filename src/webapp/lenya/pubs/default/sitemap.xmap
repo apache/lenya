@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.22 2004/04/24 21:20:50 gregor Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -53,7 +53,7 @@
 
     <map:pipeline>
       <map:match pattern="**">
-        <map:mount uri-prefix="" src="publication-sitemap.xmap"/>
+        <map:mount uri-prefix="" src="fallback://publication-sitemap.xmap"/>
       </map:match>
 
       <map:handle-errors>
