@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FlowHelper.java,v 1.10 2004/08/27 21:00:53 roku Exp $  */
+/* $Id: FlowHelper.java,v 1.11 2004/08/27 21:07:57 roku Exp $  */
 
 package org.apache.lenya.cms.cocoon.flow;
 
@@ -176,6 +176,14 @@ public class FlowHelper {
         return value;
     }
 
+    /**
+     * Saves the result of a pipeline call to the current document associated with the PageEnvelope.
+     * @param cocoon The Cocoon Object Flow Model
+     * @param pipeline The name of the pipeline to call. 
+     * Do not use any protocols in the name, since "cocoon:/" is prepended by default and
+     * there is no way around it.
+     * @throws Exception If an error occurs during save.
+     */
     public void savePipelineToDocument(FOM_Cocoon cocoon, String pipeline) 
     throws Exception {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream();
