@@ -10,6 +10,6 @@
   <htdocs-dump-dir src="../../content/authoring/matrix"/>
 
   <indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer">
-    <configuration src="mfs-luceneDoc.xconf"/>
+    <configuration src="cmfs-luceneDoc.xconf"/>
   </indexer>
 </lucene>
