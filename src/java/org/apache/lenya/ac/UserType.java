@@ -15,22 +15,33 @@
  *
  */
 
-/* $Id:  $  */
-
 package org.apache.lenya.ac;
 
 /**
  * A user type to be supported by the UserManager
  * Note: the types are configured through access control (ac.xconf)
+ * 
+ * FIXME: jwkaltz@yahoo.com please add parameter descriptions to getters and setters.
+ * @version $Id:$
  */
 public class UserType  {
     private String key;
     private String className;
     private String createUseCase;
 
+    /**
+     * Ctor.
+     */
     public UserType() {
     }
 
+    /**
+     * Ctor.
+     * 
+     * @param key The key.
+     * @param className The class name.
+     * @param createUseCase The create usecase.
+     */
     public UserType(String key, String className, String createUseCase) {
 	  this.key = key;
 	  this.className = className;
