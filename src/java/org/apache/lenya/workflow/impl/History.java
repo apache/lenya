@@ -52,6 +52,7 @@ import org.apache.lenya.workflow.BooleanVariable;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.State;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.WorkflowListener;
@@ -92,8 +93,8 @@ public abstract class History implements WorkflowListener {
             
             NamespaceHelper helper =
                 new NamespaceHelper(
-                    WorkflowBuilder.NAMESPACE,
-                    WorkflowBuilder.DEFAULT_PREFIX,
+                    Workflow.NAMESPACE,
+                    Workflow.DEFAULT_PREFIX,
                     HISTORY_ELEMENT);
 
             Element historyElement = helper.getDocument().getDocumentElement();
@@ -141,8 +142,8 @@ public abstract class History implements WorkflowListener {
                 Document document = DocumentHelper.readDocument(getHistoryFile());
                 helper =
                     new NamespaceHelper(
-                        WorkflowBuilder.NAMESPACE,
-                        WorkflowBuilder.DEFAULT_PREFIX,
+                        Workflow.NAMESPACE,
+                        Workflow.DEFAULT_PREFIX,
                         document);
             } catch (Exception e) {
                 throw new WorkflowException(e);
@@ -204,8 +205,8 @@ public abstract class History implements WorkflowListener {
 
             NamespaceHelper helper =
                 new NamespaceHelper(
-                    WorkflowBuilder.NAMESPACE,
-                    WorkflowBuilder.DEFAULT_PREFIX,
+                    Workflow.NAMESPACE,
+                    Workflow.DEFAULT_PREFIX,
                     xmlDocument);
 
             CMSSituation cmsSituation = (CMSSituation) situation;

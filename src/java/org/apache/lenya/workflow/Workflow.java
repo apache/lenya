@@ -12,6 +12,9 @@ package org.apache.lenya.workflow;
  */
 public interface Workflow {
     
+    String NAMESPACE = "http://apache.org/cocoon/lenya/workflow/1.0";
+    String DEFAULT_PREFIX = "wf";
+
     /**
      * Returns the initial state of this workflow.
      * @return The initial state

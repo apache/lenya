@@ -58,6 +58,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.xml.sax.Attributes;
@@ -85,7 +86,7 @@ public class WorkflowMenuTransformer
             
         boolean passed = true;
         if (hasWorkflow() && localName.equals(ITEM_ELEMENT)) {
-            String event = attr.getValue(EVENT_ATTRIBUTE);
+            String event = attr.getValue(Workflow.NAMESPACE, EVENT_ATTRIBUTE);
             
             // filter item if command not allowed 
             if (event != null) {

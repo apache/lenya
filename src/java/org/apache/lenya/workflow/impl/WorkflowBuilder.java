@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -31,9 +32,6 @@ public class WorkflowBuilder {
 	
 	protected WorkflowBuilder() {
 	}
-
-    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/workflow/1.0";
-    public static final String DEFAULT_PREFIX = "wf";
 
     public static WorkflowImpl buildWorkflow(File file) throws WorkflowException {
         WorkflowImpl workflow;
@@ -56,7 +54,7 @@ public class WorkflowBuilder {
             WorkflowException {
 
         NamespaceHelper helper =
-            new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, document);
+            new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX, document);
 
         Element root = document.getDocumentElement();
         StateImpl initialState = null;
@@ -67,7 +65,7 @@ public class WorkflowBuilder {
 
         // load states
         NodeList stateElements =
-            root.getElementsByTagNameNS(NAMESPACE, STATE_ELEMENT);
+            root.getElementsByTagNameNS(Workflow.NAMESPACE, STATE_ELEMENT);
         for (int i = 0; i < stateElements.getLength(); i++) {
             Element element = (Element) stateElements.item(i);
             StateImpl state = buildState(element);
@@ -83,7 +81,7 @@ public class WorkflowBuilder {
 
         // load variables
         NodeList variableElements =
-            root.getElementsByTagNameNS(NAMESPACE, VARIABLE_ELEMENT);
+            root.getElementsByTagNameNS(Workflow.NAMESPACE, VARIABLE_ELEMENT);
         for (int i = 0; i < variableElements.getLength(); i++) {
             Element element = (Element) variableElements.item(i);
             BooleanVariableImpl variable = buildVariable(element);
@@ -93,7 +91,7 @@ public class WorkflowBuilder {
 
         // load events
         NodeList eventElements =
-            root.getElementsByTagNameNS(NAMESPACE, EVENT_ELEMENT);
+            root.getElementsByTagNameNS(Workflow.NAMESPACE, EVENT_ELEMENT);
         for (int i = 0; i < eventElements.getLength(); i++) {
             EventImpl event = buildEvent((Element) eventElements.item(i));
             String id = event.getName();
@@ -102,7 +100,7 @@ public class WorkflowBuilder {
 
         // load transitions
         NodeList transitionElements =
-            root.getElementsByTagNameNS(NAMESPACE, TRANSITION_ELEMENT);
+            root.getElementsByTagNameNS(Workflow.NAMESPACE, TRANSITION_ELEMENT);
         for (int i = 0; i < transitionElements.getLength(); i++) {
             TransitionImpl transition =
                 buildTransition(
@@ -172,7 +170,7 @@ public class WorkflowBuilder {
         // set event
         Element eventElement =
             (Element) element.getElementsByTagNameNS(
-                NAMESPACE,
+            Workflow.NAMESPACE,
                 EVENT_ELEMENT).item(
                 0);
         String id = eventElement.getAttribute(ID_ATTRIBUTE);
@@ -185,7 +183,7 @@ public class WorkflowBuilder {
 
         // load conditions
         NodeList conditionElements =
-            element.getElementsByTagNameNS(NAMESPACE, CONDITION_ELEMENT);
+            element.getElementsByTagNameNS(Workflow.NAMESPACE, CONDITION_ELEMENT);
         for (int i = 0; i < conditionElements.getLength(); i++) {
             Condition condition =
                 buildCondition((Element) conditionElements.item(i));
@@ -194,7 +192,7 @@ public class WorkflowBuilder {
 
         // load assignments
         NodeList assignmentElements =
-            element.getElementsByTagNameNS(NAMESPACE, ASSIGNMENT_ELEMENT);
+            element.getElementsByTagNameNS(Workflow.NAMESPACE, ASSIGNMENT_ELEMENT);
         for (int i = 0; i < assignmentElements.getLength(); i++) {
             BooleanVariableAssignmentImpl action = buildAssignment(variables, (Element) assignmentElements.item(i));
             transition.addAction(action);
@@ -202,7 +200,7 @@ public class WorkflowBuilder {
 
         // load actions
         NodeList actionElements =
-            element.getElementsByTagNameNS(NAMESPACE, ACTION_ELEMENT);
+            element.getElementsByTagNameNS(Workflow.NAMESPACE, ACTION_ELEMENT);
         for (int i = 0; i < actionElements.getLength(); i++) {
             Action action = buildAction((Element) actionElements.item(i));
             transition.addAction(action);
