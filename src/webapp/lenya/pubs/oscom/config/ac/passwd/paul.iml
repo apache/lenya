@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<identity id="wyona">
+<password type="md5">8e07dafd13495561db9063ebe4db4b27</password>
+<comment>Paul Browning</comment>
+<groups>
+  <group>editor-matrix</group>
+</groups>
+</identity>

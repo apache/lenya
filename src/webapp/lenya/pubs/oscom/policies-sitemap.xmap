@@ -10,12 +10,21 @@
 
  <map:pipelines>
    <map:pipeline>
+
+
 <!-- Weekly Column -->
      <map:match pattern="authoring/weekly-column*.acml">
        <map:generate src="docs/publication/access-control/policies/weekly-column.acml"/>
        <map:serialize type="xml"/>
      </map:match>
 <!-- /Weekly Column -->
+
+<!-- Navigation -->
+     <map:match pattern="authoring/navigation.xml.acml">
+       <map:generate src="docs/publication/access-control/policies/navigation.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+<!-- /Navigation -->
 
 <!-- CMS/F Matrix Overview -->
      <map:match pattern="authoring/matrix/index.html.acml">
@@ -37,20 +46,24 @@
        </map:generate>
        <map:serialize type="xml"/>
      </map:match>
-     <map:match pattern="authoring/navigation.xml.acml">
-       <map:generate src="docs/publication/access-control/policies/navigation.acml"/>
+<!-- /CMS/F Matrix Project -->
+
+<!-- Editor Matrix Project -->
+     <map:match pattern="authoring/editor-matrix/*.html.acml">
+       <map:generate src="docs/publication/access-control/policies/editor-matrix.acml"/>
        <map:serialize type="xml"/>
      </map:match>
-<!-- /CMS/F Matrix Project -->
+     <map:match pattern="authoring/editor-matrix/body-*.xml.acml">
+       <map:generate src="docs/publication/access-control/policies/editor-matrix.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+<!-- /Editor Matrix Project -->
 
 
 
 <!-- Authoring -->
      <map:match pattern="authoring/**">
        <map:generate src="docs/publication/access-control/policies/root.acml"/>
-<!--
-       <map:generate src="docs/publication/access-control/policies/public.acml"/>
--->
        <map:serialize type="xml"/>
      </map:match>
 <!-- /Authoring -->
@@ -63,6 +76,9 @@
        <map:serialize type="xml"/>
      </map:match>
 <!-- /Everything else -->
+
+
+
    </map:pipeline>
  </map:pipelines>
 </map:sitemap>
