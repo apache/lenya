@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.14 2003/06/12 15:47:08 egli Exp $
+ * $Id: FileUser.java,v 1.15 2003/06/19 13:38:31 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -77,7 +77,7 @@ public class FileUser extends User {
 	public static final String ID_ATTRIBUTE = "id";
 	public static final String CLASS_ATTRIBUTE = "class";
 
-	private Publication publication;
+	protected Publication publication;
 
 	/**
 	 * @param publication
@@ -100,11 +100,11 @@ public class FileUser extends User {
 		throws ConfigurationException {
 		super(
 			config.getAttribute(ID_ATTRIBUTE),
-			config.getChild(FULL_NAME).getValue(),
+			config.getChild(FULL_NAME).getValue(null),
 			config.getChild(EMAIL).getValue(),
-			config.getChild(PASSWORD).getValue());
+			config.getChild(PASSWORD).getValue(null));
 		this.publication = publication;
-		setEncryptedPassword(config.getChild(PASSWORD).getValue());
+		setEncryptedPassword(config.getChild(PASSWORD).getValue(null));
 		Configuration[] groups = config.getChildren(GROUPS);
 		if (groups.length == 1) {
 			groups = groups[0].getChildren(GROUP);
