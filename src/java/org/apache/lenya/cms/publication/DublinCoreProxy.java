@@ -1,5 +1,5 @@
 /*
-$Id: DublinCoreProxy.java,v 1.1 2003/08/28 09:51:53 egli Exp $
+$Id: DublinCoreProxy.java,v 1.2 2003/08/28 11:39:58 egli Exp $
 <License>
 
  ============================================================================
@@ -80,14 +80,9 @@ public class DublinCoreProxy implements DublinCore {
      * 
      * @return a real dublin core object
      */
-    protected DublinCore instance() {
+    protected DublinCore instance() throws DocumentException {
         if (dcCore == null) {
-            try {
-                dcCore = new DublinCoreImpl(this.cmsDocument);
-            } catch (DocumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            dcCore = new DublinCoreImpl(this.cmsDocument);
         }
         return dcCore;
     }
@@ -168,7 +163,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setCreator(java.lang.String)
      */
-    public void setCreator(String creator) {
+    public void setCreator(String creator) throws DocumentException {
         instance().setCreator(creator);
     }
 
@@ -176,7 +171,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setDateCreated(java.lang.String)
      */
-    public void setDateCreated(String dateCreated) {
+    public void setDateCreated(String dateCreated) throws DocumentException {
         instance().setDateCreated(dateCreated);
     }
 
@@ -184,7 +179,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setDateIssued(java.lang.String)
      */
-    public void setDateIssued(String dateIssued) {
+    public void setDateIssued(String dateIssued) throws DocumentException {
         instance().setDateIssued(dateIssued);
     }
 
@@ -192,7 +187,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setDescription(java.lang.String)
      */
-    public void setDescription(String description) {
+    public void setDescription(String description) throws DocumentException {
         instance().setDescription(description);
     }
 
@@ -200,7 +195,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setIdentifier(java.lang.String)
      */
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(String identifier) throws DocumentException {
         instance().setIdentifier(identifier);
     }
 
@@ -208,7 +203,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setPublisher(java.lang.String)
      */
-    public void setPublisher(String publisher) {
+    public void setPublisher(String publisher) throws DocumentException {
         instance().setPublisher(publisher);
     }
 
@@ -216,7 +211,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setRights(java.lang.String)
      */
-    public void setRights(String rights) {
+    public void setRights(String rights) throws DocumentException {
         instance().setRights(rights);
     }
 
@@ -224,7 +219,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setSubject(java.lang.String)
      */
-    public void setSubject(String subject) {
+    public void setSubject(String subject) throws DocumentException {
         instance().setSubject(subject);
     }
 
@@ -232,7 +227,7 @@ public class DublinCoreProxy implements DublinCore {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setTitle(java.lang.String)
      */
-    public void setTitle(String title) {
+    public void setTitle(String title) throws DocumentException {
         instance().setTitle(title);
     }
 

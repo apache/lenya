@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.18 2003/08/28 09:51:53 egli Exp $
+$Id: DublinCore.java,v 1.19 2003/08/28 11:39:58 egli Exp $
 <License>
 
  ============================================================================
@@ -83,8 +83,10 @@ public interface DublinCore {
      * Set the DC creator
      * 
      * @param creator the Creator
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setCreator(String creator);
+    void setCreator(String creator) throws DocumentException;
 
     /**
      * Get the title
@@ -99,8 +101,10 @@ public interface DublinCore {
      * Set the DC title
      * 
      * @param title the title
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setTitle(String title);
+    void setTitle(String title) throws DocumentException;
 
     /**
      * Get the description
@@ -115,8 +119,10 @@ public interface DublinCore {
      * Set the DC Description
      * 
      * @param description the description
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setDescription(String description);
+    void setDescription(String description) throws DocumentException;
 
     /**
      * Get the identifier
@@ -131,8 +137,10 @@ public interface DublinCore {
      * Set the DC Identifier
      * 
      * @param identifier the identifier
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setIdentifier(String identifier);
+    void setIdentifier(String identifier) throws DocumentException;
 
     /**
      * Get the subject.
@@ -147,8 +155,10 @@ public interface DublinCore {
      * Set the DC Subject
      * 
      * @param subject the subject
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setSubject(String subject);
+    void setSubject(String subject) throws DocumentException;
 
     /**
      * Get the publisher
@@ -163,8 +173,10 @@ public interface DublinCore {
      * Set the publisher
      * 
      * @param publisher the publisher
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setPublisher(String publisher);
+    void setPublisher(String publisher) throws DocumentException;
 
     /**
      * Get the date of issue
@@ -179,8 +191,10 @@ public interface DublinCore {
      * Set the date of issue
      * 
      * @param dateIssued the date of issue
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setDateIssued(String dateIssued);
+    void setDateIssued(String dateIssued) throws DocumentException;
     
     /**
      * Get the date of creation
@@ -195,8 +209,10 @@ public interface DublinCore {
      * Set the date of creation
      * 
      * @param dateCreated the date of creation
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setDateCreated(String dateCreated);
+    void setDateCreated(String dateCreated) throws DocumentException;
     
     /**
      * Get the rights
@@ -211,6 +227,8 @@ public interface DublinCore {
      * Set the DC Rights
      * 
      * @param rights the rights
+     * 
+     * @throws DocumentException if an error occurs
      */
-    void setRights(String rights);
+    void setRights(String rights) throws DocumentException;
 }
