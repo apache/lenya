@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: FileIPRange.java,v 1.1 2003/07/22 17:01:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,97 +55,79 @@ $Id
 */
 package org.apache.lenya.cms.ac;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
-import java.io.FileFilter;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.DefaultConfiguration;
+import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 
 /**
- * @author egli
- *
- *
+ * IP range that is stored in a file.
+ * 
+ * @author andreas
  */
-public final class GroupManager extends ItemManager {
-    private static Category log = Category.getInstance(GroupManager.class);
-    protected static final String SUFFIX = ".gml";
-    private static Map instances = new HashMap();
+public class FileIPRange extends IPRange {
 
     /**
-     * Create a GroupManager
-     *
-     * @param configurationDirectory for which the GroupManager is to be created
-     * @throws AccessControlException if no GroupManager could be instanciated
+     * Ctor.
+     */    
+    public FileIPRange() {
+    }
+    
+    /**
+     * Ctor.
+     * @param configurationDirectory The configuration directory.
+     * @param id The IP range ID.
      */
-    private GroupManager(File configurationDirectory) throws AccessControlException {
-        super(configurationDirectory);
+    public FileIPRange(File configurationDirectory, String id) {
+        super(id);
+        setConfigurationDirectory(configurationDirectory);
     }
 
     /**
-     * Return the <code>GroupManager</code> for the given publication.
-     * The <code>GroupManager</code> is a singleton.
-     *
-     * @param configurationDirectory for which the GroupManager is requested
-     * @return a <code>GroupManager</code>
-     * @throws AccessControlException if no GroupManager could be instanciated
+     * @see org.apache.lenya.cms.ac.IPRange#save()
      */
-    public static GroupManager instance(File configurationDirectory)
-        throws AccessControlException {
-        assert configurationDirectory != null;
+    public void save() throws AccessControlException {
+        DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
+        Configuration config = createConfiguration();
 
-        if (!instances.containsKey(configurationDirectory)) {
-            instances.put(configurationDirectory, new GroupManager(configurationDirectory));
+        try {
+            serializer.serializeToFile(getFile(), config);
+        } catch (Exception e) {
+            throw new AccessControlException(e);
         }
-
-        return (GroupManager) instances.get(configurationDirectory);
     }
 
     /**
-     * Get all groups
+     * Returns the configuration file.
+     * @return A file object.
+     */
+    protected File getFile() {
+        File xmlPath = getConfigurationDirectory();
+        File xmlFile = new File(xmlPath, getId() + IPRangeManager.SUFFIX);
+        return xmlFile;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac.Item#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration config) throws ConfigurationException {
+        new ItemConfiguration().configure(this, config);
+        
+    }
+
+    public static final String IP_RANGE = "ip-range";
+    
+    /**
+     * Create a configuration from the current user details. Can
+     * be used for saving.
      *
-     * @return an <code>Iterator</code>
+     * @return a <code>Configuration</code>
      */
-    public Iterator getGroups() {
-        return super.getItems();
+    protected Configuration createConfiguration() {
+        DefaultConfiguration config = new DefaultConfiguration(IP_RANGE);
+        new ItemConfiguration().save(this, config);
+        return config;
     }
-
-    /**
-     * Add a group to this manager
-     *
-     * @param group the group to be added
-     */
-    public void add(Group group) {
-        super.add(group);
-    }
-
-    /**
-     * Remove a group from this manager
-     *
-     * @param group the group to be removed
-     */
-    public void remove(Group group) {
-        super.remove(group);
-    }
-
-    /**
-     * Get the group with the given group name.
-     *
-     * @param groupId the id of the requested group
-     * @return a <code>Group</code> or null if there is no group with the given name
-     */
-    public Group getGroup(String groupId) {
-        return (Group) getItem(groupId);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac.ItemManager#getSuffix()
-     */
-    protected String getSuffix() {
-        return SUFFIX;
-    }
-
 }

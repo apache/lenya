@@ -49,7 +49,7 @@
         <a href="users/{id}/index.html"><xsl:value-of select="id"/></a>
       </td>
       <td style="vertical-align: middle">
-        <xsl:value-of select="fullName"/>
+        <xsl:value-of select="name"/>
       </td>
       <xsl:apply-templates select="groups"/>
       <td style="vertical-align: middle">
@@ -70,7 +70,7 @@
   
   
   <xsl:template match="group">
-    <xsl:value-of select="."/>
+    <a href="../groups/{@id}/index.html"><xsl:value-of select="@id"/></a>
     <xsl:if test="position() != last()">, <xsl:text/>
     </xsl:if>
   </xsl:template>

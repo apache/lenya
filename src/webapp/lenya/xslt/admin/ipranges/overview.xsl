@@ -17,16 +17,16 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>User Overview: <xsl:value-of select="user/id"/></page:title>
+      <page:title>IP Range Overview: <xsl:value-of select="iprange/id"/></page:title>
       <page:body>
         <xsl:apply-templates select="message"/>
-        <xsl:apply-templates select="user"/>
+        <xsl:apply-templates select="iprange"/>
       </page:body>
     </page:page>
   </xsl:template>
   
   
-  <xsl:template match="user">
+  <xsl:template match="iprange">
     
     <table class="lenya-noborder">
       
@@ -40,16 +40,12 @@
           <table class="lenya-table-noborder">
             
             <tr>
-              <td class="lenya-entry-caption">User&#160;ID:</td>
+              <td class="lenya-entry-caption">IP&#160;range&#160;ID:</td>
               <td><xsl:value-of select="id"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Full&#160;Name:</td>
+              <td class="lenya-entry-caption">Name:</td>
               <td><xsl:value-of select="name"/></td>
-            </tr>
-            <tr>
-              <td class="lenya-entry-caption">E-Mail:</td>
-              <td><xsl:value-of select="email"/></td>
             </tr>
             <tr>
               <td valign="top" class="lenya-entry-caption">Description:</td>
@@ -59,33 +55,7 @@
               <td/>
               <td>
 				        <form method="GET" action="lenya.usecase.change_profile">
-				          <input type="submit" value="Edit Profile"/>
-				        </form>
-              </td>
-            </tr>
-          </table>
-      </div>
-    </div>
-    
-    <div class="lenya-box">
-      <div class="lenya-box-title">Password</div>
-      <div class="lenya-box-body">
-        
-          <table class="lenya-table-noborder">
-            
-            <tr>
-              <td class="lenya-entry-caption">User:</td>
-              <td>
-				        <form method="GET" action="lenya.usecase.change_password_user">
-				          <input type="submit" value="Change Password"/>
-				        </form>
-				      </td>
-				    </tr>
-            <tr>
-              <td class="lenya-entry-caption">Admin:</td>
-              <td>
-				        <form method="GET" action="lenya.usecase.change_password_admin">
-				          <input type="submit" value="Change Password"/>
+				          <input type="submit" value="Edit IP Range"/>
 				        </form>
               </td>
             </tr>

@@ -8,10 +8,9 @@
   
   <page>
     <continuation><jpath:continuation/></continuation>
-    <user>
-      <id><jpath:value-of select="user-id"/></id>
-      <fullname><jpath:value-of select="fullname"/></fullname>
-    </user>
+    <type><jpath:value-of select="type"/></type>
+    <id><jpath:value-of select="id"/></id>
+    <name><jpath:value-of select="name"/></name>
   </page>
   
 </xsp:page>

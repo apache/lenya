@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: IPRange.java,v 1.1 2003/07/22 17:01:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,97 +55,69 @@ $Id
 */
 package org.apache.lenya.cms.ac;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
-import java.io.FileFilter;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 
 /**
- * @author egli
- *
- *
+ * A range of IP addresses.
+ * 
+ * @author andreas
  */
-public final class GroupManager extends ItemManager {
-    private static Category log = Category.getInstance(GroupManager.class);
-    protected static final String SUFFIX = ".gml";
-    private static Map instances = new HashMap();
+public abstract class IPRange extends AbstractGroupable {
 
     /**
-     * Create a GroupManager
-     *
-     * @param configurationDirectory for which the GroupManager is to be created
-     * @throws AccessControlException if no GroupManager could be instanciated
-     */
-    private GroupManager(File configurationDirectory) throws AccessControlException {
-        super(configurationDirectory);
+     * Ctor.
+     */    
+    public IPRange() {
     }
 
     /**
-     * Return the <code>GroupManager</code> for the given publication.
-     * The <code>GroupManager</code> is a singleton.
-     *
-     * @param configurationDirectory for which the GroupManager is requested
-     * @return a <code>GroupManager</code>
-     * @throws AccessControlException if no GroupManager could be instanciated
+     * Ctor.
+     * @param id The IP range ID.
+     */    
+    public IPRange(String id) {
+        setId(id);
+    }
+
+    private File configurationDirectory;
+
+    /**
+     * Returns the configuration directory.
+     * @return A file object.
      */
-    public static GroupManager instance(File configurationDirectory)
-        throws AccessControlException {
-        assert configurationDirectory != null;
-
-        if (!instances.containsKey(configurationDirectory)) {
-            instances.put(configurationDirectory, new GroupManager(configurationDirectory));
-        }
-
-        return (GroupManager) instances.get(configurationDirectory);
+    public File getConfigurationDirectory() {
+        return configurationDirectory;
     }
 
     /**
-     * Get all groups
-     *
-     * @return an <code>Iterator</code>
+     * @see org.apache.lenya.cms.ac.Item#setConfigurationDirectory(java.io.File)
      */
-    public Iterator getGroups() {
-        return super.getItems();
+    public void setConfigurationDirectory(File configurationDirectory) {
+        this.configurationDirectory = configurationDirectory;
     }
 
     /**
-     * Add a group to this manager
-     *
-     * @param group the group to be added
+     * Checks if this IP range contains a certain machine.
+     * @param machine The machine to check for.
+     * @return A boolean value.
      */
-    public void add(Group group) {
-        super.add(group);
+    public boolean contains(Machine machine) {
+        return false;
     }
 
     /**
-     * Remove a group from this manager
+     * Save the IP range
      *
-     * @param group the group to be removed
+     * @throws AccessControlException if the save failed
      */
-    public void remove(Group group) {
-        super.remove(group);
-    }
+    public abstract void save() throws AccessControlException;
 
     /**
-     * Get the group with the given group name.
+     * Delete an IP range
      *
-     * @param groupId the id of the requested group
-     * @return a <code>Group</code> or null if there is no group with the given name
+     * @throws AccessControlException if the delete failed
      */
-    public Group getGroup(String groupId) {
-        return (Group) getItem(groupId);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac.ItemManager#getSuffix()
-     */
-    protected String getSuffix() {
-        return SUFFIX;
+    public void delete() throws AccessControlException {
+        removeFromAllGroups();
     }
 
 }

@@ -14,9 +14,10 @@
 
   <map:flow language="JavaScript">
     <map:script src="content/ac/passwd.js"/>
-    <map:script src="content/admin/access-control.js"/>
+    <map:script src="content/admin/common/access-control.js"/>
     <map:script src="content/admin/users/user-admin.js"/>
     <map:script src="content/admin/groups/group-admin.js"/>
+    <map:script src="content/admin/ipranges/iprange-admin.js"/>
   </map:flow>
   
   <map:resources>
@@ -80,20 +81,30 @@
     <!-- =================================================================== -->
     
     <map:pipeline>
+
+      <!-- Shared resources. -->      
+      <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
+      <!-- pattern: internal/{type}/{page}.xml -->
+      <map:match pattern="internal/*/**-common.xml">
+        <map:call resource="fallback-page">
+          <map:parameter name="serverpage" value="common/{2}"/>
+          <map:parameter name="stylesheet" value="common/{2}"/>
+        </map:call>
+      </map:match>
       
       <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
       <!-- pattern: internal/{type}/{page}.xml -->
-      <map:match pattern="internal/*/*.xml">
-        <map:generate src="content/admin/{1}/{2}.xsp" type="serverpages"/>
+      <!-- pattern: internal/{page}.xml -->
+      <map:match pattern="internal/**.xml">
         <map:call resource="fallback-page">
-          <map:parameter name="serverpage" value="{1}/{2}"/>
-          <map:parameter name="stylesheet" value="{1}/{2}"/>
+          <map:parameter name="serverpage" value="{1}"/>
+          <map:parameter name="stylesheet" value="{1}"/>
         </map:call>
       </map:match>
       
       <map:match pattern="redirect.html">
-        <map:generate src="content/admin/redirect.xsp" type="serverpages"/>
-        <map:transform src="xslt/admin/redirect.xsl"/>
+        <map:generate src="content/admin/common/redirect.xsp" type="serverpages"/>
+        <map:transform src="xslt/admin/common/redirect.xsl"/>
         <map:serialize/>
       </map:match>
       

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+  
+  <url><jpath:value-of select="url"/></url>
+  
+</xsp:page>

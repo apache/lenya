@@ -17,8 +17,6 @@
     <xsp:include>org.apache.lenya.cms.ac.Item</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Machine</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac2.AccessController</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac2.file.FileAccessController</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.*</xsp:include>
   </xsp:structure>
@@ -33,18 +31,9 @@
       catch (ParameterException e) {
           throw new ProcessingException(e);
       }
-      Publication pub = 
-        (Publication)<input:get-attribute module="page-envelope" name="publication"/>;
 
-        File configDir = new File(pub.getDirectory(), "config" + File.separator + "ac");
-        AccessController controller = new FileAccessController(configDir);
-
-        GroupManager groupManager = null;
-        try {
-            groupManager = controller.getGroupManager();
-        } catch (Exception e) {
-            throw new ProcessingException("Exception when instantiating a UserManager or GroupManager", e);
-				}
+        GroupManager groupManager = (GroupManager)
+            <input:get-attribute module="access-control" name="group-manager" as="object"/>;
 				
         Group group = groupManager.getGroup(groupId);
         

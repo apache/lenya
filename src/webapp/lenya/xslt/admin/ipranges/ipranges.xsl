@@ -17,7 +17,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>Group Administration</page:title>
+      <page:title>IP Range Administration</page:title>
       <page:body>
         <xsl:apply-templates/>
       </page:body>
@@ -25,47 +25,60 @@
   </xsl:template>
   
   
-  <xsl:template match="groups">
+  <xsl:template match="ipranges">
     <div style="margin: 10px 0px">
-      <xsl:call-template name="add-group"/>
+      <xsl:call-template name="add-iprange"/>
     </div>
     <table cellspacing="0" class="lenya-table">
       <tr>
-        <th>Group ID</th>
+        <th>IP range ID</th>
         <th>Name</th>
+        <th>Groups</th>
         <th></th>
       </tr>
-      <xsl:apply-templates select="group">
+      <xsl:apply-templates select="iprange">
         <xsl:sort select="id"/>
       </xsl:apply-templates>
     </table>
   </xsl:template>
   
   
-  <xsl:template match="group">
+  <xsl:template match="iprange">
     <tr>
       <td style="vertical-align: middle">
-        <a href="groups/{id}/index.html"><xsl:value-of select="id"/></a>
+        <a href="ipranges/{id}/index.html"><xsl:value-of select="id"/></a>
       </td>
       <td style="vertical-align: middle">
         <xsl:value-of select="name"/>
       </td>
+      <xsl:apply-templates select="groups"/>
       <td style="vertical-align: middle">
-        <form method="GET" action="groups/lenya.usecase.delete_group">
-          <input name="group-id" type="hidden">
-            <xsl:attribute name="value">
-              <xsl:value-of select="id"/>
-            </xsl:attribute>
-          </input>
+        <form method="GET" action="ipranges/lenya.usecase.delete_iprange">
+          <input name="iprange-id" type="hidden" value="{id}"/>
           <input type="submit" value="Delete"/>
         </form>
       </td>
     </tr>
   </xsl:template>
   
-  <xsl:template name="add-group">
-    <form method="GET" action="groups/lenya.usecase.add_group">
-      <input type="submit" value="Add Group"/>
+  
+  <xsl:template match="groups">
+   <td style="vertical-align: middle">
+      <xsl:apply-templates select="group"/>
+    </td>
+  </xsl:template>
+  
+  
+  <xsl:template match="group">
+    <a href="../groups/{@id}/index.html"><xsl:value-of select="@id"/></a>
+    <xsl:if test="position() != last()">, <xsl:text/>
+    </xsl:if>
+  </xsl:template>
+  
+  
+  <xsl:template name="add-iprange">
+    <form method="GET" action="ipranges/lenya.usecase.add_iprange">
+      <input type="submit" value="Add IP Range"/>
     </form>
   </xsl:template>
   

@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.4 2003/07/21 13:39:04 andreas Exp $
+$Id: AccessControlModule.java,v 1.5 2003/07/22 17:01:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -82,24 +82,34 @@ import org.apache.lenya.cms.ac2.Identity;
  * @author egli
  * 
  */
-public class AccessControlModule extends AbstractInputModule implements Serviceable {
+public class AccessControlModule
+    extends AbstractInputModule
+    implements Serviceable {
 
     public static final String USER_ID = "user-id";
     public static final String USER_NAME = "user-name";
-	public static final String USER_EMAIL = "user-email";
-    
+    public static final String USER_EMAIL = "user-email";
+
     public static final String USER_MANAGER = "user-manager";
     public static final String GROUP_MANAGER = "group-manager";
     public static final String ROLE_MANAGER = "role-manager";
+    public static final String IP_RANGE_MANAGER = "iprange-manager";
 
     /**
       * The names of the AccessControlModule parameters.
       */
     public static final String[] PARAMETER_NAMES =
-        { USER_ID, USER_NAME, USER_EMAIL };
+        {
+            USER_ID,
+            USER_NAME,
+            USER_EMAIL,
+            USER_MANAGER,
+            GROUP_MANAGER,
+            ROLE_MANAGER,
+            IP_RANGE_MANAGER };
 
     /**
-     *  (non-Javadoc)
+     *
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(
@@ -107,14 +117,14 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         Configuration modeConf,
         Map objectModel)
         throws ConfigurationException {
-            
+
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession();
         Object value = null;
 
         if (session != null) {
             Identity identity =
-                (Identity)session.getAttribute(Identity.class.getName());
+                (Identity) session.getAttribute(Identity.class.getName());
             if (identity != null) {
 
                 if (name.equals(USER_ID)) {
@@ -122,19 +132,22 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                 } else if (name.equals(USER_NAME)) {
                     value = identity.getUser().getName();
                 } else if (name.equals(USER_EMAIL)) {
-                	value = identity.getUser().getEmail();
+                    value = identity.getUser().getEmail();
                 }
             }
         }
-        
-        if (name.equals(USER_MANAGER) || name.equals(GROUP_MANAGER)) {
+
+        if (name.equals(USER_MANAGER)
+            || name.equals(GROUP_MANAGER)
+            || name.equals(ROLE_MANAGER)
+            || name.equals(IP_RANGE_MANAGER)) {
             value = getItemManager(request, name);
         }
-        
+
         return value;
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
@@ -142,7 +155,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         return Arrays.asList(PARAMETER_NAMES).iterator();
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(
@@ -154,19 +167,22 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
 
         return objects;
     }
-    
+
     protected static final String DEFAULT_RESOLVER = "composable";
 
-    protected ItemManager getItemManager(Request request, String name) throws ConfigurationException {
+    protected ItemManager getItemManager(Request request, String name)
+        throws ConfigurationException {
         AccessController accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
         ItemManager itemManager = null;
-        
+
         try {
             selector =
-                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver = (AccessControllerResolver) selector.select(DEFAULT_RESOLVER);
+                (ServiceSelector) manager.lookup(
+                    AccessControllerResolver.ROLE + "Selector");
+            resolver =
+                (AccessControllerResolver) selector.select(DEFAULT_RESOLVER);
 
             String requestURI = request.getRequestURI();
             String context = request.getContextPath();
@@ -175,20 +191,26 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             }
             String url = requestURI.substring(context.length());
             accessController = resolver.resolveAccessController(url);
-            
-            AccreditableManager accreditableManager = ((DefaultAccessController) accessController).getAccreditableManager();
-            
-            if (name.equals(USER_MANAGER)) { 
+
+            AccreditableManager accreditableManager =
+                ((DefaultAccessController) accessController)
+                    .getAccreditableManager();
+
+            if (name.equals(USER_MANAGER)) {
                 itemManager = accreditableManager.getUserManager();
-            }
-            else if (name.equals(GROUP_MANAGER)) {
+            } else if (name.equals(GROUP_MANAGER)) {
                 itemManager = accreditableManager.getGroupManager();
+            } else if (name.equals(ROLE_MANAGER)) {
+                itemManager = accreditableManager.getRoleManager();
+            } else if (name.equals(IP_RANGE_MANAGER)) {
+                itemManager = accreditableManager.getIPRangeManager();
             }
-            
+
         } catch (Exception e) {
-            throw new ConfigurationException("Obtaining user manager failed: ", e);
-        }
-        finally {
+            throw new ConfigurationException(
+                "Obtaining item manager failed: ",
+                e);
+        } finally {
             if (selector != null) {
                 if (resolver != null) {
                     if (accessController != null) {
@@ -199,10 +221,10 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                 manager.release(selector);
             }
         }
-        
+
         return itemManager;
     }
-    
+
     private ServiceManager manager;
 
     /**

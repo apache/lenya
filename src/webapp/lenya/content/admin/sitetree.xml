@@ -27,4 +27,8 @@
     <label>Groups</label>
   </node>
   
+  <node id="ipranges">
+    <label>IP Ranges</label>
+  </node>
+  
 </site>

@@ -55,7 +55,8 @@ $Id
 */
 package org.apache.lenya.cms.ac;
 
-import java.util.Collections;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.apache.lenya.cms.ac2.Accreditable;
 import org.apache.lenya.cms.ac2.Identifiable;
@@ -68,16 +69,16 @@ import org.apache.lenya.cms.ac2.Identifiable;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class Machine implements Identifiable {
+    
     /**
      * Creates a new machine object.
      * @param ip The IP address.
      */
-    public Machine(String ip) {
-        assert (ip != null) && !"".equals(ip);
-        this.ip = ip;
+    public Machine(String ip) throws UnknownHostException {
+        setAddress(getAddress(ip));
     }
 
-    private String ip;
+    private InetAddress address;
 
     /**
      * @see java.lang.Object#equals(Object)
@@ -86,8 +87,8 @@ public class Machine implements Identifiable {
         boolean equals = false;
 
         if (otherObject instanceof Machine) {
-            Machine otherRole = (Machine) otherObject;
-            equals = getIp().equals(otherRole.getIp());
+            Machine otherMachine = (Machine) otherObject;
+            equals = getAddress().equals(otherMachine.getAddress());
         }
 
         return equals;
@@ -97,14 +98,15 @@ public class Machine implements Identifiable {
      * @see java.lang.Object#hashCode()
      */
     public int hashCode() {
-        return getIp().hashCode();
+        return getAddress().hashCode();
     }
 
     /**
      * @see org.apache.lenya.cms.ac2.Accreditable#getAccreditables()
      */
     public Accreditable[] getAccreditables() {
-        return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
+        Accreditable[] accreditables = { this };
+        return accreditables;
     }
 
     /**
@@ -112,6 +114,45 @@ public class Machine implements Identifiable {
      * @return The IP address.
      */
     public String getIp() {
-        return ip;
+        return toString();
     }
+    
+    /**
+     * Converts a string to an IP addres.
+     * @param string
+     * @return
+     * @throws UnknownHostException
+     */
+    protected static InetAddress getAddress(String string) throws UnknownHostException {
+        String[] strings = string.split(".");
+        byte[] numbers = new byte[strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            numbers[i] = Byte.parseByte(strings[i]);
+        }
+        return InetAddress.getByAddress(numbers);
+    }
+    
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getAddress().toString();
+    }
+
+    /**
+     * Returns the IP address.
+     * @return An IP address.
+     */
+    public InetAddress getAddress() {
+        return address;
+    }
+
+    /**
+     * Sets the IP address.
+     * @param address An IP address.
+     */
+    public void setAddress(InetAddress address) {
+        this.address = address;
+    }
+
 }

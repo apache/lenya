@@ -60,6 +60,7 @@ import org.apache.avalon.framework.parameters.Parameterizable;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.GroupManager;
+import org.apache.lenya.cms.ac.IPRangeManager;
 import org.apache.lenya.cms.ac.RoleManager;
 import org.apache.lenya.cms.ac.UserManager;
 
@@ -94,5 +95,12 @@ public interface AccreditableManager extends Component, Parameterizable {
      * @throws AccessControlException when something went wrong.
      */
     RoleManager getRoleManager() throws AccessControlException;
+
+    /**
+     * Returns the IP range manager of this access controller.
+     * @return An IP range manager.
+     * @throws AccessControlException when something went wrong.
+     */
+    IPRangeManager getIPRangeManager() throws AccessControlException;
 
 }

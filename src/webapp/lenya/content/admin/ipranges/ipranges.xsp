@@ -9,29 +9,28 @@
   >
 
   <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.IPRangeManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.IPRange</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.Iterator</xsp:include>
   </xsp:structure>
 
   <page>
-    <users>
+    <ipranges>
       <xsp:logic>
-        UserManager userManager = (UserManager)
-            <input:get-attribute module="access-control" name="user-manager" as="object"/>;
-        for (Iterator users = userManager.getUsers(); users.hasNext();) {
-            User user = (User) users.next();
+        IPRangeManager manager = (IPRangeManager)
+            <input:get-attribute module="access-control" name="iprange-manager" as="object"/>;
+        for (Iterator ranges = manager.getIPRanges(); ranges.hasNext();) {
+            IPRange range = (IPRange) ranges.next();
       </xsp:logic>
         
-      <user>
-        <id><xsp:expr>user.getId()</xsp:expr></id>
-        <name><xsp:expr>user.getName()</xsp:expr></name>
-        <email><xsp:expr>user.getEmail()</xsp:expr></email>
+      <iprange>
+        <id><xsp:expr>range.getId()</xsp:expr></id>
+        <name><xsp:expr>range.getName()</xsp:expr></name>
         <groups>
           <xsp:logic>
-            Group groups[] = user.getGroups();
+            Group groups[] = range.getGroups();
             for (int i = 0; i &lt; groups.length; i++) {
                 <xsp:content>
                   <group><xsp:attribute name="id"><xsp:expr>groups[i].getId()</xsp:expr></xsp:attribute></group>
@@ -39,11 +38,11 @@
             }
           </xsp:logic>
         </groups>
-      </user>
+      </iprange>
       <xsp:logic>
         }
       </xsp:logic>
-    </users>
+    </ipranges>
   </page>
   
 </xsp:page>

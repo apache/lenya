@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+  
+  <page>
+    <title><jpath:value-of select="page-title"/></title>
+    <continuation><jpath:continuation/></continuation>
+    <iprange>
+      <xsp:attribute name="new"><jpath:value-of select="new-iprange"/></xsp:attribute>
+      <message type="error"><jpath:value-of select="message"/></message>
+      <id><jpath:value-of select="iprange-id"/></id>
+      <name><jpath:value-of select="name"/></name>
+      <description><jpath:value-of select="description"/></description>
+    </iprange>
+  </page>
+  
+</xsp:page>

@@ -55,8 +55,11 @@ $Id
 */
 package org.apache.lenya.cms.ac;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.apache.lenya.cms.ac2.Accreditable;
 
 
 /**
@@ -65,7 +68,7 @@ import java.util.Set;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public abstract class AbstractGroupable extends AbstractItem implements Groupable {
+public abstract class AbstractGroupable extends AbstractItem implements Groupable, Accreditable {
     private Set groups = new HashSet();
 
     /**
@@ -102,6 +105,23 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
         for (int i = 0; i < groups.length; i++) {
             groups[i].remove(this);
         }
+    }
+    
+    /**
+     * @see org.apache.lenya.cms.ac.Accreditable#getAccreditables()
+     */
+    public Accreditable[] getAccreditables() {
+        Set accreditables = new HashSet();
+        accreditables.add(this);
+
+        Group[] groups = getGroups();
+
+        for (int i = 0; i < groups.length; i++) {
+            Accreditable[] groupAccreditables = groups[i].getAccreditables();
+            accreditables.addAll(Arrays.asList(groupAccreditables));
+        }
+
+        return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
     }
     
 }

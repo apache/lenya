@@ -1,5 +1,5 @@
 /*
-$Id: User.java,v 1.21 2003/07/21 13:38:03 andreas Exp $
+$Id: User.java,v 1.22 2003/07/22 17:01:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,6 @@ import org.apache.lenya.cms.ac2.*;
 
 import org.apache.log4j.Category;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -191,23 +190,6 @@ public abstract class User extends AbstractGroupable implements Identifiable {
         log.debug("orig encrypted pw: " + this.encryptedPassword);
 
         return this.encryptedPassword.equals(Password.encrypt(password));
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac.Accreditable#getAccreditables()
-     */
-    public Accreditable[] getAccreditables() {
-        Set accreditables = new HashSet();
-        accreditables.add(this);
-
-        Group[] groups = getGroups();
-
-        for (int i = 0; i < groups.length; i++) {
-            Accreditable[] groupAccreditables = groups[i].getAccreditables();
-            accreditables.addAll(Arrays.asList(groupAccreditables));
-        }
-
-        return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
     }
 
 }

@@ -11,8 +11,8 @@
   
   <xsp:structure>
     <xsp:include>org.apache.avalon.framework.parameters.ParameterException</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.IPRangeManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.IPRange</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.Arrays</xsp:include>
@@ -22,27 +22,26 @@
   <page>
     <xsp:logic>
       
-      String userId;
+      String ipRangeId;
       try {
-          userId = parameters.getParameter("user-id");
+          ipRangeId = parameters.getParameter("iprange-id");
       }
       catch (ParameterException e) {
           throw new ProcessingException(e);
       }
-      UserManager userManager = (UserManager)
-          <input:get-attribute module="access-control" name="user-manager" as="object"/>;
-      User user = userManager.getUser(userId);
+      IPRangeManager manager = (IPRangeManager)
+          <input:get-attribute module="access-control" name="iprange-manager" as="object"/>;
+      IPRange range = manager.getIPRange(ipRangeId);
         
-      if (user != null) {
+      if (range != null) {
     </xsp:logic>
-    <user>
-      <id><xsp:expr>user.getId()</xsp:expr></id>
-      <name><xsp:expr>user.getName()</xsp:expr></name>
-      <email><xsp:expr>user.getEmail()</xsp:expr></email>
-      <description><xsp:expr>user.getDescription()</xsp:expr></description>
+    <iprange>
+      <id><xsp:expr>range.getId()</xsp:expr></id>
+      <name><xsp:expr>range.getName()</xsp:expr></name>
+      <description><xsp:expr>range.getDescription()</xsp:expr></description>
       <groups>
         <xsp:logic>
-            Group groups[] = user.getGroups();
+            Group groups[] = range.getGroups();
             for (int i = 0; i &lt; groups.length; i++) {
                 <xsp:content>
                   <group><xsp:attribute name="id"><xsp:expr>groups[i].getId()</xsp:expr></xsp:attribute><xsp:expr>groups[i].getName()</xsp:expr></group>
@@ -50,12 +49,12 @@
             }
         </xsp:logic>
       </groups>
-    </user>
+    </iprange>
     
     <xsp:logic>
         }
         else {
-            <message type="error">The user <strong><xsp:expr>userId</xsp:expr></strong> does not exist!</message>
+            <message type="error">The IP range <strong><xsp:expr>ipRangeId</xsp:expr></strong> does not exist!</message>
         }
     </xsp:logic>
     

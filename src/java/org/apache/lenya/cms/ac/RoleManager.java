@@ -58,7 +58,6 @@ package org.apache.lenya.cms.ac;
 import org.apache.log4j.Category;
 
 import java.io.File;
-import java.io.FileFilter;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -113,18 +112,10 @@ public final class RoleManager extends ItemManager {
     }
 
     /**
-     * Get a file filter for role files
-     *
-     * @return a <code>FileFilter</code>
+     * @see org.apache.lenya.cms.ac.ItemManager#getSuffix()
      */
-    protected FileFilter getFileFilter() {
-        FileFilter filter = new FileFilter() {
-                public boolean accept(File pathname) {
-                    return (pathname.getName().endsWith(SUFFIX));
-                }
-            };
-
-        return filter;
+    protected String getSuffix() {
+        return SUFFIX;
     }
 
     /**

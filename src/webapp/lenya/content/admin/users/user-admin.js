@@ -4,8 +4,7 @@
 //
 function user_change_profile(userId) {
 
-	var accessController = getAccessController();
-    var user = accessController.getUserManager().getUser(userId);
+    var user = getUserManager().getUser(userId);
 	var fullName = user.getFullName();
 	var email = user.getEmail();
 	var description = user.getDescription();
@@ -41,19 +40,27 @@ function user_change_profile(userId) {
    	sendPage("redirect.html", { "url" : "index.html" });
 }
 
-
+//
+// Change password as admin (don't check the old password)
+//
 function user_change_password_admin(userId) {
 	user_change_password(false, userId);
 }
 
+//
+// Change password as user (check the old password)
+//
 function user_change_password_user(userId) {
 	user_change_password(true, userId);
 }
 
+//
+// Change the password.
+// checkPassword: (boolean) if the old password shall be checked
+//
 function user_change_password(checkPassword, userId) {
 
-	var accessController = getAccessController();
-    var user = accessController.getUserManager().getUser(userId);
+    var user = getUserManager().getUser(userId);
     var oldPassword = "";
     var newPassword = "";
     var confirmPassword = "";
@@ -100,13 +107,12 @@ function user_change_password(checkPassword, userId) {
 // Change the group affiliation of a user.
 //
 function user_change_groups(userId) {
-	var accessController = getAccessController();
-    var user = accessController.getUserManager().getUser(userId);
+    var user = getUserManager().getUser(userId);
     
     var userGroupArray = user.getGroups();
     var userGroups = new java.util.ArrayList(java.util.Arrays.asList(userGroupArray));
     
-    var iterator = accessController.getGroupManager().getGroups();
+    var iterator = getGroupManager().getGroups();
     var groups = new java.util.ArrayList();
     while (iterator.hasNext()) {
     	var group = iterator.next();
@@ -124,7 +130,7 @@ function user_change_groups(userId) {
 	    
 		var groupId = cocoon.request.get("group");
 		if (cocoon.request.get("add_group") && groupId != "") {
-			var group = accessController.getGroupManager().getGroup(groupId);
+			var group = getGroupManager().getGroup(groupId);
 			if (!userGroups.contains(group)) {
 				userGroups.add(group);
 				groups.remove(group);
@@ -133,7 +139,7 @@ function user_change_groups(userId) {
 	    
 		var userGroupId = cocoon.request.get("user_group");
 		if (cocoon.request.get("remove_group") && userGroupId != "") {
-			var group = accessController.getGroupManager().getGroup(userGroupId);
+			var group = getGroupManager().getGroup(userGroupId);
 			if (userGroups.contains(group)) {
 				userGroups.remove(group);
 				groups.add(group);
@@ -163,12 +169,12 @@ function user_change_groups(userId) {
 //
 function user_add_user() {
 
-	var accessController = getAccessController();
 	var userId = "";
 	var email = "";
 	var fullName = "";
 	var description = "";
 	var message = "";
+	var userManager = getUserManager();
 	
 	while (true) {
 		sendPageAndWait("users/profile.xml", {
@@ -191,17 +197,17 @@ function user_add_user() {
 		fullName = cocoon.request.get("fullname");
 		description = cocoon.request.get("description");
 		
-		var existingUser = accessController.getUserManager().getUser(userId);
+		var existingUser = userManager.getUser(userId);
 		
 		if (existingUser != null) {
 			message = "This user already exists.";
 		}
 		else {
-			var configDir = accessController.getUserManager().getConfigurationDirectory();
+			var configDir = userManager.getConfigurationDirectory();
 			var user = new Packages.org.apache.lenya.cms.ac.FileUser(configDir, userId, fullName, email, "");
 			user.setDescription(description);
 			user.save();
-			accessController.getUserManager().add(user);
+			userManager.add(user);
 			break;
 		}
 	}
@@ -213,9 +219,9 @@ function user_add_user() {
 //
 function user_delete_user() {
 
-	var accessController = getAccessController();
+	var userManager = getUserManager();
 	var userId = cocoon.request.get("user-id");
-	var user = accessController.getUserManager().getUser(userId);
+	var user = userManager.getUser(userId);
 	var fullName = user.getFullName();
 	var showPage = true;
 	
@@ -226,7 +232,7 @@ function user_delete_user() {
 		});
 		
 		if (cocoon.request.get("submit")) {
-			accessController.getUserManager().remove(user);
+			userManager.remove(user);
 			user['delete']();
 			showPage = false;
 		}

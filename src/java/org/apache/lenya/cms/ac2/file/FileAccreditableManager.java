@@ -1,5 +1,5 @@
 /*
-$Id: FileAccreditableManager.java,v 1.4 2003/07/15 12:35:24 egli Exp $
+$Id: FileAccreditableManager.java,v 1.5 2003/07/22 17:01:35 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,6 +66,7 @@ import org.apache.excalibur.source.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.GroupManager;
+import org.apache.lenya.cms.ac.IPRangeManager;
 import org.apache.lenya.cms.ac.RoleManager;
 import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.ac2.AccreditableManager;
@@ -159,6 +160,13 @@ public class FileAccreditableManager
      */
     public RoleManager getRoleManager() throws AccessControlException {
         return RoleManager.instance(getConfigurationDirectory());
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.AccreditableManager#getIPRangeManager()
+     */
+    public IPRangeManager getIPRangeManager() throws AccessControlException {
+        return IPRangeManager.instance(getConfigurationDirectory());
     }
 
     protected static final String DIRECTORY = "directory";

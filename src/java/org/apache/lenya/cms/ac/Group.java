@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Group.java,v 1.12 2003/07/22 17:01:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -135,7 +135,8 @@ public abstract class Group extends AbstractItem implements Accreditable {
      * @see org.apache.lenya.cms.ac.Accreditable#getAccreditables()
      */
     public Accreditable[] getAccreditables() {
-        return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
+        Accreditable[] accreditables = { this };
+        return accreditables;
     }
     
     /**

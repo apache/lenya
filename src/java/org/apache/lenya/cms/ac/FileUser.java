@@ -152,8 +152,8 @@ public class FileUser extends User implements Item {
      * Create a configuration from the current user details. Can
      * be used for saving.
      *
-    * @return a <code>Configuration</code>
-    */
+     * @return a <code>Configuration</code>
+     */
     protected Configuration createConfiguration() {
         DefaultConfiguration config = new DefaultConfiguration(ID);
         new ItemConfiguration().save(this, config);
@@ -186,7 +186,7 @@ public class FileUser extends User implements Item {
         return config;
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.ac.User#save()
      */
     public void save() throws AccessControlException {

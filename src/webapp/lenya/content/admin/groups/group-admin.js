@@ -1,81 +1,11 @@
 
 //
-// Add a group.
-//
-function group_add_group() {
-
-	var accessController = getAccessController();
-	var groupId = "";
-	var name = "";
-	var description = "";
-	var message = "";
-	
-	while (true) {
-		sendPageAndWait("groups/profile.xml", {
-			"page-title" : "Add Group: Profile",
-			"group-id" : groupId,
-	    	"name" : name,
-	    	"description" : description,
-	    	"message" : message,
-	    	"new-group" : true
-		});
-		
-		message = "";
-		groupId = cocoon.request.get("user-id");
-		name = cocoon.request.get("name");
-		description = cocoon.request.get("description");
-		
-		var existingGroup = accessController.getGroupManager().getGroup(groupId);
-		
-		if (existingGroup != null) {
-			message = "This group already exists.";
-		}
-		else {
-			var configDir = accessController.getGroupManager().getConfigurationDirectory();
-			var group = new Packages.org.apache.lenya.cms.ac.FileGroup(configDir, groupId, fullName, email, "");
-			user.setDescription(description);
-			user.save();
-			accessController.getUserManager().add(user);
-			break;
-		}
-	}
-   	sendPage("redirect.html", { "url" : "../users.html" });
-}
-
-//
-// Delete group.
-//
-function group_delete_group() {
-
-	var accessController = getAccessController();
-	var groupId = cocoon.request.get("group-id");
-	var group = accessController.getGroupManager().getUser(groupId);
-	var name = group.getName();
-	var showPage = true;
-	
-	while (showPage) {
-		sendPageAndWait("groups/confirm-delete.xml", {
-			"group-id" : groupId,
-			"name" : name
-		});
-		
-		if (cocoon.request.get("submit")) {
-			accessController.getGroupManager().remove(group);
-			group['delete']();
-			showPage = false;
-		}
-	}
-
-   	sendPage("redirect.html", { "url" : "../groups.html" });
-}
-
-//
 // Modify a group.
 //
 function group_change_profile(groupId) {
 
-	var accessController = getAccessController();
-    var group = accessController.getGroupManager().getGroup(groupId);
+    var groupManager = getGroupManager();
+    var group = groupManager.getGroup(groupId);
 	var name = group.getName();
 	var description = group.getDescription();
 	
@@ -112,8 +42,10 @@ function group_change_profile(groupId) {
 // Change the members of a group.
 //
 function group_change_members(groupId) {
-	var accessController = getAccessController();
-    var group = accessController.getGroupManager().getGroup(groupId);
+
+    var userManager = getUserManager();
+    var groupManager = getGroupManager();
+    var group = groupManager.getGroup(groupId);
     
     var memberArray = group.getMembers();
     
@@ -132,7 +64,7 @@ function group_change_members(groupId) {
     	}
     }
     
-    var userIterator = accessController.getUserManager().getUsers();
+    var userIterator = userManager.getUsers();
     while (userIterator.hasNext()) {
     	var user = userIterator.next();
     	if (!groupUsers.contains(user)) {
@@ -151,7 +83,7 @@ function group_change_members(groupId) {
 	    
 		var otherUserId = cocoon.request.get("user");
 		if (cocoon.request.get("add_user") && otherUserId != "") {
-			var user = accessController.getUserManager().getUser(otherUserId);
+			var user = userManager.getUser(otherUserId);
 			if (!groupUsers.contains(user)) {
 				groupUsers.add(user);
 				otherUsers.remove(user);
@@ -160,7 +92,7 @@ function group_change_members(groupId) {
 	    
 		var groupUserId = cocoon.request.get("group_user");
 		if (cocoon.request.get("remove_user") && groupUserId != "") {
-			var user = accessController.getUserManager().getUser(groupUserId);
+			var user = userManager.getUser(groupUserId);
 			if (groupUsers.contains(user)) {
 				groupUsers.remove(user);
 				otherUsers.add(user);
@@ -192,7 +124,7 @@ function group_change_members(groupId) {
 //
 function group_add_group() {
 
-	var accessController = getAccessController();
+    var groupManager = getGroupManager();
 	var groupId = "";
 	var name = "";
 	var description = "";
@@ -217,20 +149,48 @@ function group_add_group() {
 		name = cocoon.request.get("name");
 		description = cocoon.request.get("description");
 		
-		var existingGroup = accessController.getGroupManager().getGroup(groupId);
+		var existingGroup = groupManager.getGroup(groupId);
 		if (existingGroup != null) {
 			message = "This group already exists.";
 		}
 		else {
-			var configDir = accessController.getGroupManager().getConfigurationDirectory();
+			var configDir = groupManager.getConfigurationDirectory();
 			var group = new Packages.org.apache.lenya.cms.ac.FileGroup(configDir, groupId);
 			group.setName(name);
 			group.setDescription(description);
 			group.save();
-			accessController.getGroupManager().add(group);
+			groupManager.add(group);
 			break;
 		}
 	}
+   	sendPage("redirect.html", { "url" : "../groups.html" });
+}
+
+//
+// Delete group.
+//
+function group_delete_group() {
+
+    var groupManager = getGroupManager();
+	var groupId = cocoon.request.get("group-id");
+	var group = groupManager.getGroup(groupId);
+	var name = group.getName();
+	var showPage = true;
+	
+	while (showPage) {
+		sendPageAndWait("groups/confirm-delete-common.xml", {
+			"type" : "group",
+			"id" : groupId,
+			"name" : name
+		});
+		
+		if (cocoon.request.get("submit")) {
+			groupManager.remove(group);
+			group['delete']();
+			showPage = false;
+		}
+	}
+
    	sendPage("redirect.html", { "url" : "../groups.html" });
 }
 

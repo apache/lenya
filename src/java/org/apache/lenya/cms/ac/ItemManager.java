@@ -214,8 +214,22 @@ public abstract class ItemManager {
 
     /**
      * Get a file filter which filters for files containing items.
-     *
      * @return a <code>FileFilter</code>
      */
-    protected abstract FileFilter getFileFilter();
+    protected FileFilter getFileFilter() {
+        FileFilter filter = new FileFilter() {
+            public boolean accept(File pathname) {
+                return (pathname.getName().endsWith(getSuffix()));
+            }
+        };
+
+        return filter;
+    }
+    
+    /**
+     * Returns the configuration file suffix.
+     * @return A string.
+     */
+    protected abstract String getSuffix();
+
 }

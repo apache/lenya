@@ -9,6 +9,7 @@
     
   <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
   
+  <xsl:variable name="type" select="/page/type"/>
   
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -17,26 +18,26 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>Delete User</page:title>
+      <page:title>Delete <xsl:value-of select="$type"/></page:title>
       <page:body>
-        <xsl:apply-templates select="body"/>
-        <xsl:apply-templates select="user"/>
-      </page:body>
-    </page:page>
-  </xsl:template>
-  
-  
-  <xsl:template match="user">
+      	
     <div class="lenya-box">
-      <div class="lenya-box-title">Delete User</div>
+      <div class="lenya-box-title">Delete <xsl:value-of select="$type"/></div>
       <div class="lenya-box-body">
-          <p> Really delete user <strong><xsl:value-of select="id"/></strong> (<xsl:value-of select="fullname"/>)? </p>
+          <p>Really delete <xsl:value-of select="$type"/>&#160;<strong><xsl:value-of select="id"/></strong> (<xsl:value-of select="name"/>)? </p>
           <form method="GET" action="{/page/continuation}.continuation">
             <input type="submit" name="submit" value="Delete"/>
             <input type="submit" name="cancel" value="Cancel"/>
           </form>
       </div>
     </div>
+    
+      </page:body>
+    </page:page>
+  </xsl:template>
+  
+  
+  <xsl:template match="user">
   </xsl:template>
   
   
