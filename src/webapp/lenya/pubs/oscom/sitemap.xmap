@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.14 2003/03/04 23:06:58 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.15 2003/03/14 10:31:38 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -94,16 +94,13 @@
     <map:pipeline>
       <map:match pattern="search-oscom/lucene*">
         <map:aggregate element="oscom">
+          <map:part src="content/live/navigation.xml"/>
           <map:part src="cocoon:/search-oscom/lucene.xml{1}"/>
         </map:aggregate>
+<!--
         <map:transform src="../../xslt/search/sort.xsl"/>
+-->
         <map:transform src="xslt/search/live/main.xsl"/>
-<!--
-        <map:transform src="lenya/xslt/search/search-and-results.xsl"/>
--->
-<!--
-        <map:transform src="../../xslt/search/search-and-results.xsl"/>
--->
         <map:serialize type="html"/>
       </map:match>
     </map:pipeline>    

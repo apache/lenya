@@ -12,7 +12,9 @@
 <html>
 <head>
 <meta name="generator" content="HTML Tidy, see www.w3.org" />
-<title>OSCOM - Matrix</title>
+<title>
+<xsl:call-template name="html-title"/> - OSCOM - Open Source Content Management
+</title>
 <meta http-equiv="Content-Type"
 content="text/html; charset=iso-latin-1" />
 <meta http-equiv="Content-Language" content="EN" />
@@ -159,7 +161,7 @@ content="text/html; charset=iso-latin-1" />
 </td>
 <td valign="middle">
 <!-- We can put topical banners here -->
-<form method="get" action="">
+<form method="get" action="/lenya/oscom/search-oscom/lucene">
 <input type="hidden" name="publication-id" value="all" />
 <input type="text" name="queryString" /><input type="submit" name="find" value="Search" />
 </form>
@@ -311,12 +313,29 @@ width="24" height="16" border="0" /></td>
 -->
  </td>
 <td align="right" valign="top" class="footer">
-<!-- Admin interface link --><a href="http://oscom.lenya.org/lenya/oscom/authoring/matrix/index.html" class="breadcrumb">Lenya</a><!-- /Admin interface link --></td>
+<!-- Admin interface link -->
+<xsl:call-template name="admin-url">
+<xsl:with-param name="prefix" select="'/lenya/oscom/authoring'"/>
+</xsl:call-template>
+<!-- /Admin interface link --></td>
 </tr>
 </tbody>
 </table>
 </body>
 </html>
 </xsl:template>
+
+<!--
+<xsl:template name="html-title">
+OSCOM - Open Source Content Management
+</xsl:template>
+-->
+
+<!--
+<xsl:template name="admin-url">
+<xsl:param name="prefix"/>
+<a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/matrix/index.html</xsl:attribute>Lenya</a>
+</xsl:template>
+-->
 
 </xsl:stylesheet>

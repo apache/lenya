@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:error="http://apache.org/cocoon/error/2.0" xmlns:n-rdf="http://my.netscape.com/rdf/simple/0.9/">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+
+<xsl:template name="html-title">
+<xsl:value-of select="/oscom/system/system_name"/> - CMS Matrix
+</xsl:template>
+
+<xsl:template name="admin-url">
+<xsl:param name="prefix"/>
+<a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/matrix/<xsl:value-of select="/oscom/system/id"/>.html</xsl:attribute>Lenya</a>
+</xsl:template>
  
 <xsl:template name="body">
   <xsl:apply-templates select="system"/>

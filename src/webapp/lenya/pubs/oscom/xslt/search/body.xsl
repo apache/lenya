@@ -4,6 +4,15 @@
 
 <xsl:import href="../../../../xslt/search/search-and-results.xsl"/>
 
+<xsl:template name="html-title">
+Search
+</xsl:template>
+
+<xsl:template name="admin-url">
+<xsl:param name="prefix"/>
+<span class="breadcrumb">Lenya</span>
+</xsl:template>
+
 <xsl:template name="body">
 <xsl:apply-templates select="/oscom/search-and-results"/>
 </xsl:template>

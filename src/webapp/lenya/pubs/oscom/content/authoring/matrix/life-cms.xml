@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<system type="cms">
+  <id>life-cms</id>
+  <editor email="christian.jaeger@ethlife.ethz.ch">Christian Jaeger</editor>
+  <system_name>LifeCMS</system_name>
+  <description>
+ This CMS goes a different route compared with most solutions being developed out there. Unlike most of them, it doesn't try to use a browser as its sole interface, but combines the benefits of a stable, seasoned html editor and file sharing techniques like samba, netatalk, ftp with the exact text markup definitions and standard data format of xml. It will work on both Windows and MacOS, and maybe even Linux, other unixes and other OS's provided there is a decent wysiwyg html editor.
+  </description>
+  <main_url>http://www.ethlife.ethz.ch/newcms/</main_url>
+  <license>
+    <license_name>GPL</license_name>
+    <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
+  </license>
+</system>
