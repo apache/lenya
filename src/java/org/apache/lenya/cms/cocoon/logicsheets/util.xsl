@@ -33,6 +33,7 @@
     String xsp_lenya_request_uri=request.getRequestURI();
     <xsp:content><request_uri><xsp:expr>xsp_lenya_request_uri</xsp:expr></request_uri></xsp:content>
     String xsp_lenya_context_prefix=xsp_lenya_request_uri.substring(0,xsp_lenya_request_uri.indexOf("/authoring"));
+    String xsp_lenya_pub_url=xsp_lenya_request_uri.substring(xsp_lenya_request_uri.indexOf("/authoring")+10);
     String xsp_lenya_sitemap_uri=request.getSitemapURI();
     <xsp:content><sitemap_uri><xsp:expr>xsp_lenya_sitemap_uri</xsp:expr></sitemap_uri></xsp:content>
 
