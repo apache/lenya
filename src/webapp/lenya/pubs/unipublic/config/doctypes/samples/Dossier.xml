@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<dossier>
+
+<head>
+  <title>Titel</title>
+  <teasertext>Teaser-Text</teasertext>
+  <color>#9dc0d0</color>
+  <abstract>Lead</abstract>
+</head>
+
+
+<articles>
+</articles>
+
+<related-content>
+  <block>
+    <title>Titel</title>
+    <item>Item</item>
+  </block>
+</related-content>
+</dossier>
