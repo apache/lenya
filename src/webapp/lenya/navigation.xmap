@@ -48,7 +48,14 @@ This sitemap creates default navigation components.
     <!-- sitetree -->
     <!-- pattern: {pub-id}/{area}/sitetree/{url}.xml -->
     <map:match pattern="*/*/sitetree/**.xml">
-      <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
+      <map:select type="resource-exists">
+        <map:when test="pubs/{1}/content/{2}/sitetree.xml">
+          <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
+        </map:when>
+        <map:otherwise>
+          <map:generate src="content/{2}/sitetree.xml"/>
+        </map:otherwise>
+      </map:select>
       <map:call resource="fallback-transformation">
         <map:parameter name="publication-id" value="{1}"/>
         <map:parameter name="url" value="{3}"/>
