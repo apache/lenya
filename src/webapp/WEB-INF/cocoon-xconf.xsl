@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cocoon-xconf.xsl,v 1.46 2004/07/25 11:05:32 andreas Exp $ -->
+<!-- $Id: cocoon-xconf.xsl,v 1.47 2004/08/09 10:28:38 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -94,7 +94,9 @@
         class="org.apache.lenya.cms.cocoon.components.modules.input.SitetreeModule"/>
         
     <component-instance logger="core.modules.input.fallback" name="fallback"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule"/>
+        class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationFallbackModule">
+      <directory src="context:///lenya"/>
+    </component-instance>
 
 	<component-instance logger="core.modules.input.document-url" name="document-url"
         class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentURLModule"/>

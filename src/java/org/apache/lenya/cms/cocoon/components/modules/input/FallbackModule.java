@@ -15,12 +15,15 @@
  *
  */
 
-/* $Id: FallbackModule.java,v 1.2 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id: FallbackModule.java,v 1.3 2004/08/09 10:28:11 andreas Exp $  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -30,77 +33,173 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.excalibur.source.SourceUtil;
 
 /**
  * <p>
- * This module checks if a file exists in a publiation, and if not,
- * it chooses the core file. The attribute name must a path relatively
- * to the <code>webapps/lenya/lenya</code> directory.
+ * This module checks if a file exists in a publiation, and if not, it chooses the core file. The
+ * attribute name must a path relatively to the <code>webapps/lenya/lenya</code> directory.
  * </p>
- * <p>Example:
- * <code>{fallback:xslt/style.xsl}</code> looks if
- * <code>lenya/pubs/(publication-id)/lenya/xslt/style.xsl</code> exists,
- * and if not, it uses <code>lenya/xslt/style.xsl</code>.
+ * <p>
+ * Example: <code>{fallback:xslt/style.xsl}</code> looks if
+ * <code>lenya/pubs/(publication-id)/lenya/xslt/style.xsl</code> exists, and if not, it uses
+ * <code>lenya/xslt/style.xsl</code>.
  */
 public class FallbackModule extends AbstractPageEnvelopeModule implements Serviceable {
 
     private ServiceManager manager;
+
+    private String[] baseUris;
+
     public static final String PATH_PREFIX = "lenya/";
 
+    protected static final String ELEMENT_PATH = "directory";
+
+    protected static final String ATTRIBUTE_SRC = "src";
+
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
-    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
-        String resolvedPath;
+    public void configure(Configuration conf) throws ConfigurationException {
+        super.configure(conf);
 
-        PageEnvelope envelope = getEnvelope(objectModel);
-        String publicationId = envelope.getPublication().getId();
-
-        String corePath = PATH_PREFIX + name;
-        String publicationPath =
-            Publication.PUBLICATION_PREFIX_URI + "/" + publicationId + "/" + corePath;
+        Configuration[] pathConfigs = conf.getChildren(ELEMENT_PATH);
+        List baseUriList = new ArrayList();
 
         SourceResolver resolver = null;
-        Source source = null;
         try {
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("context://" + publicationPath);
-            if (source.exists()) {
-                resolvedPath = publicationPath;
-            } else {
-                resolvedPath = corePath;
+            Source source = null;
+            for (int i = 0; i < pathConfigs.length; i++) {
+                String uri = pathConfigs[i].getAttribute(ATTRIBUTE_SRC);
+                try {
+                    source = resolver.resolveURI(uri);
+                    if (source.exists()) {
+                        File file = SourceUtil.getFile(source);
+                        if (file.isDirectory()) {
+                            baseUriList.add(uri);
+                        } else {
+                            getLogger().warn("Omitting path [" + uri + "] (not a directory).");
+                        }
+                    } else {
+                        getLogger().warn("Omitting path [" + uri + "] (does not exist).");
+                    }
+                } catch (Exception e) {
+                    getLogger().error("Could not resolve path [" + uri + "]: ", e);
+                    throw e;
+                } finally {
+                    if (source != null) {
+                        resolver.release(source);
+                    }
+                }
             }
+        } catch (Exception e) {
+            throw new ConfigurationException("Configuring failed: ", e);
+        } finally {
+            if (resolver != null) {
+                manager.release(resolver);
+            }
+        }
+
+        this.baseUris = (String[]) baseUriList.toArray(new String[baseUriList.size()]);
+    }
+
+    /**
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     */
+    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
+            throws ConfigurationException {
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Resolving file for path [" + name + "]");
+        }
+
+        String resolvedUri = null;
+        String checkedUris = "\n";
+
+        SourceResolver resolver = null;
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+
+            String[] baseUris = getBaseURIs(objectModel);
+            Source source = null;
+            for (int i = 0; i < baseUris.length; i++) {
+                String uri = baseUris[i] + "/" + name;
+
+                checkedUris += uri + "\n";
+
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Trying to resolve URI [" + uri + "]");
+                }
+
+                try {
+                    source = resolver.resolveURI(uri);
+                    if (source.exists()) {
+                        resolvedUri = uri;
+                    } else {
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug("Skipping URI [" + uri + "] (does not exist).");
+                        }
+                    }
+                } catch (Exception e) {
+                    getLogger().error("Could not resolve URI [" + uri + "]: ", e);
+                    throw e;
+                } finally {
+                    if (source != null) {
+                        resolver.release(source);
+                    }
+                }
+
+            }
+
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute [" + name + "] failed: ", e);
         } finally {
             if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
                 manager.release(resolver);
             }
         }
-        resolvedPath = resolvedPath.substring("lenya/".length());
-        return resolvedPath;
+
+        if (resolvedUri == null) {
+            throw new ConfigurationException("Could not resolve file for path [" + name + "]."
+                    + "\nChecked URIs:" + checkedUris);
+        }
+        else {
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Resolved URI: [" + resolvedUri + "]");
+            }
+        }
+
+        return resolvedUri;
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * Returns the base directory URIs in the order they should be traversed.
+     * @param objectModel The object model.
+     * @return An array of strings.
+     * @throws ConfigurationException if an error occurs.
+     */
+    protected String[] getBaseURIs(Map objectModel) throws ConfigurationException {
+        return this.baseUris;
+    }
+
+    /**
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         return Collections.EMPTY_SET.iterator();
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
-        Object[] objects = { getAttribute(name, modeConf, objectModel)};
+            throws ConfigurationException {
+        Object[] objects = { getAttribute(name, modeConf, objectModel) };
 
         return objects;
     }

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap,v 1.66 2004/07/30 10:23:24 andreas Exp $ -->
+<!-- $Id: global-sitemap.xmap,v 1.67 2004/08/09 10:29:09 andreas Exp $ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -208,7 +208,7 @@
     <!-- Search with Lucene -->
     <map:pipeline>
       <map:match pattern="*/search-*/lucene*">
-        <map:mount uri-prefix="" src="lenya/{fallback:lucene.xmap}" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="" src="{fallback:lucene.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
       <map:handle-errors>
         <map:select type="exception">
@@ -273,7 +273,7 @@
           <map:transform type="usecasemenu"/>
         </map:act>
         
-        <map:transform src="lenya/{fallback:xslt/menu/menu2xhtml.xsl}">
+        <map:transform src="{fallback:xslt/menu/menu2xhtml.xsl}">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="completearea" value="{2}"/>
@@ -288,7 +288,7 @@
         
         <map:call resource="i18n"/>
         
-        <map:transform src="lenya/{fallback:xslt/menu/menu2xslt.xsl}">
+        <map:transform src="{fallback:xslt/menu/menu2xslt.xsl}">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="area" value="{2}"/>
