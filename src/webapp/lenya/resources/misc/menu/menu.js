@@ -16,7 +16,6 @@
 function initialize()
         //runs at onload of window
         {
-        if (document.getElementById("articleBody") != null) initArticle(); //lays out the article in columns(if one exists)
         userEventsInit(); //set up all user events
         document.onmousemove = mousePosition; //moz
         }
