@@ -42,4 +42,10 @@
     <action id="save"/>
   </transition>
         
+  <transition source="redaktion" destination="redaktion">
+    <event id="edit"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">editor</condition>
+    <action id="save"/>
+  </transition>
+        
 </workflow>
