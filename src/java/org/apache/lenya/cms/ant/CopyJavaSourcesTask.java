@@ -1,5 +1,5 @@
 /*
-$Id: CopyJavaSourcesTask.java,v 1.12 2003/07/23 13:21:23 gregor Exp $
+$Id: CopyJavaSourcesTask.java,v 1.13 2003/08/04 10:08:45 gregor Exp $
 <License>
 
  ============================================================================
@@ -60,6 +60,8 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 
+import org.apache.lenya.util.RegexFilter;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -71,12 +73,13 @@ import java.util.StringTokenizer;
 
 
 /**
- * @author <a href="mailto:michael.wechner@apache.org">Michael Wechner</a>
+ * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
  */
 public class CopyJavaSourcesTask extends Task {
     private Path pubsRootDirs;
     private String javaDir;
     private String buildDir;
+	private static final String FILENAMEPATTERN = "*\\.java";
 
     /**
      *
@@ -88,32 +91,26 @@ public class CopyJavaSourcesTask extends Task {
 
         File absoluteBuildDir = new File(getProject().getBaseDir(), Project.translatePath(buildDir));
 
-        //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
-        //System.out.println("CopyJavaSourcesTask.execute(): " + pubsRootDirs);
         StringTokenizer st = new StringTokenizer(pubsRootDirs.toString(), File.pathSeparator);
 
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
 
-            //System.out.println("CopyJavaSourcesTask.execute(): " + pubsRootDir);
             File path = new File(pubsRootDir);
 
             if (path.isDirectory()) {
                 if (new File(path, "publication.xml").isFile()) {
                     copyContentOfDir(new File(path, javaDir), absoluteBuildDir, twoTuple,
-                        new JavaFilenameFilter());
+					new RegexFilter(FILENAMEPATTERN));
                 } else {
                     // FIXME: Look for publications defined by the file "publication.xml"
                     String[] pubs = path.list();
 
                     for (int i = 0; i < pubs.length; i++) {
-                        //System.out.println("CopyJavaSourcesTask.execute(): " + pubs[i]);
-                        File pubJavaDir = new File(path, new File(pubs[i], javaDir).toString());
+                         File pubJavaDir = new File(path, new File(pubs[i], javaDir).toString());
 
-                        //System.out.println("CopyJavaSourcesTask.execute(): " + pubJavaDir);
-                        //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
                         copyContentOfDir(pubJavaDir, absoluteBuildDir, twoTuple,
-                            new JavaFilenameFilter());
+						new RegexFilter(FILENAMEPATTERN));
                     }
                 }
             } else {
@@ -158,7 +155,6 @@ public class CopyJavaSourcesTask extends Task {
                 if (file.isFile()) {
                     copyFile(file, new File(destination, files[i]), twoTuple);
                 } else if (file.isDirectory()) {
-                    //System.out.println("CopyJavaSourcesTask.copyDir(): " + source + " " + destination);
                     copyContentOfDir(file, new File(destination, files[i]), twoTuple, filenameFilter);
                 } else {
                     System.err.println(
@@ -166,7 +162,6 @@ public class CopyJavaSourcesTask extends Task {
                 }
             }
         } else {
-            //System.err.println("CopyJavaSourcesTask.copyContentOfDir(): No such directory: " + source);
         }
     }
 
@@ -181,7 +176,6 @@ public class CopyJavaSourcesTask extends Task {
             if (!parentDest.exists()) {
                 parentDest.mkdirs();
 
-                //System.out.println("CopyJavaSourcesTask.copyFile(): Directory created: " + parentDest);
                 int numberOfDirectoriesCreated = twoTuple.x;
                 numberOfDirectoriesCreated++;
                 twoTuple.x = numberOfDirectoriesCreated;
@@ -210,7 +204,6 @@ public class CopyJavaSourcesTask extends Task {
                 numberOfFilesCopied++;
                 twoTuple.y = numberOfFilesCopied;
 
-                //System.out.println("CopyJavaSourcesTask.copyFile(): File copied (" + numberOfFilesCopied  + "): " + source + " " + destination);
             } catch (Exception e) {
                 System.err.println("CopyJavaSourcesTask.copyFile(): " + e);
             }
