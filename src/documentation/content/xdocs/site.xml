@@ -76,7 +76,7 @@
 -->          
 
             <installation12 href="installation/" label="Installation">
-              <download href="index.html" label="Download"/>
+              <download12 href="index.html" label="Download"/>
               <cvs href="subversion.html" label="Subversion Access"/>
               <install href="source_version.html" label="Installation Instructions"/>
             </installation12>

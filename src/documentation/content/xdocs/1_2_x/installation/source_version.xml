@@ -104,7 +104,7 @@
           <p>
             <strong>Get Apache Lenya</strong>
             <br/>
-            (see <link href="site:download">Download Lenya</link>)
+            (see <link href="site:download12">Download Lenya</link>)
             <br/>
             Extract the downloaded Lenya archive in the
             <code>src/</code> directory described above. This will create <code>lenya-1.2.x/</code> inside <code>src/</code>.
