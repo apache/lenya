@@ -46,13 +46,6 @@
     -->
   </task>
 
-
-
-
-  <task id="deactivateDocument" class="org.apache.lenya.defaultpub.cms.task.Deactivate">
-    <label>Deactivate</label>
-  </task>
-
   <task id="remove-language" class="org.apache.lenya.cms.task.AntTask">
     <label>RemoveLanguage</label>
     <parameter name="target" value="remove-language"/>
