@@ -1,5 +1,5 @@
 /*
- * $Id: MailTask.java,v 1.19 2003/02/07 12:14:10 ah Exp $
+ * $Id: MailTask.java,v 1.20 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,42 +50,22 @@ import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 import org.wyona.cms.task.AbstractTask;
-
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.StringWriter;
-
-import java.lang.LinkageError;
+import org.wyona.xml.DocumentHelper;
+import org.wyona.xml.NamespaceHelper;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
+import java.net.URL;
 
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.SAXParser;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 
 /**
@@ -162,46 +142,29 @@ public class MailTask extends AbstractTask {
                     uri = absoluteUri;
                 }
 
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                factory.setValidating(false);
-                factory.setNamespaceAware(true);
-                factory.setExpandEntityReferences(true);
+                Document document = DocumentHelper.readDocument(new URL(uri));
+                Element root = document.getDocumentElement();
 
-                DocumentBuilder builder = factory.newDocumentBuilder();
+                NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "mail", document);
 
-                Document document = builder.parse(uri);
-                Element root = (Element) document.getChildNodes().item(0);
-
-                /*
-                                log.debug(
-                                    "\n---------------------------" +
-                                    "\n- Entity resolver: " + builder
-                                    "\n---------------------------");
-                */
                 String[] keys = {
                     ELEMENT_SERVER, ELEMENT_FROM, ELEMENT_TO, ELEMENT_CC, ELEMENT_BCC,
                     ELEMENT_SUBJECT, ELEMENT_BODY
                 };
 
-                NodeList children = root.getChildNodes();
+                Element elements[] = helper.getChildren(root);
 
-                for (int i = 0; i < children.getLength(); i++) {
-                    Node child = children.item(i);
+                for (int i = 0; i < elements.length; i++) {
 
-                    if (child.getNodeType() == Node.ELEMENT_NODE) {
-                        Element element = (Element) child;
+                    if (elements[i].getChildNodes().getLength() > 0) {
+                        Node firstChild = elements[i].getChildNodes().item(0);
 
-                        if (element.getChildNodes().getLength() > 0) {
-                            Node firstChild = element.getChildNodes().item(0);
+                        if (firstChild instanceof Text) {
+                            Text text = (Text) firstChild;
+                            String key = elements[i].getLocalName();
 
-                            if (firstChild instanceof Text) {
-                                Text text = (Text) firstChild;
-                                String key = element.getLocalName();
-
-                                if (Arrays.asList(keys).contains(key)) {
-                                    //taskParameters.setParameter(key, getValue(text));
-                                    taskParameters.setParameter(key, text.getNodeValue());
-                                }
+                            if (Arrays.asList(keys).contains(key)) {
+                                taskParameters.setParameter(key, text.getNodeValue());
                             }
                         }
                     }
@@ -284,7 +247,7 @@ public class MailTask extends AbstractTask {
             }
 
             // send mail
-            Transport trans = mailSession.getTransport("smtp");
+            // Transport trans = mailSession.getTransport("smtp");
             Transport.send(pm);
 
             // success
@@ -293,23 +256,4 @@ public class MailTask extends AbstractTask {
         }
     }
 
-    protected String getValue(Text text) {
-        try {
-            TransformerFactory tFactory = TransformerFactory.newInstance();
-            Transformer transformer = tFactory.newTransformer();
-
-            DOMSource source = new DOMSource(text);
-
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            StreamResult result = new StreamResult(stream);
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            transformer.transform(source, result);
-
-            return stream.toString();
-        } catch (Exception e) {
-            log.error("Failed: ", e);
-
-            return null;
-        }
-    }
 }

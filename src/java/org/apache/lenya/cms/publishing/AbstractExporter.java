@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractExporter.java,v 1.2 2003/02/07 12:14:11 ah Exp $
+ * $Id: AbstractExporter.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,28 +43,14 @@
  */
 package org.wyona.cms.publishing;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.cocoon.util.HashMap;
-
-import org.apache.log4j.Category;
-
 import org.wyona.cms.task.AbstractTask;
-import org.wyona.cms.task.Task;
-
-import java.net.URL;
-
-import java.util.Map;
-import java.util.StringTokenizer;
-
 
 /**
- * DOCUMENT ME!
+ * An abstract exporter base class.
  *
  * @author ah
  */
 public abstract class AbstractExporter extends AbstractTask implements Exporter {
-    static Category log = Category.getInstance(AbstractExporter.class);
 
     protected AbstractExporter() {
     }

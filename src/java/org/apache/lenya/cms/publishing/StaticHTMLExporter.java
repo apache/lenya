@@ -1,5 +1,5 @@
 /*
- * $Id: StaticHTMLExporter.java,v 1.5 2003/02/07 12:14:11 ah Exp $
+ * $Id: StaticHTMLExporter.java,v 1.6 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,16 +46,11 @@ package org.wyona.cms.publishing;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.log4j.Category;
-
-import org.wyona.cms.task.Task;
-
-import java.io.File;
+import org.wyona.cms.task.ExecutionException;
 
 import java.net.URL;
 
 import java.util.StringTokenizer;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -85,10 +80,10 @@ public class StaticHTMLExporter extends AbstractExporter {
      * @param uris DOCUMENT ME!
      * @param substituteExpression DOCUMENT ME!
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws ExportException DOCUMENT ME!
      */
     public void export(URL serverURI, int serverPort, String publicationPath, String exportPath,
-        String[] uris, String substituteExpression) throws Exception {
+        String[] uris, String substituteExpression) throws ExportException {
         try {
             String exportDirectory = publicationPath + exportPath;
 
@@ -102,12 +97,13 @@ public class StaticHTMLExporter extends AbstractExporter {
                 URL uri = new URL(fullServerURI + uris[i]);
                 log.info(".export(): Export static HTML: " + uri);
 
-                byte[] response = wget.download(uri, substituteExpression);
+                // byte[] response =
+                wget.download(uri, substituteExpression);
 
                 //wget.saveToFile(url.getFile(),response);
             }
         } catch (Exception e) {
-            log.error("Export failed: ", e);
+            throw new ExportException(e);
         }
     }
 
@@ -116,7 +112,8 @@ public class StaticHTMLExporter extends AbstractExporter {
      *
      * @param contextPath DOCUMENT ME!
      */
-    public void execute(String contextPath) {
+    public void execute(String contextPath)
+            throws ExecutionException {
         try {
             String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
 
@@ -154,7 +151,7 @@ public class StaticHTMLExporter extends AbstractExporter {
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_EXPORT_PATH), uris,
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REGEXP));
         } catch (Exception e) {
-            log.error("Export failed: ", e);
+            throw new ExecutionException(e);
         }
     }
 }

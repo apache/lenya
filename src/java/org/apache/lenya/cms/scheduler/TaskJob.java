@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.10 2003/02/11 19:51:09 andreas Exp $
+ * $Id: TaskJob.java,v 1.11 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -71,7 +71,9 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.w3c.dom.Element;
+import org.wyona.cms.task.ExecutionException;
 import org.wyona.xml.NamespaceHelper;
 
 
@@ -198,8 +200,16 @@ public class TaskJob
         TaskManager manager = new TaskManager(publicationPath);
         Task task = manager.getTask(taskId);
 
-        task.parameterize(map.getParameters());
-        task.execute(contextPath);
+        try {
+            task.parameterize(map.getParameters());
+            task.execute(contextPath);
+        }
+        catch (ParameterException e) {
+            log.debug("Initializing task failed: ", e);
+        }
+        catch (ExecutionException e) {
+            log.debug("Executing task failed: ", e);
+        }
     }
 
     /**

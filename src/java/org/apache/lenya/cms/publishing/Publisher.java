@@ -1,5 +1,5 @@
 /*
- * $Id: Publisher.java,v 1.3 2003/02/07 12:14:11 ah Exp $
+ * $Id: Publisher.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,11 +43,6 @@
  */
 package org.wyona.cms.publishing;
 
-import org.apache.log4j.Logger;
-
-import java.net.URL;
-
-
 /**
  * A Publisher is used to copy XML sources from the authoring server to the pending server.
  *
@@ -56,5 +51,5 @@ import java.net.URL;
 public interface Publisher {
     void publish(String publicationPath, String authoringPath, String treeAuthoringPath,
         String livePath, String treeLivePath, String replicationPath, String[] sources)
-        throws Exception;
+            throws PublishingException;
 }

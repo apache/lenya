@@ -1,5 +1,5 @@
 /*
- * $Id: CommandLineTask.java,v 1.3 2003/02/07 12:14:22 ah Exp $
+ * $Id: CommandLineTask.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,8 +45,6 @@ package org.wyona.cms.task;
 
 import org.apache.avalon.framework.parameters.ParameterException;
 
-import org.apache.log4j.Category;
-
 
 /**
  * DOCUMENT ME!
@@ -54,7 +52,6 @@ import org.apache.log4j.Category;
  * @author Michael Wechner
  */
 public class CommandLineTask extends AbstractTask {
-    static Category log = Category.getInstance(CommandLineTask.class);
 
     /**
      * Creates a new CommandLineTask object.
@@ -63,14 +60,14 @@ public class CommandLineTask extends AbstractTask {
     }
 
     /**
-     * Execute the task. All parameters must have been set with init().
+     * Execute the task. All parameters must have been set with parameterize().
      *
      * @param path DOCUMENT ME!
      */
-    public void execute(String path) {
+    public void execute(String path) throws ExecutionException {
         String command = getParameters().getParameter("command",
                 "echo \"Exception: No command parameter\"");
-        log.debug(".execute(): " + command);
+        // getLogger().debug(".execute(): " + command);
 
         try {
             Process process = Runtime.getRuntime().exec(command);
@@ -85,7 +82,7 @@ public class CommandLineTask extends AbstractTask {
             }
 
             if (baout.toString().length() > 0) {
-                log.debug(".execute(): %%%InputStream:S" + baout.toString() + "END:InputStream%%%");
+                throw new ExecutionException("%%%InputStream:S" + baout.toString() + "END:InputStream%%%");
             }
 
             java.io.InputStream in_e = process.getErrorStream();
@@ -96,11 +93,11 @@ public class CommandLineTask extends AbstractTask {
             }
 
             if (baout_e.toString().length() > 0) {
-                log.error(".execute(): ###ErrorStream:START" + baout_e.toString() +
-                    "END:ErrorStream###");
+                throw new ExecutionException("###ErrorStream:START" + baout_e.toString() + "END:ErrorStream###");
             }
         } catch (java.io.IOException e) {
-            log.error(".execute(): " + e);
+            throw new ExecutionException(e);
+            //getLogger().error(".execute(): ", e);
         }
     }
 }

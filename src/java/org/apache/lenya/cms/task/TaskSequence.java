@@ -1,5 +1,5 @@
 /*
- * $Id: TaskSequence.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: TaskSequence.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -70,8 +70,9 @@ import java.util.SortedMap;
  *
  * @author ah
  */
-public class TaskSequence extends AbstractTask {
-    public static String NAMESPACE_SEPARATOR = ":";
+public class TaskSequence
+        extends AbstractTask {
+    
     static Category log = Category.getInstance(TaskSequence.class);
 
     // keeps the task order
@@ -145,7 +146,8 @@ public class TaskSequence extends AbstractTask {
      *
      * @param path DOCUMENT ME!
      */
-    public void execute(String path) {
+    public void execute(String path)
+            throws ExecutionException {
         try {
             Task[] tasks = getTasks();
 

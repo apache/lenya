@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractTask.java,v 1.3 2003/02/07 12:14:22 ah Exp $
+ * $Id: AbstractTask.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,9 +45,8 @@ package org.wyona.cms.task;
 
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.log4j.Category;
-
 import java.util.StringTokenizer;
+import org.apache.avalon.framework.parameters.ParameterException;
 
 
 /**
@@ -55,10 +54,10 @@ import java.util.StringTokenizer;
  *
  * @author ah
  */
-public abstract class AbstractTask implements Task {
-    static Category log = Category.getInstance(AbstractTask.class);
+public abstract class AbstractTask
+        implements Task {
+
     private Parameters parameters = new Parameters();
-    private String label = "default task";
 
     /**
      * DOCUMENT ME!
@@ -77,24 +76,17 @@ public abstract class AbstractTask implements Task {
      *
      * @param parameters DOCUMENT ME!
      */
-    public void parameterize(Parameters parameters) {
-        log.debug("Initializing parameters");
+    public void parameterize(Parameters parameters)
+            throws ParameterException {
+        /*
+        getLogger().debug("Initializing parameters");
 
         for (int i = 0; i < parameters.getNames().length; i++) {
-            log.debug("Setting parameter " + parameters.getNames()[i] + " to " +
+            getLogger().debug("Setting parameter " + parameters.getNames()[i] + " to " +
                 parameters.getParameter(parameters.getNames()[i], "default"));
         }
-
+        */
         this.parameters = this.parameters.merge(parameters);
-    }
-
-    /**
-     * Return the label to be displayed.
-     *
-     * @return DOCUMENT ME!
-     */
-    public String getLabel() {
-        return label;
     }
 
     /**
@@ -103,6 +95,5 @@ public abstract class AbstractTask implements Task {
      * @param label DOCUMENT ME!
      */
     public void setLabel(String label) {
-        this.label = label;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: HelloWorldTask.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: HelloWorldTask.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,11 +43,6 @@
  */
 package org.wyona.cms.task;
 
-import org.apache.avalon.framework.parameters.ParameterException;
-
-import org.apache.log4j.Category;
-
-
 /**
  * A simple task to demonstrate the task behaviour. It outputs a string to the log4j log file. The
  * following parameter can be provided:<br/
@@ -57,7 +52,6 @@ import org.apache.log4j.Category;
  * @author ah
  */
 public class HelloWorldTask extends AbstractTask {
-    static Category log = Category.getInstance(HelloWorldTask.class);
 
     /**
      * Creates a new instance of HelloWorldTask
@@ -70,7 +64,8 @@ public class HelloWorldTask extends AbstractTask {
      *
      * @param path DOCUMENT ME!
      */
-    public void execute(String path) {
-        log.debug(".execute(): " + getParameters().getParameter("text", "Hello World"));
+    public void execute(String path)
+            throws ExecutionException {
+        // getLogger().debug(".execute(): " + getParameters().getParameter("text", "Hello World"));
     }
 }

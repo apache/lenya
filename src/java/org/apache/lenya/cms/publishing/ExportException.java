@@ -1,5 +1,5 @@
 /*
- * $Id: PublisherFactory.java,v 1.2 2003/02/07 12:14:11 ah Exp $
+ * $Id: ExportException.java,v 1.1 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,31 +43,40 @@
  */
 package org.wyona.cms.publishing;
 
-import org.apache.log4j.Category;
-
-
 /**
- * DOCUMENT ME!
- *
- * @author ah
+ * Created by IntelliJ IDEA.
+ * User: nobby
+ * Date: Feb 12, 2003
+ * Time: 2:52:42 PM
+ * To change this template use Options | File Templates.
  */
-public class PublisherFactory {
-    static Category log = Category.getInstance(PublisherFactory.class);
+public class ExportException
+    extends Exception {
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param cl DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Creates a new ExportException.
      */
-    public static Publisher createInstance(Class cl) {
-        try {
-            return (Publisher) cl.newInstance();
-        } catch (Exception e) {
-            log.error("Cannot load Publisher class!", e);
+    public ExportException() {
+    }
 
-            return null;
-        }
+    /**
+     * Creates a new ExportException.
+     */
+    public ExportException(String message) {
+        super(message);
+    }
+
+    /**
+     * Creates a new ExportException.
+     */
+    public ExportException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Creates a new ExportException.
+     */
+    public ExportException(Throwable cause) {
+        super(cause);
     }
 }

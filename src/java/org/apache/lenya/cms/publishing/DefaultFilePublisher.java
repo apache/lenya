@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultFilePublisher.java,v 1.4 2003/02/07 12:14:11 ah Exp $
+ * $Id: DefaultFilePublisher.java,v 1.5 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,12 +48,11 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.log4j.Category;
 
 import org.wyona.cms.task.Task;
+import org.wyona.cms.task.ExecutionException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import java.net.URL;
 
 import java.util.StringTokenizer;
 
@@ -89,7 +88,8 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
      * @param sources DOCUMENT ME!
      */
     public void publish(String publicationPath, String authoringPath, String treeAuthoringPath,
-        String livePath, String treeLivePath, String replicationPath, String[] sources) {
+        String livePath, String treeLivePath, String replicationPath, String[] sources)
+            throws PublishingException {
         log.debug("PUBLICATION: " + publicationPath);
         log.debug("CONFIGURATION:\nauthoring path=" + authoringPath + "\nlive path=" + livePath);
 
@@ -114,9 +114,9 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
                 log.debug("Document ready for replication: " + sourceFile + " " +
                     destinationReplicationFile);
             } catch (FileNotFoundException fnfe) {
-                log.error("Document not published: Source file (" + sourceFile + ") not found");
+                throw new PublishingException("Document not published: Source file (" + sourceFile + ") not found!", fnfe);
             } catch (IOException ioe) {
-                log.error("Document not published: " + sourceFile + " " + destinationFile);
+                throw new PublishingException("Document not published: " + sourceFile + " " + destinationFile, ioe);
             }
         }
 
@@ -127,15 +127,16 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
                 absoluteTreeLivePath);
             log.debug("Tree published");
         } catch (IOException ioe) {
-            log.error("Tree not published: " + absoluteTreeAuthoringPath + " " +
-                absoluteTreeLivePath);
+            throw new PublishingException("Tree not published: " + absoluteTreeAuthoringPath + " " +
+                absoluteTreeLivePath, ioe);
         }
     }
 
     /**
      *
      */
-    public void execute(String contextPath) {
+    public void execute(String contextPath)
+            throws ExecutionException {
         try {
             String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
 
@@ -176,7 +177,7 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_REPLICATION_PATH),
                 sources);
         } catch (Exception e) {
-            log.error("Publishing failed: ", e);
+            throw new ExecutionException(e);
         }
     }
 }

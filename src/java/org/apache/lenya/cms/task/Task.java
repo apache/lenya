@@ -1,5 +1,5 @@
 /*
- * $Id: Task.java,v 1.3 2003/02/07 12:14:22 ah Exp $
+ * $Id: Task.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,9 +46,6 @@ package org.wyona.cms.task;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import javax.servlet.http.HttpServletRequest;
-
-
 /**
  * A Task is a command that can be executed. <br/
  * > When a Task is executed from a TaskAction or initialized from a TaskJob, the default
@@ -56,7 +53,9 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author <a href="mailto:ah@wyona.org">Andreas Hartmann</a>
  */
-public interface Task extends Parameterizable {
+public interface Task
+        extends Parameterizable {
+
     /**
      * The path of the servlet
      * context:<br/><code>/home/user_id/build/jakarta-tomcat/webapps/wyonacms</code>
@@ -88,22 +87,9 @@ public interface Task extends Parameterizable {
     static final String PARAMETER_PUBLICATION_ID = "publication-id";
 
     /**
-     * Initialize some or all parameters of the task. You can call this method multiple times, the
-     * parameter values are replaced.
-     */
-    void parameterize(Parameters parameters);
-
-    /**
      * Execute the task. All parameters must have been set with parameterize().
      */
-    void execute(String servletContextPath);
-
-    /**
-     * Return the label that is used to identify the task.
-     *
-     * @return DOCUMENT ME!
-     */
-    String getLabel();
+    void execute(String servletContextPath) throws ExecutionException;
 
     /**
      * Set the label that is used to identify the task.

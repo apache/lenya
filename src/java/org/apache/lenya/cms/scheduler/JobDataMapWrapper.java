@@ -1,5 +1,5 @@
 /*
- * $Id: JobDataMapWrapper.java,v 1.2 2003/02/07 12:14:21 ah Exp $
+ * $Id: JobDataMapWrapper.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -103,11 +103,11 @@ public class JobDataMapWrapper {
      */
     public Parameters getParameters() {
         Parameters parameters = new Parameters();
-        String[] names = (String[]) map.keySet().toArray(new String[map.size()]);
+        String[] names = (String[]) getMap().keySet().toArray(new String[getMap().size()]);
 
         for (int i = 0; i < names.length; i++) {
-            if (names[i].startsWith(prefix + SEPARATOR)) {
-                parameters.setParameter(getShortName(prefix, names[i]), map.getString(names[i]));
+            if (names[i].startsWith(getPrefix() + SEPARATOR)) {
+                parameters.setParameter(getShortName(getPrefix(), names[i]), getMap().getString(names[i]));
             }
         }
 
@@ -132,13 +132,13 @@ public class JobDataMapWrapper {
      * @return DOCUMENT ME!
      */
     public String get(String key) {
-        String[] names = (String[]) map.keySet().toArray(new String[map.size()]);
+        String[] names = (String[]) getMap().keySet().toArray(new String[getMap().size()]);
 
         for (int i = 0; i < names.length; i++) {
             String name = names[i];
 
-            if (name.equals(getFullName(prefix, key))) {
-                return map.getString(names[i]);
+            if (name.equals(getFullName(getPrefix(), key))) {
+                return getMap().getString(names[i]);
             }
         }
 

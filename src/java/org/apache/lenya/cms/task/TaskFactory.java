@@ -1,5 +1,5 @@
 /*
- * $Id: TaskFactory.java,v 1.3 2003/02/07 12:14:22 ah Exp $
+ * $Id: TaskFactory.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -101,18 +101,4 @@ public class TaskFactory {
         }
     }
 
-    /*
-    public Task createTask(String className, Configuration configuration) {
-        try {
-            Class cl = Class.forName(className);
-            Task task = (Task) cl.newInstance();
-            if (
-            return
-        }
-        catch (Exception e) {
-            log.error("Cannot create Task!", e);
-            return null;
-        }
-    }
-    */
 }

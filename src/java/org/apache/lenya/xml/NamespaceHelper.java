@@ -1,5 +1,5 @@
 /*
- * $Id: NamespaceHelper.java,v 1.3 2003/02/11 19:51:09 andreas Exp $
+ * $Id: NamespaceHelper.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -105,49 +105,49 @@ public class NamespaceHelper {
     /**
      * Sets the document of this NamespaceHelper.
      * @param document
-     */    
+     */
     protected void setDocument(Document document) {
         this.document = document;
     }
-    
+
     /**
      * Returns the document that is used to create elements.
      *
      * @return A document object.
-     */    
+     */
     public Document getDocument() {
         return document;
     }
-    
+
     /**
      * Returns the namespace URI of this NamespaceHelper.
      *
      * @return The namespace URI.
-     */    
+     */
     public String getNamespaceURI() {
         return namespaceUri;
     }
-    
+
     /**
      * Returns the namespace prefix that is used to create elements.
      *
      * @return The namespace prefix.
-     */    
+     */
     public String getPrefix() {
         return prefix;
     }
-    
+
     /**
      * Returns the qualified name for a local name using the prefix of this
      * NamespaceHelper.
      *
      * @param localName The local name.
      * @return The qualified name, i.e. prefix:localName.
-     */    
+     */
     public String getQualifiedName(String localName) {
         return getPrefix() + ":" + localName;
     }
-    
+
     /**
      * <p>
      * Creates an element within the namespace of this NamespaceHelper object with
@@ -184,7 +184,17 @@ public class NamespaceHelper {
         element.appendChild(textNode);
         return element;
     }
-    
+
+    /**
+     * Returns all children of an element in the namespace
+     * of this NamespaceHelper.
+     *
+     * @param element The parent element.
+     */
+    public Element[] getChildren(Element element) {
+        return DocumentHelper.getChildren(element, getNamespaceURI());
+    }
+
     /**
      * Returns all children of an element with a local name in the namespace
      * of this NamespaceHelper.

@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractPublisher.java,v 1.2 2003/02/07 12:14:11 ah Exp $
+ * $Id: AbstractPublisher.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -63,7 +63,6 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:andreas.hartmann@wyona.com">Andreas Hartmann</a>
  */
 public abstract class AbstractPublisher extends AbstractTask implements Publisher {
-    static Category log = Category.getInstance(AbstractPublisher.class);
 
     protected AbstractPublisher() {
     }
