@@ -94,4 +94,8 @@
   	    shorthand="usecase-resolver"
   	    default-class="org.apache.lenya.cms.usecase.UsecaseResolverImpl"/>
         
+  <role name="org.apache.lenya.cms.publication.DocumentTypeResolver"
+  	    shorthand="usecase-resolver"
+  	    default-class="org.apache.lenya.cms.publication.DocumentTypeResolverImpl"/>
+        
 </role-list>
