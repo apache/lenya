@@ -59,56 +59,5 @@ Several items, e.g. the servlet container, may be replaced by other products.
   
 </ul>
 
-<section><title>Recommended Combinations</title>
-<ul>
-      <li><strong>Ant:</strong> <link href="http://www.wyona.org/lenya/jakarta-ant-1.5.1-bin.tar.gz">jakarta-ant-1.5.1-bin.tar.gz</link></li>
-      <li><strong>Tomcat:</strong> <link href="http://www.wyona.org/lenya/jakarta-tomcat-4.1.21-LE-jdk14.tar.gz">jakarta-tomcat-4.1.21-LE-jdk14.tar.gz</link></li>
-      <li><strong>Endorsed Libraries:</strong> <link href="http://www.wyona.org/lenya/endorsed.tar.gz">endorsed.tar.gz</link></li>
-      <li><strong>Apache Cocoon:</strong> <link href="http://www.wyona.org/lenya/cocoon-2.1-M1-build.tar.gz">cocoon-2.1-M1-build.tar.gz</link></li>
-</ul>
-
-
-
-<!--
-    <ol>
-    <li>
-      <strong>For all versions:</strong>
-      <ul>
-      <li>Ant: <link href="http://www.wyona.org/lenya/jakarta-ant-1.5.1-bin.tar.gz">jakarta-ant-1.5.1-bin.tar.gz</link></li>
-      <li>Tomcat: <link href="http://www.wyona.org/lenya/jakarta-tomcat-4.1.21-LE-jdk14.tar.gz">jakarta-tomcat-4.1.21-LE-jdk14.tar.gz</link></li>
-      </ul>
-      <p/>
-    </li>
-    <li>
-      <strong>CVS version:</strong>
-      <ul>
-        <li>Lenya: Current CVS version</li>
-        <li>Cocoon: <link href="../download/cocoon-2.1-build-2003.05.02.19.50.tar.gz">cocoon-2.1-build-2003.05.02.19.50.tar.gz</link> (Linux) or
-            Milestone 1 (MS Windows)
-        </li>
-        <li>Endorsed Libraries: Come with the Cocoon build</li>
-      </ul>
-      <p/>
-    </li>
-    <li>
-      <strong>Last snapshots:</strong>
-      <ul>
-        <li>Lenya:<br/>
-            <link href="../download/lenya-0.8-dev-src-20030325022718.tar.gz">lenya-0.8-dev-src-20030325022718.tar.gz</link> or<br/>
-            <link href="../download/lenya-0.8-dev-src-20030328125056.tar.gz">lenya-0.8-dev-src-20030328125056.tar.gz</link>
-        </li>
-        <li>Cocoon:<br/>
-            <link href="../download/cocoon-2.1-build-2003.03.11.23.15.tar.gz">cocoon-2.1-build-2003.03.11.23.15.tar.gz</link> or<br/>
-            <link href="../download/cocoon-2.1-build-2003.04.03.18.47.tar.gz">cocoon-2.1-build-2003.04.03.18.47.tar.gz</link> (Please note that the Lenya-Forrest publication does not compile with this Cocoon snapshot. You need to remove it and also edit build.xml)
-        </li>
-        <li>Endorsed Libraries:<br/>
-            <link href="../download/endorsed.tar.gz">endorsed.tar.gz</link></li>
-      </ul>
-      <p/>
-    </li>
-    </ol>
--->
-</section>
-
 </body>
 </document>

@@ -14,6 +14,15 @@
 <body> 
 
 <section>
+<title>Releases</title>
+
+<ul>
+  <li><link href="http://www.apache.org/dist/cocoon/lenya/">http://www.apache.org/dist/cocoon/lenya/</link></li>
+</ul>
+
+</section>
+
+<section>
 <title>CVS Nightly Snapshots (Source and Binary)</title>
 
 <ul>
