@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.47 2004/02/04 21:49:25 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.48 2004/02/05 14:01:21 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -110,7 +110,8 @@
     <!-- BX Editor: Entries -->
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/index-bxeng.html">
-        <map:act type="resource-exists" src="../../../../ROOT/bxeng/index.html"> <!-- Check for BXE -->
+        <!-- Check for BXE -->
+        <map:act type="resource-exists" src="../../resources/bxeng/bxeLoader.js">
           <map:aggregate element="bxeng">
             <map:part src="../../resources/misc/bxeng/index.xhtml"/>
             <map:part src="resources/misc/bxeng/entry-namespaces.xml"/>
@@ -118,6 +119,7 @@
           <map:transform src="../../xslt/bxeng/aggregate.xsl"/>
           <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
             <map:parameter name="configfile" value="./config-bxeng.xml"/>
+            <map:parameter name="context" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize type="xhtml-iso-8859-1"/>
         </map:act>
