@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml,v 1.23 2004/06/01 15:36:53 michi Exp $ -->
+<!-- $Id: webapp-build.xml,v 1.24 2004/06/02 16:53:27 andreas Exp $ -->
 
 <project name="webapp">
 
@@ -72,7 +72,8 @@
     <echo>INFO: Patch cocoon.xconf</echo>
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
             srcdir="${build.webapp}/lenya/pubs" 
-            includes="*/config/cocoon.xconf"
+            includes="*/config/*.xconf"
+            excludes="*/config/publication.xconf"
             addComments="true"/>
             
     <!-- Patch web.xml -->
