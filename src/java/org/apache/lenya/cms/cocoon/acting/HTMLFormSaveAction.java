@@ -81,7 +81,7 @@ import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.26 2003/11/30 22:55:40 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.27 2003/12/01 23:43:23 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -160,10 +160,16 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     XPathQuery xpath = XPathQueryFactory.newInstance().newXPathQuery();
                     XUpdateQuery xq = new XUpdateQueryImpl();
 
+                    String editSelect = null;
                     Enumeration params = request.getParameterNames();
                     while (params.hasMoreElements()) {
                         String pname = (String) params.nextElement();
-                        getLogger().debug(".act(): Parameter: " + pname + " (" + request.getParameter(pname)  + ")");
+                        log.debug("Parameter: " + pname + " (" + request.getParameter(pname)  + ")");
+
+                        if (editSelect == null && pname.indexOf("edit[") >= 0 && pname.endsWith("].x")) {
+                            editSelect = pname.substring(5, pname.length() - 3);
+                           log.debug("Edit: " + editSelect);
+                        }
 
                         if (pname.indexOf("<xupdate:") == 0) {
                             String select = pname.substring(pname.indexOf("select") + 8);
@@ -185,23 +191,32 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                     } else {
                                         xupdateModifications = update(request, pname, select, selectionNodeList);
                                     }
-                                } else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">")) {
+                                } else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">.x")) {
+                                // FIXME: Internet Explorer does not send the name without the coordinates if input type is equals image. Mozilla does.
+                                //} else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">")) {
                                     // no .x and .y from input type="image"
-                                    xupdateModifications = append(pname);
+                                    xupdateModifications = append(pname.substring(0, pname.length()-2));
+                                    //xupdateModifications = append(pname);
                                 } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">")) {
+                                //} else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">")) {
                                     // no .x and .y from input type="image"
-                                    xupdateModifications = insertBefore(pname);
+                                    xupdateModifications = insertBefore(pname.substring(0, pname.length()-2));
+                                    //xupdateModifications = insertBefore(pname);
                                 } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith("/>")) {
                                     // select:option
                                     if (!request.getParameter(pname).equals("null")) {
                                         xupdateModifications = insertAfter(request.getParameter(pname));
                                     }
-                                } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">")) {
+                                } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">.x")) {
+                                //} else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">")) {
                                     // no .x and .y from input type="image"
-                                    xupdateModifications = insertAfter(pname);
-                                } else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>")) {
+                                    xupdateModifications = insertAfter(pname.substring(0, pname.length()-2));
+                                    //xupdateModifications = insertAfter(pname);
+                                } else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>.x")) {
+                                //} else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>")) {
                                     // no .x and .y from input type="image"
-                                    xupdateModifications = remove(pname);
+                                    xupdateModifications = remove(pname.substring(0, pname.length()-2));
+                                    //xupdateModifications = remove(pname);
                                 }
 
                                 if (xupdateModifications != null) {
@@ -246,7 +261,12 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                         getLogger().info(".act(): Save");
                         return null;
                     } else {
-                        return new HashMap();
+                        // Loop while editing
+                        HashMap hmap = new HashMap();
+                        if (editSelect != null) {
+                            hmap.put("editSelect", editSelect);
+                        }
+                        return hmap;
                     }
                 } catch (NullPointerException e) {
                     getLogger().error(".act(): NullPointerException", e);

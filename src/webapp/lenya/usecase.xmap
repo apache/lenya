@@ -398,7 +398,11 @@
                 </map:transform>
                 <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
                   <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
+                  <!-- FIXME: Internet Explorer does not send the name without the coordinates if input type is equals image. Mozilla does. -->
+                  <map:parameter name="edit" value="{editSelect}"/>
+<!--
                   <map:parameter name="edit" value="{request-param:edit}"/>
+-->
                 </map:transform>
                 <map:call resource="style-cms-page"/>
               </map:act>

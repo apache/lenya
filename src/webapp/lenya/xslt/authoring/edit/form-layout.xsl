@@ -166,7 +166,8 @@
 
 <xsl:template match="@select">
 <xsl:text> </xsl:text>
-<input type="image" src="{$imagesPath}/edit.png" name="edit" value="{.}"/>
+<!-- FIXME: Internet Explorer does not send the value of input type equals image. Mozilla does. -->
+<input type="image" src="{$imagesPath}/edit.png" name="edit[{.}]" value="{.}"/>
 </xsl:template>
 
 </xsl:stylesheet>  
