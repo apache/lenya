@@ -91,13 +91,13 @@
       
       <!-- create the current job snapshot -->
       <map:match pattern="scheduler-servlet">
-        <map:generate type="servletproxy" src="/lenya/servlet/QuartzSchedulerServlet"/>
+        <map:generate type="servletproxy" src="{request:contextPath}/servlet/QuartzSchedulerServlet"/>
         <map:transform src="xslt/scheduler/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       
     </map:pipeline>
-
+    
     <map:pipeline>
     
     <!-- {publication-id}/{area}/{uri}-->
@@ -118,6 +118,18 @@
       
       <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
       <map:match type="usecase" pattern="schedule">
+      
+        <!-- add job: redirect to page -->
+        <map:match type="step" pattern="add">
+          <map:call resource="scheduler-page">
+            <map:parameter name="publication-id" value="{../../1}"/>
+            <map:parameter name="uri" value="{../../2}/{../../3}"/>
+          </map:call>
+          <map:transform src="xslt/util/redirect.xsl">
+            <map:parameter name="url" value="{request:requestURI}"/>
+          </map:transform>
+          <map:serialize/>
+        </map:match>
       
           <map:call resource="scheduler-page">
             <map:parameter name="publication-id" value="{../1}"/>
