@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.17 2003/08/18 12:23:32 andreas Exp $
+$Id: SchedulerWrapper.java,v 1.18 2003/08/18 17:13:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -101,7 +101,6 @@ public class SchedulerWrapper {
     public static final String JOB_PREFIX = "job";
     public static final String DOCUMENT_URL = "document-url";
     public static final String JOB_ID = "id";
-    public static final String JOB_GROUP = "group";
     public static final String JOB_CLASS = "class";
     private static int jobId = 0;
     public static final String JOB_GROUP_ELEMENT = "job-group";
@@ -236,7 +235,6 @@ public class SchedulerWrapper {
             log.debug("Job ID: [" + uniqueJobId + "]");
 
             mapWrapper.put(JOB_ID, uniqueJobId);
-            mapWrapper.put(JOB_GROUP, jobGroup);
             mapWrapper.put(JOB_CLASS, jobClass.getName());
             mapWrapper.put(DOCUMENT_URL, documentUri);
 
@@ -584,7 +582,7 @@ public class SchedulerWrapper {
                     Element[] jobElements = helper.getChildren(jobsElement, "job");
 
                     for (int i = 0; i < jobElements.length; i++) {
-                        restoreJob(jobElements[i]);
+                        restoreJob(jobElements[i], jobGroup);
                     }
                 }
             } catch (Exception e) {
@@ -596,8 +594,9 @@ public class SchedulerWrapper {
     /**
      * Restores the jobs from a certain XML element.
      * @param jobElement The XML element.
+     * @param jobGroup The job group the job belongs to.
      */
-    protected void restoreJob(Element jobElement) {
+    protected void restoreJob(Element jobElement, String jobGroup) {
         log.debug("\n Restoring job ");
 
         String className = null;
@@ -616,7 +615,7 @@ public class SchedulerWrapper {
         try {
             Class cl = Class.forName(className);
             ServletJob job = (ServletJob) cl.newInstance();
-            JobDetail jobDetail = job.load(jobElement, getServletContextPath());
+            JobDetail jobDetail = job.load(jobElement, getServletContextPath(), jobGroup);
 
             Element triggerElement = helper.getFirstChild(jobElement, "trigger");
 

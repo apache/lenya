@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.28 2003/08/18 12:23:32 andreas Exp $
+$Id: LoadQuartzServlet.java,v 1.29 2003/08/18 17:13:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -84,7 +84,7 @@ import javax.servlet.http.HttpServletResponse;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.28 2003/08/18 12:23:32 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.29 2003/08/18 17:13:40 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -124,7 +124,7 @@ public class LoadQuartzServlet extends HttpServlet {
             process();
             log.info("OK");
         } catch (Exception e) {
-            log.error("Init of LoadQuartzServlet failed");
+            log.error("Init of LoadQuartzServlet failed", e);
             throw new ServletException(e);
         }
     }

@@ -1,5 +1,5 @@
 /*
-$Id: ServletJob.java,v 1.12 2003/08/18 12:23:32 andreas Exp $
+$Id: ServletJob.java,v 1.13 2003/08/18 17:13:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -85,10 +85,11 @@ public abstract class ServletJob implements Job {
      * Loads the job data from an XML element.
      * @param element An XML element.
      * @param servletContext The servlet context path.
+     * @param jobGroup The job group the job belongs to.
      * @return A job detail object.
      * @throws SchedulerException when something went wrong.
      */
-    public abstract JobDetail load(Element element, String servletContext)
+    public abstract JobDetail load(Element element, String servletContext, String jobGroup)
         throws SchedulerException;
 
     /**

@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.27 2003/08/18 12:23:32 andreas Exp $
+$Id: TaskJob.java,v 1.28 2003/08/18 17:13:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -238,14 +238,15 @@ public class TaskJob extends ServletJob {
     }
 
     /**
-     * DOCUMENT ME!
+     * Loads a job details object from an XML element. 
      *
-     * @param jobElement DOCUMENT ME!
-     * @param servletContext DOCUMENT ME!
+     * @param jobElement The XML element.
+     * @param servletContext The servlet context.
+     * @param jobGroup The job group the job belongs to.
      *
-     * @return DOCUMENT ME!
+     * @return A job details object.
      */
-    public JobDetail load(Element jobElement, String servletContext) {
+    public JobDetail load(Element jobElement, String servletContext, String jobGroup) {
         JobDataMap map = new JobDataMap();
         NamespaceHelper helper = SchedulerWrapper.getNamespaceHelper();
         Element taskElement = helper.getFirstChild(jobElement, "task");
@@ -293,7 +294,6 @@ public class TaskJob extends ServletJob {
 
         Class cl = null;
         String jobId = jobMap.get(SchedulerWrapper.JOB_ID);
-        String jobGroup = jobMap.get(SchedulerWrapper.JOB_GROUP);
 
         try {
             cl = Class.forName(jobMap.get(SchedulerWrapper.JOB_CLASS));
