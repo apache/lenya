@@ -91,7 +91,7 @@ function group_change_members(groupId) {
 		    });
 		    
 			var otherUserId = cocoon.request.get("user");
-			if (cocoon.request.get("add_user") && otherUserId != "") {
+			if (cocoon.request.get("add_user") && otherUserId != null) {
 				var user = userManager.getUser(otherUserId);
 				if (!groupUsers.contains(user)) {
 					groupUsers.add(user);
@@ -100,7 +100,7 @@ function group_change_members(groupId) {
 			}
 		    
 			var groupUserId = cocoon.request.get("group_user");
-			if (cocoon.request.get("remove_user") && groupUserId != "") {
+			if (cocoon.request.get("remove_user") && groupUserId != null) {
 				var user = userManager.getUser(groupUserId);
 				if (groupUsers.contains(user)) {
 					groupUsers.remove(user);
