@@ -64,6 +64,7 @@
           
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">live</xsl:with-param>
+            <xsl:with-param name="target">_blank</xsl:with-param>
           </xsl:call-template>
           
         </td>
@@ -112,6 +113,7 @@
   <xsl:template name="area-tab">
     <xsl:param name="tab-area"/>
     <xsl:param name="tab-area-prefix" select="$tab-area"/>
+    <xsl:param name="target" select="'_self'"/>
     
     <xsl:variable name="tab-documenturl">
       <xsl:choose>
@@ -119,7 +121,9 @@
         <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <a id="{$tab-area-prefix}-tab" href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}">
+    <a id="{$tab-area-prefix}-tab"
+       href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}"
+       target="{$target}">
       <xsl:choose>
         <xsl:when test="starts-with($completearea, $tab-area-prefix)">
           <img border="0" src="{$image-prefix}/{$tab-area-prefix}_active.gif" />
