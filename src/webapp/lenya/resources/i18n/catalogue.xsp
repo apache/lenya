@@ -16,20 +16,25 @@
 
   <xsp:structure>
     <xsp:include>java.io.File</xsp:include>
+    <xsp:include>org.apache.excalibur.source.Source</xsp:include>
   </xsp:structure>
 
   <catalogue>
     <xsp:logic>
-      if(new File(parameters.getParameter("pub-catalogue-location", "null") + parameters.getParameter("catalogue-file", "null")).exists()) 
+  
+      final Source pubCatalogue = resolver.resolveURI(parameters.getParameter("pub-catalogue-location", "null") + parameters.getParameter("catalogue-file", "null"));
+      
+      if(pubCatalogue.exists())
       {
           <xi:include >
-            <xsp:attribute name="href">../../pubs/default/lenya/resources/i18n/<xsp:expr>parameters.getParameter("catalogue-file", "null").substring(1)</xsp:expr>#xpointer(//message)</xsp:attribute>
+            <xsp:attribute name="href"><xsp:expr>pubCatalogue.getURI()</xsp:expr>#xpointer(//message)</xsp:attribute>
           </xi:include>          
-      }
+       }
       
-     <xi:include >
+      <xi:include >
         <xsp:attribute name="href"><xsp:expr>parameters.getParameter("catalogue-file", "null").substring(1)</xsp:expr>#xpointer(//message)</xsp:attribute>
       </xi:include>
+      
     </xsp:logic> 
   </catalogue>
   
