@@ -13,6 +13,7 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:simple="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0"
     xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
     exclude-result-prefixes="simple lenya"
     >
 
@@ -21,7 +22,7 @@
         
 <xsl:template match="/">
   <div id="body">
-    <xsl:apply-templates select="simple:simple-document/lenya:header/lenya:document-title"/>
+    <h1><xsl:apply-templates select="simple:simple-document/lenya:meta/dc:title"/></h1>
     <xsl:apply-templates select="simple:simple-document/simple:body/simple:subtitle"/>
     <xsl:apply-templates select="simple:simple-document/lenya:header/lenya:abstract"/>
     <xsl:apply-templates select="simple:simple-document/simple:body/*[local-name() != 'subtitle']"/>
