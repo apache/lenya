@@ -44,6 +44,15 @@
                 <name ns="">b</name>
                 <text/>
               </element>
+              <element>
+                <name ns="">i</name>
+                <text/>
+              </element>
+              <element>
+                <name ns="">a</name>
+                <attribute name="href"/>
+                <text/>
+              </element>
             </choice>
           </oneOrMore>
         </element>
