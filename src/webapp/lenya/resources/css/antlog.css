@@ -6,72 +6,50 @@
         Purpose of the stylesheet follows.
 */
 
-    .bannercell {
+    .lenya-ant-bannercell {
       border: 0px;
       padding: 0px;
     }
-    body {
-      margin: 0;
-      font:normal 100% arial,helvetica,sanserif;
-      background-color:#FFFFFF;
-      color:#000000;
-    }
-    table.status {
+    
+    table.lenya-ant-status {
       font:bold 80% arial,helvetica,sanserif;
       background-color:#525D76;
       color:#ffffff;
     }
-    table.log tr td, tr th {
+    
+    table.lenya-ant-log tr td, tr th {
       font-size: 80%;
     }
-    .error {
+    .lenya-ant-error {
       color:red;
     }
-    .warn {
+    .lenya-ant-warn {
       color:brown;
     }
-    .info {
+    .lenya-ant-info {
       color:gray;
     }
-    .debug{
+    .lenya-ant-debug{
       color:gray;
     }
-    .failed {
+    .lenya-ant-failed {
       font-size:80%;
       background-color: red;
       color:#FFFFFF;
       font-weight: bold
     }
-    .complete {
+    .lenya-ant-complete {
       font-size:80%;
       background-color: #525D76;
       color:#FFFFFF;
       font-weight: bold
     }
-    .a td { 
+    
+    .lenya-ant-a td { 
       background: #efefef;
     }
-    .b td { 
+    
+    .lenya-ant-b td { 
       background: #fff;
     }
-    th, td {
-      text-align: left;
-      vertical-align: top;
-    }
-    th {
-      background: #ccc;
-      color: black;
-    }
-    table, th, td {
-      border: none
-    }
-    h3 {
-      font:bold 80% arial,helvetica,sanserif;
-      background: #525D76;
-      color: white;
-      text-decoration: none;
-      padding: 5px;
-      margin-right: 2px;
-      margin-left: 2px;
-      margin-bottom: 0;
-    }
+    

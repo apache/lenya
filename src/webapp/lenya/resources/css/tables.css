@@ -1,0 +1,34 @@
+
+table.lenya-table {
+	background-color: White;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	font-size: small;
+}
+
+table.lenya-table-noborder {
+	border: 0px;
+	border-spacing: 0px;
+	font-size: small;
+}
+
+table.lenya-table th {
+    background-color: #DDDCCF;
+	border: solid 1px #CCCCCC;
+	color: Black;
+	font-weight: bold;
+	padding: 3px 10px;
+	text-align: left;
+}
+
+table.lenya-table td {
+    background-color: #F5F4E9;
+	border: solid 1px #CCCCCC;
+	padding: 3px 10px;
+}
+
+table.lenya-table-noborder td {
+	border: 0px;
+	padding: 3px 10px;
+}
+

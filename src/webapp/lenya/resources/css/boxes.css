@@ -1,0 +1,20 @@
+div.lenya-box {
+	border: solid 1px #CCCCCC;
+	font-size: small;
+	width: auto;
+	min-width: auto;
+	max-width: 100%;
+}
+
+div.lenya-box-title {
+    background-color: #DDDCCF;
+	border-bottom: solid 1px #CCCCCC;
+	color: Black;
+	font-weight: bold;
+	padding: 3px 10px;
+}
+
+div.lenya-box-body {
+    padding: 10px;
+    background-color: #F5F4E9;
+}

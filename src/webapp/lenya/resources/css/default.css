@@ -1,9 +1,13 @@
-
 @import url(antlog.css);
+@import url(forms.css);
+@import url(tables.css);
+@import url(tabs.css);
+@import url(boxes.css);
 
 body {
     margin: 0px;
     padding: 0px;
+    font-family: Verdana, sans-serif;
 }
 
 h1 {
@@ -14,77 +18,18 @@ h1 {
 }
 
 p {
-    font-family: Verdana, sans-serif;
     font-size: small;
 }
 
 li {
-    font-family: Verdana, sans-serif;
     font-size: small;
-}
-
-td {
-    font-family: Verdana, sans-serif;
-    font-size: small;
-}
-
-.menu {
-    font-family: Verdana, sans-serif;
-    color: Navy;
-    font-size: small;
-    padding-left: 8pt;
-    padding-top: 3pt;
-    padding-bottom: 3pt;
-    padding-right: 8pt;
-    background-color: #E0E0E0
-}
-
-th {
-    font-family: Verdana, sans-serif;
-    font-size: small;
-    padding: 3pt;
-    background-color: #E0E0E0;
-    color: Navy;
-    text-align: left;
-}
-
-table.scheduler-job {
-}
-
-table.scheduler-job th {
-    font-family: Verdana, sans-serif;
-    font-size: small;
-    font-weight: normal;
-    padding: 3px 10px;
-
-    border-top: solid 1px #C0C0C0;
-    background-color: #909090;
-    border-bottom: solid 1px #606060;
-
-    color: Black;
-    text-align: left;
-}
-
-table.scheduler-job td {
-    border-top: solid 1px #E0E0E0;
-    background-color: #C0C0C0;
-    border-bottom: solid 1px #909090;
-    padding: 3px 10px;
-}
-
-table.scheduler-job td.scheduler-empty {
-    background-color: White;
-    border: 0;
 }
 
 .lenya-header {
     vertical-align: bottom;
-    padding-left: 200px;
+    padding-left: 20px;
     background-color: White;
     border-bottom: solid 1px #B1B1B1;
-}
-
-.lenya-header td {
 }
 
 .lenya-body {
@@ -102,20 +47,18 @@ table.scheduler-job td.scheduler-empty {
 td.lenya-content {
     background-color: White;
     padding: 30px;
+    vertical-align: top;
 }
 
 td.lenya-sidebar {
     border-left: solid 1px #B1B1B1;
+    vertical-align: top;
 }
 
 td.lenya-frontpage {
-    background-color: #F5F4E9;
-/*    padding: 0px; */
+    background-color: White;
     padding: 30px;
-}
-
-.lenya-publication-item {
-/*    padding: 0px 0px 20px 0px; */
+    vertical-align: top;
 }
 
 .lenya-page-title {
@@ -133,11 +76,6 @@ td.lenya-frontpage {
 }
 
 .lenya-publication-item {
-/*
-    background-color: #DDDCCF;
-    background-color: #DDDCCF;
-    border-top: solid 1px #B1B1B1;
-*/
     padding: 0px 10px;
     margin: 20px 0px;
     border-bottom: solid 1px #DDDCCF;
@@ -161,107 +99,9 @@ td.lenya-frontpage {
 
 .lenya-sidebar-heading {
     font-weight: bold;
-/*
-    letter-spacing: -2;
-    font-stretch: condensed;
-*/
     font-size: 150%;
     color: White;
     background-color: #DDDCCF;
     padding: 0px 10px 5px 10px;
 }
 
-
-/*.lenya-content h2 {*/
-/*
-    background-color: #DDDCCF;
-    color: white;
-    background-color: #F5F4E9;
-    border-top: solid 1px #DDDCCF;
-    border-right: solid 1px #DDDCCF;
-*/
-/*
-    border-bottom: solid 5px #DDDCCF;
-    margin: 0px;
-    margin-top: 20px;
-    padding-left: 50px;
-}
-
-.lenya-content p {
-    margin: 10px 20px 10px 50px;
-    padding: 5px 0px;
-}
-*/
-
-
-/*
-.lenya-frontpage h2 {
-    float: left;
-    text-align: right;
-    width: 200px;
-    margin: 30px 0px 0px 0px;
-    padding: 0px;
-
-    background-color: #DDDCCF;
-    color: White;
-*/
-
-/*
-    border-top: solid 1px #B1B1B1;
-    border-bottom: solid 1px #B1B1B1;
-    border-top: solid 30px White;
-    border-bottom: solid 1px #B1B1B1;
-
-    background-color: #F5F4E9;
-    border-top: solid 1px #DDDCCF;
-    border-right: solid 1px #DDDCCF;
-    border-bottom: solid 1px #DDDCCF;
-*/
-}
-
-/*
-.lenya-frontpage p {
-    padding: 30px 30px 0px 10px;
-    margin: 0px 0px 0px 200px;
-    background-color: White;
-    border-left: solid 1px #B1B1B1;
-}
-
-.lenya-frontpage ol {
-    padding: 30px 30px 0px 50px;
-    margin: 0px 0px 0px 200px;
-    background-color: White;
-    border-left: solid 1px #B1B1B1;
-}
-
-.lenya-frontpage h3 {
-    padding: 10px 30px 10px 20px;
-    margin: 0px 0px 0px 200px;
-    background-color: White;
-    border-left: solid 1px #B1B1B1;
-}
-*/
-
-
-/* Styles for tabs in Site / Meta Area */
-
-.lenya-tab {
-	width:auto;
-	font-family:verdana,arial,sans serif;
-	background-color:#cccc99; 
-	padding:10px;
-	color:#333;
-	border-width:1px;
-	border-type:solid;
-	border-color:#003366;
-}
-
-.lenya-tablink {
-	display:inline; /*mandatory*/
-	margin-right:.5em;
-	padding-left:2em;
-	padding-right:2em;
-	text-decoration:none;
-	font-weight:bold;
-	color:#ccc;
-}

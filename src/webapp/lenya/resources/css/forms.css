@@ -1,0 +1,18 @@
+
+form {
+	margin: 0px;
+	padding: 0px;
+}
+
+.lenya-pad {
+	padding: 10px;
+}
+
+.lenya-table td.lenya-entry-caption {
+	text-align: right;
+}
+
+.lenya-form-element {
+    width: 300px;
+    font-family: Verdana, sans-serif;
+}
