@@ -1,5 +1,5 @@
 /*
-$Id: InitWorkflowHistoryTask.java,v 1.5 2003/08/05 18:17:28 egli Exp $
+$Id: InitWorkflowHistoryTask.java,v 1.6 2003/08/13 17:21:57 egli Exp $
 <License>
 
  ============================================================================
@@ -71,32 +71,45 @@ import org.apache.tools.ant.BuildException;
  *
  */
 public class InitWorkflowHistoryTask extends PublicationTask {
+    private String documentId;
+    private String documentType;
+    private String language;
+
     /**
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
         // FIXME: URL as parameter
-        String url = "/" + getPublication().getId() + "/" + Publication.AUTHORING_AREA +
-            getDocumentId() + ".html";
+        String url =
+            "/"
+                + getPublication().getId()
+                + "/"
+                + Publication.AUTHORING_AREA
+                + getDocumentId()
+                + "_"
+                + getLanguage()
+                + ".html";
         Document document;
 
         try {
-            document = DefaultDocumentBuilder.getInstance().buildDocument(getPublication(), url);
+            document =
+                DefaultDocumentBuilder.getInstance().buildDocument(
+                    getPublication(),
+                    url);
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }
 
         try {
-            DocumentType type = DocumentTypeBuilder.buildDocumentType(getDocumentType(),
+            DocumentType type =
+                DocumentTypeBuilder.buildDocumentType(
+                    getDocumentType(),
                     getPublication());
             WorkflowFactory.initHistory(document, type.getWorkflowFileName());
         } catch (Exception e) {
             throw new BuildException(e);
         }
     }
-
-    private String documentId;
-    private String documentType;
 
     /**
      * Get the document-id.
@@ -139,4 +152,23 @@ public class InitWorkflowHistoryTask extends PublicationTask {
         assertString(aDocumentType);
         documentType = aDocumentType;
     }
+    
+    /**
+     * Get the language.
+     *  
+     * @return the language
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * Set the language.
+     * 
+     * @param string the language
+     */
+    public void setLanguage(String string) {
+        language = string;
+    }
+
 }
