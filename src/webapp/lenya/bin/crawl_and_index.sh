@@ -66,30 +66,3 @@ case "$1" in
 esac
 
 exit 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##http://www.adobe.com/products/acrobat/access_simple_form.html
