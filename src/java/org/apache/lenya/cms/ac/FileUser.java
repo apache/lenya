@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.12 2003/06/11 10:23:23 egli Exp $
+ * $Id: FileUser.java,v 1.13 2003/06/11 14:58:04 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -80,14 +80,6 @@ public class FileUser extends User {
 	private Publication publication;
 
 	/**
-	 * @param id
-	 */
-	public FileUser(Publication publication, String id) {
-		super(id);
-		this.publication = publication;
-	}
-
-	/**
 	 * @param publication
 	 * @param id
 	 * @param fullName
@@ -106,11 +98,12 @@ public class FileUser extends User {
 
 	public FileUser(Publication publication, Configuration config)
 		throws ConfigurationException {
+		super(
+			config.getAttribute(ID_ATTRIBUTE),
+			config.getChild(FULL_NAME).getValue(),
+			config.getChild(EMAIL).getValue(),
+			config.getChild(PASSWORD).getValue());
 		this.publication = publication;
-		id = config.getAttribute(ID_ATTRIBUTE);
-		setEmail(config.getChild(EMAIL).getValue());
-		setFullName(config.getChild(FULL_NAME).getValue());
-		setPassword(config.getChild(PASSWORD).getValue());
 		Configuration[] groups = config.getChildren(GROUPS);
 		if (groups.length == 1) {
 			groups = groups[0].getChildren(GROUP);
@@ -187,7 +180,7 @@ public class FileUser extends User {
 		Configuration config = createConfiguration();
 		UserManager manager = UserManager.instance(publication);
 		manager.add(this);
-		
+
 		File xmlPath = manager.getPath();
 		File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
 		try {
