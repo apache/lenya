@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.27 2003/07/08 14:22:09 egli Exp $
+$Id: PageEnvelope.java,v 1.28 2003/07/15 14:55:49 egli Exp $
 <License>
 
  ============================================================================
@@ -66,7 +66,6 @@ import java.io.File;
 
 import java.util.Map;
 
-
 /**
  * A page envelope carries a set of information that are needed
  * during the presentation of a document.
@@ -88,8 +87,7 @@ public class PageEnvelope {
     /**
      * Constructor.
      */
-    protected PageEnvelope() {
-    }
+    protected PageEnvelope() {}
 
     /**
      * Creates a new instance of PageEnvelope from a sitemap inside a publication.
@@ -99,6 +97,49 @@ public class PageEnvelope {
      * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
      */
     public PageEnvelope(Publication publication, Request request)
+        throws PageEnvelopeException {
+        init(publication, request);
+    }
+
+    /**
+     * Creates a page envelope from an object model.
+     * @param objectModel The object model.
+     * @throws PageEnvelopeException when something went wrong.
+     * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
+     */
+    public PageEnvelope(Map objectModel) throws PageEnvelopeException {
+        try {
+            init(
+                PublicationFactory.getPublication(objectModel),
+                ObjectModelHelper.getRequest(objectModel));
+        } catch (PublicationException e) {
+            throw new PageEnvelopeException(e);
+        }
+    }
+
+    /**
+     * Creates a page envelope from an object model.
+     * @param objectModel The object model.
+     * @param createdByFactory A dummy parameter to allow creating an additional
+     * protected constructor that is not deprecated.
+     * @throws PageEnvelopeException when something went wrong.
+     */
+    protected PageEnvelope(Map objectModel, boolean createdByFactory)
+        throws PageEnvelopeException {
+        this(objectModel);
+    }
+
+	/**
+	 * Setup an instance of Publication.
+	 * 
+	 * Shared by multiple constructors.
+	 * 
+	 * @param publication The publication the page belongs to.
+	 * @param request The request that calls the page.
+	 * 
+	 * @throws PageEnvelopeException if an error occurs.
+	 */
+    protected void init(Publication publication, Request request)
         throws PageEnvelopeException {
         assert publication != null;
         assert request != null;
@@ -112,7 +153,9 @@ public class PageEnvelope {
             }
 
             String webappURI = requestURI.substring(context.length());
-            Document document = DefaultDocumentBuilder.getInstance().buildDocument(publication,
+            Document document =
+                DefaultDocumentBuilder.getInstance().buildDocument(
+                    publication,
                     webappURI);
             setDocument(document);
 
@@ -121,8 +164,15 @@ public class PageEnvelope {
         }
 
         // plausibility check
-        if (!request.getRequestURI().startsWith(getContext() + "/" + getPublication().getId() +
-                    "/" + getArea() + getDocumentId())) {
+        if (!request
+            .getRequestURI()
+            .startsWith(
+                getContext()
+                    + "/"
+                    + getPublication().getId()
+                    + "/"
+                    + getArea()
+                    + getDocumentId())) {
             throw new PageEnvelopeException(createExceptionMessage(request));
         }
     }
@@ -133,32 +183,17 @@ public class PageEnvelope {
      * @return A string.
      */
     protected String createExceptionMessage(Request request) {
-        return "Resolving page envelope failed:" + "\n  URI: " + request.getRequestURI() +
-        "\n  Context: " + getContext() + "\n  Publication ID: " + getPublication().getId() +
-        "\n  Area: " + getArea() + "\n  Document ID: " + getDocumentId();
-    }
-
-    /**
-     * Creates a page envelope from an object model.
-     * @param objectModel The object model.
-     * @throws PageEnvelopeException when something went wrong.
-     * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
-     */
-    public PageEnvelope(Map objectModel) throws PageEnvelopeException {
-        this(PublicationFactory.getPublication(objectModel),
-            ObjectModelHelper.getRequest(objectModel));
-    }
-
-    /**
-     * Creates a page envelope from an object model.
-     * @param objectModel The object model.
-     * @param createdByFactory A dummy parameter to allow creating an additional
-     * protected constructor that is not deprecated.
-     * @throws PageEnvelopeException when something went wrong.
-     */
-    protected PageEnvelope(Map objectModel, boolean createdByFactory)
-        throws PageEnvelopeException {
-        this(objectModel);
+        return "Resolving page envelope failed:"
+            + "\n  URI: "
+            + request.getRequestURI()
+            + "\n  Context: "
+            + getContext()
+            + "\n  Publication ID: "
+            + getPublication().getId()
+            + "\n  Area: "
+            + getArea()
+            + "\n  Document ID: "
+            + getDocumentId();
     }
 
     /**
@@ -175,7 +210,8 @@ public class PageEnvelope {
      * @deprecated We should detach the RC environment from the page envelope.
      */
     public RCEnvironment getRCEnvironment() {
-        return RCEnvironment.getInstance(getPublication().getServletContext().getAbsolutePath());
+        return RCEnvironment.getInstance(
+            getPublication().getServletContext().getAbsolutePath());
     }
 
     /**
@@ -221,11 +257,16 @@ public class PageEnvelope {
     /**
      * The names of the page envelope parameters.
      */
-    public static final String[] PARAMETER_NAMES = {
-        PageEnvelope.AREA, PageEnvelope.CONTEXT, PageEnvelope.PUBLICATION_ID,
-        PageEnvelope.PUBLICATION, PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_URL,
-        PageEnvelope.DOCUMENT_PATH, PageEnvelope.DOCUMENT_LANGUAGE
-    };
+    public static final String[] PARAMETER_NAMES =
+        {
+            PageEnvelope.AREA,
+            PageEnvelope.CONTEXT,
+            PageEnvelope.PUBLICATION_ID,
+            PageEnvelope.PUBLICATION,
+            PageEnvelope.DOCUMENT_ID,
+            PageEnvelope.DOCUMENT_URL,
+            PageEnvelope.DOCUMENT_PATH,
+            PageEnvelope.DOCUMENT_LANGUAGE };
 
     /**
      * @param string The context.
