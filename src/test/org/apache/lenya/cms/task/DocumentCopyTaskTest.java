@@ -163,9 +163,6 @@ public class DocumentCopyTaskTest extends AntTaskTest {
         assertTrue(documentFile.exists());
 		System.out.println("Document was copied: " + documentFile.getAbsolutePath());
 
-        //TODO evaluation of meta, workflow
-        File sitetreeFile = new File(authoringDirectory, TREE_FILE);
-
         SiteTree sitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
         SiteTreeNode node = sitetree.getNode(secdocumentid);
         assertNotNull(node);

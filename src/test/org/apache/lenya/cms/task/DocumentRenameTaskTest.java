@@ -140,14 +140,8 @@ public class DocumentRenameTaskTest extends AntTaskTest {
 	protected void prepareTest() throws Exception {
 		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
         String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
-		File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
-
 		String filename = AUTHORING_PATH +FIRST_DOCUMENT_ID + File.separator + "index_de.xml";
-		String filepath = authoringDirectory + FIRST_DOCUMENT_ID + File.separator + "index_de.xml";  
-		String en_filepath = authoringDirectory + FIRST_DOCUMENT_ID + File.separator + "index_en.xml";  
-
-		// TODO generate the resources  
-
+		
 		// generate the rcml and rcbak files
 		File rcmlDirectory = new File(publicationPath , RCML_DIR);
 		File rcbakDirectory = new File(publicationPath , RCBAK_DIR);
@@ -226,7 +220,11 @@ public class DocumentRenameTaskTest extends AntTaskTest {
 		SiteTree sitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
 		SiteTreeNode node = sitetree.getNode(secdocumentid);
 		assertNotNull(node);
-		System.out.println("Sitetree node with id "+node.getId()+" was created as child of node with id: " + node.getAbsoluteParentId());
+        System.out.println(
+            "Sitetree node with id "
+                + node.getId()
+                + " was created as child of node with id: "
+                + node.getAbsoluteParentId());
 		SiteTreeNode firstnode = sitetree.getNode(FIRST_DOCUMENT_ID);
 		assertNull(firstnode);
 		System.out.println("Sitetree node for document id "+FIRST_DOCUMENT_ID+" was deleted");
