@@ -59,8 +59,7 @@ import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac2.AccessControlTest;
-
+import org.apache.lenya.cms.ac2.file.FilePolicyManager;
 
 /**
  * @author andreas
@@ -91,7 +90,10 @@ public class AccessControllerTest extends AccessControlTest {
      */
     public void testAccessController() throws AccessControlException {
         for (int i = 0; i < URLS.length; i++) {
-            Policy policy = getAccessController().getPolicy(PublicationHelper.getPublication(),
+            Policy policy =
+                new FilePolicyManager().getPolicy(
+                    getAccessController(),
+                    PublicationHelper.getPublication(),
                     URLS[i]);
             assertNotNull(policy);
             assertTrue(policy.getRoles(getIdentity()).length > 0);

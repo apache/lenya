@@ -70,6 +70,7 @@ import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.file.FileAccessController;
+import org.apache.lenya.cms.ac2.file.FilePolicyManager;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -143,7 +144,7 @@ public class WorkflowTest extends TestCase {
 
         File configurationDirectory = new File(publication.getDirectory(), "config/ac");
         FileAccessController accessController = new FileAccessController(configurationDirectory);
-        Policy policy = ((FileAccessController) accessController).getPolicy(publication, URL);
+        Policy policy = new FilePolicyManager().getPolicy(accessController, publication, URL);
 
         DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
         String workflowId = type.getWorkflowFileName();

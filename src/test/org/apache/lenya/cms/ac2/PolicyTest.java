@@ -60,13 +60,12 @@ import junit.textui.TestRunner;
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.AccessControlTest;
 import org.apache.lenya.cms.ac2.file.FileAccessController;
+import org.apache.lenya.cms.ac2.file.FilePolicyManager;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * @author andreas
@@ -119,7 +118,10 @@ public class PolicyTest extends AccessControlTest {
      * @throws AccessControlException when something went wrong.
      */
     protected Policy getPolicy(String url) throws AccessControlException {
-        Policy policy = ((FileAccessController) getAccessController()).getPolicy(PublicationHelper.getPublication(),
+        Policy policy =
+            new FilePolicyManager().getPolicy(
+                getAccessController(),
+                PublicationHelper.getPublication(),
                 url);
 
         return policy;
@@ -130,14 +132,19 @@ public class PolicyTest extends AccessControlTest {
      * @throws AccessControlException when something went wrong.
      */
     public void testSavePolicy() throws AccessControlException {
-        PolicyManager manager = getAccessController().getPolicyManager();
-        DefaultPolicy urlPolicy = manager.buildURLPolicy(URL);
+        PolicyManager manager = new FilePolicyManager();
+        DefaultPolicy urlPolicy =
+            manager.buildURLPolicy(
+                getAccessController(),
+                PublicationHelper.getPublication(),
+                URL);
         DefaultPolicy newPolicy = new DefaultPolicy();
 
         Credential[] credentials = urlPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            Credential credential = new Credential(credentials[i].getAccreditable());
+            Credential credential =
+                new Credential(credentials[i].getAccreditable());
             Role[] roles = credentials[i].getRoles();
 
             for (int j = 0; j < roles.length; j++) {
@@ -147,27 +154,42 @@ public class PolicyTest extends AccessControlTest {
             newPolicy.addCredential(credential);
         }
 
-        assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
+        assertEquals(
+            urlPolicy.getCredentials().length,
+            newPolicy.getCredentials().length);
 
-        getAccessController().getPolicyManager().saveURLPolicy(SAVE_URL, newPolicy);
+        new FilePolicyManager().saveURLPolicy(
+            PublicationHelper.getPublication(),
+            SAVE_URL,
+            newPolicy);
 
-        newPolicy = manager.buildURLPolicy(SAVE_URL);
-        assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
+        newPolicy =
+            manager.buildURLPolicy(
+                getAccessController(),
+                PublicationHelper.getPublication(),
+                SAVE_URL);
+        assertEquals(
+            urlPolicy.getCredentials().length,
+            newPolicy.getCredentials().length);
 
         Credential[] newCredentials = newPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            Credential credential = new Credential(credentials[i].getAccreditable());
+            Credential credential =
+                new Credential(credentials[i].getAccreditable());
 
             Credential newCredential = null;
 
             for (int k = 0; k < newCredentials.length; k++) {
-                if (newCredentials[k].getAccreditable().equals(credential.getAccreditable())) {
+                if (newCredentials[k]
+                    .getAccreditable()
+                    .equals(credential.getAccreditable())) {
                     newCredential = newCredentials[k];
                 }
             }
 
-            System.out.println("Accreditable: [" + credential.getAccreditable() + "]");
+            System.out.println(
+                "Accreditable: [" + credential.getAccreditable() + "]");
             assertNotNull(newCredential);
 
             Set oldRoles = new HashSet(Arrays.asList(credential.getRoles()));
