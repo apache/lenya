@@ -206,8 +206,8 @@ public class FlowHelper {
     public RevisionController getRevisionController(FOM_Cocoon cocoon) 
     throws PageEnvelopeException, IOException {        
         final Publication publication = getPageEnvelope(cocoon).getPublication();
-        final String publicationPath = publication.getDirectory().getCanonicalPath();
-        final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
+        final String publicationPath = publication.getDirectory().getAbsolutePath();
+        final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
         String rcmlDirectory = rcEnvironment.getRCMLDirectory();
         rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
         String backupDirectory = rcEnvironment.getBackupDirectory();
@@ -230,7 +230,7 @@ public class FlowHelper {
         final Identity identity = (Identity) ObjectModelHelper.getRequest(cocoon.getObjectModel()).getSession().getAttribute(Identity.class.getName());
         final PageEnvelope pageEnvelope = getPageEnvelope(cocoon);
         final Publication publication = getPageEnvelope(cocoon).getPublication();
-        final String filename = pageEnvelope.getDocument().getFile().getCanonicalPath().substring(publication.getDirectory().getCanonicalPath().length());   
+        final String filename = pageEnvelope.getDocument().getFile().getAbsolutePath().substring(publication.getDirectory().getAbsolutePath().length());   
         getRevisionController(cocoon).reservedCheckIn(filename, identity.getUser().getId(), backup);
     }
 }

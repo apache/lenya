@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RevisionControllerAction.java,v 1.35 2004/08/16 12:14:13 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -92,9 +92,9 @@ public class RevisionControllerAction extends AbstractAction {
         }
 
         //get Parameters for RC
-        String publicationPath = publication.getDirectory().getCanonicalPath();
+        String publicationPath = publication.getDirectory().getAbsolutePath();
         RCEnvironment rcEnvironment =
-            RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
+            RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
         rcmlDirectory = rcEnvironment.getRCMLDirectory();
         rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
         backupDirectory = rcEnvironment.getBackupDirectory();
@@ -147,10 +147,10 @@ public class RevisionControllerAction extends AbstractAction {
                 builder.buildCanonicalUrl(publication, document.getArea(), documentid, language);
             Document srcDoc = builder.buildDocument(publication, srcUrl);
             File newFile = srcDoc.getFile();
-            filename = newFile.getCanonicalPath();
+            filename = newFile.getAbsolutePath();
 
         } else {
-            filename = document.getFile().getCanonicalPath();
+            filename = document.getFile().getAbsolutePath();
         }
 
         filename = filename.substring(publicationPath.length());
