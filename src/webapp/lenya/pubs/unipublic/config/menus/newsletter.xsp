@@ -1,81 +1,103 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-
-<xsp:page 
-  language="java" 
-  xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
->
-
-<menu>
-
-  <xsp-wyona:util/>
-
-  <xsp:logic>
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0">
+	<menu>
+		<xsp-wyona:util/>
+		<xsp:logic>
     String sourcesParameter = "sources=/newsletter/index.xml";
     String urisParameter = "uris=" + xsp_wyona_context_prefix + "/newsletter/index.html";
-  </xsp:logic>                                                                                                                              
-
-  <live_uri><xsp:expr>"/newsletter/index.html"</xsp:expr></live_uri>
-
-  <xsp:logic>
+  </xsp:logic>
+		<live_uri>
+			<xsp:expr>"/newsletter/index.html"</xsp:expr>
+		</live_uri>
+		<xsp:logic>
     String domain_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
   </xsp:logic>
-
-  <menus>
-    <menu name="File" label="File">
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/newsletter/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/newsletter.xsl&amp;url-xsd="+domain_prefix+"/schemas/newsletter.xsd&amp;url-css="+domain_prefix+"/css/newsletter.css&amp;url-post="+domain_prefix+"/save/newsletter"+"&amp;url-back="+domain_prefix_bitflux+"/authoring/newsletter/index.html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
-      </block>
-
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/send-screen.html</xsp:attribute>Dispatch&#160;Newsletter</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid/newsletter/index.html?task.<xsp:expr>sourcesParameter</xsp:expr>&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;documentType=Newsletter</xsp:attribute>Schedule</item>
-      </block>
-      <separator>
-        <item>-----------</item>
-      </separator>
-      <block>
-<!--
+		<menus>
+			<menu name="File" label="File">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/send-screen.html
+						</xsp:attribute>
+						Send&#160;Newsletter
+					</item>
+				</block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid/newsletter/index.html?task.<xsp:expr>sourcesParameter</xsp:expr>&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;documentType=Newsletter</xsp:attribute>Schedule</item>
+				</block>
+				<block>
+					<!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
 -->
-        <item>Passwd</item>
-        <item>Switch&#160;User</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
-      </block>
-    </menu>
-
-    <menu name="Search" label="Search">
-      <block>
-        <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
-        <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
-      </block>
-    </menu>
-
-    <menu name="Help" label="Help">
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#devguide</xsp:attribute>Developer's&#160;Guide</item>
-        <item href="http://www.wyona.org">About&#160;Wyona</item>
-      </block>
-    </menu>
-
-    <menu name="Debug" label="Debug">
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/newsletter/index.xml"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XML</item>
-        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/stylesheets/newsletter.xsl"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XSLT</item>
-        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/schemas/newsletter.xsd"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XSD</item>
-        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/css/newsletter.css"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;CSS</item>
-      </block>
-
-      <block>
-        <item href="content.xml">View&#160;XML</item>
-      </block>
-    </menu>
-  </menus>
-
-</menu>
-
+					<item>Passwd</item>
+					<item>Switch&#160;User</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+				</block>
+			</menu>
+			<menu name="Edit" label="Search">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/newsletter/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/newsletter.xsl&amp;url-xsd="+domain_prefix+"/schemas/newsletter.xsd&amp;url-css="+domain_prefix+"/css/newsletter.css&amp;url-post="+domain_prefix+"/save/newsletter"+"&amp;url-back="+domain_prefix_bitflux+"/authoring/newsletter/index.html"</xsp:expr>
+						</xsp:attribute>Edit&#160;with&#160;Bitflux</item>
+				</block>
+			</menu>
+			<menu name="Tools" label="Help">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/index.html
+						</xsp:attribute>
+						Newsletter
+					</item>
+				</block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/pubid/unipublic
+						</xsp:attribute>
+						Scheduler&#160;Admin
+					</item>
+				</block>
+				<!--
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr>
+						</xsp:attribute>Rollback</item>
+				</block>
+-->
+			</menu>
+			<menu name="Help" label="Debug">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html
+						</xsp:attribute>
+						About&#160;this&#160;Publication
+					</item>
+				</block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+				</block>
+				<block>
+					<item href="http://www.wyona.org">About&#160;Wyona</item>
+				</block>
+			</menu>
+		</menus>
+	</menu>
 </xsp:page>

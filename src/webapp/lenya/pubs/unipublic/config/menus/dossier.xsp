@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-
-<xsp:page 
-  language="java" 
-  xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
->
-
-<menu>
-
-  <xsp-wyona:util/>
-
-  <xsp:logic>
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0">
+	<menu>
+		<xsp-wyona:util/>
+		<xsp:logic>
     String year=parameters.getParameter("year","null");
     String dossierId=parameters.getParameter("dossierId","null");
 
@@ -19,73 +11,112 @@
     String urisParameter =
             "uris=" + xsp_wyona_context_prefix + "/dossiers/" + dossierId + "/index.html";
     
-  </xsp:logic>                                                                                                                              
-
-  <live_uri><xsp:expr>"/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr></live_uri>
-
-  <xsp:logic>
+  </xsp:logic>
+		<live_uri>
+			<xsp:expr>"/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr>
+		</live_uri>
+		<xsp:logic>
     String domain_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
   </xsp:logic>
-
-
-  <menus>
-    <menu name="File" label="File">
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/dossier.xsl&amp;url-xsd="+domain_prefix+"/schemas/dossier.xsd&amp;url-css="+domain_prefix+"/css/dossier.css&amp;url-post="+domain_prefix+"/save/dossiers/"+year+"/"+dossierId+"&amp;url-back="+domain_prefix_bitflux+"/authoring/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
-      </block>
-
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-dossier</xsp:attribute>Publish</item>
-<!--
+		<menus>
+			<menu name="File" label="File">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-dossier</xsp:attribute>Publish</item>
+					<!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?docid=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+dossierId</xsp:expr>/index.html&amp;docids=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+dossierId</xsp:expr>/index.xml</xsp:attribute>Publish</item>            
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+dossierId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            
 -->
-      </block>
-      <separator>
-        <item>-----------</item>
-      </separator>
-      <block>
-<!--
+				</block>
+				<block>
+					<!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
 -->
-        <item>Passwd</item>
-        <item>Switch&#160;User</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
-      </block>
-    </menu>
-
-    <menu name="Search" label="Search">
-      <block>
-        <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
-        <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
-      </block>
-    </menu>
-
-    <menu name="Help" label="Help">
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#devguide</xsp:attribute>Developer's&#160;Guide</item>
-        <item href="http://www.wyona.org">About&#160;Wyona</item>
-      </block>
-    </menu>
-
-    <menu name="Debug" label="Debug">
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XML</item>
-        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/stylesheets/dossier.xsl"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XSLT</item>
-        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/schemas/dossier.xsd"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XSD</item>
-        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/css/dossier.css"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;CSS</item>
-      </block>
-
-      <block>
-        <item href="content.xml">View&#160;XML</item>
-      </block>
-    </menu>
-  </menus>
-
-</menu>
-
+					<item>Passwd</item>
+					<item>Switch&#160;User</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+				</block>
+			</menu>
+			<menu name="Edit" label="Search">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/dossier.xsl&amp;url-xsd="+domain_prefix+"/schemas/dossier.xsd&amp;url-css="+domain_prefix+"/css/dossier.css&amp;url-post="+domain_prefix+"/save/dossiers/"+year+"/"+dossierId+"&amp;url-back="+domain_prefix_bitflux+"/authoring/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr>
+						</xsp:attribute>Edit&#160;with&#160;Bitflux</item>
+				</block>			
+			</menu>
+			<menu name="Tools" label="Help">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/index.html
+						</xsp:attribute>
+						Newsletter
+					</item>
+				</block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/pubid/unipublic
+						</xsp:attribute>
+						Scheduler&#160;Admin
+					</item>
+				</block>
+			</menu>
+			<menu name="Help" label="Debug">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html
+						</xsp:attribute>
+						About&#160;this&#160;Publication
+					</item>
+				</block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+				</block>
+				<block>
+					<item href="http://www.wyona.org">About&#160;Wyona</item>
+				</block>
+			</menu>
+<!--
+			<menu name="Debug" label="Debug">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml"</xsp:expr>
+						</xsp:attribute>View&#160;Bitflux&#160;XML</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>domain_prefix+"/stylesheets/dossier.xsl"</xsp:expr>
+						</xsp:attribute>View&#160;Bitflux&#160;XSLT</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>domain_prefix+"/schemas/dossier.xsd"</xsp:expr>
+						</xsp:attribute>View&#160;Bitflux&#160;XSD</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>domain_prefix+"/css/dossier.css"</xsp:expr>
+						</xsp:attribute>View&#160;Bitflux&#160;CSS</item>
+				</block>
+				<block>
+					<item href="content.xml">View&#160;XML</item>
+				</block>
+			</menu>
+-->
+		</menus>
+	</menu>
 </xsp:page>
