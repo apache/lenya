@@ -1,5 +1,4 @@
 /*
-$Id: IterativeHTMLCrawler.java,v 1.19 2004/02/21 13:44:43 gregor Exp $
 <License>
 
  ============================================================================
@@ -69,14 +68,17 @@ import java.util.StringTokenizer;
 
 import websphinx.RobotExclusion;
 
+import org.apache.log4j.Category;
+
 
 /**
- * DOCUMENT ME!
+ * Crawl iteratively
  *
- * @author $author$
- * @version $Revision: 1.19 $
+ * @version $Id: IterativeHTMLCrawler.java,v 1.20 2004/02/25 16:14:27 michi Exp $
  */
 public class IterativeHTMLCrawler {
+    Category log = Category.getInstance(IterativeHTMLCrawler.class);
+
     java.util.Vector urlsToCrawl;
     java.util.TreeSet urlsToCrawlLowerCase;
     String url_list_file = "url_file.txt";
@@ -200,7 +202,7 @@ public class IterativeHTMLCrawler {
     }
 
     /**
-     * DOCUMENT ME!
+     * Add URLs to crawl
      *
      * @param urlCandidate DOCUMENT ME!
      * @param currentURLPath DOCUMENT ME!
@@ -217,11 +219,11 @@ public class IterativeHTMLCrawler {
             if (!robot.disallowed(url)) {
                 urlsToCrawl.add(url);
                 urlsToCrawlLowerCase.add(url.toString().toLowerCase());
-                System.out.println(".addURL(): INFO: URL added: " + url);
+                log.debug("URL added: " + url);
 
                 return url;
             } else {
-                System.out.println(".addURL(): INFO: Disallowed by robots.txt: " + urlCandidate);
+                log.info("Disallowed by robots.txt: " + urlCandidate);
             }
         }
 
