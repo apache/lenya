@@ -40,17 +40,24 @@
       
       <menu label="Search" name="Edit">
         <block>
+          <item href="?lenya.step=open&amp;doctype=simple" uc:usecase="edit" wf:event="edit">Edit&#160;with&#160;Forms</item>
+<!--
           <item href="?lenya.step=open" uc:usecase="midas" wf:event="edit">Edit&#160;with&#160;Midas</item>
           <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/authoring/xopus2<xsp:expr>xmlSource</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
           <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/bitflux/index.html?url-xml=<xsp:expr>bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+<xsp-request:get-context-path/>+"/authoring"+<input:get-attribute as="string" module="page-envelope" name="document-url"/></xsp:expr></xsp:attribute>Edit with Bitflux</item>
+-->
         </block>
       </menu>
       
       <menu label="Help" name="Tools">
+<!--
         <block>
           <item><xsp:attribute name="href">../xopus<xsp:expr><input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
           <item href="../xopus/simple.xsd">View&#160;Xopus&#160;XSD</item>
           <item href="../xopus/simple.xsl">View&#160;Xopus&#160;XSLT</item>
+        </block>
+-->
+        <block>
           <item href="?lenya.usecase=view-logs&amp;lenya.step=overview">View Task Logs</item>
           <item href="?lenya.usecase=schedule&amp;lenya.step=showscreen">Scheduler</item>
           <item><xsp:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Rollback</item>

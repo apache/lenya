@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<simple-document xmlns="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+<simple-document xmlns="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:simple="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" simple:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" lenya:dummy="FIXME:keepNamespace">
     <!-- the root element indicates the doctype -->
     <lenya:meta>
         <dc:title>DC Title</dc:title>
