@@ -11,22 +11,28 @@
     </authors>
   </header>
   <body>
+ 
 <section><title>Subscribe/Unsubscribe</title>
-<p class="para">
-<b>User List:</b> <a href="mailto:lenya-user-subscribe@cocoon.apache.org">Subscribe</a>, <a href="mailto:lenya-user-unsubscribe@cocoon.apache.org">Unsubscribe</a>
+<p>
+<strong>User List:</strong> <link href="mailto:lenya-user-subscribe@cocoon.apache.org">Subscribe</link>, <link href="mailto:lenya-user-unsubscribe@cocoon.apache.org">Unsubscribe</link>
 <br />
-<b>Developer List:</b> <a href="mailto:lenya-dev-subscribe@cocoon.apache.org">Subscribe</a>, <a href="mailto:lenya-dev-unsubscribe@cocoon.apache.org">Unsubscribe</a>
+<strong>Developer List:</strong> <link href="mailto:lenya-dev-subscribe@cocoon.apache.org">Subscribe</link>, <link href="mailto:lenya-dev-unsubscribe@cocoon.apache.org">Unsubscribe</link>
 </p>
 </section>
 
 <section><title>Gmane</title>
-<p class="para">
-You can also read our mailing lists at <a href="http://gmane.org/">Gmane</a>
-<ol>
-  <li><a href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.user">gmane.comp.cms.lenya.user</a></li>
-  <li><a href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.devel">gmane.comp.cms.lenya.user</a></li>
-</ol>
+<p>
+You can also read our mailing lists at <link href="http://gmane.org/">Gmane</link>
 </p>
+<ul>
+  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.user">gmane.comp.cms.lenya.user</link></li>
+  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.devel">gmane.comp.cms.lenya.devel</link></li>
+</ul>
 </section>
+
+<section><title>Mail Archives</title>
+
+</section>
+
   </body>
 </document>

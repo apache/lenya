@@ -109,8 +109,9 @@ The URI steps are:
   <p>
     The basic principle is shown in the following figure:
   </p>
-  
-  <img src="../../images/live/navigation.png"/>
+  <p>
+  <img src="../../images/live/navigation.png" alt=""/>
+  </p>
   
   <p>
     In the publication sitemap (<code>lenya/pubs/&lt;pub-id&gt;/sitemap.xmap</code>)

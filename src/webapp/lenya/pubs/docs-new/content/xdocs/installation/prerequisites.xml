@@ -17,63 +17,74 @@
 The following list describes the setup that is tested and recommended.
 Several items, e.g. the servlet container, may be replaced by other products.
 </p>
-<ul class="wide">
+<ul>
   <li>
+    <p>
     <strong>Java 2 Platform, Standard Edition</strong> (recommended: J2SE 1.4.2 Beta)<br/>
-    <a href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>
+    <link href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</link>
+    </p>
   </li>
   
   <li>
+    <p>
     <strong>Apache Tomcat</strong> for JDK 1.4 (recommended: 4.1.24)<br/>
-    <a href="http://jakarta.apache.org/builds/jakarta-tomcat-4.0/release/v4.1.24/bin/">Tomcat release builds</a><br/>
+    <link href="http://jakarta.apache.org/builds/jakarta-tomcat-4.0/release/v4.1.24/bin/">Tomcat release builds</link><br/>
     Pick one of the <code>jakarta-tomcat-4.1.24-LE-jdk14</code> files!
+    </p>
   </li>
   
   <li>
+    <p>
     <strong>Apache Ant</strong> (recommended: 1.5.3)<br/>
-    <a href="http://www.apache.org/dist/ant/">Ant main distribution directory</a>
+    <link href="http://www.apache.org/dist/ant/">Ant main distribution directory</link>
+    </p>
   </li>
   
   <li>
+    <p>
     <strong>Apache Cocoon</strong> (recommended: Cocoon 2.1 M1 for the CVS version of Lenya)<br/>
-    <a href="http://xml.apache.org/cocoon/mirror.cgi">Cocoon download page</a>
+    <link href="http://xml.apache.org/cocoon/mirror.cgi">Cocoon download page</link>
+    </p>
   </li>
   
 </ul>
 
 <section><title>Recommended Combinations</title>
-    <ol class="wide">
+    <ol>
     <li>
       <strong>For all versions:</strong>
       <ul>
-      <li>Ant: <a href="../download/jakarta-ant-1.5.1-bin.tar.gz">jakarta-ant-1.5.1-bin.tar.gz</a></li>
-      <li>Tomcat: <a href="../download/jakarta-tomcat-4.1.21-LE-jdk14.tar.gz">jakarta-tomcat-4.1.21-LE-jdk14.tar.gz</a></li>
+      <li>Ant: <link href="../download/jakarta-ant-1.5.1-bin.tar.gz">jakarta-ant-1.5.1-bin.tar.gz</link></li>
+      <li>Tomcat: <link href="../download/jakarta-tomcat-4.1.21-LE-jdk14.tar.gz">jakarta-tomcat-4.1.21-LE-jdk14.tar.gz</link></li>
       </ul>
+      <p/>
     </li>
     <li>
       <strong>CVS version:</strong>
       <ul>
         <li>Lenya: Current CVS version</li>
-        <li>Cocoon: <a href="../download/cocoon-2.1-build-2003.05.02.19.50.tar.gz">cocoon-2.1-build-2003.05.02.19.50.tar.gz</a> (Linux) or
+        <li>Cocoon: <link href="../download/cocoon-2.1-build-2003.05.02.19.50.tar.gz">cocoon-2.1-build-2003.05.02.19.50.tar.gz</link> (Linux) or
             Milestone 1 (MS Windows)
         </li>
         <li>Endorsed Libraries: Come with the Cocoon build</li>
       </ul>
+      <p/>
     </li>
     <li>
       <strong>Last snapshots:</strong>
       <ul>
         <li>Lenya:<br/>
-            <a href="../download/lenya-0.8-dev-src-20030325022718.tar.gz">lenya-0.8-dev-src-20030325022718.tar.gz</a> or<br/>
-            <a href="../download/lenya-0.8-dev-src-20030328125056.tar.gz">lenya-0.8-dev-src-20030328125056.tar.gz</a>
+            <link href="../download/lenya-0.8-dev-src-20030325022718.tar.gz">lenya-0.8-dev-src-20030325022718.tar.gz</link> or<br/>
+            <link href="../download/lenya-0.8-dev-src-20030328125056.tar.gz">lenya-0.8-dev-src-20030328125056.tar.gz</link>
         </li>
         <li>Cocoon:<br/>
-            <a href="../download/cocoon-2.1-build-2003.03.11.23.15.tar.gz">cocoon-2.1-build-2003.03.11.23.15.tar.gz</a> or<br/>
-            <a href="../download/cocoon-2.1-build-2003.04.03.18.47.tar.gz">cocoon-2.1-build-2003.04.03.18.47.tar.gz</a> (Please note that the Lenya-Forrest publication does not compile with this Cocoon snapshot. You need to remove it and also edit build.xml)
+            <link href="../download/cocoon-2.1-build-2003.03.11.23.15.tar.gz">cocoon-2.1-build-2003.03.11.23.15.tar.gz</link> or<br/>
+            <link href="../download/cocoon-2.1-build-2003.04.03.18.47.tar.gz">cocoon-2.1-build-2003.04.03.18.47.tar.gz</link> (Please note that the Lenya-Forrest publication does not compile with this Cocoon snapshot. You need to remove it and also edit build.xml)
         </li>
         <li>Endorsed Libraries:<br/>
-            <a href="../download/endorsed.tar.gz">endorsed.tar.gz</a></li>
+            <link href="../download/endorsed.tar.gz">endorsed.tar.gz</link></li>
       </ul>
+      <p/>
     </li>
     </ol>
 </section>

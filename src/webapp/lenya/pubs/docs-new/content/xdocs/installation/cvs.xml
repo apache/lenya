@@ -67,10 +67,10 @@ from the parent directory. This is already in place.
 <p>
 To solve the problem log into the cvs repository, cd to the
 repository and do
+</p>
 <source>
 find . -type d -exec chmod g+s {} \;
 </source>
-</p>
 <p>
 As a reminder here's a excerpt from the CVS info pages:
 </p>

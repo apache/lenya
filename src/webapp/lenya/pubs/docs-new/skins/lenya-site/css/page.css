@@ -119,12 +119,26 @@ table .title { background-color: #FFFFFF; width:100%; border: 0px; }
 .pre { white-space: pre;}
 
 h1 { font-family: Verdana; color: Navy; font-size: 160%; margin: 0px 0px 0px 0px; padding: 0px; }
-h2 { font-size : 140%; margin: 10px 0px 0px 0px; padding: 0px; font-weight : bold;}
-h3 { font-size : 130%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; }
+h2 { font-size : 140%; margin: 10px 0px 0px 0px; padding: 0px; font-weight : bold; border-bottom: solid 1px #B1B1B1; }
+
+/*
+h3 {    
+        font-size: 130%;
+        margin: 18px 0px 0px 0px;
+        padding: 3px 3px 3px 5px;
+        font-weight : bold;
+        background-color: #E5E4D9;
+}
+*/
+/*
+h3 { font-size : 130%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; border-bottom: dotted 1px #B1B1B1; }
+*/
+h3 { font-size : 130%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; border-bottom: solid 3px #E5E4D9; }
+
 h4 { font-size : 120%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : normal; text-align: left; }
 h5 { font-size : 100%; margin: 14px 0px 0px 0px; padding: 0px; font-weight : normal; text-align: left; }
 
-.content { padding: 5px 5px 5px 10px; font : small Verdana, Helvetica, sans-serif;  font-size : 80%;  }
+.content { padding: 15px 5px 5px 10px; font : small Verdana, Helvetica, sans-serif;  font-size : 80%;  }
 .content .ForrestTable { width: 100%; background-color: #7099C5; color: #ffffff; font-size : 100%;}
 .content .ForrestTable caption { text-align: left; color: black; font-weight: bold; }
 .content .ForrestTable th { text-align: center; }

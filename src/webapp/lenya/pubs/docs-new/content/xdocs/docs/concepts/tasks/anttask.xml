@@ -27,7 +27,7 @@ The task parameters are:
   <li><strong><code>publication-id</code></strong>: The publication ID</li>
   <li><strong><code>buildfile (optional)</code></strong>: The location of the build file
       relative to the publication directory. If this parameter is
-      not provided, the file is loaded from the default location (see section <a href="#File+Locations">File Locations</a>).</li>
+      not provided, the file is loaded from the default location (see section <link href="#File+Locations">File Locations</link>).</li>
   <li><strong><code>target (optional)</code></strong>: The build target. If this parameter
       is not provided, the default target is executed.</li>
   <li><strong><code>properties.*</code></strong>: The project properties.</li>
@@ -41,9 +41,9 @@ The task parameters are:
 <p>
 Every time an <code>AntTask</code> is invoked, a log file is created unsing
 the <code>XmlLogger</code>
-(<a href="http://ant.apache.org/manual/listeners.html">manual entry</a>,
-<a href="http://nagoya.apache.org/gump/javadoc/ant/build/javadocs/org/apache/tools/ant/XmlLogger.html">JavaDoc</a>).
-For the location of the log files, see section <a href="#File+Locations">File Locations</a>.
+(<link href="http://ant.apache.org/manual/listeners.html">manual entry</link>,
+<link href="http://nagoya.apache.org/gump/javadoc/ant/build/javadocs/org/apache/tools/ant/XmlLogger.html">JavaDoc</link>).
+For the location of the log files, see section <link href="#File+Locations">File Locations</link>.
 The log history can be viewed at the URI
 </p>
 <source>
@@ -72,7 +72,7 @@ for a buildfile property named <code>filename</code>.
 <title>Using custom Ant Tasks</title>
 <p>
 The implementation of custom Ant tasks is described in the
-<a href="http://ant.apache.org/manual/index.html">Ant User Manual</a>.
+<link href="http://ant.apache.org/manual/index.html">Ant User Manual</link>.
 If you want to write a general Lenya task, put it into the package
 <code>org.lenya.cms.ant</code>. If you want to write a task
 that is only suited for your publication, put it in the
@@ -99,6 +99,7 @@ that is only suited for your publication, put it in the
 <p>
 The following buildfile contains the target <code>publish</code>
 that can be invoked using the <code>AntTask</code>:
+</p>
 <source>
 <![CDATA[<project name="Example Project" default="publish" basedir=".">
 
@@ -121,7 +122,6 @@ that can be invoked using the <code>AntTask</code>:
 
 </project>]]>
 </source>
-</p>
 
 <p>
 You define the task in your <code>tasks.xconf</code> file:

@@ -17,19 +17,19 @@ This list is featuring projects which are closely related to Apache Lenya.
 
 <p>
 Open Source Content Management Systems/Frameworks overviews can be found at
-<a href="http://www.oscom.org">oscom.org</a> or
-<a href="http://www.cmsinfo.org">cmsinfo.org</a>.
+<link href="http://www.oscom.org">oscom.org</link> or
+<link href="http://www.cmsinfo.org">cmsinfo.org</link>.
 </p>
 
 <p>
 More information on Cocoon-based projects can be found at
-<a href="http://xml.apache.org/cocoon/link/projects.html">http://xml.apache.org/cocoon/link/projects.html</a>.
+<link href="http://xml.apache.org/cocoon/link/projects.html">http://xml.apache.org/cocoon/link/projects.html</link>.
 </p>
 
 <section><title>CocoBlog</title>
 <p>
-CocoBlog is a free <a href="http://newhome.weblogs.com/historyOfWeblogs">weblogging</a> software tool based on Apache Cocoon and Apache XIndice
-<a href="http://www.beblogging.com/blog/docs">http://www.beblogging.com/blog/docs</a>.
+CocoBlog is a free <link href="http://newhome.weblogs.com/historyOfWeblogs">weblogging</link> software tool based on Apache Cocoon and Apache XIndice
+<link href="http://www.beblogging.com/blog/docs">http://www.beblogging.com/blog/docs</link>.
 </p>
 </section>
 
@@ -43,7 +43,7 @@ off, Cocoons centralized configuration system and sophisticated caching help you
 create, deploy, and maintain rock-solid XML server applications.
 </p>
 <p>
-<a href="http://xml.apache.org/cocoon/">http://xml.apache.org/cocoon/</a>
+<link href="http://xml.apache.org/cocoon/">http://xml.apache.org/cocoon/</link>
 </p>
 </section>
 
@@ -56,7 +56,7 @@ allowing you to generate presentation using a variety of templating and transfor
 technologies.
 </p>
 <p>
-<a href="http://mav.sourceforge.net">http://mav.sourceforge.net</a>
+<link href="http://mav.sourceforge.net">http://mav.sourceforge.net</link>
 </p>
 </section>
 
@@ -70,7 +70,7 @@ heterogenous, distributed data stores. In addition, Slide integrates security, l
 versioning, as well as many other services.
 </p>
 <p>
-<a href="http://jakarta.apache.org/slide/">http://jakarta.apache.org/slide/</a>
+<link href="http://jakarta.apache.org/slide/">http://jakarta.apache.org/slide/</link>
 </p>
 </section>
 

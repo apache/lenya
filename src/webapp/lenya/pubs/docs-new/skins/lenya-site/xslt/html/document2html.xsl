@@ -10,7 +10,7 @@ to HTML.  It renders XML as HTML in this form:
 ..which site2xhtml.xsl then combines with HTML from the index (book2menu.xsl)
 and tabs (tab2menu.xsl) to generate the final HTML.
 
-$Id: document2html.xsl,v 1.3 2003/05/07 13:29:21 andreas Exp $
+$Id: document2html.xsl,v 1.4 2003/05/08 14:25:45 andreas Exp $
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -20,7 +20,7 @@ $Id: document2html.xsl,v 1.3 2003/05/07 13:29:21 andreas Exp $
 
     <div class="content">
       <xsl:if test="normalize-space(header/title)!=''">
-        <table class="title">
+        <table class="title" cellpadding="0" cellspacing="0">
           <tr> 
             <td valign="middle"> 
               <h1>
@@ -93,7 +93,7 @@ $Id: document2html.xsl,v 1.3 2003/05/07 13:29:21 andreas Exp $
   <xsl:template match="@id">
     <xsl:apply-imports/>
   </xsl:template>
-
+<!--
   <xsl:template match="section">
     <a name="{generate-id()}"/>
     <xsl:apply-templates select="@id"/>
@@ -141,7 +141,8 @@ $Id: document2html.xsl,v 1.3 2003/05/07 13:29:21 andreas Exp $
         </table>
         <xsl:apply-templates select="*[not(self::title)]"/>
       </xsl:when>
-      <!-- If a faq, answer sections will be level 3 (1=Q/A, 2=part) -->
+      
+      <!- If a faq, answer sections will be level 3 (1=Q/A, 2=part) ->
       <xsl:when test="$level=3 and $notoc='true'">
         <h4><xsl:value-of select="title"/></h4>
         <div align="right"><a href="#{@id}-menu">^</a></div>
@@ -162,6 +163,7 @@ $Id: document2html.xsl,v 1.3 2003/05/07 13:29:21 andreas Exp $
     </xsl:choose>
 
   </xsl:template>  
+-->
 
   <xsl:template match="fixme | note | warning">
     <xsl:apply-imports/>

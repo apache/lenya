@@ -34,20 +34,22 @@ your_home
 </section>
 
 <section><title>Installation</title>
-<ol class="wide">
+<ol>
 
   <li>
-    <strong>Get the Java SDK</strong> (see <a href="prerequisites.html">Prerequisites</a>)
+    <strong>Get the Java SDK</strong> (see <link href="prerequisites.html">Prerequisites</link>)
+    <p/>
   </li>
   <li>
-    <strong>Get Apache Tomcat</strong> (see <a href="prerequisites.html">Prerequisites</a>)
+    <strong>Get Apache Tomcat</strong> (see <link href="prerequisites.html">Prerequisites</link>)
+    <p/>
   </li>
   <li>
     <p>
     <strong>Install Tomcat</strong>
     </p>
     <p>
-    See <a href="http://jakarta.apache.org/tomcat/tomcat-4.1-doc/RUNNING.txt">Running The Tomcat 4.0 Servlet/JSP Container</a>
+    See <link href="http://jakarta.apache.org/tomcat/tomcat-4.1-doc/RUNNING.txt">Running The Tomcat 4.0 Servlet/JSP Container</link>
     </p>
     <p>
     <strong>MS Windows:</strong><br/>
@@ -60,7 +62,7 @@ your_home
     <strong>Check if Tomcat is running</strong>
     </p>
     <p>
-    <a href="http://localhost:8080">http://localhost:8080</a>.
+    <link href="http://localhost:8080">http://localhost:8080</link>.
     </p>
   </li>
   <li>
@@ -74,7 +76,7 @@ your_home
   </li>
   <li>
     <p>
-    <strong>Get Apache Ant</strong> (see <a href="prerequisites.html">Prerequisites</a>)
+    <strong>Get Apache Ant</strong> (see <link href="prerequisites.html">Prerequisites</link>)
     </p>
   </li>
   <li>
@@ -82,11 +84,12 @@ your_home
     <strong>Install Ant</strong>
     </p>
     <p>
-    See section <a href="http://ant.apache.org/manual/install.html">Installing Ant</a> of the Ant Manual
+    See section <link href="http://ant.apache.org/manual/install.html">Installing Ant</link> of the Ant Manual
     </p>
     <p>
     <strong>MS Windows</strong><br/>
     Set a few environment variables, e.g.:
+    </p>
     <ul>
       <li><code>JAVA_HOME = C:\Programme\j2sdk1.4.1_01</code></li>
       <li><code>ANT_HOME = C:\Programme\Apache Group\apache-ant-1.5.2</code></li>
@@ -94,11 +97,11 @@ your_home
       <li><code>CLASSPATH = .\;C:\Programme\Apache Group\apache-ant-1.5.2\lib</code></li>
       <li><code>PATH = &lt;snip&gt;;C:\Programme\j2sdk1.4.1_01\bin;C:\Programme\Apache Group\apache-ant-1.5.2\bin</code></li>
     </ul>
-    </p>
+    <p/>
   </li>
   <li>
     <p>
-    <strong>Get Apache Cocoon</strong> (see <a href="prerequisites.html">Prerequisites</a>)
+    <strong>Get Apache Cocoon</strong> (see <link href="prerequisites.html">Prerequisites</link>)
     </p>
     <p>
     <strong>Note:</strong> The current CVS version of Lenya works only with Cocoon Milestone 1
@@ -111,20 +114,20 @@ your_home
     <strong>Compile Cocoon</strong>
     </p>
     <p>
-    See <a href="http://xml.apache.org/cocoon/installing/index.html">Installing Apache Cocoon</a>
+    See <link href="http://xml.apache.org/cocoon/installing/index.html">Installing Apache Cocoon</link>
     </p>
     <p>
     <strong>MS Windows</strong>
+    </p>
 <source>
 $COCOON_HOME > build -Dinclude.webapp.libs=yes webapp
 </source>
-    </p>
     <p>
     <strong>Unix</strong>
+    </p>
 <source>
 $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
 </source>
-    </p>
   </li>
   <li>
     <p>
@@ -142,6 +145,7 @@ $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
     <p>
     Extract the downloaded Lenya archive to a directory of your choice.
     </p>
+    <p/>
   </li>
   <li>
     <strong>Configure Lenya</strong>
@@ -162,6 +166,7 @@ $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
       <li><code>install.dir=$TOMCAT_HOME/webapps/lenya</code></li>
       <li><code>cache.dir=$TOMCAT_HOME/work/Standalone/localhost/lenya</code></li>
     </ul>
+    <p/>
   </li>
   <li>
     <strong>Build Lenya</strong>
@@ -198,7 +203,7 @@ $TOMCAT_HOME/bin > ./startup.sh
     <strong>Test the installation</strong>
     </p>
     <p>
-    <a href="http://localhost:8080/lenya">http://localhost:8080/lenya</a>
+    <link href="http://localhost:8080/lenya">http://localhost:8080/lenya</link>
     </p>
   </li>
 </ol>
