@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsl,v 1.30 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id: search-and-results.xsl,v 1.31 2004/05/26 21:40:17 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0" 
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
@@ -137,11 +137,11 @@
                 <!--
       <p>Total Hits: <xsl:value-of select="@total-hits"/></p>
 -->
-                <table width="90%" cellpadding="4" border="1">
+                <table width="90%" cellpadding="4" class="lenya-table">
                     <tr>
                         <td>&#160;</td>
                         <td>Score</td>
-                        <td>URL resp. File</td>
+                        <td>Document</td>
                     </tr>
                     <xsl:apply-templates select="hits/hit"/>
                 </table>
@@ -164,26 +164,16 @@
             <td valign="top"><xsl:value-of select="score/@percent"/>%</td>
             <xsl:choose>
                 <xsl:when test="path">
-                    <td>File: <xsl:value-of select="path"/></td>
+                    <td>Document: <xsl:value-of select="path"/></td>
                 </xsl:when>
                 <xsl:when test="uri">
-                    <td> Title: <a><xsl:attribute name="href"><xsl:value-of 
+                    <td> <strong><a><xsl:attribute name="href"><xsl:value-of 
                         select="/search-and-results/search/publication-prefix"/><xsl:value-of 
                         select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates 
-                        select="title"/></a><xsl:apply-templates 
-                        select="no-title"/> <br /> <font size="-1">Excerpt: 
+                        select="title"/></a></strong> <br />
                         <xsl:apply-templates 
                         select="excerpt"/><xsl:apply-templates 
-                        select="no-excerpt"/></font> <br /> <font 
-                        size="-1">URL: <a><xsl:attribute 
-                        name="href"><xsl:value-of 
-                        select="/search-and-results/search/publication-prefix"/><xsl:value-of 
-                        select="normalize-space(uri)"/></xsl:attribute><xsl:value-of 
-                        select="/search-and-results/search/publication-prefix"/><xsl:apply-templates 
-                        select="uri"/></a></font> <br /> <font 
-                        size="-1">Mime-Type: <xsl:apply-templates 
-                        select="mime-type"/><xsl:apply-templates 
-                        select="no-mime-type"/></font> </td>
+                        select="no-excerpt"/></td>
                 </xsl:when>
                 <xsl:otherwise>
                     <td>Neither PATH nor URL</td>
@@ -195,7 +185,7 @@
     <xsl:template match="title">
         <xsl:value-of select="."/>
     </xsl:template>
-    <xsl:template match="no-title"> (No Title!) </xsl:template>
+    <xsl:template match="no-title"> (No Title.) </xsl:template>
     <xsl:template match="excerpt"> ...&#160;<xsl:apply-templates/>&#160;... 
         </xsl:template>
     <xsl:template match="word">
