@@ -15,18 +15,18 @@
  *
  */
 
-/* $Id: DeleteResourcesTask.java,v 1.3 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourcesManager;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -45,7 +45,7 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
 	/**
 	 * Delete the resources of the documents corresponding to this node
 	 *  
-	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
 		Publication publication = getPublication();

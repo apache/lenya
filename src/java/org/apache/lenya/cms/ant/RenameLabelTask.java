@@ -15,15 +15,15 @@
  *
  */
 
-/* $Id: RenameLabelTask.java,v 1.3 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.Label;
-import org.apache.lenya.cms.publication.SiteTreeException;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -131,14 +131,15 @@ public class RenameLabelTask extends PublicationTask {
      * @param language the language of the label that is to be renamed.
      * @param area determines in which sitetree the label is to be renamed
      * 
-     * @throws SiteTreeException if an error occurs.
+     * @throws SiteException if an error occurs.
+     * @throws DocumentException if an error occurs.
      */
     public void renameLabel(
         String documentid,
         String labelName,
         String language,
         String area)
-        throws SiteTreeException, DocumentException {
+        throws SiteException, DocumentException {
 
         DefaultSiteTree tree = null;
         tree = getPublication().getSiteTree(area);

@@ -15,13 +15,13 @@
  *
  */
 
-/* $Id: SiteTreeResetTask.java,v 1.2 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**

@@ -15,10 +15,14 @@
  *
  */
 
-/* $Id: DublinCoreHelper.java,v 1.6 2004/08/16 12:27:23 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.log4j.Category;
 
 /**
@@ -26,64 +30,59 @@ import org.apache.log4j.Category;
  */
 public final class DublinCoreHelper {
 
-	/**
-	 *  
-	 */
-	private DublinCoreHelper() {
-	}
+    /**
+     *  
+     */
+    private DublinCoreHelper() {
+    }
 
-	private static Category log = Category.getInstance(DublinCoreHelper.class);
+    private static Category log = Category.getInstance(DublinCoreHelper.class);
 
-	/**
-	 * Get the value of the DCIdentifier corresponding to a document id.
-	 * 
-	 * @param publication
-	 *            The publication the document(s) belongs to.
-	 * @param area
-	 *            The area the document(s) belongs to.
-	 * @param documentId
-	 *            The document id.
-	 * @return a String. The value of the DCIdentifier.
-	 * @throws SiteTreeException
-	 *             when something with the sitetree went wrong.
-	 * @throws DocumentBuildException
-	 *             when the building of a document failed.
-	 * @throws DocumentException
-	 *             when something with the document went wrong.
-	 */
-	public static String getDCIdentifier(Publication publication, String area, String documentId)
-		throws SiteTreeException, DocumentBuildException, DocumentException {
-		String identifier = null;
-		String language = null;
-		String url = null;
-		Document document = null;
+    /**
+     * Get the value of the DCIdentifier corresponding to a document id.
+     * 
+     * @param publication The publication the document(s) belongs to.
+     * @param area The area the document(s) belongs to.
+     * @param documentId The document id.
+     * @return a String. The value of the DCIdentifier.
+     * @throws SiteException when something with the sitetree went wrong.
+     * @throws DocumentBuildException when the building of a document failed.
+     * @throws DocumentException when something with the document went wrong.
+     */
+    public static String getDCIdentifier(Publication publication, String area, String documentId)
+            throws SiteException, DocumentBuildException, DocumentException {
+        String identifier = null;
+        String language = null;
+        String url = null;
+        Document document = null;
 
-		SiteTree tree = publication.getSiteTree(area);
-		SiteTreeNode node = tree.getNode(documentId);
+        SiteTree tree = publication.getSiteTree(area);
+        SiteTreeNode node = tree.getNode(documentId);
 
-		DocumentBuilder builder = publication.getDocumentBuilder();
+        DocumentBuilder builder = publication.getDocumentBuilder();
 
-		int i = 0;
-		Label[] labels = node.getLabels();
-		if (labels.length > 0) {
-			while (identifier == null && i < labels.length) {
-				language = labels[i].getLanguage();
-				url = builder.buildCanonicalUrl(publication, area, documentId, language);
-				document = builder.buildDocument(publication, url);
-				log.debug("document file : " + document.getFile().getAbsolutePath());
-				DublinCore dublincore = document.getDublinCore();
-				log.debug("dublincore title : " + dublincore.getFirstValue(DublinCore.ELEMENT_TITLE));
-				identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
-				i = i + 1;
-			}
-		}
-		if (labels.length < 1 || identifier == null) {
-			url = builder.buildCanonicalUrl(publication, area, documentId);
-			document = builder.buildDocument(publication, url);
-			DublinCore dublincore = document.getDublinCore();
-			identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
-		}
+        int i = 0;
+        Label[] labels = node.getLabels();
+        if (labels.length > 0) {
+            while (identifier == null && i < labels.length) {
+                language = labels[i].getLanguage();
+                url = builder.buildCanonicalUrl(publication, area, documentId, language);
+                document = builder.buildDocument(publication, url);
+                log.debug("document file : " + document.getFile().getAbsolutePath());
+                DublinCore dublincore = document.getDublinCore();
+                log.debug("dublincore title : "
+                        + dublincore.getFirstValue(DublinCore.ELEMENT_TITLE));
+                identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
+                i = i + 1;
+            }
+        }
+        if (labels.length < 1 || identifier == null) {
+            url = builder.buildCanonicalUrl(publication, area, documentId);
+            document = builder.buildDocument(publication, url);
+            DublinCore dublincore = document.getDublinCore();
+            identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
+        }
 
-		return identifier;
-	}
+        return identifier;
+    }
 }

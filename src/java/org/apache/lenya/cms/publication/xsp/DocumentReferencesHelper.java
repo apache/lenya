@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentReferencesHelper.java,v 1.17 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.xsp;
 
@@ -36,9 +36,9 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.PathToDocumentIdMapper;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.search.Grep;
 import org.apache.log4j.Category;
 
@@ -125,6 +125,7 @@ public class DocumentReferencesHelper {
     /**
      * Find a list of document-ids which have references to the current
      * document.
+     * @param area The area.
      * 
      * @return an <code>array</code> of documents if there are references, 
      * an empty <code>array</code> otherwise 
@@ -316,7 +317,7 @@ public class DocumentReferencesHelper {
                         builder.buildDocument(publication, url));
                 }
             }
-        } catch (SiteTreeException e) {
+        } catch (SiteException e) {
             throw new ProcessingException(e);
         } catch (IOException e) {
             throw new ProcessingException(e);

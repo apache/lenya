@@ -15,11 +15,11 @@
  *
  */
 
-/* $Id: TwoNodesTask.java,v 1.7 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.SiteTreeException;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.tools.ant.BuildException;
 
 
@@ -107,11 +107,11 @@ public abstract class TwoNodesTask extends PublicationTask {
      * @param firstarea : area of the tree of the first node
      * @param secarea : area of the tree of the 2nd node
      * 
-     * @throws SiteTreeException if an error occurs
+     * @throws SiteException if an error occurs
      */
     public abstract void manipulateTree(String firstdocumentid, String secdocumentid,
         String firstarea, String secarea)
-        throws SiteTreeException;
+        throws SiteException;
 
     /** (non-Javadoc)
      * @see org.apache.tools.ant.Task#execute()

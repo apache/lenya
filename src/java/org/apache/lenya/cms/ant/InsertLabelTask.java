@@ -15,13 +15,13 @@
  *
  */
 
-/* $Id: InsertLabelTask.java,v 1.4 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
-import org.apache.lenya.cms.publication.Label;
-import org.apache.lenya.cms.publication.SiteTreeException;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.Label;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -43,7 +43,7 @@ public class InsertLabelTask extends PublicationTask {
     /**
      * Get the area of the site tree.
      * 
-     * @return  the area of the tree.
+     * @return the area of the tree.
      */
     protected String getArea() {
         return area;
@@ -120,14 +120,10 @@ public class InsertLabelTask extends PublicationTask {
      * @param language the language of the label that is to be inserted.
      * @param area determines in which sitetree the label is to be inserted
      * 
-     * @throws SiteTreeException if an error occurs
+     * @throws SiteException if an error occurs
      */
-    public void insertLabel(
-        String documentid,
-        String labelName,
-        String language,
-        String area)
-        throws SiteTreeException {
+    public void insertLabel(String documentid, String labelName, String language, String area)
+            throws SiteException {
 
         DefaultSiteTree tree = null;
         Label label = null;
@@ -137,17 +133,13 @@ public class InsertLabelTask extends PublicationTask {
             tree.addLabel(documentid, label);
             tree.save();
         } catch (Exception e) {
-            throw new SiteTreeException(
-                "Cannot insert label "
-                    + label
-                    + " into tree "
-                    + area,
-                e);
+            throw new SiteException("Cannot insert label " + label + " into tree " + area, e);
         }
 
     }
 
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
@@ -156,11 +148,7 @@ public class InsertLabelTask extends PublicationTask {
             log("label name: " + getLabelName());
             log("language: " + getLanguage());
             log("area: " + getArea());
-            insertLabel(
-                getDocumentid(),
-                getLabelName(),
-                getLanguage(),
-                getArea());
+            insertLabel(getDocumentid(), getLabelName(), getLanguage(), getArea());
         } catch (Exception e) {
             throw new BuildException(e);
         }

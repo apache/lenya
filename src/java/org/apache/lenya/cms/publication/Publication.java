@@ -21,6 +21,9 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+
 /**
  * A Lenya publication.
  */
@@ -129,9 +132,9 @@ public interface Publication {
      * @param area the area
      * @return the sitetree for the specified area
      * 
-     * @throws SiteTreeException if an error occurs 
+     * @throws SiteException if an error occurs 
      */
-    DefaultSiteTree getSiteTree(String area) throws SiteTreeException;
+    DefaultSiteTree getSiteTree(String area) throws SiteException;
 
     /**
      * Returns the document builder of this instance.

@@ -19,13 +19,20 @@ package org.apache.lenya.cms.publication;
 
 import java.util.List;
 
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
+
 /**
- * @version $Id: PublicationHelper.java,v 1.1 2004/08/26 22:18:19 roku Exp $
+ * @version $Id$
  */
 public final class PublicationHelper {
 
     private Publication publication;
 
+    /**
+     * Ctor.
+     * @param publication The publication.
+     */
     public PublicationHelper(Publication publication) {
         this.publication = publication;
     }
@@ -33,7 +40,9 @@ public final class PublicationHelper {
     /**
      * Returns all documents of a publication.
      * @param area
-     * @return
+     * @param language
+     * @return An array of document.
+     * @throws DocumentException
      * @see Document
      * @see Publication
      */
@@ -47,7 +56,7 @@ public final class PublicationHelper {
                         ((SiteTreeNode)allNodes.get(i)).getAbsoluteId(), language);
             }
             return documents;
-        } catch(SiteTreeException e) {
+        } catch(SiteException e) {
             throw new DocumentException("Can not access sitetree to get document ids.", e);
         } catch(DocumentBuildException e) {
             throw new DocumentException("Can not build document from id obtained from sitetree.", e);

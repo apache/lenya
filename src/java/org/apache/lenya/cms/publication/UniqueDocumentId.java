@@ -15,27 +15,28 @@
  *
  */
 
-/* $Id: UniqueDocumentId.java,v 1.11 2004/08/16 13:01:46 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
+
 /**
- * class to compute an unique document id for a document, if there is
- * already a node in the sitetree for a document with this id. It will
- * documentid_"number of version"
+ * class to compute an unique document id for a document, if there is already a node in the sitetree
+ * for a document with this id. It will documentid_"number of version"
  */
 public class UniqueDocumentId {
 
-    /** compute an unique document id
+    /**
+     * compute an unique document id
      * @param publication The publication the document belongs to.
      * @param area The area the document belongs to.
      * @param documentid The documentid .
      * @return the unique documentid
      */
-    public String computeUniqueDocumentId(
-        Publication publication,
-        String area,
-        String documentid) {
+    public String computeUniqueDocumentId(Publication publication, String area, String documentid) {
         SiteTree tree;
         try {
             tree = publication.getSiteTree(area);
@@ -70,8 +71,8 @@ public class UniqueDocumentId {
                     node = tree.getNode(documentid);
                 }
             }
-        } catch (SiteTreeException e) {
-            e.printStackTrace();
+        } catch (SiteException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
 
         return documentid;

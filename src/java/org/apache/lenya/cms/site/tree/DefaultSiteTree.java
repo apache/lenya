@@ -15,7 +15,7 @@
  *
  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.site.tree;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +26,8 @@ import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Category;
@@ -40,7 +42,7 @@ import org.xml.sax.SAXException;
 /**
  * Default sitetree implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -49,7 +51,7 @@ public class DefaultSiteTree implements SiteTree {
      * The sitetree namespace.
      */
     public static final String NAMESPACE_URI = "http://apache.org/cocoon/lenya/sitetree/1.0";
-    
+
     /**
      * The name of the sitetree file.
      */
@@ -66,43 +68,37 @@ public class DefaultSiteTree implements SiteTree {
      * @param pubDir the publication directory
      * @param area the area
      * 
-     * @throws SiteTreeException if an error occurs
+     * @throws SiteException if an error occurs
      */
-    protected DefaultSiteTree(File pubDir, String area) throws SiteTreeException {
-        this(
-            new File(
-                pubDir,
-                Publication.CONTENT_PATH
-                    + File.separator
-                    + area
-                    + File.separator
-                    + SITE_TREE_FILENAME));
+    public DefaultSiteTree(File pubDir, String area) throws SiteException {
+        this(new File(pubDir, Publication.CONTENT_PATH + File.separator + area + File.separator
+                + SITE_TREE_FILENAME));
         this.area = area;
     }
 
     /**
      * Create a DefaultSiteTree from a filename.
-     *
+     * 
      * @param treefilename file name of the tree
-     *
-     * @throws SiteTreeException if an error occurs
-     *  
+     * 
+     * @throws SiteException if an error occurs
+     * 
      * @deprecated use the DefaultSiteTree(File pubDir, String area) constructor instead.
      */
-    public DefaultSiteTree(String treefilename) throws SiteTreeException {
+    public DefaultSiteTree(String treefilename) throws SiteException {
         this(new File(treefilename));
     }
 
     /**
      * Create a DefaultSiteTree from a file.
-     *
+     * 
      * @param treefile the file containing the tree
      * 
-     * @throws SiteTreeException if an error occurs
+     * @throws SiteException if an error occurs
      * 
      * @deprecated this constructor will be private in the future
      */
-    public DefaultSiteTree(File treefile) throws SiteTreeException {
+    public DefaultSiteTree(File treefile) throws SiteException {
         this.treefile = treefile;
 
         try {
@@ -115,11 +111,11 @@ public class DefaultSiteTree implements SiteTree {
                 document = DocumentHelper.readDocument(treefile);
             }
         } catch (ParserConfigurationException e) {
-            throw new SiteTreeException(e);
+            throw new SiteException(e);
         } catch (SAXException e) {
-            throw new SiteTreeException(e);
+            throw new SiteException(e);
         } catch (IOException e) {
-            throw new SiteTreeException(e);
+            throw new SiteException(e);
         }
 
     }
@@ -130,14 +126,13 @@ public class DefaultSiteTree implements SiteTree {
      * Checks if the tree file has been modified externally and reloads the site tree.
      */
     protected void checkModified() {
-        if (area.equals(Publication.LIVE_AREA)
-            && treefile.isFile()
-            && treefile.lastModified() > lastModified) {
-                
+        if (area.equals(Publication.LIVE_AREA) && treefile.isFile()
+                && treefile.lastModified() > lastModified) {
+
             if (log.isDebugEnabled()) {
                 log.debug("Sitetree [" + treefile + "] has changed: reloading.");
             }
-                
+
             try {
                 document = DocumentHelper.readDocument(treefile);
             } catch (Exception e) {
@@ -149,7 +144,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * Create a new DefaultSiteTree xml document.
-     *
+     * 
      * @return the new site document
      * 
      * @throws ParserConfigurationException if an error occurs
@@ -159,18 +154,17 @@ public class DefaultSiteTree implements SiteTree {
 
         Element root = document.getDocumentElement();
         root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-        root.setAttribute(
-            "xsi:schemaLocation",
-            "http://apache.org/cocoon/lenya/sitetree/1.0  ../../../../resources/entities/sitetree.xsd");
+        root
+                .setAttribute("xsi:schemaLocation",
+                        "http://apache.org/cocoon/lenya/sitetree/1.0  ../../../../resources/entities/sitetree.xsd");
 
         return document;
     }
 
     /**
-     * Find a node in a subtree. The search is started at the
-     * given node. The list of ids contains the document-id
-     * split by "/".
-     *
+     * Find a node in a subtree. The search is started at the given node. The list of ids contains
+     * the document-id split by "/".
+     * 
      * @param node where to start the search
      * @param ids list of node ids
      * 
@@ -191,9 +185,8 @@ public class DefaultSiteTree implements SiteTree {
                 if (attributes != null) {
                     Node idAttribute = attributes.getNamedItem("id");
 
-                    if (idAttribute != null
-                        && !"".equals(idAttribute.getNodeValue())
-                        && idAttribute.getNodeValue().equals(ids.get(0))) {
+                    if (idAttribute != null && !"".equals(idAttribute.getNodeValue())
+                            && idAttribute.getNodeValue().equals(ids.get(0))) {
                         return findNode(nodes.item(i), ids.subList(1, ids.size()));
                     }
                 }
@@ -204,44 +197,37 @@ public class DefaultSiteTree implements SiteTree {
         return null;
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String)
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(org.apache.lenya.cms.site.tree.SiteTreeNode,
+     *      java.lang.String)
      */
-    public void addNode(SiteTreeNode node, String refDocumentId) throws SiteTreeException {
-        this.addNode(
-            node.getAbsoluteParentId(),
-            node.getId(),
-            node.getLabels(),
-            node.getHref(),
-            node.getSuffix(),
-            node.hasLink(),
-            refDocumentId);
+    public void addNode(SiteTreeNode node, String refDocumentId) throws SiteException {
+        this.addNode(node.getAbsoluteParentId(), node.getId(), node.getLabels(), node.getHref(),
+                node.getSuffix(), node.hasLink(), refDocumentId);
     }
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[])
+
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
+     *      org.apache.lenya.cms.site.tree.Label[])
      */
-    public void addNode(String parentid, String id, Label[] labels) throws SiteTreeException {
+    public void addNode(String parentid, String id, Label[] labels) throws SiteException {
         addNode(parentid, id, labels, null, null, false);
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(org.apache.lenya.cms.publication.SiteTreeNode)
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
-    public void addNode(SiteTreeNode node) throws SiteTreeException {
+    public void addNode(SiteTreeNode node) throws SiteException {
         this.addNode(node, null);
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean, java.lang.String)
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
+     *      org.apache.lenya.cms.site.tree.Label[], java.lang.String, java.lang.String, boolean,
+     *      java.lang.String)
      */
-    public void addNode(
-        String documentid,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link,
-        String refDocumentId)
-        throws SiteTreeException {
+    public void addNode(String documentid, Label[] labels, String href, String suffix,
+            boolean link, String refDocumentId) throws SiteException {
         String parentid = "";
         StringTokenizer st = new StringTokenizer(documentid, "/");
         int length = st.countTokens();
@@ -254,50 +240,36 @@ public class DefaultSiteTree implements SiteTree {
         this.addNode(parentid, id, labels, href, suffix, link, refDocumentId);
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
+     *      org.apache.lenya.cms.site.tree.Label[], java.lang.String, java.lang.String, boolean)
      */
-    public void addNode(
-        String documentid,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link)
-        throws SiteTreeException {
+    public void addNode(String documentid, Label[] labels, String href, String suffix, boolean link)
+            throws SiteException {
         this.addNode(documentid, labels, href, suffix, link, null);
     }
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
+
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
+     *      org.apache.lenya.cms.site.tree.Label[], java.lang.String, java.lang.String, boolean)
      */
-    public void addNode(
-        String parentid,
-        String id,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link)
-        throws SiteTreeException {
+    public void addNode(String parentid, String id, Label[] labels, String href, String suffix,
+            boolean link) throws SiteException {
         this.addNode(parentid, id, labels, href, suffix, link, null);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean, java.lang.String)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
+     *      org.apache.lenya.cms.site.tree.Label[], java.lang.String, java.lang.String, boolean,
+     *      java.lang.String)
      */
-    public void addNode(
-        String parentid,
-        String id,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link,
-        String refDocumentId)
-        throws SiteTreeException {
+    public void addNode(String parentid, String id, Label[] labels, String href, String suffix,
+            boolean link, String refDocumentId) throws SiteException {
 
         Node parentNode = getNodeInternal(parentid);
 
         if (parentNode == null) {
-            throw new SiteTreeException(
-                "Parentid: " + parentid + " in " + area + " tree not found");
+            throw new SiteException("Parentid: " + parentid + " in " + area + " tree not found");
         }
 
         log.debug("PARENT ELEMENT: " + parentNode);
@@ -340,7 +312,7 @@ public class DefaultSiteTree implements SiteTree {
             child.appendChild(label);
         }
 
-        // Add Node 
+        // Add Node
         if (refDocumentId != null && !refDocumentId.equals("")) {
             Node nextSibling = getNodeInternal(refDocumentId);
             if (nextSibling != null) {
@@ -354,9 +326,10 @@ public class DefaultSiteTree implements SiteTree {
         log.debug("Tree has been modified: " + document.getDocumentElement());
 
     }
+
     /**
-     *  (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addLabel(java.lang.String,
+     *      org.apache.lenya.cms.site.tree.Label)
      */
     public void addLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);
@@ -366,8 +339,8 @@ public class DefaultSiteTree implements SiteTree {
     }
 
     /**
-     *  (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#removeLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#removeLabel(java.lang.String,
+     *      org.apache.lenya.cms.site.tree.Label)
      */
     public void removeLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);
@@ -376,8 +349,9 @@ public class DefaultSiteTree implements SiteTree {
         }
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#removeNode(java.lang.String)
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#removeNode(java.lang.String)
      */
     public SiteTreeNode removeNode(String documentId) {
         assert documentId != null;
@@ -392,8 +366,7 @@ public class DefaultSiteTree implements SiteTree {
     }
 
     /**
-     * removes the node corresponding to the given document-id
-     * and returns it
+     * removes the node corresponding to the given document-id and returns it
      * 
      * @param documentId the document-id of the Node to be removed
      * 
@@ -409,7 +382,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * Find a node for a given document-id
-     *
+     * 
      * @param documentId the document-id of the Node that we're trying to get
      * 
      * @return the Node if there is a Node for the given document-id, null otherwise
@@ -427,7 +400,7 @@ public class DefaultSiteTree implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.SiteTree#getNode(java.lang.String)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#getNode(java.lang.String)
      */
     public SiteTreeNode getNode(String documentId) {
         assert documentId != null;
@@ -446,27 +419,25 @@ public class DefaultSiteTree implements SiteTree {
      * Move up the node amongst its siblings.
      * 
      * @param documentid The document id for the node.
-     * @throws SiteTreeException if the moving failed.
+     * @throws SiteException if the moving failed.
      */
-    public void moveUp(String documentid) throws SiteTreeException {
+    public void moveUp(String documentid) throws SiteException {
         Node node = this.getNodeInternal(documentid);
         if (node == null) {
-            throw new SiteTreeException("Node to move: " + documentid + " not found");
+            throw new SiteException("Node to move: " + documentid + " not found");
         }
         Node parentNode = node.getParentNode();
         if (parentNode == null) {
-            throw new SiteTreeException(
-                "Parentid of node with documentid: " + documentid + " not found");
+            throw new SiteException("Parentid of node with documentid: " + documentid
+                    + " not found");
         }
 
         Node previousNode;
         try {
-            previousNode =
-                XPathAPI.selectSingleNode(
-                    node,
+            previousNode = XPathAPI.selectSingleNode(node,
                     "(preceding-sibling::*[local-name() = 'node'])[last()]");
         } catch (TransformerException e) {
-            throw new SiteTreeException(e);
+            throw new SiteException(e);
         }
 
         if (previousNode == null) {
@@ -481,26 +452,24 @@ public class DefaultSiteTree implements SiteTree {
      * Move down the node amongst its siblings.
      * 
      * @param documentid The document id for the node.
-     * @throws SiteTreeException if the moving failed.
+     * @throws SiteException if the moving failed.
      */
-    public void moveDown(String documentid) throws SiteTreeException {
+    public void moveDown(String documentid) throws SiteException {
         Node node = this.getNodeInternal(documentid);
         if (node == null) {
-            throw new SiteTreeException("Node to move: " + documentid + " not found");
+            throw new SiteException("Node to move: " + documentid + " not found");
         }
         Node parentNode = node.getParentNode();
         if (parentNode == null) {
-            throw new SiteTreeException(
-                "Parentid of node with documentid: " + documentid + " not found");
+            throw new SiteException("Parentid of node with documentid: " + documentid
+                    + " not found");
         }
         Node nextNode;
         try {
-            nextNode =
-                XPathAPI.selectSingleNode(
-                    node,
+            nextNode = XPathAPI.selectSingleNode(node,
                     "following-sibling::*[local-name() = 'node'][position()=2]");
         } catch (TransformerException e) {
-            throw new SiteTreeException(e);
+            throw new SiteException(e);
         }
 
         Node insertNode = parentNode.removeChild(node);
@@ -514,30 +483,21 @@ public class DefaultSiteTree implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.SiteTree#importSubtree(org.apache.lenya.cms.publication.SiteTreeNode, org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#importSubtree(org.apache.lenya.cms.site.tree.SiteTreeNode,
+     *      org.apache.lenya.cms.site.tree.SiteTreeNode, java.lang.String, java.lang.String)
      */
-    public void importSubtree(
-        SiteTreeNode newParent,
-        SiteTreeNode subtreeRoot,
-        String newid,
-        String refDocumentId)
-        throws SiteTreeException {
+    public void importSubtree(SiteTreeNode newParent, SiteTreeNode subtreeRoot, String newid,
+            String refDocumentId) throws SiteException {
         assert subtreeRoot != null;
         assert newParent != null;
         String parentId = newParent.getAbsoluteId();
         String id = newid;
 
-        this.addNode(
-            parentId,
-            id,
-            subtreeRoot.getLabels(),
-            subtreeRoot.getHref(),
-            subtreeRoot.getSuffix(),
-            subtreeRoot.hasLink(),
-            refDocumentId);
+        this.addNode(parentId, id, subtreeRoot.getLabels(), subtreeRoot.getHref(), subtreeRoot
+                .getSuffix(), subtreeRoot.hasLink(), refDocumentId);
         newParent = this.getNode(parentId + "/" + id);
         if (newParent == null) {
-            throw new SiteTreeException("The added node was not found.");
+            throw new SiteException("The added node was not found.");
         }
         SiteTreeNode[] children = subtreeRoot.getChildren();
         if (children == null) {
@@ -550,23 +510,25 @@ public class DefaultSiteTree implements SiteTree {
         }
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#save()
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#save()
      */
-    public void save() throws SiteTreeException {
+    public void save() throws SiteException {
         try {
             DocumentHelper.writeDocument(document, treefile);
         } catch (TransformerException e) {
-            throw new SiteTreeException(
-                "The document [" + document.getLocalName() + "] could not be transformed");
+            throw new SiteException("The document [" + document.getLocalName()
+                    + "] could not be transformed");
         } catch (IOException e) {
-            throw new SiteTreeException(
-                "The saving of document [" + document.getLocalName() + "] failed");
+            throw new SiteException("The saving of document [" + document.getLocalName()
+                    + "] failed");
         }
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.SiteTree#setLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#setLabel(java.lang.String,
+     *      org.apache.lenya.cms.site.tree.Label)
      */
     public void setLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);

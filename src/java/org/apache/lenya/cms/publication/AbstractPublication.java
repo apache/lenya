@@ -27,7 +27,11 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.log4j.Category;
 
 /**
@@ -263,9 +267,9 @@ public abstract class AbstractPublication implements Publication {
      * @param area the area
      * @return the sitetree for the specified area
      * 
-     * @throws SiteTreeException if an error occurs
+     * @throws SiteException if an error occurs
      */
-    public DefaultSiteTree getSiteTree(String area) throws SiteTreeException {
+    public DefaultSiteTree getSiteTree(String area) throws SiteException {
 
         DefaultSiteTree sitetree = null;
 
@@ -417,7 +421,7 @@ public abstract class AbstractPublication implements Publication {
                 }
 
                 destinationTree.save();
-            } catch (SiteTreeException e) {
+            } catch (SiteException e) {
                 throw new PublicationException(e);
             }
         }
@@ -453,7 +457,7 @@ public abstract class AbstractPublication implements Publication {
             SiteTree tree;
             try {
                 tree = getSiteTree(document.getArea());
-            } catch (SiteTreeException e) {
+            } catch (SiteException e) {
                 throw new PublicationException(e);
             }
 
@@ -484,7 +488,7 @@ public abstract class AbstractPublication implements Publication {
 
             try {
                 tree.save();
-            } catch (SiteTreeException e) {
+            } catch (SiteException e) {
                 throw new PublicationException(e);
             }
         }

@@ -15,17 +15,17 @@
  *
  */
 
-/* $Id: TreePublisher.java,v 1.14 2004/08/16 12:06:45 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
-import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publishing.ParentNodeNotFoundException;
 import org.apache.lenya.cms.publishing.PublishingException;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -113,7 +113,7 @@ public class TreePublisher extends PublicationTask {
                 // node including all languages.
                 try {
                     liveTree.addNode(authoringNode, siblingDocId);
-                } catch (SiteTreeException e1) {
+                } catch (SiteException e1) {
                     throw new ParentNodeNotFoundException("Couldn't add document: " + documentId
                             + " to live tree.", e1);
                 }
@@ -139,7 +139,7 @@ public class TreePublisher extends PublicationTask {
                             liveTree.addNode(documentId, labels, authoringNode.getHref(),
                                     authoringNode.getSuffix(), authoringNode.hasLink(),
                                     siblingDocId);
-                        } catch (SiteTreeException e1) {
+                        } catch (SiteException e1) {
                             throw new ParentNodeNotFoundException("Couldn't add document: "
                                     + documentId + " to live tree.", e1);
                         }

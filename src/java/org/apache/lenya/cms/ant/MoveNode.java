@@ -15,95 +15,90 @@
  *
  */
 
-/* $Id: MoveNode.java,v 1.9 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
 import java.util.StringTokenizer;
 
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 /**
  * Ant task that moves a node in a tree.
  */
 public class MoveNode extends TwoNodesTask {
-	private String refdocumentid;
-	/**
-	 *
-	 */
-	public MoveNode() {
-		super();
-	}
+    private String refdocumentid;
 
-	/**
-	 * Move a node.
-	 * 
-	 * @param firstdocumentid The document-id of the document corresponding to the source node.
-	 * @param secdocumentid  The document-id of the document corresponding to the destination node.
-	 * @param firstarea The area of the document corresponding to the source node.
-	 * @param secarea The area of the document corresponding to the destination node.
-	 * @throws SiteTreeException if there are problems with creating or saving the site tree.  
-	 */
-	public void manipulateTree(
-		String firstdocumentid,
-		String secdocumentid,
-		String firstarea,
-		String secarea)
-		throws SiteTreeException {
+    /**
+     *  
+     */
+    public MoveNode() {
+        super();
+    }
 
-		Publication publication = getPublication();
-		SiteTree firsttree = publication.getSiteTree(firstarea);
-		SiteTree sectree = publication.getSiteTree(secarea);
+    /**
+     * Move a node.
+     * 
+     * @param firstdocumentid The document-id of the document corresponding to the source node.
+     * @param secdocumentid The document-id of the document corresponding to the destination node.
+     * @param firstarea The area of the document corresponding to the source node.
+     * @param secarea The area of the document corresponding to the destination node.
+     * @throws SiteException if there are problems with creating or saving the site tree.
+     */
+    public void manipulateTree(String firstdocumentid, String secdocumentid, String firstarea,
+            String secarea) throws SiteException {
 
-		String parentid = "";
-		StringTokenizer st = new StringTokenizer(secdocumentid, "/");
-		int length = st.countTokens();
+        Publication publication = getPublication();
+        SiteTree firsttree = publication.getSiteTree(firstarea);
+        SiteTree sectree = publication.getSiteTree(secarea);
 
-		for (int i = 0; i < (length - 1); i++) {
-			parentid = parentid + "/" + st.nextToken();
-		}
-		String newid = st.nextToken();
+        String parentid = "";
+        StringTokenizer st = new StringTokenizer(secdocumentid, "/");
+        int length = st.countTokens();
 
-		SiteTreeNode node = firsttree.removeNode(firstdocumentid);
-		if (node != null) {
-			SiteTreeNode parentNode = sectree.getNode(parentid);
-			if (parentNode != null) {
-				sectree.importSubtree(parentNode, node, newid, this.getRefdocumentid());
-			} else {
-				throw new SiteTreeException(
-					"The parent node "
-						+ parentNode
-						+ " where the removed node shall be inserted not found");
-			}
-		} else {
-			throw new SiteTreeException(
-				"Node " + node + " couldn't be removed");
-		}
+        for (int i = 0; i < (length - 1); i++) {
+            parentid = parentid + "/" + st.nextToken();
+        }
+        String newid = st.nextToken();
 
-		if (firstarea.equals(secarea)) {
-			firsttree.save();
-		} else {
-			firsttree.save();
-			sectree.save();
-		}
-	}
-	/**
-	 * @return string The document-id corresponding to the reference node, before which 
-	 * the moved node shoul be inserted. If null, the node is inserted at the end. 
-	 */
-	public String getRefdocumentid() {
-		return refdocumentid;
-	}
+        SiteTreeNode node = firsttree.removeNode(firstdocumentid);
+        if (node != null) {
+            SiteTreeNode parentNode = sectree.getNode(parentid);
+            if (parentNode != null) {
+                sectree.importSubtree(parentNode, node, newid, this.getRefdocumentid());
+            } else {
+                throw new SiteException("The parent node " + parentNode
+                        + " where the removed node shall be inserted not found");
+            }
+        } else {
+            throw new SiteException("Node " + node + " couldn't be removed");
+        }
 
-	/**
-	 * @param string The document-id corresponding to the reference node, before which 
-	 * the moved node shoul be inserted. If null, the node is inserted at the end.
-	 */
-	public void setRefdocumentid(String string) {
-		refdocumentid = string;
-	}
+        if (firstarea.equals(secarea)) {
+            firsttree.save();
+        } else {
+            firsttree.save();
+            sectree.save();
+        }
+    }
+
+    /**
+     * @return string The document-id corresponding to the reference node, before which the moved
+     *         node shoul be inserted. If null, the node is inserted at the end.
+     */
+    public String getRefdocumentid() {
+        return refdocumentid;
+    }
+
+    /**
+     * @param string The document-id corresponding to the reference node, before which the moved
+     *            node shoul be inserted. If null, the node is inserted at the end.
+     */
+    public void setRefdocumentid(String string) {
+        refdocumentid = string;
+    }
 
 }

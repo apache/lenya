@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-/* $Id: DefaultCreatorAction.java,v 1.12 2004/03/02 16:41:43 michi Exp $  */
+/* $Id$  */
 
 
 package org.apache.lenya.cms.cocoon.acting;
@@ -38,10 +38,10 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
-import org.apache.lenya.cms.publication.DefaultSiteTree;
-import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.Label;
 import org.apache.log4j.Category;
 
 

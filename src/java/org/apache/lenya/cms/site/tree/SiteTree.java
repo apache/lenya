@@ -15,10 +15,16 @@
  *
  */
 
-/* $Id: SiteTree.java,v 1.21 2004/03/01 16:18:16 gregor Exp $  */
+package org.apache.lenya.cms.site.tree;
 
-package org.apache.lenya.cms.publication;
+import org.apache.lenya.cms.site.SiteException;
 
+
+/**
+ * A sitetree.
+ * 
+ * @version $Id:$
+ */
 public interface SiteTree {
 
     /**
@@ -28,10 +34,10 @@ public interface SiteTree {
      * @param id e.g. "concepts"
      * @param labels the labels of the node that is to be added
      * 
-     * @throws SiteTreeException if the addition failed
+     * @throws SiteException if the addition failed
      */
     void addNode(String parentid, String id, Label[] labels)
-        throws SiteTreeException;
+        throws SiteException;
 
     /**
      * Add a node.
@@ -43,7 +49,7 @@ public interface SiteTree {
      * @param suffix the suffix of the new node
      * @param link the link 
      * 
-     * @throws SiteTreeException if the addition failed
+     * @throws SiteException if the addition failed
      */
     void addNode(
         String parentid,
@@ -52,7 +58,7 @@ public interface SiteTree {
         String href,
         String suffix,
         boolean link)
-        throws SiteTreeException;
+        throws SiteException;
 
     /**
      * Insert a node before a given node 
@@ -65,7 +71,7 @@ public interface SiteTree {
      * @param link the link 
      * @param refDocumentId document-id of the node, before which the new node will be inserted.
      * 
-     * @throws SiteTreeException if the addition failed
+     * @throws SiteException if the addition failed
      */
     void addNode(
         String parentid,
@@ -75,7 +81,7 @@ public interface SiteTree {
         String suffix,
         boolean link,
         String refDocumentId)
-        throws SiteTreeException;
+        throws SiteException;
 
     /**
      * Add a node.
@@ -88,7 +94,7 @@ public interface SiteTree {
      * @param suffix the suffix
      * @param link the link
      * 
-     * @throws SiteTreeException if the addition failed
+     * @throws SiteException if the addition failed
      */
     void addNode(
         String documentid,
@@ -96,7 +102,7 @@ public interface SiteTree {
         String href,
         String suffix,
         boolean link)
-        throws SiteTreeException;
+        throws SiteException;
 
     /**
      * Insert a node before a given node 
@@ -110,7 +116,7 @@ public interface SiteTree {
      * @param link the link
      * @param refDocumentId document-id of the node, before which the new node will be inserted.
      * 
-     * @throws SiteTreeException if the addition failed
+     * @throws SiteException if the addition failed
      */
     void addNode(
         String documentid,
@@ -119,7 +125,7 @@ public interface SiteTree {
         String suffix,
         boolean link,
         String refDocumentId)
-        throws SiteTreeException;
+        throws SiteException;
 
     /**
      * Add a node. This method is typically used when publishing,
@@ -131,9 +137,9 @@ public interface SiteTree {
      *
      * @param node the <code>SiteTreeNode</code> that is to be added
      * 
-     * @throws SiteTreeException if the addition failed
+     * @throws SiteException if the addition failed
      */
-    void addNode(SiteTreeNode node) throws SiteTreeException;
+    void addNode(SiteTreeNode node) throws SiteException;
 
     /**
      * Add a node. This method is typically used when publishing,
@@ -146,10 +152,10 @@ public interface SiteTree {
      * @param node the <code>SiteTreeNode</code> that is to be added
      * @param refDocumentId document-id of the node, before which the new node will be inserted.
      * 
-     * @throws SiteTreeException if the addition failed
+     * @throws SiteException if the addition failed
      */
     void addNode(SiteTreeNode node, String refDocumentId)
-        throws SiteTreeException;
+        throws SiteException;
 
     /**
      * Add a label to an existing node
@@ -200,16 +206,16 @@ public interface SiteTree {
      * Move up the node amongst its siblings.
      * 
      * @param documentid The document id of the node.
-     * @throws SiteTreeException if the moving failed.
+     * @throws SiteException if the moving failed.
      */
-    void moveUp(String documentid) throws SiteTreeException;
+    void moveUp(String documentid) throws SiteException;
 
     /**
      * Move down the node amongst its siblings. 
      * @param documentid The document id of the node.
-     * @throws SiteTreeException if the moving failed.
+     * @throws SiteException if the moving failed.
      */
-    void moveDown(String documentid) throws SiteTreeException;
+    void moveDown(String documentid) throws SiteException;
 
     /**
      * Imports a subtree (from this or from another tree) at a certain position.
@@ -219,19 +225,19 @@ public interface SiteTree {
      * @param refDocumentId The document-id corresponding to the reference node, before which 
      * the subtree should be inserted. If null, the subtree is inserted at the end. 
      * in case there is already a node with the same id in the tree).
-     * @throws SiteTreeException when an error occurs.
+     * @throws SiteException when an error occurs.
      */
     void importSubtree(
         SiteTreeNode subtreeRoot,
         SiteTreeNode newParent,
         String newid,
         String refDocumentId)
-        throws SiteTreeException;
+        throws SiteException;
 
     /**
      * Save the SiteTree.
      *
-     * @throws SiteTreeException if the saving failed
+     * @throws SiteException if the saving failed
      */
-    void save() throws SiteTreeException;
+    void save() throws SiteException;
 }

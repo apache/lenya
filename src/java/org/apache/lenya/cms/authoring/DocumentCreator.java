@@ -15,19 +15,19 @@
  *
  */
 
-/* $Id: DocumentCreator.java,v 1.7 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 
 import java.io.File;
 import java.util.Collections;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
-import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.Label;
 
 public class DocumentCreator {
     /**

@@ -15,14 +15,14 @@
  *
  */
 
-/* $Id: DocumentOperationTask.java,v 1.3 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeNode;
-import org.apache.lenya.cms.publication.SiteTreeNodeVisitor;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -73,7 +73,7 @@ public abstract class DocumentOperationTask extends PublicationTask implements S
 
 	/**
 	 * To be overriden.
-	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public abstract void visitSiteTreeNode(SiteTreeNode node); 
 

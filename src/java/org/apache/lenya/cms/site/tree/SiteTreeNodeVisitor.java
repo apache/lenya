@@ -15,9 +15,11 @@
  *
  */
 
-/* $Id: SiteTreeNodeVisitor.java,v 1.3 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.site.tree;
+
+import org.apache.lenya.cms.publication.DocumentException;
 
 /**
  * Visitor interface to define operations performed on SiteTreeNode

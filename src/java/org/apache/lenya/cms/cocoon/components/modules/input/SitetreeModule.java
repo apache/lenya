@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SitetreeModule.java,v 1.2 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -29,7 +29,7 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTree;
 
 public class SitetreeModule extends AbstractInputModule {
 

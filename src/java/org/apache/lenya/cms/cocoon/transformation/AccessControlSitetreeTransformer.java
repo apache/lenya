@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AccessControlSitetreeTransformer.java,v 1.7 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.transformation;
 
@@ -41,8 +41,8 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
-import org.apache.lenya.cms.publication.DefaultSiteTree;
-import org.apache.lenya.cms.publication.SiteTreeNodeImpl;
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNodeImpl;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

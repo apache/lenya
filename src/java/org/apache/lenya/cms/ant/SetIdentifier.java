@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SetIdentifier.java,v 1.6 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -24,11 +24,11 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DublinCore;
-import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -115,7 +115,7 @@ public class SetIdentifier extends PublicationTask {
 
 		try {
 			tree = publication.getSiteTree(area);
-		} catch (SiteTreeException e) {
+		} catch (SiteException e) {
 			throw new BuildException(e);
 		}
 		SiteTreeNode node = tree.getNode(documentid);

@@ -23,6 +23,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
+
 /**
  * A typical CMS document.
  */
@@ -192,7 +197,7 @@ public class DefaultDocument implements Document {
             } else {
                 languages.add(getLanguage());
             }
-        } catch (SiteTreeException e) {
+        } catch (SiteException e) {
             throw new DocumentException(e);
         }
 
@@ -218,7 +223,7 @@ public class DefaultDocument implements Document {
             if (siteTree != null) {
                 label = siteTree.getNode(getId()).getLabel(getLanguage()).getLabel();
             }
-        } catch (SiteTreeException e) {
+        } catch (SiteException e) {
             throw new DocumentException(e);
         }
         return label;
@@ -321,7 +326,7 @@ public class DefaultDocument implements Document {
             } else {
                 exists = getFile().exists();
             }
-        } catch (SiteTreeException e) {
+        } catch (SiteException e) {
             throw new DocumentException(e);
         }
         return exists;
@@ -340,7 +345,7 @@ public class DefaultDocument implements Document {
             } else {
                 exists = getFile().exists();
             }
-        } catch (SiteTreeException e) {
+        } catch (SiteException e) {
             throw new DocumentException(e);
         }
         return exists;

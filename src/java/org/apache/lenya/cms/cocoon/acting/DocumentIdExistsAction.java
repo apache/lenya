@@ -15,35 +15,30 @@
  *
  */
 
-/* $Id: DocumentIdExistsAction.java,v 1.3 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
+import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
- * Action that checks the sitetree if there is a node with the 
- * current document-id. This is used to prevent creation of documents
- * with non-unique document-ids
+ * Action that checks the sitetree if there is a node with the current document-id. This is used to
+ * prevent creation of documents with non-unique document-ids
  */
 public class DocumentIdExistsAction extends AbstractAction {
 
     /**
-     * Check if there is a doument in the site tree with the given
-     * document-id.
+     * Check if there is a doument in the site tree with the given document-id.
      * 
      * If yes return an empty map, if not return null.
      * 
@@ -52,24 +47,26 @@ public class DocumentIdExistsAction extends AbstractAction {
      * @param objectModel a <code>Map</code> value
      * @param source a <code>String</code> value
      * @param parameters a <code>Parameters</code> value
-     *
-     * @return an empty <code>Map</code> if there is a document 
-     * with the given document-id, null otherwiese
-     *
-     * @exception DocumentDoesNotExistException if there is no document with the specified document-id.
+     * 
+     * @return an empty <code>Map</code> if there is a document with the given document-id, null
+     *         otherwiese
+     * 
+     * @exception DocumentDoesNotExistException if there is no document with the specified
+     *                document-id.
      * @exception PageEnvelopeException if the PageEnvelope could not be created.
-     * @exception DocumentException if the language information could not be fetched from the document.
+     * @exception DocumentException if the language information could not be fetched from the
+     *                document.
      */
 
     public static final String DOCUMENT_ID_PARAMETER_NAME = "document-id";
 
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String source,
-        Parameters parameters)
-        throws PageEnvelopeException, SiteTreeException, ParameterException {
+    /**
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
+     */
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
+            Parameters parameters) throws Exception {
 
         String documentId = parameters.getParameter(DOCUMENT_ID_PARAMETER_NAME);
 
@@ -77,12 +74,9 @@ public class DocumentIdExistsAction extends AbstractAction {
             return null;
         }
 
-        PageEnvelope pageEnvelope =
-            PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
 
-        SiteTree siteTree =
-            pageEnvelope.getPublication().getSiteTree(
-                Publication.AUTHORING_AREA);
+        SiteTree siteTree = pageEnvelope.getPublication().getSiteTree(Publication.AUTHORING_AREA);
 
         if (siteTree.getNode(documentId) == null) {
             return Collections.EMPTY_MAP;

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CopyPoliciesTask.java,v 1.4 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -25,7 +25,7 @@ import java.io.IOException;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**

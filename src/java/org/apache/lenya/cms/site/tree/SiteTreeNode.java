@@ -15,11 +15,13 @@
  *
  */
 
-/* $Id: SiteTreeNode.java,v 1.19 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.site.tree;
 
 import java.util.List;
+
+import org.apache.lenya.cms.publication.DocumentException;
 
 /**
  * This interface is a wrapper around the more general w3c.Node which

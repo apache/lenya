@@ -15,9 +15,9 @@
  *
  */
 
-/* @version $Id: Label.java,v 1.10 2004/03/02 15:37:43 michi Exp $ */
+/* @version $Id$ */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.site.tree;
 
 /**
  * The Label class encapsulates a string label and a associated language.
