@@ -343,6 +343,7 @@
     <property name="insert.asset.type" value=""/>
     <property name="insert.asset.size" value=""/>
     <property name="insert.asset.caption" value=""/>
+    <property name="asset.title" value=""/>
     <property name="insert.asset.link" value=""/>
 
     <echo>Generate temporary xsl style sheet with ${pub.dir}/../xslt/util/generate-insertAsset-xsl.xsl </echo>
@@ -372,6 +373,7 @@
     <echo>type: ${insert.asset.type}</echo>
     <echo>size: ${insert.asset.size}</echo>
     <echo>caption: ${insert.asset.caption}</echo>
+    <echo>title: ${asset.title}</echo>
     <echo>link: ${insert.asset.link}</echo>
     <xslt in="${document.file}"
       out="${temp.file}" 
@@ -380,6 +382,7 @@
       <param name="data" expression="${asset.filename}"/>
       <param name="type" expression="${insert.asset.type}"/>
       <param name="size" expression="${insert.asset.size}"/>
+      <param name="title" expression="${asset.title}"/>
       <param name="caption" expression="${insert.asset.caption}"/>
       <param name="link" expression="${insert.asset.link}"/>
     </xslt>
