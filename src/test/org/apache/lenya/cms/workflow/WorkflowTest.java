@@ -236,9 +236,7 @@ public class WorkflowTest extends AccessControlTest {
          * @param value The variable value.
          */
         public TestSituation(String user, String event, boolean value) {
-            assert user != null;
             this.user = user;
-            assert event != null;
             this.event = event;
             this.value = value;
         }
