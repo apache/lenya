@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePolicyManager.java,v 1.5 2004/03/08 16:48:21 gregor Exp $  */
+/* $Id: FilePolicyManager.java,v 1.6 2004/04/28 12:49:34 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -41,6 +41,8 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.ac.impl.DefaultPolicy;
@@ -77,6 +79,7 @@ public class FilePolicyManager
 
     protected static final String URL_FILENAME = "url-policy.acml";
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
+    protected static final String USER_ADMIN_URL = "/admin/users/";
 
     /**
 	 * Builds the URL policy for a URL from a file. When the file is not present, an empty policy
@@ -440,6 +443,16 @@ public class FilePolicyManager
         }
 
         removeAccreditable(manager, accreditable, getPoliciesDirectory());
+
+        if (accreditable instanceof User) {
+            Role administratorRole = URLPolicy.getAdministratorRole(manager);
+            if (administratorRole != null) {
+                String url = USER_ADMIN_URL + ((User) accreditable).getId();
+                DefaultPolicy policy = buildSubtreePolicy(manager, url);
+                policy.removeRole(accreditable, administratorRole);
+                saveSubtreePolicy(url, policy);
+            }
+        }
     }
 
     private ServiceManager serviceManager;
@@ -451,6 +464,21 @@ public class FilePolicyManager
      */
     protected ServiceManager getServiceManager() {
         return serviceManager;
+    }
+
+    /**
+     * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
+     */
+    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
+        if (accreditable instanceof User) {
+            Role administratorRole = URLPolicy.getAdministratorRole(manager);
+            if (administratorRole != null) {
+                String url = USER_ADMIN_URL + ((User) accreditable).getId();
+                DefaultPolicy policy = buildSubtreePolicy(manager, url);
+                policy.addRole(accreditable, administratorRole);
+                saveSubtreePolicy(url, policy);
+            }
+        }
     }
 
 }
