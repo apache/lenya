@@ -56,7 +56,7 @@ your_home (or c:\ on Windows, NOT My Dcouments)
     <strong>MS Windows:</strong><br/>
     Basically this is setting the <code>JAVA_HOME</code> environment variable and
     double-clicking on tomcat-4.1.24.exe. Decide to run Tomcat as a Windows NT/2000/XP-Service.</p>
-   <warning>Make sure you do install at a location with spaces in the path</warning>
+   <warning>Make sure you do not install at a location with spaces in the path</warning>
   </li>
   <li>
     <p>
