@@ -1,5 +1,4 @@
 /*
-$Id: AbstractPublication.java,v 1.9 2003/12/05 14:34:56 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,6 +57,7 @@ package org.apache.lenya.cms.publication;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.log4j.Category;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -69,8 +69,11 @@ import java.util.List;
  * A publication.
  *
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
+ * @version $Id: AbstractPublication.java,v 1.10 2004/01/17 14:33:12 michi Exp $
  */
 public abstract class AbstractPublication implements Publication {
+    private static Category log = Category.getInstance(AbstractPublication.class);
+
     private static final String[] areas =
         { AUTHORING_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA, ARCHIVE_AREA, TRASH_AREA };
 
@@ -163,9 +166,8 @@ public abstract class AbstractPublication implements Publication {
         } catch (PublicationException e) {
             throw e;
         } catch (Exception e) {
-            throw new PublicationException(
-                "Problem with config file: " + configFile.getAbsolutePath(),
-                e);
+            log.error(e);
+            throw new PublicationException("Problem with config file: " + configFile.getAbsolutePath(), e);
         }
 
         breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
