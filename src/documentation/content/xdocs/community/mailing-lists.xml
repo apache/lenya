@@ -25,7 +25,7 @@
     <version/>
     <type/>
     <authors>
-      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+      <person name="Lenya community" email="lenya-dev@lenya.apache.org"/>
     </authors>
   </header>
   <body>
@@ -50,11 +50,11 @@
 <section><title>Subscribe/Unsubscribe</title>
 
 <p>
-<strong>User List:</strong> <link href="mailto:lenya-user-subscribe@cocoon.apache.org">Subscribe</link>, <link href="mailto:lenya-user-unsubscribe@cocoon.apache.org">Unsubscribe</link>
+<strong>User List:</strong> <link href="mailto:user-subscribe@lenya.apache.org">Subscribe</link>, <link href="mailto:user-unsubscribe@lenya.apache.org">Unsubscribe</link>
 <br />
-<strong>Developer List:</strong> <link href="mailto:lenya-dev-subscribe@cocoon.apache.org">Subscribe</link>, <link href="mailto:lenya-dev-unsubscribe@cocoon.apache.org">Unsubscribe</link>
+<strong>Developer List:</strong> <link href="mailto:dev-subscribe@lenya.apache.org">Subscribe</link>, <link href="mailto:dev-unsubscribe@lenya.apache.org">Unsubscribe</link>
 <br />
-<strong>CVS List:</strong> <link href="mailto:lenya-cvs-subscribe@cocoon.apache.org">Subscribe</link>, <link href="mailto:lenya-cvs-unsubscribe@cocoon.apache.org">Unsubscribe</link>
+<strong>Commits List:</strong> <link href="mailto:commits-subscribe@lenya.apache.org">Subscribe</link>, <link href="mailto:commits-unsubscribe@lenya.apache.org">Unsubscribe</link>
 </p>
 </section>
 
@@ -81,15 +81,15 @@ The Cocoon mailing lists can be read at
 <br />
 <strong>Developer List:</strong> <link href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=224">http://nagoya.apache.org/eyebrowse/SummarizeList?listId=224</link>
 <br />
-<strong>CVS List:</strong> <link href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=225">http://nagoya.apache.org/eyebrowse/SummarizeList?listId=225</link>
+<strong>Commits List:</strong> <link href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=225">http://nagoya.apache.org/eyebrowse/SummarizeList?listId=225</link>
 </p>
 </section>
  
 <section><title>Search</title>
 <p>
-<strong>User List:</strong> <link href="http://nagoya.apache.org/eyebrowse/SearchList?listId=&amp;listName=lenya-user@cocoon.apache.org&amp;defaultField=body">http://nagoya.apache.org/eyebrowse/SearchList?listId=&amp;listName=lenya-user@cocoon.apache.org&amp;defaultField=body</link>
+<strong>User List:</strong> <link href="http://nagoya.apache.org/eyebrowse/SearchList?listId=&amp;listName=user@lenya.apache.org&amp;defaultField=body">http://nagoya.apache.org/eyebrowse/SearchList?listId=&amp;listName=user@lenya.apache.org&amp;defaultField=body</link>
 <br />
-<strong>Developer List:</strong> <link href="http://nagoya.apache.org/eyebrowse/SearchList?listId=&amp;listName=lenya-dev@cocoon.apache.org&amp;defaultField=body">http://nagoya.apache.org/eyebrowse/SearchList?listId=&amp;listName=lenya-dev@cocoon.apache.org&amp;defaultField=body</link>
+<strong>Developer List:</strong> <link href="http://nagoya.apache.org/eyebrowse/SearchList?listId=&amp;listName=dev@lenya.apache.org&amp;defaultField=body">http://nagoya.apache.org/eyebrowse/SearchList?listId=&amp;listName=dev@lenya.apache.org&amp;defaultField=body</link>
 <br />
 </p>
 </section>
