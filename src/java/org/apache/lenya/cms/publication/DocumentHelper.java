@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.1 2003/10/29 15:33:22 andreas Exp $ <License>
+ * $Id: DocumentHelper.java,v 1.2 2003/10/29 16:36:19 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -65,6 +65,60 @@ public class DocumentHelper {
 	 */
     public DocumentHelper(Map objectModel) {
         this.objectModel = objectModel;
+    }
+
+    /**
+     * Creates a document URL.<br/>
+     * If the document ID is null, the current document ID is used.<br/>
+     * If the document area is null, the current area is used.<br/>
+     * If the language is null, the current language is used.
+     * @param documentId The target document ID.
+     * @param documentArea The target area.
+     * @param language The target language.
+     * @return A string.
+     * @throws ProcessingException if something went wrong.
+     */
+    public String getDocumentUrl(String documentId, String documentArea, String language) throws ProcessingException {
+        
+        String url = null;
+        try {
+            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+
+            if (documentId == null) {
+                documentId = envelope.getDocument().getId();
+            }
+
+            Request request = ObjectModelHelper.getRequest(objectModel);
+        
+            if (documentArea == null) {
+                String webappUrl = ServletHelper.getWebappURI(request);
+                URLInformation info = new URLInformation(webappUrl);
+                String completeArea = info.getCompleteArea();
+                documentArea = completeArea;
+            }
+            
+            if (language == null) {
+                language = envelope.getDocument().getLanguage();
+            }
+
+            Publication publication = envelope.getPublication();
+            DocumentBuilder builder = publication.getDocumentBuilder();
+        
+            url = builder.buildCanonicalUrl(publication, documentArea, documentId, language);
+        
+            String contextPath = request.getContextPath();
+            if (contextPath == null) {
+                contextPath = "";
+            }
+            
+            url = contextPath + url;
+
+        } catch (Exception e) {
+            throw new ProcessingException(e);
+        }
+        
+        return url;
+
     }
 
     /**
