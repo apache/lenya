@@ -90,6 +90,9 @@ public class IndexEnvironment implements Configurable{
  *
  */
   public String resolvePath(String path){
+    if(path.indexOf(File.separator)==0){
+      return path;
+      }
     return org.apache.avalon.excalibur.io.FileUtil.catPath(configurationFilePath,path);
     }
 }

@@ -64,7 +64,12 @@
   <xsl:apply-templates select="../search/exception"/>
   <xsl:choose>
     <xsl:when test="hits">
+<p>
+      Documents <xsl:value-of select="pages/page[@type='current']/@start"/> - <xsl:value-of select="pages/page[@type='current']/@end"/> of <xsl:value-of select="@total-hits"/> matches
+</p>
+<!--
       <p>Total Hits: <xsl:value-of select="@total-hits"/></p>
+-->
       <table width="90%" cellpadding="4" border="1">
         <tr>
           <td>&#160;</td><td>Score</td><td>URL resp. File</td>
@@ -76,11 +81,16 @@
       <p>Sorry, <b>nothing</b> found!</p>
     </xsl:otherwise>
   </xsl:choose>
+
+  <xsl:apply-templates select="pages"/>
 </xsl:template>
 
 <xsl:template match="hit">
 <tr>
+  <td><xsl:value-of select="@pos"/></td>
+<!--
   <td><xsl:value-of select="position()"/></td>
+-->
   <td><xsl:value-of select="score/@percent"/>%</td>
   <xsl:choose>
     <xsl:when test="path">
@@ -135,6 +145,33 @@ No mime-type!
 <p>
 <font color="red"><xsl:value-of select="."/></font>
 </p>
+</xsl:template>
+
+<xsl:template match="pages">
+<p>
+Result Pages
+<xsl:apply-templates select="page[@type='previous']" mode="previous"/>
+<xsl:for-each select="page">
+  <xsl:choose>
+    <xsl:when test="@type='current'">
+      <xsl:value-of select="position()"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <a href="lucene?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}"><xsl:value-of select="position()"/></a>
+    </xsl:otherwise>
+  </xsl:choose>
+  <xsl:text> </xsl:text>
+</xsl:for-each>
+<xsl:apply-templates select="page[@type='next']" mode="next"/>
+</p>
+</xsl:template>
+
+<xsl:template match="page" mode="next">
+[<a href="lucene?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}">Next</a>&gt;&gt;]
+</xsl:template>
+
+<xsl:template match="page" mode="previous">
+[&lt;&lt;<a href="lucene?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}">Previous</a>]
 </xsl:template>
 
 <xsl:template match="@*|node()">
