@@ -15,13 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.58 2004/04/03 11:52:55 roku Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.59 2004/04/03 17:10:38 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
   <!-- common used words -->
   <message key="Save">Speichern</message>
-  <message key="Submit">Senden</message>
+  <message key="Submit">Einreichen</message>
   <message key="Cancel">Abbrechen</message>
   <message key="Delete">L&#246;schen</message>
   <message key="NOTE">HINWEIS</message>
@@ -82,8 +82,8 @@
   <message key="Image">Bild</message>
 
   <!-- submit screen -->
-  <message key="submit-for-approval">Dokument {0} freigeben</message>
-  <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
+  <message key="submit-for-approval">Dokument {0} einreichen</message>
+  <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht einreichen?</message>  
   
   <!-- publish screen --> 
   <message key="Publish">Ver&#246;ffentlichen</message>    
@@ -112,7 +112,7 @@
   <message key="Remove Language Version">Sprachversion l&#246;schen</message>
   <message key="File">Datei</message>  
   <message key="Edit">Bearbeiten</message>
-  <message key="Workflow">Arbeitsablauf</message>
+  <message key="Workflow">Arbeitsfluss</message>
   <message key="Deactivate">Deaktivieren</message>
   <message key="Schedule">Zeitsteuerung</message>  
   <message key="Copy">Kopieren</message>  
@@ -258,7 +258,11 @@
   <message key="History">Verlauf</message>
   <message key="State">Status</message>
   <message key="IP Address">IP Adresse</message>   
-  
+  <message key="edit">bearbeiten</message>
+  <message key="submit">einreichen</message>
+  <message key="reject">ablehnen</message>
+  <message key="publish">ver&#246;ffentlichen</message>
+
   <!-- Info asset  --> 
   <message key="New Asset">Neue Anlage</message>
 

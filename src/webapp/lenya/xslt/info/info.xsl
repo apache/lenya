@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.62 2004/04/03 11:52:55 roku Exp $ -->
+<!-- $Id: info.xsl,v 1.63 2004/04/03 17:10:38 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -459,7 +459,7 @@
 				<input type="hidden" name="lenya.step" value="showscreen"/>
   			<input type="hidden" name="accreditable_id" value="{@accreditable-id}"/>
   			<input type="hidden" name="role_id" value="{@role-id}"/>
-  			<input type="submit" name="delete_credential_{@accreditable-type}" value="Delete">
+  			<input i18n:attr="value" type="submit" name="delete_credential_{@accreditable-type}" value="Delete">
     			<xsl:if test="$area = 'live'">
     				<xsl:attribute name="disabled">disabled</xsl:attribute>
     			</xsl:if>

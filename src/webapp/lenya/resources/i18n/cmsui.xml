@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml,v 1.55 2004/04/03 11:52:55 roku Exp $ -->
+<!-- $Id: cmsui.xml,v 1.56 2004/04/03 17:10:38 roku Exp $ -->
 
 <catalogue xml:lang="en">
 
@@ -257,7 +257,11 @@
   <message key="History">History</message>
   <message key="State">State</message>   
   <message key="IP Address">IP Address</message>   
-  
+  <message key="edit">edit</message>
+  <message key="submit">submit</message>
+  <message key="reject">reject</message>
+  <message key="publish">publish</message>
+
   <!-- Info asset  --> 
   <message key="New Asset">New Asset</message>
   
