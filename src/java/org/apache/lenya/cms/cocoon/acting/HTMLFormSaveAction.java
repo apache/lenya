@@ -308,8 +308,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
             }
         }
 
-        Document renumberedDocument = renumberDocument(document, unnumberTagsXslSource,
-                numberTagsXslSource);
+        Document renumberedDocument = renumberDocument(document, unnumberTagsXslSource, numberTagsXslSource);
         writeDocument(document, modifiableXmlSource);
 
         // check to see if we save and exit
@@ -507,14 +506,14 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      */
     private XUpdateAttributes getAttributes(Node node) {
 
+        StringBuffer buf = new StringBuffer();
         String xupdateString = "";
         String tagID = "";
         org.w3c.dom.NamedNodeMap attributes = node.getAttributes();
         if (attributes != null) {
             for (int i = 0; i < attributes.getLength(); i++) {
                 org.w3c.dom.Attr attribute = (org.w3c.dom.Attr) attributes.item(i);
-                getLogger().debug(
-                        ".getAttributes(): " + attribute.getName() + " " + attribute.getValue());
+                getLogger().debug(".getAttributes(): " + attribute.getName() + " " + attribute.getValue());
                 if (!attribute.getName().equals("tagID")) {
                     String namespace = attribute.getNamespaceURI();
                     getLogger().debug(".getAttributes(): Namespace: " + namespace);
@@ -522,15 +521,15 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     if (namespace != null) {
                         namespaceAttribute = " namespace=\"" + namespace + "\"";
                     }
-                    xupdateString = xupdateString + "<xupdate:attribute name=\""
+                    buf.append("<xupdate:attribute name=\""
                             + attribute.getName() + "\"" + namespaceAttribute + ">"
-                            + attribute.getValue() + "</xupdate:attribute>";
+                            + attribute.getValue() + "</xupdate:attribute>");
                 } else {
-                    xupdateString = xupdateString
-                            + "<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>";
+                    buf.append("<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>");
                     tagID = attribute.getValue();
                 }
             }
+            xupdateString = buf.toString();
         } else {
             xupdateString = "";
         }
