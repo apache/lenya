@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.4 2004/02/13 18:43:05 roku Exp $
+$Id: cmsui_de.xml,v 1.5 2004/02/13 18:49:22 roku Exp $
 $Author: roku $
 <License>
 
@@ -62,7 +62,7 @@ $Author: roku $
   <message key="Back to Page">Zur&#252;ck zur Seite</message>
     
   <!-- submit screen -->
-  <message key="submit-for-approval">Dokument {0} &#252;bermitteln</message>
+  <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
   
   <!-- publish screen -->  
