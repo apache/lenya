@@ -1,5 +1,5 @@
 // Md5.java
-// $Id: Md5.java,v 1.2 2002/10/24 10:57:47 michicms Exp $
+// $Id: Md5.java,v 1.3 2003/02/17 11:38:29 egli Exp $
 // (c) COPYRIGHT MIT and INRIA, 1996.
 // Please first read the full copyright statement in file COPYRIGHT.html
 
@@ -7,11 +7,7 @@ package org.w3c.tools.crypt ;
 
 import java.io.* ;
 
-//import org.apache.log4j.Category;
-
-
 public class Md5 {
-    //static Category log=Category.getInstance(Md5.class);
 
     private static final int BUFFER_SIZE = 1024 ;
 
@@ -361,7 +357,6 @@ public class Md5 {
 	throws IOException
     {
 	if ( args.length != 1) {
-	    //log.fatal ("Md5 <file>") ;
 	    System.err.println(".main(): System.exit (1) ;");
 	    System.exit (1) ;
 	}

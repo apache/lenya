@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractUsernamePasswordAuthenticatorAction.java,v 1.3 2003/02/07 12:14:08 ah Exp $
+ * $Id: AbstractUsernamePasswordAuthenticatorAction.java,v 1.4 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -74,11 +74,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public abstract class AbstractUsernamePasswordAuthenticatorAction
     extends AbstractAuthenticatorAction {
-    /*
-      public void configure(Configuration conf) throws ConfigurationException{
-        super.configure(conf);
-        }
-    */
+
     public boolean authenticate(Request request, Map map)
         throws Exception {
         String username = request.getParameter("username");

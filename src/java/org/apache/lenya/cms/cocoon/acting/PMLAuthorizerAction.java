@@ -1,5 +1,5 @@
 /*
- * $Id: PMLAuthorizerAction.java,v 1.10 2003/02/07 12:14:08 ah Exp $
+ * $Id: PMLAuthorizerAction.java,v 1.11 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -103,11 +103,6 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
             getLogger().debug("CONFIGURATION: authenticator type=" + authenticator_type);
         }
 
-        /*
-          if(authenticator_type == null){
-          throw new ConfigurationException("No authenticator type set");
-          }
-        */
         Configuration domainConf = conf.getChild("domain");
         domain = domainConf.getValue("127.0.0.1");
 
@@ -206,7 +201,6 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
                 "org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
 
         if (!this.authenticator_type.equals(authenticator_type)) {
-            //if(this.authenticator_type != authenticator_type){
             getLogger().warn(".authorize(): Bad authenticator: " + authenticator_type +
                 " (Authorizer's authenticator: " + this.authenticator_type + ")");
 
@@ -257,7 +251,6 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
 
         pmlURLString = pmlURLString + "/" + policies + sitemap_uri + ".acml";
 
-        //pmlURLString=pmlURLString+"/"+policies+sitemap_uri+".pml";
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(".getPolicyDoc(): " + pmlURLString);
         }
@@ -267,11 +260,4 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
 
         return db.parse(new URL(pmlURLString).openStream());
     }
-
-    /*
-      private void parse() throws Exception{
-      javax.xml.parsers.SAXParserFactory spf=javax.xml.parsers.SAXParserFactory.newInstance();
-      javax.xml.parsers.SAXParser sp=spf.newSAXParser();
-      }
-    */
 }

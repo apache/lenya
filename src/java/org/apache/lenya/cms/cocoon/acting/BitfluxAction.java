@@ -1,5 +1,5 @@
 /*
- * $Id: BitfluxAction.java,v 1.4 2003/02/07 12:14:08 ah Exp $
+ * $Id: BitfluxAction.java,v 1.5 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -228,18 +228,6 @@ public class BitfluxAction extends ConfigurableComposerAction {
 
         Map sitemapParams = new HashMap();
 
-        /* Not needed since Bitflux uses the url-back request parameter to do the redirection
-        // set sitemap params for response routing
-        sitemapParams.put("reqType", reqType);
-        if ("xml".equals(fileType) && ("open".equals(reqType) || "save".equals(reqType))) {
-          sitemapParams.put("reqFilePath", (String)relRootDirs.get("temp") + "/" + (String)relRootDirs.get(fileType) + "/" + reqFile);
-        } else {
-          sitemapParams.put("reqFilePath", (String)relRootDirs.get(fileType) + "/" + reqFile);
-        }
-        sitemapParams.put("fileType", fileType);
-        getLogger().debug ("File to be edited (in temp dir): " + sitemapParams.get("reqFilePath"));
-        */
-
         // save to temporary file, if needed
         if ("save".equals(reqType) || "checkin".equals(reqType)) {
             //FIXME(): remove hard coding
@@ -282,12 +270,11 @@ public class BitfluxAction extends ConfigurableComposerAction {
 
                 FileUtil.copyFile(tempFile, permFile);
             } catch (Exception e) {
-                getLogger().error(".act(): Exception during checkin: " + permFile);
+                getLogger().error(".act(): Exception during checkin: " +
+				  permFile);
 
                 return null;
             }
-
-            //FileUtil.copyFile(tempFile, permFile);
         }
 
         return sitemapParams;

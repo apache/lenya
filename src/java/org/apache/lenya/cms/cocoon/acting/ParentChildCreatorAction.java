@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.18 2003/02/13 19:17:35 andreas Exp $
+ * $Id: ParentChildCreatorAction.java,v 1.19 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -211,7 +211,6 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
             return null;
         }
 
-        //InputStream in=intercept(new FileInputStream(treefilename));
         Document doc = new SAXReader().read("file:" + treefilename);
 
         // Get parent element

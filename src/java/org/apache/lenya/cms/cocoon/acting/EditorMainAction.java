@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.9 2003/02/13 19:17:35 andreas Exp $
+ * $Id: EditorMainAction.java,v 1.10 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -95,7 +95,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
- * $Id: EditorMainAction.java,v 1.9 2003/02/13 19:17:35 andreas Exp $
+ * $Id: EditorMainAction.java,v 1.10 2003/02/17 11:38:29 egli Exp $
  *
  * @author Martin Lüthi
  * @version 2002.01.22
@@ -241,14 +241,9 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
                 String formeditorPath = context.getRealPath("formeditor");
                 String tempFile = formeditorPath + request.getRequestURI();
 
-                //String tempFile=formeditorPath+request.getRequestURI()+".xml";
-                //         Source source = resolver.resolve("cocoon:/"+request.getSitemapURI());
-                //         String cont=source.getSystemId().substring(10); // remove
-                //         "context://"
                 String wyonaPath = "wyona/cms/pubs/ethz-mat/docs/ethz/mat/";
                 String editFile = context.getRealPath("/") + wyonaPath + request.getSitemapURI();
 
-                //String editFile=context.getRealPath("/")+wyonaPath+request.getSitemapURI()+".xml";
                 getLogger().debug("**** tempfile=" + tempFile);
                 getLogger().debug("**** editfile=" + editFile);
 

@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.5 2003/02/07 12:14:07 ah Exp $
+ * $Id: NewArticleCreator.java,v 1.6 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -72,8 +72,6 @@ public class NewArticleCreator extends AbstractParentChildCreator {
      */
     public short getChildType(short childType) throws Exception {
         return AbstractParentChildCreator.BRANCH_NODE;
-
-        //    return childType;
     }
 
     /**

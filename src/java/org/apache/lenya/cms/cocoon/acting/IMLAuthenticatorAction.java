@@ -1,5 +1,5 @@
 /*
- * $Id: IMLAuthenticatorAction.java,v 1.5 2003/02/07 12:14:08 ah Exp $
+ * $Id: IMLAuthenticatorAction.java,v 1.6 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -119,11 +119,6 @@ public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticato
             getLogger().debug("CONFIGURATION: passwd=" + passwd);
         }
 
-        /*
-          if(passwd == null){
-          throw new ConfigurationException("No passwd path set");
-          }
-        */
         Configuration typeConf = conf.getChild("type");
         type = typeConf.getValue(null);
 
@@ -131,11 +126,6 @@ public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticato
             getLogger().debug("CONFIGURATION: type=" + type);
         }
 
-        /*
-          if(type == null){
-          throw new ConfigurationException("No type set");
-          }
-        */
     }
 
     /**

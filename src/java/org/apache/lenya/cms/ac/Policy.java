@@ -1,5 +1,5 @@
 /*
- * $Id: Policy.java,v 1.3 2003/02/07 12:14:07 ah Exp $
+ * $Id: Policy.java,v 1.4 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -63,7 +63,6 @@ import org.w3c.dom.Node;
  * @version 1.12.28
  */
 public class Policy {
-    //private static String ROOT="policy/object[@match=\"/\"]";
     private static String ROOT = "ac/policy/object[@match=\"/\"]";
     private static String SUBJECTS = "subjects";
     private static String ACTIONS = "actions";

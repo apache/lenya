@@ -1,5 +1,5 @@
 /*
- * $Id: EditorSaveAction.java,v 1.6 2003/02/13 19:17:35 andreas Exp $
+ * $Id: EditorSaveAction.java,v 1.7 2003/02/17 11:38:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -100,8 +100,6 @@ public class EditorSaveAction extends AbstractValidatorAction implements ThreadS
             return null;
         }
 
-        //     String editfilename = (String)request.getParameter("filename");
-        //     String tempfilename = (String)request.getParameter("tempfilename");
         Session session = request.getSession(true);
 
         if (session == null) {
@@ -126,10 +124,6 @@ public class EditorSaveAction extends AbstractValidatorAction implements ThreadS
             try {
                 File editFile = new File(editfilename);
 
-                //         if (!editFile.isAbsolute()) {
-                //           editfilename = context.getRealPath("")+File.separator+editfilename;
-                //           getLogger().error("=======> new editfilename   ="+editfilename);
-                //         }
                 // good old Java has no file copy method, so we do it the hard way
                 InputStream is = new FileInputStream(tempfilename);
                 OutputStream os = new FileOutputStream(editfilename);
