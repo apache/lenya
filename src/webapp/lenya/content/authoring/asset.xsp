@@ -25,6 +25,9 @@
     <usecase:request-uri><input:get-attribute module="request" name="requestURI"/></usecase:request-uri>
     <usecase:date><input:get-attribute module="date" name="currentDate"/></usecase:date>
     <usecase:creator><input:get-attribute module="access-control" name="user-id"/></usecase:creator>
+    <usecase:area><input:get-attribute module="page-envelope" name="area"/></usecase:area>
+    <usecase:document-id><input:get-attribute module="page-envelope" name="document-id"/></usecase:document-id>
+    <usecase:language><input:get-attribute module="page-envelope" name="document-language"/></usecase:language>
     <usecase:assets>
       <xsp:logic>
 	if (resources != null) {
@@ -37,9 +40,6 @@
       </xsp:logic>
     </usecase:assets>
 
-    <!-- FIXME: this should be defined in the workflow schema -->
-    <usecase:task-id>asset-insert</usecase:task-id>
-    
   </usecase:asset>
   
 </xsp:page>
