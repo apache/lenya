@@ -101,7 +101,7 @@
   <target name="test.identity">
     <java fork="yes" classname="org.apache.lenya.ac.impl.IdentityTest">
       <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
-      <arg value="oscom"/>
+      <arg value="default"/>
       <classpath refid="classpath"/>
       <classpath>
         <pathelement location="${build.test}" />
@@ -131,7 +131,7 @@
       <jvmarg value="-enableassertions"/>
       <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
-      <arg value="simple"/> <!-- document type -->
+      <arg value="xhtml"/> <!-- document type -->
       <classpath refid="classpath.default"/>
     </java>
   </target>  
