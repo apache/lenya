@@ -360,8 +360,9 @@
       };
   </script>
   <div class="epoz-editorframe" metal:define-slot="epoz_editorframe">
+    <!-- FIXME: reloadsrc="1" doesn't seem to be modified by the XSLT -->
     <iframe id="epoz-editor" frameborder="0" src="/epoz/common/tutorial.html"
-            reloadsrc="1" usecss="1"
+            reloadsrc="0" usecss="1"
 	    metal:define-macro="epoz_editorframe"
             tal:attributes="src nothing"
             onload="startEpoz()"> </iframe>

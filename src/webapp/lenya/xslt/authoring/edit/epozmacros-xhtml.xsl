@@ -15,7 +15,8 @@
 <xsl:template match="xhtml:body/xhtml:div/xhtml:div/xhtml:div/xhtml:iframe/@src">
 	<xsl:attribute name="src"><xsl:value-of select="$contentfile"/></xsl:attribute>
 	<xsl:attribute name="dst"><xsl:value-of select="$save-destination"/></xsl:attribute>
-	<xsl:attribute name="reloadsrc"><xsl:value-of select="reload-on-save"/></xsl:attribute>
+	<xsl:attribute name="reloadsrc">0</xsl:attribute>
+	<!--<xsl:attribute name="reloadsrc"><xsl:value-of select="reload-on-save"/></xsl:attribute>-->
 	<xsl:attribute name="usecss"><xsl:value-of select="use-css"/></xsl:attribute>
 </xsl:template>
 
