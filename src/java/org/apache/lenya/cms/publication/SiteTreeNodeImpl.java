@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTreeNodeImpl.java,v 1.5 2003/05/27 15:31:29 egli Exp $
+ * $Id: SiteTreeNodeImpl.java,v 1.6 2003/05/30 20:57:59 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -56,7 +56,7 @@ import org.apache.lenya.xml.DocumentHelper;
 
 public class SiteTreeNodeImpl 
     implements SiteTreeNode {
-    static Category log = Category.getInstance(SiteTreeNodeImpl.class);
+    private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
 
     public static final String ID_ATTRIBUTE_NAME = "id";
     public static final String HREF_ATTRIBUTE_NAME = "href";

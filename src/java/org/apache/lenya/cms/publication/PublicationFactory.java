@@ -16,9 +16,12 @@ import org.apache.log4j.Category;
  *
  * @author  andreas
  */
-public class PublicationFactory {
+public final class PublicationFactory {
+	
+	private PublicationFactory() {
+	}
     
-    static Category log = Category.getInstance(PublicationFactory.class);
+    private static Category log = Category.getInstance(PublicationFactory.class);
     
     /**
      * Creates a new publication.

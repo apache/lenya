@@ -29,7 +29,7 @@ import org.apache.lenya.cms.rc.RCEnvironment;
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class PageEnvelope {
-    static Category log = Category.getInstance(PageEnvelope.class);
+    private static Category log = Category.getInstance(PageEnvelope.class);
 
     public static final String PUBLICATION_ID = "publication-id";
     public static final String PUBLICATION = "publication";
