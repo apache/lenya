@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultDocumentIdToPathMapper.java,v 1.18 2004/01/07 13:28:54 egli Exp $ <License>
+ * $Id: DefaultDocumentIdToPathMapper.java,v 1.19 2004/01/07 16:59:20 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -122,7 +122,7 @@ public class DefaultDocumentIdToPathMapper
             // trim everything up to the documentId
             String relativeFileName = fileName.substring(contentDirName.length());
             // trim everything after the documentId
-            return relativeFileName.substring(0, relativeFileName.lastIndexOf("/"));
+            return relativeFileName.substring(0, relativeFileName.lastIndexOf(File.separator));
         } else {
             throw new DocumentDoesNotExistException("No document associated with file" + fileName);
         }
