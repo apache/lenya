@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.17 2003/08/05 16:29:06 andreas Exp $
+$Id: WorkflowFactory.java,v 1.18 2003/08/12 13:18:59 egli Exp $
 <License>
 
  ============================================================================
@@ -65,7 +65,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.impl.History;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
 
 import java.io.File;
