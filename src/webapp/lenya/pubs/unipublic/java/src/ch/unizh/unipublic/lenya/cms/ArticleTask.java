@@ -110,21 +110,21 @@ public class ArticleTask
         Element headlineElement = (Element) nodes.get(0);
         String title = headlineElement.getText();
         
-        //article's  channel, section, year, dir. FIXME: should be readen from the article, but now:
+        //article's  channel, section, year, id. FIXME: should be readen from the article, but now:
         StringTokenizer st=new StringTokenizer(docId,"/");
         String channel=st.nextToken();
         String section=st.nextToken();
         String year=st.nextToken();
-        String dir=st.nextToken();
+        String id=st.nextToken();
 
         Document headlinesDocument = getDocument(domainPath + UnipublicEnvironment.headlinesFile);
         insertElement(headlinesDocument, "/Articles", "Article",
-            channel, section, year, dir, title);
+            channel, section, year, id, title);
         writeDocument(domainPath + UnipublicEnvironment.headlinesFile, headlinesDocument);
         
         Document newsletterDocument = getDocument(domainPath + UnipublicEnvironment.newsletterFile);
         insertElement(newsletterDocument, "/newsletter/articles", "article",
-            channel, section, year, dir, title);
+            channel, section, year, id, title);
         writeDocument(domainPath + UnipublicEnvironment.newsletterFile, newsletterDocument);
         
     }
@@ -171,24 +171,24 @@ public class ArticleTask
             String channel,
             String section,
             String year,
-            String dir,
+            String id,
             String title) {
                 
         DocumentHelper documentHelper = new DocumentHelper();
                 
         Element newArticleElement
             = (Element) document.selectSingleNode(
-                parentXPath + "/" + elementName + "[@dir='" + dir + "'][@section='" + section + "']"); 
+                parentXPath + "/" + elementName + "[@id='" + id + "'][@section='" + section + "']"); 
         
         if (newArticleElement != null) {
-          log.info("the article  "+dir+" is already on the frontpage");
+          log.info("the article  "+id+" is already on the frontpage");
           newArticleElement.setText(title);
         } else {
           newArticleElement = documentHelper.createElement(elementName);
           newArticleElement.addAttribute("channel", channel);
           newArticleElement.addAttribute("section", section);
           newArticleElement.addAttribute("year", year);
-          newArticleElement.addAttribute("dir", dir);
+          newArticleElement.addAttribute("id", id);
           newArticleElement.setText(title);
           Element articlesElement = (Element) document.selectSingleNode(parentXPath); 
           List children = articlesElement.elements();

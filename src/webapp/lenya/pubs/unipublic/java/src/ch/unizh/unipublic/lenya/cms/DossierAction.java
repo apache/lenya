@@ -212,7 +212,7 @@ public class DossierAction
                         if (articleElement.attribute("channel").getStringValue().equals(articleChannel) &&
                             articleElement.attribute("section").getStringValue().equals(articleSection) &&
                             articleElement.attribute("year")   .getStringValue().equals(articleYear) &&
-                            articleElement.attribute("dir")    .getStringValue().equals(articleDirectory)) {
+                            articleElement.attribute("id")    .getStringValue().equals(articleDirectory)) {
                             elementToRemove = articleElement;
                         }
                     }
@@ -270,7 +270,7 @@ public class DossierAction
                     articleElement.add(factory.createAttribute(articleElement, "channel", articleChannel));
                     articleElement.add(factory.createAttribute(articleElement, "section", articleSection));
                     articleElement.add(factory.createAttribute(articleElement, "year", articleYear));
-                    articleElement.add(factory.createAttribute(articleElement, "dir", articleDirectory));
+                    articleElement.add(factory.createAttribute(articleElement, "id", articleDirectory));
                     articlesElement.add(articleElement);
 
                     writeDocument(newDossierPath, newDossierDocument);
