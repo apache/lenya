@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.18 2004/07/29 05:49:06 michi Exp $  */
+/* $Id: AbstractIndexer.java,v 1.19 2004/07/31 05:32:51 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -116,12 +116,26 @@ public abstract class AbstractIndexer implements Indexer {
 	String id = IndexIterator.createID(file, dumpDir);
         log.error("id: " + id);
 
+	// Delete from index
         IndexReader reader = IndexReader.open(indexDir.getAbsolutePath());
-	//Term term = ...
-        //reader.delete(term);
+	Term term = new Term("id", id);
+        int numberOfDeletedDocuments = reader.delete(term);
+        if (numberOfDeletedDocuments == 1) {
+            log.error("Document has been deleted: " + term);
+        } else {
+            log.warn("No such document found in this index: " + term);
+        }
+        log.error("Number of delected documents: " + numberOfDeletedDocuments);
+        log.error("Current number of documents in this index: " + reader.numDocs());
         reader.close();
 
-        //addFile(file);
+	// Append to index
+        Document doc = getDocumentCreator().getDocument(file, dumpDir);
+        IndexWriter writer = new IndexWriter(indexDir, new StandardAnalyzer(), false);
+        writer.maxFieldLength = 1000000;
+        writer.addDocument(doc);
+        writer.optimize();
+        writer.close();
     }
 
     /**
