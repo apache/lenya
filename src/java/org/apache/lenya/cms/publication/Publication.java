@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.31 2003/10/22 09:40:03 andreas Exp $
+$Id: Publication.java,v 1.32 2003/10/26 17:28:58 andreas Exp $
 <License>
 
  ============================================================================
@@ -328,4 +328,5 @@ public class Publication {
     public DocumentBuilder getDocumentBuilder() {
     	return DefaultDocumentBuilder.getInstance();
     }
+    
 }
