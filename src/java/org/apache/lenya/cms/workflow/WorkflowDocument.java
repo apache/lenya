@@ -27,17 +27,17 @@ import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 
 /**
  * Workflow instance for CMS documents.
- *
- * @version $Id:$
+ * 
+ * @version $Id$
  */
 public class WorkflowDocument extends WorkflowInstanceImpl {
-	
-	/**
-	 * Ctor.
-	 * @param workflow The workflow.
-	 * @param document the document
-	 * @throws WorkflowException if an error occurs.
-	 */
+
+    /**
+     * Ctor.
+     * @param workflow The workflow.
+     * @param document the document
+     * @throws WorkflowException if an error occurs.
+     */
     protected WorkflowDocument(WorkflowImpl workflow, Document document) throws WorkflowException {
         super(workflow);
         assert document != null;
@@ -53,20 +53,15 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
     public Document getDocument() {
         return document;
     }
-    
-    private History history;
 
     /**
-     * @see org.apache.lenya.workflow.WorkflowInstance#getHistory()
+     * @see org.apache.lenya.workflow.impl.WorkflowInstanceImpl#createHistory()
      */
-    public History getHistory() {
+    protected History createHistory() {
         try {
-            if (this.history == null) {
-                this.history = new CMSHistory(this);
-            }
+            return new CMSHistory(this);
         } catch (WorkflowException e) {
             throw new RuntimeException(e);
         }
-        return this.history;
     }
 }
