@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DateUtil.java,v 1.9 2003/07/17 10:20:46 egli Exp $
 <License>
 
  ============================================================================
@@ -61,11 +61,12 @@ package org.apache.lenya.util;
  *
  * @author Edith Chevrier
  * @version 2002.7.8
+ * @deprecated use java.text.DateFormat instead
  */
 public class DateUtil {
-    public String year = null;
-    public String month = null;
-    public String day = null;
+    private String year = null;
+    private String month = null;
+    private String day = null;
 
     /**
      * Creates a new DateUtil object.
