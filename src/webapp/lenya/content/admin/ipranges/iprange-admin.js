@@ -133,19 +133,21 @@ function iprange_change_profile(iprangeId, newRange) {
 	       	}
 	       	
 	       	// initialize new IP range
-	        if (newRange && ok) {
+	        if (newRange) {
 			    iprangeId = cocoon.request.get("iprange-id");
-                var existingIPRange = ipRangeManager.getIPRange(iprangeId);
-                if (existingIPRange != null) {
-                    message = "This IP range already exists.";
-                    ok = false;
-                }
-                else {
-                    range = new Packages.org.apache.lenya.cms.ac.FileIPRange(
-                        ipRangeManager.getConfigurationDirectory(), iprangeId);
-                    ipRangeManager.add(range);
-                    ok = true;
-                }
+		        if (ok) {
+	                var existingIPRange = ipRangeManager.getIPRange(iprangeId);
+	                if (existingIPRange != null) {
+	                    message = "This IP range already exists.";
+	                    ok = false;
+	                }
+	                else {
+	                    range = new Packages.org.apache.lenya.cms.ac.FileIPRange(
+	                        ipRangeManager.getConfigurationDirectory(), iprangeId);
+	                    ipRangeManager.add(range);
+	                    ok = true;
+	                }
+	            }
 	        }
 
             // save IP range	    
