@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.3 2003/02/07 12:14:07 ah Exp $
+ * $Id: DefaultCreator.java,v 1.4 2003/02/10 14:45:45 egliwyona Exp $
  * <License>
  * The Apache Software License
  *
@@ -195,7 +195,8 @@ public class DefaultCreator extends DefaultParentChildCreator {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public void create(File samplesDir, File parentDir, String childId, short childType)
+    public void create(File samplesDir, File parentDir,
+		       String childId, short childType, String childName)
         throws Exception {
         String filename = null;
         String filenameMeta = null;
