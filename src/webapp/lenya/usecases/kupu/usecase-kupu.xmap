@@ -22,6 +22,9 @@
   Most matchers serve as callbacks for Kupu running in a client's browser.
   Make sure that Kupu is installed under lenya/resources/kupu.
   
+  Most of (re)sources used in generators and transfomers of this sitemap
+  are located in the Kupu distribution.
+  
   Enjoy using Kupu.
 -->
 
@@ -143,9 +146,12 @@
         
         <!-- Kupu Image Drawer -->
         <map:match pattern="*drawerxsl" type="step">
-          <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/{1}drawer.xsl}" 
-            type="jx">
-            <map:parameter name="import-stylesheet-url" value="{page-envelope:context-prefix}/kupu/common/kupudrawers/{1}drawer.xsl"/>
+          <map:generate type="jx" src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/{1}drawer.xsl}">
+            <!-- We need to use the hole uri schem i.e. http://servername:port/, since IE xslt processor  
+                 throws an access violation upon loading of xslts from the internet.
+             -->
+            <map:parameter name="import-stylesheet-url"
+              value="{request:scheme}://{request:serverName}:{request:serverPort}{page-envelope:context-prefix}/kupu/common/kupudrawers/{1}drawer.xsl"/>
           </map:generate>  
           <map:serialize type="xml"/>
         </map:match>
