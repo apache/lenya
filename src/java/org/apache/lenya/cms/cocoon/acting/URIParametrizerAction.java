@@ -33,23 +33,23 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 
 	public void startElement(String uri, String loc, String raw, Attributes a) {
 	    if (loc.equals("parameter")) {
-		log.error("start Element " + uri + ":"+ loc + ":" + raw);
+		log.debug("start Element " + uri + ":"+ loc + ":" + raw);
 		inParamElement = true;
 	    }
 	}
 
 	public void endElement(String uri, String loc, String raw, Attributes a) {
 	    if (loc.equals("parameter")) {
-		log.error("stop Element " + uri + ":"+ loc + ":" + raw);
+		log.debug("stop Element " + uri + ":"+ loc + ":" + raw);
 		inParamElement = false;
 	    }
-            log.error("processing Element " + uri + ":"+ loc + ":" + raw);
+            log.debug("processing Element " + uri + ":"+ loc + ":" + raw);
 	}
 
 	public void characters(char[] ch, int start, int len) {
 	    if (inParamElement) {
 		parameterValue = new String(ch, start, len);
-		log.error("grab Element " + parameterValue);
+		log.debug("grab Element " + parameterValue);
 	    }
 	}
 	public String getParameter() {
