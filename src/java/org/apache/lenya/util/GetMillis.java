@@ -1,5 +1,5 @@
 /*
- * $Id: GetMillis.java,v 1.7 2003/03/06 20:45:52 gregor Exp $
+ * $Id: GetMillis.java,v 1.8 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.util;
+package org.apache.lenya.util;
 
 import java.util.GregorianCalendar;
 

@@ -1,5 +1,5 @@
 /*
- * $Id: Exporter.java,v 1.8 2003/04/17 14:11:48 michi Exp $
+ * $Id: Exporter.java,v 1.9 2003/04/24 13:52:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,7 +45,7 @@
  * Exporter.java
  *
  */
-package org.lenya.cms.publishing;
+package org.apache.lenya.cms.publishing;
 
 import java.net.URL;
 

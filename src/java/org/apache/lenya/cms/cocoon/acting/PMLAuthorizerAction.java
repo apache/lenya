@@ -1,5 +1,5 @@
 /*
- * $Id: PMLAuthorizerAction.java,v 1.17 2003/04/20 22:16:03 michi Exp $
+ * $Id: PMLAuthorizerAction.java,v 1.18 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -54,8 +54,8 @@ import org.apache.xpath.XPathAPI;
 
 import org.w3c.dom.Document;
 
-import org.lenya.cms.ac.Identity;
-import org.lenya.cms.ac.Policy;
+import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.ac.Policy;
 
 import java.net.URL;
 
@@ -180,7 +180,7 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
 
 
         // Needs to be here after authorizeMachine() check, else every component (XPSAssembler) must be wrapped by a proxy!
-        String authenticator_type = (String) session.getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
+        String authenticator_type = (String) session.getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
         if (!this.authenticator_type.equals(authenticator_type)) {
             if (authenticator_type == null) {
                 getLogger().warn(".authorize(): No authenticator yet");
@@ -192,7 +192,7 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
         }
 
 
-        Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
+        Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
 
         if (identity != null) {
             if (policy.authorizeUser(action, identity.getUsername())) {

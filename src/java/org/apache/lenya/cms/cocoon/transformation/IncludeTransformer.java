@@ -1,5 +1,5 @@
 /*
- * $Id: IncludeTransformer.java,v 1.10 2003/03/10 15:33:57 michi Exp $
+ * $Id: IncludeTransformer.java,v 1.11 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.transformation;
+package org.apache.lenya.cms.cocoon.transformation;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -50,7 +50,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 //import org.apache.cocoon.transformation.AbstractDOMTransformer;
-import org.lenya.cms.cocoon.transformation.AbstractDOMTransformer;
+import org.apache.lenya.cms.cocoon.transformation.AbstractDOMTransformer;
 
 import org.w3c.dom.Document;
 
@@ -113,9 +113,9 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
             getLogger().debug("COCOON_BASE_REQUEST: " + cocoon_base_request);
 
             if (href != null) {
-                return new org.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + href, cocoon_base_request);
+                return new org.apache.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + href, cocoon_base_request);
             } else {
-                return new org.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + sitemap_uri, cocoon_base_request);
+                return new org.apache.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + sitemap_uri, cocoon_base_request);
             }
         } catch (Exception e) {
             getLogger().error(".transform(): " + e);

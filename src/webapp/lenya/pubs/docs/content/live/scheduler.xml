@@ -62,13 +62,13 @@
 <sch:scheduler>
 
 <sch:triggers>
-  <sch:trigger name="date" src="org.lenya.cms.scheduler.DateTrigger"/>
-  <sch:trigger name="modified" src="org.lenya.cms.scheduler.ContentModifiedTrigger"/>
+  <sch:trigger name="date" src="org.apache.lenya.cms.scheduler.DateTrigger"/>
+  <sch:trigger name="modified" src="org.apache.lenya.cms.scheduler.ContentModifiedTrigger"/>
 </sch:triggers>
 
 <sch:actions>
-  <sch:action name="publish" src="org.lenya.cms.scheduler.PublishAction"/>
-  <sch:action name="email" src="org.lenya.cms.scheduler.EMailAction"/>
+  <sch:action name="publish" src="org.apache.lenya.cms.scheduler.PublishAction"/>
+  <sch:action name="email" src="org.apache.lenya.cms.scheduler.EMailAction"/>
 </sch:actions>
 
 <sch:publication name="nwt">

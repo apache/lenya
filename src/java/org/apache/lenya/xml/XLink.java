@@ -43,7 +43,7 @@
 </License>
  */
 
-package org.lenya.xml;
+package org.apache.lenya.xml;
 
 import org.w3c.dom.*;
 

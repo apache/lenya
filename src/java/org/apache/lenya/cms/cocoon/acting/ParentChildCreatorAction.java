@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.28 2003/04/02 14:58:56 egli Exp $
+ * $Id: ParentChildCreatorAction.java,v 1.29 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
 import java.util.Enumeration;
@@ -74,7 +74,7 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
-import org.lenya.cms.authoring.ParentChildCreatorInterface;
+import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 
 
 /**
@@ -188,7 +188,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         } else {
             getLogger().warn(".act(): No creator found for \"" + doctype +
                 "\". DefaultParentChildreator will be taken.");
-            creator = new org.lenya.cms.authoring.DefaultCreator();
+            creator = new org.apache.lenya.cms.authoring.DefaultCreator();
         }
 
         getLogger().debug(".act(): Creator : " + creator.getClass().getName());
@@ -335,13 +335,13 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
         // Redirect to referer
 	String parent_uri = (String) session.getAttribute(
-            "org.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
+            "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
 	getLogger().info(".act(): Child added");
 
 	HashMap actionMap = new HashMap();
 	actionMap.put("parent_uri", parent_uri);
 	session.removeAttribute(
-            "org.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
+            "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
 
 	return actionMap;
     }

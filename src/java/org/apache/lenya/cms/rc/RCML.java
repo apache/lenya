@@ -1,5 +1,5 @@
 /*
- * $Id: RCML.java,v 1.10 2003/04/23 17:56:15 edith Exp $
+ * $Id: RCML.java,v 1.11 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.rc;
+package org.apache.lenya.cms.rc;
 
 import org.apache.log4j.Category;
 
@@ -49,11 +49,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import org.lenya.util.XPSFileOutputStream;
+import org.apache.lenya.util.XPSFileOutputStream;
 
-import org.lenya.xml.DOMParserFactory;
-import org.lenya.xml.DOMWriter;
-import org.lenya.xml.XPointerFactory;
+import org.apache.lenya.xml.DOMParserFactory;
+import org.apache.lenya.xml.DOMWriter;
+import org.apache.lenya.xml.XPointerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,7 +83,7 @@ public class RCML {
      * Creates a new RCML object.
      */
     public RCML() {
-        maximalNumberOfEntries = new org.lenya.xml.Configuration().maxNumberOfRollbacks;
+        maximalNumberOfEntries = new org.apache.lenya.xml.Configuration().maxNumberOfRollbacks;
         maximalNumberOfEntries = (2 * maximalNumberOfEntries) + 1;
     }
 

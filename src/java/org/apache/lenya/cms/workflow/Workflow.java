@@ -4,7 +4,7 @@
  * Created on 8. April 2003, 17:03
  */
 
-package org.lenya.cms.workflow;
+package org.apache.lenya.cms.workflow;
 
 /**
  *

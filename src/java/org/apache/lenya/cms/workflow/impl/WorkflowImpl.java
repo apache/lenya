@@ -4,13 +4,13 @@
  * Created on 8. April 2003, 17:04
  */
 
-package org.lenya.cms.workflow.impl;
+package org.apache.lenya.cms.workflow.impl;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.lenya.cms.workflow.State;
-import org.lenya.cms.workflow.Transition;
-import org.lenya.cms.workflow.Workflow;
+import org.apache.lenya.cms.workflow.State;
+import org.apache.lenya.cms.workflow.Transition;
+import org.apache.lenya.cms.workflow.Workflow;
 
 /**
  *

@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLHandler.java,v 1.6 2003/03/06 20:45:52 gregor Exp $
+ * $Id: HTMLHandler.java,v 1.7 2003/04/24 13:53:13 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.search.crawler;
+package org.apache.lenya.search.crawler;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -64,7 +64,7 @@ import javax.swing.text.html.parser.ParserDelegator;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public final class HTMLHandler extends ParserCallback implements ContentHandler {
     private static final char space = ' ';

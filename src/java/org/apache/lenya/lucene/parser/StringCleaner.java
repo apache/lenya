@@ -4,7 +4,7 @@
  * Created on 21. März 2003, 11:31
  */
 
-package org.lenya.lucene.parser;
+package org.apache.lenya.lucene.parser;
 
 /**
  * A utility class to convert a string to text that can be included in an XML file.

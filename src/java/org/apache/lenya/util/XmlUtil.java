@@ -1,5 +1,5 @@
 /*
- * $Id: XmlUtil.java,v 1.9 2003/03/06 20:45:52 gregor Exp $
+ * $Id: XmlUtil.java,v 1.10 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.util;
+package org.apache.lenya.util;
 
 
 // SAX
@@ -58,7 +58,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 
 /**
- * XmlUtil.java $Id: XmlUtil.java,v 1.9 2003/03/06 20:45:52 gregor Exp $ Created: Thu Jan 24 18:27:05
+ * XmlUtil.java $Id: XmlUtil.java,v 1.10 2003/04/24 13:53:14 gregor Exp $ Created: Thu Jan 24 18:27:05
  * 2002 Utility Class for checking XML content for well-formedness
  *
  * @author <a href="mailto:memo@otego.com">Memo Birgi</a>

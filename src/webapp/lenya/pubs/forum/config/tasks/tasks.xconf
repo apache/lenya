@@ -4,16 +4,16 @@
 
   <task id="publish">
     <label>Publish and Export</label>
-    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher">
+    <task id="publish" class="org.apache.lenya.cms.publishing.DefaultFilePublisher">
 <!--
       <parameter name="live-path" value="content/live"/>
       <parameter name="tree-live-path" value="content/live/tree.xml"/>
 -->
     </task>
-    <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
+    <task id="export" class="org.apache.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
   
-  <task id="hello-world" class="org.lenya.cms.task.HelloWorldTask">
+  <task id="hello-world" class="org.apache.lenya.cms.task.HelloWorldTask">
     <label>Print Message into Log</label>
     <parameter name="text" value="Hello Lenya News and Comments"/>
   </task>

@@ -57,11 +57,11 @@
     Session session=request.getSession(true);
     String status=request.getParameter("status");
     if(status == null){
-      session.setAttribute("org.lenya.cms.cocoon.acting.DossierAction.parent_uri",referer);
+      session.setAttribute("org.apache.lenya.cms.cocoon.acting.DossierAction.parent_uri",referer);
       <xsp:content><referer><xsp:expr>referer</xsp:expr></referer></xsp:content>
       }
     else{
-      <xsp:content><referer><xsp:expr>session.getAttribute("org.lenya.cms.cocoon.acting.DossierAction.parent_uri")</xsp:expr></referer></xsp:content>
+      <xsp:content><referer><xsp:expr>session.getAttribute("org.apache.lenya.cms.cocoon.acting.DossierAction.parent_uri")</xsp:expr></referer></xsp:content>
       }
   </xsp:logic>
 

@@ -41,7 +41,7 @@
 <target name="passwd" description="Generate a password" depends="init">
   <echo>INFO: Generate a password (${password})</echo>
 
-  <java classname="org.lenya.cms.ac.Password">
+  <java classname="org.apache.lenya.cms.ac.Password">
     <arg value="${password}"/>
     <classpath refid="class.path"/>
   </java>

@@ -4,10 +4,10 @@
  * Created on 20. März 2003, 15:50
  */
 
-package org.lenya.lucene.parser;
+package org.apache.lenya.lucene.parser;
 
 import java.io.File;
-import org.lenya.util.CommandLineLogger;
+import org.apache.lenya.util.CommandLineLogger;
 
 /**
  * Factory to create HTML parsers that are used for indexing HTML.

@@ -4,17 +4,17 @@
  * Created on 19. März 2003, 10:45
  */
 
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 import java.io.File;
 import java.util.Date;
 
 
-import org.lenya.lucene.IndexConfiguration;
-import org.lenya.util.DebugConfiguration;
-import org.lenya.xml.DOMParserFactory;
-import org.lenya.xml.DOMUtil;
-import org.lenya.xml.XPath;
+import org.apache.lenya.lucene.IndexConfiguration;
+import org.apache.lenya.util.DebugConfiguration;
+import org.apache.lenya.xml.DOMParserFactory;
+import org.apache.lenya.xml.DOMUtil;
+import org.apache.lenya.xml.XPath;
 
 import org.w3c.dom.Document;
 

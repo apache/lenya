@@ -40,36 +40,36 @@
             <map:serialize type="xml" />
           </map:match>
 
-          <map:match pattern="skin/**.css">
-            <map:read src="content/{1}.css" mime-type="text/css" />
+          <map:match pattern="**.css">
+            <map:read src="resources/css/{0}.css" mime-type="text/css" />
           </map:match>
 
           <map:match pattern="**.js">
-            <map:read src="content/{0}" mime-type="application/javascript" />
+            <map:read src="resources/javascript/{0}" mime-type="application/javascript" />
           </map:match>
 
           <map:match pattern="**.gif">
-            <map:read src="content/{0}" mime-type="image/gif" />
+            <map:read src="resources/images/{0}" mime-type="image/gif" />
           </map:match>
 
           <map:match pattern="**.png">
-            <map:read src="content/{0}" mime-type="image/png" />
+            <map:read src="resources/images/{0}" mime-type="image/png" />
           </map:match>
 
           <map:match pattern="**.jpg">
-            <map:read src="content/{0}" mime-type="image/jpeg" />
+            <map:read src="resources/images/{0}" mime-type="image/jpeg" />
           </map:match>
 
           <map:match pattern="**.jpeg">
-            <map:read src="content/{0}" mime-type="image/jpeg" />
+            <map:read src="resources/images/{0}" mime-type="image/jpeg" />
           </map:match>
 
           <map:match pattern="**.pdf">
-            <map:read src="content/{0}" mime-type="application/pdf" />
+            <map:read src="resources/pdf/{0}" mime-type="application/pdf" />
           </map:match>
 
           <map:match pattern="**.swf">
-            <map:read src="content/{0}" mime-type="application/x-shockwave-flash" />
+            <map:read src="resources/flash/{0}" mime-type="application/x-shockwave-flash" />
           </map:match>
 
           <map:match pattern="**.txt">

@@ -23,8 +23,8 @@
     <xsp:include>java.util.*</xsp:include>
     <xsp:include>java.io.*</xsp:include>
 
-    <xsp:include>org.lenya.lucene.ReTokenizeFile</xsp:include>
-    <xsp:include>org.lenya.lucene.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.lucene.ReTokenizeFile</xsp:include>
+    <xsp:include>org.apache.lenya.lucene.Publication</xsp:include>
     
   </xsp:structure>
 

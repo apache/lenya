@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractPublisher.java,v 1.7 2003/03/06 20:45:41 gregor Exp $
+ * $Id: AbstractPublisher.java,v 1.8 2003/04/24 13:52:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,9 +41,9 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.publishing;
+package org.apache.lenya.cms.publishing;
 
-import org.lenya.cms.task.AbstractTask;
+import org.apache.lenya.cms.task.AbstractTask;
 
 
 /**

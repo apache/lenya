@@ -27,8 +27,8 @@ echo "=========================================================="
 echo "Target: crawl"
 echo "=========================================================="
 echo ""
-$JAVA -cp $CLASSPATH org.lenya.search.crawler.CrawlerEnvironment $CRAWLER_CONF
-#$JAVA -cp $CLASSPATH org.lenya.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
+$JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.CrawlerEnvironment $CRAWLER_CONF
+#$JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
 
 
 
@@ -37,7 +37,7 @@ echo "=========================================================="
 echo "Target: extract_text_from_pdf"
 echo "=========================================================="
 echo ""
-HTDOCS_DUMP_DIR=`$JAVA -cp $CLASSPATH org.lenya.search.crawler.CrawlerEnvironment $CRAWLER_CONF -name htdocs-dump-dir`
+HTDOCS_DUMP_DIR=`$JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.CrawlerEnvironment $CRAWLER_CONF -name htdocs-dump-dir`
 ##find $HTDOCS_DUMP_DIR -name "*.pdf" -print -exec $XPDF -htmlmeta {} {}.txt \;
 find $HTDOCS_DUMP_DIR -name "*.pdf.txt" -print
 
@@ -57,9 +57,9 @@ echo ""
 CLASSPATH=$CLASSPATH:$LENYA_PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar
 echo $CLASSPATH
 echo $LUCENE_CONF
-$JAVA -cp $CLASSPATH org.lenya.lucene.IndexEnvironment $LUCENE_CONF
-#$JAVA -cp $CLASSPATH org.lenya.lucene.IndexHTML $LUCENE_CONF
-$JAVA -cp $CLASSPATH org.lenya.lucene.index.Index $LUCENE_CONF
+$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexEnvironment $LUCENE_CONF
+#$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
+$JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF
 
 
 echo ""

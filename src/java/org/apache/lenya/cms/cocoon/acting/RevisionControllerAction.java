@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionControllerAction.java,v 1.13 2003/04/23 17:53:22 edith Exp $
+ * $Id: RevisionControllerAction.java,v 1.14 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.parameters.Parameters;
 
@@ -52,8 +52,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
-import org.lenya.cms.ac.Identity;
-import org.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.rc.RevisionController;
 
 import java.util.Map;
 
@@ -119,7 +119,7 @@ public class RevisionControllerAction extends AbstractAction {
             return null;
         }
 
-        Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
+        Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
         getLogger().debug(".act(): Identity: " + identity);
 
         filename = parameters.getParameter("filename");

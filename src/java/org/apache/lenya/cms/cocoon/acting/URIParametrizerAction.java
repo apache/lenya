@@ -1,4 +1,4 @@
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;

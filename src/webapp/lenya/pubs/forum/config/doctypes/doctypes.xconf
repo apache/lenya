@@ -8,7 +8,7 @@
 </doc>
 
 <doc type="Article">
-  <creator src="org.lenya.cms.pubs.forum.NewArticleCreator">
+  <creator src="org.apache.lenya.cms.pubs.forum.NewArticleCreator">
       <sample-name>Article.xml</sample-name>
     </creator>
   <children>
@@ -17,7 +17,7 @@
 </doc>
 
 <doc type="Comment">
-  <creator src="org.lenya.cms.authoring.DefaultCreator"/>
+  <creator src="org.apache.lenya.cms.authoring.DefaultCreator"/>
   <children>
     <doc type="Comment"/>
   </children>

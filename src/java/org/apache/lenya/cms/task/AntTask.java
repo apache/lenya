@@ -43,9 +43,9 @@
  * =======================================================================
 </License>
  */
-package org.lenya.cms.task;
+package org.apache.lenya.cms.task;
 
-import org.lenya.cms.task.ExecutionException;
+import org.apache.lenya.cms.task.ExecutionException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,8 +63,8 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 import org.apache.tools.ant.XmlLogger;
-import org.lenya.cms.publishing.PublishingEnvironment;
-import org.lenya.util.NamespaceMap;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.util.NamespaceMap;
 
 
 /**

@@ -11,7 +11,7 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions>
-      <map:action name="publisher" src="org.lenya.cms.cocoon.acting.TaskAction">
+      <map:action name="publisher" src="org.apache.lenya.cms.cocoon.acting.TaskAction">
         <task id="publish"/>
       </map:action>
     </map:actions>

@@ -4,7 +4,7 @@
  * Created on 27. März 2003, 15:37
  */
 
-package org.lenya.lucene.parser;
+package org.apache.lenya.lucene.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,15 +45,15 @@ public class PDFParserWrapper
         }
     }
     
-    org.lenya.lucene.html.HTMLParser parser;
+    org.apache.lenya.lucene.html.HTMLParser parser;
     
-    protected org.lenya.lucene.html.HTMLParser getParser() {
+    protected org.apache.lenya.lucene.html.HTMLParser getParser() {
         return parser;
     }
     
     public void parse(File file) throws ParseException {
         try {
-            parser = new org.lenya.lucene.html.HTMLParser(file);
+            parser = new org.apache.lenya.lucene.html.HTMLParser(file);
         }
         catch (FileNotFoundException e) {
             throw new ParseException(e);
@@ -64,7 +64,7 @@ public class PDFParserWrapper
         try {
             URLConnection connection = uri.toURL().openConnection();
             Reader reader = new InputStreamReader(connection.getInputStream());
-            parser = new org.lenya.lucene.html.HTMLParser(reader);
+            parser = new org.apache.lenya.lucene.html.HTMLParser(reader);
         }
         catch (MalformedURLException e) {
             throw new ParseException(e);

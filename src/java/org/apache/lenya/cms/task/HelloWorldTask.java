@@ -1,5 +1,5 @@
 /*
- * $Id: HelloWorldTask.java,v 1.7 2003/03/06 20:45:42 gregor Exp $
+ * $Id: HelloWorldTask.java,v 1.8 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.task;
+package org.apache.lenya.cms.task;
 
 /**
  * A simple task to demonstrate the task behaviour. It outputs a string to the log4j log file. The

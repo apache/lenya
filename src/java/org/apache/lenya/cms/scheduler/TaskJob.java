@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.16 2003/04/20 22:16:03 michi Exp $
+ * $Id: TaskJob.java,v 1.17 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  *
  * Created on November 7, 2002, 3:58 PM
  */
-package org.lenya.cms.scheduler;
+package org.apache.lenya.cms.scheduler;
 
 import org.apache.avalon.framework.parameters.Parameters;
 
@@ -57,10 +57,10 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import org.lenya.cms.publishing.PublishingEnvironment;
-import org.lenya.cms.task.AbstractTask;
-import org.lenya.cms.task.Task;
-import org.lenya.cms.task.TaskManager;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.task.AbstractTask;
+import org.apache.lenya.cms.task.Task;
+import org.apache.lenya.cms.task.TaskManager;
 
 import java.io.File;
 
@@ -69,8 +69,8 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.w3c.dom.Element;
-import org.lenya.cms.task.ExecutionException;
-import org.lenya.xml.NamespaceHelper;
+import org.apache.lenya.cms.task.ExecutionException;
+import org.apache.lenya.xml.NamespaceHelper;
 
 
 /**
@@ -98,7 +98,7 @@ public class TaskJob
         log.debug("Context path: " + contextPath);
 
         // the publicationID is fetched from the session
-        String publicationId = (String) request.getSession().getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
+        String publicationId = (String) request.getSession().getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
 
         if ((publicationId == null) || publicationId.equals("")) {
             log.error("No publication ID provided! ", new IllegalStateException());

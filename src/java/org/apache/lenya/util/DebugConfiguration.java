@@ -4,7 +4,7 @@
  * Created on 27. März 2003, 16:20
  */
 
-package org.lenya.util;
+package org.apache.lenya.util;
 
 /**
  *

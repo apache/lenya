@@ -1,5 +1,5 @@
 /*
- * $Id: Main.java,v 1.7 2003/03/27 13:25:40 gregor Exp $
+ * $Id: Main.java,v 1.8 2003/04/24 13:53:00 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene;
+package org.apache.lenya.lucene;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,7 +50,7 @@ import java.net.URL;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class Main {
     /**

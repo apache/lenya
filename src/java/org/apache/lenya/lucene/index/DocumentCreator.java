@@ -4,7 +4,7 @@
  * Created on 19. März 2003, 10:38
  */
 
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 import java.io.File;
 import org.apache.lucene.document.Document;

@@ -50,8 +50,8 @@
            classpathref="classpath"
            source="1.4"/>
 
-    <taskdef name="copyJavaSources" classpath="build/tools/anttasks" classname="org.lenya.cms.ant.CopyJavaSourcesTask"/>
-    <taskdef name="copyPubs"        classpath="build/tools/anttasks" classname="org.lenya.cms.ant.CopyTask"/>
+    <taskdef name="copyJavaSources" classpath="build/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="copyPubs"        classpath="build/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyTask"/>
   </target>
 
  <!-- ============================================================ -->

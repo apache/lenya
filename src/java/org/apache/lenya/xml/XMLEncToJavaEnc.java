@@ -1,5 +1,5 @@
 /*
- * $Id: XMLEncToJavaEnc.java,v 1.5 2003/03/06 20:45:53 gregor Exp $
+ * $Id: XMLEncToJavaEnc.java,v 1.6 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.xml;
+package org.apache.lenya.xml;
 
 import java.util.*;
 

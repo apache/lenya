@@ -1,5 +1,5 @@
 /*
- * $Id: Publisher.java,v 1.8 2003/03/19 14:26:11 egli Exp $
+ * $Id: Publisher.java,v 1.9 2003/04/24 13:52:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.publishing;
+package org.apache.lenya.cms.publishing;
 
 /**
  * A Publisher is used to copy XML sources from the authoring server to the pending server.

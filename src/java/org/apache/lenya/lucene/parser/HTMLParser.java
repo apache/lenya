@@ -4,7 +4,7 @@
  * Created on 17. März 2003, 14:13
  */
 
-package org.lenya.lucene.parser;
+package org.apache.lenya.lucene.parser;
 
 import java.io.File;
 import java.io.IOException;

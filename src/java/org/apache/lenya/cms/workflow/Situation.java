@@ -4,10 +4,10 @@
  * Created on 8. April 2003, 17:48
  */
 
-package org.lenya.cms.workflow;
+package org.apache.lenya.cms.workflow;
 
-import org.lenya.cms.ac.User;
-import org.lenya.cms.publication.Document;
+import org.apache.lenya.cms.ac.User;
+import org.apache.lenya.cms.publication.Document;
 
 /**
  *

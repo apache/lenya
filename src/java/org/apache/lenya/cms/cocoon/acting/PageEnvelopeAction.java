@@ -4,7 +4,7 @@
  * Created on 10. April 2003, 13:43
  */
 
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
 import java.util.HashMap;
@@ -12,9 +12,9 @@ import java.util.Map;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.lenya.cms.publication.PageEnvelope;
-import org.lenya.cms.publishing.PublishingEnvironment;
-import org.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.rc.RCEnvironment;
 
 /**
  *

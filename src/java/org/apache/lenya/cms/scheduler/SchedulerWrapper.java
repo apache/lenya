@@ -1,5 +1,5 @@
 /*
- * $Id: SchedulerWrapper.java,v 1.12 2003/03/06 20:45:42 gregor Exp $
+ * $Id: SchedulerWrapper.java,v 1.13 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  *
  * Created on November 8, 2002, 3:38 PM
  */
-package org.lenya.cms.scheduler;
+package org.apache.lenya.cms.scheduler;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
@@ -62,8 +62,8 @@ import org.quartz.Trigger;
 
 import org.quartz.impl.StdSchedulerFactory;
 
-import org.lenya.cms.publishing.PublishingEnvironment;
-import org.lenya.cms.scheduler.xml.TriggerHelper;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 
 import java.io.File;
 
@@ -73,8 +73,8 @@ import java.util.GregorianCalendar;
 import javax.servlet.http.HttpServletRequest;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.lenya.xml.DocumentHelper;
-import org.lenya.xml.NamespaceHelper;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 
 
 /**

@@ -1,4 +1,4 @@
-package org.lenya.lucene.html;
+package org.apache.lenya.lucene.html;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;

@@ -1,5 +1,5 @@
 /*
- * $Id: IndexConfiguration.java,v 1.3 2003/03/24 15:54:22 michi Exp $
+ * $Id: IndexConfiguration.java,v 1.4 2003/04/24 13:53:00 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,11 +41,11 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene;
+package org.apache.lenya.lucene;
 
-import org.lenya.xml.DOMParserFactory;
-import org.lenya.xml.DOMUtil;
-import org.lenya.xml.XPath;
+import org.apache.lenya.xml.DOMParserFactory;
+import org.apache.lenya.xml.DOMUtil;
+import org.apache.lenya.xml.XPath;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -96,7 +96,7 @@ public class IndexConfiguration {
      */
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Usage: org.lenya.lucene.IndexConfiguration lucene.xconf");
+            System.err.println("Usage: org.apache.lenya.lucene.IndexConfiguration lucene.xconf");
 
             return;
         }

@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLDocument.java,v 1.15 2003/03/27 13:25:40 gregor Exp $
+ * $Id: HTMLDocument.java,v 1.16 2003/04/24 13:53:00 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,11 +41,11 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene;
+package org.apache.lenya.lucene;
 
 import org.apache.lucene.document.*;
 
-import org.lenya.lucene.html.HTMLParser;
+import org.apache.lenya.lucene.html.HTMLParser;
 
 import java.io.*;
 

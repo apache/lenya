@@ -1,4 +1,4 @@
-package org.lenya.util;
+package org.apache.lenya.util;
 
 import java.io.*;
 import java.util.*;
@@ -22,7 +22,7 @@ public class SSI {
      */
     public static void main(String[] args) {
         if (args.length == 0) {
-            System.out.println("Usage: java org.lenya.util.SSI <file> -o file.out");
+            System.out.println("Usage: java org.apache.lenya.util.SSI <file> -o file.out");
             return;
         }
 

@@ -1,5 +1,5 @@
 /*
- * $Id: NamespaceHelper.java,v 1.9 2003/03/21 15:45:03 michi Exp $
+ * $Id: NamespaceHelper.java,v 1.10 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.xml;
+package org.apache.lenya.xml;
 
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;

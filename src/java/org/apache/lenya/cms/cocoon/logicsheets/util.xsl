@@ -19,8 +19,8 @@
       <xsp:structure>
         <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
         <xsp:include>org.apache.cocoon.environment.Source</xsp:include>
-        <xsp:include>org.lenya.cms.ac.Identity</xsp:include>
-        <xsp:include>org.lenya.cms.publication.Publication</xsp:include>
+        <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
+        <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
       </xsp:structure>
       
       <xsl:apply-templates/>
@@ -52,7 +52,7 @@
     Session xsp_lenya_session=request.getSession(false);
     Identity xsp_lenya_id=null;
     if(xsp_lenya_session != null){
-      xsp_lenya_id=(Identity)xsp_lenya_session.getAttribute("org.lenya.cms.ac.Identity");
+      xsp_lenya_id=(Identity)xsp_lenya_session.getAttribute("org.apache.lenya.cms.ac.Identity");
       if(xsp_lenya_id != null){
         <xsp:content><current_username><xsp:expr>xsp_lenya_id.getUsername()</xsp:expr></current_username></xsp:content>
       }
@@ -70,11 +70,11 @@
     else {
        String xsp_lenya_status=request.getParameter("status");
        if(xsp_lenya_status == null){
-          xsp_lenya_session.setAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri",xsp_lenya_referer);
+          xsp_lenya_session.setAttribute("org.apache.lenya.cms.cocoon.acting.TaskAction.parent_uri",xsp_lenya_referer);
           <xsp:content><referer><xsp:expr>xsp_lenya_referer</xsp:expr></referer></xsp:content>
        }
        else{
-         <xsp:content><referer><xsp:expr>xsp_lenya_session.getAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri")</xsp:expr></referer></xsp:content>
+         <xsp:content><referer><xsp:expr>xsp_lenya_session.getAttribute("org.apache.lenya.cms.cocoon.acting.TaskAction.parent_uri")</xsp:expr></referer></xsp:content>
        }
     }
     

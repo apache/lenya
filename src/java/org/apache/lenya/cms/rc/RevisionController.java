@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionController.java,v 1.13 2003/04/23 17:56:15 edith Exp $
+ * $Id: RevisionController.java,v 1.14 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,12 +41,12 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.rc;
+package org.apache.lenya.cms.rc;
 
 import org.apache.log4j.Category;
 
-import org.lenya.util.XPSFileOutputStream;
-import org.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.util.XPSFileOutputStream;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
 
 import java.io.File;
 import java.io.FileInputStream;

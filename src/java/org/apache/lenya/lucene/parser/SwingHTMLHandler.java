@@ -4,7 +4,7 @@
  * Created on 20. März 2003, 15:51
  */
 
-package org.lenya.lucene.parser;
+package org.apache.lenya.lucene.parser;
 
 import java.io.Reader;
 import java.io.StringReader;

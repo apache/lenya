@@ -9,7 +9,7 @@
 <map:serializers default="html"/>
 <map:matchers default="wildcard"/>
 <map:actions>
-  <map:action name="xopushandler" src="org.lenya.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.bitflux-handler">
+  <map:action name="xopushandler" src="org.apache.lenya.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.bitflux-handler">
     <xml href="content/authoring"/>
     <xsl href="stylesheets/publication"/>
     <xsd href="content/doctypes/schemas"/>

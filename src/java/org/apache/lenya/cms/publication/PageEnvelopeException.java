@@ -1,5 +1,5 @@
 /*
- * $Id: PageEnvelopeException.java,v 1.1 2003/04/23 18:00:49 edith Exp $
+ * $Id: PageEnvelopeException.java,v 1.2 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.publication;
+package org.apache.lenya.cms.publication;
 
 public class PageEnvelopeException
     extends Exception {

@@ -52,12 +52,12 @@ e. g. to use several publishers to publish into different directories:
 
 <tasks>
 
-  <task id="export-pending" class="org.lenya.cms.publishing.StaticHTMLExporter">
+  <task id="export-pending" class="org.apache.lenya.cms.publishing.StaticHTMLExporter">
     <parameter name="export-path" value="resources/export/pending"/>
     <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
   </task>
 
-  <task id="export-backup" class="org.lenya.cms.publishing.StaticHTMLExporter">
+  <task id="export-backup" class="org.apache.lenya.cms.publishing.StaticHTMLExporter">
     <parameter name="export-path" value="resources/backup"/>
     <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
   </task>

@@ -4,11 +4,11 @@
  * Created on 8. April 2003, 19:57
  */
 
-package org.lenya.cms.workflow.impl;
+package org.apache.lenya.cms.workflow.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.lenya.cms.workflow.Condition;
+import org.apache.lenya.cms.workflow.Condition;
 
 /**
  *

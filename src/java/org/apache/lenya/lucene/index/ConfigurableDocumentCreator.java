@@ -4,7 +4,7 @@
  * Created on 17. März 2003, 15:01
  */
 
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -27,11 +27,11 @@ import org.apache.lucene.document.Field;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.lenya.lucene.parser.HTMLParser;
-import org.lenya.lucene.parser.HTMLParserFactory;
-import org.lenya.lucene.parser.StringCleaner;
-import org.lenya.xml.DocumentHelper;
-import org.lenya.xml.NamespaceHelper;
+import org.apache.lenya.lucene.parser.HTMLParser;
+import org.apache.lenya.lucene.parser.HTMLParserFactory;
+import org.apache.lenya.lucene.parser.StringCleaner;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 import org.xml.sax.InputSource;
 
 /**

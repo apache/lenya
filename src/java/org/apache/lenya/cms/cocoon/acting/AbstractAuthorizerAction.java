@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthorizerAction.java,v 1.11 2003/04/20 22:16:03 michi Exp $
+ * $Id: AbstractAuthorizerAction.java,v 1.12 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -60,7 +60,7 @@ import org.apache.regexp.RECompiler;
 import org.apache.regexp.REProgram;
 import org.apache.regexp.RESyntaxException;
 
-import org.lenya.util.Stack;
+import org.apache.lenya.util.Stack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +71,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: AbstractAuthorizerAction.java,v 1.11 2003/04/20 22:16:03 michi Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.12 2003/04/24 13:52:38 gregor Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
@@ -175,11 +175,11 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
         }
 
         // Set history
-        Stack history = (Stack) session.getAttribute("org.lenya.cms.cocoon.acting.History");
+        Stack history = (Stack) session.getAttribute("org.apache.lenya.cms.cocoon.acting.History");
 
         if (history == null) {
             history = new Stack(10);
-            session.setAttribute("org.lenya.cms.cocoon.acting.History", history);
+            session.setAttribute("org.apache.lenya.cms.cocoon.acting.History", history);
         }
 
         history.push(sitemap_uri);
@@ -208,7 +208,7 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
 
 // FIXME: Can't be here. Please see comment within PMLAuthorizerAction
 /*
-        String authenticator_type = (String) session.getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
+        String authenticator_type = (String) session.getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
         if (!this.authenticator_type.equals(authenticator_type)) {
             if (authenticator_type == null) {
                 getLogger().debug(".act(): No authenticator yet");

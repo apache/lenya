@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.17 2003/04/02 15:04:16 egli Exp $
+ * $Id: NewArticleCreator.java,v 1.18 2003/04/24 13:54:00 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,17 +41,17 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.pubs.forum;
+package org.apache.lenya.cms.pubs.forum;
 
 import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 
-import org.lenya.cms.authoring.DefaultBranchCreator;
+import org.apache.lenya.cms.authoring.DefaultBranchCreator;
 
-import org.lenya.xml.DOMUtil;
+import org.apache.lenya.xml.DOMUtil;
 
-import org.lenya.util.DateUtil;
+import org.apache.lenya.util.DateUtil;
 
 import java.io.File;
 
@@ -103,7 +103,7 @@ public class NewArticleCreator extends DefaultBranchCreator {
         du.setElementValue(doc, "/article/meta/id", childId);
 
         // Replace editor
-        org.lenya.cms.ac.Identity identity = (org.lenya.cms.ac.Identity)parameters.get("org.lenya.cms.ac.Identity");
+        org.apache.lenya.cms.ac.Identity identity = (org.apache.lenya.cms.ac.Identity)parameters.get("org.apache.lenya.cms.ac.Identity");
         du.setElementValue(doc, "/article/meta/editor", identity.getUsername());
 
         Calendar cal = new GregorianCalendar();

@@ -1,5 +1,5 @@
 /*
- * $Id: TaskSequence.java,v 1.8 2003/03/06 20:45:42 gregor Exp $
+ * $Id: TaskSequence.java,v 1.9 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  *
  * Created on November 6, 2002, 6:30 PM
  */
-package org.lenya.cms.task;
+package org.apache.lenya.cms.task;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;

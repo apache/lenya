@@ -29,7 +29,7 @@
     <xsl:comment>Scheduler</xsl:comment>
     <servlet>
       <servlet-name>QuartzSchedulerServlet</servlet-name>
-      <servlet-class>org.lenya.cms.scheduler.LoadQuartzServlet</servlet-class>
+      <servlet-class>org.apache.lenya.cms.scheduler.LoadQuartzServlet</servlet-class>
       <init-param>
         <param-name>scheduler-configurations</param-name>
         <param-value>/lenya/content/scheduler/scheduler.xconf</param-value>

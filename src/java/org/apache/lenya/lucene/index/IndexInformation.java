@@ -4,7 +4,7 @@
  * Created on 19. März 2003, 14:56
  */
 
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -18,7 +18,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
-import org.lenya.util.CommandLineLogger;
+import org.apache.lenya.util.CommandLineLogger;
 
 /**
  *

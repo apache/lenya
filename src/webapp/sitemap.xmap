@@ -103,7 +103,7 @@
     
 <!-- =========================== Lenya CMS ================================= -->
     
-    <map:generator name="servletproxy" src="org.lenya.cms.cocoon.generation.ProxyGenerator"/>
+    <map:generator name="servletproxy" src="org.apache.lenya.cms.cocoon.generation.ProxyGenerator"/>
 </map:generators>
 
   <!--+
@@ -116,7 +116,7 @@
       +-->
   <map:transformers default="xslt">
 
-    <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
+    <map:transformer name="xlink" src="org.apache.lenya.cms.cocoon.transformation.IncludeTransformer">
       <publication type=""/>
     </map:transformer>
 
@@ -373,13 +373,13 @@
 
 <!-- =========================== Lenya CMS ================================= -->
 
-   <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
+   <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
         <tree-authoring href="content/authoring/tree.xml"/>
         <docs href="content/authoring"/>
         <doctypes href="content/doctypes/"/>
    </map:action>
 <!--
-      <map:action name="xopushandler" logger="sitemap.action.xopus" src="org.lenya.cms.cocoon.acting.XopusHandlerAction">
+      <map:action name="xopushandler" logger="sitemap.action.xopus" src="org.apache.lenya.cms.cocoon.acting.XopusHandlerAction">
         <xml href="content/authoring/"/>
         <xsl href="xslt"/>
         <xsd href="content"/>
@@ -393,26 +393,26 @@
         <backupDirectory href="content/backup"/>
       </map:action>
 
-      <map:action name="reserved-checkout" logger="sitemap.action.reserved-checkout" src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction">
+      <map:action name="reserved-checkout" logger="sitemap.action.reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction">
         <rcmlDirectory href="config/rc/rcml"/>
         <backupDirectory href="content/backup"/>
       </map:action>
-      <map:action name="reserved-checkin" logger="sitemap.action.reserved-checkin" src="org.lenya.cms.cocoon.acting.ReservedCheckinAction">
+      <map:action name="reserved-checkin" logger="sitemap.action.reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction">
         <rcmlDirectory href="config/rc/rcml"/>
         <backupDirectory href="content/backup"/>
       </map:action>
-      <map:action name="rollback" logger="sitemap.action.rollback" src="org.lenya.cms.cocoon.acting.RollbackAction">
+      <map:action name="rollback" logger="sitemap.action.rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction">
         <rcmlDirectory href="config/rc/rcml"/>
         <backupDirectory href="content/backup"/>
       </map:action>
 -->
-      <map:action name="file-upload" logger="sitemap.action.upload" src="org.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+      <map:action name="file-upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
         <resources-root href="resources/images/live"/>
         <docs-root href="content/authoring"/>
         <meta-root href="content/authoring/images_meta"/>
         <insert-image-before value="true"/>
       </map:action>
-      <map:action name="task" logger="sitemap.action.task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
+      <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
    </map:actions>
 
   <!--+

@@ -1,5 +1,5 @@
 /*
- * $Id: WGet.java,v 1.23 2003/04/17 14:11:48 michi Exp $
+ * $Id: WGet.java,v 1.24 2003/04/24 13:53:13 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.net;
+package org.apache.lenya.net;
 
 import org.apache.log4j.Category;
 
@@ -83,7 +83,7 @@ public class WGet {
      */
     public static void main(String[] args) {
         if (args.length == 0) {
-            System.out.println("Usage: org.lenya.net.WGet [URL] -P/home/lenya/download");
+            System.out.println("Usage: org.apache.lenya.net.WGet [URL] -P/home/lenya/download");
 
             return;
         }
@@ -174,7 +174,7 @@ public class WGet {
                 String link = (String) iterator.next();
 
                 try {
-                    URL child_url = new URL(org.lenya.util.URLUtil.complete(url.toString(), link));
+                    URL child_url = new URL(org.apache.lenya.util.URLUtil.complete(url.toString(), link));
 
                     byte[] child_sresponse = getResource(child_url);
                     saveToFile(createFileName(child_url, prefixSubstitute, substituteReplacement), child_sresponse);
@@ -243,7 +243,7 @@ public class WGet {
         List links = null;
 
         try {
-            org.lenya.util.HTML html = new org.lenya.util.HTML(url.toString());
+            org.apache.lenya.util.HTML html = new org.apache.lenya.util.HTML(url.toString());
             links = html.getImageSrcs(false);
         } catch (Exception e) {
             log.error(".getLinks() Exception 423432: " + e);

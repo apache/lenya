@@ -1,5 +1,5 @@
 /*
- * $Id: EditorAction.java,v 1.12 2003/03/06 20:45:41 gregor Exp $
+ * $Id: EditorAction.java,v 1.13 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -117,7 +117,7 @@ public class EditorAction extends AbstractComplementaryConfigurableAction implem
             return null;
         }
 
-        String tempFile = (String) session.getAttribute("org.lenya.cms.editor.HTMLForm.tempFile");
+        String tempFile = (String) session.getAttribute("org.apache.lenya.cms.editor.HTMLForm.tempFile");
         getLogger().error("**** tempfile=" + tempFile);
 
         // prepare the return params

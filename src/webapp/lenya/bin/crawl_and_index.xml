@@ -43,13 +43,13 @@
 <target name="crawl" description="Crawl and dump hypertext documents" depends="init">
   <echo>INFO: Crawl and dump hypertext documents(${crawler.xconf})</echo>
 
-  <java classname="org.lenya.search.crawler.CrawlerConfiguration">
+  <java classname="org.apache.lenya.search.crawler.CrawlerConfiguration">
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
 
 
-  <java classname="org.lenya.search.crawler.IterativeHTMLCrawler">
+  <java classname="org.apache.lenya.search.crawler.IterativeHTMLCrawler">
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
@@ -63,19 +63,19 @@
 <target name="index" description="Index hypertext documents" depends="init">
   <echo>INFO: Index hypertext documents</echo>
 
-  <java classname="org.lenya.lucene.IndexConfiguration">
+  <java classname="org.apache.lenya.lucene.IndexConfiguration">
     <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>
 
-  <java classname="org.lenya.lucene.index.Index">
+  <java classname="org.apache.lenya.lucene.index.Index">
     <arg value="${lucene.xconf}"/>
     <arg value="${debug}"/>
     <classpath refid="class.path"/>
   </java>
 
 <!--
-  <java classname="org.lenya.lucene.IndexHTML">
+  <java classname="org.apache.lenya.lucene.IndexHTML">
     <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>
@@ -104,13 +104,13 @@
   <echo>INFO: Show configuration</echo>
 
   <echo>INFO: crawler.xconf</echo>
-  <java classname="org.lenya.search.crawler.CrawlerConfiguration">
+  <java classname="org.apache.lenya.search.crawler.CrawlerConfiguration">
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
 
   <echo>INFO: lucene.xconf</echo>
-  <java classname="org.lenya.lucene.IndexConfiguration">
+  <java classname="org.apache.lenya.lucene.IndexConfiguration">
     <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>

@@ -104,7 +104,7 @@ if [ -d $REPLICATION_DIR_1 ];then
     fi
 
 
-#    $JAVA -classpath $CLASSPATH org.lenya.xps.publish.Replicator $TEMP_DIR
+#    $JAVA -classpath $CLASSPATH org.apache.lenya.xps.publish.Replicator $TEMP_DIR
 
 
 
@@ -161,7 +161,7 @@ if [ -d $REPLICATION_DIR_2 ];then
     fi
 
 
-#    $JAVA -classpath $CLASSPATH org.lenya.xps.publish.Replicator $TEMP_DIR
+#    $JAVA -classpath $CLASSPATH org.apache.lenya.xps.publish.Replicator $TEMP_DIR
 
 
 
@@ -218,7 +218,7 @@ if [ -d $REPLICATION_DIR_3 ];then
     fi
 
 
-#    $JAVA -classpath $CLASSPATH org.lenya.xps.publish.Replicator $TEMP_DIR
+#    $JAVA -classpath $CLASSPATH org.apache.lenya.xps.publish.Replicator $TEMP_DIR
 
 
 

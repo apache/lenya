@@ -15,7 +15,7 @@
       </map:matcher>
     </map:matchers>
     <map:actions>
-      <map:action name="reserved-checkout" src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+      <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
         <rcmlDirectory href="pubs/unipublic/content/rcml"/>
         <backupDirectory href="pubs/unipublic/content/rcbak"/>
       </map:action>

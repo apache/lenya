@@ -4,15 +4,15 @@
  * Created on 9. April 2003, 10:11
  */
 
-package org.lenya.cms.publication;
+package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import org.lenya.cms.workflow.Workflow;
-import org.lenya.cms.workflow.impl.WorkflowBuildException;
-import org.lenya.cms.workflow.impl.WorkflowBuilder;
-import org.lenya.cms.workflow.impl.WorkflowBuilderFactory;
-import org.lenya.xml.DocumentHelper;
-import org.lenya.xml.NamespaceHelper;
+import org.apache.lenya.cms.workflow.Workflow;
+import org.apache.lenya.cms.workflow.impl.WorkflowBuildException;
+import org.apache.lenya.cms.workflow.impl.WorkflowBuilder;
+import org.apache.lenya.cms.workflow.impl.WorkflowBuilderFactory;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

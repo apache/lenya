@@ -4,16 +4,16 @@
  * Created on 8. April 2003, 17:49
  */
 
-package org.lenya.cms.workflow.impl;
+package org.apache.lenya.cms.workflow.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.lenya.cms.workflow.Action;
-import org.lenya.cms.workflow.Condition;
-import org.lenya.cms.workflow.Event;
-import org.lenya.cms.workflow.Situation;
-import org.lenya.cms.workflow.State;
-import org.lenya.cms.workflow.Transition;
+import org.apache.lenya.cms.workflow.Action;
+import org.apache.lenya.cms.workflow.Condition;
+import org.apache.lenya.cms.workflow.Event;
+import org.apache.lenya.cms.workflow.Situation;
+import org.apache.lenya.cms.workflow.State;
+import org.apache.lenya.cms.workflow.Transition;
 
 /**
  *

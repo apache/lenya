@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.11 2003/04/09 15:57:14 andreas Exp $
+ * $Id: DocumentHelper.java,v 1.12 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.xml;
+package org.apache.lenya.xml;
 
 import java.io.File;
 import java.io.IOException;

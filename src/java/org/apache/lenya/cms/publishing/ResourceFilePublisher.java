@@ -1,5 +1,5 @@
 /*
- * $Id: ResourceFilePublisher.java,v 1.1 2003/03/19 14:26:11 egli Exp $
+ * $Id: ResourceFilePublisher.java,v 1.2 2003/04/24 13:52:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,13 +41,13 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.publishing;
+package org.apache.lenya.cms.publishing;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.excalibur.io.FileUtil;
 
 import org.apache.log4j.Category;
-import org.lenya.cms.task.ExecutionException;
+import org.apache.lenya.cms.task.ExecutionException;
 
 import java.io.File;
 import java.io.IOException;

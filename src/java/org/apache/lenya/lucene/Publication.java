@@ -1,5 +1,5 @@
 /*
- * $Id: Publication.java,v 1.5 2003/03/06 20:45:52 gregor Exp $
+ * $Id: Publication.java,v 1.6 2003/04/24 13:53:00 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,14 +41,14 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene;
+package org.apache.lenya.lucene;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class Publication {
     public String id = null;

@@ -1,5 +1,5 @@
 /*
- * $Id: Token.java,v 1.5 2003/03/06 20:45:52 gregor Exp $
+ * $Id: Token.java,v 1.6 2003/04/24 13:53:00 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene.html;
+package org.apache.lenya.lucene.html;
 
 /**
  * Describes the input token stream.

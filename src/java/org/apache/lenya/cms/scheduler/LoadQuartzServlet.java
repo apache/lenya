@@ -1,5 +1,5 @@
 /*
- * $Id: LoadQuartzServlet.java,v 1.22 2003/04/20 22:16:03 michi Exp $
+ * $Id: LoadQuartzServlet.java,v 1.23 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.scheduler;
+package org.apache.lenya.cms.scheduler;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -61,15 +61,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Category;
 import org.quartz.SchedulerException;
 import org.w3c.dom.Document;
-import org.lenya.cms.publishing.PublishingEnvironment;
-import org.lenya.xml.DocumentHelper;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.xml.DocumentHelper;
 
 
 /**
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.22 2003/04/20 22:16:03 michi Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.23 2003/04/24 13:52:59 gregor Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -236,7 +236,7 @@ public class LoadQuartzServlet extends HttpServlet {
         log.debug("-------------------- End Session Attributes --------------------");
 
         // the publicationID is fetched from the session
-        String publicationId = (String) request.getSession().getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
+        String publicationId = (String) request.getSession().getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
         // String publicationId = request.getParameter("publication");
 
         if ((publicationId == null) || publicationId.equals("")) {

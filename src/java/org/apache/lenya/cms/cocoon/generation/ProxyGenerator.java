@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyGenerator.java,v 1.15 2003/03/06 20:45:41 gregor Exp $
+ * $Id: ProxyGenerator.java,v 1.16 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.generation;
+package org.apache.lenya.cms.cocoon.generation;
 
 import org.apache.excalibur.xml.sax.SAXParser;
 import org.apache.avalon.framework.parameters.ParameterException;

@@ -1,5 +1,5 @@
 /*
- * $Id: XercesParser.java,v 1.8 2003/03/10 15:35:55 michi Exp $
+ * $Id: XercesParser.java,v 1.9 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.xml.parser;
+package org.apache.lenya.xml.parser;
 
 import org.apache.xerces.dom.*;
 //import org.apache.xerces.impl.xs.dom.DOMParser;
@@ -49,7 +49,7 @@ import org.apache.xerces.parsers.DOMParser;
 
 import org.w3c.dom.*;
 
-import org.lenya.xml.DOMWriter;
+import org.apache.lenya.xml.DOMWriter;
 
 import java.io.*;
 

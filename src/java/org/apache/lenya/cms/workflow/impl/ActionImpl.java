@@ -4,9 +4,9 @@
  * Created on 9. April 2003, 10:04
  */
 
-package org.lenya.cms.workflow.impl;
+package org.apache.lenya.cms.workflow.impl;
 
-import org.lenya.cms.workflow.Action;
+import org.apache.lenya.cms.workflow.Action;
 
 /**
  *

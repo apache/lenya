@@ -4,9 +4,9 @@
  * Created on 8. April 2003, 18:38
  */
 
-package org.lenya.cms.publication;
+package org.apache.lenya.cms.publication;
 
-import org.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
 
 import org.apache.log4j.Category;
 

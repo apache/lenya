@@ -1,5 +1,5 @@
 /*
- * $Id: ServletJobFactory.java,v 1.5 2003/03/06 20:45:42 gregor Exp $
+ * $Id: ServletJobFactory.java,v 1.6 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  *
  * Created on November 8, 2002, 2:08 PM
  */
-package org.lenya.cms.scheduler;
+package org.apache.lenya.cms.scheduler;
 
 import org.apache.log4j.Category;
 

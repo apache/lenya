@@ -12,14 +12,14 @@ import java.io.FileInputStream;
 
 import org.w3c.dom.Document;
 
-import org.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.ac.Identity;
 
 /**
- * A test case testing org.lenya.cms.ac.Identity
+ * A test case testing org.apache.lenya.cms.ac.Identity
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: IdentityTestCase.java,v 1.4 2003/04/22 22:24:56 michi Exp $
+ * @version CVS $Id: IdentityTestCase.java,v 1.5 2003/04/24 13:53:15 gregor Exp $
  */
 public final class IdentityTestCase extends TestCase {
     private Identity identity = null;
@@ -54,7 +54,7 @@ public final class IdentityTestCase extends TestCase {
             DocumentBuilder db = dbf.newDocumentBuilder();
             doc = db.parse(new FileInputStream("/home/michi/src/lenya/src/webapp/lenya/pubs/oscom/content/ac/passwd/lenya.iml"));
             identity = new Identity(doc);
-            //new org.lenya.xml.DOMWriter(System.out).printWithoutFormatting(identity.createDocument());
+            //new org.apache.lenya.xml.DOMWriter(System.out).printWithoutFormatting(identity.createDocument());
         } catch (Exception e) {
             System.err.println(e);
         }

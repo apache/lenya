@@ -1,5 +1,5 @@
 /*
- * $Id: CrawlerConfiguration.java,v 1.2 2003/03/24 15:56:59 michi Exp $
+ * $Id: CrawlerConfiguration.java,v 1.3 2003/04/24 13:53:13 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,11 +41,11 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.search.crawler;
+package org.apache.lenya.search.crawler;
 
-import org.lenya.xml.DOMParserFactory;
-import org.lenya.xml.DOMUtil;
-import org.lenya.xml.XPath;
+import org.apache.lenya.xml.DOMParserFactory;
+import org.apache.lenya.xml.DOMUtil;
+import org.apache.lenya.xml.XPath;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -98,7 +98,7 @@ public class CrawlerConfiguration {
     public static void main(String[] args) {
         if (args.length == 0) {
             System.err.println(
-                "Usage: org.lenya.search.crawler.CrawlerConfiguration crawler.xconf [-name <name>]");
+                "Usage: org.apache.lenya.search.crawler.CrawlerConfiguration crawler.xconf [-name <name>]");
 
             return;
         }

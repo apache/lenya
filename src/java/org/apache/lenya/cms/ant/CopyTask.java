@@ -1,5 +1,5 @@
 /*
- * $Id: CopyTask.java,v 1.1 2003/03/07 15:30:36 michi Exp $
+ * $Id: CopyTask.java,v 1.2 2003/04/24 13:52:37 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -38,7 +38,7 @@
  * THIRD PARTY CLAIMS AGAINST YOU.
  * </License>
  */
-package org.lenya.cms.ant;
+package org.apache.lenya.cms.ant;
 
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.BuildException;

@@ -37,9 +37,9 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 #log4j.appender.A1.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
 log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c %x - %m%n
 
-#log4j.category.org.lenya.cms.cocoon.transformation.IncludeTransformer=DEBUG
-#log4j.category.org.lenya.cms.pubs.forum.NewArticleCreator=DEBUG
-#log4j.category.org.lenya.cms.scheduler.HelloWorldJob=DEBUG
+#log4j.category.org.apache.lenya.cms.cocoon.transformation.IncludeTransformer=DEBUG
+#log4j.category.org.apache.lenya.cms.pubs.forum.NewArticleCreator=DEBUG
+#log4j.category.org.apache.lenya.cms.scheduler.HelloWorldJob=DEBUG
 </xsl:template>
 
 </xsl:stylesheet> 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: doctypes.xmap,v 1.4 2003/04/17 14:33:04 egli Exp $ -->
+<!-- CVS: $Id: doctypes.xmap,v 1.5 2003/04/24 13:53:20 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -10,12 +10,12 @@
     <map:actions>
       <!-- FIXME: Factor out to root sitemap -->
       <map:action name="task" logger="sitemap.action.task"
-	src="org.lenya.cms.cocoon.acting.TaskAction"/>
+	src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
       <map:action name="page-envelope"
       logger="sitemap.action.page-envelope"
-	src="org.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
+	src="org.apache.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
       <map:action name="uriparametrizer"
-	src="org.lenya.cms.cocoon.acting.URIParametrizerAction"
+	src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction"
 	logger="sitemap.action.uriparametrizer"/>
     </map:actions>
   </map:components>

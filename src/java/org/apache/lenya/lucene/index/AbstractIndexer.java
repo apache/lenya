@@ -4,7 +4,7 @@
  * Created on 19. März 2003, 10:40
  */
 
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -16,7 +16,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
-import org.lenya.util.CommandLineLogger;
+import org.apache.lenya.util.CommandLineLogger;
 
 import org.w3c.dom.Element;
 

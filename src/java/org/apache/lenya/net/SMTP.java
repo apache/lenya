@@ -1,5 +1,5 @@
 /*
- * $Id: SMTP.java,v 1.7 2003/03/06 20:45:52 gregor Exp $
+ * $Id: SMTP.java,v 1.8 2003/04/24 13:53:13 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,7 +45,7 @@
 <License>
 </License>
  */
-package org.lenya.net;
+package org.apache.lenya.net;
 
 import org.apache.log4j.Category;
 

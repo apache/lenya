@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doctypes>
   <doc type="XDoc">
-    <creator src="org.lenya.cms.authoring.DefaultCreator">
+    <creator src="org.apache.lenya.cms.authoring.DefaultCreator">
       <sample-name>xdoc.xml</sample-name>
     </creator>
     <tasks>

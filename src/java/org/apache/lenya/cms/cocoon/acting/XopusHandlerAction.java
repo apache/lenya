@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.26 2003/04/23 17:53:22 edith Exp $
+ * $Id: XopusHandlerAction.java,v 1.27 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.component.ComponentException;
@@ -66,8 +66,8 @@ import org.apache.cocoon.xml.dom.DOMStreamer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import org.lenya.cms.ac.Identity;
-import org.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.rc.RevisionController;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -294,7 +294,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
                     throw new Exception("No session");
                 }
 
-                Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
+                Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
 //                rc.reservedCheckIn(permFile.getAbsolutePath(), identity.getUsername(), true);
                 rc.reservedCheckIn(reqFile, identity.getUsername(), true);
                 FileUtil.copyFile(tempFile, permFile);

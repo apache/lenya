@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.8 2003/03/06 20:45:52 gregor Exp $
+ * $Id: Configuration.java,v 1.9 2003/04/24 13:53:13 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.net;
+package org.apache.lenya.net;
 
 import org.apache.log4j.Category;
 
@@ -76,7 +76,7 @@ public class Configuration {
     /**
      * http://www.artima.com/java/answers/Mar2001/messages/164.html export
      * CLASSPATH=/home/lenya/src/xps/build/properties:... java
-     * -Doverride.lenya.configuration=org/lenya/altconf.properties org.lenya.net.Configuration
+     * -Doverride.lenya.configuration=org/lenya/altconf.properties org.apache.lenya.net.Configuration
      *
      * @param args DOCUMENT ME!
      */
@@ -136,10 +136,10 @@ public class Configuration {
     public void getProperties(Properties properties) {
         if (properties != null) {
             configurationPath = getProperty(properties,
-                    "org.lenya.net.ProxyManager.configurationPath");
-            smtpHost = getProperty(properties, "org.lenya.net.SMTP.host");
-            smtpPort = getProperty(properties, "org.lenya.net.SMTP.port");
-            smtpDomain = getProperty(properties, "org.lenya.net.SMTP.domain");
+                    "org.apache.lenya.net.ProxyManager.configurationPath");
+            smtpHost = getProperty(properties, "org.apache.lenya.net.SMTP.host");
+            smtpPort = getProperty(properties, "org.apache.lenya.net.SMTP.port");
+            smtpDomain = getProperty(properties, "org.apache.lenya.net.SMTP.domain");
         }
     }
 

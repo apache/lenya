@@ -4,12 +4,12 @@
  * Created on 30. März 2003, 13:37
  */
 
-package org.lenya.lucene.parser;
+package org.apache.lenya.lucene.parser;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import org.lenya.util.CommandLineLogger;
+import org.apache.lenya.util.CommandLineLogger;
 
 /**
  * The Java HTML parser cannot handle self-closing text.

@@ -1,5 +1,5 @@
 /*
- * $Id: HelloWorldJob.java,v 1.6 2003/03/06 20:45:42 gregor Exp $
+ * $Id: HelloWorldJob.java,v 1.7 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.scheduler;
+package org.apache.lenya.cms.scheduler;
 
 import org.apache.log4j.Category;
 

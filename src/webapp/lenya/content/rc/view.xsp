@@ -8,9 +8,9 @@
        >
 
   <xsp:structure>
-    <xsp:include>org.lenya.cms.rc.RevisionController</xsp:include>
-    <xsp:include>org.lenya.cms.rc.RCEnvironment</xsp:include>
-    <xsp:include>org.lenya.xml.DOMParserFactory</xsp:include>
+    <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
+    <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
+    <xsp:include>org.apache.lenya.xml.DOMParserFactory</xsp:include>
   </xsp:structure>                                                                                                                          
 
   <rc:backup xmlns:rc="http://www.lenya.org/2002/rc">

@@ -1,5 +1,5 @@
 /*
- * $Id: XPSAssembler.java,v 1.10 2003/03/10 15:33:58 michi Exp $
+ * $Id: XPSAssembler.java,v 1.11 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,14 +41,14 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.xml;
+package org.apache.lenya.xml;
 
 import org.apache.log4j.Category;
 
 import org.w3c.dom.*;
 
-//import org.lenya.xml.*;
-import org.lenya.net.*;
+//import org.apache.lenya.xml.*;
+import org.apache.lenya.net.*;
 
 import java.io.*;
 

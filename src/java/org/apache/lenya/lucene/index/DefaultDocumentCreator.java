@@ -4,13 +4,13 @@
  * Created on 19. März 2003, 18:20
  */
 
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 import java.io.File;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.lenya.lucene.parser.HTMLParser;
-import org.lenya.lucene.parser.HTMLParserFactory;
+import org.apache.lenya.lucene.parser.HTMLParser;
+import org.apache.lenya.lucene.parser.HTMLParserFactory;
 
 /**
  *

@@ -28,7 +28,7 @@ When a document is checked-in, the old version of the document can be copied (ba
    
    <section><title>RCML-file</title>
     <p>
-The different check-in/check-out of a file are memorised in an xml file (RCML-file) created by the class org.lenya.xps.rc.RCML:
+The different check-in/check-out of a file are memorised in an xml file (RCML-file) created by the class org.apache.lenya.xps.rc.RCML:
     </p>
 <source><![CDATA[
 
@@ -61,7 +61,7 @@ The backup are located in a preconfigured directory, the BACKUP-directory. The b
    </section>  
    
    <section><title>Revision Controller</title>
-     <p>The functionality of the revision controller is managed by the java class org.lenya.cms.rc.RevisionController:
+     <p>The functionality of the revision controller is managed by the java class org.apache.lenya.cms.rc.RevisionController:
      </p>
      <ul>
        <li>to check out a file call the method reservedCheckOut(String source, String identity), where source is the filename of the file and identity, the user. <br/>
@@ -79,7 +79,7 @@ Rem: <ul>
      </ul> 
    </section>
    <section><title>Revision-Controller Action</title>
-     <p>A specified URL will call an action, which in turn calls the Revision Controller. We defined two different actions, one for the checkin (the reserved-checkin-action) and one for the checkout (the reserved-checkout-action). Both actions inherite from org.lenya.cms.cocoon.acting.RevisionControllerAction.java
+     <p>A specified URL will call an action, which in turn calls the Revision Controller. We defined two different actions, one for the checkin (the reserved-checkin-action) and one for the checkout (the reserved-checkout-action). Both actions inherite from org.apache.lenya.cms.cocoon.acting.RevisionControllerAction.java
      </p>
    </section> 
 </section>
@@ -89,8 +89,8 @@ Rem: <ul>
      The check out of a file can be activated by a specified URL, which call the reserved-checkout action. 
      </p>
      <ul>
-       <li>The action to check out a file is the java class java.org.lenya.cms.cocoon.acting.ReservedCheckoutAction</li>
-       <li>It calls the Revision Controller, the java class org.lenya.cms.rc.RevisionController and send the different exceptions. See also Exception Handling</li>
+       <li>The action to check out a file is the java class java.org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction</li>
+       <li>It calls the Revision Controller, the java class org.apache.lenya.cms.rc.RevisionController and send the different exceptions. See also Exception Handling</li>
        <li>The configuration of the needed parameters (RCML-directory and the BACKUP-directory) is made in the sitemap. See also Configuration</li>
        <li>The value of the user is got from the session</li>
        <li>The reference to the action is made in the authoring-sitemap.xmap. See also Sitemap</li>
@@ -108,7 +108,7 @@ Rem: <ul>
 <map:components>
     ...
     <map:actions>
-      <map:action name="reserved-checkout" src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+      <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
       </map:action>
     </map:actions>
     ...
@@ -146,7 +146,7 @@ Rem: <ul>
            <code><![CDATA[
  
      <map:actions>
-      <map:action name="reserved-checkout" src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+      <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
          <rcmlDirectory href="content/rcml"/>
          <backupDirectory href="content/rcbak"/>
        </map:action>
@@ -203,7 +203,7 @@ send the following XML:
          <li>and the docs/cms/rc/view.xsp for the view</li>
         </ul> 
        </li>
-      <li>The rollback to the an old version si controlled by the rollback action org.lenya.cms.cocoon.acting.RollbackAction</li>
+      <li>The rollback to the an old version si controlled by the rollback action org.apache.lenya.cms.cocoon.acting.RollbackAction</li>
      </ul> 
    <section><title>versions-screen.xsp</title>
          <p> This serverpage include in the XML document for the screen the rcml document.
@@ -214,9 +214,9 @@ send the following XML:
           This serverpage include in the "View" XML document the XML of desired version
          </p>
    </section>
-   <section><title>org.lenya.cms.cocoon.acting.RollbackAction</title>
+   <section><title>org.apache.lenya.cms.cocoon.acting.RollbackAction</title>
      <p>
-      This action inherite from org.lenya.cms.cocoon.acting.RevisionController. It called the Revision Controller to execute the rollback
+      This action inherite from org.apache.lenya.cms.cocoon.acting.RevisionController. It called the Revision Controller to execute the rollback
      </p>
    </section>
    <section><title>Sitemap</title>
@@ -231,7 +231,7 @@ send the following XML:
    ...
     <map:actions>
      ...
-      <map:action name="rollback" src="org.lenya.cms.cocoon.acting.RollbackAction">
+      <map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction">
         <rcmlDirectory href="content/rcml"/>
         <backupDirectory href="content/rcbak"/>
       </map:action>                                                                                                                         

@@ -48,7 +48,7 @@
  Software Foundation, please see <http://www.apache.org/>.
 
 */
-package org.lenya.cms.cocoon.transformation;
+package org.apache.lenya.cms.cocoon.transformation;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.component.ComponentManager;
@@ -83,7 +83,7 @@ import java.util.Map;
  * @author <a href="mailto:rossb@apache.org">Ross Burton</a>
  * @author <a href="mailto:brobertson@mta.ca">Bruce G. Robertson</a>
  * @author <a href="mailto:vgritsenko@apache.org">Vadim Gritsenko</a>
- * @version CVS $Id: AbstractDOMTransformer.java,v 1.1 2003/03/10 15:34:45 michi Exp $
+ * @version CVS $Id: AbstractDOMTransformer.java,v 1.2 2003/04/24 13:52:38 gregor Exp $
  */
 public abstract class AbstractDOMTransformer extends AbstractTransformer
         implements Transformer, DOMBuilder.Listener, Composable, Disposable, Recyclable {

@@ -1,5 +1,5 @@
 /*
- * $Id: IterativeHTMLCrawler.java,v 1.14 2003/03/24 16:01:16 michi Exp $
+ * $Id: IterativeHTMLCrawler.java,v 1.15 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.search.crawler;
+package org.apache.lenya.search.crawler;
 
 import websphinx.RobotExclusion;
 
@@ -65,7 +65,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class IterativeHTMLCrawler {
     java.util.Vector urlsToCrawl;

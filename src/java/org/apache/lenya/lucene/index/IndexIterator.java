@@ -4,7 +4,7 @@
  * Created on 26. März 2003, 17:14
  */
 
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -23,7 +23,7 @@ import org.apache.lucene.document.DateField;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermEnum;
-import org.lenya.util.CommandLineLogger;
+import org.apache.lenya.util.CommandLineLogger;
 
 /**
  *

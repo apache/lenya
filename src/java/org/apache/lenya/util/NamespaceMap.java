@@ -1,5 +1,5 @@
 /*
- * $Id: NamespaceMap.java,v 1.1 2003/04/04 11:56:35 andreas Exp $
+ * $Id: NamespaceMap.java,v 1.2 2003/04/24 13:53:14 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.util;
+package org.apache.lenya.util;
 
 import java.util.HashMap;
 import java.util.Iterator;

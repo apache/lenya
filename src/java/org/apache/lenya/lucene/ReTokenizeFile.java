@@ -1,5 +1,5 @@
 /*
- * $Id: ReTokenizeFile.java,v 1.12 2003/04/02 13:16:28 andreas Exp $
+ * $Id: ReTokenizeFile.java,v 1.13 2003/04/24 13:53:00 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,13 +41,13 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene;
+package org.apache.lenya.lucene;
 
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
-import org.lenya.lucene.html.HTMLParser;
+import org.apache.lenya.lucene.html.HTMLParser;
 
 import java.io.*;
 import java.util.StringTokenizer;
@@ -57,7 +57,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ReTokenizeFile {
     /**

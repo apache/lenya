@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthenticatorAction.java,v 1.10 2003/04/20 22:16:03 michi Exp $
+ * $Id: AbstractAuthenticatorAction.java,v 1.11 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -120,8 +120,8 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
         if (authenticate(req, new HashMap())) {
             getLogger().info(".act(): Authentication succeeded");
 
-            session.setAttribute("org.lenya.cms.cocoon.acting.Authenticator.id", authenticatorId);
-            session.setAttribute("org.lenya.cms.cocoon.acting.Authenticator.name", authenticatorName);
+            session.setAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id", authenticatorId);
+            session.setAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.name", authenticatorName);
 
             HashMap actionMap = new HashMap();
             actionMap.put("protected_destination", session.getAttribute("protected_destination"));

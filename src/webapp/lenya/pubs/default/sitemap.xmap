@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.6 2003/04/16 14:01:26 egli Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.7 2003/04/24 13:53:20 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -12,12 +12,12 @@
     <map:matchers default="wildcard"/>
     <map:actions>
       <!-- FIXME: Factor out to root sitemap -->
-      <map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
+      <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
         <authenticator type="default"/>
         <policies>default/policies/</policies>
         <public>login-screen|do-login|switch-user|logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
       </map:action>
-      <map:action name="authenticator" src="org.lenya.cms.cocoon.acting.IMLAuthenticatorAction" logger="sitemap.action.iml-authenticator">
+      <map:action name="authenticator" src="org.apache.lenya.cms.cocoon.acting.IMLAuthenticatorAction" logger="sitemap.action.iml-authenticator">
         <type>default</type>
         <passwd>default/passwd/</passwd>
       </map:action>

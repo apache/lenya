@@ -1,4 +1,4 @@
-package org.lenya.cms.ant;
+package org.apache.lenya.cms.ant;
 
 /**
  * @author Michael Wechner

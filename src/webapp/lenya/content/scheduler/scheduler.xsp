@@ -25,7 +25,7 @@
 
       String publicationId = request.getParameter("publication-id");
       if (publicationId == null || "".equals(publicationId)) {
-          publicationId = (String) request.getSession().getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
+          publicationId = (String) request.getSession().getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
           <xsp:content>  
             <sch:parameter name="publication-id">
               <xsp:attribute name="value"><xsp:expr>publicationId</xsp:expr></xsp:attribute>

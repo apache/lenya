@@ -1,5 +1,5 @@
 /*
- * $Id: RequestParamAction.java,v 1.6 2003/03/06 20:45:41 gregor Exp $
+ * $Id: RequestParamAction.java,v 1.7 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 
 /*
@@ -100,7 +100,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:Marcus.Crafter@osa.de">Marcus Crafter</a>
  * @author <a href="mailto:tcurdt@dff.st">Torsten Curdt</a>
- * @version CVS $Id: RequestParamAction.java,v 1.6 2003/03/06 20:45:41 gregor Exp $
+ * @version CVS $Id: RequestParamAction.java,v 1.7 2003/04/24 13:52:38 gregor Exp $
  */
 public class RequestParamAction extends org.apache.cocoon.acting.ComposerAction
     implements ThreadSafe {

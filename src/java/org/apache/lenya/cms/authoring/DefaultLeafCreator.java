@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultLeafCreator.java,v 1.6 2003/04/02 14:58:56 egli Exp $
+ * $Id: DefaultLeafCreator.java,v 1.7 2003/04/24 13:52:37 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.authoring;
+package org.apache.lenya.cms.authoring;
 
 import org.apache.log4j.Category;
 

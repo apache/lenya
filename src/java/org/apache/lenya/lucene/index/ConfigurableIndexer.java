@@ -1,4 +1,4 @@
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 /* ====================================================================
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.DocumentHelper;
 
 import org.w3c.dom.Element;
 

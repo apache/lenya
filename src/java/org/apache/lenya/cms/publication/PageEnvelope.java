@@ -4,7 +4,7 @@
  * Created on 10. April 2003, 13:46
  */
 
-package org.lenya.cms.publication;
+package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 
 import org.apache.log4j.Category;
 
-import org.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.rc.RCEnvironment;
 /**
  *
  * @author  nobby

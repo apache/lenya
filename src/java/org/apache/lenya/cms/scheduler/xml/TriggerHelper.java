@@ -1,5 +1,5 @@
 /*
- * $Id: TriggerHelper.java,v 1.10 2003/03/06 20:45:42 gregor Exp $
+ * $Id: TriggerHelper.java,v 1.11 2003/04/24 13:52:59 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.scheduler.xml;
+package org.apache.lenya.cms.scheduler.xml;
 
 import org.apache.log4j.Category;
 
@@ -55,8 +55,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import org.w3c.dom.Element;
-import org.lenya.cms.scheduler.SchedulerWrapper;
-import org.lenya.xml.NamespaceHelper;
+import org.apache.lenya.cms.scheduler.SchedulerWrapper;
+import org.apache.lenya.xml.NamespaceHelper;
 
 
 /**

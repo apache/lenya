@@ -31,7 +31,7 @@ Normally the "Menus" can be found at <em>content/menus</em>.
        <li>Definition of Action:
            <code><![CDATA[
 
-<map:action name="parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
+<map:action name="parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
   <tree-authoring href="content/authoring/tree.xml"/>
   <docs href="content/authoring"/>
   <doctypes href="content/doctypes/"/>
@@ -113,7 +113,7 @@ Copy the generic XSLT "../../xslt/authoring/parent-child.xsl" into the publicati
 </doc>
 
 <doc type="Article">
-  <creator src="org.lenya.cms.pubs.forum.NewArticleCreator"/>
+  <creator src="org.apache.lenya.cms.pubs.forum.NewArticleCreator"/>
   <children>
     <doc type="Comment"/>
   </children>
@@ -162,7 +162,7 @@ package ch.unizh.unipublic.lenya.cms.authoring;
     
 import java.io.File;
 
-import org.lenya.cms.authoring.AbstractParentChildCreator;
+import org.apache.lenya.cms.authoring.AbstractParentChildCreator;
 
 import org.apache.log4j.Category;
 

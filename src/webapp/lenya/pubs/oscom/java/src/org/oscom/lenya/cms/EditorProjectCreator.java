@@ -1,5 +1,5 @@
 /*
- * $Id: EditorProjectCreator.java,v 1.11 2003/04/02 15:13:31 egli Exp $
+ * $Id: EditorProjectCreator.java,v 1.12 2003/04/24 13:54:02 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,8 +49,8 @@ import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 
-import org.lenya.cms.authoring.DefaultLeafCreator;
-import org.lenya.xml.DOMUtil;
+import org.apache.lenya.cms.authoring.DefaultLeafCreator;
+import org.apache.lenya.xml.DOMUtil;
 
 /**
  * DOCUMENT ME!
@@ -77,7 +77,7 @@ public class EditorProjectCreator extends DefaultLeafCreator {
 	
         log.debug(".transformXML(): system_name = " +
 		  du.getElementValue(doc.getDocumentElement(), 
-				     new org.lenya.xml.XPath("system_name")));
+				     new org.apache.lenya.xml.XPath("system_name")));
 
         log.debug(".transformXML(): " + parameters.keySet());
     }

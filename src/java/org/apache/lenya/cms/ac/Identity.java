@@ -1,5 +1,5 @@
 /*
- * $Id: Identity.java,v 1.10 2003/04/22 22:17:24 michi Exp $
+ * $Id: Identity.java,v 1.11 2003/04/24 13:52:37 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.ac;
+package org.apache.lenya.cms.ac;
 
 import org.apache.log4j.Category;
 import org.apache.xpath.XPathAPI;
@@ -57,7 +57,7 @@ import org.w3c.dom.NodeList;
 
 import java.util.Vector;
 
-import org.lenya.xml.DOMUtil;
+import org.apache.lenya.xml.DOMUtil;
 
 
 /**
@@ -207,7 +207,7 @@ public class Identity {
              du.addElement(iml, "/identity/groups/group", (String) groupnames.elementAt(i));
          }
 
-         //new org.lenya.xml.DOMWriter(System.out).printWithoutFormatting(iml);
+         //new org.apache.lenya.xml.DOMWriter(System.out).printWithoutFormatting(iml);
          return iml;
      }
 
@@ -215,7 +215,7 @@ public class Identity {
      * Write XML Document to the filesystem
      */
      public void writeDocument(String filename) throws Exception {
-         new org.lenya.xml.DOMWriter(new java.io.FileOutputStream(filename)).printWithoutFormatting(createDocument());
+         new org.apache.lenya.xml.DOMWriter(new java.io.FileOutputStream(filename)).printWithoutFormatting(createDocument());
      }
 
     /**

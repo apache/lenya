@@ -1,5 +1,5 @@
 /*
- * $Id: ResourcePublishingEnvironment.java,v 1.2 2003/03/27 13:25:39 gregor Exp $
+ * $Id: ResourcePublishingEnvironment.java,v 1.3 2003/04/24 13:52:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.publishing;
+package org.apache.lenya.cms.publishing;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;

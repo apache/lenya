@@ -1,5 +1,5 @@
 /*
- * $Id: SearchFiles.java,v 1.7 2003/03/22 21:49:52 michi Exp $
+ * $Id: SearchFiles.java,v 1.8 2003/04/24 13:53:00 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene;
+package org.apache.lenya.lucene;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -66,7 +66,7 @@ class SearchFiles {
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println(
-                "Usage: org.lenya.lucene.SearchFiles \"directory_where_index_is_located\"");
+                "Usage: org.apache.lenya.lucene.SearchFiles \"directory_where_index_is_located\"");
 
             return;
         }

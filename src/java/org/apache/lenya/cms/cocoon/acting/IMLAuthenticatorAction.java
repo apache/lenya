@@ -1,5 +1,5 @@
 /*
- * $Id: IMLAuthenticatorAction.java,v 1.11 2003/04/20 22:16:03 michi Exp $
+ * $Id: IMLAuthenticatorAction.java,v 1.12 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -52,8 +52,8 @@ import org.apache.cocoon.environment.Session;
 
 import org.w3c.dom.Document;
 
-import org.lenya.cms.ac.Identity;
-import org.lenya.cms.ac.Password;
+import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.ac.Password;
 
 import java.net.URL;
 
@@ -166,7 +166,7 @@ public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticato
                     getLogger().debug("IDENTITY: " + identity);
                 }
 
-                session.setAttribute("org.lenya.cms.ac.Identity", identity);
+                session.setAttribute("org.apache.lenya.cms.ac.Identity", identity);
 
                 return true;
             }

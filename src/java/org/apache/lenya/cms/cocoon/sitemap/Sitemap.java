@@ -1,5 +1,5 @@
 /*
- * $Id: Sitemap.java,v 1.7 2003/03/06 20:45:41 gregor Exp $
+ * $Id: Sitemap.java,v 1.8 2003/04/24 13:52:38 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.cms.cocoon.sitemap;
+package org.apache.lenya.cms.cocoon.sitemap;
 
 import org.dom4j.Document;
 import org.dom4j.Element;

@@ -4,7 +4,7 @@
  * Created on 9. April 2003, 10:12
  */
 
-package org.lenya.cms.publication;
+package org.apache.lenya.cms.publication;
 
 /**
  *

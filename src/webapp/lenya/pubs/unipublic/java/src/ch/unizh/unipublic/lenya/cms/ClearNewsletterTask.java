@@ -1,5 +1,5 @@
 /*
- * $Id: ClearNewsletterTask.java,v 1.5 2003/03/06 20:47:08 gregor Exp $
+ * $Id: ClearNewsletterTask.java,v 1.6 2003/04/24 13:54:03 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -54,10 +54,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import org.lenya.cms.publishing.PublishingEnvironment;
-import org.lenya.cms.task.AbstractTask;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.task.AbstractTask;
 
-import org.lenya.xml.DOMWriter;
+import org.apache.lenya.xml.DOMWriter;
 
 import java.io.File;
 import java.io.FileWriter;

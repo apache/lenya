@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyItem.java,v 1.6 2003/03/06 20:45:52 gregor Exp $
+ * $Id: ProxyItem.java,v 1.7 2003/04/24 13:53:13 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,13 +41,13 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.net;
+package org.apache.lenya.net;
 
 import org.apache.regexp.*;
 
 import org.w3c.dom.*;
 
-import org.lenya.xml.*;
+import org.apache.lenya.xml.*;
 
 
 /**

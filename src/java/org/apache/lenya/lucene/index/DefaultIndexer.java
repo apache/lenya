@@ -4,7 +4,7 @@
  * Created on 21. März 2003, 10:08
  */
 
-package org.lenya.lucene.index;
+package org.apache.lenya.lucene.index;
 
 import org.w3c.dom.Element;
 
