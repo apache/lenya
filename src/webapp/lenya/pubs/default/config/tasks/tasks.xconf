@@ -12,5 +12,10 @@
     <label>Publish</label>
     <parameter name="target" value="publish"/>
   </task>
+  
+  <task id="create" class="org.apache.lenya.cms.task.AntTask">
+    <label>Create</label>
+    <parameter name="target" value="create"/>
+  </task>
 
 </tasks>
