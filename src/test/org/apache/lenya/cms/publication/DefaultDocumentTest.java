@@ -104,8 +104,7 @@ public class DefaultDocumentTest extends TestCase {
 
     protected DocumentIdentityMap getIdentityMap() {
         if (this.identityMap == null) {
-            Publication pub = PublicationHelper.getPublication();
-            this.identityMap = new DocumentIdentityMap(pub);
+            this.identityMap = new DocumentIdentityMap();
         }
         return this.identityMap;
     }
@@ -118,8 +117,9 @@ public class DefaultDocumentTest extends TestCase {
      */
     protected Document getDocument(DocumentTestSet testSet) throws DocumentBuildException {
 
-        DefaultDocument document = new DefaultDocument(getIdentityMap(), testSet.getId(), testSet
-                .getArea());
+        Publication pub = PublicationHelper.getPublication();
+        DefaultDocument document = new DefaultDocument(getIdentityMap(), pub, testSet.getId(),
+                testSet.getArea());
         document.setDocumentURL(testSet.getUrl());
         document.setLanguage(testSet.getLanguage());
         document.setExtension(testSet.getExtension());
@@ -145,7 +145,8 @@ public class DefaultDocumentTest extends TestCase {
          * @param _language The language.
          * @param _extension The extension.
          */
-        public DocumentTestSet(String _url, String _id, String _area, String _language, String _extension) {
+        public DocumentTestSet(String _url, String _id, String _area, String _language,
+                String _extension) {
             this.url = _url;
             this.id = _id;
             this.area = _area;

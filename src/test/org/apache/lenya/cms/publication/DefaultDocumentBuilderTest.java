@@ -31,42 +31,41 @@ import org.apache.lenya.cms.PublicationHelper;
  * Generation>Code and Comments
  */
 public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
-	/**
-	 * Constructor.
-	 * 
-	 * @param test
-	 *            The test.
-	 */
-	public DefaultDocumentBuilderTest(String test) {
-		super(test);
-	}
+    /**
+     * Constructor.
+     * 
+     * @param test The test.
+     */
+    public DefaultDocumentBuilderTest(String test) {
+        super(test);
+    }
 
-	/**
-	 * The main program. The parameters are set from the command line arguments.
-	 * 
-	 * @param args
-	 *            The command line arguments.
-	 */
-	public static void main(String[] args) {
-		PublicationHelper.extractPublicationArguments(args);
-		TestRunner.run(getSuite());
-	}
+    /**
+     * The main program. The parameters are set from the command line arguments.
+     * 
+     * @param args The command line arguments.
+     */
+    public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
+        TestRunner.run(getSuite());
+    }
 
-	/**
-	 * Returns the test suite.
-	 * 
-	 * @return A test suite.
-	 */
-	public static Test getSuite() {
-		return new TestSuite(DefaultDocumentBuilderTest.class);
-	}
+    /**
+     * Returns the test suite.
+     * 
+     * @return A test suite.
+     */
+    public static Test getSuite() {
+        return new TestSuite(DefaultDocumentBuilderTest.class);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.DefaultDocumentTest#getDocument(DocumentTestSet)
-	 */
-	protected Document getDocument(DocumentTestSet set) throws DocumentBuildException {
-		Publication pub = PublicationHelper.getPublication();
+    /**
+     * @see org.apache.lenya.cms.publication.DefaultDocumentTest#getDocument(DocumentTestSet)
+     */
+    protected Document getDocument(DocumentTestSet set) throws DocumentBuildException {
+        Publication pub = PublicationHelper.getPublication();
 
-		return getIdentityMap().getFactory().getFromURL(pub.getId() + "/" + set.getArea() + set.getUrl());
-	}
+        return getIdentityMap().getFactory().getFromURL(pub,
+                pub.getId() + "/" + set.getArea() + set.getUrl());
+    }
 }

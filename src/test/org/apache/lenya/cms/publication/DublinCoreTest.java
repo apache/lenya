@@ -61,8 +61,8 @@ public class DublinCoreTest extends TestCase {
      */
     final public void testModifySaveAndReload() throws DocumentBuildException, DocumentException {
         Publication publication = PublicationHelper.getPublication();
-        DocumentIdentityMap map = new DocumentIdentityMap(publication);
-        Document doc = map.get(AREA, DOCUMENT_ID, LANGUAGE);
+        DocumentIdentityMap map = new DocumentIdentityMap();
+        Document doc = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
         DublinCore dcCore = doc.getDublinCore();
         String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
         String subject = dcCore.getFirstValue(DublinCore.ELEMENT_SUBJECT);
@@ -72,7 +72,7 @@ public class DublinCoreTest extends TestCase {
         dcCore.setValue(DublinCore.ELEMENT_CREATOR, CREATOR);
         dcCore.save();
 
-        Document doc2 = map.get(AREA, DOCUMENT_ID, LANGUAGE);
+        Document doc2 = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
 
         DublinCore dcCore2 = doc2.getDublinCore();
         assertEquals(title, dcCore2.getFirstValue(DublinCore.ELEMENT_TITLE));

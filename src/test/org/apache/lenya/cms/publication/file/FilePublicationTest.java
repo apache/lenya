@@ -92,10 +92,18 @@ public class FilePublicationTest extends TestCase {
      * @throws SiteException
      */
     public void testCopyDocument() throws PublicationException, DocumentException, SiteException {
-        testCopyDocument(Publication.AUTHORING_AREA, sourceDocumentId, sourceLanguage,
-                Publication.AUTHORING_AREA, destinationDocumentId, destinationLanguage);
-        testCopyDocument(Publication.AUTHORING_AREA, sourceDocumentId, sourceLanguage,
-                Publication.LIVE_AREA, sourceDocumentId, sourceLanguage);
+        testCopyDocument(Publication.AUTHORING_AREA,
+                sourceDocumentId,
+                sourceLanguage,
+                Publication.AUTHORING_AREA,
+                destinationDocumentId,
+                destinationLanguage);
+        testCopyDocument(Publication.AUTHORING_AREA,
+                sourceDocumentId,
+                sourceLanguage,
+                Publication.LIVE_AREA,
+                sourceDocumentId,
+                sourceLanguage);
     }
 
     /**
@@ -110,9 +118,10 @@ public class FilePublicationTest extends TestCase {
      * @throws DocumentException
      * @throws SiteException
      */
-    public void testCopyDocument(String sourceArea, String _sourceDocumentId, String _sourceLanguage,
-            String destinationArea, String _destinationDocumentId, String _destinationLanguage)
-            throws PublicationException, DocumentException, SiteException {
+    public void testCopyDocument(String sourceArea, String _sourceDocumentId,
+            String _sourceLanguage, String destinationArea, String _destinationDocumentId,
+            String _destinationLanguage) throws PublicationException, DocumentException,
+            SiteException {
 
         System.out.println("Copy document");
         System.out.println("    Source area:             [" + sourceArea + "]");
@@ -123,10 +132,15 @@ public class FilePublicationTest extends TestCase {
         System.out.println("    Destination language:    [" + _destinationLanguage + "]");
 
         Publication publication = PublicationHelper.getPublication();
-        DocumentIdentityMap map = new DocumentIdentityMap(publication);
+        DocumentIdentityMap map = new DocumentIdentityMap();
 
-        Document sourceDocument = map.getFactory().get(sourceArea, _sourceDocumentId, _sourceLanguage);
-        Document destinationDocument = map.getFactory().get(destinationArea, _destinationDocumentId,
+        Document sourceDocument = map.getFactory().get(publication,
+                sourceArea,
+                _sourceDocumentId,
+                _sourceLanguage);
+        Document destinationDocument = map.getFactory().get(publication,
+                destinationArea,
+                _destinationDocumentId,
                 _destinationLanguage);
 
         publication.copyDocument(sourceDocument, destinationDocument);

@@ -20,8 +20,8 @@
 package org.apache.lenya.cms.publication;
 
 /**
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * To change the template for this generated type comment go to Window>Preferences>Java>Code
+ * Generation>Code and Comments
  */
 public class TestPageEnvelope extends PageEnvelope {
     /**
@@ -30,13 +30,12 @@ public class TestPageEnvelope extends PageEnvelope {
      * @param url The document url (starting with a slash).
      * @throws PageEnvelopeException when something goes wrong.
      */
-    public TestPageEnvelope(Publication publication, String url)
-        throws PageEnvelopeException {
+    public TestPageEnvelope(Publication publication, String url) throws PageEnvelopeException {
         setContext("");
 
         try {
-            DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            setDocument(map.getFactory().getFromURL(url));
+            DocumentIdentityMap map = new DocumentIdentityMap();
+            setDocument(map.getFactory().getFromURL(publication, url));
         } catch (DocumentBuildException e) {
             throw new PageEnvelopeException(e);
         }
