@@ -6,10 +6,6 @@
 
 <xsl:variable name="tablecolor">orange</xsl:variable>
 
-<xsl:template match="/">
-  <xsl:apply-templates/>
-</xsl:template>
-
 <xsl:template match="oscom">
 <html>
 <head><title>OSCOM - Open Source Content Management</title></head>

@@ -12,15 +12,13 @@
  <font face="verdana">
  <h3>Mailing Lists</h3>
 <p>
-<!--There are several OSCOM mailing lists available.-->
-There is currently one OSCOM mailing list available.
+There are several OSCOM mailing lists available.<br />
+NOTE: Only the public list is shown live.
 </p>
- <!--<h4>Public Lists</h4>-->
+ <h4>Public List</h4>
  <xsl:apply-templates select="public/list"/>
-<!--
  <h4>Private Lists</h4>
  <xsl:apply-templates select="private/list"/>
--->
  </font>
 </xsl:template>
 
@@ -30,9 +28,7 @@ There is currently one OSCOM mailing list available.
 <b><xsl:value-of select="name"/></b>
 <xsl:apply-templates select="description"/>
 <br /><a href="{public}">List Info</a>
-<!--
 <br /><a href="{admin}">List Administration</a>
--->
 </font>
 </p>
 </xsl:template>
