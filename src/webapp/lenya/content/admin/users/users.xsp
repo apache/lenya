@@ -77,17 +77,16 @@
 
       <types>
          <xsp:logic>
-            Iterator types = userManager.getUserTypes().iterator();
-	        while (types.hasNext()) {
-	          UserType type = (UserType)types.next();
+            UserType[] types = userManager.getUserTypes();
+            for (int i = 0; i &lt; types.length; i++) {
                 <xsp:content>
-		          <type>
-		            <xsp:attribute name="class-name"><xsp:expr>type.getClassName()</xsp:expr></xsp:attribute>
-		            <xsp:attribute name="create-use-case"><xsp:expr>type.getCreateUseCase()</xsp:expr></xsp:attribute>
-		            <xsp:expr>type.getKey()</xsp:expr>
-		          </type>	
+                  <type>
+                    <xsp:attribute name="class-name"><xsp:expr>types[i].getClassName()</xsp:expr></xsp:attribute>
+                    <xsp:attribute name="create-use-case"><xsp:expr>types[i].getCreateUseCase()</xsp:expr></xsp:attribute>
+                    <xsp:expr>types[i].getKey()</xsp:expr>
+                  </type>  
                 </xsp:content>
-	        }
+          }
          </xsp:logic>
       </types>
 
