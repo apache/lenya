@@ -25,16 +25,12 @@
     >
     
 <xsl:param name="area"/>
+<xsl:param name="root"/>
 
 <xsl:template match="nav:site">
   <div id="search">
-    <form action="{@href}../search-{$area}/lucene">
-      <div>
-        <input class="searchfield" type="text" name="queryString"/>
-        <input class="searchsubmit" type="submit" value="Search" name="find"/>
+    <form action="{$root}../search-{$area}/lucene"><input class="searchfield" type="text" name="queryString"/><input class="searchsubmit" type="submit" value="Search" name="find"/></form>
       </div>
-    </form>
-  </div>
 </xsl:template>
 
 <xsl:template match="@*|node()">
