@@ -1,5 +1,5 @@
 /*
- * $Id: SMTP.java,v 1.3 2003/02/13 19:47:13 andreas Exp $
+ * $Id: SMTP.java,v 1.4 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -141,18 +141,6 @@ public class SMTP {
         } catch (Exception e) {
             log.error("SMTP: " + e);
         }
-
-        /*
-          String from="contact@wyona.org";
-          String to=args[0];
-          String cc=null;
-          String bcc=null;
-          String subject="Test";
-          String body="All the best";
-
-          mail.send(from,to,cc,bcc,subject,body);
-          System.out.print(mail.log);
-        */
     }
 
     /**

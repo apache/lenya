@@ -1,5 +1,5 @@
 /*
- * $Id: XmlUtil.java,v 1.4 2003/02/13 19:10:16 andreas Exp $
+ * $Id: XmlUtil.java,v 1.5 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,7 +62,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 
 /**
- * XmlUtil.java $Id: XmlUtil.java,v 1.4 2003/02/13 19:10:16 andreas Exp $ Created: Thu Jan 24 18:27:05
+ * XmlUtil.java $Id: XmlUtil.java,v 1.5 2003/02/17 13:06:57 egli Exp $ Created: Thu Jan 24 18:27:05
  * 2002 Utility Class for checking XML content for well-formedness
  *
  * @author <a href="mailto:memo@otego.com">Memo Birgi</a>
@@ -83,7 +83,6 @@ public class XmlUtil {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
 
-            // MyHandler handler = new MyHandler();
             parser.parse(xmlFile, new DefaultHandler());
         } catch (FactoryConfigurationError e) {
             retMsg = "unable to get a document builder factory";

@@ -1,5 +1,5 @@
 /*
- * $Id: URLUtil.java,v 1.2 2003/02/07 12:14:24 ah Exp $
+ * $Id: URLUtil.java,v 1.3 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,7 +47,7 @@ package org.wyona.util;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class URLUtil {
     /**
@@ -96,7 +96,6 @@ public class URLUtil {
             url = currentURLPath.substring(0, pos + 2) + url.substring(3 * back, url.length());
         } else if (urlLowCase.startsWith("javascript:")) {
             // handle javascript:...
-            //url = parseJavaScript(url, urlLowCase);
             System.err.println(".parseHREF(): parseJavaScript is not implemented yet");
         } else if (urlLowCase.startsWith("#")) {
             // internal anchor... ignore.
@@ -111,7 +110,6 @@ public class URLUtil {
         // strip anchor if exists otherwise crawler may index content multiple times
         // links to the same url but with unique anchors would be considered unique
         // by the crawler when they should not be
-        //int i;
         if (url != null) {
             int i;
 

@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyManager.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: ProxyManager.java,v 1.3 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -53,9 +53,6 @@ import org.wyona.xml.*;
 
 import java.io.IOException;
 
-//import java.io.IOException;
-//import java.net.URL;
-//import java.net.MalformedURLException;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Vector;

@@ -1,5 +1,5 @@
 /*
- * $Id: Stack.java,v 1.3 2003/02/07 12:14:24 ah Exp $
+ * $Id: Stack.java,v 1.4 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -54,6 +54,7 @@ import java.util.*;
  * @author Michael Wechner
  * @version 1.12.22
  */
+// FIXME: this class seems pretty useless. Why not remove it?
 public class Stack extends Vector {
     int maxsize = 0;
 
@@ -72,18 +73,6 @@ public class Stack extends Vector {
      * @param args DOCUMENT ME!
      */
     public static void main(String[] args) {
-        Stack stack = new Stack(5);
-        stack.push(new String("Hello"));
-        stack.push(new String("Levi"));
-        stack.push(new String("how"));
-        stack.push(new String("are"));
-        stack.push(new String("you"));
-        stack.push(new String("today"));
-        stack.push(new String("?"));
-
-        for (int i = 0; i < stack.size(); i++) {
-            System.out.println(stack.elementAt(i));
-        }
     }
 
     /**

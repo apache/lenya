@@ -1,5 +1,5 @@
 /*
- * $Id: XPSFileOutputStream.java,v 1.2 2003/02/07 12:14:24 ah Exp $
+ * $Id: XPSFileOutputStream.java,v 1.3 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,8 +43,6 @@
  */
 package org.wyona.util;
 
-
-//import org.wyona.xps.publish.Publisher;
 import org.apache.log4j.Category;
 
 import java.io.File;
@@ -144,14 +142,6 @@ public class XPSFileOutputStream extends FileOutputStream {
         new File(getTempFilename(getRealFilename())).renameTo(new File(getRealFilename()));
         log.debug(".close(): mv " + getTempFilename(getRealFilename()) + " " + getRealFilename());
 
-        /*
-            try{
-              new Publisher(new File("/"),"replication").publish(getRealFilename());
-              }
-            catch(Exception e){
-              log.error(".close(): "+e);
-              }
-        */
     }
 
     /**

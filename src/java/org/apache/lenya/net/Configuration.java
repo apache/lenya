@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.4 2003/02/07 12:14:22 ah Exp $
+ * $Id: Configuration.java,v 1.5 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -121,7 +121,6 @@ public class Configuration {
         try {
             properties.load(Configuration.class.getResourceAsStream("conf.properties"));
 
-            //properties.load(url.openStream());
         } catch (Exception e) {
             log.error(e);
         }

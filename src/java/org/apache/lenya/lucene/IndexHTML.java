@@ -1,5 +1,5 @@
 /*
- * $Id: IndexHTML.java,v 1.8 2003/02/07 12:14:22 ah Exp $
+ * $Id: IndexHTML.java,v 1.9 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,7 +48,6 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.util.Arrays;
 
-//import org.apache.lucene.demo.html.HTMLParser;
 import java.io.File;
 
 import java.util.Date;
@@ -74,7 +73,6 @@ class IndexHTML {
 
             String usage = "IndexHTML <lucene.xconf>";
 
-            //String usage = "IndexHTML [-create] [-index <index>] <root_directory>";
             if (argv.length == 0) {
                 System.err.println("Usage: " + usage);
 
@@ -95,19 +93,6 @@ class IndexHTML {
                 return;
             }
 
-            /*
-                  for (int i = 0; i < argv.length; i++) {
-                    if (argv[i].equals("-index")) {                  // parse -index option
-                      index = argv[++i];
-                    } else if (argv[i].equals("-create")) {          // parse -create option
-                      create = true;
-                    } else if (i != argv.length-1) {
-                      System.err.println("Usage: " + usage);
-                      return;
-                    } else
-                      root = new File(argv[i]);
-                  }
-            */
             Date start = new Date();
 
             if (!create) { // delete stale docs
@@ -142,7 +127,6 @@ class IndexHTML {
      */
     private static void indexDocs(File file, String index, boolean create)
         throws Exception {
-        //System.out.println("IndexHTML.indexDocs(File,String,boolean): "+file);
         if (!create) { // incrementally update
             reader = IndexReader.open(index); // open existing index
             uidIter = reader.terms(new Term("uid", "")); // init uid iterator
@@ -173,7 +157,6 @@ class IndexHTML {
      */
     private static void indexDocs(File file, File root)
         throws Exception {
-        //System.out.println("IndexHTML.indexDocs(File,File): "+file+" "+root);
         if (file.isDirectory()) { // if a directory
 
             String[] files = file.list(); // list its files
@@ -186,9 +169,7 @@ class IndexHTML {
                 file.getPath().endsWith(".htm") || // index .htm files
                 file.getPath().endsWith(".txt")) { // index .txt files
 
-            //System.out.println("IndexHTML.indexDocs(File,File): File: "+file);
             if (uidIter != null) {
-                //System.out.println("IndexHTML.indexDocs(File,File): Constructing uid ...");
                 String uid = HTMLDocument.uid(file, root); // construct uid for doc
 
                 while ((uidIter.term() != null) && (uidIter.term().field() == "uid") &&
@@ -207,7 +188,6 @@ class IndexHTML {
                     uidIter.next(); // keep matching docs
                 } else if (!deleting) { // add new docs
 
-                    //System.out.println("IndexHTML.indexDocs(File,File): parsing (!deleting==true): " + file);
                     Document doc = null;
 
                     try {
@@ -225,7 +205,6 @@ class IndexHTML {
                 }
             } else { // creating a new index
 
-                //System.out.println("IndexHTML.indexDocs(File,File): parsing (unconditionally): " + file);
                 Document doc = null;
 
                 try {

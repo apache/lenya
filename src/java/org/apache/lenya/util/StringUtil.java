@@ -1,5 +1,5 @@
 /*
- * $Id: StringUtil.java,v 1.4 2003/02/07 12:14:24 ah Exp $
+ * $Id: StringUtil.java,v 1.5 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,8 +44,6 @@
 package org.wyona.util;
 
 /**
- * StringUtil.java $Id: StringUtil.java,v 1.4 2003/02/07 12:14:24 ah Exp $ Created: Thu Jan
- * 24 18:27:05 2002
  *
  * @author <a href="mailto:tinu@email.ch">Martin Lüthi</a>
  * @version Utilty Class for String handling

@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLHandler.java,v 1.2 2003/02/07 12:14:24 ah Exp $
+ * $Id: HTMLHandler.java,v 1.3 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,7 +57,7 @@ import javax.swing.text.html.HTMLEditorKit.ParserCallback;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class HTMLHandler extends ParserCallback {
     Category log = Category.getInstance(HTMLHandler.class);
@@ -72,7 +72,6 @@ public class HTMLHandler extends ParserCallback {
      * Creates a new HTMLHandler object.
      */
     public HTMLHandler() {
-        //log.debug("HTMLHandler(): Initialize");
         img_src_all = new ArrayList();
         img_src = new ArrayList();
         a_href_all = new ArrayList();
@@ -90,7 +89,6 @@ public class HTMLHandler extends ParserCallback {
      */
     public void handleStartTag(Tag tag, MutableAttributeSet attributes, int pos) {
         if (tag.equals(HTML.Tag.A)) {
-            //log.debug(".handleStartTag(): A");
             String href = (String) attributes.getAttribute(HTML.Attribute.HREF);
 
             if (href != null) {
@@ -100,8 +98,6 @@ public class HTMLHandler extends ParserCallback {
                     a_href.add(href);
                 }
             }
-        } else {
-            //log.debug(".handleStartTag(): Something else: "+tag.toString());
         }
     }
 
@@ -114,7 +110,6 @@ public class HTMLHandler extends ParserCallback {
      */
     public void handleSimpleTag(Tag tag, MutableAttributeSet attributes, int pos) {
         if (tag.equals(HTML.Tag.IMG)) {
-            //log.debug(".handleSimpleTag(): IMG");
             String src = (String) attributes.getAttribute(HTML.Attribute.SRC);
 
             if (src != null) {
@@ -127,7 +122,6 @@ public class HTMLHandler extends ParserCallback {
         }
 
         if (tag.equals(HTML.Tag.LINK)) {
-            //log.debug(".handleSimpleTag(): LINK");
             String href = (String) attributes.getAttribute(HTML.Attribute.HREF);
 
             if (href != null) {
@@ -137,8 +131,6 @@ public class HTMLHandler extends ParserCallback {
                     link_href.add(href);
                 }
             }
-        } else {
-            //log.debug(".handleSimpleTag(): Something else: "+tag.toString());
         }
     }
 

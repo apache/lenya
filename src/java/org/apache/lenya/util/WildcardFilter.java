@@ -1,5 +1,5 @@
 /*
- * $Id: WildcardFilter.java,v 1.3 2003/02/07 12:14:24 ah Exp $
+ * $Id: WildcardFilter.java,v 1.4 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -73,32 +73,6 @@ public class WildcardFilter {
             System.out.println("String did not match");
         }
 
-        /*
-                  if(new WildcardFilter().match("file:/home/wyona/xml/page-article32.xml","file:/home/wyona/xml/*article*.xml"))
-                    {
-                    System.out.println("String matched");
-                    }
-                  else
-                    {
-                    System.out.println("String did not match");
-                    }
-                  if(new WildcardFilter().match("file:/home/wyona/xml/page-article32.xml","file:/home/wyona/xml/*article*.xm"))
-                    {
-                    System.out.println("String matched");
-                    }
-                  else
-                    {
-                    System.out.println("String did not match");
-                    }
-                  if(new WildcardFilter().match("file:/home/wyona/xml/page-article32.xml","ile:/home/wyona/xml/*article*.xml"))
-                    {
-                    System.out.println("String matched");
-                    }
-                  else
-                    {
-                    System.out.println("String did not match");
-                    }
-        */
     }
 
     /**
@@ -136,7 +110,6 @@ public class WildcardFilter {
      * @return DOCUMENT ME!
      */
     public boolean matchInBetween(String stringToMatch, String stringWithWildcards) {
-        //System.out.println(stringToMatch+" "+stringWithWildcards);
         StringTokenizer st = new StringTokenizer(stringWithWildcards, "*");
         int length = st.countTokens();
 
@@ -178,9 +151,6 @@ public class WildcardFilter {
      * @return DOCUMENT ME!
      */
     public boolean matchNew(String stringToMatch, String stringWithWildcards, Vector wildcards) {
-        //System.out.println("");
-        //System.out.println(stringToMatch);
-        //System.out.println(stringWithWildcards);
         int index = stringWithWildcards.indexOf("*");
 
         if (index < 0) {
@@ -217,7 +187,6 @@ public class WildcardFilter {
                 int indexBefore = stringToMatch.indexOf(before);
 
                 if (indexBefore >= 0) {
-                    //System.out.println(stringToMatch.substring(0,indexBefore));
                     wildcards.addElement(stringToMatch.substring(0, indexBefore));
 
                     return matchNew(stringToMatch.substring(indexBefore + before.length()), after,

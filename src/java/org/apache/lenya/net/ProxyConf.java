@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyConf.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: ProxyConf.java,v 1.3 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -75,7 +75,6 @@ public class ProxyConf {
             proxyHost = proxyElement.getAttribute("host");
             proxyPort = proxyElement.getAttribute("port");
 
-            //System.err.println("Configuring proxy: "+proxyHost+":"+proxyPort);
             Vector filterEls = xpf.select(proxyElement, "xpointer(include|exclude)");
 
             for (int i = 0; i < filterEls.size(); i++) {

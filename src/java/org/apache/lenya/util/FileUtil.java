@@ -1,5 +1,5 @@
 /*
- * $Id: FileUtil.java,v 1.3 2003/02/07 12:14:24 ah Exp $
+ * $Id: FileUtil.java,v 1.4 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -97,7 +97,7 @@ public class FileUtil {
         }
 
         if (args[0].equals("--concatPath")) {
-            //File file=org.wyona.util.FileUtil.file(args[0],args[1]);
+	    // FIXME:
             File file = org.wyona.util.FileUtil.file("/root/temp/jpf-1.9/java/wyona/x/xps/samples/invoices/invoices",
                     "../addresses/wyona.xml");
             System.out.println(file.getAbsolutePath());

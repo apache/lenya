@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLDocument.java,v 1.8 2003/02/07 12:14:22 ah Exp $
+ * $Id: HTMLDocument.java,v 1.9 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -75,8 +75,6 @@ public class HTMLDocument {
         String uid = requestURI.replace(dirSep, '\u0000') + "\u0000" +
             DateField.timeToString(f.lastModified());
 
-        //String uid = f.getPath().replace(dirSep, '\u0000') + "\u0000" + DateField.timeToString(f.lastModified());
-        //System.out.println("HTMLDocument.uid(): "+uid+" "+htdocsDumpDir);
         return uid;
     }
 
@@ -113,8 +111,6 @@ public class HTMLDocument {
 
         // Add the url as a field named "url".  Use an UnIndexed field, so
         // that the url is just stored with the document, but is not searchable.
-        //System.out.println("HTMLDocument.Document(File,File): Adding 'url' as un-indexed field ...");
-        //String requestURI=f.getPath().replace(dirSep,'/');
         String requestURI = f.getPath().replace(dirSep, '/').substring(htdocsDumpDir.getPath()
                                                                                     .length());
 
@@ -122,12 +118,10 @@ public class HTMLDocument {
         if (requestURI.substring(requestURI.length() - 8).equals(".pdf.txt")) {
             requestURI = requestURI.substring(0, requestURI.length() - 4); // Remove .txt extension from PDF text file
 
-            //System.out.println(requestURI);
         }
 
         doc.add(Field.UnIndexed("url", requestURI));
 
-        //System.out.println("HTMLDocument.Document(File,File): 'url' added!");
         // Add the mime-type as a field named "mime-type"
         if (requestURI.substring(requestURI.length() - 5).equals(".html")) {
             doc.add(Field.UnIndexed("mime-type", "text/html"));
@@ -155,11 +149,6 @@ public class HTMLDocument {
         // Add the summary as an UnIndexed field, so that it is stored and returned
         // with hit documents for display.
 
-        /*
-            doc.add(Field.UnIndexed("summary", parser.getSummary()));
-            System.out.println("HTMLDocument.getLuceneDocument(): summary field added");
-        */
-
         // Add the title as a separate Text field, so that it can be searched separately.
         String title = htmlDoc.getTitle();
 
@@ -169,10 +158,6 @@ public class HTMLDocument {
             doc.add(Field.Text("title", ""));
         }
 
-        /*
-            String title=parser.getTitle();
-            doc.add(Field.Text("title",title));
-        */
         System.out.println("HTMLDocument.getLuceneDocument(): title field added: " + title);
 
         // Add the tag-stripped contents as a Reader-valued Text field so it will
@@ -187,10 +172,6 @@ public class HTMLDocument {
 
         doc.add(Field.Text("contents", contents));
 
-        /*
-            String contents=parser.getReaser();
-            doc.add(Field.Text("contents",contents));
-        */
         System.out.println("HTMLDocument.getLuceneDocument(): contents field added: " + contents);
 
         return doc;

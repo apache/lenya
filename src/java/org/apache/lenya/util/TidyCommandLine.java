@@ -1,5 +1,5 @@
 /*
- * $Id: TidyCommandLine.java,v 1.2 2003/02/07 12:14:24 ah Exp $
+ * $Id: TidyCommandLine.java,v 1.3 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -58,7 +58,7 @@ import java.net.URL;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TidyCommandLine {
     /**
@@ -81,10 +81,6 @@ public class TidyCommandLine {
         }
     }
 
-    /*
-      public Tidy(){
-        }
-    */
     public void tidy(URL url, File file, File err, boolean xhtml)
         throws Exception {
         Tidy tidy = new Tidy();

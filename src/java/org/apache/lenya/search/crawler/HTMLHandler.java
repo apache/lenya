@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLHandler.java,v 1.2 2003/02/07 12:14:23 ah Exp $
+ * $Id: HTMLHandler.java,v 1.3 2003/02/17 13:06:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -64,7 +64,7 @@ import javax.swing.text.html.parser.ParserDelegator;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public final class HTMLHandler extends ParserCallback implements ContentHandler {
     private static final char space = ' ';
@@ -402,12 +402,6 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
             pd.parse(new BufferedReader(new InputStreamReader(in)), this, true);
 
-            //System.out.println("Title: " + getTitle());
-            //System.out.println("Author: " + getAuthor());
-            //System.out.println("Published " + getPublished());
-            //System.out.println("Keywords: " + getKeywords());
-            //System.out.println("Description: " + getDescription());
-            //System.out.println("Content: " + getContents());
         } catch (Exception e) {
             e.printStackTrace();
         }
