@@ -30,7 +30,7 @@
 	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile"/></td>
 	</tr>
 	<tr>
-	  <td>Identifier&#160;</td><td><input type="text" name="identifier"/></td>
+	  <td>Identifier&#160;</td><td><input type="text" name="identifier"/> <font size="-2">(FIXME: Required field?)</font></td>
 	</tr>
 	<tr><td>&#160;</td></tr>
 	<tr><td colspan="2"><h3>Metadata (Dublin Core)</h3></td></tr>

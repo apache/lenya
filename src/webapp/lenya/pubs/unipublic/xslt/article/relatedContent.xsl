@@ -43,6 +43,10 @@
   <a href="{@href}"><xsl:value-of select="."/></a>
 </xsl:template>
 
+<xsl:template match="text()" mode="RelatedContent">
+  <xsl:copy />
+</xsl:template>
+
 <!--
 <xsl:template match="NewsML/NewsItem" mode="RelatedContents">
   <table width="180" border="0" cellspacing="0" cellpadding="0">

@@ -7,18 +7,7 @@
         <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
       </NewsIdentifier>
     </Identification>
-<!--
-    <NewsManagement>
-      <FirstCreated>20020325T0130+0100</FirstCreated>
-      <ThisRevisionCreated>20020325T0130+0100</ThisRevisionCreated>
-    </NewsManagement>
--->
     <NewsComponent EquivalentsList="no">
-<!--
-      <AdministrativeMetadata>
-        <SystemIdentifier>http://www.unipublic.unizh.ch/docs/publication/live/CHANNEL/SECTION/articles/YEAR/ARTICLE_ID/index.xml</SystemIdentifier>
-      </AdministrativeMetadata>
--->
       <ContentItem>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
            <nitf>
@@ -59,7 +48,6 @@
            </DataContent>
           </ContentItem>
        </NewsComponent>
-<!--
        <NewsComponent EquivalentsList="no">
           <ContentItem>
            <DataContent>
@@ -67,13 +55,20 @@
               <block>
                 <title>Block Title</title>
                 <item>
+                Item Text
+<!--
                 Item: Text and <a href="">Link</a>
+-->
                 </item>
+                <item>Item Text</item>
+              </block>
+              <block>
+                <title>Block Title</title>
+                <item>Item Text</item>
               </block>
             </related-content>
            </DataContent>
           </ContentItem>
        </NewsComponent>
--->
     </NewsItem>
 </NewsML>                                                                                                                                   

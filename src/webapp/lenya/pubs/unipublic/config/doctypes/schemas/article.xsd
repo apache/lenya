@@ -86,13 +86,29 @@
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
+
   <xs:element name="related-content">
     <xs:complexType mixed="true">
-      <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element ref="block" minOccurs="0" maxOccurs="unbounded"></xs:element>
-        </xs:choice></xs:sequence>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+  <xs:element name="block" minOccurs="1" maxOccurs="unbounded">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+<!--
+          <xs:element ref="item" minOccurs="1" maxOccurs="unbounded"></xs:element>
+-->
+          <xs:element name="item" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="body">
     <xs:complexType mixed="true">
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -109,15 +125,21 @@
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
+
+
   <xs:element name="block">
     <xs:complexType mixed="true">
-      <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element ref="media" minOccurs="1" maxOccurs="1"></xs:element>
-          <xs:element ref="p" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="media" minOccurs="0" maxOccurs="unbounded"></xs:element>
+          <xs:element ref="p" minOccurs="1" maxOccurs="unbounded"/>
           <xs:element name="hl2" type="xs:string" minOccurs="0" maxOccurs="1"/>
-        </xs:choice></xs:sequence>
+        </xs:choice>
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
+
+
   <xs:element name="p">
     <xs:complexType mixed="true">
         <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -129,10 +151,15 @@
           </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
+
+
   <xs:element name="media">
     <xs:complexType mixed="true">
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
+<!--
           <xs:element ref="up:authorline" minOccurs="0" maxOccurs="unbounded"/>
+-->
+          <xs:element name="authorline" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
           <xs:element name="media-reference" minOccurs="1" maxOccurs="1">
             <xs:complexType mixed="true">
               <xs:choice minOccurs="0" maxOccurs="0"/>
@@ -147,6 +174,9 @@
       <xs:attribute name="media-type" use="required" type="xs:string"/>
     </xs:complexType>
   </xs:element>
+
+
+
   <xs:element name="body.head">
     <xs:complexType mixed="true">
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -331,6 +361,7 @@
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
+
   <xs:element name="NewsEnvelope">
     <xs:complexType mixed="true">
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -339,4 +370,32 @@
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
+
+
+<!-- Related Content Elements -->
+
+
+<xs:element name="item">
+  <xs:complexType mixed="true">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="a" minOccurs="0" maxOccurs="unbounded"></xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="a">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="href" use="required" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+
+<!-- /Related Content Elements -->
+
 </xs:schema>
