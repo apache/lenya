@@ -21,9 +21,17 @@ Search
   <form>
 <table bgcolor="#f0f0f0" width="100%" cellpadding="4" border="1">
 <tr><td>
+
+
 <table>
 <tr><td>
 Search within: 
+<xsl:choose>
+<xsl:when test="configuration/@checked-pid = 'matrix'">
+the Matrix or within <a href="lucene">General</a>
+<input type="hidden" name="publication-id" value="matrix"/>
+</xsl:when>
+<xsl:otherwise>
 <select name="publication-id">
     <xsl:for-each select="configuration/publication">
       <xsl:choose>
@@ -36,20 +44,51 @@ Search within:
       </xsl:choose>
     </xsl:for-each>
 </select>
+<a href="?publication-id=matrix">Matrix Advanced</a>
+</xsl:otherwise>
+</xsl:choose>
 </td></tr>
+
+
 <tr><td>
     <input type="text" name="queryString" size="60">
       <xsl:attribute name="value"><xsl:value-of select="search/query-string"/></xsl:attribute>
     </input>
 </td></tr>
+
+
 <tr><td>
-Limit your search to field:  
-    <select name="fields">
-      <option value="all">
-        <xsl:if test="search/fields='all'">
+Limit your search to field:
+<xsl:choose>
+<xsl:when test="configuration/@checked-pid = 'matrix'">
+    <select name="matrix.fields">
+      <option value="contents">
+        <xsl:if test="search/fields='contents'">
           <xsl:attribute name="selected">selected</xsl:attribute>
         </xsl:if>
-        Contents (Title or Body)
+        Contents (Title and Body)
+      </option>
+      <option value="title">
+        <xsl:if test="search/fields='title'">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        Title
+      </option>
+      <option value="license">
+        <xsl:if test="search/fields='license'">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        License
+      </option>
+    </select>
+</xsl:when>
+<xsl:otherwise>
+    <select name="dummy-index-id.fields">
+      <option value="contents">
+        <xsl:if test="search/fields='contents'">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        Contents (Title and Body)
       </option>
       <option value="title">
         <xsl:if test="search/fields='title'">
@@ -58,7 +97,11 @@ Limit your search to field:
         Title
       </option>
     </select>
+</xsl:otherwise>
+</xsl:choose>
 </td></tr>
+
+
 <tr><td align="right">
     <input type="submit" name="find" value="Search"/>
 </td></tr>
