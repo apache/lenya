@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 	<usecase id="create">
-		<role id="editor"/>
+		<role id="edit"/>
 	</usecase>
     <usecase id="archive">
-        <role id="editor"/>
+        <role id="edit"/>
     </usecase>
     <usecase id="delete">
-        <role id="editor"/>
+        <role id="edit"/>
     </usecase>
 </usecases>

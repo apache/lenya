@@ -2,11 +2,11 @@
 <policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 
   <group id="editor">
-    <role id="editor"/>
+    <role id="edit"/>
   </group>
 
   <group id="reviewer">
-    <role id="reviewer"/>
+    <role id="review"/>
   </group>
 
 </policy> 

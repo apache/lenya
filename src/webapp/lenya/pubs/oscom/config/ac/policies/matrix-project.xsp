@@ -1,30 +1,23 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsp:page
   language="java"
   xmlns:xsp="http://apache.org/xsp"  
   >
 
-<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
-
-  <!--  
-  <machine id="127.0.0.1">
-    <role id="visitor"/>
-  </machine>
-  -->
-  
+<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">  
   <xsp:logic>
     String username = parameters.getParameter("name", null);
     if (username != null) {
       <user><xsp:attribute name="id"><xsp:expr>username</xsp:expr></xsp:attribute>
-        <role id="visitor"/>
+        <role id="visit"/>
       </user>
     }
   </xsp:logic>
 
   <group id="matrix">
-    <role id="visitor"/>
-    <role id="editor"/>
+    <role id="visit"/>
+    <role id="edit"/>
   </group>
     
 </policy> 

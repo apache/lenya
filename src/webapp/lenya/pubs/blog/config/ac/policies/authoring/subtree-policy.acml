@@ -3,7 +3,7 @@
 <policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 
   <group id="admin">
-    <role id="editor"/>
+    <role id="edit"/>
   </group>
 
 </policy> 
