@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu2xslt.xsl,v 1.6 2004/04/17 14:58:21 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
@@ -48,7 +48,7 @@
         <link href="{$contextprefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
         <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
       </head>
-      <body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
+      <body style="background-color: white; margin: 0px; padding: 0px">
         <xsl:apply-templates select="xhtml:div[@id = 'lenya-menubar']"/>
         <div id="lenya-cmsbody">
           <xso:apply-templates select="xhtml:html/xhtml:body/node()"/>
