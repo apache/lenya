@@ -18,20 +18,14 @@
 <!--   Generate the necessary form to schedule new jobs -->
 <!-- ============================================================= -->
 <xsl:template name="scheduler-form">
-	
-	<xsl:param name="task-id"/>
-	
+	<xsl:param name="form-name"/>
 	<xsl:variable name="scheduler-data" select="//sch:scheduler-data"/>
 	
-	<form method="GET">
+		<xsl:for-each select="$scheduler-data/sch:parameter">
+			<input type="hidden" name="{@name}" value="{@value}"/>
+		</xsl:for-each>
 		
-		<input type="hidden" name="lenya.usecase" value="schedule"/>
-		<input type="hidden" name="lenya.step" value="add"/>
-		<input type="hidden" name="task.id" value="{$task-id}"/>
-		<input type="hidden" name="publication-id" value="{normalize-space($scheduler-data/sch:publication-id)}"/>
-		<input type="hidden" name="document-url" value="{normalize-space($scheduler-data/sch:document-url)}"/>
-		
-		<xsl:call-template name="task-parameters"/>
+		<input type="hidden" name="scheduler.action" value="add"/>
 		
 		<table class="lenya-table" border="0" cellpadding="0"
 			cellspacing="0">
@@ -43,21 +37,21 @@
 			<tr>
 				<!-- hidden input fields for parameters -->
 				<td>
-					<select name="trigger.startDay">
+					<select name="scheduler.trigger.day">
 						<xsl:call-template name="generateSelectionNames">
 							<xsl:with-param name="currentValue" select="1"/>
 							<xsl:with-param name="selectedValue" select="$scheduler-data/sch:day"/>
 							<xsl:with-param name="maxValue" select="31"/>
 						</xsl:call-template>
 					</select>&#160;
-					<select name="trigger.startMonth">
+					<select name="scheduler.trigger.month">
 						<xsl:call-template name="generateSelectionNames">
 							<xsl:with-param name="currentValue" select="1"/>
 							<xsl:with-param name="selectedValue" select="$scheduler-data/sch:month"/>
 							<xsl:with-param name="maxValue" select="12"/>
 						</xsl:call-template>
 					</select>&#160;
-					<select name="trigger.startYear">
+					<select name="scheduler.trigger.year">
 						<xsl:variable name="year">
 							<xsl:value-of select="$scheduler-data/sch:year"/>
 						</xsl:variable>
@@ -69,25 +63,21 @@
 					</select>
 				</td>
 				<td>
-					<input name="trigger.startHour" type="text" size="2" maxlength="2">
+					<input name="scheduler.trigger.hour" type="text" size="2" maxlength="2">
 					  <xsl:attribute name="value"><xsl:value-of select="format-number($scheduler-data/sch:hour, '00')"/></xsl:attribute>
 					</input>
 					:
-					<input name="trigger.startMin" type="text" size="2" maxlength="2"> 
+					<input name="scheduler.trigger.minute" type="text" size="2" maxlength="2"> 
 					  <xsl:attribute name="value"><xsl:value-of select="format-number($scheduler-data/sch:minute, '00')"/></xsl:attribute>
 					</input>
 				</td>
 				<td>
-					<input type="submit" name="action" value="add"/>
+					<input type="submit" name="lenya.usecase" value="schedule"/>
 				</td>
 			</tr>
 		</table>
-	</form>
 </xsl:template>
   
-  
-  <!-- override this template to insert use-case specific task parameters. -->
-  <xsl:template name="task-parameters"/>
   
 <!-- ============================================================= -->
 <!--   Generate numbers from 1 to maxValue for a <select> and select a -->
