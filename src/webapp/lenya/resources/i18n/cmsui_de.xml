@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.8 2004/02/13 23:21:08 roku Exp $
+$Id: cmsui_de.xml,v 1.9 2004/02/14 08:07:40 roku Exp $
 $Author: roku $
 <License>
 
@@ -85,5 +85,9 @@ $Author: roku $
   <message key="Your history">Ihr Verlauf</message>
   <message key="Login to authoring area">An Autorenbereich anmelden</message>
 
+  <!-- reject screen -->
+  <message key="Reject">Ablehnen</message>
+  <message key="reject-doc?">Dokument {0} ablehnen?</message>
+  
 </catalogue>
 

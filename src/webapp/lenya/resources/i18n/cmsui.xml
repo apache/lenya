@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-$Id: cmsui.xml,v 1.6 2004/02/13 23:21:08 roku Exp $
+$Id: cmsui.xml,v 1.7 2004/02/14 08:07:40 roku Exp $
 $Author: roku $
 <License>
 
@@ -86,4 +86,7 @@ $Author: roku $
   <message key="Your history">Your history</message>
   <message key="Login to authoring area">Login to authoring area</message>
 
+  <!-- reject screen -->
+  <message key="Reject">Reject</message>
+  <message key="reject-doc?">Do you want to reject the document {0}?</message>
 </catalogue>
