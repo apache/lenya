@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Delete Trash</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Edith Chevrier" email="edith@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+    <section>
+	  <title>Introduction</title>
+	  <p>We have to :</p>
+	  <ul>
+	    <li>delete all the files in the trash directory</li>
+	    <li>to reset the trash sitetree</li>
+	  </ul>
+    </section>
+	  
+    <section>
+	  <title>Parameters</title>
+      <p>Required parameters:</p>
+      <ul>
+        <li>the task id </li>
+      </ul>
+    </section>
+
+    <section>
+	  <title>Implementation</title>
+	  <p>It is implemented in a sequence of usecases to get all needed parameters, and uses the task concept to execute some ant task</p>
+    </section>
+	  
+    <section>
+	  <title>usecase</title>
+      <section>
+        <title>Delete Trash screen</title>
+        <p>URL :</p>
+ 	    <source><![CDATA[{document-URL}?lenya.usecase=deleteTrash&lenya.step=showscreen]]></source> 
+	    <p>usecase sitemap:</p>
+	      <source><![CDATA[
+            <map:match pattern="deleteTrash" type="usecase">
+              <map:match pattern="showscreen" type="step">
+              <map:generate src="content/admin/content/deleteTrash.xsp" type="serverpages"/>
+              <map:transform src="xslt/admin/content/deleteTrash.xsl"/>
+              <map:call resource="style-cms-page"/>
+            </map:match>
+          </map:match>
+          ]]></source>
+	    <p>The required parameters are get in the serverpage. 
+	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
+      </section>  
+      <section>
+        <title>Delete Trash confirmation</title>
+        <p>URL :</p>
+	    <source><![CDATA[{document-URL}?lenya.usecase=deleteTrash&lenya.step=deleteTrash&...{source parameters}]]></source> 
+	    <p>usecase sitemap:</p>
+	    <source><![CDATA[
+          <map:match pattern="deleteTrash" type="usecase">
+            <map:match pattern="deleteTrash" type="step">
+              <map:act type="task">
+                <map:redirect-to session="true" uri="{request:requestURI}"/>
+              </map:act>
+            </map:match>
+          </map:match>
+        ]]></source>
+        <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p> 
+      </section>  
+    </section>
+
+    <section>
+	  <title>Ant Task </title>
+	  <p>The ant target <code>deleteTrash</code> is in the publication :</p>
+	  <source>{publication}/config/tasks/targets.xml</source>
+      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/index.html">Javadoc</link></p>
+    </section>
+
+  </body>
+</document>

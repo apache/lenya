@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Deactivate a document</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Edith Chevrier" email="edith@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+    <section>
+	  <title>Introduction</title>
+	  <p>We have to :</p>
+	  <ul>
+        <li>look if there are some live children, if no other language version is live</li> 
+	    <li>delete the live contents (xml file) for the given document id and the given language</li>
+	    <li>delete the live resources for the given document id only if no other language version is live</li>
+	    <li>delete the language from the node corresponding to given the document id or 
+	    all the node, if no other language version is live.</li>
+	  </ul>
+    </section>
+	  
+    <section>
+	  <title>Implementation</title>
+	  <p>It is implemented in a sequence of usecases to get all needed parameters, and uses the task concept to execute some ant task</p>
+    </section>
+	  
+    <section>
+	  <title>Parameters</title>
+	  <p>The parameters are string-value parameters</p>
+      <p>Required parameters:</p>
+      <ul>
+        <li>the document id</li>
+        <li>the language</li>
+        <li>the task id</li>
+      </ul>
+    </section>
+
+    <section>
+	  <title>usecase</title>
+      <p>They are implemented in the usecase sitmap (core)</p> 
+      <section>
+        <title>Deactivate screen</title>
+        <p>URL :</p>
+ 	    <source><![CDATA[{document-URL}?lenya.usecase=deactivate&lenya.step=showscreen]]></source> 
+	    <p>usecase sitemap:</p>
+        <source><![CDATA[
+          <map:match pattern="deactivate" type="usecase">
+            <map:match pattern="showscreen" type="step">
+              <map:generate src="content/info/deactivate.xsp" type="serverpages"/>
+              <map:transform src="xslt/info/deactivate.xsl">
+                <map:parameter name="use-request-parameters" value="true"/>
+              </map:transform>
+              <map:transform src="cocoon:/notification/{../../1}/deactivate.xsl"/>
+              <map:transform src="cocoon://scheduler/{../../1}/{../../2}/{../../3}.xsl"/>
+              <map:call resource="style-cms-page"/>
+            </map:match>
+          </map:match>
+        ]]></source>
+	    <p>
+        In the serverpage, we get the required parameters and if no other language version is live, we look for the live children.
+	    The stylesheet <code>xslt/info/deactivate.xsl</code> builds a form, if the requirement are achieved, else shows a message.</p>
+      </section>  
+      <section>
+        <title>Deactivate confirmation</title>
+        <p>URL :</p>
+	    <source><![CDATA[{document-URL}?lenya.usecase=deactivate&lenya.step=deactivate&...{source parameters}]]></source> 
+	    <p>usecase sitemap:</p>
+	    <source><![CDATA[
+          <map:match pattern="deactivate" type="usecase">
+            <map:match pattern="deactivate" type="step">
+              <map:act type="task">
+                <map:redirect-to session="true" uri="{request:requestURI}"/>
+              </map:act>
+            </map:match>
+          </map:match>
+        ]]></source>
+	    <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p> 
+      </section>  
+    </section>
+
+    <section>
+	  <title>Ant Task </title>
+	  <p>The ant target <code>deactivateDocument</code>is in the publication :</p>
+	  <source>{publication}/config/tasks/targets.xml</source>
+      <p>and depends on the target <code>livedocumentpath</code>, to compute the live directory of the contents</p>
+      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/index.html">Javadoc</link></p>
+    </section>
+
+  </body>
+</document>

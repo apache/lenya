@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Restore</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Edith Chevrier" email="edith@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+    <section>
+	  <title>Introduction</title>
+      <p>The restore operation corresponds to a move operation from an area, trash or archive, to the authoring</p>
+    </section>
+	  
+    <section>
+	  <title>Implementation</title>
+      <p>Similar to the operation <link href="move.html">move</link></p>  
+    </section>
+	  
+    <section>
+	  <title>Parameters</title>
+      <p>Required parameters:</p>
+      <ul>
+        <li>the area for the source document</li>
+        <li>the document id for the source document</li>
+        <li>the task id</li>
+      </ul>
+    </section>
+
+    <section>
+	  <title>usecase</title>
+      <section>
+        <title>Delete screen</title>
+        <p>URL :</p>
+ 	    <source><![CDATA[{document-URL}?lenya.usecase=restore&lenya.step=showscreen]]></source> 
+	    <p>usecase sitemap:</p>
+	    <source><![CDATA[
+          <map:match pattern="restore" type="usecase">
+            <map:match pattern="showscreen" type="step">
+              <map:generate src="content/info/restore.xsp" type="serverpages"/>
+              <map:transform src="xslt/info/restore.xsl">
+                <map:parameter name="use-request-parameters" value="true"/>
+              </map:transform>
+              <map:call resource="style-cms-page"/>
+            </map:match>
+          </map:match>
+          ]]></source>
+	    <p>The parameters for the source are get with the serverpage through the page envelope input module. 
+        The destination document id is computed in the serverpage from the identifier. The destination source is set to area in the stylesheet.
+	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
+      </section>  
+      <section>
+        <title>Restore confirmation</title>
+        <p>URL :</p>
+	    <source><![CDATA[{document-URL}?lenya.usecase=restore&lenya.step=restore&...{source parameters}]]></source> 
+	    <p>usecase sitemap:</p>
+	    <source><![CDATA[
+          <map:match pattern="restore" type="usecase">
+            <map:match pattern="restore" type="step">
+              <map:act type="task">
+                <map:redirect-to session="true" uri="{request:contextPath}/{../../../1}/{../../../2}/"/>
+              </map:act>
+            </map:match>
+          </map:match>
+        ]]></source>
+        <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p> 
+      </section>  
+    </section>
+
+    <section>
+	  <title>Ant Task </title>
+	  <p>The ant target <code>restoreDocument</code> is in the publication :</p>
+	  <source>{publication}/config/tasks/targets.xml</source>
+      <p>The target for the restore operation depends on the different targets </p>
+      <ul>
+        <li><code>firstareaproperties</code>, to set the needed properties dependent of the area of the source</li>
+        <li><code>secareaproperties</code>, to set the needed properties dependent of the area of the destination</li>
+        <li><code>newcopydocumentid</code>, to compute the unique destination id (Same logic like for the copy operation).</li>
+        <li><code>firstdocumentpath</code>, to compute the directory of the contents for the source (Needed for the revisions and the rcml files)</li>
+        <li><code>secdocumentpath</code>, to compute the directory where are the contents for the destination (Needed for the revisions and the rcml files)</li>
+        <li><code>move</code>, to execute the different move operations</li>
+      </ul>
+      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/index.html">Javadoc</link></p>
+    </section>
+
+  </body>
+</document>

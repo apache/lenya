@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Move a document</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Edith Chevrier" email="edith@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+    <section>
+	  <title>Introduction</title>
+      <p>The move operation is performed on the subtree corresponding to a given document id and a given area.</p>
+	  <p>We have to :</p>
+	  <ul>
+	    <li>compute a new id (to not overwrite an already existing file)</li>
+	    <li>move the contents (xml file)</li>
+	    <li>move the resources</li>
+        <li>move the policies</li> 
+        <li>move the revisions</li> 
+        <li>move the rcml files</li> 
+	    <li>move the workflow for the new documents</li>
+	    <li>move the node (with the subtree) in the site tree</li>
+	  </ul>
+    </section>
+	  
+    <section>
+	  <title>Implementation</title>
+	  <p>It is implemented in a sequence of usecases to get all needed parameters, and uses the task concept to execute some ant task</p>
+	  <p>To perform the different operations on the desired subtree, we used the visitor pattern</p>
+    </section>
+	  
+    <section>
+	  <title>Parameters</title>
+      <p>Required parameters:</p>
+      <ul>
+        <li>the area for the source document</li>
+        <li>the document id for the source document</li>
+        <li>the area for the destination document</li>
+        <li>the document id for the destination document</li>
+        <li>the task id</li>
+      </ul>
+    </section>
+
+    <section>
+	  <title>usecase</title>
+      <p>They are implemented in the usecase sitmap (core)</p> 
+      <section>
+        <title>Cut screen</title>
+        <p>URL :</p>
+ 	    <source><![CDATA[{document-URL}?lenya.usecase=cut&lenya.step=showscreen]]></source> 
+	    <p>usecase sitemap:</p>
+        <source><![CDATA[
+          <map:match pattern="cut" type="usecase">
+            <map:match pattern="showscreen" type="step">
+              <map:generate src="content/info/cut.xsp" type="serverpages"/>
+              <map:transform src="xslt/info/cut.xsl"/>
+              <map:call resource="style-cms-page"/>
+            </map:match>
+          </map:match>
+        ]]></source>
+	    <p>The parameters for the source are get with the serverpage through the page envelope input module. 
+	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
+      </section>  
+      <section>
+        <title>Cut confirmation</title>
+        <p>URL :</p>
+	    <source><![CDATA[{document-URL}?lenya.usecase=cut&lenya.step=cut&...{source parameters}]]></source> 
+	    <p>usecase sitemap:</p>
+	    <source><![CDATA[
+          <map:match pattern="cut" type="usecase">
+            <map:match pattern="cut" type="step">
+              <map:act type="session-propagator">
+                <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
+                <map:parameter name="org.apache.lenya.cms.info.firstarea" value="{request-param:area}"/>
+                <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value="{request-param:documentid}"/>
+                <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
+                <map:redirect-to uri="{request:requestURI}"/>
+              </map:act>
+            </map:match>
+          </map:match>
+        ]]></source>
+	    <p>The source parameters are saved in the session with the org.apache.cocoon.acting.SessionPropagatorAction</p> 
+        <p>The parameter <strong>org.apache.lenya.cms.info.cutdocumentid</strong> is used to change the representation of the cutted node in the info sitetree.</p>
+      </section>  
+      <section>
+        <title>Paste screen</title>
+    	<p>URL :</p>
+	    <source><![CDATA[{document-URL}?lenya.usecase=paste&lenya.step=showscreen]]></source> 
+	    <p>usecase sitemap (Core):</p>
+	    <source><![CDATA[
+          <map:match pattern="paste" type="usecase">
+            <map:match pattern="showscreen" type="step">
+              <map:generate src="content/info/paste.xsp" type="serverpages"/>
+              <map:transform src="xslt/info/paste.xsl"/>
+              <map:call resource="style-cms-page"/>
+            </map:match>
+          </map:match>
+        ]]></source>
+	    <p>The parameters for the destination are get with the serverpage through the page envelope input module. 
+	    Parameters needed by the access controller are also get with this serverpage through the access control input module.
+	    The parameters for the source are get from the session with the serverpage .
+	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
+      </section>  
+      <section>
+        <title>Paste confirmation</title>
+  	    <p>URL :</p>
+	    <source><![CDATA[{document-URL}?lenya.usecase=paste&lenya.step=paste&...{parameters}]]></source> 
+	    <p>usecase sitemap (Core):</p>
+	    <source><![CDATA[
+          <map:match pattern="paste" type="usecase">
+            <map:match pattern="paste" type="step">
+              <map:select type="request-parameter">
+                <map:parameter name="parameter-name" value="task-id"/>  
+                <map:when test="moveDocument">
+                  <map:act type="session-propagator">
+                    <map:parameter name="org.apache.lenya.cms.info.firstdocid" value=""/>
+                    <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
+                  </map:act>
+                </map:when>
+                <map:otherwise>
+                  <map:act type="session-propagator">
+                    <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
+                  </map:act>
+                </map:otherwise>
+              </map:select>
+              <map:act type="task">
+                <map:redirect-to session="true" uri="{request:requestURI}"/>
+              </map:act>
+            </map:match>
+          </map:match>
+        ]]></source>
+	    <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p> 
+        <p>The parameter <strong>org.apache.lenya.cms.info.cutdocumentid</strong> is set to "", because the cutted node is no more present.</p>
+      </section>  
+    </section>
+
+    <section>
+	  <title>Ant Task </title>
+	  <p>The ant target <code>moveDocument</code> is in the publication :</p>
+	  <source>{publication}/config/tasks/targets.xml</source>
+      <p>and depends on the different targets </p>
+      <ul>
+        <li><code>firstareaproperties</code>, to set the needed properties dependent of the source area</li>
+        <li><code>secareaproperties</code>, to set the needed properties dependent of the destination area</li>
+        <li><code>newcopydocumentid</code>, to compute the unique destination id</li>
+        <li><code>firstdocumentpath</code>, to compute the directory of the source contents (Needed for the revisions and the rcml files)</li>
+        <li><code>secdocumentpath</code>, to compute the directory of the destination contents (Needed for the revisions and the rcml files)</li>
+        <li><code>move</code>, to execute the different move operations</li>
+      </ul>
+      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/index.html">Javadoc</link></p>
+    </section>
+
+  </body>
+</document>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Move up/down</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Edith Chevrier" email="edith@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+    <section>
+	  <title>Introduction</title>
+      <p>To move up or down a node in the sitetree</p> 
+    </section>
+	  
+    <section>
+	  <title>Implementation</title>
+	  <p>It uses the task concept to execute some ant task</p>
+    </section>
+	  
+    <section>
+	  <title>Parameters</title>
+	  <p>The parameters are string-value parameters</p>
+      <p>Required parameters:</p>
+      <ul>
+        <li>the document id</li>
+        <li>the direction (up or down)</li>
+        <li>the task id</li>
+      </ul>
+    </section>
+
+    <section>
+	  <title>usecase</title>
+      <p>URL :</p>
+      <source><![CDATA[{document-URL}?properties.movenode.direction=up&lenya.usecase=move-node&lenya.step=move-node]]></source> 
+      <p>usecase sitemap:</p>
+        <source><![CDATA[
+        <map:match pattern="move-node" type="usecase">
+          <map:match pattern="move-node" type="step">
+            <map:act type="task">
+              <map:parameter name="task-id" value="movenode"/>
+              <map:parameter name="properties.movenode.documentid" value="{page-envelope:document-id}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
+          </map:match>
+        </map:match>
+        ]]></source>
+      <p>The parameter for the direction is a request parameter in the URL (fom the menu). The task id is set in the sitemap and
+	     the document id is get through the page envelope. </p> 
+	  <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p> 
+    </section>  
+
+    <section>
+	  <title>Ant Task </title>
+	  <p>The ant target <code>movenode</code> is in the publication :</p>
+	  <source>{publication}/config/tasks/targets.xml</source>
+      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/index.html">Javadoc</link></p>
+    </section>
+
+  </body>
+</document>

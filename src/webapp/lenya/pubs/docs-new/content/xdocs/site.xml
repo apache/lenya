@@ -88,6 +88,17 @@
 				<workflow href="workflow/" label="Workflow">
 					<introduction href="introduction.html" label="Introduction"/>
 				</workflow>
+				<sitemanagement href="sitemanagement/" label="Site Management">
+					<archive href="archive.html" label="Archive"/>
+					<copy href="copy.html" label="Copy"/>
+					<deactivate href="deactivate.html" label="Deactivate"/>
+					<delete href="delete.html" label="Delete"/>
+					<deletetrash href="deletetrash.html" label="Delete the trash"/>
+					<move href="move.html" label="Move"/>
+					<moveupdown href="moveupdown.html" label="Move Up/Down"/>
+					<rename href="rename.html" label="Rename"/>
+					<restore href="restore.html" label="Restore"/>
+				</sitemanagement>
 			</components>
 			<specs href="specs/" label="Specifications">
 				<namespaces href="namespaces.html" label="Namespaces"/>
