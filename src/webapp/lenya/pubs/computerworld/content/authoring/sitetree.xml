@@ -6,61 +6,61 @@
 				<line>Home</line>
 			</name>
 		</node>
-		<node id="/dossier/" link="/dossier/" name="dossier" target="">
+		<node id="/dossier/index.html" link="/dossier/index.html" name="dossier" target="">
 			<name>
 				<line>Dossier</line>
 			</name>
 		</node>
-		<node id="/archiv/" link="/archiv/" name="archiv" target="">
+		<node id="/archiv/index.html" link="/archiv/index.html" name="archiv" target="">
 			<name>
 				<line>Archiv</line>
 			</name>
 		</node>
-		<node id="/it-stellen/" link="/it-stellen/" name="it-stellen" target="">
+		<node id="/it-stellen/index.html" link="/it-stellen/index.html" name="it-stellen" target="">
 			<name>
 				<line>IT-Stellen</line>
 			</name>
 		</node>
-		<node id="/it-kalender/" link="/it-kalender/" name="it-kalender" target="">
+		<node id="/it-kalender/index.html" link="/it-kalender/index.html" name="it-kalender" target="">
 			<name>
 				<line>IT-Kalender</line>
 			</name>
 		</node>
 	</block>
 	<block id="infos">
-		<node id="/feedback/" link="/feedback/" name="feedback" target="">
+		<node id="/feedback/index.html" link="/feedback/index.html" name="feedback" target="">
 			<name>
 				<line>Feedback</line>
 			</name>
 		</node>
-		<node id="/impressum/" link="/impressum/" name="impressum" target="">
+		<node id="/impressum/index.html" link="/impressum/index.html" name="impressum" target="">
 			<name>
 				<line>Impressum</line>
 			</name>
 		</node>
-		<node id="/datenschutz/" link="/datenschutz/" name="datenschutz" target="">
+		<node id="/datenschutz/index.html" link="/datenschutz/index.html" name="datenschutz" target="">
 			<name>
 				<line>Datenschutz</line>
 			</name>
 		</node>
 	</block>
 	<block id="verlag">
-		<node id="/kontakt/" link="/kontakt/" name="kontakt" target="">
+		<node id="/kontakt/index.html" link="/kontakt/index.html" name="kontakt" target="">
 			<name>
 				<line>Kontakt</line>
 			</name>
 		</node>
-		<node id="/abo/" link="/abo/" name="aboservice" target="">
+		<node id="/abo/index.html" link="/abo/index.html" name="aboservice" target="">
 			<name>
 				<line>Abo Service</line>
 			</name>
 		</node>
-		<node id="/mediadaten/" link="/mediadaten/" name="mediadaten" target="">
+		<node id="/mediadaten/index.html" link="/mediadaten/index.html" name="mediadaten" target="">
 			<name>
 				<line>Mediadaten</line>
 			</name>
 		</node>
-		<node id="/ueberuns/l" link="/ueberuns/" name="about" target="">
+		<node id="/ueberuns/index.html" link="/ueberuns/index.html" name="about" target="">
 			<name>
 				<line>Über uns</line>
 			</name>

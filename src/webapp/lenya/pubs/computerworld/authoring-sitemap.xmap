@@ -264,6 +264,7 @@
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Authoring/main.xsl" label="content">
 					<map:parameter name="id" value="/index.html"/>
+					<map:parameter name="authoring" value="true"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl"/>
 				<map:serialize type="html"/>
@@ -306,12 +307,11 @@
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
-		<!-- Generate todays date  -->
+			<!-- Generate todays date  -->
 			<map:match pattern="today">
 				<map:generate type="serverpages" src="docs/publication/today.xsp"/>
 				<map:serialize type="html"/>
 			</map:match>
-
 		</map:pipeline>
 		<!-- Article -->
 		<!-- Checkout -->
@@ -372,6 +372,7 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/article.xsl">
 					<map:parameter name="id" value="/news/"/>
 					<map:parameter name="documentid" value="news/{1}.xml"/>
+					<map:parameter name="authoring" value="true"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/today.xsl"/>
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>

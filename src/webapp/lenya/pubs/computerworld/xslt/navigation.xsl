@@ -2,7 +2,14 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:param name="id"/>
+<xsl:param name="authoring"/>
 
+<xsl:variable name="prefix">/wyona-cms/computerworld</xsl:variable>
+<!--
+  <xsl:if test="$authoring">
+  <xsl:variable name="prefix">{$prefix}/authoring</xsl:variable>
+</xsl:if>
+ -->
 <xsl:template match="span[@id = 'navigation']">
         <xsl:apply-templates select="/wyona/sitetree"/>
 </xsl:template>
@@ -22,10 +29,10 @@
 		<td width="124">
 		<xsl:choose>
 		<xsl:when test="@id = $id">
-			<a href="{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
+			<a href="{$prefix}{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
-			<a href="{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
+			<a href="{$prefix}{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
 		</xsl:otherwise>
 		</xsl:choose>
 		</td>
@@ -44,10 +51,10 @@
 		<td width="124">
 		<xsl:choose>
 		<xsl:when test="@id = $id">
-			<a href="{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
+			<a href="{$prefix}{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
-			<a href="{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
+			<a href="{$prefix}{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
 		</xsl:otherwise>
 		</xsl:choose>
 		</td>
@@ -66,10 +73,10 @@
 		<td width="124">
 		<xsl:choose>
 		<xsl:when test="@id = $id">
-			<a href="{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
+			<a href="{$prefix}{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
-			<a href="{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
+			<a href="{$prefix}{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
 		</xsl:otherwise>
 		</xsl:choose>
 		</td>
