@@ -1,5 +1,5 @@
 /*
- * $Id: FileUserTest.java,v 1.1 2003/06/04 13:21:28 egli Exp $
+ * $Id: FileUserTest.java,v 1.2 2003/06/05 11:59:21 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -158,6 +158,12 @@ public class FileUserTest extends TestCase {
 		return user;
 	}
 	
+	final public FileUser loadUser(String userName) throws AccessControlException {
+		Publication publication = getPublication();
+		UserManager manager = UserManager.instance(publication);
+		return (FileUser) manager.getUser(userName);
+	}
+	
 	final public void testSave() {
 		Publication publication = getPublication();
 		String userName = "alice";
@@ -181,20 +187,34 @@ public class FileUserTest extends TestCase {
 	}
 
 	final public void testGetEmail() {
+		String userName = "alice";
 		String email = "alice@wonderland.org";
 		FileUser user =
-			createAndSaveUser("alice", "Alice Wonderland", email, "secret");
+			createAndSaveUser(userName, "Alice Wonderland", email, "secret");
+		assertTrue(user.getEmail().equals(email));
+		try {
+			user = loadUser(userName);
+		} catch (AccessControlException e) {
+			e.printStackTrace();
+		}
 		assertTrue(user.getEmail().equals(email));
 	}
 
 	final public void testGetFullName() {
+		String userName = "alice";
 		String fullName = "Alice Wonderland";
 		FileUser user =
 			createAndSaveUser(
-				"alice",
+				userName,
 				fullName,
 				"alice@wonderland.org",
 				"secret");
+		assertTrue(user.getFullName().equals(fullName));
+		try {
+			user = loadUser(userName);
+		} catch (AccessControlException e) {
+			e.printStackTrace();
+		}
 		assertTrue(user.getFullName().equals(fullName));
 	}
 
