@@ -81,6 +81,7 @@
   <target name="prepare-cocoon" depends="init,check-tools-lib,prepare-tools-lib">
     <echo>INFO: exclude: sitemap.xmap</echo>
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
+    <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/web.xml</echo>
     <echo>INFO: exclude: WEB-INF/lib/lucene**.jar</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
@@ -88,9 +89,9 @@
       <fileset dir="${src.cocoon.dir}">
         <exclude name="sitemap.xmap"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
+        <exclude name="WEB-INF/logkit.xconf"/>
         <exclude name="WEB-INF/web.xml"/>
         <exclude name="WEB-INF/lib/lucene**.jar"/>
-        <!--<exclude name="**/logkit.xconf"/>-->
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>

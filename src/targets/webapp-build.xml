@@ -20,6 +20,7 @@
     <copy todir="${build.webapp}">
       <fileset dir="${src.webapp.dir}">
         <exclude name="lenya/pubs/**"/>
+        <exclude name="WEB-INF/*-xconf.xsl"/>
       </fileset>
     </copy>
 
