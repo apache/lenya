@@ -49,8 +49,6 @@ public class Configuration
           catch(Exception e)
             {
             log.fatal(": Failed to load properties from resource: "+propertiesFileName);
-            log.fatal("System.exit(0)");
-            System.exit(0);
             }
           rcmlDirectory=properties.getProperty("rcmlDirectory");
           backupDirectory=properties.getProperty("backupDirectory");

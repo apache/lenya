@@ -405,8 +405,6 @@ public class XPSAssembler implements XPSInclude{
                 default:
                      {
                      log.fatal(".traverse(): Node type not implemented: "+nodeType+" ("+currentInfo.url+")");
-                     log.fatal("System.exit(0)");
-                     System.exit(0);
                      break;
                      }
                 }

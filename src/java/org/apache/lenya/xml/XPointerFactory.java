@@ -138,16 +138,12 @@ public class XPointerFactory
           catch(Exception e)
             {
             log.fatal(": Failed to load properties from resource: "+propertiesFileName);
-            log.fatal("System.exit(0)");
-            System.exit(0);
             }
 
           String xpointerName=properties.getProperty("XPointer");
           if(xpointerName == null)
             {
             log.fatal(": No XPointer specified in "+propertiesFileName);
-            log.fatal("System.exit(0)");
-            System.exit(0);
             }
 
           try
@@ -158,8 +154,6 @@ public class XPointerFactory
           catch(Exception e)
             {
             log.fatal(": "+e);
-            log.fatal("System.exit(0)");
-            System.exit(0);
             }
           }
 /**

@@ -104,7 +104,7 @@ public class DOMWriter
           log.fatal("\n");
           
 
-          log.fatal("System.exit(0)");
+          log.fatal(".main(): System.exit(0)");
           System.exit(0);
 
           new DOMWriter(new PrintWriter(System.out)).print(document);

@@ -1,5 +1,5 @@
 // Md5.java
-// $Id: Md5.java,v 1.1 2002/01/11 14:52:58 tinucms Exp $
+// $Id: Md5.java,v 1.2 2002/10/24 10:57:47 michicms Exp $
 // (c) COPYRIGHT MIT and INRIA, 1996.
 // Please first read the full copyright statement in file COPYRIGHT.html
 
@@ -362,7 +362,7 @@ public class Md5 {
     {
 	if ( args.length != 1) {
 	    //log.fatal ("Md5 <file>") ;
-	    //log.fatal("System.exit (1) ;");
+	    System.err.println(".main(): System.exit (1) ;");
 	    System.exit (1) ;
 	}
 	Md5 md5 = new Md5 (new FileInputStream(new File(args[0]))) ;

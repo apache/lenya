@@ -130,16 +130,12 @@ public class DOMParserFactory{
           catch(Exception e)
             {
             log.fatal(": Failed to load properties from resource: "+propertiesFileName);
-            log.fatal("System.exit(0)");
-            System.exit(0);
             }
 
           String parserName=properties.getProperty("Parser");
           if(parserName == null)
             {
             log.fatal(": No Parser specified in "+propertiesFileName);
-            log.fatal("System.exit(0)");
-            System.exit(0);
             }
 
           try
@@ -150,8 +146,6 @@ public class DOMParserFactory{
           catch(Exception e)
             {
             log.fatal(": "+e);
-            log.fatal("System.exit(0)");
-            System.exit(0);
             }        
           }
 /**
