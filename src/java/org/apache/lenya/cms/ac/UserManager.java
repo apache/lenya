@@ -64,7 +64,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-
 /**
  * Describe class <code>UserManager</code> here.
  *
@@ -84,8 +83,7 @@ public class UserManager extends ItemManager {
      * @throws AccessControlException if the UserManager could not be
      *         instantiated.
      */
-    protected UserManager(File configurationDirectory)
-        throws AccessControlException {
+    protected UserManager(File configurationDirectory) throws AccessControlException {
         super(configurationDirectory);
     }
 
@@ -96,9 +94,13 @@ public class UserManager extends ItemManager {
      * @return an <code>UserManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static UserManager instance(File configurationDirectory)
-        throws AccessControlException {
-        assert (configurationDirectory != null) && configurationDirectory.isDirectory();
+    public static UserManager instance(File configurationDirectory) throws AccessControlException {
+
+        assert configurationDirectory != null;
+        if (!configurationDirectory.isDirectory()) {
+            throw new AccessControlException(
+                "Configuration directory [" + configurationDirectory + "] does not exist!");
+        }
 
         if (!instances.containsKey(configurationDirectory)) {
             instances.put(configurationDirectory, new UserManager(configurationDirectory));
@@ -152,10 +154,10 @@ public class UserManager extends ItemManager {
      */
     protected FileFilter getFileFilter() {
         FileFilter filter = new FileFilter() {
-                public boolean accept(File pathname) {
-                    return (pathname.getName().endsWith(SUFFIX));
-                }
-            };
+            public boolean accept(File pathname) {
+                return (pathname.getName().endsWith(SUFFIX));
+            }
+        };
 
         return filter;
     }
