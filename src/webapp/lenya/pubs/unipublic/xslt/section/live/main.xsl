@@ -6,18 +6,10 @@
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables.xsl"/>
 
-
-<!--
-<xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
-<xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
-<xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
--->
-
-
 <xsl:template match="/">
 <html>
 <head>
-<title>unipublic - Geist und Gesellschaft (<xsl:value-of select="/section/@type"/>)</title>
+<title>unipublic - Geist und Gesellschaft ELEMENT:<xsl:apply-templates select="/section/type" mode="section-name"/> ATTRIBUTE:<xsl:apply-templates select="/section" mode="section-name"/> (<xsl:value-of select="/section/@type"/>)</title>
 
 <xsl:call-template name="styles"/>
 
@@ -176,7 +168,30 @@ Anfang<br />
 </center>
 </body>
 </html>
+</xsl:template>
 
+<xsl:template match="section[@type='geist']" mode="section-name">
+Geist &#38; Gesellschaft
+</xsl:template>
+
+<xsl:template match="section[@type='gesundheit']" mode="section-name">
+Gesundheit
+</xsl:template>
+
+<xsl:template match="section" mode="section-name">
+Exception: Section has no name!
+</xsl:template>
+
+<xsl:template match="type[normalize-space(text())='geist']" mode="section-name">
+Geist &#38; Gesellschaft
+</xsl:template>
+
+<xsl:template match="type[normalize-space(text())='gesundheit']" mode="section-name">
+Gesundheit
+</xsl:template>
+
+<xsl:template match="type" mode="section-name">
+Exception: Section has no name!
 </xsl:template>
 
 </xsl:stylesheet>
