@@ -10,7 +10,11 @@
   <xsl:param name="lenya.usecase" select="'asset'"/>
   <xsl:param name="lenya.step"/>
   <xsl:param name="insert"/>
+  <xsl:param name="insertimage"/>
   
+  <xsl:param name="assetXPath"/>
+  <xsl:param name="insertBefore"/>
+
   <xsl:template match="/">
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
       <xsl:choose>
@@ -41,7 +45,7 @@
       <div class="lenya-box-body">  
 	<form action="{/usecase:asset/usecase:request-uri}" method="post" enctype="multipart/form-data">
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
-	  <input type="hidden" name="lenya.step" value="upload"/>
+	  <input type="hidden" name="lenya.step" value="upload-and-insert"/>
 	  <table class="lenya-table-noborder">
 	    <tr>
 	      <td class="lenya-form-caption">Select File:</td><td><input class="lenya-form-element" type="file" name="properties.asset.file"/></td>
@@ -63,6 +67,16 @@
 	    <tr>
 	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights"/></td>
 	    </tr>
+	    <xsl:if test="$insertimage = 'true'">
+	      <tr><td>&#160;</td></tr>
+	      <tr>
+		<td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.asset.caption"/></td>
+	      </tr>
+	      <tr>
+		<td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.asset.link"/></td>
+	      </tr>
+	      <tr><td>&#160;</td></tr>
+	    </xsl:if>
 	    <tr>
 	      <td/>
 	      <td>
@@ -83,16 +97,40 @@
 	    <form method="GET"
 	      action="">
 	      <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
-	      <input type="hidden" name="lenya.step" value="create"/>
+	      <input type="hidden" name="lenya.step" value="insert"/>
+	      <input type="hidden" name="task-id" value="insert-asset"/>
+	      <input type="hidden" name="properties.insert.asset.assetXPath" value="{$assetXPath}"/>
+	      <input type="hidden" name="properties.insert.asset.insertBefore" value="{$insertBefore}"/>
+	      <xsl:choose>
+		<xsl:when test="$insertimage = 'true'">
+		  <input type="hidden" name="properties.insert.asset.insertTemplate" value="insertImg.xml"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <input type="hidden" name="properties.insert.asset.insertTemplate" value="insertAsset.xml"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <input type="hidden" name="properties.insert.asset.area" value="{/usecase:asset/usecase:area}"/>
+	      <input type="hidden" name="properties.insert.asset.document-id" value="{/usecase:asset/usecase:document-id}"/>
+	      <input type="hidden" name="properties.insert.asset.language" value="{/usecase:asset/usecase:language}"/>
 	      <table class="lenya-table-noborder">
 		<tr>
 		  <td class="lenya-form-caption">Asset:</td>
 		  <td class="lenya-form-caption">
-		    <select class="lenya-form-element">
+		    <select name="properties.insert.asset.data" class="lenya-form-element">
 		      <xsl:apply-templates select="usecase:assets/usecase:asset"/>
 		    </select>
 		  </td>
 		</tr>
+		<xsl:if test="$insertimage = 'true'">
+		  <tr><td>&#160;</td></tr>
+		  <tr>
+		    <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption"/></td>
+		  </tr>
+		  <tr>
+		    <td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/></td>
+		  </tr>
+		  <tr><td>&#160;</td></tr>
+		</xsl:if>
 		<tr>
 		  <td/>
 		  <td>
@@ -109,7 +147,7 @@
   </xsl:template>
 
   <xsl:template match="usecase:assets/usecase:asset">
-      <option name="properties.asset.file"><xsl:value-of select="."/></option>
+      <option><xsl:value-of select="."/></option>
   </xsl:template>
   
   
