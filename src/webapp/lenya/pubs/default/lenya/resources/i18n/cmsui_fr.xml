@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui_fr.xml,v 1.2 2004/04/14 08:34:17 roku Exp $
+   $Id: cmsui_fr.xml,v 1.3 2004/04/14 08:53:55 roku Exp $
    @translators Olivier Lange <wire at petit-atelier dot ch>
    
 -->
@@ -26,7 +26,7 @@
  
   <message key="default.createdoc.idtaken">The ID you've entered is already taken. Please choose another one.</message>
  
-  <message key="Create new language version">Cr&#233;er une nouvelle traduction</message>
+  <message key="Create new language version">Créer une nouvelle traduction</message>
   <message key="New language for existing Document">Nouvelle traduction pour un document existant</message>
   <message key="default.createdoc.info.all-language-versions-exists">There are already versions of this document for all languages.</message>
 
