@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.44 2003/03/18 14:24:54 michi Exp $
+   @version CVS $Id: build.xml,v 1.45 2003/03/18 15:22:47 gregor Exp $
 
 -->
 
@@ -50,7 +50,7 @@
   <property file="build.properties"/>
 
   <!-- Project version and name -->
-  <property name="version" value="2.1-dev"/>
+  <property name="version" value="0.8-dev"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
 
   
