@@ -30,7 +30,15 @@
 		Here you will find information on how to interact with and become a member 
 		of the Apache Lenya community.
 	</p>
-<section>
+
+  <section>
+    <title>Contribute to the Wiki</title>
+    <p>The <link href="ext:wiki/lenya">Lenya Wiki</link> is the scratchpad for the
+    Lenya documentation as well as a kind of whiteboard that is used by the community
+    to sketch proposals about the further direction of the project.</p>
+  </section>
+
+  <section>
 	<title>Contribute code</title>
 	<p>
 		You can contribute code as e.g. an "Enhancement Patch". 
