@@ -4,9 +4,6 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:template match="section/articles" mode="articles">
-  <tr>
-    <td width="5" bgcolor="white" valign="top">&#160;</td>
-    <td width="295" bgcolor="white" class="tsr-text"><br />
 
       <xsl:for-each select="article">
         <p>
@@ -15,8 +12,6 @@
         </p>
       </xsl:for-each>
 
-    </td>
-  </tr>
 </xsl:template>
 
 </xsl:stylesheet>

@@ -28,58 +28,55 @@
 
 </head>
 <body text="black" link="#333399" alink="#CC0000" vlink="#666666" background="{$img-unipub}/bg.gif">
-
+<div align="center">
 <!--START kopf.html-->
 <xsl:call-template name="Searchbox"/>
 <!--ENDE kopf.html-->
 
-<center>
-<table border="0" cellpadding="0" cellspacing="0" width="585">
-<tr>
-<td width="135" valign="bottom"></td>
-<td width="315">
+<table border="0" cellpadding="0" cellspacing="0" width="585" bordercolor="green">
 
-<table border="0" cellpadding="0" cellspacing="0">
 <tr>
-<td width="169">&#160;</td>
-<td><a href="../../../"><img height="63" width="108" src="{$img-unipub}/t_publogo.gif" alt="unipublic" border="0"/></a></td>
-<td width="38">&#160;</td>
+<td width="135" height="21" align="right" valign="top"><img src="{$img-unipub}/t_magazin.gif" border="0" alt="Magazin"/></td>
+<td colspan="2" width="450" height="21" valign="bottom"><img src="{$img-unipub}/r_{MainColumn/section/@type}.gif" border="0" 
+alt="{$sectiontext}"/>
+<img alt="2002" src="{$img-unipub}/jahr/2002_ein.gif" height="13" width="39" border="0" />
+<a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2001/"><img alt="2001" src="{$img-unipub}/jahr/2001_aus.gif" height="13" width="39" border="0" /></a>
+<a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2000/"><img alt="2000" src="{$img-unipub}/jahr/2000_aus.gif" height="13" width="39" border="0" /></a>
+<a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/1999/"><img alt="1999" src="{$img-unipub}/jahr/1999_aus.gif" height="13" width="39" border="0" /></a>
+</td>
 </tr>
-</table>
+
+<tr>
+<td width="135" align="right" valign="top">
+
+<xsl:apply-templates select="FirstColumn/MainNavigation">
+  <xsl:with-param name="is-section">true</xsl:with-param>
+</xsl:apply-templates>
 
 </td>
-<td width="135" valign="bottom"></td>
-</tr>
-
-<tr>
-<td width="135" align="right" valign="top" rowspan="3">
-
-<xsl:apply-templates select="FirstColumn/MainNavigation"/>
-
-</td>
-<td width="315" height="21" valign="bottom"><img src="{$img-unipub}/r_{MainColumn/section/@type}.gif" border="0" alt="{$sectiontext}"/></td>
-<td width="135" valign="bottom" align="right"></td>
-</tr>
-
-<tr>
-<td valign="top" colspan="2">
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
-<tr>
-<td width="5" valign="top" bgcolor="white">&#160;</td>
-<td width="295" bgcolor="white"><font size="1" face="Geneva,Helvetica,Arial,Swiss,Nu Sans Regular"><br />
- <b><a href="../{$year}/"><xsl:value-of select="$year"/></a></b> | <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2001/">2001</a> | <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2000/">2000</a> | <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/1999/">1999</a></font></td>
-</tr>
+<td width="5" valign="top" bgcolor="white"><img src="{$img-unipub}/spacer.gif" width="5" alt=" " /></td>
+<td width="445" bgcolor="white" valign="top" class="tsr-text">
+<br />
 
 <xsl:apply-templates select="MainColumn/section/articles" mode="articles"/>
 
-</table>
 </td>
 </tr>
 
-<xsl:apply-templates select="MainColumn/section/articles" mode="Section_copyright"/>
+<tr>
+<td width="135"></td>
+<td width="5"></td>
+<td width="445">
 
+<!-- <xsl:apply-templates select="MainColumn/section/articles" mode="Section_copyright"/> -->
+<xsl:call-template name="footer">
+  <xsl:with-param name="footer_date" select="/wyona/cmsbody/Page/Content/MainColumn/section/articles/article[1]/body.head/dateline/story.date/@norm" />
+</xsl:call-template>
+
+</td>
+</tr>
 </table>
-</center>
+</div>
 </body>
 </html>
 </xsl:template>
