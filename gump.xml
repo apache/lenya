@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<!--
+  Lenya GUMP Descriptor
+  CVS $Id: gump.xml,v 1.1 2003/04/10 17:15:45 gregor Exp $
+-->
+
+<module name="incubator-lenya">
+
+  <url href="http://incubator.apache.org/lenya/"/>
+  <description>Content Managment System</description>
+
+  <cvs repository="lenya"/>
+
+  <!--
+    *******************************
+    ********  Lenya CORE  ********
+    *******************************
+  -->
+
+  <project name="lenya">
+    <package>org.apache.lenya</package>
+
+    <ant target="gump-core">
+      <property name="version" value="@@DATE@@"/>
+      <depend property="logkit.jar" project="dist-avalon-logkit"/>
+      <depend property="avalonapi.jar" project="avalon"/>
+    </ant>
+
+<!-- only depend on Cocoon for now. -->
+    <depend project="cocoon" inherit="runtime"/>
+
+    <work nested="build/lenya-@@DATE@@/classes"/>
+
+    <home nested="build/lenya-@@DATE@@"/>
+
+    <jar name="cocoon.jar"/>
+
+    <javadoc parent="build/lenya-@@DATE@@/javadocs"/>
+
+    <nag from="Gump" to="general@incubator.apache.org">
+      <regexp pattern="/BUILD FAILED/" subject="Build Failure - Lenya"/>
+    </nag>
+  </project>
+  
+</module>
