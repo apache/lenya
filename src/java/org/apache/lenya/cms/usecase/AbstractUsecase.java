@@ -150,7 +150,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
             clearErrorMessages();
             clearInfoMessages();
             doCheckPreconditions();
-            dumpErrorMessages();
+            
+            List _errorMessages = getErrorMessages();
+            for (int i = 0; i < _errorMessages.size(); i++) {
+                getLogger().info((String) _errorMessages.get(i));
+            }
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");
@@ -201,14 +205,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     }
 
     /**
-     * Dumps the error messages to the log and the command line.
+     * Dumps the error messages to the log.
      */
     protected void dumpErrorMessages() {
         List _errorMessages = getErrorMessages();
         for (int i = 0; i < _errorMessages.size(); i++) {
-            if (getLogger().isDebugEnabled()) {
-                System.out.println("+++ ERROR +++ " + _errorMessages.get(i));
-            }
             getLogger().error((String) _errorMessages.get(i));
         }
     }
