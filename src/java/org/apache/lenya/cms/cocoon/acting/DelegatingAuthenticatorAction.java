@@ -30,6 +30,7 @@ import org.apache.cocoon.environment.SourceResolver;
 
 /**
  * Authenticator action that delegates the authentication to an access controller.
+ * @deprecated use org.apache.lenya.cms.ac.Login usecase
  */
 public class DelegatingAuthenticatorAction extends AccessControlAction {
 
