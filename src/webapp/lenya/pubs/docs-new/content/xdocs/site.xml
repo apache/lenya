@@ -70,8 +70,11 @@
 					<usecases href="usecases.html" label="Usecases"/>
 				</uri-handling>
         <asset-management href="asset-management/" label="Asset Management">
-          <management href="management.html" label="Asset Management"/>
+          <asset-management-1 href="management.html" label="Asset Management"/>
         </asset-management>
+        <link-management href="link-management/" label="Link Management">
+          <link-management-1 href="link-management.html" label="Link Management"/>
+        </link-management>
 				<node-40 href="tasks/" label="Tasks">
 					<node-41 href="concept.html" label="The Task Concept"/>
 					<node-42 href="defining.html" label="Defining Tasks"/>
