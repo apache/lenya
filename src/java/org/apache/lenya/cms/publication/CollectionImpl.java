@@ -1,5 +1,5 @@
 /*
-$Id: CollectionImpl.java,v 1.1 2003/12/04 14:17:21 andreas Exp $
+$Id: CollectionImpl.java,v 1.2 2003/12/04 16:06:51 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,7 +73,7 @@ import org.xml.sax.SAXException;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
-    
+
     /**
      * Ctor.
      * @param publication A publication.
@@ -81,7 +81,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @param area The area the document belongs to.
      * @throws DocumentException when something went wrong.
      */
-    protected CollectionImpl(Publication publication, String id, String area) throws DocumentException {
+    protected CollectionImpl(Publication publication, String id, String area)
+        throws DocumentException {
         super(publication, id, area);
         load();
     }
@@ -94,13 +95,14 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    protected CollectionImpl(Publication publication, String id, String area, String language) throws DocumentException {
+    protected CollectionImpl(Publication publication, String id, String area, String language)
+        throws DocumentException {
         super(publication, id, area, language);
         load();
     }
 
     private List documents = new ArrayList();
-    
+
     /**
      * @see org.apache.lenya.cms.publication.Collection#getDocuments()
      */
@@ -149,7 +151,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 helper = getNamespaceHelper();
 
                 Element collectionElement = helper.getDocument().getDocumentElement();
-                Element[] documentElements = helper.getChildren(collectionElement);
+                Element[] documentElements = helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
 
                 DocumentBuilder builder = getPublication().getDocumentBuilder();
                 for (int i = 0; i < documentElements.length; i++) {
@@ -161,7 +163,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                             documentId,
                             getLanguage());
                     Document document = builder.buildDocument(getPublication(), url);
-                    add(document);
+                    documents.add(document);
                 }
             } catch (DocumentException e) {
                 throw e;
@@ -177,21 +179,24 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @throws DocumentException when something went wrong.
      */
     protected void save() throws DocumentException {
-        NamespaceHelper helper;
         try {
-            helper = getNamespaceHelper();
+            NamespaceHelper helper =
+                new NamespaceHelper(
+                    Collection.NAMESPACE,
+                    Collection.DEFAULT_PREFIX,
+                    ELEMENT_COLLECTION);
             Element collectionElement = helper.getDocument().getDocumentElement();
-            
+
             Document[] documents = getDocuments();
-            
+
             for (int i = 0; i < documents.length; i++) {
                 Element documentElement = helper.createElement(ELEMENT_DOCUMENT);
                 documentElement.setAttribute(ATTRIBUTE_ID, documents[i].getId());
                 collectionElement.appendChild(documentElement);
             }
-            
+
             DocumentHelper.writeDocument(helper.getDocument(), getFile());
-            
+
         } catch (DocumentException e) {
             throw e;
         } catch (Exception e) {
