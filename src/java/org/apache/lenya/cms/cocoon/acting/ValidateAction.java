@@ -56,14 +56,16 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.lenya.xml.RelaxNG;
+import org.apache.log4j.Category;
 
 /**
  * Action to validate an xml document with relax ng schema.
  * 
  * @author Edith Chevrier
- * @version 2004.1.07
+ * @version $Id: ValidateAction.java,v 1.6 2004/02/24 13:46:43 michi Exp $
  */
 public class ValidateAction extends AbstractConfigurableAction {
+        Category log = Category.getInstance(ValidateAction.class);
 
 	/** (non-Javadoc)
 	 * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
@@ -104,17 +106,19 @@ public class ValidateAction extends AbstractConfigurableAction {
 			FileWriter fileWriter = new FileWriter(file);
 			fileWriter.write(content);
 			fileWriter.close();
+
+                        log.debug("Schema: " + schema.getAbsolutePath());
             
-            //validate temporary file
-			String message = validateDocument(schema, file);
-			if (message != null) {
-				getLogger().error("RELAX NG Validation failed: " + message);
-				HashMap hmap = new HashMap();
-				hmap.put("message", "RELAX NG Validation failed: " + message);
-				return hmap;
-			}
+                        //validate temporary file
+                        String message = validateDocument(schema, file);
+                        if (message != null) {
+                            getLogger().error("RELAX NG Validation failed: " + message);
+                            HashMap hmap = new HashMap();
+                            hmap.put("message", "RELAX NG Validation failed: " + message);
+                            return hmap;
+                        }
 		} else {
-			getLogger().warn("No such schema: " + schema.getAbsolutePath());
+			log.warn("No such schema: " + schema.getAbsolutePath());
 		}
 		return null;
 	}
