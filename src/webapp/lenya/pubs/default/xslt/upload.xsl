@@ -5,8 +5,6 @@
   
   <xsl:import href="upload-generic.xsl"/>
   
-  <!--<xsl:template name="title">Import Article (SGML)</xsl:template>-->
-  
 <xsl:template name="fields">
   <form method="POST" enctype="multipart/form-data">
 
