@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.27 2002/07/25 22:18:53 michicms Exp $
+   @version CVS $Id: build.xml,v 1.28 2002/12/23 00:28:41 michicms Exp $
 
 -->
 
@@ -357,6 +357,7 @@
     <!-- now copy any additional libraries in ./lib -->
     <mkdir dir="${build.webapp}/WEB-INF/lib"/>
 
+    <echo>INFO: exclude: servlet.jar</echo>
     <copy todir="${build.webapp}/WEB-INF/lib">
       <fileset dir="${lib.dir}">
         <include name="**/*"/>
@@ -374,15 +375,8 @@
   (and triggers the javadoc target with the dependency)
   -->
   <target name="war" depends="webapp, javadocs" description="Builds the deployable war file">
-
     <mkdir dir="${dist.bin.dir}"/>
-
-    <jar jarfile="${dist.bin.warfile}"
-         basedir="${build.webapp}"
-         excludes="META-INF/MANIFEST.MF"
-         />
-
-
+    <jar jarfile="${dist.bin.warfile}" basedir="${build.webapp}" excludes="META-INF/MANIFEST.MF"/>
   </target>
 
 
