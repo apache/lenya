@@ -25,7 +25,8 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 public class PageEnvelopeModule
     extends AbstractInputModule {
         
-    protected PageEnvelope getEnvelope(Map objectModel) {
+    protected PageEnvelope getEnvelope(Map objectModel)
+        throws ConfigurationException {
         
         PageEnvelope envelope = null;
         
@@ -35,7 +36,7 @@ public class PageEnvelopeModule
             envelope = new PageEnvelope(publication, request);
         }
         catch (Exception e) {
-            getLogger().error("Resolving page envelope failed: ", e);
+            throw new ConfigurationException("Resolving page envelope failed: ", e);
         }
         
         return envelope;
