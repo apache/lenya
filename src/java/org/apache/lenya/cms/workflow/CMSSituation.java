@@ -1,5 +1,5 @@
 /*
-$Id: CMSSituation.java,v 1.7 2003/08/25 09:54:58 andreas Exp $
+$Id: CMSSituation.java,v 1.8 2003/09/01 17:01:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -88,6 +88,8 @@ public class CMSSituation implements Situation {
 	 */
     protected CMSSituation(String[] roleIds, String userId, String machineIp) {
         this.roleIds = roleIds;
+        this.userId = userId;
+        this.machineIp = machineIp;
     }
 
     private String[] roleIds;

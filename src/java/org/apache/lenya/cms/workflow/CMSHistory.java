@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.13 2003/08/25 20:47:04 edith Exp $
+$Id: CMSHistory.java,v 1.14 2003/09/01 17:01:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,11 +57,9 @@ package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
-import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.History;
-import org.apache.lenya.workflow.impl.StateImpl;
 import org.apache.lenya.workflow.impl.Version;
 import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -99,11 +97,10 @@ public class CMSHistory extends History {
     public static final String IP_ATTRIBUTE = "ip-address";
 
     /** (non-Javadoc)
-     * @see org.apache.lenya.cms.workflow.History#createVersionElement(org.apache.lenya.xml.NamespaceHelper, org.apache.lenya.workflow.impl.StateImpl, org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.Event)
+     * @see org.apache.lenya.cms.workflow.History#createVersionElement(org.apache.lenya.xml.NamespaceHelper, org.apache.lenya.workflow.Situation)
      */
-    protected Element createVersionElement(NamespaceHelper helper, StateImpl state,
-        Situation situation, Event event) {
-        Element element = super.createVersionElement(helper, state, situation, event);
+    protected Element createVersionElement(NamespaceHelper helper, Situation situation) {
+        Element element = super.createVersionElement(helper, situation);
 
         CMSSituation cmsSituation = (CMSSituation) situation;
         
@@ -198,12 +195,13 @@ public class CMSHistory extends History {
      * Initializes the workflow history of another document using the same
      * workflow schema like this history.
      * @param newDocument The document to initialize the history for.
+     * @param situation The current situation.
      * @throws WorkflowException when something went wrong.
      */
-    protected void initialize(Document newDocument) throws WorkflowException {
+    protected void initialize(Document newDocument, Situation situation) throws WorkflowException {
         String workflowId = getWorkflowId();
         CMSHistory newHistory = new CMSHistory(newDocument);
-        newHistory.initialize(workflowId);
+        newHistory.initialize(workflowId, situation);
     }
     
     /**

@@ -1,5 +1,5 @@
 /*
-$Id: InitWorkflowHistoryTask.java,v 1.6 2003/08/13 17:21:57 egli Exp $
+$Id: InitWorkflowHistoryTask.java,v 1.7 2003/09/01 17:02:20 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,9 +62,9 @@ import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.workflow.Situation;
 
 import org.apache.tools.ant.BuildException;
-
 
 /**
  * @author andreas
@@ -74,6 +74,38 @@ public class InitWorkflowHistoryTask extends PublicationTask {
     private String documentId;
     private String documentType;
     private String language;
+
+    /**
+     * Returns the machine IP address from which the history was initialized.
+     * @return A string.
+     */
+    public String getMachineIp() {
+        return machineIp;
+    }
+
+    /**
+     * Sets the machine IP address from which the history was initialized.
+     * @param machineIp A string.
+     */
+    public void setMachineIp(String machineIp) {
+        this.machineIp = machineIp;
+    }
+
+    /**
+     * Returns the ID of the user who initialized the history.
+     * @return A string.
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets the ID of the user who initialized the history.
+     * @param userId A string.
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     /**
      * @see org.apache.tools.ant.Task#execute()
@@ -92,20 +124,18 @@ public class InitWorkflowHistoryTask extends PublicationTask {
         Document document;
 
         try {
-            document =
-                DefaultDocumentBuilder.getInstance().buildDocument(
-                    getPublication(),
-                    url);
+            document = DefaultDocumentBuilder.getInstance().buildDocument(getPublication(), url);
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }
 
         try {
+            String[] roles = new String[0];
+            Situation situation =
+                WorkflowFactory.newInstance().buildSituation(roles, getUserId(), getMachineIp());
             DocumentType type =
-                DocumentTypeBuilder.buildDocumentType(
-                    getDocumentType(),
-                    getPublication());
-            WorkflowFactory.initHistory(document, type.getWorkflowFileName());
+                DocumentTypeBuilder.buildDocumentType(getDocumentType(), getPublication());
+            WorkflowFactory.initHistory(document, type.getWorkflowFileName(), situation);
         } catch (Exception e) {
             throw new BuildException(e);
         }
@@ -152,7 +182,7 @@ public class InitWorkflowHistoryTask extends PublicationTask {
         assertString(aDocumentType);
         documentType = aDocumentType;
     }
-    
+
     /**
      * Get the language.
      *  
@@ -170,5 +200,8 @@ public class InitWorkflowHistoryTask extends PublicationTask {
     public void setLanguage(String string) {
         language = string;
     }
+
+    private String userId = "";
+    private String machineIp = "";
 
 }

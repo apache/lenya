@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.11 2003/08/20 18:53:46 andreas Exp $
+$Id: History.java,v 1.12 2003/09/01 17:02:32 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,6 @@ $Id: History.java,v 1.11 2003/08/20 18:53:46 andreas Exp $
 */
 package org.apache.lenya.workflow.impl;
 
-import org.apache.lenya.cms.workflow.CMSSituation;
 import org.apache.lenya.workflow.BooleanVariable;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
@@ -104,9 +103,10 @@ public abstract class History implements WorkflowListener {
     /**
      * Creates a new history object. A new history file is created and initialized.
      * @param workflowId The workflow ID.
+     * @param situation The current situation.
      * @throws WorkflowException when something went wrong.
      */
-    public void initialize(String workflowId) throws WorkflowException {
+    public void initialize(String workflowId, Situation situation) throws WorkflowException {
         try {
             File file = getHistoryFile();
             file.getParentFile().mkdirs();
@@ -117,6 +117,9 @@ public abstract class History implements WorkflowListener {
 
             Element historyElement = helper.getDocument().getDocumentElement();
             historyElement.setAttribute(WORKFLOW_ATTRIBUTE, workflowId);
+            
+            Element initialVersionElement = createInitialVersionElement(helper, situation, workflowId);
+            historyElement.appendChild(initialVersionElement);
             
             DocumentHelper.writeDocument(helper.getDocument(), file);
         } catch (Exception e) {
@@ -230,6 +233,28 @@ public abstract class History implements WorkflowListener {
     /**
      * Creates a new version element. This method is called after a tansition invocation.
      * @param helper The namespace helper of the history document.
+     * @param situation The current situation.
+     * @param workflowId The workflow ID.
+     * @return An XML element.
+     * @throws WorkflowException when something went wrong.
+     */
+    protected Element createInitialVersionElement(
+        NamespaceHelper helper,
+        Situation situation, String workflowId) throws WorkflowException {
+        Element versionElement = createVersionElement(helper, situation);
+        
+        WorkflowInstanceImpl instance = createInstance();
+        instance.setWorkflow(workflowId);
+        
+        StateImpl initialState = (StateImpl) instance.getWorkflow().getInitialState();
+        versionElement.setAttribute(STATE_ATTRIBUTE, initialState.getId());
+        
+        return versionElement;
+    }
+
+    /**
+     * Creates a new version element. This method is called after a tansition invocation.
+     * @param helper The namespace helper of the history document.
      * @param state The state of the new version.
      * @param situation The current situation.
      * @param event The event that was invoked.
@@ -240,25 +265,34 @@ public abstract class History implements WorkflowListener {
         StateImpl state,
         Situation situation,
         Event event) {
-        Element versionElement = helper.createElement(VERSION_ELEMENT);
+        Element versionElement = createVersionElement(helper, situation);
         versionElement.setAttribute(STATE_ATTRIBUTE, state.getId());
         versionElement.setAttribute(EVENT_ATTRIBUTE, event.getName());
-        
+        return versionElement;
+    }
+    
+    /**
+     * Creates a version element based on a situation.
+     * @param helper The namespace helper of the history document.
+     * @param situation The current situation.
+     * @return An XML element.
+     */
+    protected Element createVersionElement(NamespaceHelper helper, Situation situation) {
+        Element versionElement = helper.createElement(VERSION_ELEMENT);
         Date now = new Date();
         String dateString = SimpleDateFormat.getDateTimeInstance().format(now);
         versionElement.setAttribute(DATE_ATTRIBUTE, dateString);
-
         return versionElement;
     }
 
     /**
-     * DOCUMENT ME!
+     * Advances the workflow history when a tranistion was invoked.
      *
-     * @param instance DOCUMENT ME!
-     * @param situation DOCUMENT ME!
-     * @param event DOCUMENT ME!
+     * @param instance The workflow instance.
+     * @param situation The situation before the transition.
+     * @param event The invoked event.
      *
-     * @throws WorkflowException DOCUMENT ME!
+     * @throws WorkflowException when something went wrong.
      */
     public void transitionFired(WorkflowInstance instance, Situation situation, Event event)
         throws WorkflowException {
@@ -269,7 +303,6 @@ public abstract class History implements WorkflowListener {
             NamespaceHelper helper =
                 new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX, xmlDocument);
 
-            CMSSituation cmsSituation = (CMSSituation) situation;
             Element versionElement =
                 createVersionElement(
                     helper,
@@ -288,7 +321,8 @@ public abstract class History implements WorkflowListener {
     }
 
     /**
-     * @param impl
+     * Sets the workflow instance.
+     * @param impl A workflow instance implementation.
      */
     public void setInstance(WorkflowInstanceImpl impl) {
         instance = impl;
@@ -297,6 +331,7 @@ public abstract class History implements WorkflowListener {
     /**
      * Saves the state variables as children of the document element.
      * @param helper The helper that holds the document.
+     * @throws WorkflowException when something went wrong.
      */
     protected void saveVariables(NamespaceHelper helper) throws WorkflowException {
         Element parent = helper.getDocument().getDocumentElement();
@@ -336,7 +371,7 @@ public abstract class History implements WorkflowListener {
      * Restores the state variables of a workflow instance.
      * @param instance The instance to restore.
      * @param helper The helper that wraps the history document.
-     * @throws WorkflowException
+     * @throws WorkflowException when something went wrong.
      */
     protected void restoreVariables(WorkflowInstanceImpl instance, NamespaceHelper helper)
         throws WorkflowException {
@@ -355,7 +390,7 @@ public abstract class History implements WorkflowListener {
      * Restores the state of a workflow instance.
      * @param instance The instance to restore.
      * @param helper The helper that wraps the history document.
-     * @throws WorkflowException
+     * @throws WorkflowException when something went wrong.
      */
     protected void restoreState(WorkflowInstanceImpl instance, NamespaceHelper helper)
         throws WorkflowException {
