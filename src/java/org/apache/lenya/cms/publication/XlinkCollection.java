@@ -19,17 +19,20 @@ package org.apache.lenya.cms.publication;
 
 import java.io.IOException;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XLink;
 import org.apache.log4j.Category;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * Implementation of a Collection. In the collection are xlink inserted.
- * @author <a href="mailto:edith@apache.org">Edith Chevrier</a>
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: XlinkCollection.java,v 1.5 2004/04/14 17:41:08 andreas Exp $
+ * @author <a href="mailto:edith@apache.org">Edith Chevrier </a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
+ * @version $Id: XlinkCollection.java,v 1.6 2004/07/10 23:00:21 andreas Exp $
  */
 public class XlinkCollection extends CollectionImpl {
 
@@ -43,7 +46,7 @@ public class XlinkCollection extends CollectionImpl {
      * @throws DocumentException when something went wrong.
      */
     public XlinkCollection(Publication publication, String id, String area)
-        throws DocumentException {
+            throws DocumentException {
         super(publication, id, area);
     }
 
@@ -56,20 +59,22 @@ public class XlinkCollection extends CollectionImpl {
      * @throws DocumentException when something went wrong.
      */
     public XlinkCollection(Publication publication, String id, String area, String language)
-        throws DocumentException {
+            throws DocumentException {
         super(publication, id, area, language);
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.CollectionImpl#createDocumentElement(org.apache.lenya.cms.publication.Document, org.apache.lenya.xml.NamespaceHelper)
-     **/
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.CollectionImpl#createDocumentElement(org.apache.lenya.cms.publication.Document,
+     *      org.apache.lenya.xml.NamespaceHelper)
+     */
     protected Element createDocumentElement(Document document, NamespaceHelper helper)
-        throws DocumentException {
+            throws DocumentException {
         Element element = super.createDocumentElement(document, helper);
         String path = getXlinkHref(document);
         element.setAttributeNS(XLink.XLINK_NAMESPACE, "xlink:" + XLink.ATTRIBUTE_HREF, path);
         element.setAttributeNS(XLink.XLINK_NAMESPACE, "xlink:" + XLink.ATTRIBUTE_SHOW, "embed");
-
+        element.normalize();
         return element;
     }
 
@@ -84,35 +89,29 @@ public class XlinkCollection extends CollectionImpl {
         try {
             path = document.getFile().getCanonicalPath();
         } catch (IOException e) {
-            throw new DocumentException(
-                "Couldn't found the file path for the document [" + document + "]",
-                e);
+            throw new DocumentException("Couldn't found the file path for the document ["
+                    + document + "]", e);
         }
         return path;
     }
 
     /**
-     * Saves the XML source of this collection.
-     * @throws DocumentException when something went wrong.
+     * Adds the XLink namespace declaration to the document element.
+     * @see org.apache.lenya.cms.publication.CollectionImpl#getNamespaceHelper()
      */
-    public void save() throws DocumentException {
-        try {
-            NamespaceHelper helper = getNamespaceHelper();
+    protected NamespaceHelper getNamespaceHelper() throws DocumentException,
+            ParserConfigurationException, SAXException, IOException {
+        NamespaceHelper helper = super.getNamespaceHelper();
+        if (!exists()) {
             Element collectionElement = helper.getDocument().getDocumentElement();
-
-            if ((collectionElement.getAttribute("xmlns:xlink") == null)
-                | (!collectionElement
-                    .getAttribute("xmlns:xlink")
-                    .equals("http://www.w3.org/1999/xlink"))) {
-                collectionElement.setAttribute("xmlns:xlink", XLink.XLINK_NAMESPACE);
+            String namespaceDeclaration = collectionElement.getAttributeNS(
+                    "http://www.w3.org/2000/xmlns/", "xlink");
+            if (namespaceDeclaration == null || !namespaceDeclaration.equals(XLink.XLINK_NAMESPACE)) {
+                collectionElement.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink",
+                        XLink.XLINK_NAMESPACE);
             }
-            DocumentHelper.writeDocument(helper.getDocument(), getFile());
-            super.save();
-        } catch (DocumentException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new DocumentException(e);
         }
+        return helper;
     }
 
 }
