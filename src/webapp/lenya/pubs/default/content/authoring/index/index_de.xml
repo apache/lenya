@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:dc="http://purl.org/dc/elements/1.1/" 
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     <!-- the root element indicates the doctype -->
     <lenya:meta>
         <dc:title>Standardpublikation</dc:title>
