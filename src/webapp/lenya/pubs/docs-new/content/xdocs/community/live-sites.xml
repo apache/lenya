@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: live-sites.xml,v 1.8 2004/05/23 20:07:07 gregor Exp $ -->
+<!-- $Id: live-sites.xml,v 1.9 2004/06/23 13:29:00 gregor Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -44,10 +44,11 @@ If you want to suggest additional sites for inclusion, please send an email to t
   <li><link href="http://gurit.ch">Gurit Heberlein Group</link></li>
   <li><link href="http://www.ingenieurbuero-metzing.de/">Ingenieurbüro Metzing</link></li>
   <li><link href="http://www.krista-sager.de/">Krista Sager (german MP)</link></li>
+  <li><link href="http://netcom.no">Netcom AS</link></li>
   <li><link href="http://nzz.ch">Neue Zürcher Zeitung (daily swiss newspaper)</link></li>
   <li><link href="http://oscom.org/matrix/">OSCOM CMS matrix</link></li>  
   <li><link href="http://www.unipublic.unizh.ch">Online Journal of the University of Zurich</link></li>
-  <li><link href="http://univ-reunion.fr">University of Reunion</link></li>
+  <li><link href="http://www.univ-reunion.fr">University of Reunion</link></li>
   <li><link href="http://wyona.com">Wyona</link></li>
 </ul>
 </section>
