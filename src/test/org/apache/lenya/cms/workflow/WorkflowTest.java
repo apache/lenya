@@ -69,7 +69,7 @@ import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.file.FileAccessController;
+import org.apache.lenya.cms.ac2.file.FileAccreditableManager;
 import org.apache.lenya.cms.ac2.file.FilePolicyManager;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
@@ -143,7 +143,7 @@ public class WorkflowTest extends TestCase {
         assertTrue(configDir.exists());
 
         File configurationDirectory = new File(publication.getDirectory(), "config/ac");
-        FileAccessController accessController = new FileAccessController(configurationDirectory);
+        FileAccreditableManager accessController = new FileAccreditableManager(configurationDirectory);
         Policy policy = new FilePolicyManager().getPolicy(accessController, publication, URL);
 
         DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);

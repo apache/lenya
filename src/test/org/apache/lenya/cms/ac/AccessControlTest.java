@@ -62,9 +62,9 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.PolicyTest;
-import org.apache.lenya.cms.ac2.file.FileAccessController;
+import org.apache.lenya.cms.ac2.file.FileAccreditableManager;
 import org.apache.lenya.cms.publication.Publication;
 
 import java.io.File;
@@ -128,11 +128,11 @@ public class AccessControlTest extends TestCase {
      * Returns the access controller.
      * @return An access controller object.
      */
-    public static final AccessController getAccessController() {
+    public static AccreditableManager getAccessController() {
         Publication publication = PublicationHelper.getPublication();
         File configDir = new File(publication.getDirectory(), "config/ac");
 
-        return new FileAccessController(configDir);
+        return new FileAccreditableManager(configDir);
     }
 
     /** @see junit.framework.TestCase#setUp() */

@@ -110,16 +110,42 @@
 
   <xsl:apply-templates select="*[local-name() != 'entity-resolver']"/>
 
-  <component logger="lenya.ac.accesscontroller"
-      class="org.apache.lenya.cms.ac2.file.FileAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/unicms">
-    <parameter name="directory" value="context:///lenya/pubs/unizh/config/ac"/>
-  </component>
+  <accreditable-managers>
+    <component-instance logger="lenya.ac.accreditablemanager"
+        class="org.apache.lenya.cms.ac2.file.FileAccreditableManager" name="file"/>
+  </accreditable-managers>
 
   <authorizers>
     <component-instance class="org.apache.lenya.cms.ac2.PolicyAuthorizer" logger="lenya.ac.authorizer" name="policy"/>
     <component-instance class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer" logger="lenya.ac.authorizer" name="workflow"/>
   </authorizers>
+  
+  <policy-managers>
+    <component-instance class="org.apache.lenya.cms.ac2.file.FilePolicyManager" logger="lenya.ac.policymanager" name="file"/>
+    <component-instance class="org.apache.lenya.cms.ac2.sitemap.SitemapPolicyManager" logger="lenya.ac.policymanager" name="sitemap"/>
+  </policy-managers>
+  
+  <component logger="lenya.ac.accesscontroller"
+      class="org.apache.lenya.cms.ac2.DefaultAccessController"
+      role="org.apache.lenya.cms.ac2.AccessController/unicms">
+    <accreditable-manager type="file">
+      <parameter name="directory" value="context:///lenya/pubs/unizh/config/ac"/>
+    </accreditable-manager>
+    <policy-manager type="file"/>
+    <authorizer type="policy"/>
+    <authorizer type="workflow"/>
+  </component>
+
+  <component logger="lenya.ac.accesscontroller"
+      class="org.apache.lenya.cms.ac2.DefaultAccessController"
+      role="org.apache.lenya.cms.ac2.AccessController/weilpublishing">
+    <accreditable-manager type="file">
+      <parameter name="directory" value="context:///lenya/pubs/weilpublishing/config/ac"/>
+    </accreditable-manager>
+    <policy-manager type="file"/>
+    <authorizer type="policy"/>
+    <authorizer type="workflow"/>
+  </component>
 
   </xsl:copy>
 </xsl:template>

@@ -61,11 +61,13 @@ import junit.framework.TestSuite;
 
 import junit.textui.TestRunner;
 
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -148,7 +150,7 @@ public class AntTaskTest extends TestCase {
      * @throws IOException
      * @throws ParameterException
      */
-    protected void doTest(String target) throws ExecutionException, IOException, ParameterException {
+    protected void doTest(String target) throws ExecutionException, ParameterException, ConfigurationException, SAXException, IOException {
         System.out.println("Testing target [" + target + "]:");
 
         Publication publication = PublicationHelper.getPublication();
