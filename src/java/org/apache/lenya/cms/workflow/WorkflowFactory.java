@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.19 2003/08/15 13:13:00 andreas Exp $
+$Id: WorkflowFactory.java,v 1.20 2003/08/25 09:54:58 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,7 +60,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
@@ -155,7 +157,7 @@ public class WorkflowFactory {
      * the identity to the situation.
      */
     public Situation buildSituation(Role[] roles) throws WorkflowException {
-        return new CMSSituation(roles);
+        return null;
     }
 
     /**
@@ -182,18 +184,55 @@ public class WorkflowFactory {
         } catch (AccessControlException e) {
             throw new WorkflowException(e);
         }
-        
-        CMSSituation situation = (CMSSituation) buildSituation(roles);
         Session session = request.getSession(false);
         if (session == null) {
             throw new WorkflowException("Session not initialized!");
         }
         Identity identity = Identity.getIdentity(session);
+        
+        return buildSituation(roles, identity);
+    }
+
+    /**
+     * Creates a situation for a set of roles and an identity.
+     * @param roles The roles.
+     * @param identity The identity.
+     * @return A workflow situation.
+     * @throws WorkflowException when something went wrong.
+     */
+    public Situation buildSituation(Role[] roles, Identity identity) throws WorkflowException {
         if (identity == null) {
             throw new WorkflowException("Session does not contain identity!");
         }
-        situation.setIdentity(identity);
-        return situation;
+        String userId = null;
+        User user = identity.getUser();
+        if (user != null) {
+            userId = user.getId();
+        }
+        
+        String machineIp = null;
+        Machine machine = identity.getMachine();
+        if (machine != null) {
+            machineIp = machine.getIp();
+        }
+        
+        String[] roleIds = new String[roles.length];
+        for (int i = 0; i < roles.length; i++) {
+            roleIds[i] = roles[i].getId();
+        }
+        
+        return buildSituation(roleIds, userId, machineIp);
+    }
+
+    /**
+     * Builds a situation from a role name set, a user ID and a machine IP address.
+     * @param roleIds The role IDs.
+     * @param userId The user ID.
+     * @param machineIp The machine IP address.
+     * @return A situation.
+     */
+    public Situation buildSituation(String[] roleIds, String userId, String machineIp) {
+        return new CMSSituation(roleIds, userId, machineIp);
     }
 
     /**

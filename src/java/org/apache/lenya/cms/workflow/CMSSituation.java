@@ -1,5 +1,5 @@
 /*
-$Id: CMSSituation.java,v 1.6 2003/08/15 13:12:31 andreas Exp $
+$Id: CMSSituation.java,v 1.7 2003/08/25 09:54:58 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: CMSSituation.java,v 1.6 2003/08/15 13:12:31 andreas Exp $
 */
 package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.workflow.Situation;
 
 
@@ -66,49 +64,51 @@ import org.apache.lenya.workflow.Situation;
  */
 public class CMSSituation implements Situation {
 
-	/**
-	 * Creates a new instance of Situation
-	 * 
-	 * @param roles the roles
-	 */
-    protected CMSSituation(Role[] roles) {
-        this.roles = roles;
+    /**
+     * Returns the machine IP address.
+     * @return A string.
+     */
+    protected String getMachineIp() {
+        return machineIp;
     }
 
-    private Role[] roles;
+    /**
+     * Returns the user ID.
+     * @return A string.
+     */
+    protected String getUserId() {
+        return userId;
+    }
+
+	/**
+	 * Creates a new instance of Situation
+	 * @param roleIds The role IDs.
+     * @param userId The user ID.
+     * @param machineIp The machine IP address.
+	 */
+    protected CMSSituation(String[] roleIds, String userId, String machineIp) {
+        this.roleIds = roleIds;
+    }
+
+    private String[] roleIds;
 
     /**
      * Get the roles
      * 
      * @return the roles
      */
-    public Role[] getRoles() {
-        return roles;
+    public String[] getRoleIds() {
+        return roleIds;
     }
 
     /** (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "(roles: " + roles + ")";
+        return "(roles: " + roleIds + ")";
     }
     
-    private Identity identity;
+    private String userId;
+    private String machineIp;
     
-    /**
-     * Returns the identity.
-     * @return An identity.
-     */
-    public Identity getIdentity() {
-        return identity;
-    }
-
-    /**
-     * Sets the identity.
-     * @param identity An identity.
-     */
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
-    }
-
 }

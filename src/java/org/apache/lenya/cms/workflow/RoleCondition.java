@@ -1,5 +1,5 @@
 /*
-$Id: RoleCondition.java,v 1.5 2003/07/23 13:21:20 gregor Exp $
+$Id: RoleCondition.java,v 1.6 2003/08/25 09:54:58 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,6 @@ $Id: RoleCondition.java,v 1.5 2003/07/23 13:21:20 gregor Exp $
 */
 package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Situation;
 
@@ -74,12 +73,12 @@ public class RoleCondition implements Condition {
      */
     public boolean isComplied(Situation situation) {
         CMSSituation situationImpl = (CMSSituation) situation;
-        Role[] roles = situationImpl.getRoles();
+        String[] roles = situationImpl.getRoleIds();
 
         boolean complied = false;
 
         for (int i = 0; i < roles.length; i++) {
-            if (getExpression().equals(roles[i].getId())) {
+            if (getExpression().equals(roles[i])) {
                 complied = true;
             }
         }

@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.11 2003/08/20 18:53:46 andreas Exp $
+$Id: CMSHistory.java,v 1.12 2003/08/25 09:54:58 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,6 @@ $Id: CMSHistory.java,v 1.11 2003/08/20 18:53:46 andreas Exp $
 */
 package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.cms.ac.Machine;
-import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.workflow.Event;
@@ -109,19 +106,18 @@ public class CMSHistory extends History {
         Element element = super.createVersionElement(helper, state, situation, event);
 
         CMSSituation cmsSituation = (CMSSituation) situation;
-        Identity identity = cmsSituation.getIdentity();
         
         Element identityElement = helper.createElement(IDENTITY_ELEMENT);
         element.appendChild(identityElement);
         
-        User user = identity.getUser();
-        if (user != null) {
-            identityElement.appendChild(generateUserElement(helper, user));
+        String userId = cmsSituation.getUserId();
+        if (userId != null) {
+            identityElement.appendChild(generateUserElement(helper, userId));
         }
 
-        Machine machine = identity.getMachine();
-        if (machine != null) {
-            identityElement.appendChild(generateMachineElement(helper, machine));
+        String machineIp = cmsSituation.getMachineIp();
+        if (machineIp != null) {
+            identityElement.appendChild(generateMachineElement(helper, machineIp));
         }
 
         return element;
@@ -130,27 +126,26 @@ public class CMSHistory extends History {
     /**
      * Creates an XML element describing the user.
      * @param helper The namespace helper of the document.
-     * @param user The user.
+     * @param userId The user ID.
      * @return An XML element.
      */
-    protected Element generateUserElement(NamespaceHelper helper, User user) {
+    protected Element generateUserElement(NamespaceHelper helper, String userId) {
         Element userElement = null;
         userElement = helper.createElement(USER_ELEMENT);
-        userElement.setAttribute(ID_ATTRIBUTE, user.getId());
-        userElement.setAttribute(NAME_ATTRIBUTE, user.getName());
+        userElement.setAttribute(ID_ATTRIBUTE, userId);
         return userElement;
     }
     
     /**
      * Creates an XML element describing the machine.
      * @param helper The namespace helper of the document.
-     * @param machine The machine.
+     * @param machineIp The machine IP address.
      * @return An XML element.
      */
-    protected Element generateMachineElement(NamespaceHelper helper, Machine machine) {
+    protected Element generateMachineElement(NamespaceHelper helper, String machineIp) {
         Element machineElement = null;
         machineElement = helper.createElement(MACHINE_ELEMENT);
-        machineElement.setAttribute(IP_ATTRIBUTE, machine.getIp());
+        machineElement.setAttribute(IP_ATTRIBUTE, machineIp);
         return machineElement;
     }
 	
