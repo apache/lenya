@@ -1,4 +1,4 @@
-# www.lenya.com
+# cocoon.apache.org
 
 User-agent: *
 Disallow: /there_seems_to_be_a_bug_within_websphinx_Robot_Exclusion.html
