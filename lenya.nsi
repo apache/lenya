@@ -90,7 +90,7 @@ Section "Apache Lenya 1.2.1" SecDummy
 
   CreateDirectory "$SMPROGRAMS\$product_name"
   CreateShortCut "$SMPROGRAMS\$product_name\Lenya Home Page.lnk" \
-                 "http://cocoon.apache.org/lenya/"
+                 "http://lenya.apache.org/"
 
   CreateShortCut "$SMPROGRAMS\$product_name\Welcome.lnk" \
                  "http://127.0.0.1:8888"

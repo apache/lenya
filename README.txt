@@ -29,7 +29,7 @@
   that you read the installation instructions on updating first.
   
   Look for the most updated documentation on the Apache Lenya web site
-  (http://cocoon.apache.org/lenya/).
+  (http://lenya.apache.org/).
 
 
 
@@ -84,4 +84,4 @@
 
 
                                                The Apache Lenya Project
-                                             http://cocoon.apache.org/lenya/
+                                             http://lenya.apache.org/

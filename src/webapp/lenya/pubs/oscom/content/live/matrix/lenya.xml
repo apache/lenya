@@ -15,14 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: lenya.xml,v 1.5 2004/03/13 12:42:13 gregor Exp $ -->
+<!-- $Id$ -->
 
 <system type="cms">
   <id>lenya</id>
   <system_name>Lenya</system_name>
-  <main_url>http://cocoon.apache.org/lenya/</main_url>
+  <main_url>http://lenya.apache.org/</main_url>
   <license>
     <license_name>Apache Software License</license_name>
-    <license_url>cocoon.apache.org/lenya/license.html</license_url>
+    <license_url>lenya.apache.org/license.html</license_url>
   </license>
 </system>

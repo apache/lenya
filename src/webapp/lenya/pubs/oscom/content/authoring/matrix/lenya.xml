@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lenya.xml,v 1.14 2004/08/02 00:25:50 michi Exp $ -->
+<!-- $Id$ -->
     
 <system type="cms">
   <id>lenya</id>
@@ -28,10 +28,10 @@
 Hence it is totally based on XML, XSLT and other related open standards.
 Lenya supports browser based inline WYSIWYG editors, such as Xopus, Bitflux and Kupu.
   </description>
-  <main_url>http://cocoon.apache.org/lenya/</main_url>
+  <main_url>http://lenya.apache.org/</main_url>
   <license>
     <license_name>Apache Software License</license_name>
-    <license_url>http://cocoon.apache.org/lenya/project/license.html</license_url>
+    <license_url>http://lenya.apache.org/project/license.html</license_url>
   </license>
   <programming-language>Java</programming-language>
   <demo href="http://www.lenya.org"/>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: press_release_1.0rc1.xml,v 1.3 2004/03/13 12:42:16 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document>
@@ -94,7 +94,7 @@ May 2003.
 
 For more information about Apache Lenya, please go to:
 
-           http://cocoon.apache.org/lenya/
+           http://lenya.apache.org/
 
 or contact gregor@apache.org
 

@@ -38,7 +38,7 @@
   <li>Add, remove, commit to <code>cocoon-site</code></li>
   <li>Login to <code>minotaur.apache.org</code></li>
   <li><code>minotaur@apache.org &gt; umask 0002</code></li>
-  <li><code>minotaur@apache.org &gt; cd /www/cocoon.apache.org/lenya</code></li>
+  <li><code>minotaur@apache.org &gt; cd /www/lenya.apache.org</code></li>
   <li><code>minotaur@apache.org &gt; cvs update -dP</code></li>
 </ul>
 </section>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: skinconf.xml,v 1.11 2004/03/13 12:46:25 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!--
 Skin configuration file. This file contains details of your project, which will
@@ -85,7 +85,7 @@ be used to configure the chosen Forrest skin.
   <!-- mandatory project logo
        skin: forrest-site renders it at the top -->
   <project-name>Lenya</project-name>
-  <project-url>http://cocoon.apache.org/lenya</project-url>
+  <project-url>http://lenya.apache.org</project-url>
   <project-logo>images/apache-lenya-light.png</project-logo>
   <!--
   <project-logo>images/apache-lenya-outline.png</project-logo>

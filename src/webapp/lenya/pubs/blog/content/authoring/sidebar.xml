@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sidebar.xml,v 1.6 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id$ -->
 
 <sidebar>
 <block>
@@ -29,7 +29,7 @@
 <block>
 <title>Links</title>
 <content>
-<a href="http://cocoon.apache.org/lenya/">Lenya</a>
+<a href="http://lenya.apache.org/">Lenya</a>
 <br /><a href="http://cocoon.apache.org">Cocoon</a>
 <br /><a href="http://www.apache.org">Apache</a>
 </content>

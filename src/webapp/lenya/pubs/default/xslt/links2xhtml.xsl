@@ -2,7 +2,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:default="http://cocoon.apache.org/lenya/pubs/default/1.0"
+  xmlns:default="http://apache.org/lenya/pubs/default/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
 >
 

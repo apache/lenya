@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index.xml,v 1.13 2004/04/26 09:55:33 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document>
@@ -46,7 +46,7 @@ An adminstration interface allows advanced users to
 monitor the CMS, and perform configuration tasks.
 </p>
 		<p>
-You are very welcome to participate in the <link href="http://cocoon.apache.org/lenya">Lenya project</link>.
+You are very welcome to participate in the <link href="http://lenya.apache.org">Lenya project</link>.
 Thank you very much for your suggestions and contributions.
 </p>
 		<section>
