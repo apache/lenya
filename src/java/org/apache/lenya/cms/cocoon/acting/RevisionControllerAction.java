@@ -83,7 +83,7 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: RevisionControllerAction.java,v 1.29 2003/12/03 15:14:48 michi Exp $
+ * @version $Id: RevisionControllerAction.java,v 1.30 2003/12/03 15:26:30 michi Exp $
  */
 public class RevisionControllerAction extends AbstractAction {
     Category log = Category.getInstance(RevisionControllerAction.class);
@@ -138,7 +138,8 @@ public class RevisionControllerAction extends AbstractAction {
         //get Parameters for RC
         String publicationPath = publication.getDirectory().getCanonicalPath();
         RCEnvironment rcEnvironment =
-            RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
+        RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
+        //RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
         rcmlDirectory = rcEnvironment.getRCMLDirectory();
         rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
         backupDirectory = rcEnvironment.getBackupDirectory();
@@ -193,13 +194,17 @@ public class RevisionControllerAction extends AbstractAction {
             String srcUrl = builder.buildCanonicalUrl(publication, document.getArea(), documentid, language);
             Document srcDoc = builder.buildDocument(publication, srcUrl);
             File newFile = srcDoc.getFile();
-            filename = newFile.getAbsolutePath();
+            filename = newFile.getCanonicalPath();
+            //filename = newFile.getAbsolutePath();
 
         } else {
-            filename = document.getFile().getAbsolutePath();
+            filename = document.getFile().getCanonicalPath();
+            //filename = document.getFile().getAbsolutePath();
         }
 
+        log.error("Filename (with publicationPath): " + filename);
         filename = filename.substring(publicationPath.length());
+        log.error("Publication Path: " + publicationPath);
         log.error("Filename: " + filename);
 
         username = null;
