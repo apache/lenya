@@ -1,5 +1,5 @@
 /*
-$Id: MoveSiteTreeNodeTask.java,v 1.2 2003/07/23 13:21:45 gregor Exp $
+$Id: MoveSiteTreeNodeTask.java,v 1.3 2003/08/29 12:54:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -86,8 +86,6 @@ public class MoveSiteTreeNodeTask extends AbstractTask {
 	String direction = null;
     String treePath;
     String absolutetreepath = null;
-	String parentid = null;
-	String id = null;
 
 	try {
 		documentid=getParameters().getParameter(DOCUMENT_ID, null);
