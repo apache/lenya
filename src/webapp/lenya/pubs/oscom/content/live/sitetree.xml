@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<sitetree>
+<block id="main">
+<node id="1" link="http://www.oscom.org">
+<name>Home</name>
+</node>
+<node id="2" link="/Conferences/">
+<name>Conferences</name>
+</node>
+<node id="3" link="/matrix/index.html">
+<name>CMS Matrix</name>
+  <node id="10" link="/matrix/aegir.html">
+    <name>Aegir</name>
+  </node>
+  <node id="5" link="/matrix/cocoon.html">
+    <name>Cocoon</name>
+  </node>
+  <node id="6" link="/matrix/lenya.html">
+    <name>Lenya</name>
+    <node id="7" link="/matrix/lenya/features/index.html">
+      <name>Features</name>
+    </node>
+  </node>
+  <node id="11" link="/matrix/xaraya.html">
+    <name>Xaraya</name>
+  </node>
+  <node id="9" link="/matrix/zope.html">
+    <name>Zope</name>
+  </node>
+</node>
+<node id="4" link="/Projects/">
+<name>Projects</name>
+  <node id="8" link="/Projects/Twingle/">
+    <name>Twingle</name>
+  </node>
+</node>
+<node id="12">
+<name>Mailing lists</name>
+</node>
+<node id="13" link="http://blog.oscom.org">
+<name>Blog</name>
+</node>
+<node id="14" link="/Organization/">
+<name>Organization</name>
+</node>
+</block>
+</sitetree>

@@ -446,6 +446,12 @@
       | Hence I will explain what's inside below for pipelines.
       +-->
  <map:resources>
+   <map:resource name="navigation">
+     <map:generate src="lenya/pubs/{pub_id}/content/live/sitetree.xml" />
+     <map:transform src="lenya/xslt/util/sitetree2navigation.xsl">
+       <map:parameter name="nav_id" value="{nav_id}"/>
+     </map:transform>
+   </map:resource>
  </map:resources>
 
 <!-- ========================== Action sets ================================ -->
@@ -588,11 +594,29 @@
         <map:redirect-to uri="introduction.html"/>
       </map:match>
 -->
+      <!-- About Publication -->
       <map:match pattern="*/introduction.html">
         <map:generate src="lenya/pubs/{1}/publication.xml" />
         <map:transform src="lenya/xslt/util/publication.xsl"/>
         <map:serialize type="html" />
       </map:match>
+      <!-- Navigation -->
+      <map:match pattern="*/navigation_id*.xml">
+        <map:call resource="navigation">
+          <map:parameter name="pub_id" value="{1}"/>
+          <map:parameter name="nav_id" value="{2}"/>
+        </map:call>
+        <map:serialize type="xml" />
+      </map:match>
+      <map:match pattern="*/navigation_id*.html">
+        <map:call resource="navigation">
+          <map:parameter name="pub_id" value="{1}"/>
+          <map:parameter name="nav_id" value="{2}"/>
+        </map:call>
+        <map:transform src="lenya/xslt/util/navigation2html.xsl"/>
+        <map:serialize type="html" />
+      </map:match>
+      <!-- Enter the actual publication -->
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
