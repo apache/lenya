@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.6 2003/07/30 15:03:24 gregor Exp $
+$Id: DublinCore.java,v 1.7 2003/07/30 15:10:32 egli Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,6 @@ import org.apache.lenya.xml.DocumentHelper;
 import java.io.File;
 
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 
 /**
  * A publication.
@@ -128,8 +127,8 @@ public class DublinCore {
 			try {
 				nodelist = DocumentHelper.readDocument(infofile).getElementsByTagNameNS(DC_NAMESPACE, node);
 				try {
-					string = nodelist.item(0).getFirstChild().getNodeValue();
-				} catch (Exception e) {
+				string = nodelist.item(0).getFirstChild().getNodeValue();
+			} catch (Exception e) {
 								string = "";
 				}
 			} catch (Exception e) {

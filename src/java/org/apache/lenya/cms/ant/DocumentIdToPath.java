@@ -42,8 +42,6 @@
  */
 package org.apache.lenya.cms.ant;
 
-import java.io.File;
-
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.tools.ant.BuildException;

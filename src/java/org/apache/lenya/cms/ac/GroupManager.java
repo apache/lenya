@@ -1,5 +1,5 @@
 /*
-$Id: GroupManager.java,v 1.8 2003/07/23 13:21:16 gregor Exp $
+$Id: GroupManager.java,v 1.9 2003/07/30 15:05:12 egli Exp $
 <License>
 
  ============================================================================
@@ -58,8 +58,6 @@ package org.apache.lenya.cms.ac;
 import org.apache.log4j.Category;
 
 import java.io.File;
-import java.io.FileFilter;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

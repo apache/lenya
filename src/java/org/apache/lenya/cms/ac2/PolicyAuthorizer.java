@@ -1,5 +1,5 @@
 /*
-$Id: PolicyAuthorizer.java,v 1.12 2003/07/29 17:23:18 andreas Exp $
+$Id: PolicyAuthorizer.java,v 1.13 2003/07/30 15:05:36 egli Exp $
 <License>
 
  ============================================================================
@@ -55,14 +55,10 @@ $Id: PolicyAuthorizer.java,v 1.12 2003/07/29 17:23:18 andreas Exp $
 */
 package org.apache.lenya.cms.ac2;
 
-import java.util.Iterator;
-
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.IPRange;
-import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac.Role;
 
 /**

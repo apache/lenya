@@ -1,5 +1,5 @@
 /*
-$Id: Group.java,v 1.12 2003/07/22 17:01:34 andreas Exp $
+$Id: Group.java,v 1.13 2003/07/30 15:04:50 egli Exp $
 <License>
 
  ============================================================================
@@ -57,7 +57,6 @@ package org.apache.lenya.cms.ac;
 
 import org.apache.lenya.cms.ac2.*;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 

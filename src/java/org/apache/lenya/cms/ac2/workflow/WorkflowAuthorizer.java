@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.13 2003/07/29 14:24:48 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.14 2003/07/30 15:06:04 egli Exp $
 <License>
 
  ============================================================================
@@ -60,7 +60,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 
@@ -70,7 +69,6 @@ import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.Authorizer;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.ac2.PolicyManager;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
