@@ -108,12 +108,17 @@ public class ArticleTask
         Element headlineElement = (Element) nodes.get(0);
         String title = headlineElement.getText();
         
-        //article's  id. FIXME: should be readen from the article, but now:
+        // article's id format, e.g. /news/article.xml 
+        // FIXME: should be readen from the article, but now:
         StringTokenizer st=new StringTokenizer(docId,"/");
+        st.nextToken();
         String id=st.nextToken();
+        id=id.substring(0,id.length()-4); // Remove ".xml" extension
 
+        String headlines_filename=domainPath + ComputerworldEnvironment.headlinesFile;
+        log.debug(".addToHeadline(): "+headlines_filename);
         Document headlinesDocument = getDocument(domainPath + ComputerworldEnvironment.headlinesFile);
-        insertElement(headlinesDocument, "/Articles", "Article", id, title);
+        insertElement(headlinesDocument, "/articles", "article", id, title);
         writeDocument(domainPath + ComputerworldEnvironment.headlinesFile, headlinesDocument);
                 
     }
@@ -205,9 +210,10 @@ public class ArticleTask
 
         //get the PublishedDate Node
         Element dateE=(Element)doc.selectSingleNode("/article/head/dateline/story.date"); 
-        if (dateE != null) {
-        return false;
-        } 
+        if(dateE != null){
+          log.debug(".setFirstPublishedDate(): already set");
+          return false;
+          } 
 
         DocumentHelper documentHelper = new DocumentHelper();
 

@@ -32,7 +32,7 @@
 			<tr>
 				<td width="440" align="left" valign="top" colspan="2">
 					<br/>
-	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/head/dateline"><img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a>
+	<a href="levi.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/head/dateline"><img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a>
           <div align="left">
           <table border="0" cellpadding="0" cellspacing="0" align="left">
 						<tr>

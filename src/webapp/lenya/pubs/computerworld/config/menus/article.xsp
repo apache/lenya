@@ -5,18 +5,15 @@
 		<xsp:logic>
     String articleId=parameters.getParameter("articleId","null");
   </xsp:logic>
-		<live_uri>
-			<xsp:expr>"/news/"+articleId+".html"</xsp:expr>
-		</live_uri>
+		<live_uri><xsp:expr>"/news/"+articleId+".html"</xsp:expr></live_uri>
 		<xsp:logic>
     String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
     
     String sourcesParameter =
             "sources=/news/" +  articleId + ".xml";
-    String urisParameter =
-            "uris=" + xsp_wyona_context_prefix+"/news/"+ articleId + ".html,"+
-                      xsp_wyona_context_prefix+"/"+"index.html";
+    String urisParameter = "uris=" + xsp_wyona_context_prefix+"/news/"+ articleId + ".html";
+
   </xsp:logic>
 		<menus>
 			<menu name="File" label="File">
@@ -24,7 +21,7 @@
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
-						</xsp:attribute>Authoring Home
+						</xsp:attribute>Authoring&#160;Home
 						</item>
 				</block>
 				<block>
