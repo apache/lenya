@@ -1,5 +1,5 @@
 /*
- * $Id: CopyJavaSourcesTask.java,v 1.8 2003/05/19 10:10:16 michi Exp $
+ * $Id: CopyJavaSourcesTask.java,v 1.9 2003/05/27 14:48:10 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,6 +41,7 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 
@@ -68,7 +69,7 @@ public class CopyJavaSourcesTask extends Task {
         int numberOfFilesCopied = 0;
         TwoTuple twoTuple = new TwoTuple(numberOfDirectoriesCreated, numberOfFilesCopied);
 
-        File absoluteBuildDir = new File(project.getBaseDir(), project.translatePath(buildDir));
+        File absoluteBuildDir = new File(project.getBaseDir(), Project.translatePath(buildDir));
         //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
 
         //System.out.println("CopyJavaSourcesTask.execute(): " + pubsRootDirs);
