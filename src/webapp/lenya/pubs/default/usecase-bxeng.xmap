@@ -40,7 +40,7 @@
 	  
     <map:pipeline type="noncaching">
       
-      <map:match type="usecase" pattern="bxe">
+      <map:match type="usecase" pattern="bxeng">
         
       <map:match type="step" pattern="open">
        <map:act type="resource-exists" src="../../../../ROOT/bxeng/bxeLoader.js"> <!-- Check for BXENG -->
