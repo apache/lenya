@@ -1,6 +1,6 @@
 
-                W Y O N A           C O N T E N T - M A N A G E M E N T - S Y S T E M
-
+  W Y O N A    C O N T E N T - M A N A G E M E N T - S Y S T E M
+  ==============================================================
 
   Installation
   ------------
