@@ -6,19 +6,20 @@
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
-<sections>
- <section xmlns:xi="http://www.w3.org/2001/XInclude">
-  <articles>
-    <xsl:for-each select="dir:directory">
-      <article href="{@name}">
-      <xi:include xml:base="cocoon:" href="magazin/gesundheit/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
-
+<xsl:template match="frontpage"  xmlns:xi="http://www.w3.org/2001/XInclude">
+ <articles xmlns:xi="http://www.w3.org/2001/XInclude"> 
+    <xsl:for-each select="articles/article">
+      <article href="{@href}">
+        <xi:include xml:base="cocoon:" href="{@channel}/{@section}/{@year}/{@dir}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+<!--
+        <xi:include xml:base="cocoon:" href="magazin/gesundheit/2002/0508/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+-->
+<!--
+        <xi:include xml:base="cocoon:"><xsl:attribute name="href"><xsl:value-of select="@channel"/>/{@section}/{@year}/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"</xsl:attribute></xi:include>
+-->
       </article>
     </xsl:for-each>
   </articles>
-</section>
-</sections>
 </xsl:template>
 
 </xsl:stylesheet>

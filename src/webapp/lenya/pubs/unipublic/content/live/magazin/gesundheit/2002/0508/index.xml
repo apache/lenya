@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <NewsML>
-  <Catalog Href="http://nzz.wyona.com/newsml/catalog.xml"/>
+  <Catalog Href=""/><!--Catalog contains the controlled vocabularies used by unipublic.unizh.ch-->
   <NewsEnvelope>
     <TransmissionId>1004500635628</TransmissionId>
     <DateAndTime>20020325T0457+0100</DateAndTime>
-    <SentFrom>
-      <Party FormalName="NZZ"/>
-    </SentFrom>
-    <SentTo>
-      <Party FormalName="IHT"/>
-    </SentTo>
   </NewsEnvelope>
   <NewsItem>
     <Identification>
@@ -39,16 +33,13 @@
       <NewsLines>
         <HeadLine>Im Traum spricht er am meisten mit mir
         </HeadLine>
-        <ByLine>Von Adrian Ritter
-        </ByLine>
-        <DateLine>03.04.2002</DateLine>
-        <CreditLine>
-          <Origin Href="http://nzz.wyona.com/newml/creditline.xml"/>
-        </CreditLine>
+        <ByLine>Von Adrian Ritter </ByLine>
+        <DateLine>055555.04.2002</DateLine>
+        <CreditLine>Universit&#228;t Z&#252;rich </CreditLine>
         <CopyrightLine>&#169;Universit&#228;t Z&#252;rich</CopyrightLine>
       </NewsLines>
       <AdministrativeMetadata>
-        <SystemIdentifier></SystemIdentifier>
+        <SystemIdentifier>http://www.unipublic.unizh.ch/docs/publication/live/magazin/gesundheit/articles/2002/0508/index.xml</SystemIdentifier>
       </AdministrativeMetadata>
       <RightsMetadata>
         <Copyright>
@@ -58,7 +49,7 @@
       <DescriptiveMetadata xmlns:up="http://www.unipublic.unizh.ch/2002/up">
         <Language FormalName="de"/>
         <SubjectCode>
-          <Subject FormalName="International"/>
+          <Subject FormalName="Gesundheit"/>
         </SubjectCode>
       </DescriptiveMetadata>
       <ContentItem>
@@ -79,7 +70,7 @@
             <body>
               <body.head>
                 <dateline>
-                  <story.date>3.4.2002</story.date>
+                  <story.date norm="5.4.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>&#171;Im Traum spricht er am meisten mit mir&#187;</hl1>

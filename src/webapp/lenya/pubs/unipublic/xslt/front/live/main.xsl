@@ -223,8 +223,8 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <td width="150" valign="top" bgcolor="white" class="tsr-text">
 
 
-<p><a href="{@href}"><span class="tsr-title"><xsl:apply-templates select="sections/section/articles/article[1]/body.head/hedline/hl1"/></span></a><br />
-<xsl:apply-templates select="sections/section/articles/article[1]/body.head/abstract"/></p>
+<p><a href="{articles/article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="articles/article[1]/body.head/hedline/hl1"/></span></a><br />
+<xsl:apply-templates select="articles/article[1]/body.head/abstract"/>(<xsl:apply-templates select="articles/article[1]/body.head/dateline/story.date/@norm"/>)</p>
 
 
 </td>
@@ -232,8 +232,9 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <td width="1" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
 <td width="150" valign="top" bgcolor="white" class="tsr-text">
 
-<p><a href="{@href}"><span class="tsr-title"><xsl:apply-templates select="sections/section/articles/article[1]/body.head/hedline/hl1[1]"/> </span></a><br />
-<xsl:apply-templates select="sections/section/articles/article[1]/body.head/abstract"/>(5.4.2002)</p>
+<p><a href="{articles/article[2]/@href}/"><span class="tsr-title"><xsl:apply-templates select="articles/article[2]/body.head/hedline/hl1"/> </span></a><br />
+
+<xsl:apply-templates select="articles/article[2]/body.head/abstract"/>(<xsl:apply-templates select="articles/article[2]/body.head/dateline/story.date/@norm"/>)</p>
 
 </td>
 <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
@@ -251,7 +252,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 
 <br />
  
-<xsl:for-each select="sections/section/articles/article">
+<xsl:for-each select="articles/article">
 <table border="0" cellpadding="0" cellspacing="0" width="316">
 <tr>
 <td colspan="3">
@@ -269,7 +270,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <td bgcolor="white" class="tsr-text">
 
 
-<p><a href="../campus/uni-news/2002/0513/"><img src="{$unipublic}/campus/uni-news/2002/0513/bild-headline.jpg" width="80" height="60" border="0" alt="unijournal" align="right"/></a><span class="tsr-title"><xsl:apply-templates select="body.head/hedline/hl1"/> </span><br />
+<p><a href="{@href}/"><img src="{$unipublic}/campus/uni-news/2002/0513/bild-headline.jpg" width="80" height="60" border="0" alt="unijournal" align="right"/></a><span class="tsr-title"><a href="{@href}/"><xsl:apply-templates select="body.head/hedline/hl1"/></a> </span><br />
 <xsl:apply-templates select="body.head/abstract"/></p>
 
 </td>

@@ -180,7 +180,7 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 <xsl:for-each select="/section/articles/article">
 <p>
 <a href="{@href}/"><span class="tsr-title"><xsl:apply-templates select="body.head/hedline/hl1"/></span></a><br />
-<xsl:apply-templates select="body.head/abstract"/> (3.4.2002)
+<xsl:apply-templates select="body.head/abstract"/> (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>)
 </p>
 </xsl:for-each>
 

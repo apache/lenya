@@ -72,13 +72,15 @@
             <body>
               <body.head>
                 <dateline>
+                  <story.date norm="03.04.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>Leben mit t&#246;dlichem &#171;PIP3&#187;</hl1>
                 </hedline>
                 <byline>unicom</byline>
                 <abstract>
-Die ungehemmte Zellteilung, kurz Krebs, wird ... 
+Die ungehemmte Zellteilung, kurz Krebs, wird normalerweise durch mehrere Sicherungen in einer Zelle unterdrueckt. Eine der wichtigsten Sicherungen ist das Tumorsuppressorgen PTEN. Ein Defekt dieses Gens kann krebsfoerdernd sein. Die Forschungsgruppe von Professor Ernst Hafen vom Zoologischen Institut der Universitaet Zuerich untersuchte die Folgen dieses Defektes bei der Drosophila-Fliege genauer. Dabei wurde die Moeglichkeit einer medikamentoesen Behandlung entdeckt. Die Erkenntnisse der Forschungsgruppe wurden gestern, 28. Februar, in ScienceExpress, der Online-Version des Wissenschaftsmagazins Science publiziert.
+ 
                 </abstract>
               </body.head>
               <body.content>

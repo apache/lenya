@@ -88,19 +88,19 @@
       </map:match>
 
       <!-- Frontpage -->
-      <map:match pattern="">
-        <!--<map:generate src="docs/publication/live/frontpage/index.xml"/>-->
-        <map:generate type="directory" src="docs/publication/live/magazin/gesundheit/articles/2002"/>
-        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
+      <map:match pattern="index.html">
+        <map:generate src="docs/publication/live/frontpage/index.xml"/> 
+        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/> 
         <map:transform type="xinclude"/>
+        <!--<map:transform src="stylesheets/publication/Page/Front/newsml.xsl"/> would be nice to have-->
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
-      <map:match pattern="index.html">
-        <!--<map:generate src="docs/publication/live/frontpage/index.xml"/>-->
-        <map:generate type="directory" src="docs/publication/live/magazin/gesundheit/articles/2002"/>
-         <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
+      <map:match pattern="">
+        <map:generate src="docs/publication/live/frontpage/index.xml"/> 
+        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/> 
         <map:transform type="xinclude"/>
+        <!--<map:transform src="stylesheets/publication/Page/Front/newsml.xsl"/> would be nice to have-->
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
@@ -119,7 +119,11 @@
       <map:match pattern="*/*/*/">
         <!--<map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>-->
         <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
-        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
+          <map:parameter name="channel" value="{1}"/>
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="year" value="{3}"/>
+        </map:transform>
         <map:transform type="xinclude"/>
         <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl"/>
         <map:serialize type="html"/>

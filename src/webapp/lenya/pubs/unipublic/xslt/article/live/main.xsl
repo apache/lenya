@@ -13,11 +13,9 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="/">
-
 <html>
 <head>
 <title>unipublic - <xsl:value-of select="$section"/></title>
-<!--<title>unipublic - Uni-News</title>-->
 
 <xsl:call-template name="styles"/>
 
@@ -111,8 +109,9 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 
 <div align="left"><a href="#topofpage"><font size="1">zum Anfang<br /> <br />
 </font></a> <img height="1" width="390" src="{$img-unipub}/999999.gif" alt=" "/><br />
- <font size="1">&#169; <xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/CopyrightLine"/>,
-<xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/DateLine"/>, 
+ <font size="1"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/CopyrightLine" mode="copyright"/>
+<xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/DateLine" mode="copyright"/>
+<xsl:apply-templates select="NewsLines/DateLine" mode="copyright"/> 
 <a href="/ssi_unipublic/impressum.html">Impressum</a></font></div>
 </td>
 </tr>
@@ -134,34 +133,15 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 </td>
 </tr>
 </xsl:template>
-<!--
-<xsl:template match="related.contents">
-<xsl:for-each select="related.content">
-<table border="0" cellpadding="0" cellspacing="8" width="100%">
-<tr>
-<td class="rel-title"><xsl:value-of select="@title"/></td>
-</tr>
-<xsl:apply-templates select="link"/>
-</table>
-</xsl:for-each>
+
+<xsl:template match="NewsComponent/NewsLines/CopyrightLine" mode="copyright">
+  <xsl:apply-templates/>,
 </xsl:template>
 
-<xsl:template match="link">
-<tr>
-<td class="rel-text">
-<xsl:apply-templates/>
-</td>
-</tr>
+<xsl:template match="NewsComponent/NewsLines/DateLine" mode="copyright">
+ <xsl:apply-templates/>,
 </xsl:template>
 
-<xsl:template match="link.title">
-<a href="{@href}"><xsl:value-of select="."/></a><br />
-</xsl:template>
-
-<xsl:template match="link.text">
-<xsl:value-of select="."/>
-</xsl:template>
--->
 <xsl:template match="NewsComponent/NewsComponent" mode="RelatedContent">
 <xsl:for-each select="Role">
 <table border="0" cellpadding="0" cellspacing="8" width="100%">
