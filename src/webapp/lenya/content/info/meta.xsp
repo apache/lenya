@@ -23,28 +23,26 @@
       Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
       boolean docExists = false;
       try {
-        docExists = doc.exists();
-      } catch (DocumentException e) {}
-    </xsp:logic>              
-  
-    <lenya-info:meta>  
-      <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
-      <lenya-info:area><input:get-attribute module="page-envelope" name="area"/></lenya-info:area>
-      <dc:language><input:get-attribute module="page-envelope" name="document-language"/></dc:language>
-      <xsp:logic>
-        if (docExists) {
-        <xsp:content>
-          <dc:title><input:get-attribute module="page-envelope" name="document-dc-title"/></dc:title>
-          <dc:creator><input:get-attribute module="page-envelope" name="document-dc-creator"/></dc:creator>
-          <dc:subject><input:get-attribute module="page-envelope" name="document-dc-subject"/></dc:subject>
-          <dc:description><input:get-attribute module="page-envelope" name="document-dc-description"/></dc:description>
-          <dc:date><input:get-attribute module="page-envelope" name="document-dc-date-created"/></dc:date>
-          <dc:publisher><input:get-attribute module="page-envelope" name="document-dc-publisher"/></dc:publisher>
-          <dc:rights><input:get-attribute module="page-envelope" as="object" name="document-dc-rights"/></dc:rights>
-        </xsp:content>
-        }
-      </xsp:logic>
-    </lenya-info:meta>
+          docExists = doc.exists();
+      } catch (DocumentException e) {
+          throw new ProcessingException(e);
+      }
+      
+      if (docExists) {
+				<lenya-info:meta>  
+					<lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
+					<lenya-info:area><input:get-attribute module="page-envelope" name="area"/></lenya-info:area>
+					<dc:language><input:get-attribute module="page-envelope" name="document-language"/></dc:language>
+					<dc:title><input:get-attribute module="page-envelope" name="document-dc-title"/></dc:title>
+					<dc:creator><input:get-attribute module="page-envelope" name="document-dc-creator"/></dc:creator>
+					<dc:subject><input:get-attribute module="page-envelope" name="document-dc-subject"/></dc:subject>
+					<dc:description><input:get-attribute module="page-envelope" name="document-dc-description"/></dc:description>
+					<dc:date><input:get-attribute module="page-envelope" name="document-dc-date-created"/></dc:date>
+					<dc:publisher><input:get-attribute module="page-envelope" name="document-dc-publisher"/></dc:publisher>
+					<dc:rights><input:get-attribute module="page-envelope" as="object" name="document-dc-rights"/></dc:rights>
+				</lenya-info:meta>
+      }
+    </xsp:logic>
   </lenya-info:info>
   
 </xsp:page>

@@ -16,52 +16,79 @@
   <xsp:structure>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.DefaultDocumentBuilder</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
   </xsp:structure>
   
   <lenya-info:info>
+		<lenya-info:overview>
 
     <xsp:logic>
       Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
-      String docId = doc.getId();
-      Session session = request.getSession(true);
-      session.setAttribute("org.apache.lenya.cms.info.target", docId);
-      session.setAttribute("org.apache.lenya.cms.info.area", request.getParameter("lenya.area"));
       
-      StringBuffer documentLanguagesString = new StringBuffer();
-      boolean docExists = false;
+      boolean exists = false;
+      boolean existsLanguage = false;
       try {
-        String[] documentLanguages = (String[])doc.getLanguages();
-        for (int i = 0; i &lt; documentLanguages.length; i++) {
-          documentLanguagesString.append(documentLanguages[i] +" ");
-        }
-        docExists = doc.exists();
-      } catch (DocumentException e) {}
-    </xsp:logic>              
-
-    <lenya-info:overview>
-
-      <xsp:logic>
-        if (docExists) {
-        <xsp:content>
-          <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
-          <lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></lenya-info:abstract>
-        </xsp:content>
-        }
-      </xsp:logic>
-
-      <lenya-info:status></lenya-info:status>
-      <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
+          exists = doc.exists();
+          existsLanguage = doc.existsInAnyLanguage();
+      }
+      catch (DocumentException e) {
+          throw new ProcessingException(e);
+      }
       
-      <lenya-info:languages><xsp:expr>documentLanguagesString</xsp:expr></lenya-info:languages>       
-      <!-- <lenya-info:lastmodifiedby></lenya-info:lastmodifiedby> -->
-      <lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
-      <lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
-      <lenya-info:area></lenya-info:area>
-      <lenya-info:workflow-state><input:get-attribute module="workflow" as="string" name="state"/></lenya-info:workflow-state>
-      <lenya-info:is-live><input:get-attribute module="workflow" as="string" name="variable.is_live"/></lenya-info:is-live>
-    </lenya-info:overview>  
+      if (existsLanguage) {
+      		<lenya-info:languages>
+     			<xsp:logic>
+					try {
+						String[] documentLanguages = (String[]) doc.getLanguages();
+						for (int i = 0; i &lt; documentLanguages.length; i++) {
+						
+							DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+							String url = builder.buildCanonicalUrl(
+									doc.getPublication(),
+									doc.getArea(),
+									doc.getId(),
+									documentLanguages[i]
+							);
+							Document languageDocument = builder.buildDocument(doc.getPublication(), url);
+						
+							<lenya-info:language>
+								<xsp:attribute name="href"><input:get-attribute module="page-envelope" as="string" name="context-prefix"/><xsp:expr>languageDocument.getCompleteURL()</xsp:expr></xsp:attribute>
+								<xsp:expr>documentLanguages[i]</xsp:expr>
+							</lenya-info:language>
+						}
+					} catch (Exception e) {
+							throw new ProcessingException(e);
+					}
+					</xsp:logic>
+					</lenya-info:languages>
+			}
+			
+      if (exists) {
+					Session session = request.getSession(true);
+					session.setAttribute("org.apache.lenya.cms.info.target", doc.getId());
+					session.setAttribute("org.apache.lenya.cms.info.area", doc.getArea());
+					
+      
+						<dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
+						<lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></lenya-info:abstract>
+			
+						<lenya-info:status></lenya-info:status>
+						<dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
+						
+						<!-- <lenya-info:lastmodifiedby></lenya-info:lastmodifiedby> -->
+						<lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
+						<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
+						<lenya-info:area></lenya-info:area>
+						<lenya-info:workflow-state><input:get-attribute module="workflow" as="string" name="state"/></lenya-info:workflow-state>
+						<lenya-info:is-live><input:get-attribute module="workflow" as="string" name="variable.is_live"/></lenya-info:is-live>
+      
+      }
+      
+    </xsp:logic>
+
+		</lenya-info:overview>  
   </lenya-info:info>
   
 </xsp:page>
