@@ -35,7 +35,8 @@ public class SwingHTMLParser
         try {
             ParserDelegator delagator = new ParserDelegator();
             handler = new SwingHTMLHandler();
-            delagator.parse(getReader(uri), handler, true);
+            Reader reader = new PreParser().parse(getReader(uri));
+            delagator.parse(reader, handler, true);
         }
         catch (IOException e) {
             throw new ParseException(e);
