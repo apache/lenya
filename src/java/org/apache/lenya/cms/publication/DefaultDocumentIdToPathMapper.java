@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultDocumentIdToPathMapper.java,v 1.16 2003/10/31 15:10:46 egli Exp $ <License>
+ * $Id: DefaultDocumentIdToPathMapper.java,v 1.17 2003/10/31 15:21:04 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -133,7 +133,8 @@ public class DefaultDocumentIdToPathMapper
      * 
      * @param file the document file
      * 
-     * @return the language for the given document file
+     * @return the language for the given document file or null if
+     * the file has no language.
      */
     public String getLanguage(File file) {
         String fileName = file.getAbsolutePath();
