@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: numberTags.xsl,v 1.3 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
@@ -29,7 +29,7 @@
 
 <xsl:template match="*|text()|@*">
   <xsl:param name="parentID"/>
-  <xsl:variable name="thisID" select="concat($parentID,'.',position())"/>
+  <xsl:variable name="thisID" select="concat($parentID,'.', count(preceding-sibling::*))"/>
   <xsl:copy>
     <xsl:attribute name="tagID"><xsl:value-of select="$thisID"/></xsl:attribute>
     <xsl:copy-of select="@*"/>
