@@ -2,7 +2,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
-<xsl:param name="section"/>
+<xsl:param name="section" select="'default_value'"/>
+
+<xsl:template match="text()">
+<xsl:value-of select="."/>
+</xsl:template>
 
 <xsl:template match="nitf">
 <!--<xsl:template match="NewsComponent" mode="article">-->

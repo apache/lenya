@@ -26,6 +26,7 @@
   <menus>
     <menu name="File">
       <block>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/xopus2<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Edit&#160;with&#160;Xopus2</item>            
 <!--
         <item>Edit</item>
 -->

@@ -19,12 +19,12 @@
   <menus>
     <menu name="File">
       <block>
-        <item>Edit</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/xopus2/articles/<xsp:expr>article_id</xsp:expr>/index.html</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/articles/<xsp:expr>article_id</xsp:expr>/index.html&amp;docids=/articles/<xsp:expr>article_id</xsp:expr>/index.xml</xsp:attribute>Publish</item>
         <item href="article.xml">View&#160;XML</item>
       </block>
       <block>
-        <item>-----------</item>
+        <item>-----------------</item>
       </block>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>

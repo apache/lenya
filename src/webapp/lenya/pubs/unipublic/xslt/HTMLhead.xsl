@@ -15,7 +15,7 @@
 if (top.frames.length &#62; 0) {top.location.href = self.location;}
 <!-- CSS Triage-->
 if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
-   seite = '<xsl:value-of select="$unipublic"/>/unipublic.win.css';
+   seite = '<xsl:value-of select="string($unipublic)"/>/unipublic.win.css';
    document.write('&#60;link rel="stylesheet" type="text/css" href="'+seite+'"&#62;');
 }
 </xsl:comment>

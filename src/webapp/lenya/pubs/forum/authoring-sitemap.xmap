@@ -150,10 +150,32 @@
         <map:generate src="cocoon:/articles/{1}/article.xml"/>
         <map:select>
           <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+<!--
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus2.xsl"/>
+-->
+<!--
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
+-->
           </map:when>
           <map:otherwise>
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:match>
+      <!-- Edit with Xopus2 -->
+      <map:match pattern="xopus2/articles/*/index.html">
+        <map:generate src="cocoon:/articles/{1}/article.xml"/>
+        <map:select>
+          <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus2.xsl"/>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus2.xsl"/>
+<!--
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+-->
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>

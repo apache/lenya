@@ -342,7 +342,12 @@
         </map:aggregate>
         <map:select>
           <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
+              <map:parameter name="section" value="{2}"/>
+            </map:transform>
+<!--
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
+-->
           </map:when>
           <map:otherwise>
 <!--
@@ -353,6 +358,20 @@
             </map:transform>
           </map:otherwise>
         </map:select>
+        <map:serialize type="html"/>
+      </map:match>
+      <!-- Edit with Xopus2 -->
+      <map:match pattern="xopus2/*/*/*/*/index.html">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/{1}/{2}/{3}/{4}/article.xml"/>
+          <map:part src="cocoon:/{1}/{2}/{3}/{4}/article.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus2.xsl">
+          <map:parameter name="CHANNEL_ID" value="{1}"/>
+          <map:parameter name="SECTION_ID" value="{2}"/>
+          <map:parameter name="YEAR_ID" value="{3}"/>
+          <map:parameter name="ARTICLE_ID" value="{4}"/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
 

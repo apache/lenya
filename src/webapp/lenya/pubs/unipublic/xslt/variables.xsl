@@ -3,6 +3,6 @@
 
 
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
-<xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
-<xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
+<xsl:variable name="img-uni"><xsl:value-of select="string($unipublic)"/>/img_uni</xsl:variable>
+<xsl:variable name="img-unipub"><xsl:value-of select="string($unipublic)"/>/img_unipublic</xsl:variable>
 </xsl:stylesheet>
