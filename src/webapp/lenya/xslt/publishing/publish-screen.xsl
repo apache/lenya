@@ -83,7 +83,7 @@
   <xsl:template match="/usecase:publish[not(usecase:message)]">
 
     <page:page>
-      <page:title>Publish HUGO</page:title>
+      <page:title>Publish</page:title>
       <page:body>
         
         <table class="lenya-table-noborder">
@@ -109,7 +109,7 @@
           <input type="hidden" name="uris" value="{$uris}"/> <!-- Regular Task -->
           
           <div class="lenya-box">
-            <div class="lenya-box-title">Publish LEVI</div>
+            <div class="lenya-box-title">Publish</div>
             <div class="lenya-box-body">
               <table class="lenya-table-noborder">
                 <tr>
