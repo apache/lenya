@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: config.xml,v 1.23 2004/03/13 12:42:12 gregor Exp $ -->
+<!-- $Id: config.xml,v 1.24 2004/04/29 09:53:49 gregor Exp $ -->
 
 <config>
     <files>
@@ -81,7 +81,7 @@
         <button name="sub" col="4" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
         <button name="sup" col="5" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
         <button name="clean_inline" col="0" row="6" action="CleanInline"/>
-        <button name="link" col="0" row="5" action="InsertLink"/>
+        <button name="link" col="0" row="5" type="insertElement" ns="http://www.w3.org/1999/xhtml">a</button>
         <button name="unlink" col="1" row="5" action="DeleteLink"/>
         <button name="create_table" col="2" row="5" action="InsertTable"/>
         <button name="Unordered_List" col="3" row="2" action="UnorderedList"/>
