@@ -58,6 +58,7 @@ src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="4" height="4" /></td>
 
 <td align="right" colspan="2" background="/lenya/lenya/menu/images/grau-bg2.gif">
 <font color="#ffffff" size="-2" face="verdana">
+  <xsl:apply-templates select="workflow-state"/>
   User Id: <b><xsl:value-of select="current_username"/></b> | Server Time: <b><xsl:value-of select="server_time"/></b> &#160;&#160;&#160;
 </font>
 </td>
@@ -100,7 +101,9 @@ src="/lenya/lenya/menu/images/lenya_unten.gif" /></td>
 
 
 
-
+<xsl:template match="workflow-state">
+  Workflow State: <b><xsl:apply-templates/></b> |
+</xsl:template>
 
 
 
