@@ -40,6 +40,7 @@ public class TriggerHelper {
     public static final String TRIGGER_TYPE = "type";
     public static final String ONCE = "once";
     public static final String REPEATED = "repeated";
+    public static final String CRON_EXPRESSION = "expression";
     
     public static Trigger createTrigger(
         Element element, String jobName, String jobGroup) {
@@ -48,6 +49,7 @@ public class TriggerHelper {
         
         String triggerType = element.attribute(TRIGGER_TYPE).getValue();
 
+        // SimpleTrigger
         if (triggerType.equals(ONCE)) {
             List parameterElements = element.elements(SchedulerXMLFactory.getQName("parameter"));
             GregorianCalendar date = new GregorianCalendar();
@@ -66,8 +68,21 @@ public class TriggerHelper {
             return createSimpleTrigger(jobName, jobGroup, date.getTime());
         }
 
+
+        // CronTrigger
         if (triggerType.equals(REPEATED)) {
-            return createCronTrigger(jobName, jobGroup, "45 * * * * ?");
+            List parameterElements = element.elements(SchedulerXMLFactory.getQName("parameter"));
+            Element parameterElement = (Element) parameterElements.iterator().next();
+            String name = parameterElement.attribute("name").getValue();
+            String value = parameterElement.attribute("value").getValue();
+            String cron_expression;
+            if(name.equals(CRON_EXPRESSION)){
+              cron_expression=value;
+              }
+            else{
+              cron_expression="45 * * * * ?";
+              }
+            return createCronTrigger(jobName, jobGroup, cron_expression);
         }
      
         throw new IllegalStateException("Trigger type '" + triggerType + "' not defined!");
