@@ -7,21 +7,11 @@
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   >
 
-  <xsp:structure>
-    <xsp:include>java.util.StringTokenizer</xsp:include>
-  </xsp:structure>
-
 <page>
   <info>
-    <xsp:logic>
-      String firstDocumentId = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
-      String[] tokens = firstDocumentId.split("/");
-      String lastId = tokens[tokens.length - 1];
-    </xsp:logic>
-
     <request-uri><xsp-request:get-uri/></request-uri>
-    <last-id><xsp:expr>lastId</xsp:expr></last-id>
-    <first-document-id><xsp:expr>firstDocumentId</xsp:expr></first-document-id>
+    <destination-id><input:get-attribute module="page-envelope" as="string" name="document-node-id"/></destination-id>
+    <source-document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></source-document-id>
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
     <task-id>renameDocument</task-id>
   </info>
