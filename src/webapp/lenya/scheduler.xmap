@@ -64,18 +64,28 @@
       <map:match pattern="document/*/**">
         <map:generate src="cocoon:/publication/{1}"/>
         <map:transform src="xslt/scheduler/filter-document.xsl">
-          <map:parameter name="document-url" value="/{1}/{2}"/>
+          <map:parameter name="documenturl" value="/{1}/{2}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
+      
+      <!--
+        About the initialreferer parameter:
+        When the page is called the for first time, the initialreferer
+        parameter value is used. For subsequent requests, the value
+        of the request parameter "referer" is used. This way, it is
+        avoided that all query strings are appended.
+      -->
       
       <!-- {publication-id}/{area-document-url}.xsl -->
       <map:match pattern="*/**.xsl">
         <map:generate src="cocoon:/document/{1}/{2}"/>
         <map:transform src="xslt/scheduler/jobs2xslt.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
           <map:parameter name="contextpath" value="{request:contextPath}"/>
           <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
           <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+          <map:parameter name="initialreferer" value="{request:requestURI}?{request:queryString}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>

@@ -152,6 +152,7 @@
           <!-- show scheduler screen -->
           <map:match pattern="showscreen" type="step">
             <map:generate src="cocoon://scheduler/publication/{../../1}"/>
+            <map:serialize type="xml"/>
             <map:transform src="xslt/scheduler/scheduler-page.xsl">
               <map:parameter name="context-prefix" value="{request:contextPath}"/>
               <map:parameter name="publication-id" value="{../../1}"/>
@@ -164,12 +165,12 @@
           <!-- other steps: add job (redirect to page) -->
           <map:generate src="cocoon://scheduler/publication/{../1}"/>
           <map:transform src="xslt/util/redirect.xsl">
-            <map:parameter name="url" value="{request:requestURI}"/>
+            <map:parameter name="url" value="{request-param:referer}"/>
           </map:transform>
           <map:serialize/>
           
         </map:match>
-        
+
         <!-- usecase -->
         <!-- View Logs -->
         <map:match pattern="view-logs" type="usecase">
@@ -240,7 +241,7 @@
               <map:parameter name="stylesheet" value="publishing/publish-screen.xsl"/>
             </map:call>
             <map:transform src="cocoon:/notification/{../../1}/publish.xsl"/>
-            <map:transform src="cocoon://scheduler/{../../1}/{../../2}/{../../3}.xsl"/>
+            <map:transform src="cocoon://scheduler/{../../1}/{page-envelope:area}/{../../3}.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
@@ -629,7 +630,7 @@
           
           <map:match pattern="archive" type="step">
             <map:act type="task">
-              <map:redirect-to session="true" uri="{request:contextPath}/{../../../1}/{../../../2}/"/>
+              <map:redirect-to session="true" uri=".."/>
             </map:act>
           </map:match>
           
@@ -730,7 +731,7 @@
           
           <map:match pattern="delete" type="step">
             <map:act type="task">
-              <map:redirect-to session="true" uri="{request:contextPath}/{../../../1}/{../../../2}/"/>
+              <map:redirect-to session="true" uri=".."/>
             </map:act>
           </map:match>
           

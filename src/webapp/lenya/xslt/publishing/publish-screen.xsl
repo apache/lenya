@@ -6,6 +6,7 @@
   xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
   xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
   >
   
   <xsl:import href="../util/page-util.xsl"/>
@@ -84,6 +85,11 @@
     <page:page>
       <page:title>Publish</page:title>
       <page:body>
+        
+        <table class="lenya-table-noborder">
+        <tr>
+        <td>
+        
         <form name="form_publish">
           
           <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
@@ -138,9 +144,35 @@
             <not:textarea/>
           </not:notification>
           
-          <sch:scheduler-form/>
-
         </form>
+        
+        <sch:scheduler-form>
+          
+          <sch:job tasklabel="Publish">
+            <input type="hidden" name="properties.publish.sources" value="{$sources}"/>
+            <input type="hidden" name="properties.publish.documentid" value="{$document-id}"/>
+            <input type="hidden" name="properties.publish.language" value="{$document-language}"/>
+            <input type="hidden" name="properties.export.uris" value="{$uris}"/>
+            <input type="hidden" name="workflow.event" value="publish"/>
+            <input type="hidden" name="wrapper.task-id" value="publish"/>
+          </sch:job>
+          
+          <sch:job tasklabel="Deactivate">
+            <input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
+            <input type="hidden" name="properties.node.language" value="{$document-language}"/>
+            <input type="hidden" name="workflow.event" value="deactivate"/>
+            <input type="hidden" name="wrapper.task-id" value="deactivateDocument"/>
+          </sch:job>
+          
+        </sch:scheduler-form>
+        
+        <div style="text-align: right">
+        <a href="{$referer}"><input type="button" value="Back to Page"/></a>
+        </div>
+        </td>
+        </tr>
+        </table>
+          
       </page:body>
     </page:page>
   </xsl:template>

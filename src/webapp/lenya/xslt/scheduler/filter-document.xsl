@@ -3,10 +3,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0">
   
-<xsl:param name="document-url"/>
+<xsl:param name="documenturl"/>
     
 <!-- remove other jobs -->
-<xsl:template match="sch:job[@url != $document-url]"/>
+<xsl:template match="sch:job[@url != $documenturl]"/>
     
 <!-- Identity transformation -->
 <xsl:template match="@*|node()">
