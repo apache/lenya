@@ -29,10 +29,10 @@ as namespace prefix (<html> instead of <xhtml:html>).
   <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
   
   <xsl:template match="*">
-    <xsl:copy>
+    <xsl:element name="{local-name()}" namespace="{namespace-uri()}">
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </xsl:copy>
+    </xsl:element>
   </xsl:template>
   
 </xsl:stylesheet>
