@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: config-xml.xsl,v 1.8 2004/04/13 13:16:36 gregor Exp $ -->
+<!-- $Id: config-xml.xsl,v 1.9 2004/04/29 08:14:57 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0" 
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
@@ -27,6 +27,7 @@
 <xsl:param name="BX_validationfile"/>
 <xsl:param name="css"/>
 <xsl:param name="script"/>
+<xsl:param name="callbackscript"/>
 <xsl:param name="BX_exitdestination"/>
 <xsl:param name="contextmenufile"/>
 <xsl:param name="defaultlanguage"/>
@@ -75,6 +76,9 @@
     <file><xsl:value-of select="."/></file>
     <xsl:if test="$script">
       <file><xsl:value-of select="$script"/></file>
+    </xsl:if>
+    <xsl:if test="$callbackscript">
+      <file><xsl:value-of select="$callbackscript"/></file>
     </xsl:if>
   </xsl:template>
 
