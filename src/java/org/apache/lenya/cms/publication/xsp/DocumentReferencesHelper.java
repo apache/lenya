@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.8 2003/10/23 00:35:55 stefano Exp $
+$Id: DocumentReferencesHelper.java,v 1.9 2003/10/30 15:21:33 egli Exp $
 <License>
 
  ============================================================================
@@ -79,7 +79,7 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class DocumentReferencesHelper {
 
@@ -112,7 +112,7 @@ public class DocumentReferencesHelper {
      * @return the search string
      */
     protected String getReferencesSearchString() {
-        return "href\\s*=\\s*"
+        return "href\\s*=\\s*\""
             + pageEnvelope.getContext()
             + "/"
             + pageEnvelope.getPublication().getId()
@@ -147,7 +147,7 @@ public class DocumentReferencesHelper {
         // looks different.
 
         return Pattern.compile(
-            "href\\s*=\\s*"
+            "href\\s*=\\s*\""
                 + pageEnvelope.getContext()
                 + "/"
                 + pageEnvelope.getPublication().getId()
