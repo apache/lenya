@@ -27,4 +27,5 @@ public interface SourceCache extends Component {
      * @throws CachingException when something went wrong.
      */
     Object get(String sourceUri, InputStreamBuilder builder) throws CachingException;
+    
 }
