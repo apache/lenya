@@ -1,5 +1,5 @@
 /*
- * $Id: FileGroupTest.java,v 1.1 2003/06/03 13:52:12 egli Exp $
+ * $Id: FileGroupTest.java,v 1.2 2003/06/25 14:55:10 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,22 +50,20 @@
 package org.apache.lenya.cms.ac;
 
 import java.io.File;
-import java.util.Iterator;
+import java.io.IOException;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
-import junit.framework.TestCase;
+import org.apache.lenya.cms.PublicationHelper;
+import org.xml.sax.SAXException;
 
 /**
  * @author egli
  * 
  * 
  */
-public class FileGroupTest extends TestCase {
+public class FileGroupTest extends AccessControlTest {
 
 	/**
 	 * Constructor for FileGroupTest.
@@ -76,57 +74,43 @@ public class FileGroupTest extends TestCase {
 	}
 
 	public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
 		junit.textui.TestRunner.run(FileGroupTest.class);
 	}
 
-	final public Publication getPublication() {
-		String publicationId = "default";
-		String servletContext = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		Publication pub = PublicationFactory.getPublication(publicationId, servletContext);
-		return pub;
-	}
-	
-	final public void testFileGroup() {
+	final public void testFileGroup() throws AccessControlException, ConfigurationException, SAXException, IOException {
 		String groupName = "testGroup";
 		String roleName = "testRole";
-		Publication pub = getPublication();
-		FileGroup group = new FileGroup(pub, groupName);
-		FileRole role = new FileRole(pub, roleName);
-		group.addRole(role);
-		try {
-			role.save();
-		} catch (AccessControlException e2) {
-			e2.printStackTrace();
-		}
-		try {
-			group.save();
-		} catch (AccessControlException e) {
-			e.printStackTrace();
-		}
-		File path = null;
-		try {
-			path = RoleManager.instance(pub).getPath();
-		} catch (AccessControlException e1) {
-			e1.printStackTrace();
-		}
+        File configurationDirectory = getConfigurationDirectory();
+        
+        System.out.println("Configuration directory: " + configurationDirectory);
+        
+		FileGroup group = new FileGroup(configurationDirectory, groupName);
+		FileRole role = new FileRole(configurationDirectory, roleName);
+//		group.addRole(role);
+
+        role.save();
+        group.save();
+        
+        File path = null;
+        path = RoleManager.instance(configurationDirectory).getConfigurationDirectory();
+        
 		File groupFile = new File(path, groupName + GroupManager.SUFFIX);
 		assertNotNull(groupFile);
 		assertTrue(groupFile.exists());
 		Configuration config = null;
-		try {
-			config = new DefaultConfigurationBuilder().buildFromFile(groupFile);
-		} catch (Exception e3) {
-			e3.printStackTrace();
-		}
+        config = new DefaultConfigurationBuilder().buildFromFile(groupFile);
 		assertNotNull(config);
+        
 		FileGroup newGroup = null;
-		try {
-			newGroup = new FileGroup(pub, config);
-		} catch (ConfigurationException e4) {
-			e4.printStackTrace();
-		}
+    	newGroup = new FileGroup();
+        newGroup.setConfigurationDirectory(configurationDirectory);
+        newGroup.configure(config);
 		assertNotNull(newGroup);
+        
 		assertTrue(newGroup.getName().equals(groupName));
+        
+        /*
 		int roleCount = 0;
 		for (Iterator roles = newGroup.getRoles(); roles.hasNext();) {
 			Role newRole = (Role) roles.next();
@@ -134,6 +118,7 @@ public class FileGroupTest extends TestCase {
 			assertTrue(newRole.getName().equals(roleName));	
 		}
 		assertEquals(1, roleCount);
+        */
 	}
 
 }

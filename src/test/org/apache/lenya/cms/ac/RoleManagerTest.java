@@ -1,5 +1,5 @@
 /*
- * $Id: RoleManagerTest.java,v 1.2 2003/06/11 12:02:39 egli Exp $
+ * $Id: RoleManagerTest.java,v 1.3 2003/06/25 14:55:10 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,19 +49,17 @@
  
 package org.apache.lenya.cms.ac;
 
+import java.io.File;
 import java.util.Iterator;
 
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
-import junit.framework.TestCase;
+import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * @author egli
  * 
  * 
  */
-public class RoleManagerTest extends TestCase {
+public class RoleManagerTest extends AccessControlTest {
 
 	/**
 	 * Constructor for RoleManagerTest.
@@ -72,31 +70,15 @@ public class RoleManagerTest extends TestCase {
 	}
 
 	public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
 		junit.textui.TestRunner.run(RoleManagerTest.class);
 	}
 	
-	final public Publication getPublication() {
-		String publicationId = "default";
-		String servletContext = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		Publication pub = PublicationFactory.getPublication(publicationId, servletContext);
-		return pub;
-	}
-
-	final public void testInstance() {
-		Publication pub = getPublication();
-		RoleManager manager = null;
-		try {
-			manager = RoleManager.instance(pub);
-		} catch (AccessControlException e) {
-			e.printStackTrace();
-		}
+	final public void testInstance() throws AccessControlException {
+		File configDir = getConfigurationDirectory();
+		RoleManager manager = RoleManager.instance(configDir);
 		assertNotNull(manager);
-		RoleManager anotherManager = null;
-		try {
-			anotherManager = RoleManager.instance(pub);
-		} catch (AccessControlException e1) {
-			e1.printStackTrace();
-		}
+		RoleManager anotherManager = RoleManager.instance(configDir);
 		assertNotNull(anotherManager);
 		assertEquals(manager, anotherManager);
 	}
@@ -107,16 +89,12 @@ public class RoleManagerTest extends TestCase {
 	/*
 	 * Test for void add(Role)
 	 */
-	final public void testAddRole() {
-		Publication pub = getPublication();
+	final public void testAddRole() throws AccessControlException {
+        File configDir = getConfigurationDirectory();
 		String name = "test";
 		Role role = new Role(name);
 		RoleManager manager = null;
-		try {
-			manager = RoleManager.instance(pub);
-		} catch (AccessControlException e) {
-			e.printStackTrace();
-		}
+		manager = RoleManager.instance(configDir);
 		assertNotNull(manager);
 		manager.add(role);
 
@@ -127,12 +105,12 @@ public class RoleManagerTest extends TestCase {
 	 * Test for void remove(Role)
 	 */
 	final public void testRemoveRole() {
-		Publication pub = getPublication();
+        File configDir = getConfigurationDirectory();
 		String name = "test2";
 		Role role = new Role(name);
 		RoleManager manager = null;
 		try {
-			manager = RoleManager.instance(pub);
+			manager = RoleManager.instance(configDir);
 		} catch (AccessControlException e) {
 			e.printStackTrace();
 		}

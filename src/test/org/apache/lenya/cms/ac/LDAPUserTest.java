@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUserTest.java,v 1.3 2003/06/25 09:15:45 egli Exp $
+ * $Id: LDAPUserTest.java,v 1.4 2003/06/25 14:55:10 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,18 +49,20 @@
 
 package org.apache.lenya.cms.ac;
 
+import java.io.File;
+
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
-import junit.framework.TestCase;
 
 /**
  * @author egli
  * 
  * 
  */
-public class LDAPUserTest extends TestCase {
+public class LDAPUserTest extends AccessControlTest {
 
     /**
      * Constructor for LDAPUserTest.
@@ -75,6 +77,7 @@ public class LDAPUserTest extends TestCase {
 	 * @param args an array of <code>String</code>
 	 */
     public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
         junit.textui.TestRunner.run(LDAPUserTest.class);
     }
 
@@ -113,44 +116,46 @@ public class LDAPUserTest extends TestCase {
 	 * @param email of the user
 	 * @param ldapId ldap id of the user
 	 * @throws AccessControlException if the creating or the saving fails
+     * @throws ConfigurationException if the creating or the saving fails
 	 */
     final public void createAndSaveUser(
         String userName,
         String email,
         String ldapId)
-        throws AccessControlException {
+        throws AccessControlException, ConfigurationException {
 
-        Publication publication = getPublication();
         String editorGroupName = "editorGroup";
         String adminGroupName = "adminGroup";
         String editorRoleName = "editorRole";
         String adminRoleName = "adminRole";
 
-        FileRole editorRole = new FileRole(publication, editorRoleName);
-        FileRole adminRole = new FileRole(publication, adminRoleName);
+        File configDir = getConfigurationDirectory();
+        FileRole editorRole = new FileRole();
+        editorRole.setName(editorRoleName);
+        editorRole.setConfigurationDirectory(configDir);
+        
+        FileRole adminRole = new FileRole();
+        adminRole.setName(adminRoleName);
+        adminRole.setConfigurationDirectory(configDir);
 
-        FileGroup editorGroup = new FileGroup(publication, editorGroupName);
-        FileGroup adminGroup = new FileGroup(publication, adminGroupName);
+        FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
+        FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
 
-        LDAPUser user = null;
-        try {
-            user = new LDAPUser(publication, userName, email, ldapId);
-        } catch (ConfigurationException e) {
-			throw new AccessControlException("Could not create user", e);
-        }
+        LDAPUser user = new LDAPUser(configDir, userName, email, ldapId);
 
         editorRole.save();
         adminRole.save();
 
+/*
         editorGroup.addRole(editorRole);
         user.addGroup(editorGroup);
         adminGroup.addRole(editorRole);
         adminGroup.addRole(adminRole);
-
+*/
         editorGroup.save();
         adminGroup.save();
 
-        user.addGroup(adminGroup);
+        adminGroup.add(user);
         user.save();
 
     }
@@ -164,8 +169,7 @@ public class LDAPUserTest extends TestCase {
 	 */
     final public LDAPUser loadUser(String userName)
         throws AccessControlException {
-        Publication publication = getPublication();
-        UserManager manager = UserManager.instance(publication);
+        UserManager manager = UserManager.instance(getConfigurationDirectory());
         return (LDAPUser) manager.getUser(userName);
     }
 
@@ -200,8 +204,9 @@ public class LDAPUserTest extends TestCase {
 	 * Test the ldap id getter
 	 * 
 	 * @throws AccessControlException if the test fails
+     * @throws ConfigurationException if the creating or the saving fails
 	 */
-    final public void testGetLdapId() throws AccessControlException {
+    final public void testGetLdapId() throws ConfigurationException, AccessControlException {
         String userName = "felix";
         String ldapId = "m400032";
         createAndSaveUser(userName, "felix@wyona.com", ldapId);
@@ -215,8 +220,9 @@ public class LDAPUserTest extends TestCase {
 	 * Test settinf the ldap id
 	 * 
 	 * @throws AccessControlException if the test fails
+     * @throws ConfigurationException if the creating or the saving fails
 	 */
-    final public void testSetLdapId() throws AccessControlException {
+    final public void testSetLdapId() throws ConfigurationException, AccessControlException {
         String userName = "felix";
         String newLdapId = "foo";
         createAndSaveUser(userName, "felix@wyona.com", "bar");
@@ -235,8 +241,9 @@ public class LDAPUserTest extends TestCase {
 	 * Test save
 	 * 
 	 * @throws AccessControlException if the test fails
+     * @throws ConfigurationException if the creating or the saving fails
 	 */
-    final public void testSave() throws AccessControlException {
+    final public void testSave() throws ConfigurationException, AccessControlException {
         String userName = "felix";
         createAndSaveUser(userName, "felix@wyona.com", "m400032");
         User user = null;

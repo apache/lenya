@@ -1,5 +1,5 @@
 /*
- * $Id: UserManagerTest.java,v 1.5 2003/06/11 14:59:11 egli Exp $
+ * $Id: UserManagerTest.java,v 1.6 2003/06/25 14:55:10 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,17 +49,18 @@
 
 package org.apache.lenya.cms.ac;
 
+import java.io.File;
+
+import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-
-import junit.framework.TestCase;
 
 /**
  * @author egli
  * 
  * 
  */
-public class UserManagerTest extends TestCase {
+public class UserManagerTest extends AccessControlTest {
 
 	/**
 	 * Constructor for UserManagerTest.
@@ -70,6 +71,7 @@ public class UserManagerTest extends TestCase {
 	}
 
 	public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
 		junit.textui.TestRunner.run(UserManagerTest.class);
 	}
 
@@ -87,83 +89,52 @@ public class UserManagerTest extends TestCase {
 		super.tearDown();
 	}
 
-	final public Publication getPublication() {
-		String publicationId = "default";
-		String servletContextPath =
-			"/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		return PublicationFactory.getPublication(
-			publicationId,
-			servletContextPath);
-	}
+	final public void testInstance() throws AccessControlException {
 
-	final public void testInstance() {
-
-		Publication publication = getPublication();
-		UserManager manager = null;
-		try {
-			manager = (UserManager) UserManager.instance(publication);
-		} catch (AccessControlException e) {
-		}
+        File configDir = getConfigurationDirectory();
+		UserManager manager = UserManager.instance(configDir);
 		assertNotNull(manager);
 	}
 
-	final public void testLoadConfig() {
-		Publication publication = getPublication();
+	final public void testLoadConfig() throws AccessControlException {
+        File configDir = getConfigurationDirectory();
+        
 		String userName = "alice";
 		String editorGroupName = "editorGroup";
 		String adminGroupName = "adminGroup";
 		String editorRoleName = "editorRole";
 		String adminRoleName = "adminRole";
 
-		FileRole editorRole = new FileRole(publication, editorRoleName);
-		FileRole adminRole = new FileRole(publication, adminRoleName);
+		FileRole editorRole = new FileRole(configDir, editorRoleName);
+		FileRole adminRole = new FileRole(configDir, adminRoleName);
 
 		User user =
 			new FileUser(
-				publication,
+                configDir,
 				userName,
 				"Alice in Wonderland",
 				"alice@test.com",
 				"secret");
 
-		try {
-			editorRole.save();
-			adminRole.save();
-		} catch (AccessControlException e5) {
-			e5.printStackTrace();
-		}
-		FileGroup editorGroup = new FileGroup(publication, editorGroupName);
-		editorGroup.addRole(editorRole);
-		user.addGroup(editorGroup);
-		FileGroup adminGroup = new FileGroup(publication, adminGroupName);
-		adminGroup.addRole(editorRole);
-		adminGroup.addRole(adminRole);
-		try {
-			editorGroup.save();
-			adminGroup.save();
-		} catch (AccessControlException e2) {
-			e2.printStackTrace();
-		}
-		user.addGroup(adminGroup);
-		try {
-			user.save();
-		} catch (AccessControlException e3) {
-			e3.printStackTrace();
-		}
+		editorRole.save();
+		adminRole.save();
+		FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
+//		editorGroup.addRole(editorRole);
+        editorGroup.add(user);
+		FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
+//		adminGroup.addRole(editorRole);
+//		adminGroup.addRole(adminRole);
+		editorGroup.save();
+		adminGroup.save();
+        adminGroup.add(user);
+		user.save();
 
 		UserManager userManager = null;
 		GroupManager groupManager = null;
-		try {
-			userManager = UserManager.instance(publication);
-		} catch (AccessControlException e) {
-		}
+		userManager = UserManager.instance(configDir);
 		assertNotNull(userManager);
 
-		try {
-			groupManager = GroupManager.instance(publication);
-		} catch (AccessControlException e4) {
-			e4.printStackTrace();
-		}
+		groupManager = GroupManager.instance(configDir);
 		assertNotNull(groupManager);
 
 		Group fetchedGroup = groupManager.getGroup(editorGroupName);
@@ -173,21 +144,18 @@ public class UserManagerTest extends TestCase {
 		assertTrue(adminGroup.equals(fetchedGroup));
 	}
 
-	final public void testGetUser() {
-		Publication publication = getPublication();
+	final public void testGetUser() throws AccessControlException {
+        File configDir = getConfigurationDirectory();
 		UserManager manager = null;
 		String userName = "test-user";
 		FileUser user =
 			new FileUser(
-				publication,
+                configDir,
 				userName,
 				"Alice in Wonderland",
 				"alice@wonderland.com",
 				"secret");
-		try {
-			manager = (UserManager) UserManager.instance(publication);
-		} catch (AccessControlException e) {
-		}
+		manager = (UserManager) UserManager.instance(configDir);
 		assertNotNull(manager);
 		manager.add(user);
 

@@ -1,5 +1,5 @@
 /*
- * $Id: GroupManagerTest.java,v 1.2 2003/06/03 16:41:04 egli Exp $
+ * $Id: GroupManagerTest.java,v 1.3 2003/06/25 14:55:10 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,6 +49,9 @@
  
 package org.apache.lenya.cms.ac;
 
+import java.io.File;
+
+import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
@@ -59,7 +62,7 @@ import junit.framework.TestCase;
  * 
  * 
  */
-public class GroupManagerTest extends TestCase {
+public class GroupManagerTest extends AccessControlTest {
 
 	/**
 	 * Constructor for GroupManagerTest.
@@ -70,31 +73,17 @@ public class GroupManagerTest extends TestCase {
 	}
 
 	public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
 		junit.textui.TestRunner.run(GroupManagerTest.class);
 	}
 
-	public final Publication getPublication() {
-		String publicationId = "default";
-		String servletContext = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		Publication pub = PublicationFactory.getPublication(publicationId, servletContext);
-		return pub;		
-	}
-	
-	public final void testInstance() {
-		Publication pub = getPublication();
+	public final void testInstance() throws AccessControlException {
 		GroupManager manager = null;
-		try {
-			manager = GroupManager.instance(pub);
-		} catch (AccessControlException e) {
-			e.printStackTrace();
-		}
+        File configDir = getConfigurationDirectory();
+		manager = GroupManager.instance(configDir);
 		assertNotNull(manager);
 		GroupManager anotherManager = null;
-		try {
-			anotherManager = GroupManager.instance(pub);
-		} catch (AccessControlException e1) {
-			e1.printStackTrace();
-		}
+		anotherManager = GroupManager.instance(configDir);
 		assertNotNull(anotherManager);
 		assertEquals(manager, anotherManager);
 	}

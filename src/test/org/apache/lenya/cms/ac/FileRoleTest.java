@@ -1,5 +1,5 @@
 /*
- * $Id: FileRoleTest.java,v 1.1 2003/06/03 13:52:12 egli Exp $
+ * $Id: FileRoleTest.java,v 1.2 2003/06/25 14:55:10 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,74 +51,47 @@ package org.apache.lenya.cms.ac;
 
 import java.io.File;
 
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
-import junit.framework.TestCase;
+import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * @author egli
  * 
  * 
  */
-public class FileRoleTest extends TestCase {
+public class FileRoleTest extends AccessControlTest {
 
 	/**
 	 * Constructor for FileRoleTest.
-	 * @param arg0
+	 * @param arg0 The test to execute.
 	 */
 	public FileRoleTest(String arg0) {
 		super(arg0);
 	}
 
 	public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
 		junit.textui.TestRunner.run(FileRoleTest.class);
 	}
 
-	final public Publication getPublication() {
-		String publicationId = "default";
-		String servletContext = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		Publication pub = PublicationFactory.getPublication(publicationId, servletContext);
-		return pub;		
-	}
-	
-	final public void testFileRole() {
+	final public void testFileRole() throws AccessControlException {
 		String name = "test";
-		Publication pub = getPublication();
-		FileRole role = new FileRole(pub, name);
-		try {
-			role.save();
-		} catch (AccessControlException e) {
-			e.printStackTrace();
-		}
+        File configDir = getConfigurationDirectory();
+		FileRole role = new FileRole(configDir, name);
+		role.save();
 		File path = null;
-		try {
-			path = RoleManager.instance(pub).getPath();
-		} catch (AccessControlException e1) {
-			e1.printStackTrace();
-		}
+		path = RoleManager.instance(configDir).getConfigurationDirectory();
 		File roleFile = new File(path, name + RoleManager.SUFFIX);
 		assertNotNull(roleFile);
 		assertTrue(roleFile.exists());	
 	}
 
-	final public void testSave() {
+	final public void testSave() throws AccessControlException {
+        File configDir = getConfigurationDirectory();
 		String name = "test";
-		String publicationId = "default";
-		String servletContext = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		Publication pub = PublicationFactory.getPublication(publicationId, servletContext);
-		FileRole role = new FileRole(pub, name);
-		try {
-			role.save();
-		} catch (AccessControlException e) {
-			e.printStackTrace();
-		}
+		FileRole role = new FileRole(configDir, name);
+		role.save();
 		File path = null;
-		try {
-			path = RoleManager.instance(pub).getPath();
-		} catch (AccessControlException e1) {
-			e1.printStackTrace();
-		}
+		path = RoleManager.instance(configDir).getConfigurationDirectory();
 		File roleFile = new File(path, name + RoleManager.SUFFIX);
 		assertNotNull(roleFile);
 		assertTrue(roleFile.exists());
@@ -126,8 +99,8 @@ public class FileRoleTest extends TestCase {
 
 	final public void testGetName() {
 		String name = "test";
-		Publication pub = getPublication();
-		FileRole role = new FileRole(pub, name);
+        File configDir = getConfigurationDirectory();
+		FileRole role = new FileRole(configDir, name);
 		assertTrue(role.getName().equals(name));
 	}
 
@@ -136,9 +109,9 @@ public class FileRoleTest extends TestCase {
 	 */
 	final public void testEqualsObject() {
 		String name = "test";
-		Publication pub = getPublication();
-		FileRole role1 = new FileRole(pub, name);
-		FileRole role2 = new FileRole(pub, name);
+        File configDir = getConfigurationDirectory();
+		FileRole role1 = new FileRole(configDir, name);
+		FileRole role2 = new FileRole(configDir, name);
 		assertEquals(role1, role2);
 	}
 }

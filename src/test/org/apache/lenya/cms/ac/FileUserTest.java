@@ -1,5 +1,5 @@
 /*
- * $Id: FileUserTest.java,v 1.5 2003/06/12 15:44:18 egli Exp $
+ * $Id: FileUserTest.java,v 1.6 2003/06/25 14:55:10 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,20 +51,16 @@ package org.apache.lenya.cms.ac;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
-import junit.framework.TestCase;
+import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * @author egli
  * 
  * 
  */
-public class FileUserTest extends TestCase {
+public class FileUserTest extends AccessControlTest {
 
 	private HashMap roles = new HashMap();
 	private HashMap groups = new HashMap();
@@ -77,6 +73,7 @@ public class FileUserTest extends TestCase {
 	}
 
 	public static void main(String[] args) {
+        PublicationHelper.extractPublicationArguments(args);
 		junit.textui.TestRunner.run(FileUserTest.class);
 	}
 
@@ -94,15 +91,6 @@ public class FileUserTest extends TestCase {
 		super.tearDown();
 	}
 
-	final public Publication getPublication() {
-		String publicationId = "default";
-		String servletContextPath =
-			"/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		return PublicationFactory.getPublication(
-			publicationId,
-			servletContextPath);
-	}
-
 	final public Map getRoles() {
 		return roles;
 	}
@@ -115,75 +103,65 @@ public class FileUserTest extends TestCase {
 		String userName,
 		String fullName,
 		String email,
-		String password) {
+		String password) throws AccessControlException {
 
-		Publication publication = getPublication();
+        File configDir = getConfigurationDirectory();
+        
 		String editorGroupName = "editorGroup";
 		String adminGroupName = "adminGroup";
 		String editorRoleName = "editorRole";
 		String adminRoleName = "adminRole";
+        
+        this.roles.clear();
 
-		FileRole editorRole = new FileRole(publication, editorRoleName);
-		FileRole adminRole = new FileRole(publication, adminRoleName);
+		FileRole editorRole = new FileRole(configDir, editorRoleName);
+		FileRole adminRole = new FileRole(configDir, adminRoleName);
 		this.roles.put(editorRoleName, editorRole);
 		this.roles.put(adminRoleName, adminRole);
 
-		FileGroup editorGroup = new FileGroup(publication, editorGroupName);
-		FileGroup adminGroup = new FileGroup(publication, adminGroupName);
+		FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
+		FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
 		this.groups.put(editorGroupName, editorGroup);
 		this.groups.put(adminGroupName, adminGroup);
 
 		FileUser user =
-			new FileUser(publication, userName, fullName, email, password);
+			new FileUser(configDir, userName, fullName, email, password);
+            
+        editorGroup.add(user);
+        adminGroup.add(user);
 
-		try {
-			editorRole.save();
-			adminRole.save();
-		} catch (AccessControlException e5) {
-			e5.printStackTrace();
-		}
-		editorGroup.addRole(editorRole);
-		user.addGroup(editorGroup);
-		adminGroup.addRole(editorRole);
-		adminGroup.addRole(adminRole);
-		try {
-			editorGroup.save();
-			adminGroup.save();
-		} catch (AccessControlException e2) {
-			e2.printStackTrace();
-		}
-		user.addGroup(adminGroup);
-		try {
-			user.save();
-		} catch (AccessControlException e3) {
-			e3.printStackTrace();
-		}
+		editorRole.save();
+		adminRole.save();
+//		editorGroup.addRole(editorRole);
+//		adminGroup.addRole(editorRole);
+//		adminGroup.addRole(adminRole);
+		editorGroup.save();
+		adminGroup.save();
+		user.save();
 		return user;
 	}
 
 	final public FileUser loadUser(String userName)
 		throws AccessControlException {
-		Publication publication = getPublication();
-		UserManager manager = UserManager.instance(publication);
+        File configDir = getConfigurationDirectory();
+		UserManager manager = UserManager.instance(configDir);
 		return (FileUser) manager.getUser(userName);
 	}
 
-	final public void testSave() {
-		Publication publication = getPublication();
+	final public void testSave() throws AccessControlException {
 		String userName = "alice";
 		createAndSaveUser(
 			userName,
 			"Alice Wonderland",
 			"alice@wonderland.org",
 			"secret");
+        File configDir = getConfigurationDirectory();
 		File xmlFile =
-			new File(
-				publication.getDirectory(),
-				ItemManager.PATH + File.separator + userName + ".iml");
+			new File(configDir, userName + ".iml");
 		assertTrue(xmlFile.exists());
 	}
 
-	final public void testGetEmail() {
+	final public void testGetEmail() throws AccessControlException {
 		String userName = "alice";
 		String email = "alice@wonderland.org";
 		FileUser user =
@@ -197,7 +175,7 @@ public class FileUserTest extends TestCase {
 		assertTrue(user.getEmail().equals(email));
 	}
 
-	final public void testGetFullName() {
+	final public void testGetFullName() throws AccessControlException {
 		String userName = "alice";
 		String fullName = "Alice Wonderland";
 		FileUser user =
@@ -207,15 +185,11 @@ public class FileUserTest extends TestCase {
 				"alice@wonderland.org",
 				"secret");
 		assertTrue(user.getFullName().equals(fullName));
-		try {
-			user = loadUser(userName);
-		} catch (AccessControlException e) {
-			e.printStackTrace();
-		}
+        user = loadUser(userName);
 		assertTrue(user.getFullName().equals(fullName));
 	}
 
-	final public void testGetGroups() {
+	final public void testGetGroups() throws AccessControlException {
 		FileUser user =
 			createAndSaveUser(
 				"alice",
@@ -223,15 +197,16 @@ public class FileUserTest extends TestCase {
 				"alice@wonderland.org",
 				"secret");
 		int groupCount = 0;
-		for (Iterator groups = user.getGroups(); groups.hasNext();) {
-			Group group = (Group) groups.next();
+        Group groups[] = user.getGroups();
+        
+		for (int i = 0; i < groups.length; i++) {
 			groupCount += 1;
-			assertTrue(getGroups().containsKey(group.getName()));
+			assertTrue(getGroups().containsKey(groups[i].getName()));
 		}
 		assertEquals(groupCount, getGroups().size());
 	}
 
-	final public void testGetId() {
+	final public void testGetId() throws AccessControlException {
 		String id = "alice";
 		FileUser user =
 			createAndSaveUser(
@@ -242,7 +217,7 @@ public class FileUserTest extends TestCase {
 		assertTrue(user.getId().equals(id));
 	}
 
-	final public void testDelete() {
+	final public void testDelete() throws AccessControlException {
 		String id = "albert";
 		FileUser user =
 			createAndSaveUser(
@@ -250,25 +225,17 @@ public class FileUserTest extends TestCase {
 				"Albert Einstein",
 				"albert@physics.org",
 				"secret");
-		Publication publication = getPublication();
+        File configDir = getConfigurationDirectory();
 		UserManager manager = null;
-		try {
-			manager = UserManager.instance(publication);
-		} catch (AccessControlException e1) {
-			e1.printStackTrace();
-		}
+        manager = UserManager.instance(configDir);
 		assertNotNull(manager);
 
 		assertNotNull(manager.getUser(id));
-		try {
-			user.delete();
-		} catch (AccessControlException e) {
-			e.printStackTrace();
-		}
+        user.delete();
 		assertNull(manager.getUser(id));
 	}
 
-	final public void testAuthenticate() {
+	final public void testAuthenticate() throws AccessControlException {
 		String password = "daisy";
 		FileUser user =
 			createAndSaveUser(
@@ -278,13 +245,9 @@ public class FileUserTest extends TestCase {
 				password);
 		assertTrue(user.authenticate(password));
 
-		Publication publication = getPublication();
+        File configDir = getConfigurationDirectory();
 		UserManager manager = null;
-		try {
-			manager = UserManager.instance(publication);
-		} catch (AccessControlException e1) {
-			e1.printStackTrace();
-		}
+        manager = UserManager.instance(configDir);
 		assertNotNull(manager);
 
 		User lenya = manager.getUser("lenya");
