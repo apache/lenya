@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  $Id: cmsui.xml,v 1.27 2004/02/23 08:37:07 roku Exp $
+  $Id: cmsui.xml,v 1.28 2004/02/23 13:04:54 roku Exp $
   
   @author Rolf Kulemann (roku at apache.org)
   
@@ -186,5 +186,11 @@ c
   <message key="Rename Document">Rename Document</message>
   <message key="New Document ID">New Document ID</message>
   <message key="No whitespace, no special characters">No whitespace, no special characters</message>
+      <!-- Scheduler -->
+  <message key="No active jobs">No active jobs.</message>
+  <message key="The job date has expired">The job date has expired.</message>
+  <message key="check the log files">check the log files</message>
+  <message key="Task">Task</message>
+  <message key="Day">Day</message>
  
 </catalogue>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
+    $Id: scheduler.xsl,v 1.2 2004/02/23 13:04:54 roku Exp $
+
     Document   : scheduler-page.xsl
     Created on : 12. Mai 2003, 17:26
     Author     : andreas
@@ -10,6 +12,7 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
@@ -41,9 +44,9 @@
   <table class="lenya-table">
 
     <tr>
-      <th>Task</th>
-      <th>Day</th>
-      <th colspan="3">Time</th>
+      <th><i18n:text>Task</i18n:text></th>
+      <th><i18n:text>Day</i18n:text></th>
+      <th colspan="3"><i18n:text>Time</i18n:text></th>
     </tr>
 
     <xsl:choose>
@@ -51,7 +54,7 @@
         <xsl:apply-templates select="sch:job"/>
       </xsl:when>
       <xsl:otherwise>
-        <tr><td colspan="6">No active jobs.</td></tr>
+        <tr><td colspan="6"><i18n:text>No active jobs</i18n:text></td></tr>
       </xsl:otherwise>
     </xsl:choose>
 
@@ -64,7 +67,7 @@
     <xsl:variable name="job-document-url" select="substring-after(@url, concat('/', ../@name, '/'))"/>
     <xsl:variable name="link-url" select="concat($context-prefix, '/', ../@name, '/info-', $job-document-url)"/>
 		<tr>
-			<td colspan="5"><strong>Document:&#160;</strong>
+			<td colspan="5"><strong><i18n:text>Document</i18n:text>:&#160;</strong>
 				<a href="{$link-url}"><xsl:value-of select="$job-document-url"/></a>
 			</td>
 		</tr>
@@ -91,7 +94,7 @@
           </td>
         </xsl:when>
         <xsl:otherwise>
-          <td colspan="2">The job date has expired.</td>
+          <td colspan="2"><i18n:text>The job date has expired</i18n:text></td>
           <td>&#160;</td>
         </xsl:otherwise>
       </xsl:choose>
@@ -157,7 +160,7 @@
   </xsl:template>
 
 <xsl:template match="sch:exception">
-<span style="color: red">EXCEPTION: <xsl:value-of select="@type"/></span> (check the log files)
+<span style="color: red"><i18n:text>EXCEPTION</i18n:text>: <xsl:value-of select="@type"/></span> (<i18n:text>check the log files</i18n:text>)
 </xsl:template>
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.32 2004/02/23 08:37:07 roku Exp $
+   $Id: cmsui_de.xml,v 1.33 2004/02/23 13:04:54 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -186,6 +186,13 @@
   <message key="Rename Document">Dokument umbenennen</message>
   <message key="New Document ID">Neue Dokument ID</message>
   <message key="No whitespace, no special characters">Keine Leer- oder Sonderzeichen</message>
+  <message key="No whitespace, no special characters">No whitespace, no special characters</message>
+      <!-- Scheduler -->
+  <message key="No active jobs">Keine aktiven Aufgaben.</message>
+  <message key="The job date has expired">Das Datum der Aufgabe ist angelaufen.</message>
+  <message key="check the log files">Bitte &#252;berpr&#252;fen Sie die Log-Dateien.</message>
+  <message key="Task">Aufgabe</message>
+  <message key="Day">Tag</message>
 
 </catalogue>
 
