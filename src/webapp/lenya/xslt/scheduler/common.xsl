@@ -78,7 +78,7 @@
 					</input>
 				</td>
 				<td>
-					<input type="submit" name="action" value="Add"/>
+					<input type="submit" name="action" value="add"/>
 				</td>
 			</tr>
 		</table>

@@ -104,7 +104,7 @@
         <xsl:when test="sch:trigger">
           <xsl:apply-templates select="sch:trigger"/>
           <td>
-            <input type="submit" name="Action" value="Modify"/>
+            <input type="submit" name="action" value="modify"/>
           </td>
         </xsl:when>
         <xsl:otherwise>
@@ -113,7 +113,7 @@
         </xsl:otherwise>
       </xsl:choose>
       <td>
-        <input type="submit" name="Action" value="Delete"/>
+        <input type="submit" name="action" value="delete"/>
       </td>
     </form>
   </tr>
