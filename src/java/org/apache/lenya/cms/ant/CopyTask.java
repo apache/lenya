@@ -15,11 +15,12 @@
  *
  */
 
-/* $Id: CopyTask.java,v 1.8 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id: CopyTask.java,v 1.9 2004/06/01 15:36:53 michi Exp $  */
 
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.StringTokenizer;
 
 import org.apache.tools.ant.BuildException;
@@ -30,6 +31,7 @@ import org.apache.tools.ant.types.Path;
 public class CopyTask extends Task {
     private Path pubsRootDirs;
     private Path toDir;
+    private String excludes;
 
 	/** (non-Javadoc)
 	 * @see org.apache.tools.ant.Task#execute()
@@ -41,40 +43,52 @@ public class CopyTask extends Task {
 
         StringTokenizer st = new StringTokenizer(pubsRootDirs.toString(), File.pathSeparator);
 
+        log("Excludes " + excludes);
+        FilenameFilter filter = new SCMFilenameFilter(excludes);
+
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
 
             if (new File(pubsRootDir, "publication.xml").isFile()) {
                 CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(toDir.toString()),
-                    twoTuple, null);
+                    twoTuple, filter);
             } else {
                 // FIXME: Look for publications defined by the file "publication.xml"
                 CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir),
-                    new File(toDir.toString()), twoTuple, null);
+                    new File(toDir.toString()), twoTuple, filter);
             }
         }
 
         numberOfDirectoriesCreated = twoTuple.x;
         numberOfFilesCopied = twoTuple.y;
-        System.out.println("Copying " + numberOfDirectoriesCreated + " directories to " + toDir);
-        System.out.println("Copying " + numberOfFilesCopied + " files to " + toDir);
+        log("Copying " + numberOfDirectoriesCreated + " directories to " + toDir);
+        log("Copying " + numberOfFilesCopied + " files to " + toDir);
     }
 
-	/**
-	 * 
-	 * 
-	 * @param pubsRootDirs
-	 */
+    /**
+     * Where the publications are located
+     * 
+     * @param pubsRootDirs
+     */
     public void setPubsRootDirs(Path pubsRootDirs) {
         this.pubsRootDirs = pubsRootDirs;
     }
 
-	/**
-	 * 
-	 * 
-	 * @param toDir
-	 */
+    /**
+     * Where the publications shall be copied to
+     * 
+     * @param toDir
+     */
     public void setToDir(Path toDir) {
         this.toDir = toDir;
+    }
+
+    /**
+     * Which filenames shall be excluded
+     *
+     * @param excludes
+     */
+    public void setExcludes(String excludes) {
+        this.excludes = excludes;
     }
 }

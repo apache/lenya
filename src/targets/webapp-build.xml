@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml,v 1.22 2004/05/30 13:24:17 roku Exp $ -->
+<!-- $Id: webapp-build.xml,v 1.23 2004/06/01 15:36:53 michi Exp $ -->
 
 <project name="webapp">
 
@@ -65,16 +65,8 @@
 
     <!-- Copy publications -->
     <echo>INFO: Copy publications from ${src.webapp.dir}/lenya/pubs to ${build.webapp}/lenya/pubs</echo>
-    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}">
+    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn">
     </copyPubs>
-    
-    <!-- Workaround for copyPubs task: remove CVS and .svn dirs  since copyPubs task does not use deafultexcludes -->
-    <delete includeEmptyDirs="true">
-      <fileset dir="${build.webapp}/lenya/pubs"
-                  defaultexcludes="no" 
-                  includes="**/CVS/*,**/CVS,**/.svn/*,**/.svn"
-       />
-    </delete>
 
     <!-- Patch cocoon.xconf -->
     <echo>INFO: Patch cocoon.xconf</echo>
@@ -224,6 +216,17 @@
       </fileset>
     </copy>
     <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Install publication                                              -->
+  <!-- ============================================================ -->
+  <target name="install-pub" depends="webapp" description="Install a publication into servlet engine context. Usage: -Dpub.prefix=blog">
+    <echo>INFO: Copy publication ${pub.prefix} to Tomcat</echo>
+    <echo>INFO: Copy From build.webapp=${build.webapp}/lenya/pubs/${pub.prefix} To tomcat.webapps.dir=${tomcat.webapps.dir}/lenya/pubs/${pub.prefix}</echo>
+    <copy todir="${tomcat.webapps.dir}/lenya/pubs/${pub.prefix}" filtering="off">
+      <fileset dir="${build.webapp}/lenya/pubs/${pub.prefix}" excludes="${target.install.excludes}"/>
+    </copy>
   </target>
 
 
