@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.50 2003/12/18 17:01:18 edith Exp $
+ $Id: info.xsl,v 1.51 2004/01/18 19:09:34 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -16,8 +16,10 @@
 <xsl:import href="../util/page-util.xsl"/>
 
 <xsl:param name="tab"/>
+<xsl:param name="area"/>
 <xsl:param name="documentid"/>
 <xsl:param name="languageexists"/>
+
 
 <xsl:template match="lenya-info:info">
 <div>
@@ -78,9 +80,6 @@
    <tr><td class="lenya-entry-caption">Description:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
    <tr><td class="lenya-entry-caption">Workflow State:</td><td><xsl:apply-templates select="lenya-info:workflow-state"/></td></tr>
    <tr><td class="lenya-entry-caption">Live:</td><td><xsl:apply-templates select="lenya-info:is-live"/></td></tr>
-   <!--
-   <tr><td class="lenya-entry-caption">Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
-   -->
    <tr><td class="lenya-entry-caption">Available Languages:</td><td><xsl:apply-templates select="lenya-info:languages"/></td></tr>
    <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
    <tr><td class="lenya-entry-caption">Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
@@ -140,7 +139,12 @@
         <tr><td class="lenya-entry-caption">Publisher:</td><td><input type="text" id="dc:publisher" name="properties.save.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
         <tr><td class="lenya-entry-caption">Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
         <tr><td class="lenya-entry-caption">Rights:</td><td><input type="text" id="dc:rights" name="properties.save.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
-        <tr><td/><td><br/><input type="submit" value="Update Metadata"/></td></tr>
+        <tr><td/><td><br/>
+              <xsl:choose>
+                <xsl:when test="$area = 'authoring'"><input type="submit" value="Update Metadata"/></xsl:when>
+                <xsl:otherwise><input type="submit" disabled="disabled" value="Update Metadata"/></xsl:otherwise>
+              </xsl:choose>              
+        </td></tr>
       </table>
       <input type="hidden" name="properties.save.meta.documentid" value="{lenya-info:documentid}"/>
       <input type="hidden" name="properties.save.meta.area" value="{lenya-info:area}"/>
@@ -180,7 +184,10 @@
                   <xsl:value-of select="dc:title"/>
                 </xsl:attribute>
               </input>
-              <input type="submit" value="Delete"/>
+              <xsl:choose>
+                <xsl:when test="$area = 'authoring'"><input type="submit" value="Delete"/></xsl:when>
+                <xsl:otherwise><input type="submit" disabled="disabled" value="Delete"/></xsl:otherwise>
+              </xsl:choose>              
             </form>
           </td>
         </tr> 
@@ -195,8 +202,10 @@
           <xsl:value-of select="lenya-info:documentid"/>
         </xsl:attribute>
       </input>
-      <!--       <input type="file" name="asset" size="40"/> -->
-      <input type="submit" value="Upload New Asset"/>
+      <xsl:choose>
+         <xsl:when test="$area = 'authoring'"><input type="submit" value="Upload New Asset"/></xsl:when>
+         <xsl:otherwise><input type="submit" disabled="disabled" value="Upload New Asset"/></xsl:otherwise>
+       </xsl:choose>              
     </form>
   </xsl:template>
 
@@ -229,13 +238,14 @@
             <tr>
               <td>
                 <xsl:element name="a">
-                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute>Rollback to this version</xsl:element>
-                
+                  <xsl:if test="$area = 'authoring'"><xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute></xsl:if>
+                  Rollback to this version
+                </xsl:element>
               </td>
               <td>
                 <xsl:element name="a">
-                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
-                
+                 <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>
+                 View</xsl:element>
               </td>
               <xsl:apply-templates select="../Time"/>
               <xsl:apply-templates select="../Identity"/>
@@ -263,13 +273,24 @@
 				<input type="hidden" name="lenya.usecase" value="info-ac-{@area}"/>
 				<input type="hidden" name="lenya.step" value="showscreen"/>
 				<input type="hidden" name="change_ssl" value="true"/>
-        <input type="checkbox" name="ssl"
-        	onclick="document.forms.form_ssl_{@area}.submit()" value="true">
-       		<xsl:if test="@ssl = 'true'">
-	        	<xsl:attribute name="checked">checked</xsl:attribute>
-       		</xsl:if>
-        	SSL Encryption
-        </input>
+                <xsl:choose>
+                  <xsl:when test="$area = 'authoring'">        
+                    <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_{@area}.submit()" value="true">
+       		        <xsl:if test="@ssl = 'true'">
+	        	      <xsl:attribute name="checked">checked</xsl:attribute>
+       	 	        </xsl:if>
+        	        SSL Encryption
+                    </input>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <input disabled="disabled" type="checkbox" name="ssl" value="true">
+       		          <xsl:if test="@ssl = 'true'">
+	        	        <xsl:attribute name="checked">checked</xsl:attribute>
+       		          </xsl:if>
+        	          SSL Encryption
+                    </input>
+                  </xsl:otherwise>
+                </xsl:choose>              
     	</form>
     </td>
 	</tr>
@@ -282,14 +303,14 @@
 		</tr>
 		<tr>
 			<xsl:call-template name="form-add-credential">
-				<xsl:with-param name="area" select="@area"/>
+				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">user</xsl:with-param>
 				<xsl:with-param name="title">User</xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		<tr>
 			<xsl:call-template name="form-add-credential">
-				<xsl:with-param name="area" select="@area"/>
+				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">group</xsl:with-param>
 				<xsl:with-param name="title">Group</xsl:with-param>
 			</xsl:call-template>
@@ -297,7 +318,7 @@
 		<xsl:if test="@area = 'live'">
 		<tr>
 			<xsl:call-template name="form-add-credential">
-				<xsl:with-param name="area" select="@area"/>
+				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">iprange</xsl:with-param>
 				<xsl:with-param name="title">IP&#160;range</xsl:with-param>
 			</xsl:call-template>
@@ -305,7 +326,7 @@
 		</xsl:if>
 		
 		<xsl:apply-templates select="lenya-info:credential">
-      <xsl:with-param name="area" select="@area"/>
+          <xsl:with-param name="larea" select="@area"/>
 		</xsl:apply-templates>
 	</table>
 	
@@ -316,20 +337,20 @@
 
 
 <xsl:template name="form-add-credential">
-	<xsl:param name="area"/>
+	<xsl:param name="larea"/>
 	<xsl:param name="type"/>
 	<xsl:param name="title"/>
 	<xsl:variable name="visitor-role" select="//lenya-info:visitor-role"/>
 	<xsl:choose>
   	<xsl:when test="$visitor-role">
     	<form method="get">
-    	<input type="hidden" name="lenya.usecase" value="info-ac-{$area}"/>
+    	<input type="hidden" name="lenya.usecase" value="info-ac-{$larea}"/>
     	<input type="hidden" name="lenya.step" value="showscreen"/>
     	<td><xsl:value-of select="$title"/>:</td>
     	<td><xsl:apply-templates select="//lenya-info:items[@type = $type]"/></td>
     	<td>
     		<xsl:choose>
-    			<xsl:when test="$area = 'authoring'">
+    			<xsl:when test="$larea = 'authoring'">
     				<xsl:apply-templates select="//lenya-info:items[@type = 'role']"/>
     			</xsl:when>
     			<xsl:otherwise>
@@ -339,7 +360,7 @@
     	</td>
     	<td>
     		<input type="submit" name="add_credential_{$type}" value="Add">
-    			<xsl:if test="not(//lenya-info:items[@type = $type]/lenya-info:item)">
+    			<xsl:if test="not(//lenya-info:items[@type = $type]/lenya-info:item) or not($area = 'authoring')">
     				<xsl:attribute name="disabled">disabled</xsl:attribute>
     			</xsl:if>
     		</input>
@@ -377,7 +398,7 @@
 
 
 <xsl:template match="lenya-info:credential">
-	<xsl:param name="area"/>
+	<xsl:param name="larea"/>
 	<xsl:variable name="color">
 		<xsl:choose>
 			<xsl:when test="@type = 'parent'">#666666;</xsl:when>
@@ -397,7 +418,7 @@
   	  </span>
   	</td>
   	<td>
-  		<xsl:if test="$area = 'authoring'">
+  		<xsl:if test="$larea = 'authoring'">
   		<span style="color: {$color}">
   		<xsl:value-of select="@role-id"/>
   	  <xsl:if test="@role-name != ''">
@@ -409,11 +430,15 @@
   	<td>
   		<xsl:if test="not(@type = 'parent')">
   		<form>
-				<input type="hidden" name="lenya.usecase" value="info-ac-{$area}"/>
+				<input type="hidden" name="lenya.usecase" value="info-ac-{$larea}"/>
 				<input type="hidden" name="lenya.step" value="showscreen"/>
   			<input type="hidden" name="accreditable_id" value="{@accreditable-id}"/>
   			<input type="hidden" name="role_id" value="{@role-id}"/>
-  			<input type="submit" name="delete_credential_{@accreditable-type}" value="Delete"/>
+  			<input type="submit" name="delete_credential_{@accreditable-type}" value="Delete">
+    			<xsl:if test="not($area = 'authoring')">
+    				<xsl:attribute name="disabled">disabled</xsl:attribute>
+    			</xsl:if>
+    		</input>
   		</form>
   		</xsl:if>
   	</td>

@@ -104,10 +104,11 @@
     <map:pipeline internal-only="true">
       
       <!-- areas (default language) -->
-      <map:match pattern="cmsbody/*/">
-        <map:generate src="cocoon:/tabs/{1}"/>
+      <map:match pattern="cmsbody/*/*/">
+        <map:generate src="cocoon:/tabs/{2}"/>
         <map:transform src="xslt/info/info.xsl">
-          <map:parameter name="tab" value="{1}"/>
+          <map:parameter name="tab" value="{2}"/>
+          <map:parameter name="area" value="{1}"/>
           <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="true"/>
         </map:transform>
@@ -115,10 +116,11 @@
       </map:match>
       
       <!-- areas (non-default language) -->
-      <map:match pattern="cmsbody/*/_*">
-        <map:generate src="cocoon:/tabs/{1}"/>
+      <map:match pattern="cmsbody/*/*/_*">
+        <map:generate src="cocoon:/tabs/{2}"/>
         <map:transform src="xslt/info/info.xsl">
-          <map:parameter name="tab" value="{1}"/>
+          <map:parameter name="tab" value="{2}"/>
+          <map:parameter name="area" value="{1}"/>
           <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="true"/>
         </map:transform>
@@ -126,12 +128,13 @@
       </map:match>
       
       <!-- documents -->
-      <map:match pattern="cmsbody/*/**">
+      <map:match pattern="cmsbody/*/*/**">
         
         <map:act type="language-exists">
-          <map:generate src="cocoon:/tabs/{../1}"/>
+          <map:generate src="cocoon:/tabs/{../2}"/>
           <map:transform src="xslt/info/info.xsl">
-            <map:parameter name="tab" value="{../1}"/>
+            <map:parameter name="tab" value="{../2}"/>
+            <map:parameter name="area" value="{../1}"/>
             <map:parameter name="documentid" value="{page-envelope:document-id}"/>
             <map:parameter name="languageexists" value="true"/>
           </map:transform>
@@ -140,7 +143,8 @@
         
         <map:generate src="cocoon:/tabs/overview"/>
         <map:transform src="xslt/info/info.xsl">
-          <map:parameter name="tab" value="{1}"/>
+          <map:parameter name="tab" value="{2}"/>
+          <map:parameter name="area" value="{1}"/>
           <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="false"/>
         </map:transform>
@@ -251,7 +255,8 @@
         
         <map:match pattern="info-*" type="usecase">
           
-          <map:generate src="cocoon:/cmsbody/{1}/{../3}"/>
+          <!-- cmsbody/{area}/usecase/{document-url} -->
+          <map:generate src="cocoon:/cmsbody/{../2}/{1}/{../3}"/>
           <map:transform src="xslt/info/root.xsl" label="content">
             <map:parameter name="infoarea" value="true"/>
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
