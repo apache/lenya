@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
@@ -31,7 +32,7 @@ import org.w3c.dom.Document;
 import org.wyona.util.Stack;
 
 /**
- * $Id: EditorMainAction.java,v 1.2 2002/01/24 18:37:50 tinuwyonacms Exp $
+ * $Id: EditorMainAction.java,v 1.3 2002/02/02 23:55:23 uid523 Exp $
  *
  * @author Martin Lüthi
  * @created 2002.01.22
@@ -51,6 +52,15 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction im
     // Get request object
     Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
 
+    // Get Source
+    getLogger().error ("SOURCE: "+src);
+    if(src == null){
+      getLogger().error ("No source: e.g. src=\"docs/editfile.xml\"");
+      return null;
+      }
+    org.apache.cocoon.environment.Source inputSource=resolver.resolve(src);
+
+    // get request
     if(request == null){
       getLogger().error ("No request object");
       return null;
@@ -64,11 +74,6 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction im
 
     // Get request object
     Context context=(Context)objectModel.get(Constants.CONTEXT_OBJECT);
-    // the absolute path where Cocoon resides
-    //     String xxx = context.getRealPath("/");
-    //     getLogger().error("=======> context real path ="+xxx);
-    //getLogger().error("=======> editfilename ="+parameters.getParameter("editfilename"));
-    
 
     // Get uri
     String request_uri=request.getRequestURI();
@@ -80,42 +85,42 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction im
     getLogger().error("**** action="+action);
     
     if(save!=null && save.equals("Save")){
-      // get the Document and copy it to the temporary file
+      // get the temporary document and save it back to it's initial location
       getLogger().error("**** saving ****");
       Source source = resolver.resolve("cocoon:/saveedit");
       getLogger().error ("======= URL:"+source.getSystemId());
       String editFile = (String)session.getAttribute("org.wyona.cms.editor.HTMLForm.editFile");
-      getLogger().error ("======= Saving to :"+editFile);
+      getLogger().error ("**** Saving to :"+editFile);
 
-      BufferedReader in = new BufferedReader(new InputStreamReader(source.getInputStream()));  
-      BufferedWriter out = new BufferedWriter(new FileWriter(editFile));
-      String line;
-      while ((line = in.readLine()) != null) {
-        // we need this in order to let EditOnPro save the markup:
-        line=org.wyona.util.StringUtil.replace(line, "&lt;", "<");
-        line=org.wyona.util.StringUtil.replace(line, "&gt;", ">");
-        out.write(line+"\n");
+      try{
+        BufferedReader in = new BufferedReader(new InputStreamReader(source.getInputStream()));  
+        BufferedWriter out = new BufferedWriter(new FileWriter(editFile));
+        String line;
+        while ((line = in.readLine()) != null) {
+          // we need this in order to let EditOnPro save the XHTMLmarkup:
+          line=org.wyona.util.StringUtil.replace(line, "&lt;", "<");
+          line=org.wyona.util.StringUtil.replace(line, "&gt;", ">");
+          out.write(line+"\n");
+        } 
+        in.close();
+        out.close();
+      }catch (IOException e) {
+        getLogger().error("Unable to copy temporary file "+e);
       }
-      in.close();
-      out.close();
+      getLogger().error ("**** file saved to :"+editFile);
       return null;
     } else if(action!=null && action.equals("request")){
       getLogger().error("**** request (do nothing) ****");
       HashMap actionMap=new HashMap();
       return actionMap;
     } else {
-      // here comes the checkout, revision control aso.
+      // at this place  the checkout, revision control aso. will be plugged in
       boolean checkout=true;
       if(checkout){
         String formeditorPath = context.getRealPath("formeditor");
         String tempFile=formeditorPath+request.getRequestURI()+".xml";
-        //         Source source = resolver.resolve("cocoon:/"+request.getSitemapURI());
-        //         String cont=source.getSystemId().substring(10); // remove
-        //         "context://"
-        String wyonaPath="wyona/cms/pubs/ethz-mat/docs/ethz/mat/";
-        String editFile=context.getRealPath("/")+wyonaPath+request.getSitemapURI()+".xml";
-        getLogger().error("**** tempfile="+tempFile);
-        getLogger().error("**** editfile="+editFile);
+        String editFile=inputSource.getSystemId().substring(5); // 5: remove protocol "file:"
+        getLogger().error("****TINU EDITFILE: "+editFile);
 
         File tf=new File(tempFile);
         boolean success=new File(tf.getParent()).mkdirs();
