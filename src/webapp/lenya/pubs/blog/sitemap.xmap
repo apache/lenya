@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.2 2003/08/06 13:27:06 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.3 2003/08/10 17:39:32 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -45,7 +45,7 @@
       </map:match>
       <map:handle-errors type="500">
         <!-- FIXME: can also contain other errors than "not published yet" -->
-        <map:transform src="xslt/error2html.xsl"/>
+        <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
@@ -74,8 +74,9 @@
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">
-        <map:transform src="context://stylesheets/system/error2html.xsl"/>
-        <map:serialize status-code="500"/>
+        <!-- FIXME: can also contain other errors than "not published yet" -->
+        <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
+        <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
 
