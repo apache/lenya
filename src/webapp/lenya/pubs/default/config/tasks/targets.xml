@@ -29,12 +29,6 @@
 <property name="publish.sources" value=""/>
 <property name="servlet.context" value=""/>
 
-<taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter">
-<classpath>
-<pathelement location="${servlet.context}/webapp/lenya/WEB-INF/classes">
-</pathelement>
-</classpath>
-</taskdef>
 <target name="test">
   <echo>This is a test of the AntTask: ${text}</echo>
 </target>
@@ -51,6 +45,8 @@
       <include name="${authoring.tree}"/>
     </fileset>
   </copy>
+  
+  <taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter"/>
   
   <echo>Export:</echo>
   <export
