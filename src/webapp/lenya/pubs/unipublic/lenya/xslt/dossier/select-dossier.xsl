@@ -12,7 +12,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
-<xsl:param name="article-file"/>
+<xsl:param name="articlefile"/>
     
 <!-- template rule matching source root element -->
 <xsl:template match="/">
@@ -23,8 +23,8 @@
     </head>
     <body>
       <h1>Assign Article to Dossier</h1>
-      <form action="selectDossier" method="POST">
-        <input type="hidden" name="article-file" value="{$article-file}"/>
+      <form action="selectDossier" method="GET">
+        <input type="hidden" name="articlefile" value="{$articlefile}"/>
         <table cellpadding="5" cellspacing="0" border="0">
         <xsl:call-template name="dossier-entry">
           <xsl:with-param name="id" select="'none'"/>

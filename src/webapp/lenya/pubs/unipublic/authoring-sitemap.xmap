@@ -578,11 +578,11 @@
 						<map:part src="cocoon:/select-dossier-dossiers"/>
 						<map:part src="cocoon:/{article-file}"/>
 					</map:aggregate>
+				<map:transform src="lenya/xslt/dossier/select-dossier.xsl">
+					<map:parameter name="articlefile" value="{article-file}"/>
+				</map:transform>
 				</map:act>
 				<!--        <map:serialize type="xml"/>-->
-				<map:transform src="lenya/xslt/dossier/select-dossier.xsl">
-					<map:parameter name="use-request-parameters" value="true"/>
-				</map:transform>
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- select dossier -->
