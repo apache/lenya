@@ -14,11 +14,14 @@
     exclude-result-prefixes="nav"
     >
     
+<xsl:param name="area"/>
+
 
 <xsl:template match="nav:site">
   <div id="breadcrumb">
     <xsl:apply-templates select="nav:node"/>
-  </div>
+    <a id="search" href="{@href}../search-{$area}/lucene">| Search |</a>
+</div>
 </xsl:template>
 
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 This sitemap creates default navigation components.
@@ -36,6 +36,7 @@ This sitemap creates default navigation components.
         <map:parameter name="url" value="pubs/{publication-id}/lenya/xslt/navigation/{stylesheet}.xsl"/>
         <map:transform src="pubs/{../publication-id}/lenya/xslt/navigation/{../stylesheet}.xsl">
           <map:parameter name="url" value="{../url}"/>
+          <map:parameter name="area" value="{page-envelope:area}"/>
           <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="breadcrumbprefix" value="{page-envelope:breadcrumb-prefix}"/>
@@ -46,6 +47,7 @@ This sitemap creates default navigation components.
       <!-- use default navigation schema -->
       <map:transform src="xslt/navigation/{stylesheet}.xsl">
         <map:parameter name="url" value="{url}"/>
+        <map:parameter name="area" value="{page-envelope:area}"/>
         <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
         <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
         <map:parameter name="breadcrumbprefix" value="{page-envelope:breadcrumb-prefix}"/>

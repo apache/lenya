@@ -125,6 +125,10 @@ td.tab-post-separator {
     font-size: 80%;
 }
 
+#search {
+   margin-left: 8cm;
+}
+
 #breadcrumb a {
     text-decoration: none;
     color: Maroon;

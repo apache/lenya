@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    Document   : page2xhtml.xsl
-    Created on : 11. April 2003, 11:09
-    Author     : andreas
-    Description:
-        Purpose of transformation follows.
+$Id: page2xhtml.xsl,v 1.14 2004/03/07 19:15:28 gregor Exp $
 -->
 
 <xsl:stylesheet version="1.0"

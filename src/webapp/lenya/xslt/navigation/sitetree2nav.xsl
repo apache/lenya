@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    $Id: sitetree2nav.xsl,v 1.18 2004/03/02 14:04:39 egli Exp $
-
-    Document   : stylesheet.xsl
-    Created on : 30. April 2003, 10:53
-    Author     : andreas
-    Description:
-        Purpose of transformation follows.
+    $Id: sitetree2nav.xsl,v 1.19 2004/03/07 19:15:28 gregor Exp $
 -->
 
 <xsl:stylesheet
