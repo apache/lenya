@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+Redirect to a certain document.
+Parameters:
+
+  - document-id (defaults to current document id)
+  - document-area (defaults to current area)
+  - language
+  
+-->
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:session="http://apache.org/cocoon/session/1.0"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+       >
+
+<xsp:structure>
+  <xsp:include>org.apache.lenya.cms.publication.DocumentHelper</xsp:include>
+</xsp:structure>
+
+<redirect>
+  <xsp:logic>
+    try {
+    
+      String documentId = parameters.getParameter("document-id", null);
+      String area = parameters.getParameter("area", null);
+      String language = parameters.getParameter("language", null);
+      
+      DocumentHelper helper = new DocumentHelper(objectModel);
+      String url = helper.getDocumentUrl(documentId, area, language);
+      
+      <xsp:attribute name="url"><xsp:expr>url</xsp:expr></xsp:attribute>
+    }
+    catch (Exception e) {
+        throw new ProcessingException(e);
+    }
+  </xsp:logic>
+
+</redirect>
+
+</xsp:page>
