@@ -8,13 +8,11 @@
 <html>
 
 <head>
-<title>Lenya</title>
+<title>Lenya > <xsl:value-of select="url-info/publication-id"/> > <xsl:value-of select="url-info/area"/> > <xsl:value-of select="url-info/document-id"/></title>
 <script type="text/javascript" src="/lenya/lenya/menu/menu.js">
 </script>
 
 <link type="text/css" rel="stylesheet" href="/lenya/lenya/menu/menu.css" />
-<script type="text/javascript" src="/lenya/lenya/menu/netscape.js">
-</script>
 </head>
 
 <body bgcolor="#ffffff" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">

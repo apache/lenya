@@ -1,7 +1,6 @@
 div.lenya-box {
 	border: solid 1px #CCCCCC;
 	width: auto;
-	min-width: auto;
 	max-width: 100%;
 	font-size: small;
 	margin-bottom: 10px;
@@ -18,4 +17,5 @@ div.lenya-box-title {
 div.lenya-box-body {
     padding: 10px;
     background-color: #F5F4E9;
+	color: Black;
 }

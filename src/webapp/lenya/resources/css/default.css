@@ -31,12 +31,14 @@ li {
     padding-left: 20px;
     background-color: White;
     border-bottom: solid 1px #B1B1B1;
+    color: black;
 }
 
 .lenya-body {
     width: 100%;
     height: 100%;
     background-color: #F5F4E9;
+    color: black;
 }
 
 .lenya-project-logo {
@@ -49,6 +51,7 @@ td.lenya-content {
     background-color: White;
     padding: 30px;
     vertical-align: top;
+    color: black;
 }
 
 td.lenya-sidebar {
@@ -60,6 +63,7 @@ td.lenya-frontpage {
     background-color: White;
     padding: 30px;
     vertical-align: top;
+    color: black;
 }
 
 .lenya-page-title {
@@ -74,6 +78,7 @@ td.lenya-frontpage {
     font-weight: bold;
     text-align: right;
     padding: 5px;
+    color: black;
 }
 
 .lenya-publication-item {

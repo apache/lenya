@@ -6,7 +6,8 @@ form {
 
 td.lenya-entry-caption {
 	text-align: right;
-	color: 606060;
+	color: #606060;
+	background-color: transparent;
 }
 
 .lenya-form-element {
@@ -22,9 +23,11 @@ td.lenya-entry-caption {
 .lenya-form-message-error {
     font-weight: bold;
     color: red;
+	background-color: transparent;
 }
 
 .lenya-form-message-success {
     font-weight: bold;
     color: navy;
+	background-color: transparent;
 }

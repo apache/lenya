@@ -1,5 +1,6 @@
 
 table.lenya-table {
+	color: Black;
 	background-color: White;
 	border-spacing: 0px;
 	border-collapse: collapse;
@@ -24,6 +25,7 @@ table.lenya-table td {
 	border: solid 1px #CCCCCC;
 	padding: 3px 10px;
 	font-size: small;
+	color: Black;
 }
 
 table.lenya-table-noborder td {
