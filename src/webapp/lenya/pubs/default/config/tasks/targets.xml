@@ -130,7 +130,7 @@
       authoringpath="${authoring.dir}"
       documenttype="${create.doctype}"
       language="${create.language}"
-      treefile="${sitetree}"/>
+      area="${authoring.area}"/>
       
   <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
   <init-history
