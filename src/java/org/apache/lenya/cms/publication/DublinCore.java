@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.15 2003/08/14 16:32:59 egli Exp $
+$Id: DublinCore.java,v 1.16 2003/08/15 08:31:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -85,6 +85,7 @@ public class DublinCore {
 
     private Map elements = new HashMap();
     private Map terms = new HashMap();
+    
     private static final String META = "meta";
 
     // Dublin Core Elements
