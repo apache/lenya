@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<Page xmlns:xi="http://www.w3.org/2001/XInclude">
-  <Content>
-    <MainColumn>
-       <xi:include href="index.xml#xpointer(/frontpage/articles)"/>
-    </MainColumn>
-  </Content>
-</Page>
