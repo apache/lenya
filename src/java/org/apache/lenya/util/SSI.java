@@ -1,5 +1,5 @@
 /*
-$Id: SSI.java,v 1.6 2004/02/02 02:50:37 stefano Exp $
+$Id: SSI.java,v 1.7 2004/02/10 11:11:35 gregor Exp $
 <License>
 
  ============================================================================
@@ -63,15 +63,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 
-/*
-import org.wyona.xpipe.*;
-import org.wyona.xpipe.util.*;
-import org.wyona.xpipe.filter.Filter;
-import org.wyona.xpipe.Processor;
-*/
-
 /**
- *
+ *@deprecated
  */
 public class SSI {
     static String fileinc = "<!--#include file=\"";
