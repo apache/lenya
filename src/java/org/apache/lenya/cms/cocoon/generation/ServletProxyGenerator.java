@@ -7,7 +7,6 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.cocoon.Constants;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
-//import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.environment.http.HttpSession;
 import org.apache.cocoon.environment.Cookie;
@@ -35,33 +34,20 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * @author Christian Egli
  * @author Michael Wechner
+ * @version 2002.8.21
  */
 public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements Parameterizable {
   static Category log=Category.getInstance(ServletProxyGenerator.class);
   protected String src;
-  //protected org.apache.avalon.excalibur.source.Source src;
 
-    /** The URI of the namespace of this generator. */
-    private String URI="http://www.wyona.org/wyona-cms/servletproxygenerator/1.0";
-/*
-    private String global_container_encoding;
-    private String global_form_encoding;
-    private String container_encoding;
-    private String form_encoding;
-*/
+  // The URI of the namespace of this generator
+  private String URI="http://www.wyona.org/wyona-cms/servletproxygenerator/1.0";
 /**
  *
  */
-    public void parameterize(Parameters parameters)
-    throws ParameterException {
-        // super.parameterize(parameters);
-
-/*
-        global_container_encoding = parameters.getParameter("container-encoding", "ISO-8859-1");
-        global_form_encoding = parameters.getParameter("form-encoding", null);
-*/
+  public void parameterize(Parameters parameters) throws ParameterException {
+    //super.parameterize(parameters);
     }
 /**
  *
@@ -69,23 +55,17 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
   public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par) throws ProcessingException, SAXException, IOException{
     super.setup(resolver, objectModel, src, par);
     try{
-      log.warn("SETUP: "+src);
+      log.debug(".setup(): "+src);
       this.src=src;
-      //this.src=resolver.resolveURI(src);
       }
     catch(Exception e){
       log.error(e);
       }
-/*
-        container_encoding = par.getParameter("container-encoding", global_container_encoding);
-        form_encoding = par.getParameter("form-encoding", global_form_encoding);
-*/
     }
 /**
  * Generate XML data.
  */
   public void generate() throws SAXException{
-    //Request request = ObjectModelHelper.getRequest(objectModel);
     HttpRequest httpRequest = (HttpRequest)objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
 
     String submitMethod=httpRequest.getMethod();
@@ -96,20 +76,18 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
           // Debug
           if(submitMethod.equals("POST")){
             java.io.InputStream is=intercept(httpRequest.getInputStream());
-            log.warn("HTTP method:"+submitMethod);
+            log.debug("HTTP method: "+submitMethod);
             }
           else if(submitMethod.equals("GET")){
-            log.warn("HTTP method:"+submitMethod);
+            log.debug("HTTP method: "+submitMethod);
             }
           else{
-            log.warn("HTTP method:"+submitMethod);
+            log.debug("HTTP method: "+submitMethod);
             }
 
           // Forward "InputStream", Parameters, QueryString to Servlet
           URL url=createURL(httpRequest);
-          //URL url=new URL(this.src.getSystemId());
-          //URL url=new URL("http://127.0.0.1:8080/wyona-cms/servlet/HelloWorld");
-          log.warn("SERVLET: "+url);
+          log.debug(".generate(): Remote URL: "+url);
           org.apache.commons.httpclient.HttpMethod httpMethod=null;
           if(submitMethod.equals("POST")){
             httpMethod=new PostMethod();
@@ -121,28 +99,20 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
                 ((PostMethod)httpMethod).setParameter(paramName,paramValues[i]);
                 }
               }
-            //postMethod.setRequestBody("LeviVanya");
             }
           else if(submitMethod.equals("GET")){
             httpMethod=new org.apache.commons.httpclient.methods.GetMethod();
             httpMethod.setQueryString(httpRequest.getQueryString());
             }
 
-          // Forward Session
-          HttpSession httpSession=(HttpSession)httpRequest.getSession(false);
-          if(httpSession != null){
-            Enumeration attributes=httpSession.getAttributeNames();
-            while(attributes.hasMoreElements()){
-              String attributeName=(String)attributes.nextElement();
-              log.warn("SESSION Attribute: name="+attributeName+" value="+httpSession.getAttribute(attributeName));
-              }
-            }
+          // Forward Cookies
           Cookie[] cookies=httpRequest.getCookies();
           org.apache.commons.httpclient.Cookie[] transferedCookies=new org.apache.commons.httpclient.Cookie[cookies.length];
           for(int i=0;i<cookies.length;i++){
-            log.warn("COOKIE: "+cookies[i].getPath()+" "+cookies[i].getName()+" "+cookies[i].getDomain()+" "+cookies[i].getValue());
-            transferedCookies[i]=new org.apache.commons.httpclient.Cookie(cookies[i].getDomain(),cookies[i].getName(),cookies[i].getValue());
-            log.warn("COOKIE transfered: "+transferedCookies[i]);
+            log.warn(".generate(): Original COOKIE: "+cookies[i].getPath()+" "+cookies[i].getName()+" "+cookies[i].getDomain()+" "+cookies[i].getValue());
+            boolean secure=false; // http: false, https: true
+            transferedCookies[i]=new org.apache.commons.httpclient.Cookie(url.getHost(),cookies[i].getName(),cookies[i].getValue(),url.getFile(),null,secure);
+            log.warn(".generate(): Copied COOKIE: "+transferedCookies[i]);
             }
 
           // Send request to servlet
@@ -155,14 +125,16 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
             httpState.addCookies(transferedCookies);
             httpClient.setState(httpState);
             }
+
+          org.apache.commons.httpclient.Cookie[] tcookies=httpClient.getState().getCookies();
+          for(int i=0;i<tcookies.length;i++){
+            log.warn(".generate(): Transfered COOKIE: "+tcookies[i]);
+            }
+
           httpClient.startSession(url);
           httpClient.executeMethod(httpMethod);
           byte[] sresponse=httpMethod.getResponseBody();
-          log.warn("Response: "+new String(sresponse));
-          org.apache.commons.httpclient.Cookie[] tcookies=httpClient.getState().getCookies();
-          for(int i=0;i<tcookies.length;i++){
-            log.warn("tCOOKIE: "+tcookies[i]);
-            }
+          log.warn(".generate(): Response from remote server: "+new String(sresponse));
           httpClient.endSession();
 
 

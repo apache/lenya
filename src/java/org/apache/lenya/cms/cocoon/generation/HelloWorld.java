@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
 
 import java.io.PrintWriter;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import org.apache.log4j.Category;
 /**
  * @author Michael Wechner
  * @author Christian Egli
- * @version 2002.7.3
+ * @version 2002.8.18
  */
 public class HelloWorld extends HttpServlet {
   static Category log=Category.getInstance(HelloWorld.class);
@@ -30,7 +31,7 @@ public class HelloWorld extends HttpServlet {
  *
  */
   public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-    log.warn("GET");
+    log.debug("GET");
     response.setContentType("text/xml");
     PrintWriter writer = response.getWriter();
     writer.print("<?xml version=\"1.0\"?>");
@@ -38,6 +39,7 @@ public class HelloWorld extends HttpServlet {
     writer.print("<request method=\"GET\">");
     writer.print(getParameters(request));
     writer.print(getSession(request));
+    writer.print(getCookies(request));
     writer.print("</request>");
     writer.print("</servlet>");
     }
@@ -45,7 +47,7 @@ public class HelloWorld extends HttpServlet {
  *
  */
   public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-    log.warn("POST");
+    log.debug("POST");
     response.setContentType("text/xml");
     PrintWriter writer = response.getWriter();
     writer.print("<?xml version=\"1.0\"?>");
@@ -53,6 +55,7 @@ public class HelloWorld extends HttpServlet {
     writer.print("<request method=\"POST\">");
     writer.print(getParameters(request));
     writer.print(getSession(request));
+    writer.print(getCookies(request));
     writer.print("</request>");
     writer.print("</servlet>");
     }
@@ -92,37 +95,53 @@ public class HelloWorld extends HttpServlet {
       sb.append("<session>");
       Enumeration attributes=session.getAttributeNames();
       if(!attributes.hasMoreElements()){
-        log.warn(".getSession(): Session exits but has no attributes");
         sb.append("<noattributes/>");
         }
       while(attributes.hasMoreElements()){
         String attributeName=(String)attributes.nextElement();
-        log.warn(".getSession(): Attribute: name="+attributeName+" value="+session.getAttribute(attributeName));
+        sb.append("<attribute name=\""+attributeName+"\">");
+        sb.append(""+session.getAttribute(attributeName));
+        sb.append("</attribute>");
         }
       sb.append("</session>");
       }
     else{
       sb.append("<nosession/>");
       }
-/*
-    Enumeration parameters=request.getParameterNames();
-    boolean hasParameters=parameters.hasMoreElements();
-    if(hasParameters){
-      sb.append("<parameters>");
-      }
-    while(parameters.hasMoreElements()){
-      String name=(String)parameters.nextElement();
-      String[] values=request.getParameterValues(name);
-      sb.append("<parameter name=\""+name+"\">");
-      for(int i=0;i<values.length;i++){
-        sb.append("<value>"+values[i]+"</value>");
+    return sb.toString();
+    }
+/**
+ *
+ */
+  public String getCookies(HttpServletRequest request){
+    StringBuffer sb=new StringBuffer("");
+
+    Cookie[] cookies=request.getCookies();
+    if(cookies != null){
+      if(cookies.length > 0){
+        log.warn(cookies.length+" cookies exist");
+        sb.append("<cookies>");
+        for(int i=0;i<cookies.length;i++){
+          sb.append("<cookie>");
+          sb.append("<comment>"+cookies[i].getComment()+"</comment>");
+          sb.append("<domain>"+cookies[i].getDomain()+"</domain>");
+          sb.append("<maxage>"+cookies[i].getMaxAge()+"</maxage>");
+          sb.append("<name>"+cookies[i].getName()+"</name>");
+          sb.append("<path>"+cookies[i].getPath()+"</path>");
+          sb.append("<secure>"+cookies[i].getSecure()+"</secure>");
+          sb.append("<value>"+cookies[i].getValue()+"</value>");
+          sb.append("<version>"+cookies[i].getVersion()+"</version>");
+          sb.append("</cookie>");
+          }
+        sb.append("</cookies>");
         }
-      sb.append("</parameter>");
+      else{
+        sb.append("<nocookies/>");
+        }
       }
-    if(hasParameters){
-      sb.append("</parameters>");
+    else{
+      sb.append("<nocookies/>");
       }
-*/
     return sb.toString();
     }
 }
