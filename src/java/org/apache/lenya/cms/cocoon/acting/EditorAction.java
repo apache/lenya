@@ -63,6 +63,10 @@ public class EditorAction extends AbstractComplementaryConfigurableAction implem
     String tempFile=(String)session.getAttribute("org.wyona.cms.editor.HTMLForm.tempFile");
     getLogger().error("**** tempfile="+tempFile);
 
+    // prepare the return params
+    String xmlErrorFlag = "";
+    String xmlErrorMessage = "";
+    
     if (tempFile!=null){
       // get the Document and copy it to the temporary file
       getLogger().debug("**** saving ****");
@@ -80,6 +84,8 @@ public class EditorAction extends AbstractComplementaryConfigurableAction implem
 
       HashMap actionMap=new HashMap();
       actionMap.put("tempFile",tempFile);
+      actionMap.put("xmlErrorFlag", xmlErrorFlag);
+      actionMap.put("xmlErrorMessage", xmlErrorMessage);
       return actionMap;
     }
     return null;
