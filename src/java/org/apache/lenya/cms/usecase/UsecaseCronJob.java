@@ -22,17 +22,34 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.cron.ConfigurableCronJob;
 import org.apache.cocoon.components.cron.ServiceableCronJob;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.Identifiable;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Machine;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.impl.DefaultAccessController;
 
 /**
  * Job to schedule usecase execution.
  * 
  * @version $Id:$
  */
-public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCronJob {
+public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCronJob,
+        Contextualizable {
 
     /**
      * Initializes the job.
@@ -48,17 +65,20 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
 
     private String usecaseName;
     private String sourceUrl;
+    private String userId;
+    private String machineIp;
 
     private Map parameters = new HashMap();
 
     protected static final String USECASE_NAME = "usecaseName";
-
     protected static final String SOURCE_URL = "sourceUrl";
+    protected static final String USER_ID = "userId";
+    protected static final String MACHINE_IP = "machineIp";
 
     protected String getUsecaseName() {
         return this.usecaseName;
     }
-    
+
     protected String getSourceURL() {
         return this.sourceUrl;
     }
@@ -74,9 +94,12 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
         UsecaseResolver resolver = null;
         Usecase usecase = null;
         try {
+
+            authorizeRequest();
+
             resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
             usecase = resolver.resolve(getSourceURL(), getUsecaseName());
-            
+
             usecase.setSourceURL(getSourceURL());
             usecase.setName(getUsecaseName());
 
@@ -113,6 +136,68 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
                 this.manager.release(resolver);
             }
         }
+    }
+
+    /**
+     * Initializes the session with the access control information.
+     * @throws AccessControlException if an error occurs.
+     * @throws ServiceException if the access controller resolver could not be
+     *             created.
+     */
+    protected void authorizeRequest() throws AccessControlException, ServiceException {
+
+        ServiceSelector selector = null;
+        AccessControllerResolver acResolver = null;
+        AccessController controller = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                    + "Selector");
+            acResolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            controller = acResolver.resolveAccessController(getSourceURL());
+
+            getLogger().debug("Add identity to session");
+            getLogger().debug("User ID: [" + this.userId + "]");
+            getLogger().debug("Machine: [" + this.machineIp + "]");
+
+            Request request = ContextHelper.getRequest(this.context);
+            ((DefaultAccessController) controller).setupIdentity(request);
+            Session session = request.getSession(false);
+            Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+            Identifiable[] identifiables = identity.getIdentifiables();
+            for (int i = 0; i < identifiables.length; i++) {
+                identity.removeIdentifiable(identifiables[i]);
+            }
+
+            UserManager userManager = ((DefaultAccessController) controller)
+                    .getAccreditableManager().getUserManager();
+            if (this.userId != null) {
+                User user = userManager.getUser(this.userId);
+                
+                if (user == null) {
+                    throw new RuntimeException("User [" + this.userId + "] does not exist!");
+                }
+                
+                identity.addIdentifiable(user);
+            }
+            if (this.machineIp != null) {
+                Machine machine = new Machine(this.machineIp);
+                identity.addIdentifiable(machine);
+            }
+
+            controller.authorize(request, getSourceURL());
+
+        } finally {
+            if (selector != null) {
+                if (acResolver != null) {
+                    if (controller != null) {
+                        acResolver.release(controller);
+                    }
+                    selector.release(acResolver);
+                }
+                this.manager.release(selector);
+            }
+        }
 
     }
 
@@ -147,6 +232,17 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
         this.parameters.putAll(Parameters.toProperties(parameters));
         this.usecaseName = (String) objects.get(USECASE_NAME);
         this.sourceUrl = (String) objects.get(SOURCE_URL);
+        this.userId = (String) objects.get(USER_ID);
+        this.machineIp = (String) objects.get(MACHINE_IP);
+    }
+
+    private Context context;
+
+    /**
+     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
+     */
+    public void contextualize(Context context) throws ContextException {
+        this.context = context;
     }
 
 }
