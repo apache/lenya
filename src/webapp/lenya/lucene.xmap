@@ -28,7 +28,9 @@
         <map:transform src="xslt/search/sort.xsl"/>
         
         <map:act type="resource-exists" src="pubs/{1}/lenya/xslt/search/search-and-results.xsl">
-          <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results.xsl"/>
+          <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results.xsl">
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          </map:transform>
           <map:serialize type="html"/>
         </map:act>
         <map:transform src="xslt/search/search-and-results.xsl">

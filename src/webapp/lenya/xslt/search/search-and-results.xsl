@@ -5,13 +5,14 @@
 
 <xsl:variable name="uriName">lucene</xsl:variable>
 
-<xsl:param name="area" value="live"/>
+<xsl:param name="area" select="'live'"/>
+<xsl:param name="contextprefix"/>
 
 <xsl:template match="search-and-results">
 <html>
 <head>
   <title>Search</title>
-  <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
+  <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" />
 </head>
 <body>
 <h1>Search with Lucene (Area: <xsl:value-of select="$area"/>)</h1>
