@@ -322,9 +322,6 @@
                     <map:parameter name="message" value="{message}"/>
                   </map:generate>
                   <map:transform src="xslt/rc/rco-exception.xsl"/>
-                  <map:transform src="xslt/util/page2xhtml.xsl">
-                    <map:parameter name="contextprefix" value="{request:contextPath}"/>
-                  </map:transform>
                   <map:call resource="style-cms-page"/>
                 </map:act>
                 
@@ -470,7 +467,7 @@
                 <map:parameter name="date" value="{date}"/>
               </map:generate>
               <map:transform src="xslt/rc/rco-exception.xsl"/>
-              <map:serialize/>
+              <map:call resource="style-cms-page"/>
             </map:act>
             <map:generate src="{fallback:content/info/assets.xsp}" type="serverpages"/>
             <map:transform src="{fallback:xslt/authoring/asset.xsl}">
@@ -528,7 +525,7 @@
                 <map:parameter name="date" value="{date}"/>
               </map:generate>
               <map:transform src="xslt/rc/rco-exception.xsl"/>
-              <map:serialize/>
+              <map:call resource="style-cms-page"/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:match>
@@ -549,7 +546,7 @@
                 <map:parameter name="date" value="{date}"/>
               </map:generate>
               <map:transform src="xslt/rc/rco-exception.xsl"/>
-              <map:serialize/>
+              <map:call resource="style-cms-page"/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:match>

@@ -218,8 +218,8 @@
               <map:parameter name="message" value="{message}"/>
             </map:generate>
             <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
-            <map:serialize/>
-          </map:act>
+            <map:call resource="style-cms-page"/>
+         </map:act>
           <map:redirect-to uri="{request:requestURI}"/>
         </map:match>
       
