@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.41 2003/09/10 08:29:14 edith Exp $
+ $Id: info.xsl,v 1.42 2003/09/12 09:40:39 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -19,15 +19,8 @@
 <xsl:param name="documentid"/>
 <xsl:param name="languageexists"/>
 
-<xsl:template match="lenya-info:info">    
-    <html>
-<head>
-	<title>info</title>
-    <xsl:call-template name="include-css">
-      <xsl:with-param name="context-prefix" select="publish/context"/>
-    </xsl:call-template>
-</head>
-<body>
+<xsl:template match="lenya-info:info">
+<div>
 	<!-- 
 		These are the tabs. Make sure that each of them has the correct id,
 		target and corresponding number in the Tab() call.
@@ -65,8 +58,8 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</div>
-</body>
-</html>
+	
+</div>
 </xsl:template>
 
 <xsl:template name="activate">

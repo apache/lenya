@@ -672,11 +672,32 @@
         <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
+      <!-- Lenya page transformation -->
+      <!-- lenya-page/{publication-id}/{complete-area}/... -->
+      <map:match pattern="lenya-page/*/*/**">
+      	<map:generate src="cocoon:/menu/{1}/{2}/{3}"/>
+        <map:transform src="lenya/xslt/menu/menu2xslt.xsl">
+          <map:parameter name="context-prefix" value="{request:contextPath}"/>
+          <map:parameter name="publication-id" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="document-url" value="{page-envelope:document-url}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
       <!-- menus -->
-      <map:match pattern="menu/**">
-      	<map:generate src="cocoon:/menu-xml/{1}"/>
+      <!-- menu/{publication-id}/{complete-area}/... -->
+      <map:match pattern="menu/*/*/**">
+      	<map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
         <map:transform type="workflowmenu"/>
         <map:transform type="usecasemenu"/>
+        <map:transform src="lenya/xslt/menu/menu2xhtml.xsl">
+          <map:parameter name="context-prefix" value="{request:contextPath}"/>
+          <map:parameter name="publication-id" value="{1}"/>
+          <map:parameter name="complete-area" value="{2}"/>
+          <map:parameter name="document-area" value="{page-envelope:area}"/>
+          <map:parameter name="document-url" value="{page-envelope:document-url}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
       

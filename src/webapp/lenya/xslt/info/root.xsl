@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.29 2003/09/09 11:34:40 andreas Exp $
+ $Id: root.xsl,v 1.30 2003/09/12 09:40:39 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns="http://www.w3.org/1999/xhtml"
     >
-
-<xsl:include href="../menu/root.xsl"/>
 
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
@@ -22,9 +21,11 @@
 
 <xsl:variable name="extension"><xsl:if test="$documentextension != ''">.</xsl:if><xsl:value-of select="$documentextension"/></xsl:variable>
     
-<xsl:template match="lenya/cmsbody">
+<xsl:template match="/">
 <html>
 <head>
+
+<link href="{$contextprefix}/lenya/css/default.css" rel="stylesheet" type="text/css"/>
 
 <!-- These three scripts define the tree, do not remove-->
 <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js"/>
@@ -141,12 +142,8 @@ function findIDbyLink(srclink)
 <xsl:template name="selecttab">
   <xsl:text>?lenya.usecase=info-</xsl:text>
   <xsl:choose>
-  	<xsl:when test="$tab">
-  		<xsl:text><xsl:value-of select="$tab"/></xsl:text>
-    </xsl:when>
-  	<xsl:otherwise>
-        <xsl:text>overview</xsl:text>
-  	</xsl:otherwise>
+  	<xsl:when test="$tab"><xsl:value-of select="$tab"/></xsl:when>
+  	<xsl:otherwise>overview</xsl:otherwise>
   </xsl:choose>
   <xsl:text>&amp;lenya.step=showscreen</xsl:text>
 </xsl:template>
