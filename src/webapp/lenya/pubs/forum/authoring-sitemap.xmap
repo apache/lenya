@@ -21,7 +21,10 @@
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
         <export-directory prefix="resources/publication/export"/>
+        <export-url-prefix substitute="s/\/wyona-cms\/forum//g"/>
+<!--
         <export-substitute-uri pattern="/wyona-cms/forum/" substitution="/"/>
+-->
       </map:action>
       <map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
         <tree-authoring href="docs/publication/authoring/tree.xml"/>

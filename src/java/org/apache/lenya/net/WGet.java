@@ -46,7 +46,7 @@ public class WGet{
           }
         }
       System.out.println(wget);
-      byte[] response=wget.download(new URL(args[0]));
+      byte[] response=wget.download(new URL(args[0]),"s/\\/wyona-cms\\/unipublic//g");
       //wget.saveToFile(new URL(args[0]).getFile(),response);
       //System.out.println(".main(): Response from remote server:\n\n"+new String(response));
       }
@@ -72,7 +72,7 @@ public class WGet{
 /**
  *
  */
-  public byte[] download(URL url) throws IOException, HttpException{
+  public byte[] download(URL url,String prefixSubstitute) throws IOException, HttpException{
     log.debug(".download(): "+url);
 
 
@@ -88,11 +88,13 @@ public class WGet{
       log.info("SED");
       File file=new File(directory_prefix+"/127.0.0.1"+url.getFile());
       //File file=new File(directory_prefix+"/127.0.0.1:8080"+url.getFile());
-      command="/usr/bin/sed --expression=s/\\/wyona-cms\\/unipublic//g "+file.getAbsolutePath();
+      command="/usr/bin/sed --expression="+prefixSubstitute+" "+file.getAbsolutePath();
+/*
+      //command="/usr/bin/sed --expression=s/\\/wyona-cms\\/unipublic//g "+file.getAbsolutePath();
       //command="/usr/bin/sed --expression=s/\\/wyona-cms\\/oscom//g "+file.getAbsolutePath();
+*/
       byte[] wget_response_sed=runProcess(command);
       java.io.ByteArrayInputStream bain=new java.io.ByteArrayInputStream(wget_response_sed);
-      //FileOutputStream fout=new FileOutputStream(file.getAbsolutePath()+".tmp");
       FileOutputStream fout=new FileOutputStream(file.getAbsolutePath());
       int bytes_read=0;
       byte[] buffer=new byte[1024];

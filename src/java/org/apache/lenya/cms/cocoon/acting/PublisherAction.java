@@ -43,6 +43,7 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
     
   //private String replication_queue_href=null;
   private String directoryPrefix=null;
+  private String prefixSubstitute=null; //"s/\\/wyona-cms\\/unipublic//g";
 
   static Category log=Category.getInstance(PublisherAction.class);
 
@@ -58,6 +59,7 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
     treeLivePath = conf.getChild("tree-live").getAttribute("href");
 
     directoryPrefix=conf.getChild("export-directory").getAttribute("prefix");
+    prefixSubstitute=conf.getChild("export-url-prefix").getAttribute("substitute");
 
     //replication_queue_href=conf.getChild("replication-queue").getAttribute("href");
     if (getLogger().isDebugEnabled()) {
@@ -69,6 +71,7 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
 	
 	//getLogger().debug("CONFIGURATION:\nReplication Queue: href="+replication_queue_href);
       getLogger().debug("CONFIGURATION:\nDirectory Prefix: href="+directoryPrefix);
+      getLogger().debug("CONFIGURATION:\nPrefix Substitute: href="+prefixSubstitute);
     }
   }
     /**
@@ -187,7 +190,7 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
       wget.setDirectoryPrefix(exportDirectory);
       URL url=new URL("http://127.0.0.1:"+port+docid);
       getLogger().info("Export static HTML: "+url);
-      byte[] response=wget.download(url);
+      byte[] response=wget.download(url,prefixSubstitute);
       wget.saveToFile(url.getFile(),response);
       }
     catch(Exception e){

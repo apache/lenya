@@ -47,7 +47,10 @@
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
         <export-directory prefix="resources/publication/export/pending"/>
+        <export-url-prefix substitute="s/\/wyona-cms\/unipublic//g"/>
+<!--
         <export-substitute-uri pattern="/wyona-cms/unipublic/" substitution="/"/>
+-->
       </map:action>
 
       <map:action name="article-publisher" src="ch.unizh.unipublic.wyona.cms.ArticlePublisherAction">
@@ -56,7 +59,10 @@
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
         <export-directory prefix="resources/publication/export/pending"/>
+        <export-url-prefix substitute="s/\/wyona-cms\/unipublic//g"/>
+<!--
         <export-substitute-uri pattern="/wyona-cms/unipublic/" substitution="/"/>
+-->
       </map:action>
 
       <map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
