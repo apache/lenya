@@ -1,5 +1,5 @@
 /*
-$Id: LDAPUser.java,v 1.14 2003/08/28 14:06:32 egli Exp $
+$Id: LDAPUser.java,v 1.15 2003/09/18 11:55:26 egli Exp $
 <License>
 
  ============================================================================
@@ -149,7 +149,8 @@ public class LDAPUser extends FileUser {
             String[] attrs = new String[1];
             attrs[0] = "gecos"; /* users full name */
 
-            Attributes answer = ctx.getAttributes("uid=m400032,ou=People", attrs);
+	    String searchString = "uid=" + ldapId + ",ou=People";
+            Attributes answer = ctx.getAttributes(searchString, attrs);
 
             if (answer != null) {
                 Attribute attr = answer.get("gecos");
