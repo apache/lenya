@@ -43,6 +43,7 @@
  */
 package org.apache.lenya.cms.workflow;
 
+import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.FileUser;
 import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.Role;
@@ -50,7 +51,6 @@ import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
@@ -82,22 +82,17 @@ public class WorkflowTest extends TestCase {
      * @param args The command line arguments
      */
     public static void main(String[] args) {
+        args = PublicationHelper.extractPublicationArguments(args);
 
-        String publicationId = args[0];
-        String servletContextPath = args[1];
-        String documentTypeName = args[2];
-        WorkflowTest.init(servletContextPath, publicationId, documentTypeName);
+        String documentTypeName = args[0];
+        WorkflowTest.init(documentTypeName);
 
         TestRunner.run(getSuite());
     }
 
-    public static void init(
-        String servletContextPath,
-        String publicationId,
-        String documentTypeName) {
+    public static void init(String documentTypeName) {
 
-        Publication publication = PublicationFactory.getPublication(publicationId, servletContextPath);
-
+        Publication publication = PublicationHelper.getPublication();
         
         WorkflowInstance instance = null;
         Document document = new DefaultDocument(publication,  "index");
@@ -105,6 +100,7 @@ public class WorkflowTest extends TestCase {
         WorkflowFactory factory = WorkflowFactory.newInstance();
         Exception exception = null;
         try {
+            WorkflowFactory.initHistory(document, "workflow.xml");
             instance = factory.buildInstance(document);
         } catch (WorkflowException e) {
             e.printStackTrace(System.err);
@@ -113,7 +109,6 @@ public class WorkflowTest extends TestCase {
         assertNull(exception);
         
         setInstance(instance);
-        setPublication(publication);
 
     }
 
@@ -134,7 +129,7 @@ public class WorkflowTest extends TestCase {
             
             System.out.println("Current state: " + getInstance().getCurrentState());
             
-            User user = new FileUser(getPublication(), "test-user", "Test Fullname", "test@email", "testPassword");
+            User user = new FileUser(PublicationHelper.getPublication(), "test-user", "Test Fullname", "test@email", "testPassword");
             Role role = new Role(situations[situationIndex].getRole());
             System.out.println("Role: " + role);
         
@@ -217,7 +212,6 @@ public class WorkflowTest extends TestCase {
     }
     
     private static WorkflowInstance instance;
-    private static Publication publication;
     
 
     /* (non-Javadoc)
@@ -225,7 +219,13 @@ public class WorkflowTest extends TestCase {
      */
     protected void setUp() throws Exception {
         if (getInstance() == null) {
-            init("D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "default", "simple");
+            
+            String args[] = {
+                "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya",
+                "test"                
+            };
+            PublicationHelper.extractPublicationArguments(args);
+            init("simple");
         }
     }
 
@@ -242,19 +242,5 @@ public class WorkflowTest extends TestCase {
     public static void setInstance(WorkflowInstance instance) {
         WorkflowTest.instance = instance;
     }
-
-	/**
-	 * @return
-	 */
-	public static Publication getPublication() {
-		return publication;
-	}
-
-	/**
-	 * @param publication
-	 */
-	public static void setPublication(Publication publication) {
-		WorkflowTest.publication = publication;
-	}
 
 }

@@ -16,34 +16,31 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  *
  * @author  andreas
  */
-public class AntTaskTest
-    extends TestCase {
-    
-    /**
-	 * 
-	 */
-	AntTaskTest(String test) {
-		super(test);
-	}
+public class AntTaskTest extends TestCase {
 
-	/**
+    /**
+     * 
+     */
+    public AntTaskTest(String test) {
+        super(test);
+    }
+
+    /**
      * The main program for the IdentityTestCase class
      *
      * @param args The command line arguments
      */
     public static void main(String[] args) {
-        setServletContextPath(args[0]);
+        args = PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(getSuite());
     }
-    
-    private static String servletContextPath;
 
     /**
      *
@@ -57,50 +54,35 @@ public class AntTaskTest
      */
     public void testAntTask() {
         try {
-            
-            String publicationId = "default";
+
+            Publication publication = PublicationHelper.getPublication();
+             
             String taskId = "ant-test";
-            
-            Publication publication = PublicationFactory.getPublication(publicationId, getServletContextPath());
+
             TaskManager manager = new TaskManager(publication.getDirectory().getCanonicalPath());
             AntTask task = (AntTask) manager.getTask(taskId);
-            
+
             Parameters parameters = new Parameters();
-            parameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publicationId);
+            parameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publication.getId());
             task.parameterize(parameters);
-            
+
             final GregorianCalendar beforeExecution = new GregorianCalendar();
             
-            task.execute(getServletContextPath());
-            
+            task.execute(publication.getServletContext().getCanonicalPath());
+
             File logDirectory = new File(publication.getDirectory(), AntTask.LOG_PATH);
             File logFiles[] = logDirectory.listFiles(new FileFilter() {
                 public boolean accept(File file) {
                     return file.lastModified() > beforeExecution.getTimeInMillis();
                 }
             });
-            
+
             assertTrue(logFiles.length == 1);
             File logFile = logFiles[0];
-            
+
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
-    }
-    
-
-    /**
-     * @return
-     */
-    public static String getServletContextPath() {
-        return servletContextPath;
-    }
-
-    /**
-     * @param string
-     */
-    public static void setServletContextPath(String string) {
-        servletContextPath = string;
     }
 
 }
