@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.11 2002/01/18 03:10:29 tinuwyonacms Exp $
+   @version CVS $Id: build.xml,v 1.12 2002/01/22 10:44:51 michicms Exp $
 
 -->
 
@@ -152,7 +152,9 @@
   <!-- Initialization target                                        -->
   <!-- ============================================================ -->
   <target name="init">
-    <tstamp/>
+    <tstamp>
+      <format property="SNAPSHOT_STAMP" pattern="yyyyMMddhhmmss"/>
+    </tstamp>
     
     <property name="fullname" value="Wyona CMS"/>
     <property name="Name"     value="Wyona:CMS"/>
@@ -174,6 +176,10 @@
 
     <property name="packages"      value="org.wyona.*"/>
     <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
+
+    <property name="today"         value="${TODAY}"/>
+    <echo message="Today is ${today}"/>
+    <property name="snapshot.bin.tarfile" value="${dist.root}/${fullname}-${SNAPSHOT_STAMP}.tar"/>
 
     <available file="${tools.jar}" property="tools.jar.present"/>
   </target>
@@ -367,10 +373,39 @@
   -->
   <target name="dist" depends="distclean, war" description="Build a binary distribution tar ball">
 
+    <copy todir="${dist.root}/${fullname}">
+      <fileset dir="${basedir}">
+        <include name="INSTALL*"/>
+        <include name="README"/>
+      </fileset>
+    </copy>
+
     <tar tarfile="${dist.bin.tarfile}" basedir="${dist.root}" includes="${fullname}/**"/>
 
     <gzip zipfile="${dist.bin.tarfile}.gz" src="${dist.bin.tarfile}"/>
     <delete file="${dist.bin.tarfile}"/>
+
+  </target>
+
+  <!--
+  The dist target prepares the binary distribution tarball for
+  end users. It forces a complete rebuild of everything through its
+  dependency on the "clean" target in order to prevent garbage
+  like the cocoon logfiles from ending up in the distribution tarball.
+  -->
+  <target name="snapshot" depends="distclean, war" description="Build a binary distribution tar ball">
+
+    <copy todir="${dist.root}/${fullname}">
+      <fileset dir="${basedir}">
+        <include name="INSTALL*"/>
+        <include name="README"/>
+      </fileset>
+    </copy>
+
+    <tar tarfile="${snapshot.bin.tarfile}" basedir="${dist.root}" includes="${fullname}/**"/>
+
+    <gzip zipfile="${snapshot.bin.tarfile}.gz" src="${snapshot.bin.tarfile}"/>
+    <delete file="${snapshot.bin.tarfile}"/>
 
   </target>
 
