@@ -71,7 +71,7 @@
                 <td class="lenya-entry-caption">
                   <i18n:text>Navigation Title</i18n:text>*: </td>
                 <td>
-                  <input class="lenya-form-element" type="text" name="navigationTitle" value="${usecase.getParameter('navigationTitle')}"/>
+                  <input class="lenya-form-element" type="text" name="title" value="${usecase.getParameter('title')}"/>
                 </td>
               </tr>
               <tr>
@@ -89,7 +89,7 @@
                 <td class="lenya-entry-caption">
                   <i18n:text>Creator</i18n:text>:</td>
                 <td>
-                  <input class="lenya-form-element" type="text" name="user" value="${usecase.getParameter('user')}"/>
+                  <input class="lenya-form-element" type="text" name="creator" value="${usecase.getParameter('creator')}"/>
                 </td>
               </tr>
               <tr>
