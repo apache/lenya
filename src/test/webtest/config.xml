@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config
+        host="localhost"
+        port="8888"
+        protocol="http"
+        saveresponse="true"
+        resultpath="src/test/webtest/results/"
+        verbose="true"
+        basepath="" />

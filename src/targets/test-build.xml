@@ -13,7 +13,9 @@
   </path>
       
   <!-- Runs all tests -->
-  <target name="test" depends="tests.junit, tests.anteater" description="Runs all tests"/>
+  <target name="test"
+      description="Runs all tests"
+      depends="tests.junit, tests.anteater, tests.webtest"/>
   
   <!-- Prepares the test publication -->
   <target name="test.pub.prepare">
@@ -182,6 +184,25 @@
       <!--
       <arg value="-Ddefault.debug=10"/>
       -->
+    </java>
+  </target>
+
+
+  <!-- ================================================ -->
+  <!-- Canoo Webtest tests -->
+  <!-- ================================================ -->
+  <target name="tests.webtest">
+    <property name="webtest.home" value=""/>
+    <property name="webtest.buildfile" value="src/test/webtest/tests.xml"/>
+    <java classname="org.apache.tools.ant.Main" fork="true">
+      <classpath>
+        <fileset dir="${webtest.home}">
+          <include name="lib/**/*.jar"/>
+        </fileset>
+        <pathelement location="${webtest.home}/lib"/>
+      </classpath>
+      <jvmarg value="-Dwebtest.home=${webtest.home}" />
+      <arg line="-f ${webtest.buildfile}"/>
     </java>
   </target>
 

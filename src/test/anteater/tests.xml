@@ -6,16 +6,17 @@
 
 <project name="Lenya Anteater Tests" default="tests">
 
-  &default;
-  
   <taskdef resource="META-INF/Anteater.tasks"/>
   <typedef resource="META-INF/Anteater.types"/>
   
   <property name="default.port" value="8888"/>
+  <property name="default.haltonerror" value="true"/>
 
   <target name="tests"
     depends="
         pubs.default
     "/>
+
+  &default;
 
 </project>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<property name="publication-id" value="default"/>
+
+<target name="pubs.default">
+
+  <testSpec name="pubs.default.intro">
+    &config;
+    <steps>
+      <invoke url="${publication-id}/introduction.html"/>
+      <verifytitle text="Lenya CMS Publication: Default Publication"/>
+    </steps>
+  </testSpec>
+  
+  <testSpec name="pubs.default.login">
+    &config;
+    <steps>
+      <invoke url="${publication-id}/introduction.html"/>
+      <clicklink label="Login as Editor"/>
+      <verifytitle text="LOGIN"/>
+      
+      <setinputfield name="username" value="lenya"/>
+      <setinputfield name="password" value="wrong"/>
+      <clickbutton label="login"/>
+      <verifytitle text="LOGIN"/>
+      <verifytext text="Authentication failed"/>
+      
+      <!--
+      <setinputfield name="username" value="lenya"/>
+      <setinputfield name="password" value="levi"/>
+      <clickbutton label="login"/>
+      <verifytitle text="Apache Lenya - default"/>
+      -->
+      
+    </steps>
+  </testSpec>
+  
+</target>
+  

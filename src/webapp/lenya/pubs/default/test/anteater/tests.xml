@@ -1,16 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<target name="pubs.default">
+<property name="publication-id" value="default"/>
+
+<target name="pubs.default" depends="
+        pubs.default.intro,
+        pubs.default.login,
+        pubs.default.admin
+    "/>
+
+<target name="pubs.default.intro">
   <echo>Testing the default publication</echo>
-  
-  <property name="publication-id" value="default"/>
-  
   <echo>Testing introduction</echo>
   <httpRequest path="/${publication-id}/introduction.html">
     <match>
-<!--      <responseCode value="200"/>-->
+      <responseCode value="200"/>
       <regexp>Default Publication</regexp>
     </match>
   </httpRequest>
+</target>
+
+<target name="pubs.default.login">
+  <echo>Testing login</echo>
   
+  <httpRequest
+      path="/${publication-id}/admin/index.html"
+      followRedirects="true">
+    <match>
+      <responseCode value="200"/>
+      <regexp>Username:</regexp>
+    </match>
+  </httpRequest>
+  
+  <httpRequest
+      path="/${publication-id}/admin/index.html"
+      followRedirects="true">
+    <parameter name="username" value="lenya"/>
+    <parameter name="password" value="levi"/>
+    <match>
+      <responseCode value="200"/>
+      <regexp>Welcome</regexp>
+    </match>
+  </httpRequest>
+  
+</target>
+
+<target name="pubs.default.admin" depends="pubs.default.admin.user"/>
+
+<target name="pubs.default.admin.user">
+  <echo>Testing user administration</echo>
+  <httpRequest path="/${publication-id}/admin/index.html">
+    <match>
+      <responseCode value="200"/>
+      <regexp>Default Publication</regexp>
+    </match>
+  </httpRequest>
 </target>

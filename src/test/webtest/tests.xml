@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [
+  <!ENTITY default SYSTEM "../../webapp/lenya/pubs/default/test/webtest/tests.xml">
+  <!ENTITY config SYSTEM "config.xml"> 
+]>
+
+<project name="Lenya webtest tests" default="tests">
+
+  <taskdef file="${webtest.home}/webtestTaskdefs.properties">
+    <classpath>
+      <fileset dir="${webtest.home}" includes="**/lib/*.jar"/>
+    </classpath>
+  </taskdef>
+
+  <target name="tests" depends="pubs.default"/>
+  
+  &default;
+  
+</project>

@@ -56,6 +56,7 @@ cache.dir=/usr/local/tomcat/work/Standalone/localhost/lenya
 #enable.log4j=true
 
 #------------------------------------------------------------------------------------
-# Anteater home directory
+# Anteater and Webtest home directories
 
 #anteater.home=/usr/local/anteater
+#webtest.home = /usr/local/canoo-webtest
