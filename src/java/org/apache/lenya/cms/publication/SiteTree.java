@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTree.java,v 1.7 2003/05/28 13:18:11 egli Exp $
+ * $Id: SiteTree.java,v 1.8 2003/06/11 17:25:08 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -71,6 +71,20 @@ public interface SiteTree {
 		 String href, String suffix, boolean link)
 	throws SiteTreeException;
     
+	/**
+	 * Add a node.
+	 * Compute the parent id and the id of the node from the document-id
+	 *
+	 * @param documentid 
+	 * @param labels
+	 * @param href
+	 * @param suffix
+	 * @param link
+	 */
+	void addNode(String documentid, Label[] labels, String href,
+		 String suffix, boolean link)
+	throws SiteTreeException;
+
     /**
      * Add a node. This method is typically used when publishing,
      * i.e. when copying a node from the authoring tree to the live
@@ -86,13 +100,15 @@ public interface SiteTree {
 	throws SiteTreeException;
     
     /**
-     * Delete the node with the given document-id.
+	 * Removes the node corresponding to the given document-id 
+     * from the tree, and returns it.
      * 
-	 * @param id
+     * @param documentId
+	 * @return
 	 */
-	void deleteNode(String documentId);
-    
-    /**
+	SiteTreeNode removeNode(String documentId); 
+
+	/**
      * Return the Node for a given document-id.
      * 
 	 * @param documentId
