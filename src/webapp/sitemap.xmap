@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.7 2002/03/04 15:00:39 memo Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.8 2002/03/25 15:35:12 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -126,6 +126,11 @@
 <!-- Documentation -->
      <map:match pattern="docs/**">
        <map:mount uri-prefix="docs" src="wyona/cms/pubs/wyona-cms-docs/" check-reload="true" reload-method="synchron"/>
+     </map:match>
+
+<!-- Materials Science -->
+     <map:match pattern="slides/**">
+       <map:mount uri-prefix="slides" src="wyona/cms/pubs/slides/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
 
 <!-- Materials Science -->
