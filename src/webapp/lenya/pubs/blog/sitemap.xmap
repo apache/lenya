@@ -1,21 +1,10 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.23 2003/08/29 14:02:57 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.24 2003/08/29 14:32:30 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components>
-    <map:selectors default="browser">
-      <map:selector logger="sitemap.selector.request-method" name="request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
-    </map:selectors>
-    <map:serializers>
-      <map:serializer logger="sitemap.serializer.xhtml-bxeng" mime-type="text/html" name="xhtml-bxeng" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
-        <doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</doctype-public>
-        <doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</doctype-system>
-        <encoding>ISO-8859-1</encoding>
-      </map:serializer>
-    </map:serializers>
-  </map:components>
+  <map:components/>
 
   <map:views/>
 
@@ -88,9 +77,6 @@
     </map:pipeline>
 
     <!-- BX Editor: Entries -->
-<!--
-    <map:pipeline type="noncaching">
--->
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/index-bxeng.html">
 <!--
