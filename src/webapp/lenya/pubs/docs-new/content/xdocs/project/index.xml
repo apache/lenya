@@ -26,9 +26,8 @@ user's data, such as for instance articles, press-releases or addresses,
 but also regarding functionalities, such as for instance
 access controlling (IML and PML resp. <link href="http://www.oasis-open.org/committees/xacml/">XACML</link>), 
 revision controlling (RCML)
-or workflow management (WFML). The concept is similar to the one of a
-"HTML Browser". You should be able to switch the Content Management System
-at any time. The network is the CMS.
+or workflow management (WFML).
+The network is the CMS.
 </p>
 
 <p>
