@@ -392,6 +392,23 @@
 				<map:generate src="docs/publication/authoring/{1}.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
+						<!-- Fallback matcher (for wraping files) -->
+			<map:match pattern="*/*">
+				<map:aggregate element="wyona" label="gregor">
+					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
+					<map:part src="docs/publication/authoring/{1}/{2}" element="wrapper"/>
+					<map:part src="docs/publication/authoring/small-preview.xml"/>
+					<map:part src="docs/publication/authoring/sitetree.xml"/>
+					<map:part src="cocoon:/today"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Authoring/wrapper.xsl">
+					<map:parameter name="id" value="/{1}/index.html"/>
+					<map:parameter name="authoring" value="true"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+				<map:serialize type="html"/>
+			</map:match>
 		</map:pipeline>
 	</map:pipelines>
 </map:sitemap>

@@ -39,7 +39,7 @@ document.write('<scr'+'ipt language="JavaScript" src="http://ad.ch.doubleclick.n
 		</td>
 	</xsl:template>
 	<xsl:template match="td[@id = 'b148']">
-		<td width="148" height="400" bgcolor="#FFFFFF" valign="middle">
+		<td width="148" height="400" bgcolor="#EFEFE7" valign="middle">
 			<table cellspacing="0" cellpadding="0" border="0" width="148" height="800">
 				<tr>
 					<td valign="top" border="0" width="148" height="800">
