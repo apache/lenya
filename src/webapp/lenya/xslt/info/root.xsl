@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.15 2003/07/31 11:57:18 gregor Exp $
+ $Id: root.xsl,v 1.16 2003/08/13 14:33:27 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -78,12 +78,12 @@ function findIDbyLink(srclink)
       <div style="display:none;"><table border="0"><tr><td><a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a></td></tr></table></div>
     </div>
   <script>initializeDocument();
- loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>?lenya.usecase=info&amp;lenya.step=showscreen&amp;lenya.area=authoring');
+ loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=authoring');
    </script>
 </div>
 <div id="lenya-info-content"><iframe src="" id="basefrm" name="basefrm" frameborder="0" width="100%" height="100%"></iframe>
   <script>
-   	frames['basefrm'].location.href = '<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>?lenya.usecase=info&amp;lenya.step=showscreen';
+   	frames['basefrm'].location.href = '<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen';
    </script>
 </div>
 </body>
