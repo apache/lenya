@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableDocumentCreator.java,v 1.10 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id: ConfigurableDocumentCreator.java,v 1.11 2004/05/16 23:23:13 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -50,7 +50,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-
+/**
+ * Uses XSLT to transform a XML into a Lucene document
+ */
 public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
     Category log = Category.getInstance(ConfigurableDocumentCreator.class);
   
