@@ -56,8 +56,8 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.ac2.Authorizer;
 import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * @author andreas
@@ -69,7 +69,7 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
 
     protected static final String AUTHORIZER_ELEMENT = "authorizer";
     protected static final String CLASS_ATTRIBUTE = "src";
-    
+
     private List authorizers = new ArrayList();
 
     /**
@@ -77,18 +77,18 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
      */
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
-        
+
         Configuration authorizerConfigurations[] = conf.getChildren(AUTHORIZER_ELEMENT);
         for (int i = 0; i < authorizerConfigurations.length; i++) {
             String className = authorizerConfigurations[i].getAttribute(CLASS_ATTRIBUTE);
-        
+
             Authorizer authorizer;
             try {
                 authorizer = (Authorizer) Class.forName(className).newInstance();
             } catch (Exception e) {
                 throw new ConfigurationException("Creating authorizer failed: ", e);
             }
-        
+
             authorizer.configure(authorizerConfigurations[i]);
             authorizers.add(authorizer);
         }
@@ -101,7 +101,7 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
     protected Authorizer[] getAuthorizers() {
         return (Authorizer[]) authorizers.toArray(new Authorizer[authorizers.size()]);
     }
-    
+
     /**
      * Returns if this action has authorizers.
      * @return A boolean value.
@@ -115,31 +115,41 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
      */
     public boolean authorize(Request request, Map ignore) throws Exception {
         boolean authorized = false;
-        
+
         if (request != null) {
-            
+
             Session session = request.getSession(true);
 
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Identity: " + identity);
+                getLogger().debug("Trying to authorize identity: " + identity);
             }
-        
+
             if (identity != null) {
-                String url = envelope.getDocumentURL();
 
                 if (hasAuthorizers()) {
                     Authorizer authorizers[] = getAuthorizers();
                     int i = 0;
                     authorized = true;
                     while (i < authorizers.length && authorized) {
-                        authorized = authorized && authorizers[i].authorize(identity, getPageEnvelope(), request);
+                        authorized =
+                            authorized
+                                && authorizers[i].authorize(identity, getPublication(), request);
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug(
+                                "Authorizer ["
+                                    + authorizers[i]
+                                    + "] returned ["
+                                    + authorized
+                                    + "]");
+                        }
+
                         i++;
                     }
                 }
             }
         }
-    
+
         return authorized;
     }
 
@@ -153,19 +163,19 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
         String src,
         Parameters parameters)
         throws Exception {
-        
-        envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+
+        publication = PublicationFactory.getPublication(objectModel);
         return super.act(redirector, resolver, objectModel, src, parameters);
     }
-    
-    private PageEnvelope envelope;
+
+    private Publication publication;
 
     /**
      * Returns the envelope of the current page.
      * @return A page envelope.
      */
-    protected PageEnvelope getPageEnvelope() {
-        return envelope;
+    protected Publication getPublication() {
+        return publication;
     }
 
 }
