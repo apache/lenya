@@ -1,5 +1,5 @@
 /*
- * $Id: LoadQuartzServlet.java,v 1.17 2003/02/11 20:38:23 andreas Exp $
+ * $Id: LoadQuartzServlet.java,v 1.18 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,34 +43,13 @@
  */
 package org.wyona.cms.scheduler;
 
-import org.apache.log4j.Category;
-
-import org.quartz.*;
-import org.quartz.SchedulerFactory;
-
-import org.quartz.impl.*;
-
-import org.quartz.simpl.*;
-
-import org.quartz.spi.*;
-
-import org.quartz.utils.*;
-
-import org.wyona.cms.publishing.PublishingEnvironment;
-
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.Properties;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -78,7 +57,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Category;
+import org.quartz.SchedulerException;
 import org.w3c.dom.Document;
+import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.xml.DocumentHelper;
 
 
@@ -86,7 +69,7 @@ import org.wyona.xml.DocumentHelper;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.17 2003/02/11 20:38:23 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.18 2003/02/20 13:40:41 gregor Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     static Category log = Category.getInstance(LoadQuartzServlet.class);

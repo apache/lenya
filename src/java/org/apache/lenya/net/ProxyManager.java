@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyManager.java,v 1.3 2003/02/17 13:06:57 egli Exp $
+ * $Id: ProxyManager.java,v 1.4 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,14 +47,9 @@ import org.apache.log4j.Category;
 
 import org.w3c.dom.*;
 
-import org.wyona.util.WildcardFilter;
-
 import org.wyona.xml.*;
 
-import java.io.IOException;
-
 import java.util.Properties;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
 

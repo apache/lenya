@@ -1,5 +1,5 @@
 /*
- * $Id: TriggerHelper.java,v 1.6 2003/02/11 19:51:09 andreas Exp $
+ * $Id: TriggerHelper.java,v 1.7 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -54,8 +54,6 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
 import org.w3c.dom.Element;
 import org.wyona.cms.scheduler.SchedulerWrapper;
 import org.wyona.xml.NamespaceHelper;

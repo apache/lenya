@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthenticatorAction.java,v 1.5 2003/02/13 19:17:35 andreas Exp $
+ * $Id: AbstractAuthenticatorAction.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,13 +48,11 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.util.Tokenizer;
 
 import java.util.HashMap;
 import java.util.Map;

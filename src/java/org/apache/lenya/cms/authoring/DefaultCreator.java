@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.5 2003/02/10 14:49:39 egliwyona Exp $
+ * $Id: DefaultCreator.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,8 +44,6 @@
 package org.wyona.cms.authoring;
 
 import org.dom4j.Node;
-
-import org.wyona.cms.authoring.AbstractParentChildCreator;
 
 import java.io.File;
 

@@ -1,5 +1,5 @@
 /*
- * $Id: XmlUtil.java,v 1.5 2003/02/17 13:06:57 egli Exp $
+ * $Id: XmlUtil.java,v 1.6 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,14 +45,10 @@ package org.wyona.util;
 
 
 // SAX
-import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.SAXException;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 // JAXP
 import javax.xml.parsers.FactoryConfigurationError;
@@ -62,7 +58,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 
 /**
- * XmlUtil.java $Id: XmlUtil.java,v 1.5 2003/02/17 13:06:57 egli Exp $ Created: Thu Jan 24 18:27:05
+ * XmlUtil.java $Id: XmlUtil.java,v 1.6 2003/02/20 13:40:42 gregor Exp $ Created: Thu Jan 24 18:27:05
  * 2002 Utility Class for checking XML content for well-formedness
  *
  * @author <a href="mailto:memo@otego.com">Memo Birgi</a>

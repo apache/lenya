@@ -1,5 +1,5 @@
 /*
- * $Id: SearchFiles.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: SearchFiles.java,v 1.3 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -54,7 +54,6 @@ import org.apache.lucene.search.Searcher;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 

@@ -1,5 +1,5 @@
 /*
- * $Id: GetMillis.java,v 1.3 2003/02/13 19:43:07 andreas Exp $
+ * $Id: GetMillis.java,v 1.4 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,7 +43,6 @@
  */
 package org.wyona.util;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 

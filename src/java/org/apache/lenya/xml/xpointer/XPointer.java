@@ -1,5 +1,5 @@
 /*
- * $Id: XPointer.java,v 1.2 2003/02/07 12:14:26 ah Exp $
+ * $Id: XPointer.java,v 1.3 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,10 +44,6 @@
 package org.wyona.xml.xpointer;
 
 import org.w3c.dom.*;
-
-import org.wyona.xml.*;
-
-import java.io.*;
 
 import java.util.*;
 

@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyGenerator.java,v 1.8 2003/02/07 12:14:09 ah Exp $
+ * $Id: ProxyGenerator.java,v 1.9 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,15 +48,12 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.Cookie;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
-import org.apache.cocoon.environment.http.HttpSession;
-import org.apache.cocoon.environment.wrapper.*;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpState;
@@ -79,7 +76,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.Map;
 
 

@@ -1,5 +1,5 @@
 /*
- * $Id: InsertDossierTask.java,v 1.3 2003/02/07 12:14:06 ah Exp $
+ * $Id: InsertDossierTask.java,v 1.4 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,8 +59,6 @@ import org.dom4j.io.XMLWriter;
 
 import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.task.AbstractTask;
-
-import org.wyona.xml.DOM4JUtil;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionControllerAction.java,v 1.8 2003/02/07 12:14:08 ah Exp $
+ * $Id: RevisionControllerAction.java,v 1.9 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,20 +48,16 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.util.Tokenizer;
 
 import org.wyona.cms.ac.Identity;
-import org.wyona.cms.rc.FileReservedCheckOutException;
 import org.wyona.cms.rc.RevisionController;
 
-import java.util.HashMap;
 import java.util.Map;
 
 

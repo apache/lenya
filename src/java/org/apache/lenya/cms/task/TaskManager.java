@@ -1,5 +1,5 @@
 /*
- * $Id: TaskManager.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
+ * $Id: TaskManager.java,v 1.4 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,8 +51,6 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Category;
 
 import java.io.File;
-
-import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;

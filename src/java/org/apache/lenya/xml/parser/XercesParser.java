@@ -1,5 +1,5 @@
 /*
- * $Id: XercesParser.java,v 1.3 2003/02/13 19:10:17 andreas Exp $
+ * $Id: XercesParser.java,v 1.4 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,8 +49,6 @@ import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.*;
 
 import org.wyona.xml.DOMWriter;
-
-import org.xml.sax.*;
 
 import java.io.*;
 

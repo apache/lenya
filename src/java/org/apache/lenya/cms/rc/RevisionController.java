@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionController.java,v 1.8 2003/02/19 10:10:57 egli Exp $
+ * $Id: RevisionController.java,v 1.9 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,25 +45,16 @@ package org.wyona.cms.rc;
 
 import org.apache.log4j.Category;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import org.wyona.util.XPSFileOutputStream;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import java.util.Date;
-import java.util.Vector;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
- * $Id: TaskSequence.java,v 1.4 2003/02/17 13:00:03 egli Exp $
+ * $Id: TaskSequence.java,v 1.5 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,21 +48,10 @@
  */
 package org.wyona.cms.task;
 
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.log4j.Category;
-
-import org.dom4j.DocumentFactory;
-import org.dom4j.Namespace;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
 
 
 /**

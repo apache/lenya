@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.6 2003/02/17 11:38:29 egli Exp $
+ * $Id: NewArticleCreator.java,v 1.7 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,7 +48,6 @@ import org.apache.log4j.Category;
 import org.wyona.cms.authoring.AbstractParentChildCreator;
 
 import java.io.File;
-import java.io.FileWriter;
 
 
 /**

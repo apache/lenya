@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.11 2003/02/12 23:06:09 andreas Exp $
+ * $Id: TaskJob.java,v 1.12 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -65,10 +65,6 @@ import org.wyona.cms.task.TaskManager;
 import java.io.File;
 
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.avalon.framework.parameters.ParameterException;

@@ -1,5 +1,5 @@
 /*
- * $Id: Task.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
+ * $Id: Task.java,v 1.5 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,7 +44,6 @@
 package org.wyona.cms.task;
 
 import org.apache.avalon.framework.parameters.Parameterizable;
-import org.apache.avalon.framework.parameters.Parameters;
 
 /**
  * A Task is a command that can be executed. <br/

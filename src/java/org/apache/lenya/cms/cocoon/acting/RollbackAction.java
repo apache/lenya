@@ -1,5 +1,5 @@
 /*
- * $Id: RollbackAction.java,v 1.5 2003/02/17 11:58:11 egli Exp $
+ * $Id: RollbackAction.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,26 +48,13 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.Constants;
-import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
-import org.wyona.cms.rc.FileReservedCheckInException;
-
-import org.wyona.xml.DOMParserFactory;
-import org.wyona.xml.DOMWriter;
-
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;

@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleTask.java,v 1.10 2003/02/07 12:14:06 ah Exp $
+ * $Id: ArticleTask.java,v 1.11 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,17 +43,7 @@
  */
 package ch.unizh.unipublic.wyona.cms;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.cocoon.Constants;
-import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
-import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
-import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.log4j.Category;
 
@@ -67,27 +57,19 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import org.wyona.cms.publishing.DefaultFilePublisher;
 import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.task.AbstractTask;
 
 import org.wyona.util.DateUtil;
 
-import org.wyona.xml.DOM4JUtil;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-
-import java.net.URL;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 

@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyItem.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: ProxyItem.java,v 1.3 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,8 +48,6 @@ import org.apache.regexp.*;
 import org.w3c.dom.*;
 
 import org.wyona.xml.*;
-
-import java.util.Vector;
 
 
 /**

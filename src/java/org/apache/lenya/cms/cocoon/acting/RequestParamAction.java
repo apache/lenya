@@ -1,5 +1,5 @@
 /*
- * $Id: RequestParamAction.java,v 1.2 2003/02/07 12:14:08 ah Exp $
+ * $Id: RequestParamAction.java,v 1.3 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,7 +50,6 @@ package org.wyona.cms.cocoon.acting;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -101,7 +100,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:Marcus.Crafter@osa.de">Marcus Crafter</a>
  * @author <a href="mailto:tcurdt@dff.st">Torsten Curdt</a>
- * @version CVS $Id: RequestParamAction.java,v 1.2 2003/02/07 12:14:08 ah Exp $
+ * @version CVS $Id: RequestParamAction.java,v 1.3 2003/02/20 13:40:40 gregor Exp $
  */
 public class RequestParamAction extends org.apache.cocoon.acting.ComposerAction
     implements ThreadSafe {

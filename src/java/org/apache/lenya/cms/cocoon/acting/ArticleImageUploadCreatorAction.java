@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleImageUploadCreatorAction.java,v 1.26 2003/02/13 19:17:35 andreas Exp $
+ * $Id: ArticleImageUploadCreatorAction.java,v 1.27 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,13 +43,11 @@
  */
 package org.wyona.cms.cocoon.acting;
 
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.acting.AbstractConfigurableAction;
 import org.apache.cocoon.components.request.multipart.*;
 import org.apache.cocoon.environment.Context;

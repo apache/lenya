@@ -1,5 +1,5 @@
 /*
- * $Id: XPSFileOutputStream.java,v 1.3 2003/02/17 13:06:57 egli Exp $
+ * $Id: XPSFileOutputStream.java,v 1.4 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,7 +47,6 @@ import org.apache.log4j.Category;
 
 import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 

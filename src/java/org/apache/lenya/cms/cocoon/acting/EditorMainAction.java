@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.11 2003/02/17 16:20:56 egli Exp $
+ * $Id: EditorMainAction.java,v 1.12 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,16 +43,12 @@
  */
 package org.wyona.cms.cocoon.acting;
 
-import org.apache.avalon.framework.component.Composable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.thread.ThreadSafe;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
-import org.apache.cocoon.acting.ValidatorActionHelper;
 import org.apache.cocoon.components.parser.Parser;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
@@ -60,11 +56,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.util.PostInputStream;
-import org.apache.cocoon.util.Tokenizer;
 import org.apache.cocoon.xml.AbstractXMLConsumer;
-
-import org.w3c.dom.Document;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -72,28 +64,18 @@ import org.xml.sax.SAXException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.CharArrayReader;
-import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.StringReader;
-import java.io.Writer;
-
-import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.cocoon.environment.ObjectModelHelper;
 
-
 /**
- * $Id: EditorMainAction.java,v 1.11 2003/02/17 16:20:56 egli Exp $
+ * $Id: EditorMainAction.java,v 1.12 2003/02/20 13:40:40 gregor Exp $
  *
  * @author Martin Lüthi
  * @version 2002.01.22

@@ -45,10 +45,6 @@
 
 package org.wyona.xml;
 
-import org.wyona.xml.*;
-import java.io.*;
-import java.util.*;
-import org.w3c.dom.*;
 
 /**
  * @author Michael Wechner (http://www.wyona.com)

@@ -1,5 +1,5 @@
 /*
- * $Id: ReservedCheckoutAction.java,v 1.3 2003/02/07 12:14:08 ah Exp $
+ * $Id: ReservedCheckoutAction.java,v 1.4 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,12 +43,10 @@
  */
 package org.wyona.cms.cocoon.acting;
 
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 

@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.6 2003/02/17 13:21:36 egli Exp $
+ * $Id: DocumentHelper.java,v 1.7 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -64,8 +64,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.log.Hierarchy;
-import org.apache.log.Logger;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

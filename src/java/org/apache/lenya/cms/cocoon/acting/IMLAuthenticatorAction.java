@@ -1,5 +1,5 @@
 /*
- * $Id: IMLAuthenticatorAction.java,v 1.6 2003/02/17 11:38:29 egli Exp $
+ * $Id: IMLAuthenticatorAction.java,v 1.7 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,13 +51,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import org.wyona.cms.ac.Identity;
 import org.wyona.cms.ac.Password;
-
-import java.io.File;
 
 import java.net.URL;
 

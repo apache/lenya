@@ -1,5 +1,5 @@
 /*
- * $Id: DossierAction.java,v 1.5 2003/02/17 10:57:12 egli Exp $
+ * $Id: DossierAction.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,7 +45,6 @@ package ch.unizh.unipublic.wyona.cms;
 
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
@@ -58,10 +57,8 @@ import org.apache.log4j.Category;
 import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
-import org.dom4j.Node;
 import org.dom4j.XPath;
 
-import org.dom4j.io.DOMReader;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
@@ -70,7 +67,6 @@ import org.wyona.cms.publishing.PublishingEnvironment;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 
 import java.util.Enumeration;
 import java.util.HashMap;

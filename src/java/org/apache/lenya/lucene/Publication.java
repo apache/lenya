@@ -1,5 +1,5 @@
 /*
- * $Id: Publication.java,v 1.1 2003/02/18 00:44:41 michi Exp $
+ * $Id: Publication.java,v 1.2 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,22 +43,12 @@
  */
 package org.wyona.lucene;
 
-import org.apache.lucene.analysis.Token;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-
-import org.wyona.lucene.html.HTMLParser;
-
-import java.io.*;
-import java.io.File;
-import java.util.StringTokenizer;
-
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Publication {
     public String id = null;

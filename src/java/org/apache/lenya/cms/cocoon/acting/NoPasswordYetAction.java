@@ -1,5 +1,5 @@
 /*
- * $Id: NoPasswordYetAction.java,v 1.3 2003/02/13 19:17:35 andreas Exp $
+ * $Id: NoPasswordYetAction.java,v 1.4 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,14 +45,10 @@ package org.wyona.cms.cocoon.acting;
 
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-
-import org.xml.sax.EntityResolver;
 
 import java.io.File;
 
@@ -65,7 +61,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class NoPasswordYetAction extends AbstractAction {
     /**

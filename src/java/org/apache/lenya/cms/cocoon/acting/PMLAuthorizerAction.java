@@ -1,5 +1,5 @@
 /*
- * $Id: PMLAuthorizerAction.java,v 1.11 2003/02/17 11:38:29 egli Exp $
+ * $Id: PMLAuthorizerAction.java,v 1.12 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,14 +47,8 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.thread.ThreadSafe;
 
-import org.apache.cocoon.Constants;
-import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
-import org.apache.cocoon.acting.ValidatorActionHelper;
-import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.util.Tokenizer;
 
 import org.apache.xpath.XPathAPI;
 
@@ -65,9 +59,7 @@ import org.wyona.cms.ac.Policy;
 
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

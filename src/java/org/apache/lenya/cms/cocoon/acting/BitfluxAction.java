@@ -1,5 +1,5 @@
 /*
- * $Id: BitfluxAction.java,v 1.5 2003/02/17 11:38:29 egli Exp $
+ * $Id: BitfluxAction.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,7 +44,6 @@
 package org.wyona.cms.cocoon.acting;
 
 import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.avalon.excalibur.io.IOUtil;
 import org.apache.avalon.framework.component.ComponentException;
 import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -57,16 +56,12 @@ import org.apache.cocoon.components.parser.Parser;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Session;
-import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.serialization.Serializer;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.cocoon.util.PostInputStream;
 import org.apache.cocoon.xml.dom.DOMStreamer;
-
-import org.dom4j.io.DOMReader;
-import org.dom4j.io.XMLWriter;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -79,12 +74,8 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
 
 import java.lang.String;
 

@@ -1,5 +1,5 @@
 /*
- * $Id: RCServlet.java,v 1.3 2003/02/18 18:16:41 egli Exp $
+ * $Id: RCServlet.java,v 1.4 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,10 +50,8 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * DOCUMENT ME!

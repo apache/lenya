@@ -1,5 +1,5 @@
 /*
- * $Id: SchedulerWrapper.java,v 1.8 2003/02/12 23:30:22 andreas Exp $
+ * $Id: SchedulerWrapper.java,v 1.9 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -63,7 +63,6 @@ import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
 import org.wyona.cms.publishing.PublishingEnvironment;
-import org.wyona.cms.scheduler.TaskJob;
 import org.wyona.cms.scheduler.xml.TriggerHelper;
 
 import java.io.File;

@@ -1,5 +1,5 @@
 /*
- * $Id: ServletJob.java,v 1.4 2003/02/11 19:51:09 andreas Exp $
+ * $Id: ServletJob.java,v 1.5 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,11 +43,8 @@
  */
 package org.wyona.cms.scheduler;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
 import org.quartz.*;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import org.w3c.dom.Element;
 import org.wyona.xml.NamespaceHelper;

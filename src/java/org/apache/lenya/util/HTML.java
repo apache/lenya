@@ -1,5 +1,5 @@
 /*
- * $Id: HTML.java,v 1.7 2003/02/07 12:14:24 ah Exp $
+ * $Id: HTML.java,v 1.8 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,7 +51,6 @@ import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 

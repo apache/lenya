@@ -1,5 +1,5 @@
 /*
- * $Id: IncludeTransformer.java,v 1.5 2003/02/17 11:58:11 egli Exp $
+ * $Id: IncludeTransformer.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,7 +47,6 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.transformation.AbstractDOMTransformer;

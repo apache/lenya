@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleCreator.java,v 1.3 2003/02/17 10:57:12 egli Exp $
+ * $Id: ArticleCreator.java,v 1.4 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,13 +52,8 @@ import org.dom4j.io.SAXReader;
 
 import org.wyona.cms.authoring.AbstractParentChildCreator;
 
-import org.wyona.util.DateUtil;
-
 import java.io.File;
 import java.io.FileWriter;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
- * $Id: MalformedXPointerException.java,v 1.2 2003/02/07 12:14:25 ah Exp $
+ * $Id: MalformedXPointerException.java,v 1.3 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -42,10 +42,6 @@
  * </License>
  */
 package org.wyona.xml;
-
-import java.io.*;
-
-import java.util.*;
 
 
 /**

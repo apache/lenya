@@ -1,5 +1,5 @@
 /*
- * $Id: Stack.java,v 1.4 2003/02/17 13:06:57 egli Exp $
+ * $Id: Stack.java,v 1.5 2003/02/20 13:40:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -42,8 +42,6 @@
  * </License>
  */
 package org.wyona.util;
-
-import java.io.*;
 
 import java.util.*;
 

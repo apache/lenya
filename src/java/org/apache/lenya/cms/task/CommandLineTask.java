@@ -1,5 +1,5 @@
 /*
- * $Id: CommandLineTask.java,v 1.5 2003/02/17 13:00:03 egli Exp $
+ * $Id: CommandLineTask.java,v 1.6 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -42,8 +42,6 @@
  * </License>
  */
 package org.wyona.cms.task;
-
-import org.apache.avalon.framework.parameters.ParameterException;
 
 
 /**

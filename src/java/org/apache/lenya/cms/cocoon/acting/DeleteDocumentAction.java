@@ -1,5 +1,5 @@
 /*
- * $Id: DeleteDocumentAction.java,v 1.5 2003/02/17 11:38:29 egli Exp $
+ * $Id: DeleteDocumentAction.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,36 +48,17 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
-import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.util.Tokenizer;
-
-import org.dom4j.Attribute;
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.XPath;
-
-import org.dom4j.io.SAXReader;
-
-import org.wyona.cms.authoring.AbstractParentChildCreator;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import org.apache.cocoon.environment.ObjectModelHelper;
 
 

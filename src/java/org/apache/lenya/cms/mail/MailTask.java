@@ -1,5 +1,5 @@
 /*
- * $Id: MailTask.java,v 1.22 2003/02/17 13:23:43 egli Exp $
+ * $Id: MailTask.java,v 1.23 2003/02/20 13:40:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,7 +66,6 @@ import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 
 /**
