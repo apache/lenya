@@ -1,5 +1,5 @@
 /*
-$Id: RCML.java,v 1.16 2003/07/31 11:56:42 andreas Exp $
+$Id: RCML.java,v 1.17 2003/08/26 15:51:12 edith Exp $
 <License>
 
  ============================================================================
@@ -110,12 +110,12 @@ public class RCML {
     public RCML(String rcmlDirectory, String filename, String rootDirectory)
         throws Exception {
         this();
-        rcmlFile = new File(rcmlDirectory + "/" + filename + ".rcml");
+        rcmlFile = new File(rcmlDirectory , filename + ".rcml");
 
         if (!rcmlFile.isFile()) {
             // The rcml file does not yet exist, so we create it now...
             //
-            File dataFile = new File(rootDirectory + filename);
+            File dataFile = new File(rootDirectory , filename);
             long lastModified = 0;
 
             if (dataFile.isFile()) {

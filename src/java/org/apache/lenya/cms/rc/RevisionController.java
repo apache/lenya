@@ -1,5 +1,5 @@
 /*
-$Id: RevisionController.java,v 1.20 2003/07/25 18:59:04 gregor Exp $
+$Id: RevisionController.java,v 1.21 2003/08/26 15:51:12 edith Exp $
 <License>
 
  ============================================================================
@@ -262,11 +262,11 @@ public class RevisionController {
             }
         }
 
-        File originalFile = new File(rootDir + destination);
+        File originalFile = new File(rootDir , destination);
         long time = new Date().getTime();
 
         if (backup && originalFile.isFile()) {
-            File backupFile = new File(backupDir + "/" + destination + ".bak." + time);
+            File backupFile = new File(backupDir , destination + ".bak." + time);
             File parent = new File(backupFile.getParent());
 
             if (!parent.isDirectory()) {
@@ -309,7 +309,7 @@ public class RevisionController {
      * @return DOCUMENT ME!
      */
     public String getBackupFilename(long time, String filename) {
-        File backup = new File(backupDir + "/" + filename + ".bak." + time);
+        File backup = new File(backupDir , filename + ".bak." + time);
 
         return backup.getAbsolutePath();
     }
@@ -334,8 +334,8 @@ public class RevisionController {
             Exception {
         // Make sure the old version exists
         //
-        File backup = new File(backupDir + "/" + destination + ".bak." + time);
-        File current = new File(rootDir + destination);
+        File backup = new File(backupDir , destination + ".bak." + time);
+        File current = new File(rootDir , destination);
 
         if (!backup.isFile()) {
             throw new FileNotFoundException(backup.getAbsolutePath());
