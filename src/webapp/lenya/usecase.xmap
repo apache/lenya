@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.219 2004/07/25 11:27:36 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.220 2004/07/25 11:56:24 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -941,11 +941,7 @@
           <map:match pattern="removelabel" type="step">
             <map:act type="task">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
-              <map:generate type="serverpages" src="{fallback:content/util/redirect-document.xsp}">
-                <map:parameter name="language" value="{page-envelope:default-language}"/>
-              </map:generate>
-              <map:transform src="{fallback:xslt/util/redirect-document.xsl}"/>
-              <map:serialize/>
+              <map:redirect-to uri="{document-url:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:default-language}}"/>
             </map:act>
           </map:match>
 
