@@ -123,11 +123,11 @@
 </xsl:template>
 
 <xsl:template match="xsp-lenya:area">
-  <xsp:expr>xspPageEnvelope.getArea()</xsp:expr>
+  <xsp:expr>xspPageEnvelope.getDocument().getArea()</xsp:expr>
 </xsl:template>
 
 <xsl:template match="xsp-lenya:document-id">
-  <xsp:expr>xspPageEnvelope.getDocumentId()</xsp:expr>
+  <xsp:expr>xspPageEnvelope.getDocument().getId()</xsp:expr>
 </xsl:template>
 
 
