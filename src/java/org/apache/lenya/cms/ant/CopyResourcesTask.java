@@ -1,5 +1,5 @@
 /*
-$Id: CopyResourcesTask.java,v 1.4 2003/10/21 09:51:55 andreas Exp $
+$Id: CopyResourcesTask.java,v 1.5 2003/10/22 16:40:19 edith Exp $
 <License>
 
  ============================================================================
@@ -56,9 +56,12 @@ $Id: CopyResourcesTask.java,v 1.4 2003/10/21 09:51:55 andreas Exp $
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
@@ -66,7 +69,6 @@ import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-import org.apache.lenya.util.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -77,97 +79,90 @@ import org.apache.tools.ant.BuildException;
  */
 public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
-    /**
-     * 
-     */
-    public CopyResourcesTask() {
-        super();
-    }
+	/**
+	 * 
+	 */
+	public CopyResourcesTask() {
+		super();
+	}
 
-    /**
-     * Copy the resources files belongs to the documents corresponding to this node
-     *  
-     * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
-     */
-    public void visitSiteTreeNode(SiteTreeNode node) {
-        log("visitSiteTreeNode in ");
-        Publication publication = getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder(); 
+	/**
+	 * Copy the resources files belongs to the documents corresponding to this node
+	 *  
+	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	 */
+	public void visitSiteTreeNode(SiteTreeNode node) {
+		Publication publication = getPublication();
+		DocumentBuilder builder = publication.getDocumentBuilder();
 
-        String parentid = node.getAbsoluteParentId();
-        String srcDocumentid = parentid + "/" + node.getId();
-        log("srcDocumentid  " + srcDocumentid);
-        String destDocumentid =
-            srcDocumentid.replaceFirst(
-                getFirstdocumentid(),
-                getSecdocumentid());
-        log("destDocumentid " + destDocumentid);
+		String parentid = node.getAbsoluteParentId();
+		String srcDocumentid = parentid + "/" + node.getId();
+		String destDocumentid =
+			srcDocumentid.replaceFirst(
+				getFirstdocumentid(),
+				getSecdocumentid());
 
-        Label[] labels = node.getLabels();
+		Label[] labels = node.getLabels();
 
-        // FIXME: if the resources differ for different languages, so iterate 
-        // on all languages
+		// FIXME: if the resources differ for different languages, so iterate 
+		// on all languages
 
-        String language = labels[0].getLanguage();
-        log("language " + language);
-        String srcUrl =
-            builder.buildCanonicalUrl(
-                publication,
-                getFirstarea(),
-                srcDocumentid,
-                language);
-        log("srcUrl " + srcUrl);
-        Document srcDoc;
-        try {
-            srcDoc = builder.buildDocument(publication, srcUrl);
-        } catch (DocumentBuildException e) {
-            throw new BuildException(e);
-        }
-        ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
-        File[] srcFiles = resourcesMgr.getResources();
+		String language = labels[0].getLanguage();
+		String srcUrl =
+			builder.buildCanonicalUrl(
+				publication,
+				getFirstarea(),
+				srcDocumentid,
+				language);
+		Document srcDoc;
+		try {
+			srcDoc = builder.buildDocument(publication, srcUrl);
+		} catch (DocumentBuildException e) {
+			throw new BuildException(e);
+		}
+		ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
+		List resources = new ArrayList(Arrays.asList(resourcesMgr.getResources()));
+		resources.addAll(Arrays.asList(resourcesMgr.getMetaFiles()));
+		File[] srcFiles =
+			(File[]) resources.toArray(new File[resources.size()]);
 
-        if (srcFiles == null) {
-            log(
-                "There are no resources for the document "
-                    + getFirstdocumentid());
-            return;
-        }
+		if (srcFiles == null) {
+			log(
+				"There are no resources for the document "
+					+ getFirstdocumentid());
+			return;
+		}
 
-        String destUrl =
-            builder.buildCanonicalUrl(
-                publication,
-                getSecarea(),
-                destDocumentid,
-                language);
-        log("destUrl " + destUrl);
-        Document destDoc;
-        try {
-            destDoc = builder.buildDocument(publication, destUrl);
-        } catch (DocumentBuildException e) {
-            throw new BuildException(e);
-        }
-        resourcesMgr = new ResourcesManager(destDoc);
-        File destFilePath = resourcesMgr.getPath();
+		String destUrl =
+			builder.buildCanonicalUrl(
+				publication,
+				getSecarea(),
+				destDocumentid,
+				language);
+		Document destDoc;
+		try {
+			destDoc = builder.buildDocument(publication, destUrl);
+		} catch (DocumentBuildException e) {
+			throw new BuildException(e);
+		}
+		resourcesMgr = new ResourcesManager(destDoc);
 
-        for (int i = 0; i < srcFiles.length; i++) {
-            String srcName = srcFiles[i].getName();
-            String destPath =
-                destFilePath.getAbsolutePath() + File.separator + srcName;
+		for (int i = 0; i < srcFiles.length; i++) {
 
-            log(
-                "copy file "
-                    + srcFiles[i].getAbsolutePath()
-                    + "to file "
-                    + destPath);
-            try {
-                FileUtil.copy(srcFiles[i].getAbsolutePath(), destPath);
-            } catch (FileNotFoundException e) {
-                throw new BuildException(e);
-            } catch (IOException e) {
-                throw new BuildException(e);
-            }
-        }
+			try {
+				log(
+					"copy file "
+						+ srcFiles[i].getAbsolutePath()
+						+ "to file "
+						+ resourcesMgr.getPath().getCanonicalPath());
+				FileUtil.copyFileToDirectory(
+					srcFiles[i],
+					resourcesMgr.getPath());
+			} catch (IOException e) {
+				throw new BuildException(e);
+			}
+		}
 
-    }
+	}
 
 }
