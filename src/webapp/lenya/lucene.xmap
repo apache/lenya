@@ -40,12 +40,12 @@
           <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
-          <map:serialize type="html"/>
-        </map:act>
+          <map:call resource="style-cms-page"/>
+         </map:act>
         <map:transform src="xslt/search/search-and-results.xsl">
           <map:parameter name="area" value="{2}"/>
         </map:transform>
-        <map:serialize type="html"/>
+        <map:call resource="style-cms-page"/>
       </map:match>
       <map:handle-errors type="500">
         <map:serialize type="xml"/>
