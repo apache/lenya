@@ -55,6 +55,9 @@ $Id
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import org.apache.avalon.framework.component.ComponentException;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.environment.Redirector;
@@ -62,10 +65,11 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
+import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Identity;
 import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac.UserManager;
+import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
@@ -99,8 +103,8 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
     public boolean authenticate(String username, String password, Request request, Map map)
         throws Exception {
         File configurationDirectory = new File(publication.getDirectory(), ItemManager.PATH);
-        UserManager manager = UserManager.instance(configurationDirectory);
-        User user = manager.getUser(username);
+        
+        User user = getUser(username);
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Authenticating user: " + user);
@@ -127,7 +131,7 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
         return false;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
@@ -144,4 +148,49 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
     public Publication getPublication() {
         return publication;
     }
+
+    protected static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
+    private String accessControllerId = null;
+    
+    /**
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration conf) throws ConfigurationException {
+        super.configure(conf);
+        Configuration accessControllerConfiguration = conf.getChild(ACCESS_CONTROLLER_ELEMENT);
+        if (accessControllerConfiguration != null) {
+            accessControllerId = accessControllerConfiguration.getValue();
+            getLogger().debug("Access controller ID: [" + accessControllerId + "]");
+        }
+        else {
+            getLogger().debug("No access controller ID provided, using default access controller.");
+        }
+    }
+
+    protected String getAccessControllerId() {
+        return accessControllerId;
+    }
+    
+    /**
+     * Returns a user for a username using the AccessController of this action.
+     * @param username A string.
+     * @return A user.
+     */
+    protected User getUser(String username) throws AccessControlException, ComponentException {
+        User user;
+        AccessController controller = null;
+        String id = getAccessControllerId();
+        String suffix = id == null ? "" : "/" + id;
+            
+        try {
+            controller = (AccessController) manager.lookup(AccessController.ROLE + suffix);
+            user = controller.getUserManager().getUser(username);
+        }
+        finally {
+            manager.release(controller);
+        }
+        
+        return user;
+    }
+
 }

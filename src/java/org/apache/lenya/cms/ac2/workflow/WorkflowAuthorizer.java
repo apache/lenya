@@ -59,9 +59,11 @@ import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyAuthorizer;
+import org.apache.lenya.cms.ac2.PolicyManager;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -73,7 +75,6 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 import java.util.Arrays;
-
 
 /**
  * If the client requested invoking a workflow event, this authorizer checks if
@@ -87,7 +88,12 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
     /**
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, org.apache.lenya.cms.publication.PageEnvelope, org.apache.cocoon.environment.Request)
      */
-    public boolean authorize(Identity identity, Publication publication, Request request)
+    public boolean authorize(
+        AccessController accessController,
+        PolicyManager policyManager,
+        Identity identity,
+        Publication publication,
+        Request request)
         throws AccessControlException {
         boolean authorized = true;
 
@@ -114,7 +120,7 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
 
             if (factory.hasWorkflow(document)) {
                 WorkflowInstance instance = factory.buildInstance(document);
-                Policy policy = getAccessController().getPolicy(publication, url);
+                Policy policy = policyManager.getPolicy(accessController, publication, url);
                 Role[] roles = policy.getRoles(identity);
                 saveRoles(request, roles);
 

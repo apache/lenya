@@ -57,17 +57,19 @@ package org.apache.lenya.cms.ac2.file;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Group;
-import org.apache.lenya.cms.ac.GroupManager;
+import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.RoleManager;
 import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac.UserManager;
+import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.ac2.Accreditable;
 import org.apache.lenya.cms.ac2.Credential;
 import org.apache.lenya.cms.ac2.DefaultPolicy;
-import org.apache.lenya.cms.ac2.Machine;
+import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyManager;
+import org.apache.lenya.cms.ac2.URLPolicy;
 import org.apache.lenya.cms.ac2.World;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.CacheMap;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 
@@ -75,279 +77,342 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
-
 
 /**
  * A PolicyBuilder is used to build policies.
  * @author andreas
  */
 public class FilePolicyManager implements PolicyManager {
-    /**
-     * Creates a new PolicyBuilder.
-     * @param policyDirectory The directory where policies are stored.
-     * @param userManager The user manager.
-     * @param groupManager The group manager.
-     * @param roleManager The role manager.
-     */
-    protected FilePolicyManager(File policyDirectory, UserManager userManager,
-        GroupManager groupManager, RoleManager roleManager) {
-        assert (policyDirectory != null) && policyDirectory.isDirectory();
-        this.policyDirectory = policyDirectory;
+    
+	/**
+	 * Creates a new PolicyBuilder.
+	 */
+	public FilePolicyManager() {
+	}
 
-        assert userManager != null;
-        this.userManager = userManager;
+	private File policyDirectory;
 
-        assert groupManager != null;
-        this.groupManager = groupManager;
+	/**
+	 * Builds a policy from a file. When the file is not present, an empty policy is returned.
+	 * @param controller An access controller.
+	 * @param file The file.
+	 * @return A policy.
+	 * @throws AccessControlException when something went wrong.
+	 */
+	protected DefaultPolicy buildPolicy(AccessController controller, File file)
+		throws AccessControlException {
+		assert(null != file) && file.isFile();
 
-        assert roleManager != null;
-        this.roleManager = roleManager;
-    }
+		DefaultPolicy policy = new DefaultPolicy();
 
-    private UserManager userManager;
-    private GroupManager groupManager;
-    private RoleManager roleManager;
-    private File policyDirectory;
+		Document document;
 
-    /**
-     * Builds a policy from a file. When the file is not present, an empty policy is returned.
-     * @param file The file.
-     * @return A policy.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected DefaultPolicy buildPolicy(File file) throws AccessControlException {
-        assert (null != file) && file.isFile();
+		try {
+			document = DocumentHelper.readDocument(file);
+		} catch (Exception e) {
+			throw new AccessControlException(e);
+		}
 
-        DefaultPolicy policy = new DefaultPolicy();
+		Element policyElement = document.getDocumentElement();
+		assert policyElement.getLocalName().equals(POLICY_ELEMENT);
 
-        Document document;
+		NamespaceHelper helper =
+			new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, document);
 
-        try {
-            document = DocumentHelper.readDocument(file);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
+		Element[] credentialElements = helper.getChildren(policyElement);
 
-        Element policyElement = document.getDocumentElement();
-        assert policyElement.getLocalName().equals(POLICY_ELEMENT);
+		for (int i = 0; i < credentialElements.length; i++) {
+			Accreditable accreditable = null;
 
-        NamespaceHelper helper = new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, document);
+			String id = credentialElements[i].getAttribute(ID_ATTRIBUTE);
+			accreditable =
+				getAccreditable(
+					controller,
+					credentialElements[i].getLocalName(),
+					id);
 
-        Element[] credentialElements = helper.getChildren(policyElement);
+			Credential credential = new Credential(accreditable);
 
-        for (int i = 0; i < credentialElements.length; i++) {
-            Accreditable accreditable = null;
+			Element[] roleElements =
+				helper.getChildren(credentialElements[i], ROLE_ELEMENT);
 
-            String id = credentialElements[i].getAttribute(ID_ATTRIBUTE);
-            accreditable = getAccreditable(credentialElements[i].getLocalName(), id);
+			for (int j = 0; j < roleElements.length; j++) {
+				String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
+				Role role = controller.getRoleManager().getRole(roleId);
+				credential.addRole(role);
+			}
 
-            Credential credential = new Credential(accreditable);
+			policy.addCredential(credential);
+		}
 
-            Element[] roleElements = helper.getChildren(credentialElements[i], ROLE_ELEMENT);
+		return policy;
+	}
 
-            for (int j = 0; j < roleElements.length; j++) {
-                String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
-                Role role = roleManager.getRole(roleId);
-                credential.addRole(role);
-            }
+	/**
+	 * Creates an accredtiable for an element.
+	 * @param controller An access controller.
+	 * @param elementName The elment name.
+	 * @param id The ID of the accreditable.
+	 * @return An accreditable.
+	 * @throws AccessControlException when something went wrong.
+	 */
+	protected Accreditable getAccreditable(
+		AccessController controller,
+		String elementName,
+		String id)
+		throws AccessControlException {
+		Accreditable accreditable = null;
 
-            policy.addCredential(credential);
-        }
+		if (elementName.equals(USER_ELEMENT)) {
+			accreditable = controller.getUserManager().getUser(id);
+		} else if (elementName.equals(GROUP_ELEMENT)) {
+			accreditable = controller.getGroupManager().getGroup(id);
+		} else if (elementName.equals(WORLD_ELEMENT)) {
+			accreditable = World.getInstance();
+		} else if (elementName.equals(MACHINE_ELEMENT)) {
+			accreditable = new Machine(id);
+		}
 
-        return policy;
-    }
+		if (accreditable == null) {
+			throw new AccessControlException(
+				"Unknown accreditable [" + elementName + "]");
+		}
 
-    /**
-     * Creates an accredtiable for an element.
-     * @param elementName The elment name.
-     * @param id The ID of the accreditable.
-     * @return An accreditable.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected Accreditable getAccreditable(String elementName, String id)
-        throws AccessControlException {
-        Accreditable accreditable = null;
+		return accreditable;
+	}
 
-        if (elementName.equals(USER_ELEMENT)) {
-            accreditable = userManager.getUser(id);
-        } else if (elementName.equals(GROUP_ELEMENT)) {
-            accreditable = groupManager.getGroup(id);
-        } else if (elementName.equals(WORLD_ELEMENT)) {
-            accreditable = World.getInstance();
-        } else if (elementName.equals(MACHINE_ELEMENT)) {
-            accreditable = new Machine(id);
-        }
+	protected static final String NAMESPACE =
+		"http://apache.org/cocoon/lenya/ac/1.0";
+	protected static final String DEFAULT_PREFIX = "ac";
+	protected static final String POLICY_ELEMENT = "policy";
+	protected static final String GROUP_ELEMENT = "group";
+	protected static final String USER_ELEMENT = "user";
+	protected static final String ROLE_ELEMENT = "role";
+	protected static final String WORLD_ELEMENT = "world";
+	protected static final String MACHINE_ELEMENT = "machine";
+	protected static final String ID_ATTRIBUTE = "id";
+	protected static final String URL_FILENAME = "url-policy.acml";
+	protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
 
-        if (accreditable == null) {
-            throw new AccessControlException("Unknown accreditable [" + elementName + "]");
-        }
+	/**
+	 * Builds a URL policy from a file. When the file is not present, an empty policy is returned.
+	 * @see org.apache.lenya.cms.ac2.PolicyManager#buildURLPolicy(org.apache.lenya.cms.publication.Publication, java.lang.String)
+	 */
+	public DefaultPolicy buildURLPolicy(
+		AccessController controller,
+		Publication publication,
+		String url)
+		throws AccessControlException {
+		return buildPolicy(controller, publication, url, URL_FILENAME);
+	}
 
-        return accreditable;
-    }
+	/**
+	 * Builds a subtree policy from a file. When the file is not present, an empty policy is returned.
+	 * @see org.apache.lenya.cms.ac2.PolicyManager#buildSubtreePolicy(org.apache.lenya.cms.publication.Publication, java.lang.String)
+	 */
+	public DefaultPolicy buildSubtreePolicy(
+		AccessController controller,
+		Publication publication,
+		String url)
+		throws AccessControlException {
+		return buildPolicy(controller, publication, url, SUBTREE_FILENAME);
+	}
 
-    protected static final String NAMESPACE = "http://apache.org/cocoon/lenya/ac/1.0";
-    protected static final String DEFAULT_PREFIX = "ac";
-    protected static final String POLICY_ELEMENT = "policy";
-    protected static final String GROUP_ELEMENT = "group";
-    protected static final String USER_ELEMENT = "user";
-    protected static final String ROLE_ELEMENT = "role";
-    protected static final String WORLD_ELEMENT = "world";
-    protected static final String MACHINE_ELEMENT = "machine";
-    protected static final String ID_ATTRIBUTE = "id";
-    protected static final String URL_FILENAME = "url-policy.acml";
-    protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
+	/**
+	 * Builds a policy from a file. When the file is not present, an empty policy is returned.
+     * @param controller The access controller to use.
+	 * @param publication The publication.
+	 * @param url The url.
+	 * @param policyFilename The policy filename.
+	 * @return A policy.
+	 * @throws AccessControlException when something went wrong.
+	 */
+	protected DefaultPolicy buildPolicy(
+		AccessController controller,
+		Publication publication,
+		String url,
+		String policyFilename)
+		throws AccessControlException {
+		DefaultPolicy policy;
+		File policyFile = getPolicyFile(publication, url, policyFilename);
 
-    /**
-     * Builds a URL policy from a file. When the file is not present, an empty policy is returned.
-     * @see org.apache.lenya.cms.ac2.PolicyBuilder#buildURLPolicy(java.lang.String)
-     */
-    public DefaultPolicy buildURLPolicy(String url) throws AccessControlException {
-        return buildPolicy(url, URL_FILENAME);
-    }
+		if (policyFile.exists()) {
+			policy = buildPolicy(controller, policyFile);
+		} else {
+			policy = new DefaultPolicy();
+		}
 
-    /**
-     * Builds a subtree policy from a file. When the file is not present, an empty policy is returned.
-     * @see org.apache.lenya.cms.ac2.PolicyBuilder#buildSubtreePolicy(java.lang.String)
-     */
-    public DefaultPolicy buildSubtreePolicy(String url)
-        throws AccessControlException {
-        return buildPolicy(url, SUBTREE_FILENAME);
-    }
+		return policy;
+	}
 
-    /**
-     * Builds a policy from a file. When the file is not present, an empty policy is returned.
-     * @param url The url.
-     * @param policyFilename The policy filename.
-     * @return A policy.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected DefaultPolicy buildPolicy(String url, String policyFilename)
-        throws AccessControlException {
-        DefaultPolicy policy;
-        File policyFile = getPolicyFile(url, policyFilename);
+	/**
+	 * Returns the policy file for a URL and a policy filename.
+     * @param publication The publication.
+	 * @param url The url to get the file for: /{area}/...
+	 * @param policyFilename The name of the policy file.
+	 * @return A file object.
+	 */
+	protected File getPolicyFile(
+		Publication publication,
+		String url,
+		String policyFilename) {
+		assert url.startsWith("/");
+		url = url.substring(1);
 
-        if (policyFile.exists()) {
-            policy = buildPolicy(policyFile);
-        } else {
-            policy = new DefaultPolicy();
-        }
+		String path =
+			url.replace('/', File.separatorChar)
+				+ File.separator
+				+ policyFilename;
+		File policyFile = new File(getPolicyDirectory(publication), path);
 
-        return policy;
-    }
+		return policyFile;
+	}
 
-    /**
-     * Returns the policy file for a URL and a policy filename.
-     * @param url The url to get the file for: /{area}/...
-     * @param policyFilename The name of the policy file.
-     * @return A file object.
-     */
-    protected File getPolicyFile(String url, String policyFilename) {
-        assert url.startsWith("/");
-        url = url.substring(1);
+	public static final String POLICY_PATH =
+		"config/ac/policies".replace('/', File.separatorChar);
 
-        String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
-        File policyFile = new File(getPolicyDirectory(), path);
+	/**
+	 * Returns the policy directory.
+	 * @param publication The publication.
+	 * @return A file object.
+	 */
+	public File getPolicyDirectory(Publication publication) {
+		return new File(publication.getDirectory(), POLICY_PATH);
+	}
 
-        return policyFile;
-    }
+	/**
+	 * @see org.apache.lenya.cms.ac2.PolicyManager#saveURLPolicy(Publication, java.lang.String, org.apache.lenya.cms.ac2.Policy)
+	 */
+	public void saveURLPolicy(
+		Publication publication,
+		String url,
+		DefaultPolicy policy)
+		throws AccessControlException {
+		savePolicy(publication, url, policy, URL_FILENAME);
+	}
 
-    /**
-     * Returns the policy directory.
-     * @return A file object.
-     */
-    public File getPolicyDirectory() {
-        return policyDirectory;
-    }
+	/**
+	 * @see org.apache.lenya.cms.ac2.PolicyManager#saveSubtreePolicy(Publication, java.lang.String, Policy)
+	 */
+	public void saveSubtreePolicy(
+		Publication publication,
+		String url,
+		DefaultPolicy policy)
+		throws AccessControlException {
+		savePolicy(publication, url, policy, SUBTREE_FILENAME);
+	}
 
-    /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#saveURLPolicy(org.apache.lenya.cms.ac2.Policy)
-     */
-    public void saveURLPolicy(String url, DefaultPolicy policy)
-        throws AccessControlException {
-        savePolicy(url, policy, URL_FILENAME);
-    }
+	/**
+	 * Saves a policy to a file.
+     * @param publication The publication.
+	 * @param url The URL to save the policy for.
+	 * @param policy The policy.
+	 * @param filename The file.
+	 * @throws AccessControlException if something goes wrong.
+	 */
+	protected void savePolicy(
+		Publication publication,
+		String url,
+		DefaultPolicy policy,
+		String filename)
+		throws AccessControlException {
+		NamespaceHelper helper;
 
-    /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#saveSubtreePolicy(org.apache.lenya.cms.ac2.Policy)
-     */
-    public void saveSubtreePolicy(String url, DefaultPolicy policy)
-        throws AccessControlException {
-        savePolicy(url, policy, SUBTREE_FILENAME);
-    }
+		try {
+			helper =
+				new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, POLICY_ELEMENT);
+		} catch (ParserConfigurationException e) {
+			throw new AccessControlException(e);
+		}
 
-    /**
-     * Saves a policy to a file.
-     * @param url The URL to save the policy for.
-     * @param policy The policy.
-     * @param filename The file.
-     * @throws AccessControlException if something goes wrong.
-     */
-    protected void savePolicy(String url, DefaultPolicy policy, String filename)
-        throws AccessControlException {
-        NamespaceHelper helper;
+		Credential[] credentials = policy.getCredentials();
 
-        try {
-            helper = new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, POLICY_ELEMENT);
-        } catch (ParserConfigurationException e) {
-            throw new AccessControlException(e);
-        }
+		for (int i = 0; i < credentials.length; i++) {
+			Accreditable accreditable = credentials[i].getAccreditable();
+			Element accreditableElement = save(accreditable, helper);
+			helper.getDocument().getDocumentElement().appendChild(
+				accreditableElement);
+		}
 
-        Credential[] credentials = policy.getCredentials();
+		File file = getPolicyFile(publication, url, filename);
 
-        for (int i = 0; i < credentials.length; i++) {
-            Accreditable accreditable = credentials[i].getAccreditable();
-            Element accreditableElement = save(accreditable, helper);
-            helper.getDocument().getDocumentElement().appendChild(accreditableElement);
-        }
+		try {
+			file.getParentFile().mkdirs();
+			file.createNewFile();
+			DocumentHelper.writeDocument(helper.getDocument(), file);
+		} catch (Exception e) {
+			throw new AccessControlException(
+				"Path: [" + file.getAbsolutePath() + "]",
+				e);
+		}
+	}
 
-        File file = getPolicyFile(url, filename);
+	/**
+	 * Saves an accreditable to an XML element.
+	 * @param accreditable The accreditable.
+	 * @param helper The namespace helper to be used.
+	 * @return An XML element.
+	 * @throws AccessControlException when something went wrong.
+	 */
+	protected Element save(Accreditable accreditable, NamespaceHelper helper)
+		throws AccessControlException {
+		String localName = null;
+		String id = null;
 
-        try {
-            file.getParentFile().mkdirs();
-            file.createNewFile();
-            DocumentHelper.writeDocument(helper.getDocument(), file);
-        } catch (Exception e) {
-            throw new AccessControlException("Path: [" + file.getAbsolutePath() + "]", e);
-        }
-    }
+		if (accreditable instanceof User) {
+			localName = USER_ELEMENT;
+			id = ((User) accreditable).getId();
+		} else if (accreditable instanceof Group) {
+			localName = GROUP_ELEMENT;
+			id = ((Group) accreditable).getId();
+		} else if (accreditable instanceof World) {
+			localName = WORLD_ELEMENT;
+		} else if (accreditable instanceof Machine) {
+			localName = MACHINE_ELEMENT;
+			id = ((Machine) accreditable).getIp();
+		}
 
-    /**
-     * Saves an accreditable to an XML element.
-     * @param accreditable The accreditable.
-     * @param helper The namespace helper to be used.
-     * @return An XML element.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected Element save(Accreditable accreditable, NamespaceHelper helper)
-        throws AccessControlException {
-        String localName = null;
-        String id = null;
+		if (localName == null) {
+			throw new AccessControlException(
+				"Could not save accreditable [" + accreditable + "]");
+		}
 
-        if (accreditable instanceof User) {
-            localName = USER_ELEMENT;
-            id = ((User) accreditable).getId();
-        } else if (accreditable instanceof Group) {
-            localName = GROUP_ELEMENT;
-            id = ((Group) accreditable).getId();
-        } else if (accreditable instanceof World) {
-            localName = WORLD_ELEMENT;
-        } else if (accreditable instanceof Machine) {
-            localName = MACHINE_ELEMENT;
-            id = ((Machine) accreditable).getIp();
-        }
-        
-        if (localName == null) {
-            throw new AccessControlException("Could not save accreditable [" + accreditable + "]");
-        }
+		Element element = helper.createElement(localName);
 
-        Element element = helper.createElement(localName);
+		if (id != null) {
+			element.setAttribute(ID_ATTRIBUTE, id);
+		}
 
-        if (id != null) {
-            element.setAttribute(ID_ATTRIBUTE, id);
-        }
+		return element;
+	}
 
-        return element;
-    }
+	protected static final int CACHE_CAPACITY = 1000;
+	private static Map cache = new CacheMap(CACHE_CAPACITY);
+
+	/**
+	 * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(AccessController, Publication, java.lang.String)
+	 */
+	public Policy getPolicy(AccessController controller, Publication publication, String url)
+		throws AccessControlException {
+		assert publication != null;
+
+		String key;
+		try {
+			key = publication.getDirectory().getCanonicalPath() + ":" + url;
+		} catch (IOException e) {
+			throw new AccessControlException(e);
+		}
+		Policy policy = (Policy) cache.get(key);
+		if (policy == null) {
+			policy = new URLPolicy(controller, publication, url, this);
+			cache.put(key, policy);
+		}
+
+		return policy;
+	}
+
 }

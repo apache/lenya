@@ -55,14 +55,10 @@ $Id
 */
 package org.apache.lenya.cms.ac2;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-
 import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Publication;
-
 
 /**
  * @author andreas
@@ -71,21 +67,23 @@ import org.apache.lenya.cms.publication.Publication;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface Authorizer {
+
     /**
      * Authorizes an identity at a URL.
+     * @param accessController The access controller to use.
+     * @param policyManager The policy manager to use. 
      * @param identity The identity.
      * @param publication The publication of the page to be accessed.
      * @param request The request.
      * @return <code>true</code> if the identity is authorized, <code>false</code> otherwise.
      * @throws AccessControlException when something went wrong.
      */
-    boolean authorize(Identity identity, Publication publication, Request request)
+    boolean authorize(
+        AccessController accessController,
+        PolicyManager policyManager,
+        Identity identity,
+        Publication publication,
+        Request request)
         throws AccessControlException;
 
-    /**
-     * Configures this authorizer.
-     * @param configuration The configuration.
-     * @throws ConfigurationException if something went wrong.
-     */
-    void configure(Configuration configuration) throws ConfigurationException;
 }

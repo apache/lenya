@@ -56,6 +56,7 @@ $Id
 package org.apache.lenya.cms.ac2;
 
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.publication.Publication;
 
 
 /**
@@ -66,36 +67,54 @@ import org.apache.lenya.cms.ac.AccessControlException;
  */
 public interface PolicyManager {
     /**
-     * Builds the URL policy for a URL.
+     * Builds the URL policy for a URL in a certain publication.
+     * @param controller The access controller to use.
+     * @param publication The publication.
      * @param url The URL.
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    DefaultPolicy buildURLPolicy(String url) throws AccessControlException;
+    DefaultPolicy buildURLPolicy(AccessController controller, Publication publication, String url) throws AccessControlException;
 
     /**
      * Builds the subtree policy for a URL.
+     * @param controller The access controller to use.
+     * @param publication The publication.
      * @param url The URL.
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    DefaultPolicy buildSubtreePolicy(String url) throws AccessControlException;
+    DefaultPolicy buildSubtreePolicy(AccessController controller, Publication publication, String url) throws AccessControlException;
 
     /**
      * Saves a URL policy.
+     * @param publication The publication.
      * @param url The URL to save the policy for.
      * @param policy The policy to save.
      * @throws AccessControlException when something went wrong.
      */
-    void saveURLPolicy(String url, DefaultPolicy policy)
+    void saveURLPolicy(Publication publication, String url, DefaultPolicy policy)
         throws AccessControlException;
 
     /**
      * Saves a Subtree policy.
+     * @param publication The publication.
      * @param url The url to save the policy for.
      * @param policy The policy to save.
      * @throws AccessControlException when something went wrong.
      */
-    void saveSubtreePolicy(String url, DefaultPolicy policy)
+    void saveSubtreePolicy(Publication publication, String url, DefaultPolicy policy)
         throws AccessControlException;
+        
+	/**
+	 * Returns the policy for a given page.
+	 * @param controller The access controller.
+	 * @param publication The publication.
+	 * @param url The url: /{area}/...
+	 * @return The policy.
+	 * @throws AccessControlException when something went wrong.
+	 */
+	Policy getPolicy(AccessController controller, Publication publication, String url)
+		throws AccessControlException;
+
 }

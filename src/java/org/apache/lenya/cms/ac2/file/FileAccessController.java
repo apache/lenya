@@ -55,24 +55,24 @@ $Id
 */
 package org.apache.lenya.cms.ac2.file;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.avalon.framework.parameters.Parameterizable;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.GroupManager;
 import org.apache.lenya.cms.ac.RoleManager;
 import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.PolicyManager;
-import org.apache.lenya.cms.ac2.URLPolicy;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.util.CacheMap;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
+import java.net.URI;
 
 /**
  * @author andreas
@@ -80,7 +80,9 @@ import java.util.Map;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class FileAccessController implements AccessController {
+public class FileAccessController
+    extends AbstractLogEnabled
+    implements AccessController, Parameterizable, Serviceable {
     /**
      * Creates a new FileAccessController.
      * If you use this constructor, you have to set the configuration directory either
@@ -108,16 +110,34 @@ public class FileAccessController implements AccessController {
     /**
      * Returns the configuration directory.
      * @return The configuration directory.
+     * @throws AccessControlException when something went wrong.
      */
-    public File getConfigurationDirectory() {
+    public File getConfigurationDirectory() throws AccessControlException {
+
+        if (configurationDirectory == null) {
+            Source source;
+            File directory;
+            try {
+                getLogger().debug("Configuration directory Path: " + configurationDirectoryPath);
+                source = getResolver().resolveURI(configurationDirectoryPath);
+                getLogger().debug("Configuration directory URI: " + source.getURI());
+                directory = new File(new URI(source.getURI()));
+            } catch (Exception e) {
+                throw new AccessControlException(e);
+            }
+            setConfigurationDirectory(directory);
+        }
+
         return configurationDirectory;
     }
 
     /**
      * Returns the directory where accreditables are configured.
      * @return A file.
+     * @throws AccessControlException when something went wrong.
      */
-    protected File getAccreditableConfigurationDirectory() {
+    protected File getAccreditableConfigurationDirectory()
+        throws AccessControlException {
         return new File(getConfigurationDirectory(), ACCREDITABLE_PATH);
     }
 
@@ -142,86 +162,57 @@ public class FileAccessController implements AccessController {
         return RoleManager.instance(getAccreditableConfigurationDirectory());
     }
 
-    /**
-     * @see org.apache.lenya.cms.ac2.AccessController#getPolicy(java.lang.String)
-     */
-    public Policy getPolicy(Publication publication, String url)
-        throws AccessControlException {
-        assert publication != null;
-
-        if (getConfigurationDirectory() == null) {
-            if (configurationDirectoryPath == null) {
-                throw new AccessControlException("Configuration directory not set!");
-            }
-
-            File directory = new File(publication.getDirectory(), configurationDirectoryPath);
-            setConfigurationDirectory(directory);
-        }
-
-        String key;
-        try {
-            key = publication.getDirectory().getCanonicalPath() + ":" + url;
-        } catch (IOException e) {
-            throw new AccessControlException(e);
-        }
-        Policy policy = (Policy) cache.get(key);
-        if (policy == null) {
-            policy = getPolicy(url);
-            cache.put(key, policy);
-        }
-        
-        return policy;
-    }
-    
-    protected static final int CACHE_CAPACITY = 1000; 
-    private static Map cache = new CacheMap(CACHE_CAPACITY);
+    protected static final String DIRECTORY = "directory";
 
     /**
-     * Returns the policy for a given URL.
-     * @param url The URL.
-     * @return A policy.
-     * @throws AccessControlException when something went wrong.
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
-    protected Policy getPolicy(String url) throws AccessControlException {
-        
-        URLPolicy policy = new URLPolicy(url, getPolicyManager());
-        return policy;
+    public void parameterize(Parameters parameters) throws ParameterException {
+        configurationDirectoryPath = parameters.getParameter(DIRECTORY);
+        getLogger().debug(
+            "Configuration directory: [" + configurationDirectoryPath + "]");
     }
 
-    private PolicyManager policyManager;
-
-    /**
-     * @see org.apache.lenya.cms.ac2.AccessController#getPolicyManager()
-     */
-    public PolicyManager getPolicyManager() throws AccessControlException {
-        if (policyManager == null) {
-            policyManager = new FilePolicyManager(new File(getConfigurationDirectory(), POLICY_PATH),
-                    getUserManager(), getGroupManager(), getRoleManager());
-        }
-
-        return policyManager;
-    }
-
-    protected static final String DIRECTORY_ELEMENT = "directory";
-    protected static final String SRC_ATTRIBUTE = "src";
-
-    /**
-     * @see org.apache.lenya.cms.ac2.AccessController#configure(File, org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration configuration)
-        throws ConfigurationException {
-        Configuration directoryConfiguration = configuration.getChild(DIRECTORY_ELEMENT);
-        configurationDirectoryPath = directoryConfiguration.getAttribute(SRC_ATTRIBUTE);
-    }
-
-    private String configurationDirectoryPath;
+    private String configurationDirectoryPath = "config/ac";
 
     /**
      * Sets the configuration directory.
      * @param file The configuration directory.
      */
     public void setConfigurationDirectory(File file) {
-        assert (file != null) && file.isDirectory();
+        assert(file != null) && file.isDirectory();
         configurationDirectory = file;
     }
+
+    private ServiceManager manager;
+    private SourceResolver resolver;
+
+    /**
+     * Set the global component manager.
+     * @param manager The global component manager
+     * @exception ComponentException
+     * @throws ServiceException when something went wrong.
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+        this.resolver =
+            (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+    }
+
+    /**
+     * Returns the service manager.
+     * @return A service manager.
+     */
+    protected ServiceManager getManager() {
+        return manager;
+    }
+
+    /**
+     * Returns the source resolver.
+     * @return A source resolver.
+     */
+    protected SourceResolver getResolver() {
+        return resolver;
+    }
+
 }

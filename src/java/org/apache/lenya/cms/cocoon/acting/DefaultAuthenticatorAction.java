@@ -60,7 +60,6 @@ import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.ac2.Identity;
 
 import java.io.File;
@@ -91,8 +90,8 @@ public class DefaultAuthenticatorAction extends UserAuthenticatorAction {
 
             File publicationDir = getPublication().getDirectory();
             File configDir = new File(publicationDir, ItemManager.PATH);
-            User user = UserManager.instance(configDir).getUser(username);
 
+            User user = getUser(username);
             identity.addIdentifiable(user);
 
             Session session = request.getSession(false);
@@ -105,4 +104,5 @@ public class DefaultAuthenticatorAction extends UserAuthenticatorAction {
 
         return authenticated;
     }
+    
 }

@@ -57,89 +57,132 @@ package org.apache.lenya.cms.ac2;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.publication.Publication;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
- * A policy at a certain URL.
+ * A policy at a certain URL. The final policy is computed by merging the subtree
+ * policies of all ancestor-or-self directories with the URL policy of the actual URL.  
  * @author andreas
  */
 public class URLPolicy implements Policy {
-    /**
-     * Returns the resulting policy for a certain URL.
-     * @param url The URL.
-     * @param manager The policy manager.
-     */
-    public URLPolicy(String url, PolicyManager manager) {
-        assert url != null;
-        this.url = url;
 
-        assert manager != null;
-        policyManager = manager;
-    }
+	/**
+	 * Returns the resulting policy for a certain URL.
+	 * @param controller The acccess controller.
+	 * @param publication The publication.
+	 * @param url The URL.
+	 * @param manager The policy manager.
+	 */
+	public URLPolicy(
+		AccessController controller,
+		Publication publication,
+		String url,
+		PolicyManager manager) {
+		assert url != null;
+		this.url = url;
 
-    private String url;
-    private PolicyManager policyManager;
+		assert manager != null;
+		policyManager = manager;
 
-    /**
-     * @see org.apache.lenya.cms.ac2.Policy#getRoles(org.apache.lenya.cms.ac2.Identity)
-     */
-    public Role[] getRoles(Identity identity) throws AccessControlException {
-        Set roles = new HashSet();
-        Policy urlPolicy = getPolicyManager().buildURLPolicy(getUrl());
-        addRoles(urlPolicy, identity, roles);
+		assert publication != null;
+		this.publication = publication;
 
-        String url = "";
-        String[] directories = getUrl().split("/");
+		assert controller != null;
+		this.controller = controller;
+	}
 
-        for (int i = 0; i < directories.length; i++) {
-            url += (directories[i] + "/");
-            addRoles(identity, url, roles);
-        }
+	private String url;
+	private PolicyManager policyManager;
+	private Publication publication;
+	private AccessController controller;
 
-        return (Role[]) roles.toArray(new Role[roles.size()]);
-    }
+	/**
+	 * @see org.apache.lenya.cms.ac2.Policy#getRoles(org.apache.lenya.cms.ac2.Identity)
+	 */
+	public Role[] getRoles(Identity identity) throws AccessControlException {
+		Set roles = new HashSet();
+		Policy urlPolicy =
+			getPolicyManager().buildURLPolicy(
+				getAccessController(),
+				getPublication(),
+				getUrl());
+		addRoles(urlPolicy, identity, roles);
 
-    /**
-     * Adds roles of a certain URL to a set.
-     * @param identity The identity.
-     * @param url The URL.
-     * @param roles The roles set.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected void addRoles(Identity identity, String url, Set roles)
-        throws AccessControlException {
-        addRoles(getPolicyManager().buildSubtreePolicy(url), identity, roles);
-    }
+		String url = "";
+		String[] directories = getUrl().split("/");
 
-    /**
-     * Adds the roles of an identity of a policy to a role set.
-     * @param policy The policy.
-     * @param identity The identity.
-     * @param roles The role set.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected void addRoles(Policy policy, Identity identity, Set roles)
-        throws AccessControlException {
-        roles.addAll(Arrays.asList(policy.getRoles(identity)));
-    }
+		for (int i = 0; i < directories.length; i++) {
+			url += (directories[i] + "/");
+			addRoles(identity, url, roles);
+		}
 
-    /**
-     * Returns the URL of this policy.
-     * @return The URL of this policy.
-     */
-    public String getUrl() {
-        return url;
-    }
+		return (Role[]) roles.toArray(new Role[roles.size()]);
+	}
 
-    /**
-     * Returns the policy builder.
-     * @return A policy builder.
-     */
-    public PolicyManager getPolicyManager() {
-        return policyManager;
-    }
+	/**
+	 * Adds roles of a certain URL to a set.
+	 * @param identity The identity.
+	 * @param url The URL.
+	 * @param roles The roles set.
+	 * @throws AccessControlException when something went wrong.
+	 */
+	protected void addRoles(Identity identity, String url, Set roles)
+		throws AccessControlException {
+		addRoles(
+			getPolicyManager().buildSubtreePolicy(
+				getAccessController(),
+				getPublication(),
+				url),
+			identity,
+			roles);
+	}
+
+	/**
+	 * Adds the roles of an identity of a policy to a role set.
+	 * @param policy The policy.
+	 * @param identity The identity.
+	 * @param roles The role set.
+	 * @throws AccessControlException when something went wrong.
+	 */
+	protected void addRoles(Policy policy, Identity identity, Set roles)
+		throws AccessControlException {
+		roles.addAll(Arrays.asList(policy.getRoles(identity)));
+	}
+
+	/**
+	 * Returns the URL of this policy.
+	 * @return The URL of this policy.
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * Returns the policy builder.
+	 * @return A policy builder.
+	 */
+	public PolicyManager getPolicyManager() {
+		return policyManager;
+	}
+	/**
+	 * 
+	 * Returns the publication.
+	 * @return The publication.
+	 */
+	public Publication getPublication() {
+		return publication;
+	}
+
+	/**
+	 * Returns the access controller.
+	 * @return An access controller.
+	 */
+	public AccessController getAccessController() {
+		return controller;
+	}
+
 }

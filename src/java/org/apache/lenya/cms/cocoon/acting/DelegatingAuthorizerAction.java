@@ -64,8 +64,10 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
+import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.ac2.Authorizer;
 import org.apache.lenya.cms.ac2.Identity;
+import org.apache.lenya.cms.ac2.file.FilePolicyManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
@@ -83,19 +85,24 @@ import java.util.Map;
 public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
     protected static final String AUTHORIZER_ELEMENT = "authorizer";
     protected static final String CLASS_ATTRIBUTE = "src";
+    protected static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
     private List authorizers = new ArrayList();
+    private String accessControllerId;
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
+        
+        Configuration accessControllerConfiguration = conf.getChild(ACCESS_CONTROLLER_ELEMENT);
+        accessControllerId = accessControllerConfiguration.getValue();
+        getLogger().debug("Access controller ID: [" + accessControllerId + "]");
 
         Configuration[] authorizerConfigurations = conf.getChildren(AUTHORIZER_ELEMENT);
 
         for (int i = 0; i < authorizerConfigurations.length; i++) {
             String className = authorizerConfigurations[i].getAttribute(CLASS_ATTRIBUTE);
-
             Authorizer authorizer;
 
             try {
@@ -104,7 +111,6 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
                 throw new ConfigurationException("Creating authorizer failed: ", e);
             }
 
-            authorizer.configure(authorizerConfigurations[i]);
             authorizers.add(authorizer);
         }
     }
@@ -133,33 +139,42 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
         boolean authorized = false;
 
         if (request != null) {
-            Session session = request.getSession(true);
+            
+            AccessController controller = null;
+            
+            try {
+                controller = (AccessController) manager.lookup(AccessController.ROLE + "/" + accessControllerId);
+                Session session = request.getSession(true);
+                Identity identity = (Identity) session.getAttribute(Identity.class.getName());
 
-            Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Trying to authorize identity: " + identity);
+                }
 
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Trying to authorize identity: " + identity);
-            }
+                if (identity != null) {
+                    if (hasAuthorizers()) {
+                        Authorizer[] authorizers = getAuthorizers();
+                        int i = 0;
+                        authorized = true;
 
-            if (identity != null) {
-                if (hasAuthorizers()) {
-                    Authorizer[] authorizers = getAuthorizers();
-                    int i = 0;
-                    authorized = true;
+                        while ((i < authorizers.length) && authorized) {
+                            authorized = authorized &&
+                                authorizers[i].authorize(controller, new FilePolicyManager(), identity, getPublication(), request);
 
-                    while ((i < authorizers.length) && authorized) {
-                        authorized = authorized &&
-                            authorizers[i].authorize(identity, getPublication(), request);
+                            if (getLogger().isDebugEnabled()) {
+                                getLogger().debug("Authorizer [" + authorizers[i] + "] returned [" +
+                                    authorized + "]");
+                            }
 
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug("Authorizer [" + authorizers[i] + "] returned [" +
-                                authorized + "]");
+                            i++;
                         }
-
-                        i++;
                     }
                 }
             }
+            finally {
+                manager.release(controller);
+            }
+            
         }
 
         return authorized;

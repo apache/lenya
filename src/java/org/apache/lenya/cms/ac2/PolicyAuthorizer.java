@@ -55,15 +55,11 @@ $Id
 */
 package org.apache.lenya.cms.ac2;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-
 import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.publication.Publication;
-
 
 /**
  * @author andreas
@@ -82,7 +78,12 @@ public class PolicyAuthorizer implements Authorizer {
      * Template method, override {@link #setup(Map)} to setup your authorizer.
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, java.lang.String, java.util.Map)
      */
-    public boolean authorize(Identity identity, Publication publication, Request request)
+    public boolean authorize(
+        AccessController accessController,
+        PolicyManager policyManager,
+        Identity identity,
+        Publication publication,
+        Request request)
         throws AccessControlException {
         String requestUri = request.getRequestURI();
         String context = request.getContextPath();
@@ -93,40 +94,11 @@ public class PolicyAuthorizer implements Authorizer {
 
         String url = requestUri.substring(context.length());
 
-        Policy policy = getAccessController().getPolicy(publication, url);
+        Policy policy =
+            policyManager.getPolicy(accessController, publication, url);
         Role[] roles = policy.getRoles(identity);
 
         return roles.length > 0;
     }
 
-    /**
-     * Factory method to build the access controller.
-     * @return An access controller.
-     */
-    protected AccessController getAccessController() {
-        return controller;
-    }
-
-    protected static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
-    protected static final String CLASSNAME_ATTRIBUTE = "src";
-    private AccessController controller;
-
-    /**
-     * @see org.apache.lenya.cms.ac2.Authorizer#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration configuration)
-        throws ConfigurationException {
-        Configuration accessControllerConfiguration = configuration.getChild(ACCESS_CONTROLLER_ELEMENT);
-        String className = accessControllerConfiguration.getAttribute(CLASSNAME_ATTRIBUTE);
-        AccessController controller;
-
-        try {
-            controller = (AccessController) Class.forName(className).newInstance();
-        } catch (Exception e) {
-            throw new ConfigurationException("Configuration failed: ", e);
-        }
-
-        controller.configure(accessControllerConfiguration);
-        this.controller = controller;
-    }
 }

@@ -55,14 +55,12 @@ $Id
 */
 package org.apache.lenya.cms.ac2;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.component.Component;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.GroupManager;
 import org.apache.lenya.cms.ac.RoleManager;
 import org.apache.lenya.cms.ac.UserManager;
-import org.apache.lenya.cms.publication.Publication;
 
 
 /**
@@ -71,7 +69,10 @@ import org.apache.lenya.cms.publication.Publication;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface AccessController {
+public interface AccessController extends Component {
+    
+    String ROLE = AccessController.class.getName();
+    
     /**
      * Returns the user manager of this access controller.
      * @return A user manager.
@@ -93,27 +94,4 @@ public interface AccessController {
      */
     RoleManager getRoleManager() throws AccessControlException;
 
-    /**
-     * Returns the policy manager of this access controller.
-     * @return A policy manager.
-     * @throws AccessControlException when something went wrong.
-     */
-    PolicyManager getPolicyManager() throws AccessControlException;
-
-    /**
-     * Returns the policy for a given page.
-     * @param publication The publication.
-     * @param url The url: /{area}/...
-     * @return The policy.
-     * @throws AccessControlException when something went wrong.
-     */
-    Policy getPolicy(Publication publication, String url)
-        throws AccessControlException;
-
-    /**
-     * Configures this access controller.
-     * @param configuration The configuration.
-     * @throws ConfigurationException if something went wrong.
-     */
-    void configure(Configuration configuration) throws ConfigurationException;
 }
