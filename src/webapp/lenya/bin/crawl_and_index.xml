@@ -21,7 +21,7 @@
 
 
   <!-- Dummy arguments -->
-  <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/content/crawler.xconf"/>
+  <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
   <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
   <property name="debug" value="false"/>
   <!-- /Dummy arguments -->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.13 2003/04/24 13:54:01 gregor Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.14 2003/04/25 10:36:11 gregor Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -22,7 +22,7 @@
       <map:action name="xopushandler" src="org.apache.lenya.cms.cocoon.acting.XopusHandlerAction" logger="sitemap.action.xopus-handler">
         <xml href="content/authoring"/>
         <xsl href="xslt"/>
-        <xsd href="content/doctypes/schemas"/>
+        <xsd href="config/doctypes/schemas"/>
         <temp href="temp"/>
         <rcmlDirectory href="content/rcml"/>
         <backupDirectory href="content/rcbak"/>
@@ -43,7 +43,7 @@
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="home.xsd">
-        <map:read src="content/doctypes/schemas/home.xsd" mime-type="text/xml"/>
+        <map:read src="config/doctypes/schemas/home.xsd" mime-type="text/xml"/>
       </map:match>
     </map:pipeline>
 
@@ -57,7 +57,7 @@
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="weekly-column.xsd">
-        <map:read src="content/doctypes/schemas/weekly-column.xsd" mime-type="text/xml"/>
+        <map:read src="config/doctypes/schemas/weekly-column.xsd" mime-type="text/xml"/>
       </map:match>
     </map:pipeline>
 
@@ -66,7 +66,7 @@
         <map:read src="xslt/matrix/authoring/body_xopus2.xsl" mime-type="text/xml"/>
       </map:match>
       <map:match pattern="matrix.xsd">
-        <map:read src="content/doctypes/schemas/matrix.xsd" mime-type="text/xml"/>
+        <map:read src="config/doctypes/schemas/matrix.xsd" mime-type="text/xml"/>
       </map:match>
     </map:pipeline>
     <!-- /DEBUG:GET -->

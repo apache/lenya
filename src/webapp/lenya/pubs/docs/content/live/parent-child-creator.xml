@@ -22,7 +22,7 @@ The Parent-Child Creator is a concrete implementation of the ResourceCreator pat
 
    <section><title>Customizing the Menu</title> 
      <p>
-Normally the "Menus" can be found at <em>content/menus</em>.
+Normally the "Menus" can be found at <em>config/menus</em>.
      </p>  
    </section>
 
@@ -34,7 +34,7 @@ Normally the "Menus" can be found at <em>content/menus</em>.
 <map:action name="parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
   <tree-authoring href="content/authoring/tree.xml"/>
   <docs href="content/authoring"/>
-  <doctypes href="content/doctypes/"/>
+  <doctypes href="config/doctypes/"/>
 </map:action>
 
            ]]></code>
@@ -100,7 +100,7 @@ Copy the generic XSLT "../../xslt/authoring/parent-child.xsl" into the publicati
    <section><title>Configuration</title> 
      <ol>
        <li> doctypes.xconf
-         The different doctypes are configured in a file doctypes.xconf: LENYA_CMS/src/webapp/lenya/pubs/*publication*/content/doctypes/doctypes.xconf. Given are their children and their creator. 
+         The different doctypes are configured in a file doctypes.xconf: LENYA_CMS/src/webapp/lenya/pubs/*publication*/config/doctypes/doctypes.xconf. Given are their children and their creator. 
            <code><![CDATA[
 
 <?xml version="1.0"?>

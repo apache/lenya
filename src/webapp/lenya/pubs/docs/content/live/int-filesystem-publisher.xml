@@ -28,7 +28,7 @@ or for instance http-upload.
 
    <section><title>Customizing the Menu</title>
      <p>
-Normally the "Menus" can be found at content/menus
+Normally the "Menus" can be found at config/menus
      </p>
    </section>
                                                                                                                                             

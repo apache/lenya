@@ -11,17 +11,17 @@
  <map:pipelines>
    <map:pipeline>
      <map:match pattern="authoring/index.rss.acml">
-       <map:generate src="content/ac/policies/public.acml"/>
+       <map:generate src="config/ac/policies/public.acml"/>
        <map:serialize type="xml"/>
      </map:match>
 
      <map:match pattern="authoring/**">
-       <map:generate src="content/ac/policies/root.acml"/>
+       <map:generate src="config/ac/policies/root.acml"/>
        <map:serialize type="xml"/>
      </map:match>
 
      <map:match pattern="**">
-       <map:generate src="content/ac/policies/public.acml"/>
+       <map:generate src="config/ac/policies/public.acml"/>
        <map:serialize type="xml"/>
      </map:match>
    </map:pipeline>

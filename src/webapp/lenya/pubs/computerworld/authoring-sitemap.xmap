@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: authoring-sitemap.xmap,v 1.37 2003/04/24 13:53:18 gregor Exp $ -->
+<!-- $Id: authoring-sitemap.xmap,v 1.38 2003/04/25 10:36:10 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
   <map:components>
@@ -89,21 +89,21 @@
     <!-- Menus -->
     <map:pipeline>
       <map:match pattern="menus/front.xml">
-	<map:generate type="serverpages" src="content/menus/front.xsp"/>
+	<map:generate type="serverpages" src="config/menus/front.xsp"/>
 	<map:serialize type="xml"/>
       </map:match>
       <map:match pattern="menus/overview.xml">
-	<map:generate type="serverpages" src="content/menus/overview.xsp"/>
+	<map:generate type="serverpages" src="config/menus/overview.xsp"/>
 	<map:serialize type="xml"/>
       </map:match>
       <map:match pattern="menus/news/*.xml">
-	<map:generate type="serverpages" src="content/menus/article.xsp">
+	<map:generate type="serverpages" src="config/menus/article.xsp">
 	  <map:parameter name="articleId" value="{1}"/>
 	</map:generate>
 	<map:serialize type="xml"/>
       </map:match>
       <map:match pattern="menus/static/**.xml">
-	<map:generate type="serverpages" src="content/menus/static.xsp">
+	<map:generate type="serverpages" src="config/menus/static.xsp">
 	  <map:parameter name="articleId" value="{1}"/>
 	</map:generate>
 	<map:serialize type="xml"/>
@@ -371,7 +371,7 @@
     <!-- Samples for resource/document creation -->
     <map:pipeline>
       <map:match pattern="doctypes/samples/*.xml">
-	<map:generate src="content/doctypes/samples/{1}.xml"/>
+	<map:generate src="config/doctypes/samples/{1}.xml"/>
 	<map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

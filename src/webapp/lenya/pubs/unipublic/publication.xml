@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.8 2003/04/09 09:34:55 felix Exp $ -->
+<!-- $Id: publication.xml,v 1.9 2003/04/25 10:36:11 gregor Exp $ -->
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 	<lenya:name>Unipublic</lenya:name>
 	<lenya:version>1.0</lenya:version>
@@ -117,7 +117,7 @@ Deployment
 - Modify smtp server for newsletter (in src/webapp/lenya/pubs/unipublic/content/tasks.xconf): mail.unizh.ch
 - Modify sender address for newsletter  (in src/webapp/lenya/pubs/unipublic/content/tasks.xconf): unipublic@unicom.unizh.ch
 - Adapt logging (src/cocoon/WEB-INF/logkit.xconf, src/java/log4j.properties)
-- Remove OSCOM scheduler jobs (src/webapp/lenya/pubs/oscom/content/scheduler/jobs.xml)
+- Remove OSCOM scheduler jobs (src/webapp/lenya/pubs/oscom/work/scheduler/jobs.xml)
 - Add ssh keys
 - Adapt replication (in src/webapp/lenya/bin/replicate.sh)
 - Add cronjob for replication (0-59/1 * * * * sh /home/wcms/build/jakarta-tomcat-4.0.4/webapps/lenya/lenya/bin/replicate.sh > /home/wcms/logs/replicate.log 2>&1)

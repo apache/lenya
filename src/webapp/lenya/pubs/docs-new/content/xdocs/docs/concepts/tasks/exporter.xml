@@ -29,14 +29,14 @@ parameters:
 </ul>
 <p>
 Usually, the path information is read
-from the <code>[publication-directory]/content/publication.xconf</code> file:
+from the <code>[publication-directory]/config/publishing/publisher.xconf</code> file:
 </p>
 <source><![CDATA[
 
 <publication>
   ...
   <export>
-    <destination href="resources/export/pending"/>
+    <destination href="work/export/pending"/>
     <substitution regexp="s/\/lenya\/unipublic//g"/>
   </export>
 </publication>
@@ -52,13 +52,13 @@ e. g. to use several publishers to publish into different directories:
 
 <tasks>
 
-  <task id="export-pending" class="org.lenya.cms.publishing.StaticHTMLExporter">
-    <parameter name="export-path" value="resources/export/pending"/>
+  <task id="export-pending" class="org.apache.lenya.cms.publishing.StaticHTMLExporter">
+    <parameter name="export-path" value="work/export/pending"/>
     <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
   </task>
 
-  <task id="export-backup" class="org.lenya.cms.publishing.StaticHTMLExporter">
-    <parameter name="export-path" value="resources/backup"/>
+  <task id="export-backup" class="org.apache.lenya.cms.publishing.StaticHTMLExporter">
+    <parameter name="export-path" value="work/backup"/>
     <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
   </task>
 

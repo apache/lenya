@@ -62,7 +62,7 @@
 
 <!-- test for new menubar -->
       <map:match pattern="menus/test.xml">
-        <map:generate type="serverpages" src="content/menus/new.xsp"/>
+        <map:generate type="serverpages" src="config/menus/new.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

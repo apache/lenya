@@ -115,11 +115,11 @@
 		<!-- Menus -->
 		<map:pipeline>
 			<map:match pattern="menus/front.xml">
-				<map:generate type="serverpages" src="content/menus/front.xsp"/>
+				<map:generate type="serverpages" src="config/menus/front.xsp"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="menus/*/*/*/section.xml">
-				<map:generate type="serverpages" src="content/menus/section.xsp">
+				<map:generate type="serverpages" src="config/menus/section.xsp">
 					<map:parameter name="channel" value="{1}"/>
 					<map:parameter name="section" value="{2}"/>
 					<map:parameter name="year" value="{3}"/>
@@ -127,7 +127,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="menus/*/*/*/*/article.xml">
-				<map:generate type="serverpages" src="content/menus/article.xsp">
+				<map:generate type="serverpages" src="config/menus/article.xsp">
 					<map:parameter name="channel" value="{1}"/>
 					<map:parameter name="section" value="{2}"/>
 					<map:parameter name="year" value="{3}"/>
@@ -136,24 +136,24 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="menus/*/*/dossier.xml">
-				<map:generate type="serverpages" src="content/menus/dossier.xsp">
+				<map:generate type="serverpages" src="config/menus/dossier.xsp">
 					<map:parameter name="year" value="{1}"/>
 					<map:parameter name="dossierId" value="{2}"/>
 				</map:generate>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="menus/*/dossiers.xml">
-				<map:generate type="serverpages" src="content/menus/dossiers.xsp">
+				<map:generate type="serverpages" src="config/menus/dossiers.xsp">
 					<map:parameter name="year" value="{1}"/>
 				</map:generate>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="menus/newsletter.xml">
-				<map:generate type="serverpages" src="content/menus/newsletter.xsp"/>
+				<map:generate type="serverpages" src="config/menus/newsletter.xsp"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="menus/**.xml">
-				<map:generate type="serverpages" src="content/menus/front.xsp"/>
+				<map:generate type="serverpages" src="config/menus/front.xsp"/>
 				<map:serialize type="xml"/>
 			</map:match>
 		</map:pipeline>
@@ -604,7 +604,7 @@
 		<!-- Samples for resource/document creation -->
 		<map:pipeline>
 			<map:match pattern="doctypes/samples/*.xml">
-				<map:generate src="content/doctypes/samples/{1}.xml"/>
+				<map:generate src="config/doctypes/samples/{1}.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
 		</map:pipeline>

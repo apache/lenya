@@ -27,7 +27,7 @@
 
       <!-- load document types -->    
       <map:match pattern="document-types">
-        <map:generate src=content/doctypes/doctypes.xconf"/>
+        <map:generate src=config/doctypes/doctypes.xconf"/>
         <map:serialize type="xml"/>
       </map:match>
       

@@ -12,7 +12,7 @@
 			<map:action name="xopushandler" src="org.apache.lenya.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.xopus-handler">
 				<xml href="content/authoring"/>
 				<xsl href="stylesheets/publication"/>
-				<xsd href="content/doctypes/schemas"/>
+				<xsd href="config/doctypes/schemas"/>
 				<temp href="temp"/>
 				<rcmlDirectory href="content/rcml"/>
 				<backupDirectory href="content/rcbak"/>
@@ -45,7 +45,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/article.xsd">
-				<map:read src="content/doctypes/schemas/article.xsd" mime-type="text/xml"/>
+				<map:read src="config/doctypes/schemas/article.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/article.css">
 				<map:read src="resources/css/authoring/article-bitflux.css" mime-type="text/css"/>
@@ -63,7 +63,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/small-preview.xsd">
-				<map:read src="content/doctypes/schemas/small-preview.xsd" mime-type="text/xml"/>
+				<map:read src="config/doctypes/schemas/small-preview.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/small-preview.css">
 				<map:read src="resources/css/authoring/small-preview-bitflux.css" mime-type="text/css"/>
@@ -81,7 +81,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/preview.xsd">
-				<map:read src="content/doctypes/schemas/preview.xsd" mime-type="text/xml"/>
+				<map:read src="config/doctypes/schemas/preview.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/preview.css">
 				<map:read src="resources/css/authoring/preview-bitflux.css" mime-type="text/css"/>
@@ -99,7 +99,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/headlines.xsd">
-				<map:read src="content/doctypes/schemas/headlines.xsd" mime-type="text/xml"/>
+				<map:read src="config/doctypes/schemas/headlines.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/headlines.css">
 				<map:read src="resources/css/authoring/headlines-bitflux.css" mime-type="text/css"/>

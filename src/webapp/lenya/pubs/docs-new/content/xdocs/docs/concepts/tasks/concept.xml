@@ -141,7 +141,7 @@ a parameter selection mechanism, e. g. using namespace prefixes.
 Every document type can support a set of tasks. The labels of these tasks
 are displayed on the scheduler screen of a document of this type.
 To assign a task to a document type, you have to edit the file
-<code>[publication-directory]/content/doctypes/doctypes.xconf</code>:
+<code>[publication-directory]/config/doctypes/doctypes.xconf</code>:
 </p>
 <source><![CDATA[
 

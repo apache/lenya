@@ -29,7 +29,7 @@ It needs the following parameters:
 </ul>
 <p>
 All paths are relative to the publication directory. Usually, the path information is read
-from the <code>[publication-directory]/content/publication.xconf</code> file:
+from the <code>[publication-directory]/config/publishing/publisher.xconf</code> file:
 </p>
 <source><![CDATA[
 

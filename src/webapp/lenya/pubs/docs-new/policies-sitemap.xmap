@@ -13,14 +13,14 @@
 
 <!-- Authoring -->
      <map:match pattern="authoring/**">
-       <map:generate src="content/ac/policies/root.acml"/>
+       <map:generate src="config/ac/policies/root.acml"/>
        <map:serialize type="xml"/>
      </map:match>
 <!-- /Authoring -->
 
 <!-- Everything else -->
      <map:match pattern="**">
-       <map:generate src="content/ac/policies/public.acml"/>
+       <map:generate src="config/ac/policies/public.acml"/>
        <map:serialize type="xml"/>
      </map:match>
 <!-- /Everything else -->
