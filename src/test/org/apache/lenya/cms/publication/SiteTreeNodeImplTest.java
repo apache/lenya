@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImplTest.java,v 1.1 2003/07/08 09:31:24 egli Exp $
+$Id: SiteTreeNodeImplTest.java,v 1.2 2003/09/12 17:37:47 egli Exp $
 <License>
 
  ============================================================================
@@ -53,7 +53,7 @@ $Id: SiteTreeNodeImplTest.java,v 1.1 2003/07/08 09:31:24 egli Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
- 
+
 package org.apache.lenya.cms.publication;
 
 import junit.framework.TestCase;
@@ -64,23 +64,23 @@ import junit.framework.TestCase;
  * 
  */
 public class SiteTreeNodeImplTest extends TestCase {
-	
-	private SiteTreeNode node = null;
 
-	/**
-	 * Constructor.
-	 * @param test The test.
-	 */
+    private SiteTreeNode node = null;
+
+    /**
+     * Constructor.
+     * @param test The test.
+     */
     public SiteTreeNodeImplTest(String test) {
         super(test);
     }
 
-	/**
-	 * The main program.
-	 * The parameters are set from the command line arguments.
-	 *
-	 * @param args The command line arguments.
-	 */
+    /**
+     * The main program.
+     * The parameters are set from the command line arguments.
+     *
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
         junit.textui.TestRunner.run(SiteTreeNodeImplTest.class);
     }
@@ -94,10 +94,15 @@ public class SiteTreeNodeImplTest extends TestCase {
         Label label = new Label("Foo", "en");
         Label[] fooLabels = { label };
         siteTree.addNode("/foo", fooLabels, null, null, false);
-		label = new Label("Bar", "en");
-		Label label_de = new Label("Stab", "de");
-		Label[] barLabels = { label, label_de };
-		siteTree.addNode("/foo/bar", barLabels, "http://exact.biz", "suffix", true);
+        label = new Label("Bar", "en");
+        Label label_de = new Label("Stab", "de");
+        Label[] barLabels = { label, label_de };
+        siteTree.addNode(
+            "/foo/bar",
+            barLabels,
+            "http://exact.biz",
+            "suffix",
+            true);
 
         node = siteTree.getNode("/foo/bar");
     }
@@ -109,102 +114,102 @@ public class SiteTreeNodeImplTest extends TestCase {
         super.tearDown();
     }
 
-	/**
-	 * Test getParentId.
-	 *
-	 */
+    /**
+     * Test getParentId.
+     *
+     */
     final public void testGetParentId() {
-		assertEquals(node.getParentId(), "foo");
+        assertEquals(node.getParentId(), "foo");
     }
 
-	/**
-	 * Test getAbsoluteParentId
-	 * 
-	 */
+    /**
+     * Test getAbsoluteParentId
+     * 
+     */
     final public void testGetAbsoluteParentId() {
-    	assertEquals(node.getAbsoluteParentId(), "/foo");
+        assertEquals(node.getAbsoluteParentId(), "/foo");
     }
 
-	/**
-	 * Test getId
-	 *
-	 */
+    /**
+     * Test getId
+     *
+     */
     final public void testGetId() {
-		assertEquals(node.getId(), "bar");
+        assertEquals(node.getId(), "bar");
     }
 
-	/**
-	 * Test getLabels
-	 *
-	 */
+    /**
+     * Test getLabels
+     *
+     */
     final public void testGetLabels() {
-    	assertEquals(node.getLabels().length, 2);
-    	for (int i = 0; i < node.getLabels().length; i++) {
+        assertEquals(node.getLabels().length, 2);
+        for (int i = 0; i < node.getLabels().length; i++) {
             Label label = node.getLabels()[i];
-			Label label1 = new Label("Bar", "en");
-			Label label2 = new Label("Stab", "de");
+            Label label1 = new Label("Bar", "en");
+            Label label2 = new Label("Stab", "de");
             assertTrue(label.equals(label1) || label.equals(label2));
         }
     }
 
-	/**
-	 * Test getLabel
-	 *
-	 */
+    /**
+     * Test getLabel
+     *
+     */
     final public void testGetLabel() {
-    	Label label = node.getLabel("en");
-    	assertNotNull(label);
-    	assertEquals(label.getLabel(), "Bar");
+        Label label = node.getLabel("en");
+        assertNotNull(label);
+        assertEquals(label.getLabel(), "Bar");
     }
 
-	/**
-	 * Test addLabel 
-	 *
-	 */
+    /**
+     * Test addLabel 
+     *
+     */
     final public void testAddLabel() {
-		Label label = new Label("Barolo", "it");
-		node.addLabel(label);
-		label = node.getLabel("it");
-		assertNotNull(label);
-		assertEquals(label.getLabel(), "Barolo");
-		label = node.getLabel("ch");
-		assertNull(label);
+        Label label = new Label("Barolo", "it");
+        node.addLabel(label);
+        label = node.getLabel("it");
+        assertNotNull(label);
+        assertEquals(label.getLabel(), "Barolo");
+        label = node.getLabel("ch");
+        assertNull(label);
     }
 
-	/**
-	 * Test removeLabel
-	 *
-	 */
+    /**
+     * Test removeLabel
+     *
+     */
     final public void testRemoveLabel() {
-		Label label = new Label("Bar", "en");
-		assertNotNull(node.getLabel("en"));
-		node.removeLabel(label);
-		assertNull(node.getLabel("en"));
+        Label label = new Label("Bar", "en");
+        assertNotNull(node.getLabel("en"));
+        node.removeLabel(label);
+        assertNull(node.getLabel("en"));
     }
 
-	/**
-	 * Test getHref
-	 *
-	 */
+    /**
+     * Test getHref
+     *
+     */
     final public void testGetHref() {
-		assertEquals(node.getHref(), "http://exact.biz");
+        assertEquals(node.getHref(), "http://exact.biz");
     }
 
-	/**
-	 * Test getSuffix
-	 * 
-	 *
-	 */
+    /**
+     * Test getSuffix
+     * 
+     *
+     */
     final public void testGetSuffix() {
-    	assertEquals(node.getSuffix(), "suffix");
+        assertEquals(node.getSuffix(), "suffix");
     }
 
-	/**
-	 * Test hasLink
-	 *
-	 */
+    /**
+     * Test hasLink
+     *
+     */
     final public void testHasLink() {
-    	assertTrue(node.hasLink());
+        assertTrue(node.hasLink());
     }
 
 }

@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.15 2003/08/27 14:04:37 egli Exp $
+$Id: SiteTreeNodeImpl.java,v 1.16 2003/09/12 17:36:06 egli Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,7 @@ import java.util.List;
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
  * @author $Author: egli $
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -159,9 +159,9 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getId()
      */
     public String getId() {
-		if (node==node.getOwnerDocument().getDocumentElement()){
-        	return "";  
-		}
+        if (node == node.getOwnerDocument().getDocumentElement()) {
+            return "";
+        }
         return node
             .getAttributes()
             .getNamedItem(ID_ATTRIBUTE_NAME)
@@ -211,7 +211,8 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         for (int i = 0; i < labels.length; i++) {
             language = labels[i].getLanguage();
 
-            if ((((xmlLanguage == null) || (xmlLanguage.equals(""))) && (language == null))
+            if ((((xmlLanguage == null) || (xmlLanguage.equals("")))
+                && (language == null))
                 || ((language != null) && (language.equals(xmlLanguage)))) {
                 label = labels[i];
 
@@ -323,62 +324,75 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
             return false;
         }
     }
-	/**
-	 * (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#getChildren()
-	 */
-	public SiteTreeNode[] getChildren() {
-		List childElements = new ArrayList();
-        
-		NamespaceHelper helper = new NamespaceHelper(DefaultSiteTree.NAMESPACE_URI, "", node.getOwnerDocument());
-        Element[] elements = helper.getChildren((Element)node, SiteTreeNodeImpl.NODE_NAME);
- 		
-		for (int i = 0; i < elements.length; i++) {
-			SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]); 
-				childElements.add(newNode);
-		}
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#getChildren()
+     */
+    public SiteTreeNode[] getChildren() {
+        List childElements = new ArrayList();
 
-		return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
-	}
+        NamespaceHelper helper =
+            new NamespaceHelper(
+                DefaultSiteTree.NAMESPACE_URI,
+                "",
+                node.getOwnerDocument());
+        Element[] elements =
+            helper.getChildren((Element)node, SiteTreeNodeImpl.NODE_NAME);
 
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#removeChildren()
-	 */
-	public SiteTreeNode[] removeChildren() {
-		List childElements = new ArrayList();
-		NamespaceHelper helper = new NamespaceHelper(DefaultSiteTree.NAMESPACE_URI, "", node.getOwnerDocument());
-		Element[] elements = helper.getChildren((Element)node, SiteTreeNodeImpl.NODE_NAME);
-		for (int i = 0; i < elements.length; i++) {
-	        node.removeChild(elements[i]);
-			SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]); 
-			childElements.add(newNode);
-		}
-		return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
-	}
+        for (int i = 0; i < elements.length; i++) {
+            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            childElements.add(newNode);
+        }
 
-	/**
-	 * (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#accept(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
-	 */
-	public void accept (SiteTreeNodeVisitor visitor) throws DocumentException {
-		visitor.visitSiteTreeNode(this);
-	}
-	
-	/**
-	 * (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#acceptSubtree(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
-	 */
-	public void acceptSubtree (SiteTreeNodeVisitor visitor) throws DocumentException {
-		this.accept(visitor);
+        return (SiteTreeNode[])childElements.toArray(
+            new SiteTreeNode[childElements.size()]);
+    }
+
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#removeChildren()
+     */
+    public SiteTreeNode[] removeChildren() {
+        List childElements = new ArrayList();
+        NamespaceHelper helper =
+            new NamespaceHelper(
+                DefaultSiteTree.NAMESPACE_URI,
+                "",
+                node.getOwnerDocument());
+        Element[] elements =
+            helper.getChildren((Element)node, SiteTreeNodeImpl.NODE_NAME);
+        for (int i = 0; i < elements.length; i++) {
+            node.removeChild(elements[i]);
+            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            childElements.add(newNode);
+        }
+        return (SiteTreeNode[])childElements.toArray(
+            new SiteTreeNode[childElements.size()]);
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#accept(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
+     */
+    public void accept(SiteTreeNodeVisitor visitor) throws DocumentException {
+        visitor.visitSiteTreeNode(this);
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#acceptSubtree(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
+     */
+    public void acceptSubtree(SiteTreeNodeVisitor visitor)
+        throws DocumentException {
+        this.accept(visitor);
         SiteTreeNode[] children = this.getChildren();
-		if (children == null) {
-			log.info("The node " + this.getId() + " has no children");
-			return;
-		} else {
-			for (int i=0; i<children.length; i++) {
-				children[i].acceptSubtree(visitor);
-			}	
-		}
-	}
+        if (children == null) {
+            log.info("The node " + this.getId() + " has no children");
+            return;
+        } else {
+            for (int i = 0; i < children.length; i++) {
+                children[i].acceptSubtree(visitor);
+            }
+        }
+    }
 }
