@@ -19,7 +19,9 @@ package org.apache.lenya.cms.publication;
 
 import java.io.IOException;
 
+
 import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.log4j.Category;
 import org.w3c.dom.Element;
 
@@ -28,7 +30,7 @@ import org.w3c.dom.Element;
  */
 public class XlinkCollection extends CollectionImpl {
     
-    private static final Category log = Category.getInstance(CollectionImpl.class);
+    private static final Category log = Category.getInstance(XlinkCollection.class);
 
     /**
      * Ctor.
@@ -66,8 +68,31 @@ public class XlinkCollection extends CollectionImpl {
             log.error("Couldn't found the file path for the document: "+document.getId()); 
 		} 
         element.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", path);          
-        element.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:show", "embed");          
+        element.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:show", "embed");
+                  
         return element;
+    }
+
+    /**
+     * Saves the XML source of this collection.
+     * @throws DocumentException when something went wrong.
+     */
+    public void save() throws DocumentException {
+        try {
+            
+            NamespaceHelper helper = getNamespaceHelper();
+            Element collectionElement = helper.getDocument().getDocumentElement();
+              
+            if ((collectionElement.getAttribute("xmlns:xlink") == null) | (!collectionElement.getAttribute("xmlns:xlink").equals("http://www.w3.org/1999/xlink"))) {
+                collectionElement.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
+            }
+            DocumentHelper.writeDocument(helper.getDocument(), getFile());
+            super.save();
+        } catch (DocumentException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new DocumentException(e);
+        }
     }
 
 }
