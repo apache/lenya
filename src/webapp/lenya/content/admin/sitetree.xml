@@ -36,8 +36,8 @@
   </node>
   
   <node id="content" href="content.html">
-    <label xml:lang="en">Content</label>
-    <label xml:lang="de">Content</label>
+    <label xml:lang="en">Delete Trash</label>
+    <label xml:lang="de">Delete Trash</label>
   </node>
 
   <node id="status" href="status.html">
