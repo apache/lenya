@@ -155,6 +155,18 @@
         <map:transform src="stylesheets/publication/Page/Mailing-Lists/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
+
+      <!-- Glossary -->
+      <map:match pattern="live/glossary.html">
+        <map:generate src="cocoon:/live/glossary.xml"/>
+        <map:transform src="stylesheets/publication/Page/Glossary/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="glossary.html">
+        <map:generate src="cocoon:/live/glossary.xml"/>
+        <map:transform src="stylesheets/publication/Page/Glossary/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
    </map:pipeline>
  </map:pipelines>
 </map:sitemap>
