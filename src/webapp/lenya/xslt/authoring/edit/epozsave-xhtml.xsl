@@ -29,7 +29,9 @@
     <head>
       <xsl:apply-templates select="edited/xhtml:html/xhtml:head/*"/>
     </head>
-    <xsl:copy-of select="edited/xhtml:html/xhtml:body"/>
+    <!-- FIXME: namespaces ... -->
+    <xsl:copy-of select="edited/html/body"/>
+    <!--<xsl:copy-of select="edited/xhtml:html/xhtml:body"/>-->
   </html>
 </xsl:template>
 

@@ -87,12 +87,13 @@ import java.io.StringReader;
  * number of bytes read is equal to the getContentLength() value.
  *
  * @author <a href="mailto:Kinga_Dziembowski@hp.com">Kinga Dziembowski</a>
- * @version CVS $Id: StreamGenerator.java,v 1.2 2003/12/14 22:15:39 michi Exp $
+ * @version CVS $Id: StreamGenerator.java,v 1.3 2004/01/24 11:15:04 michi Exp $
  *
  * FIXME: Epoz sends text/html as mime-type. Please see the discussion in the mailing list.
  */
-public class StreamGenerator extends org.apache.cocoon.generation.ServiceableGenerator
-{
+public class StreamGenerator extends org.apache.cocoon.generation.ServiceableGenerator {
+    org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StreamGenerator.class);
+
     public static final String CLASS = StreamGenerator.class.getName();
 
     /** The parameter holding the name associated with the xml data  **/
@@ -144,6 +145,7 @@ public class StreamGenerator extends org.apache.cocoon.generation.ServiceableGen
             } else if (contentType.startsWith("text/plain") ||
                     contentType.startsWith("text/xml") ||
                     contentType.startsWith("text/html") ||
+                    contentType.startsWith("application/xhtml+xml") ||
                     contentType.startsWith("application/xml")) {
 
                 HttpServletRequest httpRequest = (HttpServletRequest) objectModel.get(HttpEnvironment.HTTP_REQUEST_OBJECT);
@@ -158,6 +160,7 @@ public class StreamGenerator extends org.apache.cocoon.generation.ServiceableGen
                     throw new IOException("getContentLen() == 0");
                 }
             } else {
+                log.error("Unexpected getContentType(): " + request.getContentType());
                 throw new IOException("Unexpected getContentType(): " + request.getContentType());
             }
 

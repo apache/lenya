@@ -371,6 +371,8 @@
                   <map:serialize type="html"/>
                 </map:act>
 
+                <!-- FIXME: It would be nice to reuse the original macros file -->
+                <!--<map:generate src="../../ROOT/epoz/common/epozmacros.html"/>-->
                 <map:generate src="resources/misc/epoz/epozmacros.html"/>
                 <map:transform src="xslt/authoring/edit/epozmacros-xhtml.xsl">
                   <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=content"/>
@@ -378,8 +380,9 @@
                   <map:parameter name="document-path" value="{page-envelope:document-path}"/>
                   <map:parameter name="root" value="{page-envelope:context-prefix}"/>
                   <map:parameter name="save-destination" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=save"/>
-                  <map:parameter name="reload-on-save" value="1"/>
+                  <map:parameter name="reload-on-save" value="0"/> <!-- 1 means you can see the saving -->
                   <map:parameter name="use-css" value="1"/>
+                  <map:parameter name="redirect-to" value="{../2}.html"/>
                 </map:transform>
 	        <map:serialize type="html"/>
               </map:act>
@@ -424,6 +427,7 @@
                   <map:part element="edited" src="cocoon:/epoz-stream"/>
                   <map:part element="original" src="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
                 </map:aggregate>
+
                 <map:transform src="xslt/authoring/edit/epozsave-xhtml.xsl"/>
 
                 <map:act type="reserved-checkin">
@@ -439,7 +443,7 @@
 
                 <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
                   <map:parameter name="source" value="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
-                  <!--<map:parameter name="source" value="test-epoz.xml"/>-->
+                  <!--<map:parameter name="source" value="pubs/{page-envelope:publication-id}/test-epoz.xml"/>-->
                 </map:transform>
                 <map:transform type="write-source"/>
 			
