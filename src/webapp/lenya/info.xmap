@@ -352,7 +352,7 @@
           
         </map:match>
         
-        <!-- no usecase: redirect to info-overview usecase -->
+        <!-- no usecase: redirect to tab.overview usecase -->
         <map:redirect-to uri="{request:requestURI}?lenya.usecase=tab.overview" session="true"/>
         
       </map:match>

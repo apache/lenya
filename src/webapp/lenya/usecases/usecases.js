@@ -39,17 +39,9 @@ function passRequestParameters(flowHelper, usecase) {
 }
 
 
-/* Helper method to choose the appropriate view pipeline. The usecases displayed in a tab in the site
-   area need a more complex view, so they have their own pipeline. */
 function selectView(usecaseName) { 
 	var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
-	var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
-	var view = "";
-	if (isTabUsecase) {
-		view = "view-tab/" + usecaseView;
-	} else {
-		view = "view/" + usecaseView;
-	}
+	var view = "view/" + usecaseView;
 	return view;
 }
 
