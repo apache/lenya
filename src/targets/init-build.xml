@@ -28,7 +28,6 @@
     <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
 
     <property name="today"         value="${TODAY}"/>
-    <echo message="Today is ${today}"/>
     <property name="snapshot.bin.dir" value="${dist.root}/${fullname}-bin-${SNAPSHOT_STAMP}"/>
     <property name="snapshot.src.dir" value="${dist.root}/${fullname}-src-${SNAPSHOT_STAMP}"/>
 
