@@ -77,7 +77,7 @@ import org.xml.sax.SAXException;
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCoreImpl.java,v 1.10 2004/02/20 10:41:06 andreas Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.11 2004/02/20 16:32:33 andreas Exp $
  */
 public class DublinCoreImpl {
     private Document cmsdocument;
@@ -91,7 +91,7 @@ public class DublinCoreImpl {
     private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
     private static final String DC_PREFIX = "dc";
 
-    private static final String[] ELEMENTS =
+    public static final String[] ELEMENTS =
         {
             DublinCore.ELEMENT_TITLE,
             DublinCore.ELEMENT_CREATOR,
@@ -114,7 +114,7 @@ public class DublinCoreImpl {
     private static final String DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
     private static final String DCTERMS_PREFIX = "dcterms";
 
-    private static final String[] TERMS =
+    public static final String[] TERMS =
         {
             DublinCore.TERM_AUDIENCE,
             DublinCore.TERM_ALTERNATIVE,
@@ -295,10 +295,10 @@ public class DublinCoreImpl {
      * @param key The key.
      * @return A string.
      */
-    public String getFirstValue(String key) {
+    public String getFirstValue(String key) throws DocumentException {
         String value = null;
-        String[] values = (String[]) elements.get(key);
-        if (values != null && values.length > 0) {
+        String[] values = (String[]) getElementOrTerm(key);
+        if (values.length > 0) {
             value = values[0];
         }
         return value;
