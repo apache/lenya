@@ -18,6 +18,7 @@ package org.apache.lenya.cms.ac.usecases;
 
 import java.io.File;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileUser;
@@ -115,7 +116,7 @@ public class AddUser extends AccessControlUsecase {
             user.setName(fullName);
             user.setPassword(password);
         }
-
+        ContainerUtil.enableLogging(user, getLogger());
         user.setDescription(description);
         user.save();
         getUserManager().add(user);
