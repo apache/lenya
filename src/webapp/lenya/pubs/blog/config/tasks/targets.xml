@@ -43,7 +43,7 @@
 
 
   <echo>Export page as static HTML</echo>
-  <echo>Pages to export: ${export.server-port} ${export.context-path} ${export.uris}</echo>
+  <echo>Pages to export: ${export.uris}</echo>
   <taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter"/>
   <export
     server="http://127.0.0.1:${export.server-port}${export.context-path}/${pub.id}/live/"
