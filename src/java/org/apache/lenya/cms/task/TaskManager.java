@@ -1,5 +1,5 @@
 /*
- * $Id: TaskManager.java,v 1.13 2003/06/06 17:29:07 andreas Exp $
+ * $Id: TaskManager.java,v 1.14 2003/06/11 14:35:02 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -91,10 +91,14 @@ public class TaskManager implements Configurable {
             DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
             Configuration configuration = builder.buildFromFile(configurationFile);
             configure(configuration);
+            
+            tasks.put(EMTPY_TASK, new EmptyTask());
         } catch (Exception e) {
             log.error("Cannot load task configuration! ", e);
         }
     }
+    
+    public static final String EMTPY_TASK = "empty";
 
     /**
      * DOCUMENT ME!
