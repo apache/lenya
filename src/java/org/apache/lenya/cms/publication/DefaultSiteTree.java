@@ -15,7 +15,7 @@
  *
  */
 
-/* @version $Id: DefaultSiteTree.java,v 1.43 2004/04/23 14:52:54 andreas Exp $ */
+/* @version $Id: DefaultSiteTree.java,v 1.44 2004/04/23 16:41:48 andreas Exp $ */
 
 package org.apache.lenya.cms.publication;
 
@@ -127,6 +127,11 @@ public class DefaultSiteTree implements SiteTree {
         if (area.equals(Publication.LIVE_AREA)
             && treefile.isFile()
             && treefile.lastModified() > lastModified) {
+                
+            if (log.isDebugEnabled()) {
+                log.debug("Sitetree [" + treefile + "] has changed: reloading.");
+            }
+                
             try {
                 document = DocumentHelper.readDocument(treefile);
             } catch (Exception e) {
