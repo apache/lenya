@@ -51,13 +51,9 @@ import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.AccessControlTest;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.User;
+import org.apache.lenya.cms.ac2.AccessControlTest;
 import org.apache.lenya.cms.ac2.file.FileAccessController;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.TestPageEnvelope;
 
 /**
  * @author andreas
@@ -83,18 +79,18 @@ public class PolicyTest extends AccessControlTest {
         PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(PolicyTest.class);
     }
-    
-    protected static final String URL = "index.html";
-    protected static final String SAVE_URL = "tutorial.html";
-    protected static final String USERNAME = "lenya";
-    
+
+    protected static final String URL = "/authoring/index.html";
+    protected static final String SAVE_URL = "/authoring/tutorial.html";
+
     /**
      * A test.
      * @throws AccessControlException when something went wrong.
      */
     public void testLoadPolicy() throws AccessControlException {
-        
-        Policy policy = getPolicy(URL);
+
+        String url = "/" + PublicationHelper.getPublication().getId() + URL;
+        Policy policy = getPolicy(url);
         Role roles[] = policy.getRoles(getIdentity());
         System.out.print("Roles: ");
         for (int i = 0; i < roles.length; i++) {
@@ -102,20 +98,7 @@ public class PolicyTest extends AccessControlTest {
         }
         System.out.println();
     }
-    
-    /**
-     * Returns the identity.
-     * @return The identity.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected Identity getIdentity() throws AccessControlException {
-        User user = getAccessController().getUserManager().getUser(USERNAME);
-        assertNotNull(user);
-        Identity identity = new Identity();
-        identity.addIdentifiable(user);
-        return identity;
-    }
-    
+
     /**
      * Returns the policy for a URL.
      * @param url The URL.
@@ -123,26 +106,23 @@ public class PolicyTest extends AccessControlTest {
      * @throws AccessControlException when something went wrong.
      */
     protected Policy getPolicy(String url) throws AccessControlException {
-        PageEnvelope envelope;
-        try {
-            envelope = new TestPageEnvelope(PublicationHelper.getPublication(), url);
-        } catch (PageEnvelopeException e) {
-            throw new AccessControlException(e);
-        }
-        Policy policy = ((FileAccessController) getAccessController()).getPolicy(envelope);
+        Policy policy =
+            ((FileAccessController) getAccessController()).getPolicy(
+                PublicationHelper.getPublication(),
+                url);
         return policy;
     }
-    
+
     /**
      * A test.
      * @throws AccessControlException when something went wrong.
      */
     public void testSavePolicy() throws AccessControlException {
-        
+
         PolicyManager manager = getAccessController().getPolicyManager();
         DefaultPolicy urlPolicy = manager.buildURLPolicy(URL);
         DefaultPolicy newPolicy = new DefaultPolicy();
-        
+
         Credential credentials[] = urlPolicy.getCredentials();
         for (int i = 0; i < credentials.length; i++) {
             Credential credential = new Credential(credentials[i].getAccreditable());
@@ -152,19 +132,19 @@ public class PolicyTest extends AccessControlTest {
             }
             newPolicy.addCredential(credential);
         }
-        
+
         assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
-        
+
         getAccessController().getPolicyManager().saveURLPolicy(SAVE_URL, newPolicy);
-        
+
         newPolicy = manager.buildURLPolicy(SAVE_URL);
         assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
-        
+
         Credential newCredentials[] = newPolicy.getCredentials();
         for (int i = 0; i < credentials.length; i++) {
             Credential credential = new Credential(credentials[i].getAccreditable());
 
-            Credential newCredential = null;            
+            Credential newCredential = null;
             for (int k = 0; k < newCredentials.length; k++) {
                 if (newCredentials[k].getAccreditable().equals(credential.getAccreditable())) {
                     newCredential = newCredentials[k];
@@ -172,7 +152,7 @@ public class PolicyTest extends AccessControlTest {
             }
             System.out.println("Accreditable: [" + credential.getAccreditable() + "]");
             assertNotNull(newCredential);
-                
+
             Set oldRoles = new HashSet(Arrays.asList(credential.getRoles()));
             Set newRoles = new HashSet(Arrays.asList(newCredential.getRoles()));
             assertEquals(oldRoles, newRoles);
@@ -184,5 +164,5 @@ public class PolicyTest extends AccessControlTest {
             */
         }
     }
-    
+
 }
