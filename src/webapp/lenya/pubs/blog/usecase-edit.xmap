@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: usecase-edit.xmap,v 1.1 2003/08/05 19:50:47 michi Exp $ -->
+<!-- CVS: $Id: usecase-edit.xmap,v 1.2 2003/08/08 12:43:54 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -21,6 +21,12 @@
         <map:match pattern="open" type="step">
           <map:match pattern="authoring/entries/**.html">
             <map:generate src="content/authoring/entries/{1}.xml"/>
+            <map:transform src="../../xslt/authoring/edit/numberTags.xsl"/>
+            <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="work/editor/authoring/entries/{1}.xml"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:transform src="../../xslt/authoring/edit/removeSourceTags.xsl"/>
             <map:transform src="xslt/entry/editWithForms.xsl">
               <map:parameter name="entryid" value="{1}"/>
             </map:transform>

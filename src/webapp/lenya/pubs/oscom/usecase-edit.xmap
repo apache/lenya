@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: usecase-edit.xmap,v 1.1 2003/08/07 16:29:48 michi Exp $ -->
+<!-- CVS: $Id: usecase-edit.xmap,v 1.2 2003/08/08 12:43:54 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -21,10 +21,27 @@
         <map:match pattern="open" type="step">
           <map:match pattern="authoring/matrix/*.html">
             <map:generate src="content/authoring/matrix/{1}.xml"/>
+            <map:transform src="../../xslt/authoring/edit/numberTags.xsl"/>
+            <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="work/editor/authoring/matrix/{1}.xml"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:transform src="../../xslt/authoring/edit/removeSourceTags.xsl"/>
             <map:transform src="xslt/matrix/authoring/editWithForms.xsl">
               <map:parameter name="projectid" value="{1}"/>
             </map:transform>
             <map:serialize type="html" />
+          </map:match>
+        </map:match>
+
+        <map:match pattern="update" type="step">
+          <map:match pattern="authoring/matrix/*.html">
+            <map:act type="save">
+              <map:parameter name="file" value="content/authoring/matrix/{1}.xml"/>
+              <!-- FIXME: Error Message -->
+              <map:redirect-to uri="/lenya/index.html" />
+            </map:act>
+            <map:redirect-to uri="{1}.html" />
           </map:match>
         </map:match>
 
@@ -36,6 +53,17 @@
               <map:redirect-to uri="/lenya/index.html" />
             </map:act>
             <map:redirect-to uri="{1}.html" />
+          </map:match>
+        </map:match>
+
+
+
+        <!-- DEBUG -->
+        <map:match pattern="number" type="step">
+          <map:match pattern="authoring/matrix/*.html">
+            <map:generate src="content/authoring/matrix/{1}.xml"/>
+            <map:transform src="../../xslt/authoring/edit/numberTags.xsl"/>
+            <map:serialize type="xml" />
           </map:match>
         </map:match>
       </map:match>
