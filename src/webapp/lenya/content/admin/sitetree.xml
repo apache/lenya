@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : sitetree.xml
+    Created on : 11. April 2003, 11:05
+    Author     : andreas
+    Description:
+        Purpose of the document follows.
+-->
+
+<site
+    xmlns="http://www.lenya.org/2003/sitetree"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation=
+        "http://www.lenya.org/2003/sitetree
+        ../../resources/entities/sitetree.xsd">
+    
+  <node id="index">
+    <label>Home</label>
+  </node>
+  
+  <node id="users">
+    <label>Users</label>
+  </node>
+
+  <node id="groups">
+    <label>Groups</label>
+  </node>
+  
+</site>
