@@ -51,7 +51,6 @@
 					<menubar href="lenya-menubar.html" label="Lenya Menubar"/>
 				</layout>
 				<publication href="publication/" label="Publication">
-					<page-envelope href="pageEnvelope.html" label="Page envelope"/>
 					<pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
 					<sitetree href="siteTree.html" label="Site tree"/>
 				</publication>
@@ -127,9 +126,6 @@
 			</misc>
 			<javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
 		</integrator-dev-guide>
-		<user-guide href="user-guide/" label="User Guide">
-			<logout href="login-logout.html" label="Login/Logout"/>
-		</user-guide>
 	</documentation>
 	<community href="community/" label="Community">
 		<node-f href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/" label="CVS Web"/>
