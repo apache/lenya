@@ -17,8 +17,6 @@
 
 package org.apache.lenya.ac;
 
-import java.util.Collection;
-
 /**
  * User manager.
  * @version $Id$
@@ -37,7 +35,7 @@ public interface UserManager extends ItemManager {
      *
      * @return a collection of user types
      */
-    Collection getUserTypes();
+    UserType[] getUserTypes();
 
     /**
      * Add the given user
