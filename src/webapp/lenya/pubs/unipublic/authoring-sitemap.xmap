@@ -3,14 +3,12 @@
 	<!-- =========================== Components ================================ -->
 	<map:components>
 		<map:generators default="file">
-			<map:generator name="file" src="org.apache.cocoon.generation.FileGenerator"/>
 			<map:generator name="servletproxy" src="org.lenya.cms.cocoon.generation.ProxyGenerator"/>
 		</map:generators>
 		<map:transformers default="xslt">
 			<map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
 				<publication type="unipublic"/>
 			</map:transformer>
-			<map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
 		</map:transformers>
 		<map:readers default="resource"/>
 		<map:serializers default="html"/>
@@ -53,29 +51,7 @@
 				<insert-image-before value="false"/>
 			</map:action>
 		</map:actions>
-		<map:selectors default="browser">
-			<map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
-				<!--
-           # NOTE: The appearance indicates the search order. This is very important since
-           #       some words may be found in more than one browser description. (MSIE is
-           #       presented as "Mozilla/4.0 (Compatible; MSIE 4.01; ...")
-      -->
-				<browser name="explorer" useragent="MSIE"/>
-				<browser name="pocketexplorer" useragent="MSPIE"/>
-				<browser name="handweb" useragent="HandHTTP"/>
-				<browser name="avantgo" useragent="AvantGo"/>
-				<browser name="imode" useragent="DoCoMo"/>
-				<browser name="opera" useragent="Opera"/>
-				<browser name="lynx" useragent="Lynx"/>
-				<browser name="java" useragent="Java"/>
-				<browser name="wap" useragent="Nokia"/>
-				<browser name="wap" useragent="UP"/>
-				<browser name="wap" useragent="Wapalizer"/>
-				<browser name="mozilla5" useragent="Mozilla/5"/>
-				<browser name="mozilla5" useragent="Netscape6/"/>
-				<browser name="netscape" useragent="Mozilla"/>
-			</map:selector>
-		</map:selectors>
+		<map:selectors/>
 	</map:components>
 	<!-- =========================== Views     ================================ -->
 	<map:views>
@@ -272,7 +248,7 @@
 					<map:part src="cocoon:/menus/front.xml"/>
 					<map:part src="cocoon:/index.xml" element="cmsbody"/>
 				</map:aggregate>
-				<map:transform src="xslt/front//authoring/main.xsl">
+				<map:transform src="xslt/front/authoring/main.xsl">
 					<map:parameter name="year" value="2003"/>
 				</map:transform>
 				<map:serialize type="html"/>
@@ -287,14 +263,14 @@
 				<map:transform type="xlink">
 					<map:parameter name="href" value="content/authoring/frontpage/index.xml"/>
 				</map:transform>
-				<map:transform src="xslt/front//live/main.xsl">
+				<map:transform src="xslt/front/live/main.xsl">
 					<map:parameter name="year" value="2003"/>
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="headlines.xml">
 				<map:generate src="content/authoring/frontpage/headlines.xml"/>
-				<map:transform src="xslt/front//xinclude.xsl"/>
+				<map:transform src="xslt/front/xinclude.xsl"/>
 				<map:transform type="xlink">
 					<map:parameter name="href" value="content/authoring/frontpage/headlines.xml"/>
 				</map:transform>
@@ -313,7 +289,7 @@
 			</map:match>
 			<map:match pattern="dossier.xml">
 				<map:generate src="content/authoring/frontpage/dossier.xml"/>
-				<map:transform src="xslt/front//xinclude_dossiers.xsl"/>
+				<map:transform src="xslt/front/xinclude_dossiers.xsl"/>
 				<map:transform type="xlink">
 					<map:parameter name="href" value="content/authoring/frontpage/dossier.xml"/>
 				</map:transform>
@@ -480,7 +456,9 @@
 				<map:transform type="xlink">
 					<map:parameter name="href" value="content/authoring/section.xsp"/>
 				</map:transform>
+<!--
 				<map:transform src="xslt/section/authoring/sort.xsl"/>
+-->
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="*/*/">

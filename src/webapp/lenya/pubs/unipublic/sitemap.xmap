@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.12 2003/03/04 23:07:39 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.13 2003/03/17 16:18:29 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -8,17 +8,11 @@
 
   <map:components>
 
-    <map:generators default="file">
-      <map:generator  name="request" src="org.apache.cocoon.generation.RequestGenerator"/>
-    </map:generators>
+    <map:generators default="file"/>
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
-    <map:matchers default="wildcard">
-      <map:matcher name="wildcard"      logger="sitemap.matcher.wildcard"
-                   src="org.apache.cocoon.matching.WildcardURIMatcher"/>
-    </map:matchers>
-
+    <map:matchers default="wildcard"/>
     <map:actions>
       <map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
         <authenticator type="unipublic"/>
