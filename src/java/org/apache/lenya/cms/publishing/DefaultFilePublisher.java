@@ -26,6 +26,7 @@ public class DefaultFilePublisher
     extends AbstractFilePublisher {
     
     static Category log = Category.getInstance(DefaultFilePublisher.class);
+    public static final String PARAMETER_SOURCES = "sources";
 
     /**
      * Default implementation of <code>publish</code> which simply
@@ -81,7 +82,7 @@ public class DefaultFilePublisher
     public void execute(String contextPath) {
 
         try {
-            String publicationId = getParameters().getParameter("publication-id");
+            String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
 
             Parameters taskParameters = new Parameters();
 
@@ -89,15 +90,15 @@ public class DefaultFilePublisher
                 publicationId);
 
             // read default parameters from PublishingEnvironment
-            taskParameters.setParameter("authoring-path", environment.getAuthoringPath());
-            taskParameters.setParameter("tree-authoring-path", environment.getTreeAuthoringPath());
-            taskParameters.setParameter("live-path", environment.getLivePath());
-            taskParameters.setParameter("tree-live-path", environment.getTreeLivePath());
+            taskParameters.setParameter(PublishingEnvironment.PARAMETER_AUTHORING_PATH, environment.getAuthoringPath());
+            taskParameters.setParameter(PublishingEnvironment.PARAMETER_TREE_AUTHORING_PATH, environment.getTreeAuthoringPath());
+            taskParameters.setParameter(PublishingEnvironment.PARAMETER_LIVE_PATH, environment.getLivePath());
+            taskParameters.setParameter(PublishingEnvironment.PARAMETER_TREE_LIVE_PATH, environment.getTreeLivePath());
 
             taskParameters.merge(getParameters());
             parameterize(taskParameters);
 
-            String sourcesString = getParameters().getParameter("sources");
+            String sourcesString = getParameters().getParameter(PARAMETER_SOURCES);
             StringTokenizer st = new StringTokenizer(sourcesString,",");
             String sources[] = new String[st.countTokens()];
             int i = 0;
@@ -107,10 +108,10 @@ public class DefaultFilePublisher
 
             publish(
                 PublishingEnvironment.getPublicationPath(contextPath, publicationId),
-                getParameters().getParameter("authoring-path"),
-                getParameters().getParameter("tree-authoring-path"),
-                getParameters().getParameter("live-path"),
-                getParameters().getParameter("tree-live-path"),
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_AUTHORING_PATH),
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_TREE_AUTHORING_PATH),
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_LIVE_PATH),
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_TREE_LIVE_PATH),
                 sources);
 	} catch (Exception e) {
 	    log.error("Publishing failed: ", e);

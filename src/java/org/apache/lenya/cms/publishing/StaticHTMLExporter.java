@@ -31,6 +31,8 @@ public class StaticHTMLExporter
 
     static Category log = Category.getInstance(StaticHTMLExporter.class);
 
+    public static final String PARAMETER_URIS = "uris";
+    
     public void export(
         URL serverURI,
         int serverPort,
@@ -65,7 +67,7 @@ public class StaticHTMLExporter
 
         try {
             
-            String publicationId = getParameters().getParameter("publication-id");
+            String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
 
             Parameters taskParameters = new Parameters();
 
@@ -73,8 +75,8 @@ public class StaticHTMLExporter
                 publicationId);
 
             // read default parameters from PublishingEnvironment
-            taskParameters.setParameter("export-path", environment.getExportDirectory());
-            taskParameters.setParameter("substitute-regexp", environment.getSubstituteExpression());
+            taskParameters.setParameter(PublishingEnvironment.PARAMETER_EXPORT_PATH, environment.getExportDirectory());
+            taskParameters.setParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REGEXP, environment.getSubstituteExpression());
 
             taskParameters.merge(getParameters());
             parameterize(taskParameters);
@@ -82,11 +84,11 @@ public class StaticHTMLExporter
             String publicationPath
                 = PublishingEnvironment.getPublicationPath(contextPath, publicationId);
 
-            int serverPort = getParameters().getParameterAsInteger("server-port");
+            int serverPort = getParameters().getParameterAsInteger(PARAMETER_SERVER_PORT);
             log.debug(".execute(): Server Port: "+serverPort);
-            String serverURI = getParameters().getParameter("server-uri");
+            String serverURI = getParameters().getParameter(PARAMETER_SERVER_URI);
 
-            String urisString = getParameters().getParameter("uris");
+            String urisString = getParameters().getParameter(PARAMETER_URIS);
             StringTokenizer st = new StringTokenizer(urisString, ",");
             String uris[] = new String[st.countTokens()];
             int i = 0;
@@ -98,9 +100,9 @@ public class StaticHTMLExporter
                 new URL(serverURI),
                 serverPort,
                 publicationPath,
-                getParameters().getParameter("export-path"),
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_EXPORT_PATH),
                 uris,
-                getParameters().getParameter("substitute-regexp"));
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REGEXP));
         }
         catch(Exception e){
             log.error("Export failed: ", e);

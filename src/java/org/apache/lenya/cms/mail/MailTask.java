@@ -28,7 +28,12 @@ import org.wyona.cms.task.AbstractTask;
 
 /**
  * A task that sends an e-mail. Each parameter can either be
- * provided as a task parameter or extracted from an XML document.<br/><br/>
+ * provided as a task parameter or extracted from an XML document.
+ * If the parameter "uri" starts with a <code>http://</code> or <code>ftp://</code>
+ * prefix, the absolute
+ * URI is used. If not, the URI is interpreted as relative to the
+ * local publication.
+ * <br/><br/>
  * The task parameters are:<br/>
  * <code><strong>uri</strong></code>: the URI to get the XML file from<br/>
  * <code><strong>server</strong></code>: the SMTP server<br/>
@@ -37,7 +42,7 @@ import org.wyona.cms.task.AbstractTask;
  * <code><strong>cc</strong></code>:<br/>
  * <code><strong>subject</strong></code>:<br/>
  * <code><strong>body</strong></code>:<br/>
- * <br/><br/>
+ * <br/>
  * All parameters are optional. If the uri parameter is provided, the
  * document is fetched from the URI and the parameters are extracted.
  * Task parameters have a higher priority than elements of the document.
@@ -49,7 +54,7 @@ import org.wyona.cms.task.AbstractTask;
  * &#160;&#160;...<br/>
  * &lt;/mail:mail&gt;<br/>
  * </code>
- * @author  ah
+ * @author  <a href="mailto:ah@wyona.org">Andreas Hartmann</a>
  */
 public class MailTask
     extends AbstractTask {
@@ -77,6 +82,23 @@ public class MailTask
             log.debug("\nURI: " + uri);
             
             if (!uri.equals("")) {
+
+                // generate absolute URI from relative URI
+                
+                if (!uri.startsWith("http://") && !uri.startsWith("ftp://")) {
+//                    String absoluteUri =
+//                        getParameters().getParameter(PARAMETER_SERVER_URI);
+                    String absoluteUri = "http://127.0.0.1";
+                    String serverPort = getParameters().getParameter(PARAMETER_SERVER_PORT, "");
+                    if (!serverPort.equals(""))
+                        absoluteUri += ":" + Integer.parseInt(serverPort);
+                    absoluteUri +=
+                        getParameters().getParameter(PARAMETER_CONTEXT_PREFIX) +
+                        getParameters().getParameter(PARAMETER_PUBLICATION_ID) +
+                        uri;
+                    uri = absoluteUri;
+                }
+
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 factory.setValidating(true);
                 factory.setNamespaceAware(true);

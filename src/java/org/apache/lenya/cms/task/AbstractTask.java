@@ -6,6 +6,7 @@
 
 package org.wyona.cms.task;
 
+import java.util.StringTokenizer;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.log4j.Category;
 
@@ -19,7 +20,7 @@ public abstract class AbstractTask
     static Category log = Category.getInstance(AbstractTask.class);
 
     private Parameters parameters = new Parameters();
-
+    
     public Parameters getParameters() {
         Parameters params = new Parameters();
         params = params.merge(parameters);

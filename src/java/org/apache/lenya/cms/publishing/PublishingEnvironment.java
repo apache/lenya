@@ -26,9 +26,12 @@ public class PublishingEnvironment implements Configurable {
     public static final String PUBLICATION_PREFIX = "wyona" + File.separator
                 + "cms" + File.separator + "pubs" + File.separator;
 
-    public static final String PARAMETER_PUBLICATION_ID = "publicationID";
-    public static final String PARAMETER_SOURCES = "sources";
-    public static final String PARAMETER_URIS = "uris";
+    public static final String PARAMETER_AUTHORING_PATH = "authoring-path";
+    public static final String PARAMETER_TREE_AUTHORING_PATH = "tree-authoring-path";
+    public static final String PARAMETER_LIVE_PATH = "live-path";
+    public static final String PARAMETER_TREE_LIVE_PATH = "tree-live-path";
+    public static final String PARAMETER_EXPORT_PATH = "export-path";
+    public static final String PARAMETER_SUBSTITUTE_REGEXP = "substitute-regexp";
     
     public PublishingEnvironment(String contextPath, String publicationId) {
         this(PublishingEnvironment.getPublicationPath(contextPath, publicationId));

@@ -20,8 +20,8 @@ import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.task.*;
 
 /**
- *
- * @author  ah
+ * An action that executes a task.
+ * @author  <a href="mailto:ah@wyona.org">Andreas Hartmann</a>
  */
 public class TaskAction
     extends AbstractComplementaryConfigurableAction {
@@ -86,6 +86,8 @@ public class TaskAction
 
         log.info("######### " + contextPath);
         
+        publicationPath += publicationId;
+        
 	// Get request object
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -103,14 +105,14 @@ public class TaskAction
         // prepare default parameters
         //------------------------------------------------------------
 
-        publicationPath = PublishingEnvironment.getPublicationPath(contextPath, publicationId);
-        
         Parameters taskParameters = new Parameters();
 
-        taskParameters.setParameter("server-uri", "http://" + request.getServerName());
-        taskParameters.setParameter("server-port", Integer.toString(request.getServerPort()));
-        taskParameters.setParameter("publication-id", publicationId);
-        
+        taskParameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT, contextPath);
+        taskParameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath() + "/");
+        taskParameters.setParameter(Task.PARAMETER_SERVER_PORT, Integer.toString(request.getServerPort()));
+        taskParameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
+        taskParameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publicationId);
+
         // set parameters using the request parameters
         for (Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) {
             String name = (String) e.nextElement();

@@ -28,8 +28,8 @@ import org.wyona.cms.task.TaskManager;
 
 /**
  * A TaskJob is a Job that executes a Task.
- * The task ID is obtained from the jobType request parameter.
- * @author  ah
+ * The task ID is obtained from the <code>task.id</code> request parameter.
+ * @author  <a href="mailto:ah@wyona.org">Andreas Hartmann</a>
  */
 public class TaskJob
     extends ServletJob {
@@ -65,17 +65,13 @@ public class TaskJob
                 + publicationId
                 + File.separator;
         
-        PublishingEnvironment environment = new PublishingEnvironment(publicationPath);
-
         Parameters parameters = new Parameters();
 
-        parameters.setParameter("context-path", servletContextPath);
-        parameters.setParameter("server-port", Integer.toString(request.getServerPort()));
-        log.debug(".getParameters() : server-port: "+Integer.toString(request.getServerPort()));
-        parameters.setParameter("server-uri", "http://" + request.getServerName());
-        parameters.setParameter("publication-id", publicationId);
-        parameters.setParameter("authoring-path", environment.getAuthoringPath());
-        parameters.setParameter("tree-authoring-path", environment.getTreeAuthoringPath());
+        parameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT, servletContextPath);
+        parameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath() + "/");
+        parameters.setParameter(Task.PARAMETER_SERVER_PORT, Integer.toString(request.getServerPort()));
+        parameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
+        parameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publicationId);
 
         // Add Request Parameters
         Parameters requestParameters = new Parameters();
