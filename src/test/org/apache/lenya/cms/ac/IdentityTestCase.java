@@ -19,7 +19,7 @@ import org.apache.lenya.cms.ac.Identity;
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: IdentityTestCase.java,v 1.6 2003/04/25 14:03:44 gregor Exp $
+ * @version CVS $Id: IdentityTestCase.java,v 1.7 2003/05/30 17:58:20 andreas Exp $
  */
 public final class IdentityTestCase extends TestCase {
     private Identity identity = null;
@@ -71,7 +71,7 @@ public final class IdentityTestCase extends TestCase {
      * Test if encrypted password exists
      */
     public void testEncryptedPassword() throws Exception {
-        assertTrue(identity.getPassword(doc).equals("8e07dafd13495561db9063ebe4db4b27"));
+        assertTrue(Identity.getPassword(doc).equals("8e07dafd13495561db9063ebe4db4b27"));
     }
 }
 
