@@ -6,6 +6,8 @@
 
 <xsl:output indent="no"/>
 
+<!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
+
 
 <xsl:template match="text()">
   <xsl:call-template name="search-and-replace">
