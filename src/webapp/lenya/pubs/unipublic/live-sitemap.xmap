@@ -148,6 +148,7 @@
 <!--
         <map:transform type="xinclude"/>
 -->
+        <map:transform src="stylesheets/publication/Page/Section/Live/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 

@@ -257,6 +257,7 @@
           <map:parameter name="year" value="{3}"/>
         </map:generate>
         <map:transform type="xlink"/>
+        <map:transform src="stylesheets/publication/Page/Section/Authoring/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
