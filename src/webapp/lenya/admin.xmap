@@ -62,15 +62,6 @@
     <map:pipeline>
       
 	    <!-- ============================================================ -->
-	    <!-- Admin Homepage -->
-	    <!-- ============================================================ -->
-	    
-      <map:match pattern="internal/index.html">
-        <map:generate src="content/admin/index.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-	    <!-- ============================================================ -->
 	    <!-- Status Page -->
 	    <!-- ============================================================ -->
 	    
@@ -105,6 +96,12 @@
       </map:match>
           
       <!-- usecase page (type = user|group) -->
+      <!-- pattern: {type}s/lenya.usecase.{usecase} -->
+	    <map:match pattern="*s/lenya.usecase.*">
+	      <map:call function="{1}_{2}"/>
+	    </map:match>
+          
+      <!-- usecase page (type = user|group) -->
       <!-- pattern: {type}s/{id}/lenya.usecase.{usecase} -->
 	    <map:match pattern="*s/*/lenya.usecase.*">
 	      <map:call function="{1}_{3}">
@@ -126,6 +123,17 @@
         <map:generate type="serverpages" src="content/ac/passwd-input-screen.xsp"/>
         <map:transform src="content/ac/simple-page2html.xsl"/>
         <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>
+      
+   <!-- ============================================================ -->
+   <!-- Admin Homepage (and all other pages) -->
+   <!-- ============================================================ -->
+	    
+	  <map:pipeline>
+      <map:match pattern="internal/**">
+        <map:generate src="content/admin/index.xml"/>
+        <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
 
