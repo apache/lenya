@@ -1,5 +1,5 @@
 /*
-$Id: Item.java,v 1.5 2003/08/07 12:14:49 andreas Exp $
+$Id: Item.java,v 1.6 2003/08/07 14:54:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -109,4 +109,5 @@ public interface Item {
      * @throws ConfigurationException when something went wrong.
      */
     void configure(Configuration configuration) throws ConfigurationException;
+    
 }

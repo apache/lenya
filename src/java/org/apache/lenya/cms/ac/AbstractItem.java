@@ -1,5 +1,5 @@
 /*
-$Id: AbstractItem.java,v 1.3 2003/08/07 12:14:49 andreas Exp $
+$Id: AbstractItem.java,v 1.4 2003/08/07 14:54:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -164,5 +164,5 @@ public abstract class AbstractItem implements Item {
     public int hashCode() {
         return getId().hashCode();
     }
-
+    
 }
