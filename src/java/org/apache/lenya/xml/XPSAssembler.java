@@ -72,7 +72,7 @@ import java.util.*;
  * XLink/XInclude Processor (Nesting, Caching, Java, Exceptions)
  *
  * @author Michael Wechner
- * @version $Id: XPSAssembler.java,v 1.15 2003/08/13 16:24:12 michi Exp $
+ * @version $Id: XPSAssembler.java,v 1.16 2003/10/02 03:55:19 michi Exp $
  */
 public class XPSAssembler implements XPSInclude {
     static Category log = Category.getInstance(XPSAssembler.class);
@@ -203,8 +203,7 @@ public class XPSAssembler implements XPSInclude {
         assembledDocument.appendChild(assembledRoot);
 
         File workingDirectory = new File(System.getProperty("user.dir"));
-        XPSSourceInformation sourceInfo = new XPSSourceInformation("file:" + workingDirectory +
-                "/dummy.xml", cocoon);
+        XPSSourceInformation sourceInfo = new XPSSourceInformation("file:" + workingDirectory + "/dummy.xml", cocoon);
         XPSSourceInformation currentInfo = new XPSSourceInformation(reference, sourceInfo, cocoon);
         NodeList nl = root.getChildNodes();
 
@@ -423,8 +422,7 @@ public class XPSAssembler implements XPSInclude {
             XLink xlink = new XLink((Element) orgChild);
 
             if (xlink.href == null) {
-                Element newElement = (Element) dpf.cloneNode(newParent.getOwnerDocument(),
-                        orgChild, false);
+                Element newElement = (Element) dpf.cloneNode(newParent.getOwnerDocument(), orgChild, false);
                 newChildren.addElement(newElement);
             } else {
                 noXLink = false;

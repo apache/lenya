@@ -71,7 +71,7 @@ import java.util.Properties;
  * Utility class for creating DOM documents
  *
  * @author Michael Wechner
- * @version $Id: DOMParserFactory.java,v 1.15 2003/08/13 16:24:12 michi Exp $
+ * @version $Id: DOMParserFactory.java,v 1.16 2003/10/02 03:55:19 michi Exp $
  * @deprecated replaced by DocumentHelper
  */
 public class DOMParserFactory {
@@ -242,13 +242,13 @@ public class DOMParserFactory {
     }
 
     /**
-     * DOCUMENT ME!
+     * Clone node, which means copy a node into another document
      *
-     * @param document DOCUMENT ME!
-     * @param original DOCUMENT ME!
-     * @param deep DOCUMENT ME!
+     * @param document New document where original nodes shall be attached to
+     * @param original Original node from original document
+     * @param deep true means clone also all children
      *
-     * @return DOCUMENT ME!
+     * @return New node, which is clone of original node
      */
     public Node cloneNode(Document document, Node original, boolean deep) {
         Node node = null;
@@ -257,11 +257,13 @@ public class DOMParserFactory {
         switch (nodeType) {
         case Node.ELEMENT_NODE: {
             Element element = newElementNode(document, original.getNodeName());
+            log.debug(".cloneNode(): Clone element: " + original.getNodeName());
             NamedNodeMap attributes = original.getAttributes();
 
             for (int i = 0; i < attributes.getLength(); i++) {
                 Node attribute = attributes.item(i);
-                element.setAttribute(attribute.getNodeName(), attribute.getNodeValue());
+                log.debug(".cloneNode(): LocalName: " + attribute.getLocalName() + ", Prefix: " + attribute.getPrefix() + ", NamespaceURI: " + attribute.getNamespaceURI());
+                element.setAttributeNS(attribute.getNamespaceURI(), attribute.getNodeName(), attribute.getNodeValue());
             }
 
             node = element;
