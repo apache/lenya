@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.31 2003/08/29 12:24:54 egli Exp $
+ $Id: info.xsl,v 1.32 2003/09/02 13:19:23 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -114,7 +114,7 @@
    <table class="lenya-table-noborder">
    <tr><td>Title:</td><td><xsl:value-of select="dc:title"/></td></tr>
    <tr><td>Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
-   <tr><td>Status:</td><td><xsl:value-of select="lenya-info:status"/></td></tr>
+   <tr><td>Workflow State:</td><td><xsl:value-of select="lenya-info:workflow-state"/></td></tr>
    <tr><td>Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
    <tr><td>Available Languages:</td><td><xsl:value-of select="lenya-info:languages"/></td></tr>
    <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr>
