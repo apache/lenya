@@ -1,5 +1,5 @@
 /*
-$Id: UserAuthenticator.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
+$Id: UserAuthenticator.java,v 1.3 2004/02/05 08:50:57 andreas Exp $
 <License>
 
  ============================================================================
@@ -115,7 +115,9 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
 
         boolean authenticated = false;
         if (user != null && user.authenticate(password)) {
-            getLogger().info("User [" + user + "] authenticated.");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("User [" + user + "] authenticated.");
+            }
             
             if (!identity.contains(user)) {
                 User oldUser = identity.getUser();
@@ -130,10 +132,12 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
             authenticated = true;
         }
         else {
-            if (user == null) {
-                getLogger().warn("No such user: [" + username + "]");
+            if (getLogger().isDebugEnabled()) {
+                if (user == null) {
+                    getLogger().debug("No such user: [" + username + "]");
+                }
+                getLogger().debug("User [" + username + "] not authenticated.");
             }
-            getLogger().warn("User [" + username + "] not authenticated.");
         }
 
         return authenticated;

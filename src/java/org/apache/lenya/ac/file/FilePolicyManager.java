@@ -1,5 +1,5 @@
 /*
- * $Id: FilePolicyManager.java,v 1.2 2004/02/02 02:50:40 stefano Exp $ <License>
+ * $Id: FilePolicyManager.java,v 1.3 2004/02/05 08:50:57 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -392,8 +392,8 @@ public class FilePolicyManager
             getServiceManager().release(getCache());
         }
         
-        if (getLogger().isInfoEnabled()) {
-            getLogger().info("Disposing [" + this + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Disposing [" + this + "]");
         }
     }
 

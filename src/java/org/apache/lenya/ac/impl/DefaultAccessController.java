@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultAccessController.java,v 1.1 2003/11/13 16:07:07 andreas Exp $ <License>
+ * $Id: DefaultAccessController.java,v 1.2 2004/02/05 08:50:57 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -101,8 +101,8 @@ public class DefaultAccessController
     private Authenticator authenticator;
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AccessController#authenticate(org.apache.cocoon.environment.Request)
-	 */
+     * @see org.apache.lenya.cms.ac2.AccessController#authenticate(org.apache.cocoon.environment.Request)
+     */
     public boolean authenticate(Request request) throws AccessControlException {
 
         assert request != null;
@@ -112,16 +112,16 @@ public class DefaultAccessController
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AccessController#authorize(org.apache.cocoon.environment.Request)
-	 */
+     * @see org.apache.lenya.cms.ac2.AccessController#authorize(org.apache.cocoon.environment.Request)
+     */
     public boolean authorize(Request request) throws AccessControlException {
 
         assert request != null;
 
         boolean authorized = false;
 
-        getLogger().info("=========================================================");
-        getLogger().info("Beginning authorization.");
+        getLogger().debug("=========================================================");
+        getLogger().debug("Beginning authorization.");
 
         if (hasAuthorizers()) {
             Authorizer[] authorizers = getAuthorizers();
@@ -130,8 +130,10 @@ public class DefaultAccessController
 
             while ((i < authorizers.length) && authorized) {
 
-                getLogger().info("---------------------------------------------------------");
-                getLogger().info("Invoking authorizer [" + authorizers[i] + "]");
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("---------------------------------------------------------");
+                    getLogger().debug("Invoking authorizer [" + authorizers[i] + "]");
+                }
 
                 if (authorizers[i] instanceof PolicyAuthorizer) {
                     PolicyAuthorizer authorizer = (PolicyAuthorizer) authorizers[i];
@@ -141,22 +143,27 @@ public class DefaultAccessController
 
                 authorized = authorized && authorizers[i].authorize(request);
 
-                getLogger().info(
-                    "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug(
+                        "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
+                }
 
                 i++;
             }
         }
-        getLogger().info("=========================================================");
-        getLogger().info("Authorization complete, result: [" + authorized + "]");
-        getLogger().info("=========================================================");
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("=========================================================");
+            getLogger().debug("Authorization complete, result: [" + authorized + "]");
+            getLogger().debug("=========================================================");
+        }
 
         return authorized;
     }
 
     /**
-	 * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-	 */
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
     public void configure(Configuration conf) throws ConfigurationException {
 
         try {
@@ -191,13 +198,13 @@ public class DefaultAccessController
     }
 
     /**
-	 * Creates the accreditable manager.
-	 * 
-	 * @param configuration The access controller configuration.
-	 * @throws ConfigurationException when the configuration failed.
-	 * @throws ServiceException when something went wrong.
+     * Creates the accreditable manager.
+     * 
+     * @param configuration The access controller configuration.
+     * @throws ConfigurationException when the configuration failed.
+     * @throws ServiceException when something went wrong.
      * @throws ParameterException when something went wrong.
-	 */
+     */
     protected void setupAccreditableManager(Configuration configuration)
         throws ConfigurationException, ServiceException, ParameterException {
 
@@ -206,8 +213,8 @@ public class DefaultAccessController
         if (accreditableManagerConfiguration != null) {
             String accreditableManagerType =
                 accreditableManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
-            if (getLogger().isInfoEnabled()) {
-                getLogger().info("AccreditableManager type: [" + accreditableManagerType + "]");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("AccreditableManager type: [" + accreditableManagerType + "]");
             }
 
             accreditableManagerSelector =
@@ -220,13 +227,13 @@ public class DefaultAccessController
     }
 
     /**
-	 * Creates the authorizers.
-	 * 
-	 * @param configuration The access controller configuration.
-	 * @throws ConfigurationException when the configuration failed.
-	 * @throws ServiceException when something went wrong.
+     * Creates the authorizers.
+     * 
+     * @param configuration The access controller configuration.
+     * @throws ConfigurationException when the configuration failed.
+     * @throws ServiceException when something went wrong.
      * @throws ParameterException when something went wrong.
-	 */
+     */
     protected void setupAuthorizers(Configuration configuration)
         throws ServiceException, ConfigurationException, ParameterException {
         Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
@@ -235,8 +242,8 @@ public class DefaultAccessController
 
             for (int i = 0; i < authorizerConfigurations.length; i++) {
                 String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
-                if (getLogger().isInfoEnabled()) {
-                    getLogger().info("Adding authorizer [" + type + "]");
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Adding authorizer [" + type + "]");
                 }
 
                 Authorizer authorizer = (Authorizer) authorizerSelector.select(type);
@@ -248,21 +255,21 @@ public class DefaultAccessController
     }
 
     /**
-	 * Creates the policy manager.
-	 * 
-	 * @param configuration The access controller configuration.
-	 * @throws ConfigurationException when the configuration failed.
-	 * @throws ServiceException when something went wrong.
+     * Creates the policy manager.
+     * 
+     * @param configuration The access controller configuration.
+     * @throws ConfigurationException when the configuration failed.
+     * @throws ServiceException when something went wrong.
      * @throws ParameterException when something went wrong.
-	 */
+     */
     protected void setupPolicyManager(Configuration configuration)
         throws ServiceException, ConfigurationException, ParameterException {
         Configuration policyManagerConfiguration =
             configuration.getChild(POLICY_MANAGER_ELEMENT, false);
         if (policyManagerConfiguration != null) {
             String policyManagerType = policyManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
-            if (getLogger().isInfoEnabled()) {
-                getLogger().info("Adding policy manager type: [" + policyManagerType + "]");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Adding policy manager type: [" + policyManagerType + "]");
             }
             policyManagerSelector =
                 (ServiceSelector) manager.lookup(PolicyManager.ROLE + "Selector");
@@ -272,10 +279,10 @@ public class DefaultAccessController
     }
 
     /**
-	 * Sets up the authenticator.
-	 * 
-	 * @throws ServiceException when something went wrong.
-	 */
+     * Sets up the authenticator.
+     * 
+     * @throws ServiceException when something went wrong.
+     */
     protected void setupAuthenticator() throws ServiceException {
         authenticator = (Authenticator) manager.lookup(Authenticator.ROLE);
     }
@@ -283,30 +290,30 @@ public class DefaultAccessController
     private ServiceManager manager;
 
     /**
-	 * Set the global component manager.
-	 * 
-	 * @param manager The global component manager
-	 * @exception ComponentException
-	 * @throws ServiceException when something went wrong.
-	 */
+     * Set the global component manager.
+     * 
+     * @param manager The global component manager
+     * @exception ComponentException
+     * @throws ServiceException when something went wrong.
+     */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
 
     /**
-	 * Returns the service manager.
-	 * 
-	 * @return A service manager.
-	 */
+     * Returns the service manager.
+     * 
+     * @return A service manager.
+     */
     protected ServiceManager getManager() {
         return manager;
     }
 
     /**
-	 * Returns the authorizers of this action.
-	 * 
-	 * @return An array of authorizers.
-	 */
+     * Returns the authorizers of this action.
+     * 
+     * @return An array of authorizers.
+     */
     public Authorizer[] getAuthorizers() {
 
         Authorizer[] authorizerArray = new Authorizer[authorizers.size()];
@@ -319,17 +326,17 @@ public class DefaultAccessController
     }
 
     /**
-	 * Returns if this action has authorizers.
-	 * 
-	 * @return A boolean value.
-	 */
+     * Returns if this action has authorizers.
+     * 
+     * @return A boolean value.
+     */
     protected boolean hasAuthorizers() {
         return !authorizers.isEmpty();
     }
 
     /**
-	 * @see org.apache.avalon.framework.activity.Disposable#dispose()
-	 */
+     * @see org.apache.avalon.framework.activity.Disposable#dispose()
+     */
     public void dispose() {
 
         if (accreditableManagerSelector != null) {
@@ -359,52 +366,52 @@ public class DefaultAccessController
             getManager().release(authenticator);
         }
 
-        if (getLogger().isInfoEnabled()) {
-            getLogger().info("Disposing [" + this +"]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Disposing [" + this +"]");
         }
     }
 
     /**
-	 * Returns the accreditable manager.
-	 * 
-	 * @return An accreditable manager.
-	 */
+     * Returns the accreditable manager.
+     * 
+     * @return An accreditable manager.
+     */
     public AccreditableManager getAccreditableManager() {
         return accreditableManager;
     }
 
     /**
-	 * Returns the policy manager.
-	 * 
-	 * @return A policy manager.
-	 */
+     * Returns the policy manager.
+     * 
+     * @return A policy manager.
+     */
     public PolicyManager getPolicyManager() {
         return policyManager;
     }
 
     /**
-	 * Returns the authenticator.
-	 * 
-	 * @return The authenticator.
-	 */
+     * Returns the authenticator.
+     * 
+     * @return The authenticator.
+     */
     public Authenticator getAuthenticator() {
         return authenticator;
     }
 
     /**
-	 * Checks if this identity was initialized by this access controller.
-	 * 
-	 * @param identity An identity.
-	 * @return A boolean value.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Checks if this identity was initialized by this access controller.
+     * 
+     * @param identity An identity.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
     public boolean ownsIdenity(Identity identity) throws AccessControlException {
         return identity.belongsTo(getAccreditableManager());
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
-	 */
+     * @see org.apache.lenya.cms.ac2.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
+     */
     public void setupIdentity(Request request) throws AccessControlException {
         Session session = request.getSession(true);
         if (!hasValidIdentity(session)) {
@@ -425,13 +432,13 @@ public class DefaultAccessController
     }
 
     /**
-	 * Checks if the session contains an identity that is not null and belongs to the used access
-	 * controller.
-	 * 
-	 * @param session The current session.
-	 * @return A boolean value.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Checks if the session contains an identity that is not null and belongs to the used access
+     * controller.
+     * 
+     * @param session The current session.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
     protected boolean hasValidIdentity(Session session) throws AccessControlException {
         boolean valid = true;
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
@@ -442,8 +449,8 @@ public class DefaultAccessController
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac.ItemManagerListener#itemAdded(org.apache.lenya.cms.ac.Item)
-	 */
+     * @see org.apache.lenya.cms.ac.ItemManagerListener#itemAdded(org.apache.lenya.cms.ac.Item)
+     */
     public void itemAdded(Item item) {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item was added: [" + item + "]");
@@ -451,8 +458,8 @@ public class DefaultAccessController
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac.ItemManagerListener#itemRemoved(org.apache.lenya.cms.ac.Item)
-	 */
+     * @see org.apache.lenya.cms.ac.ItemManagerListener#itemRemoved(org.apache.lenya.cms.ac.Item)
+     */
     public void itemRemoved(Item item) throws AccessControlException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item was removed: [" + item + "]");

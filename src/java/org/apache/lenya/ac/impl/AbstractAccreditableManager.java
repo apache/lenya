@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAccreditableManager.java,v 1.1 2003/11/13 16:07:08 andreas Exp $ <License>
+ * $Id: AbstractAccreditableManager.java,v 1.2 2004/02/05 08:50:57 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -166,8 +166,8 @@ public abstract class AbstractAccreditableManager
             this.roleManager.removeItemManagerListener(this);
         }
         
-        if (getLogger().isInfoEnabled()) {
-            getLogger().info("Disposing [" + this + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Disposing [" + this + "]");
         }
     }
 
