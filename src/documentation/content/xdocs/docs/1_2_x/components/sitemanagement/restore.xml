@@ -104,7 +104,7 @@
         <li><code>secdocumentpath</code>, to compute the directory where are the contents for the destination (Needed for the revisions and the rcml files)</li>
         <li><code>move</code>, to execute the different move operations</li>
       </ul>
-      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/index.html">Javadoc</link></p>
+      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/1.2/index.html">Javadoc</link></p>
     </section>
 
   </body>

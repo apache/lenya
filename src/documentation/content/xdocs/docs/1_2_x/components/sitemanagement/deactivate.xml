@@ -107,7 +107,7 @@
 	  <p>The ant target <code>deactivateDocument</code>is in the publication :</p>
 	  <source>{publication}/config/tasks/targets.xml</source>
       <p>and depends on the target <code>livedocumentpath</code>, to compute the live directory of the contents</p>
-      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/index.html">Javadoc</link></p>
+      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/1.2/index.html">Javadoc</link></p>
     </section>
 
   </body>

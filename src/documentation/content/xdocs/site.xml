@@ -150,10 +150,11 @@
                 <node-e href="unittests.html" label="Unit Tests"/>
                 <node-e href="xinclude-processor.html" label="XInclude Processor"/>
             </misc>
-            <javadoc href="../../apidocs/index.html" label="API (Javadoc)"/>
+            <javadoc1.2 href="../../apidocs/1.2/index.html" label="1.2 API (Javadoc)"/>
         </docu1.2.x>
-        <docu1.4 href="1_4/index.html" label="1.4" />
-        <docu2.x href="2_1/index.html" label="2" />
+        <docu1.4 href="1_4/index.html" label="1.4">
+            <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
+        </docu1.4>
     </documentation>
     <community href="community/" label="Community" tab="community">
         <index_com href="index.html" label="Contributing"/>
@@ -183,14 +184,11 @@
                 </cocoon.howto>
                 <cocoon.2.1.features href="features.html"/>
             </cocoon.2.1>
-            <lenya href="lenya/"/>
             <mirror href="mirror.cgi"/>
         </cocoon>
-        <cvs.asf href="http://svn.apache.org/">
-            <cvs.incubator href="dist/incubator/">
-                <incubator.lenya href="lenya/"/>
-            </cvs.incubator>
-        </cvs.asf>
+        <lenya href="http://lenya.apache.org"/>
+        <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
+        <cvs.asf href="http://svn.apache.org/"/>
         <forrest.apache.org href="http://forrest.apache.org/">
             <forrest.build href="build.html"/>
         </forrest.apache.org>

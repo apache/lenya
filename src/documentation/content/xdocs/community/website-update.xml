@@ -33,7 +33,7 @@
   <li><link href="ext:forrest.build">Build Forrest</link></li>
   <li><code>go to the root of lenya/docu</code></li>
   <li><code>forrest</code></li>
-  <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>$T/lenya/pubs/docs-new/resources/html/apidocs</code> to <code>lenya/site/apidocs</code>)</li>
+  <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>build/webapp/site/apidocs</code> to <code>lenya/site/apidocs/1.2</code>)</li>
   <li>Add, remove, commit to <code>lenya/site</code></li>
 </ul>
 <p>There is a cron job on minotaur which will do 'svn update'
