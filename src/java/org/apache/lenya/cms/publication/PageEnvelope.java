@@ -40,10 +40,10 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME, PageEnvelope.DOCUMENT_LABEL,
             PageEnvelope.DOCUMENT_URL, PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
             PageEnvelope.DOCUMENT_PATH, PageEnvelope.DOCUMENT_EXTENSION,
-            PageEnvelope.DEFAULT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGE,
-            PageEnvelope.DOCUMENT_LANGUAGES, PageEnvelope.DOCUMENT_LANGUAGES_CSV,
-            PageEnvelope.DOCUMENT_LASTMODIFIED, PageEnvelope.BREADCRUMB_PREFIX,
-            PageEnvelope.SSL_PREFIX };
+            PageEnvelope.DOCUMENT_TYPE, PageEnvelope.DEFAULT_LANGUAGE,
+            PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES,
+            PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_LASTMODIFIED,
+            PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX };
     /**
      * <code>PUBLICATION_ID</code> The publication id
      */
@@ -148,6 +148,7 @@ public class PageEnvelope {
     public static final String DEFAULT_PREFIX = "lenya";
 
     private String context;
+    private String area;
 
     /**
      * Constructor.
@@ -174,6 +175,10 @@ public class PageEnvelope {
             }
 
             webappURI = ServletHelper.getWebappURI(request);
+
+            URLInformation info = new URLInformation(webappURI);
+            this.area = info.getArea();
+
             if (map.getFactory().isDocument(webappURI)) {
                 Document _document = map.getFactory().getFromURL(webappURI);
                 setDocument(_document);
@@ -211,7 +216,14 @@ public class PageEnvelope {
      * @return a <code>Publication</code> value
      */
     public Publication getPublication() {
-        return getDocument().getPublication();
+        return getIdentityMap().getPublication();
+    }
+
+    /**
+     * @return The current area.
+     */
+    public String getArea() {
+        return this.area;
     }
 
     /**
@@ -251,7 +263,8 @@ public class PageEnvelope {
     private Document document;
 
     /**
-     * Returns the document or <code>null</code> if the current URL does not represent a document.
+     * Returns the document or <code>null</code> if the current URL does not
+     * represent a document.
      * @return A document
      */
     public Document getDocument() {
