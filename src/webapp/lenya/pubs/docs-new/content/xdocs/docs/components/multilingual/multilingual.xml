@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: multilingual.xml,v 1.2 2004/03/13 12:42:21 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -195,7 +195,7 @@
       <p>The following classes, XSPs and XSLTs are involved in
       multilingual document handling:</p>
       <dl>
-	<dt>org.apache.lenya.cms.publication.SiteTree and org.apache.lenya.cms.publication.SiteTreeNode</dt>
+	<dt>org.apache.lenya.cms.site.tree..SiteTree and org.apache.lenya.cms.site.tree.SiteTreeNode</dt>
 	<dd>These interfaces provide acces to the label nodes.</dd>
 	<dt>org.apache.lenya.cms.publication.Publication</dt>
 	<dd>Provides access to the default language and to all

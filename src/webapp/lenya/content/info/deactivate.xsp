@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: deactivate.xsp,v 1.15 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -28,9 +28,9 @@
   <xsp:include>org.apache.lenya.cms.publication.DefaultDocumentBuilder</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-  <xsp:include>org.apache.lenya.cms.publication.SiteTree</xsp:include>
-  <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
-  <xsp:include>org.apache.lenya.cms.publication.Label</xsp:include>
+  <xsp:include>org.apache.lenya.cms.site.tree.SiteTree</xsp:include>
+  <xsp:include>org.apache.lenya.cms.site.tree.SiteTreeNode</xsp:include>
+  <xsp:include>org.apache.lenya.cms.site.tree.Label</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</xsp:include>
 </xsp:structure>
 

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: screen.xsp,v 1.3 2004/03/13 12:31:31 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page
        language="java"
@@ -33,8 +33,8 @@
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DocumentHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.SiteTree</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
+    <xsp:include>org.apache.lenya.cms.site.tree.SiteTree</xsp:include>
+    <xsp:include>org.apache.lenya.cms.site.tree.SiteTreeNode</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.workflow.CMSVersion</xsp:include>
     <xsp:include>org.apache.lenya.cms.workflow.WorkflowFactory</xsp:include>
