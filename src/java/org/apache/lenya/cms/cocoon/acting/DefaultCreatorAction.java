@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreatorAction.java,v 1.5 2003/05/28 11:54:59 egli Exp $
+ * $Id: DefaultCreatorAction.java,v 1.6 2003/06/26 14:02:12 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -75,7 +75,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
-
 
 public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
