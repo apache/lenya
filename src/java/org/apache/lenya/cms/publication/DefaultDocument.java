@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.17 2003/07/28 20:07:07 gregor Exp $
+$Id: DefaultDocument.java,v 1.18 2003/07/29 15:39:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -253,14 +253,23 @@ public class DefaultDocument implements Document {
         this.extension = extension;
     }
 
+    private String documentUrl;
+    
+    /**
+     * Sets the document URL.
+     * @param url The document URL (without publication ID and area).
+     */
+    public void setDocumentUrl(String url) {
+        assert url != null;
+        this.documentUrl = url;
+    }
+    
     /**
      * @see org.apache.lenya.cms.publication.Document#getDocumentUrl()
      */
     public String getDocumentUrl() {
-        String languageSuffix = "".equals(getLanguage()) ? "" : ("_" + getLanguage());
-        String extensionSuffix = "".equals(getExtension()) ? "" : ("." + getExtension());
-
-        return getId() + languageSuffix + extensionSuffix;
+        return documentUrl;
     }
+    
     
 }

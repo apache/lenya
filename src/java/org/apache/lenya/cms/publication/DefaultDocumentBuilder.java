@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.6 2003/07/29 14:23:10 andreas Exp $
+$Id: DefaultDocumentBuilder.java,v 1.7 2003/07/29 15:39:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -93,6 +93,8 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         String area = publicationURI.split("/")[1];
 
         String documentUrl = publicationURI.substring(("/" + area).length());
+        
+        String originalUrl = documentUrl;
 
         String extension = getExtension(documentUrl);
         String fullExtension = "".equals(extension) ? "" : ("." + extension);
@@ -116,6 +118,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 
         DefaultDocument document = new DefaultDocument(publication, documentId, area, language);
         document.setExtension(extension);
+        document.setDocumentUrl(originalUrl);
 
         return document;
     }
