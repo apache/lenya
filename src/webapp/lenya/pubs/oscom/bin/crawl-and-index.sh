@@ -16,7 +16,8 @@ TOMCAT_HOME=/home/michi/build/jakarta-tomcat-4.1.21-LE-jdk14
 BUILD_FILE=$LENYA_SOURCE_DIR/src/webapp/lenya/bin/crawl_and_index.xml
 CONF_PATH=$TOMCAT_HOME/webapps/lenya/lenya/pubs/oscom/content
 
-INDICES="-cambridge -lists -conferences"
+INDICES="-cambridge -lists -conferences -blog"
+#INDICES="-blog"
 
 
 ###########
