@@ -15,9 +15,6 @@
 <body>
 <login>
 
-  <!-- Import Lenya Page Envelope -->
-  <xsp-lenya:util/>
-
   <xsp:logic>
       Session session=request.getSession(false);
       String authenticatorId=(String)session.getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
