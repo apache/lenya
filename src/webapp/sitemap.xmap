@@ -430,6 +430,10 @@
     <map:view from-position="last" name="links">
       <map:serialize type="links"/>
     </map:view>
+
+    <map:view from-label="aggregate" name="aggregate">
+      <map:serialize type="xml"/>
+    </map:view>
   </map:views>
 
 <!-- =========================== Resources ================================= -->
@@ -512,7 +516,7 @@
         <map:redirect-to uri="index.html"/>
       </map:match>
       <map:match pattern="index.html">
-        <map:aggregate element="lenya" label="xml">
+        <map:aggregate element="lenya" label="aggregate">
           <map:part src="cocoon:/publications.xml"/>
           <map:part src="lenya/content/introduction.xml"/>
         </map:aggregate>
