@@ -12,6 +12,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
+<xsl:param name="forrest-publication"/>
 
 <xsl:template match="markup-languages/xsp-language/target-language[@name = 'java']">
   <xsl:copy>
@@ -98,7 +99,7 @@
       +-->
   <entity-resolver class="org.apache.cocoon.components.resolver.ResolverImpl" logger="core.resolver">
     <parameter name="catalog" value="/lenya/pubs/forrest/resources/schema/catalog.xcat"/>
-    <parameter name="local-catalog" value="D:\Development\src\xml-forrest\src\documentation\resources\schema\catalog.xcat"/>
+    <parameter name="local-catalog" value="{$forrest-publication}/resources/schema/catalog.xcat"/>
     <parameter name="verbosity" value="1"/>
   </entity-resolver>
 
