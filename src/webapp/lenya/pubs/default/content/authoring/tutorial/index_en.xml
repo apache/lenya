@@ -97,9 +97,9 @@
 
     The user lenya (which you are probably currently logged in as) has
     the role author, i.e. he can create new documents and submit them
-    for approval (with <code>Workflow->Submit</code>). The user Alice
-    has the role reviewer which allows her to approve, i.e. publish
-    documents.</p>
+    for approval (with <code>Workflow->Submit for review</code>). The
+    user Alice has the role reviewer which allows her to approve,
+    i.e. publish documents.</p>
 
     <p>In order to publish your newly created document simply press
     <code>Workflow->Sumbit</code> (as user lenya) to submit the
