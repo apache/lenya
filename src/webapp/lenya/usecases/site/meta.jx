@@ -22,36 +22,32 @@
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
   <div>
-    <!-- 
-		These are the tabs. Make sure that each of them has the correct id,
-		target and corresponding number in the Tab() call.
-	 -->
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td>
-          <a href="?lenya.usecase=info-overview&amp;lenya.step=showscreen" class="lenya-tablink">
+          <a href="?lenya.usecase=site.overview" class="lenya-tablink">
             <i18n:text>Overview</i18n:text>
           </a>
         </td>
         <jx:if test="${usecase.getParameter('languageexists').equals('true')}">
           <jx:if test="${not(usecase.getParameter('documentid').equals('/'))}">
             <td>
-              <a href="?lenya.usecase=info-meta&amp;lenya.step=showscreen" class="lenya-tablink-active">
+              <a href="?lenya.usecase=site.meta" class="lenya-tablink-active">
                 <i18n:text>Meta</i18n:text>
               </a>
             </td>
             <td>
-              <a href="?lenya.usecase=info-assets&amp;lenya.step=showscreen" class="lenya-tablink">
+              <a href="?lenya.usecase=site.assets" class="lenya-tablink">
                 <i18n:text>Assets</i18n:text>
               </a>
             </td>
             <td>
-              <a href="?lenya.usecase=info-workflow&amp;lenya.step=showscreen" class="lenya-tablink">
+              <a href="?lenya.usecase=site.workflow" class="lenya-tablink">
                 <i18n:text>Workflow</i18n:text>
               </a>
             </td>
             <td>
-              <a href="?lenya.usecase=info-revisions&amp;lenya.step=showscreen" class="lenya-tablink">
+              <a href="?lenya.usecase=site.revisions" class="lenya-tablink">
                 <i18n:text>Versions</i18n:text>
               </a>
             </td>
@@ -59,33 +55,33 @@
           <jx:choose>
             <jx:when test="${usecase.getParameter('area').equals('authoring')}">
               <td>
-                <a href="?lenya.usecase=info-ac-auth&amp;lenya.step=showscreen" class="lenya-tablink">
+                <a href="?lenya.usecase=site.acAuthoring" class="lenya-tablink">
                   <i18n:text>AC Auth</i18n:text>
                 </a>
               </td>
               <td>
-                <a href="?lenya.usecase=ac-live&amp;lenya.step=showscreen" class="lenya-tablink">
+                <a href="?lenya.usecase=site.acLive" class="lenya-tablink">
                   <i18n:text>AC Live</i18n:text>
                 </a>
               </td>
             </jx:when>
             <jx:when test="${usecase.getParameter('area').equals('archive')}">
               <td>
-                <a href="?lenya.usecase=ac-archive&amp;lenya.step=showscreen" class="lenya-tablink">
+                <a href="?lenya.usecase=site.acArchive" class="lenya-tablink">
                   <i18n:text>AC Archive</i18n:text>
                 </a>
               </td>
             </jx:when>
             <jx:when test="${usecase.getParameter('area').equals('trash')}">
               <td>
-                <a href="?lenya.usecase=ac-trash&amp;lenya.step=showscreen" class="lenya-tablink">
+                <a href="?lenya.usecase=site.acTrash" class="lenya-tablink">
                   <i18n:text>AC Trash</i18n:text>
                 </a>
               </td>
             </jx:when>
           </jx:choose>
           <td>
-            <a href="?lenya.usecase=info-scheduler&amp;lenya.step=showscreen" class="lenya-tablink">
+            <a href="?lenya.usecasesite.scheduler" class="lenya-tablink">
               <i18n:text>Scheduler</i18n:text>
             </a>
           </td>
@@ -175,7 +171,7 @@
             </td>
           </tr>
         </table>
-        <input type="hidden" name="lenya.usecase" value="info-meta"/>
+        <input type="hidden" name="lenya.usecase" value="site.meta"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       </form>
     </div>

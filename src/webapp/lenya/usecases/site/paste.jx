@@ -37,7 +37,7 @@
       </div>
       <div class="lenya-box-body">
         <form method="get" action="">
-          <input type="hidden" name="lenya.usecase" value="paste"/>
+          <input type="hidden" name="lenya.usecase" value="site.paste"/>
           <table class="lenya-table-noborder">
             <tr>
               <td>
