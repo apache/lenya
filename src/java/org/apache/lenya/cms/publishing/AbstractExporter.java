@@ -64,6 +64,10 @@ import org.apache.lenya.cms.task.AbstractTask;
  * @author ah
  */
 public abstract class AbstractExporter extends AbstractTask implements Exporter {
+	
+	/**
+	 * Create an AbstractExporter.
+	 */
     protected AbstractExporter() {
     }
 }
