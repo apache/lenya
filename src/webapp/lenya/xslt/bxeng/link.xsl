@@ -16,7 +16,7 @@
 -->
 
 <!--
- $Id: link.xsl,v 1.10 2004/04/29 09:39:59 gregor Exp $
+ $Id: link.xsl,v 1.11 2004/08/25 14:40:21 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -87,24 +87,24 @@
     <div id="lenya-info-treecanvas">
 <!-- Build the tree. -->
 	<table border="0" cellpadding="0" cellspacing="0">
-		<tr>
+                <tr>
                       <xsl:call-template name="languagetabs">
                         <xsl:with-param name="tablanguages">
                           <xsl:value-of select="$languages"/>
                         </xsl:with-param>
                       </xsl:call-template>
-		</tr>
-	</table>
+                </tr>
+        </table>
 
    <div id="lenya-info-tree">
       <div style="display:none;">
-      	<table border="0">
-      		<tr>
-      			<td>
-      				<a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/">JavaScript Tree Menu</a>
-      			</td>
-      		</tr>
-      	</table>
+              <table border="0">
+                      <tr>
+                              <td>
+                                      <a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/">JavaScript Tree Menu</a>
+                              </td>
+                      </tr>
+              </table>
       </div>
       <script type="text/javascript">
          initializeDocument();
@@ -163,8 +163,8 @@
 </xsl:template>
 
 <xsl:template name="activate">
-	<xsl:param name="tablanguage"/>
-	<xsl:variable name="docidwithoutlanguage"><xsl:value-of select="substring-before($documentid, '_')"/></xsl:variable>
+        <xsl:param name="tablanguage"/>
+        <xsl:variable name="docidwithoutlanguage"><xsl:value-of select="substring-before($documentid, '_')"/></xsl:variable>
    <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.usecase=bxeng&amp;lenya.step=link-show</xsl:attribute>
    <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
@@ -172,8 +172,8 @@
 <xsl:template name="selecttab">
   <xsl:text>?lenya.usecase=</xsl:text>
   <xsl:choose>
-  	<xsl:when test="$tab"><xsl:value-of select="$tab"/></xsl:when>
-  	<xsl:otherwise>bxeng</xsl:otherwise>
+    <xsl:when test="$tab"><xsl:value-of select="$tab"/></xsl:when>
+    <xsl:otherwise>bxeng</xsl:otherwise>
   </xsl:choose>
   <xsl:text>&amp;lenya.step=link-show</xsl:text>
 </xsl:template>
