@@ -59,16 +59,21 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.tools.ant.BuildException;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  * This task is used to rewrite internal links after a cut'n'paste operation, i.e.
@@ -78,7 +83,7 @@ import org.apache.tools.ant.BuildException;
  * 
  * @author Christian Egli
  * 
- * @version $Id: LinkRewriteTask.java,v 1.2 2003/11/03 12:57:18 egli Exp $
+ * @version $Id: LinkRewriteTask.java,v 1.3 2003/12/08 13:56:55 andreas Exp $
  *
  */
 public class LinkRewriteTask extends PublicationTask {
@@ -208,7 +213,7 @@ public class LinkRewriteTask extends PublicationTask {
      * @throws TransformerException
      */
     private void replace_internal(File file, Transformer transformer)
-        throws TransformerException, IOException {
+        throws TransformerException, ParserConfigurationException, SAXException, IOException {
 
         FilenameFilter directoryFilter = new FilenameFilter() {
 
@@ -222,8 +227,7 @@ public class LinkRewriteTask extends PublicationTask {
 
             public boolean accept(File dir, String name) {
                 File file = new File(dir, name);
-                return file.isFile()
-                    && FileUtil.getExtension(name).equals("xml");
+                return file.isFile() && FileUtil.getExtension(name).equals("xml");
             }
         };
 
@@ -235,13 +239,18 @@ public class LinkRewriteTask extends PublicationTask {
             replace_internal(children[i], transformer);
         }
         File[] xmlFiles = file.listFiles(xmlFileFilter);
+
+        javax.xml.parsers.DocumentBuilder documentBuilder = DocumentHelper.createBuilder();
+
         for (int i = 0; i < xmlFiles.length; i++) {
             File tmpFile = File.createTempFile("linkRewrite", "tmp");
             FileOutputStream os = new FileOutputStream(tmpFile);
             log("transform " + xmlFiles[i].getCanonicalPath());
-            transformer.transform(
-                new StreamSource(xmlFiles[i]),
-                new StreamResult(os));
+
+            Document document = documentBuilder.parse(xmlFiles[i]);
+            DOMSource domSource = new DOMSource(document);
+
+            transformer.transform(domSource, new StreamResult(os));
 
             if (!tmpFile.renameTo(xmlFiles[i])) {
                 throw new IOException(
@@ -269,23 +278,21 @@ public class LinkRewriteTask extends PublicationTask {
         String area,
         String oldDcoumentId,
         String newDocumentId)
-        throws TransformerException, IOException {
+        throws TransformerException, ParserConfigurationException, SAXException, IOException {
 
         File rootDir = new File(rootDirName);
         TransformerFactory tFactory = TransformerFactory.newInstance();
-        Transformer transformer =
-            tFactory.newTransformer(new StreamSource(stylesheet));
+
+        Transformer transformer = tFactory.newTransformer(new StreamSource(stylesheet));
 
         Publication publication = getPublication();
         DocumentBuilder builder = publication.getDocumentBuilder();
-        
+
         // replace all internal links
         String oldURL =
-            getContextPrefix()
-                + builder.buildCanonicalUrl(publication, area, oldDcoumentId);
+            getContextPrefix() + builder.buildCanonicalUrl(publication, area, oldDcoumentId);
         String newURL =
-            getContextPrefix()
-                + builder.buildCanonicalUrl(publication, area, newDocumentId);
+            getContextPrefix() + builder.buildCanonicalUrl(publication, area, newDocumentId);
 
         log("Replace '" + oldURL + "' by '" + newURL + "'");
         transformer.setParameter("idbefore", oldURL);
@@ -293,25 +300,17 @@ public class LinkRewriteTask extends PublicationTask {
 
         replace_internal(rootDir, transformer);
 
-		// now also do the replacement for all language versions
+        // now also do the replacement for all language versions
         String[] languages = publication.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             String language = languages[i];
 
             oldURL =
                 getContextPrefix()
-                    + builder.buildCanonicalUrl(
-                        publication,
-                        area,
-                        oldDcoumentId,
-                        language);
+                    + builder.buildCanonicalUrl(publication, area, oldDcoumentId, language);
             newURL =
                 getContextPrefix()
-                    + builder.buildCanonicalUrl(
-                        publication,
-                        area,
-                        newDocumentId,
-                        language);
+                    + builder.buildCanonicalUrl(publication, area, newDocumentId, language);
 
             log("Replace '" + oldURL + "' by '" + newURL + "'");
             transformer.setParameter("idbefore", oldURL);
