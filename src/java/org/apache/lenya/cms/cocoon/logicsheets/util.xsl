@@ -25,16 +25,6 @@
     </xsp:page>
   </xsl:template>
 
-<!--
-<xsl:template match="xsp-wyona:context_prefix">
-  <xsp:logic>
-    String gugus_xsp_wyona_prefix="nwt";
-    String gugus_xsp_wyona_context_prefix=xsp_wyona_context+"/"+xsp_wyona_prefix;
-  </xsp:logic>
-  <xsp:content><xsp:expr>gugus_xsp_wyona_context_prefix</xsp:expr></xsp:content>
-</xsl:template>
--->
-
 <xsl:template match="xsp-wyona:util">
   <xsp:logic>
     Date xsp_wyona_server_time=new Date();
@@ -44,6 +34,7 @@
     <xsp:content><request_uri><xsp:expr>xsp_wyona_request_uri</xsp:expr></request_uri></xsp:content>
     String xsp_wyona_sitemap_uri=request.getSitemapURI();
     <xsp:content><sitemap_uri><xsp:expr>xsp_wyona_sitemap_uri</xsp:expr></sitemap_uri></xsp:content>
+    //String xsp_wyona_prefix="oscom";
     String xsp_wyona_prefix="nwt";
     String xsp_wyona_context_prefix=xsp_wyona_context+"/"+xsp_wyona_prefix;
 
