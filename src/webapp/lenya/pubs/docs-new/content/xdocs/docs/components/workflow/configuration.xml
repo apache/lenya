@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document> 
+
+<header> 
+    <title>Workflow Configuration</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body>
+
+<section><title>Workflow Schemas</title>
+<p>The workflow schema definition files of a publication are located at</p>
+<source>
+{publication}/config/workflow/
+</source>
+
+<p>
+  A workflow schema definition looks as follows:
+</p>
+
+<source><![CDATA[
+<workflow xmlns="http://apache.org/cocoon/lenya/workflow/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://apache.org/cocoon/lenya/workflow/1.0
+        ../../../resources/entities/workflow/workflow.xsd">
+
+  <state id="authoring" initial="true"/>
+  <state id="live"/>
+  <state id="trash"/>
+  <state id="archive"/>
+
+  <variable name="is_live" value="false"/>
+  
+  <transition source="authoring" destination="authoring">
+    <event id="edit"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">
+      edit, review, organize
+    </condition>
+  </transition>
+  
+  <transition source="authoring" destination="authoring">
+    <event id="deactivate"/>
+    <condition class="org.apache.lenya.workflow.impl.BooleanVariableCondition">
+      is_live = true
+    </condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">
+      review, organize
+    </condition>
+    <assign variable="is_live" value="false"/>
+  </transition>
+  
+  ...
+  
+</workflow>  
+]]></source>
+
+<p>The workflow namespace URI is</p>
+<source>http://apache.org/cocoon/lenya/workflow/1.0</source>
+</section>
+
+<section><title>States</title>
+<p>
+  All states that are used in the workflow schema have to be declared
+  using <code>&lt;state&gt;</code> elements. The initial state is
+  marked with the <code>initial="true"</code> attribute.
+</p>
+</section>
+
+<section><title>Variables</title>
+<p>
+  All used variables have to be declared using <code>&lt;variable&gt;</code>
+  elements. The initial value of the variable is assigned using the
+  <code>value</code> attribute.
+</p>
+</section>
+
+<section><title>Transitions</title>
+<p>
+  A transition is declared using the <code>&lt;transition&gt;</code> element.
+  The required attributes <code>source</code> and <code>destination</code>
+  denote the states that are connected by this transition.
+</p>
+<p>
+  The transition element must contain one <code>&lt;event&gt;</code> element
+  with an <code>id</code> attribute. Furthermore, it can contain an
+  arbitrary number of <code>&lt;condition&gt;</code> and <code>&lt;assign&gt;</code>
+  elements.
+</p>
+<p>
+  A transition element can have a <code>synchronized="true"</code> attribute.
+  In this case, if the transition is triggered using a
+  <em>SynchronizedWorkflowInstance</em>, it is invoked on all instances.
+</p>
+</section>
+
+<section><title>Variable Assignments</title>
+<p>A variable assignment has the form</p>
+<source><![CDATA[<assign variable="..." value="..."/>]]></source>
+<p>
+  The variable must have been declared in this workflow schema.
+  Because only boolean variables are supported, <code>value</code> must
+  be either <code>true</code> or <code>false</code>.
+</p>
+</section>
+
+<section><title>Conditions</title>
+<p>A condition has the form</p>
+<source><![CDATA[<condition class="...">...</condition>]]></source>
+
+<p>The <code>class</code> attribute contains the complete name
+(including the package) of the condition class. You can use the
+condition classes that ship with Lenya (see below) or implement your
+own conditions. All condition classes must implement the
+<code>org.apache.lenya.workflow.Condition</code> interface.
+The text inside the element is the expression that should
+be evaluated. It is passed as an argument to the <code>setExpression()</code>
+method.
+</p>
+
+<section><title>BooleanVariableCondition</title>
+<p>The <em>org.apache.lenya.workflow.impl.BooleanVariableCondition</em> requires
+an expression of the form</p>
+<source>{variable-name} = {value}</source>
+<p><code>{variable-name}</code> is the name of a variable that
+was declared in the workflow schema. <code>{value}</code> is either
+<code>true</code> or <code>false</code>.</p>
+</section>
+
+<section><title>RoleCondition</title>
+<p>The <em>org.apache.lenya.cms.workflow.RoleCondition</em> requires a
+comma-separated list of role IDs:
+</p>
+<source>{role-id-1}, {role-id-2}, ...</source>
+<p>
+  The condition is complied when the current identity has one
+  of these roles on the requested URL.
+</p>
+</section>
+
+</section>
+
+<section><title>Assigning Workflow Schemas to Document Types</title>
+<p>A workflow schema can be assigned to a document type in</p>
+<source>
+{publication}/config/doctypes/doctypes.xconf
+</source>
+<source><![CDATA[<doctypes>
+  <doc type="content-page">
+    ...
+    <workflow src="workflow.xml"/>
+  </doc>
+  ...
+</doctypes>]]></source>
+</section>
+
+</body>
+</document>

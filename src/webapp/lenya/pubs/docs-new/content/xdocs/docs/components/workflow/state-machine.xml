@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document> 
+
+<header> 
+    <title>The Workflow State Machine</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body>
+
+<section><title>Invoking a Transition</title>
+<p>
+When an event <em>e</em> is invoked on a workflow instance <em>I</em>, the following
+algorithm is executed:
+</p>
+<ul>
+  <li>The current state <em>s<sub>current</sub></em> is determined.</li>
+  <li>The transition <em>t</em> from <em>s<sub>current</sub></em> to <em>s<sub>next</sub></em>
+      which has the event <em>e</em> is determined.</li>
+  <li>If <em>t</em> is not exactly defined, an exception is thrown.</li>
+  <li>All conditions of <em>t</em> are validated.</li>
+  <li>If all conditions are complied, the transition <em>t</em> fires:
+  <ul>
+    <li>All assignments of <em>t</em> are executed.</li>
+    <li>The workflow instance <em>I</em> is advanced to the state <em>s<sub>next</sub></em>.</li>
+  </ul>
+  </li>
+</ul>
+</section>
+
+</body>
+</document>

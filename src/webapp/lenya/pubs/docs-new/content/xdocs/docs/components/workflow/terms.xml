@@ -4,7 +4,7 @@
 <document> 
 
 <header> 
-    <title>Using Workflow</title>
+    <title>Workflow Terms</title>
     <version>0.1</version> 
     <type>Overview document</type> 
     <authors>
@@ -92,55 +92,27 @@ of a workflow instance. Examples are:
 </ul>
 </dd>
 
+<dt>Synchronization</dt>
+<dd>
+<p>A set of workflow instances with the same workflow schema
+can be synchronized. If a transition in this schema is marked as
+synchronized, it can only be invoked on all instances in the
+set at the same time.</p>
+<p>When a workflow event is invoked on a set of synchronized
+workflow instances, the transition is invoked only if</p>
+<ul>
+  <li>all instances are in the source state of the transition, and</li>
+  <li>all conditions of the transition are complied for all
+  instances.</li>
+</ul>
+<p>Then the transition is invoked for all instances in the set.</p>
+<p>A common usecase of this concept is the simultaneous publishing
+of a set of documents (all language versions of a document,
+a section, ...).</p>
+</dd>
+
 </dl>
 
-</section>
-
-<section><title>The State Machine</title>
-<p>
-When an event <em>e</em> is invoked on a workflow instance <em>I</em>, the following
-algorithm is executed:
-</p>
-<ul>
-  <li>The current state <em>s<sub>current</sub></em> is determined.</li>
-  <li>The transition <em>t</em> from <em>s<sub>current</sub></em> to <em>s<sub>next</sub></em>
-      which has the event <em>e</em> is determined.</li>
-  <li>If <em>t</em> is not exactly defined, an exception is thrown.</li>
-  <li>All conditions of <em>t</em> are validated.</li>
-  <li>If all conditions are complied, the transition <em>t</em> fires:
-  <ul>
-    <li>All assignments of <em>t</em> are executed.</li>
-    <li>The workflow instance <em>I</em> is advanced to the state <em>s<sub>next</sub></em>.</li>
-  </ul>
-  </li>
-</ul>
-</section>
-
-<section><title>The Workflow Schema</title>
-<p>The workflow schema definition files of a publication are located at</p>
-<source>
-{publication}/config/workflow/
-</source>
-</section>
-
-<section><title>Assigning Workflow Schemas to Document Types</title>
-<p>A workflow schema can be assigned to a document type in</p>
-<source>
-{publication}/config/doctypes/doctypes.xconf
-</source>
-<source><![CDATA[<doctypes>
-  <doc type="content-page">
-    ...
-    <workflow src="workflow.xml"/>
-  </doc>
-  ...
-</doctypes>]]></source>
-</section>
-
-<section><title>Initializing the Workflow History</title>
-</section>
-
-<section><title>Synchronization</title>
 </section>
 
 </body>

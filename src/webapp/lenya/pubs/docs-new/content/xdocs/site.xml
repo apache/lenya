@@ -96,7 +96,10 @@
 					<node-50 href="development.html" label="Developing Tasks"/>
 				</node-40>
 				<workflow href="workflow/" label="Workflow">
-					<introduction href="introduction.html" label="Introduction"/>
+					<introduction href="terms.html" label="Terms"/>
+					<introduction href="state-machine.html" label="The State Machine"/>
+					<introduction href="configuration.html" label="Configuration"/>
+					<introduction href="implementation.html" label="Implementation"/>
 				</workflow>
 				<sitemanagement href="sitemanagement/" label="Site Management">
 					<archive href="archive.html" label="Archive"/>

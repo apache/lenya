@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document> 
+
+<header> 
+    <title>Workflow Implementation</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body>
+  
+<section><title>Using Workflow</title>
+
+<p>The general workflow interfaces are declared in the package</p>
+<source>org.apache.lenya.workflow</source>
+
+<p>Workflow objects should only be accessed using these
+interfaces.</p>
+
+<p>For the Lenya CMS, the workflow entry point is the class</p>
+<source>org.apache.lenya.cms.workflow.WorkflowFactory</source>
+<note>It should be possible to select the workflow factory dynamically
+(this is an enhancement in Bugzilla).</note>
+
+<p>For further information, consult the Lenya API documentation.</p>
+
+</section>
+
+</body>
+</document>
