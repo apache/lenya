@@ -13,7 +13,8 @@
 <link rel="stylesheet" type="text/css" href="css/styles.css" title="default css"/>
 <title>
   <!-- FIXME: namespace -->
-  <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/>
+  <xsl:value-of select="feed/title"/>
+  <xsl:value-of select="echo:feed/echo:title"/>
 </title>
 </head>
 
@@ -23,7 +24,8 @@
 <td colspan="2" id="title">
   <a href="{$relative2root}/index.html">
     <!-- FIXME: namespace -->
-    <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/>
+    <xsl:value-of select="feed/title"/>
+    <xsl:value-of select="echo:feed/echo:title"/>
   </a>
 </td>
 </tr>
@@ -37,7 +39,7 @@
 <td valign="top" id="content" width="70%">
     <!-- FIXME: namespace -->
     <xsl:apply-templates select="feed/entry"/>
-    <xsl:apply-templates select="feed/echo:entry"/>
+    <xsl:apply-templates select="echo:feed/echo:entry"/>
 </td>
 
 <td valign="top" id="sidebar" width="30%">
@@ -49,7 +51,7 @@
 </div>
 -->
 
-<xsl:apply-templates select="sidebar/block"/>
+<xsl:apply-templates select="sidebar/block" mode="atom"/>
 </td>
 </tr>
 
@@ -65,7 +67,7 @@ Copyright &#169; Apache Software Foundation
 </html>
 </xsl:template>
 
-<xsl:template match="block">
+<xsl:template match="block" mode="atom">
 <div class="sidebar-title"><xsl:value-of select="title"/></div>
 <xsl:apply-templates select="content" mode="sidebar"/>
 </xsl:template>
