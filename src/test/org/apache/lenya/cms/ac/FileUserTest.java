@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: FileUserTest.java,v 1.12 2003/07/31 11:40:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,6 +60,7 @@ import org.apache.lenya.cms.PublicationHelper;
 import java.io.File;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -69,7 +70,6 @@ import java.util.Map;
  *
  */
 public class FileUserTest extends AccessControlTest {
-    private HashMap roles = new HashMap();
     private HashMap groups = new HashMap();
 
     /**
@@ -111,15 +111,6 @@ public class FileUserTest extends AccessControlTest {
      *
      * @return DOCUMENT ME!
      */
-    final public Map getRoles() {
-        return roles;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
     final public Map getGroups() {
         return groups;
     }
@@ -142,15 +133,6 @@ public class FileUserTest extends AccessControlTest {
 
         String editorGroupName = "editorGroup";
         String adminGroupName = "adminGroup";
-        String editorRoleName = "editorRole";
-        String adminRoleName = "adminRole";
-
-        this.roles.clear();
-
-        FileRole editorRole = new FileRole(configDir, editorRoleName);
-        FileRole adminRole = new FileRole(configDir, adminRoleName);
-        this.roles.put(editorRoleName, editorRole);
-        this.roles.put(adminRoleName, adminRole);
 
         FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
         FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
@@ -162,12 +144,6 @@ public class FileUserTest extends AccessControlTest {
         editorGroup.add(user);
         adminGroup.add(user);
 
-        editorRole.save();
-        adminRole.save();
-
-        //		editorGroup.addRole(editorRole);
-        //		adminGroup.addRole(editorRole);
-        //		adminGroup.addRole(adminRole);
         editorGroup.save();
         adminGroup.save();
         user.save();
@@ -243,15 +219,11 @@ public class FileUserTest extends AccessControlTest {
     final public void testGetGroups() throws AccessControlException {
         FileUser user = createAndSaveUser("alice", "Alice Wonderland", "alice@wonderland.org",
                 "secret");
-        int groupCount = 0;
-        Group[] groups = user.getGroups();
-
-        for (int i = 0; i < groups.length; i++) {
-            groupCount += 1;
-            assertTrue(getGroups().containsKey(groups[i].getId()));
+                
+        for (Iterator i = getGroups().values().iterator(); i.hasNext(); ) {
+            Group group = (Group) i.next();
+            assertTrue(group.contains(user));
         }
-
-        assertEquals(groupCount, getGroups().size());
     }
 
     /**
