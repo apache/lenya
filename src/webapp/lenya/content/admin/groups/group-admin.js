@@ -110,9 +110,9 @@ function group_change_members(groupId) {
 			while (userIterator.hasNext()) {
 				var user = userIterator.next();
 				group.add(user);
+				user.save();
 			}
 			
-			group.save();
 			break;
 		}
 	}
