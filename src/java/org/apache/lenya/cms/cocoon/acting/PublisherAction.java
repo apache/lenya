@@ -31,119 +31,136 @@ import org.dom4j.io.SAXReader;
  * @author Michael Wechner
  * @version 2002.02.04
  */
-public class PublisherAction extends AbstractComplementaryConfigurableAction implements Configurable{
-  private String authoringPath=null;
-  private String livePath=null;
-  private String treeAuthoringPath=null;
-  private String treeLivePath=null;
+public class PublisherAction
+    extends AbstractComplementaryConfigurableAction
+    implements Configurable {
 
+    private String authoringPath = null;
+    private String livePath = null;
+    private String treeAuthoringPath = null;
+    private String treeLivePath = null;
+    
   //private String replication_queue_href=null;
+
 /**
  *
  */
   public void configure(Configuration conf) throws ConfigurationException{
     super.configure(conf);
 
-    authoringPath=conf.getChild("authoring").getAttribute("href");
-    livePath=conf.getChild("live").getAttribute("href");
-    treeAuthoringPath=conf.getChild("tree-authoring").getAttribute("href");
-    treeLivePath=conf.getChild("tree-live").getAttribute("href");
+    authoringPath = conf.getChild("authoring").getAttribute("href");
+    livePath = conf.getChild("live").getAttribute("href");
+    treeAuthoringPath = conf.getChild("tree-authoring").getAttribute("href");
+    treeLivePath = conf.getChild("tree-live").getAttribute("href");
 
     //replication_queue_href=conf.getChild("replication-queue").getAttribute("href");
-
-    if(getLogger().isDebugEnabled()) {
-      getLogger().debug("CONFIGURATION:\nauthoring path="+authoringPath+"\nlive path="+livePath);
-      getLogger().debug("CONFIGURATION:\ntree authoring path="+treeAuthoringPath+"\ntree live path="+treeLivePath);
-
-      //getLogger().debug("CONFIGURATION:\nReplication Queue: href="+replication_queue_href);
-      }
-    }
-/**
- *
- */
-  public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
-    // Get Source
-    org.apache.cocoon.environment.Source inputSource=resolver.resolve("");
-    String sitemapParentPath=inputSource.getSystemId();
-    sitemapParentPath=sitemapParentPath.substring(5); // Remove "file:" protocoll
-    getLogger().error("RESOLVED SOURCE: "+sitemapParentPath);
-    getLogger().error("CONFIGURATION:\nauthoring path="+authoringPath+"\nlive path="+livePath);
-
-    // Set absolute paths
-    String absoluteAuthoringPath=sitemapParentPath+authoringPath;
-    String absoluteLivePath=sitemapParentPath+livePath;
-    String absoluteTreeAuthoringPath=sitemapParentPath+treeAuthoringPath;
-    String absoluteTreeLivePath=sitemapParentPath+treeLivePath;
-
-    // Get request object
-    Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
-    if(request == null){
-      getLogger().error ("No request object");
-      return null;
-      }
-    
-    // Get parameters
-    String submit=request.getParameter("submit");
-    if(submit.equals("cancel")){
-      // cancel
-      //return ;
-      }
-    String docid=request.getParameter("docid");
-    String docids=request.getParameter("docids");
-
-    // Update (copy) files
-    StringTokenizer st=new StringTokenizer(docids,",");
-    while(st.hasMoreTokens()){
-      String docId=st.nextToken();
-      File sourceFile=new File(absoluteAuthoringPath+docId);
-      File destinationFile=new File(absoluteLivePath+docId);
-      if(copyFile(sourceFile,destinationFile)){
-        getLogger().error("Document published: "+sourceFile+" "+destinationFile);
-        }
-      else{
-        getLogger().error("EXCEPTION: Document not published: "+sourceFile+" "+destinationFile);
-        }
-      }
-
-    // Update (copy) tree
-    if(copyFile(new File(absoluteTreeAuthoringPath),new File(absoluteTreeLivePath))){
-      getLogger().error("COPY\ntree source="+absoluteTreeAuthoringPath+"\ntree destination="+absoluteTreeLivePath);
-      getLogger().error("Tree published");
-      }
-    else{
-      getLogger().error("Tree not published");
-      }
-
-    // Get session
-    Session session=request.getSession(true);
-    if(session == null){
-      getLogger().error("No session object");
-      return null;
-      }
-
-    // Return referer
-    String parent_uri=(String)session.getAttribute("org.wyona.cms.cocoon.acting.PublisherAction.parent_uri");
-    HashMap actionMap=new HashMap();
-    actionMap.put("parent_uri",parent_uri);
-    session.removeAttribute("org.wyona.cms.cocoon.acting.PublisherAction.parent_uri");
-    return actionMap;
-    }
-/**
- *
- */
-  private boolean copyFile(File source,File destination) throws Exception{
-    if(source.exists()){
-      File parentDestination=new File(destination.getParent());
-      if(!parentDestination.exists()){
-       getLogger().warn("Directory will be created: "+parentDestination);
-        parentDestination.mkdirs();
-        }
-      org.apache.avalon.excalibur.io.FileUtil.copyFile(source,destination);
-      return true;
-      }
-    else{
-      getLogger().error("File does not exist: "+source);
-      return false;
-      }
+    if (getLogger().isDebugEnabled()) {
+	getLogger().debug("CONFIGURATION:\nauthoring path=" +
+			  authoringPath + "\nlive path=" + livePath);
+	getLogger().debug("CONFIGURATION:\ntree authoring path=" +
+			  treeAuthoringPath + "\ntree live path=" +
+			  treeLivePath);
+	
+	//getLogger().debug("CONFIGURATION:\nReplication Queue: href="+replication_queue_href);
     }
   }
+    /**
+     *
+     */
+    public Map act(Redirector redirector, SourceResolver resolver,
+		   Map objectModel, String src, Parameters parameters)
+	throws Exception {
+
+	// Get Source
+	org.apache.cocoon.environment.Source inputSource = resolver.resolve("");
+	String sitemapParentPath = inputSource.getSystemId();
+	// Remove "file:" protocoll
+	sitemapParentPath = sitemapParentPath.substring(5); 
+	
+	getLogger().error("RESOLVED SOURCE: " + sitemapParentPath);
+	getLogger().error("CONFIGURATION:\nauthoring path=" + authoringPath +
+			  "\nlive path=" + livePath);
+	
+	// Set absolute paths
+	String absoluteAuthoringPath = sitemapParentPath + authoringPath;
+	String absoluteLivePath = sitemapParentPath + livePath;
+	String absoluteTreeAuthoringPath = sitemapParentPath + treeAuthoringPath;
+	String absoluteTreeLivePath = sitemapParentPath + treeLivePath;
+
+	// Get request object
+	Request request = (Request)objectModel.get(Constants.REQUEST_OBJECT);
+
+	if (request == null) {
+	    getLogger().error ("No request object");
+	    return null;
+	}
+	
+	// Get parameters
+	String submit = request.getParameter("submit");
+	if (submit.equals("cancel")) {
+	    // cancel
+	    //return ;
+	}
+	String docid = request.getParameter("docid");
+	String docids = request.getParameter("docids");
+
+	// Update (copy) files
+	StringTokenizer st = new StringTokenizer(docids,",");
+	while (st.hasMoreTokens()) {
+	    String docId = st.nextToken();
+	    File sourceFile = new File(absoluteAuthoringPath+docId);
+	    File destinationFile = new File(absoluteLivePath+docId);
+	    if (copyFile(sourceFile, destinationFile)) {
+		getLogger().error("Document published: " + sourceFile +
+				  " " + destinationFile);
+	    } else {
+		getLogger().error("EXCEPTION: Document not published: " +
+				  sourceFile + " " + destinationFile);
+	    }
+	}
+	
+	// Update (copy) tree
+	if (copyFile(new File(absoluteTreeAuthoringPath),
+		     new File(absoluteTreeLivePath))) {
+	    getLogger().error("COPY\ntree source=" + absoluteTreeAuthoringPath +
+			      "\ntree destination=" + absoluteTreeLivePath);
+	    getLogger().error("Tree published");
+	} else {
+	    getLogger().error("Tree not published");
+	}
+	
+	// Get session
+	Session session = request.getSession(true);
+	if (session == null) {
+	    getLogger().error("No session object");
+	    return null;
+	}
+	
+	// Return referer
+	String parent_uri = (String)session.getAttribute("org.wyona.cms.cocoon.acting.PublisherAction.parent_uri");
+	HashMap actionMap = new HashMap();
+	actionMap.put("parent_uri", parent_uri);
+	session.removeAttribute("org.wyona.cms.cocoon.acting.PublisherAction.parent_uri");
+	return actionMap;
+    }
+
+    /**
+     *
+     */
+    private boolean copyFile(File source, File destination) throws Exception {
+
+	if (source.exists()) {
+	    File parentDestination = new File(destination.getParent());
+	    if (!parentDestination.exists()) {
+		getLogger().warn("Directory will be created: " +
+				 parentDestination);
+		parentDestination.mkdirs();
+	    }
+	    org.apache.avalon.excalibur.io.FileUtil.copyFile(source,destination);
+	    return true;
+	} else {
+	    getLogger().error("File does not exist: " + source);
+	    return false;
+	}
+    }
+}
