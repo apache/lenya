@@ -266,6 +266,7 @@ public class WGet{
     log.debug(".saveToFile(): Filename: "+file.getAbsolutePath());
     FileOutputStream out=new FileOutputStream(file.getAbsolutePath());
     out.write(bytes);
+    out.close();
     }
 /**
  *
