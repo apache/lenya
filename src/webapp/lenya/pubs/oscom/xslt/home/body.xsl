@@ -12,10 +12,15 @@
 <br />&#160;<br />
 -->
 
-  <div id_xopus="about_and_features" xml_xopus="index.xml" xsl_xopus="Page/Home/Authoring/xopus.xsl" xsd_xopus="home.xsd">
+  <xsl:apply-templates select="html/body" mode="xhtml"/>
+<!--
   <xsl:apply-templates select="about"/>
   <xsl:apply-templates select="features"/>
-  </div>
+-->
+</xsl:template>
+
+<xsl:template match="body" mode="xhtml">
+  <xsl:copy-of select="*"/>
 </xsl:template>
 
 <xsl:template match="about">
