@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultDocumentBuilder.java,v 1.28 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id: DefaultDocumentBuilder.java,v 1.29 2004/05/13 15:57:33 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -161,8 +161,9 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 
             int slashIndex = publicationURI.indexOf("/");
             if (slashIndex > -1) {
+                String area = publicationURI.substring(0, slashIndex);
                 String documentUri = publicationURI.substring(slashIndex);
-                if (documentUri.startsWith("/")) {
+                if (AbstractPublication.isValidArea(area) && documentUri.startsWith("/")) {
                     isDocument = true;
                 }
             }
