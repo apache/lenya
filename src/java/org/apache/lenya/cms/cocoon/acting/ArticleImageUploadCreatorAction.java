@@ -34,6 +34,14 @@ public class ArticleImageUploadCreatorAction
     protected String uploadDirName = null;
     protected String metaDirName = null;
 
+    /**
+     * The variable <code>insertImageBefore</code> is configured trough
+     * parameters to the action in the sitemap. It defines whether the
+     * media tag is to be inserted before or after the xpath.
+     *
+     */
+    protected boolean insertImageBefore = true;
+
     final String UPLOADFILE_PARAM_NAME = "uploadFile";
     final String IMAGEXPATH_PARAM_NAME = "xpath";
     final String DOCUMENTID_PARAM_NAME = "documentid";
@@ -57,18 +65,17 @@ public class ArticleImageUploadCreatorAction
      */
     public void configure(Configuration conf) throws ConfigurationException {
 	super.configure(conf);
+
 	// The name of the uploaddir is specified as a parameter of
 	// the action. The parameter is a child of the configuration.
-	Configuration[] parameters = conf.getChildren();
-	for (int i = 0; i<parameters.length; i++) {
-	    if (parameters[i].getAttribute("name").equals("images-dir")) {
-		uploadDirName = parameters[i].getAttribute("value");
-	    } else if (parameters[i].getAttribute("name").equals("meta-dir")) {
-		metaDirName = parameters[i].getAttribute("value");
-	    }
-	}
+	uploadDirName = conf.getChild("images-dir").getAttribute("href");
+	metaDirName = conf.getChild("meta-dir").getAttribute("href");
+	insertImageBefore =
+	    conf.getChild("insert-image-before").getAttributeAsBoolean("value",
+								       true);
 	getLogger().debug("uploadDirName:" + uploadDirName);
 	getLogger().debug("metaDirName:" + metaDirName);
+	getLogger().debug("insertImageBefore:" + insertImageBefore);
     }
 
     /**
@@ -293,8 +300,13 @@ public class ArticleImageUploadCreatorAction
 	Element parent = node.getParent();
 	List list = parent.content();
 	
-	// insert the tag before the imageXPath
-	list.add(parent.indexOf(node), mediaTag);
+	if (insertImageBefore) {
+	    // insert the tag before the imageXPath
+	    list.add(parent.indexOf(node), mediaTag);
+	} else {
+	    // insert the tag after the imageXPath
+	   list.add(parent.indexOf(node) + 1, mediaTag);
+	}
 
 	// write it back to the file
 	OutputStream out =
