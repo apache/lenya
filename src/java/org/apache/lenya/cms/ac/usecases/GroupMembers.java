@@ -52,6 +52,7 @@ public class GroupMembers extends AccessControlUsecase {
         for (Iterator i = groupUsers.iterator(); i.hasNext(); ) {
             User user = (User) i.next();
             this.group.add(user);
+	    user.save();
         }
     }
 
