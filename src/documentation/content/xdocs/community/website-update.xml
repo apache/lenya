@@ -40,7 +40,7 @@
 every 12 hours (see ~thorsten/bin/mycrontab). If you want to do it manually then ...</p>
 <ul>
   <li>Login to <code>minotaur.apache.org</code></li>
-  <li><code>minotaur@apache.org &gt; ~thorsten/bin/lenya-update.sh</code></li>
+  <li><code>minotaur@apache.org &gt; /x1/home/thorsten/bin/lenya-update.sh</code></li>
 </ul>
 </section>
   </body>

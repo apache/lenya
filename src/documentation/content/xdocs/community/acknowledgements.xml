@@ -17,7 +17,7 @@
 
 <!-- $Id: acknowledgements.xml 55404 2004-10-24 01:12:28Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
@@ -26,43 +26,37 @@
     <type/>
   </header>
   <body>
-<section>
+<section id="committer">
 <title>Active Committers</title>
 <ul>
-<li><strong>Edith Chevrier</strong> (edith at apache.org)</li>
-<li><strong>Dale Christ</strong> (bigdog at apache.org)</li>
-<li><strong>Christian Egli</strong> (egli at apache.org)</li>
-<li><strong>Antonio Gallardo</strong> (antonio at apache.org)</li>
-<li><strong>Andreas Hartmann</strong> (andreas at apache.org)</li>
-<li><strong>Rolf Kulemann</strong> (roku at apache.org)</li>
-<li><strong>Gregor J. Rothfuss</strong> (gregor at apache.org)</li>
-<li><strong>Thorsten Scherler</strong> (thorsten at apache.org)</li>
-<li><strong>Michael Wechner</strong> (michi at apache.org)</li>
+<li><strong>Edith Chevrier (edith at apache.org)</strong></li>
+<li><strong>Dale Christ (bigdog at apache.org)</strong></li>
+<li><strong>Christian Egli (egli at apache.org)</strong></li>
+<li><strong>Antonio Gallardo (antonio at apache.org)</strong></li>
+<li><strong>Andreas Hartmann (andreas at apache.org)</strong></li>
+<li><strong><em>Rolf Kulemann (roku at apache.org)</em></strong></li>
+<li><strong>Gregor J. Rothfuss(gregor at apache.org)</strong></li>
+<li><strong>[TS] - Thorsten Scherler (thorsten at apache.org)</strong></li>
+<li><strong>Michael Wechner (michi at apache.org)</strong></li>
 </ul>
 </section>
 
 
-<section>
-<title>Inactive Committers</title>
+<section id="iacommitter">
+<title>Inactive (or former WyonaCMS) committers</title>
 <ul>
-<li><strong>J&#252;rgen Bigalke</strong></li>
-<li><strong>Memo Birgi</strong></li>
-<li><strong>Rene Niedermowe</strong></li>
-<li><strong>Giacomo Pati</strong> (giacomo at apache.org)</li>
-<li><strong>Marc Liyanage</strong></li>
-<li><strong>Alexander McLintock</strong></li>
-</ul>
-</section>
-
-<section>
-<title>Emeritus Committers</title>
-<ul>
-<li><strong>Felix M&#228;der</strong> (felix at apache.org))</li>
+<li>J&#252;rgen Bigalke</li>
+<li>Memo Birgi</li>
+<li>Rene Niedermowe</li>
+<li>Giacomo Pati (giacomo at apache.org)</li>
+<li>Marc Liyanage</li>
+<li>Alexander McLintock</li>
+<li>Felix M&#228;der (felix at apache.org))</li>
 </ul>
 </section>
 
 
-<section>
+<section id="contributor">
 <title>Other Contributors</title>
 <ul>
 <li><strong>Olivier Lange</strong> (french translation)</li>
@@ -70,7 +64,7 @@
 <li><strong>Lon Boonen</strong>
 <p>
 Lon is the original creator of Xopus. He helped a lot to integrate Xopus into Lenya.
-Recently he rewrote the JavaScript of the Lenya menubar.
+He rewrote the JavaScript of the Lenya menubar.
 <br />&#160;
 </p>
 </li>
@@ -94,8 +88,15 @@ The Lenya logo has been designed by Stephen.  <br />&#160;
 <li><strong>Martin Hitz</strong></li>
 </ul>
 </section>
-
-    <section>
+<section id="notes">
+      <title>Notes</title>
+      <p>Strong type denotes <strong>PMC member</strong></p>
+      <p>Emphasis type denotes <em>PMC chair</em></p>
+      <p>See the <a href="http://apache.org/foundation/how-it-works.html#roles">ASF role definitions</a> for detailed role information.</p>
+      <p> All <a href="http://cocoon.apache.org/community/members.html">Cocoon committers</a>
+        also have rights to commit to Forrest.</p>
+    </section>
+    <section id="credits-software">
       <title>Credits</title>
 
       <p>This product includes software developed by the Apache

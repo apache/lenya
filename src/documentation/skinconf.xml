@@ -200,7 +200,6 @@ which will be used to configure the chosen Forrest skin.
     <color name="heading" value="#E5E4D9"/>
     <color name="subheading" value="#000000"/>
     <color name="published" value="#000000"/>
-<!--#E5F5F8-->
     <color name="navstrip" value="#E5E4D9" font="#000000"/>
     <color name="toolbox" value="#CFDCED" font="#000000"/>
     <color name="border" value="#999999"/>

@@ -249,8 +249,11 @@
 			<w3c.xml href="XML/"/>
 			<w3c.xslt href="TR/xslt/"/>
 		</w3c>
-		<wiki href="http://wiki.apache.org/cocoon-lenya">
-			<wiki.CocoonWebsiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
+		<wiki href="http://wiki.apache.org">
+      <lenya href="lenya/" />
+      <cocoon href="cocoon/">
+			  <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
+      </cocoon>
 		</wiki>
 		<wyona href="http://wyona.com" />
 	</external-refs>
