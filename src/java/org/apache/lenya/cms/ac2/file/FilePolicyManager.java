@@ -103,7 +103,7 @@ public class FilePolicyManager implements PolicyManager {
     private File policyDirectory;
 
     /**
-     * Builds a policy from a file. 
+     * Builds a policy from a file. When the file is not present, an empty policy is returned.
      * @param file The file.
      * @return A policy.
      * @throws AccessControlException when something went wrong.
@@ -187,6 +187,7 @@ public class FilePolicyManager implements PolicyManager {
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
 
     /**
+     * Builds a URL policy from a file. When the file is not present, an empty policy is returned.
      * @see org.apache.lenya.cms.ac2.PolicyBuilder#buildURLPolicy(java.lang.String)
      */
     public DefaultPolicy buildURLPolicy(String url) throws AccessControlException {
@@ -194,6 +195,7 @@ public class FilePolicyManager implements PolicyManager {
     }
 
     /**
+     * Builds a subtree policy from a file. When the file is not present, an empty policy is returned.
      * @see org.apache.lenya.cms.ac2.PolicyBuilder#buildSubtreePolicy(java.lang.String)
      */
     public DefaultPolicy buildSubtreePolicy(String url) throws AccessControlException {
@@ -201,7 +203,7 @@ public class FilePolicyManager implements PolicyManager {
     }
 
     /**
-     * Builds a policy from a file. 
+     * Builds a policy from a file. When the file is not present, an empty policy is returned.  
      * @param url The url.
      * @param policyFilename The policy filename.
      * @return A policy.
@@ -222,11 +224,13 @@ public class FilePolicyManager implements PolicyManager {
     
     /**
      * Returns the policy file for a URL and a policy filename.
-     * @param url The url to get the file for.
+     * @param url The url to get the file for: /{area}/...
      * @param policyFilename The name of the policy file.
      * @return A file object.
      */
     protected File getPolicyFile(String url, String policyFilename) {
+        assert url.startsWith("/");
+        url = url.substring(1);
         String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
         File policyFile = new File(getPolicyDirectory(), path);
         return policyFile;
