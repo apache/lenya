@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: OneFormEditorSaveAction.java,v 1.2 2004/05/15 17:11:03 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -34,8 +34,10 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.log4j.Category;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -104,10 +106,21 @@ public class OneFormEditorSaveAction
                     + File.separator
                     + parameters.getParameter("schema"));
         if (schema.isFile()) {
+            
+            try {
+                DocumentHelper.readDocument(file);
+            }
+            catch (SAXException e) {
+                log.error("Wellformedness check failed: " + e.getMessage());
+                Map hmap = new HashMap();
+                hmap.put("message", "Document is not well-formed: " + e.getMessage());
+                return hmap;
+            }
+            
             String message = RelaxNG.validate(schema, file);
             if (message != null) {
                 log.error("RELAX NG Validation failed: " + message);
-                HashMap hmap = new HashMap();
+                Map hmap = new HashMap();
                 hmap.put("message", "RELAX NG Validation failed: " + message);
                 return hmap;
             }
