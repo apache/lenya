@@ -7,7 +7,7 @@
  * for the specific language governing permissions and limitations under the License.
  */
 
-/* $Id: UploadHelper.java,v 1.5 2004/08/16 12:10:52 andreas Exp $ */
+/* $Id: UploadHelper.java,v 1.6 2004/08/16 12:11:31 andreas Exp $ */
 
 package org.apache.lenya.cms.authoring;
 
@@ -25,7 +25,7 @@ import java.io.OutputStream;
  * Helper class for uploading files.
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner </a>
- * @version $Id: UploadHelper.java,v 1.5 2004/08/16 12:10:52 andreas Exp $
+ * @version $Id: UploadHelper.java,v 1.6 2004/08/16 12:11:31 andreas Exp $
  */
 public class UploadHelper {
 
@@ -100,6 +100,7 @@ public class UploadHelper {
 
     /**
      * Saves the a file the request for a certain request parameter name.
+     * @param request The request.
      * @param requestParameter The name of the &lt;input type="file"/&gt; request parameter value.
      * @return The saved file or <code>null</code> if the upload was not successful.
      * @throws Exception when something went wrong.
