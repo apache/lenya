@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.14 2003/09/01 17:01:48 andreas Exp $
+$Id: CMSHistory.java,v 1.15 2003/09/02 13:41:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,7 +68,6 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 
-
 /**
  * @author andreas
  *
@@ -76,7 +75,7 @@ import java.io.File;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class CMSHistory extends History {
-    public static final String HISTORY_PATH = "content/workflow/history".replace('/', File.separatorChar);
+    public static final String HISTORY_PATH = "content/workflow/history";
 
     /**
      * Creates a new CMSHistory object.
@@ -88,7 +87,7 @@ public class CMSHistory extends History {
     }
 
     private Document document;
-    
+
     public static final String IDENTITY_ELEMENT = "identity";
     public static final String USER_ELEMENT = "user";
     public static final String MACHINE_ELEMENT = "machine";
@@ -103,10 +102,10 @@ public class CMSHistory extends History {
         Element element = super.createVersionElement(helper, situation);
 
         CMSSituation cmsSituation = (CMSSituation) situation;
-        
+
         Element identityElement = helper.createElement(IDENTITY_ELEMENT);
         element.appendChild(identityElement);
-        
+
         String userId = cmsSituation.getUserId();
         if (userId != null) {
             identityElement.appendChild(generateUserElement(helper, userId));
@@ -119,7 +118,7 @@ public class CMSHistory extends History {
 
         return element;
     }
-    
+
     /**
      * Creates an XML element describing the user.
      * @param helper The namespace helper of the document.
@@ -132,7 +131,7 @@ public class CMSHistory extends History {
         userElement.setAttribute(ID_ATTRIBUTE, userId);
         return userElement;
     }
-    
+
     /**
      * Creates an XML element describing the machine.
      * @param helper The namespace helper of the document.
@@ -145,28 +144,35 @@ public class CMSHistory extends History {
         machineElement.setAttribute(IP_ATTRIBUTE, machineIp);
         return machineElement;
     }
-	
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
-	 */
+
+    /**
+     * Returns the path of the history file inside the publication directory.
+     * @return A string.
+     */
+    public String getHistoryPath() {
+        DocumentIdToPathMapper pathMapper = document.getPublication().getPathMapper();
+        String documentPath = pathMapper.getPath(document.getId(), document.getLanguage());
+        String path = HISTORY_PATH + "/" + document.getArea() + "/" + documentPath;
+        path = path.replace('/', File.separatorChar);
+        return path;
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
+     */
     protected File getHistoryFile() {
         return getHistoryFile(getDocument());
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
      */
     protected File getHistoryFile(Document document) {
-        File historyDirectory = new File(document.getPublication().getDirectory(), HISTORY_PATH);
-        DocumentIdToPathMapper pathMapper = document.getPublication().getPathMapper();
-        String documentPath = pathMapper.getPath(document.getId(), document.getLanguage()); 
-        File historyFile = new File(historyDirectory, document.getArea() + File.separator + documentPath);
+        File historyFile = new File(document.getPublication().getDirectory(), getHistoryPath());
         return historyFile;
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.lenya.workflow.impl.History#createInstance()
      */
     protected WorkflowInstanceImpl createInstance() throws WorkflowException {
@@ -190,7 +196,7 @@ public class CMSHistory extends History {
     public void setDocument(Document document) {
         this.document = document;
     }
-    
+
     /**
      * Initializes the workflow history of another document using the same
      * workflow schema like this history.
@@ -203,7 +209,7 @@ public class CMSHistory extends History {
         CMSHistory newHistory = new CMSHistory(newDocument);
         newHistory.initialize(workflowId, situation);
     }
-    
+
     /**
      * Moves this history to a new document.
      * @param newDocument The new document.
@@ -218,15 +224,16 @@ public class CMSHistory extends History {
     /**
      * @see org.apache.lenya.workflow.impl.History#restoreVersion(NamespaceHelper, org.w3c.dom.Element)
      */
-    protected Version restoreVersion(NamespaceHelper helper, Element element) throws WorkflowException {
+    protected Version restoreVersion(NamespaceHelper helper, Element element)
+        throws WorkflowException {
         Version version = super.restoreVersion(helper, element);
         CMSVersion cmsVersion = new CMSVersion(version.getEvent(), version.getState());
-        
+
         Element identityElement = helper.getFirstChild(element, IDENTITY_ELEMENT);
         Element userElement = helper.getFirstChild(identityElement, USER_ELEMENT);
         String userId = userElement.getAttribute(ID_ATTRIBUTE);
         cmsVersion.setUserId(userId);
-        
+
         return cmsVersion;
     }
 

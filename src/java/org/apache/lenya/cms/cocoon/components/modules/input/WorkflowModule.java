@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowModule.java,v 1.1 2003/09/02 13:15:07 andreas Exp $
+$Id: WorkflowModule.java,v 1.2 2003/09/02 13:41:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,6 +65,7 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.WorkflowInstance;
 
@@ -78,8 +79,9 @@ public class WorkflowModule extends AbstractInputModule {
 
     public static final String STATE = "state";
     public static final String VARIABLE_PREFIX = "variable.";
+    public static final String HISTORY_PATH = "history-path";
 
-    protected static final String[] PARAMETER_NAMES = { STATE };
+    protected static final String[] PARAMETER_NAMES = { STATE, HISTORY_PATH };
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
@@ -98,10 +100,12 @@ public class WorkflowModule extends AbstractInputModule {
                 WorkflowInstance instance = factory.buildInstance(document);
                 if (name.equals(STATE)) {
                     value = instance.getCurrentState().toString();
-                }
-                else if (name.startsWith(VARIABLE_PREFIX)) {
+                } else if (name.startsWith(VARIABLE_PREFIX)) {
                     String variableName = name.substring(VARIABLE_PREFIX.length());
                     value = new Boolean(instance.getValue(variableName));
+                }
+                else if (name.equals(HISTORY_PATH)) {
+                    value = ((CMSHistory) WorkflowFactory.getHistory(document)).getHistoryPath();
                 }
             }
         } catch (Exception e) {
@@ -127,5 +131,5 @@ public class WorkflowModule extends AbstractInputModule {
 
         return objects;
     }
-
+    
 }
