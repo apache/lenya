@@ -495,13 +495,10 @@
           </map:match>
           
           <map:match pattern="copy" type="step">
-	        <map:act src="authoring{request-param:documentid}/index_de.xml" type="uriparametrizer">
-              <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
             <map:act type="session-propagator">
               <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
               <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
               <map:parameter name="org.apache.lenya.cms.info.documentType" value="{doctype}"/>
-            </map:act>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:match>
