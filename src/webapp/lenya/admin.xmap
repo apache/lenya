@@ -17,6 +17,14 @@
   </map:flow>
 
   <map:pipelines>
+    <!-- Menus -->
+    <map:pipeline>
+      <map:match pattern="menus/admin.xml">
+	    <map:generate type="serverpages" src="content/menus/admin.xsp"/>
+	    <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
     <map:pipeline>
       <map:match pattern="passwd/continuation-*">
         <map:call continuation="{1}"/>
@@ -33,8 +41,15 @@
 
     <map:pipeline>
       <map:match pattern="**">
-        <map:read src="resources/html/index.html"/>
+ 	    <map:aggregate element="lenya" label="aggregate">
+      <map:part src="cocoon:/menus/admin.xml"/>
+	      <map:part element="cmsbody" src="resources/html/index.html"/>
+	    </map:aggregate>
+	    <map:transform src="xslt/admin/root.xsl" label="content" />
+	    <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
+    
+    
   </map:pipelines>
 </map:sitemap>
