@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: crawl_and_index.xml,v 1.33 2004/04/02 10:13:24 michi Exp $ -->
+<!-- $Id: crawl_and_index.xml,v 1.34 2004/04/14 09:32:25 michi Exp $ -->
 
 <project default="main" basedir=".">
 
@@ -54,6 +54,8 @@
     <pathelement path="${web-inf.dir}/lib/websphinx.jar"/>
     <pathelement path="${web-inf.dir}/lib/xml-commons-resolver-1.1.jar"/>
   </path>
+
+  <chmod file="${webapp.dir}/lenya/bin/crawl_and_index.sh" perm="755"/>
 </target>
 
 <target name="crawl" description="Crawl and dump hypertext documents. Usage: -Dcrawler.xconf=/foo/bar/crawler.xconf" depends="init">
