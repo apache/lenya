@@ -15,29 +15,26 @@ import org.apache.cocoon.components.request.multipart.*;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
-import org.apache.log4j.Category;
-
 public class ArticleImageUploadCreatorAction
     extends AbstractConfigurableAction implements ThreadSafe  {
 
-    private Category log=Category.getInstance(ArticleImageUploadCreatorAction.class);
-    
     Properties default_properties = null;
     protected String uploadDirName = null;
     protected String metaDirName = null;
 
     final String UPLOADFILE_PARAM_NAME = "uploadFile";
-    final String IMAGEXPATH_PARAM_NAME = "imageXPath";
-    final String REFERER_PARAM_NAME = "referer";
+    final String IMAGEXPATH_PARAM_NAME = "xpath";
+    final String DOCUMENTID_PARAM_NAME = "documentid";
 
     // optional parameters for meta data according to dublin core
     final String[] DUBLIN_CORE_PARAMETERS
@@ -61,37 +58,27 @@ public class ArticleImageUploadCreatorAction
 		metaDirName = parameters[i].getAttribute("value");
 	    }
 	}
-        log.debug(".act(): "+"uploadDirName:" + uploadDirName);
-        log.debug(".act(): "+"metaDirName:" + metaDirName);
 	getLogger().debug("uploadDirName:" + uploadDirName);
 	getLogger().debug("metaDirName:" + metaDirName);
     }
-/**
- *
- */
+
     public Map act(Redirector redirector, SourceResolver resolver,
 		   Map objectModel, String source, Parameters parameters)
 	throws Exception {
 
-    org.apache.cocoon.environment.Source input_source=resolver.resolve("");
-    String sitemapPath=input_source.getSystemId();
-    sitemapPath=sitemapPath.substring(5); // Remove "file:" protocol
-    log.debug("Absolute SITEMAP Directory: " + sitemapPath);
-
-    String absoluteUploadDirName=sitemapPath+"/"+uploadDirName;
-    String absoluteMetaDirName=sitemapPath+"/"+metaDirName;
-    log.debug(".act(): "+"absoluteUploadDirName:" + absoluteUploadDirName);
-    log.debug(".act(): "+"abssoluteMetaDirName:" + absoluteMetaDirName);
-        
-
-        if(true){
-          log.debug(".act(): RETURN");
-          return null;
-          }
-	
 	HashMap results = new HashMap();
 	Request request = (Request)objectModel.get(Constants.REQUEST_OBJECT);
 	Context context = (Context)objectModel.get(Constants.CONTEXT_OBJECT);
+	
+	// find the absolute path (so we know where to put images and
+	// meta data)
+	Source  inputSource = resolver.resolve("");
+	String  sitemapPath = inputSource.getSystemId();
+	sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
+
+	String absoluteUploadDirName = sitemapPath + File.separator + uploadDirName;
+	String absoluteMetaDirName = sitemapPath + File.separator + metaDirName;
+	
 	Properties properties = new Properties(default_properties);
 	byte[] buf = new byte[4096];
 
@@ -100,8 +87,13 @@ public class ArticleImageUploadCreatorAction
 	getLogger().debug("properties: " + properties);
 
 	String imageXPath = request.getParameter(IMAGEXPATH_PARAM_NAME);
-	String requestingDocumentName = request.getParameter(REFERER_PARAM_NAME);
+	String requestingDocumentName = sitemapPath +
+	    request.getParameter(DOCUMENTID_PARAM_NAME);
 	String uploadFile = request.getParameter(UPLOADFILE_PARAM_NAME);
+
+	getLogger().debug("imageXPath: " + imageXPath);
+	getLogger().debug("requestingDocumentName: " + requestingDocumentName);
+	getLogger().debug("uploadFile: " + uploadFile);
 
 	// optional parameters for the meta file which contains dublin
 	// core information.
@@ -114,10 +106,6 @@ public class ArticleImageUploadCreatorAction
 	    }
 	    dublinCoreParams.put(paramName, paramValue);
         }
-
-	getLogger().debug("imageXPath: " + imageXPath);
-	getLogger().debug("requestingDocumentName: " + requestingDocumentName);
-	getLogger().debug("uploadFile: " + uploadFile);
 
 	Iterator iter = dublinCoreParams.keySet().iterator();
 	while(iter.hasNext()) {
@@ -133,31 +121,33 @@ public class ArticleImageUploadCreatorAction
 
 	Object obj = request.get(UPLOADFILE_PARAM_NAME);
 	getLogger().debug(obj.getClass().getName());
-	
+
 	// upload the file to the uploadDir
 	if (obj instanceof FilePart) {
 	    getLogger().debug("Uploading file: " +
 			      ((FilePart)obj).getFileName());
 	    
-	    String fileName = ((FilePart)obj).getFileName();
-	    
-	    String realPath = context.getRealPath("/wyona/cms/pubs/unipublic");
-	    String realUploadDirName = null;
-	    
-	    if (realPath != null)
-		realUploadDirName = realPath + File.separator + uploadDirName;
+	    String fileName = (String)dublinCoreParams.get("identifier");
+	
+	    // grab the mime type and add it to the dublin core meta
+	    // data as "format" 
+	    //	    String mimeType = ((FilePart)obj).getMimeType();
+	    String mimeType = "FIXME:";
+	    if (mimeType != null) {
+		dublinCoreParams.put("format", mimeType);
+	    }
+		
+	    String imagePathName = absoluteUploadDirName + File.separator +
+		fileName;
 
-	    String imagePathName = realUploadDirName + File.separator + fileName;
-	    
 	    getLogger().debug("fileName: " + fileName);
-	    getLogger().debug("realUploadDirName: " + uploadDirName);
-	    getLogger().debug("realPath: " + realPath);
+	    getLogger().debug("absoluteUploadDirName: " + absoluteUploadDirName);
+	    getLogger().debug("sitemapPath: " + sitemapPath);
 	    System.out.println("==fileName:" + fileName);
-	    System.out.println("==:realUploadDirName" + realUploadDirName);
-	    System.out.println("==realPath:" + realPath);
+	    System.out.println("==absoluteUploadDirName:" + absoluteUploadDirName);
+	    System.out.println("==sitemapPath:" + sitemapPath);
 	    
-	    
-	    File dir = new File(realUploadDirName);
+	    File dir = new File(absoluteUploadDirName);
 	    if (!dir.exists())
 		dir.mkdir();
 
@@ -176,12 +166,13 @@ public class ArticleImageUploadCreatorAction
 	    
 	    // create an extra file containing the meta description for
 	    // the image. 
-	    createMetaData(imagePathName + ".meta", dublinCoreParams);
+	    createMetaData(absoluteMetaDirName + File.separator + fileName +
+			   ".meta", dublinCoreParams);
 	    
-	    // insert <figure> tags at the location sepecified by the
+	    // insert <media> tags at the location sepecified by the
 	    // cpath in the original document (the referer)
-	    insertFigureTag(requestingDocumentName, imageXPath,
-			    imagePathName);
+	    insertMediaTag(requestingDocumentName, imageXPath,
+			   imagePathName, dublinCoreParams);
 	    
 	} else if (obj instanceof String) {
 	    getLogger().debug("Skipping parameter: " + (String)obj);
@@ -211,35 +202,70 @@ public class ArticleImageUploadCreatorAction
 	out.close();
     }
 
-    protected void insertFigureTag(String requestingDocumentName,
-				   String imageXPath,
-				   String imagePathName)
+    /**
+     * Insert <media> tags at the location specified by the xpath in
+     * the original document (the requestingDocumentName) 
+     *
+     * @param requestingDocumentName the xml document from where the
+     * image upload request originated.
+     * @param imageXPath the xpath after which the image is to be
+     * inserted.
+     * @param imagePathName path name of the uploaded image
+     * @param dublinCoreParams a HashMap of additional values
+     * according to Dublin Core.
+     *
+     * @exception DocumentException if an error occurs
+     * @exception IOException if an error occurs
+     */
+    protected void insertMediaTag(String requestingDocumentName,
+				  String imageXPath,
+				  String imagePathName,
+				  HashMap dublinCoreParams)
 	throws DocumentException, IOException {
-	// insert <figure> tags at the location specified by the xpath
+
+	// insert <media> tags at the location specified by the xpath
 	// in the original document (the referer)
 	
 	// read the document
 	SAXReader reader = new SAXReader();
 	
+	p("insertMediaTag>>" + requestingDocumentName);
 	Document document = reader.read(requestingDocumentName);
-	
-	// create the figure element
-	Element figureTag = DocumentHelper.createElement("figure");
-	figureTag.addAttribute("src", imagePathName);
-	
+	getLogger().debug("insertMediaTag:" + requestingDocumentName);
+
+	// create the media element
+	Element mediaTag = DocumentHelper.createElement("media");
+	mediaTag.addAttribute("media-type", "image");
+
+	mediaTag.addElement("media-reference")
+	    .addAttribute("mime-type", (String)dublinCoreParams.get("format"))
+	    .addAttribute("source", imagePathName)
+	    .addAttribute("alternate-text",
+			  (String)dublinCoreParams.get("title"))
+	    .addAttribute("copyright", (String)dublinCoreParams.get("rights"));
+
+	mediaTag.addElement("media-caption").addText(""); // FIXME:
+	mediaTag.addElement("authorline")
+	    .addText((String)dublinCoreParams.get("creator"));
+	     
 	// find the node where the figure tag has to be inserted
 	Node node = document.selectSingleNode(imageXPath);
 	
 	Element parent = node.getParent();
 	List list = parent.content();
 	
-	// insert the tag before the imageXPath
-	list.add(parent.indexOf(node), figureTag);
+	// insert the tag after the imageXPath
+	list.add(parent.indexOf(node) + 1, mediaTag);
 
 	// write it back to the file
 	FileWriter out = new FileWriter(requestingDocumentName);
 	document.write(out);
 	out.close();
     }
+
+    private void p(String s) {
+	System.out.println("--" + s);
+    }
+	
 }
 
