@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.21 2003/09/02 18:20:19 andreas Exp $
+ $Id: root.xsl,v 1.22 2003/09/03 09:14:51 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -39,10 +39,10 @@ function loadSynchPage(srclink)
 	docObj.forceOpeningOfAncestorFolders();
 	clickOnLink(linkID,docObj.srclink,'basefrm');
 	
-    //Scroll the tree window to show the selected node
-    //Other code in these functions needs to be changed to work with
-    //frameless pages, but this code should, I think, simply be removed
-   document.body.scrollTop=docObj.navObj.offsetTop
+  //Scroll the tree window to show the selected node
+  //Other code in these functions needs to be changed to work with
+  //frameless pages, but this code should, I think, simply be removed
+  //document.body.scrollTop = docObj.navObj.offsetTop
 }
 
 function findIDbyLink(srclink)
@@ -50,7 +50,13 @@ function findIDbyLink(srclink)
 <![CDATA[
   var i=0;
   
-  for (i = 0; i < nEntries && indexOfEntries[i].link.split('?')[0] != srclink; i++);
+  for (i = 0; i < nEntries &&
+      (indexOfEntries[i].link == undefined || indexOfEntries[i].link.split('?')[0] != srclink) &&
+      (indexOfEntries[i].hreference == undefined || indexOfEntries[i].hreference.split('?')[0] != srclink)
+      ;
+      i++) {
+//      alert(indexOfEntries[i].link);
+  }
   //FIXME: extend to allow for mapping of index.html to index_defaultlanguage.html
   if (i >= nEntries) {
      return 1; //example: node removed in DB
@@ -81,7 +87,7 @@ function findIDbyLink(srclink)
 }
    
 #lenya-info-treecanvas { border: dotted 1px #CCCCCC; width: 200px; float: left; padding: 10px; margin: 2px; font-size: 8pt; }
-#lenya-info-content { border: dotted 1px #CCCCCC; height: 600px; width: 700px; float: left; padding: 10px; margin: 2px;}
+#lenya-info-content { height: 600px; width: 700px; float: left; }
 
 	.lenya-tab {
 	width: auto;
@@ -170,7 +176,7 @@ function findIDbyLink(srclink)
 <xsl:template name="activate">
 	<xsl:param name="tablanguage"/>
 	<xsl:variable name="docidwithoutlanguage"><xsl:value-of select="substring-before($documentid, '_')"/></xsl:variable>
-   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$docidwithoutlanguage"/>_<xsl:value-of select="$tablanguage"/>.html?lenya.language=<xsl:value-of select="$tablanguage"/></xsl:attribute>
+   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/>.html</xsl:attribute>
    <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
 
