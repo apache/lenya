@@ -1,5 +1,5 @@
 /*
-$Id: TaskWrapperParameters.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
+$Id: TaskWrapperParameters.java,v 1.3 2003/09/12 17:36:42 egli Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,6 @@ $Id: TaskWrapperParameters.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
 package org.apache.lenya.cms.task;
 
 import java.util.Map;
-import org.apache.log4j.Category;
 
 /**
  * @author andreas
@@ -65,8 +64,6 @@ import org.apache.log4j.Category;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class TaskWrapperParameters extends ParameterWrapper {
-
-    private static Category log = Category.getInstance(TaskWrapperParameters.class);
 
     public static final String TASK_ID = "task-id";
     public static final String WEBAPP_URL = "webapp-url";
