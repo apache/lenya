@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: prerequisites.xml,v 1.16 2004/03/13 12:42:12 gregor Exp $ -->
+<!-- $Id: prerequisites.xml,v 1.17 2004/03/21 18:38:18 gregor Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -38,7 +38,7 @@ Several items, e.g. the servlet container, may be replaced by other products.
 <ul>
   <li>
     <p>
-    <strong>Java 2 Platform, Standard Edition</strong> (recommended: J2SE 1.4.2)<br/>
+    <strong>Java 2 Platform, Standard Edition</strong> (required: J2SE 1.4.1 or newer)<br/>
     <link href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</link>
     </p>
   </li>
@@ -53,7 +53,7 @@ Several items, e.g. the servlet container, may be replaced by other products.
   
   <li>
     <p>
-    <strong>Apache Ant</strong> (recommended: 1.6b2)<br/>
+    <strong>Apache Ant</strong> (required: 1.6.1 or newer)<br/>
     <link href="http://www.apache.org/dist/ant/">Ant main distribution directory</link>
     </p>
   </li>
