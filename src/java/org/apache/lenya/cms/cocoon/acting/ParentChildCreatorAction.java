@@ -181,7 +181,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
     // Create actual document
     try{
-      creator.create(new File(absoluteDoctypesPath+"samples"),new File(sitemapParentPath+docsPath+parentid),childid,childType);
+      creator.create(new File(absoluteDoctypesPath+"samples"),new File(sitemapParentPath+docsPath+parentid),childid,childType,childname);
       }
     catch(Exception e){
       getLogger().error(".act(): Creator throwed exception: "+e);

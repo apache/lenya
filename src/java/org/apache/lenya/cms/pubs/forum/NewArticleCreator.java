@@ -45,7 +45,7 @@ public class NewArticleCreator extends AbstractParentChildCreator{
 /**
  *
  */
-  public void create(File samplesDir,File parentDir,String childId,short childType) throws Exception{
+  public void create(File samplesDir,File parentDir,String childId,short childType,String childName) throws Exception{
     // Set filenames
     String id=generateTreeId(childId,childType);
     String filename=parentDir+"/articles/"+id+"/index.xml";

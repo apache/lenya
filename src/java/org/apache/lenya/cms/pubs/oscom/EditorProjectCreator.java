@@ -43,7 +43,7 @@ public class EditorProjectCreator extends AbstractParentChildCreator{
 /**
  * Create the new editor project
  */
-  public void create(File samplesDir,File parentDir,String childId,short childType) throws Exception{
+  public void create(File samplesDir,File parentDir,String childId,short childType,String childName) throws Exception{
     // Set filenames
     String id=generateTreeId(childId,childType);
     String filename=parentDir+"/"+id+".xml";
@@ -66,7 +66,7 @@ public class EditorProjectCreator extends AbstractParentChildCreator{
     Element ename=(Element)doc.selectSingleNode("/system/system_name");
     if(ename != null){
       log.debug(ename.getPath()+" "+ename.getText());
-      ename.addText("VANYA");
+      ename.addText(childName);
       log.debug(ename.getPath()+" "+ename.getText());
       }
 

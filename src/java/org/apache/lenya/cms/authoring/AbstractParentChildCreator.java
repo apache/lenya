@@ -56,9 +56,8 @@ public abstract class AbstractParentChildCreator {
      * @param childId from HTML form
      * @param childType from HTML form
      */
-    public abstract void create(File samplesDir, File parentDir,
-				String childId, short childType)
-	throws Exception;
+    public abstract void create(File samplesDir, File parentDir, String childId, short childType, String childName) 
+      throws Exception;
 
     /**
      * Utility function to copy a source file to destination

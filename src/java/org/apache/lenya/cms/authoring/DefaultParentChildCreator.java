@@ -44,7 +44,7 @@ public class DefaultParentChildCreator extends AbstractParentChildCreator {
      * @exception Exception if an error occurs
      */
     public void create(File samplesDir, File parentDir,
-		       String childId, short childType)
+		       String childId, short childType,String childName)
 	throws Exception {
 
 	log.warn("DefaultParentChildCreator.create() has been called.");
