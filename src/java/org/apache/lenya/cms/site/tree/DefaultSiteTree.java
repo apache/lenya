@@ -410,14 +410,14 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.SiteTree#getTopNodes()
+     * @see org.apache.lenya.cms.site.tree.SiteTree#getTopNodes()
      */
     public SiteTreeNode[] getTopNodes() {
         List childElements = new ArrayList();
 
-        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
+        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
  
-        Element[] elements = helper.getChildren((Element) document.getDocumentElement(), SiteTreeNodeImpl.NODE_NAME);
+        Element[] elements = helper.getChildren(this.document.getDocumentElement(), SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
@@ -429,7 +429,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     
     /**
      * Move up the node amongst its siblings.
-     * 
      * @param documentid The document id for the node.
      * @throws SiteException if the moving failed.
      */
