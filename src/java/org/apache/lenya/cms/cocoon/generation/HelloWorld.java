@@ -37,6 +37,7 @@ public class HelloWorld extends HttpServlet {
     writer.print("<?xml version=\"1.0\"?>");
     writer.print("<servlet class=\""+this.getClass().getName()+"\">");
     writer.print("<request method=\"GET\">");
+    writer.print(getRequestInfo(request));
     writer.print(getParameters(request));
     writer.print(getSession(request));
     writer.print(getCookies(request));
@@ -53,11 +54,22 @@ public class HelloWorld extends HttpServlet {
     writer.print("<?xml version=\"1.0\"?>");
     writer.print("<servlet class=\""+this.getClass().getName()+"\">");
     writer.print("<request method=\"POST\">");
+    writer.print(getRequestInfo(request));
     writer.print(getParameters(request));
     writer.print(getSession(request));
     writer.print(getCookies(request));
     writer.print("</request>");
     writer.print("</servlet>");
+    }
+/**
+ *
+ */
+  public String getRequestInfo(HttpServletRequest request){
+    StringBuffer sb=new StringBuffer("");
+    sb.append("<URI>"+request.getRequestURI()+"</URI>");
+    sb.append("<servername>"+request.getServerName()+"</servername>");
+    sb.append("<serverport>"+request.getServerPort()+"</serverport>");
+    return sb.toString();
     }
 /**
  *
