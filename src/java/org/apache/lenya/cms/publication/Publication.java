@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.28 2003/09/04 17:04:01 andreas Exp $
+$Id: Publication.java,v 1.29 2003/09/29 10:19:18 egli Exp $
 <License>
 
  ============================================================================
@@ -76,15 +76,15 @@ public class Publication {
     public static final String AUTHORING_AREA = "authoring";
     public static final String LIVE_AREA = "live";
     public static final String ADMIN_AREA = "admin";
-	public static final String ARCHIVE_AREA = "archive";
-	public static final String TRASH_AREA = "trash";
+    public static final String ARCHIVE_AREA = "archive";
+    public static final String TRASH_AREA = "trash";
 
     public static final String PATH_MAPPER = "path-mapper";
     public static final String LANGUAGES = "languages";
     public static final String LANGUAGE = "language";
     public static final String DEFAULT_LANGUAGE_ATTR = "default";
 
-	public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+    public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
 
     public static final String PUBLICATION_PREFIX =
         "lenya" + File.separator + "pubs";
@@ -104,7 +104,7 @@ public class Publication {
     private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
-	private String breadcrumbprefix = null;
+    private String breadcrumbprefix = null;
     private HashMap siteTrees = new HashMap();
 
     /** 
@@ -222,6 +222,17 @@ public class Publication {
         return new File(
             getServletContext(),
             PUBLICATION_PREFIX + File.separator + getId());
+    }
+
+    /**
+     * Return the directory of a specific area.
+     * 
+     * @param area a <code>File</code> representing the root of the area content directory.
+     * 
+     * @return the directory of the given content area. 
+     */
+    public File getContentDirectory(String area) {
+        return new File(getDirectory(), CONTENT_PATH + File.separator + area);
     }
 
     /**
