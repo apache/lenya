@@ -15,10 +15,10 @@
   limitations under the License.
 -->
 
-<!-- $Id: aegir-cms.xml,v 1.2 2004/03/13 12:42:03 gregor Exp $ -->
+<!-- $Id: aegircms.xml,v 1.1 2004/04/07 13:06:37 michi Exp $ -->
 
 <system type="cms">
-  <id>aegir-cms</id>
+  <id>aegircms</id>
   <system_name>Aegir CMS</system_name>
   <main_url>http://www.aegir-cms.org</main_url>
   <license>
