@@ -104,7 +104,7 @@ public class WorkflowFactory {
 
         List roleList = (List) request.getAttribute(Role.class.getName());
         if (roleList == null) {
-            throw new WorkflowException("Session does not contain roles!");
+            throw new WorkflowException("Request does not contain roles!");
         }
         Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
         return buildSituation(roles);
