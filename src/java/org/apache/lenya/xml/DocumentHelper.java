@@ -67,8 +67,10 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Writer;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -147,7 +149,6 @@ public class DocumentHelper {
     public static Document readDocument(File file)
         throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder builder = createBuilder();
-
         return builder.parse(file);
     }
 
@@ -162,8 +163,35 @@ public class DocumentHelper {
     public static Document readDocument(URL url)
         throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder builder = createBuilder();
-
         return builder.parse(url.toString());
+    }
+
+    /**
+     * Reads a document from a URI.
+     * @return A document.
+     * @param uri The URI to load the document from.
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
+    public static Document readDocument(URI uri)
+        throws ParserConfigurationException, SAXException, IOException {
+        DocumentBuilder builder = createBuilder();
+        return builder.parse(uri.toString());
+    }
+
+    /**
+     * Reads a document from an input stream.
+     * @return A document.
+     * @param stream The input stream to load the document from.
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
+    public static Document readDocument(InputStream stream)
+        throws ParserConfigurationException, SAXException, IOException {
+        DocumentBuilder builder = createBuilder();
+        return builder.parse(stream);
     }
 
     /** Writes a document to a file. A new file is created if it does not exist.
