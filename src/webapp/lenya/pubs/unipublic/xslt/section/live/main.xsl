@@ -5,16 +5,19 @@
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables.xsl"/>
+
+
 <!--
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
 <xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
 -->
-<xsl:template match="/">
 
+
+<xsl:template match="/">
 <html>
 <head>
-<title>unipublic - Geist und Gesellschaft</title>
+<title>unipublic - Geist und Gesellschaft (<xsl:value-of select="/section/@type"/>)</title>
 
 <xsl:call-template name="styles"/>
 
@@ -45,7 +48,7 @@
 
 <tr>
 <td width="135" valign="bottom" align="right"><img height="21" width="120" src="{$img-unipub}/t_magazin.gif" alt="magazin"/></td>
-<td width="315" valign="bottom"><img src="{$img-unipub}/r_geist.gif" width="138" height="13" border="0" alt="geist &#38; gesellschaft"/></td>
+<td width="315" valign="bottom"><img src="{$img-unipub}/r_{/section/@type}.gif" width="138" height="13" border="0" alt="geist &#38; gesellschaft"/></td>
 
 <td width="135" valign="bottom" align="right"></td>
 </tr>
@@ -62,7 +65,7 @@
 </tr>
 
 <tr>
-<td><img height="25" src="{$img-unipub}/m_d_geist.gif" border="0" name="geist" alt="geist &#38; gesellschaft" width= "115"/></td>
+<td><img height="25" src="{$img-unipub}/m_d_{/section/@type}.gif" border="0" name="geist" alt="geist &#38; gesellschaft" width= "115"/></td>
 </tr>
 
 <tr>
