@@ -64,7 +64,11 @@ public class CommandLineUtil {
     static Category log = Category.getInstance(CommandLineUtil.class);
 
     /**
+     * Command process utility where stdout and stderr are returned as byte arrays
      *
+     * @param command Command to be executed
+     * @throws Exception Execution of command might throw an error
+     * @return Standard output of executed command
      */
     public static byte[] runProcess(String command) throws Exception {
         Process process = Runtime.getRuntime().exec(command);
@@ -91,6 +95,7 @@ public class CommandLineUtil {
 
         if (baout_e.toString().length() > 0) {
             log.error(".runProcess(): ###ErrorStream:START" + baout_e.toString() + "END:ErrorStream###");
+            throw new Exception(baout_e.toString());
         }
 
         return baout.toByteArray();
