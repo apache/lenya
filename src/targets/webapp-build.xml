@@ -55,6 +55,14 @@
       </fileset>
     </copy>
 
+    <!-- now copy our roles -->
+    <echo>INFO: Copy properties from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.src}">
+        <include name="**/*.roles"/>
+      </fileset>
+    </copy>
+
     <!-- now create logs directory, where log4j can write to -->
     <echo>INFO: Create logs directory ${build.webapp}/WEB-INF/logs</echo>
     <mkdir dir="${build.webapp}/WEB-INF/logs"/>
@@ -113,3 +121,24 @@
     </copy>
     <echo>INFO: Copy From build.webapp=${build.webapp} To install.dir=${install.dir}</echo>
   </target>
+
+  <!-- ============================================================ -->
+  <!-- Reload Tomcat                                                -->
+  <!-- ============================================================ -->
+  
+  <target name="reload">
+      <!-- For Tomcat Tasks -->
+    <path id="tomcat.classpath">
+        <fileset dir="${install.dir}/../../server/lib" 
+            includes="catalina-ant.jar" />
+    </path>
+    <taskdef name="reload" 
+        classname="org.apache.catalina.ant.ReloadTask"
+        classpathref="tomcat.classpath" /> 
+    <reload
+    		url="http://localhost:8080/manager"
+    		username="nobby"
+    		password="f800sl"
+    	  path="/lenya"/>
+  </target>
+  
