@@ -410,11 +410,7 @@
                 </map:transform>
                 <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
                   <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
-                  <!-- FIXME: Internet Explorer does not send the name without the coordinates if input type is equals image. Mozilla does. -->
                   <map:parameter name="edit" value="{editSelect}"/>
-<!--
-                  <map:parameter name="edit" value="{request-param:edit}"/>
--->
                 </map:transform>
                 <map:call resource="style-cms-page"/>
               </map:act>
@@ -431,26 +427,31 @@
                 <map:serialize/>
               </map:act>
 
-              <map:generate src="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
-              <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
+              <map:act type="resource-exists" src="pubs/{1}/work/editor/authoring/{page-envelope:document-path}">
+                <map:generate src="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
+                <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
 
-              <!-- Save: Overwrite original file (FIXME: Cancel should not overwrite original file) -->
-              <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-                <map:parameter name="source" value="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-              </map:transform>
-              <map:transform type="write-source"/>
+                <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+                  <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
+                </map:transform>
+                <map:transform type="write-source"/>
+                <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+                  <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html"/>
+                </map:transform>
+              
+                <map:act type="workflow">
+                  <map:parameter name="area" value="{page-envelope:area}"/>
+                  <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+                  <map:parameter name="language" value="{page-envelope:document-language}"/>
+                  <map:parameter name="event" value="edit"/>
+                </map:act>
+                <map:serialize type="html" />
+              </map:act>
+              
+              <map:generate src="pubs/{1}/publication.xml"/> <!-- used as dummy file -->
               <map:transform src="xslt/authoring/edit/redirect-to.xsl">
                 <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
               </map:transform>
-              
-              <!-- trigger workflow (FIXME: Cancel should not trigger the workflow) -->
-              <map:act type="workflow">
-                <map:parameter name="area" value="{page-envelope:area}"/>
-                <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-                <map:parameter name="language" value="{page-envelope:document-language}"/>
-                <map:parameter name="event" value="edit"/>
-              </map:act>
-              
               <map:serialize type="html" />
             </map:match>
           </map:match>

@@ -81,7 +81,7 @@ import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.29 2003/12/04 16:10:50 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.30 2003/12/09 15:50:33 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -139,7 +139,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
         if(request.getParameter("cancel") != null) {
             getLogger().warn(".act(): Editing has been canceled");
-            // FIXME: document needs to be restored from original document
+            file.delete();
             return null;
         } else {
             if(file.isFile()) {
