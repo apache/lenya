@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.5 2003/05/30 15:25:53 andreas Exp $
+ * $Id: User.java,v 1.6 2003/06/02 09:29:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,8 +52,6 @@ package org.apache.lenya.cms.ac;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import org.apache.avalon.framework.configuration.Configuration;
 
 /**
  *
@@ -162,8 +160,6 @@ public abstract class User {
 	}
 
 	public abstract void save() throws AccessControlException;
-
-	public abstract void configure(Configuration config);
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
