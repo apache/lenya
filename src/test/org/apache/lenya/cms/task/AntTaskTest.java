@@ -104,7 +104,7 @@ public class AntTaskTest extends TestCase {
     /**
      * Override this method to add your test evaluation code.
      */
-    protected void evaluateTest() {
+    protected void evaluateTest() throws Exception {
     }
 
 }
