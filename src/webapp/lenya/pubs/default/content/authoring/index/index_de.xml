@@ -22,7 +22,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   limitations under the License.
 -->
 
-<!-- $Id: index_de.xml,v 1.7 2004/03/17 19:49:28 gregor Exp $ -->
+<!-- $Id: index_de.xml,v 1.8 2004/04/26 10:06:37 gregor Exp $ -->
     <lenya:meta>
         <dc:title>Standardpublikation</dc:title>
         <dc:creator>Christian Egli</dc:creator>
@@ -52,14 +52,14 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
     Cocoon.</p>
 
     <p>For an overview of the concepts and the terminology used in
-    Apache Lenya please see the <a href="concepts.html">Concepts
+    Apache Lenya please see the <a href="/lenya/default/authoring/concepts.html">Concepts
     section</a>. To see what you can do with Apache Lenya please
-    refer to the <a href="features.html">Features
+    refer to the <a href="/lenya/default/authoring/features.html">Features
     section</a>.</p>
 
     <p>If you'd like to get a quick introduction on how to use Apache
     Lenya CMS please go through the <a
-    href="tutorial.html">tutorial</a>.</p>
+    href="/lenya/default/authoring/tutorial.html">tutorial</a>.</p>
 
     <p>The purpose of this publication is</p>
 

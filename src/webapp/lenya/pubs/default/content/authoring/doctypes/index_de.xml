@@ -23,7 +23,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   limitations under the License.
 -->
 
-<!-- $Id: index_de.xml,v 1.9 2004/03/17 19:49:28 gregor Exp $ -->
+<!-- $Id: index_de.xml,v 1.10 2004/04/26 10:09:18 gregor Exp $ -->
     <lenya:meta>
         <dc:title>Dokumenttyp Beispiele</dc:title>
         <dc:creator>Christian Egli</dc:creator>
@@ -47,7 +47,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   <body>
     <h1>Dokumenttyp Beispiele</h1>
 
-    <p>The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype.</a></p>
+    <p>The default publication comes with the <a href="/lenya/default/authoring/doctypes/xhtml-document.html">XHTML Doctype.</a></p>
     
     <p>The XHTML Doctype is for situations where
     users ask for complete freedom on what information can be inserted
