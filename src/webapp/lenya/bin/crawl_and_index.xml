@@ -4,8 +4,9 @@
 
 
 
-<target name="main" description="Says Hi" depends="crawl, index">
-  <echo>Hello</echo>
+<target name="main" description="main" depends="init">
+  <echo>INFO: home.dir=${home.dir}</echo>
+  <echo>INFO: lenya.dir=${lenya.dir}</echo>
 </target>
 
 
@@ -14,9 +15,9 @@
 <target name="init">
   <echo message="INFO: Init"/>
 
-  <property name="lenya.dir" value="/home/USERNAME/src/cocoon-lenya"/>
-  <!--<property name="lenya.dir" value="../../../.."/>-->
-  <!--<property name="lenya.dir" value="."/>-->
+  <property file="search.properties"/>
+
+  <property name="lenya.dir" value="${home.dir}/src/cocoon-lenya"/>
   
   <!-- Dummy arguments -->
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
@@ -37,6 +38,7 @@
     <pathelement path="${lenya.dir.web-inf}/lib/excalibur-io-1.1.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/lucene-1.3.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/websphinx.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xml-commons-resolver-1.1.jar"/>
   </path>
 </target>
 

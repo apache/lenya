@@ -1,0 +1,3 @@
+home.dir=/home/USERNAME
+
+java.run=/usr/lib/j2sdk1.4/bin/java
