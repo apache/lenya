@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: InetAddressUtil.java,v 1.13 2004/05/17 16:56:20 andreas Exp $  */
+/* $Id: InetAddressUtil.java,v 1.14 2004/06/28 08:52:33 andreas Exp $  */
 
 package org.apache.lenya.net;
 
@@ -39,59 +39,67 @@ public class InetAddressUtil {
 
     /**
      * Checks if a subnet contains a specific IP address.
+     * 
      * @param network The network address.
      * @param netmask The subnet mask.
      * @param ip The IP address to check.
      * @return A boolean value.
      */
     public static boolean contains(InetAddress network, InetAddress netmask, InetAddress ip) {
-
-        log.debug("=======================================");
-        log.debug("Checking IP address");
-
-        boolean contained = true;
-
-        int part = checkNetmask(netmask);
-        if (0 <= part && part <= 3) {
-        } else {
-            return false; // illegal netmask
+        if(log.isDebugEnabled()) {
+            log.debug("=======================================");
+            log.debug("Checking IP address: " + ip + " in " + network + " / " + netmask);
         }
-
-        int networkPart = getClassPart(network, part);
-        int netmaskPart = getClassPart(netmask, part);
-        int ipPart = getClassPart(ip, part);
-
-        // Treat 255.255.255.255 exceptionally
-        if (netmaskPart == 255 && networkPart == ipPart) return true;
-
-        int firstHostAddress = networkPart + 1;
-        int broadcastAddress = networkPart + (256 - netmaskPart - 1);
-        int lastHostAddress = broadcastAddress - 1;
-
-        contained = contained && firstHostAddress <= ipPart && ipPart <= lastHostAddress;
-        for (int i = 0; i < part; i++) {
-            contained = contained && getClassPart(network, i) == getClassPart(ip, i);
+        
+        byte[] networkBytes = network.getAddress();
+        byte[] netmaskBytes = netmask.getAddress();
+        byte[] ipBytes = ip.getAddress();
+        
+        /* check IPv4/v6-compatibility or parameters: */
+        if(networkBytes.length != netmaskBytes.length
+            || netmaskBytes.length != ipBytes.length)
+        {
+            /*
+             * FIXME: If network and netmask have the same size
+             * should already be checked whenever
+             * org.apache.lenya.ac.(impl.Abstract)IPRange
+             * is set. In that case the user should be notified
+             * of this configuration-error instead of silently
+             * accepting the buggy IPRange as one not matching
+             * any host!
+             * (Note that changes to the public API of IPRange
+             * and other classes would be necessary to fix this
+             * problem. This method and therefore this whole
+             * class would probably be obsolete in that case.)
+             */
+            if(log.isDebugEnabled()) {
+                log.debug
+                    ("Network address " + network + ", subnet mask "
+                     + netmask + " and/or host address " + ip
+                     + " have different sizes! (return false ...)");
+                log.debug("=======================================");
+            }
+            return false;
         }
-
-        if (log.isDebugEnabled()) {
-            log.debug("---------------------------------------");
-            log.debug("Checking part           [" + part + "]");
-            log.debug("    Network:            [" + network.getHostAddress() + "]");
-            log.debug("    Netmask:            [" + netmask.getHostAddress() + "]");
-            log.debug("    Address:            [" + ip.getHostAddress() + "]");
-            log.debug("    Network class part: [" + networkPart + "]");
-            log.debug("    Netmask class part: [" + netmaskPart + "]");
-            log.debug("    Address class part: [" + ipPart + "]");
-            log.debug("    First host address: [" + firstHostAddress + "]");
-            log.debug("    Last host address:  [" + lastHostAddress + "]");
-            log.debug("    Contained:          [" + contained + "]");
+        
+        /* Check if the masked network and ip addresses match: */
+        for(int i=0; i<netmaskBytes.length; i++) {
+            int mask = netmaskBytes[i] & 0xff;
+            if((networkBytes[i] & mask) != (ipBytes[i] & mask)) {
+                if(log.isDebugEnabled()) {
+                    log.debug
+                        (ip + " is not in " + network + " / " + netmask);
+                    log.debug("=======================================");
+                }
+                return false;
+            }
         }
-
-        log.debug("---------------------------------------");
-        log.debug("Contained:              [" + contained + "]");
-        log.debug("=======================================");
-
-        return contained;
+        if(log.isDebugEnabled()) {
+            log.debug
+                (ip + " is in " + network + " / " + netmask);
+            log.debug("=======================================");
+        }
+        return true;
     }
 
     /**
@@ -99,6 +107,13 @@ public class InetAddressUtil {
      * @param ip The address.
      * @param partNumber The number of the part.
      * @return An integer value.
+     * 
+     * @deprecated This was an internal implementation detail of the
+     *      method {@link #contains} and should never have been
+     *      made public. (And it's inefficient and unnecessary
+     *      too, as well as broken for IPv6. ;-)
+     *      Use <code>ip.getAddress()[partNumber]</code>
+     *      instead.
      */
     public static int getClassPart(InetAddress ip, int partNumber) {
         String[] parts = ip.getHostAddress().split("\\.");
@@ -110,6 +125,13 @@ public class InetAddressUtil {
      * Check netmask, e.g. 255.255.255.240 is fine, 255.255.240.16 is illegal (needs to be 255.255.240.0)
      * @param netmask The netmask address.
      * @return An integer value. -1 if illegal netmask, otherwise 0, 1, 2, 3
+     * 
+     * @deprecated This was an internal implementation detail of the
+     *      method {@link #contains} and should never have been
+     *      made public. Furthermore it's broken for IPv6.
+     *      (However, there is no real replacement. If you
+     *      need this functionality, you should rewrite it
+     *      yourself.)
      */
     public static int checkNetmask(InetAddress netmask) {
         String[] parts = netmask.getHostAddress().split("\\.");
@@ -149,6 +171,13 @@ public class InetAddressUtil {
      * @param string The IP address, represented by a string.
      * @return An InetAddress object.
      * @throws AccessControlException when something went wrong.
+     * 
+     * @deprecated This was an internal implementation detail of the
+     *      method {@link #contains} and should never have been
+     *      made public. (And it's unnecessary
+     *      too, as well as broken for IPv6. ;-)
+     *      Use <code>InetAddress.getByName(string)</code>
+     *      instead.
      */
     public static InetAddress getAddress(String string) throws UnknownHostException {
         String[] strings = string.split("\\.");

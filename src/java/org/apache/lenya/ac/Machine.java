@@ -15,23 +15,37 @@
  *
  */
 
-/* $Id: Machine.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
+/* $Id: Machine.java,v 1.4 2004/06/28 08:52:33 andreas Exp $  */
 
 package org.apache.lenya.ac;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Machine implements Identifiable {
 
     /**
-     * Creates a new machine object.
-     * @param ip The IP address.
-     * @throws AccessControlException when something went wrong.
+     * Creates a new machine object. This method accepts
+     * numeric IPv4 addresses like <code>"129.168.0.32"</code>,
+     * numeric IPv6 addresses like <code>"1080::8:800:200C:417A"</code>
+     * as well as hostnames (if DNS resolution is available) like
+     * <code>"localhost"</code> or <code>"www.apache.com"</code>.
+     * 
+     * @param ip a <code>String</code> like <code>"192.168.0.32"</code>,
+     *      <code>"::1"</code>, ...
+     * .
+     * @throws AccessControlException when the conversion of the
+     *      <code>String</code> to an <code>InetAddress</code> failed
      */
     public Machine(String ip) throws AccessControlException {
-        setAddress(getAddress(ip));
+        try {
+            setAddress(InetAddress.getByName(ip));
+        } catch(UnknownHostException uhe) {
+            throw new AccessControlException
+                ("Failed to convert address [" + ip + "]: ", uhe);
+        }
     }
 
     private InetAddress address;
@@ -83,6 +97,9 @@ public class Machine implements Identifiable {
      * @param string The IP address, represented by a string.
      * @return An InetAddress object.
      * @throws AccessControlException when something went wrong.
+     * 
+     * @deprecated This method is unnecessary and does not work for IPv6.
+     *      Use <code>InetAddress.getByName(string)</code> instead!
      */
     public static InetAddress getAddress(String string)
         throws AccessControlException {
