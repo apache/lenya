@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:param name="id"/>
 	<xsl:template match="span[@id = 'headlines']">
 		<!-- Process the headlines here... -->
 		<xsl:apply-templates select="/wyona/articles"/>
 	</xsl:template>
 	<xsl:template match="articles">
 		<xsl:for-each select="article">
-			<xsl:variable name="href"><xsl:value-of select="@href"/></xsl:variable>
-			<tr bgcolor="#EFEFE7">
+			<xsl:variable name="href"><xsl:choose><xsl:when test="$id = '/news/'">../</xsl:when><xsl:otherwise></xsl:otherwise></xsl:choose><xsl:value-of select="@href"/></xsl:variable>
+			<xsl:variable name="color"><xsl:choose><xsl:when test="position() mod 2 = 1">#EFEFE7</xsl:when><xsl:otherwise>#FFFFFF</xsl:otherwise></xsl:choose></xsl:variable>
+			<tr bgcolor="{$color}">
 				<td height="30" width="320" valign="middle">
 					<!-- NEWS TITEL -->
 					<a href="{$href}" class="txt-l-black">
@@ -23,7 +25,7 @@
 					</span>
 				</td>
 			</tr>
-			<tr bgcolor="#EFEFE7">
+			<tr bgcolor="{$color}">
 				<td width="440" valign="middle" colspan="2">
 					<!-- EVTL. BILD  WIDTH="50" HEIGHT="50" ALIGN="LEFT" -->
 <xsl:apply-templates select="head/media[1]">
@@ -37,7 +39,7 @@
 					</span>
 				</td>
 			</tr>
-			<tr bgcolor="#EFEFE7" width="440" height="3">
+			<tr bgcolor="{$color}" width="440" height="3">
 				<td height="3" colspan="2">
 					<img src="/img/layout/linecontent440x3.gif" width="440" height="3"/>
 				</td>
