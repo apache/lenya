@@ -22,7 +22,7 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.SiteManager;
 
 /**
  * A Lenya publication.
@@ -39,6 +39,7 @@ public interface Publication {
     String ELEMENT_DOCUMENT_BUILDER = "document-builder";
     String ELEMENT_SITE_STRUCTURE = "site-structure";
     String ATTRIBUTE_TYPE = "type";
+    String ATTRIBUTE_SRC = "type";
     String LANGUAGES = "languages";
     String LANGUAGE = "language";
     String DEFAULT_LANGUAGE_ATTR = "default";
@@ -126,15 +127,12 @@ public interface Publication {
     String getBreadcrumbPrefix();
 
     /**
-     * Get the sitetree for a specific area of this publication. 
-     * Sitetrees are created on demand and are cached.
-     * 
-     * @param area the area
-     * @return the sitetree for the specified area
-     * 
+     * Returns a site manager of this publication for a certain document identity map. 
+     * @param map The document identity map.
+     * @return A site manager.
      * @throws SiteException if an error occurs 
      */
-    DefaultSiteTree getSiteTree(String area) throws SiteException;
+    SiteManager getSiteManager(DocumentIdentityMap map) throws SiteException;
 
     /**
      * Returns the document builder of this instance.

@@ -35,10 +35,11 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * A factory for the Lenya protocol.
@@ -100,11 +101,13 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
 
                 Map objectModel = ContextHelper.getObjectModel(this.context);
                 try {
+                    Publication pub = PublicationFactory.getPublication(objectModel);
+                    DocumentIdentityMap map = new DocumentIdentityMap(pub);
                     PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
 
                     if (pageEnvelopeFactory != null) {
                         PageEnvelope pageEnvelope = pageEnvelopeFactory
-                                .getPageEnvelope(objectModel);
+                                .getPageEnvelope(map, objectModel);
 
                         if (pageEnvelope != null) {
                             String publicationID = pageEnvelope.getPublication().getId();
@@ -113,7 +116,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                                     + area + path;
                         }
                     }
-                } catch (PageEnvelopeException e) {
+                } catch (Exception e) {
                     throw new SourceException(
                             "Cannot attach publication-id and/or area to " + path, e);
                 }

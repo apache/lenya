@@ -22,6 +22,7 @@ package org.apache.lenya.cms.site.tree;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.site.Label;
 
 /**
  * This interface is a wrapper around the more general w3c.Node which

@@ -22,8 +22,8 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publishing.ParentNodeNotFoundException;
 import org.apache.lenya.cms.publishing.PublishingException;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -91,8 +91,8 @@ public class TreePublisher extends PublicationTask {
         SiteTree liveTree = null;
 
         try {
-            authoringTree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
-            liveTree = getPublication().getSiteTree(Publication.LIVE_AREA);
+            authoringTree = getSiteTree(Publication.AUTHORING_AREA);
+            liveTree = getSiteTree(Publication.LIVE_AREA);
 
             SiteTreeNode authoringNode = authoringTree.getNode(documentId);
             SiteTreeNode[] siblings = authoringNode.getNextSiblings();

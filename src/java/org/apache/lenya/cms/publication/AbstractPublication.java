@@ -28,16 +28,15 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
-import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.log4j.Category;
 
 /**
  * A publication.
  */
 public abstract class AbstractPublication implements Publication {
+
     private static Category log = Category.getInstance(AbstractPublication.class);
 
     private static final String[] areas = { AUTHORING_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
@@ -51,14 +50,12 @@ public abstract class AbstractPublication implements Publication {
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
-    private HashMap siteTrees = new HashMap();
-    private boolean hasSitetree = true;
 
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_SSL = "ssl";
-    
+
     /**
      * Creates a new instance of Publication
      * 
@@ -120,14 +117,14 @@ public abstract class AbstractPublication implements Publication {
                 }
             }
 
+            String siteManagerClass = TreeSiteManager.class.getName();
             Configuration siteStructureConfiguration = config.getChild(ELEMENT_SITE_STRUCTURE,
                     false);
             if (siteStructureConfiguration != null) {
-                String siteStructureType = siteStructureConfiguration.getAttribute(ATTRIBUTE_TYPE);
-                if (!siteStructureType.equals("sitetree")) {
-                    hasSitetree = false;
-                }
+                siteManagerClass = siteStructureConfiguration.getAttribute(ATTRIBUTE_TYPE);
             }
+            Class klass = Class.forName(siteManagerClass);
+            this.siteManagerClass = klass;
 
             Configuration[] proxyConfigs = config.getChildren(ELEMENT_PROXY);
             for (int i = 0; i < proxyConfigs.length; i++) {
@@ -145,7 +142,6 @@ public abstract class AbstractPublication implements Publication {
                             + "]");
                 }
             }
-
 
         } catch (PublicationException e) {
             throw e;
@@ -260,30 +256,6 @@ public abstract class AbstractPublication implements Publication {
         return breadcrumbprefix;
     }
 
-    /**
-     * Get the sitetree for a specific area of this publication. Sitetrees are created on demand and
-     * are cached.
-     * 
-     * @param area the area
-     * @return the sitetree for the specified area
-     * 
-     * @throws SiteException if an error occurs
-     */
-    public DefaultSiteTree getSiteTree(String area) throws SiteException {
-
-        DefaultSiteTree sitetree = null;
-
-        if (hasSitetree) {
-            if (siteTrees.containsKey(area)) {
-                sitetree = (DefaultSiteTree) siteTrees.get(area);
-            } else {
-                sitetree = new DefaultSiteTree(getDirectory(), area);
-                siteTrees.put(area, sitetree);
-            }
-        }
-        return sitetree;
-    }
-
     private DocumentBuilder documentBuilder;
 
     /**
@@ -311,7 +283,7 @@ public abstract class AbstractPublication implements Publication {
         DocumentBuilder builder = getDocumentBuilder();
         String url = builder
                 .buildCanonicalUrl(this, area, document.getId(), document.getLanguage());
-        Document destinationDocument = builder.buildDocument(this, url);
+        Document destinationDocument = builder.buildDocument(document.getIdentityMap(), url);
         return destinationDocument;
     }
 
@@ -348,83 +320,7 @@ public abstract class AbstractPublication implements Publication {
             throws PublicationException {
 
         copyDocumentSource(sourceDocument, destinationDocument);
-
-        copySiteStructure(sourceDocument, destinationDocument);
-    }
-
-    /**
-     * Copies a document in the site structure.
-     * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
-     * @throws PublicationException when something went wrong.
-     */
-    protected void copySiteStructure(Document sourceDocument, Document destinationDocument)
-            throws PublicationException {
-        if (hasSitetree) {
-            try {
-                SiteTree sourceTree = getSiteTree(sourceDocument.getArea());
-                SiteTree destinationTree = getSiteTree(destinationDocument.getArea());
-
-                SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
-                if (sourceNode == null) {
-                    throw new PublicationException("The node for source document ["
-                            + sourceDocument.getId() + "] doesn't exist!");
-                } else {
-
-                    SiteTreeNode[] siblings = sourceNode.getNextSiblings();
-                    String parentId = sourceNode.getAbsoluteParentId();
-                    SiteTreeNode sibling = null;
-                    String siblingDocId = null;
-
-                    // same document ID -> insert at the same position
-                    if (sourceDocument.getId().equals(destinationDocument.getId())) {
-                        for (int i = 0; i < siblings.length; i++) {
-                            String docId = parentId + "/" + siblings[i].getId();
-                            sibling = destinationTree.getNode(docId);
-                            if (sibling != null) {
-                                siblingDocId = docId;
-                                break;
-                            }
-                        }
-                    }
-
-                    Label label = sourceNode.getLabel(sourceDocument.getLanguage());
-                    if (label == null) {
-                        // the node that we're trying to publish
-                        // doesn't have this language
-                        throw new PublicationException("The node " + sourceDocument.getId()
-                                + " doesn't contain a label for language "
-                                + sourceDocument.getLanguage());
-                    } else {
-                        SiteTreeNode destinationNode = destinationTree.getNode(destinationDocument
-                                .getId());
-                        if (destinationNode == null) {
-                            Label[] labels = { label };
-
-                            if (siblingDocId == null) {
-                                destinationTree.addNode(destinationDocument.getId(), labels,
-                                        sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
-                                                .hasLink());
-                            } else {
-                                destinationTree.addNode(destinationDocument.getId(), labels,
-                                        sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
-                                                .hasLink(), siblingDocId);
-                            }
-
-                        } else {
-                            // if the node already exists in the live
-                            // tree simply insert the label in the
-                            // live tree
-                            destinationTree.setLabel(destinationDocument.getId(), label);
-                        }
-                    }
-                }
-
-                destinationTree.save();
-            } catch (SiteException e) {
-                throw new PublicationException(e);
-            }
-        }
+        getSiteManager(sourceDocument.getIdentityMap()).copy(sourceDocument, destinationDocument);
     }
 
     /**
@@ -443,55 +339,8 @@ public abstract class AbstractPublication implements Publication {
         if (!document.exists()) {
             throw new PublicationException("Document [" + document + "] does not exist!");
         }
-        deleteFromSiteStructure(document);
+        getSiteManager(document.getIdentityMap()).delete(document);
         deleteDocumentSource(document);
-    }
-
-    /**
-     * Deletes a document from the site structure.
-     * @param document The document to remove.
-     * @throws PublicationException when something went wrong.
-     */
-    protected void deleteFromSiteStructure(Document document) throws PublicationException {
-        if (hasSitetree) {
-            SiteTree tree;
-            try {
-                tree = getSiteTree(document.getArea());
-            } catch (SiteException e) {
-                throw new PublicationException(e);
-            }
-
-            SiteTreeNode node = tree.getNode(document.getId());
-
-            if (node == null) {
-                throw new PublicationException("Sitetree node for document [" + document
-                        + "] does not exist!");
-            }
-
-            Label label = node.getLabel(document.getLanguage());
-
-            if (label == null) {
-                throw new PublicationException("Sitetree label for document [" + document
-                        + "] in language [" + document.getLanguage() + "]does not exist!");
-            }
-
-            if (node.getLabels().length == 1 && node.getChildren().length > 0) {
-                throw new PublicationException("Cannot delete last language version of document ["
-                        + document + "] because this node has children.");
-            }
-
-            node.removeLabel(label);
-
-            if (node.getLabels().length == 0) {
-                tree.removeNode(document.getId());
-            }
-
-            try {
-                tree.save();
-            } catch (SiteException e) {
-                throw new PublicationException(e);
-            }
-        }
     }
 
     /**
@@ -540,4 +389,19 @@ public abstract class AbstractPublication implements Publication {
         return proxy;
     }
 
+    private Class siteManagerClass;
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getSiteManager(org.apache.lenya.cms.publication.DocumentIdentityMap)
+     */
+    public SiteManager getSiteManager(DocumentIdentityMap map) throws SiteException {
+        SiteManager manager;
+        try {
+            manager = (SiteManager) this.siteManagerClass.newInstance();
+        } catch (Exception e) {
+            throw new SiteException(e);
+        }
+        manager.setIdentityMap(map);
+        return manager;
+    }
 }

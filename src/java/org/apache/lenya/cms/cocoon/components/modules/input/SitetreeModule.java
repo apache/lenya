@@ -23,18 +23,18 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.cocoon.components.modules.input.AbstractInputModule;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
  * Module for sitetree access.
- *
- * @version $Id:$
+ * 
+ * @version $Id$
  */
-public class SitetreeModule extends AbstractInputModule {
+public class SitetreeModule extends AbstractPageEnvelopeModule {
 
     public static final String AUTHORING_NODE = "authoring-node";
     public static final String LIVE_NODE = "live-node";
@@ -42,24 +42,27 @@ public class SitetreeModule extends AbstractInputModule {
     protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE };
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
 
         Object value = null;
 
         try {
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            PageEnvelope envelope = getEnvelope(objectModel);
             Publication publication = envelope.getPublication();
+            DocumentIdentityMap map = envelope.getIdentityMap();
+            TreeSiteManager manager = (TreeSiteManager) publication.getSiteManager(map);
 
             if (name.equals(AUTHORING_NODE)) {
-                SiteTree authoringTree = publication.getSiteTree(Publication.AUTHORING_AREA);
+                SiteTree authoringTree = manager.getTree(Publication.AUTHORING_AREA);
                 value = authoringTree.getNode(envelope.getDocument().getId());
             }
 
             if (name.equals(LIVE_NODE)) {
-                SiteTree liveTree = publication.getSiteTree(Publication.LIVE_AREA);
+                SiteTree liveTree = manager.getTree(Publication.LIVE_AREA);
                 value = liveTree.getNode(envelope.getDocument().getId());
             }
 
@@ -71,18 +74,20 @@ public class SitetreeModule extends AbstractInputModule {
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         return Arrays.asList(PARAMETER_NAMES).iterator();
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         Object[] objects = { getAttribute(name, modeConf, objectModel) };
         return objects;
     }

@@ -26,9 +26,12 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
@@ -74,11 +77,11 @@ public class DocumentIdExistsAction extends AbstractAction {
             return null;
         }
 
-        PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        Publication publication = PublicationFactory.getPublication(objectModel);
+        DocumentIdentityMap map = new DocumentIdentityMap(publication);
+        Document document = map.get(documentId);
 
-        SiteTree siteTree = pageEnvelope.getPublication().getSiteTree(Publication.AUTHORING_AREA);
-
-        if (siteTree.getNode(documentId) == null) {
+        if (!document.existsInAnyLanguage()) {
             return Collections.EMPTY_MAP;
         }
         return null;

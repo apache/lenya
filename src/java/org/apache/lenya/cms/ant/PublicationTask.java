@@ -15,27 +15,32 @@
  *
  */
 
-/* $Id: PublicationTask.java,v 1.10 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.task.AntTask;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 /**
- * Abstract base class for publication-dependent Ant tasks.
- * It requires some project parameters that are set by the AntTask.
+ * Abstract base class for publication-dependent Ant tasks. It requires some project parameters that
+ * are set by the AntTask.
  */
 public abstract class PublicationTask extends Task {
     /** Creates a new instance of PublicationTask */
-    public PublicationTask() {}
+    public PublicationTask() {
+    }
 
     /**
      * Returns the publication directory.
@@ -43,17 +48,16 @@ public abstract class PublicationTask extends Task {
      * @return a the path to the publication directory as a <code>File</code>
      */
     protected File getPublicationDirectory() {
-        return new File(
-            getProject().getProperty(AntTask.PUBLICATION_DIRECTORY));
+        return new File(getProject().getProperty(AntTask.PUBLICATION_DIRECTORY));
     }
-    
+
     /**
      * Return the context prefix.
      * 
      * @return the context-prefix
      */
     protected String getContextPrefix() {
-    	return getProject().getProperty(AntTask.CONTEXT_PREFIX);
+        return getProject().getProperty(AntTask.CONTEXT_PREFIX);
     }
 
     /**
@@ -75,22 +79,35 @@ public abstract class PublicationTask extends Task {
     }
 
     /**
+     * Returns the document identity map.
+     * @return An identity map.
+     */
+    protected DocumentIdentityMap getIdentityMap() {
+        if (this.identityMap == null) {
+            try {
+                Publication publication = PublicationFactory.getPublication(getPublicationId(),
+                        getServletContext().getCanonicalPath());
+                this.identityMap = new DocumentIdentityMap(publication);
+            } catch (IOException e) {
+                throw new BuildException(e);
+            } catch (PublicationException e) {
+                throw new BuildException(e);
+            }
+        }
+        return this.identityMap;
+    }
+
+    private DocumentIdentityMap identityMap;
+
+    /**
      * Get the publication
      * 
      * @return the publication
-     *  
+     * 
      * @throws BuildException if the publication could not be found
      */
     protected Publication getPublication() throws BuildException {
-        try {
-            return PublicationFactory.getPublication(
-                getPublicationId(),
-                getServletContext().getCanonicalPath());
-        } catch (IOException e) {
-            throw new BuildException(e);
-        } catch (PublicationException e) {
-            throw new BuildException(e);
-        }
+        return getIdentityMap().getPublication();
     }
 
     /**
@@ -99,6 +116,23 @@ public abstract class PublicationTask extends Task {
      * @param string the string to check
      */
     protected void assertString(String string) {
-        assert(string != null) && !string.equals("");
+        assert (string != null) && !string.equals("");
     }
+
+    protected SiteTree getSiteTree(String area) {
+        SiteTree tree;
+        try {
+            SiteManager manager = getPublication().getSiteManager(getIdentityMap());
+            if (!(manager instanceof TreeSiteManager)) {
+                throw new RuntimeException("Only supported for site trees.");
+            }
+            tree = ((TreeSiteManager) manager).getTree(area);
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return tree;
+    }
+
 }

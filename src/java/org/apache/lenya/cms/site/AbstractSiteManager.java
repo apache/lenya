@@ -30,9 +30,14 @@ public abstract class AbstractSiteManager implements SiteManager {
     
     /**
      * Ctor.
-     * @param map The resource identity map.
      */
-    public AbstractSiteManager(DocumentIdentityMap map) {
+    public AbstractSiteManager() {
+    }
+    
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#setIdentityMap(org.apache.lenya.cms.publication.DocumentIdentityMap)
+     */
+    public void setIdentityMap(DocumentIdentityMap map) {
         this.map = map;
     }
 

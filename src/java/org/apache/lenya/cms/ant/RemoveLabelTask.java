@@ -19,9 +19,10 @@
 
 package org.apache.lenya.cms.ant;
 
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
@@ -136,10 +137,10 @@ public class RemoveLabelTask extends PublicationTask {
     public void removeLabel(String documentid, String labelName, String language, String area)
             throws SiteException {
 
-        DefaultSiteTree tree = null;
+        SiteTree tree = null;
         Label label = null;
         try {
-            tree = getPublication().getSiteTree(area);
+            tree = getSiteTree(area);
             SiteTreeNode node = tree.getNode(documentid);
             // if there is only one label left do not delete it.
             if (node.getLabels().length > 1) {

@@ -22,31 +22,31 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.Label;
-import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.cms.site.SiteManager;
 
 /**
  * A typical CMS document.
  */
 public class DefaultDocument implements Document {
-    
+
     private String id;
-    private Publication publication;
     private DublinCore dublincore;
+    private DocumentIdentityMap identityMap;
 
     /**
      * Creates a new instance of DefaultDocument.
-     * @param publication The publication the document belongs to.
+     * @param map The identity map the document belongs to.
      * @param id The document ID (starting with a slash).
-     * @deprecated Use {@link DefaultDocumentBuilder} instead.
+     * @deprecated Use {@link DefaultDocumentBuilder}instead.
      */
-    public DefaultDocument(Publication publication, String id) {
-        
+    public DefaultDocument(DocumentIdentityMap map, String id) {
+
         if (id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
@@ -55,20 +55,18 @@ public class DefaultDocument implements Document {
         }
         this.id = id;
 
-        assert(publication != null) && !"".equals(publication.getId());
-        this.publication = publication;
+        this.identityMap = map;
         this.dublincore = new DublinCoreProxy(this);
     }
 
     /**
-     * Creates a new instance of DefaultDocument.
-     * The language of the document is the default language of
-     * the publication.
-     * @param publication The publication the document belongs to.
+     * Creates a new instance of DefaultDocument. The language of the document is the default
+     * language of the publication.
+     * @param map The identity map the document belongs to.
      * @param id The document ID (starting with a slash).
      * @param area The area.
      */
-    protected DefaultDocument(Publication publication, String id, String area) {
+    protected DefaultDocument(DocumentIdentityMap map, String id, String area) {
         if (id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
@@ -77,11 +75,10 @@ public class DefaultDocument implements Document {
         }
         this.id = id;
 
-        assert(publication != null) && !"".equals(publication.getId());
-        this.publication = publication;
+        this.identityMap = map;
 
         setArea(area);
-        setLanguage(publication.getDefaultLanguage());
+        setLanguage(identityMap.getPublication().getDefaultLanguage());
 
         this.dublincore = new DublinCoreProxy(this);
 
@@ -90,12 +87,12 @@ public class DefaultDocument implements Document {
     /**
      * Creates a new instance of DefaultDocument.
      * 
-     * @param publication The publication the document belongs to.
+     * @param map The identity map the document belongs to.
      * @param id The document ID (starting with a slash).
      * @param area The area.
      * @param language the language
      */
-    protected DefaultDocument(Publication publication, String id, String area, String language) {
+    protected DefaultDocument(DocumentIdentityMap map, String id, String area, String language) {
         if (id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
@@ -104,8 +101,7 @@ public class DefaultDocument implements Document {
         }
         this.id = id;
 
-        assert(publication != null) && !"".equals(publication.getId());
-        this.publication = publication;
+        this.identityMap = map;
         this.language = language;
         setArea(area);
 
@@ -142,7 +138,7 @@ public class DefaultDocument implements Document {
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
     public Publication getPublication() {
-        return publication;
+        return getIdentityMap().getPublication();
     }
 
     /**
@@ -164,11 +160,8 @@ public class DefaultDocument implements Document {
      * @return A file object.
      */
     public File getFile() {
-        return getPublication().getPathMapper().getFile(
-            getPublication(),
-            getArea(),
-            getId(),
-            getLanguage());
+        return getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(),
+                getLanguage());
     }
 
     private String language = "";
@@ -184,26 +177,19 @@ public class DefaultDocument implements Document {
      * @see org.apache.lenya.cms.publication.Document#getLanguages()
      */
     public String[] getLanguages() throws DocumentException {
-        ArrayList languages = new ArrayList();
-        SiteTree sitetree;
-        try {
-            sitetree = getPublication().getSiteTree(getArea());
-            if (sitetree != null) {
-                SiteTreeNode node = sitetree.getNode(getId());
-                if (node != null) {
-                    Label[] labels = node.getLabels();
-                    for (int i = 0; i < labels.length; i++) {
-                        languages.add(labels[i].getLanguage());
-                    }
-                }
-            } else {
-                languages.add(getLanguage());
+
+        List documentLanguages = new ArrayList();
+        String[] allLanguages = getPublication().getLanguages();
+
+        DocumentBuilder builder = getPublication().getDocumentBuilder();
+        for (int i = 0; i < allLanguages.length; i++) {
+            Document version = builder.buildLanguageVersion(this, allLanguages[i]);
+            if (version.exists()) {
+                documentLanguages.add(allLanguages[i]);
             }
-        } catch (SiteException e) {
-            throw new DocumentException(e);
         }
 
-        return (String[]) languages.toArray(new String[languages.size()]);
+        return (String[]) documentLanguages.toArray(new String[documentLanguages.size()]);
     }
 
     /**
@@ -219,16 +205,17 @@ public class DefaultDocument implements Document {
      * @see org.apache.lenya.cms.publication.Document#getLabel()
      */
     public String getLabel() throws DocumentException {
-        String label = "";
+        String labelString = "";
         try {
-            SiteTree siteTree = getPublication().getSiteTree(getArea());
-            if (siteTree != null) {
-                label = siteTree.getNode(getId()).getLabel(getLanguage()).getLabel();
+            SiteManager siteManager = getPublication().getSiteManager(getIdentityMap());
+            if (siteManager != null) {
+                Label label = siteManager.getLabel(this);
+                labelString = label.getLabel();
             }
         } catch (SiteException e) {
             throw new DocumentException(e);
         }
-        return label;
+        return labelString;
     }
 
     private String area;
@@ -251,12 +238,8 @@ public class DefaultDocument implements Document {
      * @see Document#getCompleteInfoURL()
      */
     public String getCompleteInfoURL() {
-        return "/"
-            + getPublication().getId()
-            + "/"
-            + Publication.INFO_AREA_PREFIX
-            + getArea()
-            + getDocumentURL();
+        return "/" + getPublication().getId() + "/" + Publication.INFO_AREA_PREFIX + getArea()
+                + getDocumentURL();
     }
 
     /**
@@ -315,16 +298,15 @@ public class DefaultDocument implements Document {
         return documentURL;
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.publication.Document#exists()
      */
     public boolean exists() throws DocumentException {
         boolean exists;
         try {
-            SiteTree sitetree = getPublication().getSiteTree(getArea());
-            if (sitetree != null) {
-                SiteTreeNode node = sitetree.getNode(getId());
-                exists = (node != null) && (node.getLabel(getLanguage()) != null);
+            SiteManager manager = getPublication().getSiteManager(getIdentityMap());
+            if (manager != null) {
+                exists = manager.contains(this);
             } else {
                 exists = getFile().exists();
             }
@@ -334,16 +316,15 @@ public class DefaultDocument implements Document {
         return exists;
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
      */
     public boolean existsInAnyLanguage() throws DocumentException {
-        boolean exists = false;
+        boolean exists;
         try {
-            SiteTree sitetree = getPublication().getSiteTree(getArea());
-            if (sitetree != null) {
-                SiteTreeNode node = sitetree.getNode(getId());
-                exists = node != null;
+            SiteManager manager = getPublication().getSiteManager(getIdentityMap());
+            if (manager != null) {
+                exists = manager.containsInAnyLanguage(this);
             } else {
                 exists = getFile().exists();
             }
@@ -360,10 +341,8 @@ public class DefaultDocument implements Document {
         boolean equals = false;
         if (getClass().isInstance(object)) {
             Document document = (Document) object;
-            equals =
-                getPublication().equals(document.getPublication())
-                    && getId().equals(document.getId())
-                    && getArea().equals(document.getArea())
+            equals = getPublication().equals(document.getPublication())
+                    && getId().equals(document.getId()) && getArea().equals(document.getArea())
                     && getLanguage().equals(document.getLanguage());
         }
         return equals;
@@ -375,16 +354,8 @@ public class DefaultDocument implements Document {
      */
     public int hashCode() {
 
-        String key =
-            getPublication().getId()
-                + ":"
-                + getPublication().getServletContext()
-                + ":"
-                + getArea()
-                + ":"
-                + getId()
-                + ":"
-                + getLanguage();
+        String key = getPublication().getId() + ":" + getPublication().getServletContext() + ":"
+                + getArea() + ":" + getId() + ":" + getLanguage();
 
         return key.hashCode();
     }
@@ -394,6 +365,13 @@ public class DefaultDocument implements Document {
      */
     public String toString() {
         return getPublication().getId() + ":" + getArea() + ":" + getId() + ":" + getLanguage();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getIdentityMap()
+     */
+    public DocumentIdentityMap getIdentityMap() {
+        return this.identityMap;
     }
 
 }

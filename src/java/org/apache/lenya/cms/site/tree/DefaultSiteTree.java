@@ -27,6 +27,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -70,7 +71,7 @@ public class DefaultSiteTree implements SiteTree {
      * 
      * @throws SiteException if an error occurs
      */
-    public DefaultSiteTree(File pubDir, String area) throws SiteException {
+    protected DefaultSiteTree(File pubDir, String area) throws SiteException {
         this(new File(pubDir, Publication.CONTENT_PATH + File.separator + area + File.separator
                 + SITE_TREE_FILENAME));
         this.area = area;
@@ -85,7 +86,7 @@ public class DefaultSiteTree implements SiteTree {
      * 
      * @deprecated use the DefaultSiteTree(File pubDir, String area) constructor instead.
      */
-    public DefaultSiteTree(String treefilename) throws SiteException {
+    protected DefaultSiteTree(String treefilename) throws SiteException {
         this(new File(treefilename));
     }
 
@@ -98,7 +99,7 @@ public class DefaultSiteTree implements SiteTree {
      * 
      * @deprecated this constructor will be private in the future
      */
-    public DefaultSiteTree(File treefile) throws SiteException {
+    protected DefaultSiteTree(File treefile) throws SiteException {
         this.treefile = treefile;
 
         try {
@@ -208,7 +209,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
-     *      org.apache.lenya.cms.site.tree.Label[])
+     *      org.apache.lenya.cms.site.Label[])
      */
     public void addNode(String parentid, String id, Label[] labels) throws SiteException {
         addNode(parentid, id, labels, null, null, false);
@@ -223,7 +224,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
-     *      org.apache.lenya.cms.site.tree.Label[], java.lang.String, java.lang.String, boolean,
+     *      org.apache.lenya.cms.site.Label[], java.lang.String, java.lang.String, boolean,
      *      java.lang.String)
      */
     public void addNode(String documentid, Label[] labels, String href, String suffix,
@@ -242,7 +243,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
-     *      org.apache.lenya.cms.site.tree.Label[], java.lang.String, java.lang.String, boolean)
+     *      org.apache.lenya.cms.site.Label[], java.lang.String, java.lang.String, boolean)
      */
     public void addNode(String documentid, Label[] labels, String href, String suffix, boolean link)
             throws SiteException {
@@ -251,7 +252,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
-     *      org.apache.lenya.cms.site.tree.Label[], java.lang.String, java.lang.String, boolean)
+     *      org.apache.lenya.cms.site.Label[], java.lang.String, java.lang.String, boolean)
      */
     public void addNode(String parentid, String id, Label[] labels, String href, String suffix,
             boolean link) throws SiteException {
@@ -260,7 +261,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
-     *      org.apache.lenya.cms.site.tree.Label[], java.lang.String, java.lang.String, boolean,
+     *      org.apache.lenya.cms.site.Label[], java.lang.String, java.lang.String, boolean,
      *      java.lang.String)
      */
     public void addNode(String parentid, String id, Label[] labels, String href, String suffix,
@@ -329,7 +330,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addLabel(java.lang.String,
-     *      org.apache.lenya.cms.site.tree.Label)
+     *      org.apache.lenya.cms.site.Label)
      */
     public void addLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);
@@ -340,7 +341,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#removeLabel(java.lang.String,
-     *      org.apache.lenya.cms.site.tree.Label)
+     *      org.apache.lenya.cms.site.Label)
      */
     public void removeLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);
@@ -528,7 +529,7 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#setLabel(java.lang.String,
-     *      org.apache.lenya.cms.site.tree.Label)
+     *      org.apache.lenya.cms.site.Label)
      */
     public void setLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: LanguageExistsAction.java,v 1.5 2004/08/17 21:58:49 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -31,20 +31,21 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
- * Action that checks the sitetree if there is a node with the 
- * current document-id and the current language, i.e. if the 
- * current document has a version in the current language.
+ * Action that checks the sitetree if there is a node with the current document-id and the current
+ * language, i.e. if the current document has a version in the current language.
  */
 public class LanguageExistsAction extends AbstractAction {
 
     /**
-     * Check if the current document-id has a document for the 
-     * currently requested language.
+     * Check if the current document-id has a document for the currently requested language.
      * 
      * If yes return an empty map, if not return null.
      * 
@@ -53,30 +54,30 @@ public class LanguageExistsAction extends AbstractAction {
      * @param objectModel a <code>Map</code> value
      * @param source a <code>String</code> value
      * @param parameters a <code>Parameters</code> value
-     *
-     * @return an empty <code>Map</code> if there is a version of this 
-     * document for the current language, null otherwiese
-     *
-     * @exception DocumentDoesNotExistException if there is no document with the specified document-id.
+     * 
+     * @return an empty <code>Map</code> if there is a version of this document for the current
+     *         language, null otherwiese
+     * 
+     * @exception DocumentDoesNotExistException if there is no document with the specified
+     *                document-id.
      * @exception PageEnvelopeException if the PageEnvelope could not be created.
-     * @exception DocumentException if the language information could not be fetched from the document.
+     * @exception DocumentException if the language information could not be fetched from the
+     *                document.
      */
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String source,
-        Parameters parameters)
-        throws PageEnvelopeException, DocumentDoesNotExistException, DocumentException {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
+            Parameters parameters) throws Exception {
 
-        PageEnvelope pageEnvelope =
-            PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        Publication pub = PublicationFactory.getPublication(objectModel);
+        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
+                objectModel);
 
         Document doc = pageEnvelope.getDocument();
         String language = doc.getLanguage();
 
         if (!doc.existsInAnyLanguage()) {
-            throw new DocumentDoesNotExistException("Document " + doc.getId() + " does not exist. Check sitetree, it might need to be reloaded.");
+            throw new DocumentDoesNotExistException("Document " + doc.getId()
+                    + " does not exist. Check sitetree, it might need to be reloaded.");
         }
         List availableLanguages = Arrays.asList(doc.getLanguages());
 

@@ -20,7 +20,7 @@ package org.apache.lenya.cms.publication;
 /**
  * Default document builder implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
     /**
@@ -45,11 +45,11 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildDocument(org.apache.lenya.cms.publication.Publication,
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildDocument(org.apache.lenya.cms.publication.DocumentIdentityMap,
      *      java.lang.String)
      */
-    public Document buildDocument(Publication publication, String url)
-        throws DocumentBuildException {
+    public Document buildDocument(DocumentIdentityMap map, String url)
+            throws DocumentBuildException {
 
         URLInformation info = new URLInformation(url);
 
@@ -64,18 +64,17 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         documentURL = documentURL.substring(0, documentURL.length() - fullLanguage.length());
 
         if ("".equals(language)) {
-            language = publication.getDefaultLanguage();
+            language = map.getPublication().getDefaultLanguage();
         }
 
         String documentId = documentURL;
 
         if (!documentId.startsWith("/")) {
-            throw new DocumentBuildException(
-                "Document ID [" + documentId + "] does not start with '/'!");
+            throw new DocumentBuildException("Document ID [" + documentId
+                    + "] does not start with '/'!");
         }
 
-        DefaultDocument document =
-            createDocument(publication, info.getArea(), documentId, language);
+        DefaultDocument document = createDocument(map, info.getArea(), documentId, language);
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
 
@@ -83,23 +82,18 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
     }
 
     /**
-     * Creates a new document object.
-     * Override this method to create specific document objects,
+     * Creates a new document object. Override this method to create specific document objects,
      * e.g., for different document IDs.
-     * @param publication The publication.
-     * @param area The area. 
+     * @param map The identity map.
+     * @param area The area.
      * @param documentId The document ID.
      * @param language The language.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    protected DefaultDocument createDocument(
-        Publication publication,
-        String area,
-        String documentId,
-        String language)
-        throws DocumentBuildException {
-        DefaultDocument document = new DefaultDocument(publication, documentId, area, language);
+    protected DefaultDocument createDocument(DocumentIdentityMap map, String area,
+            String documentId, String language) throws DocumentBuildException {
+        DefaultDocument document = new DefaultDocument(map, documentId, area, language);
         return document;
     }
 
@@ -183,10 +177,8 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      * @param language The language of the document.
      * @return A string.
      */
-    protected String buildCanonicalDocumentUrl(
-        Publication publication,
-        String documentid,
-        String language) {
+    protected String buildCanonicalDocumentUrl(Publication publication, String documentid,
+            String language) {
 
         String languageSuffix = "";
         if (!language.equals(publication.getDefaultLanguage())) {
@@ -201,11 +193,8 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(org.apache.lenya.cms.publication.Publication,
      *      java.lang.String, java.lang.String, java.lang.String)
      */
-    public String buildCanonicalUrl(
-        Publication publication,
-        String area,
-        String documentid,
-        String language) {
+    public String buildCanonicalUrl(Publication publication, String area, String documentid,
+            String language) {
 
         String documentUrl = buildCanonicalDocumentUrl(publication, documentid, language);
         String url = "/" + publication.getId() + "/" + area + documentUrl;
@@ -226,15 +215,11 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      *      java.lang.String)
      */
     public Document buildLanguageVersion(Document document, String language) {
-        DefaultDocument newDocument =
-            new DefaultDocument(
-                document.getPublication(),
-                document.getId(),
-                document.getArea(),
-                language);
+        DefaultDocument newDocument = new DefaultDocument(document.getIdentityMap(), document
+                .getId(), document.getArea(), language);
         newDocument.setExtension(document.getExtension());
-        String url =
-            buildCanonicalDocumentUrl(document.getPublication(), document.getId(), language);
+        String url = buildCanonicalDocumentUrl(document.getPublication(), document.getId(),
+                language);
         newDocument.setDocumentURL(url);
 
         return newDocument;

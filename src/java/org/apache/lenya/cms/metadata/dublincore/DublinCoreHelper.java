@@ -21,13 +21,10 @@ package org.apache.lenya.cms.metadata.dublincore;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.Label;
-import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.log4j.Category;
 
 /**
@@ -56,23 +53,17 @@ public final class DublinCoreHelper {
      */
     public static String getDCIdentifier(Publication publication, String area, String documentId)
             throws SiteException, DocumentBuildException, DocumentException {
+        
         String identifier = null;
-        String language = null;
-        String url = null;
-        Document document = null;
-
-        SiteTree tree = publication.getSiteTree(area);
-        SiteTreeNode node = tree.getNode(documentId);
-
-        DocumentBuilder builder = publication.getDocumentBuilder();
-
+        
+        DocumentIdentityMap map = new DocumentIdentityMap(publication);
+        Document baseDocument = map.get(area, documentId);
+        String[] languages = baseDocument.getLanguages();
+        
         int i = 0;
-        Label[] labels = node.getLabels();
-        if (labels.length > 0) {
-            while (identifier == null && i < labels.length) {
-                language = labels[i].getLanguage();
-                url = builder.buildCanonicalUrl(publication, area, documentId, language);
-                document = builder.buildDocument(publication, url);
+        if (languages.length > 0) {
+            while (identifier == null && i < languages.length) {
+                Document document = map.get(area, documentId, languages[i]);
                 log.debug("document file : " + document.getFile().getAbsolutePath());
                 DublinCore dublincore = document.getDublinCore();
                 log.debug("dublincore title : "
@@ -81,10 +72,8 @@ public final class DublinCoreHelper {
                 i = i + 1;
             }
         }
-        if (labels.length < 1 || identifier == null) {
-            url = builder.buildCanonicalUrl(publication, area, documentId);
-            document = builder.buildDocument(publication, url);
-            DublinCore dublincore = document.getDublinCore();
+        if (languages.length < 1 || identifier == null) {
+            DublinCore dublincore = baseDocument.getDublinCore();
             identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
         }
 

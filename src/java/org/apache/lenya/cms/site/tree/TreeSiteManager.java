@@ -18,12 +18,15 @@
 package org.apache.lenya.cms.site.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.site.AbstractSiteManager;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.log4j.Category;
 
@@ -35,24 +38,31 @@ import org.apache.log4j.Category;
 public class TreeSiteManager extends AbstractSiteManager {
 
     private static final Category log = Category.getInstance(TreeSiteManager.class);
+    private Map siteTrees = new HashMap();
 
     /**
      * Ctor.
-     * @param map The resource identity map.
      */
-    public TreeSiteManager(DocumentIdentityMap map) {
-        super(map);
+    public TreeSiteManager() {
     }
 
     /**
-     * Returns the site tree for a certain area.
+     * Returns the sitetree for a specific area of this publication. Sitetrees are created on demand
+     * and are cached.
      * @param area The area.
      * @return A site tree.
      * @throws SiteException if an error occurs.
      */
-    protected SiteTree getTree(String area) throws SiteException {
-        SiteTree tree = getIdentityMap().getPublication().getSiteTree(area);
-        return tree;
+    public SiteTree getTree(String area) throws SiteException {
+        DefaultSiteTree sitetree = null;
+
+        if (siteTrees.containsKey(area)) {
+            sitetree = (DefaultSiteTree) siteTrees.get(area);
+        } else {
+            sitetree = new DefaultSiteTree(getIdentityMap().getPublication().getDirectory(), area);
+            siteTrees.put(area, sitetree);
+        }
+        return sitetree;
     }
 
     /**
@@ -151,7 +161,145 @@ public class TreeSiteManager extends AbstractSiteManager {
      */
     public boolean contains(Document resource) throws SiteException {
         SiteTreeNode node = getTree(resource.getArea()).getNode(resource.getId());
+        return node != null && node.getLabel(resource.getLanguage()) != null;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#containsInAnyLanguage(org.apache.lenya.cms.publication.Document)
+     */
+    public boolean containsInAnyLanguage(Document resource) throws SiteException {
+        SiteTreeNode node = getTree(resource.getArea()).getNode(resource.getId());
         return node != null;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#copy(org.apache.lenya.cms.publication.Document,
+     *      org.apache.lenya.cms.publication.Document)
+     */
+    public void copy(Document sourceDocument, Document destinationDocument) throws SiteException {
+        SiteTree sourceTree = getTree(sourceDocument.getArea());
+        SiteTree destinationTree = getTree(destinationDocument.getArea());
+
+        SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
+        if (sourceNode == null) {
+            throw new SiteException("The node for source document [" + sourceDocument.getId()
+                    + "] doesn't exist!");
+        } else {
+
+            SiteTreeNode[] siblings = sourceNode.getNextSiblings();
+            String parentId = sourceNode.getAbsoluteParentId();
+            SiteTreeNode sibling = null;
+            String siblingDocId = null;
+
+            // same document ID -> insert at the same position
+            if (sourceDocument.getId().equals(destinationDocument.getId())) {
+                for (int i = 0; i < siblings.length; i++) {
+                    String docId = parentId + "/" + siblings[i].getId();
+                    sibling = destinationTree.getNode(docId);
+                    if (sibling != null) {
+                        siblingDocId = docId;
+                        break;
+                    }
+                }
+            }
+
+            Label label = sourceNode.getLabel(sourceDocument.getLanguage());
+            if (label == null) {
+                // the node that we're trying to publish
+                // doesn't have this language
+                throw new SiteException("The node " + sourceDocument.getId()
+                        + " doesn't contain a label for language " + sourceDocument.getLanguage());
+            } else {
+                SiteTreeNode destinationNode = destinationTree.getNode(destinationDocument.getId());
+                if (destinationNode == null) {
+                    Label[] labels = { label };
+
+                    if (siblingDocId == null) {
+                        destinationTree.addNode(destinationDocument.getId(), labels, sourceNode
+                                .getHref(), sourceNode.getSuffix(), sourceNode.hasLink());
+                    } else {
+                        destinationTree.addNode(destinationDocument.getId(), labels, sourceNode
+                                .getHref(), sourceNode.getSuffix(), sourceNode.hasLink(),
+                                siblingDocId);
+                    }
+
+                } else {
+                    // if the node already exists in the live
+                    // tree simply insert the label in the
+                    // live tree
+                    destinationTree.setLabel(destinationDocument.getId(), label);
+                }
+            }
+        }
+
+        destinationTree.save();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#delete(org.apache.lenya.cms.publication.Document)
+     */
+    public void delete(Document document) throws SiteException {
+        SiteTree tree = getTree(document.getArea());
+
+        SiteTreeNode node = tree.getNode(document.getId());
+
+        if (node == null) {
+            throw new SiteException("Sitetree node for document [" + document + "] does not exist!");
+        }
+
+        Label label = node.getLabel(document.getLanguage());
+
+        if (label == null) {
+            throw new SiteException("Sitetree label for document [" + document + "] in language ["
+                    + document.getLanguage() + "]does not exist!");
+        }
+
+        if (node.getLabels().length == 1 && node.getChildren().length > 0) {
+            throw new SiteException("Cannot delete last language version of document [" + document
+                    + "] because this node has children.");
+        }
+
+        node.removeLabel(label);
+
+        if (node.getLabels().length == 0) {
+            tree.removeNode(document.getId());
+        }
+
+        tree.save();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#getLabel(org.apache.lenya.cms.publication.Document)
+     */
+    public Label getLabel(Document document) throws SiteException {
+        Label label = null;
+        SiteTree siteTree = getTree(document.getArea());
+        if (siteTree != null) {
+            SiteTreeNode node = siteTree.getNode(document.getId());
+            if (node == null) {
+                throw new SiteException("Node for document [" + document + "] does not exist!");
+            }
+            label = node.getLabel(document.getLanguage());
+        }
+        return label;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#getDocuments(java.lang.String)
+     */
+    public Document[] getDocuments(String area) throws SiteException {
+        try {
+            List allNodes = getTree(area).getNode("/").preOrder();
+            Document[] documents = new Document[allNodes.size() - 1];
+
+            for (int i = 1; i < allNodes.size(); i++) {
+                SiteTreeNode node = (SiteTreeNode) allNodes.get(i);
+                documents[i - 1] = getIdentityMap().get(area, node.getAbsoluteId());
+            }
+            return documents;
+        } catch (DocumentBuildException e) {
+            throw new SiteException(e);
+        }
     }
 
 }

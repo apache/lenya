@@ -17,13 +17,14 @@
 
 package org.apache.lenya.cms.site.tree;
 
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 
 
 /**
  * A sitetree.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface SiteTree {
 

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Category;
@@ -33,7 +34,7 @@ import org.w3c.dom.NodeList;
  * Concrete implementation of the <code>SiteTreeNode</code> interface.
  * 
  * @see org.apache.lenya.cms.site.tree.SiteTreeNode
- * @version $Id:$
+ * @version $Id$
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -53,7 +54,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
      * 
      * @param node the node which is to be wrapped by this SiteTreeNode
      */
-    public SiteTreeNodeImpl(Node node) {
+    protected SiteTreeNodeImpl(Node node) {
         this.node = node;
     }
 
@@ -186,7 +187,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#addLabel(org.apache.lenya.cms.site.tree.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#addLabel(org.apache.lenya.cms.site.Label)
      */
     public void addLabel(Label label) {
         if (getLabel(label.getLanguage()) == null) {
@@ -202,7 +203,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#removeLabel(org.apache.lenya.cms.site.tree.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#removeLabel(org.apache.lenya.cms.site.Label)
      */
     public void removeLabel(Label label) {
         if (getLabel(label.getLanguage()) != null) {
@@ -379,7 +380,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#setLabel(org.apache.lenya.cms.site.tree.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#setLabel(org.apache.lenya.cms.site.Label)
      */
     public void setLabel(Label label) {
         Label existingLabel = getLabel(label.getLanguage());

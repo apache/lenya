@@ -42,9 +42,11 @@ import org.apache.lenya.ac.impl.Credential;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * Helper class for the policy GUI.
@@ -66,7 +68,7 @@ public class PolicyHelper {
     private ComponentManager manager;
     private String url;
     private Logger logger;
-    
+
     /**
      * Returns the logger.
      * @return A logger.
@@ -83,7 +85,7 @@ public class PolicyHelper {
      * @throws ProcessingException when something went wrong.
      */
     public void setup(Map objectModel, ComponentManager manager, String area)
-        throws ProcessingException {
+            throws ProcessingException {
 
         this.manager = manager;
 
@@ -95,11 +97,10 @@ public class PolicyHelper {
         url = computeUrl(objectModel, area);
 
         try {
-            selector =
-                (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver =
-                (AccessControllerResolver) selector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+            selector = (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE
+                    + "Selector");
+            resolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             accessController = (DefaultAccessController) resolver.resolveAccessController(url);
 
@@ -134,8 +135,8 @@ public class PolicyHelper {
     }
 
     /**
-     * Returns the credential wrappers for the parent URI of the URL
-     * belonging to the request of this object model.
+     * Returns the credential wrappers for the parent URI of the URL belonging to the request of
+     * this object model.
      * @return An array of CredentialWrappers.
      * @throws ProcessingException when something went wrong.
      */
@@ -145,8 +146,8 @@ public class PolicyHelper {
 
     /**
      * Returns the credentials of the policy of the selected URL.
-     * @param urlOnly If true, the URL policy credentials are returned.
-     * If false, the credentials of all ancestor policies are returned.
+     * @param urlOnly If true, the URL policy credentials are returned. If false, the credentials of
+     *            all ancestor policies are returned.
      * @return An array of CredentialWrappers.
      * @throws ProcessingException when something went wrong.
      */
@@ -174,8 +175,7 @@ public class PolicyHelper {
     }
 
     /**
-     * Computes the webapp URL belonging to an object model with respect to the selected
-     * area.
+     * Computes the webapp URL belonging to an object model with respect to the selected area.
      * @param objectModel The Cocoon object model.
      * @param area The selected area.
      * @return A string.
@@ -184,19 +184,21 @@ public class PolicyHelper {
     private static String computeUrl(Map objectModel, String area) throws ProcessingException {
         PageEnvelope envelope;
         try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-        } catch (PageEnvelopeException e) {
+            Publication publication = PublicationFactory.getPublication(objectModel);
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
+        } catch (Exception e) {
             throw new ProcessingException(e);
         }
-        String url =
-            "/" + envelope.getPublication().getId() + "/" + area + envelope.getDocument().getId();
+        String url = "/" + envelope.getPublication().getId() + "/" + area
+                + envelope.getDocument().getId();
         return url;
     }
 
     /**
      * Returns the policies for a certain URL.
-     * @param onlyUrl If true, only the URL policies are returned.
-     * Otherwise, all ancestor policies are returned.
+     * @param onlyUrl If true, only the URL policies are returned. Otherwise, all ancestor policies
+     *            are returned.
      * @return An array of DefaultPolicy objects.
      * @throws ProcessingException when something went wrong.
      */
@@ -211,19 +213,17 @@ public class PolicyHelper {
                 policies[0] = policyManager.buildSubtreePolicy(manager, url);
             } else {
                 String ancestorUrl = "";
-                
+
                 String currentUrl = url;
                 if (currentUrl.endsWith("/")) {
                     currentUrl = currentUrl.substring(0, currentUrl.length() - 1);
                 }
-                
+
                 int lastSlashIndex = currentUrl.lastIndexOf("/");
                 if (lastSlashIndex != -1) {
                     ancestorUrl = currentUrl.substring(0, lastSlashIndex);
                 }
-                policies =
-                    policyManager.getPolicies(
-                        accessController.getAccreditableManager(),
+                policies = policyManager.getPolicies(accessController.getAccreditableManager(),
                         ancestorUrl);
             }
         } catch (AccessControlException e) {
@@ -237,7 +237,7 @@ public class PolicyHelper {
      * The add operation ID.
      */
     public static final String ADD = "add";
-    
+
     /**
      * The delete operation ID.
      */
@@ -247,15 +247,15 @@ public class PolicyHelper {
      * Changes a credential by adding or deleting an item for a role.
      * @param item The item to add or delete.
      * @param role The role.
-     * @param operation The operation, either {@link #ADD} or {@link #DELETE}.
+     * @param operation The operation, either {@link #ADD}or {@link #DELETE}.
      * @throws ProcessingException when something went wrong.
      */
     public void manipulateCredential(Item item, Role role, String operation)
-        throws ProcessingException {
+            throws ProcessingException {
 
         try {
-            DefaultPolicy policy =
-                policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
+            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController
+                    .getAccreditableManager(), url);
             Accreditable accreditable = (Accreditable) item;
 
             if (operation.equals(ADD)) {
@@ -284,8 +284,8 @@ public class PolicyHelper {
             if (lastSlashIndex != -1) {
                 ancestorUrl = url.substring(0, lastSlashIndex);
             }
-            Policy policy =
-                policyManager.getPolicy(accessController.getAccreditableManager(), ancestorUrl);
+            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
+                    ancestorUrl);
             ssl = policy.isSSLProtected();
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
@@ -301,8 +301,8 @@ public class PolicyHelper {
     public boolean isUrlSSLProtected() throws ProcessingException {
         boolean ssl;
         try {
-            DefaultPolicy policy =
-                policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
+            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController
+                    .getAccreditableManager(), url);
             ssl = policy.isSSLProtected();
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
@@ -317,8 +317,8 @@ public class PolicyHelper {
      */
     public void setUrlSSLProtected(boolean ssl) throws ProcessingException {
         try {
-            DefaultPolicy policy =
-                policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
+            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController
+                    .getAccreditableManager(), url);
             policy.setSSL(ssl);
             policyManager.saveSubtreePolicy(url, policy);
         } catch (AccessControlException e) {
@@ -335,8 +335,8 @@ public class PolicyHelper {
     public User[] getUsersWithRole(String roleId) throws ProcessingException {
         List users = new ArrayList();
         try {
-            Policy policy =
-                policyManager.getPolicy(accessController.getAccreditableManager(), getUrl());
+            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
+                    getUrl());
             UserManager userManager = accessController.getAccreditableManager().getUserManager();
             User[] userArray = userManager.getUsers();
             for (int i = 0; i < userArray.length; i++) {

@@ -25,8 +25,7 @@ import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
- * A DocumentIdentityMap avoids the multiple instanciation
- * of a document object.
+ * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
  * @version $Id:$
  */
@@ -34,7 +33,7 @@ public class DocumentIdentityMap {
 
     private Publication publication;
     private Map key2document = new HashMap();
-    
+
     /**
      * Ctor.
      * @param publication The publication to use.
@@ -42,7 +41,7 @@ public class DocumentIdentityMap {
     public DocumentIdentityMap(Publication publication) {
         this.publication = publication;
     }
-    
+
     /**
      * Returns the publication.
      * @return A publication.
@@ -59,18 +58,19 @@ public class DocumentIdentityMap {
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    public Document get(String area, String documentId, String language) throws DocumentBuildException {
+    public Document get(String area, String documentId, String language)
+            throws DocumentBuildException {
         String key = getKey(area, documentId, language);
         Document document = (Document) key2document.get(key);
         if (document == null) {
             DocumentBuilder builder = getPublication().getDocumentBuilder();
             String url = builder.buildCanonicalUrl(getPublication(), area, documentId, language);
-            document = builder.buildDocument(getPublication(), url);
+            document = builder.buildDocument(this, url);
             key2document.put(key, document);
         }
         return document;
     }
-    
+
     /**
      * Returns a document.
      * @param area The area.
@@ -80,6 +80,32 @@ public class DocumentIdentityMap {
      */
     public Document get(String area, String documentId) throws DocumentBuildException {
         return get(area, documentId, getPublication().getDefaultLanguage());
+    }
+
+    /**
+     * Returns the document identified by a certain web application URL.
+     * @param webappUrl The web application URL.
+     * @return A document.
+     * @throws DocumentBuildException if an error occurs.
+     */
+    public Document get(String webappUrl) throws DocumentBuildException {
+        DocumentBuilder builder = getPublication().getDocumentBuilder();
+        if (!builder.isDocument(getPublication(), webappUrl)) {
+            throw new DocumentBuildException("The webapp URL [" + webappUrl
+                    + "] does not identify a valid document");
+        }
+
+        Document document = builder.buildDocument(this, webappUrl);
+        String key = getKey(document.getArea(), document.getId(), document.getLanguage());
+
+        Document resultDocument;
+        if (key2document.containsKey(key)) {
+            resultDocument = (Document) key2document.get(key);
+        } else {
+            resultDocument = document;
+            key2document.put(key, resultDocument);
+        }
+        return resultDocument;
     }
     
     /**
@@ -92,5 +118,5 @@ public class DocumentIdentityMap {
     protected String getKey(String area, String documentId, String language) {
         return area + ":" + documentId + ":" + language;
     }
-    
+
 }

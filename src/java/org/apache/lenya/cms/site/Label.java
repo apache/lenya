@@ -17,7 +17,7 @@
 
 /* @version $Id$ */
 
-package org.apache.lenya.cms.site.tree;
+package org.apache.lenya.cms.site;
 
 /**
  * The Label class encapsulates a string label and a associated language.
@@ -31,7 +31,7 @@ public class Label {
      *
      * @param label the actual label
      */
-    public Label(String label) {
+    protected Label(String label) {
         this(label, null);
     }
 

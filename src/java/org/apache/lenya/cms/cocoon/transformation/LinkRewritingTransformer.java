@@ -37,11 +37,13 @@ import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -53,8 +55,8 @@ import org.xml.sax.helpers.AttributesImpl;
  * </p>
  * 
  * <p>
- * This transformer is applied to an XHMTL document. It processes <code>&lt;xhtml:a href="..."&gt;</code>
- * attributes of the following form:
+ * This transformer is applied to an XHMTL document. It processes
+ * <code>&lt;xhtml:a href="..."&gt;</code> attributes of the following form:
  * </p>
  * <p>
  * <code>{context-prefix}/{publication-id}/{area}{document-url}</code>
@@ -65,7 +67,8 @@ import org.xml.sax.helpers.AttributesImpl;
  * <ul>
  * <li>The area is replaced by the current area (obtained from the page envelope).</li>
  * <li>A URL prefix is added depending on the proxy configuration of the publication.</li>
- * <li>If the target document does not exist, the <code>&lt;a/&gt;</code> element is removed to disable the link.</li>
+ * <li>If the target document does not exist, the <code>&lt;a/&gt;</code> element is removed to
+ * disable the link.</li>
  * </ul>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
@@ -80,17 +83,21 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     private Document currentDocument;
 
+    private DocumentIdentityMap identityMap;
+
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
-     *      java.util.Map, java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
+     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver resolver, Map objectModel, String source, Parameters parameters)
             throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, source, parameters);
 
         try {
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            Publication pub = PublicationFactory.getPublication(objectModel);
+            this.identityMap = new DocumentIdentityMap(pub);
+            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
+                    this.identityMap, objectModel);
             this.currentDocument = envelope.getDocument();
 
         } catch (Exception e) {
@@ -157,15 +164,15 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     /**
      * (non-Javadoc)
      * 
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
-     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
+     *      java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String name, String qname, Attributes attrs)
             throws SAXException {
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "<" + qname + "> (ignoreAElement = "
-                    + this.ignoreAElement + ")");
+            getLogger().debug(
+                    this.indent + "<" + qname + "> (ignoreAElement = " + this.ignoreAElement + ")");
             this.indent += "  ";
         }
 
@@ -191,39 +198,38 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                     String context = this.request.getContextPath();
 
                     if (href.startsWith(context + "/" + publication.getId())) {
-                        
+
                         final String webappUrlWithAnchor = href.substring(context.length());
-                        
+
                         String anchor = null;
                         String webappUrl = null;
-                        
+
                         int anchorIndex = webappUrlWithAnchor.indexOf("#");
                         if (anchorIndex > -1) {
                             webappUrl = webappUrlWithAnchor.substring(0, anchorIndex);
                             anchor = webappUrlWithAnchor.substring(anchorIndex + 1);
-                        }
-                        else {
+                        } else {
                             webappUrl = webappUrlWithAnchor;
                         }
-                        
+
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug(this.indent + "webapp URL: [" + webappUrl + "]");
                             getLogger().debug(this.indent + "anchor:     [" + anchor + "]");
                         }
                         if (builder.isDocument(publication, webappUrl)) {
 
-                            Document targetDocument = builder.buildDocument(publication, webappUrl);
+                            Document targetDocument = this.identityMap.get(webappUrl);
 
                             if (getLogger().isDebugEnabled()) {
-                                getLogger().debug(this.indent + "Resolved target document: ["
-                                        + targetDocument + "]");
+                                getLogger().debug(
+                                        this.indent + "Resolved target document: ["
+                                                + targetDocument + "]");
                             }
 
                             String currentAreaUrl = builder.buildCanonicalUrl(publication,
-                                    getCurrentDocument().getArea(),
-                                    targetDocument.getId(),
+                                    getCurrentDocument().getArea(), targetDocument.getId(),
                                     targetDocument.getLanguage());
-                            targetDocument = builder.buildDocument(publication, currentAreaUrl);
+                            targetDocument = this.identityMap.get(currentAreaUrl);
 
                             if (targetDocument.exists()) {
                                 rewriteLink(newAttrs, targetDocument, anchor);
@@ -269,7 +275,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         String webappUrl = targetDocument.getCompleteURL();
         Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
 
-        Proxy proxy = targetDocument.getPublication().getProxy(targetDocument, policy.isSSLProtected());
+        Proxy proxy = targetDocument.getPublication().getProxy(targetDocument,
+                policy.isSSLProtected());
 
         String rewrittenURL;
         if (proxy == null) {
@@ -277,7 +284,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         } else {
             rewrittenURL = proxy.getURL(targetDocument);
         }
-        
+
         if (anchor != null) {
             rewrittenURL += "#" + anchor;
         }
@@ -296,8 +303,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * 
      * @param attr The attributes.
      * @param value The value.
-     * @throws IllegalArgumentException if the href attribute is not contained
-     *             in this attributes.
+     * @throws IllegalArgumentException if the href attribute is not contained in this attributes.
      */
     protected void setHrefAttribute(AttributesImpl attr, String value) {
         int position = attr.getIndex(ATTRIBUTE_HREF);
@@ -310,8 +316,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     /**
      * (non-Javadoc)
      * 
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
-     *      java.lang.String, java.lang.String)
+     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String,
+     *      java.lang.String)
      */
     public void endElement(String uri, String name, String qname) throws SAXException {
         if (getLogger().isDebugEnabled()) {

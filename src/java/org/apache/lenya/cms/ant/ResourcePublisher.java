@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourcePublisher.java,v 1.4 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -45,12 +45,12 @@ public class ResourcePublisher extends PublicationTask {
 
             String authoringUrl =
                 builder.buildCanonicalUrl(getPublication(), Publication.AUTHORING_AREA, documentId);
-            Document authoringDocument = builder.buildDocument(getPublication(), authoringUrl);
+            Document authoringDocument = getIdentityMap().get(authoringUrl);
             ResourcesManager authoringManager = new ResourcesManager(authoringDocument);
 
             String liveUrl =
                 builder.buildCanonicalUrl(getPublication(), Publication.LIVE_AREA, documentId);
-            Document liveDocument = builder.buildDocument(getPublication(), liveUrl);
+            Document liveDocument = getIdentityMap().get(liveUrl);
             ResourcesManager liveManager = new ResourcesManager(liveDocument);
             
             // find all resource files and their associated meta files

@@ -23,7 +23,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.WorkflowException;
@@ -69,8 +69,8 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 			
 			log("init workflow history");
 			try {
-				srcDoc = builder.buildDocument(publication, srcUrl);
-				destDoc = builder.buildDocument(publication, destUrl);
+				srcDoc = getIdentityMap().get(srcUrl);
+				destDoc = getIdentityMap().get(destUrl);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}

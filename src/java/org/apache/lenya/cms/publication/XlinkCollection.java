@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection. In the collection are xlink inserted.
  * @author <a href="mailto:edith@apache.org">Edith Chevrier </a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
- * @version $Id: XlinkCollection.java,v 1.7 2004/07/10 23:13:35 andreas Exp $
+ * @version $Id$
  */
 public class XlinkCollection extends CollectionImpl {
 
@@ -39,27 +39,27 @@ public class XlinkCollection extends CollectionImpl {
 
     /**
      * Ctor.
-     * @param publication A publication.
+     * @param map A document identity map.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @throws DocumentException when something went wrong.
      */
-    public XlinkCollection(Publication publication, String id, String area)
+    public XlinkCollection(DocumentIdentityMap map, String id, String area)
             throws DocumentException {
-        super(publication, id, area);
+        super(map, id, area);
     }
 
     /**
      * Ctor.
-     * @param publication A publication.
+     * @param map A document identity map.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    public XlinkCollection(Publication publication, String id, String area, String language)
+    public XlinkCollection(DocumentIdentityMap map, String id, String area, String language)
             throws DocumentException {
-        super(publication, id, area, language);
+        super(map, id, area, language);
     }
 
     /**

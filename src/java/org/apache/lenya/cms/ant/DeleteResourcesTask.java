@@ -24,77 +24,67 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourcesManager;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to delete the resources of documents corresponding to a defined subtree
- * (Visitor pattern) Visitor of the subtree. The subtree is reverse visited.
+ * Ant task to delete the resources of documents corresponding to a defined subtree (Visitor
+ * pattern) Visitor of the subtree. The subtree is reverse visited.
  */
 public class DeleteResourcesTask extends TwoDocumentsOperationTask {
 
-	/**
-	 * 
-	 */
-	public DeleteResourcesTask() {
-		super();
-	}
+    /**
+     *  
+     */
+    public DeleteResourcesTask() {
+        super();
+    }
 
-	/**
-	 * Delete the resources of the documents corresponding to this node
-	 *  
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
-	 */
-	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-		DocumentBuilder builder = publication.getDocumentBuilder();
+    /**
+     * Delete the resources of the documents corresponding to this node
+     * 
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+     */
+    public void visitSiteTreeNode(SiteTreeNode node) {
 
-		String destDocumentid = node.getAbsoluteId();
-		String srcDocumentid =
-			destDocumentid.replaceFirst(
-				getSecdocumentid(),
-				getFirstdocumentid());
+        String destDocumentid = node.getAbsoluteId();
+        String srcDocumentid = destDocumentid
+                .replaceFirst(getSecdocumentid(), getFirstdocumentid());
 
-		Label[] labels = node.getLabels();
-		for (int i = 0; i < labels.length; i++) {
-			String language = labels[i].getLanguage();
-			String url =
-				builder.buildCanonicalUrl(
-					publication,
-					getFirstarea(),
-					srcDocumentid,
-					language);
-			Document srcDoc;
-			try {
-				srcDoc = builder.buildDocument(publication, url);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
+        Label[] labels = node.getLabels();
+        for (int i = 0; i < labels.length; i++) {
+            String language = labels[i].getLanguage();
+            Document srcDoc;
+            try {
+                srcDoc = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
+            } catch (DocumentBuildException e) {
+                throw new BuildException(e);
+            }
 
-			ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
-			resourcesMgr.deleteResources();
-		}
-	}
+            ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
+            resourcesMgr.deleteResources();
+        }
+    }
 
-	/** 
-	 * @see org.apache.tools.ant.Task#execute()
-	 **/
-	public void execute() throws BuildException {
-		try {
-			log("document-id for the source :" + this.getFirstdocumentid());
-			log("area for the source :" + this.getFirstarea());
-			log("document-id for the destination :" + this.getSecdocumentid());
-			log("area for the destination :" + this.getSecarea());
+    /**
+     * @see org.apache.tools.ant.Task#execute()
+     */
+    public void execute() throws BuildException {
+        try {
+            log("document-id for the source :" + this.getFirstdocumentid());
+            log("area for the source :" + this.getFirstarea());
+            log("document-id for the destination :" + this.getSecdocumentid());
+            log("area for the destination :" + this.getSecarea());
 
-			Publication publication = getPublication();
-			SiteTree tree = publication.getSiteTree(this.getSecarea());
-			SiteTreeNode node = tree.getNode(this.getSecdocumentid());
-			node.acceptReverseSubtree(this);
-		} catch (Exception e) {
-			throw new BuildException(e);
-		}
-	}
+            Publication publication = getPublication();
+            SiteTree tree = getSiteTree(this.getSecarea());
+            SiteTreeNode node = tree.getNode(this.getSecdocumentid());
+            node.acceptReverseSubtree(this);
+        } catch (Exception e) {
+            throw new BuildException(e);
+        }
+    }
 
 }

@@ -28,9 +28,13 @@ import java.util.List;
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
+import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
@@ -48,7 +52,7 @@ public abstract class PublicationTask extends AbstractTask {
 
     private static final Category log = Category.getInstance(PublicationTask.class);
 
-    private Publication publication;
+    private DocumentIdentityMap map;
 
     /**
      * Returns the publication used by this task.
@@ -56,17 +60,28 @@ public abstract class PublicationTask extends AbstractTask {
      * @throws ExecutionException when an error occurs.
      */
     protected Publication getPublication() throws ExecutionException {
-        if (publication == null) {
+        return getIdentityMap().getPublication();
+    }
+
+    /**
+     * Returns the document identity map used by this task.
+     * @return An identity map.
+     * @throws ExecutionException when an error occurs.
+     */
+    protected DocumentIdentityMap getIdentityMap() throws ExecutionException {
+        if (this.map == null) {
             try {
                 String publicationId = getParameters().getParameter(Task.PARAMETER_PUBLICATION_ID);
-                String servletContextPath =
-                    getParameters().getParameter(Task.PARAMETER_SERVLET_CONTEXT);
-                publication = PublicationFactory.getPublication(publicationId, servletContextPath);
+                String servletContextPath = getParameters().getParameter(
+                        Task.PARAMETER_SERVLET_CONTEXT);
+                Publication publication = PublicationFactory.getPublication(publicationId,
+                        servletContextPath);
+                this.map = new DocumentIdentityMap(publication);
             } catch (Exception e) {
                 throw new ExecutionException(e);
             }
         }
-        return publication;
+        return this.map;
     }
 
     /**
@@ -76,7 +91,7 @@ public abstract class PublicationTask extends AbstractTask {
      * @throws ExecutionException when something went wrong.
      */
     protected void copyResources(Document sourceDocument, Document destinationDocument)
-        throws ExecutionException {
+            throws ExecutionException {
 
         if (log.isDebugEnabled()) {
             log.debug("Copying resources");
@@ -94,12 +109,8 @@ public abstract class PublicationTask extends AbstractTask {
             File destinationResource = new File(destinationDirectory, resources[i].getName());
 
             if (log.isDebugEnabled()) {
-                log.debug(
-                    "Copy file ["
-                        + resources[i].getAbsolutePath()
-                        + "] to ["
-                        + destinationResource.getAbsolutePath()
-                        + "]");
+                log.debug("Copy file [" + resources[i].getAbsolutePath() + "] to ["
+                        + destinationResource.getAbsolutePath() + "]");
             }
             try {
                 FileUtil.copyFile(resources[i], destinationResource);
@@ -141,13 +152,12 @@ public abstract class PublicationTask extends AbstractTask {
                     throw new ExecutionException(e);
                 }
                 Event event = getExecutableEvent(instance, situation);
-                
+
                 if (event == null) {
                     canFire = false;
                 }
-                
-            }
-            catch (Exception e) {
+
+            } catch (Exception e) {
                 throw new ExecutionException(e);
             }
         }
@@ -215,15 +225,16 @@ public abstract class PublicationTask extends AbstractTask {
     }
 
     /**
-     * Returns the executable event for the provided {@link #PARAMETER_WORKFLOW_EVENT} parameter.
+     * Returns the executable event for the provided {@link #PARAMETER_WORKFLOW_EVENT}parameter.
      * @param instance The workflow instance.
      * @param situation The situation.
      * @return An event.
      * @throws WorkflowException when something went wrong.
-     * @throws ParameterException when the {@link #PARAMETER_WORKFLOW_EVENT} parameter could not be resolved.
+     * @throws ParameterException when the {@link #PARAMETER_WORKFLOW_EVENT}parameter could not be
+     *             resolved.
      */
     protected Event getExecutableEvent(SynchronizedWorkflowInstances instance, Situation situation)
-        throws WorkflowException, ParameterException {
+            throws WorkflowException, ParameterException {
 
         String workflowEvent = getEventName();
 
@@ -244,7 +255,7 @@ public abstract class PublicationTask extends AbstractTask {
         if (log.isDebugEnabled()) {
             log.debug("Executable event found: [" + event + "]");
         }
-        
+
         if (event == null) {
             log.error("Event [" + workflowEvent + "] cannot be invoked!");
         }
@@ -271,6 +282,22 @@ public abstract class PublicationTask extends AbstractTask {
         String rolesString = getParameters().getParameter(PARAMETER_ROLE_IDS);
         String[] roles = rolesString.split(ROLE_SEPARATOR_REGEXP);
         return roles;
+    }
+
+    protected SiteTree getSiteTree(String area) {
+        SiteTree tree;
+        try {
+            SiteManager manager = getPublication().getSiteManager(getIdentityMap());
+            if (!(manager instanceof TreeSiteManager)) {
+                throw new RuntimeException("Only supported for site trees.");
+            }
+            tree = ((TreeSiteManager) manager).getTree(area);
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return tree;
     }
 
 }

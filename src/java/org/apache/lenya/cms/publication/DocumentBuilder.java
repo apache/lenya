@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentBuilder.java,v 1.11 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -28,12 +28,12 @@ public interface DocumentBuilder {
     /**
      * Builds a document.
      * 
-     * @param publication The publication the document belongs to.
+     * @param map The identity map the document belongs to.
      * @param url The URL of the form /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    Document buildDocument(Publication publication, String url)
+    Document buildDocument(DocumentIdentityMap map, String url)
         throws DocumentBuildException;
     
     /**

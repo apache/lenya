@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowMenuTransformer.java,v 1.30 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.transformation;
 
@@ -28,8 +28,11 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
@@ -41,19 +44,21 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * This transformer disables menu items (by removing the href attribute)
- * which are not allowed with respect to the current workflow state.
+ * This transformer disables menu items (by removing the href attribute) which are not allowed with
+ * respect to the current workflow state.
  */
 public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     public static final String MENU_ELEMENT = "menu";
     public static final String ITEM_ELEMENT = "item";
     public static final String EVENT_ATTRIBUTE = "event";
 
-    /** (non-Javadoc)
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+    /**
+     * (non-Javadoc)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
+     *      java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String localName, String raw, Attributes attr)
-        throws SAXException {
+            throws SAXException {
         boolean passed = true;
 
         if (hasWorkflow() && localName.equals(ITEM_ELEMENT)) {
@@ -62,7 +67,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
                 getLogger().debug("Event: [" + event + "]");
             }
 
-            // filter item if command not allowed 
+            // filter item if command not allowed
             if (event != null) {
                 passed = false;
 
@@ -97,15 +102,18 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     }
 
     /**
-     * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
+     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
-        throws ProcessingException, SAXException, IOException {
+            throws ProcessingException, SAXException, IOException {
 
         PageEnvelope envelope = null;
 
         try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            Publication pub = PublicationFactory.getPublication(objectModel);
+            DocumentIdentityMap map = new DocumentIdentityMap(pub);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         } catch (Exception e) {
             throw new ProcessingException(e);
         }

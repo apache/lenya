@@ -15,11 +15,12 @@
  *
  */
 
-/* $Id: DocumentTask.java,v 1.2 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.task;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.task.ExecutionException;
@@ -34,8 +35,9 @@ public abstract class DocumentTask extends PublicationTask {
     public static final String PARAMETER_DOCUMENT_LANGUAGE = "document-language";
 
     /**
-     * Returns the document specified using the default document parameters
-     * ({@link #PARAMETER_DOCUMENT_ID}, {@link #PARAMETER_DOCUMENT_AREA}, {@link #PARAMETER_DOCUMENT_LANGUAGE}).
+     * Returns the document specified using the default document parameters (
+     * {@link #PARAMETER_DOCUMENT_ID},{@link #PARAMETER_DOCUMENT_AREA},
+     * {@link #PARAMETER_DOCUMENT_LANGUAGE}).
      * @return A document.
      * @throws ExecutionException when something went wrong.
      */
@@ -61,17 +63,12 @@ public abstract class DocumentTask extends PublicationTask {
      * @throws ExecutionException when something went wrong.
      */
     protected Document getDocument(String documentId, String area, String language)
-        throws ExecutionException {
-        Publication publication = getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
-        String url = builder.buildCanonicalUrl(publication, area, documentId, language);
-        Document document;
+            throws ExecutionException {
         try {
-            document = builder.buildDocument(publication, url);
-        } catch (Exception e) {
+            return getIdentityMap().get(area, documentId, language);
+        } catch (DocumentBuildException e) {
             throw new ExecutionException(e);
         }
-        return document;
     }
 
 }

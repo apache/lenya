@@ -27,7 +27,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -38,83 +38,74 @@ import org.apache.tools.ant.BuildException;
  */
 public class DeleteContentTask extends TwoDocumentsOperationTask {
 
-	/**
-	 * 
-	 */
-	public DeleteContentTask() {
-		super();
-	}
+    /**
+     *  
+     */
+    public DeleteContentTask() {
+        super();
+    }
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
-	 */
-	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-		DocumentBuilder builder = publication.getDocumentBuilder();
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+     */
+    public void visitSiteTreeNode(SiteTreeNode node) {
+        Publication publication = getPublication();
+        DocumentBuilder builder = publication.getDocumentBuilder();
 
-		String destDocumentid = node.getAbsoluteId();
-		String srcDocumentid =
-			destDocumentid.replaceFirst(
-				getSecdocumentid(),
-				getFirstdocumentid());
+        String destDocumentid = node.getAbsoluteId();
+        String srcDocumentid = destDocumentid
+                .replaceFirst(getSecdocumentid(), getFirstdocumentid());
 
-		Label[] labels = node.getLabels();
-		for (int i = 0; i < labels.length; i++) {
-			String language = labels[i].getLanguage();
-			String url =
-				builder.buildCanonicalUrl(
-					publication,
-					getFirstarea(),
-					srcDocumentid,
-					language);
-			Document doc;
-			try {
-				doc = builder.buildDocument(publication, url);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-			File srcFile = doc.getFile();
-			if (!srcFile.exists()) {
-				log("There are no file " + srcFile.getAbsolutePath());
-				return;
-			}
-			File directory = srcFile.getParentFile();
-			try {
-				FileUtil.forceDelete(srcFile);
-			} catch (IOException e) {
-				//FIXME: catch Exception because of window's delete problem 
-				log("exception " + e);
-			}
-			if (directory.exists()
-				&& directory.isDirectory()
-				&& directory.listFiles().length == 0) {
-				try {
-					FileUtil.forceDelete(directory);
-				} catch (IOException e) {
-					//FIXME: catch Exception because of window's delete problem 
-					log("exception " + e);
-				}
-			}
-		}
+        Label[] labels = node.getLabels();
+        for (int i = 0; i < labels.length; i++) {
+            String language = labels[i].getLanguage();
+            Document doc;
+            try {
+                doc = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
+            } catch (DocumentBuildException e) {
+                throw new BuildException(e);
+            }
+            File srcFile = doc.getFile();
+            if (!srcFile.exists()) {
+                log("There are no file " + srcFile.getAbsolutePath());
+                return;
+            }
+            File directory = srcFile.getParentFile();
+            try {
+                FileUtil.forceDelete(srcFile);
+            } catch (IOException e) {
+                //FIXME: catch Exception because of window's delete problem
+                log("exception " + e);
+            }
+            if (directory.exists() && directory.isDirectory() && directory.listFiles().length == 0) {
+                try {
+                    FileUtil.forceDelete(directory);
+                } catch (IOException e) {
+                    //FIXME: catch Exception because of window's delete problem
+                    log("exception " + e);
+                }
+            }
+        }
 
-	}
+    }
 
-	/** 
-	 * @see org.apache.tools.ant.Task#execute()
-	 **/
-	public void execute() throws BuildException {
-		try {
-			log("document-id for the source :" + this.getFirstdocumentid());
-			log("area for the source :" + this.getFirstarea());
-			log("document-id for the destination :" + this.getSecdocumentid());
-			log("area for the destination :" + this.getSecarea());
+    /**
+     * @see org.apache.tools.ant.Task#execute()
+     */
+    public void execute() throws BuildException {
+        try {
+            log("document-id for the source :" + this.getFirstdocumentid());
+            log("area for the source :" + this.getFirstarea());
+            log("document-id for the destination :" + this.getSecdocumentid());
+            log("area for the destination :" + this.getSecarea());
 
-			Publication publication = getPublication();
-			SiteTree tree = publication.getSiteTree(this.getSecarea());
-			SiteTreeNode node = tree.getNode(this.getSecdocumentid());
-			node.acceptReverseSubtree(this);
-		} catch (Exception e) {
-			throw new BuildException(e);
-		}
-	}
+            Publication publication = getPublication();
+            SiteTree tree = getSiteTree(this.getSecarea());
+            SiteTreeNode node = tree.getNode(this.getSecdocumentid());
+            node.acceptReverseSubtree(this);
+        } catch (Exception e) {
+            throw new BuildException(e);
+        }
+    }
 }

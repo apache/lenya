@@ -23,12 +23,10 @@ import java.io.File;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourcesManager;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
@@ -61,11 +59,10 @@ public class DeactivateResourcesTask extends PublicationTask {
      */
     public void deactivateResources(String language, String documentid, String area)
             throws SiteException {
-        Publication publication = getPublication();
-        DefaultSiteTree tree = null;
+        SiteTree tree = null;
 
         try {
-            tree = publication.getSiteTree(area);
+            tree = getSiteTree(area);
             SiteTreeNode node = tree.getNode(documentid);
             Label[] labels = null;
             if (node != null) {
@@ -73,11 +70,9 @@ public class DeactivateResourcesTask extends PublicationTask {
             }
             if (node == null || (labels != null && labels.length < 1)) {
 
-                DocumentBuilder builder = publication.getDocumentBuilder();
-                String url = builder.buildCanonicalUrl(publication, area, documentid, language);
                 Document doc;
                 try {
-                    doc = builder.buildDocument(publication, url);
+                    doc =getIdentityMap().get(area, documentid, language);
                 } catch (DocumentBuildException e) {
                     throw new BuildException(e);
                 }

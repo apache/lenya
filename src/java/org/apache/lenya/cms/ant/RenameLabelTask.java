@@ -20,9 +20,10 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
@@ -141,8 +142,8 @@ public class RenameLabelTask extends PublicationTask {
         String area)
         throws SiteException, DocumentException {
 
-        DefaultSiteTree tree = null;
-        tree = getPublication().getSiteTree(area);
+        SiteTree tree = null;
+        tree = getSiteTree(area);
         SiteTreeNode node = tree.getNode(documentid);
         if (node == null) {
             throw new DocumentException(

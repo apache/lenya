@@ -17,10 +17,10 @@
 
 package org.apache.lenya.cms.publication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 /**
  * @version $Id$
@@ -38,29 +38,34 @@ public final class PublicationHelper {
     }
 
     /**
-     * Returns all documents of a publication.
-     * @param area
-     * @param language
+     * Returns all documents of a publication in a certain language.
+     * @param map The identity map.
+     * @param area The area.
+     * @param language The language.
      * @return An array of document.
      * @throws DocumentException
      * @see Document
      * @see Publication
      */
-    public Document[] getAllDocuments(String area, String language) throws DocumentException {
+    public Document[] getAllDocuments(DocumentIdentityMap map, String area, String language)
+            throws DocumentException {
         try {
-            List allNodes = getPublication().getSiteTree(area).getNode("/").preOrder();
-            Document[] documents = new Document[allNodes.size()-1];
-        
-            for(int i=1; i<allNodes.size(); i++) {
-                documents[i-1] = DefaultDocumentBuilder.getInstance().createDocument(getPublication(), area,
-                        ((SiteTreeNode)allNodes.get(i)).getAbsoluteId(), language);
+            Document[] allDocuments = getPublication().getSiteManager(map).getDocuments(area);
+
+            List documents = new ArrayList();
+            
+            for (int i = 0; i < allDocuments.length; i++) {
+                Document doc = allDocuments[i];
+                Document languageDoc = doc.getIdentityMap().get(doc.getArea(), doc.getId(), language);
+                documents.add(languageDoc);
             }
-            return documents;
-        } catch(SiteException e) {
+            
+            return (Document[]) documents.toArray(new Document[documents.size()]);
+        } catch (SiteException e) {
             throw new DocumentException("Can not access sitetree to get document ids.", e);
-        } catch(DocumentBuildException e) {
+        } catch (DocumentBuildException e) {
             throw new DocumentException("Can not build document from id obtained from sitetree.", e);
-        }        
+        }
     }
 
     /**

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentLanguagesHelper.java,v 1.6 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.xsp;
 
@@ -24,6 +24,7 @@ import java.util.Map;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -37,14 +38,13 @@ public class DocumentLanguagesHelper {
 
     /**
 	 * Create a new DocumentlanguageHelper.
-	 * 
+     * @param map The identity map.
 	 * @param objectModel the objectModel
-	 * 
 	 * @throws ProcessingException if the page envelope could not be created.
 	 */
-    public DocumentLanguagesHelper(Map objectModel) throws ProcessingException {
+    public DocumentLanguagesHelper(DocumentIdentityMap map, Map objectModel) throws ProcessingException {
         try {
-            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         } catch (PageEnvelopeException e) {
             throw new ProcessingException(e);
         }

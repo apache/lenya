@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowAuthorizer.java,v 1.5 2004/08/16 16:42:32 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ac.workflow;
 
@@ -30,6 +30,7 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
@@ -38,90 +39,91 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 
 /**
- * If the client requested invoking a workflow event, this authorizer checks if the current
- * document state and identity roles allow this transition.
+ * If the client requested invoking a workflow event, this authorizer checks if the current document
+ * state and identity roles allow this transition.
  */
 public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer, Serviceable {
 
-	protected static final String EVENT_PARAMETER = "lenya.event";
+    protected static final String EVENT_PARAMETER = "lenya.event";
 
-	/**
-	 * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
-	 */
-	public boolean authorize(Request request) throws AccessControlException {
+    /**
+     * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
+     */
+    public boolean authorize(Request request) throws AccessControlException {
 
-		boolean authorized = true;
+        boolean authorized = true;
 
-		String requestUri = request.getRequestURI();
-		String context = request.getContextPath();
+        String requestUri = request.getRequestURI();
+        String context = request.getContextPath();
 
-		if (context == null) {
-			context = "";
-		}
+        if (context == null) {
+            context = "";
+        }
 
-		String url = requestUri.substring(context.length());
+        String url = requestUri.substring(context.length());
 
-		String event = request.getParameter(EVENT_PARAMETER);
-		SourceResolver resolver = null;
+        String event = request.getParameter(EVENT_PARAMETER);
+        SourceResolver resolver = null;
 
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("Authorizing workflow for event [" + event + "]");
-		}
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Authorizing workflow for event [" + event + "]");
+        }
 
-		if (event != null) {
+        if (event != null) {
 
-			try {
-				resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-				Publication publication = PublicationFactory.getPublication(resolver, request);
+            try {
+                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+                Publication publication = PublicationFactory.getPublication(resolver, request);
 
-				DocumentBuilder builder = publication.getDocumentBuilder();
-				if (builder.isDocument(publication, url)) {
+                DocumentBuilder builder = publication.getDocumentBuilder();
+                if (builder.isDocument(publication, url)) {
 
-					Document document = builder.buildDocument(publication, url);
-					WorkflowFactory factory = WorkflowFactory.newInstance();
+                    DocumentIdentityMap map = new DocumentIdentityMap(publication);
+                    Document document = map.get(url);
+                    WorkflowFactory factory = WorkflowFactory.newInstance();
 
-					if (factory.hasWorkflow(document)) {
-						SynchronizedWorkflowInstances instance =
-							factory.buildSynchronizedInstance(document);
+                    if (factory.hasWorkflow(document)) {
+                        SynchronizedWorkflowInstances instance = factory
+                                .buildSynchronizedInstance(document);
 
-						authorized = false;
+                        authorized = false;
 
-						Situation situation = WorkflowHelper.buildSituation(request);
-						Event[] events = instance.getExecutableEvents(situation);
-						int i = 0;
+                        Situation situation = WorkflowHelper.buildSituation(request);
+                        Event[] events = instance.getExecutableEvents(situation);
+                        int i = 0;
 
-						while (!authorized && (i < events.length)) {
-							if (events[i].getName().equals(event)) {
-								authorized = true;
-							}
-							if (getLogger().isDebugEnabled()) {
-								getLogger().debug("    Event [" + events[i] + "] is executable.");
-							}
+                        while (!authorized && (i < events.length)) {
+                            if (events[i].getName().equals(event)) {
+                                authorized = true;
+                            }
+                            if (getLogger().isDebugEnabled()) {
+                                getLogger().debug("    Event [" + events[i] + "] is executable.");
+                            }
 
-							i++;
-						}
-					}
-				}
+                            i++;
+                        }
+                    }
+                }
 
-			} catch (Exception e) {
-				throw new AccessControlException(e);
-			} finally {
-				if (resolver != null) {
-					manager.release(resolver);
-				}
-			}
-		}
+            } catch (Exception e) {
+                throw new AccessControlException(e);
+            } finally {
+                if (resolver != null) {
+                    manager.release(resolver);
+                }
+            }
+        }
 
-		return authorized;
-	}
+        return authorized;
+    }
 
-	private ServiceManager manager;
+    private ServiceManager manager;
 
-	/**
-	 * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-	 */
-	public void service(ServiceManager manager) throws ServiceException {
-		this.manager = manager;
-	}
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
 
 }

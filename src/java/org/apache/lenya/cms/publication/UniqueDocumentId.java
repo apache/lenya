@@ -20,8 +20,10 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
  * class to compute an unique document id for a document, if there is already a node in the sitetree
@@ -37,9 +39,16 @@ public class UniqueDocumentId {
      * @return the unique documentid
      */
     public String computeUniqueDocumentId(Publication publication, String area, String documentid) {
-        SiteTree tree;
         try {
-            tree = publication.getSiteTree(area);
+            
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            SiteManager manager = publication.getSiteManager(map);
+            
+            if (!(manager instanceof TreeSiteManager)) {
+                throw new RuntimeException("Only supported for site trees!");
+            }
+            
+            SiteTree tree = ((TreeSiteManager) manager).getTree(area);
             SiteTreeNode node = tree.getNode(documentid);
             String suffix = null;
             int version = 0;

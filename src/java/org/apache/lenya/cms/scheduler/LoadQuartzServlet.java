@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: LoadQuartzServlet.java,v 1.38 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler;
 
@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -89,10 +90,10 @@ public class LoadQuartzServlet extends HttpServlet {
 
         this.schedulerConfigurations = config.getInitParameter(CONFIGURATION_ELEMENT);
         this.servletContext = config.getServletContext();
-        
-        log.debug(
-            ".init(): Servlet Context Path: " + getServletContextDirectory().getAbsolutePath());
-            
+
+        log.debug(".init(): Servlet Context Path: "
+                + getServletContextDirectory().getAbsolutePath());
+
         try {
             log.debug("Storing servlet");
             String contextPath = getServletContextDirectory().getCanonicalPath();
@@ -101,7 +102,7 @@ public class LoadQuartzServlet extends HttpServlet {
         } catch (IOException e) {
             throw new ServletException(e);
         }
-            
+
         log.debug(".init(): Scheduler Configurations: " + this.schedulerConfigurations);
 
         try {
@@ -116,14 +117,12 @@ public class LoadQuartzServlet extends HttpServlet {
 
     /**
      * Process.
-     *
+     * 
      * @throws ServletException when an error occurs.
      * @throws SchedulerException when an error occurs.
      */
     public void process() throws ServletException, SchedulerException {
-        scheduler =
-            new SchedulerWrapper(
-                getServletContextDirectory().getAbsolutePath(),
+        scheduler = new SchedulerWrapper(getServletContextDirectory().getAbsolutePath(),
                 schedulerConfigurations);
 
         try {
@@ -152,8 +151,8 @@ public class LoadQuartzServlet extends HttpServlet {
 
     /**
      * This method sets a ShutdownHook to the system This traps the CTRL+C or kill signal and
-     * shutdows  Correctly the system.
-     *
+     * shutdows Correctly the system.
+     * 
      * @throws Exception when something went wrong.
      */
     public static void ShutdownHook() throws Exception {
@@ -173,22 +172,22 @@ public class LoadQuartzServlet extends HttpServlet {
      * @throws IOException when an error occured.
      * @throws ServletException when an error occured.
      */
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws IOException, ServletException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,
+            ServletException {
         handleRequest(request, response);
     }
 
     /**
      * Handles a POST request.
-     *
+     * 
      * @param req The requust.
      * @param resp The response.
-     *
+     * 
      * @throws ServletException when an error occured.
      * @throws IOException when an error occured.
      */
-    public void doPost(HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
         doGet(req, resp);
     }
 
@@ -204,11 +203,12 @@ public class LoadQuartzServlet extends HttpServlet {
      * @throws IOException when something went wrong.
      */
     protected void handleRequest(HttpServletRequest request, HttpServletResponse response)
-        throws IOException {
+            throws IOException {
         log.debug("----------------------------------------------------------------");
         log.debug("- Incoming request at URI: ");
-        log.debug(
-            request.getServerName() + ":" + request.getServerPort() + request.getRequestURI());
+        log
+                .debug(request.getServerName() + ":" + request.getServerPort()
+                        + request.getRequestURI());
         log.debug("----------------------------------------------------------------");
         log.debug("Request parameters:");
 
@@ -239,14 +239,12 @@ public class LoadQuartzServlet extends HttpServlet {
                 getScheduler().deleteJob(jobId, publicationId);
             } else if (action.equals(DOCUMENT_DELETED)) {
 
-                Publication publication =
-                    PublicationFactory.getPublication(
-                        publicationId,
+                Publication publication = PublicationFactory.getPublication(publicationId,
                         getServletContextDirectory().getAbsolutePath());
 
                 String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
-                org.apache.lenya.cms.publication.Document document =
-                    publication.getDocumentBuilder().buildDocument(publication, documentUrl);
+                DocumentIdentityMap map = new DocumentIdentityMap(publication);
+                org.apache.lenya.cms.publication.Document document = map.get(documentUrl);
                 deleteDocumentJobs(document);
             }
 
@@ -287,7 +285,7 @@ public class LoadQuartzServlet extends HttpServlet {
                 parameterMap.put(key, values);
             }
         }
-        
+
         NamespaceMap schedulerParameters = new NamespaceMap(parameterMap, PREFIX);
         return schedulerParameters;
     }
@@ -300,7 +298,7 @@ public class LoadQuartzServlet extends HttpServlet {
      * @throws PublicationException
      */
     public void deleteDocumentJobs(org.apache.lenya.cms.publication.Document document)
-        throws DocumentBuildException, SchedulerException, PublicationException {
+            throws DocumentBuildException, SchedulerException, PublicationException {
         log.debug("Requested to delete jobs for document URL [" + document.getCompleteURL() + "]");
         getScheduler().deleteJobs(document);
     }
@@ -311,8 +309,8 @@ public class LoadQuartzServlet extends HttpServlet {
      * @return A string.
      */
     protected String getJobId(NamespaceMap schedulerParameters) {
-        String parameterName =
-            NamespaceMap.getFullName(SchedulerWrapper.JOB_PREFIX, SchedulerWrapper.JOB_ID);
+        String parameterName = NamespaceMap.getFullName(SchedulerWrapper.JOB_PREFIX,
+                SchedulerWrapper.JOB_ID);
         String jobId = (String) schedulerParameters.get(parameterName);
         log.debug("    scheduler.job.id:         [" + jobId + "]");
         return jobId;
@@ -333,7 +331,7 @@ public class LoadQuartzServlet extends HttpServlet {
 
     /**
      * Returns the servlet context path.
-     *
+     * 
      * @return A string.
      */
     public File getServletContextDirectory() {
@@ -346,8 +344,8 @@ public class LoadQuartzServlet extends HttpServlet {
      */
     public void restoreJobs() throws SchedulerException {
 
-        File publicationsDirectory =
-            new File(getServletContextDirectory(), PublishingEnvironment.PUBLICATION_PREFIX);
+        File publicationsDirectory = new File(getServletContextDirectory(),
+                PublishingEnvironment.PUBLICATION_PREFIX);
 
         File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
             public boolean accept(File file) {
@@ -364,8 +362,8 @@ public class LoadQuartzServlet extends HttpServlet {
         for (int i = 0; i < publicationDirectories.length; i++) {
             File directory = publicationDirectories[i];
             String publicationId = directory.getName();
-            if (PublicationFactory
-                .existsPublication(publicationId, getServletContextDirectory().getAbsolutePath())) {
+            if (PublicationFactory.existsPublication(publicationId, getServletContextDirectory()
+                    .getAbsolutePath())) {
                 getScheduler().restoreJobs(publicationId);
             }
         }
@@ -387,10 +385,8 @@ public class LoadQuartzServlet extends HttpServlet {
      * @param document The document.
      * @return A string.
      */
-    public static String getDeleteDocumentRequestURI(
-        String port,
-        String servletContextPath,
-        org.apache.lenya.cms.publication.Document document) {
+    public static String getDeleteDocumentRequestURI(String port, String servletContextPath,
+            org.apache.lenya.cms.publication.Document document) {
 
         NamespaceMap requestParameters = new NamespaceMap(PREFIX);
         requestParameters.put(PARAMETER_ACTION, DOCUMENT_DELETED);

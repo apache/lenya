@@ -33,9 +33,13 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.DocumentHelper;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowDocument;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
@@ -100,8 +104,16 @@ public class FlowHelper {
      * @throws PageEnvelopeException when something went wrong.
      */
     public PageEnvelope getPageEnvelope(FOM_Cocoon cocoon) throws PageEnvelopeException {
+        
+        Publication pub;
+        try {
+            pub = PublicationFactory.getPublication(cocoon.getObjectModel());
+        } catch (PublicationException e) {
+            throw new PageEnvelopeException(e);
+        }
+        DocumentIdentityMap map = new DocumentIdentityMap(pub);
         PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
-        return factory.getPageEnvelope(cocoon.getObjectModel());
+        return factory.getPageEnvelope(map, cocoon.getObjectModel());
     }
 
     /**

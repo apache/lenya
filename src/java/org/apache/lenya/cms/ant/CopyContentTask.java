@@ -25,9 +25,7 @@ import java.io.IOException;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.util.FileUtil;
 import org.apache.tools.ant.BuildException;
@@ -49,9 +47,6 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
      * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public void visitSiteTreeNode(SiteTreeNode node) {
-        Publication publication = getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
-
         String srcDocumentid = node.getAbsoluteId();
         String destDocumentid = srcDocumentid
                 .replaceFirst(getFirstdocumentid(), getSecdocumentid());
@@ -59,11 +54,9 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
         Label[] labels = node.getLabels();
         for (int i = 0; i < labels.length; i++) {
             String language = labels[i].getLanguage();
-            String srcUrl = builder.buildCanonicalUrl(publication, getFirstarea(), srcDocumentid,
-                    language);
             Document srcDoc;
             try {
-                srcDoc = builder.buildDocument(publication, srcUrl);
+                srcDoc = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }
@@ -72,11 +65,9 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
                 log("There are no file " + srcFile.getAbsolutePath());
                 return;
             }
-            String destUrl = builder.buildCanonicalUrl(publication, getSecarea(), destDocumentid,
-                    language);
             Document destDoc;
             try {
-                destDoc = builder.buildDocument(publication, destUrl);
+                destDoc = getIdentityMap().get(getSecarea(), destDocumentid, language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }

@@ -34,9 +34,9 @@ import org.apache.lenya.workflow.WorkflowInstance;
 /**
  * Module for workflow access.
  * 
- * @version $Id:$
+ * @version $Id$
  */
-public class WorkflowModule extends AbstractInputModule {
+public class WorkflowModule extends AbstractPageEnvelopeModule {
 
     public static final String STATE = "state";
     public static final String VARIABLE_PREFIX = "variable.";
@@ -45,16 +45,16 @@ public class WorkflowModule extends AbstractInputModule {
     static final String[] PARAMETER_NAMES = { STATE, HISTORY_PATH };
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
 
         Object value = null;
 
-		
         try {
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            PageEnvelope envelope = getEnvelope(objectModel);
             Document document = envelope.getDocument();
 
             WorkflowFactory factory = WorkflowFactory.newInstance();
@@ -62,23 +62,21 @@ public class WorkflowModule extends AbstractInputModule {
                 WorkflowInstance instance = factory.buildInstance(document);
                 if (name.equals(STATE)) {
                     value = instance.getCurrentState().toString();
-                }
-                else if (name.startsWith(VARIABLE_PREFIX)) {
+                } else if (name.startsWith(VARIABLE_PREFIX)) {
                     String variableName = name.substring(VARIABLE_PREFIX.length());
                     String[] variableNames = instance.getWorkflow().getVariableNames();
                     if (Arrays.asList(variableNames).contains(variableName)) {
                         value = Boolean.valueOf(instance.getValue(variableName));
                     }
-                }
-                else if (name.equals(HISTORY_PATH)) {
+                } else if (name.equals(HISTORY_PATH)) {
                     value = ((CMSHistory) WorkflowFactory.getHistory(document)).getHistoryPath();
+                } else {
+                    throw new ConfigurationException("The attribute [" + name
+                            + "] is not supported!");
                 }
-				else {
-					throw new ConfigurationException("The attribute [" + name + "] is not supported!");
-				}
             }
-		} catch (ConfigurationException e) {
-			throw e;
+        } catch (ConfigurationException e) {
+            throw e;
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute failed: ", e);
         }
@@ -86,21 +84,23 @@ public class WorkflowModule extends AbstractInputModule {
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         return Arrays.asList(PARAMETER_NAMES).iterator();
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
-        Object[] objects = { getAttribute(name, modeConf, objectModel)};
+            throws ConfigurationException {
+        Object[] objects = { getAttribute(name, modeConf, objectModel) };
 
         return objects;
     }
-    
+
 }

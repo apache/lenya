@@ -23,9 +23,8 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
@@ -54,13 +53,13 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
         try {
             PublicationTemplateManager templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-            templateManager.setup(envelope.getPublication());
-            
+            Publication publication = PublicationFactory.getPublication(objectModel);
+            templateManager.setup(publication);
+
             ExistingSourceResolver resolver = new ExistingSourceResolver();
             templateManager.visit(name, resolver);
             resolvedUri = resolver.getURI();
-            
+
         } catch (Exception e) {
             throw new ConfigurationException("Resolving path [" + name + "] failed: ", e);
         }

@@ -35,10 +35,13 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -47,7 +50,7 @@ import org.dom4j.io.SAXReader;
 /**
  * Default creator action.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction implements
         Configurable {
@@ -186,7 +189,10 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         creator.init(doctypeConf);
 
         // add a node to the tree
-        DefaultSiteTree siteTree = publication.getSiteTree(Publication.AUTHORING_AREA);
+        
+        DocumentIdentityMap identityMap = new DocumentIdentityMap(publication);
+        TreeSiteManager manager = (TreeSiteManager) publication.getSiteManager(identityMap);
+        SiteTree siteTree = manager.getTree(Publication.AUTHORING_AREA);
         Label[] labels = new Label[1];
         labels[0] = new Label(childname, language);
         siteTree.addNode(parentid, creator.generateTreeId(childid, childType), labels);

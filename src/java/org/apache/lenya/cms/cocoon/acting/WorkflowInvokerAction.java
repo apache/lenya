@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowInvokerAction.java,v 1.10 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -28,23 +28,21 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 
 /**
- * Action to invoke a workflow transition independently from the request document URL.
- * Parameters:
+ * Action to invoke a workflow transition independently from the request document URL. Parameters:
  * <ul>
- *   <li><strong>area:</strong> The area.</li>
- *   <li><strong>document-id:</strong> The document id.</li>
- *   <li><strong>language:</strong> The language.</li>
- *   <li><strong>event:</strong> The event to invoke.</li>
+ * <li><strong>area: </strong> The area.</li>
+ * <li><strong>document-id: </strong> The document id.</li>
+ * <li><strong>language: </strong> The language.</li>
+ * <li><strong>event: </strong> The event to invoke.</li>
  * </ul>
  */
 public class WorkflowInvokerAction extends AbstractAction {
@@ -55,15 +53,12 @@ public class WorkflowInvokerAction extends AbstractAction {
     public static final String EVENT = "event";
 
     /**
-     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String source,
-        Parameters parameters)
-        throws Exception {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
+            Parameters parameters) throws Exception {
 
         String area = parameters.getParameter(AREA);
         String documentId = parameters.getParameter(DOCUMENT_ID);
@@ -78,11 +73,9 @@ public class WorkflowInvokerAction extends AbstractAction {
             getLogger().debug("    Event:       [" + eventName + "]");
         }
 
-        PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-        Publication publication = envelope.getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
-        String url = builder.buildCanonicalUrl(publication, area, documentId, language);
-        Document document = builder.buildDocument(publication, url);
+        Publication pub = PublicationFactory.getPublication(objectModel);
+        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        Document document = map.get(area, documentId, language);
 
         WorkflowFactory factory = WorkflowFactory.newInstance();
 

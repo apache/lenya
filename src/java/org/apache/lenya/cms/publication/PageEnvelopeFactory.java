@@ -15,15 +15,11 @@
  *
  */
 
-/* $Id: PageEnvelopeFactory.java,v 1.10 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
 import java.util.Map;
-
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-
 
 /**
  * Common entry point for creating page envelopes.
@@ -50,19 +46,15 @@ public class PageEnvelopeFactory {
 
     /**
      * Returns the page envelope for the object model of a Cocoon component.
+     * @param map The document identity map to use.
      * @param objectModel The object model.
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
-    public PageEnvelope getPageEnvelope(Map objectModel)
-        throws PageEnvelopeException {
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
-
-        envelope = new PageEnvelope(objectModel, true);
-        request.setAttribute(PageEnvelope.class.getName(), envelope);
-
+    public PageEnvelope getPageEnvelope(DocumentIdentityMap map, Map objectModel)
+            throws PageEnvelopeException {
+        PageEnvelope envelope = new PageEnvelope(map, objectModel);
         return envelope;
     }
-    
+
 }

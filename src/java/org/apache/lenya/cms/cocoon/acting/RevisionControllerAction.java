@@ -30,17 +30,18 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
 
 /**
  * Revision controller action.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class RevisionControllerAction extends AbstractAction {
 
@@ -67,11 +68,12 @@ public class RevisionControllerAction extends AbstractAction {
         }
 
         PageEnvelope envelope = null;
-        Publication publication = null;
+        Publication publication = PublicationFactory.getPublication(objectModel);
+        DocumentIdentityMap map = new DocumentIdentityMap(publication);
         Document document = null;
 
         try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
             publication = envelope.getPublication();
             document = envelope.getDocument();
         } catch (Exception e) {
@@ -129,11 +131,7 @@ public class RevisionControllerAction extends AbstractAction {
                 }
             }
 
-            DocumentBuilder builder = publication.getDocumentBuilder();
-
-            String srcUrl = builder.buildCanonicalUrl(publication, document.getArea(), documentid,
-                    language);
-            Document srcDoc = builder.buildDocument(publication, srcUrl);
+            Document srcDoc = map.get(document.getArea(), documentid, language);
             File newFile = srcDoc.getFile();
             filename = newFile.getCanonicalPath();
 

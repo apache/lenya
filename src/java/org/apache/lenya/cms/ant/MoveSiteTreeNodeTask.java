@@ -21,6 +21,7 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -73,7 +74,7 @@ public class MoveSiteTreeNodeTask extends PublicationTask {
         log("    Direction:   [" + getDirection() + "]");
 
         try {
-            DefaultSiteTree tree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
+            SiteTree tree = getSiteTree(Publication.AUTHORING_AREA);
             if (getDirection().equals(UP)) {
                 tree.moveUp(getDocumentId());
             } else if (getDirection().equals(DOWN)) {

@@ -21,6 +21,7 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
@@ -84,10 +85,10 @@ public class DeleteNodeTask extends PublicationTask {
      */
     public void deleteNode(String documentid, String area)
         throws SiteException {
-		DefaultSiteTree tree = null;
+		SiteTree tree = null;
 
 	  	try {
-			tree = getPublication().getSiteTree(area);
+			tree = getSiteTree(area);
 			SiteTreeNode node = tree.removeNode(documentid);
 			if (node == null) {
 				throw new SiteException("Node " + node + " couldn't be removed");

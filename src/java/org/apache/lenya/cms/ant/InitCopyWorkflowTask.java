@@ -23,7 +23,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
@@ -84,9 +84,6 @@ public class InitCopyWorkflowTask extends TwoDocumentsOperationTask {
 	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-		DocumentBuilder builder = publication.getDocumentBuilder();
-
 		Label[] labels = node.getLabels(); 
 		for (int i = 0 ; i < labels.length; i++){
 			String language = labels[i].getLanguage();
@@ -94,18 +91,14 @@ public class InitCopyWorkflowTask extends TwoDocumentsOperationTask {
 			String srcDocumentid = node.getAbsoluteId();
 			String destDocumentid = srcDocumentid.replaceFirst(this.getFirstdocumentid(),this.getSecdocumentid());
 
-			String srcUrl = builder.buildCanonicalUrl(publication, getFirstarea(), srcDocumentid, language);
-			String destUrl = builder.buildCanonicalUrl(publication, getSecarea(), destDocumentid, language);
-
-
 			Document document;
 			Document newdocument;
 			WorkflowFactory factory = WorkflowFactory.newInstance();
 			
 			log("init workflow history");
 			try {
-				document = builder.buildDocument(publication, srcUrl);
-				newdocument = builder.buildDocument(publication, destUrl);
+				document = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
+				newdocument = getIdentityMap().get(getSecarea(), destDocumentid, language);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}

@@ -39,6 +39,8 @@ import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
@@ -76,7 +78,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         }
 
         final String path = location.substring(pos + 3);
-        
+
         if (path.length() == 0) {
             throw new RuntimeException("The path after the protocol must not be empty!");
         }
@@ -93,8 +95,8 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
             Map objectModel = ContextHelper.getObjectModel(this.context);
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-            templateManager.setup(envelope.getPublication());
+            Publication pub = PublicationFactory.getPublication(objectModel);
+            templateManager.setup(pub);
 
             ExistingSourceResolver resolver = new ExistingSourceResolver();
             templateManager.visit(path, resolver);

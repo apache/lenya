@@ -19,9 +19,10 @@
 
 package org.apache.lenya.cms.ant;
 
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -125,10 +126,10 @@ public class InsertLabelTask extends PublicationTask {
     public void insertLabel(String documentid, String labelName, String language, String area)
             throws SiteException {
 
-        DefaultSiteTree tree = null;
+        SiteTree tree = null;
         Label label = null;
         try {
-            tree = getPublication().getSiteTree(area);
+            tree = getSiteTree(area);
             label = new Label(labelName, language);
             tree.addLabel(documentid, label);
             tree.save();

@@ -1,21 +1,19 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Copyright 1999-2004 The Apache Software Foundation
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ *  
  */
 
-/* $Id: InitWorkflowHistoryTask.java,v 1.11 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$ */
 
 package org.apache.lenya.cms.ant;
 
@@ -75,11 +73,9 @@ public class InitWorkflowHistoryTask extends PublicationTask {
         if (language == null) {
             language = getPublication().getDefaultLanguage();
         }
-        DocumentBuilder builder = getPublication().getDocumentBuilder();
-        String url = builder.buildCanonicalUrl(getPublication(), Publication.AUTHORING_AREA, getDocumentId(), language);
         Document document;
         try {
-            document = builder.buildDocument(getPublication(), url);
+            document = getIdentityMap().get(Publication.AUTHORING_AREA, getDocumentId(), language);
             log(".execute(): " + document.getLanguage());
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
@@ -87,10 +83,10 @@ public class InitWorkflowHistoryTask extends PublicationTask {
 
         try {
             String[] roles = new String[0];
-            Situation situation =
-                WorkflowFactory.newInstance().buildSituation(roles, getUserId(), getMachineIp());
-            DocumentType type =
-                DocumentTypeBuilder.buildDocumentType(getDocumentType(), getPublication());
+            Situation situation = WorkflowFactory.newInstance().buildSituation(roles, getUserId(),
+                    getMachineIp());
+            DocumentType type = DocumentTypeBuilder.buildDocumentType(getDocumentType(),
+                    getPublication());
             WorkflowFactory.initHistory(document, type.getWorkflowFileName(), situation);
         } catch (Exception e) {
             throw new BuildException(e);
@@ -141,7 +137,7 @@ public class InitWorkflowHistoryTask extends PublicationTask {
 
     /**
      * Get the language.
-     *  
+     * 
      * @return the language
      */
     public String getLanguage() {

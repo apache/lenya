@@ -26,7 +26,7 @@ import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor;
@@ -46,7 +46,7 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
             log("Area:        [" + area + "]");
 
             Publication publication = getPublication();
-            SiteTree tree = publication.getSiteTree(area);
+            SiteTree tree = getSiteTree(area);
             SiteTreeNode node = tree.getNode(documentId);
 
             node.acceptSubtree(this);
@@ -92,8 +92,7 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
             DocumentBuilder builder = publication.getDocumentBuilder();
 
             try {
-                String url = builder.buildCanonicalUrl(publication, area, documentId, language);
-                Document document = builder.buildDocument(publication, url);
+                Document document = getIdentityMap().get(area, documentId, language);
 
                 String servletContext = new File(servletContextPath).getCanonicalPath();
                 log("Deleting scheduler entry for document [" + document + "]");

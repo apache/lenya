@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CollectionImpl.java,v 1.13 2004/07/10 22:59:55 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -44,25 +44,25 @@ public class CollectionImpl extends DefaultDocument implements Collection {
 
     /**
      * Ctor.
-     * @param publication A publication.
+     * @param map A document identity map.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(Publication publication, String id, String area) throws DocumentException {
-        super(publication, id, area);
+    public CollectionImpl(DocumentIdentityMap map, String id, String area) throws DocumentException {
+        super(map, id, area);
     }
 
     /**
      * Ctor.
-     * @param publication A publication.
+     * @param map A document identity map.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(Publication publication, String id, String area, String language) throws DocumentException {
-        super(publication, id, area, language);
+    public CollectionImpl(DocumentIdentityMap map, String id, String area, String language) throws DocumentException {
+        super(map, id, area, language);
     }
 
     private List documentsList = new ArrayList();
@@ -158,7 +158,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 getArea(),
                 documentId,
                 getLanguage());
-        Document document = builder.buildDocument(getPublication(), url);
+        Document document = builder.buildDocument(getIdentityMap(), url);
         return document;
     }
 

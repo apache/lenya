@@ -42,8 +42,11 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -96,7 +99,9 @@ public class UploadAction extends AbstractConfigurableAction {
 
         Map results = new HashMap();
         Request request = ObjectModelHelper.getRequest(objectModel);
-        pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        Publication pub = PublicationFactory.getPublication(objectModel);
+        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         document = pageEnvelope.getDocument();
 
         File assetFile;

@@ -50,8 +50,8 @@ public class InsertCopyNode extends TwoNodesTask {
             String secarea) throws SiteException {
 
         Publication publication = getPublication();
-        SiteTree firsttree = publication.getSiteTree(firstarea);
-        SiteTree sectree = publication.getSiteTree(secarea);
+        SiteTree firsttree = getSiteTree(firstarea);
+        SiteTree sectree = getSiteTree(secarea);
 
         String parentid = "";
         StringTokenizer st = new StringTokenizer(secdocumentid, "/");

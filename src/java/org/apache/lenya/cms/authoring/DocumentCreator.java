@@ -22,12 +22,14 @@ package org.apache.lenya.cms.authoring;
 import java.io.File;
 import java.util.Collections;
 
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 public class DocumentCreator {
     /**
@@ -89,10 +91,12 @@ public class DocumentCreator {
 
         ParentChildCreatorInterface creator = type.getCreator();
 
-        DefaultSiteTree siteTree;
+        DocumentIdentityMap map = new DocumentIdentityMap(publication);
+        SiteTree siteTree;
 
         try {
-            siteTree = publication.getSiteTree(area);
+            TreeSiteManager manager = (TreeSiteManager) publication.getSiteManager(map);
+            siteTree = manager.getTree(area);
         } catch (Exception e) {
             throw new CreatorException(e);
         }

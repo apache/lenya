@@ -240,7 +240,7 @@ public class WriteDCParametersTask extends PublicationTask {
 
         DocumentBuilder builder = getPublication().getDocumentBuilder();
         String url = builder.buildCanonicalUrl(getPublication(), area, documentId, lang);
-        Document doc = builder.buildDocument(getPublication(), url);
+        Document doc = getIdentityMap().get(url);
         DublinCore dc = doc.getDublinCore();
         dc.setValue(DublinCore.ELEMENT_CREATOR, creator);
         dc.setValue(DublinCore.ELEMENT_TITLE, title);

@@ -37,7 +37,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 
 /**
  * Input module wrapping the page envelope. This module provides publication
@@ -48,32 +47,6 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Serviceable {
 
     private ServiceManager manager;
-
-    /**
-     * Get the the page envelope for the given objectModel.
-     * 
-     * @param objectModel the objectModel for which the page enevelope is requested.
-     * 
-     * @return a <code>PageEnvelope</code>
-     * 
-     * @throws ConfigurationException if the page envelope could not be instantiated.
-     */
-    protected PageEnvelope getEnvelope(Map objectModel) throws ConfigurationException {
-        PageEnvelope envelope = null;
-
-        if (getLogger().isDebugEnabled()) {
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
-        }
-
-        try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-        } catch (Exception e) {
-            throw new ConfigurationException("Resolving page envelope failed: ", e);
-        }
-
-        return envelope;
-    }
 
     protected static final String URI_PARAMETER_DOCTYPE = "doctype";
 

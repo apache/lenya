@@ -29,7 +29,14 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
  */
 public interface Document {
     
+    /**
+     * The document namespace URI.
+     */
     String NAMESPACE = "http://apache.org/cocoon/lenya/document/1.0";
+    
+    /**
+     * The default namespace prefix.
+     */
     String DEFAULT_PREFIX = "lenya";
     
     /**
@@ -169,5 +176,11 @@ public interface Document {
      * @throws DocumentException if an error occurs
      */
     boolean existsInAnyLanguage() throws DocumentException;
+    
+    /**
+     * Returns the identity map this document belongs to.
+     * @return A document identity map.
+     */
+    DocumentIdentityMap getIdentityMap();
     
 }

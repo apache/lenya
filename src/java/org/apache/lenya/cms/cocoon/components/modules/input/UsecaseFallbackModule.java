@@ -24,7 +24,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.templating.ExistingUsecaseResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
@@ -56,7 +55,7 @@ public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements
         try {
             PublicationTemplateManager templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            PageEnvelope envelope = getEnvelope(objectModel);
             templateManager.setup(envelope.getPublication());
 
             ExistingUsecaseResolver resolver = new ExistingUsecaseResolver(name);

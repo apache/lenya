@@ -113,7 +113,7 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 
 			//visit the destination tree
 			Publication publication = getPublication();
-			SiteTree tree = publication.getSiteTree(this.getSecarea());
+			SiteTree tree = getSiteTree(this.getSecarea());
 			SiteTreeNode node = tree.getNode(this.getSecdocumentid());
 			node.acceptReverseSubtree(this);
 

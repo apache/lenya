@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentHelper.java,v 1.8 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -45,10 +45,9 @@ public class DocumentHelper {
     }
 
     /**
-     * Creates a document URL.<br/>
-     * If the document ID is null, the current document ID is used.<br/>
-     * If the document area is null, the current area is used.<br/>
-     * If the language is null, the current language is used.
+     * Creates a document URL. <br/>If the document ID is null, the current document ID is used.
+     * <br/>If the document area is null, the current area is used. <br/>If the language is null,
+     * the current language is used.
      * @param documentId The target document ID.
      * @param documentArea The target area.
      * @param language The target language.
@@ -56,11 +55,14 @@ public class DocumentHelper {
      * @throws ProcessingException if something went wrong.
      */
     public String getDocumentUrl(String documentId, String documentArea, String language)
-        throws ProcessingException {
+            throws ProcessingException {
 
         String url = null;
         try {
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            Publication publication = PublicationFactory.getPublication(objectModel);
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
+                    objectModel);
 
             if (documentId == null) {
                 documentId = envelope.getDocument().getId();
@@ -79,9 +81,7 @@ public class DocumentHelper {
                 language = envelope.getDocument().getLanguage();
             }
 
-            Publication publication = envelope.getPublication();
             DocumentBuilder builder = publication.getDocumentBuilder();
-
             url = builder.buildCanonicalUrl(publication, documentArea, documentId, language);
 
             String contextPath = request.getContextPath();
@@ -100,8 +100,8 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns the complete URL of the parent document. If the document is a top-level document,
-     * the /index document is chosen. If the parent does not exist in the appropriate language, the
+     * Returns the complete URL of the parent document. If the document is a top-level document, the
+     * /index document is chosen. If the parent does not exist in the appropriate language, the
      * default language is chosen.
      * 
      * @return A string.
@@ -111,8 +111,10 @@ public class DocumentHelper {
 
         PageEnvelope envelope;
         try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-        } catch (PageEnvelopeException e) {
+            Publication publication = PublicationFactory.getPublication(objectModel);
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
+        } catch (Exception e) {
             throw new ProcessingException(e);
         }
 
@@ -138,16 +140,13 @@ public class DocumentHelper {
         Document parentDocument;
 
         try {
-            parentDocument = builder.buildDocument(publication, parentUrl);
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            parentDocument = map.get(parentUrl);
             parentDocument = getExistingLanguageVersion(parentDocument, document.getLanguage());
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
-        parentUrl =
-            builder.buildCanonicalUrl(
-                publication,
-                completeArea,
-                parentDocument.getId(),
+        parentUrl = builder.buildCanonicalUrl(publication, completeArea, parentDocument.getId(),
                 parentDocument.getLanguage());
 
         String contextPath = request.getContextPath();
@@ -170,6 +169,7 @@ public class DocumentHelper {
     public static Document getExistingLanguageVersion(Document document) throws DocumentException {
         return getExistingLanguageVersion(document, document.getPublication().getDefaultLanguage());
     }
+
     /**
      * Returns an existing language version of a document. If the document exists in the preferred
      * language, this version is returned. Otherwise, if the document exists in the default
@@ -182,7 +182,7 @@ public class DocumentHelper {
      * @throws DocumentException when an error occurs.
      */
     public static Document getExistingLanguageVersion(Document document, String preferredLanguage)
-        throws DocumentException {
+            throws DocumentException {
 
         Publication publication = document.getPublication();
         DocumentBuilder builder = publication.getDocumentBuilder();
@@ -190,8 +190,8 @@ public class DocumentHelper {
         String[] languages = document.getLanguages();
 
         if (languages.length == 0) {
-            throw new DocumentException(
-                "The document [" + document.getId() + "] does not exist in any language!");
+            throw new DocumentException("The document [" + document.getId()
+                    + "] does not exist in any language!");
         }
 
         List languageList = Arrays.asList(languages);
@@ -226,14 +226,10 @@ public class DocumentHelper {
             String parentId = id.substring(0, lastSlashIndex);
             Publication publication = document.getPublication();
             DocumentBuilder builder = publication.getDocumentBuilder();
-            String url =
-                builder.buildCanonicalUrl(
-                    publication,
-                    document.getArea(),
-                    parentId,
+            String url = builder.buildCanonicalUrl(publication, document.getArea(), parentId,
                     document.getLanguage());
             try {
-                parent = builder.buildDocument(publication, url);
+                parent = document.getIdentityMap().get(url);
             } catch (DocumentBuildException e) {
                 throw new ProcessingException(e);
             }

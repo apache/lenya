@@ -23,7 +23,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor;
@@ -141,8 +141,8 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 
 			log("move workflow history");
 			try {
-				document = builder.buildDocument(publication, url);
-				newDocument = builder.buildDocument(publication, newurl);
+				document = getIdentityMap().get(url);
+				newDocument = getIdentityMap().get(newurl);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}
@@ -168,7 +168,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 			log("area for the destination" + this.getSecarea());
 
 			Publication publication = getPublication();
-			SiteTree tree = publication.getSiteTree(getFirstarea());
+			SiteTree tree = getSiteTree(getFirstarea());
 			SiteTreeNode node = tree.getNode(getFirstdocumentid());
 
 			node.acceptSubtree(this);
