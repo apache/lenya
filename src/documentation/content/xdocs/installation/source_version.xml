@@ -38,13 +38,13 @@
   			There are different ways to install and run Lenya:
   			<br/>
   			Choose between
-  			<ol>
-  				<li>running Lenya standalone using the built-in Jetty servlet container</li>
-  				<li>using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
-  				<!--<li>creating a webapp for Tomcat (and other servlet containers) to be deployed manually on a remote server</li>-->
-  			</ol>
   		</p>
-  		
+        <ol>
+            <li>running Lenya standalone using the built-in Jetty servlet container</li>
+            <li>using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
+            <!--<li>creating a webapp for Tomcat (and other servlet containers) to be deployed manually on a remote server</li>-->
+        </ol>
+
   		<p>
   			Please note that you can use other servlet
         	containers as well, but Jetty and Tomcat are the tested ones.
