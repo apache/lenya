@@ -25,9 +25,9 @@ org.apache.lenya.cms.cocoon.workflow
 org.apache.lenya.cms.metadata.dublincore
 org.apache.lenya.cms.metadata.usecases
 org.apache.lenya.cms.publication
-org.apache.lenya.cms.publication.file
 org.apache.lenya.cms.publication.task
 org.apache.lenya.cms.publication.templating
+org.apache.lenya.cms.publication.usecases
 org.apache.lenya.cms.publication.util
 org.apache.lenya.cms.publishing
 org.apache.lenya.cms.rc
@@ -40,9 +40,9 @@ org.apache.lenya.cms.site.tree
 org.apache.lenya.cms.site.usecases
 org.apache.lenya.cms.task
 org.apache.lenya.cms.usecase
+org.apache.lenya.cms.usecase.scheduling
 org.apache.lenya.cms.workflow
 org.apache.lenya.cms.workflow.usecases
-org.apache.lenya.defaultpub.cms.task
 org.apache.lenya.defaultpub.cms.usecases
 org.apache.lenya.lucene
 org.apache.lenya.lucene.html
