@@ -1,5 +1,5 @@
 /*
- * $Id: DublinCoreHelper.java,v 1.3 2003/10/21 09:51:55 andreas Exp $ <License>
+ * $Id: DublinCoreHelper.java,v 1.4 2004/02/20 10:42:13 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -96,8 +96,8 @@ public final class DublinCoreHelper {
 				document = builder.buildDocument(publication, url);
 				log.debug("document file : " + document.getFile().getAbsolutePath());
 				DublinCore dublincore = document.getDublinCore();
-				log.debug("dublincore title : " + dublincore.getTitle());
-				identifier = dublincore.getIdentifier();
+				log.debug("dublincore title : " + dublincore.getFirstValue(DublinCore.ELEMENT_TITLE));
+				identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
 				i = i + 1;
 			}
 		}
@@ -105,7 +105,7 @@ public final class DublinCoreHelper {
 			url = builder.buildCanonicalUrl(publication, area, documentId);
 			document = builder.buildDocument(publication, url);
 			DublinCore dublincore = document.getDublinCore();
-			identifier = dublincore.getIdentifier();
+			identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
 		}
 
 		return identifier;
