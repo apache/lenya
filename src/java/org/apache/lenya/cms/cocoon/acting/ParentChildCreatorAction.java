@@ -1,81 +1,94 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.30 2003/05/30 09:37:16 egli Exp $
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2002 lenya. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this
- *    list of conditions and the following disclaimer in the documentation and/or
- *    other materials provided with the distribution.
- *
- * 3. All advertising materials mentioning features or use of this software must
- *    display the following acknowledgment: "This product includes software developed
- *    by lenya (http://www.lenya.org)"
- *
- * 4. The name "lenya" must not be used to endorse or promote products derived from
- *    this software without prior written permission. For written permission, please
- *    contact contact@lenya.org
- *
- * 5. Products derived from this software may not be called "lenya" nor may "lenya"
- *    appear in their names without prior written permission of lenya.
- *
- * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
- * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
- * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES
- * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
- * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
- * THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
-package org.apache.lenya.cms.cocoon.acting;
+$Id
+<License>
 
-import java.io.File;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
+package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.ProcessingException;
-
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
-
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
+
 import org.apache.excalibur.source.Source;
+
+import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.XPath;
+
 import org.dom4j.io.SAXReader;
 
-import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
+import java.io.File;
+
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 
 /**
@@ -180,12 +193,11 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
         if (creator_src != null) {
             getLogger().info(".act(): Creator found for \"" + doctype + "\": " +
-                creator_src.getName() + " " + creator_src.getPath() + " " +
-		creator_src.getValue());
-	    // now get the constructor that accepts the configuration
-	    
-	    Class creatorClass = Class.forName(creator_src.getValue());
-	    creator = (ParentChildCreatorInterface) creatorClass.newInstance();
+                creator_src.getName() + " " + creator_src.getPath() + " " + creator_src.getValue());
+
+            // now get the constructor that accepts the configuration
+            Class creatorClass = Class.forName(creator_src.getValue());
+            creator = (ParentChildCreatorInterface) creatorClass.newInstance();
         } else {
             getLogger().warn(".act(): No creator found for \"" + doctype +
                 "\". DefaultParentChildreator will be taken.");
@@ -195,21 +207,22 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         getLogger().debug(".act(): Creator : " + creator.getClass().getName());
 
         // Init creator
-	// "Read" the configuration from the DOM node
-	DefaultConfigurationBuilder defaultConfigBuilder = new DefaultConfigurationBuilder();
-	Configuration[] docTypeConfigs =
-	    defaultConfigBuilder.buildFromFile(absoluteDoctypesPath +
-					       "doctypes.xconf").getChildren();
+        // "Read" the configuration from the DOM node
+        DefaultConfigurationBuilder defaultConfigBuilder = new DefaultConfigurationBuilder();
+        Configuration[] docTypeConfigs = defaultConfigBuilder.buildFromFile(absoluteDoctypesPath +
+                "doctypes.xconf").getChildren();
 
-	Configuration doctypeConf = null;
-	for (int i = 0; i < docTypeConfigs.length; i++) {
-	    String typeName = docTypeConfigs[i].getAttribute("type");
-	    if (typeName.equals(doctype)) {
-		doctypeConf = docTypeConfigs[i].getChild("creator", false);
-	    }
-	}
+        Configuration doctypeConf = null;
 
-	creator.init(doctypeConf);
+        for (int i = 0; i < docTypeConfigs.length; i++) {
+            String typeName = docTypeConfigs[i].getAttribute("type");
+
+            if (typeName.equals(doctype)) {
+                doctypeConf = docTypeConfigs[i].getChild("creator", false);
+            }
+        }
+
+        creator.init(doctypeConf);
 
         // Transaction should actually be started here!
         // Read tree
@@ -263,9 +276,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         if (doc.selectSingleNode(newChildXPath + "[@relURI='" +
                     creator.generateTreeId(childid, childType) + "']") != null) {
             getLogger().error("Exception: XPath exists: " + newChildXPath + "[@relURI='" +
-			      creator.generateTreeId(childid, childType) + "']");
+                creator.generateTreeId(childid, childType) + "']");
             getLogger().error("No child added");
-	    
+
             return null;
         }
 
@@ -283,68 +296,71 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
         // Transaction should actually be finished here!
         // Create actual document
+        // grab all the parameters from session, request params and
+        // sitemap params
+        HashMap allParameters = new HashMap();
+        String[] names = parameters.getNames();
 
-	// grab all the parameters from session, request params and
-	// sitemap params
-	HashMap allParameters = new HashMap();
-	String[] names = parameters.getNames();
-	
-	for( int i = 0; i < names.length; i++ ) {
-	    String name = names[ i ];
-	    String value = null;
-	    try {
-		value = parameters.getParameter( name );
-	    } catch (ParameterException pe) {
-		value = null;
-	    }
-	    
-	    allParameters.put(name, value);
-	}
-	
-	Enumeration requestParameters = request.getParameterNames();
-	while (requestParameters.hasMoreElements()) {
-	    String requestParameterName = (String) requestParameters.nextElement();
-	    if (allParameters.containsKey(requestParameterName)) {
-		// we do not allow name clashes
-		throw new ProcessingException("Name clash in request parameter " +
-					      "and sitemap parameter: " +
-					      requestParameterName);
-	    }
-	    allParameters.put(requestParameterName,
-			      request.getParameter(requestParameterName));
-	}
-	
-	Enumeration sessionAttributeNames = session.getAttributeNames();
-	while (sessionAttributeNames.hasMoreElements()) {
-	    String sessionAttributeName = (String) sessionAttributeNames.nextElement();
-	    if (allParameters.containsKey(sessionAttributeName)) {
-		// we do not allow name clashes
-		throw new ProcessingException("Name clash in session attribute " +
-					      "and request parameter or sitemap parameter: " +
-					      sessionAttributeName);
-	    }
-	    allParameters.put(sessionAttributeName, session.getAttribute(sessionAttributeName));
-	}
-	
-	try {
+        for (int i = 0; i < names.length; i++) {
+            String name = names[i];
+            String value = null;
+
+            try {
+                value = parameters.getParameter(name);
+            } catch (ParameterException pe) {
+                value = null;
+            }
+
+            allParameters.put(name, value);
+        }
+
+        Enumeration requestParameters = request.getParameterNames();
+
+        while (requestParameters.hasMoreElements()) {
+            String requestParameterName = (String) requestParameters.nextElement();
+
+            if (allParameters.containsKey(requestParameterName)) {
+                // we do not allow name clashes
+                throw new ProcessingException("Name clash in request parameter " +
+                    "and sitemap parameter: " + requestParameterName);
+            }
+
+            allParameters.put(requestParameterName, request.getParameter(requestParameterName));
+        }
+
+        Enumeration sessionAttributeNames = session.getAttributeNames();
+
+        while (sessionAttributeNames.hasMoreElements()) {
+            String sessionAttributeName = (String) sessionAttributeNames.nextElement();
+
+            if (allParameters.containsKey(sessionAttributeName)) {
+                // we do not allow name clashes
+                throw new ProcessingException("Name clash in session attribute " +
+                    "and request parameter or sitemap parameter: " + sessionAttributeName);
+            }
+
+            allParameters.put(sessionAttributeName, session.getAttribute(sessionAttributeName));
+        }
+
+        try {
             creator.create(new File(absoluteDoctypesPath + "samples"),
-			   new File(sitemapParentPath + docsPath + parentid),
-			   childid, childType, childname, allParameters);
+                new File(sitemapParentPath + docsPath + parentid), childid, childType, childname,
+                allParameters);
         } catch (Exception e) {
             getLogger().error(".act(): Creator threw exception: " + e);
         }
 
         // Redirect to referer
-	String parent_uri = (String) session.getAttribute(
-            "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
-	getLogger().info(".act(): Child added");
+        String parent_uri = (String) session.getAttribute(
+                "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
+        getLogger().info(".act(): Child added");
 
-	HashMap actionMap = new HashMap();
-	actionMap.put("parent_uri", parent_uri);
-	session.removeAttribute(
+        HashMap actionMap = new HashMap();
+        actionMap.put("parent_uri", parent_uri);
+        session.removeAttribute(
             "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
 
-	return actionMap;
+        return actionMap;
     }
 
     /**
@@ -358,9 +374,8 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
      *
      * @return DOCUMENT ME!
      */
-    public boolean validate(String parentid,
-			    String childid, String childname, String childtype,
-			    String doctype) {
+    public boolean validate(String parentid, String childid, String childname, String childtype,
+        String doctype) {
         getLogger().debug(".validate(): parentid=" + parentid + " ; childid=" + childid +
             " ; childname=" + childname + " ; childtype=" + childtype + " ; doctype=" + doctype);
 
@@ -374,5 +389,4 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
         return true;
     }
-
 }

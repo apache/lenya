@@ -1,51 +1,59 @@
 /*
- * $Id
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2002 lenya. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this
- *    list of conditions and the following disclaimer in the documentation and/or
- *    other materials provided with the distribution.
- *
- * 3. All advertising materials mentioning features or use of this software must
- *    display the following acknowledgment: "This product includes software developed
- *    by lenya (http://www.lenya.org)"
- *
- * 4. The name "lenya" must not be used to endorse or promote products derived from
- *    this software without prior written permission. For written permission, please
- *    contact contact@lenya.org
- *
- * 5. Products derived from this software may not be called "lenya" nor may "lenya"
- *    appear in their names without prior written permission of lenya.
- *
- * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
- * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
- * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES
- * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
- * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
- * THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
+$Id
+<License>
+
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
 package org.apache.lenya.cms.ac2.file;
-
-import java.io.File;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Group;
@@ -62,15 +70,20 @@ import org.apache.lenya.cms.ac2.PolicyManager;
 import org.apache.lenya.cms.ac2.World;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import java.io.File;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 
 /**
  * A PolicyBuilder is used to build policies.
  * @author andreas
  */
 public class FilePolicyManager implements PolicyManager {
-
     /**
      * Creates a new PolicyBuilder.
      * @param policyDirectory The directory where policies are stored.
@@ -78,13 +91,9 @@ public class FilePolicyManager implements PolicyManager {
      * @param groupManager The group manager.
      * @param roleManager The role manager.
      */
-    protected FilePolicyManager(
-        File policyDirectory,
-        UserManager userManager,
-        GroupManager groupManager,
-        RoleManager roleManager) {
-
-        assert policyDirectory != null && policyDirectory.isDirectory();
+    protected FilePolicyManager(File policyDirectory, UserManager userManager,
+        GroupManager groupManager, RoleManager roleManager) {
+        assert (policyDirectory != null) && policyDirectory.isDirectory();
         this.policyDirectory = policyDirectory;
 
         assert userManager != null;
@@ -109,12 +118,12 @@ public class FilePolicyManager implements PolicyManager {
      * @throws AccessControlException when something went wrong.
      */
     protected DefaultPolicy buildPolicy(File file) throws AccessControlException {
-        
-        assert null != file && file.isFile();
+        assert (null != file) && file.isFile();
 
         DefaultPolicy policy = new DefaultPolicy();
 
         Document document;
+
         try {
             document = DocumentHelper.readDocument(file);
         } catch (Exception e) {
@@ -126,9 +135,9 @@ public class FilePolicyManager implements PolicyManager {
 
         NamespaceHelper helper = new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, document);
 
-        Element credentialElements[] = helper.getChildren(policyElement);
-        for (int i = 0; i < credentialElements.length; i++) {
+        Element[] credentialElements = helper.getChildren(policyElement);
 
+        for (int i = 0; i < credentialElements.length; i++) {
             Accreditable accreditable = null;
 
             String id = credentialElements[i].getAttribute(ID_ATTRIBUTE);
@@ -136,7 +145,8 @@ public class FilePolicyManager implements PolicyManager {
 
             Credential credential = new Credential(accreditable);
 
-            Element roleElements[] = helper.getChildren(credentialElements[i], ROLE_ELEMENT);
+            Element[] roleElements = helper.getChildren(credentialElements[i], ROLE_ELEMENT);
+
             for (int j = 0; j < roleElements.length; j++) {
                 String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
                 Role role = roleManager.getRole(roleId);
@@ -144,12 +154,11 @@ public class FilePolicyManager implements PolicyManager {
             }
 
             policy.addCredential(credential);
-
         }
 
         return policy;
     }
-    
+
     /**
      * Creates an accredtiable for an element.
      * @param elementName The elment name.
@@ -157,8 +166,10 @@ public class FilePolicyManager implements PolicyManager {
      * @return An accreditable.
      * @throws AccessControlException when something went wrong.
      */
-    protected Accreditable getAccreditable(String elementName, String id) throws AccessControlException {
+    protected Accreditable getAccreditable(String elementName, String id)
+        throws AccessControlException {
         Accreditable accreditable = null;
+
         if (elementName.equals(USER_ELEMENT)) {
             accreditable = userManager.getUser(id);
         } else if (elementName.equals(GROUP_ELEMENT)) {
@@ -168,9 +179,11 @@ public class FilePolicyManager implements PolicyManager {
         } else if (elementName.equals(MACHINE_ELEMENT)) {
             accreditable = new Machine(id);
         }
+
         if (accreditable == null) {
             throw new AccessControlException("Unknown accreditable [" + elementName + "]");
         }
+
         return accreditable;
     }
 
@@ -198,12 +211,13 @@ public class FilePolicyManager implements PolicyManager {
      * Builds a subtree policy from a file. When the file is not present, an empty policy is returned.
      * @see org.apache.lenya.cms.ac2.PolicyBuilder#buildSubtreePolicy(java.lang.String)
      */
-    public DefaultPolicy buildSubtreePolicy(String url) throws AccessControlException {
+    public DefaultPolicy buildSubtreePolicy(String url)
+        throws AccessControlException {
         return buildPolicy(url, SUBTREE_FILENAME);
     }
 
     /**
-     * Builds a policy from a file. When the file is not present, an empty policy is returned.  
+     * Builds a policy from a file. When the file is not present, an empty policy is returned.
      * @param url The url.
      * @param policyFilename The policy filename.
      * @return A policy.
@@ -213,15 +227,16 @@ public class FilePolicyManager implements PolicyManager {
         throws AccessControlException {
         DefaultPolicy policy;
         File policyFile = getPolicyFile(url, policyFilename);
+
         if (policyFile.exists()) {
             policy = buildPolicy(policyFile);
-        }
-        else {
+        } else {
             policy = new DefaultPolicy();
         }
+
         return policy;
     }
-    
+
     /**
      * Returns the policy file for a URL and a policy filename.
      * @param url The url to get the file for: /{area}/...
@@ -231,11 +246,13 @@ public class FilePolicyManager implements PolicyManager {
     protected File getPolicyFile(String url, String policyFilename) {
         assert url.startsWith("/");
         url = url.substring(1);
+
         String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
         File policyFile = new File(getPolicyDirectory(), path);
+
         return policyFile;
     }
-    
+
     /**
      * Returns the policy directory.
      * @return A file object.
@@ -247,14 +264,16 @@ public class FilePolicyManager implements PolicyManager {
     /**
      * @see org.apache.lenya.cms.ac2.PolicyManager#saveURLPolicy(org.apache.lenya.cms.ac2.Policy)
      */
-    public void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException {
+    public void saveURLPolicy(String url, DefaultPolicy policy)
+        throws AccessControlException {
         savePolicy(url, policy, URL_FILENAME);
     }
 
     /**
      * @see org.apache.lenya.cms.ac2.PolicyManager#saveSubtreePolicy(org.apache.lenya.cms.ac2.Policy)
      */
-    public void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException {
+    public void saveSubtreePolicy(String url, DefaultPolicy policy)
+        throws AccessControlException {
         savePolicy(url, policy, SUBTREE_FILENAME);
     }
 
@@ -267,21 +286,24 @@ public class FilePolicyManager implements PolicyManager {
      */
     protected void savePolicy(String url, DefaultPolicy policy, String filename)
         throws AccessControlException {
-
         NamespaceHelper helper;
+
         try {
             helper = new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, POLICY_ELEMENT);
         } catch (ParserConfigurationException e) {
             throw new AccessControlException(e);
         }
-        Credential credentials[] = policy.getCredentials();
+
+        Credential[] credentials = policy.getCredentials();
+
         for (int i = 0; i < credentials.length; i++) {
             Accreditable accreditable = credentials[i].getAccreditable();
             Element accreditableElement = save(accreditable, helper);
             helper.getDocument().getDocumentElement().appendChild(accreditableElement);
         }
-        
+
         File file = getPolicyFile(url, filename);
+
         try {
             file.getParentFile().mkdirs();
             file.createNewFile();
@@ -289,9 +311,8 @@ public class FilePolicyManager implements PolicyManager {
         } catch (Exception e) {
             throw new AccessControlException("Path: [" + file.getAbsolutePath() + "]", e);
         }
-
     }
-    
+
     /**
      * Saves an accreditable to an XML element.
      * @param accreditable The accreditable.
@@ -299,32 +320,34 @@ public class FilePolicyManager implements PolicyManager {
      * @return An XML element.
      * @throws AccessControlException when something went wrong.
      */
-    protected Element save(Accreditable accreditable, NamespaceHelper helper) throws AccessControlException {
+    protected Element save(Accreditable accreditable, NamespaceHelper helper)
+        throws AccessControlException {
         String localName = null;
         String id = null;
+
         if (accreditable instanceof User) {
             localName = USER_ELEMENT;
             id = ((User) accreditable).getId();
-        }
-        else if (accreditable instanceof Group) {
+        } else if (accreditable instanceof Group) {
             localName = GROUP_ELEMENT;
             id = ((Group) accreditable).getName();
-        }
-        else if (accreditable instanceof World) {
+        } else if (accreditable instanceof World) {
             localName = WORLD_ELEMENT;
-        }
-        else if (accreditable instanceof Machine) {
+        } else if (accreditable instanceof Machine) {
             localName = MACHINE_ELEMENT;
             id = ((Machine) accreditable).getIp();
         }
+
         if (localName == null) {
             throw new AccessControlException("Could not save accreditable [" + accreditable + "]");
         }
-        
+
         Element element = helper.createElement(localName);
+
         if (id != null) {
             element.setAttribute(ID_ATTRIBUTE, id);
         }
+
         return element;
     }
 }

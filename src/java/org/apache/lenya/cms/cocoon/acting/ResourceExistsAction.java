@@ -1,4 +1,6 @@
 /*
+$Id
+<License>
 
  ============================================================================
                    The Apache Software License, Version 1.1
@@ -22,7 +24,7 @@
     Alternately, this  acknowledgment may  appear in the software itself,  if
     and wherever such third-party acknowledgments normally appear.
 
- 4. The names "Apache Cocoon" and  "Apache Software Foundation" must  not  be
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
     used to  endorse or promote  products derived from  this software without
     prior written permission. For written permission, please contact
     apache@apache.org.
@@ -44,22 +46,30 @@
 
  This software  consists of voluntary contributions made  by many individuals
  on  behalf of the Apache Software  Foundation and was  originally created by
- Stefano Mazzocchi  <stefano@apache.org>. For more  information on the Apache
- Software Foundation, please see <http://www.apache.org/>.
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
 
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
 */
 package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
+
 import org.apache.cocoon.acting.ComposerAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
+
 import org.apache.excalibur.source.Source;
 
 import java.io.File;
+
 import java.net.URL;
+
 import java.util.Map;
+
 
 /**
  * This action simply checks to see if a given resource exists. It checks
@@ -68,7 +78,7 @@ import java.util.Map;
  * <p>Instead of src attribute, source can be specified using
  * parameter named 'url' (this is old syntax).
  * <p>In order to differentiate between files and directories, the type can be specified
- * using the parameter 'type' (&lt;map:parameter name="type" value="file"/&gt; or 
+ * using the parameter 'type' (&lt;map:parameter name="type" value="file"/&gt; or
  * &lt;map:parameter name="type" value="directory"/&gt;). The parameter 'type' is optional.
  * <p>
  * <b>Note:</b> {@link org.apache.cocoon.selection.ResourceExistsSelector}
@@ -77,37 +87,45 @@ import java.util.Map;
  *
  * @author <a href="mailto:balld@apache.org">Donald Ball</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: ResourceExistsAction.java,v 1.3 2003/06/25 14:51:46 andreas Exp $
+ * @version CVS $Id: ResourceExistsAction.java,v 1.4 2003/06/30 11:46:29 andreas Exp $
  */
 public class ResourceExistsAction extends ComposerAction implements ThreadSafe {
-
     /**
      *
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source, Parameters parameters) throws Exception {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
+        Parameters parameters) throws Exception {
         String urlstring = parameters.getParameter("url", source);
         String typestring = parameters.getParameter("type", "resource");
         Source src = null;
+
         try {
             src = resolver.resolveURI(urlstring);
+
             File resource = new File(new URL(src.getURI()).getFile());
+
             if (typestring.equals("resource") && src.exists()) {
                 getLogger().debug(".act(): Resource (file or directory) exists: " + src.getURI());
+
                 return EMPTY_MAP;
             } else if (typestring.equals("file") && resource.isFile()) {
                 getLogger().debug(".act(): File exists: " + resource);
+
                 return EMPTY_MAP;
             } else if (typestring.equals("directory") && resource.isDirectory()) {
                 getLogger().debug(".act(): Directory exists: " + resource);
+
                 return EMPTY_MAP;
             } else {
-                getLogger().debug(".act(): Resource " + resource + " as type \"" + typestring + "\" does not exist");
+                getLogger().debug(".act(): Resource " + resource + " as type \"" + typestring +
+                    "\" does not exist");
             }
         } catch (Exception e) {
             getLogger().warn(".act(): Exception", e);
         } finally {
             resolver.release(src);
         }
+
         return null;
     }
 }
