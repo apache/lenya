@@ -1,5 +1,5 @@
 /*
-$Id: TreePublisher.java,v 1.8 2003/08/18 09:20:50 egli Exp $
+$Id: TreePublisher.java,v 1.9 2003/08/28 09:44:50 egli Exp $
 <License>
 
  ============================================================================
@@ -72,9 +72,6 @@ import org.apache.tools.ant.BuildException;
 public class TreePublisher extends PublicationTask {
     private String documentid;
     private String language;
-    private String absolutetreeauthoringpath;
-    private String absolutetreelivepath;
-
     /**
      * Creates a new instance of TreePublisher
      */
