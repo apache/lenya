@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePolicyManager.java,v 1.8 2004/04/28 12:53:24 andreas Exp $  */
+/* $Id: FilePolicyManager.java,v 1.9 2004/04/28 16:17:20 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -45,6 +45,7 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
+import org.apache.lenya.ac.impl.Credential;
 import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
 import org.apache.lenya.ac.impl.PolicyBuilder;
@@ -61,8 +62,8 @@ public class FilePolicyManager
     implements InheritingPolicyManager, Parameterizable, Disposable, Serviceable {
 
     /**
-	 * Creates a new FilePolicyManager.
-	 */
+     * Creates a new FilePolicyManager.
+     */
     public FilePolicyManager() {
     }
 
@@ -82,42 +83,42 @@ public class FilePolicyManager
     protected static final String USER_ADMIN_URL = "/admin/users/";
 
     /**
-	 * Builds the URL policy for a URL from a file. When the file is not present, an empty policy
-	 * is returned.
-	 * 
-	 * @param controller The access controller to use.
-	 * @param url The URL inside the web application.
-	 * @return A policy.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Builds the URL policy for a URL from a file. When the file is not present, an empty policy
+     * is returned.
+     * 
+     * @param controller The access controller to use.
+     * @param url The URL inside the web application.
+     * @return A policy.
+     * @throws AccessControlException when something went wrong.
+     */
     public DefaultPolicy buildURLPolicy(AccreditableManager controller, String url)
         throws AccessControlException {
         return buildPolicy(controller, url, URL_FILENAME);
     }
 
     /**
-	 * Builds a subtree policy from a file. When the file is not present, an empty policy is
-	 * returned.
-	 * 
-	 * @param controller The access controller to use.
-	 * @param url The URL inside the web application.
-	 * @return A policy.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Builds a subtree policy from a file. When the file is not present, an empty policy is
+     * returned.
+     * 
+     * @param controller The access controller to use.
+     * @param url The URL inside the web application.
+     * @return A policy.
+     * @throws AccessControlException when something went wrong.
+     */
     public DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url)
         throws AccessControlException {
         return buildPolicy(controller, url, SUBTREE_FILENAME);
     }
 
     /**
-	 * Builds a policy from a file. When the file is not present, an empty policy is returned.
-	 * 
-	 * @param controller The access controller to use.
-	 * @param url The url.
-	 * @param policyFilename The policy filename.
-	 * @return A policy.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Builds a policy from a file. When the file is not present, an empty policy is returned.
+     * 
+     * @param controller The access controller to use.
+     * @param url The url.
+     * @param policyFilename The policy filename.
+     * @return A policy.
+     * @throws AccessControlException when something went wrong.
+     */
     protected DefaultPolicy buildPolicy(
         AccreditableManager controller,
         String url,
@@ -153,34 +154,36 @@ public class FilePolicyManager
     }
 
     /**
-	 * Returns the policy file URI for a URL and a policy filename.
-	 * 
-	 * @param url The url to get the file for.
-	 * @param policyFilename The name of the policy file.
-	 * @return A String.
-	 * 
-	 * @throws AccessControlException if an error occurs
-	 */
+     * Returns the policy file URI for a URL and a policy filename.
+     * 
+     * @param url The url to get the file for.
+     * @param policyFilename The name of the policy file.
+     * @return A String.
+     * 
+     * @throws AccessControlException if an error occurs
+     */
     protected String getPolicySourceURI(String url, String policyFilename)
         throws AccessControlException {
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
 
-        File policyFile = new File(getPoliciesDirectory(), url + "/" + policyFilename);
-        String policyUri = policyFile.toURI().toString(); 
-        getLogger().debug("Computing policy URI [" + policyUri + "]");
+        File policyFile = new File(getPoliciesDirectory(), url + File.separator + policyFilename);
+        String policyUri = policyFile.toURI().toString();
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Computing policy URI [" + policyUri + "]");
+        }
         return policyUri;
     }
 
     /**
-	 * Returns the policy file for a certain URL.
-	 * 
-	 * @param url The URL to get the policy for.
-	 * @param policyFilename The policy filename.
-	 * @return A file.
-	 * @throws AccessControlException when an error occurs.
-	 */
+     * Returns the policy file for a certain URL.
+     * 
+     * @param url The URL to get the policy for.
+     * @param policyFilename The policy filename.
+     * @return A file.
+     * @throws AccessControlException when an error occurs.
+     */
     protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
         String fileUri = getPolicySourceURI(url, policyFilename);
         File file;
@@ -193,37 +196,37 @@ public class FilePolicyManager
     }
 
     /**
-	 * Saves a URL policy.
-	 * 
-	 * @param url The URL to save the policy for.
-	 * @param policy The policy to save.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Saves a URL policy.
+     * 
+     * @param url The URL to save the policy for.
+     * @param policy The policy to save.
+     * @throws AccessControlException when something went wrong.
+     */
     public void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException {
         getLogger().debug("Saving URL policy for URL [" + url + "]");
         savePolicy(url, policy, URL_FILENAME);
     }
 
     /**
-	 * Saves a Subtree policy.
-	 * 
-	 * @param url The url to save the policy for.
-	 * @param policy The policy to save.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Saves a Subtree policy.
+     * 
+     * @param url The url to save the policy for.
+     * @param policy The policy to save.
+     * @throws AccessControlException when something went wrong.
+     */
     public void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException {
         getLogger().debug("Saving subtree policy for URL [" + url + "]");
         savePolicy(url, policy, SUBTREE_FILENAME);
     }
 
     /**
-	 * Saves a policy to a file.
-	 * 
-	 * @param url The URL to save the policy for.
-	 * @param policy The policy.
-	 * @param filename The file.
-	 * @throws AccessControlException if something goes wrong.
-	 */
+     * Saves a policy to a file.
+     * 
+     * @param url The URL to save the policy for.
+     * @param policy The policy.
+     * @param filename The file.
+     * @throws AccessControlException if something goes wrong.
+     */
     protected void savePolicy(String url, DefaultPolicy policy, String filename)
         throws AccessControlException {
 
@@ -232,12 +235,12 @@ public class FilePolicyManager
     }
 
     /**
-	 * Saves a policy to a file.
-	 * 
-	 * @param policy The policy to save.
-	 * @param file The file.
-	 * @throws AccessControlException when an error occurs.
-	 */
+     * Saves a policy to a file.
+     * 
+     * @param policy The policy to save.
+     * @param file The file.
+     * @throws AccessControlException when an error occurs.
+     */
     protected void savePolicy(DefaultPolicy policy, File file) throws AccessControlException {
         Document document = PolicyBuilder.savePolicy(policy);
 
@@ -251,9 +254,9 @@ public class FilePolicyManager
     }
 
     /**
-	 * @see org.apache.lenya.ac.PolicyManager#getPolicy(AccreditableManager, Publication,
-	 *      java.lang.String)
-	 */
+     * @see org.apache.lenya.ac.PolicyManager#getPolicy(AccreditableManager, Publication,
+     *      java.lang.String)
+     */
     public Policy getPolicy(AccreditableManager controller, String url)
         throws AccessControlException {
 
@@ -266,8 +269,8 @@ public class FilePolicyManager
     private File policiesDirectory;
 
     /**
-	 * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
-	 */
+     * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
+     */
     public void parameterize(Parameters parameters) throws ParameterException {
         if (parameters.isParameter(DIRECTORY_PARAMETER)) {
             policiesDirectoryUri = parameters.getParameter(DIRECTORY_PARAMETER);
@@ -278,12 +281,12 @@ public class FilePolicyManager
     }
 
     /**
-	 * Get the path to the policies directory.
-	 * 
-	 * @return the path to the policies directory
-	 * 
-	 * @throws AccessControlException if an error occurs
-	 */
+     * Get the path to the policies directory.
+     * 
+     * @return the path to the policies directory
+     * 
+     * @throws AccessControlException if an error occurs
+     */
     public File getPoliciesDirectory() throws AccessControlException {
 
         if (policiesDirectory == null) {
@@ -316,20 +319,20 @@ public class FilePolicyManager
     }
 
     /**
-	 * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-	 */
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
     public void service(ServiceManager manager) throws ServiceException {
         this.serviceManager = manager;
         this.cache = (SourceCache) manager.lookup(SourceCache.ROLE);
     }
 
     /**
-	 * Sets the policies directory.
-	 * 
-	 * @param directory The directory.
-	 * 
-	 * @throws AccessControlException if the directory is not a directory
-	 */
+     * Sets the policies directory.
+     * 
+     * @param directory The directory.
+     * 
+     * @throws AccessControlException if the directory is not a directory
+     */
     public void setPoliciesDirectory(File directory) throws AccessControlException {
         getLogger().debug("Setting policies directory [" + directory.getAbsolutePath() + "]");
         if (!directory.isDirectory()) {
@@ -340,12 +343,12 @@ public class FilePolicyManager
     }
 
     /**
-	 * @see org.apache.lenya.ac.impl.InheritingPolicyManager#getPolicies(org.apache.lenya.ac.AccreditableManager,
-	 *      java.lang.String)
-	 */
+     * @see org.apache.lenya.ac.impl.InheritingPolicyManager#getPolicies(org.apache.lenya.ac.AccreditableManager,
+     *      java.lang.String)
+     */
     public DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
         throws AccessControlException {
-        
+
         List policies = new ArrayList();
 
         Policy policy = buildURLPolicy(controller, url);
@@ -364,27 +367,27 @@ public class FilePolicyManager
     }
 
     /**
-	 * @see org.apache.avalon.framework.activity.Disposable#dispose()
-	 */
+     * @see org.apache.avalon.framework.activity.Disposable#dispose()
+     */
     public void dispose() {
-        
+
         if (getCache() != null) {
             getServiceManager().release(getCache());
         }
-        
+
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing [" + this + "]");
+            getLogger().debug("Disposing [" + this +"]");
         }
     }
 
     /**
-	 * Removes an accreditable from all policies within a certain directory tree.
-	 * 
-	 * @param manager The accreditable manager which owns the accreditable.
-	 * @param accreditable The accreditable to remove.
-	 * @param policyDirectory The directory where the policies are located.
-	 * @throws AccessControlException when an error occurs.
-	 */
+     * Removes an accreditable from all policies within a certain directory tree.
+     * 
+     * @param manager The accreditable manager which owns the accreditable.
+     * @param accreditable The accreditable to remove.
+     * @param policyDirectory The directory where the policies are located.
+     * @throws AccessControlException when an error occurs.
+     */
     protected void removeAccreditable(
         AccreditableManager manager,
         Accreditable accreditable,
@@ -399,7 +402,8 @@ public class FilePolicyManager
         });
 
         try {
-            RemovedAccreditablePolicyBuilder builder = new RemovedAccreditablePolicyBuilder(manager);
+            RemovedAccreditablePolicyBuilder builder =
+                new RemovedAccreditablePolicyBuilder(manager);
             builder.setRemovedAccreditable(accreditable);
             for (int i = 0; i < policyFiles.length; i++) {
 
@@ -432,9 +436,9 @@ public class FilePolicyManager
     }
 
     /**
-	 * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager,
-	 *      org.apache.lenya.ac.Accreditable)
-	 */
+     * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager,
+     *      org.apache.lenya.ac.Accreditable)
+     */
     public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable)
         throws AccessControlException {
 
@@ -447,9 +451,12 @@ public class FilePolicyManager
         if (accreditable instanceof User) {
             Role role = URLPolicy.getAuthorRole(manager);
             if (role != null) {
-                String url = USER_ADMIN_URL + ((User) accreditable).getId();
+                String url = USER_ADMIN_URL + ((User) accreditable).getId() + ".html";
                 DefaultPolicy policy = buildSubtreePolicy(manager, url);
-                policy.removeRole(accreditable, role);
+                Credential credential = policy.getCredential(accreditable);
+                if (credential != null && credential.contains(role)) {
+                    policy.removeRole(accreditable, role);
+                }
                 saveSubtreePolicy(url, policy);
             }
         }
@@ -469,11 +476,12 @@ public class FilePolicyManager
     /**
      * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
      */
-    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
+    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable)
+        throws AccessControlException {
         if (accreditable instanceof User) {
             Role role = URLPolicy.getAuthorRole(manager);
             if (role != null) {
-                String url = USER_ADMIN_URL + ((User) accreditable).getId();
+                String url = USER_ADMIN_URL + ((User) accreditable).getId() + ".html";
                 DefaultPolicy policy = buildSubtreePolicy(manager, url);
                 policy.addRole(accreditable, role);
                 saveSubtreePolicy(url, policy);
