@@ -1,5 +1,5 @@
 /*
-$Id: IndexConfiguration.java,v 1.8 2004/02/08 17:18:49 andreas Exp $
+$Id: IndexConfiguration.java,v 1.9 2004/02/21 16:58:18 gregor Exp $
 <License>
 
  ============================================================================
@@ -86,8 +86,6 @@ public class IndexConfiguration {
      */
     public IndexConfiguration(String configurationFilePath) {
         this.configurationFilePath = configurationFilePath;
-
-        File configurationFile = new File(configurationFilePath);
 
         try {
             File configFile = new File(configurationFilePath);
