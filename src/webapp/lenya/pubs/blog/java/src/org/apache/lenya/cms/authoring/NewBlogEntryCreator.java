@@ -85,6 +85,8 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         // Replace title 
         element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'title']");
         DocumentHelper.setSimpleElementText(element, (String)parameters.get("title"));
+
+        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'link']");
         element.setAttribute("rel","alternate");
         element.setAttribute("href","http://bob.blog");
         element.setAttribute("type","text/xml");
@@ -103,7 +105,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
             throw new RuntimeException("Element entry/author/name not found.");
         }
         
-        element.setNodeValue(identity.getUser().getId());
+        DocumentHelper.setSimpleElementText(element, identity.getUser().getId());
 
         // Replace date created (and issued and modified, FIXME: issued should be set during first time publishing, modified should be set during re-publishing)
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
