@@ -134,8 +134,8 @@
       <param name="enableUploads" expression="${enable.uploads}"/>
       <xmlcatalog>
         <dtd 
-          publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
-          location="${src.webapp.dir}/WEB-INF/entities/web-app_2_2.dtd"/>
+          publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+          location="${src.webapp.dir}/WEB-INF/entities/web-app_2_3.dtd"/>
       </xmlcatalog>
       <outputproperty name="indent" value="yes"/>
     </xslt>
