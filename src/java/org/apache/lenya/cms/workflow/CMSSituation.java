@@ -68,7 +68,14 @@ public class CMSSituation implements Situation {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "(roles: " + this.roleIds + ")";
+        String rolesString = "";
+        for (int i = 0; i < this.roleIds.length; i++) {
+            if (i > 0) {
+                rolesString += ", ";
+            }
+            rolesString += this.roleIds[i];
+        }
+        return "roles: " + rolesString;
     }
     
     private String userId;
