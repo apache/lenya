@@ -15,7 +15,7 @@
     >
 
 <!-- ============================================================= -->
-<!--   Generate the necessary form to schedule new jobs -->
+<!--   Generate the form to schedule new jobs -->
 <!-- ============================================================= -->
 <xsl:template name="scheduler-form">
 	<xsl:param name="form-name"/>
@@ -95,9 +95,7 @@
 			</option>
 		</xsl:when>
 		<xsl:otherwise>
-			<option>
-				<xsl:value-of select="$currentValue"/>
-			</option>
+			<option><xsl:value-of select="$currentValue"/></option>
 		</xsl:otherwise>
 	</xsl:choose>
 	<xsl:if test="$currentValue &lt; $maxValue">
@@ -108,5 +106,6 @@
 		</xsl:call-template>
 	</xsl:if>
 </xsl:template>
+
 
 </xsl:stylesheet> 

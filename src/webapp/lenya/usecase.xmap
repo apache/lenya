@@ -50,17 +50,6 @@
       <map:serialize/>
     </map:resource>
     
-    <map:resource name="scheduler-page">
-      <map:aggregate element="scheduler" label="aggregation" ns="http://apache.org/cocoon/lenya/scheduler/1.0" prefix="sch">
-        <map:part src="cocoon:/tasks/{publication-id}"/>
-        <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
-      </map:aggregate>
-      <map:transform src="xslt/scheduler/filter.xsl">
-      	<map:parameter name="publication-id" value="{publication-id}"/>
-      	<map:parameter name="document-url" value="/{publication-id}{uri}"/>
-      </map:transform>
-    </map:resource>
-    
     <map:resource name="cms-screen-xml">
       
       <!-- use publication-specific schema if available -->
@@ -115,11 +104,32 @@
       
       <!-- create the current job snapshot -->
       <map:match pattern="scheduler-servlet">
-          <map:generate src="{request:contextPath}/servlet/QuartzSchedulerServlet" type="servletproxy"/>
+        <map:generate src="{request:contextPath}/servlet/QuartzSchedulerServlet" type="servletproxy"/>
         <map:transform src="xslt/scheduler/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       
+      <!-- {publication-id} -->
+      <map:match pattern="scheduler-page-publication/*">
+        <map:aggregate element="scheduler" label="aggregation" ns="http://apache.org/cocoon/lenya/scheduler/1.0" prefix="sch">
+          <map:part src="cocoon:/tasks/{1}"/>
+          <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
+        </map:aggregate>
+        <map:transform src="xslt/scheduler/filter-publication.xsl">
+          <map:parameter name="publication-id" value="{1}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- {publication-id}/{area-document-url} -->
+      <map:match pattern="scheduler-page-document/*/**">
+      	<map:generate src="cocoon:/scheduler-page-publication/{1}"/>
+        <map:transform src="xslt/scheduler/filter-document.xsl">
+          <map:parameter name="document-url" value="/{1}/{2}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+    
     </map:pipeline>
     
     <!-- =================================================================== -->
@@ -177,45 +187,23 @@
         	
         	<!-- show scheduler screen -->
           <map:match pattern="showscreen" type="step">
-            <map:call resource="scheduler-page">
-              <map:parameter name="publication-id" value="{../../1}"/>
-              <map:parameter name="uri" value="{../../2}/{../../3}"/>
-            </map:call>
+          	<map:generate src="cocoon:/scheduler-page-publication/{../../1}"/>
             <map:transform src="xslt/scheduler/scheduler-page.xsl">
               <map:parameter name="context-prefix" value="{request:contextPath}"/>
               <map:parameter name="publication-id" value="{../../1}"/>
               <map:parameter name="area" value="{../../2}"/>
-              <!--
               <map:parameter name="document-url" value="/{../../3}"/>
-              -->
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
           
           <!-- other steps: add job (redirect to page) -->
-					<map:call resource="scheduler-page">
-						<map:parameter name="publication-id" value="{../1}"/>
-						<map:parameter name="uri" value="{../2}/{../3}"/>
-					</map:call>
+         	<map:generate src="cocoon:/scheduler-page-publication/{../../1}"/>
 					<map:transform src="xslt/util/redirect.xsl">
 						<map:parameter name="url" value="{request:requestURI}"/>
 					</map:transform>
 					<map:serialize/>
           
-        </map:match>
-        
-        <!-- usecase -->
-        <!-- Schedule Publication -->
-        <map:match pattern="schedule-publication" type="usecase">
-          <map:match pattern="showscreen" type="step">
-            <map:call resource="scheduler-page">
-              <map:parameter name="publication-id" value="{../../1}"/>
-              <map:parameter name="uri" value="{../../2}"/>
-            </map:call>
-            <map:transform src="xslt/scheduler/admin-publication.xsl"/>
-            <map:serialize/>
-          </map:match>
-          <!-- step -->
         </map:match>
         
         <!-- usecase -->

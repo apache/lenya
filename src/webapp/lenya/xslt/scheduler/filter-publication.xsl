@@ -3,7 +3,6 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0">
   
-<xsl:param name="document-url"/>
 <xsl:param name="publication-id"/>
 
 <!-- insert requested job group element if it does not exist -->
@@ -16,16 +15,12 @@
 		<xsl:apply-templates/>
 	</xsl:copy>
 </xsl:template>
-    
+
+
 <!-- remove other publications -->
 <xsl:template match="sch:job-group[@name != $publication-id]"/>
 
     
-<!-- only jobs for this document -->  
-<!--
-<xsl:template match="sch:job[($document-url != '') and (@url != $document-url)]"/>
--->
-  
 <!-- Identity transformation -->
 <xsl:template match="@*|*">
   <xsl:copy>

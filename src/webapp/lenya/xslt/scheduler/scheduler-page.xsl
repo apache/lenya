@@ -16,7 +16,7 @@
     xmlns:task="http://apache.org/cocoon/lenya/task/1.0"
     >
 
-<xsl:import href="common.xsl"/>    
+<xsl:import href="common.xsl"/>
     
 <xsl:param name="document-url"/>
 <xsl:param name="area"/>
@@ -29,7 +29,7 @@
   <xsl:variable name="uri-prefix" select="concat($context-prefix, '/', $publication-id)"/>
 	<xsl:variable name="menu-separator" select="'&#160;&#160;|&#160;&#160;'"/>
 	<p>
-	<a class="menu-item" href="">Back to page</a>
+	<a class="menu-item" href="{$context-prefix}/{$publication-id}/{$area}{$document-url}">Back to page</a>
 	<xsl:value-of select="$menu-separator"/>
 	<a class="menu-item" href="lenya.usecase=schedule&amp;lenya.step=showscreen">Refresh</a>
 	</p>
@@ -39,7 +39,7 @@
 	-->
 </xsl:template>
 
-  
+
 <xsl:template match="/sch:scheduler">
   <page:page>
     <page:title>Scheduler</page:title>
@@ -53,18 +53,11 @@
 
 
 <xsl:template match="sch:job-group">
-	<xsl:if test="$document-url">
-    <ul>
-      <li><strong>Document:</strong>&#160;&#160;<xsl:value-of select="$area"/><xsl:value-of select="$document-url"/></li>
-    </ul>
-	</xsl:if>
     
   <table class="lenya-table" border="0" cellpadding="0" cellspacing="0">
 
     <tr>
-    	<xsl:if test="not($document-url)">
-        <th>Document</th>
-    	</xsl:if>
+      <th>Document</th>
       <th>Task</th>
       <th>Day</th>
       <th>Time</th>
@@ -89,9 +82,7 @@
   <tr>
     <form method="GET">
     	
-    	<xsl:if test="not($document-url)">
-    		<td><xsl:value-of select="substring-after(@url, concat('/', ../@name))"/></td>
-    	</xsl:if>
+   		<td><xsl:value-of select="substring-after(@url, concat('/', ../@name))"/></td>
     	
 			<td>
         <!-- hidden input fields for parameters -->
@@ -125,18 +116,14 @@
 
   <xsl:template match="sch:trigger">
     <td>
-      <font size="2">
-        <xsl:apply-templates select="sch:parameter[@name='day']"/>&#160;
-        <xsl:apply-templates select="sch:parameter[@name='month']"/>&#160;
-        <xsl:apply-templates select="sch:parameter[@name='year']"/>
-      </font>
+			<xsl:apply-templates select="sch:parameter[@name='year']"/> -
+			<xsl:apply-templates select="sch:parameter[@name='month']"/> -
+			<xsl:apply-templates select="sch:parameter[@name='day']"/>
     </td>
     <td>
-      <font size="2"> 
-        <xsl:apply-templates select="sch:parameter[@name='hour']"/>
-        : 
-        <xsl:apply-templates select="sch:parameter[@name='minute']"/>
-      </font>
+			<xsl:apply-templates select="sch:parameter[@name='hour']"/>
+			: 
+			<xsl:apply-templates select="sch:parameter[@name='minute']"/>
     </td>
   </xsl:template>
   
@@ -179,7 +166,7 @@
   </xsl:template>
 
 <xsl:template match="sch:exception">
-<font color="red">EXCEPTION: <xsl:value-of select="@type"/></font> (check the log files)
+<span style="color: red">EXCEPTION: <xsl:value-of select="@type"/></span> (check the log files)
 </xsl:template>
 
 
