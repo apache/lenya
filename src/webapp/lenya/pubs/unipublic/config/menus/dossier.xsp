@@ -9,7 +9,7 @@
     String sourcesParameter =
             "sources=/dossiers/" + year + "/" + dossierId + "/index.xml";
     String urisParameter =
-            "uris=" + xsp_wyona_context_prefix + "/dossiers/" + dossierId + "/index.html," + xsp_wyona_context_prefix + "/dossiers/index.html";
+            "uris=" + xsp_wyona_context_prefix + "/dossiers/" + year + "/" + dossierId + "/index.html," + xsp_wyona_context_prefix + "/dossiers/" + year + "/index.html";
     
   </xsp:logic>
 		<live_uri><xsp:expr>"/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr></live_uri>
