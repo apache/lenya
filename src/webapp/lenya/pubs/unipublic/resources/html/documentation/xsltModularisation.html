@@ -1,0 +1,105 @@
+<html>
+<head><title>Unipublic: XSLT-Architecture</title>
+</head>
+<body>
+<h1>Unipublic: XSLT-Architecture</h1>
+<pre>
+Page
+   |
+   +--root.xsl                            (the root element)
+   |
+   +--htmlHead.xsl                        (the &#139;head&#155;)
+   |
+   +--head.xsl                            (the background, searchbox, etc.)
+   |
+   +--navigation.xsl                      (the main navigation on the left)
+   | 
+   +--Front
+   |    |
+   |    +--body.xsl                       (the sructure/tables of the page) 
+   |    |
+   |    +--service.xsl                    (the service part of the third column) 
+   |    |
+   |    +--Authoring
+   |    |    | 
+   |    |    +--main.xsl                  (all the includes and imports)
+   |    |    |
+   |    |    +--headlines.xsl             (the headlines)
+   |    |    |
+   |    |    +--headlines_xopus.xsl       (the headlines for the editor xopus)
+   |    |    |
+   |    |    +--webperls.xsl              (the webperls)
+   |    |    |
+   |    |    +--webperls_xopus.xsl        (the webperls for the editor xopus)
+   |    |
+   |    +--Live
+   |         |
+   |         +--main.xsl                  (all the includes and imports)
+   |         |
+   |         +--headlines.xsl             (the articles on the front)
+   |         |
+   |         +--webperls.xsl              (the webperls)
+   |
+   +--Section
+   |    |
+   |    +--body.xsl                       (the sructure/tables of the page) 
+   |    |
+   |    +--Authoring
+   |    |    |
+   |    |    +--main.xsl                  (all the includes and imports)
+   |    |    |
+   |    |    +--articleOverview.xsl       (the articles overview)
+   |    |    |
+   |    |    +--articleOverview_xopus.xsl (the articles overview for the editor xopus)
+   |    |
+   |    +--Live
+   |         |
+   |         +--main.xsl                  (all the includes and imports)
+   |         |
+   |         +--articleOverview.xsl       (the articles in the section)
+   |
+   +--Article
+   |    |
+   |    +--body.xsl                       (the sructure/tables of the page)
+   |    |
+   |    +--head.xsl                       (the background, searchbox, etc., overwrites head in Page)
+   |    |
+   |    +--Authoring
+   |    |    |
+   |    |    +--main.xsl                  (all the includes and imports)
+   |    |    |
+   |    |    +--content.xsl               (the article)
+   |    |    |
+   |    |    +--content_xopus.xsl         (the article for the editor xopus)
+   |    |    |
+   |    |    +--relatedContent.xsl        (the related content)
+   |    |    |
+   |    |    +--relatesContent_xopus.xsl  (the related content for the editor xopus)
+   |    |
+   |    +--Live
+   |         |
+   |         +--main.xsl                  (all the includes and imports)
+   |         |
+   |         +--content.xsl               (the article)
+   |         |
+   |         +--relatedContent.xsl        (the related content)
+
+
+</pre>
+<p>
+<b>Directories</b><br>
+<ul>
+<li><b>Page</b><br> Contains the general xslts, not necessarly needed in all subdirectories (e.g navigation not used in "Article")</li>
+<ul><li><b>Front, Section, Article</b><br> Contains the general xslts for the specific layout</li>
+<ul><li><b>Authoring, Live, Edit</b><br> Contains the specific xslts for this zone<br>
+Authoring: includes the menu<br>
+Live: the edited and published page<br>
+Edit: the xslts for the editor (eg. xopus)</li>
+</ul>
+</ul>
+</ul>
+</p>
+<p>&#160;
+</p>
+</body>
+</html>
