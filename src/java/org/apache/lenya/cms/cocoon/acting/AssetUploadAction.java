@@ -1,5 +1,5 @@
 /*
-$Id: AssetUploadAction.java,v 1.2 2003/08/25 20:15:38 egli Exp $
+$Id: AssetUploadAction.java,v 1.3 2003/10/13 13:19:41 egli Exp $
 <License>
 
  ============================================================================
@@ -100,7 +100,9 @@ public class AssetUploadAction extends AbstractConfigurableAction {
 
     public static final String UPLOADASSET_RETURN_FILESIZE = "mime-type";
     public static final String UPLOADASSET_RETURN_MIMETYPE = "file-size";
-    
+
+    public static String FILE_NAME_REGEXP = "[-a-zA-Z0-9_.]+";
+
     // optional parameters for meta data according to dublin core
     public static final String[] DUBLIN_CORE_PARAMETERS =
         {
@@ -131,8 +133,9 @@ public class AssetUploadAction extends AbstractConfigurableAction {
      * @param source a <code>String</code> value
      * @param parameters a <code>Parameters</code> value
      *
-     * @return a <code>Map</code> containing the referer or null if
-     * the upload failed.
+     * @return a <code>Map</code> containing the referer or null if the 
+     * name of the file to be uploaded contains characters that are not allowed
+     * (@see FILE_NAME_REGEXP).
      *
      * @exception Exception if an error occurs
      */
@@ -145,7 +148,7 @@ public class AssetUploadAction extends AbstractConfigurableAction {
         throws Exception {
 
         HashMap results = new HashMap();
-        
+
         Request request = ObjectModelHelper.getRequest(objectModel);
 
         PageEnvelope pageEnvelope =
@@ -153,9 +156,17 @@ public class AssetUploadAction extends AbstractConfigurableAction {
 
         byte[] buf = new byte[4096];
 
-        for (Enumeration enum = request.getParameterNames(); enum.hasMoreElements();) {
+        for (Enumeration enum = request.getParameterNames();
+            enum.hasMoreElements();
+            ) {
             String param = (String)enum.nextElement();
-            getLogger().debug(param + ": " + request.getParameter(param) + " [" + request.get(param) + "]");
+            getLogger().debug(
+                param
+                    + ": "
+                    + request.getParameter(param)
+                    + " ["
+                    + request.get(param)
+                    + "]");
         }
 
         // optional parameters for the meta file which contains dublin
@@ -164,7 +175,8 @@ public class AssetUploadAction extends AbstractConfigurableAction {
 
         for (int i = 0; i < DUBLIN_CORE_PARAMETERS.length; i++) {
             String paramName = DUBLIN_CORE_PARAMETERS[i];
-            String paramValue = request.getParameter(UPLOADASSET_PARAM_PREFIX + paramName);
+            String paramValue =
+                request.getParameter(UPLOADASSET_PARAM_PREFIX + paramName);
 
             if (paramValue == null) {
                 paramValue = "";
@@ -184,17 +196,23 @@ public class AssetUploadAction extends AbstractConfigurableAction {
         // upload the file to the uploadDir
         Part part = (Part)request.get(UPLOADASSET_PARAM_NAME);
 
+        String fileName = part.getFileName();
+        if (!fileName.matches(FILE_NAME_REGEXP)) {
+            // the file name contains characters which mean trouble 
+            // and are therefore not allowed.
+            return null;
+        }
         String mimeType = part.getMimeType();
         int fileSize = part.getSize();
 
         results.put(UPLOADASSET_RETURN_MIMETYPE, mimeType);
         results.put(UPLOADASSET_RETURN_FILESIZE, new Integer(fileSize));
-        
+
         dublinCoreParams.put("format", mimeType);
         dublinCoreParams.put("extent", Integer.toString(fileSize));
 
         // FIXME: write fileSize into dc meta data
-        
+
         ResourcesManager resourcesMgr =
             new ResourcesManager(pageEnvelope.getDocument());
         File assetFile = new File(resourcesMgr.getPath(), part.getFileName());
@@ -217,7 +235,7 @@ public class AssetUploadAction extends AbstractConfigurableAction {
         // create an extra file containing the meta description for
         // the image.
         File metaDataFile =
-            new File(resourcesMgr.getPath(), part.getFileName() + ".meta");
+            new File(resourcesMgr.getPath(), fileName + ".meta");
         createMetaData(metaDataFile, dublinCoreParams);
 
         return Collections.unmodifiableMap(results);
@@ -231,13 +249,11 @@ public class AssetUploadAction extends AbstractConfigurableAction {
      *
      * @exception IOException if an error occurs
      */
-    protected void createMetaData(
-        File metaDataFile,
-        HashMap dublinCoreParams)
+    protected void createMetaData(File metaDataFile, HashMap dublinCoreParams)
         throws IOException {
 
         assert(metaDataFile.getParentFile().exists());
-        
+
         Document document = DocumentHelper.createDocument();
         Element root = document.addElement("dc:metadata");
 
@@ -250,8 +266,7 @@ public class AssetUploadAction extends AbstractConfigurableAction {
         }
 
         OutputStream out =
-            new BufferedOutputStream(
-                new FileOutputStream(metaDataFile));
+            new BufferedOutputStream(new FileOutputStream(metaDataFile));
 
         XMLWriter writer = new XMLWriter(out, OutputFormat.createPrettyPrint());
         writer.write(document);
