@@ -15,11 +15,11 @@
  *
  */
 
-/* $Id: RemoveLabelTask.java,v 1.3 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -140,7 +140,7 @@ public class RemoveLabelTask extends PublicationTask {
         String area)
         throws SiteTreeException {
 
-        DefaultSiteTree tree = null;
+        SiteTree tree = null;
         Label label = null;
         try {
             tree = getPublication().getSiteTree(area);

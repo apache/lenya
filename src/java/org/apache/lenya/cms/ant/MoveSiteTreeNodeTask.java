@@ -15,11 +15,11 @@
  *
  */
 
-/* $Id: MoveSiteTreeNodeTask.java,v 1.2 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.tools.ant.BuildException;
 
@@ -73,7 +73,7 @@ public class MoveSiteTreeNodeTask extends PublicationTask {
         log("    Direction:   [" + getDirection() + "]");
 
         try {
-            DefaultSiteTree tree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
+            SiteTree tree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
             if (getDirection().equals(UP)) {
                 tree.moveUp(getDocumentId());
             } else if (getDirection().equals(DOWN)) {

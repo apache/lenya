@@ -19,7 +19,7 @@
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -89,7 +89,7 @@ public class ChangeVisibilityTask extends PublicationTask {
         String area)
         throws SiteTreeException, DocumentException {
 
-        DefaultSiteTree tree = null;
+        SiteTree tree = null;
         tree = getPublication().getSiteTree(area);
         SiteTreeNode node = tree.getNode(documentid);
 

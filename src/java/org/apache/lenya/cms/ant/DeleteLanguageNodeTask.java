@@ -15,11 +15,11 @@
  *
  */
 
-/* $Id: DeleteLanguageNodeTask.java,v 1.2 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -53,7 +53,7 @@ public class DeleteLanguageNodeTask extends DeleteNodeTask {
      */
     public void deleteLanguageNode(String language, String documentid, String area)
         throws SiteTreeException {
-        DefaultSiteTree tree = null;
+        SiteTree tree = null;
 
         try {
             tree = getPublication().getSiteTree(area);

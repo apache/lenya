@@ -15,11 +15,11 @@
  *
  */
 
-/* $Id: RenameLabelTask.java,v 1.3 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.SiteTreeException;
@@ -140,8 +140,7 @@ public class RenameLabelTask extends PublicationTask {
         String area)
         throws SiteTreeException, DocumentException {
 
-        DefaultSiteTree tree = null;
-        tree = getPublication().getSiteTree(area);
+        SiteTree tree = getPublication().getSiteTree(area);
         SiteTreeNode node = tree.getNode(documentid);
         if (node == null) {
             throw new DocumentException(

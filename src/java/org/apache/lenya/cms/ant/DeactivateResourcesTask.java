@@ -15,13 +15,13 @@
  *
  */
 
-/* $Id: DeactivateResourcesTask.java,v 1.4 2004/08/16 12:00:55 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
@@ -66,7 +66,7 @@ public class DeactivateResourcesTask extends PublicationTask {
 	public void deactivateResources(String language, String documentid, String area)
 		throws SiteTreeException {
 		Publication publication = getPublication();
-		DefaultSiteTree tree = null;
+		SiteTree tree = null;
 
 		try {
 			tree = publication.getSiteTree(area);

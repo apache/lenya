@@ -38,7 +38,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -202,7 +202,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         creator.init(doctypeConf);
 
         // add a node to the tree
-        DefaultSiteTree siteTree = publication.getSiteTree(Publication.AUTHORING_AREA);
+        SiteTree siteTree = publication.getSiteTree(Publication.AUTHORING_AREA);
         Label[] labels = new Label[1];
         labels[0] = new Label(childname, language);
         siteTree.addNode(parentid, creator.generateTreeId(childid, childType), labels, visibleInNav);

@@ -15,11 +15,11 @@
  *
  */
 
-/* $Id: DeleteNodeTask.java,v 1.4 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -84,7 +84,7 @@ public class DeleteNodeTask extends PublicationTask {
      */
     public void deleteNode(String documentid, String area)
         throws SiteTreeException {
-		DefaultSiteTree tree = null;
+		SiteTree tree = null;
 
 	  	try {
 			tree = getPublication().getSiteTree(area);
