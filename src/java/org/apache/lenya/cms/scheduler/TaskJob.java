@@ -60,6 +60,7 @@ $Id
  */
 package org.apache.lenya.cms.scheduler;
 
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 
@@ -79,7 +80,9 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
+import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -198,7 +201,12 @@ public class TaskJob extends ServletJob {
         String publicationId = map.get(Task.PARAMETER_PUBLICATION_ID);
 
         Publication publication = PublicationFactory.getPublication(publicationId, contextPath);
-        TaskManager manager = new TaskManager(publication.getDirectory().getAbsolutePath());
+        TaskManager manager;
+        try {
+            manager = new TaskManager(publication.getDirectory().getAbsolutePath());
+        } catch (Exception e) {
+            throw new JobExecutionException(e, false);
+        }
 
         try {
             Task task = manager.getTask(taskId);
