@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CocoonTaskWrapper.java,v 1.9 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id: CocoonTaskWrapper.java,v 1.10 2004/06/28 08:29:46 andreas Exp $  */
 
 package org.apache.lenya.cms.cocoon.task;
 
@@ -29,6 +29,7 @@ import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -151,6 +152,12 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
 			log.debug("    No notification parameters found.");
 		} else {
 			log.debug("    Initializing notification");
+            
+            Identity identity = Identity.getIdentity(request.getSession());
+            User user = identity.getUser();
+            String eMail = user.getEmail();
+            notificationMap.put(Notifier.PARAMETER_FROM, eMail);
+            log.debug("    Setting from address [" + Notifier.PARAMETER_FROM + "] = [" + eMail + "]");
 
 			String toKey = NamespaceMap.getFullName(Notifier.PREFIX, Notifier.PARAMETER_TO);
 			String toString = "";
