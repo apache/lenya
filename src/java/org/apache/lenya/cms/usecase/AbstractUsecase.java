@@ -329,7 +329,18 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      *      org.apache.cocoon.servlet.multipart.Part)
      */
     public void setPart(String name, Part value) {
-        // do nothing
+        if (!Part.class.isInstance(value)) {
+            throw new RuntimeException("[" + value.getClass() + "] [" + value
+                    + "] is not a part object. Maybe you have to enable uploads?");
+        }
+        setParameter(name, value);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#getPart(java.lang.String)
+     */
+    public Part getPart(String name) {
+        return (Part) getParameter(name);
     }
 
     private Context context;
@@ -340,9 +351,9 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     public void contextualize(Context _context) throws ContextException {
         this.context = _context;
     }
-    
+
     private DocumentManager documentManager;
-    
+
     protected DocumentManager getDocumentManager() {
         return this.documentManager;
     }
@@ -362,12 +373,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      */
     public void dispose() {
         super.dispose();
-        
+
         if (this.documentManager != null) {
             this.manager.release(documentManager);
         }
     }
-    
+
     /**
      * Does the actual initialization. Template method.
      */

@@ -62,6 +62,13 @@ public interface Usecase {
     void setPart(String name, Part value);
 
     /**
+     * Returns the current value of a part parameter as a string.
+     * @param name The part parameter name.
+     * @return A part or <code>null</code> if the part was not set.
+     */
+    Part getPart(String name);
+
+    /**
      * Advances the usecase to the next step. This method is called when all
      * parameters are set.
      */
