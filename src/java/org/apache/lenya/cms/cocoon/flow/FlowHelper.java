@@ -15,10 +15,11 @@
  *
  */
 
-/* $Id: FlowHelper.java,v 1.9 2004/08/22 21:51:14 roku Exp $  */
+/* $Id: FlowHelper.java,v 1.10 2004/08/27 21:00:53 roku Exp $  */
 
 package org.apache.lenya.cms.cocoon.flow;
 
+import java.io.FileOutputStream;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -26,6 +27,8 @@ import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
+import org.apache.cocoon.util.BufferedOutputStream;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
@@ -173,4 +176,22 @@ public class FlowHelper {
         return value;
     }
 
+    public void savePipelineToDocument(FOM_Cocoon cocoon, String pipeline) 
+    throws Exception {
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        BufferedOutputStream docOutputStream = null;
+        try {
+            cocoon.jsFunction_processPipelineTo(pipeline, null, bos);
+            docOutputStream = new BufferedOutputStream(new FileOutputStream(getPageEnvelope(cocoon).getDocument().getFile()));
+            docOutputStream.write(bos.toByteArray());
+        } finally {
+            if(docOutputStream != null) {
+                docOutputStream.flush();
+                docOutputStream.close();
+            }
+            if(bos != null) {
+              bos.close(); // Not needed for ByteArrayOutpuStream, but it cleaner this way.    
+            }
+        }
+    }
 }

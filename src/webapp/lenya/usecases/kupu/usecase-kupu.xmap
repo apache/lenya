@@ -60,6 +60,7 @@
   </map:flow>
   <!-- =========================== Pipelines ================================ -->  
   <map:pipelines>
+    
     <map:component-configurations>
       <global-variables>
         <!-- To access core resources -->
@@ -68,12 +69,14 @@
       </global-variables>
     </map:component-configurations>
 
+
     <map:pipeline internal-only="true">
       <map:match pattern="kupu-stream">
         <map:generate type="stream"/>
         <map:serialize type="xml"/>
       </map:match>
       
+      <!-- Flow callbacks -->
       <map:match pattern="sitetree_link_library_template">
         <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/sitetree_link_library.xml.jx}" type="jx">
           <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images/right_arrow.png"/>
@@ -86,10 +89,19 @@
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>      
-    </map:pipeline>
+      <map:match pattern="request2document">
+        <map:aggregate element="edit-envelope">
+          <map:part element="edited" src="cocoon:/kupu-stream"/>
+          <map:part element="original" 
+              src="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+        </map:aggregate>              
+        <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/kupusave.xsl}"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>   
     
     <!-- Usecase pipeline -->  
-    <map:pipeline>
+    <map:pipeline>           
       <map:match pattern="kupu" type="usecase">
         <map:match pattern="open" type="step">
           <map:match pattern="*/authoring/**.html">
@@ -249,23 +261,9 @@
                 <map:call resource="style-cms-page"/>
               </map:act>
               
-              <!-- Merge changed dcoument sent by Kupu with orginial.
-                   I.e. the dc meta data needs to be preserved.
-              -->
-              <map:aggregate element="edit-envelope">
-                <map:part element="edited" src="cocoon:/kupu-stream"/>
-                <map:part element="original" 
-                  src="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
-              </map:aggregate>              
-              <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/kupusave.xsl}"/>
-              <!-- Save the document -->
-              <map:transform src="{global:basedir}/xslt/authoring/edit/addSourceTags.xsl">
-                <map:parameter name="source" 
-                  value="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
-              </map:transform>
-              <map:transform type="write-source"/>
-                              
-              <map:serialize type="xml" status-code="204"/>
+              <map:call function="save">
+                <map:parameter name="template" value="request2document"/>
+              </map:call>
             </map:when>
           </map:select>
         </map:match>

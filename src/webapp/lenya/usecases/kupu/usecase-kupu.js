@@ -8,10 +8,16 @@ importClass(Packages.org.apache.lenya.cms.publication.DocumentHelper);
 importClass(Packages.org.apache.lenya.cms.publication.PublicationHelper);
 importClass(Packages.org.apache.lenya.cms.publication.ResourcesManager);
 
+importClass(Packages.java.io.BufferedOutputStream);
+importClass(Packages.java.io.FileOutputStream);
+
+/**
+ * @version $Id$
+ */
+
 /**
  * Collects all link/url information from a publication's siteree.
  * This information is used to generate xml for the Kupu (link) library drawer.
- * @version $Id$
  */
 function sitetree_link_library() {
     
@@ -65,4 +71,17 @@ function publication_image_library() {
     cocoon.sendPage(cocoon.parameters["template"], {"imageInfos" : imageInfos});
 }
 
+/**
+ * Saves the edited document submitted by Kupu.
+ */
+function save() {
+    cocoon.log.debug("Starting to save Kupu doc.");
 
+    try {        
+        new FlowHelper().savePipelineToDocument(cocoon, cocoon.parameters["template"]);
+        cocoon.response.setStatus(204); // Expected by Kupu upon successful save
+    } catch(e) { 
+        cocoon.log.error("Error saving Kupu doc.", e);
+        cocoon.response.setStatus(500);// Send real error page? Kupu wo't display it anyway, but would be cleaner 
+    }
+}
