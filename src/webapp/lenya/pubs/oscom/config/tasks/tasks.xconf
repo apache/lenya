@@ -32,7 +32,7 @@
   
   <task id="command-line" class="org.wyona.cms.task.CommandLineTask">
     <label>Command Line</label>
-    <parameter name="command" value="ls"/>
+    <parameter name="command" value="date"/>
   </task>
 
 </tasks>
