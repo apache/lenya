@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PublisherTest.java,v 1.5 2003/08/08 17:05:33 egli Exp $
 <License>
 
  ============================================================================
@@ -63,6 +63,8 @@ import junit.textui.TestRunner;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
+import org.apache.lenya.cms.publication.Publication;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,18 +104,18 @@ public class PublisherTest extends AntTaskTest {
         TestRunner.run(getSuite());
     }
 
-    public static final String DOCUMENT_ID = "tutorial";
-    public static final String LIVE_PATH = "content/live/".replace('/', File.separatorChar);
+    public static final String DOCUMENT_ID = "/tutorial";
+    public static final String DOCUMENT_LANGUAGE = "en";
 
 	/**
 	 *  (non-Javadoc)
 	 * @see org.apache.lenya.cms.task.AntTaskTest#evaluateTest()
 	 */
     protected void evaluateTest() throws IOException {
-        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String livePath = LIVE_PATH + DOCUMENT_ID + File.separator + "index.xml";
-        File publishedFile = new File(publicationDirectory, livePath);
-        System.out.println("Path of file to publish: " + livePath);
+        Publication pub = PublicationHelper.getPublication();
+        DocumentIdToPathMapper mapper = pub.getPathMapper();
+        File publishedFile = mapper.getFile(pub, Publication.LIVE_AREA, DOCUMENT_ID, DOCUMENT_LANGUAGE);
+        System.out.println("Path of file to publish: " + publishedFile);
         assertTrue(publishedFile.exists());
         System.out.println("Published file exists: " + publishedFile.getCanonicalPath());
     }
@@ -125,8 +127,10 @@ public class PublisherTest extends AntTaskTest {
     protected Parameters getTaskParameters() {
         Parameters parameters = super.getTaskParameters();
         parameters.setParameter("properties.publish.documentid", DOCUMENT_ID);
-        parameters.setParameter("properties.publish.sources",
-            DOCUMENT_ID + File.separator + "index.xml");
+        parameters.setParameter("properties.publish.language", DOCUMENT_LANGUAGE);
+        Publication pub = PublicationHelper.getPublication();
+        DocumentIdToPathMapper mapper = pub.getPathMapper();
+        parameters.setParameter("properties.publish.sources", mapper.getPath(DOCUMENT_ID, DOCUMENT_LANGUAGE));
 
         return parameters;
     }
