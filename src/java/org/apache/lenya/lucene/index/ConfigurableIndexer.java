@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableIndexer.java,v 1.16 2004/05/16 21:54:47 michi Exp $  */
+/* $Id: ConfigurableIndexer.java,v 1.17 2004/05/16 23:25:15 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -80,6 +80,7 @@ public class ConfigurableIndexer extends AbstractIndexer {
         Writer stylesheetWriter = new StringWriter();
         configurationTransformer.transform(source, new StreamResult(stylesheetWriter));
 
+        // Show meta stylesheet which has been created by configuration2xslt.xsl
         log.debug(".getStylesheet(): Meta Stylesheet: " + stylesheetWriter.toString());
 
         return stylesheetWriter.toString();
