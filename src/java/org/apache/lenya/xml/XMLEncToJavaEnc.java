@@ -63,6 +63,7 @@ import java.util.*;
  *
  * @author Roger Lacher, lenya
  * @version 0.5.8.
+ * @deprecated 
  */
 public class XMLEncToJavaEnc extends Hashtable {
     private static String DEFAULT_ENCODING = "utf-8";

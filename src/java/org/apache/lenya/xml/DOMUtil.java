@@ -73,6 +73,7 @@ import java.util.Vector;
  *
  * @author Michael Wechner
  * @version 1.7.24
+ * @deprecated use DocumentHelper instead
  */
 public class DOMUtil {
     static Category log = Category.getInstance(DOMUtil.class);

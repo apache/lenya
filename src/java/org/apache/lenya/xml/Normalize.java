@@ -57,8 +57,9 @@ package org.apache.lenya.xml;
 
 
 /**
- * @author Michael Wechner (http://www.lenya.com)
+ * @author Michael Wechner (http://cocoon.apache.org/lenya)
  * @version 0.9.14
+ * @deprecated 
  */
 public class Normalize {
     /**

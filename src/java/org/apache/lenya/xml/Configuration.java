@@ -67,6 +67,7 @@ import java.util.Properties;
  *
  * @author Michael Wechner
  * @version 1.8.10
+ * @deprecated replaced by config/ directory
  */
 public class Configuration {
     static Category log = Category.getInstance(Configuration.class);

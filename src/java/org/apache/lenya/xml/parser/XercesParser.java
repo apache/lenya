@@ -72,6 +72,7 @@ import java.io.*;
  *
  * @author Michael Wechner, lenya
  * @version 0.5.5
+ * @deprecated replaced by DocumentHelper
  */
 public class XercesParser implements Parser {
     /**

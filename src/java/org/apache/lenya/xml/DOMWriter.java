@@ -67,9 +67,10 @@ import java.util.*;
 /**
  * DOCUMENT ME!
  *
- * @author Michael Wechner (http://www.lenya.com)
- * @author Roger Lacher (http://www.lenya.com)
+ * @author Michael Wechner (http://cocoon.apache.org/lenya)
+ * @author Roger Lacher (http://cocoon.apache.org/lenya)
  * @version 0.9.26
+ * @deprecated replaced by DocumentHelper
  */
 public class DOMWriter {
     static Category log = Category.getInstance(DOMWriter.class);

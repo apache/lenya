@@ -73,6 +73,7 @@ import java.util.Properties;
  *
  * @author Michael Wechner
  * @version 1.9.11
+ * @deprecated replaced by DocumentHelper
  */
 public class DOMParserFactory {
     static Category log = Category.getInstance(DOMParserFactory.class);

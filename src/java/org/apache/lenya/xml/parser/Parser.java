@@ -65,6 +65,7 @@ import java.io.*;
  *
  * @author Michael Wechner, lenya
  * @version 0.4.16
+ * @deprecated replaced by DocumentHelper
  */
 public interface Parser {
     /**
