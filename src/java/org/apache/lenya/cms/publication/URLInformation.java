@@ -1,5 +1,5 @@
 /*
-$Id: URLInformation.java,v 1.2 2003/09/08 19:29:54 andreas Exp $
+$Id: URLInformation.java,v 1.3 2003/10/26 19:28:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,6 +64,7 @@ public class URLInformation {
     
     private String publicationId = null;
     private String area = null;
+	private String completeArea = null;
     private String documentUrl = null;
     
     /**
@@ -73,6 +74,14 @@ public class URLInformation {
     public String getArea() {
         return area;
     }
+
+	/**
+	 * Returns the complete area (including the "info-" prefix).
+	 * @return A string.
+	 */
+	public String getCompleteArea() {
+		return completeArea;
+	}
 
     /**
      * Returns the document URL.
@@ -103,7 +112,7 @@ public class URLInformation {
         this.publicationId = fragments[0];
         
         if (fragments.length > 1) {
-            String completeArea = fragments[1];
+            this.completeArea = fragments[1];
             
             if (url.length() > (this.publicationId + "/" + completeArea).length()) {
                 this.documentUrl = url.substring((this.publicationId + "/" + completeArea).length());
@@ -113,9 +122,11 @@ public class URLInformation {
             }
             
             if (completeArea.startsWith(Publication.INFO_AREA_PREFIX)) {
-                completeArea = completeArea.substring(Publication.INFO_AREA_PREFIX.length());
+				this.area = completeArea.substring(Publication.INFO_AREA_PREFIX.length());
             }
-            this.area = completeArea;
+            else {
+            	this.area = completeArea;
+            }
         }
     }
     
