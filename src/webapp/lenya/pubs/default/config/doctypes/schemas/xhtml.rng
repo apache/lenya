@@ -16,7 +16,7 @@
 
 
 <!-- include original XHTML transitional schema -->
-<include href="xhtml/xhtml-strict.rng">
+<include href="xhtml/xhtml-basic.rng">
 
   <define name="html">
     <element name="html">
