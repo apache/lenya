@@ -1,5 +1,5 @@
 /*
-$Id: TaskManager.java,v 1.19 2003/07/23 13:21:45 gregor Exp $
+$Id: TaskManager.java,v 1.20 2003/09/05 14:40:46 andreas Exp $
 <License>
 
  ============================================================================
@@ -98,7 +98,10 @@ public class TaskManager implements Configurable {
     /**
      * Creates a new instance of TaskManager
      *
-     * @param publicationPath path to publication,
+     * @param publicationPath path to publication
+     * @throws ConfigurationException if the configuration failed.
+     * @throws SAXException when parsing the config file failed.
+     * @throws IOException when an I/O error occured.
      */
     public TaskManager(String publicationPath)
         throws ConfigurationException, SAXException, IOException {
