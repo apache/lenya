@@ -1,5 +1,5 @@
 /*
- * $Id: MailTask.java,v 1.26 2003/03/06 20:45:41 gregor Exp $
+ * $Id: MailTask.java,v 1.27 2003/04/09 17:26:59 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,7 +43,7 @@
  */
 package org.lenya.cms.mail;
 
-import com.sun.mail.smtp.SMTPMessage;
+//import com.sun.mail.smtp.SMTPMessage;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.log4j.Category;
@@ -61,12 +61,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import java.net.URL;
+import org.lenya.net.SMTP;
 
+/*
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-
+*/
 
 /**
  * A task that sends an e-mail. Each parameter can either be provided as a task parameter or
@@ -184,6 +186,13 @@ public class MailTask extends AbstractTask {
         }
     }
 
+    public void sendMail(String host, String from, String to, String cc, String bcc,
+        String subject, String body) {
+            
+        SMTP smtp = new SMTP();
+        smtp.send(from, to, cc, bcc, subject, body);
+    }
+    
     /**
      * DOCUMENT ME!
      *
@@ -195,6 +204,7 @@ public class MailTask extends AbstractTask {
      * @param subject DOCUMENT ME!
      * @param body DOCUMENT ME!
      */
+    /*
     public void sendMail(String host, String from, String to, String cc, String bcc,
         String subject, String body) {
         log.debug("\nTrying to send mail:" +
@@ -257,5 +267,6 @@ public class MailTask extends AbstractTask {
             log.error("Sending mail failed: ", e);
         }
     }
+     */
 
 }
