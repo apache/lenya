@@ -49,7 +49,8 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
 
 /**
- * Ant task to get the file path from the document id.
+ * Ant task to get the directory path of the xml files of a document with document id.
+ * The path is given from the {area} directory.
  * 
  * @author edith
  */
@@ -66,7 +67,7 @@ public class DocumentIdToPath extends PublicationTask {
     }
 
     /**
-     * @return Sting The directory for the area in the publication.
+     * @return Sting The area.
      */
     public String getArea() {
         return area;
@@ -80,7 +81,7 @@ public class DocumentIdToPath extends PublicationTask {
     }
 
     /**
-     * @return propertyname. The name of the property for the path.
+     * @return propertyname. The name of the property for the directory path.
      */
     public String getPropertyname() {
         return propertyname;
@@ -110,7 +111,7 @@ public class DocumentIdToPath extends PublicationTask {
     }
 
     /**
-     * Gets the path from the document id and sets this value in the 
+     * Gets the directory path from the document id and sets this value in the 
      * property of the project with the name propertyname.   
     
      * @param area The area (ex authoring)
