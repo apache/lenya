@@ -14,7 +14,7 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 
-; $Id: lenya.nsi,v 1.8 2004/04/03 18:15:50 gregor Exp $
+; $Id: lenya.nsi,v 1.9 2004/04/12 11:44:17 gregor Exp $
 
 ;--------------------------------
 ;Include Modern UI
@@ -94,7 +94,7 @@ Section "Apache Lenya" SecDummy
                  "http://127.0.0.1:8888"
 
   CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Lenya Documentation.lnk" \
-                 "http://127.0.0.1:8888/docs/"
+                 "http://127.0.0.1:8888/docs-new/docs/index.html"
 
   CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Uninstall Lenya 1.2.lnk" \
                  "$INSTDIR\Uninstall.exe"
