@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: init-build.xml,v 1.32 2004/05/16 10:27:25 gregor Exp $ -->
+<!-- $Id: init-build.xml,v 1.33 2004/06/28 17:41:08 michi Exp $ -->
 
 <project name="init">
 
@@ -74,6 +74,7 @@
            source="1.4"/>
 
     <taskdef name="copyJavaSources" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="copyPubLibraries" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyPubLibrariesTask"/>
     <taskdef name="copyPubs"        classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyTask"/>
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
   </target>
@@ -198,5 +199,8 @@
     
     <echo>INFO: Copy java source files from ${pubs.root.dirs} to ${build.src}</echo>
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/src" builddir="${build.src}" />
+    
+    <echo>INFO: Copy publication specific libraries from ${pubs.root.dirs} (java/lib) to ${build.webapp}/WEB-INF/lib</echo>
+    <copyPubLibraries pubsrootdirs="${pubs.root.dirs}" libdir="java/lib" builddir="${build.webapp}/WEB-INF/lib" excludes="CVS,.svn"/>
   </target>
 </project>
