@@ -25,7 +25,7 @@
 			<!-- dossier selection -->
 			<map:action name="dossier" src="ch.unizh.unipublic.lenya.cms.DossierAction"/>
 
-			<map:action name="parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
+			<map:action name="parent-child" logger="sitemap.action.parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
 				<tree-authoring href="content/authoring/tree.xml"/>
 				<docs href="content/authoring"/>
 				<doctypes href="content/doctypes/"/>
