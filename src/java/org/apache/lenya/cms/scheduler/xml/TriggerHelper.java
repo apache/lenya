@@ -1,5 +1,5 @@
 /*
-$Id: TriggerHelper.java,v 1.14 2003/07/23 13:21:34 gregor Exp $
+$Id: TriggerHelper.java,v 1.15 2003/08/18 12:33:26 andreas Exp $
 <License>
 
  ============================================================================
@@ -74,11 +74,16 @@ import java.util.GregorianCalendar;
 
 
 /**
- * DOCUMENT ME!
+ * Utility class to work with trigger XML.
  *
- * @author ah
+ * @author Andreas Hartmann
+ * @author Michael Wechner
  */
 public final class TriggerHelper {
+    
+    /**
+     * Ctor.
+     */
     private TriggerHelper() {
     }
 
@@ -95,13 +100,13 @@ public final class TriggerHelper {
     private static int id = 0;
 
     /**
-     * DOCUMENT ME!
+     * Creates a trigger from an XML element.
      *
-     * @param element DOCUMENT ME!
-     * @param jobName DOCUMENT ME!
-     * @param jobGroup DOCUMENT ME!
+     * @param element The XML element.
+     * @param jobName The job name.
+     * @param jobGroup The job group.
      *
-     * @return DOCUMENT ME!
+     * @return A trigger.
      */
     public static Trigger createTrigger(Element element, String jobName, String jobGroup) {
         if (!element.getLocalName().equals("trigger")) {
@@ -168,16 +173,20 @@ public final class TriggerHelper {
         throw new IllegalStateException("Trigger type '" + triggerType + "' not defined!");
     }
 
+    /**
+     * Creates a unique trigger ID.
+     * @return A string.
+     */
     protected static String createUniqueTriggerId() {
         return "trigger_" + id++;
     }
 
     /**
-     * DOCUMENT ME!
+     * Creates a simple trigger.
      *
-     * @param jobName DOCUMENT ME!
-     * @param jobGroup DOCUMENT ME!
-     * @param date DOCUMENT ME!
+     * @param jobName The job name.
+     * @param jobGroup The job group.
+     * @param date The trigger date.
      *
      * @return DOCUMENT ME!
      */
@@ -187,14 +196,14 @@ public final class TriggerHelper {
     }
 
     /**
-     * author Michael Wechner Create CronTrigger
+     * Creates a cron trigger.
      *
-     * @param jobName DOCUMENT ME!
-     * @param jobGroup DOCUMENT ME!
+     * @param jobName The job name.
+     * @param jobGroup The job group.
      * @param cron_expression Seconds, Minutes, Hours, Day of Month, Months, Day of Week (e.g. 34
      *        ?)
      *
-     * @return DOCUMENT ME!
+     * @return A trigger.
      */
     public static Trigger createCronTrigger(String jobName, String jobGroup, String cron_expression) {
         try {
@@ -208,11 +217,10 @@ public final class TriggerHelper {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param trigger DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Creates an XML element containing trigger information.
+     * @param helper The namespace helper to use.
+     * @param trigger The trigger.
+     * @return An XML element.
      */
     public static Element createElement(NamespaceHelper helper, Trigger trigger) {
         Element triggerElement = helper.createElement("trigger");
