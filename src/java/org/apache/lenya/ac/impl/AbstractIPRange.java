@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIPRange.java,v 1.4 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: AbstractIPRange.java,v 1.5 2004/04/03 15:17:45 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -38,7 +38,8 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
     private static final Category log = Category.getInstance(AbstractIPRange.class);
 
     /**
-     * Ctor.
+     * FIXME: this is completely broken for IPv6. why are we in the business of implementing IP ranges??
+     * 
      */
     public AbstractIPRange() {
         try {
