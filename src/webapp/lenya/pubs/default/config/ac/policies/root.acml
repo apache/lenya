@@ -1,18 +1,23 @@
 <?xml version="1.0"?>
 
 <ac>
-<request>
-  <action name="read"/>
-</request>
-<policy>
- <object match="/">
-  <subjects>
-    <group id="root">
-      <actions>
-        <read/>
-      </actions>
-    </group>
-  </subjects>
- </object>
-</policy>
+  <request>
+    <action name="read"/>
+  </request>
+  <policy>
+    <object match="/">
+      <subjects>
+	<group id="admin">
+	  <actions>
+	    <read/>
+	  </actions>
+	</group>
+	<group id="editor">
+	  <actions>
+	    <read/>
+	  </actions>
+	</group>
+      </subjects>
+    </object>
+  </policy>
 </ac>
