@@ -69,4 +69,4 @@ the ways the Lenya community pays back.
 
 
                                                   The Apache Lenya Community
-                                                  http://cocoon.apache.org/lenya/
+                                                  http://lenya.apache.org/

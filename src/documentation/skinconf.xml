@@ -66,7 +66,7 @@ be used to configure the chosen Forrest skin.
   	It is based on open standards such as XML and XSLT. 
   	One of its core components is Cocoon from the Apache Software Foundation.
   </project-description>
-  <project-url>http://cocoon.apache.org/lenya</project-url>
+  <project-url>http://lenya.apache.org</project-url>
   <project-logo>images/apache-lenya-light.png</project-logo>
 
   <!-- Alternative static image:

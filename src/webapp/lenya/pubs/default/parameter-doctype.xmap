@@ -31,7 +31,7 @@
           <document-element namespace="http://www.w3.org/1999/xhtml"/>
         </sourcetype>
         <sourcetype name="links">
-          <document-element namespace="http://cocoon.apache.org/lenya/pubs/default/1.0"/>
+          <document-element namespace="http://apache.org/lenya/pubs/default/1.0"/>
         </sourcetype>
       </map:action>
     </map:actions>

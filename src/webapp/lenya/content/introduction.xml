@@ -24,7 +24,7 @@ You have successfully installed Apache Lenya <strong>1.4-dev</strong>. To start,
 
 <h3>About Apache Lenya</h3>
 <p>
-<a href="http://cocoon.apache.org/lenya">Apache Lenya</a> is a Java-based <a href="http://www.opensource.org">Open-Source</a>
+<a href="http://lenya.apache.org">Apache Lenya</a> is a Java-based <a href="http://www.opensource.org">Open-Source</a>
 Content Management System. It
 is based on open standards such as <a href="http://www.w3c.org/XML/">XML</a> and <a href="http://www.w3c.org/TR/xslt">XSLT</a>. One of its core
 components is <a href="http://cocoon.apache.org">Cocoon</a> from the

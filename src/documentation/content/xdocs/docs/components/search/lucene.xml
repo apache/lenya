@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lucene.xml,v 1.3 2004/07/27 03:08:08 michi Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -93,8 +93,8 @@ whereas the crawler.xconf has the following elements
 <crawler>
   <user-agent>lenya</user-agent>
 
-  <base-url href="http://cocoon.apache.org/lenya/index.html"/>
-  <scope-url href="http://cocoon.apache.org/lenya/"/>
+  <base-url href="http://lenya.apache.org/index.html"/>
+  <scope-url href="http://lenya.apache.org/"/>
 
   <uri-list src="work/search/lucene/uris.txt"/>
   <htdocs-dump-dir src="work/search/lucene/htdocs_dump/cocoon.apache.org"/>
