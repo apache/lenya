@@ -40,4 +40,13 @@ public interface Authorizer extends Component {
     boolean authorize(Request request)
         throws AccessControlException;
 
+    /**
+     * Authorizes a request using a different URL.
+     * @param request The request.
+     * @param webappUrl The URL to authorize.
+     * @return A boolean value.
+     * @throws AccessControlException if an error occurs.
+     */
+    boolean authorize(Request request, String webappUrl)
+            throws AccessControlException;
 }

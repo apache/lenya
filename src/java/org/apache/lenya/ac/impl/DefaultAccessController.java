@@ -50,6 +50,7 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Default access controller implementation.
@@ -88,50 +89,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      * @see org.apache.lenya.ac.AccessController#authorize(org.apache.cocoon.environment.Request)
      */
     public boolean authorize(Request request) throws AccessControlException {
-
-        assert request != null;
-
-        boolean authorized = false;
-
-        getLogger().debug("=========================================================");
-        getLogger().debug("Beginning authorization.");
-
-        if (hasAuthorizers()) {
-            Authorizer[] _authorizers = getAuthorizers();
-            int i = 0;
-            authorized = true;
-
-            while ((i < _authorizers.length) && authorized) {
-
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("---------------------------------------------------------");
-                    getLogger().debug("Invoking authorizer [" + _authorizers[i] + "]");
-                }
-
-                if (_authorizers[i] instanceof PolicyAuthorizer) {
-                    PolicyAuthorizer authorizer = (PolicyAuthorizer) _authorizers[i];
-                    authorizer.setAccreditableManager(this.accreditableManager);
-                    authorizer.setPolicyManager(this.policyManager);
-                }
-
-                authorized = authorized && _authorizers[i].authorize(request);
-
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(
-                            "Authorizer [" + _authorizers[i] + "] returned [" + authorized + "]");
-                }
-
-                i++;
-            }
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("=========================================================");
-            getLogger().debug("Authorization complete, result: [" + authorized + "]");
-            getLogger().debug("=========================================================");
-        }
-
-        return authorized;
+        return authorize(request, ServletHelper.getWebappURI(request));
     }
 
     /**
@@ -448,6 +406,55 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getLogger().debug("Notifying policy manager");
         }
         getPolicyManager().accreditableRemoved(getAccreditableManager(), (Accreditable) item);
+    }
+
+    /**
+     * @see org.apache.lenya.ac.AccessController#authorize(org.apache.cocoon.environment.Request, java.lang.String)
+     */
+    public boolean authorize(Request request, String webappUrl) throws AccessControlException {
+        assert request != null;
+
+        boolean authorized = false;
+
+        getLogger().debug("=========================================================");
+        getLogger().debug("Beginning authorization.");
+
+        if (hasAuthorizers()) {
+            Authorizer[] _authorizers = getAuthorizers();
+            int i = 0;
+            authorized = true;
+
+            while ((i < _authorizers.length) && authorized) {
+
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("---------------------------------------------------------");
+                    getLogger().debug("Invoking authorizer [" + _authorizers[i] + "]");
+                }
+
+                if (_authorizers[i] instanceof PolicyAuthorizer) {
+                    PolicyAuthorizer authorizer = (PolicyAuthorizer) _authorizers[i];
+                    authorizer.setAccreditableManager(this.accreditableManager);
+                    authorizer.setPolicyManager(this.policyManager);
+                }
+
+                authorized = authorized && _authorizers[i].authorize(request, webappUrl);
+
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug(
+                            "Authorizer [" + _authorizers[i] + "] returned [" + authorized + "]");
+                }
+
+                i++;
+            }
+        }
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("=========================================================");
+            getLogger().debug("Authorization complete, result: [" + authorized + "]");
+            getLogger().debug("=========================================================");
+        }
+
+        return authorized;
     }
 
 }

@@ -34,6 +34,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowEngine;
@@ -41,8 +42,8 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 
 /**
- * If the client requested invoking a workflow event, this authorizer checks if the current document
- * state and identity roles allow this transition.
+ * If the client requested invoking a workflow event, this authorizer checks if
+ * the current document state and identity roles allow this transition.
  */
 public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer, Serviceable {
 
@@ -52,17 +53,24 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
      * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
      */
     public boolean authorize(Request request) throws AccessControlException {
+        return authorize(request, ServletHelper.getWebappURI(request));
+    }
 
+    private ServiceManager manager;
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
+    }
+
+    /**
+     * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request,
+     *      java.lang.String)
+     */
+    public boolean authorize(Request request, String webappUrl) throws AccessControlException {
         boolean authorized = true;
-
-        String requestUri = request.getRequestURI();
-        String context = request.getContextPath();
-
-        if (context == null) {
-            context = "";
-        }
-
-        String url = requestUri.substring(context.length());
 
         String event = request.getParameter(EVENT_PARAMETER);
         SourceResolver resolver = null;
@@ -79,10 +87,11 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                 PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
                 Publication publication = pubFactory.getPublication(resolver, request);
                 DocumentIdentityMap map = new DocumentIdentityMap();
-                if (map.getFactory().isDocument(publication, url)) {
+                if (map.getFactory().isDocument(publication, webappUrl)) {
 
-                    Document document = map.getFactory().getFromURL(publication, url);
-                    workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+                    Document document = map.getFactory().getFromURL(publication, webappUrl);
+                    workflowResolver = (WorkflowResolver) this.manager
+                            .lookup(WorkflowResolver.ROLE);
 
                     if (workflowResolver.hasWorkflow(document)) {
                         Workflow workflow = workflowResolver.getWorkflowSchema(document);
@@ -111,15 +120,6 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
         }
 
         return authorized;
-    }
-
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
     }
 
 }

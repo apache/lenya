@@ -30,12 +30,12 @@ public interface AccessController extends Component {
      * The access control namespace URI.
      */
     String NAMESPACE = "http://apache.org/cocoon/lenya/ac/1.0";
-    
+
     /**
      * The default prefix for the access control namespace.
      */
     String DEFAULT_PREFIX = "ac";
-    
+
     /**
      * The Avalon role.
      */
@@ -56,7 +56,17 @@ public interface AccessController extends Component {
      * @throws AccessControlException when something went wrong.
      */
     boolean authorize(Request request) throws AccessControlException;
-    
+
+    /**
+     * Authorizes a request using a different URL.
+     * @param request The request.
+     * @param webappUrl The URL to authorize.
+     * @return A boolean value.
+     * @throws AccessControlException if an error occurs.
+     */
+    boolean authorize(Request request, String webappUrl)
+            throws AccessControlException;
+
     /**
      * Initializes the identity for this access controller.
      * @param request The request that contains the identity information.

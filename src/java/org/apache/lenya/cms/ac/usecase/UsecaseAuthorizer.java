@@ -219,4 +219,11 @@ public class UsecaseAuthorizer
         return authorizeUsecase(usecase, roles, getConfigurationURI(publication));
     }
 
+    /**
+     * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request, java.lang.String)
+     */
+    public boolean authorize(Request request, String webappUrl) throws AccessControlException {
+        return authorize(request);
+    }
+
 }
