@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.18 2003/08/08 16:38:42 gregor Exp $
+$Id: PageEnvelopeModule.java,v 1.19 2003/08/11 14:46:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -146,6 +146,8 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 value = envelope.getDocument().getDublinCore().getRights();
             } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
                 value = envelope.getDocument().getLastModified();
+			} else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
+				value = envelope.getPublication().getBreadcrumbPrefix();
             }
         } catch (Exception e) {
             throw new ConfigurationException(

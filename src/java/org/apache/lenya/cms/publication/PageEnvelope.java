@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.37 2003/08/08 16:38:42 gregor Exp $
+$Id: PageEnvelope.java,v 1.38 2003/08/11 14:46:28 gregor Exp $
 <License>
 
  ============================================================================
@@ -89,6 +89,7 @@ public class PageEnvelope {
     public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
+	public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
     private String context;
 
     /**
@@ -269,7 +270,8 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_DC_SUBJECT,
             PageEnvelope.DOCUMENT_DC_DESCRIPTION,
             PageEnvelope.DOCUMENT_DC_RIGHTS,
-            PageEnvelope.DOCUMENT_LASTMODIFIED };
+            PageEnvelope.DOCUMENT_LASTMODIFIED,
+			PageEnvelope.BREADCRUMB_PREFIX };
 
     /**
      * @param string The context.

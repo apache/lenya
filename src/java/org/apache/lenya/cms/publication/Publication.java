@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.23 2003/08/08 09:07:32 egli Exp $
+$Id: Publication.java,v 1.24 2003/08/11 14:46:28 gregor Exp $
 <License>
 
  ============================================================================
@@ -86,6 +86,8 @@ public class Publication {
     public static final String LANGUAGE = "language";
     public static final String DEFAULT_LANGUAGE_ATTR = "default";
 
+	public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+
     public static final String PUBLICATION_PREFIX =
         "lenya" + File.separator + "pubs";
     public static final String PUBLICATION_PREFIX_URI = "lenya/pubs";
@@ -103,6 +105,7 @@ public class Publication {
     private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
+	private String breadcrumbprefix = null;
     private HashMap siteTrees = new HashMap();
 
     /** 
@@ -160,6 +163,9 @@ public class Publication {
                     defaultLanguage = language;
                 }
             }
+			breadcrumbprefix =
+				config.getChild(BREADCRUMB_PREFIX).getValue("");
+
 
         } catch (ConfigurationException e) {
             throw new PublicationException(
@@ -276,11 +282,20 @@ public class Publication {
     /**
      * Get all available languages for this publication
      * 
-     * @return an <code>Arrary</code> of languages
+     * @return an <code>Array</code> of languages
      */
     public String[] getLanguages() {
         return (String[])languages.toArray(new String[languages.size()]);
     }
+
+	/**
+	 * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger site
+	 * 
+	 * @return the breadcrumb prefix
+	 */
+	public String getBreadcrumbPrefix() {
+		return breadcrumbprefix;
+	}
 
     /**
      * Get the sitetree for a specific area of this publication. 
