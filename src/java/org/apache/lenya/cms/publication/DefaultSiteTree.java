@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.5 2003/05/13 13:22:42 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.6 2003/05/13 15:56:04 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -112,18 +112,24 @@ public class DefaultSiteTree
 	return null;
     }
 
-    public void addNode(String parentid, String id, Label[] labels) {
+    public void addNode(String parentid, String id, Label[] labels)
+	throws SiteTreeException {
 	addNode(parentid, id, labels, null, null, false);
     }
 
+    public void addNode(SiteTreeNode node)
+	throws SiteTreeException {
+	this.addNode(node.getParentId(), node.getId(), node.getLabels(),
+		     node.getHref(), node.getSuffix(), node.hasLink());
+    }
+
     public void addNode(String parentid, String id, Label[] labels,
-			String href, String suffix, boolean link) {
+			String href, String suffix, boolean link)
+	throws SiteTreeException {
 	
 	Node parentNode = getNodeInternal(parentid);
         if (parentNode == null) {
-            log.error("No nodes: " + parentid + ". No child added");
-	    
-            return;
+            throw new SiteTreeException("Parentid: " + parentid + " not found");
         }
 	
 	log.debug("PARENT ELEMENT: " + parentNode);
@@ -164,11 +170,6 @@ public class DefaultSiteTree
 
 	parentNode.appendChild(child);
 	log.debug("Tree has been modified: " + document.getDocumentElement());
-    }
-
-    public void addNode(SiteTreeNode node) {
-	this.addNode(node.getParentId(), node.getId(), node.getLabels(),
-		     node.getHref(), node.getSuffix(), node.hasLink());
     }
 
     public void deleteNode(String id) {}

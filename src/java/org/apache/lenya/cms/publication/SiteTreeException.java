@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTree.java,v 1.4 2003/05/13 15:56:04 egli Exp $
+ * $Id: SiteTreeException.java,v 1.1 2003/05/13 15:56:04 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,21 +43,33 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.util.Map;
+public class SiteTreeException
+    extends Exception {
 
-public interface SiteTree {
+    /**
+     * Creates a new SiteTreeException.
+     */
+    public SiteTreeException() {
+    }
 
-    void addNode(String parentid, String id, Label[] labels)
-	throws SiteTreeException;
-    
-    void addNode(String parentid, String id, Label[] labels,
-		 String href, String suffix, boolean link)
-	throws SiteTreeException;
-    
-    void addNode(SiteTreeNode node)
-	throws SiteTreeException;
-    
-    void deleteNode(String id);
-    
-    SiteTreeNode getNode(String documentId);
+    /**
+     * Creates a new SiteTreeException.
+     */
+    public SiteTreeException(String message) {
+        super(message);
+    }
+
+    /**
+     * Creates a new SiteTreeException.
+     */
+    public SiteTreeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Creates a new SiteTreeException.
+     */
+    public SiteTreeException(Throwable cause) {
+        super(cause);
+    }
 }
