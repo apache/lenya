@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTree.java,v 1.6 2003/05/28 12:56:24 egli Exp $
+ * $Id: SiteTree.java,v 1.7 2003/05/28 13:18:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,6 +47,7 @@ public interface SiteTree {
 
     /**
      * Add a node.
+     * 
 	 * @param parentid e.g. "/tutorial"
 	 * @param id e.g. "concepts"
 	 * @param labels
@@ -57,6 +58,7 @@ public interface SiteTree {
     
     /**
      * Add a node.
+     * 
 	 * @param parentid
 	 * @param id
 	 * @param labels
@@ -76,6 +78,7 @@ public interface SiteTree {
      * authoring tree). The node that is added will be a copy of
      * the original node and will be inserted at the same parentid
      * as the original node.
+     * 
 	 * @param node
 	 * @throws SiteTreeException
 	 */
@@ -83,13 +86,15 @@ public interface SiteTree {
 	throws SiteTreeException;
     
     /**
-     * Delete the node with the given document-id
+     * Delete the node with the given document-id.
+     * 
 	 * @param id
 	 */
-	void deleteNode(String id);
+	void deleteNode(String documentId);
     
     /**
-     * Return the Node for a given document-id
+     * Return the Node for a given document-id.
+     * 
 	 * @param documentId
 	 * @return
 	 */
