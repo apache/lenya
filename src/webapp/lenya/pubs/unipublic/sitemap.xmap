@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.3 2002/08/30 13:43:18 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.4 2002/09/04 14:22:58 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -64,11 +64,20 @@
       <map:match pattern="frontpage.html">
         <map:read src="resources/publication/html/documentation/frontpage.html" mime-type="text/html"/>
       </map:match>
+      <map:match pattern="dossier.html">
+        <map:read src="resources/publication/html/documentation/dossier.html" mime-type="text/html"/>
+      </map:match>
+      <map:match pattern="dossiers.html">
+        <map:read src="resources/publication/html/documentation/dossiers.html" mime-type="text/html"/>
+      </map:match>
       <map:match pattern="xmlArchitecture.html">
         <map:read src="resources/publication/html/documentation/xmlArchitecture.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="xsltModularisation.html">
         <map:read src="resources/publication/html/documentation/xsltModularisation.html" mime-type="text/html"/>
+      </map:match>
+      <map:match pattern="todo.html">
+        <map:read src="resources/publication/html/documentation/todo.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>
 
