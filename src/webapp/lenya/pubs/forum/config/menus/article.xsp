@@ -9,6 +9,7 @@
 <menu>
 
   <xsp-wyona:util/>
+  <authoring/>
 
   <xsp:logic>
     String article_id=parameters.getParameter("articleid","null");

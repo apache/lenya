@@ -9,6 +9,7 @@
 <menu>
 
   <xsp-wyona:util/>
+  <authoring/>
 
   <live_uri>/index.html</live_uri>
 

@@ -13,7 +13,7 @@
 <table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="%100">
  <tr>
   <td colspan="3">
-  <a href="{$context_prefix}/index.html"><img src="{$image_path}/wyona-org-forum.jpg" border="0"/></a>
+  <a><xsl:attribute name="href"><xsl:value-of select="$context_prefix"/><xsl:if test="/wyona/menu/authoring">/authoring</xsl:if>/index.html</xsl:attribute><img src="{$image_path}/wyona-org-forum.jpg" border="0"/></a>
   </td>
  </tr>
  <tr>
