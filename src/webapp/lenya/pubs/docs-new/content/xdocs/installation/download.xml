@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: download.xml,v 1.5 2004/03/13 12:42:12 gregor Exp $ -->
+<!-- $Id: download.xml,v 1.6 2004/07/05 13:11:59 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -35,7 +35,7 @@
 <title>Releases</title>
 
 <ul>
-  <li><link href="http://www.apache.org/dyn/closer.cgi/cocoon/lenya/">http://www.apache.org/dyn/closer.cgi/cocoon/lenya/</link></li>
+  <li><link href="http://cvs.apache.org/dist/incubator/lenya/">http://cvs.apache.org/dist/incubator/lenya/</link></li>
 </ul>
 
 </section>
