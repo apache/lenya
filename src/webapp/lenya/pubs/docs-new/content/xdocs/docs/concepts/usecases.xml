@@ -475,10 +475,6 @@
           <td colspan="2">All Dublin core identifiers are also accepted</td>
         </tr>
       </table>
-      <fixme author="ce">We assume that we can get the documentid
-        from the request URI (given the standardized <link
-          href="#uri_definition">URI definition</link>). Is this
-        ok?</fixme>
     </section>
 
     <section>
