@@ -6,15 +6,15 @@
 <xsl:template match="/" xmlns:xi="http://www.w3.org/2001/XInclude">
   <Page>
     <Content>
-<!--      FirstColumn-->
+      <!-- FirstColumn-->
         <xi:include xml:base="cocoon:" href="navigation.xml"/>
-<!--      End FirstColumn-->
+      <!-- End FirstColumn-->
       <MainColumn>
         <xsl:apply-templates select="Frontpage"/>
       </MainColumn>
-<!--     LastColumn -->
+      <!-- LastColumn -->
         <xi:include xml:base="cocoon:" href="services.xml"/>
-<!--    End  LastColumn -->
+      <!-- End  LastColumn -->
     </Content>
   </Page>
 </xsl:template>
