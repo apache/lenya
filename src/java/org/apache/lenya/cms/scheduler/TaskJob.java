@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.35 2004/01/07 18:37:23 andreas Exp $
+$Id: TaskJob.java,v 1.36 2004/02/02 02:42:35 stefano Exp $
 <License>
 
  ============================================================================
@@ -60,29 +60,25 @@ $Id: TaskJob.java,v 1.35 2004/01/07 18:37:23 andreas Exp $
  */
 package org.apache.lenya.cms.scheduler;
 
+import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.DefaultTaskWrapper;
+import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.TaskParameters;
 import org.apache.lenya.cms.task.TaskWrapper;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-
 import org.apache.log4j.Category;
-
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.SchedulerException;
-
 import org.w3c.dom.Element;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * A TaskJob is a Job that executes a Task. The task ID is obtained from the <code>task-id</code>
@@ -104,12 +100,12 @@ public class TaskJob extends ServletJob {
     protected Map getParameters(HttpServletRequest request)
         throws SchedulerException {
         
-        Map parameterMap = request.getParameterMap();
+        Enumeration parameters = request.getParameterNames();
         Map wrapperMap = new HashMap();
-        for (Iterator i = parameterMap.keySet().iterator(); i.hasNext(); ) {
-            String key = (String) i.next();
+        while (parameters.hasMoreElements()) {
+            String key = (String) parameters.nextElement();
             Object value;
-            String[] values = (String[]) parameterMap.get(key);
+            String[] values = (String[]) request.getParameterValues(key);
             if (values.length == 1) {
                 value = values[0];
             }
