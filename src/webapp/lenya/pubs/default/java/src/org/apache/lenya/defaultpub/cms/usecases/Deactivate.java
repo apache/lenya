@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.defaultpub.cms.usecases;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -24,8 +25,8 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * Deactivate usecase handler.
@@ -51,12 +52,21 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 
             String event = getEvent();
 
-            if (!getWorkflowInstance(getSourceDocument()).canInvoke(getSituation(), event)) {
-                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
-                addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
-            } else {
-                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
+            WorkflowManager wfManager = null;
+            try {
+                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+                if (!wfManager.canInvoke(getSourceDocument(), event)) {
+                    setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
+                    addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
+                } else {
+                    setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
+                }
+            } finally {
+                if (wfManager != null) {
+                    this.manager.release(wfManager);
+                }
             }
+
         }
     }
 
@@ -81,12 +91,14 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         Publication publication = authoringDocument.getPublication();
         boolean success = false;
 
+        WorkflowManager wfManager = null;
         try {
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             Document liveDocument = publication.getAreaVersion(authoringDocument,
                     Publication.LIVE_AREA);
             getDocumentManager().deleteDocument(liveDocument);
 
-            triggerWorkflow(getEvent(), authoringDocument);
+            wfManager.invoke(authoringDocument, getEvent());
             success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -94,6 +106,9 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Deactivate document [" + authoringDocument + "]. Success: ["
                         + success + "]");
+            }
+            if (wfManager != null) {
+                this.manager.release(wfManager);
             }
         }
 
@@ -173,13 +188,22 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             WorkflowException {
         String[] languages = document.getPublication().getLanguages();
         DocumentFactory factory = document.getIdentityMap().getFactory();
-        for (int i = 0; i < languages.length; i++) {
-            Document version = factory.getLanguageVersion(document, languages[i]);
-            if (version.exists()) {
-                WorkflowInstance instance = getWorkflowInstance(version);
-                if (instance.canInvoke(getSituation(), getEvent())) {
-                    deactivate(version);
+        WorkflowManager wfManager = null;
+        try {
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            for (int i = 0; i < languages.length; i++) {
+                Document version = factory.getLanguageVersion(document, languages[i]);
+                if (version.exists()) {
+                    if (wfManager.canInvoke(getSourceDocument(), getEvent())) {
+                        deactivate(version);
+                    }
                 }
+            }
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (wfManager != null) {
+                this.manager.release(wfManager);
             }
         }
 

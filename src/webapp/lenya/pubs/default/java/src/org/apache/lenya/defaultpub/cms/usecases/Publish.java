@@ -27,8 +27,8 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * Publish usecase handler.
@@ -59,11 +59,19 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 return;
             }
 
-            if (!getWorkflowInstance(getSourceDocument()).canInvoke(getSituation(), event)) {
-                setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
-                addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
-            } else {
-                setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
+            WorkflowManager wfManager = null;
+            try {
+                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+                if (!wfManager.canInvoke(getSourceDocument(), event)) {
+                    setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
+                    addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
+                } else {
+                    setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
+                }
+            } finally {
+                if (wfManager != null) {
+                    this.manager.release(wfManager);
+                }
             }
 
             Publication publication = document.getPublication();
@@ -107,21 +115,18 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
      */
     protected void publish(Document authoringDocument) {
 
-        boolean success = false;
-
+        WorkflowManager wfManager = null;
         try {
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             getDocumentManager().copyDocumentToArea(authoringDocument, Publication.LIVE_AREA);
-            triggerWorkflow(getEvent(), authoringDocument);
-            success = true;
+            wfManager.invoke(authoringDocument, getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Publish document [" + authoringDocument + "]. Success: ["
-                        + success + "]");
+            if (wfManager != null) {
+                this.manager.release(wfManager);
             }
         }
-
     }
 
     /**
@@ -198,13 +203,23 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             WorkflowException {
         String[] languages = document.getPublication().getLanguages();
         DocumentFactory factory = document.getIdentityMap().getFactory();
-        for (int i = 0; i < languages.length; i++) {
-            Document version = factory.getLanguageVersion(document, languages[i]);
-            if (version.exists()) {
-                WorkflowInstance instance = getWorkflowInstance(version);
-                if (instance.canInvoke(getSituation(), getEvent())) {
-                    publish(version);
+
+        WorkflowManager wfManager = null;
+        try {
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            for (int i = 0; i < languages.length; i++) {
+                Document version = factory.getLanguageVersion(document, languages[i]);
+                if (version.exists()) {
+                    if (wfManager.canInvoke(version, getEvent())) {
+                        publish(version);
+                    }
                 }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (wfManager != null) {
+                this.manager.release(wfManager);
             }
         }
 

@@ -2,11 +2,15 @@
 
     <component-instance name="default/workflow.submit"
                         logger="lenya.usecases.workflow"
-                        class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow"/>
+                        class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow">
+      <event id="submit"/>
+    </component-instance>
                         
     <component-instance name="default/workflow.reject"
                         logger="lenya.usecases.workflow"
-                        class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow"/>
+                        class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow">
+      <event id="reject"/>
+    </component-instance>
                         
     <component-instance name="default/workflow.publish"
                         logger="lenya.usecases.workflow"
