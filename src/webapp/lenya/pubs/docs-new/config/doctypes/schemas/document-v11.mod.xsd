@@ -45,7 +45,7 @@
 <!-- =============================================================== -->
 <!-- Useful entities for increased DTD readability -->
 <!-- =============================================================== -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:bxe="http://bitfluxeditor.org/schema/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <!-- Entities referred to later on are defined up front -->
   <xs:element name="markup" abstract="true"/>
@@ -177,6 +177,12 @@
   <!-- ==================================================== -->
   <!-- Strong (typically bold) -->
   <xs:element name="strong" substitutionGroup="markup">
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Bold</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Bold</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType mixed="true">
       <xs:sequence>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="code"/>
@@ -273,6 +279,16 @@
   <!-- ==================================================== -->
   <!-- Text Paragraph (normally vertically space delimited. Space can be preserved.) -->
   <xs:element name="p" substitutionGroup="paragraphs">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Paragraph</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Paragraph</bxe:name>
+				<bxe:returnelement>p</bxe:returnelement>
+				<bxe:insertafter>
+					<bxe:element>p</bxe:element>
+				</bxe:insertafter>
+			</xs:appinfo>
+		</xs:annotation>
     <xs:complexType mixed="true">
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="content.mix"/>
       <xs:attributeGroup ref="common.att"/>
@@ -472,6 +488,13 @@
   <!-- Document -->
   <!-- =============================================================== -->
   <xs:element name="document">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Document</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Document</bxe:name>
+				<bxe:returnelement></bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="header"/>
@@ -499,6 +522,13 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="title">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Title</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Title</bxe:name>
+				<bxe:returnelement>abstract</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="markup"/>
@@ -566,6 +596,13 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="body">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Body</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Body</bxe:name>
+				<bxe:returnelement>p</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
         <xs:element ref="sections"/>

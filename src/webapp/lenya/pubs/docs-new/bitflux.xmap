@@ -47,8 +47,8 @@
 			<map:match pattern="schemas/xdoc.xsd">
 				<map:read src="content/doctypes/schemas/xdoc.xsd" mime-type="text/xml"/>
 			</map:match>
-			<map:match pattern="css/article.css">
-				<map:read src="resources/css/authoring/article-bitflux.css" mime-type="text/css"/>
+			<map:match pattern="css/xdoc.css">
+				<map:read src="resources/css/authoring/xdoc-bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
 		<!-- Generic -->
