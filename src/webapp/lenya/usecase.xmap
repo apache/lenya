@@ -549,6 +549,12 @@
           
           <map:match pattern="rollback" type="step">
             <map:act type="rollback">
+              <map:act type="workflow">
+                <map:parameter name="area" value="{page-envelope:area}"/>
+                <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+                <map:parameter name="language" value="{page-envelope:document-language}"/>
+                <map:parameter name="event" value="edit"/>
+              </map:act>
               <map:redirect-to session="true" uri="{location}"/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
