@@ -1,9 +1,9 @@
 /*
- * $Id: IMLAuthenticatorAction.java,v 1.13 2003/06/12 15:51:33 egli Exp $
+ * $Id: IMLAuthenticatorAction.java,v 1.14 2003/06/17 07:28:47 michi Exp $
  * <License>
  * The Apache Software License
  *
- * Copyright (c) 2002 lenya. All rights reserved.
+ * Copyright (c) 2003 lenya. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -53,13 +53,15 @@ import org.apache.cocoon.environment.Session;
 import org.w3c.dom.Document;
 
 import org.apache.lenya.cms.ac.Identity;
-import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac.UserManager;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.ac.Password;
+
 import java.net.URL;
+
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 
 /**
  * DOCUMENT ME!
@@ -67,149 +69,136 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @author Michael Wechner
  * @version 2.1.6
  */
-public class IMLAuthenticatorAction
-	extends AbstractUsernamePasswordAuthenticatorAction
-	implements ThreadSafe {
-	private String domain = null;
-	private String port = null;
-	private String context = null;
-	private String passwd = null;
-	private String type = null;
+public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticatorAction
+    implements ThreadSafe {
+    private String domain = null;
+    private String port = null;
+    private String context = null;
+    private String passwd = null;
+    private String type = null;
 
-	/**
-	 * DOCUMENT ME!
-	 *
-	 * @param conf DOCUMENT ME!
-	 *
-	 * @throws ConfigurationException DOCUMENT ME!
-	 */
-	public void configure(Configuration conf) throws ConfigurationException {
-		super.configure(conf);
+    /**
+     * DOCUMENT ME!
+     *
+     * @param conf DOCUMENT ME!
+     *
+     * @throws ConfigurationException DOCUMENT ME!
+     */
+    public void configure(Configuration conf) throws ConfigurationException {
+        super.configure(conf);
 
-		Configuration domainConf = conf.getChild("domain");
-		domain = domainConf.getValue("127.0.0.1");
+        Configuration domainConf = conf.getChild("domain");
+        domain = domainConf.getValue("127.0.0.1");
 
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("CONFIGURATION: domain=" + domain);
-		}
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("CONFIGURATION: domain=" + domain);
+        }
 
-		Configuration portConf = conf.getChild("port");
-		port = portConf.getValue(null);
+        Configuration portConf = conf.getChild("port");
+        port = portConf.getValue(null);
 
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("CONFIGURATION: port=" + port);
-		}
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("CONFIGURATION: port=" + port);
+        }
 
-		Configuration contextConf = conf.getChild("context");
-		context = contextConf.getValue(null);
+        Configuration contextConf = conf.getChild("context");
+        context = contextConf.getValue(null);
 
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("CONFIGURATION: context=" + context);
-		}
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("CONFIGURATION: context=" + context);
+        }
 
-		Configuration passwdConf = conf.getChild("passwd");
-		passwd = passwdConf.getValue(null);
+        Configuration passwdConf = conf.getChild("passwd");
+        passwd = passwdConf.getValue(null);
 
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("CONFIGURATION: passwd=" + passwd);
-		}
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("CONFIGURATION: passwd=" + passwd);
+        }
 
-		Configuration typeConf = conf.getChild("type");
-		type = typeConf.getValue(null);
+        Configuration typeConf = conf.getChild("type");
+        type = typeConf.getValue(null);
 
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("CONFIGURATION: type=" + type);
-		}
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("CONFIGURATION: type=" + type);
+        }
 
-	}
+    }
 
-	/**
-	 * DOCUMENT ME!
-	 *
-	 * @param username DOCUMENT ME!
-	 * @param password DOCUMENT ME!
-	 * @param request DOCUMENT ME!
-	 * @param map DOCUMENT ME!
-	 *
-	 * @return DOCUMENT ME!
-	 *
-	 * @throws Exception DOCUMENT ME!
-	 */
-	public boolean authenticate(
-		String username,
-		String password,
-		Request request,
-		Publication publication)
-		throws Exception {
-		if ((username != null) && (password != null)) {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     * @param request DOCUMENT ME!
+     * @param map DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public boolean authenticate(String username, String password, Request request, Map map)
+        throws Exception {
+        if ((username != null) && (password != null)) {
+            String passwordString = null;
+            Document idoc = null;
 
-			UserManager manager = UserManager.instance(publication);
-			User user = manager.getUser(username);
-			getLogger().debug("User: " + user.getFullName());
-			getLogger().debug("passwd: " + password);
-			getLogger().debug("username: " + username);
-						
-			Document idoc = null;
+            try {
+                String context = request.getContextPath();
+                int port = request.getServerPort();
+                idoc = getIdentityDoc(username, port, context);
+                passwordString = Identity.getPassword(idoc);
+            } catch (Exception e) {
+                getLogger().error(".authenticate(): " + e);
 
-			try {
-				String context = request.getContextPath();
-				int port = request.getServerPort();
-				idoc = getIdentityDoc(username, port, context);
-			} catch (Exception e) {
-				getLogger().error(".authenticate(): " + e);
+                return false;
+            }
 
-				return false;
-			}
+            if (Password.encrypt(password).equals(passwordString)) {
+                Session session = request.getSession(true);
 
-			if (user.authenticate(password)) {
-				
-				Session session = request.getSession(true);
+                if (session == null) {
+                    return false;
+                }
 
-				if (session == null) {
-					return false;
-				}
+                Identity identity = new Identity(idoc);
 
-				Identity identity = new Identity(idoc);
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("IDENTITY: " + identity);
+                }
 
-				if (getLogger().isDebugEnabled()) {
-					getLogger().debug("IDENTITY: " + identity);
-				}
+                session.setAttribute("org.apache.lenya.cms.ac.Identity", identity);
 
-				session.setAttribute(
-					"org.apache.lenya.cms.ac.Identity",
-					identity);
+                return true;
+            }
+        }
 
-				return true;
-			}
-		}
+        return false;
+    }
 
-		return false;
-	}
+    /**
+     *
+     */
+    private Document getIdentityDoc(String username, int port, String context)
+        throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        String imlURLString = "http://" + domain;
 
-	/**
-	 *
-	 */
-	private Document getIdentityDoc(String username, int port, String context)
-		throws Exception {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		String imlURLString = "http://" + domain;
+        if (this.port != null) {
+            imlURLString = imlURLString + ":" + this.port;
+        } else {
+            imlURLString = imlURLString + ":" + port;
+        }
 
-		if (this.port != null) {
-			imlURLString = imlURLString + ":" + this.port;
-		} else {
-			imlURLString = imlURLString + ":" + port;
-		}
+        if (this.context != null) {
+            imlURLString = imlURLString + this.context;
+        } else {
+            imlURLString = imlURLString + context;
+        }
 
-		if (this.context != null) {
-			imlURLString = imlURLString + this.context;
-		} else {
-			imlURLString = imlURLString + context;
-		}
+        imlURLString = imlURLString + "/" + passwd + username + ".iml";
+        getLogger().debug(".getIdentity(): " + imlURLString);
 
-		imlURLString = imlURLString + "/" + passwd + username + ".iml";
-		getLogger().debug(".getIdentity(): " + imlURLString);
-
-		return db.parse(new URL(imlURLString).openStream());
-	}
+        return db.parse(new URL(imlURLString).openStream());
+    }
 }

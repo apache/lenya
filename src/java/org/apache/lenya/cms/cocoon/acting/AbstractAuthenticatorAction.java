@@ -1,9 +1,9 @@
 /*
- * $Id: AbstractAuthenticatorAction.java,v 1.12 2003/06/12 15:51:33 egli Exp $
+ * $Id: AbstractAuthenticatorAction.java,v 1.13 2003/06/17 07:28:47 michi Exp $
  * <License>
  * The Apache Software License
  *
- * Copyright (c) 2002 lenya. All rights reserved.
+ * Copyright (c) 2003 lenya. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -57,8 +57,6 @@ import org.apache.cocoon.environment.SourceResolver;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 
 
 /**
@@ -110,9 +108,6 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
             return null;
         }
 
-		// Get the current publication
-		Publication publication = PublicationFactory.getPublication(objectModel);
-		
         // Get session
         Session session = req.getSession(true);
 
@@ -122,7 +117,7 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
             return null;
         }
 
-        if (authenticate(req, publication)) {
+        if (authenticate(req, new HashMap())) {
             getLogger().info(".act(): Authentication succeeded");
 
             session.setAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id", authenticatorId);
@@ -140,12 +135,15 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
     }
 
     /**
-	 * @param request
-	 * @param publication
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-    public abstract boolean authenticate(Request request, Publication publication)
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     * @param map DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public abstract boolean authenticate(Request request, Map map)
         throws Exception;
 }

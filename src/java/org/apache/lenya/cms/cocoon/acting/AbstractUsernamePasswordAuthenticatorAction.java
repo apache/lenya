@@ -1,9 +1,9 @@
 /*
- * $Id: AbstractUsernamePasswordAuthenticatorAction.java,v 1.10 2003/06/12 15:51:33 egli Exp $
+ * $Id: AbstractUsernamePasswordAuthenticatorAction.java,v 1.11 2003/06/17 07:28:47 michi Exp $
  * <License>
  * The Apache Software License
  *
- * Copyright (c) 2002 lenya. All rights reserved.
+ * Copyright (c) 2003 lenya. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -44,7 +44,8 @@
 package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.publication.Publication;
+
+import java.util.Map;
 
 /**
  * DOCUMENT ME!
@@ -53,37 +54,32 @@ import org.apache.lenya.cms.publication.Publication;
  * @version 1.12.29
  */
 public abstract class AbstractUsernamePasswordAuthenticatorAction
-	extends AbstractAuthenticatorAction {
+    extends AbstractAuthenticatorAction {
 
-	/* (non-Javadoc)
-	 * @see org.apache.lenya.cms.cocoon.acting.AbstractAuthenticatorAction#authenticate(org.apache.cocoon.environment.Request, org.apache.lenya.cms.publication.Publication)
-	 */
-	public boolean authenticate(Request request, Publication publication)
-		throws Exception {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+    public boolean authenticate(Request request, Map map)
+        throws Exception {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-		if ((username == null) || (password == null)) {
-			return false;
-		}
+        if ((username != null) && (password != null)) {
+            return authenticate(username, password, request, map);
+        }
 
-		return authenticate(username, password, request, publication);
-	}
+        return false;
+    }
 
-	/**
-	 * @param username
-	 * @param password
-	 * @param request
-	 * @param publication
-	 * 
-	 * @return
-	 * 
-	 * @throws Exception
-	 */
-	public abstract boolean authenticate(
-		String username,
-		String password,
-		Request request,
-		Publication publication)
-		throws Exception;
+    /**
+     * DOCUMENT ME!
+     *
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     * @param request DOCUMENT ME!
+     * @param map DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public abstract boolean authenticate(String username, String password, Request request, Map map)
+        throws Exception;
 }
