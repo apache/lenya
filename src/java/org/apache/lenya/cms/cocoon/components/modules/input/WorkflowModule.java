@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowModule.java,v 1.2 2003/09/02 13:41:19 andreas Exp $
+$Id: WorkflowModule.java,v 1.3 2003/09/17 16:03:43 andreas Exp $
 <License>
 
  ============================================================================
@@ -102,7 +102,10 @@ public class WorkflowModule extends AbstractInputModule {
                     value = instance.getCurrentState().toString();
                 } else if (name.startsWith(VARIABLE_PREFIX)) {
                     String variableName = name.substring(VARIABLE_PREFIX.length());
-                    value = new Boolean(instance.getValue(variableName));
+                    String[] variableNames = instance.getWorkflow().getVariableNames();
+                    if (Arrays.asList(variableNames).contains(variableName)) {
+                        value = new Boolean(instance.getValue(variableName));
+                    }
                 }
                 else if (name.equals(HISTORY_PATH)) {
                     value = ((CMSHistory) WorkflowFactory.getHistory(document)).getHistoryPath();
