@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlAction.java,v 1.5 2003/08/12 15:17:52 andreas Exp $
+$Id: AccessControlAction.java,v 1.6 2003/08/13 13:14:00 andreas Exp $
 <License>
 
  ============================================================================
@@ -126,9 +126,6 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
         } finally {
             if (selector != null) {
                 if (resolver != null) {
-                    if (accessController != null) {
-                        resolver.release(accessController);
-                    }
                     selector.release(resolver);
                 }
                 manager.release(selector);
