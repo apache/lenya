@@ -172,32 +172,6 @@
         <!-- usecase -->
 
 
-        <!-- Submit -->
-        <map:match pattern="submit" type="usecase">
-          <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="fallback://lenya/content/publishing/submit-screen.xsp"/>
-            <map:transform src="fallback://lenya/xslt/publishing/submit-screen.xsl">
-              <map:parameter name="use-request-parameters" value="true"/>
-            </map:transform>
-            <map:transform src="cocoon:/notification/{../../1}/submit.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-        </map:match>
-        <!-- / Submit -->
-        
-        <!-- Reject -->
-        <map:match pattern="reject" type="usecase">
-          <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="fallback://lenya/content/publishing/reject-screen.xsp"/>
-            <map:transform src="fallback://lenya/xslt/publishing/reject-screen.xsl">
-              <map:parameter name="use-request-parameters" value="true"/>
-            </map:transform>
-            <map:transform src="cocoon:/notification/{../../1}/reject.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-        </map:match>
-        <!-- / Reject -->
-        
         <!-- Publish -->
         <map:match pattern="publish" type="usecase">
           
