@@ -346,7 +346,7 @@ width="24" height="16" border="0" /></td>
 <td align="right" valign="top" class="footer">
 <!-- Admin interface link -->
 <xsl:call-template name="admin-url">
-<xsl:with-param name="prefix" select="'/lenya/oscom/authoring'"/>
+<xsl:with-param name="prefix" select="'http://oscom.wyona.org:18080/lenya/oscom/authoring'"/>
 </xsl:call-template>
 <!-- /Admin interface link --></td>
 </tr>
