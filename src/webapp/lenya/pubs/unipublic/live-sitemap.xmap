@@ -100,31 +100,37 @@
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
-<!--
-      <map:match pattern="dossier.xml">
-        <map:generate src="docs/publication/live/frontpage/dossier.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
 
-      <map:match pattern="navigation.xml">
+      <map:match pattern="navigation">
         <map:generate src="docs/publication/live/navigation.xml"/>
         <map:serialize type="xml"/>
       </map:match>
--->
-
-      <map:match pattern="one">
-        <map:generate src="docs/publication/live/navigation.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="two">
+      <map:match pattern="dossier">
         <map:generate src="docs/publication/live/frontpage/dossier.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="navigation.xml">
         <map:aggregate element="FirstColumn">
-          <map:part src="cocoon:/one"/>
-          <map:part src="cocoon:/two"/>
+          <map:part src="cocoon:/navigation"/>
+          <map:part src="cocoon:/dossier"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="service">
+        <map:generate src="docs/publication/live/frontpage/service.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="webperls">
+        <map:generate src="docs/publication/live/frontpage/webperls.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="services.xml">
+        <map:aggregate element="LastColumn">
+          <map:part src="cocoon:/service"/>
+          <map:part src="cocoon:/webperls"/>
         </map:aggregate>
         <map:serialize type="xml"/>
       </map:match>

@@ -6,6 +6,8 @@
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables.xsl"/>
 <xsl:include href="../../navigation.xsl"/>
+<xsl:include href="webperls.xsl"/>
+<xsl:include href="../services.xsl"/>
 
 <xsl:template match="/">
 <html>
@@ -62,10 +64,6 @@ function aboWindow() {
 <td width="135" align="right" valign="top">
 
 <xsl:apply-templates select="/Page/Content/FirstColumn/MainNavigation"/>
-
-<!--
-<xsl:call-template name="navigation"/>
--->
 
 </td>
 <td width="315" valign="top">
@@ -276,4 +274,10 @@ directive]</td>
 </html>
 
 </xsl:template>
+<!--
+<xsl:template match="LastColumn">
+  <xsl:apply-templates select="Webperls"/>
+  <xsl:apply-templates select="Services"/>
+</xsl:template>
+-->
 </xsl:stylesheet>

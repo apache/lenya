@@ -2,9 +2,6 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<!--<xsl:include href="Live/webperls.xsl"/>-->
-<!--<xsl:include href="services.xsl"/>-->
-
 
 <xsl:template match="/" xmlns:xi="http://www.w3.org/2001/XInclude">
   <Page>
@@ -15,14 +12,9 @@
       <MainColumn>
         <xsl:apply-templates select="Frontpage"/>
       </MainColumn>
-      <LastColumn>
-<!--
-        <xsl:apply-templates select="Services"/>
-        <xsl:apply-templates select="Webperls"/>
--->
-        <xsl:call-template name="Service"/>
-        <xsl:call-template name="Webperlen"/>
-      </LastColumn>
+<!--     LastColumn -->
+        <xi:include xml:base="cocoon:" href="services.xml"/>
+<!--    End  LastColumn -->
     </Content>
   </Page>
 </xsl:template>
