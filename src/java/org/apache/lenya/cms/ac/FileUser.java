@@ -1,5 +1,5 @@
 /*
-$Id: FileUser.java,v 1.24 2003/07/23 13:21:15 gregor Exp $
+$Id: FileUser.java,v 1.25 2003/08/07 13:19:29 andreas Exp $
 <License>
 
  ============================================================================
@@ -109,7 +109,7 @@ public class FileUser extends User implements Item {
      */
     public void configure(Configuration config) throws ConfigurationException {
         new ItemConfiguration().configure(this, config);
-        setEmail(config.getChild(EMAIL).getValue());
+        setEmail(config.getChild(EMAIL).getValue(""));
         setEncryptedPassword(config.getChild(PASSWORD).getValue(null));
 
         Configuration[] groups = config.getChildren(GROUPS);
