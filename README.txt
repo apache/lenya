@@ -76,6 +76,24 @@
   please read the CREDITS.txt file in this directory.
 
 
+  Known issues
+  ------------
+  
+  The following bugs/issues are known in Lenya 1.2
+  
+  * #26577 [FormsEditor] One needs to click the edit icons twice
+    before a field becomes editable.
+
+  * #29074 [FormsEditor] Saving modified table content in forms editor 
+    fails with validation error
+    
+  * #27905 [BxeEditor] Using the save+exit button using bxe takes a long time
+    under "some" circumstances and may also result in a weird rendering of the page.
+    If one reloads the page everything is fine.
+
+  Apache issue tracker is available at http://nagoya.apache.org/bugzilla/ .
+  
+  
     
   Thanks for your interest in Apache Lenya
 

@@ -25,3 +25,10 @@ Tomcat
 2) Copy endorsed libraries into .../TOMCAT_PREFIX/common/endorsed directory
 
 3) Startup Tomcat
+
+
+
+Known issues
+------------
+Please read the "Known issues" section in the README.txt file
+to find out more about known bugs/issues in Lenya.

@@ -202,3 +202,8 @@ $TOMCAT_HOME/bin > ./startup.sh
 
 http://localhost:8080/lenya [http://localhost:8080/lenya]
 
+
+Known issues
+============
+Please read the "Known issues" section in the README.txt file
+to find out more about known bugs/issues in Lenya.
