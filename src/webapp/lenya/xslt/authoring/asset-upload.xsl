@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset-upload.xsl,v 1.3 2004/08/25 09:52:25 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -37,7 +37,7 @@
 
 <xsl:template match="/lenya-info:info">
   <page:page>
-    <page:title><i18n:text key="lenya.assetupload.title"/></page:title>
+    <page:title><i18n:text key="lenya.assetupload.subtitle"/></page:title>
     <page:body>
       <xsl:apply-templates select="lenya-info:assets"/>
     </page:body>
@@ -83,7 +83,7 @@ Override this template to add scripts etc.
           </tr>
           <tr><td>&#160;</td></tr>
           <tr>
-            <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
+            <td class="lenya-form-caption"><i18n:text>Title</i18n:text>*:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
           </tr>
           <tr>
             <td class="lenya-form-caption"><i18n:text>Creator</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/lenya-info:info/lenya-info:assets/lenya-info:creator}"/></td>

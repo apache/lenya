@@ -75,7 +75,8 @@
   <message key="select-object">Select {0}</message>
   <message key="Insert">Insert</message>
   <message key="Insert File">Insert File</message>
-  <message key="upload-with-invalid-extension">You tried to upload a file with an invalid extension. Valid extensions are{0}</message>
+  <message key="upload-with-invalid-extension">You tried to upload a file with an invalid extension. Valid extensions are{0}. Note that extensions need to be in lowercase.</message>
+  <message key="upload-with-missing-title">You tried to upload a file without a title.</message>
   <message key="filename-format-exception">The file name of the file you are trying to upload either has no extension, or contains characters which are not allowed, such as spaces or umlauts.</message>
   <message key="Creation Date">Creation Date</message>
   <message key="File Size">File Size</message>

@@ -66,6 +66,11 @@
                     var ext = '<xsl:value-of select="$extensions"/>';
                     var delimiter = ' '; 
                     var thefile = fileinput["properties.asset.data"].value; 
+                    var title = fileinput["properties.asset.title"].value;
+                    if (title == "") {
+                     alert("<i18n:translate><i18n:text key="upload-with-missing-title"/></i18n:translate>"); 
+                     return false;
+                    }
                     var _tempArray = new Array();
                     _tempArray = ext.split(delimiter);
                     for(i in _tempArray) { 
@@ -73,7 +78,7 @@
                            return true; 
                       } 
                      } // file does not have one of the accepted extensions. 
-                     alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n<xsl:value-of select="$extensions"/></i18n:param></i18n:translate>"); 
+                     alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n<xsl:value-of select="$extensions"/>\n</i18n:param></i18n:translate>"); 
                      return false;
                   } 
                 </script>
@@ -106,7 +111,7 @@
                                     id="data"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
                             </tr>
                             <tr>
-                                <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
+                                <td class="lenya-form-caption"><i18n:text>Title</i18n:text>*:</td>
                                 <td>
                                     <input class="lenya-form-element" 
                                         type="text" 
@@ -163,7 +168,7 @@
                                     <xsl:for-each select="lenya-info:asset">
                                         <xsl:choose>
                                             <xsl:when 
-                                                test="dc:format = 'image/jpeg' or dc:format = 'image/gif'">
+                                                test="dc:format = 'image/jpeg' or dc:format = 'image/gif' or  dc:format = 'image/png'">
                                                 <tr>
                                                     <td 
                                                         colspan="2">
@@ -180,7 +185,7 @@
                                                     </td>
                                                     <td>
                                                         <a 
-                                                            href="javascript:insertImage('{dc:title}');">
+                                                            href="javascript:insertImage('{dc:source}');">
                                                              <i18n:text>Insert</i18n:text></a>
                                                     </td>
                                                 </tr>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.13 2004/08/23 16:30:47 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -49,6 +49,11 @@
       var ext = '<xsl:value-of select="$extensions"/>';
       var delimiter = ' ';
       var thefile = fileinput["properties.asset.data"].value;
+      var title = fileinput["properties.asset.title"].value;
+      if (title == "") {
+       alert("<i18n:translate><i18n:text key="upload-with-missing-title"/></i18n:translate>"); 
+       return false;
+      }
       var _tempArray = new Array();
       _tempArray = ext.split(delimiter);
       for(i in _tempArray)

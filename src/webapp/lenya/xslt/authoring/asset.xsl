@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.40 2004/08/25 09:51:44 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -177,7 +177,7 @@ function check(fileinput) {
             </tr>
             <tr><td>&#160;</td></tr>
             <tr>
-              <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
+              <td class="lenya-form-caption"><i18n:text>Title</i18n:text>*:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
             </tr>
             <tr>
               <td class="lenya-form-caption"><i18n:text>Creator</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/lenya-info:info/lenya-info:assets/lenya-info:creator}"/></td>
