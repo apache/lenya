@@ -22,5 +22,6 @@
 <leaf name="Editor&#160;Overview"/>
 <leaf name="Glossary" href="glossary.html"/>
 <leaf name="Mailing&#160;Lists" href="mailing-lists.html"/>
+<leaf name="Wiki" href="http://alpha.oscom.org/postnuke/modules.php?op=modload&amp;name=phpWiki&amp;file=index"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>
