@@ -1,5 +1,5 @@
 /*
- * $Id: EditorProjectCreator.java,v 1.6 2003/02/28 00:06:37 michi Exp $
+ * $Id: EditorProjectCreator.java,v 1.7 2003/02/28 01:04:40 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -75,14 +75,14 @@ public class EditorProjectCreator extends DefaultLeafCreator {
         du.setElementValue(doc, "/system/id", childId);
         // Replace name
         du.setElementValue(doc, "/system/system_name", childName);
+        // Replace project URL
+        String project_url = (String)parameters.get("project_url");
+        du.setElementValue(doc, "/system/main_url", project_url);
 	
         log.debug(".transformXML(): system_name = " +
 		  du.getElementValue(doc.getDocumentElement(), 
 				     new org.wyona.xml.XPath("system_name")));
 
         log.debug(".transformXML(): " + parameters.keySet());
-        log.debug(".transformXML(): " + parameters.get("project_name"));
-        String project_url = (String)parameters.get("project_url");
-        du.setElementValue(doc, "/system/main_url", project_url);
     }
 }

@@ -39,9 +39,6 @@
     <td>project name:</td><td><input type="text" name="childname"/> (e.g. Xopus)</td>
   </tr>
   <tr>
-    <td>project name:</td><td><input type="text" name="project_name"/> (e.g. Xopus)</td>
-  </tr>
-  <tr>
     <td>project home url:</td><td><input type="text" name="project_url"/> (e.g. http://www.xopus.org)</td>
   </tr>
 <!--

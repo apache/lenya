@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.11 2003/02/27 15:59:34 egli Exp $
+ * $Id: NewArticleCreator.java,v 1.12 2003/02/28 01:04:40 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -105,14 +105,11 @@ public class NewArticleCreator extends DefaultBranchCreator {
 
         // Replace id
         du.setElementValue(doc, "/article/meta/id", childId);
-	
-        log.debug("system_name = " +
-		  du.getElementValue(doc.getDocumentElement(), 
-				     new org.wyona.xml.XPath("system_name")));
 
         // Replace editor
-        du.setElementValue(doc, "/article/meta/editor",
-			   (String) parameters.get("editor"));
+        org.wyona.cms.ac.Identity identity = (org.wyona.cms.ac.Identity)parameters.get("org.wyona.cms.ac.Identity");
+        du.setElementValue(doc, "/article/meta/editor", identity.getUsername());
+        //du.setElementValue(doc, "/article/meta/editor", (String) parameters.get("editor"));
 
         Calendar cal = new GregorianCalendar();
 
