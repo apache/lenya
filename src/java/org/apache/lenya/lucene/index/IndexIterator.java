@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexIterator.java,v 1.12 2004/04/14 13:06:41 michi Exp $  */
+/* $Id: IndexIterator.java,v 1.13 2004/07/29 05:49:06 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -222,6 +222,25 @@ public class IndexIterator {
      */
     protected static boolean hasEqualUID(Term term, String uid) {
         return isUIDTerm(term) && term.text().equals(uid);
+    }
+
+    /**
+     * Create a unique id
+     *
+     * @param file file to index
+     * @param dumpDir dump directory
+     *
+     * @return id
+     */
+    public static String createID(File file, File dumpDir) {
+        if (dumpDir.getPath().length() <= file.getPath().length()) {
+            String id = file.getPath().substring(dumpDir.getPath().length());
+            //id = id.replace(File.separatorChar, '\u0000'));
+            return id;
+        } else {
+            log.warn("Length of dumping directory is less than length of file name!");
+        }
+        return null;
     }
 
     /**

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractDocumentCreator.java,v 1.8 2004/05/11 14:09:37 michi Exp $  */
+/* $Id: AbstractDocumentCreator.java,v 1.9 2004/07/29 05:49:06 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -25,7 +25,11 @@ import org.apache.lucene.document.DateField;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 
+import org.apache.log4j.Category;
+
 public class AbstractDocumentCreator implements DocumentCreator {
+    Category log = Category.getInstance(AbstractDocumentCreator.class);
+
     /** Creates a new instance of AbstractDocumentCreator */
     public AbstractDocumentCreator() {
     }
@@ -72,10 +76,17 @@ public class AbstractDocumentCreator implements DocumentCreator {
         // to tokenize the field into words.
         doc.add(Field.Keyword("modified", DateField.timeToString(file.lastModified())));
 
+        // Add the id as a field, so that index can be incrementally maintained.
+	String id = IndexIterator.createID(file, htdocsDumpDir);
+	log.error(id);
+        doc.add(Field.Keyword("id", id));
+
         // Add the uid as a field, so that index can be incrementally maintained.
         // This field is not stored with document, it is indexed, but it is not
         // tokenized prior to indexing.
-        doc.add(new Field("uid", IndexIterator.createUID(file, htdocsDumpDir), false, true, false));
+	String uid = IndexIterator.createUID(file, htdocsDumpDir);
+	log.error(uid);
+        doc.add(new Field("uid", uid, false, true, false));
 
         return doc;
     }

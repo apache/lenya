@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Indexer.java,v 1.10 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id: Indexer.java,v 1.11 2004/07/29 05:49:06 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -39,5 +39,11 @@ public interface Indexer {
      * Indexes the contents of a directory.
      */
     void updateIndex(File dumpDirectory, File index)
+        throws Exception;
+
+    /**
+     * Indexes the content of one file
+     */
+    void indexDocument(File file)
         throws Exception;
 }

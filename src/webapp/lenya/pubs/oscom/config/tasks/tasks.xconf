@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: tasks.xconf,v 1.15 2004/03/13 12:42:17 gregor Exp $ -->
+<!-- $Id: tasks.xconf,v 1.16 2004/07/29 05:51:54 michi Exp $ -->
 
 <tasks>
 
@@ -30,6 +30,9 @@
       <parameter name="substitute-regexp" value="/lenya/oscom/live/"/>
       <parameter name="substitute-replacement" value="/"/>
       <parameter name="my-server-port" value="1313"/>
+    </task>
+    <task id="lucene" class="org.apache.lenya.cms.task.LuceneTask">
+      <parameter name="config" value="config/search/lucene-cmfsMatrix.xconf"/>
     </task>
   </task>
 

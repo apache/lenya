@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publish-screen.xsl,v 1.18 2004/03/13 12:42:07 gregor Exp $ -->
+<!-- $Id: publish-screen.xsl,v 1.19 2004/07/29 05:50:14 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -38,6 +38,7 @@
 
   <xsl:variable name="uris"><xsl:value-of select="/usecase:publish/usecase:uris"/></xsl:variable>
   <xsl:variable name="sources"><xsl:value-of select="/usecase:publish/usecase:sources"/></xsl:variable>
+  <xsl:variable name="files2index"><xsl:value-of select="/usecase:publish/usecase:files2index"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/usecase:publish/usecase:document-id"/></xsl:variable>
   <xsl:variable name="document-language"><xsl:value-of select="/usecase:publish/usecase:language"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/usecase:publish/usecase:task-id"/></xsl:variable>
@@ -118,6 +119,7 @@
 
           <!-- FIXME: The ant taks and the regular task don't use the same parameter names. Another difference is that the regular task requires a leading slash (also compare blog and oscom publication) -->
           <input type="hidden" name="properties.publish.sources" value="{$sources}"/> <!-- Ant Task -->
+          <input type="hidden" name="properties.files2index" value="{$files2index}"/> <!-- Ant Task -->
           <input type="hidden" name="sources" value="{$sources}"/> <!-- Regular Task -->
           <input type="hidden" name="properties.export.uris" value="{$uris}"/> <!-- Ant Task -->
           <input type="hidden" name="uris" value="{$uris}"/> <!-- Regular Task -->

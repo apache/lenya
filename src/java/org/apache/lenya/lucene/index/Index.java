@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Index.java,v 1.14 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id: Index.java,v 1.15 2004/07/29 05:49:06 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -40,9 +40,9 @@ public class Index {
             boolean create = false;
             File root = null;
 
-            String usage = "Index <lucene.xconf>";
+            String usage = "Index <lucene.xconf> [file]";
 
-            if (argv.length != 1) {
+            if (argv.length == 0) {
                 System.err.println("Usage: " + usage);
 
                 return;
@@ -72,6 +72,11 @@ public class Index {
             Document config = DocumentHelper.readDocument(new File(path));
             indexer.configure(du.getElement(config.getDocumentElement(), new XPath("indexer")), argv[0]);
 
+            if (argv.length == 2) {
+                indexer.indexDocument(new File(argv[1]));
+                return;
+            }
+
             if (create) {
                 indexer.createIndex(root, new File(index));
             } else {
@@ -85,5 +90,18 @@ public class Index {
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
+    }
+
+    /**
+     * Get indexer from configuration
+     */
+    public static Indexer getIndexer(String luceneConfig) throws Exception {
+        IndexConfiguration ie = new IndexConfiguration(luceneConfig);
+        Indexer indexer = (Indexer) ie.getIndexerClass().newInstance();
+        DOMUtil du = new DOMUtil();
+        Document config = DocumentHelper.readDocument(new File(luceneConfig));
+        indexer.configure(du.getElement(config.getDocumentElement(), new XPath("indexer")), luceneConfig);
+
+        return indexer;
     }
 }

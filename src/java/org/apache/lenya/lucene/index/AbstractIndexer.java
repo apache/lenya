@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.17 2004/07/10 23:17:24 andreas Exp $  */
+/* $Id: AbstractIndexer.java,v 1.18 2004/07/29 05:49:06 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -25,13 +25,14 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.log4j.Category;
+import org.apache.lenya.lucene.IndexConfiguration;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
-import org.w3c.dom.Element;
 
+import org.w3c.dom.Element;
 
 /**
  * Abstract base class for indexers.
@@ -91,6 +92,36 @@ public abstract class AbstractIndexer implements Indexer {
     public void updateIndex(File dumpDirectory, File index) throws Exception {
         deleteStaleDocuments(dumpDirectory, index);
         doIndex(dumpDirectory, index, false);
+    }
+
+    /**
+     * Updates the index re one document
+     *
+     * <ol>
+     *   <li>old documents to be deleted</li>
+     *   <li>unchanged documents, to be left alone, or</li>
+     *   <li>new documents, to be indexed.</li>
+     * </ol>
+     */
+    public void indexDocument(File file) throws Exception {
+        IndexConfiguration config = new IndexConfiguration(configFileName);
+        log.debug("File: " + file);
+
+        File dumpDir = new File(config.resolvePath(config.getHTDocsDumpDir()));
+        log.debug("Dump dir: " + dumpDir);
+
+        File indexDir = new File(config.resolvePath(config.getIndexDir()));
+        log.debug("Index dir: " + indexDir);
+
+	String id = IndexIterator.createID(file, dumpDir);
+        log.error("id: " + id);
+
+        IndexReader reader = IndexReader.open(indexDir.getAbsolutePath());
+	//Term term = ...
+        //reader.delete(term);
+        reader.close();
+
+        //addFile(file);
     }
 
     /**
