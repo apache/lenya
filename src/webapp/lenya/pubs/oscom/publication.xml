@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.3 2003/03/04 18:08:21 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.4 2003/03/12 00:21:00 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>OSCOM</lenya:name>
@@ -49,4 +49,13 @@ This publication implements the CMS matrix used at <a href="http://www.oscom.org
   </li>
 </ol>
 </lenya:readme>
+
+<lenya:tests>
+  <lenya:test>Check Frontpage</lenya:test>
+  <lenya:test>Check CMS Matrix</lenya:test>
+  <lenya:test>Create new CMS Project</lenya:test>
+  <lenya:test>Check new CMS Project</lenya:test>
+  <lenya:test>Publish new CMS Project</lenya:test>
+  <lenya:test>Check published new CMS Project</lenya:test>
+</lenya:tests>
 </lenya:publication>
