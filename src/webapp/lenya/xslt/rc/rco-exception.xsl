@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: rco-exception.xsl,v 1.11 2004/03/13 12:42:18 gregor Exp $ -->
+<!-- $Id: rco-exception.xsl,v 1.12 2004/04/29 14:46:08 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -68,6 +68,9 @@
               <tr><td>Date:</td><td><xsl:value-of select="rc:date"/></td></tr>
               <tr><td>Filename:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
+            <form>
+              <input type="button" value="OK" onClick="history.go(-1)"/>
+            </form>		
   	      </div>
   	    </div>
       </page:body>
@@ -88,6 +91,9 @@
             <table>
               <tr><td>Filename:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
+            <form>
+              <input type="button" value="OK" onClick="history.go(-1)"/>
+            </form>		
        	  </div>
   	    </div>
       </page:body>
