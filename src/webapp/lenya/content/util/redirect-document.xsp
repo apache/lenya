@@ -33,7 +33,7 @@ Parameters:
       DocumentHelper helper = new DocumentHelper(objectModel);
       String url = helper.getDocumentUrl(documentId, area, language);
       
-      <xsp:attribute name="url"><xsp:expr>url</xsp:expr></xsp:attribute>
+      <xsp:attribute name="url"><xsp:expr>url</xsp:expr>?lenya.usecase=checkin&amp;lenya.step=checkin</xsp:attribute>
     }
     catch (Exception e) {
         throw new ProcessingException(e);
