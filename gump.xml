@@ -2,12 +2,12 @@
 
 <!--
   Lenya GUMP Descriptor
-  CVS $Id: gump.xml,v 1.1 2003/04/10 17:15:45 gregor Exp $
+  CVS $Id: gump.xml,v 1.2 2003/11/09 23:28:00 gregor Exp $
 -->
 
-<module name="incubator-lenya">
+<module name="cocoon-lenya">
 
-  <url href="http://incubator.apache.org/lenya/"/>
+  <url href="http://cocoon.apache.org/lenya/"/>
   <description>Content Managment System</description>
 
   <cvs repository="lenya"/>
@@ -38,7 +38,7 @@
 
     <javadoc parent="build/lenya-@@DATE@@/javadocs"/>
 
-    <nag from="Gump" to="general@incubator.apache.org">
+    <nag from="Gump" to="lenya-dev@cocoon.apache.org">
       <regexp pattern="/BUILD FAILED/" subject="Build Failure - Lenya"/>
     </nag>
   </project>
