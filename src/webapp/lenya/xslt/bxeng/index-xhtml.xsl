@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index-xhtml.xsl,v 1.3 2004/03/13 13:09:51 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -34,11 +34,11 @@
 </xsl:template>
 
 <xsl:template match="xhtml:head/xhtml:link/@href">
-  <xsl:attribute name="href"><xsl:value-of select="$context"/>/bxeng/css/editor.css</xsl:attribute>
+  <xsl:attribute name="href"><xsl:value-of select="$context"/>/bxe/css/editor.css</xsl:attribute>
 </xsl:template>
 
 <xsl:template match="xhtml:head/xhtml:script/@src">
-  <xsl:attribute name="src"><xsl:value-of select="$context"/>/bxeng/bxeLoader.js</xsl:attribute>
+  <xsl:attribute name="src"><xsl:value-of select="$context"/>/bxe/bxeLoader.js</xsl:attribute>
 </xsl:template>
 
 <xsl:template match="@*|node()">

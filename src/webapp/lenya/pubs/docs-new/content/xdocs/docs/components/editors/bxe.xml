@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: bxeng.xml,v 1.2 2004/03/13 12:48:14 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -45,7 +45,7 @@
 
 <section>
 <title>Namespace declaration</title>
-<p>resources/misc/bxeng/*-namespaces.xml</p>
+<p>resources/misc/bxe/*-namespaces.xml</p>
 </section>
 
 </body>

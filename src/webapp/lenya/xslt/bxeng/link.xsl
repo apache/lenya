@@ -16,7 +16,7 @@
 -->
 
 <!--
- $Id: link.xsl,v 1.12 2004/08/25 14:48:22 andreas Exp $
+ $Id$
  -->
 
 <xsl:stylesheet version="1.0"
@@ -47,7 +47,7 @@
       <page:body>
       <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js">&#160;</script>
       <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js">&#160;</script>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/{$documenturl}?lenya.usecase=bxeng&amp;lenya.step=link-tree&amp;language={$chosenlanguage}">&#160;</script>
+      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/{$documenturl}?lenya.usecase=bxe&amp;lenya.step=link-tree&amp;language={$chosenlanguage}">&#160;</script>
       <script> 
           var url;
           window.onload = insertText
@@ -167,7 +167,7 @@
   <xsl:text>?lenya.usecase=</xsl:text>
   <xsl:choose>
     <xsl:when test="$tab"><xsl:value-of select="$tab"/></xsl:when>
-    <xsl:otherwise>bxeng</xsl:otherwise>
+    <xsl:otherwise>bxe</xsl:otherwise>
   </xsl:choose>
   <xsl:text>&amp;lenya.step=link-show</xsl:text>
 </xsl:template>
@@ -209,7 +209,7 @@
 
 <xsl:template name="activate">
   <xsl:param name="tablanguage"/>
-  <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.usecase=bxeng&amp;lenya.step=link-show</xsl:attribute>
+  <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/><xsl:value-of select="$extension"/>?lenya.usecase=bxe&amp;lenya.step=link-show</xsl:attribute>
   <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
 

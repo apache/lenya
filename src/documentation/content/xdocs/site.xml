@@ -79,7 +79,7 @@
                             label="HTML Form Editor"/>
                         <namespaces href="1form.html" 
                             label="HTML One Form Editor"/>
-                        <namespaces href="bxeng.html" label="Bitflux Editor"/>
+                        <namespaces href="bxe.html" label="Bitflux Editor"/>
                         <namespaces href="kupu.html" label="Kupu"/>
                         <namespaces href="xopus.html" label="Xopus"/>
                     </misc>

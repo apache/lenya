@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: aggregate.xsl,v 1.3 2004/03/13 13:09:51 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -23,10 +23,10 @@
 >
 
 <xsl:template match="/">
-<xsl:apply-templates select="bxeng"/>
+<xsl:apply-templates select="bxe"/>
 </xsl:template>
 
-<xsl:template match="bxeng">
+<xsl:template match="bxe">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <xsl:apply-templates select="xhtml:html/xhtml:head"/>
 <xsl:copy-of select="xhtml:html/xhtml:body"/>
@@ -35,7 +35,7 @@
 
 <xsl:template match="xhtml:head">
 <head xmlns="http://www.w3.org/1999/xhtml">
-<xsl:for-each select="/bxeng/namespaces/xmlns">
+<xsl:for-each select="/bxe/namespaces/xmlns">
   <meta name="bxeNS" content="{.}"/>
 </xsl:for-each>
 <xsl:copy-of select="@*|node()"/>

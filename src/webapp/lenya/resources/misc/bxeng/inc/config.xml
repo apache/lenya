@@ -15,19 +15,19 @@
   limitations under the License.
 -->
 
-<!-- $Id: config.xml,v 1.26 2004/09/03 12:56:55 andreas Exp $ -->
+<!-- $Id$ -->
 
 <config>
     <files>
         <input>
             <!-- The XML-document with the actual data -->
-            <file name="BX_xmlfile">index-bxeng.xml</file>
+            <file name="BX_xmlfile">index-bxe.xml</file>
            <!-- The xhtml with the appropriate div tag (e.g. <div bxe_xpath="/xhtml:html/lenya:meta/dc:title" />)
                  An xhtml file can be used instead of an xsl to provide the page layout of the non-editable part -->
             <file name="BX_xhtmlfile">testxhtml.xml</file>
 
             <!-- The XSL-document which transforms the xml to the output format -->
-            <file name="BX_xslfile">entry-bxeng.xsl</file>
+            <file name="BX_xslfile">entry-bxe.xsl</file>
             <!-- The RelaxNG (XML Schema) -->
             <file name="BX_validationfile">relaxng.xml</file>
         </input>
@@ -39,7 +39,7 @@
         <!-- You can't provide a different "method" than http.get for the following files -->
         <css>
             <!-- Document specific css, which you should adjust.  -->
-             <file>entry-bxeng.css</file>
+             <file>entry-bxe.css</file>
           
         </css>
         
@@ -98,10 +98,10 @@
         <button name="Asset" col="2" row="6" action="InsertAsset"/>
     </buttons>
     <callbacks>
-        <element name="object" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=bxeng&amp;lenya.step=image-upload-show</element>
-        <element name="img" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=bxeng&amp;lenya.step=image-upload-show</element>
+        <element name="object" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=bxe&amp;lenya.step=image-upload-show</element>
+        <element name="img" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=bxe&amp;lenya.step=image-upload-show</element>
         <element name="table" ns="http://www.w3.org/1999/xhtml" type="function">bxe_InsertTableCallback</element>
-        <element name="asset" ns="http://apache.org/cocoon/lenya/page-envelope/1.0" type="popup">?lenya.usecase=bxeng&amp;lenya.step=asset-upload-show</element>
-        <element name="a" ns="http://www.w3.org/1999/xhtml" precheck="bxe_checkIfNotALink" type="popup">?lenya.usecase=bxeng&amp;lenya.step=link-show</element>
+        <element name="asset" ns="http://apache.org/cocoon/lenya/page-envelope/1.0" type="popup">?lenya.usecase=bxe&amp;lenya.step=asset-upload-show</element>
+        <element name="a" ns="http://www.w3.org/1999/xhtml" precheck="bxe_checkIfNotALink" type="popup">?lenya.usecase=bxe&amp;lenya.step=link-show</element>
     </callbacks>
 </config>

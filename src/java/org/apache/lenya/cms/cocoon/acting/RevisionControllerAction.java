@@ -111,13 +111,13 @@ public class RevisionControllerAction extends AbstractAction {
         // the page-envelope
 
         String documentid = document.getId();
-        int bx = documentid.lastIndexOf("-bxeng");
+        int bx = documentid.lastIndexOf("-bxe");
 
         if (bx > 0) {
             String language = document.getLanguage();
 
             int l = documentid.length();
-            int bxLength = "-bxeng".length();
+            int bxLength = "-bxe".length();
             int lang = documentid.lastIndexOf("_", bx);
             int langLength = bx - lang;
 

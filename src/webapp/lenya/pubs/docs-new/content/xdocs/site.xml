@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: site.xml,v 1.60 2004/05/24 11:39:11 andreas Exp $ -->
+<!-- $Id$ -->
 
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya">
 	<home href="index.html">Home</home>
@@ -60,7 +60,7 @@
 				<misc href="editors/" label="Editors">
 					<namespaces href="htmlform.html" label="HTML Form Editor"/>
 					<namespaces href="1form.html" label="HTML One Form Editor"/>
-					<namespaces href="bxeng.html" label="Bitflux Editor"/>
+					<namespaces href="bxe.html" label="Bitflux Editor"/>
 					<namespaces href="kupu.html" label="Kupu"/>
 					<namespaces href="xopus.html" label="Xopus"/>
 				</misc>

@@ -53,7 +53,7 @@
         <menu name="Edit">
           <block>
             <item uc:usecase="edit" href="?lenya.step=open&amp;form=entry">With&#160;Forms</item>
-            <item href="index-bxeng.html">With&#160;BXE</item>
+            <item href="index-bxe.html">With&#160;BXE</item>
             <item uc:usecase="1formedit" href="?lenya.step=open">With&#160;one&#160;Form</item>
           </block>
         </menu>
@@ -62,7 +62,7 @@
       <!--
       <block>
         <item uc:usecase="edit" href="?lenya.step=open&amp;form=entry">Edit&#160;with&#160;Forms</item>
-        <item href="index-bxeng.html">Edit&#160;with&#160;BXE</item>
+        <item href="index-bxe.html">Edit&#160;with&#160;BXE</item>
         <item uc:usecase="1formedit" href="?lenya.step=open">Edit&#160;with&#160;one&#160;Form</item>
       </block>
       -->
@@ -102,11 +102,11 @@
         <item href="http://www.feedvalidator.org">Feed Validator</item>
       </block>
       <block>
-        <item href="index-bxeng.html">HTML&#160;for&#160;BXE</item>
-        <item href="config-bxeng.xml">Config&#160;for&#160;BXE</item>
-        <item href="entry-bxeng.xsl">XSLT&#160;for&#160;BXE</item>
-        <item href="entry-bxeng.css">CSS&#160;for&#160;BXE</item>
-        <item href="entry-relaxng-bxeng.xml">RelaxNG&#160;for&#160;BXE</item>
+        <item href="index-bxe.html">HTML&#160;for&#160;BXE</item>
+        <item href="config-bxe.xml">Config&#160;for&#160;BXE</item>
+        <item href="entry-bxe.xsl">XSLT&#160;for&#160;BXE</item>
+        <item href="entry-bxe.css">CSS&#160;for&#160;BXE</item>
+        <item href="entry-relaxng-bxe.xml">RelaxNG&#160;for&#160;BXE</item>
       </block>
     </menu>
   </menus>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: management.xml,v 1.1 2004/07/01 23:59:24 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -88,7 +88,7 @@
       <p>Images and assets can also be inserted from within the Bitflux editor.</p>
 
       <p>The insertion is done via a XSLT stylesheet 
-      (<code>image.xsl</code> or <code>asset.xsl</code> in <code>xslt/bxeng</code>). 
+      (<code>image.xsl</code> or <code>asset.xsl</code> in <code>xslt/bxe</code>). 
       These stylesheets create a popup window that let the user select an asset or image
       and insert it into the currently opened document via javascript.</p>
       </section>

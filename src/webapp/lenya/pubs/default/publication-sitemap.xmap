@@ -91,8 +91,8 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <map:match pattern="**/*-bxeng.css">
-        <map:read mime-type="text/css" src="resources/misc/bxeng/{2}-bxeng.css"/>
+      <map:match pattern="**/*-bxe.css">
+        <map:read mime-type="text/css" src="resources/misc/bxe/{2}-bxe.css"/>
       </map:match>
       
       <map:handle-errors>
