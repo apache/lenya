@@ -116,14 +116,14 @@
 
     <xsp:logic>
 	  DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
-	  String[] references = helper.getInternalReferences();
+	  Document[] references = helper.getInternalReferences();
 	  if (references.length &gt; 0) {
         </xsp:logic><referenced-documents><xsp:logic>
 
         for (int i = 0; i &lt; references.length; i++) {
 	      <referenced-document>
-	        <xsp:attribute name="href"><xsp:expr>helper.getURL(Publication.AUTHORING_AREA, references[i])</xsp:expr></xsp:attribute>
-	        <xsp:expr>references[i]</xsp:expr>
+	        <xsp:attribute name="href"><xsp-request:get-context-path/><xsp:expr>references[i].getCompleteURL()</xsp:expr></xsp:attribute>
+	        <xsp:expr>references[i].getId()</xsp:expr> [<xsp:expr>references[i].getLanguage()</xsp:expr>]
 	      </referenced-document>
 	    }  
 	    </xsp:logic></referenced-documents><xsp:logic>
