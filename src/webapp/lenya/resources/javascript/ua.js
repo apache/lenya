@@ -1,7 +1,7 @@
 /*
  * $Log: ua.js,v $
- * Revision 1.1  2003/06/04 15:32:56  gregor
- * Added Tree Widget (Javascript, Images, CSS) and a XSL to convert a sitetree to a Javascript array suitable for the tree widget.
+ * Revision 1.2  2003/06/06 17:42:13  gregor
+ * *** keyword substitution change ***
  *
  * Revision 1.1  2003/05/21 15:20:33  gregor
  * first cut of a tree widget for the admin area. comes with a preliminary xsl that converts a sitetree to the required javascript.
