@@ -112,4 +112,23 @@ public class DocumentType {
     public String toString() {
         return getName();
     }
+
+    private String[] linkAttributeXPaths = { };
+
+    /**
+     * Returns an array of XPaths representing attributes to be rewritten
+     * when a document URL has changed.
+     * @return An array of strings.
+     */
+    public String[] getLinkAttributeXPaths() {
+        return this.linkAttributeXPaths;
+    }
+    
+    /**
+     * Sets the link attribute XPath values.
+     * @param xPaths An array of strings.
+     */
+    public void setLinkAttributeXPaths(String[] xPaths) {
+        this.linkAttributeXPaths = xPaths;
+    }
 }

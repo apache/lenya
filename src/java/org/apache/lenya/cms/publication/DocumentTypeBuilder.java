@@ -21,6 +21,8 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -71,6 +73,14 @@ public final class DocumentTypeBuilder {
      * <code>WORKFLOW_ELEMENT</code> The workflow element
      */
     public static final String WORKFLOW_ELEMENT = "workflow";
+    /**
+     * <code>ELEMENT_REWRITE_ATTRIBUTE</code> The link-attribute element.
+     */
+    public static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
+    /**
+     * <code>ATTRIBUTE_XPATH</code> The xpath attribute.
+     */
+    public static final String ATTRIBUTE_XPATH = "xpath";
 
     /**
      * Builds a document type for a given name.
@@ -123,6 +133,16 @@ public final class DocumentTypeBuilder {
                 String workflowFileName = workflowConf.getAttribute(SRC_ATTRIBUTE);
                 type.setWorkflowFileName(workflowFileName);
             }
+            
+            Configuration[] rewriteAttributeConfigs = doctypeConf.getChildren(ELEMENT_REWRITE_ATTRIBUTE);
+            List xPaths = new ArrayList();
+            for (int i = 0; i < rewriteAttributeConfigs.length; i++) {
+                String xPath = rewriteAttributeConfigs[i].getAttribute(ATTRIBUTE_XPATH);
+                xPaths.add(xPath);
+            }
+            String[] xPathArray = (String[]) xPaths.toArray(new String[xPaths.size()]);
+            type.setLinkAttributeXPaths(xPathArray);
+            
         } catch (final ConfigurationException e) {
             throw new DocumentTypeBuildException(e);
         } catch (final SAXException e) {
