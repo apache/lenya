@@ -22,9 +22,6 @@
     <map:transformer name="link-rewrite" logger="lenya.sitemap.transformer.link-rewrite" src="org.apache.lenya.cms.cocoon.transformation.LinkRewritingTransformer"/>
     <map:transformer name="usecasemenu" logger="lenya.sitemap.transformer.usecasemenu" src="org.apache.lenya.cms.cocoon.transformation.UsecaseMenuTransformer"/>
     <map:transformer name="workflowmenu" logger="lenya.sitemap.transformer.workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/>
-    <map:transformer name="xlink" src="org.apache.lenya.cms.cocoon.transformation.IncludeTransformer">
-      <publication type=""/>
-    </map:transformer>
     <map:transformer name="i18n" logger="sitemap.transformer.i18n" src="org.apache.cocoon.transformation.I18nTransformer">
       <catalogues default="cmsui">
          <catalogue id="cmsui" name="cmsui" location="cocoon://i18n-catalogue/"/>
