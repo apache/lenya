@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Related Projects</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+<p>
+This list is featuring projects which are closely related to Apache Lenya.
+</p>
+
+<p>
+Open Source Content Management Systems/Frameworks overviews can be found at
+<a href="http://www.oscom.org">oscom.org</a> or
+<a href="http://www.cmsinfo.org">cmsinfo.org</a>.
+</p>
+
+<p>
+More information on Cocoon-based projects can be found at
+<a href="http://xml.apache.org/cocoon/link/projects.html">http://xml.apache.org/cocoon/link/projects.html</a>.
+</p>
+
+<section><title>CocoBlog</title>
+<p>
+CocoBlog is a free <a href="http://newhome.weblogs.com/historyOfWeblogs">weblogging</a> software tool based on Apache Cocoon and Apache XIndice
+<a href="http://www.beblogging.com/blog/docs">http://www.beblogging.com/blog/docs</a>.
+</p>
+</section>
+
+<section><title>Cocoon</title>
+<p>
+Apache Cocoon is an XML publishing framework that raises the usage of XML and XSLT
+technologies for server applications to a new level. Designed for performance and
+scalability around pipelined SAX processing, Cocoon offers a flexible environment
+based on a separation of concerns between content, logic, and style. To top this all
+off, Cocoons centralized configuration system and sophisticated caching help you to
+create, deploy, and maintain rock-solid XML server applications.
+</p>
+<p>
+<a href="http://xml.apache.org/cocoon/">http://xml.apache.org/cocoon/</a>
+</p>
+</section>
+
+
+<section><title>Maverick</title>
+<p>
+Maverick is a Model-View-Controller (aka "Model 2") framework for web publishing
+using Java and J2EE. It is a minimalist framework which focuses solely on MVC logic,
+allowing you to generate presentation using a variety of templating and transformation
+technologies.
+</p>
+<p>
+<a href="http://mav.sourceforge.net">http://mav.sourceforge.net</a>
+</p>
+</section>
+
+
+<section><title>Slide</title>
+<p>
+The Slide project main module is a Content Management and Integration System, which
+can be seen as a low-level content management framework. Conceptually, it provides
+a hierarchical organization of binary content which can be stored into arbitrary,
+heterogenous, distributed data stores. In addition, Slide integrates security, locking,
+versioning, as well as many other services.
+</p>
+<p>
+<a href="http://jakarta.apache.org/slide/">http://jakarta.apache.org/slide/</a>
+</p>
+</section>
+
+
+</body>
+</document>
