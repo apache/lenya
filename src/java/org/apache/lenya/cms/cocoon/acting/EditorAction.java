@@ -1,6 +1,10 @@
 package org.wyona.cms.cocoon.acting;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -20,6 +24,7 @@ import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
+import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.util.Tokenizer;
 import org.w3c.dom.Document;
@@ -44,7 +49,6 @@ public class EditorAction extends AbstractComplementaryConfigurableAction implem
   public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
     // Get request object
     Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
-
     if(request == null){
       getLogger().error ("No request object");
       return null;
@@ -56,24 +60,26 @@ public class EditorAction extends AbstractComplementaryConfigurableAction implem
       return null;
     }
 
-    String tempfile=(String)session.getAttribute("org.wyona.cms.editor.HTMLForm.tempFile");
-    getLogger().error("**** tempfile="+tempfile);
+    String tempFile=(String)session.getAttribute("org.wyona.cms.editor.HTMLForm.tempFile");
+    getLogger().error("**** tempfile="+tempFile);
 
-    if (tempfile!=null){
-//       Enumeration reqparams=request.getParameterNames();                                                  
-//       String newparams="?";
-//       while (reqparams.hasMoreElements()) {                        
-//         String param=(String)reqparams.nextElement();
-//         String[] values=request.getParameterValues(param);
-//         if (values!=null) for (int i=0; i<values.length; i++) {
-//           getLogger().error("parameter: " +param+" : "+values[i]);
-//           newparams=newparams+param+"="+values[i]+"&";
-//         }
-//       }
-//       getLogger().error("**** new parameter: " +newparams);
+    if (tempFile!=null){
+      // get the Document and copy it to the temporary file
+      getLogger().debug("**** saving ****");
+      Source source = resolver.resolve("cocoon:/performrequest");
+      getLogger().debug ("======= URL:"+source.getSystemId());
+
+      BufferedReader in = new BufferedReader(new InputStreamReader(source.getInputStream()));  
+      BufferedWriter out = new BufferedWriter(new FileWriter(tempFile));
+      String line;
+      while ((line = in.readLine()) != null) {
+        out.write(line+"\n");
+      }
+      in.close();
+      out.close();
 
       HashMap actionMap=new HashMap();
-      actionMap.put("tempFile",tempfile);
+      actionMap.put("tempFile",tempFile);
       return actionMap;
     }
     return null;

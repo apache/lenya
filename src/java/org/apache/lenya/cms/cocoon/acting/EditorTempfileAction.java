@@ -26,12 +26,11 @@ import org.w3c.dom.Document;
 import org.wyona.util.Stack;
 
 /**
- * this class gets the name of the tempfile from the session and writes it to
- * the sitemap
+ * this class does nothing but provide the name of the tempfile to the sitemap
  *
- * @author Michael Wechner
- * @created 2001.11.18
- * @version 2001.12.28
+ * @author Martin Lüthi
+ * @created 2002.02.06
+ * @version 2002.02.06
  */
 public class EditorTempfileAction extends AbstractComplementaryConfigurableAction implements Configurable{
 /**
@@ -45,26 +44,22 @@ public class EditorTempfileAction extends AbstractComplementaryConfigurableActio
  */
   public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
     // Get request object
-    Request req=(Request)objectModel.get(Constants.REQUEST_OBJECT);
-    getLogger().error("********* here i am *****************************************");
-
-    if(req == null){
+    Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
+    if(request == null){
       getLogger().error ("No request object");
       return null;
       }
     // Get session
-    Session session=req.getSession(true);
+    Session session=request.getSession(true);
     if(session == null){
       getLogger().error("No session object");
       return null;
     }
-
-    // Get uri
-    String tempfile=(String)session.getAttribute("org.wyona.cms.editor.HTMLForm.tempFile");
-    getLogger().error("**** tempfile="+tempfile);
-    if (tempfile!=null){
+    // Get tempfile
+    String tempFile=(String)session.getAttribute("org.wyona.cms.editor.HTMLForm.tempFile");
+    if (tempFile!=null){
       HashMap actionMap=new HashMap();
-      actionMap.put("tempFile",tempfile);
+      actionMap.put("tempFile",tempFile);
       return actionMap;
     }
     return null;
