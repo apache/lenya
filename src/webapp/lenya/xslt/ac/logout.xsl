@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:session="http://www.apache.org/xsp/session/2.0">
 
-<xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:param name="publication_name"/>
 <xsl:variable name="copyright">copyright &#169; 2003 lenya.org</xsl:variable>
@@ -39,7 +39,7 @@
 LOGOUT
 </xsl:template>
 
-<xsl:template match="invalidate">
+<xsl:template match="logout">
 <font face="verdana">
 <br /><b>LOGOUT</b>
 

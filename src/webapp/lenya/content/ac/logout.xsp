@@ -3,6 +3,7 @@
 <xsp:page
        language="java"
        xmlns:xsp="http://apache.org/xsp"  
+       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
        >
   <xsp:structure>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
@@ -11,28 +12,25 @@
 
 <page>
 <body>
-<invalidate>
+<logout>
+
+  <!-- Import Lenya Page Envelope -->
+  <xsp-lenya:util/>
+
   <xsp:logic>
-    String referer=request.getHeader("Referer");
-    if(referer != null){
-      <xsp:content><referer><xsp:expr>referer</xsp:expr></referer></xsp:content>
-      }
-    else{
-      <xsp:content><no_referer/></xsp:content>
-      }
     Session session=request.getSession(false);
     if(session != null){
       session.removeAttribute("org.lenya.cms.ac.Identity");
-      Vector history=(Vector)session.getAttribute("org.lenya.cms.cocoon.acting.History");
+     Vector history=(Vector)session.getAttribute("org.lenya.cms.cocoon.acting.History");
       if(history != null){
         for(int i=0;i&lt;history.size();i++){
           String uri=(String)history.elementAt(i);
           <xsp:content><uri><xsp:expr>uri</xsp:expr></uri></xsp:content>
-          }
         }
       }
+    }
   </xsp:logic>
-</invalidate>
+</logout>
 </body>
 </page>
 

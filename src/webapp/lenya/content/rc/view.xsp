@@ -7,6 +7,7 @@
   </xsp:structure>                                                                                                                          
 <rc:backup xmlns:rc="http://www.lenya.org/2002/rc">
   <xsp:logic>
+    <!-- FIXME: This bad mother needs a good fixing -->
     org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
     String sitemapPath=input_source.getSystemId();
     sitemapPath=sitemapPath.substring(5); // Remove "file:" protocol

@@ -8,12 +8,8 @@
 
 <menu>
 
-<!--
+  <!-- Import Lenya Page Envelope -->
   <xsp-lenya:util/>
--->
-  <context>/lenya</context>
-  <context_prefix>/lenya/ethz-mat</context_prefix>
-  <prefix>ethz-mat</prefix>
 
 </menu>
 

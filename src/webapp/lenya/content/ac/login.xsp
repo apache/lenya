@@ -3,6 +3,7 @@
 <xsp:page
        language="java"
        xmlns:xsp="http://apache.org/xsp"  
+       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
        >
 
   <xsp:structure>
@@ -12,42 +13,35 @@
 
 <page>
 <body>
-<identify>
+<login>
+
+  <!-- Import Lenya Page Envelope -->
+  <xsp-lenya:util/>
+
   <xsp:logic>
-    <xsp:content><context><xsp:expr>request.getContextPath()</xsp:expr></context></xsp:content>
-    Session session=request.getSession(false);
-    if(session != null){
-      Identity id=(Identity)session.getAttribute("org.lenya.cms.ac.Identity");
+      Session session=request.getSession(false);
       String authenticator_id=(String)session.getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
-      //String authenticator_id=(String)session.getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.id");
-      if(id != null){
-        <xsp:content><current_username><xsp:expr>id.getUsername()</xsp:expr></current_username></xsp:content>
-        }
-      else{
-        <xsp:content><no_username_yet/></xsp:content>
-        }
       if(authenticator_id != null){
         <xsp:content><authenticator><xsp:attribute name="id"><xsp:expr>authenticator_id</xsp:expr></xsp:attribute></authenticator></xsp:content>
-        }
+      }
       else{
         <xsp:content><no_authenticator_id_yet/></xsp:content>
-        }
+      }
       String protected_destination=(String)session.getAttribute("protected_destination");
       if(protected_destination != null){
         <xsp:content><protected_destination><xsp:expr>protected_destination</xsp:expr></protected_destination></xsp:content>
-        }
+      }
       else{
         <xsp:content><no_protected_destination/></xsp:content>
-        }
       }
-    String status=request.getParameter("status");
-    if(status != null){
-      if(status.equals("failed")){
-        <xsp:content><authentication_failed/></xsp:content>
+      String status=request.getParameter("status");
+      if(status != null){
+        if(status.equals("failed")){
+          <xsp:content><authentication_failed/></xsp:content>
         }
       }
   </xsp:logic>
-</identify>
+</login>
 </body>
 </page>
 

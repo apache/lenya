@@ -53,7 +53,6 @@ for a TaskAction execution.
     String request_uri=request.getRequestURI();
     String sitemap_uri=request.getSitemapURI();
     String prefix=request_uri.substring(0,request_uri.length()-sitemap_uri.length()-1);
-    String context_prefix=context+"/"+prefix;
     if(session != null){
       id=(Identity)session.getAttribute("org.lenya.cms.ac.Identity");
       if(id != null){

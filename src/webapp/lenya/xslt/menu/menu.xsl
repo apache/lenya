@@ -29,9 +29,6 @@
 
 
 <table width="600" border="0" cellspacing="0" cellpadding="0">
-<!--
-<table width="800" border="0" cellspacing="0" cellpadding="0">
--->
 <tr>
 <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4">
 <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4" /></td>
@@ -63,7 +60,7 @@ src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="4" height="4" /></td>
 <font color="#ffffff" size="-2" face="verdana">
   User Id: <b><xsl:value-of select="current_username"/></b> | Server Time: <b><xsl:value-of select="server_time"/></b> &#160;&#160;&#160;
 </font>
-<!--</td><td valign="top" background="/lenya/lenya/menu/images/grau-bg.gif"><img src="/lenya/lenya/menu/images/lenya_oben.gif">--></td>
+</td>
 <td background="/lenya/lenya/menu/images/grau-bg.gif" height="4" width="2"><img
 src="/lenya/lenya/menu/images/grau-bg.gif" width="2" height="4" /></td>
 </tr>

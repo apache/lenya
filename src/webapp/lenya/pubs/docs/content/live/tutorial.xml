@@ -82,7 +82,7 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 <code><![CDATA[
 
 <map:match pattern="logout">
-  <map:generate type="serverpages" src="../../content/ac/invalidate.xsp"/>
+  <map:generate type="serverpages" src="../../content/ac/logout.xsp"/>
   <map:transform src="../../xslt/ac/logout.xsl">
     <map:parameter name="publication_name" value="MY-PUB"/>
   </map:transform>

@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:util="http://apache.org/xsp/util/2.0">
+<xsp:page 
+       language="java" 
+       xmlns:xsp="http://apache.org/xsp" 
+       xmlns:util="http://apache.org/xsp/util/2.0"
+       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+       >
+       
   <xsp:structure>
     <xsp:include>org.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>java.io.IOException</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
   </xsp:structure>                                                                                                                          
 <rc:revisions xmlns:rc="http://www.lenya.org/2002/rc">
+
+  <!-- Import Lenya Page Envelope -->
+  <xsp-lenya:util/>
+
   <xsp:logic>
+    <!-- FIXME: This bad mother needs a good fixing -->
     org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
     String sitemapPath=input_source.getSystemId();
     sitemapPath=sitemapPath.substring(5); // Remove "file:" protocol
@@ -19,11 +30,7 @@
     rcmlDirectory=rootDir+"/"+rcmlDirectory;
     backupDirectory=rootDir+"/"+backupDirectory;
 
-    
-    String request_uri=request.getRequestURI();
-    String sitemap_uri=request.getSitemapURI();
-    String prefix=request_uri.substring(0,request_uri.length()-sitemap_uri.length()-1);
-
+   
     String artId = parameters.getParameter("docid","null");
     String uriprefix = request_uri.substring(0,request_uri.indexOf("/authoring")) + File.separator + "authoring";
 
@@ -37,8 +44,8 @@
     org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
     rootE.setAttribute("id", artId);     
     rootE.setAttribute("uriprefix", uriprefix);     
-    rootE.setAttribute("request_uri", request_uri);     
-    rootE.setAttribute("sitemap_uri", sitemap_uri);     
+    rootE.setAttribute("request_uri", xsp_lenya_request_uri);     
+    rootE.setAttribute("sitemap_uri", xsp_lenya_sitemap_uri);     
 
     org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
 

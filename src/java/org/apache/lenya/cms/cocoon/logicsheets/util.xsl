@@ -28,18 +28,18 @@
 <xsl:template match="xsp-lenya:util">
   <xsp:logic>
     Date xsp_lenya_server_time=new Date();
+    <xsp:content><server_time><xsp:expr>xsp_lenya_server_time</xsp:expr></server_time></xsp:content>
     String xsp_lenya_context=request.getContextPath();
     <xsp:content><context><xsp:expr>xsp_lenya_context</xsp:expr></context></xsp:content>
     String xsp_lenya_request_uri=request.getRequestURI();
     <xsp:content><request_uri><xsp:expr>xsp_lenya_request_uri</xsp:expr></request_uri></xsp:content>
     String xsp_lenya_context_prefix=xsp_lenya_request_uri.substring(0,xsp_lenya_request_uri.indexOf("/authoring"));
+    <xsp:content><context_prefix><xsp:expr>xsp_lenya_context_prefix</xsp:expr></context_prefix></xsp:content>
     String xsp_lenya_pub_url=xsp_lenya_request_uri.substring(xsp_lenya_request_uri.indexOf("/authoring")+10);
     String xsp_lenya_sitemap_uri=request.getSitemapURI();
     <xsp:content><sitemap_uri><xsp:expr>xsp_lenya_sitemap_uri</xsp:expr></sitemap_uri></xsp:content>
-
-    //String xsp_lenya_prefix="oscom";
-    //String xsp_lenya_prefix="nwt";
-    //String xsp_lenya_context_prefix=xsp_lenya_context+"/"+xsp_lenya_prefix;
+    String xsp_lenya_prefix=xsp_lenya_request_uri.substring(0,xsp_lenya_request_uri.length()-xsp_lenya_sitemap_uri.length()-1);
+    <xsp:content><prefix><xsp:expr>xsp_lenya_prefix</xsp:expr></prefix></xsp:content>
 
     Session xsp_lenya_session=request.getSession(false);
     Identity xsp_lenya_id=null;
@@ -47,19 +47,29 @@
       xsp_lenya_id=(Identity)xsp_lenya_session.getAttribute("org.lenya.cms.ac.Identity");
       if(xsp_lenya_id != null){
         <xsp:content><current_username><xsp:expr>xsp_lenya_id.getUsername()</xsp:expr></current_username></xsp:content>
-        }
+      }
       else{
         <xsp:content><no_username_yet/></xsp:content>
-        }
       }
+    }
     else{
       <xsp:content><no_session_yet/></xsp:content>
-      }
+    }
+    String xsp_lenya_referer=request.getHeader("Referer");
+    if(xsp_lenya_referer == null){
+      <xsp:content><no_referer/></xsp:content>
+    }    
+    else {
+       String xsp_lenya_status=request.getParameter("status");
+       if(xsp_lenya_status == null){
+          xsp_lenya_session.setAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri",xsp_lenya_referer);
+          <xsp:content><referer><xsp:expr>xsp_lenya_referer</xsp:expr></referer></xsp:content>
+       }
+       else{
+         <xsp:content><referer><xsp:expr>xsp_lenya_session.getAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri")</xsp:expr></referer></xsp:content>
+       }
+    }
   </xsp:logic>
-
-  <server_time><xsp:expr>xsp_lenya_server_time</xsp:expr></server_time>
-  <!--<xsp:content><prefix><xsp:expr>xsp_lenya_prefix</xsp:expr></prefix></xsp:content>-->
-  <xsp:content><context_prefix><xsp:expr>xsp_lenya_context_prefix</xsp:expr></context_prefix></xsp:content>
 </xsl:template>
 
 <xsl:template match="@*|node()" priority="-1">

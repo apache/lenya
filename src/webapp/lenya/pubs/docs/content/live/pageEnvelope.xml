@@ -6,6 +6,7 @@
     <version major="0" minor="1">Initial version</version>
     <authors>
       <person name="Christian Egli" email="christian.egli@wyona.org"/>
+      <person name="Gregor J. Rothfuss" email="gregor.rothfuss@wyona.org"/>
     </authors> 
     <notice></notice> 
     <abstract>Proposal for a standard Page envelope which carries all
@@ -59,6 +60,23 @@
   &lt;/lenya:body&gt;
 &lt;/lenya&gt;
 </source>
+    </section>
+
+    <section>
+      <title>Current Parameters</title>
+      <p>Currently, the following variables are defined within Lenya (see &lt;xsp-lenya:util/&gt;):</p>
+      <ul>
+	<li>context</li>
+	<li>request_uri</li>
+    <li>sitemap_uri</li>
+    <li>current_username</li>
+    <li>no_username_yet</li>
+    <li>no_session_yet</li>
+    <li>server_time</li>
+    <li>context_prefix</li>
+    <li>referer</li>  
+    <li>no_referer</li>   
+           </ul>
     </section>
 
     <section>

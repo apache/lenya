@@ -21,7 +21,7 @@
    <head>
     <title><xsl:value-of select="$publication_name"/> - <xsl:call-template name="html-title"/></title>
     <xsl:call-template name="include-css">
-      <xsl:with-param name="context-prefix" select="concat(body/identify/context, $prefix)"/>
+      <xsl:with-param name="context-prefix" select="concat(body/login/context, $prefix)"/>
     </xsl:call-template>
     </head>
     <body bgcolor="#ffffff">
@@ -42,7 +42,7 @@
 LOGIN
 </xsl:template>
 
-<xsl:template match="identify">
+<xsl:template match="login">
 <font face="verdana">
 <b>LOGIN</b>
 
