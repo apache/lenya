@@ -1,5 +1,5 @@
 /*
-$Id: HtmlContentHandler.java,v 1.4 2003/07/23 13:21:17 gregor Exp $
+$Id: HtmlContentHandler.java,v 1.5 2003/11/13 22:56:43 michi Exp $
 <License>
 
  ============================================================================
@@ -75,9 +75,7 @@ public class HtmlContentHandler extends DefaultHandler {
         org.apache.excalibur.xml.sax.JTidyHTMLParser parser = new org.apache.excalibur.xml.sax.JTidyHTMLParser();
 
         try {
-            parser.parse(new org.xml.sax.InputSource(
-                    new java.io.FileInputStream("/home/michi/eurex/htdocs_dump_BAK1/index.html")),
-                ch);
+            parser.parse(new org.xml.sax.InputSource(new java.io.FileInputStream("/usr/local/apache/htdocs/index.html")), ch);
         } catch (Exception e) {
             System.err.println(e);
         }
