@@ -106,4 +106,8 @@
   	    shorthand="workflow-resolver"
   	    default-class="org.apache.lenya.cms.workflow.WorkflowResolverImpl"/>
         
+  <role name="org.apache.lenya.cms.site.usecases.LinkRewriter"
+  	    shorthand="link-rewriter"
+  	    default-class="org.apache.lenya.cms.site.usecases.LinkRewriterImpl"/>
+        
 </role-list>
