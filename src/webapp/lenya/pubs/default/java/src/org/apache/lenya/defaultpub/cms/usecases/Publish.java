@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -60,6 +61,15 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         Date now = new GregorianCalendar().getTime();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         setParameter(SCHEDULE_TIME, format.format(now));
+        
+        // resolve involved documents to lock them
+        Document doc = getSourceDocument();
+        try {
+            Document liveVersion = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
+            getInvolvedDocuments(liveVersion);
+        } catch (DocumentBuildException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

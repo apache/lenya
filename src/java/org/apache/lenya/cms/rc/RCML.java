@@ -256,7 +256,7 @@ public class RCML {
                 "/XPSRevisionControl/CheckIn[1]/Identity/text()");
         Node time = XPathAPI.selectSingleNode(parent, "/XPSRevisionControl/CheckIn[1]/Time/text()");
         Node versionNode = XPathAPI.selectSingleNode(parent,
-                "/XPSRevisionControl/CheckOut[1]/Version/text()");
+                "/XPSRevisionControl/CheckIn[1]/Version/text()");
 
         if (identity == null && time == null) {
             // No checkout at all

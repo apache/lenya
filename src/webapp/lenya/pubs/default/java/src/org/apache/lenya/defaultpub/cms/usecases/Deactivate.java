@@ -19,6 +19,7 @@ package org.apache.lenya.defaultpub.cms.usecases;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -44,6 +45,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
+        
         if (getErrorMessages().isEmpty()) {
 
             if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
@@ -68,6 +70,14 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                 }
             }
 
+            // get involved objects to lock them
+            Document doc = getSourceDocument();
+            try {
+                Document liveVersion = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
+                getInvolvedDocuments(liveVersion);
+            } catch (DocumentBuildException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -138,6 +148,20 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             getLogger().debug("Subtree deactivation: [" + isSubtreeEnabled() + "]");
         }
 
+        DocumentSet set = getInvolvedDocuments(document);
+        try {
+            set.visit(this);
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Publishing completed.");
+        }
+    }
+
+    protected DocumentSet getInvolvedDocuments(Document document) {
+        DocumentSet set;
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {
@@ -146,11 +170,10 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                     .getSiteManagerHint());
 
             Document[] descendants = siteManager.getRequiringResources(document);
-            DocumentSet set = new DocumentSet(descendants);
+            set = new DocumentSet(descendants);
             set.add(document);
             siteManager.sortAscending(set);
             set.reverse();
-            set.visit(this);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -161,10 +184,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                 this.manager.release(selector);
             }
         }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Publishing completed.");
-        }
+        return set;
     }
 
     /**

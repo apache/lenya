@@ -587,11 +587,14 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         checkin(true);
     }
 
+    private boolean isCheckedOut = false;
+    
     protected void checkin(boolean backup) throws TransactionException {
         try {
             String userName = getUserId();
             boolean newVersion = getIdentityMap().getUnitOfWork().isDirty(this);
             getRevisionController().reservedCheckIn(getRCPath(), userName, backup, newVersion);
+            this.isCheckedOut = false;
         } catch (Exception e) {
             throw new TransactionException(e);
         }
@@ -616,6 +619,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         try {
             String userName = getUserId();
             getRevisionController().reservedCheckOut(getRCPath(), userName);
+            this.isCheckedOut = true;
         } catch (Exception e) {
             throw new TransactionException(e);
         }
@@ -625,12 +629,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
      */
     public boolean isCheckedOut() throws TransactionException {
-        try {
-            String userName = getUserId();
-            return !getRevisionController().canCheckOut(getRCPath(), userName);
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        }
+        return this.isCheckedOut;
     }
 
     /**
@@ -735,8 +734,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public int getVersion() throws TransactionException {
         try {
-            String fileName = getRCPath();
-            return getRevisionController().getLatestVersion(fileName);
+            return getRevisionController().getLatestVersion(getRCPath());
         } catch (Exception e) {
             throw new TransactionException(e);
         }

@@ -571,6 +571,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             String userName = getUserID();
             boolean newVersion = this.identityMap.getUnitOfWork().isDirty(this);
             getRevisionController().reservedCheckIn(getRCPath(), userName, backup, newVersion);
+            isCheckedOut = false;
         } catch (Exception e) {
             throw new TransactionException(e);
         }
@@ -597,6 +598,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         try {
             String userName = getUserID();
             getRevisionController().reservedCheckOut(getRCPath(), userName);
+            isCheckedOut = true;
         } catch (Exception e) {
             throw new TransactionException(e);
         }
@@ -605,17 +607,14 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     protected String getRCPath() {
         return this.area + "/" + SITE_TREE_FILENAME;
     }
+    
+    private boolean isCheckedOut = false;
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
      */
     public boolean isCheckedOut() throws TransactionException {
-        try {
-            String userName = getUserID();
-            return !getRevisionController().canCheckOut(getRCPath(), userName);
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        }
+        return isCheckedOut;
     }
 
     private Lock lock;
@@ -694,8 +693,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      */
     public int getVersion() throws TransactionException {
         try {
-            String fileName = this.treefile.getCanonicalPath();
-            return getRevisionController().getLatestVersion(fileName);
+            return getRevisionController().getLatestVersion(getRCPath());
         } catch (Exception e) {
             throw new TransactionException(e);
         }

@@ -37,6 +37,7 @@ import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.transaction.AbstractOperation;
+import org.apache.lenya.transaction.LockException;
 
 /**
  * Abstract usecase implementation.
@@ -207,6 +208,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
                 getUnitOfWork().commit();
             }
 
+        } catch (LockException e) {
+            addErrorMessage("The operation could not be completed because an involved object was changed by another user.");
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");
