@@ -21,6 +21,7 @@ Configure and compile mod_dav:
 </p>
 <source>
 <![CDATA[
+wget http://www.webdav.org/mod_dav/mod_dav-1.0.3-1.3.6.tar.gz
 cd /home/michiii/src/mod_dav-1.0.3-1.3.6
 ./configure --with-apache=/home/michiii/src/apache_1.3.24
 make
@@ -30,7 +31,9 @@ find . -name "*dav*" -print
 ./configure --prefix=/usr/local/apache --activate-module=src/modules/dav/libdav.a
 (./configure --prefix=/usr/local/apache --enable-module=proxy --activate-module=src/modules/dav/libdav.a)
 make
+su
 make install
+/usr/local/apache/bin/httpd -l
 ]]>
 </source>
 
