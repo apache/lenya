@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Bitflux Editor - Insert Image</title>
+<script type="text/javascript">
+//<![CDATA[
+function BX_image_insert() {
+	var url = document.forms.image.url.value;
+
+	var mediaRef = '<media xmlns="http://www.w3.org/1999/xhtml" > <media-reference id="BX_id_'+parent.opener.BX_id_counter+'" source="'+ url +'"><img id="BX_id_'+parent.opener.BX_id_counter++ +'"  xmlns="http://www.w3.org/1999/xhtml" src="'+url+'" bxe_temporaryelement="yes"/><\/media-reference>';
+	if(document.forms.image.caption.value) {
+		mediaRef+='<media-caption>'+document.forms.image.caption.value+'<\/media-caption>';
+	}
+	mediaRef+='<\/media>';
+		
+	parent.opener.BX_id_counter++;
+	parent.opener.BX_insertContent(mediaRef);
+	
+}
+
+function BX_image_show() {
+	var url = document.forms.image.url.value;
+	
+	document.getElementById("pic").innerHTML = "<img src='"+url+"'>";
+}
+
+
+//]]>
+</script>
+</head>
+<body style="font-family: arial">
+Type in the URL of the image and hit "Insert Picture".<br/>
+If you click "Show Picture", the picture will be shown within this window. <br/>
+You can't upload images right now, it's you're responsibility to put the image somewhere 
+accessibale.<p/>
+<form name="image">
+<table>
+<tr>
+<td>Image URL:</td>
+<td><input type="text" name="url" size="40"/></td>
+</tr>
+
+<tr>
+<td>Caption :</td>
+<td><textarea name="caption" cols="40"></textarea></td>
+</tr>
+</table>
+</form>
+
+<input type="button" onclick="BX_image_insert();" value="Insert Picture" /> 
+<input type="button" onclick="BX_image_show();" value="Show Picture" /> 
+<p />
+<div id="pic">
+</div>
+</body>
+</html>
+
