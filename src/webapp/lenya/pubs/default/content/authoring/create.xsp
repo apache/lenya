@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"  
+       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+       >
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
+    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+  </xsp:structure>
+  
+  <parent-child>
+    
+    <!-- Import Lenya Page Envelope -->
+    <xsp-lenya:util/>
+    
+    <xsp:logic>
+      String referer = request.getRequestURI();
+      Session session = request.getSession(true);
+      String status = request.getParameter("status");
+      if (status == null) {
+        session.setAttribute("org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri",referer);
+        <xsp:content>
+	  <referer><xsp:expr>referer</xsp:expr></referer>
+        </xsp:content>
+      } else {
+        <xsp:content>
+	  <referer><xsp:expr>session.getAttribute("org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri")</xsp:expr></referer>
+        </xsp:content>
+        if (status.equals("failed")) {
+        <xsp:content><exception/></xsp:content>
+        }
+      }
+      <xsp:content>
+	<parentid><xsp-lenya:document-id/></parentid>
+	<doctype><xsp:expr>request.getParameter("doctype")</xsp:expr></doctype>
+      </xsp:content>
+    </xsp:logic>
+  </parent-child>
+  
+</xsp:page>
