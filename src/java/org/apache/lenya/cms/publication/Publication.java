@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.22 2003/08/08 08:17:57 edith Exp $
+$Id: Publication.java,v 1.23 2003/08/08 09:07:32 egli Exp $
 <License>
 
  ============================================================================
@@ -90,6 +90,7 @@ public class Publication {
         "lenya" + File.separator + "pubs";
     public static final String PUBLICATION_PREFIX_URI = "lenya/pubs";
     public static final String CONFIGURATION_PATH = "config";
+    public static final String CONTENT_PATH = "content";
 
     private static final String[] areas =
         { AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA };
@@ -102,7 +103,7 @@ public class Publication {
     private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
-    private HashMap siteTrees = null;
+    private HashMap siteTrees = new HashMap();
 
     /** 
      * Creates a new instance of Publication
@@ -294,9 +295,6 @@ public class Publication {
 
         DefaultSiteTree sitetree = null;
 		
-		if (siteTrees == null) {
-			siteTrees = new HashMap();	 
-		}
         if (siteTrees.containsKey(area)) {
             sitetree = (DefaultSiteTree)siteTrees.get(area);
         } else {
