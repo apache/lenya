@@ -264,6 +264,7 @@
     <component-instance name="site.cut" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Cut"/>
     <component-instance name="site.copy" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Copy"/>
     <component-instance name="site.paste" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Paste"/>
+    <component-instance name="site.nudge" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Nudge"/>
     
     <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>
     <component-instance name="tab.acAuthoring" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>

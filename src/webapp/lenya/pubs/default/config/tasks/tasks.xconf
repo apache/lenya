@@ -40,11 +40,6 @@
     <parameter name="target" value="moveDocument"/>
   </task>
 
-  <task id="movenode" class="org.apache.lenya.cms.task.AntTask">
-    <label>Move Node</label>
-    <parameter name="target" value="movenode"/>
-  </task>
-
   <task id="deleteDocument" class="org.apache.lenya.cms.task.AntTask">
     <label>DeleteDocument</label>
     <parameter name="target" value="deleteDocument"/>

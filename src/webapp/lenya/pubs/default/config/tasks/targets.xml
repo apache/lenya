@@ -490,20 +490,6 @@
 
 </target>
 
-<target name="movenode">
-	<property name="movenode.documentid" value=""/>
-	<property name="movenode.direction" value=""/>
-	
-	<echo>Moving sitetree node</echo>
-	<echo>Document ID: ${movenode.documentid}</echo>
-	<echo>Direction: ${movenode.direction}</echo>
-	
-  <taskdef name="movenodeupdown" classname="org.apache.lenya.cms.ant.MoveSiteTreeNodeTask"/>
-  <movenodeupdown
-    documentid="${movenode.documentid}"
-    direction="${movenode.direction}"
-  />
-</target>
 
   <target name="deletecache">
     <delete dir="${cachedir}"/>
