@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.2 2003/10/29 16:36:19 andreas Exp $ <License>
+ * $Id: DocumentHelper.java,v 1.3 2003/11/06 10:15:09 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -59,10 +59,10 @@ public class DocumentHelper {
     private Map objectModel;
 
     /**
-	 * Ctor.
-	 * 
-	 * @param objectModel The Cocoon object model.
-	 */
+     * Ctor.
+     * 
+     * @param objectModel The Cocoon object model.
+     */
     public DocumentHelper(Map objectModel) {
         this.objectModel = objectModel;
     }
@@ -78,8 +78,9 @@ public class DocumentHelper {
      * @return A string.
      * @throws ProcessingException if something went wrong.
      */
-    public String getDocumentUrl(String documentId, String documentArea, String language) throws ProcessingException {
-        
+    public String getDocumentUrl(String documentId, String documentArea, String language)
+        throws ProcessingException {
+
         String url = null;
         try {
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
@@ -89,46 +90,46 @@ public class DocumentHelper {
             }
 
             Request request = ObjectModelHelper.getRequest(objectModel);
-        
+
             if (documentArea == null) {
                 String webappUrl = ServletHelper.getWebappURI(request);
                 URLInformation info = new URLInformation(webappUrl);
                 String completeArea = info.getCompleteArea();
                 documentArea = completeArea;
             }
-            
+
             if (language == null) {
                 language = envelope.getDocument().getLanguage();
             }
 
             Publication publication = envelope.getPublication();
             DocumentBuilder builder = publication.getDocumentBuilder();
-        
+
             url = builder.buildCanonicalUrl(publication, documentArea, documentId, language);
-        
+
             String contextPath = request.getContextPath();
             if (contextPath == null) {
                 contextPath = "";
             }
-            
+
             url = contextPath + url;
 
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
-        
+
         return url;
 
     }
 
     /**
-	 * Returns the complete URL of the parent document. If the document is a top-level document,
-	 * the /index document is chosen. If the parent does not exist in the appropriate language, the
-	 * default language is chosen.
-	 * 
-	 * @return A string.
-	 * @throws ProcessingException when something went wrong.
-	 */
+     * Returns the complete URL of the parent document. If the document is a top-level document,
+     * the /index document is chosen. If the parent does not exist in the appropriate language, the
+     * default language is chosen.
+     * 
+     * @return A string.
+     * @throws ProcessingException when something went wrong.
+     */
     public String getCompleteParentUrl() throws ProcessingException {
 
         PageEnvelope envelope;
@@ -181,16 +182,28 @@ public class DocumentHelper {
     }
 
     /**
-	 * Returns an existing language version of a document. If the document exists in the preferred
-	 * language, this version is returned. Otherwise, if the document exists in the default
-	 * language, the default language version is returned. Otherwise, a random language version is
-	 * returned. If no language version exists, a DocumentException is thrown.
-	 * 
-	 * @param document The document.
-	 * @param preferredLanguage The preferred language.
-	 * @return A document.
-	 * @throws DocumentException when an error occurs.
-	 */
+     * Returns an existing language version of a document. If the document exists in the default
+     * language, the default language version is returned. Otherwise, a random language version is
+     * returned. If no language version exists, a DocumentException is thrown.
+     * 
+     * @param document The document.
+     * @return A document.
+     * @throws DocumentException when an error occurs.
+     */
+    public static Document getExistingLanguageVersion(Document document) throws DocumentException {
+        return getExistingLanguageVersion(document, document.getPublication().getDefaultLanguage());
+    }
+    /**
+     * Returns an existing language version of a document. If the document exists in the preferred
+     * language, this version is returned. Otherwise, if the document exists in the default
+     * language, the default language version is returned. Otherwise, a random language version is
+     * returned. If no language version exists, a DocumentException is thrown.
+     * 
+     * @param document The document.
+     * @param preferredLanguage The preferred language.
+     * @return A document.
+     * @throws DocumentException when an error occurs.
+     */
     public static Document getExistingLanguageVersion(Document document, String preferredLanguage)
         throws DocumentException {
 
@@ -219,6 +232,33 @@ public class DocumentHelper {
         document = builder.buildLanguageVersion(document, existingLanguage);
 
         return document;
+    }
+
+    /**
+     * Returns the parent document of a document in the same language.
+     * @param document The document.
+     * @return A document or <code>null</code> if the document parameter is the root document.
+     * @throws DocumentBuildException when the parent document could not be created.
+     */
+    public static Document getParentDocument(Document document) throws DocumentBuildException {
+
+        Document parent = null;
+
+        int lastSlashIndex = document.getId().lastIndexOf("/");
+        if (lastSlashIndex > 0) {
+            String parentId = document.getId().substring(0, lastSlashIndex);
+            Publication publication = document.getPublication();
+            DocumentBuilder builder = publication.getDocumentBuilder();
+            String parentUrl =
+                builder.buildCanonicalUrl(
+                    publication,
+                    document.getArea(),
+                    parentId,
+                    document.getLanguage());
+            parent = builder.buildDocument(publication, parentUrl);
+        }
+
+        return parent;
     }
 
 }
