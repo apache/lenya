@@ -1,11 +1,24 @@
 <!-- === Test targets =========================================================== -->
 
   <!-- Runs all tests -->
-  <target name="test" depends="junit.tests, anteater.tests" description="Runs all tests"/>
-
-  <!-- Runs JUnit tests -->
-  <target name="junit.tests" depends="init">
-  <!--<target name="junit.tests" depends="compile">-->
+  <target name="test" depends="tests.junit, tests.anteater" description="Runs all tests"/>
+  
+  <!-- Prepares the test publication -->
+  <target name="test.pub.prepare">
+    
+    <property name="test.pub.dir" value="${install.dir}/lenya/pubs/test"/>
+    
+    <delete dir="${test.pub.dir}"/>
+    <mkdir dir="${test.pub.dir}"/>
+    
+    <copy todir="${test.pub.dir}">
+      <fileset dir="${build.webapp}/lenya/pubs/default"/>
+    </copy>
+    
+  </target>
+  
+  <!-- prepares the tests. -->
+  <target name="tests.prepare">
     <mkdir dir="${build.test}"/>
 
     <!-- Copy test files to build test dir -->
@@ -20,19 +33,27 @@
            optimize="{optimize}"
            deprecation="{deprecation}"
            target="${target.vm}"
-           fork="true">
+           fork="true"
+           source="1.4">
       <classpath refid="classpath"/>
       <classpath>
         <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
       </classpath>
     </javac>
+  </target>
 
-    <!-- Run tests -->
-    
-    <!--
-    Identity Test
-    -->
-    <!--
+
+  <!-- Runs JUnit tests -->
+  <target name="tests.junit"	depends="init, tests.prepare,
+  			test.workflow,
+  			test.anttask"
+  />
+  			
+<!-- test.identity -->
+
+  
+  <!-- Identity Test -->
+  <target name="test.identity">
     <java fork="yes" classname="junit.textui.TestRunner">
       <arg value="org.apache.lenya.cms.ac.IdentityTestCase"/>
       <classpath refid="classpath"/>
@@ -41,17 +62,18 @@
         <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
       </classpath>
     </java>
-    -->
+  </target>
+  
     
-    <!--
-    AntTask Test
-    -->
+  <!-- AntTask Test -->
+  <target name="test.anttask" depends="test.pub.prepare">
     <java
     	fork="yes"
     	classname="org.apache.lenya.cms.task.AntTaskTest"
     	>
       <jvmarg value="-enableassertions"/>
       <arg value="${install.dir}"/> <!-- servlet context path -->
+      <arg value="test"/> <!-- servlet context path -->
       <classpath refid="classpath"/>
       <classpath>
         <pathelement location="${build.test}" />
@@ -61,12 +83,15 @@
         </fileset>
       </classpath>
     </java>
-    
-    <!-- Workflow Test -->
+  </target>
+  
+
+  <!-- Workflow Test -->
+  <target name="test.workflow" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.workflow.WorkflowTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="default"/> <!-- publication id -->
       <arg value="${install.dir}"/> <!-- servlet context path -->
+      <arg value="test"/> <!-- publication id -->
       <arg value="simple"/> <!-- document type -->
       <classpath refid="classpath"/>
       <classpath>
@@ -77,12 +102,10 @@
         </fileset>
       </classpath>
     </java>
-    
-    
-  </target>
+  </target>  
 
   <!-- Anteater tests  -->
-  <target name="anteater.tests">
+  <target name="tests.anteater">
     <property name="host" value="localhost"/>
     <property name="port" value="8888"/>
     <property name="base" value="/"/>
