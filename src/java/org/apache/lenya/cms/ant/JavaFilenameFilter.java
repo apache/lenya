@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
 
 public class JavaFilenameFilter implements FilenameFilter {
     
-    protected static final String[] SUFFIXES = { "java", "properties", "xsl" };
+    protected static final String[] SUFFIXES = { "java", "properties", "xml", "xsl", "jdo", "dtd" };
 
     /**
      *  (non-Javadoc)
