@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: lucene.xmap,v 1.3 2003/11/16 23:05:20 michi Exp $ -->
+<!-- CVS: $Id: lucene.xmap,v 1.4 2003/11/25 09:20:36 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -58,7 +58,7 @@
           <map:parameter name="pub4-id" value="matrix"/>
           <map:parameter name="pub4-name" value="Matrix"/>
           <map:parameter name="pub4-index-dir" value="../work/search/lucene/index/index-cmfsMatrix"/>
-          <map:parameter name="pub4-search-fields" value="title,contents"/>
+          <map:parameter name="pub4-search-fields" value="title,contents,license"/>
           <map:parameter name="pub4-excerpt-dir" value="../content/authoring/matrix"/>
           <map:parameter name="pub4-prefix" value="http://www.oscom.org/matrix"/>
 
