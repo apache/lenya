@@ -142,6 +142,7 @@
       
       <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
     
+      <!-- TODO: is also defined within global-sitemap.xmap. Is this necessary? -->
       <map:action name="default-create" src="org.apache.lenya.cms.cocoon.acting.DefaultCreatorAction" logger="sitemap.action.default-create">
         <tree-authoring href="content/authoring/sitetree.xml"/>
         <docs href="content/authoring"/>
