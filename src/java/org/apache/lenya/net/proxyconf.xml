@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<conf xmlns:xlink="http://www.w3.org/xlink">
+<conf xmlns:xlink="http://www.w3.org/1999/xlink">
 <!--
 	<Proxy host="proxy1.example.com" port="8080">
 		<include>.*</include>
