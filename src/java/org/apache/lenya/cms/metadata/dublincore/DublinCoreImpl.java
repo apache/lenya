@@ -102,6 +102,20 @@ public class DublinCoreImpl {
     }
 
     /**
+     * Creates a new instance of Dublin Core 
+     * 
+     * @param file the File for which the Dublin Core instance is created.
+     * TODO This is a hack until resources are treated as documents, and .meta files
+     * can be accessed through the Document interface.
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public DublinCoreImpl(File file) throws DocumentException {
+        infofile = file;
+        loadValues();
+    }
+
+    /**
      * Loads the dublin core values from the XML file.
      * @throws DocumentException when something went wrong.
      */

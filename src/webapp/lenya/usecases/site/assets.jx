@@ -17,10 +17,12 @@
 
 <!-- $Id$ -->
 
-<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+<html xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
            xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+           <head/>
+            <body>
   <div>
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
@@ -105,7 +107,7 @@
               <jx:if test="${item.format.equals('image/jpeg') or item.format.equals('image/gif') or item.format.equals('image/png')}">
                   <img src="../authoring/${usecase.getParameter('documentnodeid')}/${item.source}" style="height: 32px; vertical-align: middle;"/>&#160;
               </jx:if>
-             </td>
+            </td>
             <td><jx:out value="${item.title}"/></td>
             <td align="right"><jx:out value="${item.extent}"/> kB</td>
             <td align="right"><jx:out value="${item.date}"/></td>
@@ -120,16 +122,55 @@
               </form>
             </td>
           </tr> 
-        </jx:forEeach>
+        </jx:forEach>
       </table>
-      <form>
+<!--     <jx:if test="${usecase.getParameter('area').equals('authoring')}">
+-->      <form>
         <input type="hidden" name="lenya.usecase" value="site.asset"/>
-        <input type="hidden" name="insert" value="false"/>
-        <jx:choose>
-           <jx:when test="${usecase.getParameter('area').equals('authoring')}"><input i18n:attr="value" type="submit" value="New Asset"/></jx:when>
-           <jx:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="New Asset"/></jx:otherwise>
-         </jx:choose>              
-      </form>
-    </div>
+        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+        <table class="lenya-table-noborder">
+          <tr>
+            <td colspan="2">
+              <ul>
+              <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+                <li>
+                  <i18n:text><jx:out value="${message}"/></i18n:text>
+                </li>
+              </jx:forEach>
+              <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+                <li>
+                  <i18n:text><jx:out value="${message}"/></i18n:text>
+                </li>
+              </jx:forEach>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><i18n:text>File</i18n:text> *</td>
+            <td><input type="file" name="file" class="lenya-form-entry"/></td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><i18n:text>Title</i18n:text> *</td>
+            <td><input type="text" name="title" class="lenya-form-entry" value="${usecase.getParameter('title')}"/></td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><i18n:text>Creator</i18n:text> *</td>
+            <td><input type="text" name="creator" class="lenya-form-entry" value="${usecase.getParameter('creator')}"/></td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><i18n:text>Rights</i18n:text> *</td>
+            <td><input type="text" name="rights" class="lenya-form-entry" value="${usecase.getParameter('rights')}"/></td>
+          </tr>
+          <tr>
+            <td/>
+            <td>
+              <input i18n:attr="value" type="submit" value="New Asset"/>
+            </td>
+          </tr>
+        </table>
+       </form>
+<!--      </jx:if>
+-->    </div>
   </div>
-</page:page>
+  </body>
+</html>

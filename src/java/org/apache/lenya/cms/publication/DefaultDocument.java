@@ -38,7 +38,7 @@ public class DefaultDocument implements Document {
     private String id;
     private DublinCore dublincore;
     private DocumentIdentityMap identityMap;
-
+    private ResourcesManager resourcesManager;
     /**
      * Creates a new instance of DefaultDocument.
      * @param map The identity map the document belongs to.
@@ -57,6 +57,7 @@ public class DefaultDocument implements Document {
 
         this.identityMap = map;
         this.dublincore = new DublinCoreProxy(this);
+        this.resourcesManager = new DefaultResourcesManager(this);
     }
 
     /**
@@ -106,6 +107,7 @@ public class DefaultDocument implements Document {
         setArea(area);
 
         this.dublincore = new DublinCoreProxy(this);
+        this.resourcesManager = new DefaultResourcesManager(this);
 
     }
 
@@ -375,6 +377,13 @@ public class DefaultDocument implements Document {
      */
     public DocumentIdentityMap getIdentityMap() {
         return this.identityMap;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getResourcesManager()
+     */
+    public ResourcesManager getResourcesManager() {
+        return this.resourcesManager;
     }
 
     /**

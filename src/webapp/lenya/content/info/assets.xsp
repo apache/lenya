@@ -40,7 +40,7 @@
   <lenya-info:info>
     <xsp:logic>
       Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
-      ResourcesManager resourceMgr = new ResourcesManager(doc);
+      ResourcesManager resourceMgr = doc.getResourcesManager();
       File[] resources = resourceMgr.getResources();
       
       String documentId = (String) <request:get-parameter name="document-id"/>;

@@ -199,6 +199,12 @@ public interface Document {
     DocumentIdentityMap getIdentityMap();
     
     /**
+     * Returns the resources manager for this document.
+     * @return A resources manager.
+     */
+    ResourcesManager getResourcesManager();
+
+    /**
      * Returns the URI to resolve the document's source.
      * @return A string.
      */

@@ -20,127 +20,73 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import java.io.FileFilter;
+import java.util.Map;
 
-import org.apache.lenya.util.FileUtil;
+import org.apache.cocoon.servlet.multipart.Part;
 
 /**
  * Manager for resources of a CMS document.
  */
-public class ResourcesManager {
+public interface ResourcesManager {
 
-    private Document document;
-
+    public static final String CONTENT_PREFIX = "content";
     public static final String RESOURCES_PREFIX = "resources";
-
     public static final String RESOURCES_META_SUFFIX = ".meta";
 
+    public static final String UPLOADASSET_PARAM_NAME = "properties.asset.data";
+    public static final String UPLOADASSET_PARAM_PREFIX = "properties.asset.";
+
+    public static final String UPLOADASSET_RETURN_FILESIZE = "file-size";
+    public static final String UPLOADASSET_RETURN_MIMETYPE = "mime-type";
+
+    public static final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_.]+";
+    public static final String[] IMAGE_FILE_EXTENSIONS = {".jpg", ".png", ".bmp", ".gif", ".svg"};
+
+    // optional parameters for meta data according to dublin core
+    public static final String[] DUBLIN_CORE_PARAMETERS = { "title", "creator", "subject",
+            "description", "publisher", "contributor", "date", "type", "format", "identifier",
+            "source", "language", "relation", "coverage", "rights" };
+
     /**
-     * Create a new instance of Resources.
-     * 
-     * @param document the document for which the resources are managed
+     * Add a resource to the document.
+     * @param part the part that contains the uploaded file
+     * @param metadata the metadata for the resource
      */
-    public ResourcesManager(Document document) {
-        this.document = document;
-    }
+    public void addResource(Part part, Map metadata) throws Exception;
 
     /**
      * Get the path to the resources.
      * 
      * @return the path to the resources
+     * @deprecated the resource manager should not expose storage details.
      */
-    public String getPathFromPublication() {
-        return RESOURCES_PREFIX + "/" + getDocument().getArea() + getDocument().getId();
-    }
-
-    /**
-     * Get the path to the resources.
-     * 
-     * @return the path to the resources
-     */
-    public File getPath() {
-        File publicationPath = getDocument().getPublication().getDirectory();
-        File resourcesPath = new File(publicationPath, getPathFromPublication().replace('/',
-                File.separatorChar));
-        return resourcesPath;
-    }
+    public File getPath();
 
     /**
      * Returns the path of a resource relative to the context prefix.
      * @return The path of a resource relative to the context prefix.
      */
-    public String getResourceUrl(File resource) {
-        return 
-            getDocument().getPublication().getId() 
-            + "/" 
-            + getDocument().getArea()
-            + getDocument().getId()
-            + "/" 
-            + resource.getName();   
-    }
+    public String getResourceUrl(File resource);
     
     /**
      * Get all resources for the associated document.
      * 
      * @return all resources of the associated document
      */
-    public File[] getResources() {
-
-        // filter the meta files out. We only want to see the "real" resources.
-        FileFilter filter = new FileFilter() {
-
-            public boolean accept(File file) {
-                return file.isFile() && !file.getName().endsWith(RESOURCES_META_SUFFIX);
-            }
-        };
-
-        return getFiles(filter);
-    }
+    public File[] getResources();
 
     /**
      * Return all resources which are images.
      * @return All image resources.
      */
-    public File[] getImageResources() {
-        final String[] IMAGE_FILE_EXTENSIONS = {".jpg", ".png", ".bmp", ".gif", ".svg"};
-        return getFiles( new FileFilter() {
-                public boolean accept(File file) {
-                    for(int i=0; i<IMAGE_FILE_EXTENSIONS.length; i++)
-                        if (file.getName().toLowerCase().endsWith(IMAGE_FILE_EXTENSIONS[i]))
-                            return true;
-                    return false;
-                }
-            });
-    }
+    public File[] getImageResources();
     
-    /**
-     * Returns the resources that are matched by a certain file filter.
-     * @param filter A file filter.
-     * @return A file array.
-     */
-    protected File[] getFiles(FileFilter filter) {
-        File[] files = new File[0];
-        if (getPath().isDirectory()) {
-            files = getPath().listFiles(filter);
-        }
-
-        return files;
-    }
-
     /**
      * Get the meta data for all resources for the associated document.
      * 
      * @return all meta data files for the resources for the associated document.
      */
-    public File[] getMetaFiles() {
-        FileFilter filter = new FileFilter() {
-
-            public boolean accept(File file) {
-                return file.isFile() && file.getName().endsWith(RESOURCES_META_SUFFIX);
-            }
-        };
-        return getFiles(filter);
-    }
+    public File[] getMetaFiles();
 
     /**
      * Returns a meta file for a given resource.
@@ -149,43 +95,15 @@ public class ResourcesManager {
      * Returns null if no meta file was found.
      * @throws IllegalArgumentException If resource is a meta file itself.
      */
-    public File getMetaFile(final File resource) throws IllegalArgumentException {
-        if(resource.getName().endsWith(RESOURCES_META_SUFFIX))
-            throw new IllegalArgumentException("File is itself a meta file.");
-        
-        final FileFilter filter = new FileFilter() {
-            public boolean accept(File file) {
-                return file.isFile() && 
-                    file.getName().equals(resource.getName().concat(RESOURCES_META_SUFFIX));
-            }
-        };
-        
-        final File[] metaFiles = getFiles(filter);
-        assert(metaFiles.length == 0);
-        return metaFiles[0];
-    }
+    public File getMetaFile(final File resource) throws IllegalArgumentException;
     
     /**
      * Deletes all resources.
      */
-    public void deleteResources() {
+    public void deleteResources();
 
-        File stopDirectory = new File(getDocument().getPublication().getDirectory(), RESOURCES_PREFIX);
-
-        File[] resources = getResources();
-        for (int i = 0; i < resources.length; i++) {
-            resources[i].delete();
-            FileUtil.deleteParentDirs(resources[i], stopDirectory);
-        }
-
-        File[] metas = getMetaFiles();
-        for (int i = 0; i < metas.length; i++) {
-            metas[i].delete();
-            FileUtil.deleteParentDirs(metas[i], stopDirectory);
-        }
-    }
-
-    public Document getDocument() {
-        return document;
-    }
+    /**
+     * Gets the document this resource manager belongs to.
+     */
+    public Document getDocument();
 }

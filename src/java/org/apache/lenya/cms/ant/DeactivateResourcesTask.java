@@ -76,7 +76,7 @@ public class DeactivateResourcesTask extends PublicationTask {
                 } catch (DocumentBuildException e) {
                     throw new BuildException(e);
                 }
-                ResourcesManager resourcesMgr = new ResourcesManager(doc);
+                ResourcesManager resourcesMgr = doc.getResourcesManager();
                 File[] resources = resourcesMgr.getResources();
                 for (int i = 0; i < resources.length; i++) {
                     resources[i].delete();

@@ -68,7 +68,7 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }
-        ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
+        ResourcesManager resourcesMgr = srcDoc.getResourcesManager();
         List resources = new ArrayList(Arrays.asList(resourcesMgr.getResources()));
         resources.addAll(Arrays.asList(resourcesMgr.getMetaFiles()));
         File[] srcFiles = (File[]) resources.toArray(new File[resources.size()]);
@@ -84,8 +84,7 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }
-        resourcesMgr = new ResourcesManager(destDoc);
-
+        resourcesMgr = destDoc.getResourcesManager();
         for (int i = 0; i < srcFiles.length; i++) {
 
             try {

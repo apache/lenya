@@ -97,8 +97,8 @@ public abstract class PublicationTask extends AbstractTask {
             log.debug("Copying resources");
         }
 
-        ResourcesManager sourceManager = new ResourcesManager(sourceDocument);
-        ResourcesManager destinationManager = new ResourcesManager(destinationDocument);
+        ResourcesManager sourceManager = sourceDocument.getResourcesManager();
+        ResourcesManager destinationManager = destinationDocument.getResourcesManager();
 
         List resourcesList = new ArrayList(Arrays.asList(sourceManager.getResources()));
         resourcesList.addAll(Arrays.asList(sourceManager.getMetaFiles()));

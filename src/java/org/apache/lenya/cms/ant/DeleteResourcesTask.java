@@ -63,7 +63,7 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
                 throw new BuildException(e);
             }
 
-            ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
+            ResourcesManager resourcesMgr = srcDoc.getResourcesManager();
             resourcesMgr.deleteResources();
         }
     }

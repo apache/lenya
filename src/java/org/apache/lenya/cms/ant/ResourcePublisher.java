@@ -44,10 +44,10 @@ public class ResourcePublisher extends PublicationTask {
 
         try {
             Document authoringDocument = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, documentId);
-            ResourcesManager authoringManager = new ResourcesManager(authoringDocument);
+            ResourcesManager authoringManager = authoringDocument.getResourcesManager();
 
             Document liveDocument = getIdentityMap().getFactory().get(Publication.LIVE_AREA, documentId);
-            ResourcesManager liveManager = new ResourcesManager(liveDocument);
+            ResourcesManager liveManager = liveDocument.getResourcesManager();
             
             // find all resource files and their associated meta files
             List resourcesList =

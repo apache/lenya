@@ -243,6 +243,7 @@
     <component-instance name="ac.login" logger="lenya.ac" class="org.apache.lenya.cms.ac.Login"/>
     <component-instance name="ac.logout" logger="lenya.ac" class="org.apache.lenya.cms.ac.Logout"/>
     <component-instance name="site.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.Metadata"/>
+    <component-instance name="site.assets" logger="lenya.site" class="org.apache.lenya.cms.site.Assets"/>
     <component-instance name="authoring.create" logger="lenya.authoring" class="org.apache.lenya.cms.authoring.Create"/>
   </usecases>
       
