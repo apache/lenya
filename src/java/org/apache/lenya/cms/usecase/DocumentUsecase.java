@@ -119,8 +119,12 @@ public class DocumentUsecase extends AbstractUsecase {
     public String getTargetURL(boolean success) {
         Document document = getTargetDocument(success);
         String documentUrl = document.getCanonicalDocumentURL();
-        String area = getParameterAsString(COMPLETE_AREA);
-        String url = "/" + document.getPublication().getId() + "/" + area + documentUrl;
+        String completeArea = getParameterAsString(COMPLETE_AREA);
+        String documentArea = document.getArea();
+        if (completeArea.startsWith(Publication.INFO_AREA_PREFIX)) {
+            documentArea = Publication.INFO_AREA_PREFIX + documentArea;
+        }
+        String url = "/" + document.getPublication().getId() + "/" + documentArea + documentUrl;
         return url;
     }
 
