@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableIndexer.java,v 1.13 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id: ConfigurableIndexer.java,v 1.14 2004/04/03 23:26:30 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -86,9 +86,15 @@ public class ConfigurableIndexer extends AbstractIndexer {
      * Returns the filter used to receive the indexable files.
      */
     public FileFilter getFilter(Element indexer, String configFileName) {
-        String[] indexableExtensions = new String[1];
+        if (extensionsExists(indexer)) {
+            String[] indexableExtensions = new String[1];
 	    indexableExtensions[0] = getExtensions(indexer);
-        return new AbstractIndexer.DefaultIndexFilter(indexableExtensions);
+            return new AbstractIndexer.DefaultIndexFilter(indexableExtensions);
+        } else if (filterExists(indexer)) {
+            return getFilterFromConfiguration(indexer);
+        }
+
+        return new AbstractIndexer.DefaultIndexFilter(); 
     }
 
     /**
@@ -131,5 +137,62 @@ public class ConfigurableIndexer extends AbstractIndexer {
         }
         log.debug("Extensions: " + extensions);
         return extensions;
+    }
+
+    /**
+     *
+     */
+    private FileFilter getFilterFromConfiguration(Element indexer) {
+        String className = null;
+
+        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            org.w3c.dom.Node node = nl.item(i);
+            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("filter")) {
+                log.debug("Node filter exists!");
+                className = ((Element)node).getAttribute("class");
+            }
+        }
+        if (className == null) {
+            log.error("Class name has not been specified (indexer/filter/@class)");
+            return null;
+        }
+        log.debug("Class name: " + className);
+        try {
+            return (FileFilter)Class.forName(className).newInstance();
+        } catch(Exception e) {
+            log.error("" + e);
+        }
+        return null;
+    }
+
+    /**
+     *
+     */
+    private boolean extensionsExists(Element indexer) {
+        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            org.w3c.dom.Node node = nl.item(i);
+            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("extensions")) {
+                log.error("Node extensions exists!");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     */
+    private boolean filterExists(Element indexer) {
+        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            org.w3c.dom.Node node = nl.item(i);
+            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("filter")) {
+                log.debug("Node filter exists!");
+                return true;
+            }
+        }
+        return false;
     }
 }

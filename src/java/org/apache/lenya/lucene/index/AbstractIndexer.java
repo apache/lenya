@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.14 2004/03/17 16:11:55 michi Exp $  */
+/* $Id: AbstractIndexer.java,v 1.15 2004/04/03 23:26:30 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -40,8 +40,7 @@ import org.w3c.dom.Element;
  * DocumentCreator from the command-line arguments.
  */
 public abstract class AbstractIndexer implements Indexer {
-    
-    private static Category log = Category.getInstance(Indexer.class); 
+    private static Category log = Category.getInstance(AbstractIndexer.class); 
     
     private DocumentCreator documentCreator;
     private Element indexer;
@@ -265,6 +264,9 @@ public abstract class AbstractIndexer implements Indexer {
             return writer;
         }
 
+        /**
+	 * Add document to index
+	 */
         protected void addFile(File file) {
             log.debug("adding document: " + file.getAbsolutePath());
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexIterator.java,v 1.10 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id: IndexIterator.java,v 1.11 2004/04/03 23:26:30 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -43,7 +43,9 @@ public class IndexIterator {
     
     private static Category log = Category.getInstance(IndexIterator.class);
     
-    /** Creates a new instance of IndexItertor */
+    /**
+     * Creates a new instance of IndexItertor
+     */
     public IndexIterator(String index, FileFilter filter) {
         this.filter = filter;
         this.index = index;
@@ -112,9 +114,9 @@ public class IndexIterator {
     }
 
     /**
-     * DOCUMENT ME!
+     * Iterate over all files within directory
      *
-     * @param dumpDirectory DOCUMENT ME!
+     * @param dumpDirectory Directory over which shall be iterated
      */
     public void iterate(File dumpDirectory) {
         log.debug("Iterating files for index " + getIndex());
@@ -143,6 +145,9 @@ public class IndexIterator {
         }
     }
 
+    /**
+     *
+     */
     protected void iterateFiles(TermEnum iterator, File file, File dumpDirectory)
         throws IOException {
         String uid = createUID(file, dumpDirectory);
@@ -269,8 +274,12 @@ public class IndexIterator {
         return fileArray;
     }
 
+    /**
+     * Collect files
+     */
     protected void collectFiles(File file, List files) {
         if (file.isDirectory()) {
+            log.debug("Apply filter " + getFilter().getClass().getName() + " to: " + file);
             File[] fileArray = file.listFiles(getFilter());
 
             for (int i = 0; i < fileArray.length; i++) {

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexInformation.java,v 1.9 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: IndexInformation.java,v 1.10 2004/04/03 23:26:30 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -47,13 +47,13 @@ public class IndexInformation {
      * @param create DOCUMENT ME!
      */
     public IndexInformation(String index, File dumpDirectory, FileFilter filter, boolean create) {
-        log.debug("collecting index information for index '" + index + "'...");
+        log.info("Collecting index information for index '" + index + "'...");
 
         creating = create;
         collectFiles(dumpDirectory, filter, index);
         this.startTime = new GregorianCalendar();
 
-        log.debug(getFileNumber() + " files to index");
+        log.info(getFileNumber() + " files to index");
     }
 
     private String index;
@@ -137,6 +137,9 @@ public class IndexInformation {
         format.format(getEstimatedTime().getTime()) + ")";
     }
 
+    /**
+     *
+     */
     protected Calendar getEstimatedTime() {
         long elapsedMillis = new Date().getTime() - getStartTime().getTime().getTime();
 
@@ -150,6 +153,9 @@ public class IndexInformation {
         return estimatedCalendar;
     }
 
+    /**
+     * Collect files
+     */
     protected void collectFiles(File dumpDirectory, FileFilter filter, String index) {
         IndexIterator iterator = new IndexIterator(index, filter);
         IndexIteratorHandler handler;
