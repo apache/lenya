@@ -89,7 +89,14 @@
 
     <h2>Revision Control</h2>
 
-    <p>FIXME:</p>
+    <p>Every time you edit a document and exit the editor a new
+    revision of the document is stored. Old versions of the document
+    are kept and you can go back to an older version if you want to
+    undo some of the changes you applied to it. To see all available
+    versions of the current document press
+    <code>Tools->Rollback</code>. This will give you a list of all
+    previous versions. You can view a specific old version or rollback
+    to a specific old version by clicking on the appropriate links.</p>
 
   </body>
 </html>
