@@ -595,14 +595,6 @@
         <!-- UserAdmin -->
         <!-- ============================================================ -->
         
-        <map:match pattern="user-admin" type="usecase">
-          <map:call function="userAdmin"/>
-        </map:match>
-        
-        <map:match pattern="user-modify" type="usecase">
-          <map:call function="modifyUser"/>
-        </map:match>
-          
         <map:match pattern="user-add" type="usecase">
           
           <map:match pattern="showscreen" type="step">
@@ -619,21 +611,6 @@
           </map:match>
           
         </map:match>
-        
-        <!--
-        <map:match pattern="user-modify" type="usecase">
-          <map:match pattern="showscreen" type="step">
-          </map:match>
-          
-          <map:match pattern="modify" type="step">
-            <map:act type="user-admin-modify">
-              <map:redirect-to uri="{request:requestURI}"/>
-            </map:act>
-            <map:redirect-to uri="{request:requestURI}?lenya.usecase=user-add&amp;lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
-          </map:match>
-          
-        </map:match>
-        -->
         
         <map:match pattern="user-delete" type="usecase">
           
