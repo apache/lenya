@@ -6,14 +6,7 @@
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
 <xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
 <xsl:variable name="section"><xsl:value-of select="/NewsML/NewsItem/NewsComponent/DescriptiveMetadata/SectionName"/></xsl:variable>
-<!--
-<xsl:variable name="slider">
-  <xsl:if test="contains($section, 'Geist und Gesellschaft')">geist</xsl:if>
-  <xsl:if test="contains($section, 'Gesundheit')">gesund</xsl:if>
-  <xsl:if test="contains($section, 'Umwelt und Technik')">umwelt</xsl:if>
-  <xsl:if test="contains($section, 'Recht und Wirtschaft')">recht</xsl:if>
-</xsl:variable>
--->
+
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="/">
@@ -22,6 +15,7 @@
 <head>
 <title>unipublic - <xsl:value-of select="$section"/></title>
 <!--<title>unipublic - Uni-News</title>-->
+
 <xsl:call-template name="styles"/>
 
 <script type="text/javascript" language="JavaScript">
@@ -36,8 +30,10 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 }
 </xsl:comment>
 </script>
+
 </head>
 <body text="black" link="#333399" alink="#CC0000" vlink="#666666" bgcolor="#F5F5F5" background="{$img-unipub}/bg.gif">
+
 <!--START kopf.html-->
 <xsl:call-template name="Searchbox"/>
 <!--ENDE kopf.html-->
@@ -52,14 +48,8 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <td width="388" height="16"></td>
 </tr>
 
-<xsl:call-template name="slide-image"/>
-<!--
-<tr>
-<td align="right" width="187"></td>
-<td width="10"></td>
-<td width="388"><a href="../"><img height="13" width="138" src="{$img-unipub}/r_{$slider}.gif" alt="{$section}" border="0"/></a></td>
-</tr>
--->
+<xsl:call-template name="slider_image"/>
+
 <tr>
 <td valign="top" width="187">
 <table width="180" border="0" cellspacing="0" cellpadding="0">
@@ -112,9 +102,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <td bgcolor="white" width="388"><br />
   
 
-<div align="left"><a href="#topofpage"><font size="1">zum
-Anfang<br />
-<br />
+<div align="left"><a href="#topofpage"><font size="1">zum Anfang<br /> <br />
 </font></a> <img height="1" width="390" src="{$img-unipub}/999999.gif" alt=" "/><br />
  <font size="1">&#169; <xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/copyrite/copyrite.holder"/>,
 <xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/copyrite/copyrite.year"/>, 
@@ -128,7 +116,7 @@ Anfang<br />
 </xsl:template>
 
 
-<xsl:template name="slide-image">
+<xsl:template name="slider_image">
 <tr>
 <td align="right" width="187"></td><td width="10"></td><td width="388"><a href="../">
 <xsl:if test="contains($section, 'Geist und Gesellschaft')"><img height="13" width="138" src="{$img-unipub}/r_geist.gif" alt="{$section}" border="0"/></xsl:if>
