@@ -1,5 +1,5 @@
 /*
- * $Id: ParserThread.java,v 1.6 2003/04/24 13:53:00 gregor Exp $
+ * $Id: ParserThread.java,v 1.7 2003/05/30 09:30:43 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,7 +69,7 @@ class ParserThread extends Thread {
                 parser.pipeOut.close();
 
                 synchronized (parser) {
-                    parser.summary.setLength(parser.SUMMARY_LENGTH);
+                    parser.summary.setLength(HTMLParser.SUMMARY_LENGTH);
                     parser.titleComplete = true;
                     parser.notifyAll();
                 }
