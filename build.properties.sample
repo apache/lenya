@@ -42,24 +42,23 @@ tomcat.home.dir=/usr/local/tomcat
 
 #------------------------------------------------------------------------------------
 # Where the 'install' build target should put the webapp context
-# NOTE: This path is relative to tomcat.home.dir
+# NOTE: This path is not necessarily relative to tomcat.home.dir
 
-tomcat.webapps.dir=webapps/lenya
+tomcat.webapps.dir=${tomcat.home.dir}/webapps/lenya
 
 
 #------------------------------------------------------------------------------------
 # The server cache directory to be cleaned by the 'reset' target
-# NOTE: This path is relative to tomcat.home.dir
+# NOTE: This path is not necessarily relative to tomcat.home.dir
 
-tomcat.cache.dir=work/Standalone/localhost/lenya
+tomcat.cache.dir=${tomcat.home.dir}/work/Standalone/localhost/lenya
 
 
 #------------------------------------------------------------------------------------
 # Where the 'install' build target should copy the endorsed libraries
-# NOTE: This path is relative to tomcat.home.dir
+# NOTE: This path is not necessarily relative to tomcat.home.dir
 
-tomcat.endorsed.dir=common/endorsed
-
+tomcat.endorsed.dir=${tomcat.home.dir}/common/endorsed
 
 #------------------------------------------------------------------------------------
 # Files and directories which should be excluded during 'install' and 'reset'

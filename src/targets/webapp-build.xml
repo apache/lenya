@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml,v 1.19 2004/05/11 12:49:47 michi Exp $ -->
+<!-- $Id: webapp-build.xml,v 1.20 2004/05/16 10:27:25 gregor Exp $ -->
 
 <project name="webapp">
 
@@ -206,15 +206,15 @@
     </copy>
 
     <echo>INFO: Copy endorsed libraries</echo>
-    <copy todir="${tomcat.home.dir}/${tomcat.endorsed.dir}">
+    <copy todir="${tomcat.endorsed.dir}">
       <fileset dir="${build.webapp}/WEB-INF/lib/endorsed"/>
     </copy>
-    <copy todir="${tomcat.home.dir}/${tomcat.endorsed.dir}">
+    <copy todir="${tomcat.endorsed.dir}">
       <fileset dir="${build.webapp}/WEB-INF/lib/">
         <include name="xercesImpl-*.jar"/>
       </fileset>
     </copy>
-    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.home.dir}/${tomcat.endorsed.dir}"/>
+    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
   </target>
 
 
