@@ -1,5 +1,5 @@
 /*
-$Id: IPRange.java,v 1.2 2003/07/23 19:18:17 andreas Exp $
+$Id: IPRange.java,v 1.3 2003/07/24 08:28:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,7 +60,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * A range of IP addresses.
+ * A range of IP addresses, expressed by a network address and a
+ * subnet mask.
  * 
  * @author andreas
  */
@@ -103,15 +104,6 @@ public abstract class IPRange extends AbstractGroupable {
      */
     public void setConfigurationDirectory(File configurationDirectory) {
         this.configurationDirectory = configurationDirectory;
-    }
-
-    /**
-     * Checks if this IP range contains a certain machine.
-     * @param machine The machine to check for.
-     * @return A boolean value.
-     */
-    public boolean contains(Machine machine) {
-        return false;
     }
 
     /**
@@ -197,4 +189,26 @@ public abstract class IPRange extends AbstractGroupable {
     public InetAddress getSubnetMask() {
         return subnetMask;
     }
+    
+    /**
+     * Checks if a network address / subnet mask combination describes a
+     * valid subnet.
+     * @param networkAddress The network address.
+     * @param subnetMask The subnet mask.
+     * @return A boolean value.
+     */
+    public static boolean isValidSubnet(InetAddress networkAddress, InetAddress subnetMask) {
+        // TODO
+        return false;
+    }
+
+    /**
+     * Checks if this IP range contains a certain machine.
+     * @param machine The machine to check for.
+     * @return A boolean value.
+     */
+    public boolean contains(Machine machine) {
+        return false;
+    }
+
 }
