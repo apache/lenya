@@ -819,9 +819,9 @@
           <map:match pattern="update" type="step">
             <map:act type="task">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
-              <map:redirect-to session="true" uri="{request:requestURI}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-meta&amp;lenya.step=showscreen&amp;lenya.area={request-param:lenya.area}"/>
             </map:act>
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-meta"/>
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-meta&amp;lenya.step=showscreen&amp;lenya.area={request-param:lenya.area}"/>
           </map:match>
           
         </map:match>
