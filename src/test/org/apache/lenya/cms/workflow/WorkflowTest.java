@@ -53,10 +53,10 @@ import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.Transition;
-import org.apache.lenya.workflow.WorkflowBuildException;
-import org.apache.lenya.workflow.WorkflowFactory;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 import junit.framework.Test;
@@ -99,7 +99,7 @@ public class WorkflowTest extends TestCase {
         String publicationId,
         String documentTypeName) {
 
-        Publication publication = new Publication(publicationId, servletContextPath);
+        Publication publication = PublicationFactory.getPublication(publicationId, servletContextPath);
 
         DocumentTypeBuilder builder = new DocumentTypeBuilder();
         DocumentType documentType = null;
@@ -112,30 +112,19 @@ public class WorkflowTest extends TestCase {
         }
         assertNull(exception);
         
-        Situation situation = null;
         WorkflowInstance instance = null;
         Document document = new DefaultDocument(publication,  "index");
         
-        User user = new FileUser("test-user");
-        Role role = new Role("editor");
-        
-        Group group = new Group();
-        group.addRole(role);
-        
-        user.addGroup(group);
-        
-        WorkflowFactory factory = WorkflowFactoryImpl.newInstance(document, user);
+        WorkflowFactory factory = WorkflowFactory.newInstance();
 
         try {
-            instance = factory.buildInstance();
-            situation = factory.buildSituation();
-        } catch (WorkflowBuildException e) {
+            instance = factory.buildInstance(document);
+        } catch (WorkflowException e) {
             e.printStackTrace(System.err);
             exception = e;
         }
         assertNull(exception);
         
-        setSituation(situation);
         setInstance(instance);
 
     }
@@ -147,47 +136,108 @@ public class WorkflowTest extends TestCase {
         return new TestSuite(WorkflowTest.class);
     }
 
-    private static WorkflowInstance instance;
-    private static Situation situation;
+    private static final String variableName = "is-live";
 
     public void testWorkflow() {
 
-        assertNotNull(getSituation());
         assertNotNull(getInstance());
 
-        Transition transitions[] = getInstance().getExecutableTransitions(situation);
-
-        System.out.println("Transitions:");
-        for (int i = 0; i < transitions.length; i++) {
-            System.out.println(" - " + transitions[i]);
+        for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
+            
+            System.out.println("Current state: " + getInstance().getCurrentState());
+            
+            User user = new FileUser("test-user");
+            Role role = new Role(situations[situationIndex].getRole());
+            System.out.println("Role: " + role);
+        
+            Group group = new Group();
+            group.addRole(role);
+        
+            user.addGroup(group);
+        
+            WorkflowFactory factory = WorkflowFactory.newInstance();
+            Situation situation = null;
+            try {
+                situation = factory.buildSituation(user);
+            } catch (WorkflowException e1) {
+                e1.printStackTrace(System.err);
+            }
+            Event events[] = getInstance().getExecutableEvents(situation);
+            
+            Event event = null;
+            System.out.print("Events:");
+            for (int eventIndex = 0; eventIndex < events.length; eventIndex++) {
+                System.out.print(" " + events[eventIndex]);
+                if (events[eventIndex].getName().equals(situations[situationIndex].getEvent())) {
+                    event = events[eventIndex];
+                }
+            }
+            assertNotNull(event);
+            System.out.println();
+        
+            System.out.println("Executing event: " + event);
+            try {
+                getInstance().invoke(situation, event);
+            } catch (WorkflowException e) {
+                e.printStackTrace(System.err);
+            }
+            try {
+                System.out.println("Variable: " + variableName + " = " + getInstance().getValue(variableName));
+            } catch (WorkflowException e) {
+                e.printStackTrace(System.err);
+            }
+            System.out.println("------------------------------------------------------");
+        
         }
-        System.out.println();
-
-        CommandFilter filter = new CommandFilterImpl();
-        String commands[] = filter.getExecutableCommands(getInstance(), getSituation());
-
-        System.out.println("Commands:");
-        for (int i = 0; i < commands.length; i++) {
-            System.out.println(" - " + commands[i]);
-        }
-        System.out.println();
 
         System.out.println("Test completed.");
 
     }
+    
+    private static final TestSituation situations[] = {
+        new TestSituation("editor", "publish"),
+        new TestSituation("manager", "approve"),
+        new TestSituation("editor", "edit")
+    };
+    
+    public static class TestSituation {
+        
+        private String role;
+        private String event;
+        
+        public TestSituation(String role, String event) {
+            assert role != null;
+            this.role = role;
+            assert event != null;
+            this.event = event;
+        }
+        
+        /**
+         * @return
+         */
+        public String getEvent() {
+            return event;
+        }
 
-    /**
-     * @return
-     */
-    public static Situation getSituation() {
-        return situation;
+        /**
+         * @return
+         */
+        public String getRole() {
+            return role;
+        }
+
     }
+    
+    private static WorkflowInstance instance;
+    
 
-    /**
-     * @param situation
+    /* (non-Javadoc)
+     * @see junit.framework.TestCase#setUp()
      */
-    public static void setSituation(Situation sit) {
-        situation = sit;
+    protected void setUp() throws Exception {
+        if (getInstance() == null) {
+            init("D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "default", "simple");
+        }
     }
 
     /**
@@ -200,17 +250,8 @@ public class WorkflowTest extends TestCase {
     /**
      * @param instance
      */
-    public static void setInstance(WorkflowInstance ins) {
-        instance = ins;
-    }
-
-    /* (non-Javadoc)
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        if (getInstance() == null) {
-            init("D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "default", "simple");
-        }
+    public static void setInstance(WorkflowInstance instance) {
+        WorkflowTest.instance = instance;
     }
 
 }
