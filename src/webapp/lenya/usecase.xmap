@@ -52,71 +52,8 @@
     <!-- Usecases that use the Usecase Framework -->
     <!-- =================================================================== -->
     
-     <map:pipeline>
-      <map:match pattern="authoring.create" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.archive" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.copy" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.cut" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.deactivate" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.delete" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.paste" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.renameLabel" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.renameURL" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="site.restore" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.acArchive" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.acAuthoring" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.acLive" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.acTrash" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.assets" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.meta" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.overview" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.scheduler" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="tab.workflow" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="workflow.publish" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="workflow.reject" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="workflow.submit" type="usecase">
+    <map:pipeline>
+      <map:match type="registered-usecase">
         <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
