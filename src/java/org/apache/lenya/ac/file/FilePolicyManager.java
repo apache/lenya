@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePolicyManager.java,v 1.7 2004/04/28 12:52:35 andreas Exp $  */
+/* $Id: FilePolicyManager.java,v 1.8 2004/04/28 12:53:24 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -445,11 +445,11 @@ public class FilePolicyManager
         removeAccreditable(manager, accreditable, getPoliciesDirectory());
 
         if (accreditable instanceof User) {
-            Role administratorRole = URLPolicy.getAdministratorRole(manager);
-            if (administratorRole != null) {
+            Role role = URLPolicy.getAuthorRole(manager);
+            if (role != null) {
                 String url = USER_ADMIN_URL + ((User) accreditable).getId();
                 DefaultPolicy policy = buildSubtreePolicy(manager, url);
-                policy.removeRole(accreditable, administratorRole);
+                policy.removeRole(accreditable, role);
                 saveSubtreePolicy(url, policy);
             }
         }
