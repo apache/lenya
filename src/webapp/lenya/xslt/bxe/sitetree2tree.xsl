@@ -87,9 +87,9 @@ foldersTree.treeID = "t2"
   </xsl:variable>
   
   <xsl:variable name="link">
-      <xsl:text>, 'javascript:setLink("</xsl:text>
+      <xsl:text>, 'javascript:setLink(\'</xsl:text>
       <xsl:value-of select="concat('/', $suffix)"/>
-      <xsl:text>")'</xsl:text>
+      <xsl:text>\')'</xsl:text>
   </xsl:variable>
   
   <xsl:variable name="protected-pre"><xsl:if test="@protected = 'true'">&lt;span class=\"lenya-info-protected\"&gt;</xsl:if></xsl:variable>
@@ -112,9 +112,9 @@ foldersTree.treeID = "t2"
   <xsl:variable name="tree-area" select="ancestor::s:site/@area"/>
   <xsl:variable name="link">
     <xsl:if test="not(@protected = 'true')">
-      <xsl:text>, 'javascript:setLink("</xsl:text>
+      <xsl:text>, 'javascript:setLink(\'</xsl:text>
       <xsl:value-of select="concat('/', @basic-url, @language-suffix, @suffix)"/>
-      <xsl:text>")'</xsl:text>
+      <xsl:text>\')'</xsl:text>
     </xsl:if>
   </xsl:variable>
   <xsl:variable name="exists-language" select="s:label[lang($chosenlanguage)]"/>

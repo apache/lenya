@@ -163,23 +163,45 @@
       
       <!-- {publication-id}/{area}/info-sitetree -->
       <map:match pattern="link-tree" type="step">
-        <map:aggregate element="lenya" label="aggregate">
-          <map:part src="content/authoring/sitetree.xml"/>
-        </map:aggregate>
-
-        <map:transform src="../../xslt/navigation/sitetree2nav.xsl" label="navtree">
-          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
-          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-        </map:transform>
-
-        <map:transform src="../../xslt/bxe/sitetree2tree.xsl" label="content">
-          <map:parameter name="contextprefix" value="{request:contextPath}"/>
-          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
-          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-          <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
-         </map:transform>
-
+        <map:select type="parameter">
+          <map:parameter name="parameter-selector-test" value="{request-param:incremental}"/>
+          <map:when test="true">
+            <map:generate src="../../content/util/empty.xml" />
+            <map:act type="set-header">
+              <map:parameter name="Cache-Control" value="pre-check=0" />
+              <map:parameter name="Expires" value="-1" />
+            </map:act>
+            <map:transform src="../../xslt/info/sitetree2tree.xsl" label="content">
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
+              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+              <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+              <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
+              <map:parameter name="incremental" value="true"/>
+              <map:parameter name="areas" value="authoring"/>
+            </map:transform>
+          </map:when>
+          
+          <map:otherwise>
+            <map:aggregate element="lenya" label="aggregate">
+              <map:part src="content/authoring/sitetree.xml"/>
+            </map:aggregate>
+    
+            <map:transform src="../../xslt/navigation/sitetree2nav.xsl" label="navtree">
+              <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+            </map:transform>
+    
+            <map:transform src="../../xslt/bxe/sitetree2tree.xsl" label="content">
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
+              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+              <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+              <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
+             </map:transform>
+           </map:otherwise>
+         </map:select>
+         
         <map:serialize type="text"/>
       </map:match>      
 

@@ -75,6 +75,13 @@
             document.forms["link"].url.value = url;
           }
           
+          <!-- override the makeHref function -->
+          var makeHref = function makeSetLinkHref(area, link)
+          {
+            var temp = 'javascript:setLink(\'/'+link+'\')';
+            return temp;
+          }
+          
           function insertLink() { 
           var text = document.forms["link"].text.value;
           var title = document.forms["link"].title.value;
@@ -117,7 +124,7 @@
               </table>
       </div>
       <script type="text/javascript">
-         initializeDocument();
+         initializeDocument('authoring', '/');
       </script>
     </div>
 </div>
