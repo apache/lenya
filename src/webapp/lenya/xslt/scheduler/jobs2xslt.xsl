@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: jobs2xslt.xsl,v 1.5 2004/03/13 12:42:07 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!--
     Creates a job list for a document with no modification functionality.
@@ -47,7 +47,7 @@
   <xsl:variable name="scheduler-url"
       select="concat($contextpath, '/', $publicationid, '/info-authoring', $documenturl)"/>
   
-  <xso:stylesheet exclude-result-prefixes="sch xso">
+  <xso:stylesheet version="1.0" exclude-result-prefixes="sch xso">
   	
     <xso:template match="sch:scheduler-form">
       
