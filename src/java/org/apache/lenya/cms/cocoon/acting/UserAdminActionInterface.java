@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminActionInterface.java,v 1.1 2003/06/06 13:55:44 egli Exp $
+ * $Id: UserAdminActionInterface.java,v 1.2 2003/06/06 17:23:45 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -61,6 +61,6 @@ public interface UserAdminActionInterface {
 	public static final String EMAIL = "email";
 	public static final String PASSWORD = "password";
 	public static final String CONFIRM_PASSWORD = "confirm-password";
-	public static final String GROUP = "group";			
+	public static final String GROUPS = "groups";			
 
 }

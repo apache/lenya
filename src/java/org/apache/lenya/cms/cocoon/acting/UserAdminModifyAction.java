@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminModifyAction.java,v 1.1 2003/06/06 13:55:44 egli Exp $
+ * $Id: UserAdminModifyAction.java,v 1.2 2003/06/06 17:23:45 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -103,7 +103,7 @@ public class UserAdminModifyAction
 		String email = request.getParameter(EMAIL);
 		String password = request.getParameter(PASSWORD);
 		String confirmPassword = request.getParameter(CONFIRM_PASSWORD);
-		String[] groups = request.getParameterValues(GROUP);
+		String[] groups = request.getParameterValues(GROUPS);
 
 		if ((password != null) && (!password.equals(confirmPassword))) {
 			getLogger().info("Password not confirmed");
