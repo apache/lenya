@@ -1,5 +1,5 @@
 /*
-$Id: Workflow.java,v 1.4 2003/07/23 13:21:13 gregor Exp $
+$Id: Workflow.java,v 1.5 2003/08/28 10:17:29 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,4 +77,10 @@ public interface Workflow {
      * @return The transitions that leave the state.
      */
     Transition[] getLeavingTransitions(State state);
+    
+    /**
+     * Returns the variable names.
+     * @return A string array.
+     */
+    String[] getVariableNames();
 }

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowImpl.java,v 1.4 2003/07/23 13:21:08 gregor Exp $
+$Id: WorkflowImpl.java,v 1.5 2003/08/28 10:17:20 andreas Exp $
 <License>
 
  ============================================================================
@@ -207,7 +207,23 @@ public class WorkflowImpl implements Workflow {
         return (BooleanVariableImpl) variables.get(name);
     }
 
+    /**
+     * Returns the variables.
+     * @return An array of variables.
+     */
     protected BooleanVariableImpl[] getVariables() {
         return (BooleanVariableImpl[]) variables.values().toArray(new BooleanVariableImpl[variables.size()]);
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflow#getVariableNames()
+     */
+    public String[] getVariableNames() {
+        BooleanVariableImpl[] variables = getVariables();
+        String[] names = new String[variables.length];
+        for (int i = 0; i <names.length; i++) {
+            names[i] = variables[i].getName();
+        }
+        return names;
     }
 }
