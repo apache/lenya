@@ -33,7 +33,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -44,8 +43,6 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection.
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
-
-    private static final Category log = Category.getInstance(CollectionImpl.class);
 
     /**
      * Ctor.
@@ -127,7 +124,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected void load() throws DocumentException {
         if (!isLoaded) {
-            log.debug("Loading: ", new DocumentException());
+            getLogger().debug("Loading: ", new DocumentException());
             NamespaceHelper helper;
             try {
                 helper = getNamespaceHelper();

@@ -22,13 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.log4j.Category;
 
 /**
  * A tree-based site manager.
@@ -37,7 +37,6 @@ import org.apache.log4j.Category;
  */
 public class TreeSiteManager extends AbstractSiteManager {
 
-    private static final Category log = Category.getInstance(TreeSiteManager.class);
     private Map siteTrees = new HashMap();
 
     /**
@@ -60,6 +59,7 @@ public class TreeSiteManager extends AbstractSiteManager {
             sitetree = (DefaultSiteTree) this.siteTrees.get(area);
         } else {
             sitetree = new DefaultSiteTree(getIdentityMap().getPublication().getDirectory(), area);
+            ContainerUtil.enableLogging(sitetree, getLogger());
             this.siteTrees.put(area, sitetree);
         }
         return sitetree;
@@ -108,8 +108,8 @@ public class TreeSiteManager extends AbstractSiteManager {
      */
     public Document[] getRequiringResources(Document resource) throws SiteException {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Obtaining requiring resources of [" + resource + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Obtaining requiring resources of [" + resource + "]");
         }
 
         SiteTree tree = getTree(resource.getArea());
@@ -127,16 +127,16 @@ public class TreeSiteManager extends AbstractSiteManager {
                 SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
                 resources[i] = getIdentityMap().getFactory().get(resource.getArea(),
                         descendant.getAbsoluteId());
-                if (log.isDebugEnabled()) {
-                    log.debug("    Descendant: [" + resources[i] + "]");
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("    Descendant: [" + resources[i] + "]");
                 }
             }
         } catch (PublicationException e) {
             throw new SiteException(e);
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Obtaining requiring resources completed.");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Obtaining requiring resources completed.");
         }
 
         return resources;

@@ -27,9 +27,9 @@ import java.util.List;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.LogEnabled;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
+import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 
@@ -364,6 +364,13 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#accept(org.apache.lenya.cms.publication.util.DocumentVisitor)
+     */
+    public void accept(DocumentVisitor visitor) throws PublicationException {
+        visitor.visitDocument(this);
     }
 
 }

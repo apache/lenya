@@ -26,7 +26,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XLink;
-import org.apache.log4j.Category;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -35,8 +34,6 @@ import org.xml.sax.SAXException;
  * @version $Id$
  */
 public class XlinkCollection extends CollectionImpl {
-
-    private static final Category log = Category.getInstance(XlinkCollection.class);
 
     /**
      * Ctor.

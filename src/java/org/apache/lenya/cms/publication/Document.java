@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.Date;
 
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.publication.util.DocumentVisitor;
 
 /**
  * A CMS document.
@@ -173,5 +174,12 @@ public interface Document {
      * @return A string.
      */
     String getSourceURI();
+    
+    /**
+     * Accepts a document visitor.
+     * @param visitor The visitor.
+     * @throws PublicationException if an error occurs.
+     */
+    void accept(DocumentVisitor visitor) throws PublicationException;
     
 }

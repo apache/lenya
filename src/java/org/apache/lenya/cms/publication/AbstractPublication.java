@@ -402,6 +402,7 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
         SiteManager manager;
         try {
             manager = (SiteManager) this.siteManagerClass.newInstance();
+            ContainerUtil.enableLogging(manager, getLogger());
         } catch (Exception e) {
             throw new SiteException(e);
         }

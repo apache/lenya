@@ -17,14 +17,15 @@
 
 package org.apache.lenya.cms.site;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 
 /**
  * Abstract base class for site managers.
  * 
- * @version $Id: AbstractSiteManager.java,v 1.1 2004/02/18 18:47:07 andreas Exp $
+ * @version $Id$
  */
-public abstract class AbstractSiteManager implements SiteManager {
+public abstract class AbstractSiteManager extends AbstractLogEnabled implements SiteManager {
     
     private DocumentIdentityMap map;
     

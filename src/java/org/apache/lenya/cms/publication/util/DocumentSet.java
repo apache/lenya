@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.PublicationException;
 
 /**
  * A set of documents.
@@ -76,4 +77,15 @@ public class DocumentSet {
         return documents.isEmpty();
     }
     
+    /**
+     * Visits the set.
+     * @param visitor The visitor.
+     * @throws PublicationException if an error occurs during visiting.
+     */
+    public void visit(DocumentVisitor visitor) throws PublicationException {
+        Document[] resources = getDocuments();
+        for (int i = 0; i < resources.length; i++) {
+            resources[i].accept(visitor);
+        }
+    }
 }

@@ -20,11 +20,12 @@ package org.apache.lenya.cms.site.tree;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -36,8 +37,7 @@ import org.w3c.dom.NodeList;
  * @see org.apache.lenya.cms.site.tree.SiteTreeNode
  * @version $Id$
  */
-public class SiteTreeNodeImpl implements SiteTreeNode {
-    private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
+public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode {
 
     public static final String ID_ATTRIBUTE_NAME = "id";
     public static final String HREF_ATTRIBUTE_NAME = "href";
@@ -246,6 +246,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            ContainerUtil.enableLogging(newNode, getLogger());
             childElements.add(newNode);
         }
 
@@ -262,6 +263,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         for (int i = 0; i < elements.length; i++) {
             node.removeChild(elements[i]);
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            ContainerUtil.enableLogging(newNode, getLogger());
             childElements.add(newNode);
         }
         return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
@@ -278,6 +280,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            ContainerUtil.enableLogging(newNode, getLogger());
             siblingElements.add(newNode);
         }
 
@@ -310,7 +313,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         this.accept(visitor);
         SiteTreeNode[] children = this.getChildren();
         if (children == null) {
-            log.info("The node " + this.getId() + " has no children");
+            getLogger().info("The node " + this.getId() + " has no children");
             return;
         } else {
             for (int i = 0; i < children.length; i++) {
@@ -381,6 +384,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         if (parentNode.getNodeType() == Node.ELEMENT_NODE
                 && parentNode.getLocalName().equals(NODE_NAME)) {
             parent = new SiteTreeNodeImpl(parentNode);
+            ContainerUtil.enableLogging(parent, getLogger());
         }
 
         return parent;
