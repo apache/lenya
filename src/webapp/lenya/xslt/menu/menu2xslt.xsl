@@ -18,7 +18,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     exclude-result-prefixes="xhtml">
     
-  <xso:output method="html"/>
+  <xso:output method="xml" indent="yes"/>
 
   <xsl:if test="$area != 'live'">
     
@@ -67,7 +67,7 @@
       <xso:apply-templates select="@*|node()"/>
     </xso:copy>
   </xso:template>
-  
+
   </xso:stylesheet>
   
 </xsl:template>
@@ -79,7 +79,7 @@
     <xsl:apply-templates select="@*|node()"/>
   </xsl:element>
 </xsl:template>
-  
+
   
 <xsl:template match="@*|node()">
   <xsl:copy>
