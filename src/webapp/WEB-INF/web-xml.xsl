@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: web-xml.xsl,v 1.9 2004/04/17 07:37:01 roku Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -84,6 +84,14 @@
     <init-param>
       <param-name>overwrite-uploads</param-name>
       <param-value>allow</param-value>
+    </init-param>
+  </xsl:template>
+
+  <xsl:template match="/web-app/servlet[position() = 1]/init-param[position() = last()]">
+    <xsl:copy-of select="."/>
+    <init-param>
+      <param-name>form-encoding</param-name>
+      <param-value>UTF-8</param-value>
     </init-param>
   </xsl:template>
   
