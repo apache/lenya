@@ -112,6 +112,7 @@
           <map:parameter name="configfile" value="{request:requestURI}?lenya.usecase=bxeng&amp;lenya.step=config"/>
           <map:parameter name="context" value="{request:contextPath}"/>
         </map:transform>
+        <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xhtml"/>
         </map:act>
         <map:generate src="../../resources/misc/bxeng/download.xhtml"/>
