@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.134 2004/08/09 10:29:09 andreas Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.135 2004/08/13 09:27:43 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -199,7 +199,9 @@
      <doctype-system>http://www.w3.org/TR/2000/03/WD-SVG-20000303/</doctype-system>
     </map:serializer>
     
-    <map:serializer name="text" logger="sitemap.serializer.text" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer"/>
+    <map:serializer name="text" logger="sitemap.serializer.text" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
+      <encoding>UTF-8</encoding>
+    </map:serializer>
     
     <map:serializer name="text-iso-8859-1" logger="sitemap.serializer.text-iso-8859-1" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
       <encoding>ISO-8859-1</encoding>
