@@ -4,8 +4,6 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
   
-<xsl:import href="page2xhtml.xsl"/>
-<!--
 <xsl:import href="fallback://xslt/page2xhtml.xsl"/>
--->
+
 </xsl:stylesheet>
