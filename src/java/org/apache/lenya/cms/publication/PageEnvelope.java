@@ -8,9 +8,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.cocoon.ProcessingException;
@@ -40,9 +37,6 @@ public class PageEnvelope {
     public static final String DOCUMENT_ID = "document-id";
     public static final String DOCUMENT_URL = "document-url";
 
-    public static final int AREA_POS = 3;
-    public static final int DOCUMENT_ID_POS = 4;
-
     private Publication publication;
     private RCEnvironment rcEnvironment;
     private String context;
@@ -60,28 +54,58 @@ public class PageEnvelope {
      * @exception IOException if an error occurs
      */
     public PageEnvelope(Publication publication, Request request)
-        throws PageEnvelopeException, ProcessingException, SAXException, IOException {
+        throws PageEnvelopeException {
 
         assert publication != null;
         assert request != null;
 
-        // compute area
-        String requestURI = request.getRequestURI();
-        log.debug("requestURI: " + requestURI);
-        String[] directories = requestURI.split("/");
-        area = directories[AREA_POS];
-
-        String urlPrefix = request.getContextPath() + "/" + publication.getId() + "/" + area;
-        documentUrl = requestURI.substring(urlPrefix.length());
-
-        documentId = computeDocumentId(requestURI);
-        this.publication = publication;
-        rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
-        context = request.getContextPath();
+        try {        
+            this.publication = publication;
+            String requestURI = request.getRequestURI();
+            context = request.getContextPath();
+            if (context == null) {
+                context = "";
+            }
+        
+            String webappURI = requestURI.substring(context.length());
+            String publicationURI = webappURI.substring(("/" + publication.getId()).length());
+        
+            area = publicationURI.split("/")[1];
+        
+            documentUrl = publicationURI.substring(("/" + area).length());
+            documentId = computeDocumentId(documentUrl);
+            
+            rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
+        }
+        catch (Exception e) {
+            throw new PageEnvelopeException(createExceptionMessage(request), e);
+        }
+        
+        // plausibility check
+        if (!request.getRequestURI().startsWith(getContext() + "/" + getPublication().getId() + "/" + getArea() + getDocumentId())) {
+            throw  new PageEnvelopeException(createExceptionMessage(request));
+        }
+    }
+    
+    protected String createExceptionMessage(Request request) {
+        return "Resolving page envelope failed:"
+                    + "\n  URI: " + request.getRequestURI()
+                    + "\n  Context: " + getContext()
+                    + "\n  Publication ID: " + getPublication().getId()
+                    + "\n  Area: " + getArea()
+                    + "\n  Document ID: " + getDocumentId();
     }
 
+    /**
+     * Creates a page envelope from an object model.
+     * @param objectModel The object model.
+     * @throws ProcessingException
+     * @throws PageEnvelopeException
+     * @throws SAXException
+     * @throws IOException
+     */
     public PageEnvelope(Map objectModel)
-        throws ProcessingException, PageEnvelopeException, SAXException, IOException {
+        throws PageEnvelopeException {
         this(
             PublicationFactory.getPublication(objectModel),
             ObjectModelHelper.getRequest(objectModel));
@@ -96,6 +120,8 @@ public class PageEnvelope {
      * @exception SAXException if an error occurs
      * @exception IOException if an error occurs
      * @deprecated This constructor does not work outside a publication directory. Use {@link #PageEnvelope(Map)} instead!
+     * 
+     * 
      */
     public PageEnvelope(SourceResolver resolver, Request request)
         throws PageEnvelopeException, ProcessingException, SAXException, IOException {
@@ -126,7 +152,7 @@ public class PageEnvelope {
         String requestURI = request.getRequestURI();
         log.debug("requestURI: " + requestURI);
         directories = requestURI.split("/");
-        area = directories[AREA_POS];
+        area = directories[3];
 
         documentId = computeDocumentId(requestURI);
         publication = new Publication(publicationId, path);
@@ -145,33 +171,19 @@ public class PageEnvelope {
      * @param requestURI a <code>String</code> value
      * @return a <code>String</code> value
      */
-    protected String computeDocumentId(String requestURI) {
+    protected String computeDocumentId(String documentURL) {
         // the computation of the document id is based on the
         // assumption that and URI matches of the following pattern:
-        // http:/<context-prefix>/<publication-id>/<area>/<document-id>.*
-        // where document-id can be foo/bar/baz
+        // <publication-id>/<area><document-id>.*
+        // where document-id can be /foo/bar/baz
 
-        String directories[] = requestURI.split("/");
-        String documentId = "";
-        List documentIds = Arrays.asList(directories).subList(DOCUMENT_ID_POS, directories.length);
         // remove the suffix from the last element
-        log.debug("documentIds: " + documentIds);
-        String lastPartOfDocumentId = (String) documentIds.get(documentIds.size() - 1);
-        log.debug("lastPartOfDocumentId: " + lastPartOfDocumentId);
-        int startOfSuffix = lastPartOfDocumentId.indexOf('.');
-        log.debug("startOfSuffix: " + startOfSuffix);
-        if (startOfSuffix >= 0) {
-            documentIds.set(
-                documentIds.size() - 1,
-                lastPartOfDocumentId.substring(0, startOfSuffix));
-            log.debug("w/oSuffix: " + lastPartOfDocumentId.substring(0, startOfSuffix));
+        int startOfSuffix = documentURL.lastIndexOf('.');
+        if (startOfSuffix > -1) {
+            documentURL = documentURL.substring(0, startOfSuffix);
         }
-
-        log.debug("documentIds: " + documentIds);
-        for (Iterator i = documentIds.iterator(); i.hasNext();) {
-            documentId += "/" + i.next();
-        }
-        return documentId;
+        
+        return documentURL;
     }
 
     /**
