@@ -16,7 +16,7 @@
   <li>For further information see the Wiki page <link href="http://wiki.cocoondev.org/Wiki.jsp?page=CocoonWebsiteUpdate">CocoonWebsiteUpdate</link></li>
   <li>Checkout the <code>cocoon-site</code> module from <code>cvs.apache.org</code></li>
   <li><link href="http://xml.apache.org/forrest/your-project.html#installing">Install Forrest</link></li>
-  <li><code>export FORREST_HOME=.../xml-forrest/build/dist/shbat</code></li>
+  <li><code>export FORREST_HOME=../../../../../xml-forrest/build/dist/shbat</code></li>
   <li><code>export PATH=$FORREST_HOME/bin:$PATH</code></li>
   <li><code>cd $LENYA_HOME</code></li>
   <li><code>ant export-forrest -Dpublication=docs-new</code></li>

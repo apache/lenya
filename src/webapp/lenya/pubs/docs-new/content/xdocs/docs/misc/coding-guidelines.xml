@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Coding Guidelines for Lenya</title>
+    <title>Apache Lenya Coding Guidelines</title>
     <version/>
     <type/>
     <authors>
@@ -47,4 +47,3 @@
     </section>
   </body>
 </document>
-

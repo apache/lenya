@@ -1,103 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya">
-
-  <home href="index.html">Home</home>
-
-  <project-information href="project/" label="Project Information">
-<!-- FIXME: The demo needs to be improved
-    <node-a href="http://demo.wyona.org" label="Demo" />
--->
-    <node-d href="roadmap.html" label="Roadmap" />
-    <node-e href="../community/mailing-lists.html" label="Mailing Lists" />
-    <node-h href="acknowledgements.html" label="Credits" />
-    <node-i href="license.html" label="License" />
-    <node-i href="related-projects.html" label="Related Projects" />
-  </project-information>
-  <installation href="installation/" label="Installation">
-    <install-overview href="index.html" label="Overview"/>
-    <prerequisites href="prerequisites.html" label="Prerequisites"/>
-    <download href="download.html" label="Download"/>
-    <cvs href="cvs.html" label="CVS Access"/>
-    <install href="source_version.html" label="Installation Instructions"/>
-  </installation>
-  
-  <documentation href="docs/" label="Documentation">
-   <user-guide href="user-guide/" label="User Guide">
-      <logout href="login-logout.html" label="Login/Logout"/>
-   </user-guide>
-   <integrator-dev-guide label="Integrator/Dev Guide">
-    <components href="components/" label="Components">
-      <uri-parametrizer href="URIParametrizer.html" label="URI Parametrizer"/>
-      <pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
-    </components>
-    <concepts href="concepts/" label="Concepts and Best Practises">
-      <sitetree href="siteTree.html" label="Site tree"/>
-
-      <page-envelope href="pageEnvelope.html" label="Page envelope"/>
-      <navigation href="navigation.html" label="Navigation"/>
-      <standard-uri href="standardURI.html" label="URI Scheme"/>
-      <usecases href="usecases.html" label="Usecases"/>
-      <xhtml-templating href="xhtml-templating.html" label="XHTML templating"/>
-      <static-resources href="static-resources.html" label="Serving static resources"/>
-      <node-40 href="tasks/" label="Tasks">
-        <node-41 href="concept.html" label="The Task Concept"/>
-        <node-42 href="defining.html" label="Defining Tasks"/>
-        <node-43 href="taskaction.html" label="The TaskAction"/>
-        <node-44 href="scheduling.html" label="Scheduling a Task"/>
-        <node-45 label="Included tasks">
-          <node-46 href="anttask.html" label="AntTask"/>
-          <node-47 href="publisher.html" label="DefaultFilePublisher"/>
-          <node-48 href="exporter.html" label="StaticHTMLExporter"/>
-          <node-49 href="mailtask.html" label="MailTask"/>
-        </node-45>
-        <node-50 href="development.html" label="Developing Tasks"/>
-      </node-40>
-      <accesscontrol href="accesscontrol/" label="Access&#160;Control">
-      	<terms href="terms.html" label="Basic Terms"/>
-      	<terms href="accesscontrollers.html" label="Access&#160;Controllers"/>
-      	<terms href="accesscontrollerresolvers.html" label="Access Controller Resolvers"/>
-      	<terms href="authenticators.html" label="Authenticators"/>
-      	<terms href="authorizers.html" label="Authorizers"/>
-      	<terms href="policymanagers.html" label="Policy&#160;Managers"/>
-      	<terms href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
-      </accesscontrol>
-      <workflow href="workflow/" label="Workflow">
-      	<introduction href="introduction.html" label="Introduction"/>
-      </workflow>
-    </concepts>
-    <customization href="customization/" label="Customization">
-      <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
-    </customization>
-    <specs href="specs/" label="Specifications">
-      <namespaces href="namespaces.html" label="Namespaces"/>
-    </specs>
-    <proposals href="proposals/" label="Proposals / Requests for Comment (RFC)">
-      <sitetree-proposal href="siteTree.html" label="Site tree"/>
-      <openoffice href="openoffice.html" label="OpenOffice"/>
-    </proposals>
-    <misc href="misc/" label="Miscellaneous">
-      <namespaces href="webdav.html" label="WebDAV Servers"/>
-      <namespaces href="image-upload.html" label="Image Upload"/>
-      <namespaces href="mod_proxy.html" label="mod_proxy"/>
-      <namespaces href="lucene.html" label="Searching with Lucene"/>
-    </misc>
-    <misc href="editors/" label="Editors">
-      <namespaces href="htmlform.html" label="HTML Form Editor"/>
-      <namespaces href="bxeng.html" label="Bitflux Editor"/>
-    </misc>
-    <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
-    <javadoc-error href="javadoc-error.html"/>
-   </integrator-dev-guide>
-  </documentation>
-  
-  <community href="community/" label="Community">
-    <node-f href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/" label="CVS Web" />
-    <node-g href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=%27Importance%27" label="Bug Tracker" />
-    <node-e href="mailing-lists.html" label="Mailing Lists" />
-    <irc href="irc.html" label="IRC"/>
-    <meetings href="meetings.html" label="Meetings and Sprints"/>
-    <coding href="coding-guidelines.html" label="Coding Guidelines"/>
-    <website-update href="website-update.html" label="Website Update"/>
-  </community>
-
+	<home href="index.html">Home</home>
+	<project-information href="project/" label="Project Information">
+		<node-d href="roadmap.html" label="Roadmap"/>
+		<node-e href="../community/mailing-lists.html" label="Mailing Lists"/>
+		<node-h href="acknowledgements.html" label="Credits"/>
+		<node-i href="license.html" label="License"/>
+		<node-zz href="../community/live-sites.html" label="Live Sites"/>
+	</project-information>
+	<installation href="installation/" label="Installation">
+		<install-overview href="index.html" label="Overview"/>
+		<prerequisites href="prerequisites.html" label="Prerequisites"/>
+		<download href="download.html" label="Download"/>
+		<cvs href="cvs.html" label="CVS Access"/>
+		<install href="source_version.html" label="Installation Instructions"/>
+	</installation>
+	<documentation href="docs/" label="Documentation">
+		<integrator-dev-guide label="Integrator/Dev Guide">
+			<components href="components/" label="Components">
+				<accesscontrol href="accesscontrol/" label="Access&#160;Control">
+					<terms href="terms.html" label="Basic Terms"/>
+					<terms href="accesscontrollers.html" label="Access&#160;Controllers"/>
+					<terms href="accesscontrollerresolvers.html" label="Access Controller Resolvers"/>
+					<terms href="authenticators.html" label="Authenticators"/>
+					<terms href="authorizers.html" label="Authorizers"/>
+					<terms href="policymanagers.html" label="Policy&#160;Managers"/>
+					<terms href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
+				</accesscontrol>
+				<authoring href="authoring" labe="Authoring">
+					<namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
+					<namespaces href="image-upload.html" label="Image Upload"/>
+					<openoffice href="openoffice.html" label="OpenOffice"/>
+				</authoring>
+				<deployment href="deployment" label="Deployment">
+					<namespaces href="mod_proxy.html" label="mod_proxy"/>
+				</deployment>
+				<misc href="editors/" label="Editors">
+					<namespaces href="htmlform.html" label="HTML Form Editor"/>
+					<namespaces href="bxeng.html" label="Bitflux Editor"/>
+				</misc>
+				<layout href="layout" label="Layout">
+					<navigation href="navigation.html" label="Navigation"/>
+					<xhtml-templating href="xhtml-templating.html" label="XHTML templating"/>
+					<static-resources href="static-resources.html" label="Serving static resources"/>
+				</layout>
+				<publication href="publication" label="Publication">
+					<page-envelope href="pageEnvelope.html" label="Page envelope"/>
+					<pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
+					<sitetree href="siteTree.html" label="Site tree"/>
+				</publication>
+				<repository href="repository" label="Repository">
+					<namespaces href="webdav.html" label="WebDAV Servers"/>
+				</repository>
+				<search href="search" label="Search">
+					<namespaces href="lucene.html" label="Searching with Lucene"/>
+				</search>
+				<uri-handling href="uri-handling/" label="URI Handling">
+					<uri-parametrizer href="URIParametrizer.html" label="URI Parametrizer"/>
+					<standard-uri href="standardURI.html" label="URI Scheme"/>
+					<usecases href="usecases.html" label="Usecases"/>
+				</uri-handling>
+				<node-40 href="tasks/" label="Tasks">
+					<node-41 href="concept.html" label="The Task Concept"/>
+					<node-42 href="defining.html" label="Defining Tasks"/>
+					<node-43 href="taskaction.html" label="The TaskAction"/>
+					<node-44 href="scheduling.html" label="Scheduling a Task"/>
+					<node-45 label="Included tasks">
+						<node-46 href="anttask.html" label="AntTask"/>
+						<node-47 href="publisher.html" label="DefaultFilePublisher"/>
+						<node-48 href="exporter.html" label="StaticHTMLExporter"/>
+						<node-49 href="mailtask.html" label="MailTask"/>
+					</node-45>
+					<node-50 href="development.html" label="Developing Tasks"/>
+				</node-40>
+				<workflow href="workflow/" label="Workflow">
+					<introduction href="introduction.html" label="Introduction"/>
+				</workflow>
+			</components>
+			<specs href="specs/" label="Specifications">
+				<namespaces href="namespaces.html" label="Namespaces"/>
+			</specs>
+			<misc href="misc/" label="Miscellaneous">
+				<coding href="coding-guidelines.html" label="Coding Guidelines"/>
+				<javadoc-error href="javadoc-error.html"/>
+				<node-e href="unittests.html" label="Unit Tests"/>
+			</misc>
+			<javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
+		</integrator-dev-guide>
+		<user-guide href="user-guide/" label="User Guide">
+			<logout href="login-logout.html" label="Login/Logout"/>
+		</user-guide>
+	</documentation>
+	<community href="community/" label="Community">
+		<node-f href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/" label="CVS Web"/>
+		<node-g href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=%27Importance%27" label="Bug Tracker"/>
+		<node-e href="mailing-lists.html" label="Mailing Lists"/>
+		<irc href="irc.html" label="IRC"/>
+		<meetings href="meetings.html" label="Meetings and Sprints"/>
+		<live-sites href="live-sites.html" label="Live Sites"/>
+		<node-i href="related-projects.html" label="Related Projects"/>
+		<website-update href="website-update.html" label="Website Update"/>
+	</community>
 </site>

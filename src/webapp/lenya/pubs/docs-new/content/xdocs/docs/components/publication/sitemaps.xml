@@ -23,20 +23,17 @@ how sitemaps work is therefore crucial to customize Lenya.
 <ol>
 <li>webapp/sitemap.xmap</li>
 <li>webapp/lenya/admin.xmap</li>
-<li>webapp/lenya/bitflux.xmap</li>
 <li>webapp/lenya/lenya.xmap</li>
 <li>webapp/lenya/lucene.xmap</li>
 <li>webapp/lenya/navigation.xmap</li>
 <li>webapp/lenya/openoffice.xmap</li>
 <li>webapp/lenya/resources.xmap</li>
-<li>webapp/lenya/xopus.xmap</li>
 <li>webapp/lenya/pubs/default/doctypes.xmap</li>
 <li>webapp/lenya/pubs/default/parameter-doctype.xmap</li>
 <li>webapp/lenya/pubs/default/parameter-document-id.xmap</li>
 <li>webapp/lenya/pubs/default/policies-sitemap.xmap</li>
 <li>webapp/lenya/pubs/default/publication-sitemap.xmap</li>
 <li>webapp/lenya/pubs/default/sitemap.xmap</li>
-<li>webapp/lenya/pubs/default/xopus.xmap</li>
 </ol>
 </section>
 <section><title>1) The root Sitemap</title> 
@@ -48,14 +45,11 @@ Its main function is to mount various sub-sitemaps.
 <li>The Parent-Child Action</li>
 <li>The Page Envelope Action</li>
 <li>The File Upload Action</li>
-<li>The Task Action</li>
 <li>The Navigation Resource</li>
 <li>The Publications Pipeline</li>
 <li>The Publications Introduction Matcher</li>
 <li>The Admin Area Mountpoint</li>
 <li>The Lucene Search Mountpoint</li>
-<li>The Xopus Mountpoint</li>
-<li>The BitFlux Mountpoint</li>
 <li>The Lenya GUI Mountpoint</li>
 <li>The Navigation Mountpoint</li>
 <li>The Publication Mountpoint</li>
@@ -64,11 +58,6 @@ Its main function is to mount various sub-sitemaps.
 </section>
 <section><title>2) The administrative Sitemap</title> 
 <p> 
-</p>
-</section>
-<section><title>3) The Bitflux Sitemap</title> 
-<p>
-This Sitemap contains the functionality for the Bitflux Editor. It is mounted under /lenya/bitflux 
 </p>
 </section>
 <section><title>4) The Lenya Sitemap</title> 
@@ -93,11 +82,6 @@ This Sitemap contains the functionality for the Lucene Search engine. It is moun
 <p>The resources sitemap serves static resources, as described in <link href="site:xhtml-templating">Serving static Resources</link>
 </p>
 </section>
-<section><title>9) The Xopus Sitemap</title> 
-<p> 
-This Sitemap contains the functionality for the Xopus Editor. It is mounted under /lenya/xopus 
-</p>
-</section>
 <section><title>10) The Doctypes Sitemap</title> 
 <p>
 This Sitemap defines the doctypes used in a publication, and enables mixing and matching of doctypes
@@ -118,11 +102,6 @@ logic should go in here.
 <section><title>15) The Publication Root Sitemap</title> 
 <p>
 The publication root sitemap links together all the sitemaps of a publication and implements access control. 
-</p>
-</section>
-<section><title>16) The Publication Xopus Sitemap</title> 
-<p> 
-The Publication Xopus sitemap contains the publication-specific parts for the Xopus editor.
 </p>
 </section>
 </body>

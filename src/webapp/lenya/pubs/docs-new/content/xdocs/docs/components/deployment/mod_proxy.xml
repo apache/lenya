@@ -4,7 +4,7 @@
 <document> 
 
 <header> 
-    <title>mod_proxy</title>
+    <title>Proxying Apache Lenya</title>
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
@@ -14,7 +14,9 @@
 <body> 
 
 <section>
-<title>conf/httpd.conf</title>
+<title>Proxying Apache Lenya</title>
+<p>In order to run a Lenya site dynamically, add the following to your Apache httpd.conf file 
+after making sure that you have the mod_proxy module installed:</p>
 <source>
 <![CDATA[
 <VirtualHost 192.168.1.13>

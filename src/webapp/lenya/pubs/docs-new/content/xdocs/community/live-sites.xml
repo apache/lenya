@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya Live Sites</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Gregor J. Rothfuss" email="gregor@apache.org"/>
+    </authors>
+  </header>
+  <body>
+ 
+<section><title>List of Apache Lenya Live Sites</title>
+<p>
+The Lenya community is aware of the following sites that are running on Apache Lenya. 
+If you want to suggest additional sites for inclusion, please send an email to the 
+<link href="mailto:lenya-user@cocoon.apache.org?Subject=New Lenya Live Site">Lenya User mailing list</link>.
+</p>
+<ul>
+  <li><link href="http://www.computerworld.ch">Computerworld Switzerland (IT newspaper)</link></li>
+  <li><link href="http://www.unipublic.unizh.ch">Online Journal of the University of Zurich</link></li>
+  <li><link href="http://www.univ-reunion.f">University of Reunion</link></li>
+  <li><link href="http://www.nzz.ch">Neue Zuercher Zeitung (daily swiss newspaper)</link></li>
+  <li><link href="http://wyona.com">Wyona Inc</link></li>
+  <li><link href="http://cocooncenter.org">Cocoon Center</link></li>
+  <li><link href="http://oscom.org/matrix">OSCOM CMS matrix</link></li>  
+</ul>
+</section>
+
+  </body>
+</document>
