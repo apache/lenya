@@ -46,22 +46,14 @@
       </fileset>
     </copy>
 
-    <!-- Copy endorsed libraries -->
-    <copy todir="${dist.bin.dir}/endorsed">
-      <fileset dir="${build.webapp}/WEB-INF/lib/endorsed"/>
-    </copy>
-    <copy todir="${dist.bin.dir}/endorsed">
-      <fileset dir="${build.webapp}/WEB-INF/lib/">
-        <include name="xercesImpl-*.jar"/>
-      </fileset>
-    </copy>
-    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${dist.root}/${distname}-bin/endorsed"/>
-
     <!-- Copy Jetty -->
     <copy todir="${dist.bin.dir}/tools">
       <fileset dir="tools"/>
     </copy>
     <delete dir="${dist.bin.dir}/tools/anttasks"/>
+    
+	<!-- Make executable -->
+    <chmod file="${dist.bin.dir}/*.sh" perm="ugo+rx"/>
   </target>
 
   <target name="dist-bin" depends="prepare-dist-bin" description="Build a regular binary distribution tar ball">
@@ -112,6 +104,7 @@
         <exclude name="local.build.properties"/>
         <exclude name=".classpath"/>
         <exclude name=".project"/>
+        <exclude name="dist/**"/>
       </fileset>
     </copy>
 
