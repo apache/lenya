@@ -33,19 +33,12 @@
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
     
-    <category name="lenya" log-level="LENYA">
+    <category name="lenya" log-level="INFO">
       <log-target id-ref="lenya"/>
       <log-target id-ref="error"/>
     </category>
     
   </xsl:copy>
-</xsl:template>
-
-
-<xsl:template match="category">
-  <category name="{@name}" log-level="INFO">
-    <xsl:apply-templates/>
-  </category>
 </xsl:template>
 
 
