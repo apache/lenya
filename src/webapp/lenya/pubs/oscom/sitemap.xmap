@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.49 2004/03/19 10:21:35 gregor Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.50 2004/09/01 23:26:48 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -200,8 +200,17 @@
         <map:transform src="xslt/generic/{1}/main.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
-        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/xhtml/{2}.xml"/>
-        <map:serialize type="html"/>
+
+        <map:select type="browser">
+          <map:when test="mozilla5DISABLED">
+            <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/xhtml/{2}.xml?uiml=xul"/>
+            <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/xhtml/{2}.xml"/>
+            <map:serialize type="html"/>
+          </map:otherwise>
+        </map:select>
       </map:match>
 
       <map:handle-errors>
