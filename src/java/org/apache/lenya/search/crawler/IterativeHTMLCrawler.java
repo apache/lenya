@@ -74,10 +74,10 @@ import org.apache.log4j.Category;
 /**
  * Crawl iteratively
  *
- * @version $Id: IterativeHTMLCrawler.java,v 1.20 2004/02/25 16:14:27 michi Exp $
+ * @version $Id: IterativeHTMLCrawler.java,v 1.21 2004/02/26 00:39:12 michi Exp $
  */
 public class IterativeHTMLCrawler {
-    Category log = Category.getInstance(IterativeHTMLCrawler.class);
+    static Category log = Category.getInstance(IterativeHTMLCrawler.class);
 
     java.util.Vector urlsToCrawl;
     java.util.TreeSet urlsToCrawlLowerCase;
@@ -90,21 +90,22 @@ public class IterativeHTMLCrawler {
     /**
      * Creates a new IterativeHTMLCrawler object.
      *
-     * @param url_list_file DOCUMENT ME!
-     * @param html_dump_directory DOCUMENT ME!
-     * @param userAgent DOCUMENT ME!
+     * @param url_list_file File where all dumped files will be listed
+     * @param html_dump_directory Directory where htdocs should be dumped
+     * @param userAgent User-agent for robots.txt
      */
     public IterativeHTMLCrawler(String url_list_file, String html_dump_directory, String userAgent) {
         this.url_list_file = url_list_file;
         this.html_dump_directory = html_dump_directory;
 
         robot = new RobotExclusion(userAgent);
+        robot.addLocalEntries("cocoon.apache.org", new File("/home/USERNAME/src/cocoon-lenya/robots.txt"));
     }
 
     /**
-     * DOCUMENT ME!
+     * Command line interface
      *
-     * @param args DOCUMENT ME!
+     * @param args Configuration file crawler.xconf
      */
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -119,7 +120,7 @@ public class IterativeHTMLCrawler {
                 ce.resolvePath(ce.getHTDocsDumpDir()), ce.getUserAgent()).crawl(new URL(
                     ce.getBaseURL()), ce.getScopeURL());
         } catch (MalformedURLException e) {
-            System.err.println(e);
+            log.error("" + e);
         }
     }
 
@@ -142,15 +143,15 @@ public class IterativeHTMLCrawler {
         String currentURLPath = start.toString().substring(0, start.toString().lastIndexOf("/"));
 
         try {
-            System.out.println(".crawl(): Start crawling at: " + start);
+            log.info(".crawl(): Start crawling at: " + start);
 
             if (addURL(start.getFile(), currentURLPath) != null) {
                 dumpHTDoc(start);
             } else {
-                System.err.println(".crawl(): Start URL has not been dumped: " + start);
+                log.warn("Start URL has not been dumped: " + start);
             }
         } catch (MalformedURLException e) {
-            System.err.println(".crawl(): ERROR: " + e);
+            log.error("" + e);
         }
 
         int currentPosition = 0;
@@ -179,7 +180,7 @@ public class IterativeHTMLCrawler {
                             dumpHTDoc(urlToCrawl);
                         }
                     } catch (MalformedURLException e) {
-                        System.err.println(".crawl(): ERROR: " + e);
+                        log.error("" + e + " " + urlCandidate);
                     }
                 }
             }
@@ -188,6 +189,11 @@ public class IterativeHTMLCrawler {
         }
 
         try {
+            File parent = new File(new File(url_list_file).getParent());
+            if (!parent.isDirectory()) {
+                parent.mkdirs();
+                log.warn("Directory has been created: " + parent);
+            }
             java.io.PrintWriter out = new java.io.PrintWriter(new java.io.FileOutputStream(
                         url_list_file));
 
@@ -197,7 +203,7 @@ public class IterativeHTMLCrawler {
 
             out.close();
         } catch (java.io.FileNotFoundException e) {
-            System.err.println(".crawl(): ERROR: " + e);
+            log.error("" + e);
         }
     }
 
@@ -337,7 +343,7 @@ public class IterativeHTMLCrawler {
                 return true;
             }
         } else {
-            System.out.println(".filterURL(): Not in scope: " + url);
+            log.debug("Not in scope: " + url);
         }
 
         return false;
@@ -378,15 +384,15 @@ public class IterativeHTMLCrawler {
             url = currentURLPath.substring(0, pos + 2) + url.substring(3 * back, url.length());
         } else if (urlLowCase.startsWith("javascript:")) {
             // handle javascript:...
-            System.err.println(".parseHREF(): WARN: \"javascript:\" is not implemented yet!");
+            log.warn("\"javascript:\" is not implemented yet!");
             url = null;
         } else if (urlLowCase.startsWith("#")) {
-            System.err.println(".parseHREF(): WARN: \"#\" (anchor) will be irgnored!");
+            log.warn("\"#\" (anchor) will be irgnored!");
 
             // internal anchor... ignore.
             url = null;
         } else if (urlLowCase.startsWith("mailto:")) {
-            System.err.println(".parseHREF(): WARN: \"mailto:\" is not a URL to be followed!");
+            log.debug("\"mailto:\" is not a URL to be followed!");
 
             // handle mailto:...
             url = null;
