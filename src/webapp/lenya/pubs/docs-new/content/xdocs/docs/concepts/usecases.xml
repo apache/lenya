@@ -87,61 +87,65 @@
         <th><code>lenya.step=</code></th>
         <th>Comment</th>
       </tr>
-      <tr>
-        <td>Publish</td>
-        <td>publish</td>
+       <tr>
+        <td>Add Child</td>
+        <td>add-child</td>
         <td>showscreen</td>
-        <td>Confirm the publication of this document</td>
+        <td>Confirm to add a child document to the current node in the site tree.</td>
       </tr>
-      <tr>
+       <tr>
         <td></td>
         <td></td>
-        <td>publish</td>
-        <td>Publish this document</td>
+        <td>add-child</td>
+        <td></td>
       </tr>
-      <tr>
-        <td>Create</td>
-        <td>create</td>
+       <tr>
+        <td>Add Sibling</td>
+        <td>add-sibling</td>
         <td>showscreen</td>
-        <td>Show a form allowing to specify the parameters for
-        creation of a document</td> 
+        <td>Confirm to add a sibling document to the current node in the site tree.</td>
       </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td>create</td>
-        <td>Create the document</td>
-      </tr>
-      <tr>
-        <td>Resource upload</td>
-        <td>upload</td>
+       <tr>
+        <td>Reject Approval</td>
+        <td>approval-reject</td>
         <td>showscreen</td>
-        <td>Show a form allowing to specify the parameters for
-          uploading of a resource</td>
+        <td>Confirm to reject a document from approval.</td>
       </tr>
-      <tr>
+       <tr>
         <td></td>
         <td></td>
-        <td>upload</td>
-        <td>Upload the resource</td>
+        <td>approval-reject</td>
+        <td></td>
       </tr>
-      <tr>
-        <td>Rollback</td>
-        <td>rollback</td>
+       <tr>
+        <td>Submit for Approval</td>
+        <td>approval-submit</td>
         <td>showscreen</td>
-        <td>Show a list of all versions of this document</td>
+        <td>Confirm to submit a document to approval.</td>
       </tr>
-      <tr>
+       <tr>
         <td></td>
         <td></td>
-        <td>view</td>
-        <td>View a particular version of this document</td>
+        <td>approval-submit</td>
+        <td></td>
       </tr>
-      <tr>
+       <tr>
+        <td>Archive</td>
+        <td>archive</td>
+        <td>showscreen</td>
+        <td>Confirm to archive a document.</td>
+      </tr>
+       <tr>
         <td></td>
         <td></td>
-        <td>rollback</td>
-        <td>Roll back to a particular version of this document</td>
+        <td>archive</td>
+        <td></td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>add-sibling</td>
+        <td></td>
       </tr>
       <tr>
         <td>Checkin</td>
@@ -166,6 +170,164 @@
         <td></td>
         <td>checkout</td>
         <td></td>
+      </tr>
+       <tr>
+        <td>Copy</td>
+        <td>copy</td>
+        <td>showscreen</td>
+        <td>Confirm to copy a document.  (The document is held in a clipboard until it is pasted again)</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>copy</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Create</td>
+        <td>create</td>
+        <td>showscreen</td>
+        <td>Show a form allowing to specify the parameters for
+        creation of a document</td> 
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>create</td>
+        <td>Create the document</td>
+      </tr>
+       <tr>
+        <td>Cut</td>
+        <td>cut</td>
+        <td>showscreen</td>
+        <td>Confirm to cut a document.  (The document is held in a clipboard until it is pasted again)</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>cut</td>
+        <td></td>
+      </tr>
+       <tr>
+        <td>Deactivate</td>
+        <td>deactivate</td>
+        <td>showscreen</td>
+        <td>Confirm to deactivate a document.</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>deactivate</td>
+        <td></td>
+      </tr>
+       <tr>
+        <td>Delete</td>
+        <td>delete</td>
+        <td>showscreen</td>
+        <td>Confirm to delete a document.</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>delete</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Logout</td>
+        <td>logout</td>
+        <td>showscreen</td>
+        <td>Confirm the logout</td>
+      </tr>
+       <tr>
+        <td>Move Down</td>
+        <td>move-down</td>
+        <td>showscreen</td>
+        <td>Confirm to move a document downwards in the site tree.</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>move-down</td>
+        <td></td>
+      </tr>
+       <tr>
+        <td>Move Up</td>
+        <td>move-up</td>
+        <td>showscreen</td>
+        <td>Confirm to move a document upwards in the site tree.</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>move-up</td>
+        <td></td>
+      </tr>
+       <tr>
+        <td>Paste</td>
+        <td>paste</td>
+        <td>showscreen</td>
+        <td>Confirm to paste a document.  (The document which is held in a clipboard until is pasted)</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>paste</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Publish</td>
+        <td>publish</td>
+        <td>showscreen</td>
+        <td>Confirm the publication of this document</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>publish</td>
+        <td>Publish this document</td>
+      </tr>
+      <tr>
+        <td>Resource upload</td>
+        <td>upload</td>
+        <td>showscreen</td>
+        <td>Show a form allowing to specify the parameters for
+          uploading of a resource</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>upload</td>
+        <td>Upload the resource</td>
+      </tr>
+       <tr>
+        <td>Rename</td>
+        <td>rename</td>
+        <td>showscreen</td>
+        <td>Confirm to rename a document.</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>rename</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Rollback</td>
+        <td>rollback</td>
+        <td>showscreen</td>
+        <td>Show a list of all versions of this document</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>view</td>
+        <td>View a particular version of this document</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>rollback</td>
+        <td>Roll back to a particular version of this document</td>
       </tr>
       <tr>
         <td>Schedule</td>
@@ -220,12 +382,6 @@
         <td></td>
         <td>delete</td>
         <td>Delete a user</td>
-      </tr>
-      <tr>
-        <td>Logout</td>
-        <td>logout</td>
-        <td>showscreen</td>
-        <td>Confirm the logout</td>
       </tr>
       <tr>
         <td>View Logs</td>

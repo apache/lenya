@@ -35,27 +35,27 @@
 
     <menu name="Edit" label="Search">
       <block>
-        <item>Cut</item>
-        <item>Copy</item>
-        <item>Paste</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=cut&lenya.step=showscreen</xsp:attribute>Cut</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=copy&lenya.step=showscreen</xsp:attribute>Copy</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=paste&lenya.step=showscreen</xsp:attribute>Paste</item>
       </block>
       <block>
-        <item>Rename</item>
-        <item>Move Up</item>
-        <item>Move Down</item>
-        <item>Add Child Element</item>
-        <item>Insert New Document</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=rename&lenya.step=showscreen</xsp:attribute>Rename</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=move-up&lenya.step=showscreen</xsp:attribute>Move Up</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=move-down&lenya.step=showscreen</xsp:attribute>Move Down</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=add-child&lenya.step=showscreen</xsp:attribute>Add Child Element</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=add-sibling&lenya.step=showscreen</xsp:attribute>Insert New Document</item>
       </block>
     </menu>
 
     <menu name="Workflow" label="Help">
       <block>
-        <item>Publish</item>
-        <item>Delete</item>
-        <item>Archive</item>
-        <item>Submit for Approval</item>
-        <item>Reject</item>
-        <item>Deactivate</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=publish&lenya.step=showscreen</xsp:attribute>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=delete&lenya.step=showscreen</xsp:attribute>Delete</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=archive&lenya.step=showscreen</xsp:attribute>Archive</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=approval-submit&lenya.step=showscreen</xsp:attribute>Submit for Approval</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=approval-reject&lenya.step=showscreen</xsp:attribute>Reject</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>?lenya.usecase=deactivate&lenya.step=showscreen</xsp:attribute>Deactivate</item>
       </block>
     </menu>
 
