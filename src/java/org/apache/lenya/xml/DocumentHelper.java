@@ -64,6 +64,8 @@ import org.w3c.dom.Text;
 
 import org.xml.sax.SAXException;
 
+import org.apache.xml.resolver.tools.CatalogResolver;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,7 +93,7 @@ import javax.xml.transform.stream.StreamResult;
  * Various utility methods to work with JAXP.
  *
  * @author Andreas Hartmann
- * @version $Id: DocumentHelper.java,v 1.21 2003/09/17 18:58:23 edith Exp $
+ * @version $Id: DocumentHelper.java,v 1.22 2003/12/03 11:18:13 edith Exp $
  */
 public class DocumentHelper {
     /**
@@ -103,8 +105,11 @@ public class DocumentHelper {
     public static DocumentBuilder createBuilder() throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
+        DocumentBuilder builder = factory.newDocumentBuilder();    
 
-        return factory.newDocumentBuilder();
+		CatalogResolver cr = new CatalogResolver();
+		builder.setEntityResolver(cr);
+        return builder;
     }
 
     /**
