@@ -47,7 +47,7 @@
 <tr>
   <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
   <td valign="top">Content (text/plain)</td>
-  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5"><xsl:value-of select="."/></textarea></td>
+  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;![CDATA[" cols="40" rows="5"><xsl:value-of select="."/></textarea></td>
 </tr>
 </xsl:template>
 

@@ -66,7 +66,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.14 2003/09/03 17:50:22 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.15 2003/09/18 23:29:39 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
     org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HTMLFormSaveAction.class);
@@ -144,8 +144,12 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             } else {
 
                         if (pname.indexOf("xupdate:update") > 0) {
-                            log.error(".act() Update Node: " + pname + request.getParameter(pname) + "</xupdate:update>");
-                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + request.getParameter(pname) + "</xupdate:update></xupdate:modifications>");
+                            String xupdateUpdate = pname + request.getParameter(pname) + "</xupdate:update>";
+                            if (pname.indexOf("<![CDATA[") > 0) {
+                                xupdateUpdate = pname + request.getParameter(pname) + "]]></xupdate:update>";
+                            }
+                            log.error(".act() Update Node: " + xupdateUpdate);
+                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>");
                             xq.execute(document);
                         } else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">")) { // no .x and .y from input type="image"
                             log.error(".act() Append Node: " + pname);
