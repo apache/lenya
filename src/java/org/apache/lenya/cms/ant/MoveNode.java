@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: MoveNode.java,v 1.9 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -55,8 +55,8 @@ public class MoveNode extends TwoNodesTask {
 		throws SiteTreeException {
 
 		Publication publication = getPublication();
-		SiteTree firsttree = publication.getSiteTree(firstarea);
-		SiteTree sectree = publication.getSiteTree(secarea);
+		SiteTree firsttree = publication.getTree(firstarea);
+		SiteTree sectree = publication.getTree(secarea);
 
 		String parentid = "";
 		StringTokenizer st = new StringTokenizer(secdocumentid, "/");

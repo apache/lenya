@@ -140,7 +140,7 @@ public class RenameLabelTask extends PublicationTask {
         String area)
         throws SiteTreeException, DocumentException {
 
-        SiteTree tree = getPublication().getSiteTree(area);
+        SiteTree tree = getPublication().getTree(area);
         SiteTreeNode node = tree.getNode(documentid);
         if (node == null) {
             throw new DocumentException(

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UniqueDocumentId.java,v 1.11 2004/08/16 13:01:46 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -38,7 +38,7 @@ public class UniqueDocumentId {
         String documentid) {
         SiteTree tree;
         try {
-            tree = publication.getSiteTree(area);
+            tree = publication.getTree(area);
             SiteTreeNode node = tree.getNode(documentid);
             String suffix = null;
             int version = 0;

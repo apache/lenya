@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DublinCoreHelper.java,v 1.6 2004/08/16 12:27:23 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -58,7 +58,7 @@ public final class DublinCoreHelper {
 		String url = null;
 		Document document = null;
 
-		SiteTree tree = publication.getSiteTree(area);
+		SiteTree tree = publication.getTree(area);
 		SiteTreeNode node = tree.getNode(documentId);
 
 		DocumentBuilder builder = publication.getDocumentBuilder();

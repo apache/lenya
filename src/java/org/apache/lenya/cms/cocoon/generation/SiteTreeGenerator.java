@@ -82,7 +82,7 @@ public class SiteTreeGenerator extends ServiceableGenerator
         try {
             Publication publication = PublicationFactory.getPublication(objectModel);
             area = par.getParameter(AREA_PARAMETER);
-            sitetree = publication.getSiteTree(area);
+            sitetree = publication.getTree(area);
         } catch (PublicationException e) {
             throw new ProcessingException("Unable to get sitetree: publication exception.", e);
         } catch (ParameterException e) {

@@ -143,7 +143,7 @@ public class RemoveLabelTask extends PublicationTask {
         SiteTree tree = null;
         Label label = null;
         try {
-            tree = getPublication().getSiteTree(area);
+            tree = getPublication().getTree(area);
             SiteTreeNode node = tree.getNode(documentid);
             // if there is only one label left do not delete it.
             if (node.getLabels().length > 1) {

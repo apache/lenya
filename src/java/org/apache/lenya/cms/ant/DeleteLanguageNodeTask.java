@@ -56,7 +56,7 @@ public class DeleteLanguageNodeTask extends DeleteNodeTask {
         SiteTree tree = null;
 
         try {
-            tree = getPublication().getSiteTree(area);
+            tree = getPublication().getTree(area);
             SiteTreeNode node = tree.getNode(documentid);
             node.removeLabel(node.getLabel(language));
             Label[] labels = node.getLabels();

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DeleteSchedulerEntryTask.java,v 1.2 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -46,7 +46,7 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
             log("Area:        [" + area + "]");
 
             Publication publication = getPublication();
-            SiteTree tree = publication.getSiteTree(area);
+            SiteTree tree = publication.getTree(area);
             SiteTreeNode node = tree.getNode(documentId);
 
             node.acceptSubtree(this);

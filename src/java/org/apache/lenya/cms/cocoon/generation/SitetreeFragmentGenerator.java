@@ -244,7 +244,7 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
                 && !this.area.equals(Publication.LIVE_AREA)) {
             throw new ProcessingException("Invalid area: " + this.area);
         }
-        siteTree = publication.getSiteTree(this.area);
+        siteTree = publication.getTree(this.area);
 
         SiteTreeNode node = siteTree.getNode(this.documentid);
         if (this.getLogger().isDebugEnabled()) {
@@ -277,7 +277,7 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
     protected void generateFragmentInitial(String siteArea)
             throws SiteTreeException, SAXException, ProcessingException {
 
-        SiteTree siteTree = publication.getSiteTree(siteArea);
+        SiteTree siteTree = publication.getTree(siteArea);
 
         String label = "";
         String isFolder = "";

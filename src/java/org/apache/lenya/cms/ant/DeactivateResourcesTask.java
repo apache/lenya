@@ -69,7 +69,7 @@ public class DeactivateResourcesTask extends PublicationTask {
 		SiteTree tree = null;
 
 		try {
-			tree = publication.getSiteTree(area);
+			tree = publication.getTree(area);
 			SiteTreeNode node = tree.getNode(documentid);
 			Label[] labels = null;
 			if (node != null) {

@@ -73,7 +73,7 @@ public class MoveSiteTreeNodeTask extends PublicationTask {
         log("    Direction:   [" + getDirection() + "]");
 
         try {
-            SiteTree tree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
+            SiteTree tree = getPublication().getTree(Publication.AUTHORING_AREA);
             if (getDirection().equals(UP)) {
                 tree.moveUp(getDocumentId());
             } else if (getDirection().equals(DOWN)) {

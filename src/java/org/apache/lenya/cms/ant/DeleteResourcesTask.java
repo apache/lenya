@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DeleteResourcesTask.java,v 1.3 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -89,7 +89,7 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
 			log("area for the destination :" + this.getSecarea());
 
 			Publication publication = getPublication();
-			SiteTree tree = publication.getSiteTree(this.getSecarea());
+			SiteTree tree = publication.getTree(this.getSecarea());
 			SiteTreeNode node = tree.getNode(this.getSecdocumentid());
 			node.acceptReverseSubtree(this);
 		} catch (Exception e) {

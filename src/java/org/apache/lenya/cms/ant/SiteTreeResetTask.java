@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SiteTreeResetTask.java,v 1.2 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -58,7 +58,7 @@ public class SiteTreeResetTask extends PublicationTask {
 		try {
 			log("area : " + this.getArea());
 			Publication publication= getPublication();
-			SiteTree tree = publication.getSiteTree(getArea());
+			SiteTree tree = publication.getTree(getArea());
            
 			SiteTreeNode node = tree.getNode("/");
             node.removeChildren(); 			

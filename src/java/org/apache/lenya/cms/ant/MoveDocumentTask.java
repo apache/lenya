@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: MoveDocumentTask.java,v 1.6 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -168,7 +168,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 			log("area for the destination" + this.getSecarea());
 
 			Publication publication = getPublication();
-			SiteTree tree = publication.getSiteTree(getFirstarea());
+			SiteTree tree = publication.getTree(getFirstarea());
 			SiteTreeNode node = tree.getNode(getFirstdocumentid());
 
 			node.acceptSubtree(this);

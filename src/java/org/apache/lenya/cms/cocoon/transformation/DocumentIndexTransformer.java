@@ -104,7 +104,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             setPublication(document.getPublication());
             setArea(document.getArea());
             setBuilder(document.getPublication().getDocumentBuilder());
-            setSiteTree(publication.getSiteTree(area));
+            setSiteTree(publication.getTree(area));
 
         } catch (Exception e) {
             throw new ProcessingException(e);

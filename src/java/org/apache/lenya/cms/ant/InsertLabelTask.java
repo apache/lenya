@@ -132,7 +132,7 @@ public class InsertLabelTask extends PublicationTask {
         SiteTree tree = null;
         Label label = null;
         try {
-            tree = getPublication().getSiteTree(area);
+            tree = getPublication().getTree(area);
             label = new Label(labelName, language);
             tree.addLabel(documentid, label);
             tree.save();

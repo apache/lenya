@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SetIdentifier.java,v 1.6 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -114,7 +114,7 @@ public class SetIdentifier extends PublicationTask {
 		SiteTree tree;
 
 		try {
-			tree = publication.getSiteTree(area);
+			tree = publication.getTree(area);
 		} catch (SiteTreeException e) {
 			throw new BuildException(e);
 		}

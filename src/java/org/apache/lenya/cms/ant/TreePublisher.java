@@ -91,8 +91,8 @@ public class TreePublisher extends PublicationTask {
         SiteTree liveTree = null;
 
         try {
-            authoringTree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
-            liveTree = getPublication().getSiteTree(Publication.LIVE_AREA);
+            authoringTree = getPublication().getTree(Publication.AUTHORING_AREA);
+            liveTree = getPublication().getTree(Publication.LIVE_AREA);
 
             SiteTreeNode authoringNode = authoringTree.getNode(documentId);
             SiteTreeNode[] siblings = authoringNode.getNextSiblings();

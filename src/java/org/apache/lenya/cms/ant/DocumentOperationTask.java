@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentOperationTask.java,v 1.3 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -86,7 +86,7 @@ public abstract class DocumentOperationTask extends PublicationTask implements S
 			log("area for the source" + this.getFirstarea());
 
 			Publication publication= getPublication();
-			SiteTree tree = publication.getSiteTree(getFirstarea());
+			SiteTree tree = publication.getTree(getFirstarea());
 			SiteTreeNode node = tree.getNode(getFirstdocumentid());
 
 			node.acceptSubtree(this);

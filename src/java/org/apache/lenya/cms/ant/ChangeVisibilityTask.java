@@ -90,7 +90,7 @@ public class ChangeVisibilityTask extends PublicationTask {
         throws SiteTreeException, DocumentException {
 
         SiteTree tree = null;
-        tree = getPublication().getSiteTree(area);
+        tree = getPublication().getTree(area);
         SiteTreeNode node = tree.getNode(documentid);
 
         if (node == null) {
