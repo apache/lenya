@@ -203,7 +203,7 @@
       language="${create.language}"
       propertyname="document.file" 
       />
-    <tempfile property="temp.file"/>
+    <tempfile property="temp.file" destDir="work"/>
     <xslt in="${document.file}"
       out="${temp.file}" 
       force="true"
@@ -390,8 +390,8 @@
 
     <echo>Generate temporary xsl style sheet with ${pub.dir}/../xslt/util/generate-insertAsset-xsl.xsl </echo>
     <echo>from ${pub.dir}/config/assets/${insert.asset.insertTemplate}</echo>
-    <tempfile property="temp.stylesheet"/>
-    <tempfile property="temp.file"/>
+    <tempfile property="temp.stylesheet" destDir="work"/>
+    <tempfile property="temp.file" destDir="work"/>
     <xslt in="${pub.dir}/config/assets/${insert.asset.insertTemplate}"
       out="${temp.stylesheet}" 
       force="true"
