@@ -11,6 +11,15 @@
     <map:actions/>
     <map:selectors/>
   </map:components>
+  
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform src="xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize/>
+    </map:resource>
+  </map:resources>
 
   <map:pipelines>
     <!-- Menus -->
@@ -71,6 +80,12 @@
       </map:match>
     </map:pipeline>
 
+    <map:pipeline>
+      <map:match pattern="contextmenu.js">
+	    <map:read src="resources/javascript/contextmenu.js"/>
+	    <map:serialize type="text"/>
+      </map:match>
+    </map:pipeline>
     
     <map:pipeline>
       <map:match pattern="**">

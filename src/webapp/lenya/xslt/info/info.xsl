@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.3 2003/06/11 09:39:55 gregor Exp $
+ $Id: info.xsl,v 1.4 2003/06/16 09:34:32 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -17,7 +17,7 @@
     <html>
 <head>
 	<title></title>
-	<script language="javascript" type="text/javascript" src="../tabs.js"></script>
+	<script language="javascript" type="text/javascript" src="tabs.js"></script>
     <xsl:call-template name="include-css">
       <xsl:with-param name="context-prefix" select="publish/context"/>
     </xsl:call-template>
