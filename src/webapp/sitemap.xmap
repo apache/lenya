@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.13 2002/05/30 21:49:55 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.14 2002/06/03 09:48:47 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -137,14 +137,14 @@
        <map:mount uri-prefix="oscom" src="wyona/cms/pubs/oscom/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
 
+<!-- Discussion Forum -->
+     <map:match pattern="forum/**">
+       <map:mount uri-prefix="forum" src="wyona/cms/pubs/forum/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+     </map:match>
+
 <!-- Unipublic -->
      <map:match pattern="unipublic/**">
        <map:mount uri-prefix="unipublic" src="wyona/cms/pubs/unipublic/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- cocooncenter -->
-     <map:match pattern="cocooncenter/**">
-       <map:mount uri-prefix="cocooncenter" src="wyona/cms/pubs/cocooncenter/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
 
 <!-- Materials Science -->
