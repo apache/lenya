@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<oscom>
+
+<mailing-lists>
+ <list>
+   <name>General</name>
+   <address>general@oscom.org</address>
+   <public>http://www.oscom.org/mailman/listinfo/general</public>
+   <admin>http://www.oscom.org/mailman/admin/general</admin>
+ </list>
+
+ <list>
+   <name>Speakers</name>
+   <address>speakers@oscom.org</address>
+   <public>http://www.oscom.org/mailman/listinfo/speakers</public>
+   <admin>http://www.oscom.org/mailman/admin/speakers</admin>
+ </list>
+
+ <list>
+   <name>Organization Committee San Francisco</name>
+   <address>oc-1@oscom.org</address>
+   <public>http://www.oscom.org/mailman/listinfo/oc-1</public>
+   <admin>http://www.oscom.org/mailman/admin/oc-1</admin>
+ </list>
+</mailing-lists>
+
+</oscom>
