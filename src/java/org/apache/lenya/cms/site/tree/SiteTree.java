@@ -45,14 +45,14 @@ public interface SiteTree extends Transactionable {
     void addNode(String parentid, String id, Label[] labels) throws SiteException;
 
     /**
-     * Add a node.
+     * Add a node. TODO: Lenya 1.2.X supports argument visibleInNav
      * 
      * @param parentid the node where the new node is to be inserted
      * @param id the node id
      * @param labels the labels
-     * @param href the href of the new node
+     * @param href the href of the new node (internal and external references)
      * @param suffix the suffix of the new node
-     * @param link the link
+     * @param link Visibility of link respectively href. It is meant to support "grouping" nodes in the navigation which do not relate to a document (internal) or external link (www).
      * 
      * @throws SiteException if the addition failed
      */
