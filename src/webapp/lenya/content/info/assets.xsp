@@ -41,6 +41,7 @@
 	}
       </xsp:logic>
       <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
+      <lenya-info:documentnodeid><input:get-attribute module="page-envelope" name="document-node-id"/></lenya-info:documentnodeid>
     </lenya-info:assets>     
   </lenya-info:info>
   
