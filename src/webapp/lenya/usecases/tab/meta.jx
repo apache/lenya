@@ -162,16 +162,16 @@
               <br/>
               <jx:choose>
                 <jx:when test="${usecase.getParameter('area').equals('authoring')}">
-                  <input i18n:attr="value" type="submit" value="Save"/>
+                  <input i18n:attr="value" name="submit" type="submit" value="Save"/>
                 </jx:when>
                 <jx:otherwise>
-                  <input i18n:attr="value" type="submit" disabled="disabled" value="Save"/>
+                  <input i18n:attr="value" name="submit" type="submit" disabled="disabled" value="Save"/>
                 </jx:otherwise>
               </jx:choose>
             </td>
           </tr>
         </table>
-        <input type="hidden" name="lenya.usecase" value="tab.meta"/>
+        <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       </form>
     </div>
