@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <!-- =========================== Components ================================ -->
+
+  <map:components>
+    <map:generators default="file"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+    <map:selectors/>
+  </map:components>
+
+  <!-- =========================== Pipelines ================================ -->
+
+  <map:pipelines>
+    <map:pipeline>
+      <map:match pattern="http/slashdot.rdf">
+        <map:generate src="http://www.slashdot.org/slashdot.rdf"/>
+        <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <map:pipeline>
+      <map:match pattern="http/fm.rdf">
+        <map:generate src="http://www.freshmeat.net/backend/fm.rdf"/>
+        <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <map:pipeline>
+      <map:match pattern="live/*.rdf">
+        <map:generate src="docs/publication/live/rss-rdf/{1}.rdf"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <map:pipeline>
+      <!-- images gif -->
+      <map:match pattern="live/images/**.gif">
+        <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
+      </map:match>
+      <!-- images jpg -->
+      <map:match pattern="live/images/**.jpg">
+        <map:read src="resources/publication/images/live/{1}.jpg" mime-type="images/jpeg">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
+      </map:match>
+      <map:match pattern="live/images/**.jpeg">
+        <map:read src="resources/publication/images/live/{1}.jpeg" mime-type="images/jpeg">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
+      </map:match>
+
+      <!-- XML -->
+      <map:match pattern="**.xml">
+        <map:generate src="docs/publication/{1}.xml"/>
+        <map:transform type="xinclude"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- Homepage -->
+      <map:match pattern="live/index.html">
+        <map:generate src="cocoon:/live/index.xml"/>
+<!--
+        <map:generate src="docs/publication/live/index.xml"/>
+        <map:transform type="xinclude"/>
+-->
+        <map:transform src="stylesheets/publication/Page/Home/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+   </map:pipeline>
+ </map:pipelines>
+</map:sitemap>
