@@ -8,6 +8,7 @@
 <xsl:param name="form"/>
 <xsl:param name="message"/>
 
+
 <xsl:template match="/">
 <html>
 <body>
@@ -48,9 +49,55 @@ Edit Document <b><xsl:value-of select="$docid"/></b> (Form: <xsl:value-of select
 </xsl:template>
 
 <!-- Copy mixed content -->
-
-<xsl:include href="copy-mixed-content.xsl"/>
 <!-- also see oneform.xsl -->
+
+<!--
+<xsl:include href="copy-mixed-content.xsl"/>
+-->
+<xsl:template match="//*" mode="mixedcontent">
+<xsl:variable name="prefix"><xsl:if test="contains(name(),':')">:<xsl:value-of select="substring-before(name(),':')"/></xsl:if></xsl:variable>
+
+<xsl:choose>
+<xsl:when test="node()">
+<xsl:text>&lt;</xsl:text><xsl:value-of select="name()"/>
+
+<xsl:apply-templates select="@*[local-name()!='tagID']" mode="mixedcontent"/>
+
+<xsl:for-each select="namespace::*">
+<xsl:variable name="prefix"><xsl:if test="local-name() != ''">:<xsl:value-of select="local-name()"/></xsl:if></xsl:variable>
+<xsl:if test=". != 'http://www.w3.org/XML/1998/namespace'">
+<xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="."/><xsl:text>"</xsl:text>
+</xsl:if>
+</xsl:for-each>
+
+<xsl:text>&gt;</xsl:text>
+
+<xsl:apply-templates select="node()" mode="mixedcontent"/>
+
+<xsl:text>&lt;/</xsl:text><xsl:value-of select="name()"/><xsl:text>&gt;</xsl:text>
+
+</xsl:when>
+
+<xsl:otherwise>
+
+<xsl:text>&lt;</xsl:text><xsl:value-of select="name()"/>
+
+<xsl:apply-templates select="@*[local-name()!='tagID']" mode="mixedcontent"/>
+
+<xsl:for-each select="namespace::*">
+<xsl:variable name="prefix"><xsl:if test="local-name() != ''">:<xsl:value-of select="local-name()"/></xsl:if></xsl:variable>
+<xsl:if test=". != 'http://www.w3.org/XML/1998/namespace'">
+<xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="."/><xsl:text>"</xsl:text>
+</xsl:if>
+</xsl:for-each>
+
+<xsl:text>/&gt;</xsl:text></xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
+<xsl:template match="@*" mode="mixedcontent"><xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"</xsl:template>
+
+
 
 <!-- FIXME: namespaces occur multiple times, e.g. xlink:show="" xlink:href="" xmlns:xlink="" xmlns:xlink="" -->
 <!--
