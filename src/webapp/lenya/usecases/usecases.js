@@ -69,7 +69,7 @@ function executeUsecase() {
         usecase.setSourceURL(sourceUrl);
         usecase.setName(usecaseName);
         view = usecase.getView();
-        if (view.showMenu()) {
+        if (view && view.showMenu()) {
             menu = "menu";
         }
 
