@@ -19,6 +19,8 @@
     </map:serializers>
     <map:matchers default="wildcard"/>
     <map:actions>
+      <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" 
+	src="org.apache.cocoon.acting.RequestParameterExistsAction" />
       <map:action name="save" logger="sitemap.action.save" 
 	src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
       <map:action name="upload" logger="sitemap.action.upload" 
@@ -467,6 +469,70 @@
 
         
         <!-- ************************************************************** -->
+        <!-- ** HTML One Form Editor                                     ** -->
+        <!-- **                                                          ** -->
+        <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
+        <!-- **       publication specific DocumentIdToPathMapper which  ** -->
+        <!-- **       is configured within config/publication.xconf      ** -->
+        <!-- ************************************************************** -->
+
+      <map:match pattern="1formedit" type="usecase">
+        <map:match pattern="open" type="step">
+          <map:match pattern="*/authoring/**.html">
+              <map:act type="reserved-checkout">
+                <map:generate type="serverpages" src="content/rc/{exception}.xsp">
+                  <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="filename" value="{filename}"/>
+                  <map:parameter name="date" value="{date}"/>
+                </map:generate>
+              <map:transform src="xslt/rc/rco-exception.xsl"/>
+              <map:call resource="style-cms-page"/>
+            </map:act>
+            <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+            <map:transform src="xslt/authoring/edit/oneform.xsl">
+              <map:parameter name="docid" value="{page-envelope:document-path}"/>
+            </map:transform>
+            <map:call resource="style-cms-page"/>
+          </map:match>
+        </map:match>
+	
+      <map:match pattern="close" type="step">
+        <map:match pattern="*/authoring/**.html">
+          <map:generate type="stream">
+            <map:parameter name="form-name" value="content"/>
+          </map:generate>
+          <!-- Save: Overwrite original file  -->
+          <map:act type="request-parameter-exists">
+            <map:parameter name="parameters" value="save"/>
+            <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
+            <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+              <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
+            </map:transform>
+            <map:act type="workflow">
+              <map:parameter name="area" value="{page-envelope:area}"/>
+              <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+              <map:parameter name="language" value="{page-envelope:document-language}"/>
+              <map:parameter name="event" value="edit"/>
+            </map:act>
+            <map:serialize type="htmlnoi" />
+          </map:act>
+          <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+            <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false"/>
+          </map:transform>
+          <map:serialize type="html" />
+	    </map:match>
+	  </map:match>
+    </map:match>
+      
+    <!-- ************************************************************** -->
+    <!-- ********  /HTML One Form Editor ****************************** -->
+    <!-- ************************************************************** -->
+    
+        <!-- ************************************************************** -->
         <!-- ** HTML Form Editor                                         ** -->
         <!-- **                                                          ** -->
         <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
@@ -546,7 +612,7 @@
                 <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
                   <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
                 </map:transform>
-                <map:transform type="write-source"/>
+                <map:transform type="write-source"/> 
               
                 <map:act type="workflow">
                   <map:parameter name="area" value="{page-envelope:area}"/>
@@ -555,19 +621,8 @@
                   <map:parameter name="event" value="edit"/>
                 </map:act>
 
-                <map:act type="reserved-checkin">
-                  <map:generate src="content/rc/{exception}.xsp" type="serverpages">
-                    <map:parameter name="user" value="{user}"/>
-                    <map:parameter name="filename" value="{filename}"/>
-                    <map:parameter name="checkType" value="{checkType}"/>
-                    <map:parameter name="date" value="{date}"/>
-                  </map:generate>
-                  <map:transform src="xslt/rc/rco-exception.xsl"/>
-                  <map:serialize/>
-                </map:act>
-
                 <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-                  <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html"/>
+                  <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
                 </map:transform>
                 <map:serialize type="html" />
               </map:act>
@@ -774,6 +829,7 @@
           
           <map:match pattern="checkin" type="step">
             <map:act type="reserved-checkin">
+              <map:parameter name="backup" value="{request-param:backup}"/>
               <map:generate src="content/rc/{exception}.xsp" type="serverpages">
                 <map:parameter name="user" value="{user}"/>
                 <map:parameter name="filename" value="{filename}"/>
@@ -1125,65 +1181,6 @@
       </map:handle-errors>
       
     </map:pipeline>
-    
-    <!-- ************************************************************** -->
-    <!-- ** HTML One Form Editor                                     ** -->
-    <!-- **                                                          ** -->
-    <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
-    <!-- **       publication specific DocumentIdToPathMapper which  ** -->
-    <!-- **       is configured within config/publication.xconf      ** -->
-    <!-- ************************************************************** -->
-    <map:pipeline>
-      <map:match pattern="1formedit" type="usecase">
-	<map:match pattern="open" type="step">
-	  <map:match pattern="*/authoring/**.html">
-	    <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-	    <map:transform src="xslt/authoring/edit/oneform.xsl">
-	      <map:parameter name="docid" value="{page-envelope:document-path}"/>
-	    </map:transform>
-	    <map:call resource="style-cms-page"/>
-	  </map:match>
-	</map:match>
-	
-	<map:match pattern="close" type="step">
-	  <map:match pattern="*/authoring/**.html">
-	    <map:generate type="stream">
-	      <map:parameter name="form-name" value="content"/>
-	    </map:generate>
-	    <!-- Save: Overwrite original file (FIXME: Cancel should not overwrite original file) -->
-	    <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-	      <map:parameter name="source" value="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-	    </map:transform>
-	    <map:transform type="write-source"/>
-	    <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-	      <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
-	    </map:transform>
-	    <!-- trigger workflow (FIXME: Cancel should not trigger the workflow) -->
-	    <map:act type="workflow">
-	      <map:parameter name="area" value="{page-envelope:area}"/>
-	      <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-	      <map:parameter name="language" value="{page-envelope:document-language}"/>
-	      <map:parameter name="event" value="edit"/>
-	    </map:act>
-	    <map:serialize type="htmlnoi" />
-	  </map:match>
-	</map:match>
-      </map:match>
-      
-      <map:handle-errors type="500">
-	<map:select type="exception">
-	  <map:when test="sax-parsing">
-	    <map:transform src="xslt/exception/sax-parsing.xsl"/>
-	    <map:call resource="style-cms-page"/>
-	  </map:when>
-	</map:select>
-	<map:serialize type="html"/>
-      </map:handle-errors>
-      
-    </map:pipeline>
-    <!-- ************************************************************** -->
-    <!-- ********  /HTML One Form Editor ****************************** -->
-    <!-- ************************************************************** -->
     
   </map:pipelines>
   
