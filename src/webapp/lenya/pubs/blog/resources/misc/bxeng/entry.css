@@ -18,3 +18,51 @@
   display: block;
   /*border: 1pt solid red;*/
 }
+
+.content {
+  padding: 10pt;
+  display: block;
+  /*border: 1pt solid red;*/
+}
+
+.author {
+  padding: 5pt;
+  display: block;
+  /*border: 1pt solid green;*/
+}
+
+.contributor {
+  padding: 5pt;
+  display: block;
+  /*border: 1pt solid blue;*/
+}
+
+.created {
+  padding: 5pt;
+  display: block;
+  /*border: 1pt solid blue;*/
+}
+
+.issued {
+  padding: 5pt;
+  display: block;
+  /*border: 1pt solid blue;*/
+}
+
+.modified {
+  padding: 5pt;
+  display: block;
+  /*border: 1pt solid blue;*/
+}
+
+.link {
+  padding: 5pt;
+  display: block;
+  /*border: 1pt solid blue;*/
+}
+
+.id {
+  padding: 5pt;
+  display: block;
+  /*border: 1pt solid blue;*/
+}
