@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.12 2003/04/24 13:53:14 gregor Exp $
+ * $Id: DocumentHelper.java,v 1.13 2003/05/08 15:38:02 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -165,7 +165,7 @@ public class DocumentHelper {
         file.createNewFile();
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(file);
-        getTransformer().transform(source, result);
+        getTransformer(document.getDoctype()).transform(source, result);
     }
     
     /** Writes a document to a writer.
@@ -181,14 +181,17 @@ public class DocumentHelper {
                 
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(writer);
-        getTransformer().transform(source, result);
+        getTransformer(document.getDoctype()).transform(source, result);
     }
     
-    protected static Transformer getTransformer()
+    protected static Transformer getTransformer(DocumentType documentType)
             throws TransformerConfigurationException {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	if (documentType != null) {
+	    transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, documentType.getPublicId());
+	}
         return transformer;
     }
     
