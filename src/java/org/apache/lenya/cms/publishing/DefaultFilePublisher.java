@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultFilePublisher.java,v 1.13 2003/04/14 09:41:15 michi Exp $
+ * $Id: DefaultFilePublisher.java,v 1.14 2003/04/14 15:54:54 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -158,7 +158,7 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
      * @exception ExecutionException if an error occurs
      */
     public void execute(String contextPath) throws ExecutionException {
-        log.error(".execute(): Context Path: " + contextPath);
+        log.debug(".execute(): Context Path: " + contextPath);
         try {
             String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
 
