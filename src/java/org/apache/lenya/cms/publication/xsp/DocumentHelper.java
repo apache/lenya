@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.1 2003/10/26 19:16:04 andreas Exp $ <License>
+ * $Id: DocumentHelper.java,v 1.2 2003/10/26 19:30:14 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -83,7 +83,7 @@ public class DocumentHelper {
 		Request request = ObjectModelHelper.getRequest(objectModel);
 		String webappUrl = ServletHelper.getWebappURI(request);
 		URLInformation info = new URLInformation(webappUrl);
-		String completeArea = info.getArea();
+		String completeArea = info.getCompleteArea();
 
 		DocumentBuilder builder = publication.getDocumentBuilder();
 		String url =
