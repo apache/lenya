@@ -61,13 +61,13 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
     /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
-    public Source getSource(String location, Map parameters) throws IOException,
+    public Source getSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
         String resolvedUri = null;
 
         long startTime = new GregorianCalendar().getTimeInMillis();
 
-        // Remove the protocol and the first '/'
+        // Remove the protocol and the first '//'
         final int pos = location.indexOf("://");
         final String path = location.substring(pos + 1);
 
@@ -94,7 +94,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             }
             
             if (resolvedUri == null) {
-                final String contextUri = "context://" + resolvedUri.substring("fallback://".length());
+                final String contextUri = "context://" + location.substring("fallback://".length());
                 resolvedUri = contextUri;
             }
             
