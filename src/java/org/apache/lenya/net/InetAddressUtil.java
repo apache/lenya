@@ -62,11 +62,10 @@ import org.apache.log4j.Category;
  * A utility class for InetAddress
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.5 2003/10/27 18:36:54 andreas Exp $
+ * @version $Id: InetAddressUtil.java,v 1.6 2003/10/28 11:11:21 michi Exp $
  */
 public class InetAddressUtil {
-	
-	private static final Category log = Category.getInstance(InetAddressUtil.class);
+    private static final Category log = Category.getInstance(InetAddressUtil.class);
 	
     /**
      * Checks if a subnet contains a specific IP address.
@@ -76,47 +75,49 @@ public class InetAddressUtil {
      * @return A boolean value.
      */
     public static boolean contains(InetAddress network, InetAddress netmask, InetAddress ip) {
-    	
-		log.debug("=======================================");
-		log.debug("Checking IP address");
-		
-    	boolean contained = true;
-    	
-    	short part = 0;
-    	while (contained && part < 4) {
-    		
-			int networkC = getClassPart(network, part);
-			int netmaskC = getClassPart(netmask, part);
-			int ipC = getClassPart(ip, part);
+
+        log.debug("=======================================");
+        log.debug("Checking IP address");
+
+        boolean contained = true;
+
+        int part = checkNetmask(netmask);
+        if (0 <= part && part <= 3) {
+        } else {
+            return false; // illegal netmask
+        }
+
+        int networkPart = getClassPart(network, part);
+        int netmaskPart = getClassPart(netmask, part);
+        int ipPart = getClassPart(ip, part);
 			
-			int firstHostAddress = networkC + 1;
-			int broadcastAddress = networkC + (256 - netmaskC - 1);
-			int lastHostAddress = broadcastAddress - 1;
+        int firstHostAddress = networkPart + 1;
+        int broadcastAddress = networkPart + (256 - netmaskPart - 1);
+        int lastHostAddress = broadcastAddress - 1;
 			
-    		contained = contained && firstHostAddress <= ipC && ipC <= lastHostAddress;
+        contained = contained && firstHostAddress <= ipPart && ipPart <= lastHostAddress;
+        for (int i = 0; i < part; i++) {
+            contained = contained && getClassPart(network, i) == getClassPart(ip, i);
+        }
     		
 //			if (log.isDebugEnabled()) {
-				log.debug("---------------------------------------");
-				log.debug("Checking part           [" + part + "]");
-				log.debug("    Network:            [" + network.getHostAddress() + "]");
-				log.debug("    Netmask:            [" + netmask.getHostAddress() + "]");
-				log.debug("    Address:            [" + ip.getHostAddress() + "]");
-				log.debug("    Network class part: [" + networkC + "]");
-				log.debug("    Netmask class part: [" + netmaskC + "]");
-				log.debug("    Address class part: [" + ipC + "]");
-				log.debug("    First host address: [" + firstHostAddress + "]");
-				log.debug("    Last host address:  [" + lastHostAddress + "]");
-				log.debug("    Contained:          [" + contained + "]");
+				log.error("---------------------------------------");
+				log.error("Checking part           [" + part + "]");
+				log.error("    Network:            [" + network.getHostAddress() + "]");
+				log.error("    Netmask:            [" + netmask.getHostAddress() + "]");
+				log.error("    Address:            [" + ip.getHostAddress() + "]");
+				log.error("    Network class part: [" + networkPart + "]");
+				log.error("    Netmask class part: [" + netmaskPart + "]");
+				log.error("    Address class part: [" + ipPart + "]");
+				log.error("    First host address: [" + firstHostAddress + "]");
+				log.error("    Last host address:  [" + lastHostAddress + "]");
+				log.error("    Contained:          [" + contained + "]");
 //			}
-				
-			part++;
-
-    	}
     	
-		log.debug("---------------------------------------");
-		log.debug("Contained:              [" + contained + "]");
-		log.debug("=======================================");
-		
+        log.debug("---------------------------------------");
+        log.debug("Contained:              [" + contained + "]");
+        log.debug("=======================================");
+
         return contained;
     }
 
@@ -126,9 +127,45 @@ public class InetAddressUtil {
      * @param partNumber The number of the part.
      * @return An integer value.
      */
-    public static int getClassPart(InetAddress ip, short partNumber) {
+    public static int getClassPart(InetAddress ip, int partNumber) {
         String[] parts = ip.getHostAddress().split("\\.");
         String part = parts[partNumber];
         return new Integer(part).intValue();
+    }
+
+    /**
+     * Check netmask, e.g. 255.255.255.240 is fine, 255.255.240.16 is illegal (needs to be 255.255.240.0)
+     * @param netmask The netmask address.
+     * @return An integer value. -1 if illegal netmask, otherwise 0, 1, 2, 3
+     */
+    public static int checkNetmask(InetAddress netmask) {
+        String[] parts = netmask.getHostAddress().split("\\.");
+        Integer[] numbers = new Integer[4];
+        for (int i = 0; i < 4; i++) {
+            numbers[i] = new Integer(parts[i]);
+        }
+
+        for(int i = 0; i < 4; i++) {
+            log.error(".checkNetmask(): Check part: " + numbers[i]);
+            if (0 <= numbers[i].intValue() && numbers[i].intValue() <= 255) {
+                if (numbers[i].intValue() != 255) {
+                    for(int k = i + 1; k < 4; k++) {
+                        if (numbers[k].intValue() != 0) {
+                            log.error(".checkNetmask(): Illegal Netmask: " + netmask);
+                            return -1;
+                        }
+                    }
+                    return i;
+                } else {
+                    continue;
+                }
+            } else {
+                // FIXME: This check not really be necessary because java.net.UnknownHostException should be thrown long time before
+                log.error(".checkNetmask(): Illegal Netmask: " + netmask);
+                return -1;
+            }
+        }
+        log.error(".checkNetmask(): Illegal Netmask: " + netmask);
+        return -1;
     }
 }
