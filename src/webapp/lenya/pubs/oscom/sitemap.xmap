@@ -155,30 +155,24 @@
 
   <map:pipeline>
       <!-- XML -->
-      <map:match pattern="authoring/**.xml">
-        <map:generate src="content/authoring/{1}.xml"/>
+      <map:match pattern="*/**.xml">
+        <map:generate src="content/{1}/{2}.xml"/>
         <map:transform type="xlink">
-          <map:parameter name="href" value="content/authoring/{1}.xml"/>
+          <map:parameter name="href" value="content/{1}/{2}.xml"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
       <!-- Home -->
       <map:match pattern="*/">
-        <map:redirect-to uri="matrix/index.html"/>
-        <!--<map:redirect-to uri="index.html"/>-->
-      </map:match>
-
-      <!-- FIXME: ... -->
-      <map:match pattern="*/index.html">
-        <map:redirect-to uri="matrix/index.html"/>
+        <map:redirect-to uri="index.html"/>
       </map:match>
       <!-- /Home -->
 
       <!-- Generic (XHTML) -->
       <map:match pattern="*/**.html">
         <map:aggregate element="lenya">
-          <map:part src="content/{1}/{2}.xml" element="cmsbody"/>
+          <map:part src="cocoon:/{1}/{2}-envelope.xml" element="cmsbody"/>
         </map:aggregate>
         <map:transform src="xslt/generic/{1}/main.xsl"/>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/xhtml/{2}.xml"/>
