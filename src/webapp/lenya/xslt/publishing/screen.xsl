@@ -11,30 +11,30 @@
 
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:param name="task-id"/>
 <xsl:param name="action" select="'publish'"/>
 
 <xsl:variable name="separator" select="','"/>
 
+<xsl:variable name="uris"><xsl:value-of select="/usecase:publish/usecase:uris"/></xsl:variable>
+<xsl:variable name="sources"><xsl:value-of select="/usecase:publish/usecase:sources"/></xsl:variable>
+<xsl:variable name="document-id"><xsl:value-of select="/usecase:publish/usecase:document-id"/></xsl:variable>
+<xsl:variable name="task-id"><xsl:value-of select="/usecase:publish/usecase:task-id"/></xsl:variable>
+
 <xsl:template match="/usecase:publish">
 
-  <xsl:variable name="uris"><xsl:value-of select="usecase:uris"/></xsl:variable>
-  <xsl:variable name="sources"><xsl:value-of select="usecase:sources"/></xsl:variable>
-  <xsl:variable name="document-id"><xsl:value-of select="usecase:document-id"/></xsl:variable>
 
   <page:page>
     <page:title>Publish</page:title>
     <page:body>
       <p>
         <form action="">
+        
         <input type="hidden" name="lenya.usecase" value="publish"/>
         <input type="hidden" name="lenya.step" value="publish"/>
-
-        <input type="hidden" name="properties.publish.sources" value="{$sources}"/>
-        <input type="hidden" name="properties.publish.documentid" value="{$document-id}"/>
-        <input type="hidden" name="properties.export.uris" value="{$uris}"/>
-
         <input type="hidden" name="task-id" value="{$task-id}"/>
+        <xsl:call-template name="task-parameters">
+          <xsl:with-param name="prefix" select="''"/>
+        </xsl:call-template>
         
         <div class="menu">Do you really want to publish the following source<xsl:text/>
           <xsl:if test="contains(sources, $separator)">s</xsl:if>
@@ -65,19 +65,23 @@
     </p>
     
     <p>
-      <form action="">
 
-        <!-- task parameters -->
-        <input type="hidden" name="task.properties.export.uris" value="{$uris}"/>
-        <input type="hidden" name="task.properties.publish.sources" value="{$sources}"/>
-        <input type="hidden" name="task-id" value="{$task-id}"/>
+     <xsl:call-template name="scheduler-form">
+       <xsl:with-param name="task-id" select="$task-id"/>
+     </xsl:call-template>
 
-        <xsl:call-template name="scheduler-form"/>
-
-      </form>
     </p>
     </page:body>
   </page:page>
 </xsl:template>
+
+
+<xsl:template name="task-parameters">
+  <xsl:param name="prefix" select="'task.'"/>
+  <input type="hidden" name="{$prefix}properties.publish.sources" value="{$sources}"/>
+  <input type="hidden" name="{$prefix}properties.publish.documentid" value="{$document-id}"/>
+  <input type="hidden" name="{$prefix}properties.export.uris" value="{$uris}"/>
+</xsl:template>
+
 
 </xsl:stylesheet>  

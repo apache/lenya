@@ -89,7 +89,9 @@
       <td>
         &#160;
         <!-- hidden input fields for parameters -->
-        <xsl:call-template name="parameters-as-inputs"/>
+        <input type="hidden" name="lenya.usecase" value="schedule"/>
+        <input type="hidden" name="lenya.step" value="showscreen"/>
+        
         <xsl:apply-templates select="sch:parameter"/>
       </td>
       <td>
@@ -141,29 +143,6 @@
       </xsl:if>
       </xsl:if>
     </xsl:for-each>
-  </xsl:template>
-  
-  <!-- ============================================================= -->
-  <!-- create hidden inputs for all request parameters -->
-  <!-- ============================================================= -->
-  <xsl:template name="parameters-as-inputs">
-<!--    <ul>-->
-    <input type="hidden" name="lenya.usecase" value="schedule"/>
-    <input type="hidden" name="lenya.step" value="showscreen"/>
-    
-    <xsl:for-each select="/sch:scheduler/sch:parameters/sch:parameter">
-      <xsl:if test="not(starts-with(@name, 'job.'))">
-      <xsl:if test="not(starts-with(@name, 'trigger.'))">
-      <xsl:if test="not(starts-with(@name, 'task.id'))">
-      <xsl:if test="not(translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'action')">
-        <input type="hidden" name="{@name}" value="{@value}"/>
-<!--        <li>Parameter: <xsl:value-of select="@name"/> = <xsl:value-of select="@value"/></li>-->
-      </xsl:if>
-      </xsl:if>
-      </xsl:if>
-      </xsl:if>
-    </xsl:for-each>
-<!--    </ul>-->
   </xsl:template>
   
   <xsl:template match="sch:trigger">

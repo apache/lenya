@@ -18,12 +18,17 @@
   <!--   Generate the necessary form to schedule new jobs -->
   <!-- ============================================================= -->
   <xsl:template name="scheduler-form">
+    <xsl:param name="task-id"/>
   
     <xsl:variable name="date" select="//sch:current-date"/>
-  
+    
+    <form method="GET">
     <input type="hidden" name="lenya.usecase" value="schedule"/>
     <input type="hidden" name="lenya.step" value="showscreen"/>
     
+    <input type="hidden" name="task.id" value="{$task-id}"/>
+    <xsl:call-template name="task-parameters"/>
+        
     <table class="scheduler-job" border="0" cellpadding="0" cellspacing="0">
 
       <tr> 
@@ -33,8 +38,6 @@
         <th>&#160;</th>
       </tr>
       <tr>
-      <form method="GET">
-        
         <!-- hidden input fields for parameters -->
         
 	<td>
@@ -83,9 +86,14 @@
 	<td>
 	  <input type="submit" name="Action" value="Add"/>
 	</td>
-      </form>
-    </tr>
-  </table>
+      </tr>
+    </table>
+    </form>
+  </xsl:template>
+  
+  
+  <!-- override this template to insert use-case specific task parameters. -->
+  <xsl:template name="task-parameters">
   </xsl:template>
   
   <!-- ============================================================= -->
@@ -115,6 +123,5 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
-
 
 </xsl:stylesheet> 
