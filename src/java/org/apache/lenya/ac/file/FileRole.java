@@ -30,7 +30,7 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
 
 /**
  * File-based role implementation.
- * @version $Id: FileRole.java,v 1.4 2004/08/16 15:59:51 andreas Exp $
+ * @version $Id$
  */
 public class FileRole extends AbstractRole implements Item {
     
@@ -44,7 +44,7 @@ public class FileRole extends AbstractRole implements Item {
         setConfigurationDirectory(configurationDirectory);
     }
 
-    public static final String ROLE = "role";
+    protected static final String ROLE = "role";
 
     /**
      * Creates a new FileRole object.

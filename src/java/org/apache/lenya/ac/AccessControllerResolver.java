@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AccessControllerResolver.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac;
 
@@ -27,7 +27,14 @@ import org.apache.avalon.framework.component.Component;
  */
 public interface AccessControllerResolver extends Component {
     
+    /**
+     * The Avalon role.
+     */
     String ROLE = AccessControllerResolver.class.getName();
+    
+    /**
+     * The name of the default resolver to use.
+     */
     String DEFAULT_RESOLVER = "publication";
 
     /**

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileItemManager.java,v 1.8 2004/08/16 15:59:51 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 
@@ -47,7 +47,7 @@ import org.apache.log4j.Category;
 public abstract class FileItemManager {
     private static final Category log = Category.getInstance(FileItemManager.class);
 
-    public static final String PATH = "config" + File.separator + "ac" + File.separator + "passwd";
+    protected static final String PATH = "config" + File.separator + "ac" + File.separator + "passwd";
     
     private Map items = new HashMap();
     private File configurationDirectory;
@@ -141,7 +141,7 @@ public abstract class FileItemManager {
         String id = fileName.substring(0, fileName.length() - getSuffix().length());
         Item item = (Item) items.get(id);
 
-        String klass = getItemClass(config);
+        String klass = ItemConfiguration.getItemClass(config);
         if (item == null) {
             try {
                 item = (Item) Class.forName(klass).newInstance();
@@ -167,28 +167,6 @@ public abstract class FileItemManager {
             throw new AccessControlException(errorMsg, e);
         }
         return item;
-    }
-
-    /**
-     * Returns the class name of an item.
-     * @param config The item configuration.
-     * @return The class name.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected String getItemClass(Configuration config) throws AccessControlException {
-        String klass = null;
-
-        try {
-            klass = config.getAttribute(ItemConfiguration.CLASS_ATTRIBUTE);
-        } catch (ConfigurationException e) {
-            String errorMsg =
-                "Exception when extracting class name from identity file: "
-                    + klass
-                    + config.getAttributeNames();
-            log.error(errorMsg);
-            throw new AccessControlException(errorMsg, e);
-        }
-        return klass;
     }
 
     /**

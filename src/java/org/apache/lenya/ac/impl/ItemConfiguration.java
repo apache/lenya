@@ -15,13 +15,14 @@
  *
  */
 
-/* $Id: ItemConfiguration.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
+import org.apache.lenya.ac.AccessControlException;
 
 /**
  * Use this class to create configurations from {@link AbstractItem}s or
@@ -41,27 +42,27 @@ public class ItemConfiguration {
      * @param configuration A configuration.
      */
     public void save(AbstractItem manageable, DefaultConfiguration configuration) {
-        configuration.setAttribute(CLASS_ATTRIBUTE, manageable.getClass().getName());
-        configuration.setAttribute(ID_ATTRIBUTE, manageable.getId());
+        configuration.setAttribute(ATTRIBUTE_CLASS, manageable.getClass().getName());
+        configuration.setAttribute(ATTRIBUTE_ID, manageable.getId());
 
         DefaultConfiguration child = null;
 
         // add name node
-        child = new DefaultConfiguration(NAME);
+        child = new DefaultConfiguration(ELEMENT_NAME);
         child.setValue(manageable.getName());
         configuration.addChild(child);
 
         // add description node
-        child = new DefaultConfiguration(DESCRIPTION);
+        child = new DefaultConfiguration(ELEMENT_DESCRIPTION);
         child.setValue(manageable.getDescription());
         configuration.addChild(child);
 
     }
 
-    public static final String NAME = "name";
-    public static final String DESCRIPTION = "description";
-    public static final String ID_ATTRIBUTE = "id";
-    public static final String CLASS_ATTRIBUTE = "class";
+    protected static final String ELEMENT_NAME = "name";
+    protected static final String ELEMENT_DESCRIPTION = "description";
+    protected static final String ATTRIBUTE_ID = "id";
+    protected static final String ATTRIBUTE_CLASS = "class";
 
     /**
      * Configures a Manageable.
@@ -70,9 +71,30 @@ public class ItemConfiguration {
      * @throws ConfigurationException when something went wrong.
      */    
     public void configure(AbstractItem manageable, Configuration configuration) throws ConfigurationException {
-        manageable.setId(configuration.getAttribute(ID_ATTRIBUTE));
-        manageable.setName(configuration.getChild(NAME).getValue(""));
-        manageable.setDescription(configuration.getChild(DESCRIPTION).getValue(""));
+        manageable.setId(configuration.getAttribute(ATTRIBUTE_ID));
+        manageable.setName(configuration.getChild(ELEMENT_NAME).getValue(""));
+        manageable.setDescription(configuration.getChild(ELEMENT_DESCRIPTION).getValue(""));
+    }
+
+    /**
+     * Returns the class name of an item.
+     * @param config The item configuration.
+     * @return The class name.
+     * @throws AccessControlException when something went wrong.
+     */
+    public static String getItemClass(Configuration config) throws AccessControlException {
+        String klass = null;
+
+        try {
+            klass = config.getAttribute(ItemConfiguration.ATTRIBUTE_CLASS);
+        } catch (ConfigurationException e) {
+            String errorMsg =
+                "Exception when extracting class name from identity file: "
+                    + klass
+                    + config.getAttributeNames();
+            throw new AccessControlException(errorMsg, e);
+        }
+        return klass;
     }
 
 }

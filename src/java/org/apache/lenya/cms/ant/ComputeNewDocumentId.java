@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ComputeNewDocumentId.java,v 1.6 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -27,15 +27,21 @@ import org.apache.tools.ant.Target;
 
 
 /**
+ * <p>
  * Ant task to set the property "newdocumentid" in the project with the 
  * value of computed unique document id, needed for the destination file
- * Overriden for copy/move/rename.  
- * @param area The area in which is the sitetree.
- * @param firstdocumentid The document id of the source
- * @param secdocumentid The document id of the parent of the destination
- * or in case of rename the new name
+ * Overriden for copy/move/rename.
+ * </p>
+ * <p>Parameters:</p>
+ * <ul>
+ * <li>area - The area in which is the sitetree.</li>
+ * <li>firstdocumentid - The document id of the source</li>
+ * <li>secdocumentid - The document id of the parent of the destination
+       or in case of rename the new name</li>
+ * </ul>
  */
-public class ComputeNewDocumentId extends PublicationTask{
+public class ComputeNewDocumentId extends PublicationTask {
+    
 	private String area;
 	private String firstdocumentid;
 	private String secdocumentid;

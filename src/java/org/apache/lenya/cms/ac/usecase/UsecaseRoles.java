@@ -15,13 +15,16 @@
  *
  */
 
-/* $Id: UsecaseRoles.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
-
 package org.apache.lenya.cms.ac.usecase;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class to manage roles for a usecase.
+ *
+ * @version $Id:$
+ */
 public class UsecaseRoles {
     
     private Map usecaseToRoles = new HashMap();

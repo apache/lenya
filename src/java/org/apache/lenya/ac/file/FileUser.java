@@ -32,17 +32,18 @@ import org.apache.log4j.Category;
 
 /**
  * File-based user implementation.
- * @version $Id: FileUser.java,v 1.5 2004/08/16 15:59:51 andreas Exp $
+ * @version $Id$
  */
 public class FileUser extends AbstractUser implements Item {
+    
     private Category log = Category.getInstance(FileUser.class);
 
-    public static final String ID = "identity";
-    public static final String EMAIL = "email";
-    public static final String PASSWORD = "password";
-    public static final String GROUPS = "groups";
-    public static final String GROUP = "group";
-    public static final String PASSWORD_ATTRIBUTE = "type";
+    protected static final String ID = "identity";
+    protected static final String EMAIL = "email";
+    protected static final String PASSWORD = "password";
+    protected static final String GROUPS = "groups";
+    protected static final String GROUP = "group";
+    protected static final String PASSWORD_ATTRIBUTE = "type";
 
     /**
      * Creates a new FileUser object.

@@ -26,7 +26,7 @@ import org.apache.lenya.ac.User;
 
 /**
  * Wrapper class for credentials.
- * @version $Id: CredentialWrapper.java,v 1.3 2004/08/16 16:42:31 andreas Exp $
+ * @version $Id$
  */
 public class CredentialWrapper {
 
@@ -101,9 +101,9 @@ public class CredentialWrapper {
         
     }
     
-    public static final String USER = "user";
-    public static final String GROUP = "group";
-    public static final String IPRANGE = "iprange";
+    protected static final String USER = "user";
+    protected static final String GROUP = "group";
+    protected static final String IPRANGE = "iprange";
     
     private String type;
     private String accreditableId;

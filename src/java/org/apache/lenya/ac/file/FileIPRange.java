@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileIPRange.java,v 1.3 2004/08/16 15:59:51 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 
@@ -125,9 +125,9 @@ public class FileIPRange extends AbstractIPRange {
 
 	}
 
-	public static final String IP_RANGE = "ip-range";
-	public static final String ELEMENT_NETWORK_ADDRESS = "network-address";
-	public static final String ELEMENT_SUBNET_MASK = "subnet-mask";
+	protected static final String IP_RANGE = "ip-range";
+	protected static final String ELEMENT_NETWORK_ADDRESS = "network-address";
+	protected static final String ELEMENT_SUBNET_MASK = "subnet-mask";
 
 	/**
 	 * Create a configuration from the current user details. Can be used for saving.

@@ -41,13 +41,13 @@ import com.sun.jndi.ldap.LdapCtxFactory;
 
 /**
  * LDAP user.
- * @version $Id: LDAPUser.java,v 1.6 2004/08/16 16:36:57 andreas Exp $
+ * @version $Id$
  */
 public class LDAPUser extends FileUser {
     private static Properties defaultProperties = null;
     private static Category log = Category.getInstance(LDAPUser.class);
 
-    public static final String LDAP_ID = "ldapid";
+    protected static final String LDAP_ID = "ldapid";
     private static String PROVIDER_URL = "provider-url";
     private static String MGR_DN = "mgr-dn";
     private static String MGR_PW = "mgr-pw";

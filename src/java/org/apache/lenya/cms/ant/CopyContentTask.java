@@ -33,80 +33,64 @@ import org.apache.lenya.util.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to copy the contents (xml files) belonging to a subtree defined by a given document id and a given area.
- * Visitor of the defined subtree (visitor pattern)
+ * Ant task to copy the contents (xml files) belonging to a subtree defined by a given document id
+ * and a given area. Visitor of the defined subtree (visitor pattern)
  */
 public class CopyContentTask extends TwoDocumentsOperationTask {
 
-	/**
-	 * 
-	 */
-	public CopyContentTask() {
-		super();
-	}
+    /**
+     * Ctor.
+     */
+    public CopyContentTask() {
+        super();
+    }
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
-	 */
-	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-		DocumentBuilder builder = publication.getDocumentBuilder();
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
+     */
+    public void visitSiteTreeNode(SiteTreeNode node) {
+        Publication publication = getPublication();
+        DocumentBuilder builder = publication.getDocumentBuilder();
 
-		String srcDocumentid = node.getAbsoluteId();
-		String destDocumentid =
-			srcDocumentid.replaceFirst(
-				getFirstdocumentid(),
-				getSecdocumentid());
+        String srcDocumentid = node.getAbsoluteId();
+        String destDocumentid = srcDocumentid
+                .replaceFirst(getFirstdocumentid(), getSecdocumentid());
 
-		Label[] labels = node.getLabels();
-		for (int i = 0; i < labels.length; i++) {
-			String language = labels[i].getLanguage();
-			String srcUrl =
-				builder.buildCanonicalUrl(
-					publication,
-					getFirstarea(),
-					srcDocumentid,
-					language);
-			Document srcDoc;
-			try {
-				srcDoc = builder.buildDocument(publication, srcUrl);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-			File srcFile = srcDoc.getFile();
-			if (!srcFile.exists()) {
-				log("There are no file " + srcFile.getAbsolutePath());
-				return;
-			}
-			String destUrl =
-				builder.buildCanonicalUrl(
-					publication,
-					getSecarea(),
-					destDocumentid,
-					language);
-			Document destDoc;
-			try {
-				destDoc = builder.buildDocument(publication, destUrl);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-			File destFile = destDoc.getFile();
+        Label[] labels = node.getLabels();
+        for (int i = 0; i < labels.length; i++) {
+            String language = labels[i].getLanguage();
+            String srcUrl = builder.buildCanonicalUrl(publication, getFirstarea(), srcDocumentid,
+                    language);
+            Document srcDoc;
+            try {
+                srcDoc = builder.buildDocument(publication, srcUrl);
+            } catch (DocumentBuildException e) {
+                throw new BuildException(e);
+            }
+            File srcFile = srcDoc.getFile();
+            if (!srcFile.exists()) {
+                log("There are no file " + srcFile.getAbsolutePath());
+                return;
+            }
+            String destUrl = builder.buildCanonicalUrl(publication, getSecarea(), destDocumentid,
+                    language);
+            Document destDoc;
+            try {
+                destDoc = builder.buildDocument(publication, destUrl);
+            } catch (DocumentBuildException e) {
+                throw new BuildException(e);
+            }
+            File destFile = destDoc.getFile();
 
-			log(
-				"copy file "
-					+ srcFile.getAbsolutePath()
-					+ "to file "
-					+ destFile.getAbsolutePath());
-			try {
-				FileUtil.copy(
-					srcFile.getAbsolutePath(),
-					destFile.getAbsolutePath());
-			} catch (FileNotFoundException e) {
-				throw new BuildException(e);
-			} catch (IOException e) {
-				throw new BuildException(e);
-			}
-		}
+            log("copy file " + srcFile.getAbsolutePath() + "to file " + destFile.getAbsolutePath());
+            try {
+                FileUtil.copy(srcFile.getAbsolutePath(), destFile.getAbsolutePath());
+            } catch (FileNotFoundException e) {
+                throw new BuildException(e);
+            } catch (IOException e) {
+                throw new BuildException(e);
+            }
+        }
 
-	}
+    }
 }

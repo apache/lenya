@@ -41,14 +41,14 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * Authorizer for usecases.
- * @version $Id: UsecaseAuthorizer.java,v 1.4 2004/08/16 16:42:32 andreas Exp $
+ * @version $Id$
  */
 public class UsecaseAuthorizer
     extends AbstractLogEnabled
     implements Authorizer, Serviceable, Disposable, Parameterizable {
 
-    public static final String TYPE = "usecase";
-    public static final String USECASE_PARAMETER = "lenya.usecase";
+    protected static final String TYPE = "usecase";
+    protected static final String USECASE_PARAMETER = "lenya.usecase";
 
     private SourceCache cache;
     private String configurationUri;
@@ -179,8 +179,8 @@ public class UsecaseAuthorizer
         }
     }
 
-    public static final String CONFIGURATION_FILE = "/config/ac/usecase-policies.xml";
-    public static final String PARAMETER_CONFIGURATION = "configuration";
+    protected static final String CONFIGURATION_FILE = "/config/ac/usecase-policies.xml";
+    protected static final String PARAMETER_CONFIGURATION = "configuration";
 
     /**
 	 * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)

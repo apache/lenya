@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: UsecaseRolesBuilder.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
-
 package org.apache.lenya.cms.ac.usecase;
 
 import java.io.InputStream;
@@ -31,6 +29,11 @@ import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * Builder for usecase roles.
+ *
+ * @version $Id:$
+ */
 public class UsecaseRolesBuilder implements InputStreamBuilder {
 
     protected static final String USECASES_ELEMENT = "usecases";

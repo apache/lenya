@@ -34,7 +34,7 @@ import org.apache.lenya.util.CacheMap;
 
 /**
  * Basic implementation of a source cache.
- * @version $Id: SourceCacheImpl.java,v 1.5 2004/08/16 16:06:14 andreas Exp $
+ * @version $Id$
  */
 public class SourceCacheImpl
     extends AbstractLogEnabled
@@ -63,7 +63,7 @@ public class SourceCacheImpl
         cache = new CacheMap(CAPACITY);
     }
 
-    public static final int CAPACITY = 1000;
+    protected static final int CAPACITY = 1000;
     private CacheMap cache;
 
     /**

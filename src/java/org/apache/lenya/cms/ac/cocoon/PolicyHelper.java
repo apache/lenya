@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PolicyHelper.java,v 1.3 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ac.cocoon;
 
@@ -221,7 +221,14 @@ public class PolicyHelper {
         return policies;
     }
 
+    /**
+     * The add operation ID.
+     */
     public static final String ADD = "add";
+    
+    /**
+     * The delete operation ID.
+     */
     public static final String DELETE = "delete";
 
     /**

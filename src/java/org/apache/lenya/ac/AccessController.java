@@ -22,13 +22,23 @@ import org.apache.cocoon.environment.Request;
 
 /**
  * An access controller allows authenticating and authorizing identities.
- * @version $Id: AccessController.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ * @version $Id$
  */
 public interface AccessController extends Component {
 
+    /**
+     * The access control namespace URI.
+     */
     String NAMESPACE = "http://apache.org/cocoon/lenya/ac/1.0";
+    
+    /**
+     * The default prefix for the access control namespace.
+     */
     String DEFAULT_PREFIX = "ac";
     
+    /**
+     * The Avalon role.
+     */
     String ROLE = AccessController.class.getName();
 
     /**
