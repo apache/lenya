@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.30 2003/10/21 09:51:55 andreas Exp $
+$Id: Publication.java,v 1.31 2003/10/22 09:40:03 andreas Exp $
 <License>
 
  ============================================================================
@@ -101,7 +101,7 @@ public class Publication {
     private String id;
     private PublishingEnvironment environment;
     private File servletContext;
-    private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
+    private DocumentIdToPathMapper mapper = null;
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
