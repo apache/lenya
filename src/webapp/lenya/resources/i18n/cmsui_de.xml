@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.5 2004/02/13 18:49:22 roku Exp $
+$Id: cmsui_de.xml,v 1.6 2004/02/13 22:44:54 roku Exp $
 $Author: roku $
 <License>
 
@@ -58,14 +58,23 @@ $Author: roku $
 
   <message key="Submit">Senden</message>
   <message key="Cancel">Abbrechen</message>
-  <message key="Publish">Ver&#246;ffentlichen</message>  
   <message key="Back to Page">Zur&#252;ck zur Seite</message>
-    
+  <message key="NOTE">HINWEIS</message>
+      
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
   
-  <!-- publish screen -->  
-   <message key="Source File(s)">Quelldatei(en)</message>
+  <!-- publish screen --> 
+  <message key="Publish">Ver&#246;ffentlichen</message>    
+  <message key="Source File(s)">Quelldatei(en)</message>
+   
+  <!-- logn screen -->        
+  <message key="login-to-pub">Anmelden an {0} Publikation</message>    
+  <message key="Login">Anmelden</message>
+  <message key="Password">Passwort</message>    
+  <message key="Username">Benutzername</message>                
+  <message key="Authentication failed">Anmeldung ist fehlgeschlagen</message>  
+  <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1}</message> 
 </catalogue>
 
