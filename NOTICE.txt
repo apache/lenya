@@ -7,11 +7,11 @@ This product includes software developed by the DOM4J Project
 This product includes software developed by the XML:DB Initiative 
 (http://www.xmldb.org/).
 
-This product includes software developed by the Bitflux Editor Project
-(http://www.bitfluxeditor.org/).
+This product includes software developed by the BXE Project
+(http://bxe.oscom.org/).
 
-This product includes software developed by the Epoz Project
-(http://epoz.sf.net/).
+This product includes software developed by the Kupu Project
+(http://kupu.oscom.org/).
 
 Portions are Copyright (c) 1998-2000 World Wide Web Consortium 
 (Massachusetts Institute of Technology, Institut National de Recherche en
