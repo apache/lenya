@@ -53,11 +53,12 @@ import org.apache.lenya.util.ServletHelper;
  * document.
  * 
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
- * @version $Id: PageEnvelope.java,v 1.56 2004/02/20 16:34:53 andreas Exp $ <License>
+ * @version $Id: PageEnvelope.java,v 1.57 2004/02/25 16:10:16 egli Exp $ <License>
  */
 public class PageEnvelope {
     public static final String PUBLICATION_ID = "publication-id";
     public static final String PUBLICATION = "publication";
+    public static final String PUBLICATION_LANGUAGES_CSV = "publication-languages-csv";
     public static final String CONTEXT = "context-prefix";
     public static final String AREA = "area";
     public static final String DEFAULT_LANGUAGE = "default-language";
@@ -297,6 +298,7 @@ public class PageEnvelope {
             PageEnvelope.CONTEXT,
             PageEnvelope.PUBLICATION_ID,
             PageEnvelope.PUBLICATION,
+            PageEnvelope.PUBLICATION_LANGUAGES_CSV,
             PageEnvelope.DOCUMENT,
             PageEnvelope.DOCUMENT_ID,
             PageEnvelope.DOCUMENT_NAME,
