@@ -1,68 +1,80 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.6 2003/03/04 21:45:35 gregor Exp $ -->
-
+<!-- $Id: publication.xml,v 1.7 2003/03/24 11:19:09 felix Exp $ -->
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
-<lenya:name>Unipublic</lenya:name>
-<lenya:version>1.0</lenya:version>
-<lenya:description>This publication implements a news-driven site for the University of Zurich</lenya:description>
-<lenya:credits>Special thanks to</lenya:credits>
-<lenya:help></lenya:help>
-<lenya:changelog>changes.xml</lenya:changelog>
-<lenya:license></lenya:license>
-<lenya:readme>
-<p>
+	<lenya:name>Unipublic</lenya:name>
+	<lenya:version>1.0</lenya:version>
+	<lenya:description>This publication implements a news-driven site for the University of Zurich</lenya:description>
+	<lenya:credits>Special thanks to</lenya:credits>
+	<lenya:help/>
+	<lenya:changelog>changes.xml</lenya:changelog>
+	<lenya:license/>
+	<lenya:readme>
+		<p>
 We have to thank Roger Stupf and Thomas Poppenwimmer from University of Zurich, that
 we can publish the XML and XSLT of this publication.
 We hope deeply that they will receive the appropriate ROI.
 </p>
-
-<ol>
-  <li>Users (We are currently implementing a wizard to set initial users and corresponding passwords)
+		<ol>
+			<li>Users (We are currently implementing a wizard to set initial users and corresponding passwords)
     <ol>
-      <li>lenya (levi)</li>
-    </ol>
-  </li>
-  <li><a target="blank" href="http://www.unipublic.unizh.ch">Live</a></li>
-  <li><a href="mirror/index.html">Mirror of Live</a> (Shall NOT be taken as design templates)</li>
-  <li><a target="blank" href="http://www.unipublic.unizh.ch/lenya/">Design templates</a></li>
-  <li><a href="index.html">Reader`s View</a> (Live)</li>
-  <li><a href="authoring/index.html">Editor`s View</a> (Authoring)</li>
-  <li>Information Architecture
+					<li>lenya (levi)</li>
+				</ol>
+			</li>
+			<li>
+				<a target="blank" href="http://www.unipublic.unizh.ch">Live</a>
+			</li>
+			<li>
+				<a href="mirror/index.html">Mirror of Live</a> (Shall NOT be taken as design templates)</li>
+			<li>
+				<a target="blank" href="http://www.unipublic.unizh.ch/lenya/">Design templates</a>
+			</li>
+			<li>
+				<a href="index.html">Reader`s View</a> (Live)</li>
+			<li>
+				<a href="authoring/index.html">Editor`s View</a> (Authoring)</li>
+			<li>Information Architecture
     <ol>
-      <li>Pages
+					<li>Pages
         <ol>
-          <li><a href="article.html">Article</a> (<a href="magazin/gesundheit/2002/0508/index.xml">XML</a>, <a href="magazin/gesundheit/2002/0508/index.html">HTML</a>)</li>
-          <li><a href="section.html">Section/Annual</a> Index (<a href="magazin/gesundheit/2002/index.xml">XML</a>, <a href="magazin/gesundheit/2002/index.html">HTML</a>)</li>
-          <li><a href="frontpage.html">Frontpage/Home</a> (<a href="index.xml">XML</a>, <a href="index.html">HTML</a>)</li>
-          <li><a href="dossiers.html">Dossiers</a></li>
-          <li><a href="dossier.html">Dossier</a></li>
-        </ol>
-      </li>
-      <li>Document Types
+							<li>
+								<a href="article.html">Article</a> (<a href="magazin/gesundheit/2002/0508/index.xml">XML</a>, <a href="magazin/gesundheit/2002/0508/index.html">HTML</a>)</li>
+							<li>
+								<a href="section.html">Section/Annual</a> Index (<a href="magazin/gesundheit/2002/index.xml">XML</a>, <a href="magazin/gesundheit/2002/index.html">HTML</a>)</li>
+							<li>
+								<a href="frontpage.html">Frontpage/Home</a> (<a href="index.xml">XML</a>, <a href="index.html">HTML</a>)</li>
+							<li>
+								<a href="dossiers.html">Dossiers</a>
+							</li>
+							<li>
+								<a href="dossier.html">Dossier</a>
+							</li>
+						</ol>
+					</li>
+					<li>Document Types
         <ol>
-          <li>Article</li>
-          <li>Section/Annual Index (<a href="magazin/gesundheit/2002/index.xml">XML</a>)</li>
-          <li>Frontpage/Home (<a href="index.xml">XML</a>)</li>
-          <li>Headlines (<a href="frontpage/headlines.xml">XML</a>, <a href="headlines.xml">XML</a>)</li>
-          <li>Webperlen (<a href="frontpage/webperls.xml">XML</a>)</li>
-          <li>Service (<a href="frontpage/service.xml">XML</a>)</li>
-          <li>Navigation (<a href="navigation">XML</a>)</li>
-          <li>Dossier Teaser (<a href="dossier">XML</a>)</li>
-        </ol>
-      </li>
-      <li>Collections
+							<li>Article</li>
+							<li>Section/Annual Index (<a href="magazin/gesundheit/2002/index.xml">XML</a>)</li>
+							<li>Frontpage/Home (<a href="index.xml">XML</a>)</li>
+							<li>Headlines (<a href="frontpage/headlines.xml">XML</a>, <a href="headlines.xml">XML</a>)</li>
+							<li>Webperlen (<a href="frontpage/webperls.xml">XML</a>)</li>
+							<li>Service (<a href="frontpage/service.xml">XML</a>)</li>
+							<li>Navigation (<a href="navigation">XML</a>)</li>
+							<li>Dossier Teaser (<a href="dossier">XML</a>)</li>
+						</ol>
+					</li>
+					<li>Collections
         <ol>
-          <li>Site</li>
-          <li>Channel</li>
-          <li>Section</li>
-          <li>Year</li>
-          <li>Dossiers</li>
-          <li>Dossier</li>
-          <li>Newsletter</li>
-        </ol>
-      </li>
-
-<!--
+							<li>Site</li>
+							<li>Channel</li>
+							<li>Section</li>
+							<li>Year</li>
+							<li>Dossiers</li>
+							<li>Dossier</li>
+							<li>Newsletter</li>
+						</ol>
+					</li>
+					
+					<!--
       <li>Use Cases
         <ol>
           <li>Create Group</li>
@@ -83,14 +95,13 @@ We hope deeply that they will receive the appropriate ROI.
         </ol>
       </li>
 -->
-    </ol>
-  </li>
-  <li>The <a href="xsltModularisation.html"> XSLT Modularisation </a> shows the structure of the xslt directories.</li>
-  <li>The <a href="xmlArchitecture.html"> XML Architecture  </a> shows the structure of the xml directories.</li>
-  <li>The <a href="todo.html">TODOs</a></li>
-</ol>
-
-<![CDATA[
+				</ol>
+			</li>
+			<li>The <a href="xsltModularisation.html"> XSLT Modularisation </a> shows the structure of the xslt directories.</li>
+			<li>The <a href="xmlArchitecture.html"> XML Architecture  </a> shows the structure of the xml directories.</li>
+			<li>The <a href="todo.html">TODOs</a>
+			</li>
+		</ol><![CDATA[
 Deployment
 **********
 
@@ -114,6 +125,53 @@ the files are:
 src/webapp/lenya/resources/misc/bitflux/inc/config.xml
 src/webapp/lenya/bitflux.xmap
 
-]]>
-</lenya:readme>
+]]></lenya:readme>
+<lenya:tests>
+  <lenya:test>Check frontpage (Authoring Home)</lenya:test>
+  <lenya:test>Navigate to category "Gesundheit"</lenya:test>
+  <lenya:test>Create new article</lenya:test>
+  <lenya:test>Check entry of article in category overview ("noch nie publiziert")</lenya:test>
+  <lenya:test>Navigate to newly created article</lenya:test>
+  <lenya:test>Edit article with Bitflux (title, lead)</lenya:test>
+  <lenya:test>Edit article with Xopus</lenya:test>
+  <lenya:test>Publish article</lenya:test>
+  <lenya:test>Check date (top of article)</lenya:test>
+  <lenya:test>Check if article published (click on "live")</lenya:test>
+  <lenya:test>Check entry in category overview (publication date instead of "noch nie publiziert")</lenya:test>
+  <lenya:test>Check insertion of headline on frontpage</lenya:test>
+  <lenya:test>Go back to article</lenya:test>
+  <lenya:test>Upload teaser image</lenya:test>
+  <lenya:test>Upload article image (insert also caption and author)</lenya:test>
+  <lenya:test>Check images, caption and author</lenya:test>
+  <lenya:test>Assign article to a dossier (menu "File")</lenya:test>
+  <lenya:test>Check appearance of dossier teaser in article left column</lenya:test>
+  <lenya:test>Check appending of article to dossier (click on dossier teaser)</lenya:test>
+  <lenya:test>Schedule publishing of article</lenya:test>
+  <lenya:test>Check if changes have been published (in "live")</lenya:test>
+  <lenya:test>Go to dossiers overview</lenya:test>
+  <lenya:test>Create new dossier</lenya:test>
+  <lenya:test>Check entry of dossier in dossiers overview</lenya:test>
+  <lenya:test>Go to newly created dossier</lenya:test>
+  <lenya:test>Edit dossier with Bitflux (titel, lead, color)</lenya:test>
+  <lenya:test>Publish dossier</lenya:test>
+  <lenya:test>Check if dossier published ("live")</lenya:test>
+  <lenya:test>Check insertion of dossier in dossiers box in the left column of frontpage</lenya:test>
+  <lenya:test>Go to frontpage</lenya:test>
+  <lenya:test>Edit headlines (move up and down)</lenya:test>
+  <lenya:test>Edith dossierkasten (move up and down, delete)</lenya:test>
+  <lenya:test>Edit webperlen (text)</lenya:test>
+  <lenya:test>Schedule headlines</lenya:test>
+  <lenya:test>Publish dossierkasten</lenya:test>
+  <lenya:test>Publish webperlen</lenya:test>
+  <lenya:test>Check if changes to headlines, dossierkasten, webperlen published</lenya:test>
+  <lenya:test>Go to newsletter (menu "Tools")</lenya:test>
+  <lenya:test>Check insertion of article</lenya:test>
+  <lenya:test>Edit with Bitflux (change "to" address to your email address)</lenya:test>
+  <lenya:test>Send newsletter (configure mailhost settings beforehand)</lenya:test>
+  <lenya:test>Check if article removed from newsletter</lenya:test>
+  <lenya:test>Check if mail arrives</lenya:test>
+  <lenya:test>Schedule newsletter</lenya:test>
+  <lenya:test>Check if mail arrives</lenya:test>
+</lenya:tests>
+
 </lenya:publication>
