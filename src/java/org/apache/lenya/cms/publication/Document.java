@@ -80,37 +80,10 @@ public interface Document {
     String getCompleteInfoURL();
 
     /**
-     * Returns the complete URL of this document:<br/>
-     * /{publication-id}/{area}{document-id}{language-suffix}.{extension}
-     * @return A string.
-     * @deprecated Use {@link #getCanonicalWebappURL()} instead.
-     */
-    String getCompleteURL();
-
-    /**
-     * Returns the complete URL of this document without 
-     * the language-suffix: 
-     * /{publication-id}/{area}{document-id}.{extension}
-     * The URL always starts with a slash (/).
-     * @return A string.
-     * @deprecated Use {@link #getCanonicalWebappURL()} instead.
-     */
-    String getCompleteURLWithoutLanguage();
-    
-    /**
      * Returns the canonical document URL.
      * @return A string.
      */
     String getCanonicalDocumentURL();
-
-    /**
-     * Returns the URL of this document:
-     * {document-id}{language-suffix}.{extension}
-     * The URL always starts with a slash (/).
-     * @return A string.
-     * @deprecated Use {@link #getCanonicalDocumentURL()} instead.
-     */
-    String getDocumentURL();
 
 	/**
 	 * Returns the dublin core class for this document.

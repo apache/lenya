@@ -51,7 +51,7 @@
 
           for (int i = 0; i &lt; references.length; i++) {
 	    <inconsistent-document>
-	      <xsp:attribute name="href"><xsp-request:get-context-path/><xsp:expr>references[i].getCompleteURL()</xsp:expr></xsp:attribute>
+	      <xsp:attribute name="href"><xsp-request:get-context-path/><xsp:expr>references[i].getCanonicalWebappURL()</xsp:expr></xsp:attribute>
 	        <xsp:expr>references[i].getId()</xsp:expr> [<xsp:expr>references[i].getLanguage()</xsp:expr>]
 	    </inconsistent-document>
 	  }

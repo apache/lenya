@@ -79,9 +79,9 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
             } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) { // FIXME: Why is this here?
                 value = envelope.getDocument().getLabel();
             } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
-                value = envelope.getDocument().getDocumentURL();
+                value = envelope.getDocument().getCanonicalDocumentURL();
             } else if (name.equals(PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE)) {
-                value = envelope.getDocument().getCompleteURLWithoutLanguage();
+                value = envelope.getDocument().getCanonicalWebappURL();
             } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
                 value = envelope.getDocumentPath();
             } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
@@ -151,7 +151,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                     + URI_PARAMETER_DOCTYPE);
 
             String source =
-                envelope.getDocument().getArea() + envelope.getDocument().getDocumentURL();
+                envelope.getDocument().getArea() + envelope.getDocument().getCanonicalDocumentURL();
 
             Request request = ObjectModelHelper.getRequest(objectModel);
             map = parameterizer.parameterize(filterURI(request.getRequestURI()), filterURI(source), parameters);                

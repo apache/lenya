@@ -520,7 +520,7 @@ public class SchedulerWrapper {
         for (int i = 0; i < jobs.length; i++) {
             ServletJob job = jobs[i].getJob();
             String documentUrl = job.getDocumentUrl(jobs[i].getJobDetail());
-            if (documentUrl.equals(document.getCompleteURL())) {
+            if (documentUrl.equals(document.getCanonicalWebappURL())) {
                 deleteJob(jobs[i].getJobDetail().getName(), jobGroup);
                 changed = true;
             }

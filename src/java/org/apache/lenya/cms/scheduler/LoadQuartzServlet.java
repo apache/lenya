@@ -300,7 +300,7 @@ public class LoadQuartzServlet extends HttpServlet {
      */
     public void deleteDocumentJobs(org.apache.lenya.cms.publication.Document document)
             throws DocumentBuildException, SchedulerException, PublicationException {
-        log.debug("Requested to delete jobs for document URL [" + document.getCompleteURL() + "]");
+        log.debug("Requested to delete jobs for document URL [" + document.getCanonicalWebappURL() + "]");
         getScheduler().deleteJobs(document);
     }
 
@@ -392,7 +392,7 @@ public class LoadQuartzServlet extends HttpServlet {
         NamespaceMap requestParameters = new NamespaceMap(PREFIX);
         requestParameters.put(PARAMETER_ACTION, DOCUMENT_DELETED);
         requestParameters.put(PARAMETER_PUBLICATION_ID, document.getPublication().getId());
-        requestParameters.put(PARAMETER_DOCUMENT_URL, document.getCompleteURL());
+        requestParameters.put(PARAMETER_DOCUMENT_URL, document.getCanonicalWebappURL());
 
         String requestUri = "http://127.0.0.1:" + port + servletContextPath + "?";
         Map map = requestParameters.getMap();

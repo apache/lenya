@@ -39,26 +39,6 @@ public class DefaultDocument implements Document {
     private DublinCore dublincore;
     private DocumentIdentityMap identityMap;
     private ResourcesManager resourcesManager;
-    /**
-     * Creates a new instance of DefaultDocument.
-     * @param map The identity map the document belongs to.
-     * @param id The document ID (starting with a slash).
-     * @deprecated Use {@link DefaultDocumentBuilder}instead.
-     */
-    public DefaultDocument(DocumentIdentityMap map, String id) {
-
-        if (id == null) {
-            throw new IllegalArgumentException("The document ID must not be null!");
-        }
-        if (!id.startsWith("/")) {
-            throw new IllegalArgumentException("The document ID must start with a slash!");
-        }
-        this.id = id;
-
-        this.identityMap = map;
-        this.dublincore = new DublinCoreProxy(this);
-        this.resourcesManager = new DefaultResourcesManager(this);
-    }
 
     /**
      * Creates a new instance of DefaultDocument. The language of the document is the default
@@ -233,28 +213,13 @@ public class DefaultDocument implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#getCompleteURL()
-     */
-    public String getCompleteURL() {
-        return "/" + getPublication().getId() + "/" + getArea() + getDocumentURL();
-    }
-
-    /**
      * @see Document#getCompleteInfoURL()
      */
     public String getCompleteInfoURL() {
         return "/" + getPublication().getId() + "/" + Publication.INFO_AREA_PREFIX + getArea()
-                + getDocumentURL();
+                + getCanonicalDocumentURL();
     }
 
-    /**
-     * @see Document#getCompleteURLWithoutLanguage()
-     */
-    public String getCompleteURLWithoutLanguage() {
-        String extensionSuffix = "".equals(getExtension()) ? "" : ("." + getExtension());
-
-        return "/" + getPublication().getId() + "/" + getArea() + getId() + extensionSuffix;
-    }
 
     /**
      * Sets the area.
@@ -294,13 +259,6 @@ public class DefaultDocument implements Document {
     public void setDocumentURL(String url) {
         assert url != null;
         this.documentURL = url;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getDocumentURL()
-     */
-    public String getDocumentURL() {
-        return documentURL;
     }
 
     /**
@@ -390,14 +348,14 @@ public class DefaultDocument implements Document {
      * @see org.apache.lenya.cms.publication.Document#getCanonicalWebappURL()
      */
     public String getCanonicalWebappURL() {
-        return getCompleteURL();
+        return "/" + getPublication().getId() + "/" + getArea() + getCanonicalDocumentURL();
     }
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getCanonicalDocumentURL()
      */
     public String getCanonicalDocumentURL() {
-        return getDocumentURL();
+        return documentURL;
     }
 
     /**

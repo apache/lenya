@@ -76,7 +76,7 @@ public class SchedulerHelper {
                     objectModel);
 
             schedulerParameters.put(ServletJob.PARAMETER_DOCUMENT_URL, envelope.getDocument()
-                    .getCompleteURL());
+                    .getCanonicalWebappURL());
             schedulerParameters.put(LoadQuartzServlet.PARAMETER_PUBLICATION_ID, envelope
                     .getPublication().getId());
             map.putAll(schedulerParameters.getPrefixedMap());
