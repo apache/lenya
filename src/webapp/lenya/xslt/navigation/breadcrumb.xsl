@@ -52,7 +52,7 @@
     
 <xsl:template match="nav:label">
    <xsl:choose>
-      <xsl:when test="self::*[lang($chosenlanguage)]">
+      <xsl:when test="parent::nav:node/child::nav:label[@xml:lang = $chosenlanguage]">
       	<xsl:value-of select="self::*[lang($chosenlanguage)]"/>
       </xsl:when>
       <xsl:otherwise>
