@@ -16,9 +16,6 @@ content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
 </head>
 <body bgcolor="#FFFFFF">
 <a id="" name=""></a> 
-
-<table>
-<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
 <!-- CONTENT TABLE BEGINS HERE -->
 <td width="440" valign="top">
 <!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
@@ -35,13 +32,6 @@ class="txt-m-black">Leider haben wir die von Ihnen angeforderte Seite
 nicht finden koennen.<br />
 <br />
  Ihr Redaktionsteam der Computerworld online</span></td>
-</tr>
-</table>
-
-<!-- FEEDBACK TABLE ENDS HERE -->
-</td>
-<!-- CONTENT TABLE ENDS HERE -->
-<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
 </tr>
 </table>
 </body>
