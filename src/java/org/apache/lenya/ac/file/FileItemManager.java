@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileItemManager.java,v 1.5 2004/04/28 12:48:22 andreas Exp $  */
+/* $Id: FileItemManager.java,v 1.6 2004/04/28 12:53:46 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -38,7 +38,6 @@ import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManagerListener;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 import org.apache.log4j.Category;
 
