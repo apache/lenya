@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URLPolicy.java,v 1.3 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: URLPolicy.java,v 1.4 2004/03/08 16:03:40 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -133,9 +133,9 @@ public class URLPolicy implements Policy {
 	}
 
     /**
-     * The URL policy requires SSL protection iff one of its
+     * The URL policy requires SSL protection if one of its
      * member policies requires SSL protection.
-     * @see org.apache.lenya.cms.ac2.Policy#isSSLProtected()
+     * @see org.apache.lenya.ac.Policy#isSSLProtected()
      */
     public boolean isSSLProtected() throws AccessControlException {
         obtainPolicies();
@@ -152,7 +152,7 @@ public class URLPolicy implements Policy {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.Policy#isEmpty()
+     * @see org.apache.lenya.ac.Policy#isEmpty()
      */
     public boolean isEmpty() throws AccessControlException {
         boolean empty = true;
