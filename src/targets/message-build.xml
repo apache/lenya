@@ -30,9 +30,9 @@
     <echo message="*"/>
     <echo message="*      Cocoon (${cocoon.src.dir})"/>
     <echo message="*"/>
-    <echo message="* Start using ${Name} by starting Jetty"/>
+    <echo message="* Start using ${Name} with Jetty by typing"/>
     <echo message="*      Linux/UNIX: ./lenya.sh servlet"/>
-    <echo message="*      Windows:    lenya.bat servlet"/>
+    <echo message="*      Windows:      lenya"/>
     <echo message="*"/>
     <echo message="* and browse to "/>
     <echo message="*      http://127.0.0.1:8888"/>
@@ -49,8 +49,9 @@
     <echo message="*"/>
     <echo message="*      Cocoon (${cocoon.src.dir})"/>
     <echo message="*"/>
-    <echo message="* Start using ${Name} by starting Tomcat"/>
+    <echo message="* Start using ${Name} with Tomcat by typing"/>
     <echo message="*      Linux/UNIX: ${tomcat.home.dir}/bin/startup.sh"/>
+    <echo message="*      Windows:    ${tomcat.home.dir}/bin/startup.bat"/>
     <echo message="*"/>
     <echo message="* and browse to "/>
     <echo message="*      http://127.0.0.1:8080/lenya/"/>
