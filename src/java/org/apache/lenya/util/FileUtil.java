@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileUtil.java,v 1.15 2004/07/21 15:55:10 roku Exp $  */
+/* $Id: FileUtil.java,v 1.16 2004/07/23 12:32:13 roku Exp $  */
 
 package org.apache.lenya.util;
 
@@ -121,8 +121,13 @@ public class FileUtil {
         if (src.isFile()) {
             copySingleFile(src, dest);
         } else {
-            dest.mkdirs();
             File[] contents = src.listFiles();
+            
+            if(contents == null || contents.length == 0)
+                return;
+            
+            dest.mkdirs();
+
             for (int i = 0; i < contents.length; i++) {
                 String destPath = dest.getAbsolutePath() + File.separator + contents[i].getName();
                 copy(contents[i], new File(destPath));
