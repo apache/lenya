@@ -27,8 +27,8 @@ import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * A page envelope carries a set of information that are needed during the presentation of a
- * document.
+ * A page envelope carries a set of information that are needed during the
+ * presentation of a document.
  */
 public class PageEnvelope {
     /**
@@ -37,13 +37,13 @@ public class PageEnvelope {
     public static final String[] PARAMETER_NAMES = { PageEnvelope.AREA, PageEnvelope.CONTEXT,
             PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION,
             PageEnvelope.PUBLICATION_LANGUAGES_CSV, PageEnvelope.DOCUMENT,
-            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME,
-            PageEnvelope.DOCUMENT_LABEL, PageEnvelope.DOCUMENT_URL,
-            PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE, PageEnvelope.DOCUMENT_PATH,
-            PageEnvelope.DOCUMENT_EXTENSION, PageEnvelope.DEFAULT_LANGUAGE,
-            PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES,
-            PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_LASTMODIFIED,
-            PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX };
+            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME, PageEnvelope.DOCUMENT_LABEL,
+            PageEnvelope.DOCUMENT_URL, PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
+            PageEnvelope.DOCUMENT_PATH, PageEnvelope.DOCUMENT_EXTENSION,
+            PageEnvelope.DEFAULT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGE,
+            PageEnvelope.DOCUMENT_LANGUAGES, PageEnvelope.DOCUMENT_LANGUAGES_CSV,
+            PageEnvelope.DOCUMENT_LASTMODIFIED, PageEnvelope.BREADCRUMB_PREFIX,
+            PageEnvelope.SSL_PREFIX };
     /**
      * <code>PUBLICATION_ID</code> The publication id
      */
@@ -53,7 +53,8 @@ public class PageEnvelope {
      */
     public static final String PUBLICATION = "publication";
     /**
-     * <code>PUBLICATION_LANGUAGES_CSV</code> A list of the publication's languages, comma-seperated
+     * <code>PUBLICATION_LANGUAGES_CSV</code> A list of the publication's
+     * languages, comma-seperated
      */
     public static final String PUBLICATION_LANGUAGES_CSV = "publication-languages-csv";
     /**
@@ -93,7 +94,8 @@ public class PageEnvelope {
      */
     public static final String DOCUMENT_URL = "document-url";
     /**
-     * <code>DOCUMENT_URL_WITHOUT_LANGUAGE</code> The URL of the current document without a language extension.
+     * <code>DOCUMENT_URL_WITHOUT_LANGUAGE</code> The URL of the current
+     * document without a language extension.
      */
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     /**
@@ -113,19 +115,23 @@ public class PageEnvelope {
      */
     public static final String DOCUMENT_LANGUAGE = "document-language";
     /**
-     * <code>DOCUMENT_LANGUAGES</code> The languages the current document is available in
+     * <code>DOCUMENT_LANGUAGES</code> The languages the current document is
+     * available in
      */
     public static final String DOCUMENT_LANGUAGES = "document-languages";
     /**
-     * <code>DOCUMENT_LANGUAGES_CSV</code> The languages the current document is available in, comma-seperated
+     * <code>DOCUMENT_LANGUAGES_CSV</code> The languages the current document
+     * is available in, comma-seperated
      */
     public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
     /**
-     * <code>DOCUMENT_LASTMODIFIED</code> The last modified date of the current document
+     * <code>DOCUMENT_LASTMODIFIED</code> The last modified date of the
+     * current document
      */
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
     /**
-     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix of the publication, used for navigation
+     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix of the
+     * publication, used for navigation
      */
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
     /**
@@ -147,7 +153,7 @@ public class PageEnvelope {
      * Constructor.
      */
     protected PageEnvelope() {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -168,16 +174,18 @@ public class PageEnvelope {
             }
 
             webappURI = ServletHelper.getWebappURI(request);
-            Document _document = map.getFactory().getFromURL(webappURI);
-            setDocument(_document);
+            if (map.getFactory().isDocument(webappURI)) {
+                Document _document = map.getFactory().getFromURL(webappURI);
+                setDocument(_document);
+            }
 
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }
     }
-    
+
     private DocumentIdentityMap identityMap;
-    
+
     /**
      * Returns the identity map.
      * @return An identity map.
@@ -243,7 +251,7 @@ public class PageEnvelope {
     private Document document;
 
     /**
-     * Returns the document.
+     * Returns the document or <code>null</code> if the current URL does not represent a document.
      * @return A document
      */
     public Document getDocument() {
