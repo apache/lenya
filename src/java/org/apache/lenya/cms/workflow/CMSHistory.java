@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.5 2003/07/09 13:44:52 egli Exp $
+$Id: CMSHistory.java,v 1.6 2003/07/29 17:55:28 edith Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,7 @@ $Id: CMSHistory.java,v 1.5 2003/07/09 13:44:52 egli Exp $
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
@@ -110,15 +111,11 @@ public class CMSHistory extends History {
 	 * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
 	 */
     protected File getHistoryFile() {
-        String language = getDocument().getLanguage();
-        String languageSuffix = "".equals(language) ? "" : ("_" + language);
-
-        String documentPath = getDocument().getId().replace('/', File.separatorChar) +
-            languageSuffix + ".xml";
-
         File workflowDirectory = new File(document.getPublication().getDirectory(),
                 WorkflowFactory.WORKFLOW_DIRECTORY);
         File historyDirectory = new File(workflowDirectory, HISTORY_PATH);
+		DocumentIdToPathMapper pathMapper=document.getPublication().getPathMapper();
+		String documentPath = pathMapper.getPath(getDocument().getId(), ""); 
         File historyFile = new File(historyDirectory, documentPath);
 
         return historyFile;
