@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DateUtil.java,v 1.11 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id: DateUtil.java,v 1.12 2004/03/17 22:35:56 michi Exp $  */
 
 package org.apache.lenya.util;
 
@@ -240,7 +240,7 @@ public class DateUtil {
         String year = "" + cal.get(Calendar.YEAR);
         String month = oneToTwoDigits("" + (cal.get(Calendar.MONTH) + 1));
         String day = oneToTwoDigits("" + cal.get(Calendar.DAY_OF_MONTH));
-        String hour = oneToTwoDigits("" + cal.get(Calendar.HOUR));
+        String hour = oneToTwoDigits("" + cal.get(Calendar.HOUR_OF_DAY));
         String minute = oneToTwoDigits("" + cal.get(Calendar.MINUTE));
         String second = oneToTwoDigits("" + cal.get(Calendar.SECOND));
         return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
