@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : workflow.xml
+    Created on : 8. April 2003, 19:02
+    Author     : andreas
+    Description:
+        Purpose of the document follows.
+-->
+
+<workflow xmlns="http://apache.org/cocoon/lenya/workflow/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://apache.org/cocoon/lenya/workflow/1.0
+        ../../../resources/entities/workflow/workflow.xsd">
+
+  <state id="modified" initial="yes"/>
+  <state id="pending"/>
+  <state id="published"/>
+  
+  <transition source="modified" destination="pending">
+    <event id="publish"/>
+    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">editor</condition>
+  </transition>
+        
+  <transition source="pending" destination="published">
+    <event id="approve"/>
+    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">manager</condition>
+    <action id="publish"/>
+  </transition>
+        
+  <transition source="pending" destination="modified">
+    <event id="disapprove"/>
+    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">manager</condition>
+  </transition>
+        
+  <transition source="published" destination="modified">
+    <event id="edit"/>
+    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">editor</condition>
+    <action id="save"/>
+  </transition>
+        
+  <transition source="pending" destination="modified">
+    <event id="edit"/>
+    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">editor</condition>
+    <action id="save"/>
+  </transition>
+        
+</workflow>
