@@ -15,8 +15,8 @@
     xmlns:lenya="http://lenya.org/2003/"
     exclude-result-prefixes="simple lenya"
     >
-    
-<xsl:import href="lenya-header.xsl"/>
+
+<xsl:include href="lenya-header.xsl"/>
 
         
 <xsl:template match="/">
