@@ -1,0 +1,89 @@
+title {
+	color: black;
+	font-size: 15px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	display: block;
+}
+
+.emphasize {
+	font-style: italic;
+font-family: Verdana, Geneva, Helvetica, Arial, Swiss, SunSans-Regular 
+}
+
+.strong {
+	font-weight: bold;
+font-family: Verdana, Geneva, Helvetica, Arial, Swiss, SunSans-Regular 
+}
+
+bold {
+	font-weight: bold;
+}
+
+bxlistitem {
+	display: list-item;
+	margin-left: 40px;
+}
+
+orderedlist {
+	list-style-type: decimal;
+}
+
+orderedlist, itemizedlist {
+	margin-left: 40px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+itemizedlist {
+	list-style-type: disc;
+}
+
+para, orderedlist, itemizedlist {
+	margin: 1.33em 0;
+}
+
+subscript {
+	vertical-align: sub;
+}
+
+superscript {
+	vertical-align: super;
+}
+
+subscript, superscript {
+	font-size: .83em;
+}
+
+a, ulink, email {
+	text-decoration: underline;
+	color: #339;
+font-family: Verdana, Geneva, Helvetica, Arial, Swiss, SunSans-Regular 
+}
+
+orderedlist, itemizedlist,  title,  p {
+	display: block;
+}
+
+emphasis, emphasize {
+	font-style: italic;
+}
+
+p {
+	color: black;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: none
+	display: block;
+}
+
+media,  abstract, byline {
+	display: block;
+	margin: 0em 0;
+}
+
+a {
+	text-decoration: underline;
+	color: #339;
+}
+
