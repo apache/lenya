@@ -312,7 +312,8 @@
 					<map:part src="docs/publication/authoring/sitetree.xml"/>
 					<map:part src="cocoon:/today"/>
 				</map:aggregate>
-				<map:transform src="stylesheets/publication/Page/it-overview.xsl">
+				<map:transform src="stylesheets/publication/Page/Authoring/it-overview.xsl">
+					<map:parameter name="files" value="Stellen/"/>
 					<map:parameter name="id" value="/it-stellen/"/>
 					<map:parameter name="documentid" value="news/{1}.xml"/>
 					<map:parameter name="authoring" value="true"/>
@@ -331,7 +332,8 @@
 					<map:part src="docs/publication/authoring/sitetree.xml"/>
 					<map:part src="cocoon:/today"/>
 				</map:aggregate>
-				<map:transform src="stylesheets/publication/Page/it-overview.xsl">
+				<map:transform src="stylesheets/publication/Page/Authoring/it-overview.xsl">
+					<map:parameter name="files" value="Kalender"/>
 					<map:parameter name="id" value="/it-kalender/"/>
 					<map:parameter name="documentid" value="news/{1}.xml"/>
 					<map:parameter name="authoring" value="true"/>
@@ -440,10 +442,6 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
-			<!-- Catch-all matcher -->
-<!--			<map:match pattern="news/">
-				<map:redirect-to uri="/wyona-cms/computerworld/authoring/index.html" session="true"/>
-			</map:match> -->
 		</map:pipeline>
 		<!-- Samples for resource/document creation -->
 		<map:pipeline>
