@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" ?>
 
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
 >
+
+<info>
+  <document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></document-id>
+</info>
 
 </xsp:page>
