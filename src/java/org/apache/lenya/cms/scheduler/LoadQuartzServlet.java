@@ -28,7 +28,7 @@ import org.quartz.utils.*;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.5 2002/10/09 09:57:39 michicms Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.6 2002/11/04 23:30:25 michicms Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -38,13 +38,16 @@ public class LoadQuartzServlet extends HttpServlet {
 
     private ServletContext servletContext;
     private String servletContextPath;
+    private String schedulerConfigurations;
 
     public void init(ServletConfig config) throws ServletException{
 	super.init(config);
 
         this.servletContext=config.getServletContext();
         this.servletContextPath = this.servletContext.getRealPath("/");
+        this.schedulerConfigurations=config.getInitParameter("scheduler-configurations");
 	log.debug(".init(): Servlet Context Path: "+this.servletContextPath);
+	log.debug(".init(): Scheduler Configurations: "+this.schedulerConfigurations);
 	
 	try {
  	    log.info("Working?...");
@@ -64,7 +67,8 @@ public class LoadQuartzServlet extends HttpServlet {
         // FIXME: Read from file. This is just an example yet
         Date startTime = null;
         try{
-          org.dom4j.Document doc_conf=new org.dom4j.io.SAXReader().read("file:"+this.servletContextPath+"/wyona/cms/docs/cms/scheduler.xconf");
+          //org.dom4j.Document doc_conf=new org.dom4j.io.SAXReader().read("file:"+this.servletContextPath+"/wyona/cms/docs/cms/scheduler.xconf");
+          org.dom4j.Document doc_conf=new org.dom4j.io.SAXReader().read("file:"+this.servletContextPath+schedulerConfigurations);
 /*
           // Add Simple Job
 	  startTime = new GregorianCalendar(Integer.parseInt("2002"),
