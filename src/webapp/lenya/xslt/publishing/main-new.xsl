@@ -33,7 +33,8 @@
 <input type="hidden" name="lenya.usecase" value="publish"/>
 <input type="hidden" name="lenya.step" value="execute"/>
 <input type="hidden" name="uris" value="{uris}"/>
-<input type="hidden" name="properties.publish.sources" value="{sources}"/>
+<input type="hidden" name="sources" value="{sources}"/> <!-- DefaultFilePublisher -->
+<input type="hidden" name="properties.publish.sources" value="{sources}"/> <!-- AntTask -->
 <input type="hidden" name="task-id" value="{task-id}"/>
 <!-- FIXME: arbitrary request parameters set within the menubar should be transfered!
 <input type="hidden" name="server-port" value="1937"/>
