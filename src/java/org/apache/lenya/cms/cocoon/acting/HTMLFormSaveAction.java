@@ -76,7 +76,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.41 2004/02/16 15:16:34 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.42 2004/02/21 22:33:53 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when 
  * namespaces are not declared within the root element. Unfortunately the XSLTs 
@@ -204,7 +204,7 @@ public Map act(
                         XObject result = xpath.execute(document);
                         NodeList selectionNodeList = result.nodeset();
                         if (selectionNodeList.getLength() == 0) {
-                            log.warn(
+                            log.debug(
                                 ".act(): Node does not exist (might have been deleted during update): "
                                     + select);
                         } else {
@@ -371,9 +371,12 @@ public Map act(
 }
 
 /**
- * Get attributes
+ * Get attributes from original node
+ *
+ * @param node Original node
  */
 private XUpdateAttributes getAttributes(Node node) {
+
     String xupdateString = "";
     String tagID = "";
     org.w3c.dom.NamedNodeMap attributes = node.getAttributes();
@@ -412,7 +415,35 @@ private XUpdateAttributes getAttributes(Node node) {
     } else {
         xupdateString = "";
     }
-    log.debug(".getAttributes(): " + xupdateString);
+    log.debug("Attributes: " + xupdateString);
+
+    return new XUpdateAttributes(xupdateString, tagID);
+}
+
+/**
+ * Get attributes from actual update
+ *
+ * @param update The actual update
+ */
+private XUpdateAttributes getAttributes(String update, String tagID) {
+    log.debug(update);
+
+    String xupdateString = "<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>";
+
+    String[] attributes = update.substring(0, update.indexOf(">")).split(" ");
+    for (int i = 1; i < attributes.length; i++) {
+        // TODO: beware of white spaces
+        int index = attributes[i].indexOf("=");
+        if (index > 0) {
+            String name = attributes[i].substring(0, index);
+            String value = attributes[i].substring(index + 2, attributes[i].length() - 1);
+            if (name.indexOf("xmlns") < 0) {
+                xupdateString = xupdateString + "<xupdate:attribute name=\"" + name  + "\">" + value  + "</xupdate:attribute>";
+            }
+        }
+    }
+
+    log.debug("Attributes: " + xupdateString);
 
     return new XUpdateAttributes(xupdateString, tagID);
 }
@@ -420,7 +451,7 @@ private XUpdateAttributes getAttributes(Node node) {
 /**
  * xupdate:update
  *
- * @param parent if true then attributes of parent will also be updated
+ * @param parent If true then parent element is part of update and attributes need to be updated resp. added or deleted
  */
 private String update(
     Request request,
@@ -454,11 +485,10 @@ private String update(
             namespaceAttribute = " namespace=\"" + namespace + "\"";
         }
         // NOTE: getAttributes adds the attribute tagID with value "temp", which will be replaced further down
-        XUpdateAttributes xa = null;
+        XUpdateAttributes xa = getAttributes(nodeToCopy);
         String xupdateInsertAfter = null;
         if (parent) {
-            // FIXME: New parent attributes need to be updated, removed and inserted
-            xa = getAttributes(nodeToCopy);
+            xa = getAttributes(request.getParameter(pname), xa.tagID);
             xupdateInsertAfter =
                 "<xupdate:insert-after select=\""
                     + select
@@ -471,7 +501,6 @@ private String update(
                     + removeParent(request.getParameter(pname))
                     + "</xupdate:element></xupdate:insert-after>";
         } else {
-            xa = getAttributes(nodeToCopy);
             xupdateInsertAfter =
                 "<xupdate:insert-after select=\""
                     + select
