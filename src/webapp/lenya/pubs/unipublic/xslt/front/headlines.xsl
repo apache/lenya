@@ -3,7 +3,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
-
+<xsl:include href="../variables.xsl"/> 
 
 <xsl:template match="MainColumn">
   <xsl:apply-templates select="Articles"/>
@@ -47,7 +47,7 @@
           <td colspan="3">
             <table border="0" cellpadding="0" cellspacing="0" width="316">
               <tr>
-                <td colspan="3"><a href="{$unipublic}/{@channel}/{@section}/"><img src="{$img-unipub}/t_{@section}.gif" width="316" height="13" border="0" alt="{@section}"/></a></td>
+                <td colspan="3"><a href="{$unipublic}{$view}/{@channel}/{@section}/"><img src="{$img-unipub}/t_{@section}.gif" width="316" height="13" border="0" alt="{@section}"/></a></td>
               </tr>
 
               <tr>
@@ -57,10 +57,11 @@
               <tr>
                 <td width="4" bgcolor="white">&#160;</td>
                 <td bgcolor="white" class="tsr-text">
-
-                  <p><a href="{@href}/"><img src="{$unipublic}/{@href}/{body.head/media/media-reference/@source}" width="80" height="60" border="0" alt="{body.head/media/media-reference/@alternate-text}" align="right"/></a><span class="tsr-title"><a href="{@href}/"><xsl:apply-templates select="body.head/hedline/hl1"/></a> </span><br />
-                    <xsl:apply-templates select="body.head/abstract"/></p>
-
+                  <p>
+                    <xsl:apply-templates select="body.head" mode="media-column"/>
+                    <span class="tsr-title"><a href="{@href}/"><xsl:apply-templates select="body.head/hedline/hl1"/></a> </span><br />
+                    <xsl:apply-templates select="body.head/abstract"/>
+                  </p>
                   </td>
                 <td width="4" bgcolor="white">&#160;</td>
               </tr>
@@ -81,7 +82,9 @@
     <xsl:for-each select="Article">
       <xsl:if test="position()&#60;=2">
         <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-        <td align="right" width="150" bgcolor="#CCCC99" valign="bottom"><a href="{@href}/"><img src="{$unipublic}/{@href}/{body.head/media/media-reference/@source}" width="80" height="60" border="0" alt="{body.head/media/media-reference/@alternate-text}"/></a></td>
+        <td align="right" width="150" bgcolor="#CCCC99" valign="bottom">
+          <xsl:apply-templates select="body.head" mode="media-top"/>
+        </td>
         <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
       </xsl:if>
     </xsl:for-each>
@@ -106,6 +109,5 @@
     <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
   </tr>
 </xsl:template>
-
 
 </xsl:stylesheet>

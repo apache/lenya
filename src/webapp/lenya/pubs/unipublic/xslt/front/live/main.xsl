@@ -15,6 +15,7 @@
 <xsl:include href="../webperls.xsl"/>
 <xsl:include href="../services.xsl"/>
 <xsl:include href="../headlines.xsl"/>
+<xsl:include href="media.xsl"/>
 <xsl:include href="../page.xsl"/>
 
 </xsl:stylesheet>
