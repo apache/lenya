@@ -215,7 +215,11 @@
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
-    
+
+      <map:match pattern="">
+      	<map:redirect-to uri="index.html"/>
+      </map:match>
+
       <map:match pattern="**">
         <map:aggregate element="lenya" label="aggregate">
           <map:part src="cocoon:/menus/admin.xml"/>
