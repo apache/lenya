@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.18 2003/04/24 13:54:00 gregor Exp $
+ * $Id: NewArticleCreator.java,v 1.19 2003/07/04 17:37:05 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -67,7 +67,7 @@ import java.util.Map;
  * @version 2002.11.10
  */
 public class NewArticleCreator extends DefaultBranchCreator {
-    static Category log = Category.getInstance(NewArticleCreator.class);
+    private static Category log = Category.getInstance(NewArticleCreator.class);
 
     /**
      * DOCUMENT ME!

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Password.java,v 1.11 2003/07/04 17:38:31 egli Exp $
 <License>
 
  ============================================================================
@@ -90,7 +90,6 @@ public class Password {
      *
      * @return DOCUMENT ME!
      *
-     * @throws Exception DOCUMENT ME!
      */
     public static String encrypt(String plain) {
         Md5 md5 = new Md5(plain);

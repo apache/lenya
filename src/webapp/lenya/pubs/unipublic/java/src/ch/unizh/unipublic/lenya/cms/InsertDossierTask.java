@@ -1,5 +1,5 @@
 /*
- * $Id: InsertDossierTask.java,v 1.9 2003/04/24 13:54:03 gregor Exp $
+ * $Id: InsertDossierTask.java,v 1.10 2003/07/04 17:43:09 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -74,7 +74,7 @@ import java.util.StringTokenizer;
  * @author ah
  */
 public class InsertDossierTask extends AbstractTask {
-    static Category log = Category.getInstance(InsertDossierTask.class);
+    private static Category log = Category.getInstance(InsertDossierTask.class);
 
     /**
      * DOCUMENT ME!

@@ -1,5 +1,5 @@
 /*
- * $Id: ClearNewsletterTask.java,v 1.6 2003/04/24 13:54:03 gregor Exp $
+ * $Id: ClearNewsletterTask.java,v 1.7 2003/07/04 17:43:09 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -73,7 +73,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @author ah
  */
 public class ClearNewsletterTask extends AbstractTask {
-    static Category log = Category.getInstance(ClearNewsletterTask.class);
+    private static Category log = Category.getInstance(ClearNewsletterTask.class);
 
     /**
      * DOCUMENT ME!

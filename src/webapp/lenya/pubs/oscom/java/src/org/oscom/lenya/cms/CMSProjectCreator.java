@@ -1,5 +1,5 @@
 /*
- * $Id: CMSProjectCreator.java,v 1.9 2003/04/24 13:54:02 gregor Exp $
+ * $Id: CMSProjectCreator.java,v 1.10 2003/07/04 17:36:09 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,8 +59,12 @@ import org.apache.lenya.xml.DOMUtil;
  * @version 2003.2.11
  */
 public class CMSProjectCreator extends DefaultLeafCreator {
-    static Category log = Category.getInstance(CMSProjectCreator.class);
-
+    private static Category log = Category.getInstance(CMSProjectCreator.class);
+	
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.authoring.DefaultCreator#transformXML(org.w3c.dom.Document, java.lang.String, short, java.lang.String, java.util.Map)
+	 */
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,
 				 Map parameters)

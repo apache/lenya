@@ -113,7 +113,8 @@ import javax.mail.internet.InternetAddress;
  * @author <a href="mailto:ah@lenya.org">Andreas Hartmann</a>
  */
 public class MailTask extends AbstractTask {
-    static Category log = Category.getInstance(MailTask.class);
+    private static Category log = Category.getInstance(MailTask.class);
+    
     public static final String ELEMENT_TO = "to";
     public static final String ELEMENT_CC = "cc";
     public static final String ELEMENT_BCC = "bcc";

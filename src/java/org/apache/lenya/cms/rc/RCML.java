@@ -82,7 +82,7 @@ import java.util.Vector;
  * @version 0.7.19
  */
 public class RCML {
-    static Category log = Category.getInstance(RCML.class);
+    private static Category log = Category.getInstance(RCML.class);
     static short co = 0;
     static short ci = 1;
     private File rcmlFile;

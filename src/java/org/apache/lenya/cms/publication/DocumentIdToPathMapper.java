@@ -86,5 +86,5 @@ public interface DocumentIdToPathMapper {
 	 * @return File The directory in which are all the files with the same
 	 * document id
 	 */
-	public abstract File getDirectory(Publication publication, String area, String documentId);
+	File getDirectory(Publication publication, String area, String documentId);
 }

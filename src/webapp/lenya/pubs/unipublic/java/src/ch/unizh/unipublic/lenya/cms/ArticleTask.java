@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleTask.java,v 1.17 2003/04/28 10:08:15 egli Exp $
+ * $Id: ArticleTask.java,v 1.18 2003/07/04 17:43:09 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -80,7 +80,7 @@ import java.util.StringTokenizer;
  * @author ah
  */
 public class ArticleTask extends AbstractTask {
-    static Category log = Category.getInstance(ArticleTask.class);
+    private static Category log = Category.getInstance(ArticleTask.class);
 
     /**
      * DOCUMENT ME!

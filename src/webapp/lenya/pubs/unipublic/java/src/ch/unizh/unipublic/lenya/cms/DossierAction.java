@@ -1,5 +1,5 @@
 /*
- * $Id: DossierAction.java,v 1.12 2003/05/30 09:38:01 egli Exp $
+ * $Id: DossierAction.java,v 1.13 2003/07/04 17:43:09 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -83,7 +83,7 @@ import java.util.StringTokenizer;
  * @author ah
  */
 public class DossierAction extends AbstractComplementaryConfigurableAction {
-    static Category log = Category.getInstance(DossierAction.class);
+    private static Category log = Category.getInstance(DossierAction.class);
     public static final String ARTICLE_FILE = "articlefile";
     public static final String DOSSIER_ID = "dossier-id";
 
