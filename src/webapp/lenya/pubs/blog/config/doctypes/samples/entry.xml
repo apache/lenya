@@ -15,6 +15,6 @@
     <echo:modified>2003-02-05T12:29:29Z</echo:modified>
 
     <echo:content type="application/xhtml+xml">
-      <p><i>Hello</i>, <b>weblog</b> <a href="http://www.apache.org">world</a>!</p>
+      <p><em>Hello</em>, <strong>weblog</strong> <a href="http://www.apache.org">world</a>!</p>
     </echo:content>
 </echo:entry>

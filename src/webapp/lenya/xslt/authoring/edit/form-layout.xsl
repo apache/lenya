@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: form-layout.xsl,v 1.15 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id: form-layout.xsl,v 1.16 2004/04/24 20:59:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -93,8 +93,8 @@
   <div class="lenya-box-title"><a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a></div>
   <div class="lenya-box-body">
 <ul>
-<li>&amp;lt; instead of &lt; (left angle bracket <b>must</b> be escaped)</li>
-<li>&amp;amp; instead of &amp; (ampersand <b>must</b> be escaped)</li>
+<li>&amp;lt; instead of &lt; (left angle bracket <strong>must</strong> be escaped)</li>
+<li>&amp;amp; instead of &amp; (ampersand <strong>must</strong> be escaped)</li>
 <li>&amp;gt; instead of > (right angle bracket)</li>
 <li>&amp;apos; instead of ' (single-quote)</li>
 <li>&amp;quot; instead of " (double-quote)</li>

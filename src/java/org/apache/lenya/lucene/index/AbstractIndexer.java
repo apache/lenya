@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.15 2004/04/03 23:26:30 michi Exp $  */
+/* $Id: AbstractIndexer.java,v 1.16 2004/04/24 20:59:15 gregor Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -107,7 +107,7 @@ public abstract class AbstractIndexer implements Indexer {
      *
      * @param dumpDirectory Directory where the files to be indexed are located
      * @param index Directory where the index shall be located
-     * @param create <b>true</b> means the index will be created from scratch, <b>false</b> means it will be indexed incrementally
+     * @param create <strong>true</strong> means the index will be created from scratch, <strong>false</strong> means it will be indexed incrementally
      */
     public void doIndex(File dumpDirectory, File index, boolean create) {
         if (!index.isDirectory()) {

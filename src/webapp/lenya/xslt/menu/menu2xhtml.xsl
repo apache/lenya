@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu2xhtml.xsl,v 1.24 2004/03/13 12:42:17 gregor Exp $ -->
+<!-- $Id: menu2xhtml.xsl,v 1.25 2004/04/24 20:59:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -112,7 +112,7 @@
         	  <xsl:if test="$workflowstate != ''">
         	    <xsl:call-template name="workflow"/>
         	  </xsl:if>
-            &#160;<i18n:text>User</i18n:text>: <b><xsl:value-of select="$userid"/></b>&#160;&#160;|&#160;&#160;<i18n:text>Server Time</i18n:text>: <b><xsl:value-of select="$servertime"/></b>
+            &#160;<i18n:text>User</i18n:text>: <strong><xsl:value-of select="$userid"/></strong>&#160;&#160;|&#160;&#160;<i18n:text>Server Time</i18n:text>: <strong><xsl:value-of select="$servertime"/></strong>
           </div>
           
         <div style="margin-top: 5px;"><img border="0" src="{$image-prefix}/lenya_oben_2.gif" /></div>

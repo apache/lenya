@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: oneform.xsl,v 1.12 2004/03/20 12:21:15 gregor Exp $ -->
+<!-- $Id: oneform.xsl,v 1.13 2004/04/24 20:59:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -72,8 +72,8 @@
           </div>
           <div class="lenya-box-body">
             <ul>
-              <li>&amp;lt; instead of &lt; (left angle bracket <b>must</b> be escaped)</li>
-              <li>&amp;amp; instead of &amp; (ampersand <b>must</b> be escaped)</li>
+              <li>&amp;lt; instead of &lt; (left angle bracket <strong>must</strong> be escaped)</li>
+              <li>&amp;amp; instead of &amp; (ampersand <strong>must</strong> be escaped)</li>
               <li>&amp;gt; instead of &gt; (right angle bracket)</li>
               <li>&amp;apos; instead of ' (single-quote)</li>
               <li>&amp;quot; instead of " (double-quote)</li>

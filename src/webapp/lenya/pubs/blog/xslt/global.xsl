@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global.xsl,v 1.17 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id: global.xsl,v 1.18 2004/04/24 20:59:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -58,15 +58,15 @@
     </p>
     <h3>Add new entry</h3>
     <p>
-    To create a new entry click on the <b>File</b> menu above and select the menu item <b>Add new entry</b>. Enter <b>id</b> and <b>title</b> and a new entry will be created.
+    To create a new entry click on the <strong>File</strong> menu above and select the menu item <strong>Add new entry</strong>. Enter <strong>id</strong> and <strong>title</strong> and a new entry will be created.
     </p>
     <h3>Edit entry</h3>
     <p>
-    To edit an entry click on the title of the entry. On the entry page click on the <b>File</b> menu and select the menu item <b>Edit with ...</b>.
+    To edit an entry click on the title of the entry. On the entry page click on the <strong>File</strong> menu and select the menu item <strong>Edit with ...</strong>.
     </p>
     <h3>Publish entry</h3>
     <p>
-    To publish an entry click on the <b>File</b> menu and select the menu item <b>Publish</b>.
+    To publish an entry click on the <strong>File</strong> menu and select the menu item <strong>Publish</strong>.
     </p>
     </xsl:if>
 

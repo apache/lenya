@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xsl,v 1.18 2004/04/05 12:41:42 michi Exp $ -->
+<!-- $Id: publication.xsl,v 1.19 2004/04/24 20:59:15 gregor Exp $ -->
 
 <xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
@@ -77,15 +77,15 @@
 </xsl:template>
 
 <xsl:template match="lenya:version|lenya:lenya-version">
-Lenya <b><xsl:value-of select="."/></b>
+Lenya <strong><xsl:value-of select="."/></strong>
 </xsl:template>
 
 <xsl:template match="lenya:cocoon-version">
-,&#160;Cocoon <b><xsl:value-of select="."/></b>
+,&#160;Cocoon <strong><xsl:value-of select="."/></strong>
 </xsl:template>
 
 <xsl:template match="lenya:pub-version">
-Version: <b><xsl:value-of select="."/></b><br/>
+Version: <strong><xsl:value-of select="."/></strong><br/>
 </xsl:template>
 
 <xsl:template match="lenya:tests">

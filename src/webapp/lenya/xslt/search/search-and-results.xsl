@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsl,v 1.29 2004/03/18 16:53:26 michi Exp $ -->
+<!-- $Id: search-and-results.xsl,v 1.30 2004/04/24 20:59:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0" 
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
@@ -147,7 +147,7 @@
                 </table>
             </xsl:when>
             <xsl:otherwise>
-                <p><b>No results</b> found.</p>
+                <p><strong>No results</strong> found.</p>
             </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates select="pages"/>
@@ -199,9 +199,9 @@
     <xsl:template match="excerpt"> ...&#160;<xsl:apply-templates/>&#160;... 
         </xsl:template>
     <xsl:template match="word">
-        <b>
+        <strong>
             <xsl:value-of select="."/>
-        </b>
+        </strong>
     </xsl:template>
     
     <xsl:template match="no-excerpt"> No excerpt available: <xsl:value-of 

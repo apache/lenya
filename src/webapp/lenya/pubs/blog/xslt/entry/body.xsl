@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.14 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id: body.xsl,v 1.15 2004/04/24 20:59:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -30,7 +30,7 @@
   <xsl:apply-templates select="echo:content"/>
   <br />
   <p class="issued">
-  <b>Posted <xsl:apply-templates select="echo:author"/> at <xsl:value-of select="echo:issued"/>&#160;|&#160;<xsl:call-template name="permalink"><xsl:with-param name="id" select="echo:id"/></xsl:call-template></b>
+  <strong>Posted <xsl:apply-templates select="echo:author"/> at <xsl:value-of select="echo:issued"/>&#160;|&#160;<xsl:call-template name="permalink"><xsl:with-param name="id" select="echo:id"/></xsl:call-template></strong>
   </p>
 </xsl:template>
 

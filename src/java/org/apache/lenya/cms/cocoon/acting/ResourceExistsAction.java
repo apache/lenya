@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourceExistsAction.java,v 1.8 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: ResourceExistsAction.java,v 1.9 2004/04/24 20:59:15 gregor Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -41,7 +41,7 @@ import org.apache.excalibur.source.Source;
  * using the parameter 'type' (&lt;map:parameter name="type" value="file"/&gt; or
  * &lt;map:parameter name="type" value="directory"/&gt;). The parameter 'type' is optional.
  * <p>
- * <b>Note:</b> {@link org.apache.cocoon.selection.ResourceExistsSelector}
+ * <strong>Note:</strong> {@link org.apache.cocoon.selection.ResourceExistsSelector}
  * should be preferred to this component, as the semantics of a Selector better
  * match the supplied functionality.
  */

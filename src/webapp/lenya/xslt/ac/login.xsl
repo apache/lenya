@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: login.xsl,v 1.19 2004/03/13 12:42:18 gregor Exp $ -->
+<!-- $Id: login.xsl,v 1.20 2004/04/24 20:59:15 gregor Exp $ -->
     
 <xsl:stylesheet version="1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"      
@@ -58,8 +58,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <xsl:apply-templates select="authenticator" />
     </p>
     <p>
-      <b>
-      <i18n:text>NOTE</i18n:text>: </b>
+      <strong>
+      <i18n:text>NOTE</i18n:text>: </strong>
       <i18n:translate>
         <i18n:text i18n:key="try-user-lenya" />
         <i18n:param>"lenya"</i18n:param>

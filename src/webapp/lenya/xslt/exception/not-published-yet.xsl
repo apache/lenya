@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: not-published-yet.xsl,v 1.2 2004/03/13 12:42:12 gregor Exp $ -->
+<!-- $Id: not-published-yet.xsl,v 1.3 2004/04/24 20:59:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -38,9 +38,9 @@
 	      An error occured. Most likely you are trying access a
 	      page which has not been published yet.</p>
 	      
-	    <p>To publish this page click on the <b>File</b> menu
+	    <p>To publish this page click on the <strong>File</strong> menu
 	      within the Authoring area and then click on the
-	      <b>Publish</b> menu item.</p>
+	      <strong>Publish</strong> menu item.</p>
 	  </div>
 	</div>
       </page:body>
