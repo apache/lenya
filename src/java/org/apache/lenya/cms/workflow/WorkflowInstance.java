@@ -33,6 +33,6 @@ public interface WorkflowInstance {
      * @param user The user who invoked the event.
      * @param event The event that was invoked.
      */
-    void invoke(Situation situation, Event event);
+    void invoke(Situation situation, Event event) throws WorkflowException;
 
 }
