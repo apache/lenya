@@ -1,5 +1,5 @@
 /*
- * $Id: ItemManager.java,v 1.3 2003/06/03 13:47:38 egli Exp $
+ * $Id: ItemManager.java,v 1.4 2003/06/04 13:19:13 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -70,7 +70,7 @@ import org.apache.log4j.Category;
 public abstract class ItemManager {
 	static Category log = Category.getInstance(ItemManager.class);
 
-	private static final String PATH =
+	public static final String PATH =
 		"config" + File.separator + "ac" + File.separator + "passwd";
 
 	private Set items = null;
