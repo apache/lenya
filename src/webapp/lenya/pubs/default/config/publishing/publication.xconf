@@ -11,12 +11,12 @@
 <publication>
   <authoring>
     <documents href="content/authoring"/>
-    <tree href="content/authoring/tree.xml"/>
+    <tree href="content/authoring/sitetree.xml"/>
     <resource href="resources/images/authoring"/>
   </authoring>
   <live>
     <documents href="content/live"/>
-    <tree href="content/live/tree.xml"/>
+    <tree href="content/live/sitetree.xml"/>
     <resource href="resources/images/live"/>
   </live>
   <replication>
