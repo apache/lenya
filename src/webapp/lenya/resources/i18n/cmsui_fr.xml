@@ -16,7 +16,7 @@
 -->
 
 <!-- 
-	$Id: cmsui_fr.xml,v 1.2 2004/04/14 07:11:40 roku Exp $ 
+	$Id: cmsui_fr.xml,v 1.3 2004/04/14 08:26:01 roku Exp $ 
 	@translators Olivier Lange <wire at petit-atelier dot ch>
 	-->
 
@@ -211,8 +211,6 @@
 
     <!-- Info screen actions-->
   <message key="New Navigation Title">Nouveau titre de navigation</message>
-  <message key="Create new language version">Créer une nouvelle traduction</message>
-  <message key="New language for existing Document">Nouvelle traduction pour un document existant</message>
   <message key="Rename Document">Renommer document</message>
   <message key="New Document ID">Nouvel ID de document</message>
   <message key="No whitespace, no special characters">Pas d'espaces, pas de caractères spéciaux</message>
