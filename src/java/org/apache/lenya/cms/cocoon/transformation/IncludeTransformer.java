@@ -67,11 +67,10 @@ import org.w3c.dom.Document;
  * Wrapper for XLink/XInclude Processor
  *
  * @author Michael Wechner
- * @version $Id: IncludeTransformer.java,v 1.16 2004/02/02 02:50:40 stefano Exp $
+ * @version $Id: IncludeTransformer.java,v 1.17 2004/02/21 11:22:28 andreas Exp $
  */
 public class IncludeTransformer extends AbstractDOMTransformer implements Configurable {
     private String domain = "127.0.0.1";
-    private String port = null;
     private String context = null;
     private String publication = null;
 
