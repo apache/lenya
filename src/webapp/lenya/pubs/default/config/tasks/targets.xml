@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    Document   : ant-test.xml
-    Created on : 3. April 2003, 18:29
-    Author     : andreas
-    Description:
-        Purpose of the document follows.
+$Id: targets.xml,v 1.26 2004/01/31 12:09:10 gregor Exp $
 -->
 
 <project name="Ant Test Project" default="test" basedir=".">
@@ -39,7 +35,7 @@
 <property name="export.server-port" value=""/>
 <property name="export.context-path" value=""/>
 <property name="export.dir" value="work/export/pending"/>
-<property name="export.expression" value="/lenya/unicom/live/"/>
+<property name="export.expression" value="/lenya/default/live/"/>
 <property name="export.replacement" value="/"/>
 <property name="export.uris" value=""/>
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0"?>
 
 <xsp:page 
     language="java" 
@@ -24,7 +24,7 @@
     <xsp:logic>
       String xmlSource = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
       String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
-      String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
+      String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/live" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
       String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
 
       String docType = "";

@@ -8,8 +8,16 @@
     <parameter name="properties.text" value="The test was successful."/>
   </task>
 
-  <task id="publish" class="org.apache.lenya.defaultpub.cms.task.Publish">
-    <label>Publish</label>
+  <task id="publish">
+    <label>Publish and Export</label>
+    <task id="publish" class="org.apache.lenya.defaultpub.cms.task.Publish">
+    </task>
+    <task id="export" class="org.apache.lenya.cms.publishing.StaticHTMLExporter">
+      <parameter name="export-path" value="work/export/pending"/>
+      <parameter name="substitute-regexp" value="/lenya/default/live/"/>
+      <parameter name="substitute-replacement" value="/"/>
+      <parameter name="my-server-port" value="1313"/>
+    </task>
   </task>
 
   <task id="deactivateDocument" class="org.apache.lenya.defaultpub.cms.task.Deactivate">
