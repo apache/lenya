@@ -17,7 +17,7 @@
   		<lenya-site:abstract></lenya-site:abstract>
   		<lenya-site:status></lenya-site:status>
         <dc:language></dc:language>
-   		<lenya-site:lasteditedby></lenya-site:lasteditedby>
+   		<lenya-site:lastmodifiedby></lenya-site:lastmodifiedby>
    		<lenya-site:lastmodified></lenya-site:lastmodified>
   		<lenya-site:documentid></lenya-site:documentid>
   </lenya-site:overview>  

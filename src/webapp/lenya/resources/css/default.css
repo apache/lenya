@@ -242,3 +242,26 @@ td.lenya-frontpage {
 }
 */
 
+
+/* Styles for tabs in Site / Meta Area */
+
+.lenya-tab {
+	width:auto;
+	font-family:verdana,arial,sans serif;
+	background:#cccc99; 
+	padding:10px;
+	color:#333;
+	border-width:1px;
+	border-type:solid;
+	border-color:#003366;
+}
+
+.lenya-tablink {
+	display:inline; /*mandatory*/
+	margin-right:.5em;
+	padding-left:2em;
+	padding-right:2em;
+	text-decoration:none;
+	font-weight:bold;
+	color:#ccc;
+}
