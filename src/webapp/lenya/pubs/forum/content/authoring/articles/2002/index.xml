@@ -1,22 +1,16 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <article>
-   <meta>
-     <id>2002</id>
-     <editor>martin</editor>
-     <author>michael</author>
-   </meta>
-   <head>
-     <title>OSCOM will be sponsored by OSCON</title>
-   </head>
-   <body>
-     <p>
-     Hello Levi
-     </p>
-
-     <p>
-     Hello Vanya
-     </p>
-   </body>
-   <comments/>
-</article>
+			<meta>
+				<id>2002</id>
+				<editor>martin</editor>
+				<author>michael</author>
+			</meta>
+			<head>
+				<title>OSCOM will be sponsored by OSCON</title>
+			</head>
+			<body>
+				<p>Hello all! <quotation>NEW quotation from Kars</quotation><quotation>new quotation</quotation></p>
+				<p>Hello Vanya </p>
+				<p>new p</p></body>
+			<comments/>
+		</article>

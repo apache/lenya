@@ -15,23 +15,23 @@
   </td>
 <!--
   <td valign="top" bgcolor="white" width="388" class="art-text">
-    <p class="art-date"><xsl:apply-templates select="NewsLines/DateLine" mode="article"/></p>
+    <div class="art-date"><xsl:apply-templates select="NewsLines/DateLine" mode="article"/></div>
     <p class="art-pretitle"><xsl:apply-templates select="ContentItem/DataContent/nitf/head/hedline/dossier"/></p>
-    <p class="art-title1"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.head/hedline/hl1"/></p>
-    <p class="art-lead"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.head/abstract"/> </p>
+    <div class="art-title1"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.head/hedline/hl1"/></div>
+    <div class="art-lead"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.head/abstract"/> </div>
     <p class="art-author"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.head/byline"/></p>
     <xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.content/block"/>
     <p class="art-author"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.end/tagline"/></p>
   </td>
 -->
   <td valign="top" bgcolor="white" width="388" class="art-text" id_xopus="body" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
-    <p class="art-date"><xsl:apply-templates select="../../../NewsLines/DateLine" mode="article"/></p>
-    <p class="art-pretitle"><xsl:apply-templates select="head/hedline/dossier"/></p>
-    <p class="art-title1"><xsl:apply-templates select="body/body.head/hedline/hl1"/></p>
-    <p class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </p>
-    <p class="art-author"><xsl:apply-templates select="body/body.head/byline"/></p>
+    <div class="art-date"><xsl:apply-templates select="../../../NewsLines/DateLine" mode="article"/></div>
+    <div class="art-pretitle"><xsl:apply-templates select="head/hedline/dossier"/></div>
+    <div class="art-title1"><xsl:apply-templates select="body/body.head/hedline/hl1"/></div>
+    <div class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </div>
+    <div class="art-author"><xsl:apply-templates select="body/body.head/byline"/></div>
     <xsl:apply-templates select="body/body.content/block"/>
-    <p class="art-author"><xsl:apply-templates select="body/body.end/tagline"/></p>
+    <div class="art-author"><xsl:apply-templates select="body/body.end/tagline"/></div>
   </td>
 </xsl:template>
 

@@ -20,6 +20,11 @@
 			</xs:sequence></xs:complexType></xs:element>
 	<xs:element name="body"><xs:complexType><xs:sequence><xs:element ref="p" minOccurs="1" maxOccurs="unbounded"></xs:element>
 			</xs:sequence></xs:complexType></xs:element>
-	<xs:element name="p"><xs:complexType mixed="true"><xs:sequence><xs:element name="QUOTATION" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence></xs:complexType></xs:element>
+	<xs:element name="p">
+	<xs:complexType mixed="true">
+	<xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
+		<xs:element name="b" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+		<xs:element name="quotation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+	</xs:choice></xs:sequence>
+	</xs:complexType></xs:element>
 </xs:schema>

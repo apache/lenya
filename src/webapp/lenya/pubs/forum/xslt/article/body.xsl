@@ -3,6 +3,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:template match="b">
+	<b><xsl:value-of select="text()" /></b>
+</xsl:template>
 
 <xsl:template match="article">
   <tr>
@@ -36,7 +39,7 @@
   <p />
 </xsl:template>
 
-<xsl:template match="quotation">
+<xsl:template match="quotation|QUOTATION">
 <i>"<xsl:apply-templates/>"</i>
 </xsl:template>
 

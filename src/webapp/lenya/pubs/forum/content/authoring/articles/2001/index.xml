@@ -2,19 +2,18 @@
 <article>
 			<meta>
 				<id>2001</id><editor>martin</editor><author>michael</author><date><year>2002</year>
-					<month name="June"/>
+					<month name="July"/>
 					<day name="Saturday"/>
-					<hour>23</hour>
-					<minute>35</minute></date>
+					<hour>01</hour>
+					<minute>01</minute></date>
 				<category/>
 			</meta>
-			<head><title>Copy That Floppy? Go To Jahannum (Hell)</title>
+			<head><title>Hello Levi? Go To Jahannum (Hell)</title>
 			</head>
 			<body>
-				<p>A paragraph<QUOTATION>first quotation</QUOTATION><QUOTATION>second quotation</QUOTATION></p>
-				<p>Kars writes: <QUOTATION>The Business Software Alliance has ...</QUOTATION>
-				</p>
-				<p>Another paragraph</p><p>And another paragraph<QUOTATION>new QUOTATION</QUOTATION></p>
+				<p>Another paragraph<quotation>Quotation works very fine.</quotation></p><p>new p<quotation>new q uotation</quotation></p><p>And another paragraph<quotation>new quotation</quotation></p><p>A paragrah</p>
+				<p>Kars writes: 
+				<quotation>Who needs XML anyway?</quotation></p>
 			</body>
 			<comments/>
 		</article>
