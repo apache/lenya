@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.61 2004/04/02 13:55:09 roku Exp $ -->
+<!-- $Id: info.xsl,v 1.62 2004/04/03 11:52:55 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -333,14 +333,14 @@
 			<xsl:call-template name="form-add-credential">
 				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">user</xsl:with-param>
-				<xsl:with-param name="title"><i18n:text>User</i18n:text></xsl:with-param>
+				<xsl:with-param name="title">User</xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		<tr>
 			<xsl:call-template name="form-add-credential">
 				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">group</xsl:with-param>
-				<xsl:with-param name="title"><i18n:text>Group</i18n:text></xsl:with-param>
+				<xsl:with-param name="title">Group</xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		<xsl:if test="@area = 'live'">
@@ -348,7 +348,7 @@
 			<xsl:call-template name="form-add-credential">
 				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">iprange</xsl:with-param>
-				<xsl:with-param name="title"><i18n:text>IP Range</i18n:text></xsl:with-param>
+				<xsl:with-param name="title">IP Range</xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		</xsl:if>
@@ -374,7 +374,7 @@
     	<form method="get">
     	<input type="hidden" name="lenya.usecase" value="info-ac-{$larea}"/>
     	<input type="hidden" name="lenya.step" value="showscreen"/>
-    	<td><xsl:value-of select="$title"/>:</td>
+    	<td><i18n:text><xsl:value-of select="$title"/></i18n:text>:</td>
     	<td><xsl:apply-templates select="//lenya-info:items[@type = $type]"/></td>
     	<td>
     		<xsl:choose>
@@ -387,7 +387,7 @@
     		</xsl:choose>
     	</td>
     	<td>
-    		<input type="submit" name="add_credential_{$type}" value="Add">
+    		<input i18n:attr="value" type="submit" name="add_credential_{$type}" value="Add">
     			<xsl:if test="not(//lenya-info:items[@type = $type]/lenya-info:item) or ($area = 'live')">
     				<xsl:attribute name="disabled">disabled</xsl:attribute>
     			</xsl:if>
@@ -435,7 +435,7 @@
 	</xsl:variable>
   <tr>
   	<td>
-  	  <xsl:if test="@type = 'parent' and not(preceding-sibling::lenya-info:credential[@type = 'parent'])">Inherited&#160;Rights:</xsl:if>
+  	  <xsl:if test="@type = 'parent' and not(preceding-sibling::lenya-info:credential[@type = 'parent'])"><i18n:text>Inherited Rights</i18n:text>:</xsl:if>
   	</td>
   	<td>
   		<span style="color: {normalize-space($color)}">

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.57 2004/04/02 13:55:09 roku Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.58 2004/04/03 11:52:55 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
@@ -261,10 +261,15 @@
   
   <!-- Info asset  --> 
   <message key="New Asset">Neue Anlage</message>
-  <message key="Rollback to this revision">Zu dieser version zur&#252;cksetzen</message>
 
   <!-- Info RC  --> 
   <message key="Current Version">Aktuelle Version</message>
+  <message key="Rollback to this revision">Zu dieser version zur&#252;cksetzen</message>
+
+  <!-- Info RC  --> 
+  <message key="SSL Encryption">SSL&#160;Verschl&#252;sselung</message>
+  <message key="Access Object">Zugriffsobjekt</message>
+  <message key="Inherited Rights">Geerbte&#160;Rechte</message>
 
   <!-- Scheduler --> 
   <message key="New job">Neuer&#160;Job</message>

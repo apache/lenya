@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml,v 1.54 2004/04/02 13:55:09 roku Exp $ -->
+<!-- $Id: cmsui.xml,v 1.55 2004/04/03 11:52:55 roku Exp $ -->
 
 <catalogue xml:lang="en">
 
@@ -264,7 +264,12 @@
   <!-- Info RC  --> 
   <message key="Current Version">Current Version</message>
   <message key="Rollback to this revision">Rollback to this revision</message>
-    
+
+  <!-- Info RC  --> 
+  <message key="SSL Encryption">SSL&#160;Encryption</message>
+  <message key="Access Object">Access&#160;Object</message>
+  <message key="Inherited Rights">Inherited&#160;Rights</message>
+
   <!-- Scheduler --> 
   <message key="New job">New&#160;job</message>
   <message key="Active jobs">Active&#160;jobs</message>
