@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.31 2003/08/28 10:13:55 andreas Exp $
+$Id: LoadQuartzServlet.java,v 1.32 2003/08/29 11:38:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -91,20 +91,18 @@ import javax.servlet.http.HttpServletResponse;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.31 2003/08/28 10:13:55 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.32 2003/08/29 11:38:34 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);
     private static SchedulerWrapper scheduler = null;
     private ServletContext servletContext;
-    private String servletContextPath;
     private String schedulerConfigurations;
 
     public static final String PREFIX = "scheduler";
     public static final String PARAMETER_INVOKED = "invoked";
     public static final String PARAMETER_ACTION = "action";
     public static final String PARAMETER_PUBLICATION_ID = "publication-id";
-    public static final String PARAMETER_DOCUMENT_URL = "document-url";
     public static final String CONFIGURATION_ELEMENT = "scheduler-configurations";
 
     /**
@@ -124,9 +122,9 @@ public class LoadQuartzServlet extends HttpServlet {
         super.init(config);
 
         this.servletContext = config.getServletContext();
-        this.servletContextPath = this.servletContext.getRealPath("/");
         this.schedulerConfigurations = config.getInitParameter(CONFIGURATION_ELEMENT);
-        log.debug(".init(): Servlet Context Path: " + this.servletContextPath);
+        log.debug(
+            ".init(): Servlet Context Path: " + getServletContextDirectory().getAbsolutePath());
         log.debug(".init(): Scheduler Configurations: " + this.schedulerConfigurations);
 
         try {
@@ -146,7 +144,10 @@ public class LoadQuartzServlet extends HttpServlet {
      * @throws SchedulerException when an error occurs.
      */
     public void process() throws ServletException, SchedulerException {
-        scheduler = new SchedulerWrapper(servletContextPath, schedulerConfigurations);
+        scheduler =
+            new SchedulerWrapper(
+                getServletContextDirectory().getAbsolutePath(),
+                schedulerConfigurations);
 
         try {
             ShutdownHook();
@@ -240,7 +241,7 @@ public class LoadQuartzServlet extends HttpServlet {
             keys.add(key);
         }
         Collections.sort(keys);
-        for (Iterator i = keys.iterator(); i.hasNext(); ) {
+        for (Iterator i = keys.iterator(); i.hasNext();) {
             String key = (String) i.next();
             String[] values = request.getParameterValues(key);
             log.debug("    [" + key + "] = [" + values[0] + "]");
@@ -257,11 +258,8 @@ public class LoadQuartzServlet extends HttpServlet {
             String publicationId = (String) schedulerParameters.get(PARAMETER_PUBLICATION_ID);
             log.debug("Scheduler invoked.");
 
-            String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
-
             log.debug("Scheduler Parameters:");
             log.debug("    scheduler.publication-id: [" + publicationId + "]");
-            log.debug("    scheduler.document-url:   [" + documentUrl + "]");
 
             logSessionAttributes(request);
 
@@ -271,12 +269,12 @@ public class LoadQuartzServlet extends HttpServlet {
             if (action == null) {
             } else if (action.equals(ADD)) {
                 Date startTime = TriggerHelper.getDate(schedulerParameters);
-                getScheduler().addJob(documentUrl, publicationId, startTime, request);
+                getScheduler().addJob(publicationId, startTime, request);
             } else if (action.equals(MODIFY)) {
                 Date startTime = TriggerHelper.getDate(schedulerParameters);
                 String jobId = getJobId(schedulerParameters);
                 getScheduler().deleteJob(jobId, publicationId);
-                getScheduler().addJob(documentUrl, publicationId, startTime, request);
+                getScheduler().addJob(publicationId, startTime, request);
             } else if (action.equals(DELETE)) {
                 String jobId = getJobId(schedulerParameters);
                 getScheduler().deleteJob(jobId, publicationId);
@@ -287,7 +285,7 @@ public class LoadQuartzServlet extends HttpServlet {
             PrintWriter writer = response.getWriter();
             response.setContentType("text/xml");
 
-            Document snapshot = getScheduler().getSnapshot(publicationId);
+            Document snapshot = getScheduler().getSnapshot();
 
             DocumentHelper.writeDocument(snapshot, writer);
         } catch (Exception e) {
@@ -303,7 +301,7 @@ public class LoadQuartzServlet extends HttpServlet {
      */
     protected String getJobId(NamespaceMap schedulerParameters) {
         String parameterName =
-            JobDataMapWrapper.getFullName(SchedulerWrapper.JOB_PREFIX, SchedulerWrapper.JOB_ID);
+            NamespaceMap.getFullName(SchedulerWrapper.JOB_PREFIX, SchedulerWrapper.JOB_ID);
         String jobId = (String) schedulerParameters.get(parameterName);
         log.debug("    scheduler.job.id:         [" + jobId + "]");
         return jobId;
@@ -327,8 +325,8 @@ public class LoadQuartzServlet extends HttpServlet {
      *
      * @return A string.
      */
-    public String getServletContextPath() {
-        return servletContextPath;
+    public File getServletContextDirectory() {
+        return new File(this.servletContext.getRealPath("/"));
     }
 
     /**
@@ -337,7 +335,7 @@ public class LoadQuartzServlet extends HttpServlet {
      */
     public void restoreJobs() throws SchedulerException {
         File publicationsDirectory =
-            new File(getServletContextPath() + PublishingEnvironment.PUBLICATION_PREFIX);
+            new File(getServletContextDirectory(), PublishingEnvironment.PUBLICATION_PREFIX);
 
         File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
             public boolean accept(File file) {
