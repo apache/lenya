@@ -24,6 +24,12 @@
     //String domain_prefix="http://cvs.wyona.org:8080"+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
     //String domain_prefix_bitflux="http://cvs.wyona.org:8080"+xsp_wyona_context_prefix;
+    
+    String sourcesParameter =
+            "sources=/" + channel + "/" + section + "/" + year + "/" + articleId + "/index.xml";
+    String urisParameter =
+            "uris=" + xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/" + articleId + "/index.html,"+
+                      xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/index.html";
   </xsp:logic>
 
   <menus>
@@ -41,8 +47,8 @@
         <item>-----------------</item>
       </separator>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?uris=<xsp:expr>xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html,"+xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/index.html"</xsp:expr>&amp;sources=<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Publish</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html?task.uris=<xsp:expr>xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html,"+xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/index.html"</xsp:expr>&amp;task.sources=<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml&amp;documentType=Article</xsp:attribute>Schedule</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr></xsp:attribute>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html?task.<xsp:expr>sourcesParameter</xsp:expr>&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;documentType=Article</xsp:attribute>Schedule</item>
 <!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            
 -->

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : publishing.xconf.xml
+    Created on : November 4, 2002, 3:08 PM
+    Author     : ah
+    Description:
+        Configuration of the authoring and publishing process of this publication.
+-->
+
+<publication>
+  <authoring>
+    <documents href="docs/publication/authoring"/>
+    <tree href="docs/publication/authoring/tree.xml"/>
+  </authoring>
+  <live>
+    <documents href="docs/publication/live"/>
+    <tree href="docs/publication/live/tree.xml"/>
+  </live>
+<!-- FIXME? -->
+  <export>
+    <destination href="resources/publication/export/pending"/>
+    <substitution regexp="s/\/wyona-cms\/oscom//g"/>
+  </export>
+</publication>

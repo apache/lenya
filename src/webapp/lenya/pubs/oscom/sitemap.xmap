@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.5 2002/09/15 15:51:41 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.6 2002/11/15 13:45:40 ah Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -123,6 +123,11 @@
           <!-- The authoring area -->
           <map:match pattern="authoring/**">
             <map:mount uri-prefix="" src="authoring-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+          </map:match>
+
+          <!-- Scheduler -->
+          <map:match pattern="scheduler/**">
+            <map:mount uri-prefix="scheduler" src="scheduler-sitemap.xmap" check-reload="true" reload-method="synchron"/>
           </map:match>
 
           <map:match pattern="**">

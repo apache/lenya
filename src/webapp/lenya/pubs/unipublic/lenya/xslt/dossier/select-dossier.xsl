@@ -22,7 +22,7 @@
     </head>
     <body>
       <h1>Assign Article to Dossier</h1>
-      <form action="selectDossier" method="GET">
+      <form action="selectDossier" method="POST">
         <input type="hidden" name="article-file" value="{$article-file}"/>
         <table cellpadding="5" cellspacing="0" border="0">
         <xsl:call-template name="dossier-entry">

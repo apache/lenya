@@ -9,6 +9,9 @@
   <xsl:param name="task.uris"/>
   <xsl:param name="documentUri"/>
   <xsl:param name="documentType"/>
+
+  <!-- FIXME -->
+  <xsl:variable name="context_prefix">/wyona-cms/oscom</xsl:variable>
   
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -71,8 +74,7 @@
       </td>
       <form method="POST">
 	<xsl:attribute name="action">
-	  <xsl:text>/wyona-cms/unipublic/scheduler/docid/</xsl:text> <!-- FIXME: context_prefix -->
-	  <xsl:value-of select="$documentUri"/>
+	  <xsl:value-of select="$context_prefix"/><xsl:text>/scheduler/docid/</xsl:text><xsl:value-of select="$documentUri"/>
 	</xsl:attribute>
         
         <!-- hidden input fields for parameters -->
@@ -156,7 +158,7 @@
 	  <h1>Scheduler</h1>
 	  <h3>Schedule tasks for this page/document</h3>
 	  <p>
-            <a href="/wyona-cms/unipublic/authoring/{$documentUri}">
+            <a href="{$context_prefix}/authoring/{$documentUri}">
               <xsl:value-of select="$documentUri"/>
             </a>
           </p>
@@ -200,8 +202,7 @@
 		  <tr>
 		    <form method="POST">
 		      <xsl:attribute name="action">
-			<xsl:text>/wyona-cms/unipublic/scheduler/docid/</xsl:text> <!-- FIXME: context_prefix -->
-			<xsl:value-of select="$documentUri"/>
+			<xsl:value-of select="$context_prefix"/><xsl:text>/scheduler/docid/</xsl:text><xsl:value-of select="$documentUri"/>
 		      </xsl:attribute>
                       <!-- hidden input fields for parameters -->
                       <input type="hidden" name="documentUri" value="{$documentUri}"/>

@@ -15,17 +15,8 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions>
-      <map:action name="publisher" src="org.wyona.cms.cocoon.acting.PublisherAction">
-        <authoring href="docs/publication/authoring/"/>
-        <live href="docs/publication/live/"/>
-        <tree-authoring href="docs/publication/authoring/tree.xml"/>
-        <tree-live href="docs/publication/live/tree.xml"/>
-        <export-directory prefix="resources/publication/export/pending"/>
-        <export-url-prefix substitute="s/\/wyona-cms\/oscom//g"/>
-<!--
-        <export-substitute-uri pattern="/wyona-cms/oscom/" substitution="/"/>
-        <replication-queue href="resources/cms/replication-queue"/>
--->
+      <map:action name="publisher" src="org.wyona.cms.cocoon.acting.TaskAction">
+        <task id="publish"/>
       </map:action>
     </map:actions>
     <map:selectors default="browser">
