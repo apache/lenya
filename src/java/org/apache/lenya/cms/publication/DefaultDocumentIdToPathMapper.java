@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultDocumentIdToPathMapper.java,v 1.2 2003/06/17 09:55:11 egli Exp $
+ * $Id: DefaultDocumentIdToPathMapper.java,v 1.3 2003/06/25 14:32:35 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -86,8 +86,25 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
         String area,
         String documentId,
         String language) {
-        // TODO Auto-generated method stub
-        return null;
+            
+        String languageSuffix = "";
+        if (language != null && !"".equals(language)) {
+            languageSuffix = "_" + language;
+        }
+            
+        File file =
+            new File(
+                publication.getDirectory(),
+                "content"
+                    + File.separator
+                    + area
+                    + File.separator
+                    + documentId
+                    + File.separator
+                    + "index"
+                    + languageSuffix
+                    +".xml");
+        return file;
     }
 
     /* (non-Javadoc)
@@ -97,7 +114,8 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
         Publication publication,
         String area,
         String documentId) {
-        // TODO Auto-generated method stub
+        
+        //SiteTree tree = new DefaultSiteTree()
         return null;
     }
 
