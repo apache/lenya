@@ -30,8 +30,9 @@
 	
 	<p>
 		Each AccessController component needs a type that is attached to the
-		role attribute, separated with a slash (/). This allows the assignment
-		of the AccessController to an <link href="accesscontrollerresolvers.html">AccessControllerResolver</link>.
+		role attribute, separated with a slash (/). This allows you to choose an
+		AccessController in your publication in combination with the
+		Publication<link href="accesscontrollerresolvers.html">AccessControllerResolver</link>.
 		The following example shows the declaration of an AccessController with
 		the type <em>global</em>:
 	</p>
