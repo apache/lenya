@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: workflow2info.xsl,v 1.2 2003/08/15 13:14:30 andreas Exp $
+ $Id: workflow2info.xsl,v 1.3 2004/02/11 13:32:27 gregor Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -30,7 +30,9 @@
 					<th>User</th>
 					<th>IP Address</th>
 				</tr>
-				<xsl:apply-templates select="wf:version"/>
+				<xsl:apply-templates select="wf:version">
+				    <xsl:sort select="@date" order="descending"/>
+				</xsl:apply-templates>
 			</table>
 		</lenya-info:workflow>
 	</lenya-info:info>
