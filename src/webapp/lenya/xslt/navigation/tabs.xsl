@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: tabs.xsl,v 1.12 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -61,9 +61,11 @@
 
 
 <xsl:template name="label">
-  <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
+   <xsl:choose>
+    <xsl:when test="@current='true'"><xsl:apply-templates select="nav:label"/></xsl:when>
+    <xsl:otherwise><a href="{@href}"><xsl:apply-templates select="nav:label"/></a></xsl:otherwise>
+  </xsl:choose>	  
 </xsl:template>
-
 
 <xsl:template match="nav:label">
   <xsl:value-of select="."/>
