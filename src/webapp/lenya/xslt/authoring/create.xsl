@@ -44,9 +44,9 @@ function validContent(formField,fieldLabel)
 {
 	var result = true;
 	
-	if (formField.value.match("[^a-zA-Z0-9_\\-]+"))
+	if (formField.value.match("[^a-zA-Z0-9\\-]+"))
 	{
-		alert('Please enter a valid value for the "' + fieldLabel +'" field. A-Z, a-z, 0-9, _ or -');
+		alert('Please enter a valid value for the "' + fieldLabel +'" field. A-Z, a-z, 0-9 or -');
 		formField.focus();
 		result = false;
 	}
