@@ -2,7 +2,7 @@
 :: -----------------------------------------------------------------------------
 :: Lenya Win32 Shell Script
 ::
-:: $Id: lenya.bat,v 1.2 2003/11/09 23:29:32 gregor Exp $
+:: $Id: lenya.bat,v 1.3 2004/03/04 18:40:41 gregor Exp $
 :: -----------------------------------------------------------------------------
 
 :: Configuration variables
@@ -98,31 +98,31 @@ goto cliLoop
 
 :cliLoopEnd
 
-"%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -classpath %CP% -Djava.endorsed.dirs=lib\endorsed -Dloader.jar.repositories=%LENYA_LIB% -Dloader.main.class=org.apache.cocoon.Main Loader %param%
+"%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -classpath %CP% -Djava.endorsed.dirs=%LENYA_LIB%\endorsed -Dloader.jar.repositories=%LENYA_LIB% -Dloader.main.class=org.apache.cocoon.Main Loader %param%
 goto end
 
 :: ----- Servlet ---------------------------------------------------------------
 
 :doServlet
-%EXEC% "%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -classpath %CP% -Djava.endorsed.dirs=%LENYA_HOME%\lib\endorsed -Dwebapp=%JETTY_WEBAPP% -Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser -Djetty.port=%JETTY_PORT% -Djetty.admin.port=%JETTY_ADMIN_PORT% -Dhome=%LENYA_HOME% -Dloader.jar.repositories=%LENYA_HOME%\tools\jetty\lib,%LENYA_HOME%\lib\endorsed -Dloader.main.class=org.mortbay.jetty.Server Loader %LENYA_HOME%\tools\jetty\conf\main.xml
+%EXEC% "%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -classpath %CP% -Djava.endorsed.dirs=%LENYA_LIB%\endorsed -Dwebapp=%JETTY_WEBAPP% -Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser -Djetty.port=%JETTY_PORT% -Djetty.admin.port=%JETTY_ADMIN_PORT% -Dhome=%LENYA_HOME% -Dloader.jar.repositories=%LENYA_HOME%\tools\jetty\lib,%LENYA_LIB%\endorsed -Dloader.main.class=org.mortbay.jetty.Server Loader %LENYA_HOME%\tools\jetty\conf\main.xml
 goto end
 
 :: ----- Servlet with Administration Web Interface -----------------------------
 
 :doAdmin
-%EXEC% "%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -classpath %CP% -Djava.endorsed.dirs=%LENYA_HOME%\lib\endorsed -Dwebapp=%JETTY_WEBAPP% -Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser -Djetty.port=%JETTY_PORT% -Djetty.admin.port=%JETTY_ADMIN_PORT% -Dhome=%LENYA_HOME% -Dloader.jar.repositories=%LENYA_HOME%\tools\jetty\lib,%LENYA_HOME%\lib\endorsed -Dloader.main.class=org.mortbay.jetty.Server Loader %LENYA_HOME%\tools\jetty\conf\main.xml %LENYA_HOME%\tools\jetty\conf\admin.xml
+%EXEC% "%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -classpath %CP% -Djava.endorsed.dirs=%LENYA_LIB%\endorsed -Dwebapp=%JETTY_WEBAPP% -Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser -Djetty.port=%JETTY_PORT% -Djetty.admin.port=%JETTY_ADMIN_PORT% -Dhome=%LENYA_HOME% -Dloader.jar.repositories=%LENYA_HOME%\tools\jetty\lib,%LENYA_LIB%\endorsed -Dloader.main.class=org.mortbay.jetty.Server Loader %LENYA_HOME%\tools\jetty\conf\main.xml %LENYA_HOME%\tools\jetty\conf\admin.xml
 goto end
 
 :: ----- Servlet Debug ---------------------------------------------------------
 
 :doDebug
-%EXEC% "%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -Xdebug -Xrunjdwp:transport=dt_socket,address=%JAVA_DEBUG_PORT%,server=y,suspend=n  -classpath %CP% -Djava.endorsed.dirs=%LENYA_HOME%\lib\endorsed -Dwebapp=%JETTY_WEBAPP% -Dhome=%LENYA_HOME% -Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser -Djetty.port=%JETTY_PORT% -Djetty.admin.port=%JETTY_ADMIN_PORT% -Dloader.jar.repositories=%LENYA_HOME%\tools\jetty\lib,%LENYA_HOME%\lib\endorsed -Dloader.main.class=org.mortbay.jetty.Server Loader %LENYA_HOME%\tools\jetty\conf\main.xml
+%EXEC% "%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -Xdebug -Xrunjdwp:transport=dt_socket,address=%JAVA_DEBUG_PORT%,server=y,suspend=n  -classpath %CP% -Djava.endorsed.dirs=%LENYA_LIB%\endorsed -Dwebapp=%JETTY_WEBAPP% -Dhome=%LENYA_HOME% -Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser -Djetty.port=%JETTY_PORT% -Djetty.admin.port=%JETTY_ADMIN_PORT% -Dloader.jar.repositories=%LENYA_HOME%\tools\jetty\lib,%LENYA_LIB%\endorsed -Dloader.main.class=org.mortbay.jetty.Server Loader %LENYA_HOME%\tools\jetty\conf\main.xml
 goto end
 
 :: ----- Servlet Profile ---------------------------------------------------------
 
 :doProfile
-%EXEC% "%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -Xrunhprof:heap=all,cpu=samples,thread=y,depth=3 -classpath %CP% -Djava.endorsed.dirs=%LENYA_HOME%\lib\endorsed -Dwebapp=%JETTY_WEBAPP% -Dhome=%LENYA_HOME% -Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser -Djetty.port=%JETTY_PORT% -Djetty.admin.port=%JETTY_ADMIN_PORT% -Dloader.jar.repositories=%LENYA_HOME%\tools\jetty\lib,%LENYA_HOME%\lib\endorsed -Dloader.main.class=org.mortbay.jetty.Server Loader %LENYA_HOME%\tools\jetty\conf\main.xml
+%EXEC% "%JAVA_HOME%\bin\java.exe" %JAVA_OPTIONS% -Xrunhprof:heap=all,cpu=samples,thread=y,depth=3 -classpath %CP% -Djava.endorsed.dirs=%LENYA_LIB%\endorsed -Dwebapp=%JETTY_WEBAPP% -Dhome=%LENYA_HOME% -Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser -Djetty.port=%JETTY_PORT% -Djetty.admin.port=%JETTY_ADMIN_PORT% -Dloader.jar.repositories=%LENYA_HOME%\tools\jetty\lib,%LENYA_LIB%\endorsed -Dloader.main.class=org.mortbay.jetty.Server Loader %LENYA_HOME%\tools\jetty\conf\main.xml
 
 :: ----- End -------------------------------------------------------------------
 

@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------------
 # Lenya Unix Shell Script
 #
-# $Id: lenya.sh,v 1.2 2003/11/08 14:06:40 michi Exp $
+# $Id: lenya.sh,v 1.3 2004/03/04 18:40:41 gregor Exp $
 # -----------------------------------------------------------------------------
 
 # Configuration variables
@@ -104,7 +104,7 @@ fi
 # ----- Set Local Variables ( used to minimize cut/paste) ---------------------
 
 JAVA="$JAVA_HOME/bin/java"
-ENDORSED_LIBS="$LENYA_HOME/lib/endorsed"
+ENDORSED_LIBS="$LENYA_LIB/endorsed"
 ENDORSED="-Djava.endorsed.dirs=$ENDORSED_LIBS"
 PARSER=-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser
 LOADER=Loader
