@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.11 2003/06/06 13:58:49 egli Exp $
+ * $Id: User.java,v 1.12 2003/06/11 09:48:35 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,7 +62,7 @@ public abstract class User {
 	protected String id;
 	protected String fullName;
 	protected String email;
-	protected String password;
+	protected String encryptedPassword;
 	protected Set groups = new HashSet();
 
 	public User() {
@@ -88,7 +88,7 @@ public abstract class User {
 		this.id = id;
 		this.fullName = fullName;
 		this.email = email;
-		this.password = password;
+		this.encryptedPassword = password;
 	}
 
 	/**
@@ -162,10 +162,10 @@ public abstract class User {
 	}
 
 	/**
-	 * @param string
+	 * @param plainTextPassword
 	 */
-	public void setPassword(String string) {
-		password = string;
+	public void setPassword(String plainTextPassword) {
+		encryptedPassword = Password.encrypt(plainTextPassword);
 	}
 
 	/**
