@@ -72,7 +72,7 @@ Section "Apache Lenya 1.2.1" SecDummy
   File build\lenya\webapp\sitemap.xmap
   File build\lenya\webapp\welcome.xml
   File build\lenya\webapp\welcome.xslt
-  File /r build\lenya\webapp\legal
+  File /r legal
   File /r build\lenya\webapp\lenya
   File /r build\lenya\webapp\resources
   File /r build\lenya\webapp\stylesheets
