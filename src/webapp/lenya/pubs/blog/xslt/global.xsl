@@ -90,9 +90,7 @@ Copyright &#169; Apache Software Foundation
 
 <xsl:template match="content" mode="sidebar">
 <div class="sidebar-content">
-<!-- FIXME: Don't copy "content" tag, only children -->
-<xsl:copy-of select="."/>
-<xsl:copy/>
+<xsl:copy-of select="@*|node()"/>
 </div>
 </xsl:template>
  
