@@ -12,12 +12,26 @@ LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 #symlink the xpdf directory to the version you have
 XPDF=$HOME/build/xpdf-2.03-linux/pdftotext
 
-CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar
+CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar:$LIB_DIR/websphinx.jar
 
 echo "INFO: classpath = $CLASSPATH"
 
 
 case "$1" in
+    crawl)
+        echo ""
+        echo "=========================================================="
+        echo "Target: $1"
+        echo "=========================================================="
+        echo ""
+
+        CRAWLER_CONF=$2
+
+        echo "INFO: crawler.xconf = $CRAWLER_CONF"
+        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.CrawlerConfiguration $CRAWLER_CONF
+        echo ""
+        $JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
+	;;
     index)
         echo ""
         echo "=========================================================="
