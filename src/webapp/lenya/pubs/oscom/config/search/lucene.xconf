@@ -8,4 +8,6 @@
 
   <index-dir src="../resources/search/lucene/index/index"/>
   <htdocs-dump-dir src="../resources/search/lucene/htdocs_dump"/>
+
+  <indexer class="org.lenya.lucene.index.DefaultIndexer"/>
 </lucene>
