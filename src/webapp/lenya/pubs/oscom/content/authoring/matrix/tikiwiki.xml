@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>tikiwiki</id>
+  <editor email="marc@marclaporte.com">Marc Laporte</editor>
+  <system_name>Tiki</system_name>
+  <description>
+Tiki is a CMS system based on a Wiki, it has all the features a regular
+Wiki application and a whole lot more. Tiki uses PHP and templates via
+Smarty for a customizable layout and look &amp; feel. Features: Wiki pages,
+File Galleries, Comments, Image Galleries, Forums, Multi-language
+support, Permission system using groups and users , Weblogs, CMS system
+(Articles, submissions and topics), Banners, Dynamic Content, Polls,
+Chat, RSS feeds, Communications center using an XMLRPC API.
+  </description>
+  <main_url>http://tikiwiki.sourceforge.net</main_url>
+  <license>
+    <license_name>GNU LGPL License</license_name>
+  </license>
+</system>

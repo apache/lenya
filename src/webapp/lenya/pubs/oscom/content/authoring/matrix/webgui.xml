@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>webgui</id>
+  <editor email="jt@plainblack.com">JT Smith</editor>
+  <system_name>WebGUI</system_name>
+  <description>
+WebGUI is a content management platform built to allow average business users to build and maintain complex web sites. It is modular, pluggable, and platform independent. It was designed to allow the people who create the content, to manage it online, rather than content management taking up the time of the busy IT Staff.
+  </description>
+  <main_url>http://www.plainblack.com/webgui</main_url>
+  <license>
+    <license_name>GNU GPL</license_name>
+    <license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+  </license>
+</system>

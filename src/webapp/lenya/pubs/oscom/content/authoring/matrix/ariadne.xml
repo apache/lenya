@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>ariadne</id>
+  <editor email="auke@muze.nl">Auke van Slooten</editor>
+  <system_name>Ariadne</system_name>
+  <description>
+Ariadne is a multi-language Web Application Server and Content Management
+System built with PHP. It has a rich user interface which includes wizards,
+pulldown menus, and a WYSIWYG HTML editor. Data is stored in a structured
+object store and can be accessed via filesystem-like calls (ls, find, get).
+It supports MySQL, PostgreSQL, and MSSQL.
+  </description>
+  <main_url>http://ariadne.muze.nl</main_url>
+  <license>
+    <license_name>GNU GPL</license_name>
+    <license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+  </license>
+</system>
