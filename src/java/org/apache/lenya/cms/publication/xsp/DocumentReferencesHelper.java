@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.11 2003/10/31 15:50:53 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.12 2003/11/03 17:49:39 egli Exp $
 <License>
 
  ============================================================================
@@ -82,7 +82,7 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class DocumentReferencesHelper {
 
@@ -250,8 +250,12 @@ public class DocumentReferencesHelper {
 
             for (int i = 0; i < internalLinks.length; i++) {
                 String docId = internalLinks[i];
-                // trim the leading '_'
-                String language = internalLinksLanguages[i].substring(1);
+		String language = null;
+                
+		if (internalLinksLanguages[i] != null) {
+		    // trim the leading '_'
+		    language = internalLinksLanguages[i].substring(1);
+		}
                 SiteTreeNode documentNode = sitetree.getNode(docId);
                 if (documentNode == null
                     || documentNode.getLabel(language) == null) {
