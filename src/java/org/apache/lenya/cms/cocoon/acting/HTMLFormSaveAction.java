@@ -69,9 +69,11 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.lenya.xml.XPath;
+
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.18 2003/10/14 14:04:07 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.19 2003/10/14 23:00:32 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -136,7 +138,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     while (params.hasMoreElements()) {
                         String pname = (String) params.nextElement();
       
-                        getLogger().debug(".act(): Parameter: " + pname + " (" + request.getParameter(pname)  + ")");
+                        getLogger().error(".act(): Parameter: " + pname + " (" + request.getParameter(pname)  + ")");
 
                         if (pname.indexOf("<xupdate:") == 0) {
                             String select = pname.substring(pname.indexOf("select") + 8);
@@ -156,8 +158,26 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             if (pname.indexOf("<![CDATA[") > 0) {
                                 xupdateUpdate = pname + request.getParameter(pname) + "]]></xupdate:update>";
                             }
-                            log.error(".act() Update Node: " + xupdateUpdate);
-                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>");
+                            log.error(".act(): Update Node (update): " + xupdateUpdate);
+
+                            if (pname.indexOf("<![CDATA[") > 0) {
+                              xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>");
+                            } else {
+                              // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new and remove original
+                              String namespace = selectionNodeList.item(0).getNamespaceURI();
+                              log.error(".act(): Update Node (namespace): " + namespace);
+                              String namespaceAttribute = "";
+                              if (namespace != null) {
+                                namespaceAttribute = "namespace=\"" + namespace + "\"";
+                              }
+                              String xupdateInsertAfter = "<xupdate:insert-after select=\"" + select  + " \"><xupdate:element name=\"" + new XPath(select).getNameWithoutPredicates()  + "\" " + namespaceAttribute  + ">" + request.getParameter(pname)  + "</xupdate:element></xupdate:insert-after>";
+                              log.error(".act(): Update Node (insert-after): " + xupdateInsertAfter);
+                              String xupdateRemove = "<xupdate:remove select=\"" + select  + " \"/>";
+                              log.error(".act(): Update Node (remove): " + xupdateRemove);
+                              xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateInsertAfter + xupdateRemove + "</xupdate:modifications>");
+
+                              //xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>");
+                            }
                             xq.execute(document);
                         } else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">")) { // no .x and .y from input type="image"
                             log.error(".act() Append Node: " + pname);
