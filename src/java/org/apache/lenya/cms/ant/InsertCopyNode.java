@@ -1,5 +1,5 @@
 /*
-$Id: InsertCopyNode.java,v 1.5 2003/07/28 07:54:35 edith Exp $
+$Id: InsertCopyNode.java,v 1.6 2003/08/07 15:52:26 egli Exp $
 <License>
 
  ============================================================================
@@ -59,12 +59,9 @@ import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 
-import org.xml.sax.SAXException;
-
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 
@@ -116,10 +113,6 @@ public class InsertCopyNode extends TwoNodesTask {
 				throw new SiteTreeException("Node " + node + " couldn't be found");
 			}
 				tree.save();
-			} catch (ParserConfigurationException e) {
-				throw new SiteTreeException("Exception when creating the site tree", e);
-			} catch (SAXException e) {
-				throw new SiteTreeException("Exception when creating the site tree", e);
 			} catch (IOException e) {
 				throw new SiteTreeException("Exception when saving the tree file", e);
 			} catch (TransformerException e) {
@@ -168,12 +161,7 @@ public class InsertCopyNode extends TwoNodesTask {
 			} else {
 				throw new SiteTreeException("Node " + node + " couldn't be found");
 			}
-
                 sectree.save();
-			} catch (ParserConfigurationException e) {
-				throw new SiteTreeException("Exception when creating the site tree", e);
-			} catch (SAXException e) {
-				throw new SiteTreeException("Exception when creating the site tree", e);
 			} catch (IOException e) {
 				throw new SiteTreeException("Exception when saving the tree file", e);
             } catch (TransformerException e) {

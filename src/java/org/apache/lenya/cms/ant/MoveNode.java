@@ -1,5 +1,5 @@
 /*
-$Id: MoveNode.java,v 1.4 2003/07/25 16:38:53 edith Exp $
+$Id: MoveNode.java,v 1.5 2003/08/07 15:52:26 egli Exp $
 <License>
 
  ============================================================================
@@ -58,13 +58,11 @@ package org.apache.lenya.cms.ant;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-import org.xml.sax.SAXException;
 
 
 /**
@@ -129,10 +127,6 @@ public class MoveNode extends TwoNodesTask {
 				firsttree.save();
 				sectree.save();
 			}
-		} catch (ParserConfigurationException e) {
-			throw new SiteTreeException("Exception when creating the site tree", e);
-		} catch (SAXException e) {
-			throw new SiteTreeException("Exception when creating the site tree", e);
 		} catch (IOException e) {
 			throw new SiteTreeException("Exception when saving the tree file", e);
 		} catch (TransformerException e) {
