@@ -1,5 +1,5 @@
 /*
-$Id: WriteDCParametersTask.java,v 1.1 2003/08/14 10:46:23 egli Exp $
+$Id: WriteDCParametersTask.java,v 1.2 2003/08/14 15:30:58 egli Exp $
 <License>
 
  ============================================================================
@@ -74,8 +74,6 @@ public class WriteDCParametersTask extends PublicationTask {
     private String subject = null;
     private String language = null;
     private String publisher = null;
-    private String dateIssued = null;
-    private String datePublished = null;    
     private String rights = null;
  
     /**
@@ -194,42 +192,6 @@ public class WriteDCParametersTask extends PublicationTask {
     }
 
     /**
-     * Get the date of issue
-     * 
-     * @return the date of issue
-     */
-    public String getDateIssued() {
-        return dateIssued;
-    }
-
-    /**
-     * Get the date of publication.
-     *  
-     * @return the date of publication
-     */
-    public String getDatePublished() {
-        return datePublished;
-    }
-
-    /**
-     * Set the date of first issue
-     * 
-     * @param string the date of issue
-     */
-    public void setDateIssued(String string) {
-        dateIssued = string;
-    }
-
-    /**
-     * Set the publication date
-     * 
-     * @param string the date of publication
-     */
-    public void setDatePublished(String string) {
-        datePublished = string;
-    }
-
-    /**
      * Write the dublin core params.
      * 
      * @param creator the creator.
@@ -237,8 +199,6 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param description the description
      * @param subject the subject
      * @param publisher the publisher
-     * @param dateIssued the date of issue
-     * @param datePublished the date of publication
      * @param rights the rights
      * 
      * @throws BuildException if an error occurs
@@ -251,8 +211,6 @@ public class WriteDCParametersTask extends PublicationTask {
         String description,
         String subject,
         String publisher,
-        String dateIssued,
-        String datePublished,
         String rights)
         throws BuildException, DocumentBuildException, DocumentException {
 
@@ -266,8 +224,6 @@ public class WriteDCParametersTask extends PublicationTask {
         dc.setDescription(description);
         dc.setSubject(subject);
         dc.setPublisher(publisher);
-        dc.setDateIssued(dateIssued);
-        dc.setDatePublished(datePublished);
         dc.setRights(rights);
         dc.save();
     }
@@ -283,8 +239,6 @@ public class WriteDCParametersTask extends PublicationTask {
                 getDescription(),
                 getSubject(),
                 getPublisher(),
-                getDateIssued(),
-                getDatePublished(),
                 getRights());
             } catch (
                 Exception e) {
