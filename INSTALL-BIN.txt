@@ -6,7 +6,8 @@
   ------------
 
   cp wyona-cms.war PREFIX/jakarta-tomcat-4.0/webapps/.
-  export JAVA_HOME=/usr/local/IBMJava2-13
+  export JAVA_HOME=/usr/local/jdk1.3.1
+  #export JAVA_HOME=/usr/local/IBMJava2-13 (We encounter problems here with stylesheets)
   export CATALINA_HOME=PREFIX/jakarta-tomcat-4.0
   PREFIX/jakarta-tomcat-4.0/bin/startup.sh
   (Wait a few seconds)

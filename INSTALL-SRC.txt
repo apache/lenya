@@ -30,7 +30,7 @@
      [unix]  cd /home/wyona/build
              wget http://jakarta.apache.org/builds/jakarta-tomcat-4.0/nightly/jakarta-tomcat-4.0-20020110.tar.gz
              tar -xzf jakarta-tomcat-4.0-20020110.tar.gz
-             export JAVA_HOME=/usr/local/IBMJava2-13
+             export JAVA_HOME=/usr/local/jdk1.3.1
              export CATALINA_HOME=/home/wyona/build/jakarta-tomcat-4.0
              /home/wyona/build/jakarta-tomcat-4.0/bin/startup.sh
              lynx http://localhost:8080
@@ -60,7 +60,7 @@
              wget http://cvs.apache.org/snapshots/xml-cocoon2/xml-cocoon2_20020110171938.tar.gz
              tar -xzf xml-cocoon2_20020110171938.tar.gz
              cd xml-cocoon2
-             export JAVA_HOME=/usr/local/IBMJava2-13
+             export JAVA_HOME=/usr/local/jdk1.3.1
              ./build.sh -Dinclude.webapp.libs=yes webapp
              cp build/cocoon/cocoon.war ../wyona-cms-2.0-src/.
 
@@ -68,7 +68,7 @@
   5) Build Wyona
 
      [unix]  cd /home/wyona/src/wyona-cms-2.0-src
-             export JAVA_HOME=/usr/local/IBMJava2-13
+             export JAVA_HOME=/usr/local/jdk1.3.1
              export ANT_HOME=/home/wyona/build/jakarta-ant-1.4.1
              export PATH=/home/wyona/build/jakarta-ant-1.4.1/bin:$PATH
              ant
