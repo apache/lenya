@@ -1,5 +1,5 @@
 /*
-$Id: SimpleLinkRewritingTransformer.java,v 1.1 2003/10/17 14:28:37 egli Exp $
+$Id: SimpleLinkRewritingTransformer.java,v 1.2 2003/10/22 16:39:18 egli Exp $
 <License>
 
  ============================================================================
@@ -58,8 +58,6 @@ package org.apache.lenya.cms.cocoon.transformation;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractTransformer;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -76,9 +74,9 @@ import java.util.regex.Pattern;
 
 /**
  * This is a simple transformer which rewrites &lt;a
- * href="http://localhost:8080/lenya/unicom/authoring/doctypes/2columns.html"&gt;
+ * href="/lenya/unicom/authoring/doctypes/2columns.html"&gt;
  * to &lt;a
- * href="http://localhost:8080/lenya/unicom/$AREA/doctypes/2columns.html"&gt;.
+ * href="/lenya/unicom/$AREA/doctypes/2columns.html"&gt;.
  * 
  * Ideally this transformer could be replaced by the
  * LinkRewrittingTransformer that Forrest uses if we employ the same
@@ -90,8 +88,6 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
 
     private String baseURI;
     private PageEnvelope envelope = null;
-    private int serverPort;
-    private String serverName;
 
     public static final String INTERNAL_LINK_PREFIX = "site:";
 
@@ -101,8 +97,6 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
         String source,
         Parameters parameters)
         throws ProcessingException {
-
-        Request request = ObjectModelHelper.getRequest(objectModel);
 
         try {
             envelope =
@@ -115,26 +109,6 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
             envelope.getContext() + "/" + envelope.getPublication().getId();
 
         StringBuffer uribuf = new StringBuffer();
-        boolean isSecure = request.isSecure();
-        this.serverPort = request.getServerPort();
-
-        if (isSecure)
-            uribuf.append("https://");
-        else
-            uribuf.append("http://");
-
-        this.serverName = request.getServerName();
-        uribuf.append(this.serverName);
-
-        if (isSecure) {
-            if (this.serverPort != 443) {
-                uribuf.append(":").append(this.serverPort);
-            }
-        } else {
-            if (this.serverPort != 80) {
-                uribuf.append(":").append(this.serverPort);
-            }
-        }
 
         uribuf.append(mountPoint);
 
@@ -154,11 +128,7 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
         // same problems. See DocumentReferencesHelper#getInternalLinkPattern().
         Pattern pattern =
             Pattern.compile(
-                "http://"
-                    + this.serverName
-                    + ":"
-                    + this.serverPort
-                    + envelope.getContext()
+                    envelope.getContext()
                     + "/"
                     + envelope.getPublication().getId()
                     + "/"
@@ -197,7 +167,6 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
 
     public void recycle() {
         this.envelope = null;
-        this.serverName = null;
         this.baseURI = null;
     }
 }

@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.6 2003/10/21 09:51:55 andreas Exp $
+$Id: DocumentReferencesHelper.java,v 1.7 2003/10/22 16:39:18 egli Exp $
 <License>
 
  ============================================================================
@@ -63,8 +63,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
@@ -81,13 +80,11 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DocumentReferencesHelper {
 
     private PageEnvelope pageEnvelope = null;
-    private String serverName = null;
-    private int serverPort = 80;
 
     /**
      * Create a new DocumentReferencesHelper
@@ -104,9 +101,6 @@ public class DocumentReferencesHelper {
         } catch (PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        this.serverName = request.getServerName();
-        this.serverPort = request.getServerPort();
     }
 
     /**
@@ -114,16 +108,12 @@ public class DocumentReferencesHelper {
      * links from other documents to the current document. This
      * is done using the assumption that internal links look as if
      * they were copied directly from the browser,
-     * e.g. http://localhost:8080/lenya/unicom/authoring/doctypes/2columns.html
+     * e.g. /lenya/unicom/authoring/doctypes/2columns.html
      * 
      * @return the search string
      */
     protected String getReferencesSearchString() {
         return "href\\s*=\\s*"
-            + "\"http://"
-            + this.serverName
-            + ":"
-            + this.serverPort
             + pageEnvelope.getContext()
             + "/"
             + pageEnvelope.getPublication().getId()
@@ -137,32 +127,28 @@ public class DocumentReferencesHelper {
      * i.e from the current document to others. This is done using 
      * the assumption that internal links look as if they were copied 
      * directly from the browser, e.g. 
-     * http://localhost:8080/lenya/unicom/authoring/doctypes/2columns.html
+     * /lenya/unicom/authoring/doctypes/2columns.html
      * 
      * @return the search string
      */
     protected Pattern getInternalLinkPattern() {
-    	// FIXME: The following method is not very robust and certainly 
-    	// will fail if the mapping between URL and document-id changes  
+        // FIXME: The following method is not very robust and certainly 
+        // will fail if the mapping between URL and document-id changes  
 
-	// Link Management now assumes that internal links are of the
-	// form
-	// href="http://$SERVER_NAME:$SERVER_PORT/$CONTEXT_PREFIX/$PUBLICATION_ID/$AREA$DOCUMENT_ID(_[a-z][a-z])?.html
-	// If there is a match in a document file it is assumed that
-	// this is an internal link and is treated as such (warning if
-	// publish with unpublished internal links and warning if
-	// deactivate with internal references).
-  
-	// However this is not coordinated with the
-	// DocumentToPathMapper and will probably fail if the URL
-	// looks different.
+        // Link Management now assumes that internal links are of the
+        // form
+        // href="$CONTEXT_PREFIX/$PUBLICATION_ID/$AREA$DOCUMENT_ID(_[a-z][a-z])?.html
+        // If there is a match in a document file it is assumed that
+        // this is an internal link and is treated as such (warning if
+        // publish with unpublished internal links and warning if
+        // deactivate with internal references).
+
+        // However this is not coordinated with the
+        // DocumentToPathMapper and will probably fail if the URL
+        // looks different.
 
         return Pattern.compile(
             "href\\s*=\\s*"
-                + "\"http://"
-                + this.serverName
-                + ":"
-                + this.serverPort
                 + pageEnvelope.getContext()
                 + "/"
                 + pageEnvelope.getPublication().getId()
