@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.6 2004/03/21 18:35:15 gregor Exp $ -->
+<!-- $Id: dist-build.xml,v 1.7 2004/04/05 10:09:37 michi Exp $ -->
 
 <project name="dist">
 
@@ -40,7 +40,7 @@
 
   </target>
 
-  <target name="dist" depends="prepare-dist" description="Build a regular binary distribution tar ball">
+  <target name="dist-bin" depends="prepare-dist" description="Build a regular binary distribution tar ball">
 
     <tar tarfile="${dist.bin.dir}.tar" basedir="${dist.root}" includes="${fullname}/**"/>
 
@@ -55,7 +55,7 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="snapshot" depends="prepare-dist" description="Build a snapshot binary distribution tar ball (the same as 'dist' except for the filename)">
+  <target name="snapshot-bin" depends="prepare-dist" description="Build a snapshot binary distribution tar ball (the same as 'dist' except for the filename)">
 
     <copy todir="${snapshot.bin.dir}">
       <fileset dir="${dist.root}/${fullname}"/>
