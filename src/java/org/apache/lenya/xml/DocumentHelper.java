@@ -88,8 +88,8 @@ import org.xml.sax.SAXException;
 /**
  * Various utility methods to work with JAXP.
  *
- * @author Andreas Hartmann
- * @version $Id: DocumentHelper.java,v 1.23 2004/02/02 02:50:36 stefano Exp $
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: DocumentHelper.java,v 1.24 2004/02/10 15:34:24 andreas Exp $
  */
 public class DocumentHelper {
     /**
