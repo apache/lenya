@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.7 2003/07/01 16:40:39 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.8 2003/07/03 13:47:40 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -29,7 +29,7 @@ HIGHLIGHT = 1
 
 foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info&amp;lenya.step=showscreen")
 		<xsl:apply-templates select="*[local-name()='node']">
-            <xsl:with-param name="parentPath"><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/></xsl:with-param>
+            <xsl:with-param name="parentPath"><xsl:value-of select="@id"/></xsl:with-param>
 		</xsl:apply-templates>
 
 //Set this string if Treeview and other configuration files may also be loaded in the same session
