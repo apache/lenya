@@ -8,6 +8,10 @@ import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.EditorKit;
@@ -32,7 +36,13 @@ public class HTML{
 
     try{
       HTML html=new HTML(args[0]);
-      html.getImageSrcs();
+
+      List img_src_list=html.getImageSrcs();
+      Iterator iterator=img_src_list.iterator();
+      while(iterator.hasNext()){
+        System.out.println((String)iterator.next());
+        }
+
       html.getAnchorHRefs();
       html.getLinkHRefs();
       }
@@ -55,7 +65,8 @@ public class HTML{
 /**
  *
  */
-  public void getAnchorHRefs(){
+  public List getAnchorHRefs(){
+    List list=new ArrayList();
     System.out.println(".getAnchorHRefs(): INFO: Extract Links");
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
@@ -66,11 +77,13 @@ public class HTML{
         System.out.println(".getAnchorHRefs(): <a href=\"\">content</a>: "+sas.getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
         }
       }
+    return list;
     }
 /**
  *
  */
-  public void getLinkHRefs(){
+  public List getLinkHRefs(){
+    List list=new ArrayList();
     System.out.println(".getLinkHRefs(): INFO: Extract Links");
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
@@ -80,20 +93,25 @@ public class HTML{
         System.out.println(".getLinkHRefs(): <link href=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
         }
       }
+    return list;
     }
 /**
  *
  */
-  public void getImageSrcs(){
+  public List getImageSrcs(){
+    List list=new ArrayList();
     System.out.println(".getImageSrcs(): INFO: Extract Sources");
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
     while((element = iterator.next()) != null){
       // Extract <im src=""/>
       if(element.getName().equals("img")){
-        System.out.println(".getImageSrcs(): <im src=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.SRC));
+        String src=(String)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.SRC);
+        System.out.println(".getImageSrcs(): <im src=\"\"/>: "+src);
+        list.add(src);
         }
       }
+    return list;
     }
 /**
  *
