@@ -1,5 +1,5 @@
 /*
-$Id: PolicyHelper.java,v 1.1 2003/11/13 16:07:11 andreas Exp $
+$Id: PolicyHelper.java,v 1.2 2004/02/20 09:25:31 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,6 +67,7 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Policy;
@@ -233,18 +234,24 @@ public class PolicyHelper {
         try {
             if (onlyUrl) {
                 policies = new DefaultPolicy[1];
-                policies[0] =
-                    policyManager.buildSubtreePolicy(
-                        accessController.getAccreditableManager(),
-                        url);
+                AccreditableManager manager = accessController.getAccreditableManager();
+                policies[0] = policyManager.buildSubtreePolicy(manager, url);
             } else {
                 String ancestorUrl = "";
-                int lastSlashIndex = url.lastIndexOf("/");
+                
+                String currentUrl = url;
+                if (currentUrl.endsWith("/")) {
+                    currentUrl = currentUrl.substring(0, currentUrl.length() - 1);
+                }
+                
+                int lastSlashIndex = currentUrl.lastIndexOf("/");
                 if (lastSlashIndex != -1) {
-                    ancestorUrl = url.substring(0, lastSlashIndex);
+                    ancestorUrl = currentUrl.substring(0, lastSlashIndex);
                 }
                 policies =
-                    policyManager.getPolicies(accessController.getAccreditableManager(), ancestorUrl);
+                    policyManager.getPolicies(
+                        accessController.getAccreditableManager(),
+                        ancestorUrl);
             }
         } catch (AccessControlException e) {
             throw new ProcessingException(e);
@@ -267,7 +274,8 @@ public class PolicyHelper {
         throws ProcessingException {
 
         try {
-            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
+            DefaultPolicy policy =
+                policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
             Accreditable accreditable = (Accreditable) item;
 
             if (operation.equals(ADD)) {
@@ -296,7 +304,8 @@ public class PolicyHelper {
             if (lastSlashIndex != -1) {
                 ancestorUrl = url.substring(0, lastSlashIndex);
             }
-            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(), ancestorUrl);
+            Policy policy =
+                policyManager.getPolicy(accessController.getAccreditableManager(), ancestorUrl);
             ssl = policy.isSSLProtected();
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
@@ -312,7 +321,8 @@ public class PolicyHelper {
     public boolean isUrlSSLProtected() throws ProcessingException {
         boolean ssl;
         try {
-            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
+            DefaultPolicy policy =
+                policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
             ssl = policy.isSSLProtected();
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
@@ -327,14 +337,15 @@ public class PolicyHelper {
      */
     public void setUrlSSLProtected(boolean ssl) throws ProcessingException {
         try {
-            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
+            DefaultPolicy policy =
+                policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
             policy.setSSL(ssl);
             policyManager.saveSubtreePolicy(url, policy);
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
         }
     }
-    
+
     /**
      * Returns the users with a certain role on the current URL.
      * @param roleId The role ID.
@@ -344,10 +355,11 @@ public class PolicyHelper {
     public User[] getUsersWithRole(String roleId) throws ProcessingException {
         List users = new ArrayList();
         try {
-            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(), getUrl());
+            Policy policy =
+                policyManager.getPolicy(accessController.getAccreditableManager(), getUrl());
             UserManager userManager = accessController.getAccreditableManager().getUserManager();
             User[] userArray = userManager.getUsers();
-            for (int i = 0; i < userArray.length; i++ ) {
+            for (int i = 0; i < userArray.length; i++) {
                 Identity identity = new Identity();
                 identity.addIdentifiable(userArray[i]);
                 Role[] roles = policy.getRoles(identity);
