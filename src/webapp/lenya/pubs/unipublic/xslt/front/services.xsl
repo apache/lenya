@@ -15,56 +15,18 @@
         <td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
       </tr>
     </xsl:for-each>
-<!--
+
     <tr>
-      <td><img height="25" width="115" src="{$img-unipub}/s_agenda.gif" border="0" alt="agenda"/></td>
+      <td><br />
+        <a href="{Newsletter/@href}"><img height="18" width="126" src="{$img-unipub}/newslett.gif" border="0" alt="newsletter abo"/></a></td>
     </tr>
 
     <tr>
-      <td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+      <td><br />
+        <a href="../webperlen/"><img height="40" width="83" src="{$img-unipub}/t_webperlen.gif" alt="webperlen" border="0"/>
+        </a></td>
     </tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_mediadesk.gif" border="0" name="media" alt="mediadesk"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_neuepro.gif" border="0" alt="neue produkte"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_unimus.gif" border="0" alt="uni-museen"/></td>
-</tr>
-
-<tr>
-td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_weiter.gif" border="0" alt="weiterbildung"/></td>
-</tr>
--->
-
-<tr>
-<td><br />
- <img height="18" width="126" src="{$img-unipub}/newslett.gif" border="0" alt="newsletter abo"/></td>
-</tr>
-
-<tr>
-<td><br />
- <a href="../webperlen/"><img height="40" width="83" src="{$img-unipub}/t_webperlen.gif" alt="webperlen" border="0"/>
-</a></td>
-</tr>
-</table>
-
+  </table>
 </xsl:template>
 
 </xsl:stylesheet>

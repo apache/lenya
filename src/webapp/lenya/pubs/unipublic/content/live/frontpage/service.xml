@@ -5,5 +5,5 @@
   <Service href="service/produkte" id="neue-produkte">Neue Produkte</Service>
   <Service href="sevice/museen" id="uni-museen">Uni-Museen</Service>
   <Service href="service/weiterbildung" id="weiterbildung">Weiterbildung</Service>
-  <Newsletter href="" id="newsletter">Newsletter</Newsletter>
+  <Newsletter href="javascript:aboWindow();" id="newsletter">Newsletter</Newsletter>
 </Services>
