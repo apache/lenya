@@ -1,5 +1,5 @@
 /*
-$Id: FileAccreditableManager.java,v 1.5 2003/07/22 17:01:35 andreas Exp $
+$Id: FileAccreditableManager.java,v 1.6 2003/08/22 18:39:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -216,5 +216,5 @@ public class FileAccreditableManager
     protected ServiceManager getManager() {
         return manager;
     }
-
+    
 }
