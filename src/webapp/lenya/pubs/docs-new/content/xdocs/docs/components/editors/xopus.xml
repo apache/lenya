@@ -78,5 +78,27 @@ whereas the text of the alerts might be replaced by something else.
 </source>
 whereas the text of the alert might be replaced by something else.
 </section>
+
+<section>
+<title>Making a page editable with Xopus: Schemas, Views (XSLT) and Menus</title>
+<p>Xopus needs an XML Schema for validation and an XSLT to view the document. The Schemas and XSLTs need to be located at:</p>
+<source>
+<![CDATA[
+$PUBLICATION/config/doctypes/schemas/$DOCTYPE.xsd
+$PUBLICATION/lenya/xslt/xopus/$DOCTYPE.xsl
+]]>
+</source>
+<p>
+whereas one might want to use <link href="http://www.thaiopensource.com/relaxng/trang.html">Trang</link> to generate XML Schemas.
+</p>
+<p>
+Editing with Xopus is implemented as a usecase. One can add a menu item as follows:
+</p>
+<source>
+<![CDATA[
+<item uc:usecase="xopus" href="?lenya.step=open&amp;doctype=$DOCTYPE">Edit&#160;with&#160;Xopus</item>
+]]>
+</source>
+</section>
 </body>
 </document>
