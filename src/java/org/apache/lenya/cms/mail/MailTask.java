@@ -100,7 +100,9 @@ public class MailTask
 
                 // generate absolute URI from relative URI
                 
-                if (!uri.startsWith("http://") && !uri.startsWith("ftp://")) {
+                if (!uri.startsWith("http://") &&
+                    !uri.startsWith("ftp://") &&
+                    !uri.startsWith("file://")) {
 //                    String absoluteUri =
 //                        getParameters().getParameter(PARAMETER_SERVER_URI);
                     String absoluteUri = "http://127.0.0.1";
@@ -232,7 +234,7 @@ public class MailTask
             StreamResult result = new StreamResult(stream);
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.transform(source, result);
-            return stream.toString("ISO-8859-1");
+            return stream.toString();
         }
         catch(Exception e) {
             log.error("Failed: ", e);
