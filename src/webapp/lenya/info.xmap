@@ -94,7 +94,7 @@
       	<map:match pattern="*" type="language">
 	       <map:aggregate element="lenya" label="aggregate">
              <map:part src="cocoon:/menus/info.xml"/>
-	         <map:part element="cmsbody" type="serverpages" src="content/info/info.xsp"/>
+	         <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
 	       </map:aggregate>
 	       <map:transform src="xslt/info/root.xsl" label="content">
               <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
@@ -104,11 +104,11 @@
               <map:parameter name="documentid" value="{../1}"/>
               <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
            </map:transform>
-	       <map:serialize type="html"/>
+	       <map:serialize/>
         </map:match>
 	       <map:aggregate element="lenya" label="aggregate">
              <map:part src="cocoon:/menus/info.xml"/>
-	         <map:part element="cmsbody" type="serverpages" src="content/info/info.xsp"/>
+	         <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
 	       </map:aggregate>
 	       <map:transform src="xslt/info/root.xsl" label="content">
               <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
@@ -118,7 +118,7 @@
               <map:parameter name="documentid" value="{1}"/>
               <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
            </map:transform>
-	       <map:serialize type="html"/>
+	       <map:serialize/>
       </map:match>
     </map:pipeline>
   </map:pipelines>
