@@ -22,10 +22,9 @@
     
 <lenya-info:info>
   <lenya-info:overview>
-        <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
+    <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
 		<lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></lenya-info:abstract>
-  		<lenya-info:status></lenya-info:status>
-        <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
+    <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
     <xsp:logic>
     	
       String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
@@ -38,13 +37,14 @@
       for (int i = 0; i &lt; documentlanguages.length; i++) {
        str.append(documentlanguages[i] +" ");
       }
-      
     </xsp:logic>    		
-    	<lenya-info:languages><xsp:expr>str</xsp:expr></lenya-info:languages>	  
-   		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
-   		<lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
-  		<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
-  		<lenya-info:area></lenya-info:area>
+    
+    <lenya-info:languages><xsp:expr>str</xsp:expr></lenya-info:languages>	  
+    <lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
+    <lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
+    <lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
+    <lenya-info:area></lenya-info:area>
+    <lenya-info:workflow-state><input:get-attribute module="workflow" as="string" name="state"/></lenya-info:workflow-state>
   </lenya-info:overview>  
 </lenya-info:info>
 
