@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.4 2003/08/12 17:07:50 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.5 2003/08/12 23:58:27 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -104,6 +104,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
+        getLogger().error(".act(): File: " + file.getAbsolutePath());
+
         if(request.getParameter("save") != null) {
             if(file.isFile()) {
                 getLogger().error(".act(): Save modifications to " + file.getAbsolutePath());
@@ -124,6 +126,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                         }
                     }
                     DocumentHelper.writeDocument(document, file);
+                    return null;
                 } catch (Exception e) {
                     getLogger().error(".act(): Exception: " + e.getMessage(), e);
                     return new HashMap();
@@ -139,6 +142,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                 String name = (String) params.nextElement();
                 getLogger().error(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
             }
+            return new HashMap();
         } else if(request.getParameter("delete") != null) {
             getLogger().error(".act(): Delete");
             Enumeration params = request.getParameterNames();
@@ -146,11 +150,11 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                 String name = (String) params.nextElement();
                 getLogger().error(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
             }
+            return new HashMap();
         } else { // cancel
             getLogger().error(".act(): Cancel editing");
+            return null;
         }
-
-        return null;
     }
 
     /**
