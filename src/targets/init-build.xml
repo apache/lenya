@@ -28,7 +28,7 @@
   <!-- ============================================================ -->
   <target name="init">
     <tstamp>
-      <format property="SNAPSHOT_STAMP" pattern="yyyyMMddhhmmss"/>
+      <format property="SNAPSHOT_STAMP" pattern="yyyyMMdd'T'HHmmss"/>
     </tstamp>
     
     <property name="Name"     value="Apache Lenya"/>
