@@ -163,6 +163,14 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
           httpMethod.setRequestHeader("Content-type","text/plain");
           httpMethod.setPath(url.getPath());
           httpClient.startSession(url);
+          
+        log.debug(
+            "\n----------------------------------------------------------------" +
+            "\n- Starting session at URI: " + url +
+            "\n----------------------------------------------------------------");
+    
+          
+          
           httpClient.executeMethod(httpMethod);
           byte[] sresponse=httpMethod.getResponseBody();
           //log.warn(".generate(): Response from remote server: "+new String(sresponse));

@@ -34,7 +34,7 @@ import org.wyona.cms.publishing.PublishingEnvironment;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.11 2002/11/22 10:07:34 ah Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.12 2002/11/22 10:12:19 ah Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -158,7 +158,7 @@ public class LoadQuartzServlet extends HttpServlet {
        log.debug(".handleRequest() : server-port:"+request.getServerPort());
     log.debug(
         "\n----------------------------------------------------------------" +
-        "\n- Incoming request at URI: " + request.getRequestURI() +
+        "\n- Incoming request at URI: " + request.getServerName() + ":" + request.getServerPort() + request.getRequestURI() +
         "\n----------------------------------------------------------------");
     
 
