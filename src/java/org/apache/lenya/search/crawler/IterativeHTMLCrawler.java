@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IterativeHTMLCrawler.java,v 1.26 2004/03/05 23:22:26 michi Exp $  */
+/* $Id: IterativeHTMLCrawler.java,v 1.27 2004/03/06 00:41:07 michi Exp $  */
 
 package org.apache.lenya.search.crawler;
 
@@ -217,9 +217,13 @@ public class IterativeHTMLCrawler {
 
         if (filterURL(urlCandidate, currentURLPath, urlsToCrawlLowerCase)) {
             if (!robot.disallowed(url)) {
-                urlsToCrawl.add(url);
-                urlsToCrawlLowerCase.add(url.toString().toLowerCase());
-                log.debug("URL added: " + url);
+                if (url.getQuery() == null) {
+                    urlsToCrawl.add(url);
+                    urlsToCrawlLowerCase.add(url.toString().toLowerCase());
+                    log.debug("URL added: " + url);
+                } else {
+                    log.info("Don't crawl URLs with query string: " + url);
+                }
 
                 return url;
             } else {
