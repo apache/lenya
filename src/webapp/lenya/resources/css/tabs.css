@@ -1,22 +1,45 @@
 /* Styles for tabs in Site / Meta Area */
 
 .lenya-tab {
-	width:auto;
-	font-family:verdana,arial,sans serif;
-	background-color:#cccc99; 
-	padding:10px;
-	color:#333;
-	border-width:1px;
-	border-type:solid;
-	border-color:#003366;
+	width: auto;
+	font-family: verdana, sans serif;
+	font-size: small;
+	background-color: #F5F4E9; 
+	padding: 20px;
+	color: black;
+	border: solid 1px #CCCCCC;
+	position: relative;
+	top: 1px;
 }
 
 .lenya-tablink {
-	display:inline; /*mandatory*/
-	margin-right:.5em;
-	padding-left:2em;
-	padding-right:2em;
-	text-decoration:none;
-	font-weight:bold;
-	color:#ccc;
+	color: #666666;
+	font-size: small;
+	display: inline; /*mandatory*/
+	margin-right: .5em;
+	padding: 0px 1em;
+	position: relative;
+	top: 1px;
+	
+	text-decoration: none;
+	
+	background-color: #DDDCCF; 
+	border: solid 1px #CCCCCC;
+}
+
+.lenya-tablink-active {
+	color: black;
+	font-size: small;
+	display: inline; /*mandatory*/
+	margin-right: .5em;
+	padding: 0px 1em;
+	position: relative;
+	top: 1px;
+	
+	text-decoration: none;
+	
+	background-color: #F5F4E9; 
+	border: solid 1px #CCCCCC;
+	border-bottom: solid 1px #F5F4E9;
+	z-index: 1;
 }
