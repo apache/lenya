@@ -155,7 +155,7 @@ public class Group implements Accreditable {
      * @param member The member to check.
      * @return A boolean value.
      */
-    boolean contains(Groupable member) {
+    public boolean contains(Groupable member) {
         return members.contains(member);
     }
 
@@ -165,4 +165,12 @@ public class Group implements Accreditable {
     public Accreditable[] getAccreditables() {
         return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
     }
+    
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getName();
+    }
+
 }
