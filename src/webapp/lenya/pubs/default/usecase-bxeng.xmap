@@ -124,10 +124,6 @@
            <map:parameter name="serverpage" value="info/assets.xsp"/>
            <map:parameter name="stylesheet" value="bxeng/image.xsl"/>
         </map:call>
-
-<!--
-<map:generate src="../../content/info/assets.xsp" type="serverpages"/>
-<map:serialize type="xml"/> -->
       </map:match>
 
       <map:match pattern="asset-upload-show" type="step">
