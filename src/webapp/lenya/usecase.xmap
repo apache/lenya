@@ -120,6 +120,8 @@
     		<map:generate src="cocoon:/notification/{1}/{2}.xml"/>
     		<map:transform src="xslt/notification/message2xslt.xsl">
     			<map:parameter name="usecase" value="{2}"/>
+    			<map:parameter name="server-uri" value="http://{request:serverName}:{request:serverPort}"/>
+    			<map:parameter name="document-url" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
     		</map:transform>
     		<map:serialize type="xml"/>
     	</map:match>

@@ -13,6 +13,9 @@
     xmlns="http://www.w3.org/1999/xhtml"
     >
     
+<xsl:param name="server-uri"/>
+<xsl:param name="document-url"/>
+    
 <xsl:namespace-alias stylesheet-prefix="xslt" result-prefix="xsl"/>
     
 <xsl:template match="/">
@@ -55,7 +58,7 @@
 					<td>
 						<textarea name="notification.message" class="lenya-form-element">
 							<xsl:text/>
-							<xsl:value-of select="normalize-space(not:message/not:body)"/>
+							<xsl:apply-templates select="not:message/not:body"/>
 							<xsl:text>&#160;</xsl:text>
 						</textarea>
 					</td>
@@ -102,5 +105,16 @@
  
 </xsl:template>
     
+
+<xsl:template match="not:body">
+	<xsl:apply-templates select="node()"/>
+</xsl:template>
+
+<xsl:template match="not:body/text()"><xsl:value-of select="."/></xsl:template>
+
+<xsl:template match="not:document-url">
+	<xsl:value-of select="$server-uri"/><xsl:value-of select="$document-url"/>
+</xsl:template>
+	
 
 </xsl:stylesheet>
