@@ -5,9 +5,7 @@
 		<xsp:logic>
     String articleId=parameters.getParameter("articleId","null");
   </xsp:logic>
-		<live_uri>
-			<xsp:expr>"/news/"+articleId+".html"</xsp:expr>
-		</live_uri>
+		<live_uri><xsp:expr>"/news/"+articleId+".html"</xsp:expr></live_uri>
 		<xsp:logic>
     String bitflux_prefix=""+xsp_lenya_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_lenya_context_prefix;

@@ -22,13 +22,7 @@
       </separator>
       <block>
         <item>Edit&#160;with&#160;Xopus2</item>
-<!--
-        <item href="xopus2/weekly-column.html">Edit&#160;with&#160;Xopus2</item>
--->
         <item>Edit&#160;with&#160;Bitflux</item>
-<!--
-        <item href="/lenya/bitflux/weekly-column.html?url-xml=/lenya/oscom/bitflux/home.xml&amp;url-xslt=/lenya/oscom/bitflux/home.xsl&amp;url-xsd=/lenya/oscom/bitflux/home.xsd&amp;url-css=/lenya/oscom/bitflux/home.css&amp;url-post=/lenya/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
--->
 <!--
         <item>Publish</item>
 -->
@@ -38,12 +32,6 @@
         <item>-----------------</item>
       </separator>
       <block>
-        <item>Passwd</item>
-        <item>Switch&#160;User</item>
-<!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_lenya_id == null ? "nobody" : xsp_lenya_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
--->
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
@@ -87,12 +75,6 @@
         <item>View&#160;Xopus&#160;XSLT</item>
         <item>View&#160;Xopus&#160;XSD</item>
       </block>
-<!--
-      <block>
-        <item href="../xopus/weekly-column.xsl">View&#160;Xopus&#160;XSLT</item>
-        <item href="../xopus/weekly-column.xsd">View&#160;Xopus&#160;XSD</item>
-      </block>
--->
       <separator>
         <item>-----------------</item>
       </separator>

@@ -25,12 +25,6 @@
       <parameter name="uri" value="http://www.lenya.org/xsp/lenya/1.0"/>
       <parameter name="href" value="resource://org/lenya/cms/cocoon/logicsheets/util.xsl"/>
     </builtin-logicsheet>
-
-    <builtin-logicsheet>
-      <parameter name="prefix" value="xsp-hello"/>
-      <parameter name="uri" value="http://www.lenya.org/xsp/hello/1.0"/>
-      <parameter name="href" value="resource://org/lenya/cms/cocoon/logicsheets/helloworld.xsl"/>
-    </builtin-logicsheet>
     
     <xsl:comment>/ Lenya Logicsheets</xsl:comment>
     

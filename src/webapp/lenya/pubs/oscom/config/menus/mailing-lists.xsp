@@ -42,11 +42,6 @@
         <item href="http://www.lenya.org">About&#160;Lenya</item>
       </block>
     </menu>
-    <menu name="Debug" label="Debug">
-      <block>
-        <item href="http://www.lenya.org">About&#160;Lenya</item>
-      </block>
-    </menu>
   </menus>
 
 </menu>

@@ -27,12 +27,6 @@
         <item>-----------------</item>
       </separator>
       <block>
-        <item>Passwd</item>
-        <item>Switch&#160;User</item>
-<!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_lenya_id == null ? "nobody" : xsp_lenya_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
--->
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>

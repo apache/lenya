@@ -4,11 +4,9 @@
 		<xsp-lenya:util/>
 		<xsp:logic>
    		 	String bitflux_prefix=""+xsp_lenya_context_prefix+"/bitflux";
-    			String articleId=parameters.getParameter("articleId","null");
+    		String articleId=parameters.getParameter("articleId","null");
   		</xsp:logic>
-		<live_uri>
-			<xsp:expr>"/"+articleId</xsp:expr>
-		</live_uri>
+		<live_uri><xsp:expr>"/"+articleId</xsp:expr></live_uri>
 		<menus>
 			<menu name="File" label="File">
 				<block>
