@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication-sitemap.xmap,v 1.77 2004/09/01 23:26:48 michi Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -67,7 +67,8 @@
     </map:pipeline>
     
     <map:pipeline>
-      <!-- pattern="{area}/xhtml/{document-path}" -->
+      <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
+      <!-- NOTE: rendertype seems to be 'edit' or 'view' -->
       <map:match pattern="lenya-document-*/*/*/**.xml">
         <map:mount check-reload="true" reload-method="synchron" src="doctypes.xmap" uri-prefix="lenya-document-"/>
       </map:match>
