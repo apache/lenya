@@ -19,6 +19,8 @@
     </map:serializers>
     <map:matchers default="wildcard"/>
     <map:actions>
+      <map:action name="validate" logger="sitemap.action.validateAction" 
+	src="org.apache.lenya.cms.cocoon.acting.ValidateAction" />
       <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" 
 	src="org.apache.cocoon.acting.RequestParameterExistsAction" />
       <map:action name="save" logger="sitemap.action.save" 
@@ -313,8 +315,8 @@
                 <map:parameter name="serverpage" value="authoring/create.xsp"/>
                 <map:parameter name="stylesheet" value="authoring/create.xsl"/>
               </map:call>
-            </map:act>
-            <map:redirect-to uri="{request:requestURI}?doctype={request-param:properties.create.doctype}&amp;lenya.usecase=create&amp;lenya.step=showscreen&amp;status=duplicate-id"/>
+              </map:act>
+              <map:redirect-to uri="{request:requestURI}?doctype={request-param:properties.create.doctype}&amp;lenya.usecase=create&amp;lenya.step=showscreen&amp;status=duplicate-id"/>
           </map:match>
           
         </map:match>
@@ -501,7 +503,16 @@
           <map:generate type="stream">
             <map:parameter name="form-name" value="content"/>
           </map:generate>
+          <map:act type="validate">
+            <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
+            <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
+            <map:transform src="xslt/authoring/edit/oneform.xsl">
+              <map:parameter name="message" value="{message}"/>
+            </map:transform>
+            <map:call resource="style-cms-page"/>
+          </map:act>
           <!-- Save: Overwrite original file  -->
+
           <map:act type="request-parameter-exists">
             <map:parameter name="parameters" value="save"/>
             <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
