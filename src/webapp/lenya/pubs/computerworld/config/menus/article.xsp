@@ -23,6 +23,13 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+						</xsp:attribute>Authoring Home
+						</item>
+				</block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-article</xsp:attribute>Publish</item>
 				</block>
 				<block>

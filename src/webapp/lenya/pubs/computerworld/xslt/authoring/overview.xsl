@@ -27,6 +27,7 @@
 						<xsl:value-of select="@href"/>
 					</xsl:variable>
 					<tr bgcolor="#EFEFE7">
+					<td>Article</td><td>Status</td></tr><tr>
 						<td height="30" width="320" valign="middle">
 							<!-- NEWS TITEL -->
 							<a href="{$href}" class="txt-l-black">
