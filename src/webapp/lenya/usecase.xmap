@@ -479,7 +479,7 @@
           </map:match>
           
           <map:match pattern="view" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+            <map:redirect-to session="true" uri="{page-envelope:context-prefix}/{../../1}/authoring/{../../3}?lenya.step=view-revision&amp;rollbackTime={request-param:rollbackTime}"/>
           </map:match>
           
           <map:match pattern="rollback" type="step">
