@@ -22,14 +22,21 @@ package org.apache.lenya.cms.authoring;
 import java.io.File;
 import java.util.Collections;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 
+import org.apache.log4j.Category;
+
+/**
+ *
+ */
 public class DocumentCreator {
+    private static Category log = Category.getInstance(DocumentCreator.class);
+
     /**
      * DOCUMENT ME!
      *
@@ -91,9 +98,10 @@ public class DocumentCreator {
 
         ParentChildCreatorInterface creator = type.getCreator();
 
-        DefaultSiteTree siteTree;
+        SiteTree siteTree;
 
         try {
+            log.debug("Get sitetree of area: " + area);
             siteTree = publication.getSiteTree(area);
         } catch (Exception e) {
             throw new CreatorException(e);
