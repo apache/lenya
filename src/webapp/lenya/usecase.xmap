@@ -52,18 +52,13 @@
     
     <map:resource name="scheduler-page">
       <map:aggregate element="scheduler" label="aggregation" ns="http://apache.org/cocoon/lenya/scheduler/1.0" prefix="sch">
-        <map:part src="cocoon:/document-types/{publication-id}"/>
         <map:part src="cocoon:/tasks/{publication-id}"/>
-        <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
         <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
       </map:aggregate>
-      <map:transform src="xslt/scheduler/filter.xsl"/>
-      <map:act src="{uri}" type="uriparametrizer">
-        <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
-        <map:transform src="xslt/scheduler/filterTasks-new.xsl">
-          <map:parameter name="documentType" value="{doctype}"/>
-        </map:transform>
-      </map:act>
+      <map:transform src="xslt/scheduler/filter.xsl">
+      	<map:parameter name="publication-id" value="{publication-id}"/>
+      	<map:parameter name="document-url" value="/{publication-id}{uri}"/>
+      </map:transform>
     </map:resource>
     
     <map:resource name="cms-screen-xml">
@@ -112,21 +107,9 @@
     
     <map:pipeline>
       
-      <!-- load document types -->
-      <map:match pattern="document-types/*">
-        <map:generate src="pubs/{1}/config/doctypes/doctypes.xconf"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
       <!-- load task list -->
       <map:match pattern="tasks/*">
         <map:generate src="pubs/{1}/config/tasks/tasks.xconf"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
-      <!-- create the current date -->
-      <map:match pattern="scheduler-xsp">
-        <map:generate src="content/scheduler/scheduler-new.xsp" type="serverpages"/>
         <map:serialize type="xml"/>
       </map:match>
       
@@ -147,7 +130,14 @@
     	
     	<!-- notification/{publication-id}/{usecase}.xml -->
     	<map:match pattern="notification/*/*.xml">
-    		<map:generate src="pubs/{1}/config/notification/notification.xconf"/>
+    		<map:select type="resource-exists">
+    			<map:when test="lenya/pubs/{1}/config/notification/notification.xconf">
+            <map:generate src="pubs/{1}/config/notification/notification.xconf"/>
+    			</map:when>
+    			<map:otherwise>
+            <map:generate src="config/notification/notification.xconf"/>
+    			</map:otherwise>	
+    		</map:select>
     		<map:transform src="xslt/notification/notification2message.xsl">
     			<map:parameter name="usecase" value="{2}"/>
     		</map:transform>
@@ -160,13 +150,6 @@
     		<map:transform src="xslt/notification/message2xslt.xsl">
     			<map:parameter name="usecase" value="{2}"/>
     		</map:transform>
-    		<map:serialize type="xml"/>
-    	</map:match>
-    	
-    	<!-- notification/{publication-id}/{usecase}.xsl -->
-    	<map:match pattern="notification/*.xsl">
-<!--    		<map:generate src="cocoon:/notification/{page-envelope:publication-id}/{1}.xsl"/>-->
-    		<map:generate src="xslt/notification/{1}.xsl"/>
     		<map:serialize type="xml"/>
     	</map:match>
     	
@@ -202,7 +185,9 @@
               <map:parameter name="context-prefix" value="{request:contextPath}"/>
               <map:parameter name="publication-id" value="{../../1}"/>
               <map:parameter name="area" value="{../../2}"/>
-              <map:parameter name="document-uri" value="{../../3}"/>
+              <!--
+              <map:parameter name="document-url" value="/{../../3}"/>
+              -->
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
@@ -840,7 +825,7 @@
 
         <map:match pattern="info-workflow" type="usecase">
         	<map:act type="resource-exists" src="pubs/{page-envelope:publication-id}/content/workflow/history/{page-envelope:document-path}">
-						<map:generate src="pubs/{page-envelope:publication-id}/content/workflow/history/{page-envelope:document-path}"/>
+						<map:generate src="pubs/{page-envelope:publication-id}/content/workflow/history/{page-envelope:area}/{page-envelope:document-path}"/>
 						<map:transform src="xslt/info/workflow2info.xsl"/>
 						<map:transform src="xslt/info/info.xsl">
 							<map:parameter name="tab" value="{../../1}"/>
