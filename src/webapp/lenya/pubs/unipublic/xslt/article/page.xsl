@@ -11,7 +11,7 @@
 <xsl:template match="NewsML">
   <html>
     <head>
-      <title>unipublic - <xsl:value-of select="string($section)"/></title>
+      <title>unipublic - <xsl:value-of select="NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head/hedline/hl1"/></title>
       <xsl:call-template name="styles"/>
       <xsl:call-template name="jscript"/>
     </head>
