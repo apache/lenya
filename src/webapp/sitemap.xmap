@@ -730,6 +730,10 @@
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
       
+        <!-- User Admin -->
+        <map:match type="usecase" pattern="user-admin">
+          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
       </map:pipeline>
 
 
