@@ -4,7 +4,7 @@
  
 <xsl:import href="../util/page-util.xsl"/>
 
-<xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:param name="title" select="'Dispatch Newsletter'"/>
 <xsl:param name="action" select="'send'"/>

@@ -3,7 +3,7 @@
 	of the University of Zurich that displays the first headline of Unipublic
 	-->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:output method="html" version="1.0" encoding="ISO-8859-1" indent="yes"/>
+	<xsl:output version="1.0" encoding="ISO-8859-1" indent="yes"/>
 	
 	<xsl:template match="/">
 		<!-- Select the first article -->
