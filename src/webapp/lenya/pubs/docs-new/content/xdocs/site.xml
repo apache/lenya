@@ -79,6 +79,7 @@
     </misc>
     <misc href="editors/" label="Editors">
       <namespaces href="htmlform.html" label="HTML Form Editor"/>
+      <namespaces href="bxeng.html" label="Bitflux Editor"/>
     </misc>
     <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
     <javadoc-error href="javadoc-error.html"/>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Bitflux Editor</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>Configuration</title>
+<p>Required and Optional parameters</p>
+<ul>
+<li>BX_xmlfile: Actual Content (XML)</li>
+<li>BX_xslfile (or BX_xhtmlfile): Global Formatting (XSLT (or XHTML))</li>
+<li>css: Content Formatting (CSS)</li>
+<li>BX_exitdestination: Link (HTML)</li>
+<li>BX_validationfile: Schema (RNG)</li>
+</ul>
+</section>
+
+<section>
+<title>Namespace declaration</title>
+<p>resources/misc/bxeng/*-namespaces.xml</p>
+</section>
+
+</body>
+</document>
