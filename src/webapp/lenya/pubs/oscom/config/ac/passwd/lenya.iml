@@ -9,5 +9,6 @@
   <group>useradministrator</group>
   <group>editor</group>
   <group>root</group>
+  <group>matrix</group>
 </groups>
 </identity>

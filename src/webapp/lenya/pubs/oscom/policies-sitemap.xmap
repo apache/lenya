@@ -10,19 +10,42 @@
 
  <map:pipelines>
    <map:pipeline>
+<!-- Weekly Column -->
      <map:match pattern="authoring/weekly-column*.acml">
        <map:generate src="docs/publication/access-control/policies/weekly-column.acml"/>
        <map:serialize type="xml"/>
      </map:match>
-     <map:match pattern="authoring/matrix/*.acml">
-       <map:generate src="docs/publication/access-control/policies/axkit.acml"/>
+<!-- /Weekly Column -->
+
+<!-- CMS/F Matrix Overview -->
+     <map:match pattern="authoring/matrix/index.html.acml">
+       <map:generate src="docs/publication/access-control/policies/root.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+<!-- /CMS/F Matrix Overview -->
+
+<!-- CMS/F Matrix Project -->
+     <map:match pattern="authoring/matrix/*.html.acml">
+       <map:generate type="serverpages" src="docs/publication/access-control/policies/matrix-project.xsp">
+         <map:parameter name="name" value="{1}"/>
+       </map:generate>
+       <map:serialize type="xml"/>
+     </map:match>
+     <map:match pattern="authoring/matrix/body-*.xml.acml">
+       <map:generate type="serverpages" src="docs/publication/access-control/policies/matrix-project.xsp">
+         <map:parameter name="name" value="{1}"/>
+       </map:generate>
        <map:serialize type="xml"/>
      </map:match>
      <map:match pattern="authoring/navigation.xml.acml">
        <map:generate src="docs/publication/access-control/policies/navigation.acml"/>
        <map:serialize type="xml"/>
      </map:match>
+<!-- /CMS/F Matrix Project -->
 
+
+
+<!-- Authoring -->
      <map:match pattern="authoring/**">
        <map:generate src="docs/publication/access-control/policies/root.acml"/>
 <!--
@@ -30,11 +53,16 @@
 -->
        <map:serialize type="xml"/>
      </map:match>
+<!-- /Authoring -->
 
+
+
+<!-- Everything else -->
      <map:match pattern="**">
        <map:generate src="docs/publication/access-control/policies/public.acml"/>
        <map:serialize type="xml"/>
      </map:match>
+<!-- /Everything else -->
    </map:pipeline>
  </map:pipelines>
 </map:sitemap>
