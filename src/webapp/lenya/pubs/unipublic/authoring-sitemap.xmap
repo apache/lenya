@@ -6,7 +6,7 @@
 
   <map:components>
     <map:generators default="file">
-      <map:generator  name="servletproxy" src="org.wyona.cms.cocoon.generation.ServletProxyGenerator"/>
+      <map:generator  name="servletproxy" src="org.wyona.cms.cocoon.generation.ProxyGenerator"/>
     </map:generators>                                                                                                                       
     <map:transformers default="xslt">
       <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">

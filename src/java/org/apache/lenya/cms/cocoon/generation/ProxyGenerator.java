@@ -35,10 +35,10 @@ import java.util.Map;
 
 /**
  * @author Michael Wechner
- * @version 2002.8.21
+ * @version 2002.8.27
  */
-public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements Parameterizable {
-  static Category log=Category.getInstance(ServletProxyGenerator.class);
+public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements Parameterizable {
+  static Category log=Category.getInstance(ProxyGenerator.class);
   protected String src;
 
   // The URI of the namespace of this generator
