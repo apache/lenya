@@ -13,6 +13,8 @@
   <xsl:param name="assetXPath"/>
   <xsl:param name="insertWhere"/>
 
+  <xsl:param name="error"/>
+
   <xsl:template match="/">
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
       <xsl:choose>
@@ -80,6 +82,16 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	  <table class="lenya-table-noborder">
+	    <xsl:if test="$error = 'true'">
+	      <tr>
+		<td colspan="2" class="lenya-form-caption">
+		  <span	class="lenya-form-message-error">The file name
+		  of the file you are trying to upload contains characters
+		  which are not allowed, such as spaces or umlauts.
+		  </span>
+		</td>
+	      </tr>
+	    </xsl:if>
 	    <tr>
 	      <td class="lenya-form-caption">Select File:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/></td>
 	    </tr>
