@@ -49,7 +49,7 @@
     <xsl:apply-templates/>
     
     <component-instance class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory" name="fallback"/>
-    
+    <component-instance class="org.apache.lenya.cms.cocoon.source.LenyaSourceFactory" logger="lenya.source" name="lenya" scheme="context:"/>
   </xsl:copy>
 </xsl:template>
 
