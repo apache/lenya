@@ -5,6 +5,8 @@
 # The original, unmodified and expanded cocoon webapp directory
 
 cocoon.webapp.dir=../cocoon-2.1.4/build/webapp
+# or Cocoon-2.1.5-dev
+#cocoon.webapp.dir=../cocoon-2.1/build/webapp
 
 
 #------------------------------------------------------------------------------------
