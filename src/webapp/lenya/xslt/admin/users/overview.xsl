@@ -78,7 +78,7 @@
               <td/>
               <td>
 				        <form method="GET">
-				          <input type="hidden" name="lenya.usecase" value="userProfile"/>
+				          <input type="hidden" name="lenya.usecase" value="admin.userProfile"/>
 				          <input type="hidden" name="userId" value="{normalize-space(id)}"/>
 				          <input i18n:attr="value" type="submit" value="Edit Profile"/>
 				        </form>
