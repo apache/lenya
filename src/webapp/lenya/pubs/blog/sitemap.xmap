@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.55 2004/09/01 23:26:48 michi Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -158,7 +158,7 @@
             <map:parameter name="configfile" value="./config-bxeng.xml"/>
             <map:parameter name="context" value="{request:contextPath}"/>
           </map:transform>
-          <map:serialize type="xhtml-iso-8859-1"/>
+          <map:serialize type="xhtml"/>
         </map:act>
         <map:generate src="../../resources/misc/bxeng/download.xhtml"/>
         <map:serialize type="html"/>
@@ -251,18 +251,9 @@
           <map:parameter name="relative2root" value="../.."/>
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
-
-        <map:select type="browser">
-          <map:when test="mozilla5DISABLED">
-            <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml?uiml=xul"/>
-            <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
-          </map:when>
-          <map:otherwise>
-            <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
-            <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
-            <map:serialize type="html"/>
-          </map:otherwise>
-        </map:select>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
+        <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="html"/>
       </map:match>
       <map:handle-errors>
         <map:select type="exception">
