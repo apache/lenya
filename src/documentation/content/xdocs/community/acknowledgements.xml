@@ -27,7 +27,7 @@
   </header>
   <body>
 <section id="committer">
-<title>Active Committers</title>
+<title>Active committers</title>
 <ul>
 <li><strong>Edith Chevrier (edith at apache.org)</strong></li>
 <li><strong>Dale Christ (bigdog at apache.org)</strong></li>
@@ -58,7 +58,7 @@
 
 
 <section id="contributor">
-<title>Other Contributors</title>
+<title>Other contributors</title>
 <ul>
 <li>Olivier Lange (french translation)</li>
 <li>Kars Veiling</li>
