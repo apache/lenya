@@ -8,6 +8,7 @@
       <element name="echo:title">
         <text/>
       </element>
+<!-- FIXME: BXE seems to have a problem with optional summary -->
       <optional>
         <element name="echo:summary">
           <text/>
