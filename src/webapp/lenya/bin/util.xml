@@ -72,5 +72,17 @@
   </java>
 </target>
 
+<!-- e.g. tidying legacy "HTML" stylesheets -->
+<target name="u2l" description="Transforms upper to lower case"> 
+    <echo>INFO: Upper 2 lower case</echo>
+    <xslt
+        basedir="/home/username/upper_case"
+        destdir="/home/username/lower_case"
+        style="${lenya.dir}/src/webapp/lenya/xslt/misc/upper2lower_case.xsl"
+        includes="**/*.xsl"
+        extension=".xsl"
+        />
+</target>
+
 
 </project>
