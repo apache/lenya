@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  $Id: overview.xsl,v 1.7 2004/02/16 19:52:18 roku Exp $
+-->
+
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
     
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
+  <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
   
   
   <xsl:template match="/">
@@ -17,7 +23,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>Group Overview: <xsl:value-of select="group/id"/></page:title>
+      <page:title><i18n:text>Group</i18n:text>&#160;<q><xsl:value-of select="group/id"/></q></page:title>
       <page:body>
         <xsl:apply-templates select="message"/>
         <xsl:apply-templates select="group"/>
@@ -34,28 +40,28 @@
     <td>
     
     <div class="lenya-box">
-      <div class="lenya-box-title">Profile</div>
+      <div class="lenya-box-title"><i18n:text>Profile</i18n:text></div>
       <div class="lenya-box-body">
         
           <table class="lenya-table-noborder">
             
             <tr>
-              <td class="lenya-entry-caption">Group&#160;ID:</td>
+              <td class="lenya-entry-caption"><i18n:text>Group ID</i18n:text>:</td>
               <td><xsl:value-of select="id"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Name:</td>
+              <td class="lenya-entry-caption"><i18n:text>Name</i18n:text>:</td>
               <td><xsl:value-of select="name"/></td>
             </tr>
             <tr>
-              <td valign="top" class="lenya-entry-caption">Description:</td>
+              <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td>
               <td><xsl:value-of select="description"/></td>
             </tr>
             <tr>
               <td/>
               <td>
 				        <form method="GET" action="lenya.usecase.change_profile">
-				          <input type="submit" value="Edit Profile"/>
+				          <input i18n:attr="value" type="submit" value="Edit Profile"/>
 				        </form>
               </td>
             </tr>
@@ -64,7 +70,7 @@
     </div>
     
     <div class="lenya-box">
-      <div class="lenya-box-title">Members</div>
+      <div class="lenya-box-title"><i18n:text>Members</i18n:text></div>
       <div class="lenya-box-body">
         
           <table class="lenya-table-noborder">
@@ -75,7 +81,7 @@
               <td/>
               <td>
 				        <form method="GET" action="lenya.usecase.change_members">
-				          <input type="submit" value="Edit Members"/>
+				          <input i18n:attr="value" type="submit" value="Edit Members"/>
 				        </form>
               </td>
             </tr>
@@ -92,7 +98,7 @@
   
   <xsl:template match="users">
 		<tr>
-			<td class="lenya-entry-caption" valign="top">Users:</td>
+			<td class="lenya-entry-caption" valign="top"><i18n:text>Users</i18n:text>:</td>
 			<td>
 				<xsl:apply-templates select="member">
 					<xsl:sort/>
@@ -103,7 +109,7 @@
   
   <xsl:template match="machines">
 		<tr>
-			<td class="lenya-entry-caption" valign="top">IP&#160;Ranges:</td>
+			<td class="lenya-entry-caption" valign="top"><i18n:text>IP Ranges</i18n:text>:</td>
 			<td>
 				<xsl:apply-templates select="member">
 					<xsl:sort/>

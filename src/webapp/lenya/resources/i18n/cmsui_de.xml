@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.20 2004/02/16 18:49:30 roku Exp $
+   $Id: cmsui_de.xml,v 1.21 2004/02/16 19:52:18 roku Exp $
 
    Copyright 2004 Rolf Kulemann (roku at apache.org)
 
@@ -24,6 +24,7 @@
   <!-- common used words -->
   <message key="Submit">Senden</message>
   <message key="Cancel">Abbrechen</message>
+  <message key="Delete">L&#246;schen</message>
   <message key="NOTE">HINWEIS</message>
   <message key="No referer">Keine R&#252;ckverweiseite</message>  
   <message key="Referer">R&#252;ckverweis</message>
@@ -34,10 +35,15 @@
   <message key="authoring">Bearbeitung</message>
   <message key="review">Freigabe</message>
   <message key="user">Benutzer</message>
+  <message key="Users">Benutzer</message>  
   <message key="group">Gruppe</message>
+  <message key="Group">Gruppe</message>
+  <message key="Group ID">Gruppen ID</message>
   <message key="Yes">Ja</message>
   <message key="No">Nein</message>
-  
+  <message key="Description">Beschreibung</message>
+  <message key="Name">Name</message>
+    
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -109,6 +115,14 @@
   <message key="Passwd">Passwort &#228;ndern</message>
   <message key="Switch User">Benutzer wechseln</message>
   <message key="Delete Trash">Papierkorb leeren</message>
+
+  <message key="Profile">Profil</message>  
+  <message key="Members">Mitglieder</message>
+  <message key="IP Ranges">IP&#160;Regeln</message>
+  <message key="Edit Profile">Profil bearbeiten</message>
+  <message key="Edit Members">Mitglieder bearbeiten</message>
+  <message key="Group Administration">Gruppenverwaltung</message>
+  <message key="Add Group">Gruppe hinzuf&#252;gen</message>
 
 </catalogue>
 

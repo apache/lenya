@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-  $Id: cmsui.xml,v 1.17 2004/02/16 18:49:30 roku Exp $
+  $Id: cmsui.xml,v 1.18 2004/02/16 19:52:18 roku Exp $
 
    Copyright 2004 Rolf Kulemann (roku at apache.org)
 
@@ -24,6 +24,7 @@
   <!-- common used words -->
   <message key="Submit">Submit</message>
   <message key="Cancel">Cancel</message>
+  <message key="Delete">Delete</message>
   <message key="NOTE">NOTE</message>
   <message key="No referer">No referer</message>
   <message key="Referer">Referer</message>
@@ -34,9 +35,14 @@
   <message key="authoring">authoring</message>
   <message key="review">review</message>
   <message key="user">user</message>
+  <message key="Users">Users</message>
   <message key="group">group</message>
+  <message key="Group">Group</message>
+  <message key="Group ID">Group ID</message>
   <message key="Yes">Yes</message>
   <message key="No">No</message>
+  <message key="Description">Description</message>
+  <message key="Name">Name</message>  
      
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
@@ -109,5 +115,13 @@
   <message key="Passwd">Passwd</message>
   <message key="Switch User">Switch User</message>
   <message key="Delete Trash">Delete Trash</message>
+  
+  <message key="Profile">Profile</message>
+  <message key="Members">Members</message>
+  <message key="IP Ranges">IP&#160;Ranges</message>
+  <message key="Edit Profile">Edit Profile</message>
+  <message key="Edit Members">Edit Members</message>
+  <message key="Group Administration">Group Administration</message>
+  <message key="Add Group">Add Group</message>
   
 </catalogue>
