@@ -186,11 +186,8 @@
   
   <!-- match blocks with not area='false' -->
   <xsl:template match="menu:block" mode="menu">
-    <xsl:apply-templates mode="menu"/>
-
-    <!--
-    <xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
-    -->
+    <!-- * is menu and item -->
+    <xsl:apply-templates select="*[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]" mode="menu"/>
 
     <xsl:if test="position() != last()">
       <xul:menuseparator/>
