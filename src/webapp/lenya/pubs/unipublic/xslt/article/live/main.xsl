@@ -3,6 +3,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
+<xsl:include href="../../head.xsl"/>
+
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
 <xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
@@ -67,7 +69,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 
 <tr valign="top">
 <td width="180" valign="middle" bgcolor="#CCCC99">
-<xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.content/related.contents"/>
+<xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsComponent" mode="RelatedContent"/>
 </td>
 </tr>
 
@@ -84,7 +86,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <p>&#160;</p>
 </td>
 <td valign="top" bgcolor="white" width="388" class="art-text">
-<p class="art-date"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head/dateline/story.date"/></p>
+<p class="art-date"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/DateLine"/></p>
 
 <p class="art-pretitle"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/head/hedline/dossier"/></p>
 
@@ -124,15 +126,15 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <xsl:template name="slider_image">
 <tr>
 <td align="right" width="187"></td><td width="10"></td><td width="388"><a href="../">
-<xsl:if test="contains($section, 'Geist und Gesellschaft')"><img height="13" width="138" src="{$img-unipub}/r_geist.gif" alt="{$section}" border="0"/></xsl:if>
-<xsl:if test="contains($section, 'Gesundheit')"><img height="13" width="80" src="{$img-unipub}/r_gesund.gif" alt="{$section}" border="0"/></xsl:if>
-<xsl:if test="contains($section, 'Umwelt und Technik')"><img height="13" width="97" src="{$img-unipub}/r_umwelt.gif" alt="{$section}" border="0"/></xsl:if>
-<xsl:if test="contains($section, 'Recht und Wirtschaft')"><img height="13" width="133" src="{$img-unipub}/r_recht.gif" alt="{$section}" border="0"/></xsl:if>
+<xsl:if test="contains($section, 'geist')"><img height="13" width="138" src="{$img-unipub}/r_geist.gif" alt="{$section}" border="0"/></xsl:if>
+<xsl:if test="contains($section, 'gesundheit')"><img height="13" width="80" src="{$img-unipub}/r_gesund.gif" alt="{$section}" border="0"/></xsl:if>
+<xsl:if test="contains($section, 'umwelt')"><img height="13" width="97" src="{$img-unipub}/r_umwelt.gif" alt="{$section}" border="0"/></xsl:if>
+<xsl:if test="contains($section, 'recht')"><img height="13" width="133" src="{$img-unipub}/r_recht.gif" alt="{$section}" border="0"/></xsl:if>
 </a>
 </td>
 </tr>
 </xsl:template>
-
+<!--
 <xsl:template match="related.contents">
 <xsl:for-each select="related.content">
 <table border="0" cellpadding="0" cellspacing="8" width="100%">
@@ -157,6 +159,33 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 </xsl:template>
 
 <xsl:template match="link.text">
+<xsl:value-of select="."/>
+</xsl:template>
+-->
+<xsl:template match="NewsComponent/NewsComponent" mode="RelatedContent">
+<xsl:for-each select="Role">
+<table border="0" cellpadding="0" cellspacing="8" width="100%">
+<tr>
+<td class="rel-title"><xsl:value-of select="@FormalName"/></td>
+</tr>
+<xsl:apply-templates select="../NewsComponent/NewsLines" mode="RelatedContent"/>
+</table>
+</xsl:for-each>
+</xsl:template>
+
+<xsl:template match="NewsComponent/NewsComponent/NewsComponent/NewsLines" mode="RelatedContent">
+<tr>
+<td class="rel-text">
+<xsl:apply-templates mode="RelatedContent"/>
+</td>
+</tr>
+</xsl:template>
+
+<xsl:template match="NewsComponent/NewsComponent/NewsComponent/NewsLines/HeadLine" mode="RelatedContent">
+<a href="{../NewsItemRef/@NewsItem}"><xsl:value-of select="."/></a><br />
+</xsl:template>
+
+<xsl:template match="NewsComponent/NewsComponent/NewsComponent/NewsLines/SlugLine" mode="RelatedContent">
 <xsl:value-of select="."/>
 </xsl:template>
 
@@ -206,7 +235,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <td class="img-author">(<xsl:value-of select="."/>)</td>
 </tr>
 </xsl:template>
-
+<!--
 <xsl:template name="Searchbox">
 <center>
 <form action="http://www.unizh.ch/cgi-bin/unisearch" method="post">
@@ -231,7 +260,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 </form>
 </center>
 </xsl:template>
-
+-->
 
 <xsl:template name="styles">
 <link type="text/css" rel="stylesheet" href="{$unipublic}/unipublic.css"/>

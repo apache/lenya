@@ -89,31 +89,6 @@
                 </abstract>
               </body.head>
               <body.content>
-              <related.contents>
-                <related.content title="Artikel">
-                  <link>
-                    <link.title href="../0501/">Kommunizierendes Gehirn</link.title>
-                    <link.text>(unipublic, 15.3.2002)</link.text>
-                  </link>
-                  <link>
-                    <link.title href="../0507/">Wenn die Sprache verlorengeht</link.title>
-                    <link.text>(Podiumsgespr&#228;ch zu Hirnverletzungen)</link.text>
-                  </link>
-                </related.content>
-                <related.content title="Link">
-                  <link>
-                    <link.text>Das Podiumsgespr&#228;ch wurde organisiert von der</link.text>
-                    <link.title href="http://www.parkinson.ch">Schweizerischen Parkinsonvereinigung</link.title>
-                  </link>
-                  <link>
-                    <link.title href="http://www.npi.ch">Neuropsychologisches Institut</link.title>
-                  </link>
-                  <link>
-                    <link.title href="http://www.brainfair2002.ch/">BrainFair 2002</link.title>
-                  </link>
-                </related.content>
-              </related.contents>
-
                 <block>
                   <p>
                                		Willi und K&#228;ti Bucher sind seit Jahrzehnten verheiratet und ein eingespieltes Paar. Als
@@ -255,5 +230,48 @@
              </DataContent>
           </ContentItem>
        </NewsComponent>
+       <!--Start related content -->
+       <NewsComponent EquivalentsList="no" Essential="no">
+         <Role FormalName="RelatedContent"/>
+         <NewsComponent EquivalentsList="yes" Essential="no">
+           <Role FormalName="Artikel"/>
+           <NewsComponent EquivalentsList="no" Essential="no">
+             <NewsLines>
+               <HeadLine>Kommunizierendes Gehirn</HeadLine>
+               <SlugLine>(unipublic, 15.3.2002)</SlugLine>
+             </NewsLines>
+             <NewsItemRef NewsItem="../0501/"/>
+           </NewsComponent>
+           <NewsComponent EquivalentsList="no" Essential="no">
+             <NewsLines>
+               <HeadLine>Wenn die Sprache verlorengeht</HeadLine>
+               <SlugLine>(Podiumsgespr&#228;ch zu Hirnverletzungen)</SlugLine>
+             </NewsLines>
+             <NewsItemRef NewsItem="../0507/"/>
+           </NewsComponent>
+         </NewsComponent>
+         <NewsComponent EquivalentsList="yes" Essential="no">
+           <Role FormalName="Link"/>
+           <NewsComponent EquivalentsList="no" Essential="no">
+             <NewsLines>
+               <SlugLine>Das Podiumsgespr&#228;ch wurde organisiert von der</SlugLine>
+               <HeadLine>Schweizerischen Parkinsonvereinigung</HeadLine>
+             </NewsLines>
+             <NewsItemRef NewsItem="http://www.parkinson.ch"/>
+           </NewsComponent>
+           <NewsComponent EquivalentsList="no" Essential="no">
+             <NewsLines>
+               <HeadLine>Neuropsychologisches Institut</HeadLine>
+             </NewsLines>
+             <NewsItemRef NewsItem="http://www.npi.ch"/>
+         </NewsComponent>
+           <NewsComponent EquivalentsList="no" Essential="no">
+             <NewsLines>
+               <HeadLine>BrainFair 2002</HeadLine>
+             </NewsLines>
+             <NewsItemRef NewsItem="http://www.brainfair2002.ch"/>
+         </NewsComponent>
+       </NewsComponent>
+      </NewsComponent>
     </NewsItem>
 </NewsML>

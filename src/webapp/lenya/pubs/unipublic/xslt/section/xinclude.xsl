@@ -3,8 +3,6 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
-<!--<xsl:variable name="channel"><xsl:value-of select="/NewsML/NewsItem/NewsComponent/DescriptiveMetadata/up:Channel"/>/<xsl:value-of select="/NewsML/NewsItem/NewsComponent/DescriptiveMetadata/up:Section"/></xsl:variable>-->
-<xsl:variable name="channel">magazin/gesundheit</xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates/>
@@ -15,8 +13,7 @@
   <articles xmlns:xi="http://www.w3.org/2001/XInclude">
     <xsl:for-each select="dir:directory">
       <article href="{@name}">
-      <!--<xi:include xml:base="cocoon:" href="magazin/gesundheit/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>-->
-      <xi:include xml:base="cocoon:" href="{$channel}/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+      <xi:include xml:base="cocoon:" href="magazin/gesundheit/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
 <!--
       <xi:include xml:base="cocoon:" href="magazin/geist/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
 -->

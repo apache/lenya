@@ -25,8 +25,8 @@
       <map:match pattern="article.html">
         <map:read src="resources/publication/html/documentation/article.html" mime-type="text/html"/>
       </map:match>
-      <map:match pattern="xmlModularisation.html">
-        <map:read src="resources/publication/html/documentation/xmlModularisation.html" mime-type="text/html"/>
+      <map:match pattern="xmlArchitecture.html">
+        <map:read src="resources/publication/html/documentation/xmlArchitecture.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="xsltModularisation.html">
         <map:read src="resources/publication/html/documentation/xsltModularisation.html" mime-type="text/html"/>
