@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractDocumentCreator.java,v 1.7 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: AbstractDocumentCreator.java,v 1.8 2004/05/11 14:09:37 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -63,7 +63,8 @@ public class AbstractDocumentCreator implements DocumentCreator {
         } else if (requestURI.substring(requestURI.length() - 4).equals(".pdf")) {
             doc.add(Field.UnIndexed("mime-type", "application/pdf"));
         } else {
-            doc.add(Field.UnIndexed("mime-type", "null"));
+            // Don't add any mime-type field
+            //doc.add(Field.UnIndexed("mime-type", "null"));
         }
 
         // Add the last modified date of the file a field named "modified".  Use a
