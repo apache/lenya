@@ -105,7 +105,7 @@
   <message key="Password">Contraseña</message>
   <message key="Username">Nombre&#160;de&#160;usuario</message>
   <message key="Authentication failed">Error&#160;en&#160;la&#160;autentificación</message>
-  <message key="try-user-lenya">Pruebe&#160;con&#160;usuario&#160;{0}&#160;y&#160;contraseña&#160;{1}</message>
+  <message key="try-user-lenya">Pruebe con usuario {0} y contraseña {1} (editor) o usuario {2} y contraseña {3} (revisor)</message>
 
   <!-- logout screen -->
   <message key="logout-from-pub">Salir&#160;de&#160;la&#160;{0}&#160;Publicación</message>
