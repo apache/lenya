@@ -54,10 +54,11 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.util.IOUtils;
 import org.apache.lenya.xml.RelaxNG;
 
 /**
- * Action to validate an xml document
+ * Action to validate an xml document with relax ng schema.
  * 
  * @author Edith Chevrier
  * @version 2004.1.07
@@ -76,19 +77,13 @@ public class ValidateAction extends AbstractConfigurableAction {
 		throws Exception {
 		File sitemap =
 			new File(new URL(resolver.resolveURI("").getURI()).getFile());
-		File file =
-			new File(
-				sitemap.getAbsolutePath()
-					+ File.separator
-					+ parameters.getParameter("file"));
 		File schema =
 			new File(
 				sitemap.getAbsolutePath()
 					+ File.separator
 					+ parameters.getParameter("schema"));
+		getLogger().debug("schema: " + schema.getAbsolutePath());
 
-            getLogger().debug("file: " + file.getAbsolutePath());
-            getLogger().debug("schema: " + schema.getAbsolutePath());
 		Request request = ObjectModelHelper.getRequest(objectModel);
 
 		if (request.getParameter("cancel") != null) {
@@ -96,49 +91,56 @@ public class ValidateAction extends AbstractConfigurableAction {
 			return null;
 		}
 		if (schema.isFile()) {
-            if (!file.getParentFile().isDirectory()){
-                file.getParentFile().mkdir();
-            }
-            file.createNewFile();
-            String content = request.getParameter("content");
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-            fileWriter.close();
-        	String message = validateDocument(schema, file);
+			//create temporary file to validate 
+			if (!(sitemap.exists())) {
+				sitemap.mkdir();
+			}
+			File file =
+				IOUtils.createFile(sitemap, parameters.getParameter("file"));
+			getLogger().debug("file: " + file.getAbsolutePath());
+
+            //write POST content in temporary file
+			String content = request.getParameter("content");
+			FileWriter fileWriter = new FileWriter(file);
+			fileWriter.write(content);
+			fileWriter.close();
+            
+            //validate temporary file
+			String message = validateDocument(schema, file);
 			if (message != null) {
 				getLogger().error("RELAX NG Validation failed: " + message);
 				HashMap hmap = new HashMap();
 				hmap.put("message", "RELAX NG Validation failed: " + message);
 				return hmap;
 			}
-        } else {
+		} else {
 			getLogger().warn("No such schema: " + schema.getAbsolutePath());
 		}
-	    return null;
-    }
+		return null;
+	}
 
 	/**
-	 * Validate document
+     * Validate document
+	 * @param schema The relax ng schema.
+	 * @param file The file to validate
+	 * @return The validation error message or null.
 	 */
-	private String validateDocument(
-		File schema,
-		File file) {
-            
-        try {
-/** FIXME
- * what is this whole file creation business here?
- */
-            File valFile = new File(file.getAbsolutePath() + ".validate");
-            if (!valFile.getParentFile().isDirectory()){
-                valFile.getParentFile().mkdir();
-            }
-            valFile.createNewFile();
-			return RelaxNG.validate(
-				schema,
-				file);
+	private String validateDocument(File schema, File file) {
+
+		try {
+			File parentFile = file.getParentFile();
+			if (!(parentFile.exists())) {
+				parentFile.mkdir();
+			}
+			String filename = file.getName();
+			File valFile =
+				IOUtils.createFile(parentFile, filename + ".validate");
+			getLogger().debug("validation file: " + valFile.getAbsolutePath());
+
+			return RelaxNG.validate(schema, file);
 		} catch (Exception e) {
 			getLogger().error(e.getMessage());
 			return "" + e;
 		}
-        }
+	}
 }
