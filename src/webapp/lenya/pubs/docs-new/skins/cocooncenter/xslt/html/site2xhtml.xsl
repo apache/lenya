@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.1 2003/04/09 23:28:24 andreas Exp $
+$Id: site2xhtml.xsl,v 1.2 2003/05/02 18:07:58 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -45,45 +45,9 @@ $Id: site2xhtml.xsl,v 1.1 2003/04/09 23:28:24 andreas Exp $
         <table cellspacing="0" cellpadding="0" border="0" width="100%" summary="header with logos">
           <tr>
 
-            <xsl:comment>================= start Group Logo ==================</xsl:comment>
-            <td>&#160;</td>
-            <td bgcolor="{$header-color}" colspan="2" valign="bottom">
-              
-                  <table cellspacing="0" cellpadding="5" border="0" width="100%" >
-                  <tr>
-                  <td>
-              <h1><xsl:value-of select="$config/project-name"/> Documentation</h1>
-              <xsl:if test="$config/group-url">
-                <div class="headerlogo">
-                <xsl:call-template name="renderlogo">
-                  <xsl:with-param name="name" select="$config/group-name"/>
-                  <xsl:with-param name="url" select="$config/group-url"/>
-                  <xsl:with-param name="logo" select="$config/group-logo"/>
-                  <xsl:with-param name="root" select="$root"/>
-                </xsl:call-template>
-                </div>
-                <span class="textheader"><xsl:value-of select="$config/group-name"/></span>
-              </xsl:if>
-                  </td>
-                  </tr>
-                  <tr>
-                  <td bgcolor="{$background-bars}" width="50%" align="left">
-                    <!-- ============ Page number =========== -->
-                    <span class="trail">
-                      <script type="text/javascript" language="JavaScript" src="{$root}skin/breadcrumbs.js"></script>
-                      <!-- <b>Page 1 of 5</b> -->
-                    </span>
-                    <img src="{$spacer}" alt="" height="8" width="10" />
-                  </td>
-                  </tr>
-                  </table>
-              
-            </td>
-            <xsl:comment>================= end Group Logo ==================</xsl:comment>
-            
             <xsl:comment>================= start Project Logo ==================</xsl:comment>
-            <td bgcolor="{$header-color}" align="right">
-             <div class="headerlogo">
+            <td bgcolor="{$header-color}" align="left">
+             <div class="headerlogo" style="margin-top: 10px; margin-left: 10px;">
               <xsl:call-template name="renderlogo">
                 <xsl:with-param name="name" select="$config/project-name"/>
                 <xsl:with-param name="url" select="$config/project-url"/>
@@ -95,6 +59,25 @@ $Id: site2xhtml.xsl,v 1.1 2003/04/09 23:28:24 andreas Exp $
             </td>
             <xsl:comment>================= end Project Logo ==================</xsl:comment>
 
+            <xsl:comment>================= start Group Logo ==================</xsl:comment>
+            <td>&#160;</td>
+            <td bgcolor="{$header-color}" colspan="2" valign="bottom">
+              
+              <xsl:if test="$config/group-url">
+                <div class="headerlogo">
+                <xsl:call-template name="renderlogo">
+                  <xsl:with-param name="name" select="$config/group-name"/>
+                  <xsl:with-param name="url" select="$config/group-url"/>
+                  <xsl:with-param name="logo" select="$config/group-logo"/>
+                  <xsl:with-param name="root" select="$root"/>
+                </xsl:call-template>
+                </div>
+                <span class="textheader"><xsl:value-of select="$config/group-name"/></span>
+              </xsl:if>
+              
+            </td>
+            <xsl:comment>================= end Group Logo ==================</xsl:comment>
+            
             <!--
             <xsl:comment>================= start Search ==================</xsl:comment>
             <td class="search" align="right" bgcolor="{$header-color}" rowspan="2" valign="top">
@@ -144,6 +127,19 @@ $Id: site2xhtml.xsl,v 1.1 2003/04/09 23:28:24 andreas Exp $
 
           </tr>
           
+          
+          <tr>
+          <td colspan="4" bgcolor="{$background-bars}" width="50%" align="left">
+            <!-- ============ Page number =========== -->
+            <div style="padding: 3px">
+            <span class="trail">
+              <script type="text/javascript" language="JavaScript" src="{$root}skin/breadcrumbs.js"></script>
+              <!-- <b>Page 1 of 5</b> -->
+            </span>
+            <img src="{$spacer}" alt="" height="8" width="10" />
+            </div>
+          </td>
+          </tr>
           
           <tr>
             <td colspan="2" bgcolor="{$header-color}" valign="bottom">
