@@ -69,7 +69,7 @@ import org.apache.lenya.cms.publication.Publication;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
-    
+
     /**
      * Creates a new policy authorizer.
      */
@@ -80,15 +80,51 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, java.lang.String, java.util.Map)
      */
     public boolean authorize(
-        AccreditableManager accessController,
+        AccreditableManager accreditableManager,
         PolicyManager policyManager,
         Identity identity,
         Publication publication,
         Request request)
         throws AccessControlException {
-            
+
         getLogger().debug("Authorizing identity: " + identity);
-            
+
+        boolean authorized;
+
+        if (identity.belongsTo(accreditableManager)) {
+            authorized =
+                authorizePolicy(accreditableManager, policyManager, identity, publication, request);
+        } else {
+            getLogger().debug(
+                "Identity ["
+                    + identity
+                    + "] not authorized - belongs to wrong accreditable manager.");
+            authorized = false;
+        }
+
+        getLogger().debug("Authorized: " + authorized);
+
+        return authorized;
+    }
+
+    /**
+     * Authorizes an request for an identity depending on a policy.
+     * @param accreditableManager The accreditable manager.
+     * @param policyManager The policy manager.
+     * @param identity The identity to authorize.
+     * @param publication The publication.
+     * @param request The request to authorize.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected boolean authorizePolicy(
+        AccreditableManager accreditableManager,
+        PolicyManager policyManager,
+        Identity identity,
+        Publication publication,
+        Request request)
+        throws AccessControlException {
+
         String requestUri = request.getRequestURI();
         String context = request.getContextPath();
 
@@ -98,14 +134,10 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
         String url = requestUri.substring(context.length());
 
-        Policy policy =
-            policyManager.getPolicy(accessController, publication, url);
+        Policy policy = policyManager.getPolicy(accreditableManager, publication, url);
         Role[] roles = policy.getRoles(identity);
-        
-        boolean authorized = roles.length > 0; 
 
-        getLogger().debug("Authorized: " + authorized);
-            
+        boolean authorized = roles.length > 0;
         return authorized;
     }
 
