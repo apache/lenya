@@ -56,6 +56,7 @@ package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.History;
@@ -69,7 +70,7 @@ import java.io.File;
 
 /**
  * @author andreas
- * @version $Id: CMSHistory.java,v 1.21 2003/10/24 12:04:16 andreas Exp $
+ * @version $Id: CMSHistory.java,v 1.22 2003/12/05 17:27:09 andreas Exp $
  *
  */
 public class CMSHistory extends History {
@@ -151,7 +152,13 @@ public class CMSHistory extends History {
     public String getHistoryPath(Document document) {
         DocumentIdToPathMapper pathMapper = document.getPublication().getPathMapper();
         String documentPath = pathMapper.getPath(document.getId(), document.getLanguage());
-        String path = HISTORY_PATH + "/" + document.getArea() + "/" + documentPath;
+
+        String area = document.getArea();
+        if (!area.equals(Publication.ARCHIVE_AREA) && !area.equals(Publication.TRASH_AREA)) {
+            area = Publication.AUTHORING_AREA;
+        }
+
+        String path = HISTORY_PATH + "/" + area + "/" + documentPath;
         path = path.replace('/', File.separatorChar);
         return path;
     }
@@ -167,7 +174,8 @@ public class CMSHistory extends History {
      * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
      */
     protected File getHistoryFile(Document document) {
-        File historyFile = new File(document.getPublication().getDirectory(), getHistoryPath(document));
+        File historyFile =
+            new File(document.getPublication().getDirectory(), getHistoryPath(document));
         return historyFile;
     }
 
@@ -231,8 +239,8 @@ public class CMSHistory extends History {
         Element identityElement = helper.getFirstChild(element, IDENTITY_ELEMENT);
         Element userElement = helper.getFirstChild(identityElement, USER_ELEMENT);
         if (userElement != null) {
-        	String userId = userElement.getAttribute(ID_ATTRIBUTE);
-        	cmsVersion.setUserId(userId);
+            String userId = userElement.getAttribute(ID_ATTRIBUTE);
+            cmsVersion.setUserId(userId);
         }
 
         return cmsVersion;
