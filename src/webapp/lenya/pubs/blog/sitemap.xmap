@@ -171,7 +171,7 @@
             <map:parameter name="configfile" value="./config-bxe.xml"/>
             <map:parameter name="context" value="{request:contextPath}"/>
           </map:transform>
-          <map:serialize type="xhtml-iso-8859-1"/>
+          <map:serialize type="xhtml"/>
         </map:act>
         <map:generate src="../../resources/misc/bxe/download.xhtml"/>
         <map:serialize type="html"/>
