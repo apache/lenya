@@ -46,8 +46,9 @@ log4j.appender.A1=org.apache.log4j.ConsoleAppender
 
 
 log4j.appender.A1.layout=org.apache.log4j.PatternLayout
-#log4j.appender.A1.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
-log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c %x - %m%n
+#log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c %x - %m%n
+# Showing the method might slow down logging. In order to improve performance use the pattern above
+log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c.%M():%L %x - %m%n
 
 #log4j.category.org.apache.lenya.cms.cocoon.transformation.IncludeTransformer=DEBUG
 #log4j.category.org.apache.lenya.cms.pubs.forum.NewArticleCreator=DEBUG
