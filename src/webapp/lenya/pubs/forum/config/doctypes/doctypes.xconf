@@ -8,7 +8,9 @@
 </doc>
 
 <doc type="Article">
-  <creator src="org.lenya.cms.pubs.forum.NewArticleCreator"/>
+  <creator src="org.lenya.cms.pubs.forum.NewArticleCreator">
+      <sample-name>Article.xml</sample-name>
+    </creator>
   <children>
     <doc type="Comment"/>
   </children>

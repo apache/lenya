@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.16 2003/03/06 20:46:49 gregor Exp $
+ * $Id: NewArticleCreator.java,v 1.17 2003/04/02 15:04:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -68,10 +68,6 @@ import java.util.Map;
  */
 public class NewArticleCreator extends DefaultBranchCreator {
     static Category log = Category.getInstance(NewArticleCreator.class);
-
-    public NewArticleCreator() {
-	sampleResourceName = "Article.xml";
-    }
 
     /**
      * DOCUMENT ME!
