@@ -26,13 +26,22 @@ public interface WorkflowInstance {
     /**
      * Returns the transitions that can fire for this user.
      */
-    Transition[] getExecutableTransitions(Situation situation);
+    Event[] getExecutableEvents(Situation situation);
 
     /**
      * Indicates that the user invoked an event.
      * @param user The user who invoked the event.
      * @param event The event that was invoked.
+     * @throws WorkflowException
      */
     void invoke(Situation situation, Event event) throws WorkflowException;
+    
+    /**
+     * Returns the current value of a variable.
+     * @param variable A variable.
+     * @return A boolean value.
+     * @throws WorkflowException
+     */
+    boolean getValue(String variableName) throws WorkflowException;
 
 }
