@@ -74,7 +74,7 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * Constructor for FileUserTest.
-     * @param arg0
+     * @param arg0 command line args
      */
     public FileUserTest(String arg0) {
         super(arg0);
@@ -90,16 +90,18 @@ public class FileUserTest extends AccessControlTest {
         junit.textui.TestRunner.run(FileUserTest.class);
     }
 
-    /*
-     * @see TestCase#setUp()
-     */
+	/**
+	 *  (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
     protected void setUp() throws Exception {
         super.setUp();
     }
 
-    /*
-     * @see TestCase#tearDown()
-     */
+	/**
+	 *  (non-Javadoc)
+	 * @see junit.framework.TestCase#tearDown()
+	 */
     protected void tearDown() throws Exception {
         super.tearDown();
     }
@@ -123,16 +125,16 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Create and save a user
      *
      * @param userName DOCUMENT ME!
      * @param fullName DOCUMENT ME!
      * @param email DOCUMENT ME!
      * @param password DOCUMENT ME!
      *
-     * @return DOCUMENT ME!
+     * @return a <code>FileUser</code>
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public FileUser createAndSaveUser(String userName, String fullName, String email,
         String password) throws AccessControlException {
@@ -176,13 +178,13 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Load a user.
      *
-     * @param userName DOCUMENT ME!
+     * @param userName the name of the user
      *
-     * @return DOCUMENT ME!
+     * @return a <code>FileUser</code>
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public FileUser loadUser(String userName) throws AccessControlException {
         File configDir = getConfigurationDirectory();
@@ -192,9 +194,9 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Test save
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public void testSave() throws AccessControlException {
         String userName = "alice";
@@ -206,9 +208,9 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Test getEmail
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public void testGetEmail() throws AccessControlException {
         String userName = "alice";
@@ -226,9 +228,9 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Test getFullName
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public void testGetFullName() throws AccessControlException {
         String userName = "alice";
@@ -240,9 +242,9 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Test getGroups
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public void testGetGroups() throws AccessControlException {
         FileUser user = createAndSaveUser("alice", "Alice Wonderland", "alice@wonderland.org",
@@ -259,9 +261,9 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Test getId
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public void testGetId() throws AccessControlException {
         String id = "alice";
@@ -270,9 +272,9 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Test delete
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public void testDelete() throws AccessControlException {
         String id = "albert";
@@ -289,9 +291,9 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Test authenticate
      *
-     * @throws AccessControlException DOCUMENT ME!
+     * @throws AccessControlException if an error occurs
      */
     final public void testAuthenticate() throws AccessControlException {
         String password = "daisy";

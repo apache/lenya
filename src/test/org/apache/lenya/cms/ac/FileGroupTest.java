@@ -75,7 +75,7 @@ import java.io.IOException;
 public class FileGroupTest extends AccessControlTest {
     /**
      * Constructor for FileGroupTest.
-     * @param arg0
+     * @param arg0 command line args
      */
     public FileGroupTest(String arg0) {
         super(arg0);
