@@ -40,38 +40,11 @@
             
             <xsl:apply-templates select="message"/>
             
-            <tr>
-              
-              <td class="lenya-entry-caption">User&#160;ID</td>
-              <td>
-                 <xsl:choose>
-                   <xsl:when test="@new = 'true'">
-                     <input class="lenya-form-element" name="user-id" type="text" value="{id}"/>
-                   </xsl:when>
-                   <xsl:otherwise>
-                     <xsl:value-of select="id"/>
-                   </xsl:otherwise>
-                 </xsl:choose>
-              </td>
-            </tr>
-            <tr>
-              <td class="lenya-entry-caption">Name</td>
-              <td>
-                <input class="lenya-form-element" name="fullname" type="text" value="{fullname}"/>
-              </td>
-            </tr>
-            <tr>
-              <td class="lenya-entry-caption">E-Mail</td>
-              <td>
-                <input class="lenya-form-element" name="email" type="text" value="{email}"/>
-              </td>
-            </tr>
-            <tr>
-              <td class="lenya-entry-caption">Description</td>
-              <td>
-                <input class="lenya-form-element" name="description" type="text" value="{description}"/>
-              </td>
-            </tr>
+            <xsl:apply-templates select="id"/>
+            <xsl:apply-templates select="ldapid"/>
+            <xsl:apply-templates select="fullname"/>
+            <xsl:apply-templates select="email"/>
+            <xsl:apply-templates select="description"/>
             <tr>
               <td/>
               <td>
@@ -92,6 +65,64 @@
   </xsl:template>
   
   
+  <xsl:template match="id">
+		<tr>
+			
+			<td class="lenya-entry-caption">User&#160;ID</td>
+			<td>
+				 <xsl:choose>
+					 <xsl:when test="../@new = 'true'">
+						 <input class="lenya-form-element" name="userid" type="text" value="{normalize-space(.)}"/>
+					 </xsl:when>
+					 <xsl:otherwise>
+						 <xsl:value-of select="id"/>
+					 </xsl:otherwise>
+				 </xsl:choose>
+			</td>
+		</tr>
+  </xsl:template>
+  
+  
+  <xsl:template match="ldapid">
+		<tr>
+			<td class="lenya-entry-caption">LDAP&#160;ID</td>
+			<td>
+				<input class="lenya-form-element" name="fullname" type="text" value="{normalize-space(.)}"/>
+			</td>
+		</tr>
+  </xsl:template>
+  
+  
+  <xsl:template match="fullname">
+		<tr>
+			<td class="lenya-entry-caption">Name</td>
+			<td>
+				<input class="lenya-form-element" name="fullname" type="text" value="{normalize-space(.)}"/>
+			</td>
+		</tr>
+  </xsl:template>
+  
+  
+  <xsl:template match="email">
+		<tr>
+			<td class="lenya-entry-caption">E-Mail</td>
+			<td>
+				<input class="lenya-form-element" name="email" type="text" value="{normalize-space(.)}"/>
+			</td>
+		</tr>
+  </xsl:template>
+  
+  
+	<xsl:template match="description">
+		<tr>
+			<td class="lenya-entry-caption">Description</td>
+			<td>
+				<input class="lenya-form-element" name="description" type="text" value="{description}"/>
+			</td>
+		</tr>
+	</xsl:template>  
+	
+	
   <xsl:template match="message">
     <xsl:if test="text()">
       <tr>

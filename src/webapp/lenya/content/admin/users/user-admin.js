@@ -9,6 +9,11 @@ function user_change_profile(userId) {
 	var email = user.getEmail();
 	var description = user.getDescription();
 	
+	var ldapId;
+	if (user.getClass().getName().endsWith("LDAPUser")) {
+		ldapId = user.getLdapId();
+	}
+	
 	// at the moment the loop is executed only once (no form validation)
 	
     while (true) {
@@ -164,12 +169,27 @@ function user_change_groups(userId) {
    	sendPage("redirect.html", { "url" : "index.html" });
 }
 
+function user_add_user_ldap() {
+	add_user(true);
+}
+
+function user_add_user() {
+	add_user(false);
+}
+
+
 //
 // Add a user.
 //
-function user_add_user() {
+function add_user(ldap) {
 
 	var userId = "";
+	
+	var ldapId = null;
+	if (ldap) {
+		ldapId = "";
+	}
+	
 	var email = "";
 	var fullName = "";
 	var description = "";
@@ -184,6 +204,7 @@ function user_add_user() {
 	    	"email" : email,
 	    	"description" : description,
 	    	"message" : message,
+	    	"ldap-id" : ldapId,
 	    	"new-user" : true
 		});
 		
@@ -192,10 +213,11 @@ function user_add_user() {
 	    }
 	    
 		message = "";
-		userId = cocoon.request.get("user-id");
+		userId = cocoon.request.get("userid");
 		email = cocoon.request.get("email");
 		fullName = cocoon.request.get("fullname");
 		description = cocoon.request.get("description");
+		ldapId = cocoon.request.get("ldapid");
 		
 		var existingUser = userManager.getUser(userId);
 		
@@ -204,7 +226,15 @@ function user_add_user() {
 		}
 		else {
 			var configDir = userManager.getConfigurationDirectory();
-			var user = new Packages.org.apache.lenya.cms.ac.FileUser(configDir, userId, fullName, email, "");
+			var user;
+			if (ldap) {
+				user = new Packages.org.apache.lenya.cms.ac.LDAPUser(configDir, userId, email, ldapId);
+				user.setName(fullName);
+			}
+			else {
+				user = new Packages.org.apache.lenya.cms.ac.FileUser(configDir, userId, fullName, email, "");
+			}
+			
 			user.setDescription(description);
 			user.save();
 			userManager.add(user);

@@ -13,6 +13,13 @@
       <xsp:attribute name="new"><jpath:value-of select="new-user"/></xsp:attribute>
       <message type="error"><jpath:value-of select="message"/></message>
       <id><jpath:value-of select="user-id"/></id>
+      
+      <xsp:logic>
+      	String ldapId = (String) <jpath:value-of select="ldap-id"/>;
+      	if (ldapId != null) {
+          <ldapid><xsp:expr>ldapId</xsp:expr></ldapid>
+      	}
+      </xsp:logic>
       <fullname><jpath:value-of select="fullname"/></fullname>
       <email><jpath:value-of select="email"/></email>
       <description><jpath:value-of select="description"/></description>
