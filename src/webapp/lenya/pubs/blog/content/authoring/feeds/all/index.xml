@@ -2,7 +2,7 @@
 
 <feed xmlns="http://purl.org/atom/ns#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="0.2">
   <title>Lenya's Weblog</title>
-  <subtitle>XML and beyond</subtitle>
+  <!-- "subtitle" has been removed from Atom specification. Can be added to xslt/global.xsl -->
   <link>http://cocoon.apache.org/lenya/blog/</link>
 
   <modified>2003-02-05T12:29:29Z</modified>
