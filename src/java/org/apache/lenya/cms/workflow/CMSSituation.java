@@ -1,5 +1,5 @@
 /*
-$Id: CMSSituation.java,v 1.5 2003/07/09 13:44:52 egli Exp $
+$Id: CMSSituation.java,v 1.6 2003/08/15 13:12:31 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,7 @@ $Id: CMSSituation.java,v 1.5 2003/07/09 13:44:52 egli Exp $
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.workflow.Situation;
 
 
@@ -91,4 +92,23 @@ public class CMSSituation implements Situation {
     public String toString() {
         return "(roles: " + roles + ")";
     }
+    
+    private Identity identity;
+    
+    /**
+     * Returns the identity.
+     * @return An identity.
+     */
+    public Identity getIdentity() {
+        return identity;
+    }
+
+    /**
+     * Sets the identity.
+     * @param identity An identity.
+     */
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+    }
+
 }
