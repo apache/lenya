@@ -40,12 +40,8 @@
     
 <section>
 <title>Demo</title>
-<p>Try Xopus at:</p>
-<source>
-<![CDATA[
-http://www.xopus.com/demo/index.html
-]]>
-</source>
+<p>There is an online <link href="http://www.xopus.com/demo/index.html">XOPUS demo</link> available. You need Internet
+    Explorer 5.5 or newer to view the demo.</p>
 </section>
 
 <section>

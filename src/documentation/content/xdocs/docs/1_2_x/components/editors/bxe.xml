@@ -22,7 +22,7 @@
 <document> 
 
 <header> 
-    <title>Bitflux Editor</title>
+    <title>Bitflux Editor (BXE)</title>
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
@@ -32,21 +32,107 @@
 <body> 
 
 <section>
-<title>Configuration</title>
-<p>Required and Optional parameters</p>
-<ul>
-<li>BX_xmlfile: Actual Content (XML)</li>
-<li>BX_xslfile (or BX_xhtmlfile): Global Formatting (XSLT (or XHTML))</li>
-<li>css: Content Formatting (CSS)</li>
-<li>BX_exitdestination: Link (HTML)</li>
-<li>BX_validationfile: Schema (RNG)</li>
-</ul>
+<title>Overview</title>
+<p><link href="http://bxe.oscom.org">BXE</link> is a validating WYSIWYG XML editor for Mozilla-based browsers.
+    It uses <link href="http://www.relaxng.org/">RELAX NG</link> for validation and CSS for layout. 
+    Integration with Lenya is done with a series of use case steps that are defined
+    in a sitemap inside your publication: <code>usecase-bxeng.xmap</code>. If you understand the purpose
+    of the various use case steps, you will have a good grasp of how to integration is done, and will be
+    able to adjust it to your needs as necessary.</p>
 </section>
-
 <section>
-<title>Namespace declaration</title>
-<p>resources/misc/bxe/*-namespaces.xml</p>
-</section>
+<title>The open step</title>
+    <p>The open step is called when you first open BXE from the Lenya menu. It first checks
+        if BXE is installed, and displays a warning page if it is not. It then attempts to check
+        out the page to be edited (to protect it from being edited by other users at the same time),
+        and displays an error page if this fails for some reason. It then loads the BXE start page
+        that contains references to the BXE configuration to be used for this page, such as the
+        location of the RELAX NG schema, CSS files, and more. The BXE start page is a dynamically
+        generated page that is being aggregated from a configuration pipeline (the config step), 
+        a file that contains all the namespaces that may occur in the document to be edited 
+        (<code>content-namespaces.xml</code>), and the skeleton BXE start page (<code>index.xhtml</code>).
+        The pipeline looks like this:
+     </p>
+    <source>
+    <![CDATA[
+          <map:match type="step" pattern="open">
+           <!-- Check for BXENG -->
+           <map:act type="resource-exists" src="../../resources/bxeng/bxeLoader.js">
+            <map:act type="reserved-checkout">
+              <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
+                <map:parameter name="user" value="{user}"/>
+                <map:parameter name="filename" value="{filename}"/>
+                <map:parameter name="date" value="{date}"/>
+                <map:parameter name="message" value="{message}"/>
+              </map:generate>
+              <map:transform src="../../xslt/rc/rco-exception.xsl"/>
+              <map:call resource="style-cms-page"/>
+            </map:act>
+            <map:aggregate element="bxeng">
+              <map:part src="../../resources/misc/bxeng/index.xhtml"/>
+              <map:part src="../../resources/misc/bxeng/content-namespaces.xml"/>
+            </map:aggregate>
+            <map:transform src="../../xslt/bxeng/aggregate.xsl"/>
+            <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
+              <map:parameter name="configfile" value="{request:requestURI}?lenya.usecase=bxeng&amp;lenya.step=config"/>
+              <map:parameter name="context" value="{request:contextPath}"/>
+            </map:transform>
+            <map:serialize type="xhtml"/>
+            </map:act>
+            <map:generate src="../../resources/misc/bxeng/download.xhtml"/>
+            <map:call resource="style-cms-page"/>
+            <map:serialize type="html"/>
+          </map:match>
+    ]]>
+    </source>
+</section>    
+<section>
+<title>The config step</title>
+    <p>The config step generates the BXE config file by transforming a template file (<code>config.xml</code>
+        and passing in values for the following parameters:
+     </p>
+        <ul>
+        <li>BX_exitdestination: URL of the location BXE should redirect to upon exit</li>
+        <li>BX_validationfile: URL of the RELAX NG schema for the XML to be edited</li>
+        <li>BX_xhtmlfile: URL of the XHTML page to load the XML content into for editing</li>
+        <li>BX_xmlfile: URL of the XML for the page to be edited</li>
+        <li>BX_xslfile: URL of the XSL stylesheet to use for formatting the XML in BXE (BXE 1.1 only)</li>
+        <li>contextmenufile: URL of the file that defines the BXE context menu</li>
+        <li>css: URL of the CSS file used for styling the XML to be edited in BXE</li>
+        <li>defaultlanguage: default language of the publication, used for insert popups</li>
+        </ul>
+      <p>If you want to customize BXE, the config step is your starting point. Make sure to pass
+        in the right URL for these parameters. The default publication uses additional pipelines
+        for these URL to provide more flexibility (such as automatically loading the correct
+        RELAX NG schema based on the resource type of the current page). More information about
+        the format of <code>config.xml</code> is available at the <link href="http://wiki.bitfluxeditor.org/Config.xml">BXE wiki</link>. 
+        The config step pipeline looks as follows in the default publication:</p>
+    <source>
+    <![CDATA[
+        <map:match type="step" pattern="config">
+          <map:generate src="../../resources/misc/bxeng/inc/config.xml"/>
+          <map:transform src="../../xslt/bxeng/config-xml.xsl">
+            <map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.usecase=bxeng&amp;lenya.step=xml"/>
+            <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+            
+  <!--      Instead of an xsl we use the xhtml file to provide the basic layout
+            <map:parameter name="BX_xslfile" value="{2}.xsl"/>
+  -->
+            <map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html"/>
+            <map:parameter name="BX_validationfile" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}.rng"/>
+            <map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/{page-envelope:document-type}-bxeng.css"/>
+  <!--       The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
+             for the checkin while we redirect to the document
+  -->
+            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
+            <map:parameter name="contextmenufile" value="../../resources/misc/bxeng/contextmenu.xml"/>
+          </map:transform>
+          <map:transform type="cinclude"/>
+          <map:serialize type="xml"/>
+        </map:match>
+    ]]>
+    </source>
+</section>    
 
 </body>
 </document>
