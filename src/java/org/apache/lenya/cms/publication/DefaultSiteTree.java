@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.4 2003/05/13 12:28:53 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.5 2003/05/13 13:22:42 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -93,10 +93,6 @@ public class DefaultSiteTree
 	document = DocumentHelper.readDocument(treefile);
     }
 
-    public void addNode(String parentid, String id, Label[] labels) {
-	addNode(parentid, id, labels, null, null, false);
-    }
-
     protected Node findNode(Node node, List ids) {
 	if (ids.size() < 1) {
 	    return node;
@@ -116,23 +112,14 @@ public class DefaultSiteTree
 	return null;
     }
 
+    public void addNode(String parentid, String id, Label[] labels) {
+	addNode(parentid, id, labels, null, null, false);
+    }
+
     public void addNode(String parentid, String id, Label[] labels,
 			String href, String suffix, boolean link) {
-        // Get parent element
-        StringTokenizer st = new StringTokenizer(parentid, "/");
-	ArrayList ids = new ArrayList();
-	while (st.hasMoreTokens()) {
-	    ids.add(st.nextToken());
-	}
-
-	Element root = document.getDocumentElement();
 	
-	NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
-	
-	Element elements[] = helper.getChildren(root);
-	
-	Node parentNode = findNode(root, ids);
-
+	Node parentNode = getNodeInternal(parentid);
         if (parentNode == null) {
             log.error("No nodes: " + parentid + ". No child added");
 	    
@@ -153,6 +140,7 @@ public class DefaultSiteTree
 //         }
 
         // Add node
+	NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
 	Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
 	child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
  	if (href != null && href.length() > 0) {
@@ -175,7 +163,7 @@ public class DefaultSiteTree
 	}
 
 	parentNode.appendChild(child);
-	log.debug("Tree has been modified: " + root);
+	log.debug("Tree has been modified: " + document.getDocumentElement());
     }
 
     public void addNode(SiteTreeNode node) {
@@ -185,14 +173,22 @@ public class DefaultSiteTree
 
     public void deleteNode(String id) {}
 
-    public SiteTreeNode getNode(String documentId) {
+    private Node getNodeInternal(String documentId) {
         StringTokenizer st = new StringTokenizer(documentId, "/");
 	ArrayList ids = new ArrayList();
 	while (st.hasMoreTokens()) {
 	    ids.add(st.nextToken());
 	}
-
+	
 	Node node = findNode(document.getDocumentElement(), ids);
+	if (node == null) {
+	    return null;
+	}
+	return node;
+    }
+
+    public SiteTreeNode getNode(String documentId) {
+	Node node = getNodeInternal(documentId);
 	if (node == null) {
 	    return null;
 	}
