@@ -1,5 +1,5 @@
 /*
-$Id: ContentHandler.java,v 1.8 2003/07/23 13:21:37 gregor Exp $
+$Id: ContentHandler.java,v 1.9 2003/07/30 15:13:14 egli Exp $
 <License>
 
  ============================================================================
@@ -64,7 +64,7 @@ import java.util.List;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public interface ContentHandler {
     /**
@@ -72,80 +72,82 @@ public interface ContentHandler {
      *
      * @return DOCUMENT ME!
      */
-    public String getAuthor();
+    String getAuthor();
 
     /**
      * Return categories (from META tags)
      *
      * @return DOCUMENT ME!
      */
-    public String getCategories();
+    String getCategories();
 
     /**
      * Return contents
      *
      * @return DOCUMENT ME!
      */
-    public String getContents();
+    String getContents();
 
     /**
      * Return description (from META tags)
      *
      * @return DOCUMENT ME!
      */
-    public String getDescription();
+    String getDescription();
 
     /**
      * Return META HREF
      *
      * @return DOCUMENT ME!
      */
-    public String getHREF();
+    String getHREF();
 
     /**
      * Return keywords (from META tags)
      *
      * @return DOCUMENT ME!
      */
-    public String getKeywords();
+    String getKeywords();
 
     /**
      * Return links
      *
      * @return DOCUMENT ME!
      */
-    public List getLinks();
+    List getLinks();
 
     /**
      * Return published date (from META tag)
      *
      * @return DOCUMENT ME!
      */
-    public long getPublished();
+    long getPublished();
 
     /**
      * Return description (from META tags)
      *
      * @return DOCUMENT ME!
      */
-    public boolean getRobotFollow();
+    boolean getRobotFollow();
 
     /**
      * Return description (from META tags)
      *
      * @return DOCUMENT ME!
      */
-    public boolean getRobotIndex();
+    boolean getRobotIndex();
 
     /**
      * Return page title
      *
      * @return DOCUMENT ME!
      */
-    public String getTitle();
+    String getTitle();
 
     /**
      * Parse Content.
+     * 
+     * @param in DOCUMENT ME!
      */
-    public void parse(InputStream in);
+    void parse(InputStream in);
 }
