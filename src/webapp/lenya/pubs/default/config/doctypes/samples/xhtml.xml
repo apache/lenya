@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<xhtml:html
       xmlns:xhtml="http://www.w3.org/1999/xhtml" 
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       xmlns:dcterms="http://purl.org/dc/terms/"
@@ -24,21 +24,21 @@
         <dc:coverage/>
         <dc:rights>dcrights</dc:rights>
     </lenya:meta>
-  <head>
-    <title>Default Publication</title>
-  </head>
-  <body>
-    <h1>Default Publication</h1>
-    <p>Welcome to the default Lenya publication!</p>
-    <p>The purpose of this publication is</p>
-    <ul>
-      <li>to show beginners the basic functionality of the Lenya CMS,</li>
-      <li>to provide an "out of the box" publication that can be easily adapted and used, and</li>
-      <li>to provide a basis for reference implementations of new concepts and best practices.</li>
-    </ul>
-    <p>
+  <xhtml:head>
+    <xhtml:title>Default Publication</xhtml:title>
+  </xhtml:head>
+  <xhtml:body>
+    <xhtml:h1>Default Publication</xhtml:h1>
+    <xhtml:p>Welcome to the default Lenya publication!</xhtml:p>
+    <xhtml:p>The purpose of this publication is</xhtml:p>
+    <xhtml:ul>
+      <xhtml:li>to show beginners the basic functionality of the Lenya CMS,</xhtml:li>
+      <xhtml:li>to provide an "out of the box" publication that can be easily adapted and used, and</xhtml:li>
+      <xhtml:li>to provide a basis for reference implementations of new concepts and best practices.</xhtml:li>
+    </xhtml:ul>
+    <xhtml:p>
     You won't find any fancy and confusing bells and whistles here, but the
     publication contains everything you need to get started.
-    </p>
-  </body>
-</html>
+    </xhtml:p>
+  </xhtml:body>
+</xhtml:html>
