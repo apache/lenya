@@ -39,6 +39,7 @@
         <map:act type="resource-exists" src="pubs/{1}/lenya/xslt/search/search-and-results.xsl">
           <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="publicationid" value="{1}"/>
           </map:transform>
           <map:call resource="style-cms-page"/>
          </map:act>
