@@ -4,7 +4,16 @@
 
   <map:components>
     <map:generators default="file"/>
-    <map:transformers default="xslt"/>
+    <map:transformers default="xslt">
+      <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
+        <catalogues default="cmsui">
+          <catalogue id="cmsui" name="cmsui" location="resources/i18n"/>           
+        </catalogues>
+        <untranslated-text>untranslated</untranslated-text>
+        <!-- cache-at-startup should be true in non development/debug mode -->
+        <cache-at-startup>true</cache-at-startup>
+      </map:transformer>
+    </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard">
@@ -271,7 +280,11 @@
           </map:transform>
           
           <map:transform src="cocoon://lenya-page/{../1}/info/default.xml"/>
-          
+        
+          <map:transform type="i18n">      
+            <map:parameter name="locale" value="{request:locale}"/>
+          </map:transform>
+        
           <map:serialize type="html-iso-8859-1"/>
           
           <!--
