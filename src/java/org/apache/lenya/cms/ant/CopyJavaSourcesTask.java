@@ -1,5 +1,5 @@
 /*
- * $Id: CopyJavaSourcesTask.java,v 1.1 2003/03/01 08:49:07 michi Exp $
+ * $Id: CopyJavaSourcesTask.java,v 1.2 2003/03/01 23:00:51 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -71,10 +71,10 @@ public class CopyJavaSourcesTask extends Task {
         numberOfEmptyDirectoriesCreated = 0;
         numberOfFilesCopied = 0;
 
-        File absoluteBuildDir = new File(project.getBaseDir(), buildDir);
+        File absoluteBuildDir = new File(project.getBaseDir(), project.translatePath(buildDir));
+        //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
 
         //System.out.println("CopyJavaSourcesTask.execute(): " + pubsRootDirs);
-
         StringTokenizer st = new StringTokenizer(pubsRootDirs.toString(),File.pathSeparator);
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
