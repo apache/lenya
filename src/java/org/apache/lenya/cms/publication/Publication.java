@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.24 2003/08/11 14:46:28 gregor Exp $
+$Id: Publication.java,v 1.25 2003/08/18 17:12:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -97,7 +97,7 @@ public class Publication {
     private static final String[] areas =
         { AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA };
 
-    private static final String configFileName = "publication.xconf";
+    protected static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator + "publication.xconf";
 
     private String id;
     private PublishingEnvironment environment;
@@ -131,15 +131,7 @@ public class Publication {
         environment = new PublishingEnvironment(servletContextPath, id);
 
         File configFile =
-            new File(
-                servletContext,
-                PUBLICATION_PREFIX
-                    + File.separator
-                    + id
-                    + File.separator
-                    + CONFIGURATION_PATH
-                    + File.separator
-                    + configFileName);
+            new File(getDirectory(), CONFIGURATION_FILE);
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 
         Configuration config;
