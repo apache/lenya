@@ -2,9 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 xmlns:xhtml="http://www.w3.org/1999/xhtml" 
 xmlns:dc="http://purl.org/dc/elements/1.1/" 
+xmlns:dcterms="http://purl.org/dc/terms/"
 xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
 xhtml:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" 
-lenya:dummy="FIXME:keepNamespace">
+lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
 
     <!-- the root element indicates the doctype -->
     <lenya:meta>
