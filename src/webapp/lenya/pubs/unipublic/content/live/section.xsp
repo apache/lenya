@@ -23,7 +23,7 @@
 <!--
     <xi:include xml:base="cocoon:"><xsp:attribute name="href"><xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></xi:include>
 -->
-    <dossier xlink:href="frontpage/dossier.xml" xlink:show="embed"/>
+    <dossier xlink:href="cocoon:dossier.xml" xlink:show="embed"/>
 <!--
     <xi:include href="frontpage/dossier.xml" xml:base="cocoon:"/>
 -->

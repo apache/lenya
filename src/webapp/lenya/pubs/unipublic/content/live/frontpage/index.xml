@@ -4,7 +4,7 @@
 <Content xmlns:xi="http://www.w3.org/2001/XInclude">
   <FirstColumn>
     <navigation xlink:href="../navigation.xml" xlink:show="embed"/>
-    <dossier xlink:href="dossier.xml" xlink:show="embed"/>
+    <dossier xlink:href="cocoon:dossier.xml" xlink:show="embed"/>
 <!--
     <xi:include href="navigation.xml" xml:base="cocoon:"/>
     <xi:include href="frontpage/dossier.xml" xml:base="cocoon:"/>

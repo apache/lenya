@@ -1,9 +1,4 @@
 <?xml version="1.0"?>
-<Dossiers href="dossiers">
-  <Dossier href="2002/ada">
-    <Title>UNI AN DER EXPO</Title>
-    <Teaser>Berichte zur Landesausstellung und zum Expo-Projekt &#171;Ada - der intelligente Raum&#187;</Teaser>
-    <Color>#9dc0d0</Color>
-    <Image href="teaser.jpg" />
-  </Dossier>
-</Dossiers>
+<dossiers>
+  <dossier id="2002/ada" />
+</dossiers>

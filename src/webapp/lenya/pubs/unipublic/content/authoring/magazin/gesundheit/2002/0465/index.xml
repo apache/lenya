@@ -62,7 +62,6 @@
             <head>
               <hedline>
                 <hl1>Im Traum spricht er am meisten mit mir </hl1>
-		<dossier>Brain Fair 2002</dossier>
 		<abstract> Parkinson-Patienten leiden an ihrer Krankheit und manchmal an den Reaktionen ihrer Umwelt.
                              Auch f&#252;r die Partnerin oder den Partner einer erkrankten Person kann dies zur Belastung
                              werden. An der Brainfair 2002 tauschten sich Betroffene und Forscher dar&#252;ber aus, wie die
@@ -86,6 +85,7 @@ Die ungehemmte Zellteilung, kurz Krebs, wird normalerweise durch mehrere Sicheru
                 <media media-type="image">
                   <media-reference source="bild-headline.gif" alternate-text="Zellteilung" copyright=""/>
                 </media>
+		<dossier id="2002/brainfair" />
               </body.head>
               <body.content>
                 <block>

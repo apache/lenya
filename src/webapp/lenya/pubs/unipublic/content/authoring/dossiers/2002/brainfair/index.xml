@@ -4,13 +4,15 @@
 
 <head>
   <title>Kommunizierendes Gehirn</title>
-  <teasertext>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</teasertext>
-  <image href="teaser.jpg"/>
+  <teasertext></teasertext>
   <color>#dddddd</color>
+  <media media-type="image">
+    <media-reference alternate-text="" source="teaser.jpg" />
+  </media>
+  <abstract>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</abstract>
 </head>
 
 
-<lead>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</lead>
 
 <articles>
   <article channel="magazin" section="gesundheit" year="2002" dir="0465"/>

@@ -1,15 +1,5 @@
 <?xml version="1.0"?>
-<Dossiers href="dossiers">
-  <Dossier href="2002/ada">
-    <Title>UNI AN DER EXPO</Title>
-    <Teaser>Berichte zur Landesausstellung und zum Expo-Projekt &#171;Ada - der intelligente Raum&#187;</Teaser>
-    <Color>#9dc0d0</Color>
-    <Image href="teaser.jpg" />
-  </Dossier>
-  <Dossier href="2002/brainfair">
-    <Title>Kommunizierendes Gehirn</Title>
-    <Teaser>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</Teaser>
-    <Color>#dddddd</Color>
-    <Image href="teaser.jpg" />
-  </Dossier>
-</Dossiers>
+<dossiers>
+  <dossier id="2002/ada" />
+  <dossier id="2002/brainfair" />
+</dossiers>

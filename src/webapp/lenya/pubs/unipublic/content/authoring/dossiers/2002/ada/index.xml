@@ -5,11 +5,13 @@
 <head>
   <title>Uni &amp; Ada</title>
   <teasertext>Uni und ETH sind an der Expo pr&#228;sent.</teasertext>
-  <image href="teaser.jpg"/>
+  <media media-type="image">
+    <media-reference alternate-text="" source="teaser.jpg" /> 
+  </media>
   <color>#9dc0d0</color>
+  <abstract>Universit&#228;t und ETH Z&#252;rich sind an der Expo.02 mit Ada pr&#228;sent. Auf der Arteplage im Neuenburgersee...</abstract>
 </head>
 
-<lead>Universit&#228;t und ETH Z&#252;rich sind an der Expo.02 mit Ada pr&#228;sent. Auf der Arteplage im Neuenburgersee...</lead>
 
 <articles>
   <article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
