@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.4 2003/10/17 09:44:06 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.5 2003/10/17 09:56:58 egli Exp $
 <License>
 
  ============================================================================
@@ -82,7 +82,7 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DocumentReferencesHelper {
 
@@ -144,7 +144,20 @@ public class DocumentReferencesHelper {
      */
     protected Pattern getInternalLinkPattern() {
     	// FIXME: The following method is not very robust and certainly 
-    	// will fail if the mapping between URL and document-id changes
+    	// will fail if the mapping between URL and document-id changes  
+
+	// Link Management now assumes that internal links are of the
+	// form
+	// href="http://$SERVER_NAME:$SERVER_PORT/$CONTEXT_PREFIX/$PUBLICATION_ID/$AREA$DOCUMENT_ID(_[a-z][a-z])?.html
+	// If there is a match in a document file it is assumed that
+	// this is an internal link and is treated as such (warning if
+	// publish with unpublished internal links and warning if
+	// deactivate with internal references).
+  
+	// However this is not coordinated with the
+	// DocumentToPathMapper and will probably fail if the URL
+	// looks different.
+
         return Pattern.compile(
             "href\\s*=\\s*"
                 + "\"http://"
