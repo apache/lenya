@@ -216,7 +216,7 @@
             <map:parameter name="documentextension" value="{page-envelope:document-extension}"/>
             <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           </map:transform>
-          <map:serialize/>
+          <map:serialize type="html-iso-8859-1"/>
           
           <!--
           <map:match pattern="update" type="step">

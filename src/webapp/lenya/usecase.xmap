@@ -47,7 +47,7 @@
       <map:transform src="xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:serialize/>
+      <map:serialize type="xhtml-iso-8859-1"/>
     </map:resource>
     
     <map:resource name="cms-screen-xml">
