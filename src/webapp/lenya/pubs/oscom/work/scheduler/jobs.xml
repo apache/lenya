@@ -4,7 +4,6 @@
   <sch:triggers>
     <sch:trigger name="cron" src="org.quartz.CronTrigger"/>
     <sch:trigger name="date" src="org.quartz.SimpleTrigger"/>
-    <sch:trigger name="andreas" src="org.quartz.AndreasTrigger"/>
   </sch:triggers>
   <sch:publication name="oscom">
     <sch:jobs>

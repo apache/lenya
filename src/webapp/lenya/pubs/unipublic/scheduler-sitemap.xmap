@@ -24,7 +24,7 @@
   <map:pipelines>
 
     <!-- scheduler aggregation pipeline -->
-    <map:pipeline internal-only="true">
+    <map:pipeline internal-only="false">
 
       <!-- load document types -->    
       <map:match pattern="document-types">
@@ -55,44 +55,29 @@
 
     <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
     <map:pipeline>
-      <map:match pattern="docid/**">
+      <map:match pattern="admin-document">
         <map:aggregate element="scheduler" prefix="sch" ns="http://www.wyona.org/2002/sch">
           <map:part src="cocoon:/document-types"/>
           <map:part src="cocoon:/tasks"/>
           <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
           <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
         </map:aggregate>
-        <map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl">
-	  <map:parameter name="documentUri" value="{1}"/>
-	  <map:parameter name="publication-id" value="unipublic"/>
-	</map:transform>
-        <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl">
-          <map:parameter name="use-request-parameters" value="true"/>
-	</map:transform>
-        <map:transform src="../../stylesheets/cms/Page/Scheduler/scheduler-document.xsl">
-          <map:parameter name="use-request-parameters" value="true"/>
-          <map:parameter name="documentUri" value="{1}"/>
-        </map:transform>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/admin-document.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       
-      <map:match pattern="pubid/**">
+      <map:match pattern="admin-publication">
         <map:aggregate element="scheduler" prefix="sch" ns="http://www.wyona.org/2002/sch">
           <map:part src="cocoon:/document-types"/>
           <map:part src="cocoon:/tasks"/>
           <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
           <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
         </map:aggregate>
-        <map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl">
-	  <map:parameter name="publication-id" value="{1}"/>
-	</map:transform>
-        <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl">
-          <map:parameter name="use-request-parameters" value="true"/>
-	</map:transform>
-        <map:transform src="../../stylesheets/cms/Page/Scheduler/scheduler-admin.xsl">
-          <map:parameter name="use-request-parameters" value="true"/>
-          <map:parameter name="publication-id" value="{1}"/>
-        </map:transform>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/admin-publication.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       

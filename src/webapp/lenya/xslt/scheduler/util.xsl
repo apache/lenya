@@ -67,32 +67,39 @@
   <!-- create hidden inputs for all request parameters -->
   <!-- ============================================================= -->
   <xsl:template name="parameters-as-inputs">
-    <input type="hidden" name="context-prefix" value="{$context-prefix}"/>
-    <input type="hidden" name="publication-id" value="{$publication-id}"/>
-    <input type="hidden" name="documentType" value="{$documentType}"/>
-    <input type="hidden" name="documentUri" value="{$documentUri}"/>
+<!--    <ul>-->
     <xsl:for-each select="/sch:scheduler/sch:parameters/sch:parameter">
-      <xsl:if test="starts-with(@name, 'task.')">
+      <xsl:if test="not(starts-with(@name, 'job.'))">
+      <xsl:if test="not(starts-with(@name, 'trigger.'))">
+      <xsl:if test="not(starts-with(@name, 'task.id'))">
+      <xsl:if test="not(translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'action')">
         <input type="hidden" name="{@name}" value="{@value}"/>
+<!--        <li>Parameter: <xsl:value-of select="@name"/> = <xsl:value-of select="@value"/></li>-->
+      </xsl:if>
+      </xsl:if>
+      </xsl:if>
       </xsl:if>
     </xsl:for-each>
+<!--    </ul>-->
   </xsl:template>
   
   <!-- ============================================================= -->
   <!-- create new request parameters for all request parameters -->
   <!-- ============================================================= -->
   <xsl:template name="parameters-as-request-parameters">
-    <xsl:text>?</xsl:text>
-      <xsl:text>context-prefix=</xsl:text><xsl:value-of select="$context-prefix"/>
-      <xsl:text>&amp;publication-id=</xsl:text><xsl:value-of select="$publication-id"/>
-      <xsl:text>&amp;documentType=</xsl:text><xsl:value-of select="$documentType"/>
-      <xsl:text>&amp;documentUri=</xsl:text><xsl:value-of select="$documentUri"/>
-      <xsl:text/>
     <xsl:for-each select="/sch:scheduler/sch:parameters/sch:parameter">
-      <xsl:if test="starts-with(@name, 'task.')">
-        <xsl:text>&amp;</xsl:text>
+      <xsl:if test="not(starts-with(@name, 'job.'))">
+      <xsl:if test="not(starts-with(@name, 'trigger.'))">
+      <xsl:if test="not(starts-with(@name, 'task.id'))">
+      <xsl:if test="not(translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'action')">
+        <xsl:if test="position() &gt; 1">
+          <xsl:text>&amp;</xsl:text>
+        </xsl:if>
         <xsl:value-of select="concat(@name, '=', @value)"/>
         <xsl:text/>
+      </xsl:if>
+      </xsl:if>
+      </xsl:if>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
@@ -103,17 +110,10 @@
   <xsl:template name="schedulerForm">
     <tr>
       <form method="POST">
-        <td />
-	<xsl:attribute name="action">
-          <xsl:text/>
-	  <xsl:value-of select="$uri-prefix"/>
-          <xsl:text>/scheduler/docid/</xsl:text>
-          <xsl:value-of select="$documentUri"/>
-          <xsl:text/>
-	</xsl:attribute>
         
         <!-- hidden input fields for parameters -->
         <xsl:call-template name="parameters-as-inputs"/>
+        <td />
         
         <!-- task selection combobox -->
 	<td><xsl:call-template name="tasks"/></td>

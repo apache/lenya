@@ -13,28 +13,37 @@
   
     <xsp:logic>
 
-      String publicationId = (String) request.getSession().getAttribute(
-          "org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
-      String contextPrefix = request.getContextPath();
-    
-      <xsp:content>  
-        <sch:parameter name="context-prefix">
-          <xsp:attribute name="value"><xsp:expr>contextPrefix</xsp:expr></xsp:attribute>
-        </sch:parameter>
-        <sch:parameter name="publication-id">
-          <xsp:attribute name="value"><xsp:expr>publicationId</xsp:expr></xsp:attribute>
-        </sch:parameter>
-      </xsp:content>
+      String contextPrefix = request.getParameter("context-prefix");
+      if (contextPrefix == null || "".equals(contextPrefix)) {
+          contextPrefix = request.getContextPath();
+          <xsp:content>  
+            <sch:parameter name="context-prefix">
+              <xsp:attribute name="value"><xsp:expr>contextPrefix</xsp:expr></xsp:attribute>
+            </sch:parameter>
+          </xsp:content>
+      }
+
+      String publicationId = request.getParameter("publication-id");
+      if (publicationId == null || "".equals(publicationId)) {
+          publicationId = (String) request.getSession().getAttribute(
+              "org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
+          <xsp:content>  
+            <sch:parameter name="publication-id">
+              <xsp:attribute name="value"><xsp:expr>publicationId</xsp:expr></xsp:attribute>
+            </sch:parameter>
+          </xsp:content>
+      }
     
       for (java.util.Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) {
-        String name = (String) e.nextElement();
-        <xsp:content>
-          <sch:parameter>
-            <xsp:attribute name="name"><xsp:expr>name</xsp:expr></xsp:attribute>
-            <xsp:attribute name="value"><xsp:expr>request.getParameter(name)</xsp:expr></xsp:attribute>
-          </sch:parameter>
-        </xsp:content>
+          String name = (String) e.nextElement();
+          <xsp:content>
+            <sch:parameter>
+              <xsp:attribute name="name"><xsp:expr>name</xsp:expr></xsp:attribute>
+              <xsp:attribute name="value"><xsp:expr>request.getParameter(name)</xsp:expr></xsp:attribute>
+            </sch:parameter>
+          </xsp:content>
       }
+
     </xsp:logic>
     
   </sch:parameters>

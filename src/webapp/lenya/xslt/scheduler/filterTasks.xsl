@@ -3,7 +3,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:sch="http://www.wyona.org/2002/sch">
   
-  <xsl:param name="documentType" select="''"/>
+  <xsl:variable name="params" select="/sch:scheduler/sch:parameters"/>
+  <xsl:variable name="documentType" select="$params/sch:parameter[@name='documentType']/@value"/>
 
   <xsl:template match="sch:doctypes">
   <sch:test id="{$documentType}"></sch:test>

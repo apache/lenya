@@ -45,7 +45,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/pubid/unipublic
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication?publication-id=unipublic
 						</xsp:attribute>
 						Scheduler&#160;Admin
 					</item>

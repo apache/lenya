@@ -24,7 +24,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid/newsletter/index.html?task.<xsp:expr>sourcesParameter</xsp:expr>&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;documentType=Newsletter</xsp:attribute>Schedule</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?documentUri=/newsletter/index.html?task.<xsp:expr>sourcesParameter</xsp:expr>&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;documentType=Newsletter</xsp:attribute>Schedule</item>
 				</block>
 				<block>
 					<!--
@@ -58,7 +58,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/pubid/unipublic
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication?publication-id=unipublic
 						</xsp:attribute>
 						Scheduler&#160;Admin
 					</item>
