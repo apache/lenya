@@ -30,7 +30,7 @@ class="txt-s-white"><b><xsl:value-of select="date"/> Nr. <xsl:value-of select="e
 class="txt-s-black"><b><xsl:value-of select="item[1]/title"/></b></span></td>
 <!-- VERTICAL DOT...LINE BEGINS HERE -->
 <td width="1" rowspan="6" valign="top"
-style="background-image: url('/img/layout/dot1x3-black.gif')">
+style="background-image:url(/img/layout/dot1x3-black.gif)">
 <img src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
 <td width="114" rowspan="6" valign="top" align="center">
 <!-- TITELBILD AKTUELLE AUSGABE -->
@@ -59,7 +59,7 @@ width="9" height="7" alt="&#187;" />weiter</a>
 
 <tr bgcolor="#EFEFE7">
 <td width="325" valign="middle" height="3"
-style="background-image: url('/img/layout/lines/linecontent440x3.gif')">
+style="background-image:url(/img/layout/lines/linecontent440x3.gif)">
 <img src="/img/layout/trans1x1.gif" width="1" height="3" /></td>
 </tr>
 
@@ -81,7 +81,7 @@ width="9" height="7" alt="&#187;" />weiter</a>
 
 <tr bgcolor="#FFFFFF">
 <td width="440" height="3" colspan="3"
-style="background-image: url('/img/layout/lines/linecontent440x3.gif')">
+style="background-image:url(/img/layout/lines/linecontent440x3.gif)">
 <img src="/img/layout/trans1x1.gif" width="1" height="3" /></td>
 </tr>
 </table>
