@@ -77,7 +77,7 @@
             <map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html"/>
             <map:parameter name="BX_validationfile" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}.rng"/>
             <map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/{page-envelope:document-type}-bxeng.css"/>
-            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin"/>
+            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
           </map:transform>
           <map:serialize type="xml"/>
         </map:match>
