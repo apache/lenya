@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.34 2003/09/10 17:29:47 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.35 2003/09/20 23:28:21 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -96,22 +96,19 @@
     <!-- BX Editor: Entries -->
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/index-bxeng.html">
-<!--
-        <map:read src="resources/misc/bxeng/entry.xhtml" mime-type="text/html"/>
--->
-<!--
-        <map:generate src="resources/misc/bxeng/entry.xhtml"/>
-        <map:serialize type="xhtml-iso-8859-1"/>
--->
-        <map:aggregate element="bxeng">
-          <map:part src="../../resources/misc/bxeng/index.xhtml"/>
-          <map:part src="resources/misc/bxeng/entry-namespaces.xml"/>
-        </map:aggregate>
-        <map:transform src="../../xslt/bxeng/aggregate.xsl"/>
-        <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
-          <map:parameter name="configfile" value="./config-bxeng.xml"/>
-        </map:transform>
-        <map:serialize type="xhtml-iso-8859-1"/>
+        <map:act type="resource-exists" src="../../../../ROOT/bxeng/index.html"> <!-- Check for BXENG -->
+          <map:aggregate element="bxeng">
+            <map:part src="../../resources/misc/bxeng/index.xhtml"/>
+            <map:part src="resources/misc/bxeng/entry-namespaces.xml"/>
+          </map:aggregate>
+          <map:transform src="../../xslt/bxeng/aggregate.xsl"/>
+          <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
+            <map:parameter name="configfile" value="./config-bxeng.xml"/>
+          </map:transform>
+          <map:serialize type="xhtml-iso-8859-1"/>
+        </map:act>
+        <map:generate src="../../resources/misc/bxeng/download.xhtml"/>
+        <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
     <map:pipeline>
