@@ -1,6 +1,5 @@
 package org.wyona.cms.cocoon.acting;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,20 +31,22 @@ import org.w3c.dom.Document;
 import org.wyona.util.Stack;
 
 /**
+ * $Id: EditorMainAction.java,v 1.2 2002/01/24 18:37:50 tinuwyonacms Exp $
+ *
  * @author Martin Lüthi
  * @created 2002.01.22
  * @version 2002.01.22
  */
 public class EditorMainAction extends AbstractComplementaryConfigurableAction implements Configurable{
-/**
- *
- */
+  /**
+   *
+   */
   public void configure(Configuration conf) throws ConfigurationException{
     super.configure(conf);
-    }
-/**
- *
- */
+  }
+  /**
+   *
+   */
   public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
     // Get request object
     Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
@@ -90,6 +91,9 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction im
       BufferedWriter out = new BufferedWriter(new FileWriter(editFile));
       String line;
       while ((line = in.readLine()) != null) {
+        // we need this in order to let EditOnPro save the markup:
+        line=org.wyona.util.StringUtil.replace(line, "&lt;", "<");
+        line=org.wyona.util.StringUtil.replace(line, "&gt;", ">");
         out.write(line+"\n");
       }
       in.close();
@@ -137,14 +141,6 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction im
       }
     }
     return null;
-    }
+  }
 
-//   private org.dom4j.Document getXMLwithIDs(Request request) throws Exception{
-//     String url="http://127.0.0.1:"+request.getServerPort()+request.getRequestURI()+".temp";
-//     getLogger().error(url);
-//     //DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
-//     //DocumentBuilder db=dbf.newDocumentBuilder();
-//     return new org.dom4j.io.SAXReader().read(url);
-//     //return db.parse(new URL(url).openStream());
-//   }
 }
