@@ -41,10 +41,8 @@
     </map:view>
 
     <map:view name="links" from-position="last">
-      <map:transform src="../../../../documentation/stylesheets/filterlinks.xsl"/>
-<!--
-      <map:serialize type="xml"/>
--->
+      <!-- the XSLT filterlinks.xsl is reponsible for the exclusion of certain links (robots.txt) -->
+      <map:transform src="stylesheets/cms/filterlinks.xsl"/>
       <map:serialize type="links"/>
     </map:view>
   </map:views>
