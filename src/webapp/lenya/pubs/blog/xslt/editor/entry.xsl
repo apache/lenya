@@ -6,13 +6,13 @@
   xmlns:ent="http://www.purl.org/NET/ENT/1.0/"
 >
 
-<xsl:param name="entryid"/>
+<xsl:param name="docid"/>
 
 <xsl:template match="/">
 <html>
 <body>
 <p>
-Edit Document <b><xsl:value-of select="$entryid"/></b>
+Edit Document <b><xsl:value-of select="$docid"/></b>
 </p>
 <form method="post" action="?lenya.usecase=edit&amp;lenya.step=close">
 <table border="1">

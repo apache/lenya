@@ -66,3 +66,7 @@ div.sidebar-content {
 td#sidebar a {
   text-decoration: none;
 }
+
+p.dateline {
+  border: 1pt solid red;
+}

@@ -10,10 +10,11 @@
   <h1><xsl:value-of select="echo:title"/></h1>
   <h2><xsl:value-of select="echo:subtitle"/></h2>
   <i><xsl:value-of select="echo:summary"/></i>
-  <br />
-  <b>Posted by <a href="{echo:author/echo:homepage}"><xsl:value-of select="echo:author/echo:name"/></a> at <xsl:value-of select="echo:issued"/></b>
-  <br />
   <xsl:apply-templates select="echo:content"/>
+  <br />
+  <div class="dateline">
+  <b>Posted by <a href="{echo:author/echo:homepage}"><xsl:value-of select="echo:author/echo:name"/></a> at <xsl:value-of select="echo:issued"/></b>
+  </div>
 </xsl:template>
 
 <xsl:template match="echo:content">
