@@ -4,6 +4,12 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
+<xsl:variable name="mbarcolor">#ffa500</xsl:variable>
+<!--
+<xsl:variable name="mbarcolor">#3366cc</xsl:variable>
+<xsl:variable name="mbarcolor">#000000</xsl:variable>
+-->
+
 <xsl:template name="body">
 <font face="verdana">
 <h3>Content Management Frameworks/Systems Overview</h3>
@@ -18,19 +24,19 @@ Please contact them directly in case the data might be outdated.
 <p>
 If you want your CMS/F project being added to the list below, please send an email to
 <a href="mailto:michael.wechner@oscom.org">Michael Wechner</a>.
-For all other inquiries please use OSCOM's <a href="../mailing-lists.html">mailing lists</a>.
+For all other inquiries please use OSCOM's <a href="/Mailing%20lists/">mailing lists</a>.
 </p>
 </font>
 
  <h4>Content Management Frameworks</h4>
   <table cellspacing="0" cellpadding="0" width="450">
   <tr>
-    <td bgcolor="#000000">&#160;</td>
-    <td height="20" bgcolor="#000000"><font size="-2" color="#ffffff"><b>project</b></font></td>
-    <td bgcolor="#000000">&#160;</td>
+    <td bgcolor="{$mbarcolor}">&#160;</td>
+    <td height="20" bgcolor="{$mbarcolor}"><font size="-2" color="#ffffff"><b>project</b></font></td>
+    <td bgcolor="{$mbarcolor}">&#160;</td>
     <td bgcolor="#ffffff">&#160;</td>
-    <td bgcolor="#000000">&#160;</td>
-    <td bgcolor="#000000"><font size="-2" color="#ffffff"><b>license</b></font></td>
+    <td bgcolor="{$mbarcolor}">&#160;</td>
+    <td bgcolor="{$mbarcolor}"><font size="-2" color="#ffffff"><b>license</b></font></td>
   </tr>
   <xsl:apply-templates select="system[@type='framework']">
     <xsl:sort select="system_name" data-type="text" order="ascending"/>
@@ -41,12 +47,12 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
  <h4>Content Management Systems</h4>
   <table cellspacing="0" cellpadding="0" width="450">
   <tr>
-    <td bgcolor="#000000">&#160;</td>
-    <td height="20" bgcolor="#000000"><font size="-2" color="#ffffff"><b>project</b></font></td>
-    <td bgcolor="#000000">&#160;</td>
+    <td bgcolor="{$mbarcolor}">&#160;</td>
+    <td height="20" bgcolor="{$mbarcolor}"><font size="-2" color="#ffffff"><b>project</b></font></td>
+    <td bgcolor="{$mbarcolor}">&#160;</td>
     <td bgcolor="#ffffff">&#160;</td>
-    <td bgcolor="#000000">&#160;</td>
-    <td bgcolor="#000000"><font size="-2" color="#ffffff"><b>license</b></font></td>
+    <td bgcolor="{$mbarcolor}">&#160;</td>
+    <td bgcolor="{$mbarcolor}"><font size="-2" color="#ffffff"><b>license</b></font></td>
   </tr>
   <xsl:apply-templates select="system[@type='cms']">
     <xsl:sort select="system_name" data-type="text" order="ascending"/>
@@ -78,6 +84,7 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
 
 <xsl:template match="related-content">
  <table cellpadding="0" cellspacing="0" border="0" width="150">
+<!--
   <tr>
     <td bgcolor="{$tablecolor}">&#160;</td>
     <td bgcolor="{$tablecolor}">
@@ -88,11 +95,12 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
       </p>
     </td>
   </tr>
+-->
   <tr>
     <td>&#160;</td>
 <td>
 <font face="verdana" size="-2">
-<a target="_blank" href="http://www.cms-list.org">cms-list</a>
+<div class="nnbe" style="padding-left: 10px;"><a class="nnbr" target="_blank" href="http://www.cms-list.org">cms-list</a></div>
 <br/><br/>
 <a target="_blank" href="http://www.cmsinfo.org">cmsinfo.org</a>
 <br/><br/>
@@ -106,6 +114,44 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
 <br/><br/>
 <a target="_blank" href="http://www.clueful.com.au/cgi-bin/cmsdirectory/browse/Products%3aFree%20systems">Clueful Consulting</a>
 </font>
+</td>
+  </tr>
+ </table>
+</xsl:template>
+
+<xsl:template match="related-content">
+ <table cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td>&#160;</td>
+<td>
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.cms-list.org">cms-list</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.cmsinfo.org">cmsinfo.org</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.cmswatch.com/ContentManagement/Products/">CMS Watch</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.contentmanager.eu.com/links/a4.htm">contentmanagement.eu.com</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.contentmanager.de/itguide/produktvergleich_cms_opensource.html">contentmanager.de</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.content-wire.com">Content-Wire</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.clueful.com.au/cgi-bin/cmsdirectory/browse/Products%3aFree%20systems">Clueful Consulting</a>
+</div>
+
 </td>
   </tr>
  </table>
