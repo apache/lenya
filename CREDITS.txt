@@ -32,9 +32,8 @@ combination of the names of his two sons Levi and Vanya.
 * Giacomo Pati
 * Gregor J. Rothfuss
 * Jürgen Bigalke
-* Rolf Kulemann
 * Marc Liyanage
-
+* Rolf Kulemann
 
  Inactive Committers:
  --------------------
