@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.20 2003/03/20 17:49:17 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.21 2003/04/04 16:01:39 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -18,10 +18,7 @@
     </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
-    <map:matchers default="wildcard">
-      <map:matcher name="wildcard"      logger="sitemap.matcher.wildcard"
-                   src="org.apache.cocoon.matching.WildcardURIMatcher"/>
-    </map:matchers>
+    <map:matchers default="wildcard" />
 
     <map:actions>
       <map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
