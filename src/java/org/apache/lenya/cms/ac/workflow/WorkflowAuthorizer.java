@@ -1,5 +1,5 @@
 /*
- * $Id: WorkflowAuthorizer.java,v 1.1 2003/11/13 16:07:12 andreas Exp $ <License>
+ * $Id: WorkflowAuthorizer.java,v 1.2 2004/02/12 10:19:06 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -50,6 +50,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Authorizer;
+import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
@@ -111,7 +112,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
 						authorized = false;
 
-						Situation situation = factory.buildSituation(request);
+						Situation situation = WorkflowHelper.buildSituation(request);
 						Event[] events = instance.getExecutableEvents(situation);
 						int i = 0;
 

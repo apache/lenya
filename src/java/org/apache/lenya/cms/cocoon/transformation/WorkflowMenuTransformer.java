@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.28 2003/11/26 15:43:48 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.29 2004/02/12 10:19:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
+import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -157,7 +158,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
             try {
                 setInstance(factory.buildSynchronizedInstance(document));
-                situation = factory.buildSituation(objectModel);
+                situation = WorkflowHelper.buildSituation(objectModel);
             } catch (Exception e) {
                 throw new ProcessingException(e);
             }

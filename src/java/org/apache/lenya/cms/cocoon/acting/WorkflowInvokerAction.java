@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInvokerAction.java,v 1.8 2003/12/30 15:42:37 gregor Exp $
+$Id: WorkflowInvokerAction.java,v 1.9 2004/02/12 10:19:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -130,7 +131,7 @@ public class WorkflowInvokerAction extends AbstractAction {
             }
 
             SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
-            Situation situation = factory.buildSituation(objectModel);
+            Situation situation = WorkflowHelper.buildSituation(objectModel);
             Event[] events = instance.getExecutableEvents(situation);
             Event event = null;
 

@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.7 2003/11/13 16:09:53 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.8 2004/02/12 10:19:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,8 +59,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -129,7 +129,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     }
 
     private UsecaseAuthorizer authorizer;
-    private ComponentSelector selector = null;
+    private ServiceSelector selector = null;
     private Role[] roles;
     private Publication publication;
     private AccessControllerResolver acResolver;
@@ -153,7 +153,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
             publication = PublicationFactory.getPublication(objectModel);
             selector =
-                (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
             acResolver =
                 (AccessControllerResolver) selector.select(
                     AccessControllerResolver.DEFAULT_RESOLVER);

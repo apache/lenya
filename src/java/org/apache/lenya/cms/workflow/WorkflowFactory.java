@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.28 2004/02/11 13:51:28 andreas Exp $
+$Id: WorkflowFactory.java,v 1.29 2004/02/12 10:19:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,17 +56,11 @@ $Id: WorkflowFactory.java,v 1.28 2004/02/11 13:51:28 andreas Exp $
 package org.apache.lenya.cms.workflow;
 
 import java.io.File;
-import java.util.Map;
 
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.LanguageVersions;
@@ -80,8 +74,9 @@ import org.apache.lenya.workflow.impl.History;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
 
 /**
- *
- * @author andreas
+ * Workflow factory.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class WorkflowFactory {
     public static final String WORKFLOW_DIRECTORY =
@@ -175,39 +170,6 @@ public class WorkflowFactory {
         Workflow workflow = WorkflowBuilder.buildWorkflow(workflowFile);
 
         return workflow;
-    }
-
-    /**
-     * Creates a situation for a Cocoon object model.
-     * @param objectModel The object model.
-     * @return A workflow situation.
-     * @throws WorkflowException when something went wrong.
-     */
-    public Situation buildSituation(Map objectModel) throws WorkflowException {
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        return buildSituation(request);
-    }
-    
-    /**
-     * Creates a situation for a request.
-     * @param request The request.
-     * @return A workflow situation.
-     * @throws WorkflowException when something went wrong.
-     */
-    public Situation buildSituation(Request request) throws WorkflowException {
-        Role[] roles;
-        try {
-            roles = PolicyAuthorizer.getRoles(request);
-        } catch (AccessControlException e) {
-            throw new WorkflowException(e);
-        }
-        Session session = request.getSession(false);
-        if (session == null) {
-            throw new WorkflowException("Session not initialized!");
-        }
-        Identity identity = Identity.getIdentity(session);
-        
-        return buildSituation(roles, identity);
     }
 
     /**
