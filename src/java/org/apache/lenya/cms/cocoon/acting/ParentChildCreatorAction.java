@@ -106,13 +106,14 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     Document doctypesDoc=new SAXReader().read("file:"+absoluteDoctypesPath+"doctypes.xconf");
     Attribute creator_src=(Attribute)doctypesDoc.selectSingleNode("/doctypes/doc[@type='"+doctype+"']/creator/@src");
     if(creator_src != null){
-      getLogger().error("CREATOR: "+creator_src.getName()+" "+creator_src.getPath()+" "+creator_src.getValue());
+      //getLogger().debug("CREATOR 1: "+creator_src.getName()+" "+creator_src.getPath()+" "+creator_src.getValue());
       creator=(AbstractParentChildCreator)Class.forName(creator_src.getValue()).newInstance();
       }
     else{
-      getLogger().error("CREATOR: DefaultCreator");
+      //getLogger().debug("CREATOR 2: DefaultCreator");
       creator=(AbstractParentChildCreator)Class.forName("org.wyona.cms.authoring.DefaultParentChildCreator").newInstance();
       }
+    getLogger().debug("CREATOR : "+creator.getClass().getName());
 
     // Transaction should actually be started here!
 
@@ -120,6 +121,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     String treefilename=sitemapParentPath+treeAuthoringPath;
     getLogger().debug("FILENAME OF TREE: "+treefilename);
     if(!new File(treefilename).exists()){
+      getLogger().error("No such file (453): "+treefilename);
       return null;
     }
     //InputStream in=intercept(new FileInputStream(treefilename));
