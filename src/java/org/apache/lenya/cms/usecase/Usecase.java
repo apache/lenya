@@ -19,7 +19,6 @@ package org.apache.lenya.cms.usecase;
 import java.util.List;
 
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.workflow.Situation;
 
 /**
@@ -56,12 +55,12 @@ public interface Usecase {
     void setPart(String name, Part value);
     
     /**
-     * Passes the source document and the workflow situation to the usecase.
-     * @param sourceDocument The document the workflow was invoked on.
+     * Passes the source URL and the workflow situation to the usecase.
+     * @param sourceUrl The URL the usecase was invoked on.
      * @param situation The workflow situation.
      * 
      */
-    void setup(Document sourceDocument, Situation situation);
+    void setup(String sourceUrl, Situation situation);
     
     /**
      * Checks the conditions before a form is displayed.
@@ -104,10 +103,10 @@ public interface Usecase {
     void execute() throws UsecaseException;
     
     /**
-     * Returns the document which should be shown after the usecase is completed.
+     * Returns the webapp URL which should be redirected to after the usecase is completed.
      * @param success If the usecase was completed successfully.
-     * @return A document.
+     * @return A web application URL.
      */
-    Document getTargetDocument(boolean success);
+    String getTargetURL(boolean success);
     
 }

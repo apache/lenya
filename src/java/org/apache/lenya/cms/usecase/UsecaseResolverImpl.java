@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.usecase;
 
+
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
@@ -43,8 +44,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String)
      */
     public Usecase resolve(String name) throws ServiceException {
-        Usecase usecase = (Usecase) this.selector.select(name);
-        return usecase;
+        return (Usecase) this.selector.select(name);
     }
 
     private ServiceManager manager;
@@ -76,5 +76,5 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
             this.manager.release(selector);
         }
     }
-
+    
 }

@@ -22,16 +22,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * Abstract usecase implementation.
- *
- * @version $Id:$ 
+ * 
+ * @version $Id:$
  */
-public class AbstractUsecase extends AbstractOperation implements Usecase {
+public class AbstractUsecase extends AbstractOperation implements Usecase, Contextualizable {
 
     /**
      * Ctor.
@@ -40,20 +48,21 @@ public class AbstractUsecase extends AbstractOperation implements Usecase {
     }
 
     private Situation situation;
-    private Document sourceDocument;
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setup(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.workflow.Situation)
+     * Sets the source URL and the workflow situation of the usecase.
+     * @param sourceUrl The URL the usecase was invoked on.
+     * @param situation The workflow situation.
+     * 
      */
-    public void setup(Document sourceDocument, Situation situation) {
-        this.sourceDocument = sourceDocument;
+    public void setup(String sourceUrl, Situation situation) {
+        this.sourceUrl = sourceUrl;
         this.situation = situation;
 
         initParameters();
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Invoking usecase on document: [" + sourceDocument + "]");
+            getLogger().debug("Invoking usecase on URL: [" + sourceUrl + "]");
         }
     }
 
@@ -71,12 +80,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase {
         return this.situation;
     }
 
+    private String sourceUrl = null;
+
     /**
-     * Returns the source document.
-     * @return A document.
+     * Returns the source URL.
+     * @return A string.
      */
-    protected Document getSourceDocument() {
-        return sourceDocument;
+    protected String getSourceURL() {
+        return sourceUrl;
     }
 
     /**
@@ -285,29 +296,25 @@ public class AbstractUsecase extends AbstractOperation implements Usecase {
         return value;
     }
 
-    private Document targetDocument = null;
+    private String targetUrl = null;
 
-    /**
-     * Sets the target document.
-     * @param document A document.
-     */
-    protected void setTargetDocument(Document document) {
-        this.targetDocument = document;
+    protected void setTargetURL(String url) {
+        this.targetUrl = url;
     }
 
     /**
-     * If {@link #setTargetDocument(Document)}was not called, the source document (
-     * {@link #getSourceDocument()}) is returned.
-     * @see org.apache.lenya.cms.usecase.Usecase#getTargetDocument(boolean)
+     * If {@link #setTargetURL(String)}was not called, the source document (
+     * {@link #getSourceURL()}) is returned.
+     * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
-    public Document getTargetDocument(boolean success) {
-        Document document;
-        if (this.targetDocument != null) {
-            document = this.targetDocument;
+    public String getTargetURL(boolean success) {
+        String url;
+        if (this.targetUrl != null) {
+            url = this.targetUrl;
         } else {
-            document = getSourceDocument();
+            url = getSourceURL();
         }
-        return document;
+        return url;
     }
 
     /**
@@ -317,4 +324,30 @@ public class AbstractUsecase extends AbstractOperation implements Usecase {
     public void setPart(String name, Part value) {
     }
 
+    private Context context;
+
+    /**
+     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
+     */
+    public void contextualize(Context context) throws ContextException {
+        this.context = context;
+    }
+
+    /**
+     * @see org.apache.avalon.framework.activity.Initializable#initialize()
+     */
+    public void initialize() throws Exception {
+        super.initialize();
+        Map objectModel = ContextHelper.getObjectModel(this.context);
+        Situation situation;
+        try {
+            situation = WorkflowHelper.buildSituation(objectModel);
+        } catch (WorkflowException e) {
+            throw new RuntimeException(e);
+        }
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        String webappUri = ServletHelper.getWebappURI(request);
+        
+        setup(webappUri, situation);
+    }
 }
