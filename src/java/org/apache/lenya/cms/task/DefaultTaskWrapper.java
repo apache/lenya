@@ -1,5 +1,5 @@
 /*
-$Id: DefaultTaskWrapper.java,v 1.4 2003/08/29 11:37:10 andreas Exp $
+$Id: DefaultTaskWrapper.java,v 1.5 2003/08/29 12:54:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -346,7 +346,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
         for (int i = 0; i < parameterElements.length; i++) {
             String key = parameterElements[i].getAttribute(ATTRIBUTE_NAME);
             String value = parameterElements[i].getAttribute(ATTRIBUTE_VALUE);
-            getWrapperParameters().put(key, value);
+            getParameterObject().put(key, value);
         }
     }
 
@@ -355,6 +355,14 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @return A map.
      */
     public Map getParameters() {
+        return Collections.unmodifiableMap(parameters);
+    }
+
+    /**
+     * Returns all prefixed parameters.
+     * @return A map.
+     */
+    protected Map getParameterObject() {
         return parameters;
     }
 
@@ -364,7 +372,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      */
     protected void setNotifying(NamespaceMap notificationParameters) {
         log.info("Enabling notification");
-        getParameters().putAll(notificationParameters.getPrefixedMap());
+        getParameterObject().putAll(notificationParameters.getPrefixedMap());
     }
 
 }
