@@ -12,7 +12,8 @@
   <xsl:variable name="params" select="/sch:scheduler/sch:parameters"/>
   
   <!-- This is a workaround until the final Scheduler interface is specified. -->
-  <xsl:variable name="documentUri" select="$params/sch:parameter[@name='task.uris']/@value"/>
+  <!--<xsl:variable name="documentUri" select="$params/sch:parameter[@name='task.uris']/@value"/>-->
+  <xsl:variable name="documentUri" select="$params/sch:parameter[@name='documentUri']/@value"/>
   
   <xsl:variable name="documentType" select="$params/sch:parameter[@name='documentType']/@value"/>
   <xsl:variable name="context-prefix" select="$params/sch:parameter[@name='context-prefix']/@value"/>
