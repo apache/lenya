@@ -110,10 +110,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @throws AccessControlException if the delete failed
      */
     public void delete() throws AccessControlException {
-        Groupable[] members = getMembers();
-        for (int i = 0; i < members.length; i++) {
-            remove(members[i]);
-        }
+        removeAllMembers();
     }
 
 }
