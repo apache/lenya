@@ -43,7 +43,7 @@ Several items, e.g. the servlet container, may be replaced by other products.
   <li>
     <p>
     <strong>Apache Cocoon</strong> (recommended: Cocoon 2.1 M1 for the CVS version of Lenya)<br/>
-    <link href="http://xml.apache.org/cocoon/mirror.cgi">Cocoon download page</link>
+    <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>
     </p>
     <p><strong>Note:</strong> The files in <code>tools/bin</code> in the Cocoon 2.1 M1 tarball on the Apache
     site have DOS line ends.
