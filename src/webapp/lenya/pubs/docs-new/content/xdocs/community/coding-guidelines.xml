@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document>
+  <header>
+    <title>Coding Guidelines for Lenya</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Christian Egli" email="christian.egli@lenya.org"/>
+    </authors>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>
+	We use coding standards to be able to write code easy to
+	understand, to maintain, and to enhance.
+      </p>
+    </section>
+    <section>
+      <title>Java Code</title>
+      <p>
+	Generally we stick with standards. In the case of coding
+	standards we simply use the guidelines from Sun.
+      </p>
+      <p>
+	Here are the rules:
+      </p>
+      <ul>
+        <li>Thou shalt only produce code conforming to the Java code
+        conventions, as they are set down on the page <link
+        href="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html">http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html</link>
+        <p/>
+        </li>
+        <li>Thou shalt not produce any code containing tab-stops.
+        <p/>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <title>XML and XSP</title>
+      <p>
+	The only restriction we impose on XML, XSLT and XSP code is
+	that the indenting is 2 spaces. Again please no tab stops.
+      </p>
+    </section>
+  </body>
+</document>
+

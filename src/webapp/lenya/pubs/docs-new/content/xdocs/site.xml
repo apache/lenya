@@ -64,6 +64,7 @@
     <node-e href="mailing-lists.html" label="Mailing Lists" />
     <irc href="irc.html" label="IRC"/>
     <meetings href="meetings.html" label="Meetings and Sprints"/>
+    <coding href="coding-guidelines.html" label="Coding Guidelines"/>
   </community>
 
 </site>
