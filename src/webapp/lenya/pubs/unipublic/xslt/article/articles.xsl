@@ -107,44 +107,20 @@
   </xsl:if>
 </xsl:template>
 
-<!--  General Text Templates  -->
-
-<xsl:template match="br">
-  <br/>
-</xsl:template>
-
-<xsl:template match="bold">
-  <b><xsl:apply-templates/></b>
-</xsl:template>
-
-<xsl:template match="emphasize">
-  <i><xsl:apply-templates/></i>
-</xsl:template>
-
-<xsl:template match="subscript">
-  <sub><xsl:apply-templates/></sub>
-</xsl:template>
-
-<xsl:template match="superscript">
-  <sup><xsl:apply-templates/></sup>
-</xsl:template>
-
+<!-- List Templates -->
 <xsl:template match="itemizedlist">
   <ul>
     <xsl:apply-templates/>
   </ul>
 </xsl:template>
-
+  
 <xsl:template match="listitem | bxlistitem">
   <li><xsl:apply-templates/></li>
 </xsl:template>
 
-<xsl:template match="ulink">
-  <a href="{@url}"><xsl:apply-templates/></a>
-</xsl:template>
-
+<!-- Table Templates -->
 <xsl:template match="informaltable">
-  <table width="100%" border="0" cellspacing="1" cellpadding="2" bgcolor="white">  
+  <table width="100%" border="0" cellspacing="1" cellpadding="2" bgcolor="white">
     <xsl:apply-templates/>
   </table>
 </xsl:template>
