@@ -1,17 +1,19 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: sitemap.xmap,v 1.7 2003/03/04 23:06:56 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.8 2003/03/19 10:28:52 edith Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
 		<map:generators default="file">
-			<map:generator name="request" src="org.apache.cocoon.generation.RequestGenerator"/>
+			<map:generator name="servletproxy" src="org.lenya.cms.cocoon.generation.ProxyGenerator"/>
 		</map:generators>
-		<map:transformers default="xslt"/>
+ 		<map:transformers default="xslt">
+			<map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer" pool-min="20" pool-max="30" pool-grow="5">
+				<publication type="computerworld"/>
+			</map:transformer>
+		</map:transformers>
 		<map:readers default="resource"/>
 		<map:serializers default="html"/>
-		<map:matchers default="wildcard">
-			<map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>
-		</map:matchers>
+		<map:matchers default="wildcard"/>
 		<map:actions>
 			<map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
 				<authenticator type="computerworld"/>

@@ -1,32 +1,14 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.21 2003/03/06 20:45:53 gregor Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.22 2003/03/19 10:28:52 edith Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
-		<map:generators default="file">
-			<map:generator name="file" src="org.apache.cocoon.generation.FileGenerator"/>
-		</map:generators>
-		<map:readers default="resource">
-			<map:reader name="resource" src="org.apache.cocoon.reading.ResourceReader"/>
-		</map:readers>
-		<map:transformers default="xslt">
-			<map:transformer name="xslt" src="org.apache.cocoon.transformation.TraxTransformer"/>
-			<map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
-				<publication type="computerworld"/>
-			</map:transformer>
-			<map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
-		</map:transformers>
-		<map:serializers default="html">
-			<map:serializer name="html" src="org.apache.cocoon.serialization.HTMLSerializer"/>
-			<map:serializer name="xhtml" mime-type="text/html" logger="sitemap.serializer.xhtml" src="org.apache.cocoon.serialization.XMLSerializer" pool-max="64" pool-min="2" pool-grow="2">
-</map:serializer>
-		</map:serializers>
-		<map:matchers default="wildcard">
-			<map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>
-		</map:matchers>
-		<map:actions>
-			<map:action logger="sitemap.action.resource-exists" name="resource-exists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
-		</map:actions>
+		<map:generators default="file"/>
+		<map:transformers/>
+		<map:serializers default="html"/>
+		<map:readers default="resource"/>
+		<map:matchers default="wildcard"/>
+		<map:actions/>
 	</map:components>
 	<!-- =========================== Views ================================ -->
 	<map:views>
