@@ -1,5 +1,5 @@
 /*
-$Id: RegexFilter.java,v 1.1 2003/07/30 15:03:24 gregor Exp $
+$Id: RegexFilter.java,v 1.2 2003/08/27 16:55:49 egli Exp $
 <License>
 
  ============================================================================
@@ -91,8 +91,6 @@ public class RegexFilter implements FilenameFilter {
 	*/
    public boolean accept(File dir, String name)
 	  {
-	  File f = new File(dir, name);
-
 	  if (!(new File(dir, name).isFile())) return false;
 
 	  if (pattern != null && !(pattern.matcher(name).matches())) return false;
