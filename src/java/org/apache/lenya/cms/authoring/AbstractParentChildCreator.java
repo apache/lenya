@@ -1,7 +1,7 @@
 package org.wyona.cms.authoring;
 
 import java.io.File;
-
+import org.dom4j.Node; 
 /**
  * @author <a href="mailto:michael.wechner@wyona.com">Michael Wechner</a>
  */
@@ -10,7 +10,12 @@ public abstract class AbstractParentChildCreator {
     public static short LEAF_NODE = 0;
     public static short BRANCH_NODE = 1;
     
-    /**
+  /**
+   *  added by <a href="mailto:juergen.bigalke@wyona.org">Juergen Bigalke</a>
+   */
+      public void init(Node creatorElement) {  }                                                                                 
+      
+  /**
      * Return the child type which is either <code>LEAF_NODE</code> or
      * <code>BRANCH_NODE</code>.
      *
