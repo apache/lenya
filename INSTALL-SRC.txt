@@ -112,7 +112,7 @@
 
    4. *Build Lenya*
 
-      Execute ant install in your Lenya source directory.
+      Execute ant in your Lenya source directory.
 
    5. *Restart Tomcat*
 
