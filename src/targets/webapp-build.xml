@@ -158,12 +158,9 @@
       </fileset>
     </copy>
 
-    <echo>INFO: Copy libraries from ${lib.dir} and ${tools.lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
+    <echo>INFO: Copy libraries from ${lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
     <copy todir="${build.webapp}/WEB-INF/lib">
       <fileset dir="${lib.dir}">
-        <include name="**/*"/>
-      </fileset>
-      <fileset dir="${tools.lib.dir}">
         <include name="**/*"/>
       </fileset>
     </copy>
