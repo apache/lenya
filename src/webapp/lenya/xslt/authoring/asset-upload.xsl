@@ -124,7 +124,8 @@ Override this template to add scripts etc.
             <td/>
             <td colspan="4">
               <input type="button" value="Insert" i18n:attr="value"
-                     onclick="insertAsset('{dc:title}','{dc:extent}');"/>
+                     onclick="insertAsset(document.forms[&quot;assetlibrary&quot;].source.value,
+                                          document.forms[&quot;assetlibrary&quot;].extent.value);"/>
             </td>
           </tr>
         </table>
