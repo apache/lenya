@@ -5,7 +5,7 @@
     build.xml
     =========
 
-    Jakarta Ant build file for the wyona content management system
+    Jakarta Ant build file for the Lenya content management system
 
 
     History
@@ -21,7 +21,7 @@
     License
     =======
     
-    Copyright (c) 2003 wyona.org
+    Copyright (c) 2003 lenya.org
 
    
     Docu
@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.38 2003/03/04 17:58:25 gregor Exp $
+   @version CVS $Id: build.xml,v 1.39 2003/03/05 14:25:28 michi Exp $
 
 -->
 
@@ -183,9 +183,9 @@
 
     <property name="packages"      value="*.*"/>
 <!--
-    <property name="packages"      value="org.wyona.*,org.w3c.*,ch.ethz.*,ch.unizh.*"/>
+    <property name="packages"      value="org.lenya.*,org.w3c.*,ch.ethz.*,ch.unizh.*"/>
 -->
-    <property name="resource.dir"  value="${src.webapp.dir}/resources/styles"/>
+    <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
 
     <property name="today"         value="${TODAY}"/>
     <echo message="Today is ${today}"/>
@@ -206,10 +206,10 @@
            deprecation="${deprecation}"
            target="${target.vm}"
            nowarn="${nowarn}"
-           includes="org/wyona/cms/ant/**"
+           includes="org/lenya/cms/ant/**"
            classpathref="classpath"/>
 
-    <taskdef name="copyJavaSources" classpath="tools/anttasks" classname="org.wyona.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="copyJavaSources" classpath="tools/anttasks" classname="org.lenya.cms.ant.CopyJavaSourcesTask"/>
   </target>
 
   <!-- ============================================================ -->
@@ -402,7 +402,7 @@
     <!--
     Copy publications
     -->
-    <echo>INFO: Copy publications from ${src.webapp.dir}/wyona/cms/pubs to ${build.webapp}/wyona/cms/pubs</echo>
+    <echo>INFO: Copy publications from ${src.webapp.dir}/lenya/pubs to ${build.webapp}/lenya/pubs</echo>
     <copy todir="${build.webapp}/lenya/pubs">
 <!--
       <fileset dir="/home/michiii/src/lenya-pubs"/>

@@ -1,5 +1,5 @@
 
-  W Y O N A    C O N T E N T - M A N A G E M E N T - S Y S T E M
+  LENYA        C O N T E N T - M A N A G E M E N T - S Y S T E M
   ==============================================================
 
 
@@ -27,30 +27,30 @@
 
   1) Get, install, start, try and stop Tomcat
 
-     [unix]  cd /home/wyona/build
+     [unix]  cd /home/lenya/build
              wget http://jakarta.apache.org/builds/jakarta-tomcat-4.0/nightly/jakarta-tomcat-4.0-20020110.tar.gz 
              (take the apropriate tomcat version, this one might not exist anymore)
              tar -xzf jakarta-tomcat-4.0-20020110.tar.gz
              export JAVA_HOME=/usr/local/jdk1.3.1
-             export CATALINA_HOME=/home/wyona/build/jakarta-tomcat-4.0
-             /home/wyona/build/jakarta-tomcat-4.0/bin/startup.sh
+             export CATALINA_HOME=/home/lenya/build/jakarta-tomcat-4.0
+             /home/lenya/build/jakarta-tomcat-4.0/bin/startup.sh
              lynx http://localhost:8080
-             /home/wyona/build/jakarta-tomcat-4.0/bin/shutdown.sh
+             /home/lenya/build/jakarta-tomcat-4.0/bin/shutdown.sh
 
 
   2) Get and install Ant
 
-     [unix]  cd /home/wyona/build
+     [unix]  cd /home/lenya/build
              wget http://jakarta.apache.org/builds/jakarta-ant/release/v1.4.1/bin/jakarta-ant-1.4.1-bin.tar.gz
              (take the apropriate ant version, this one might not exist anymore)
              tar -xzf jakarta-ant-1.4.1-bin.tar.gz
 
 
-  3) Get Wyona
+  3) Get Lenya
 
-     [unix]  cd /home/wyona/src
+     [unix]  cd /home/lenya/src
              choose 1) or 2)
-             1) wget http://www.wyona.org/builds/lenya-2.0/nightly/src/lenya-2.0-src-200201102354.tar.gz
+             1) wget http://www.lenya.org/builds/lenya-2.0/nightly/src/lenya-2.0-src-200201102354.tar.gz
                 (take the apropriate wyonacms (src not bin) version, this one might not exist anymore)
                 tar -xzf lenya-2.0-src-200201102354.tar.gz
                 mv lenya-2.0-src wyonacms 
