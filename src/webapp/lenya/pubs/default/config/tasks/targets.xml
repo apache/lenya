@@ -57,8 +57,8 @@
   <echo>to ${pub.dir}/${live.resource.dir}</echo>
 
   <copy todir="${pub.dir}/${live.resource.dir}/${publish.documentid}">
-    <fileset dir="${pub.dir}/${authoring.resource.dir}">
-      <include name="${publish.documentid}/*"/>
+    <fileset dir="${pub.dir}">
+      <include name="${authoring.resource.dir}/${publish.documentid}/*"/>
     </fileset>
   </copy>
 
