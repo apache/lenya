@@ -51,6 +51,17 @@
         </map:transform>
       </map:act>
     </map:resource>
+    
+    <map:resource name="style-publish">
+      <map:transform src="xslt/publishing/screen.xsl">
+        <map:parameter name="use-request-parameters" value="true"/>
+        <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+      </map:transform>
+      <map:transform src="xslt/util/page2xhtml.xsl">
+        <map:parameter name="context-prefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize type="html"/>
+    </map:resource>
   
   </map:resources>
   
@@ -91,6 +102,15 @@
     
     <!-- {publication-id}/{area}/{uri}-->
     <map:match pattern="*/*/**">
+    
+      <!-- mount publication-specific usecase sitemap -->
+      <map:act type="resource-exists" src="pubs/{1}/usecase.xmap">
+        <map:mount
+            uri-prefix="{../1}"
+            src="pubs/{../1}/usecase.xmap"
+            check-reload="true"
+            reload-method="synchron"/>
+      </map:act>
       
       <!--
       Scheduler
@@ -172,21 +192,14 @@
       <map:match type="usecase" pattern="publish">
       
         <map:match type="step" pattern="showscreen">
-          <map:generate
-            type="serverpages"
-            src="pubs/{../../1}/content/publishing/publish-screen.xsp"
-            label="xsp"/>
-          <map:act type="uriparametrizer" src="{../../2}/{../../3}">
-            <map:parameter name="document-id" value="cocoon://uri-parameter/{../../1}/document-id"/>
-            <map:transform src="xslt/publishing/screen.xsl">
-              <map:parameter name="use-request-parameters" value="true"/>
-              <map:parameter name="document-id" value="{document-id}"/>
-            </map:transform>
+          <map:act type="resource-exists" src="pubs/{../../1}/lenya/content/publishing/publish-screen.xsp">
+            <map:generate type="serverpages" label="xsp"
+                src="pubs/{../../../1}/lenya/content/publishing/publish-screen.xsp"/>
+            <map:call resource="style-publish"/>
           </map:act>
-          <map:transform src="xslt/util/page2xhtml.xsl">
-            <map:parameter name="context-prefix" value="{request:contextPath}"/>
-          </map:transform>
-          <map:serialize type="html"/>
+          <map:generate type="serverpages" label="xsp"
+              src="content/publishing/publish-screen-usecase.xsp"/>
+          <map:call resource="style-publish"/>
         </map:match>
         
         <map:match type="step" pattern="publish">
