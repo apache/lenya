@@ -40,6 +40,16 @@
 <xsl:param name="defaultlanguage"/>
 
 <xsl:variable name="extension"><xsl:if test="$documentextension != ''">.</xsl:if><xsl:value-of select="$documentextension"/></xsl:variable>
+  
+<!-- Decide whether to load the sitetree incrementally. 
+     true:  The sitetree.js will only contain the root node of the tree.  
+            All other nodes will be loaded dynamically by tree.js when needed.
+            Useful for large trees.
+     false: The sitetree.js will contain the whole sitetree structure and tree.js 
+            won't load anything dynamically. Useful for small trees or for browsers
+            which don't support xmlhttp requests. 
+-->
+  <xsl:variable name="incremental-loading" select="'true'"/>
     
 <xsl:template match="/">
     <page:page>
@@ -47,7 +57,7 @@
       <page:body>
       <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js">&#160;</script>
       <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js">&#160;</script>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/{$documenturl}?lenya.usecase=bxe&amp;lenya.step=link-tree&amp;language={$chosenlanguage}">&#160;</script>
+      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/{$documenturl}?lenya.usecase=bxe&amp;lenya.step=link-tree&amp;language={$chosenlanguage}&amp;incremental={$incremental-loading}">&#160;</script>
       <script> 
           var url;
           window.onload = insertText
