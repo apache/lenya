@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.5 2003/07/14 10:30:54 egli Exp $
+$Id: DefaultSiteTreeTest.java,v 1.6 2003/07/25 16:44:25 edith Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,10 @@ package org.apache.lenya.cms.publication;
 
 import java.io.IOException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import junit.framework.TestCase;
 
@@ -287,5 +290,29 @@ public class DefaultSiteTreeTest extends TestCase {
 		siteTree.moveDown("/foo");
 		siteTree.save();
 		assertNotNull(siteTree.getNode("/foo"));
+	}
+
+	final public void testImportSubtree() throws ParserConfigurationException, SAXException, SiteTreeException, IOException, TransformerException {
+		DefaultSiteTree newSiteTree = new DefaultSiteTree("importedTree.xml");
+		Label label = new Label("root", "en");
+		Label[] rootLabels = { label };
+		newSiteTree.addNode("/root", rootLabels, null, null, false);
+		label = new Label("foo", "en");
+		Label[] fooLabels = { label };
+		newSiteTree.addNode("/root/foo", fooLabels, null, null, false);
+		label = new Label("subtree", "en");
+		Label[] subtreeLabels = { label };
+		newSiteTree.addNode("/root/subtree", subtreeLabels, "http://exact.biz", "suffix", true);
+		label = new Label("child", "en");
+		Label[] childLabels = { label };
+		newSiteTree.addNode("/root/subtree/child", childLabels, null, null, false);
+		SiteTreeNode node=newSiteTree.getNode("/root/subtree");
+		assertNotNull(node);
+		SiteTreeNode parentNode=siteTree.getNode("/foo/lala");
+		assertNotNull(parentNode);
+        siteTree.importSubtree(parentNode,node, "subtree");
+		siteTree.save();
+		assertNotNull(siteTree.getNode("/foo/lala/subtree"));
+		assertNotNull(siteTree.getNode("/foo/lala/subtree/child"));
 	}
 }
