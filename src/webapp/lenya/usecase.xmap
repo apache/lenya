@@ -26,8 +26,10 @@
       <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
         <exception class="org.apache.lenya.cms.task.ExecutionException" name="execution" unroll="true"/>
         <exception class="org.apache.tools.ant.BuildException" name="build" unroll="true"/>
+        <exception class="org.xml.sax.SAXParseException" name="sax-parsing"/>
         <exception class="org.xml.sax.SAXException" name="sax" unroll="true"/>
         <exception class="org.apache.cocoon.ResourceNotFoundException" name="resourcenotfound"/>
+        <exception class="org.apache.cocoon.ProcessingException" name="processing" unroll="true"/>
         <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException"
           name="parent-node-not-found"/>
         <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
@@ -451,65 +453,6 @@
         <!-- ********  /HTML Form Editor ********************************** -->
         <!-- ************************************************************** -->
         
-
-
-        <!-- ************************************************************** -->
-        <!-- ** HTML One Form Editor                                     ** -->
-        <!-- **                                                          ** -->
-        <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
-        <!-- **       publication specific DocumentIdToPathMapper which  ** -->
-        <!-- **       is configured within config/publication.xconf      ** -->
-        <!-- ************************************************************** -->
-        <map:match pattern="1formedit" type="usecase">
-          <map:match pattern="open" type="step">
-            <map:match pattern="*/authoring/**.html">
-              <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-	      <!-- FIXME: path should be configured within publication -->
-	      <!--
-              <map:generate src="{global:content-prefix}/authoring/{page-envelope:document-path}"/>
-	      -->
-              <!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
-              <map:transform src="xslt/authoring/edit/replace-predefined-entities.xsl"/>
-              <map:transform src="xslt/authoring/edit/oneform.xsl">
-                <map:parameter name="docid" value="{page-envelope:document-path}"/>
-              </map:transform>
-              <map:call resource="style-cms-page"/>
-            </map:match>
-          </map:match>
-
-
-          <map:match pattern="close" type="step">
-            <map:match pattern="*/authoring/**.html">
-              <map:generate type="stream">
-                <map:parameter name="form-name" value="content"/>
-              </map:generate>
-              <!-- Save: Overwrite original file (FIXME: Cancel should not overwrite original file) -->
-              <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-                <map:parameter name="source" value="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-                <!-- FIXME: path should be configured within publication -->
-		<!--
-                <map:parameter name="source" value="{global:content-prefix}/authoring/{page-envelope:document-path}"/>
-		-->
-              </map:transform>
-              <map:transform type="write-source"/>
-              <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-                <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
-              </map:transform>
-              <!-- trigger workflow (FIXME: Cancel should not trigger the workflow) -->
-              <map:act type="workflow">
-                <map:parameter name="area" value="{page-envelope:area}"/>
-                <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-                <map:parameter name="language" value="{page-envelope:document-language}"/>
-                <map:parameter name="event" value="edit"/>
-              </map:act>
-              <map:serialize type="htmlnoi" />
-            </map:match>
-          </map:match>
-        </map:match>
-        <!-- ************************************************************** -->
-        <!-- ********  /HTML One Form Editor ****************************** -->
-        <!-- ************************************************************** -->
-
 
         <!-- This is the generic asset upload matcher -->
         <map:match pattern="asset" type="usecase">
@@ -975,6 +918,75 @@
       </map:handle-errors>
       
     </map:pipeline>
+    
+    <!-- ************************************************************** -->
+    <!-- ** HTML One Form Editor                                     ** -->
+    <!-- **                                                          ** -->
+    <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
+    <!-- **       publication specific DocumentIdToPathMapper which  ** -->
+    <!-- **       is configured within config/publication.xconf      ** -->
+    <!-- ************************************************************** -->
+    <map:pipeline>
+      <map:match pattern="1formedit" type="usecase">
+	<map:match pattern="open" type="step">
+	  <map:match pattern="*/authoring/**.html">
+	    <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+	    <!-- FIXME: path should be configured within publication -->
+	    <!--
+	    <map:generate src="{global:content-prefix}/authoring/{page-envelope:document-path}"/>
+	    -->
+	    <!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
+	    <map:transform src="xslt/authoring/edit/replace-predefined-entities.xsl"/>
+	    <map:transform src="xslt/authoring/edit/oneform.xsl">
+	      <map:parameter name="docid" value="{page-envelope:document-path}"/>
+	    </map:transform>
+	    <map:call resource="style-cms-page"/>
+	  </map:match>
+	</map:match>
+	
+	<map:match pattern="close" type="step">
+	  <map:match pattern="*/authoring/**.html">
+	    <map:generate type="stream">
+	      <map:parameter name="form-name" value="content"/>
+	    </map:generate>
+	    <!-- Save: Overwrite original file (FIXME: Cancel should not overwrite original file) -->
+	    <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+	      <map:parameter name="source" value="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+	      <!-- FIXME: path should be configured within publication -->
+	      <!--
+	      <map:parameter name="source" value="{global:content-prefix}/authoring/{page-envelope:document-path}"/>
+	      -->
+	    </map:transform>
+	    <map:transform type="write-source"/>
+	    <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+	      <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
+	    </map:transform>
+	    <!-- trigger workflow (FIXME: Cancel should not trigger the workflow) -->
+	    <map:act type="workflow">
+	      <map:parameter name="area" value="{page-envelope:area}"/>
+	      <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+	      <map:parameter name="language" value="{page-envelope:document-language}"/>
+	      <map:parameter name="event" value="edit"/>
+	    </map:act>
+	    <map:serialize type="htmlnoi" />
+	  </map:match>
+	</map:match>
+      </map:match>
+      
+      <map:handle-errors type="500">
+	<map:select type="exception">
+	  <map:when test="sax-parsing">
+	    <map:transform src="xslt/exception/sax-parsing.xsl"/>
+	    <map:call resource="style-cms-page"/>
+	  </map:when>
+	</map:select>
+	<map:serialize type="html"/>
+      </map:handle-errors>
+      
+    </map:pipeline>
+    <!-- ************************************************************** -->
+    <!-- ********  /HTML One Form Editor ****************************** -->
+    <!-- ************************************************************** -->
     
   </map:pipelines>
   
