@@ -301,7 +301,7 @@
             <map:call resource="cms-screen">
               <map:parameter name="publication-id" value="{../../1}"/>
               <map:parameter name="serverpage" value="publishing/screen.xsp"/>
-              <map:parameter name="stylesheet" value="publishing/screen.xsl"/>
+              <map:parameter name="stylesheet" value="publishing/publish-screen.xsl"/>
             </map:call>
           </map:match>
           
@@ -731,6 +731,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/deactivate.xsp" type="serverpages"/>
             <map:transform src="xslt/info/deactivate.xsl"/>
+            <map:transform src="cocoon:/notification/{../../1}/deactivate.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
