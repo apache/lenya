@@ -9,9 +9,7 @@
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables_live.xsl"/>
 <xsl:include href="../../variables.xsl"/>
-<!--
 <xsl:include href="../../navigation.xsl"/>
--->
 <xsl:include href="../webperls.xsl"/>
 <xsl:include href="../services.xsl"/>
 <xsl:include href="../headlines.xsl"/>

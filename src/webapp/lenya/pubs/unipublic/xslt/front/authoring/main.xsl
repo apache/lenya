@@ -13,13 +13,10 @@
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables_authoring.xsl"/>
 <xsl:include href="../../variables.xsl"/>
-<!--
 <xsl:include href="../../navigation.xsl"/>
--->
 <xsl:include href="../webperls.xsl"/>
 <xsl:include href="../services.xsl"/>
 <xsl:include href="../headlines.xsl"/>
 <xsl:include href="media.xsl"/>
 <xsl:include href="../page.xsl"/>
-
 </xsl:stylesheet>

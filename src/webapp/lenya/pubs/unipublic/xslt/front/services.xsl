@@ -2,8 +2,6 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<xsl:include href="../variables.xsl"/>
-
 <xsl:template match="Services">
   <table border="0" cellpadding="0" cellspacing="0" width="126">
     <xsl:for-each select="Service">
