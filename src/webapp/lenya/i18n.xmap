@@ -41,7 +41,7 @@
   
   <map:pipelines>
   
-    <map:pipeline>
+    <map:pipeline type="noncaching">
       <map:match pattern="i18n-catalogue/**">
         <map:select type="resource-exists">
           <map:when test="pubs/{page-envelope:publication-id}/lenya/resources/i18n/{1}">
