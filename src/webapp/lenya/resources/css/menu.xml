@@ -15,7 +15,8 @@
 	top: 55px;
 	left: 0px;
 	z-index: 1;
-	text-align: center;
+        // FIXME: seems to be inherited
+	//text-align: center;
 }
 
 table.lenya-menubar-menu a { color: #3360AA; text-decoration:none; background-color: transparent; }
