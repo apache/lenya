@@ -34,6 +34,7 @@
     <pathelement path="${lenya.dir.web-inf}/lib/lucene-1.3.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/websphinx.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/jtidy-04aug2000r7-dev.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/w3c-crypt.jar"/>
   </path>
 </target>
 
