@@ -14,7 +14,7 @@
 	  <!-- On the section pages the "magazin" GIF is drawn by page.xsl because of alignment issues (HTML) -->
 	  <xsl:if test="not($is-section) or not(contains(@name,'magazin'))">
             <tr>
-              <td><img height="21" width="120" src="{$img-unipub}/t_{@name}.gif" border="0" alt="{@name}"/></td>
+              <td align="right"><img src="{$img-unipub}/t_{@name}.gif" border="0" alt="{@name}"/></td>
             </tr>                                                                                                                             
 	  </xsl:if>
 
