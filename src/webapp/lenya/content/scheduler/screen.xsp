@@ -38,7 +38,7 @@
     <xsp:include>org.apache.lenya.cms.publication.util.DocumentReferencesHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.workflow.CMSVersion</xsp:include>
     <xsp:include>org.apache.lenya.cms.workflow.WorkflowFactory</xsp:include>
-    <xsp:include>org.apache.lenya.workflow.impl.History</xsp:include>
+    <xsp:include>org.apache.lenya.workflow.impl.HistoryImpl</xsp:include>
     <xsp:include>org.apache.lenya.workflow.impl.Version</xsp:include>
   </xsp:structure>
 
