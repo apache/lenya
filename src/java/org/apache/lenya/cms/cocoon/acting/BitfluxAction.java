@@ -1,5 +1,5 @@
 /*
- * $Id: BitfluxAction.java,v 1.9 2003/03/06 20:45:41 gregor Exp $
+ * $Id: BitfluxAction.java,v 1.10 2003/03/17 17:40:53 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,7 +52,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
-import org.apache.cocoon.components.parser.Parser;
+import org.apache.excalibur.xml.dom.DOMParser;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Session;
@@ -176,7 +176,7 @@ public class BitfluxAction extends ConfigurableComposerAction {
         PostInputStream reqContent = new PostInputStream(httpReq.getInputStream(), length);
 
         // construct DOM document from the request contents
-        Parser parser = (Parser) this.manager.lookup(Parser.ROLE);
+        DOMParser parser = (DOMParser) this.manager.lookup(DOMParser.ROLE);
         InputSource saxSource = new InputSource(reqContent);
         Document requestDoc = parser.parseDocument(saxSource);
 
