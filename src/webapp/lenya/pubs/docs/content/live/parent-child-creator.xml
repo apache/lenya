@@ -48,8 +48,8 @@ Normally the "Menus" can be found at <i>docs/publication/menus</i>.
 <![CDATA[
 <map:pipeline>
   <map:match pattern="wyona/ParentChildScreenNewArticle*">
-    <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
-    <map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
+    <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
+    <map:transform src="../../stylesheets/cms/Page/authoring/parent-child.xsl"/>
     <map:serialize type="html"/>
   </map:match>
 </map:pipeline>

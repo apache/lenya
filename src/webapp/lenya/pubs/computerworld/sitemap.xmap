@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: sitemap.xmap,v 1.1 2003/01/16 10:31:58 gregorcms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.2 2003/02/21 18:48:49 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -26,8 +26,8 @@
 	</map:components>
 	<map:resources>
 		<map:resource name="login">
-			<map:generate type="serverpages" src="../../docs/cms/access-control/identify.xsp"/>
-			<map:transform src="../../stylesheets/cms/Page/Login/main.xsl">
+			<map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
+			<map:transform src="../../stylesheets/cms/Page/ac/login.xsl">
 				<map:parameter name="publication_name" value="Computerworld"/>
 				<map:parameter name="publication_id" value="computerworld"/>
 			</map:transform>
@@ -103,8 +103,8 @@
 					</map:match>
 					<map:match pattern="logout">
 						<map:generate type="serverpages" src="../../docs/cms/access-control/invalidate.xsp"/>
-						<map:transform src="../../stylesheets/cms/Page/Logout/main.xsl">
-							<map:parameter name="publication_name" value="Unipublic"/>
+						<map:transform src="../../stylesheets/cms/Page/ac/logout.xsl">
+							<map:parameter name="publication_name" value="Computerworld"/>
 						</map:transform>
 						<map:serialize/>
 					</map:match>

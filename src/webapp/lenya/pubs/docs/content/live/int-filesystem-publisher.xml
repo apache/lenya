@@ -56,8 +56,8 @@ Normally the "Menus" can be found at docs/publication/menus
            <source>
 <![CDATA[
      <map:match pattern="authoring/wyona/publishScreen*">
-       <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
-       <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
+       <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
+       <map:transform src="../../stylesheets/cms/Page/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>                                                                                                                           
 ]]>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: authoring-sitemap.xmap,v 1.23 2003/02/05 11:59:40 gregorcms Exp $ -->
+<!-- $Id: authoring-sitemap.xmap,v 1.24 2003/02/21 18:48:49 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -106,13 +106,13 @@
 		<!-- Rollback -->
 		<map:pipeline>
 			<map:match pattern="revision/*">
-				<map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
+				<map:generate type="serverpages" src="../../docs/cms/rc/versions-screen.xsp">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
 					<map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
 					<map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
 					<map:parameter name="articleId" value="{4}"/>
 				</map:generate>
-				<map:transform src="../../stylesheets/cms/Page/rollback.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/rc/rollback.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<map:match pattern="rollback/*">
@@ -122,7 +122,7 @@
 				</map:act>
 			</map:match>
 			<map:match pattern="view/*">
-				<map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
+				<map:generate type="serverpages" src="../../docs/cms/rc/view.xsp">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
 					<map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
 					<map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
@@ -141,8 +141,8 @@
                       from the menu. This simplifies publishing of different document types. -->
 			<!-- ===================================================================== -->
 			<map:match pattern="wyona/publishScreen*">
-				<map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
-				<map:transform src="../../stylesheets/cms/Page/Publish/main.xsl">
+				<map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
+				<map:transform src="../../stylesheets/cms/Page/publishing/main.xsl">
 					<map:parameter name="use-request-parameters" value="true"/>
 				</map:transform>
 				<map:serialize type="html"/>
@@ -162,12 +162,8 @@
 		<!-- ParentChild Content Creator: New Document -->
 		<map:pipeline>
 			<map:match pattern="wyona/ParentChildScreenNewArticle*">
-				<map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
-				<map:transform src="../../stylesheets/cms/Page/new-document.xsl"/>
-				<!--
-				<map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
-				<map:transform src="stylesheets/cms/Page/article-creator.xsl"/>
--->
+				<map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
+				<map:transform src="../../stylesheets/cms/Page/authoring/new-document.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<map:match pattern="wyona/create*">
@@ -231,17 +227,17 @@
 		<map:pipeline>
 			<map:match type="usecase" pattern="uploadimage">
 				<map:match type="step" pattern="showxml">
-					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+					<map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
 					<map:serialize type="xml"/>
 				</map:match>
 				<map:match type="step" pattern="showscreen">
-					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
-					<map:transform src="stylesheets/cms/Page/upload-image.xsl"/>
+					<map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
+					<map:transform src="stylesheets/cms/Page/authoring/upload-image.xsl"/>
 					<map:serialize type="html"/>
 				</map:match>
 				<map:match type="step" pattern="showteaserscreen">
-					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
-					<map:transform src="stylesheets/cms/Page/upload-teaserimage.xsl"/>
+					<map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
+					<map:transform src="stylesheets/cms/Page/authoring/upload-teaserimage.xsl"/>
 					<map:serialize type="html"/>
 				</map:match>
 				<map:match type="step" pattern="upload">
@@ -250,8 +246,8 @@
 						<map:redirect-to uri="{referer}"/>
 					</map:act>
 					<!-- otherwise the action could not validate some of the	  input and we present the upload form again -->
-					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
-					<map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
+					<map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
+					<map:transform src="../../stylesheets/cms/Page/authoring/upload-image.xsl"/>
 					<map:serialize type="html"/>
 				</map:match>
 			</map:match>
@@ -387,12 +383,12 @@
 				<map:act type="reserved-checkout">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
 					<!--
-          <map:generate src="../../docs/cms/revision-control/file-reserved-checkout-exception.xml">
+          <map:generate src="../../docs/cms/rc/file-reserved-checkout-exception.xml">
 -->
 					<!--
-          <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkout-exception.xsp">
+          <map:generate type="serverpages" src="../../docs/cms/rc/file-reserved-checkout-exception.xsp">
 -->
-					<map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+					<map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
 						<map:parameter name="user" value="{user}"/>
 						<map:parameter name="filename" value="{filename}"/>
 						<map:parameter name="date" value="{date}"/>
@@ -409,9 +405,9 @@
 				<map:act type="reserved-checkin">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
 					<!--
-          <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkin-exception.xsp">
+          <map:generate type="serverpages" src="../../docs/cms/rc/file-reserved-checkin-exception.xsp">
 -->
-					<map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+					<map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
 						<map:parameter name="user" value="{user}"/>
 						<map:parameter name="filename" value="{filename}"/>
 						<map:parameter name="checkType" value="{checkType}"/>

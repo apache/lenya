@@ -91,7 +91,7 @@
 		<!-- Rollback -->
 		<map:pipeline>
 			<map:match pattern="revision/*/*/*/*/index.xml">
-				<map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
+				<map:generate type="serverpages" src="../../docs/cms/rc/versions-screen.xsp">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 					<map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
 					<map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
@@ -100,7 +100,7 @@
 					<map:parameter name="year" value="{3}"/>
 					<map:parameter name="articleId" value="{4}"/>
 				</map:generate>
-				<map:transform src="../../stylesheets/cms/Page/rollback.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/rc/rollback.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<map:match pattern="rollback/*/*/*/*/index.xml">
@@ -110,7 +110,7 @@
 				</map:act>
 			</map:match>
 			<map:match pattern="view/*/*/*/*/index.xml">
-				<map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
+				<map:generate type="serverpages" src="../../docs/cms/rc/view.xsp">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 					<map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
 					<map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
@@ -132,8 +132,8 @@
       -->
 			<!-- ===================================================================== -->
 			<map:match pattern="wyona/publishScreen*">
-				<map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
-				<map:transform src="../../stylesheets/cms/Page/Publish/main.xsl">
+				<map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
+				<map:transform src="../../stylesheets/cms/Page/publishing/main.xsl">
 					<map:parameter name="use-request-parameters" value="true"/>
 				</map:transform>
 				<map:serialize type="html"/>
@@ -153,8 +153,8 @@
 		<!-- ParentChild Content Creator: New Document -->
 		<map:pipeline>
 			<map:match pattern="wyona/ParentChildScreenNewArticle*">
-				<map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
-				<map:transform src="../../stylesheets/cms/Page/new-document.xsl"/>
+				<map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
+				<map:transform src="../../stylesheets/cms/Page/authoring/new-document.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<map:match pattern="wyona/create*">
@@ -240,16 +240,16 @@
 			<!-- Upload and append image -->
 			<map:match type="usecase" pattern="uploadimage">
 				<map:match type="step" pattern="showxml">
-					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+					<map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
 					<map:serialize type="xml"/>
 				</map:match>
 				<map:match type="step" pattern="showscreen">
-					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+					<map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
 					<map:transform src="stylesheets/cms/Page/upload-image.xsl"/>
 					<map:serialize type="html"/>
 				</map:match>
 				<map:match type="step" pattern="showteaserscreen">
-					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+					<map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
 					<map:transform src="stylesheets/cms/Page/upload-teaserimage.xsl"/>
 					<map:serialize type="html"/>
 				</map:match>
@@ -261,8 +261,8 @@
 					</map:act>
 					<!-- otherwise the action could not validate some of the
 	  input and we present the upload form again -->
-					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
-					<map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
+					<map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
+					<map:transform src="../../stylesheets/cms/Page/authoring/upload-image.xsl"/>
 					<map:serialize type="html"/>
 				</map:match>
 			</map:match>
@@ -512,7 +512,7 @@
 			<map:match pattern="rco/*/*/*/*/index.xml">
 				<map:act type="reserved-checkout">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
-					<map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+					<map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
 						<map:parameter name="user" value="{user}"/>
 						<map:parameter name="filename" value="{filename}"/>
 						<map:parameter name="date" value="{date}"/>
@@ -529,7 +529,7 @@
 			<map:match pattern="rci/*/*/*/*/index.xml">
 				<map:act type="reserved-checkin">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
-					<map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+					<map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
 						<map:parameter name="user" value="{user}"/>
 						<map:parameter name="filename" value="{filename}"/>
 						<map:parameter name="checkType" value="{checkType}"/>
@@ -552,19 +552,7 @@
 				<map:transform src="stylesheets/publication/Page/Article/migrate-xhtml2xml.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
-			<!--  Not needed    -->
-			<!--
-      <map:match pattern="*/*/*/*/article.xml">
-        <map:generate type="serverpages" src="docs/publication/authoring/article.xsp">
-          <map:parameter name="channel" value="{1}"/>
-          <map:parameter name="section" value="{2}"/>
-          <map:parameter name="year" value="{3}"/>
-          <map:parameter name="id" value="{4}"/>
-        </map:generate>
-        <map:transform type="xlink"/>
-        <map:serialize type="xml"/>
-      </map:match>
--->
+
 			<map:match pattern="*/*/*/*/">
 				<map:redirect-to uri="index.html" session="true"/>
 			</map:match>
@@ -601,19 +589,19 @@
 			<map:match pattern="xopus2/*/*/*/*/index.html">
 				<map:act type="reserved-checkout">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
-					<map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+					<map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
 						<map:parameter name="user" value="{user}"/>
 						<map:parameter name="filename" value="{filename}"/>
 						<map:parameter name="date" value="{date}"/>
 					</map:generate>
-					<map:transform src="../../stylesheets/cms/Page/rco-exception.xsl"/>
+					<map:transform src="../../stylesheets/cms/Page/rc/rco-exception.xsl"/>
 					<map:serialize type="html"/>
 				</map:act>
 				<map:aggregate element="wyona">
 					<map:part src="cocoon:/menus/{1}/{2}/{3}/{4}/article.xml"/>
 					<map:part src="cocoon:/{1}/{2}/{3}/{4}/index.xml" element="cmsbody"/>
 				</map:aggregate>
-				<map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus2.xsl">
+				<map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl">
 					<map:parameter name="CHANNEL_ID" value="{1}"/>
 					<map:parameter name="SECTION_ID" value="{2}"/>
 					<map:parameter name="YEAR_ID" value="{3}"/>

@@ -32,22 +32,6 @@
       </map:match>
     </map:pipeline>
 
-<!--
-    <map:pipeline>
-      <map:match pattern="xopus2/**.html">
-        <map:generate src="http://127.0.0.1:8080/wyona-cms/oscom/authoring/weekly-column-page.xml"/>
-        <map:transform src="../oscom/stylesheets/publication/Page/WeeklyColumn/Authoring/main_xopus2.xsl"/>
--->
-<!--
-        <map:generate src="http://127.0.0.1:8080/wyona-cms/eurex/{1}.xml" element="cmsbody"/>
-        <map:transform src="stylesheets/publication/Page/Generic/Authoring/main.xsl"/>
--->
-<!--
-        <map:serialize type="html"/>
-      </map:match>
-    </map:pipeline>
--->
-
     <map:pipeline>
       <map:match pattern="**.html">
         <map:act type="request">

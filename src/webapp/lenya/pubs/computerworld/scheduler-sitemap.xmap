@@ -38,7 +38,7 @@
 			<!-- create the current job snapshot -->
 			<map:match pattern="scheduler-servlet">
 				<map:generate type="servletproxy" src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
-				<map:transform src="../../stylesheets/cms/Page/Scheduler/sort.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/scheduler/sort.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 		</map:pipeline>
@@ -51,9 +51,9 @@
 					<map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
 					<map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
 				</map:aggregate>
-				<map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl"/>
-				<map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl"/>
-				<map:transform src="../../stylesheets/cms/Page/Scheduler/admin-document.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/scheduler/filter.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/scheduler/filterTasks.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/scheduler/admin-document.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- Admin interface -->
@@ -64,9 +64,9 @@
 					<map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
 					<map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
 				</map:aggregate>
-				<map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl"/>
-				<map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl"/>
-				<map:transform src="../../stylesheets/cms/Page/Scheduler/admin-publication.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/scheduler/filter.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/scheduler/filterTasks.xsl"/>
+				<map:transform src="../../stylesheets/cms/Page/scheduler/admin-publication.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
 		</map:pipeline>

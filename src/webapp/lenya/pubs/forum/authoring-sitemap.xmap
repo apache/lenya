@@ -67,8 +67,8 @@
     <map:pipeline>
      <!-- Publisher -->
       <map:match pattern="wyona/publishScreen*">
-        <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
-        <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
+        <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
+        <map:transform src="../../stylesheets/cms/Page/publishing/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="wyona/publish*">
@@ -81,10 +81,10 @@
 
      <!-- ParentChild Content Creator: New Article -->
       <map:match pattern="wyona/ParentChildScreenNewArticle*">
-        <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+        <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
         <map:transform src="stylesheets/cms/Page/parent-child-new-article.xsl"/>
 <!--
-        <map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/authoring/parent-child.xsl"/>
 -->
         <map:serialize type="html"/>
       </map:match>
@@ -177,39 +177,14 @@
         <map:generate src="cocoon:/articles/{1}/article.xml"/>
         <map:select>
           <map:when test="explorer">
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus2.xsl"/>
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus2.xsl"/>
-<!--
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
--->
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>
       </map:match>
-<!-- Needed if you want to use Xopus' default databasedriver.js -->
-<!-- Not needed if you use wyona_databasedriver.js -->
-<!--
-      <map:match pattern="xopus2/articles/*/**/xopus2.xsl">
-        <map:generate src="stylesheets/publication/{2}/xopus2.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="xopus2/articles/*/**/tree.xsl">
-        <map:generate src="stylesheets/publication/{2}/tree.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="xopus2/articles/*/*.xsd">
-        <map:generate src="docs/publication/doctypes/schemas/{2}.xsd"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="xopus2/articles/*/articles/2001/index.xml">
-        <map:generate src="docs/publication/authoring/articles/2001/index.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
--->
-
-
 
 
       <map:match pattern="**.xml">

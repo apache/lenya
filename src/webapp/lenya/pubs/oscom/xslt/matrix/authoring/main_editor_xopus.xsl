@@ -6,7 +6,7 @@
 
 <xsl:param name="projectid"/>
 
-<xsl:include href="../../../../../../../stylesheets/cms/Page/root_xopus2.xsl"/>
+<xsl:include href="../../../../../../../stylesheets/cms/Page/xopus/root.xsl"/>
 
 <xsl:template match="cmsbody">
   <xsl:apply-templates select="oscom"/>

@@ -6,10 +6,7 @@
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:include href="../../../../../../../stylesheets/cms/Page/root-dhtml.xsl"/>
-<!--
-<xsl:include href="../../../../../../../stylesheets/cms/Page/root.xsl"/>
--->
+<xsl:include href="../../../../../../../stylesheets/cms/Page/menu/root.xsl"/>
 
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../foot.xsl"/>

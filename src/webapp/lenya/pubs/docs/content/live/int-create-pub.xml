@@ -72,8 +72,8 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 ...
 <map:resources>
   <map:resource name="login">
-    <map:generate type="serverpages" src="../../docs/cms/access-control/identify.xsp"/>
-    <map:transform src="../../stylesheets/cms/Page/Login/main.xsl">
+    <map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
+    <map:transform src="../../stylesheets/cms/Page/ac/login.xsl">
       <map:parameter name="publication_name" value="MY-PUB"/>
       <map:parameter name="publication_id" value="MY-PUB"/>
       <map:parameter name="wyona_path" value="wyona/cms/pubs/MY-PUB/docs/standard/t01/" />
@@ -87,7 +87,7 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 <![CDATA[
 <map:match pattern="logout">
   <map:generate type="serverpages" src="../../docs/cms/access-control/invalidate.xsp"/>
-  <map:transform src="../../stylesheets/cms/Page/Logout/main.xsl">
+  <map:transform src="../../stylesheets/cms/Page/ac/logout.xsl">
     <map:parameter name="publication_name" value="MY-PUB"/>
   </map:transform>
   <map:serialize/>

@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.32 2003/02/21 13:27:20 michi Exp $
+   @version CVS $Id: build.xml,v 1.33 2003/02/21 18:48:49 gregor Exp $
 
 -->
 
@@ -306,10 +306,11 @@
   <!-- ============================================================ -->
   <!-- Creates the API documentation                                -->
   <!-- ============================================================ -->
+
   <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done"
           unless="javadocs.notrequired"
           description="Generates the API documentation">
-    <mkdir dir="${dist.bin.javadocs}"/>
+  <!--    <mkdir dir="${dist.bin.javadocs}"/>
     <javadoc packagenames="${packages}"
              sourcepath="${build.src}"
              destdir="${dist.bin.javadocs}"
@@ -323,6 +324,7 @@
              stylesheetfile="${resource.dir}/javadoc.css">
       <classpath refid="classpath"/>
     </javadoc>
+-->
   </target>
 
   <!-- ============================================================ -->

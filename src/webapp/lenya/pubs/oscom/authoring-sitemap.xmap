@@ -69,7 +69,7 @@
     <!-- Rollback -->
     <map:pipeline>
       <map:match pattern="authoring/revision/editor-matrix/*.html">
-        <map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
+        <map:generate type="serverpages" src="../../docs/cms/rc/versions-screen.xsp">
           <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
@@ -78,13 +78,13 @@
           <map:parameter name="year" value="year"/>
           <map:parameter name="articleId" value="articleId"/>
         </map:generate>
-        <map:transform src="../../stylesheets/cms/Page/rollback.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/rc/rollback.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
 <!--
       <map:match pattern="view/*/*/*/*/index.xml">
-        <map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
+        <map:generate type="serverpages" src="../../docs/cms/rc/view.xsp">
           <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
@@ -196,7 +196,6 @@
 -->
       <map:match pattern="authoring/menus/**.xml">
         <map:generate type="serverpages" src="docs/publication/menus/generic.xsp"/>
-        <!--<map:generate type="serverpages" src="../../docs/cms/menus/live.xsp"/>-->
         <map:serialize type="xml"/>
       </map:match>
 
@@ -266,7 +265,7 @@
   <!-- Create New CMS Project -->
   <map:pipeline>
     <map:match pattern="authoring/matrix/ParentChildScreenNewCMS*">
-      <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+      <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
       <map:transform src="stylesheets/cms/parent-child-new-cms-project.xsl"/>
       <map:serialize type="html"/>
     </map:match>
@@ -326,11 +325,8 @@
   <!-- Create New Editor Project -->
   <map:pipeline>
     <map:match pattern="authoring/editor-matrix/ParentChildScreenNewEditor*">
-      <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+      <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
       <map:transform src="stylesheets/cms/parent-child-new-editor-project.xsl"/>
-<!--
-      <map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
--->
       <map:serialize type="html"/>
     </map:match>
     <map:match pattern="authoring/editor-matrix/create*">
@@ -342,9 +338,6 @@
   </map:pipeline>
   <!-- /Create New Editor Project -->
 <!-- /Editor Matrix -->
-
-
-
 
 
 
@@ -388,9 +381,6 @@
         <map:generate src="cocoon:/authoring/index.xml"/>
         <map:select>
           <map:when test="explorer">
-<!--
-            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus.xsl"/>
--->
             <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
           </map:when>
           <map:otherwise>
@@ -405,10 +395,10 @@
         <map:generate src="cocoon:/authoring/index.xml"/>
         <map:select>
           <map:when test="explorer">
-            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus2.xsl"/>
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus2.xsl"/>
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus.xsl"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>
@@ -417,21 +407,21 @@
       <!-- Edit News with Xopus2 -->
       <map:match pattern="authoring/xopus2/news.html">
         <map:generate src="cocoon:/authoring/news.xml"/>
-        <map:transform src="stylesheets/publication/Page/News/Authoring/main_xopus2.xsl"/>
+        <map:transform src="stylesheets/publication/Page/News/Authoring/main_xopus.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Edit Weekly Column with Xopus2 -->
       <map:match pattern="authoring/xopus2/weekly-column.html">
         <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
-        <map:transform src="stylesheets/publication/Page/WeeklyColumn/Authoring/main_xopus2.xsl"/>
+        <map:transform src="stylesheets/publication/Page/WeeklyColumn/Authoring/main_xopus.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Edit Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/matrix/*.html">
         <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
-        <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_xopus2.xsl">
+        <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_xopus.xsl">
           <map:parameter name="projectid" value="{1}"/>
         </map:transform>
         <map:serialize type="html"/>
@@ -441,24 +431,21 @@
       <map:match pattern="authoring/xopus2/editor-matrix/*.html">
         <map:act type="reserved-checkout">
           <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
-          <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+          <map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
             <map:parameter name="filename" value="{filename}"/>
             <map:parameter name="date" value="{date}"/>
           </map:generate>
-          <map:transform src="../../stylesheets/cms/Page/rco-exception.xsl"/>
+          <map:transform src="../../stylesheets/cms/Page/rc/rco-exception.xsl"/>
           <map:serialize type="html"/>
         </map:act>
 
         <map:generate src="cocoon:/authoring/editor-matrix/{1}.xml"/>
-        <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_editor_xopus2.xsl">
+        <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_editor_xopus.xsl">
           <map:parameter name="projectid" value="{1}"/>
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
-
-
-
 
 
 
@@ -546,9 +533,6 @@
         <map:select>
           <map:when test="explorer">
             <map:transform src="stylesheets/publication/Page/Generic/Authoring/main.xsl"/>
-<!--
-            <map:transform src="stylesheets/publication/Page/Generic/Authoring/main_xopus.xsl"/>
--->
           </map:when>
           <map:otherwise>
             <map:transform src="stylesheets/publication/Page/Generic/Authoring/main.xsl"/>
@@ -571,12 +555,12 @@
          <map:part src="cocoon:/authoring/matrix/index.xml"/>
        </map:aggregate>
        <map:transform src="stylesheets/publication/Page/Overview/publishScreen.xsl"/>
-       <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
+       <map:transform src="../../stylesheets/cms/Page/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>
      <map:match pattern="authoring/wyona/publishScreen*">
-       <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp" label="xml"/>
-       <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
+       <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp" label="xml"/>
+       <map:transform src="../../stylesheets/cms/Page/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>
      <map:match pattern="authoring/wyona/publish*">

@@ -4,13 +4,28 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:include href="../../../../../../../stylesheets/cms/Page/root_xopus.xsl"/>
+<xsl:include href="../../../../../../../stylesheets/cms/Page/xopus/root.xsl"/>
 
 <xsl:template match="cmsbody">
   <xsl:apply-templates select="oscom"/>
 </xsl:template>
 
 <xsl:include href="../../html_authoring.xsl"/>
-<xsl:include href="../body.xsl"/>
+
+<xsl:template name="body">
+ <div id="article_xopus" xopus="true" autostart="true">
+<b>............ LOADING ............</b>
+ 	<xml>
+		<pipeline xml="home.xml" xsd="home.xsd">
+			<view id="defaultView" default="true">
+				<transform xsl="Page/Home/Authoring/xopus.xsl"></transform>
+			</view>
+			<view id="treeView">
+				<transform xsl="Page/Home/Authoring/tree.xsl"></transform>
+			</view>
+		</pipeline>
+    </xml>
+ </div>
+</xsl:template>
  
 </xsl:stylesheet>  

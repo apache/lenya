@@ -33,12 +33,12 @@
 <!--
         <map:act type="reserved-checkout">
           <map:parameter name="filename" value="pubs/{1}/docs/publication/authoring/{2}"/>
-          <map:generate type="serverpages" src="docs/cms/revision-control/{exception}.xsp">
+          <map:generate type="serverpages" src="docs/cms/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
             <map:parameter name="filename" value="{filename}"/>
             <map:parameter name="date" value="{date}"/>
           </map:generate>
-          <map:transform src="stylesheets/cms/Page/rco-exception.xsl"/>
+          <map:transform src="stylesheets/cms/Page/rc/rco-exception.xsl"/>
           <map:serialize type="html"/>
         </map:act>
 -->

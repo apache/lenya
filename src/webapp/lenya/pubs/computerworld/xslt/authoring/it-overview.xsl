@@ -3,7 +3,7 @@
 
 <xsl:param name="files"/>
 
-	<xsl:include href="../../../../../../stylesheets/cms/Page/root-dhtml.xsl"/>
+	<xsl:include href="../../../../../../stylesheets/cms/Page/menu/root.xsl"/>
 	
 	<xsl:template match="wyona/cmsbody">
 		<xsl:apply-templates/>

@@ -95,7 +95,7 @@
       </map:match>
 
       <map:handle-errors>
-        <map:transform src="../../stylesheets/cms/Page/Exception/not_published_yet.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/exception/not_published_yet.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
 
