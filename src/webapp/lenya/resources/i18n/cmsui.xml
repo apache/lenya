@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.43 2004/03/12 16:07:49 roku Exp $
+   $Id: cmsui.xml,v 1.44 2004/03/12 20:53:04 roku Exp $
    
 -->
 
@@ -156,7 +156,7 @@
 
     <!-- User Administration -->
   <message key="User Data">User&#160;Data</message>
-c
+
   <message key="CMS User ID">CMS&#160;User&#160;ID</message>
   <message key="LDAP ID">LDAP&#160;ID</message>
   <message key="Confirm password">Confirm&#160;password</message>
