@@ -31,9 +31,13 @@
 <p>
 <h1><xsl:value-of select="$title"/></h1>
 <form action="{$action}">
-<input type="hidden" name="uris" value="{uris}"/>
+
 <input type="hidden" name="sources" value="{sources}"/> <!-- DefaultFilePublisher -->
+<input type="hidden" name="uris" value="{uris}"/> <!-- StaticHTMLExporter -->
+
 <input type="hidden" name="properties.publish.sources" value="{sources}"/> <!-- AntTask -->
+<input type="hidden" name="properties.export.uris" value="{uris}"/> <!-- AntTask -->
+
 <input type="hidden" name="task-id" value="{task-id}"/>
 <!-- FIXME: arbitrary request parameters set within the menubar should be transfered!
 <input type="hidden" name="server-port" value="1937"/>
