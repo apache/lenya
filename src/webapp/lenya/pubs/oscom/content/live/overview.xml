@@ -3,6 +3,9 @@
 <oscom xmlns:xi="http://www.w3.org/2001/XInclude">
 
 <xi:include href="navigation.xml"/>
+<xi:include href="overview-body.xml#xpointer(/oscom/system)"/>
+<!--
 <xi:include xml:base="http://www.oscom.org" href="/syndication/overviews.xml#xpointer(/oscom/system)"/>
+-->
 
 </oscom>
