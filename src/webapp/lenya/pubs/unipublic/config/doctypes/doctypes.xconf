@@ -12,7 +12,7 @@
 
 <doc type="Article">
 <!--
-  <creator src="org.wyona.cms.authoring.DefaultParentChildCreator"/>
+  <creator src="org.wyona.cms.authoring.DefaultCreator"/>
 -->
   <creator src="ch.unizh.unipublic.wyona.cms.authoring.NewArticleCreator"/>
   <tasks>
