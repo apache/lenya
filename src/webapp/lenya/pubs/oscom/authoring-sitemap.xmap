@@ -255,14 +255,23 @@
       <!-- Edit News with Xopus2 -->
       <map:match pattern="authoring/xopus2/news.html">
         <map:generate src="cocoon:/authoring/news.xml"/>
-          <map:transform src="stylesheets/publication/Page/News/Authoring/main_xopus2.xsl"/>
+        <map:transform src="stylesheets/publication/Page/News/Authoring/main_xopus2.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Edit Weekly Column with Xopus2 -->
       <map:match pattern="authoring/xopus2/weekly-column.html">
         <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
-          <map:transform src="stylesheets/publication/Page/WeeklyColumn/Authoring/main_xopus2.xsl"/>
+        <map:transform src="stylesheets/publication/Page/WeeklyColumn/Authoring/main_xopus2.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Edit Matrix with Xopus2 -->
+      <map:match pattern="authoring/xopus2/matrix/*.html">
+        <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
+        <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_xopus2.xsl">
+          <map:parameter name="projectid" value="{1}"/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
 
@@ -286,7 +295,10 @@
       </map:match>
 
       <!-- CM/F Overview -->
-      <map:match pattern="authoring/overview.html">
+      <map:match pattern="authoring/matrix/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+      <map:match pattern="authoring/matrix/index.html">
         <map:generate src="cocoon:/authoring/overview.xml"/>
         <map:transform src="stylesheets/publication/Page/Overview/Authoring/main.xsl"/>
         <map:serialize type="html"/>

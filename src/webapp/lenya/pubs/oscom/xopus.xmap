@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.4 2002/10/02 22:46:19 michicms Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.5 2002/10/25 21:33:44 michicms Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -56,6 +56,15 @@
       </map:match>
       <map:match pattern="weekly-column.xsd">
         <map:read src="docs/publication/doctypes/schemas/weekly-column.xsd" mime-type="text/xml"/>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline>
+      <map:match pattern="matrix.xsl">
+        <map:read src="stylesheets/publication/Page/Matrix/Authoring/body_xopus2.xsl" mime-type="text/xml"/>
+      </map:match>
+      <map:match pattern="matrix.xsd">
+        <map:read src="docs/publication/doctypes/schemas/matrix.xsd" mime-type="text/xml"/>
       </map:match>
     </map:pipeline>
     <!-- /DEBUG:GET -->

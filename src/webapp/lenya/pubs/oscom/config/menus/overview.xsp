@@ -10,7 +10,7 @@
 
   <xsp-wyona:util/>
 
-  <live_uri>/overview.html</live_uri>
+  <live_uri>/matrix/index.html</live_uri>
 
   <menus>
     <menu name="File" label="File">
@@ -23,7 +23,10 @@
 <!--
         <item href="/wyona-cms/bitfluxeditor/weekly-column.html?url-xml=/wyona-cms/oscom/bitflux/home.xml&amp;url-xslt=/wyona-cms/oscom/bitflux/home.xsl&amp;url-xsd=/wyona-cms/oscom/bitflux/home.xsd&amp;url-css=/wyona-cms/oscom/bitflux/home.css&amp;url-post=/wyona-cms/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
 -->
-        <item href="wyona/publishScreen?docid=/wyona-cms/oscom/overview.html&amp;docids=/overview-body.xml">Publish</item>
+        <item>Publish</item>
+<!--
+        <item href="wyona/publishScreen?docid=/wyona-cms/oscom/matrix/index.html&amp;docids=/overview-body.xml">Publish</item>
+-->
       </block>
       <separator>
         <item>-----------------</item>
@@ -63,7 +66,7 @@
     <menu name="Debug" label="Debug">
       <block>
         <item>View&#160;Page&#160;XML</item>
-        <item href="matrix/index.xml">View&#160;Body&#160;XML</item>
+        <item href="index.xml">View&#160;Body&#160;XML</item>
       </block>
 <!--
       <block>

@@ -4,10 +4,8 @@
   <id>mason</id>
   <system_name>Mason</system_name>
   <main_url>http://www.masonhq.com/</main_url>
-  <faq_url><![CDATA[http://www.masonhq.com/docs/faq/]]></faq_url>
   <license>
     <license_name>Artistic License (Perl)</license_name>
-    <license_description></license_description>
     <license_url>http://www.masonhq.com/about/license.html</license_url>
   </license>
 </system>
