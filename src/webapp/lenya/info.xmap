@@ -28,34 +28,162 @@
       <map:serialize/>
     </map:resource>
 
-    <map:resource name="aggregate-and-transform-tab">
-      <map:aggregate element="lenya" label="aggregate">
-        <map:part src="cocoon:/menus/info.xml"/>
-        <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
-      </map:aggregate>
-      <map:transform src="xslt/info/root.xsl" label="content">
-        <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
-        <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-        <map:parameter name="area" value="{page-envelope:area}"/>
-        <map:parameter name="tab" value="{tab}"/>
-        <map:parameter name="chosenlanguage" value="{chosenlanguage}"/>
-        <map:parameter name="documentid" value="{documentid}"/>
-        <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-      </map:transform>
-      <map:serialize/>
-    </map:resource>
-
   </map:resources>
 
   <map:pipelines>
-    <!-- Workflow History -->
+  	
+  	<!-- usecases -->
+    <!-- Sitetree Javascript array -->
     <map:pipeline>
-      <map:match pattern="workflow-history/**">
-        <map:generate src="pubs/{page-envelope:publication-id}/config/workflow/history/{1}"/>
-        <map:serialize type="xml"/>
+    	
+    	<!-- {publication-id}/{area}/info-sitetree -->
+      <map:match pattern="*/*/info-sitetree/sitetree.js">
+        <map:aggregate element="lenya" label="aggregate">
+          <map:part src="pubs/{1}/content/authoring/sitetree.xml"/>
+          <map:part src="pubs/{1}/content/archive/sitetree.xml"/>
+          <map:part src="pubs/{1}/content/trash/sitetree.xml"/>
+        </map:aggregate>
+        <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree">
+          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+        </map:transform>
+        <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+        </map:transform>
+        <map:serialize type="text"/>
+      </map:match>
+    </map:pipeline>
+    
+    <!-- Sitetree Javascript array      -->
+    <map:pipeline>
+      <map:match pattern="*/*/info-sitetree/tree.js">
+        <map:read src="resources/javascript/tree.js"/>
+        <map:serialize type="text"/>
       </map:match>
     </map:pipeline>
 
+    <!-- Sitetree Javascript array      -->
+    <map:pipeline>
+      <map:match pattern="*/*/info-sitetree/ua.js">
+        <map:read src="resources/javascript/ua.js"/>
+        <map:serialize type="text"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- Sitetree Javascript array      -->
+    <map:pipeline>
+      <map:match pattern="*/*/info-sitetree/tabs.js">
+        <map:read src="resources/javascript/tabs.js"/>
+        <map:serialize type="text"/>
+      </map:match>
+    </map:pipeline>
+
+  	<map:pipeline>
+  		
+  		<!-- {publication-id}/{area}/{document-url} -->
+    	<map:match pattern="*/*/**">
+  	
+        <map:match pattern="info-*" type="usecase">
+          
+          <map:match type="step" pattern="showscreen">
+						<map:aggregate element="lenya" label="aggregate">
+							<map:part src="cocoon:/menus/info.xml"/>
+							<map:part element="cmsbody" type="serverpages" src="cocoon:/tabs/{../1}"/>
+						</map:aggregate>
+						<map:transform src="xslt/info/root.xsl" label="content">
+							<map:parameter name="contextprefix" value="{request:contextPath}"/>
+							<map:parameter name="publicationid" value="{../../1}"/>
+							<map:parameter name="area" value="{../../2}"/>
+							<map:parameter name="tab" value="{../1}"/>
+							<map:parameter name="chosenlanguage" value="{request-param:language}"/>
+							<map:parameter name="documentid" value="{page-envelope:document-id}"/>
+							<map:parameter name="documenturl" value="/{../../3}"/>
+							<map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+						</map:transform>
+						<map:serialize/>
+					</map:match>
+          
+          <!--
+          <map:match pattern="update" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          -->
+          
+        </map:match>
+      </map:match>
+    </map:pipeline>
+    
+    <map:pipeline>
+    	<map:match pattern="cmsbody/*">
+				<map:aggregate element="cmsbody" label="aggregate-cmsbody">
+					<map:part src="cocoon:/tabs/{1}"/>
+					<map:part src=""/>
+				</map:aggregate>
+    	</map:match>
+    </map:pipeline>
+
+		<!-- tabs -->
+    <map:pipeline>        
+    	
+        <map:match pattern="tabs/meta">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/meta.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/info.xsl">
+            	<map:parameter name="tab" value="meta"/>
+            </map:transform>	
+            <map:serialize/>
+          </map:match>
+          
+          <map:match pattern="update" type="step">
+            <map:act type="task">
+              <map:parameter name="task-id" value="{request-param:task-id}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-meta&amp;lenya.step=showscreen&amp;lenya.area={request-param:lenya.area}"/>
+            </map:act>
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-meta&amp;lenya.step=showscreen&amp;lenya.area={request-param:lenya.area}"/>
+          </map:match>
+          
+        </map:match>
+        
+        <map:match pattern="tabs/ac-*">
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/access-control.xsp" type="serverpages">
+              <map:parameter name="area" value="{../1}"/>
+            </map:generate>
+            <map:transform src="xslt/info/info.xsl">
+            	<map:parameter name="tab" value="ac-{../1}"/>
+            </map:transform>
+            <map:serialize/>
+          </map:match>
+        </map:match>
+
+        <map:match pattern="tabs/workflow">
+        	<map:act type="resource-exists" src="pubs/{page-envelope:publication-id}/{workflow:history-path}">
+						<map:generate src="pubs/{page-envelope:publication-id}/{workflow:history-path}"/>
+						<map:transform src="xslt/info/workflow2info.xsl"/>
+						<map:transform src="xslt/info/info.xsl">
+							<map:parameter name="tab" value="workflow"/>
+						</map:transform>
+						<map:serialize/>
+        	</map:act>
+        </map:match>
+
+        <map:match pattern="tabs/*">
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/{../1}.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/info.xsl">
+            	<map:parameter name="tab" value="{../1}"/>
+            </map:transform>	
+            <map:serialize/>
+          </map:match>
+        </map:match>
+          
+    </map:pipeline>
+        
     <!-- Menus -->
     <map:pipeline>
       <map:match pattern="menus/info.xml">
@@ -64,55 +192,9 @@
       </map:match>
     </map:pipeline>
 
-    <!-- Sitetree Javascript array -->
-    <map:pipeline>
-      <map:match pattern="**lenyasitetree/*">
-        <map:aggregate element="lenya" label="aggregate">
-          <map:part src="pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
-          <map:part src="pubs/{page-envelope:publication-id}/content/archive/sitetree.xml"/>
-          <map:part src="pubs/{page-envelope:publication-id}/content/trash/sitetree.xml"/>
-        </map:aggregate>
-        <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree">
-          <map:parameter name="chosenlanguage" value="{2}"/>
-          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/> 
-        </map:transform>
-        <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
-          <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
-          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-          <map:parameter name="area" value="{page-envelope:area}"/>
-          <map:parameter name="chosenlanguage" value="{2}"/>
-          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/> 
-        </map:transform>
-        <map:serialize type="text"/>
-      </map:match>
-    </map:pipeline>
-    
-    <!-- Sitetree Javascript array      -->
-    <map:pipeline>
-      <map:match pattern="**tree.js">
-        <map:read src="resources/javascript/tree.js"/>
-        <map:serialize type="text"/>
-      </map:match>
-    </map:pipeline>
-
-    <!-- Sitetree Javascript array      -->
-    <map:pipeline>
-      <map:match pattern="**ua.js">
-        <map:read src="resources/javascript/ua.js"/>
-        <map:serialize type="text"/>
-      </map:match>
-    </map:pipeline>
-
-    <!-- Sitetree Javascript array      -->
-    <map:pipeline>
-      <map:match pattern="**tabs.js">
-        <map:read src="resources/javascript/tabs.js"/>
-        <map:serialize type="text"/>
-      </map:match>
-    </map:pipeline>
-
     <!-- FIXME: the main pipeline. the nested pipelines check if the language and the default tab to be shown are set.
     very ugly, i guess it could be done diferently. What about a resource? -->    
+    <!--
     <map:pipeline>
       <map:match pattern="**">
         <map:match pattern="*" type="language">
@@ -124,7 +206,7 @@
             </map:call>
           </map:match>
 
-          <!-- No tab parameter -->
+          <!- No tab parameter ->
           <map:call resource="aggregate-and-transform-tab">
             <map:parameter name="tab" value=""/>
             <map:parameter name="chosenlanguage" value="{1}"/>
@@ -132,7 +214,7 @@
           </map:call>
         </map:match>
 
-        <!-- No language -->
+        <!- No language ->
         <map:match pattern="*" type="tab">
           <map:call resource="aggregate-and-transform-tab">
             <map:parameter name="tab" value="{1}"/>
@@ -141,7 +223,7 @@
           </map:call>
         </map:match>
 
-        <!-- No language and no tab -->
+        <!- No language and no tab ->
         <map:call resource="aggregate-and-transform-tab">
           <map:parameter name="tab" value=""/>
           <map:parameter name="chosenlanguage" value=""/>
@@ -150,5 +232,7 @@
 
       </map:match>
     </map:pipeline>
+    -->
+    
   </map:pipelines>
 </map:sitemap>

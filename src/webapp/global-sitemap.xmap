@@ -730,6 +730,15 @@
       </map:pipeline>
       <!-- /Edit XHTML with Midas -->
 
+      <!-- Info area -->
+      <map:pipeline>
+      	<map:match pattern="*/*/info-sitetree/**">
+          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+      	</map:match>
+        <map:match type="usecase" pattern="info-*">
+          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+      </map:pipeline>
 
       <!-- Usecases -->
       <map:pipeline>
@@ -797,20 +806,13 @@
         </map:act>
       </map:match>
 
-    <!-- Admin Area -->
-    <map:pipeline>
-      <map:match pattern="*/admin/**">
-        <map:mount uri-prefix="{1}/admin" src="lenya/admin.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-    </map:pipeline>
+      <!-- Admin Area -->
+      <map:pipeline>
+        <map:match pattern="*/admin/**">
+          <map:mount uri-prefix="{1}/admin" src="lenya/admin.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+      </map:pipeline>
 
-    <!-- Info Area -->
-    <map:pipeline>
-      <map:match pattern="*/info/**">
-        <map:mount uri-prefix="{1}/info" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-    </map:pipeline>
-      
       <!-- Enter the actual publication -->
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
