@@ -1,5 +1,5 @@
 /*
-$Id: UploadAction.java,v 1.3 2003/10/22 19:28:38 gregor Exp $
+$Id: UploadAction.java,v 1.4 2003/10/22 19:37:01 gregor Exp $
 <License>
 
  ============================================================================
@@ -266,15 +266,6 @@ public class UploadAction extends AbstractConfigurableAction {
 
         return Collections.unmodifiableMap(results);
     }
-
-	/**
-	 * Get the path to the resources.
-	 * 
-	 * @return the path to the resources
-	 */
-	private String getPathFromPublication() {
-		return File.separatorChar + CONTENT_PREFIX + File.separatorChar + document.getArea() + document.getId() + File.separatorChar;
-	}
 
     /**
      * Create the meta data file given the dublin core parameters.
