@@ -125,14 +125,18 @@ public class ValidateAction extends AbstractConfigurableAction {
 		File file) {
             
         try {
+/** FIXME
+ * what is this whole file creation business here?
+ */
             File valFile = new File(file.getAbsolutePath() + ".validate");
+            getLogger().error("valFile: " + file.getAbsolutePath() + ".validate");
             if (!valFile.getParentFile().isDirectory()){
                 valFile.getParentFile().mkdir();
             }
             valFile.createNewFile();
 			return RelaxNG.validate(
 				schema,
-				new File(file.getAbsolutePath() + ".validate"));
+				file);
 		} catch (Exception e) {
 			getLogger().error(e.getMessage());
 			return "" + e;
