@@ -36,7 +36,7 @@ We also provide an expandable/collapsable <a href="js-index.html">ToC</a> based 
  <h2>Table of Contents</h2>
  <ol>
   <xsl:apply-templates mode="tree">
-    <xsl:with-param name="parentPath">/wyona-cms/docs</xsl:with-param>
+    <xsl:with-param name="parentPath">/lenya/docs</xsl:with-param>
   </xsl:apply-templates>
  </ol>
 </xsl:template>

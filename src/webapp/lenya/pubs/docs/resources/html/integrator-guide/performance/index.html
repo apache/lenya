@@ -16,7 +16,7 @@ Check out the performance tips of Cocoon itself:<br>
 
 <h2>Tomcat performance</h2>
 <ol>
- <li>Set attribute "reloadable" of Context wyona-cms to "false" within conf/server.xml</li>
+ <li>Set attribute "reloadable" of Context lenya to "false" within conf/server.xml</li>
 </ol>
 
 <h2>Load Test with Apache's <code>ab</code></h2>
@@ -26,7 +26,7 @@ The following load tests were executed on a PC with
 </p>
 
 <p>
-<code>nohup /usr/local/apache/bin/ab -n 100000 -c 3 http://localhost:8080/wyona-cms/ethz-mat/live/index.html &</code><br>
+<code>nohup /usr/local/apache/bin/ab -n 100000 -c 3 http://localhost:8080/lenya/ethz-mat/live/index.html &</code><br>
 </p>
 
 <h3>Test 1</h3>
@@ -36,7 +36,7 @@ Number of Requests: 100000<br>
 Concurrency: 1<br>
 Result (nohup.out):<br>
 <pre>
-This is ApacheBench, Version 1.3d <$Revision: 1.1 $> apache-1.3
+This is ApacheBench, Version 1.3d <$Revision: 1.2 $> apache-1.3
 Copyright (c) 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Copyright (c) 1998-2002 The Apache Software Foundation, http://www.apache.org/
 
@@ -45,7 +45,7 @@ Benchmarking 194.191.122.220 (be patient)
 Server timed out
 
 : Operation now in progress
-This is ApacheBench, Version 1.3d <$Revision: 1.1 $> apache-1.3
+This is ApacheBench, Version 1.3d <$Revision: 1.2 $> apache-1.3
 Copyright (c) 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Copyright (c) 1998-2002 The Apache Software Foundation, http://www.apache.org/
 
@@ -64,7 +64,7 @@ Server Software:        Apache
 Server Hostname:        194.191.122.220
 Server Port:            8080
 
-Document Path:          /wyona-cms/ethz-mat/live/index
+Document Path:          /lenya/ethz-mat/live/index
 Document Length:        8340 bytes
 
 Concurrency Level:      1
@@ -107,7 +107,7 @@ Number of Requests: 100000<br>
 Concurrency: 3<br>
 Result (nohup.out):<br>
 <pre>
-This is ApacheBench, Version 1.3d <$Revision: 1.1 $> apache-1.3
+This is ApacheBench, Version 1.3d <$Revision: 1.2 $> apache-1.3
 Copyright (c) 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Copyright (c) 1998-2002 The Apache Software Foundation, http://www.apache.org/
 
@@ -126,7 +126,7 @@ Server Software:        Apache
 Server Hostname:        194.191.122.220
 Server Port:            8080
 
-Document Path:          /wyona-cms/ethz-mat/live/index
+Document Path:          /lenya/ethz-mat/live/index
 Document Length:        8340 bytes
 
 Concurrency Level:      3

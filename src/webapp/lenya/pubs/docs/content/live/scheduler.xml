@@ -126,8 +126,8 @@
 	]]></source>
 	<p>
 	  This allows you to call the servlet by either
-	  http://localhost:8080/wyona-cms/servlet/LoadServlet or
-	  http://localhost:8080/wyona-cms/load
+	  http://localhost:8080/lenya/servlet/LoadServlet or
+	  http://localhost:8080/lenya/load
 	</p>
       </section>
       <section><title>Status</title>

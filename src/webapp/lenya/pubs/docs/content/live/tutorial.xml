@@ -146,7 +146,7 @@ to do
 </p>
 <p>
 export PATH=/usr/local/jdk1.3.1/bin:$PATH <br/>
-java -classpath WYONACMS/build/wyona-cms/classes:WYONACMS/build/wyona-cms/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar org.lenya.util.TidyCommandLine
+java -classpath WYONACMS/build/lenya/classes:WYONACMS/build/lenya/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar org.lenya.util.TidyCommandLine
 </p>
 </section>
 </section>

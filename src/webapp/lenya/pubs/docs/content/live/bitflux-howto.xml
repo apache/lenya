@@ -217,7 +217,7 @@ title, byline {
 <item>
         <xsp:attribute name="href">
                 <xsp:expr>
-                "/wyona-cms/bitfluxeditor/in]]><![CDATA[dex.html?url-xml="+bitflux_prefix+"/webperls.xml
+                "/lenya/bitfluxeditor/in]]><![CDATA[dex.html?url-xml="+bitflux_prefix+"/webperls.xml
                 &amp;url-xslt="+bitflux_prefix+"/stylesheets/webperls.xsl
                 &amp;url-xsd="+bitflux_prefix+"/schemas/webperls.xsd
                 &amp;url-css="+bitflux_prefix+"/css/webperls.css

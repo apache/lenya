@@ -47,8 +47,8 @@
         <item>-----------</item>
       </separator>
       <block>
-        <item href="/wyona-cms/lucene/create">Create&#160;Lucene&#160;Index</item>
-        <item href="/wyona-cms/lucene/search">Search&#160;with&#160;Lucene</item>
+        <item href="/lenya/lucene/create">Create&#160;Lucene&#160;Index</item>
+        <item href="/lenya/lucene/search">Search&#160;with&#160;Lucene</item>
       </block>
     </menu>
 

@@ -34,13 +34,13 @@ border="0" /> </td>
 
 <tr>
 <td
-style="BACKGROUND-IMAGE: url(/wyona-cms/computerworld/img/layout/bg-topnav1x3.gif)"
+style="BACKGROUND-IMAGE: url(/lenya/computerworld/img/layout/bg-topnav1x3.gif)"
  colspan="9" height="115">
 <table cellspacing="0" cellpadding="0" border="0">
 <tbody>
 <tr>
 <td
-style="BACKGROUND-IMAGE: url(/wyona-cms/computerworld/img/layout/dbrown1x1.gif)"
+style="BACKGROUND-IMAGE: url(/lenya/computerworld/img/layout/dbrown1x1.gif)"
  width="1" bgcolor="#abaaa5" height="115"><img height="1"
 src="/img/layout/dbrown1x1.gif" width="1" border="0" /> </td>
 <td valign="top" align="left" width="740" height="115">
@@ -89,21 +89,21 @@ width="1" border="0" /> </td>
 
 <tr>
 <td
-style="BACKGROUND-IMAGE: url(/wyona-cms/computerworld/img/layout/trans1x1.gif)"
+style="BACKGROUND-IMAGE: url(/lenya/computerworld/img/layout/trans1x1.gif)"
  valign="bottom" height="41"><img height="41" alt="Computerworld"
 src="/img/layout/cw-logo.gif" width="300" border="0" /> </td>
 <td
-style="BACKGROUND-IMAGE: url(/wyona-cms/computerworld/img/layout/trans1x1.gif)"
+style="BACKGROUND-IMAGE: url(/lenya/computerworld/img/layout/trans1x1.gif)"
  valign="center" align="right" height="41">&#160;</td>
 </tr>
 
 <tr>
 <td
-style="BACKGROUND-IMAGE: url(/wyona-cms/computerworld/img/layout/trans1x1.gif)"
+style="BACKGROUND-IMAGE: url(/lenya/computerworld/img/layout/trans1x1.gif)"
  valign="center" align="left" height="18"><img height="11" alt=""
 src="/img/layout/cw-desc.gif" width="300" border="0" /> </td>
 <td
-style="BACKGROUND-IMAGE: url(/wyona-cms/computerworld/img/layout/trans1x1.gif)"
+style="BACKGROUND-IMAGE: url(/lenya/computerworld/img/layout/trans1x1.gif)"
  valign="center" align="right" height="18"><span
 class="txt-s-black" id="today">Montag, 9. Dezember
 2002&#160;</span> </td>
@@ -112,7 +112,7 @@ class="txt-s-black" id="today">Montag, 9. Dezember
 </table>
 </td>
 <td
-style="BACKGROUND-IMAGE: url(/wyona-cms/computerworld/img/layout/dbrown1x1.gif)"
+style="BACKGROUND-IMAGE: url(/lenya/computerworld/img/layout/dbrown1x1.gif)"
  width="1" bgcolor="#abaaa5" height="115"><img height="1"
 src="/img/layout/dbrown1x1.gif" width="1" border="0" /> </td>
 </tr>
@@ -145,7 +145,7 @@ src="/img/layout/aktuell.gif" width="140" border="0" /></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -154,7 +154,7 @@ href="http://demo.wyona.org:7080/index.html">Home</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -163,7 +163,7 @@ href="http://demo.wyona.org:7080/dossier/">Dossier</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -172,7 +172,7 @@ href="http://demo.wyona.org:7080/archiv/">Archiv</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -181,7 +181,7 @@ href="http://demo.wyona.org:7080/it-stellen/">IT-Stellen</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -201,7 +201,7 @@ src="/img/layout/infos.gif" width="140" border="0" /></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -210,7 +210,7 @@ href="http://demo.wyona.org:7080/feedback/">Feedback</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -219,7 +219,7 @@ href="http://demo.wyona.org:7080/impressum/">Impressum</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -239,7 +239,7 @@ src="/img/layout/verlag.gif" width="140" border="0" /></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -248,7 +248,7 @@ href="http://demo.wyona.org:7080/kontakt/">Kontakt</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -257,7 +257,7 @@ href="http://demo.wyona.org:7080/abo/">Abo Service</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -266,7 +266,7 @@ href="http://demo.wyona.org:7080/mediadaten/">Mediadaten</a></td>
 
 <tr>
 <td valign="center" align="right" width="16" height="16"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="7" alt="&#187;" src="/img/layout/arrow-black.gif"
 width="9" border="0" /></a></td>
 <td width="124"><a class="txt-s-black"
@@ -282,7 +282,7 @@ border="0" /></td>
 
 <tr>
 <td colspan="2"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/magazine/">
+href="http://demo.wyona.org:7080/lenya/computerworld/news/magazine/">
 <img height="18" alt="Magazine" src="/img/layout/magazine.gif"
 width="140" border="0" /></a></td>
 </tr>
@@ -294,14 +294,14 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format">
 <tbody>
 <tr>
 <td valign="top" align="middle" width="52"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/magazine/">
+href="http://demo.wyona.org:7080/lenya/computerworld/news/magazine/">
 <img height="42" alt="IT Security"
 src="/img/layout/maga-security03.gif" width="42" border="0" />
 </a></td>
 <td valign="top" width="88"><span class="txt-s-black">Nach den
 Boomjahren besinnt sich die IT-Branche auf Vaeterchen Staat.<br />
 </span><a class="txt-link-red"
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/magazine/">
+href="http://demo.wyona.org:7080/lenya/computerworld/news/magazine/">
 <img height="7" alt="&#187;"
 src="/img/layout/arrow-red.gif" width="9"
 border="0" />weiter</a></td>
@@ -315,14 +315,14 @@ border="0" /></td>
 
 <tr>
 <td valign="top" align="middle" width="52"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/magazine/">
+href="http://demo.wyona.org:7080/lenya/computerworld/news/magazine/">
 <img height="42" alt="IT Security"
 src="/img/layout/maga-security03.gif" width="42" border="0" />
 </a></td>
 <td valign="top" width="88"><span class="txt-s-black">IBM
 expandiert nach Suedostasien.<br />
 </span><a class="txt-link-red"
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/magazine/">
+href="http://demo.wyona.org:7080/lenya/computerworld/news/magazine/">
 <img height="7" alt="&#187;"
 src="/img/layout/arrow-red.gif" width="9"
 border="0" />weiter</a></td>
@@ -398,7 +398,7 @@ width="440" /></td>
 
 <tr>
 <td valign="center" width="300" height="20"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/1.html#">
+href="http://demo.wyona.org:7080/lenya/computerworld/news/1.html#">
 <img height="16" alt="^" src="/img/layout/arrow-red-top.gif"
 width="16" border="0" /></a></td>
 <td valign="center" align="left" width="140" height="20"></td>
@@ -426,7 +426,7 @@ today</span></i></b></span> </td>
 
 <tr bgcolor="#efefe7">
 <td valign="center" width="320" height="30"><a class="txt-l-black"
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/news/1.html">
+href="http://demo.wyona.org:7080/lenya/computerworld/news/news/1.html">
 <b>1 hier steht der titel</b></a></td>
 <td valign="center" align="right" width="120" height="30"><span
 class="txt-s-black">Datum</span></td>
@@ -434,11 +434,11 @@ class="txt-s-black">Datum</span></td>
 
 <tr bgcolor="#efefe7">
 <td valign="center" width="440" colspan="2"><a
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/"><img
+href="http://demo.wyona.org:7080/lenya/computerworld/news/"><img
  height="50" src="/img/layout/dotnet.jpg" width="50" align="left"
 border="0" /></a><span class="txt-s-black">1 abstract<br />
 <a class="txt-link-red"
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/news/news/1.html">
+href="http://demo.wyona.org:7080/lenya/computerworld/news/news/1.html">
 <img height="7" alt="" src="/img/layout/arrow-red.gif" width="9"
 border="0" />weiter</a></span></td>
 </tr>

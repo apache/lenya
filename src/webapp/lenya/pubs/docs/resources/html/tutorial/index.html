@@ -27,7 +27,7 @@
       <br>(for instance: <code>cp -r wyona/cms/pubs/ethz-mat wyona/cms/pubs/my-pub</code>)</li>
   <li>Configure sitemap.xmap 
       <br>(for instance: replace ethz-mat by my-pub)</li>
-  <li>Mount sitemap.xmap from the root sitemap.xmap which is located within the wyona-cms directory
+  <li>Mount sitemap.xmap from the root sitemap.xmap which is located within the lenya directory
       <br>
       <code>
      &lt;map:match pattern="my-pub/**"&gt;<br>
@@ -43,7 +43,7 @@
     <ol>
       <li>Create XSLT from HTML with JTidy:
         <br><code>export PATH=/usr/local/jdk1.3.1/bin:$PATH</code>
-        <br><code>java&#160;-classpath&#160;WYONACMS/build/wyona-cms/classes:WYONACMS/build/wyona-cms/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar&#160;org.lenya.util.TidyCommandLine</code>
+        <br><code>java&#160;-classpath&#160;WYONACMS/build/lenya/classes:WYONACMS/build/lenya/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar&#160;org.lenya.util.TidyCommandLine</code>
       </li>
     </ol>
   </li>

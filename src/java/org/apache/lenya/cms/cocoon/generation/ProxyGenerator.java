@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyGenerator.java,v 1.11 2003/03/04 17:46:34 gregor Exp $
+ * $Id: ProxyGenerator.java,v 1.12 2003/03/04 17:58:25 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -85,7 +85,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
     static Category log = Category.getInstance(ProxyGenerator.class);
 
     // The URI of the namespace of this generator
-    private String URI = "http://www.wyona.org/wyona-cms/proxygenerator/1.0";
+    private String URI = "http://www.wyona.org/lenya/proxygenerator/1.0";
 
     /**
      * DOCUMENT ME!

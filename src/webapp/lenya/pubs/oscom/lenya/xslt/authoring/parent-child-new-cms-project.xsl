@@ -7,7 +7,7 @@
 <xsl:template match="/">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/wyona-cms/wyona/default.css" />
+<link rel="stylesheet" type="text/css" href="/lenya/wyona/default.css" />
 </head>
 <body>
   <xsl:apply-templates/>

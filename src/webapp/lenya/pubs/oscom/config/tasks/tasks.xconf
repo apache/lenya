@@ -11,7 +11,7 @@
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter">
 <!--
       <parameter name="export-path" value="resources/publication/export/pending"/>
-      <parameter name="substitute-regexp" value="s/\/wyona-cms\/oscom//g"/>
+      <parameter name="substitute-regexp" value="s/\/lenya\/oscom//g"/>
 -->
       <parameter name="my-server-port" value="1313"/>
     </task>
@@ -21,7 +21,7 @@
     <label>Export</label>
 <!--
     <parameter name="export-path" value="resources/publication/export/pending"/>
-    <parameter name="substitute-regexp" value="s/\/wyona-cms\/oscom//g"/>
+    <parameter name="substitute-regexp" value="s/\/lenya\/oscom//g"/>
 -->
   </task>
   
@@ -37,12 +37,12 @@
   
   <task id="downloadRSS" class="org.lenya.cms.task.CommandLineTask">
     <label>Download RSS</label>
-    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/oscom/bin/wget-rss.sh"/>
+    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/wyona/cms/pubs/oscom/bin/wget-rss.sh"/>
   </task>
 
   <task id="replicate" class="org.lenya.cms.task.CommandLineTask">
     <label>Replicate</label>
-    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/bin/replicate.sh"/>
+    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/wyona/cms/bin/replicate.sh"/>
   </task>
 
 </tasks>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.2 2003/02/27 10:48:32 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.3 2003/03/04 17:58:26 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>Computerworld</lenya:name>
@@ -23,7 +23,7 @@ Comment out all image transform stylesheets:
 
 - src/wyonacms/src/webapp/wyona/cms/pubs/computerworld/stylesheets/publication/Page/navigation.xsl 
 Change to the following line:
-<xsl:variable name="prefix"><xsl:if test="$authoring">/wyona-cms/computerworld/authoring</xsl:if></xsl:variable>
+<xsl:variable name="prefix"><xsl:if test="$authoring">/lenya/computerworld/authoring</xsl:if></xsl:variable>
 
 
 Performance improvements

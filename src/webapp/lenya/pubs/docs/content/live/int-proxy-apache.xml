@@ -41,8 +41,8 @@ NameVirtualHost 195.226.6.70
     ServerAdmin michael.wechner@wyona.org
 #    DocumentRoot /usr/local/apache/htdocs/oscom
     ServerName oscom.wyona.org
-    ProxyPass          / http://195.226.6.70:8080/wyona-cms/oscom/
-    ProxyPassReverse   / http://195.226.6.70:8080/wyona-cms/oscom/
+    ProxyPass          / http://195.226.6.70:8080/lenya/oscom/
+    ProxyPassReverse   / http://195.226.6.70:8080/lenya/oscom/
     ErrorLog logs/oscom.wyona.org-error_log
     CustomLog logs/oscom.wyona.org-access_log common
 </VirtualHost>

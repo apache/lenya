@@ -45,7 +45,7 @@ org.apache.lucene.search.Hits hits=searcher.search(query_string,LuceneXMLIndexer
 
 <section><title>Crawling HTDOCS</title>
 <p>
-<code>java -cp build/wyona-cms/classes org.lenya.search.crawler.IterativeHTMLCrawler</code>
+<code>java -cp build/lenya/classes org.lenya.search.crawler.IterativeHTMLCrawler</code>
 </p>
 </section>
 

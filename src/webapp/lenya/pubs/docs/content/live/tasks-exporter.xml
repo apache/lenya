@@ -37,7 +37,7 @@ from the <code>[publication-directory]/docs/publication/publication.xconf</code>
   ...
   <export>
     <destination href="resources/publication/export/pending"/>
-    <substitution regexp="s/\/wyona-cms\/unipublic//g"/>
+    <substitution regexp="s/\/lenya\/unipublic//g"/>
   </export>
 </publication>
 
@@ -54,12 +54,12 @@ e. g. to use several publishers to publish into different directories:
 
   <task id="export-pending" class="org.lenya.cms.publishing.StaticHTMLExporter">
     <parameter name="export-path" value="resources/publication/export/pending"/>
-    <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
+    <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
   </task>
 
   <task id="export-backup" class="org.lenya.cms.publishing.StaticHTMLExporter">
     <parameter name="export-path" value="resources/publication/backup"/>
-    <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
+    <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
   </task>
 
 </tasks>

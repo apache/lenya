@@ -7,7 +7,7 @@
 <xsl:param name="authoring"/>
 
 <!-- Variables apparently not supported by Bitflux
-<xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
+<xsl:variable name="unipublic">/lenya/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="string($unipublic)"/>/img_uni</xsl:variable>
 <xsl:variable name="img-unipub"><xsl:value-of select="string($unipublic)"/>/img_unipublic</xsl:variable>
 -->
@@ -24,7 +24,7 @@
       <!-- <xsl:call-template name="jscript"/> -->
     </head>
 
-    <body text="black" link="#333399" alink="#CC0000" vlink="#666666" bgcolor="#F5F5F5" background="/wyona-cms/unipublic/img_unipublic/bg.gif">
+    <body text="black" link="#333399" alink="#CC0000" vlink="#666666" bgcolor="#F5F5F5" background="/lenya/unipublic/img_unipublic/bg.gif">
       <center>
       <div align="center">
       <xsl:call-template name="Searchbox"/>
@@ -34,13 +34,13 @@
             <tr>
 	      <!-- Start Left Column  -->
               <td valign="top" align="right" width="187" rowspan="2">
-                <a href="../"><img height="28" alt="" src="/wyona-cms/unipublic/img_unipublic/dossiers/doss_rub_title.gif" width="112" border="0"/></a>
+                <a href="../"><img height="28" alt="" src="/lenya/unipublic/img_unipublic/dossiers/doss_rub_title.gif" width="112" border="0"/></a>
   <table width="180" border="0" cellspacing="0" cellpadding="0">
     <tr valign="top">
       <td width="180">
         <table width="180" border="0" cellspacing="0" cellpadding="0">
           <tr valign="top">
-            <td width="180"><img height="19" width="187" src="/wyona-cms/unipublic/img_unipublic/t_teil7.gif" alt="Muscheln1"/></td>
+            <td width="180"><img height="19" width="187" src="/lenya/unipublic/img_unipublic/t_teil7.gif" alt="Muscheln1"/></td>
           </tr>
           <tr valign="top">
             <td width="180" valign="middle" bgcolor="#CCCC99">
@@ -48,7 +48,7 @@
             </td>
           </tr>
           <tr valign="top">
-            <td width="180"><img height="27" width="181" src="/wyona-cms/unipublic/img_unipublic/t_teil8.gif" align="right"/></td>
+            <td width="180"><img height="27" width="181" src="/lenya/unipublic/img_unipublic/t_teil8.gif" align="right"/></td>
           </tr>
         </table>
      </td>
@@ -136,7 +136,7 @@
                 <tbody>
                   <tr height="28">
                     <td align="left" width="402" colspan="2" height="28">&#160;&#160;&#160;&#160;&#160;
-	              <a href="../"><img height="5" alt="Alle Dossiers" src="/wyona-cms/unipublic/img_unipublic/dossiers/doss_nav_list.gif" width="94" border="0"/></a>
+	              <a href="../"><img height="5" alt="Alle Dossiers" src="/lenya/unipublic/img_unipublic/dossiers/doss_nav_list.gif" width="94" border="0"/></a>
                     </td>
                   </tr>
                   <tr>
@@ -191,41 +191,41 @@
     <table width="585" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td valign="middle" bgcolor="#999966" width="142">
-          <img src="/wyona-cms/unipublic/img_unipublic/spacer.gif" alt=" " width="3" height="20" border="0"/>
+          <img src="/lenya/unipublic/img_unipublic/spacer.gif" alt=" " width="3" height="20" border="0"/>
           <a href="http://www.unizh.ch/">
-            <img src="/wyona-cms/unipublic/img_unipublic/head/home.gif" alt="Home" border="0" height="17" width="31"/>
+            <img src="/lenya/unipublic/img_unipublic/head/home.gif" alt="Home" border="0" height="17" width="31"/>
           </a>
         </td>
         <td colspan="2" align="right" valign="middle" bgcolor="#999966">&#160;<a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum
 .html">
-            <img src="/wyona-cms/unipublic/img_unipublic/head/kontakt.gif" alt="Kontakt" border="0" height="17" width="41" align="middle"/>
+            <img src="/lenya/unipublic/img_unipublic/head/kontakt.gif" alt="Kontakt" border="0" height="17" width="41" align="middle"/>
           </a>
-          <img src="/wyona-cms/unipublic/img_unipublic/head/strich.gif" alt="|" height="17" width="7" align="middle"/>
-          <img src="/wyona-cms/unipublic/img_unipublic/head/up_suchen.gif" alt="Suchen" height="17" width="79" align="middle"/>
+          <img src="/lenya/unipublic/img_unipublic/head/strich.gif" alt="|" height="17" width="7" align="middle"/>
+          <img src="/lenya/unipublic/img_unipublic/head/up_suchen.gif" alt="Suchen" height="17" width="79" align="middle"/>
           <input type="text" name="keywords" size="18"/>
-          <input src="/wyona-cms/unipublic/img_unipublic/head/go.gif" type="image" border="0" name="search4" align="middle" height="17" width="28"/>
+          <input src="/lenya/unipublic/img_unipublic/head/go.gif" type="image" border="0" name="search4" align="middle" height="17" width="28"/>
         </td>
         <td valign="middle" bgcolor="#F5F5F5" width="57">&#160;</td>
       </tr>
       <tr>
         <td bgcolor="#666699" width="142">
-          <img src="/wyona-cms/unipublic/img_unipublic/spacer.gif" alt=" " width="10" height="39" border="0"/>
+          <img src="/lenya/unipublic/img_unipublic/spacer.gif" alt=" " width="10" height="39" border="0"/>
         </td>
         <td valign="bottom" bgcolor="#666699" width="96">
           <!-- No link needed on the unipublic logo if we are on the frontpage -->
           <xsl:choose>
             <xsl:when test="$is-front">
-              <img src="/wyona-cms/unipublic/img_unipublic/head/uplogo_oben.gif" alt="unipublic" width="96" height="21" border="0"/>
+              <img src="/lenya/unipublic/img_unipublic/head/uplogo_oben.gif" alt="unipublic" width="96" height="21" border="0"/>
             </xsl:when>
             <xsl:otherwise>
-              <a href="{$unipublic}{$view}/"><img src="/wyona-cms/unipublic/img_unipublic/head/uplogo_oben.gif" alt="unipublic" width="96" height="21" border="0"
+              <a href="{$unipublic}{$view}/"><img src="/lenya/unipublic/img_unipublic/head/uplogo_oben.gif" alt="unipublic" width="96" height="21" border="0"
 /></a>
             </xsl:otherwise>
           </xsl:choose>
         </td>
         <td align="right" valign="top" bgcolor="#666699" width="290">
           <a href="http://www.unizh.ch/">
-            <img src="/wyona-cms/unipublic/img_unipublic/head/uni_zh.gif" alt="Universit&#228;t Z&#252;rich" width="235" height="29" border="0"/>
+            <img src="/lenya/unipublic/img_unipublic/head/uni_zh.gif" alt="Universit&#228;t Z&#252;rich" width="235" height="29" border="0"/>
           </a>
         </td>
         <td bgcolor="#666699" width="57"/>
@@ -236,10 +236,10 @@
           <!-- No link needed on the unipublic logo if we are on the frontpage -->
           <xsl:choose>
             <xsl:when test="$is-front">
-              <img src="/wyona-cms/unipublic/img_unipublic/head/uplogo_unten.gif" alt="unipublic" width="96" height="29" border="0"/>
+              <img src="/lenya/unipublic/img_unipublic/head/uplogo_unten.gif" alt="unipublic" width="96" height="29" border="0"/>
             </xsl:when>
             <xsl:otherwise>
-              <a href="{$unipublic}{$view}/"><img src="/wyona-cms/unipublic/img_unipublic/head/uplogo_unten.gif" alt="unipublic" width="96" height="29" border="0
+              <a href="{$unipublic}{$view}/"><img src="/lenya/unipublic/img_unipublic/head/uplogo_unten.gif" alt="unipublic" width="96" height="29" border="0
 "/></a>
             </xsl:otherwise>
           </xsl:choose>
@@ -261,10 +261,10 @@
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                         <td><br/>
-                                                <a href="#topofpage"><img src="/wyona-cms/unipublic/img_unipublic/top.gif" alt="top" width="40" height="13" border="0" /></a></td>
+                                                <a href="#topofpage"><img src="/lenya/unipublic/img_unipublic/top.gif" alt="top" width="40" height="13" border="0" /></a></td>
                                 </tr>
                                 <tr>
-                                        <td bgcolor="#666666" height="1"><img src="/wyona-cms/unipublic/img_unipublic/spacer.gif" alt="top" width="40" height="1" border="0" /></td>
+                                        <td bgcolor="#666666" height="1"><img src="/lenya/unipublic/img_unipublic/spacer.gif" alt="top" width="40" height="1" border="0" /></td>
                                 </tr>
                                 <tr>
                                         <td><font size="1">&#169; Universit&#228;t Z&#252;rich,&#160;<!--

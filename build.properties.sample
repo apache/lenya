@@ -7,12 +7,12 @@ pubs.root.dirs=src/webapp/lenya/pubs:/home/lenya/src/lenya-pubs
 # Where the 'install' build target should put the webapp context
 # Either use an absolute path or a relative one based on the current directory
 
-install.dir=/usr/local/tomcat/webapps/wyona-cms
+install.dir=/usr/local/tomcat/webapps/lenya
 
 # The server cache directory to be cleaned by the 'reset' target
 # Either use an absolute path or a relative one based on the current directory
 
-cache.dir=/usr/local/tomcat/work/localhost/wyona-cms
+cache.dir=/usr/local/tomcat/work/localhost/lenya
 
 # Files and directories which should be excluded during 'install' and 'reset'
 # Comma- or space-separated list of patterns

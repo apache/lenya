@@ -86,9 +86,9 @@ Existing cookies are being forward. New cookies are not being forwarded.
 
 <map:pipeline>
   <map:match pattern="test-proxy-generator.xml">
-    <map:generate type="proxygen" src="/wyona-cms/servlet/TestProxyGeneratorServlet"/>
+    <map:generate type="proxygen" src="/lenya/servlet/TestProxyGeneratorServlet"/>
 <!--
-    <map:generate type="proxygen" src="http://127.0.0.1:8080/wyona-cms/servlet/TestProxyGeneratorServlet"/>
+    <map:generate type="proxygen" src="http://127.0.0.1:8080/lenya/servlet/TestProxyGeneratorServlet"/>
 -->
     <map:serialize type="xml"/>
   </map:match>

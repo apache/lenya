@@ -52,7 +52,7 @@ A typical task configuration file looks like follows:
     </task>
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter">
       <parameter name="export-path" value="resources/publication/export/pending"/>
-      <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
+      <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
     </task>
   </task>
 
@@ -98,19 +98,19 @@ the request and session objects:</p>
   </li>
   <li>
     <code>Task.PARAMETER_SERVER_URI</code> - the server URI<br/>
-    <code>http://www.yourhost.com:8080/wyona-cms/publication/index.html</code>
+    <code>http://www.yourhost.com:8080/lenya/publication/index.html</code>
   </li>
   <li>
     <code>Task.PARAMETER_SERVER_PORT</code> - the server port<br/>
-    <code>http://www.yourhost.com:8080/wyona-cms/publication/index.html</code>
+    <code>http://www.yourhost.com:8080/lenya/publication/index.html</code>
   </li>
   <li>
     <code>Task.PARAMETER_CONTEXT_PREFIX</code> - the part of the URI that precedes the publication ID<br/>
-    <code>http://www.yourhost.com:8080/wyona-cms/publication/index.html</code>
+    <code>http://www.yourhost.com:8080/lenya/publication/index.html</code>
   </li>
   <li>
     <code>Task.PARAMETER_PUBLICATION_ID</code> - the publication ID<br/>
-    <code>http://www.yourhost.com:8080/wyona-cms/publication/index.html</code>
+    <code>http://www.yourhost.com:8080/lenya/publication/index.html</code>
   </li>
 </ul>
 </section>

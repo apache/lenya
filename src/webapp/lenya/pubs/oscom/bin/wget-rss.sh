@@ -15,10 +15,10 @@ PORT=8080
 downloadRSS(){
   RSS_FILE=$1
 
-  wget -t 1 -O $RSS_FILE.tmp http://localhost:$PORT/wyona-cms/oscom/http/$RSS_FILE
+  wget -t 1 -O $RSS_FILE.tmp http://localhost:$PORT/lenya/oscom/http/$RSS_FILE
   ERROR=`grep -l "xmlns:error" $RSS_FILE.tmp`
   if [ $ERROR ];then
-    echo "ERROR: http://localhost:$PORT/wyona-cms/oscom/http/$RSS_FILE"
+    echo "ERROR: http://localhost:$PORT/lenya/oscom/http/$RSS_FILE"
     rm $RSS_FILE.tmp
   else
     echo "NO ERROR"

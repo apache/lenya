@@ -6,7 +6,7 @@ echo $PARENT_DIR
 cd $PARENT_DIR
 cd ../resources/publication/html/live
 
-wget -O tmp.html http://localhost:8080/wyona-cms/oscom/index.html
+wget -O tmp.html http://localhost:8080/lenya/oscom/index.html
 
 STATUS=`grep -l "org.apache.cocoon" tmp.html`
 if [ $STATUS ];then

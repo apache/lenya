@@ -27,7 +27,7 @@
   <task id="publish-headlines">
     <label>Publish Headlines</label>
     <parameter name="sources" value="/frontpage/headlines.xml"/>
-    <parameter name="uris" value="/wyona-cms/unipublic/index.html"/>
+    <parameter name="uris" value="/lenya/unipublic/index.html"/>
     <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
@@ -35,7 +35,7 @@
   <task id="publish-webperls">
     <label>Publish Webperls</label>
     <parameter name="sources" value="/frontpage/webperls.xml"/>
-    <parameter name="uris" value="/wyona-cms/unipublic/frontpage/webperls.html"/>
+    <parameter name="uris" value="/lenya/unipublic/frontpage/webperls.html"/>
     <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>

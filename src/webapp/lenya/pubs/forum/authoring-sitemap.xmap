@@ -25,7 +25,7 @@
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
         <export-directory prefix="resources/publication/export/pending"/>
-        <export-url-prefix substitute="s/\/wyona-cms\/forum/\/news/g"/>
+        <export-url-prefix substitute="s/\/lenya\/forum/\/news/g"/>
       </map:action>
 -->
       <map:action name="parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">

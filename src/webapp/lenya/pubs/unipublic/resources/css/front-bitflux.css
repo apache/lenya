@@ -234,8 +234,8 @@ authorline:after { content: " )";}
 
 media-caption:before { content: "\a";}
 
-/* Webperl:before { content:url(/wyona-cms/unipublic/img_unipublic/strich_weiss.gif);} */
-Title:before { content:url(/wyona-cms/unipublic/img_unipublic/t_perle.gif)" ";}
+/* Webperl:before { content:url(/lenya/unipublic/img_unipublic/strich_weiss.gif);} */
+Title:before { content:url(/lenya/unipublic/img_unipublic/t_perle.gif)" ";}
 
 dos_title, .dos-title1 { color: #fff; font-weight: bold; font-size: 18px; line-height: 20px; font-family: Verdana, Helvetica, Arial }
 

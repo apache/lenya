@@ -18,7 +18,7 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml"
         </xsl:for-each>
 
         <xsl:call-template name="generateID"/>
-        <xhtml:img src="/wyona-cms/computerworld/authoring/img/news/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
+        <xhtml:img src="/lenya/computerworld/authoring/img/news/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
 <!--    The following is from Unipublic
         <xhtml:img src="{$url-back}/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
 -->
@@ -39,7 +39,7 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml"
         </xsl:for-each>
 
         <xsl:call-template name="generateID"/>
-        <xhtml:img src="/wyona-cms/computerworld/authoring/img/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{gen
+        <xhtml:img src="/lenya/computerworld/authoring/img/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{gen
 erate-id()}">
 <!--    The following is from Unipublic
         <xhtml:img src="{$url-back}/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">

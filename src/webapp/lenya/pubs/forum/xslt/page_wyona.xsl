@@ -4,7 +4,7 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:variable name="context_prefix">/wyona-cms/forum</xsl:variable>
+<xsl:variable name="context_prefix">/lenya/forum</xsl:variable>
 <xsl:variable name="image_path"><xsl:value-of select="$context_prefix"/>/images</xsl:variable>
 
 <xsl:template name="page">

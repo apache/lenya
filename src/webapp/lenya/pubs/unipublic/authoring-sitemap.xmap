@@ -379,7 +379,7 @@
         <map:transform src="stylesheets/publication/Page/Newsletter/newsletter-mail.xsl"/>
         <map:transform type="sendmail"/>
         <map:transform src="stylesheets/publication/Page/Newsletter/mail-result.xsl">
-          <map:parameter name="context-prefix" value="/wyona-cms/unipublic"/>
+          <map:parameter name="context-prefix" value="/lenya/unipublic"/>
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
@@ -518,7 +518,7 @@
 				</map:act>
 				<map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 				<!--
-        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
+        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/wyona/cms/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
 -->
 				<map:serialize type="xml"/>
 			</map:match>
@@ -536,7 +536,7 @@
 				</map:act>
 				<map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 				<!--
-        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
+        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/wyona/cms/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
 -->
 				<map:serialize type="xml"/>
 			</map:match>

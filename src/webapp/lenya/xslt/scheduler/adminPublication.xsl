@@ -87,7 +87,7 @@
 		<tr>
 		  <form method="POST">
 		    <xsl:attribute name="action">
-		      <xsl:text>/wyona-cms/scratchpad/admin/scheduler/publicationid/</xsl:text>
+		      <xsl:text>/lenya/scratchpad/admin/scheduler/publicationid/</xsl:text>
 		      <xsl:value-of select="$documentID"/>
 		    </xsl:attribute>
 		    <td bgcolor="#CCCCCC">

@@ -91,7 +91,7 @@
 			</map:match>
 			<map:match pattern="stylesheets/preview.xsl">
 				<!--
-				<map:generate src="http://127.0.0.1:7080/wyona-cms/computerworld/index.html?cocoon-view=content"/>
+				<map:generate src="http://127.0.0.1:7080/lenya/computerworld/index.html?cocoon-view=content"/>
 				-->
 				<map:generate src="docs/publication/live/index.html"/>
 				<map:transform src="stylesheets/publication/Page/Authoring/preview-bitflux.xsl"/>
@@ -112,7 +112,7 @@
 			</map:match>
 			<map:match pattern="stylesheets/headlines.xsl">
 				<!--
-				<map:generate src="http://127.0.0.1:7080/wyona-cms/computerworld/index.html?cocoon-view=content"/>
+				<map:generate src="http://127.0.0.1:7080/lenya/computerworld/index.html?cocoon-view=content"/>
 				-->
 				<map:generate src="docs/publication/live/index.html"/>
 				<map:transform src="stylesheets/publication/Page/Authoring/headlines-bitflux.xsl"/>

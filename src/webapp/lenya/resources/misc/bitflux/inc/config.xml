@@ -37,7 +37,7 @@
 		<output>
 			<!-- looks like not implemented -->
 			<!--
-			<file name="BX_posturl" method="wyona" >http://cvs.wyona.org:8080/wyona-cms/unipublic/xopus/XopusInterface</file>
+			<file name="BX_posturl" method="wyona" >http://cvs.wyona.org:8080/lenya/unipublic/xopus/XopusInterface</file>
 -->
 			<file name="BX_posturl" method="wyona" isParam="true">url-post</file>
 		</output>
@@ -50,8 +50,8 @@
 		</scripts>
 		<transform>
 			<includes>
-				<file name="BX_xmltransformfile">/wyona-cms/computerworld/bitflux/stylesheets/bitflux-include.xsl</file>
-				<file name="BX_xmltransformbackfile">/wyona-cms/computerworld/bitflux/stylesheets/bitflux-back-include.xsl</file>
+				<file name="BX_xmltransformfile">/lenya/computerworld/bitflux/stylesheets/bitflux-include.xsl</file>
+				<file name="BX_xmltransformbackfile">/lenya/computerworld/bitflux/stylesheets/bitflux-back-include.xsl</file>
 
 			</includes>
 			<parameters>

@@ -50,10 +50,10 @@
 
      [unix]  cd /home/wyona/src
              choose 1) or 2)
-             1) wget http://www.wyona.org/builds/wyona-cms-2.0/nightly/src/wyona-cms-2.0-src-200201102354.tar.gz
+             1) wget http://www.wyona.org/builds/lenya-2.0/nightly/src/lenya-2.0-src-200201102354.tar.gz
                 (take the apropriate wyonacms (src not bin) version, this one might not exist anymore)
-                tar -xzf wyona-cms-2.0-src-200201102354.tar.gz
-                mv wyona-cms-2.0-src wyonacms 
+                tar -xzf lenya-2.0-src-200201102354.tar.gz
+                mv lenya-2.0-src wyonacms 
              2) or get it from the public cvs:
                 cvs -d :pserver:anonwyonacms@194.191.122.220:/repository checkout wyonacms
              cd wyonacms
@@ -80,7 +80,7 @@
              export ANT_HOME=/home/wyona/build/jakarta-ant-1.4.1
              export PATH=/home/wyona/build/jakarta-ant-1.4.1/bin:$PATH
              ant
-             ls build/wyona-cms/webapp
+             ls build/lenya/webapp
 
 
   6) Install Wyona for Development
@@ -91,7 +91,7 @@
              ls install.dir (Check if things actually got copied into "install.dir", where "install.dir" is not the string "install.dir", but the value you have set within build.properties)
              vi /home/wyona/build/jakarta-tomcat-4.0/conf/server.xml
              To allow class reloading, insert the following line:
-             <Context path="/wyona-cms" docBase="wyona-cms" debug="0" reloadable="true" crossContext="true"/>
+             <Context path="/lenya" docBase="lenya" debug="0" reloadable="true" crossContext="true"/>
 
 
   7) Start Wyona
@@ -99,7 +99,7 @@
      [unix]  (/home/wyona/build/jakarta-tomcat-4.0/bin/shutdown.sh)
              ("rm -r /home/wyona/build/jakarta-tomcat-4.0/work/*" OR "ant reset". This is the "cache.dir" directory which can be set within build.properties)
              /home/wyona/build/jakarta-tomcat-4.0/bin/startup.sh
-             lynx http://localhost:8080/wyona-cms/
+             lynx http://localhost:8080/lenya/
 
 
   8) Start Hacking Wyona
@@ -111,7 +111,7 @@
              vi src/webapp/cocoon.xconf   (asynchron, synchron)
              ant install
              tail -f build/webapp/WEB-INF/logs/* | grep Sitemap -B10
-             lynx http://localhost:8080/wyona-cms/
+             lynx http://localhost:8080/lenya/
 
 
   9) Stop Wyona
@@ -140,7 +140,7 @@
      1) Tomcat port: TOMCAT/conf/server.xml (default: 8080)
      2) Catalina port: TOMCAT/conf/server.xml (default: 8008)
      3) Tomcat shutdown port: TOMCAT/conf/server.xml (default: 8005)
-     4) HypersonicSQL DB port(http://www.hsqldb.org): TOMCAT/webapps/wyona-cms/WEB-INF/cocoon.xconf (default: 9002)
+     4) HypersonicSQL DB port(http://www.hsqldb.org): TOMCAT/webapps/lenya/WEB-INF/cocoon.xconf (default: 9002)
                                                       (In case you work with Cocoon Source: src/java/org/apache/cocoon/components/hsqldb/hsqldb.xconf)
 
      NOTE: To find out which ports are used:

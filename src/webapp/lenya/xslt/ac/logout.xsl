@@ -15,7 +15,7 @@
   <html>
    <head>
     <title><xsl:value-of select="$publication_name"/> - <xsl:call-template name="html-title"/></title>
-    <link rel="stylesheet" type="text/css" href="/wyona-cms/wyona/default.css" />
+    <link rel="stylesheet" type="text/css" href="/lenya/wyona/default.css" />
     </head>
     <body bgcolor="#ffffff">
      <h2><xsl:value-of select="$publication_name"/></h2>

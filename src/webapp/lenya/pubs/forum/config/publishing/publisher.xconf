@@ -23,6 +23,6 @@
 <!-- FIXME? -->
   <export>
     <destination href="resources/publication/export/pending"/>
-    <substitution regexp="s/\/wyona-cms\/forum//g"/>
+    <substitution regexp="s/\/lenya\/forum//g"/>
   </export>
 </publication>

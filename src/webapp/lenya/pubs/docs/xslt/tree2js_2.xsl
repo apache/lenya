@@ -6,7 +6,7 @@
   
   <xsl:template match="array">
    var tocTab = new Array();
-   tocTab[0] = new Array("0", "Documentation","/wyona-cms/docs/welcome.html");
+   tocTab[0] = new Array("0", "Documentation","/lenya/docs/welcome.html");
    <xsl:apply-templates select="tocTab"/>
    var nCols = 5;
   </xsl:template>

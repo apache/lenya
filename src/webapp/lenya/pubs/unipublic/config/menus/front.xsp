@@ -40,24 +40,24 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/frontpage/headlines.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/headlines.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/headlines.xsd&amp;url-css="+bitflux_prefix+"/css/headlines.css&amp;url-post="+bitflux_prefix+"/save/headlines.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+							<xsp:expr>"/lenya/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/frontpage/headlines.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/headlines.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/headlines.xsd&amp;url-css="+bitflux_prefix+"/css/headlines.css&amp;url-post="+bitflux_prefix+"/save/headlines.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>Edit&#160;Headlines
 					</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/frontpage/webperls.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/webperls.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/webperls.xsd&amp;url-css="+bitflux_prefix+"/css/webperls.css&amp;url-post="+bitflux_prefix+"/save/webperls.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+							<xsp:expr>"/lenya/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/frontpage/webperls.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/webperls.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/webperls.xsd&amp;url-css="+bitflux_prefix+"/css/webperls.css&amp;url-post="+bitflux_prefix+"/save/webperls.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>Edit&#160;Webperlen
 					</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/frontpage/dossier.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/dossierkasten.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/dossierkasten.xsd&amp;url-css="+bitflux_prefix+"/css/dossierkasten.css&amp;url-post="+bitflux_prefix+"/save/dossier.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+							<xsp:expr>"/lenya/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/frontpage/dossier.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/dossierkasten.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/dossierkasten.xsd&amp;url-css="+bitflux_prefix+"/css/dossierkasten.css&amp;url-post="+bitflux_prefix+"/save/dossier.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>Edit&#160;Dossierkasten
 					</item>
 				</block>
 <!--
 				<block>
-					<item href="/wyona-cms/lucene/create">Create&#160;Lucene&#160;Index</item>
-					<item href="/wyona-cms/lucene/search">Search&#160;with&#160;Lucene</item>
+					<item href="/lenya/lucene/create">Create&#160;Lucene&#160;Index</item>
+					<item href="/lenya/lucene/search">Search&#160;with&#160;Lucene</item>
 				</block>
 -->
 			</menu>

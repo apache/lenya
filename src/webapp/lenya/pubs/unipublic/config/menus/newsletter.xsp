@@ -42,7 +42,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/newsletter/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/newsletter.xsl&amp;url-xsd="+domain_prefix+"/schemas/newsletter.xsd&amp;url-css="+domain_prefix+"/css/newsletter.css&amp;url-post="+domain_prefix+"/save/newsletter"+"&amp;url-back="+domain_prefix_bitflux+"/authoring/newsletter/index.html"</xsp:expr>
+							<xsp:expr>"/lenya/bitfluxeditor/index.html?url-xml="+domain_prefix+"/newsletter/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/newsletter.xsl&amp;url-xsd="+domain_prefix+"/schemas/newsletter.xsd&amp;url-css="+domain_prefix+"/css/newsletter.css&amp;url-post="+domain_prefix+"/save/newsletter"+"&amp;url-back="+domain_prefix_bitflux+"/authoring/newsletter/index.html"</xsp:expr>
 						</xsp:attribute>Edit&#160;with&#160;Bitflux</item>
 				</block>
 			</menu>

@@ -197,7 +197,7 @@ content="text/html; charset=iso-latin-1" />
 
 
 <td height="21" class="topnavigation" align="left">
-  <a href="/wyona-cms/oscom/matrix/index.html" class="navigationwhite">
+  <a href="/lenya/oscom/matrix/index.html" class="navigationwhite">
     <span class="naviselected">CMS Matrix</span>
   </a>
 </td>
@@ -313,7 +313,7 @@ width="24" height="16" border="0" /></td>
 -->
  </td>
 <td align="right" valign="top" class="footer">
-<!-- Admin interface link --><a href="http://oscom.wyona.org/wyona-cms/oscom/authoring/matrix/index.html" class="breadcrumb">Wyona</a><!-- /Admin interface link --></td>
+<!-- Admin interface link --><a href="http://oscom.wyona.org/lenya/oscom/authoring/matrix/index.html" class="breadcrumb">Wyona</a><!-- /Admin interface link --></td>
 </tr>
 </tbody>
 </table>

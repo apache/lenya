@@ -11,8 +11,8 @@
 <!--
   <xsp-wyona:util/>
 -->
-  <context>/wyona-cms</context>
-  <context_prefix>/wyona-cms/ethz-mat</context_prefix>
+  <context>/lenya</context>
+  <context_prefix>/lenya/ethz-mat</context_prefix>
   <prefix>ethz-mat</prefix>
 
 </menu>

@@ -44,7 +44,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/dossier.xsl&amp;url-xsd="+domain_prefix+"/schemas/dossier.xsd&amp;url-css="+domain_prefix+"/css/dossier.css&amp;url-post="+domain_prefix+"/save/dossiers/"+year+"/"+dossierId+"&amp;url-back="+domain_prefix_bitflux+"/authoring/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr>
+							<xsp:expr>"/lenya/bitfluxeditor/index.html?url-xml="+domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/dossier.xsl&amp;url-xsd="+domain_prefix+"/schemas/dossier.xsd&amp;url-css="+domain_prefix+"/css/dossier.css&amp;url-post="+domain_prefix+"/save/dossiers/"+year+"/"+dossierId+"&amp;url-back="+domain_prefix_bitflux+"/authoring/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr>
 						</xsp:attribute>Edit&#160;with&#160;Bitflux</item>
 				</block>			
 			</menu>

@@ -5,14 +5,14 @@
   Installation
   ------------
 
-  cp wyona-cms.war PREFIX/jakarta-tomcat-4.0/webapps/.
+  cp lenya.war PREFIX/jakarta-tomcat-4.0/webapps/.
   rm PREFIX/jakarta-tomcat-4.0/work/* (Remove garbage from former installations)
   export JAVA_HOME=/usr/local/jdk1.3.1
   #export JAVA_HOME=/usr/local/IBMJava2-13 (We encounter problems here with stylesheets)
   export CATALINA_HOME=PREFIX/jakarta-tomcat-4.0
   PREFIX/jakarta-tomcat-4.0/bin/startup.sh
   (Wait a few seconds)
-  lynx http://localhost:8080/wyona-cms/
+  lynx http://localhost:8080/lenya/
   (Wait a few seconds or minutes)
 
   NOTE: PREFIX is not the string "PREFIX". Instead use the
@@ -30,7 +30,7 @@
   Tomact Performance
   ------------------
 
-  1) Set attribute "reloadable" of Context wyona-cms to "false" within conf/server.xml
+  1) Set attribute "reloadable" of Context lenya to "false" within conf/server.xml
 
 
   Reconfigure Ports
@@ -39,7 +39,7 @@
   1) Tomcat port: TOMCAT/conf/server.xml (default: 8080)
   2) Catalina port: TOMCAT/conf/server.xml (default: 8008)
   3) Tomcat shutdown port: TOMCAT/conf/server.xml (default: 8005)
-  4) HypersonicSQL DB port: TOMCAT/webapps/wyona-cms/WEB-INF/cocoon.xconf (default: 9002)
+  4) HypersonicSQL DB port: TOMCAT/webapps/lenya/WEB-INF/cocoon.xconf (default: 9002)
 
   NOTE: To find out which ports are used:
         /usr/local/bin/nmap localhost -p 1-65535

@@ -1,5 +1,5 @@
 /*
- * $Id: XPSAssembler.java,v 1.6 2003/03/04 17:46:47 gregor Exp $
+ * $Id: XPSAssembler.java,v 1.7 2003/03/04 17:58:25 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -111,7 +111,7 @@ public class XPSAssembler implements XPSInclude {
             return;
         }
 
-        String cocoon = null; // e.g. http://127.0.0.1:8080/wyona-cms/nwt
+        String cocoon = null; // e.g. http://127.0.0.1:8080/lenya/nwt
         Document document = xpsa.assemble(args[0], cocoon);
 
         try {

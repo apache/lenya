@@ -32,7 +32,7 @@ $PREFIX/jakarta-tomcat-4.0/webapps/ROOT/editonpro
       </p>
 <source><![CDATA[
 
-$PREFIX/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/ethz-mat/stylesheets/Configuration/read.xsl
+$PREFIX/jakarta-tomcat-4.0/webapps/lenya/wyona/cms/pubs/ethz-mat/stylesheets/Configuration/read.xsl
 
 ]]></source>
     </section>

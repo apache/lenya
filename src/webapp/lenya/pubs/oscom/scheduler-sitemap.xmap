@@ -44,7 +44,7 @@
       
       <!-- create the current job snapshot -->
       <map:match pattern="scheduler-servlet/**">
-        <map:generate type="servletproxy" src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
+        <map:generate type="servletproxy" src="/lenya/servlet/QuartzSchedulerServlet"/>
         <map:transform src="../../stylesheets/cms/Page/scheduler/filter.xsl">
 	  <map:parameter name="documentUri" value="{1}"/>
 	</map:transform>
@@ -78,7 +78,7 @@
     <map:pipeline>
       <map:match pattern="admin/pubid/**">
         <map:generate type="servletproxy"
-	  src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
+	  src="/lenya/servlet/QuartzSchedulerServlet"/>
         <map:transform src="../../stylesheets/cms/Page/scheduler/sort.xsl"/>
         <map:transform src="../../stylesheets/cms/Page/scheduler/adminPublication.xsl">
 	  <map:parameter name="documentID" value="{1}"/>

@@ -6,7 +6,7 @@
 
 <xsl:variable name="tablecolor">orange</xsl:variable>
 <!-- context_prefix is just a temporary setting, will be given by general logicsheet -->
-<xsl:variable name="CONTEXT_PREFIX">/wyona-cms/oscom</xsl:variable>
+<xsl:variable name="CONTEXT_PREFIX">/lenya/oscom</xsl:variable>
 <xsl:variable name="images"><xsl:value-of select="$CONTEXT_PREFIX"/>/images</xsl:variable>
 
 <xsl:include href="navigation_authoring.xsl"/>

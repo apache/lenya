@@ -18,9 +18,9 @@
         <item href="xopus2/weekly-column.html">Edit&#160;with&#160;Xopus2</item>
         <item>Edit&#160;with&#160;Bitflux</item>
 <!--
-        <item href="/wyona-cms/bitfluxeditor/weekly-column.html?url-xml=/wyona-cms/oscom/bitflux/home.xml&amp;url-xslt=/wyona-cms/oscom/bitflux/home.xsl&amp;url-xsd=/wyona-cms/oscom/bitflux/home.xsd&amp;url-css=/wyona-cms/oscom/bitflux/home.css&amp;url-post=/wyona-cms/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
+        <item href="/lenya/bitfluxeditor/weekly-column.html?url-xml=/lenya/oscom/bitflux/home.xml&amp;url-xslt=/lenya/oscom/bitflux/home.xsl&amp;url-xsd=/lenya/oscom/bitflux/home.xsd&amp;url-css=/lenya/oscom/bitflux/home.css&amp;url-post=/lenya/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
 -->
-        <item href="wyona/publishScreen?uris=/wyona-cms/oscom/weekly-column.html&amp;sources=/weekly-column-body.xml">Publish</item>
+        <item href="wyona/publishScreen?uris=/lenya/oscom/weekly-column.html&amp;sources=/weekly-column-body.xml">Publish</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid/weekly-column.html?task.uris=<xsp:expr>xsp_wyona_context_prefix+"/weekly-column.html"</xsp:expr>&amp;task.sources=/weekly-column-body.xml&amp;documentType=Generic</xsp:attribute>Schedule</item>
       </block>
       <separator>

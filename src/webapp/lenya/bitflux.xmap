@@ -29,7 +29,7 @@
 
     <map:pipeline>
       <map:match pattern="index.html">
-        <map:match type="bitflux" pattern="/wyona-cms/*/bitflux/**">
+        <map:match type="bitflux" pattern="/lenya/*/bitflux/**">
 <!--
         <map:act type="reserved-checkout">
           <map:parameter name="filename" value="pubs/{1}/docs/publication/authoring/{2}"/>

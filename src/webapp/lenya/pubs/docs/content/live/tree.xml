@@ -63,7 +63,7 @@
 
 		<!-- Integrator's Guide -->
 		<branch relURI="integrator-guide" doctype="Guide" menuName="Integrator's Guide">
-			<!-- leaf relURI="/wyona-cms/docs/tutorial/index.html" doctype="Shared" menuName="Creating a new Publication" /-->
+			<!-- leaf relURI="/lenya/docs/tutorial/index.html" doctype="Shared" menuName="Creating a new Publication" /-->
 			<leaf relURI="int-create-pub.html" doctype="XDoc" menuName="Creating a new Publication"/>
 			<branch relURI="document" doctype="Empty" menuName="Pages and Documents">
 				<leaf relURI="" doctype="Empty" menuName="The definition of a Page"/>
@@ -208,7 +208,7 @@
       </branch>
       <leaf relURI="proxy-generator.html" doctype="XDoc" menuName="Proxy Generator"/>
       <leaf relURI="release-manager.html" doctype="XDoc" menuName="Release Manager Info"/>
-      <leaf absURI="/wyona-cms/scratchpad/index.html" doctype="HTML" menuName="Scratchpad"/>
+      <leaf absURI="/lenya/scratchpad/index.html" doctype="HTML" menuName="Scratchpad"/>
       <branch relURI="" doctype="Empty" menuName="Strange Effects">
 	<leaf relURI="" doctype="Empty" menuName="XSLT (Xalan) Problems with IBMJava2-13: Use another JDK (jdk1.3.1)"/>
       </branch>

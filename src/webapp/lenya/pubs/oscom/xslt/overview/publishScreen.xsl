@@ -8,14 +8,14 @@
 
 <xsl:template match="publish-all">
 <publish>
-  <referer>/wyona-cms/oscom/authoring/matrix/index.html</referer>
+  <referer>/lenya/oscom/authoring/matrix/index.html</referer>
   <publication-id>oscom</publication-id>
   <current_username/>
-  <context>/wyona-cms</context>
-  <prefix>/wyona-cms/oscom</prefix>
+  <context>/lenya</context>
+  <prefix>/lenya/oscom</prefix>
 
 <uris>
-/wyona-cms/oscom/matrix/index.html<xsl:for-each select="oscom/system">,/wyona-cms/oscom/matrix/<xsl:value-of select="id"/>.html</xsl:for-each>
+/lenya/oscom/matrix/index.html<xsl:for-each select="oscom/system">,/lenya/oscom/matrix/<xsl:value-of select="id"/>.html</xsl:for-each>
 </uris>
 
 <sources>

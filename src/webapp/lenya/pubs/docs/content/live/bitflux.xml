@@ -37,12 +37,12 @@ by editing the javascript bxe/js/bitfluxeditor.js (navigator.productSub &lt;= 20
 		<section><title>Open/Edit and Save</title>
 			<section><title>Getting Data from Server</title>
 				<source><![CDATA[
-http://hostname:port/wyona-cms/bitfluxeditor/index.html
-?url-xml=/wyona-cms/unipublic/bitflux/magazin/gesundheit/2002/0508
-&url-xslt=/wyona-cms/unipublic/bitflux/stylesheets/article.xsl
-&url-xsd=/wyona-cms/unipublic/bitflux/doctypes/schemas/article.xsd
-&url-css=/wyona-cms/unipublic/bitflux/css/article.css     
-&url-post=/wyona-cms/unipublic/bitflux/save/magazin/gesundheit/2002/0508
+http://hostname:port/lenya/bitfluxeditor/index.html
+?url-xml=/lenya/unipublic/bitflux/magazin/gesundheit/2002/0508
+&url-xslt=/lenya/unipublic/bitflux/stylesheets/article.xsl
+&url-xsd=/lenya/unipublic/bitflux/doctypes/schemas/article.xsd
+&url-css=/lenya/unipublic/bitflux/css/article.css     
+&url-post=/lenya/unipublic/bitflux/save/magazin/gesundheit/2002/0508
 	  ]]></source>
 				<p>
 The parameters can be configured within the file inc/config.xml

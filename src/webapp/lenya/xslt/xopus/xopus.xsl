@@ -22,7 +22,7 @@
 <!--
 	<script language="javascript" src="/software/xopus/xopus.js">;</script>
 -->
-	<script language="javascript" src="/wyona-cms/xopus/xopus/xopus.js">;</script>
+	<script language="javascript" src="/lenya/xopus/xopus/xopus.js">;</script>
 	<script language="javascript">
 		//xopus_globs.WYONA_CMS_URL="<xsl:value-of select="$context_prefix" />";
 		xopus_consts.WYONA_CMS_URL="<xsl:value-of select="$context_prefix" />/xopus/XopusInterface";

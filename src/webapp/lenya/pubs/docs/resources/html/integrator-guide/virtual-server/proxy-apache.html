@@ -56,13 +56,13 @@ NameVirtualHost 194.191.122.220
 &lt;/VirtualHost&gt;
 &lt;VirtualHost 194.191.122.217&gt;
   ServerName ethz-mat.wyona.org
-  ProxyPass / http://194.191.122.220:8080/wyona-cms/ethz-mat/
-  ProxyPassReverse / http://194.191.122.220:8080/wyona-cms/ethz-mat/
+  ProxyPass / http://194.191.122.220:8080/lenya/ethz-mat/
+  ProxyPassReverse / http://194.191.122.220:8080/lenya/ethz-mat/
 &lt;/VirtualHost&gt;
 &lt;VirtualHost 194.191.122.220&gt;
   ServerName unipublic.wyona.org
-  ProxyPass / http://194.191.122.220:8080/wyona-cms/oscom/live/index.html
-  ProxyPassReverse / http://194.191.122.220:8080/wyona-cms/oscom/live/index.html
+  ProxyPass / http://194.191.122.220:8080/lenya/oscom/live/index.html
+  ProxyPassReverse / http://194.191.122.220:8080/lenya/oscom/live/index.html
 &lt;/VirtualHost&gt;
 </pre>
 </p>

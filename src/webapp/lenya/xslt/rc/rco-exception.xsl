@@ -16,7 +16,7 @@
 <html>	
 <body>
 <head>
-<link rel="stylesheet" type="text/css" href="/wyona-cms/wyona/default.css" />
+<link rel="stylesheet" type="text/css" href="/lenya/wyona/default.css" />
 </head>
   <xsl:apply-templates/>
 </body>

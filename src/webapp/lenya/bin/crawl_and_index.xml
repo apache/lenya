@@ -12,7 +12,7 @@
   <property name="wyona.src.dir" value="/home/michiii/src/wyonacms"/>
 
   <path id="class.path">
-    <pathelement path="${wyona.src.dir}/build/wyona-cms/classes"/>
+    <pathelement path="${wyona.src.dir}/build/lenya/classes"/>
     <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar"/>
     <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/avalon-excalibur-20020402.jar"/>
 
@@ -54,7 +54,7 @@
 <!--
 <taskdef name="index" classname="org.lenya.search.crawler.IterativeHTMLCrawler">
   <classpath>
-    <fileset dir="./" includes="build/wyona-cms/classes"/>
+    <fileset dir="./" includes="build/lenya/classes"/>
   </classpath>
 </taskdef>
 -->

@@ -15,7 +15,7 @@ Start at Trunk
   <xsl:template match="branch" mode="trunk">
     <array>
       <xsl:apply-templates select="branch|leaf">
-        <xsl:with-param name="parentPath">/wyona-cms/docs/xdocs</xsl:with-param>
+        <xsl:with-param name="parentPath">/lenya/docs/xdocs</xsl:with-param>
         <xsl:with-param name="parentNumber"></xsl:with-param>
       </xsl:apply-templates>
     </array>

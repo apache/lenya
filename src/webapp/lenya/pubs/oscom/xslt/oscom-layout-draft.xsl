@@ -212,7 +212,7 @@ class="navigationwhite">Board</a></td>
 src="oscom-proposals_files/spacer.gif" width="19"
 height="14" /></td>
 <td height="21" class="topnavigation" align="left"><a
-href="/wyona-cms/oscom/matrix/index.html" class="navigationwhite">CMS
+href="/lenya/oscom/matrix/index.html" class="navigationwhite">CMS
 Matrix</a></td>
 <td height="21" width="19" align="left"><img
 src="oscom-proposals_files/spacer.gif" width="19"
@@ -291,7 +291,7 @@ border="0" /></td>
 -->
  </td>
 <td align="right" valign="top" class="footer">
-<!-- Admin interface link --><a href="http://oscom.wyona.org/wyona-cms/oscom/matrix/index.html" class="breadcrumb">Wyona</a><!-- /Admin interface link --></td>
+<!-- Admin interface link --><a href="http://oscom.wyona.org/lenya/oscom/matrix/index.html" class="breadcrumb">Wyona</a><!-- /Admin interface link --></td>
 </tr>
 </tbody>
 </table>

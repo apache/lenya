@@ -30,12 +30,12 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.37 2003/03/04 17:46:33 gregor Exp $
+   @version CVS $Id: build.xml,v 1.38 2003/03/04 17:58:25 gregor Exp $
 
 -->
 
 
-<project default="webapp" name="wyona-cms" basedir=".">
+<project default="webapp" name="lenya" basedir=".">
 
   <!-- ============================================================ -->
   <!-- Set up some global properties                                -->

@@ -1,5 +1,5 @@
 /*
- * $Id: WGet.java,v 1.18 2003/03/04 17:46:47 gregor Exp $
+ * $Id: WGet.java,v 1.19 2003/03/04 17:58:25 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -97,7 +97,7 @@ public class WGet {
                 }
             }
 
-            byte[] response = wget.download(new URL(args[0]), "s/\\/wyona-cms\\/oscom//g");
+            byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/oscom//g");
 
         } catch (MalformedURLException e) {
             System.err.println(e);
