@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePolicyManager.java,v 1.10 2004/08/16 15:59:51 andreas Exp $  */
+/* $Id: FilePolicyManager.java,v 1.11 2004/08/25 13:45:59 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -57,9 +57,8 @@ import org.w3c.dom.Document;
 /**
  * A PolicyBuilder is used to build policies.
  */
-public class FilePolicyManager
-    extends AbstractLogEnabled
-    implements InheritingPolicyManager, Parameterizable, Disposable, Serviceable {
+public class FilePolicyManager extends AbstractLogEnabled implements InheritingPolicyManager,
+        Parameterizable, Disposable, Serviceable {
 
     /**
      * Creates a new FilePolicyManager.
@@ -83,8 +82,8 @@ public class FilePolicyManager
     protected static final String USER_ADMIN_URL = "/admin/users/";
 
     /**
-     * Builds the URL policy for a URL from a file. When the file is not present, an empty policy
-     * is returned.
+     * Builds the URL policy for a URL from a file. When the file is not present, an empty policy is
+     * returned.
      * 
      * @param controller The access controller to use.
      * @param url The URL inside the web application.
@@ -92,7 +91,7 @@ public class FilePolicyManager
      * @throws AccessControlException when something went wrong.
      */
     public DefaultPolicy buildURLPolicy(AccreditableManager controller, String url)
-        throws AccessControlException {
+            throws AccessControlException {
         return buildPolicy(controller, url, URL_FILENAME);
     }
 
@@ -106,7 +105,7 @@ public class FilePolicyManager
      * @throws AccessControlException when something went wrong.
      */
     public DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url)
-        throws AccessControlException {
+            throws AccessControlException {
         return buildPolicy(controller, url, SUBTREE_FILENAME);
     }
 
@@ -119,11 +118,8 @@ public class FilePolicyManager
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    protected DefaultPolicy buildPolicy(
-        AccreditableManager controller,
-        String url,
-        String policyFilename)
-        throws AccessControlException {
+    protected DefaultPolicy buildPolicy(AccreditableManager controller, String url,
+            String policyFilename) throws AccessControlException {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Building policy for URL [" + url + "]");
@@ -163,7 +159,7 @@ public class FilePolicyManager
      * @throws AccessControlException if an error occurs
      */
     protected String getPolicySourceURI(String url, String policyFilename)
-        throws AccessControlException {
+            throws AccessControlException {
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
@@ -228,7 +224,7 @@ public class FilePolicyManager
      * @throws AccessControlException if something goes wrong.
      */
     protected void savePolicy(String url, DefaultPolicy policy, String filename)
-        throws AccessControlException {
+            throws AccessControlException {
 
         File file = getPolicyFile(url, filename);
         savePolicy(policy, file);
@@ -245,13 +241,13 @@ public class FilePolicyManager
         Document document = PolicyBuilder.savePolicy(policy);
 
         try {
-            file.getParentFile().mkdirs();
-            if (file.createNewFile()) {
-                DocumentHelper.writeDocument(document, file);
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                if (!file.createNewFile()) {
+                    throw new AccessControlException("File [" + file + "] could not be created.");
+                }
             }
-            else {
-                throw new AccessControlException("File [" + file + "] could not be created.");
-            }
+            DocumentHelper.writeDocument(document, file);
         } catch (AccessControlException e) {
             throw e;
         } catch (Exception e) {
@@ -260,10 +256,11 @@ public class FilePolicyManager
     }
 
     /**
-     * @see org.apache.lenya.ac.PolicyManager#getPolicy(org.apache.lenya.ac.AccreditableManager, java.lang.String)
+     * @see org.apache.lenya.ac.PolicyManager#getPolicy(org.apache.lenya.ac.AccreditableManager,
+     *      java.lang.String)
      */
     public Policy getPolicy(AccreditableManager controller, String url)
-        throws AccessControlException {
+            throws AccessControlException {
 
         return new URLPolicy(controller, url, this);
     }
@@ -316,7 +313,7 @@ public class FilePolicyManager
             }
 
             getLogger().debug(
-                "Policies directory resolved to [" + directory.getAbsolutePath() + "]");
+                    "Policies directory resolved to [" + directory.getAbsolutePath() + "]");
             setPoliciesDirectory(directory);
         }
 
@@ -341,8 +338,8 @@ public class FilePolicyManager
     public void setPoliciesDirectory(File directory) throws AccessControlException {
         getLogger().debug("Setting policies directory [" + directory.getAbsolutePath() + "]");
         if (!directory.isDirectory()) {
-            throw new AccessControlException(
-                "Policies directory invalid: [" + directory.getAbsolutePath() + "]");
+            throw new AccessControlException("Policies directory invalid: ["
+                    + directory.getAbsolutePath() + "]");
         }
         policiesDirectory = directory;
     }
@@ -352,7 +349,7 @@ public class FilePolicyManager
      *      java.lang.String)
      */
     public DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
-        throws AccessControlException {
+            throws AccessControlException {
 
         List policies = new ArrayList();
 
@@ -381,7 +378,7 @@ public class FilePolicyManager
         }
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing [" + this +"]");
+            getLogger().debug("Disposing [" + this + "]");
         }
     }
 
@@ -393,22 +390,18 @@ public class FilePolicyManager
      * @param policyDirectory The directory where the policies are located.
      * @throws AccessControlException when an error occurs.
      */
-    protected void removeAccreditable(
-        AccreditableManager manager,
-        Accreditable accreditable,
-        File policyDirectory)
-        throws AccessControlException {
+    protected void removeAccreditable(AccreditableManager manager, Accreditable accreditable,
+            File policyDirectory) throws AccessControlException {
 
         File[] policyFiles = policyDirectory.listFiles(new FileFilter() {
             public boolean accept(File file) {
                 return file.getName().equals(SUBTREE_FILENAME)
-                    || file.getName().equals(URL_FILENAME);
+                        || file.getName().equals(URL_FILENAME);
             }
         });
 
         try {
-            RemovedAccreditablePolicyBuilder builder =
-                new RemovedAccreditablePolicyBuilder(manager);
+            RemovedAccreditablePolicyBuilder builder = new RemovedAccreditablePolicyBuilder(manager);
             builder.setRemovedAccreditable(accreditable);
             for (int i = 0; i < policyFiles.length; i++) {
 
@@ -416,7 +409,7 @@ public class FilePolicyManager
                     getLogger().debug("Removing roles");
                     getLogger().debug("    Accreditable: [" + accreditable + "]");
                     getLogger().debug(
-                        "    File:         [" + policyFiles[i].getAbsolutePath() + "]");
+                            "    File:         [" + policyFiles[i].getAbsolutePath() + "]");
                 }
 
                 InputStream stream = new FileInputStream(policyFiles[i]);
@@ -445,7 +438,7 @@ public class FilePolicyManager
      *      org.apache.lenya.ac.Accreditable)
      */
     public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable)
-        throws AccessControlException {
+            throws AccessControlException {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("An accreditable was removed: [" + accreditable + "]");
@@ -479,10 +472,11 @@ public class FilePolicyManager
     }
 
     /**
-     * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
+     * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager,
+     *      org.apache.lenya.ac.Accreditable)
      */
     public void accreditableAdded(AccreditableManager manager, Accreditable accreditable)
-        throws AccessControlException {
+            throws AccessControlException {
         if (accreditable instanceof User) {
             Role role = URLPolicy.getAuthorRole(manager);
             if (role != null) {
