@@ -1,38 +1,89 @@
-<?xml version="1.0"?>
-
-<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
-<xs:element name="system">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element name="id" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element ref="editor" minOccurs="0" maxOccurs="1"></xs:element>
-      <xs:element name="system_name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="main_url" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element ref="license" minOccurs="1" maxOccurs="1"></xs:element>
-    </xs:sequence>
-    <xs:attribute name="type" use="required" type="xs:string"/>
-  </xs:complexType>
-</xs:element>
-
-<xs:element name="license">
-  <xs:complexType mixed="true">
-    <xs:sequence>
-        <xs:element name="license_name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="license_url" type="xs:string" minOccurs="0" maxOccurs="1"/>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
-
-<xs:element name="editor">
-  <xs:complexType>
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute name="email" use="required" type="xs:string" default="name@domain"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-</xs:element>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="system">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="id"/>
+        <xs:element ref="editor" minOccurs="0"/>
+        <xs:element ref="system_name"/>
+        <xs:element ref="description" minOccurs="0"/>
+        <xs:element ref="main_url"/>
+        <xs:element ref="license"/>
+        <xs:element ref="related-info" minOccurs="0"/>
+        <xs:element ref="features" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="id" type="xs:NCName"/>
+  <xs:element name="editor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="email"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="email" type="xs:string"/>
+  <xs:element name="system_name" type="xs:string"/>
+  <xs:element name="main_url" type="xs:anyURI"/>
+  <xs:element name="license">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="license_name"/>
+        <xs:element ref="license_url" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="license_name" type="xs:string"/>
+  <xs:element name="license_url" type="xs:anyURI"/>
+  <xs:element name="related-info">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="info-item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="info-item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="title"/>
+        <xs:element ref="uri"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="uri" type="xs:anyURI"/>
+  <xs:element name="features">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="feature"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="feature">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="title"/>
+        <xs:element ref="description"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="description">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="a"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="a">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:NCName">
+          <xs:attribute name="href" use="required" type="xs:anyURI"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="title" type="xs:string"/>
 </xs:schema>

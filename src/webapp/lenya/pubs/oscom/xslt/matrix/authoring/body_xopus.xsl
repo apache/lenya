@@ -31,6 +31,8 @@ Framework
    <li>Home: <xsl:apply-templates select="main_url"/></li>
    <li><xsl:apply-templates select="license"/></li>
  </ul>
+ <xsl:apply-templates select="related-info"/>
+ <xsl:apply-templates select="features"/>
  </font>
 </div>
 </xsl:template>
@@ -40,15 +42,37 @@ Framework
 </xsl:template>
 
 <xsl:template match="description">
-  <p><xsl:apply-templates/></p>
+  <p><xsl:copy-of select="."/></p>
+</xsl:template>
+
+<xsl:template match="description" mode="feature">
+<xsl:copy-of select="."/>
 </xsl:template>
 
 <xsl:template match="editor">
 <p>
 <font size="-1">
-Data maintained by <xsl:apply-templates/> (<xsl:value-of select="@email"/>)
+Data maintained by <xsl:value-of select="name"/> (<xsl:value-of select="email"/>)
 </font>
 </p>
+</xsl:template>
+
+<xsl:template match="related-info">
+  <b>Related Information:</b>
+  <ul>
+  <xsl:for-each select="info-item">
+    <li><xsl:value-of select="title"/> (<xsl:value-of select="uri"/>)</li>
+  </xsl:for-each>
+  </ul>
+</xsl:template>
+
+<xsl:template match="features">
+  <b>Features:</b>
+  <ul>
+  <xsl:for-each select="feature">
+    <li><b><xsl:value-of select="title"/>:</b><xsl:text> </xsl:text><xsl:apply-templates select="description" mode="feature"/></li>
+  </xsl:for-each>
+  </ul>
 </xsl:template>
  
 </xsl:stylesheet>  

@@ -42,23 +42,43 @@ No such type: <xsl:value-of select="@type"/>
    <li>Home: <a href="{main_url}" target="_blank"><xsl:apply-templates select="main_url"/></a></li>
    <li><xsl:apply-templates select="license"/></li>
  </ul>
+ <xsl:apply-templates select="related-info" />
+ <xsl:apply-templates select="features" />
  </font>
 </xsl:template>
 
 <xsl:template match="license">
- License: <a href="{license_url}"><xsl:apply-templates select="license_name"/></a>
+ License: <a href="{license_url}" target="_blank"><xsl:apply-templates select="license_name"/></a>
 </xsl:template>
 
 <xsl:template match="description">
-  <p><xsl:apply-templates/></p>
+  <p><xsl:copy-of select="."/></p>
 </xsl:template>
 
 <xsl:template match="editor">
 <p>
 <font size="-1">
-Data maintained by <i><a href="mailto:{@email}?subject=OSCOM CMS Matrix"><xsl:apply-templates/></a></i>
+Data maintained by <i><a href="mailto:{email}?subject=OSCOM CMS Matrix: {../system_name}"><xsl:value-of select="name"/></a></i>
 </font>
 </p>
+</xsl:template>
+
+<xsl:template match="related-info">
+  <b>Related Information:</b>
+  <ul>
+  <xsl:for-each select="info-item">
+    <li><a href="{uri}" target="_blank"><xsl:value-of select="title"/></a></li>
+  </xsl:for-each>
+  </ul>
+</xsl:template>
+
+<xsl:template match="features">
+  <b>Features:</b>
+  <ul>
+  <xsl:for-each select="feature">
+    <li><b><xsl:value-of select="title"/>:</b><xsl:text> </xsl:text><xsl:apply-templates select="description" mode="feature"/></li>
+  </xsl:for-each>
+  </ul>
 </xsl:template>
  
 </xsl:stylesheet>  
