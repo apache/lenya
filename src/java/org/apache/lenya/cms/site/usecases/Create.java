@@ -16,6 +16,15 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.Map;
+
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -25,6 +34,11 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  * @version $Id: Create.java 123982 2005-01-03 15:01:19Z andreas $
  */
 public class Create extends DocumentUsecase {
+    
+    protected static final String USER = "user";
+    protected static final String LANGUAGE = "language";
+    protected static final String LANGUAGES = "languages";
+    protected static final String PARENT_ID = "parentId";
 
 	/**
      * Ctor.
@@ -68,5 +82,25 @@ public class Create extends DocumentUsecase {
     public void setParameter(String name, Object value) {
         super.setParameter(name, value);
 
+    }
+    
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     */
+    protected void initParameters() {
+        super.initParameters();
+        
+        Document parent = getSourceDocument();
+        setParameter(PARENT_ID, parent.getId());
+        
+        Map objectModel = ContextHelper.getObjectModel(getContext());
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Session session = request.getSession(false);
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        User user = identity.getUser();
+        setParameter(USER, user.getId());
+        
+        String[] languages = parent.getPublication().getLanguages();
+        setParameter(LANGUAGES, languages);
     }
 }

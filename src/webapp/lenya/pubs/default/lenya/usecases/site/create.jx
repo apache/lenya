@@ -26,7 +26,7 @@
   <page:body>
     <div class="lenya-box">
       <div class="lenya-box-title">
-        <i18n:text>Login</i18n:text>
+        <i18n:text>New Document</i18n:text>
       </div>
       <div class="lenya-box-body">
         <form>
@@ -79,7 +79,7 @@
                   <i18n:text>Language</i18n:text>*: </td>
                 <td>
                   <select class="lenya-form-element" name="language">
-                    <jx:forEach var="language" items="${usecase.getLanguages()}">
+                    <jx:forEach var="language" items="${usecase.getParameter('languages')}">
                       <option value="${language}">${language}</option>
                     </jx:forEach>
                   </select>
