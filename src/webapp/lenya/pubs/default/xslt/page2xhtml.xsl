@@ -20,7 +20,6 @@
 <xsl:param name="document-id"/>
 
 <xsl:template match="cmsbody">
-  <xsl:copy>
   <html>
     <head>
       <link rel="stylesheet" href="{$root}/css/page.css" mime-type="text/css"/>
@@ -45,7 +44,6 @@
       </table>
     </body>
   </html>
-  </xsl:copy>
 </xsl:template>
 
 <xsl:template match="@*|node()" priority="-1">
