@@ -27,6 +27,12 @@
       <map:match pattern="article.html">
         <map:read src="resources/publication/html/documentation/article.html" mime-type="text/html"/>
       </map:match>
+      <map:match pattern="section.html">
+        <map:read src="resources/publication/html/documentation/section.html" mime-type="text/html"/>
+      </map:match>
+      <map:match pattern="frontpage.html">
+        <map:read src="resources/publication/html/documentation/frontpage.html" mime-type="text/html"/>
+      </map:match>
       <map:match pattern="xmlArchitecture.html">
         <map:read src="resources/publication/html/documentation/xmlArchitecture.html" mime-type="text/html"/>
       </map:match>
