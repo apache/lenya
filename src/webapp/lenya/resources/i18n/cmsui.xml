@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-  $Id: cmsui.xml,v 1.18 2004/02/16 19:52:18 roku Exp $
+  $Id: cmsui.xml,v 1.19 2004/02/17 20:01:09 roku Exp $
 
    Copyright 2004 Rolf Kulemann (roku at apache.org)
 
@@ -123,5 +123,6 @@
   <message key="Edit Members">Edit Members</message>
   <message key="Group Administration">Group Administration</message>
   <message key="Add Group">Add Group</message>
-  
+  <message key="Group Data">Group Data</message>
+
 </catalogue>

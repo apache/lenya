@@ -2,12 +2,13 @@
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
     
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
+  <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
   
   
   <xsl:template match="/">
@@ -17,7 +18,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title><xsl:value-of select="title"/></page:title>
+      <page:title><i18n:text><xsl:value-of select="title"/></i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="group"/>
       </page:body>
@@ -32,7 +33,7 @@
     <td valign="top">
     
     <div class="lenya-box">
-      <div class="lenya-box-title">Group Data</div>
+      <div class="lenya-box-title"><i18n:text>Group Data</i18n:text></div>
       <div class="lenya-box-body">
         
         <form method="GET" action="{/page/continuation}.continuation">
@@ -42,7 +43,7 @@
             
             <tr>
               
-              <td class="lenya-entry-caption">Group&#160;ID</td>
+              <td class="lenya-entry-caption"><i18n:text>Group ID</i18n:text></td>
               <td>
                  <xsl:choose>
                    <xsl:when test="@new = 'true'">
@@ -55,13 +56,13 @@
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Name</td>
+              <td class="lenya-entry-caption"><i18n:text>Name</i18n:text></td>
               <td>
                 <input class="lenya-form-element" name="name" type="text" value="{name}"/>
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption" valign="top">Description</td>
+              <td class="lenya-entry-caption" valign="top"><i18n:text>Description</i18n:text></td>
               <td>
                 <textarea class="lenya-form-element" name="description"><xsl:value-of select="description"/>&#160;</textarea>
               </td>
@@ -69,9 +70,9 @@
             <tr>
               <td/>
               <td>
-                <input name="submit" type="submit" value="Submit"/>
+                <input i18n:attr="value" name="submit" type="submit" value="Submit"/>
                 &#160;
-                <input name="cancel" type="submit" value="Cancel"/>
+                <input i18n:attr="value" name="cancel" type="submit" value="Cancel"/>
               </td>
             </tr>
           </table>
