@@ -44,7 +44,7 @@
   -------------------------------------------
 
   Read the files INSTALL-BIN.txt (for the binary distribution) or
-  INSTALL-SRC.txt (for the soruce disctribution) in this directory for
+  INSTALL-SRC.txt (for the source disctribution) in this directory for
   the installation instructions.
 
   The documentation available as of the date of this release is included 
