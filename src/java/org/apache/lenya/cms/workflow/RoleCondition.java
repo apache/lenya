@@ -6,13 +6,7 @@
 
 package org.apache.lenya.cms.workflow;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Situation;
 
@@ -32,24 +26,13 @@ public class RoleCondition implements Condition {
     public boolean isComplied(Situation situation) {
 
         CMSSituation situationImpl = (CMSSituation) situation;
-        User user = situationImpl.getUser();
-        Iterator userGroups = user.getGroups();
-        Set userRoles = new HashSet();
-        
-        while (userGroups.hasNext()) {
-        	Iterator groupRoles = ((Group)userGroups.next()).getRoles();
-            assert groupRoles != null;
-        	while (groupRoles.hasNext()) {
-        		userRoles.add(groupRoles.next());
-        	}
-        }
+        Role roles[] = situationImpl.getRoles();
         
         Role conditionRole = new Role(getExpression().trim());
 
         boolean complied = false;
-        Iterator roles = userRoles.iterator();
-        while (!complied && roles.hasNext()) {
-        	if (conditionRole.equals(roles.next())) {
+        for (int i = 0; i < roles.length; i++) {
+        	if (conditionRole.equals(roles[i])) {
         		complied = true;
         	}
         }
@@ -67,11 +50,15 @@ public class RoleCondition implements Condition {
         this.expression = expression;
     }
 
+    /**
+     * Returns the expression of this condition.
+     * @return A string.
+     */
     public String getExpression() {
         return expression;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.lang.Object#toString()
      */
     public String toString() {

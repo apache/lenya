@@ -13,9 +13,12 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.ac.ItemManager;
+import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac.UserManager;
+import org.apache.lenya.cms.ac2.Identity;
+import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -74,9 +77,8 @@ public class WorkflowFactory {
     /* 
      * Creates a new workflow situation.
      */
-    public Situation buildSituation(User user) throws WorkflowException {
-        assert user != null;
-        return new CMSSituation(user);
+    public Situation buildSituation(Role roles[]) throws WorkflowException {
+        return new CMSSituation(roles);
     }
     
     public Situation buildSituation(Map objectModel) throws WorkflowException {
@@ -87,24 +89,19 @@ public class WorkflowFactory {
             throw new WorkflowException("No session object available!");
         }
         
-        Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
-        
-        if (identity == null) {
-            throw new WorkflowException("No session object available!");
-        }
-        
-        String username = identity.getUsername();
-        
         Publication publication = PublicationFactory.getPublication(objectModel);
+        File configDir = new File(publication.getDirectory(), ItemManager.PATH);
         
-        User user;
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        Policy policy = (Policy) session.getAttribute(Policy.class.getName());
+        
+        Role roles[];
         try {
-            user = UserManager.instance(publication).getUser(username);
+            roles = policy.getRoles(identity);
         } catch (AccessControlException e) {
             throw new WorkflowException(e);
         }
-        
-        return buildSituation(user);
+        return buildSituation(roles);
     }
     
    

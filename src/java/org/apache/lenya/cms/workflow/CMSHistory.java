@@ -85,8 +85,11 @@ public class CMSHistory extends History {
         Event event) {
         
         Element element = super.createVersionElement(helper, state, situation, event);
+        // TODO: add identity
+        /*
         User user = ((CMSSituation) situation).getUser();
         element.setAttribute(USER_ATTRIBUTE, user.getId());
+        */
         return element;
     }
     

@@ -43,17 +43,27 @@
  */
 package org.apache.lenya.cms.workflow;
 
+import java.io.File;
+
 import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.ac.FileUser;
+import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Group;
+import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
+import org.apache.lenya.cms.ac.UserManager;
+import org.apache.lenya.cms.ac2.Identity;
+import org.apache.lenya.cms.ac2.Policy;
+import org.apache.lenya.cms.ac2.file.FileAccessController;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.TestPageEnvelope;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
@@ -73,13 +83,14 @@ import junit.textui.TestRunner;
 public class WorkflowTest extends TestCase {
 
     /**
-	 * @param arg0
-	 */
-	public WorkflowTest(String test) {
-		super(test);
-	}
+     * Constructor.
+     * @param test The test to execute.
+     */
+    public WorkflowTest(String test) {
+        super(test);
+    }
 
-	/**
+    /**
      * The main program for the WorkflowTest class
      *
      * @param args The command line arguments
@@ -91,7 +102,8 @@ public class WorkflowTest extends TestCase {
     }
 
     /**
-     *
+     * Returns the test suite.
+     * @return A test suite.
      */
     public static Test getSuite() {
         return new TestSuite(WorkflowTest.class);
@@ -99,41 +111,69 @@ public class WorkflowTest extends TestCase {
 
     private static final String variableName = "is-live";
 
-    public void testWorkflow() throws DocumentTypeBuildException, WorkflowException {
+    /**
+     * Tests the workflow.
+     * @throws DocumentTypeBuildException when something went wrong.
+     * @throws WorkflowException when something went wrong.
+     * @throws AccessControlException when something went wrong.
+     * @throws PageEnvelopeException when something went wrong.
+     */
+    public void testWorkflow()
+        throws
+            DocumentTypeBuildException,
+            WorkflowException,
+            AccessControlException,
+            PageEnvelopeException {
 
         Publication publication = PublicationHelper.getPublication();
-        Document document = new DefaultDocument(publication,  "index");
-        
+        Document document = new DefaultDocument(publication, "index");
+
+        File configDir = new File(publication.getDirectory(), ItemManager.PATH);
+        assertTrue(configDir.exists());
+
+        File configurationDirectory = new File(publication.getDirectory(), "config/ac");
+        FileAccessController accessController = new FileAccessController(configurationDirectory);
+        PageEnvelope envelope = new TestPageEnvelope(publication, "index.html");
+        Policy policy = ((FileAccessController) accessController).getPolicy(envelope);
+
         DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
         String workflowId = type.getWorkflowFileName();
         WorkflowFactory.initHistory(document, workflowId);
-        
+
         WorkflowFactory factory = WorkflowFactory.newInstance();
         for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
-            
+
             WorkflowInstance instance = null;
             instance = factory.buildInstance(document);
             assertNotNull(instance);
-            
+
             System.out.println("Current state: " + instance.getCurrentState());
-            
-            User user = new FileUser(PublicationHelper.getPublication(), "test-user", "Test Fullname", "test@email", "testPassword");
-            Role role = new Role(situations[situationIndex].getRole());
-            System.out.println("Role: " + role);
-        
+
+            User user =
+                UserManager.instance(configDir).getUser(situations[situationIndex].getUser());
+
+            Identity identity = new Identity();
+            identity.addIdentifiable(user);
+            Role roles[] = policy.getRoles(identity);
+            System.out.print("Roles:");
+            for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {
+                System.out.print(" " + roles[roleIndex]);
+            }
+            System.out.println();
+
             Group group = new Group("test-group");
-            group.addRole(role);
-        
-            user.addGroup(group);
-        
+            //group.addRole(role);
+
+            //user.addGroup(group);
+
             Situation situation = null;
             try {
-                situation = factory.buildSituation(user);
+                situation = factory.buildSituation(roles);
             } catch (WorkflowException e1) {
                 e1.printStackTrace(System.err);
             }
             Event events[] = instance.getExecutableEvents(situation);
-            
+
             Event event = null;
             System.out.print("Events:");
             for (int eventIndex = 0; eventIndex < events.length; eventIndex++) {
@@ -144,77 +184,87 @@ public class WorkflowTest extends TestCase {
             }
             assertNotNull(event);
             System.out.println();
-        
+
             System.out.println("Executing event: " + event);
             instance.invoke(situation, event);
-            
+
             assertTrue(instance.getValue(variableName) == situations[situationIndex].getValue());
-            
-            System.out.println("Variable: " + variableName + " = " + instance.getValue(variableName));
+
+            System.out.println(
+                "Variable: " + variableName + " = " + instance.getValue(variableName));
             System.out.println("------------------------------------------------------");
-        
+
         }
 
         System.out.println("Test completed.");
 
     }
-    
-    private static final TestSituation situations[] = {
-        new TestSituation("editor", "submit", false),
-        new TestSituation("reviewer", "reject", false),
-        new TestSituation("editor", "submit", false),
-        new TestSituation("reviewer", "publish", true),
-        new TestSituation("reviewer", "deactivate", false)
-    };
-    
+
+    private static final TestSituation situations[] =
+        {
+            new TestSituation("lenya", "submit", false),
+            new TestSituation("roger", "reject", false),
+            new TestSituation("lenya", "submit", false),
+            new TestSituation("roger", "publish", true),
+            new TestSituation("roger", "deactivate", false)};
+
+    /**
+     * A test situation. 
+     */
     public static class TestSituation {
-        
-        private String role;
+
+        private String user;
         private String event;
-        private boolean value; 
-        
-        public TestSituation(String role, String event, boolean value) {
-            assert role != null;
-            this.role = role;
+        private boolean value;
+
+        /**
+         * Creates a new test situation.
+         * @param user The user.
+         * @param event The event.
+         * @param value The variable value.
+         */
+        public TestSituation(String user, String event, boolean value) {
+            assert user != null;
+            this.user = user;
             assert event != null;
             this.event = event;
             this.value = value;
         }
-        
+
         /**
-         * @return
+         * Returns the event.
+         * @return An event.
          */
         public String getEvent() {
             return event;
         }
 
         /**
-         * @return
+         * Returns the user.
+         * @return A string.
          */
-        public String getRole() {
-            return role;
+        public String getUser() {
+            return user;
         }
 
         /**
-         * @return
+         * Returns the value.
+         * @return A value.
          */
         public boolean getValue() {
             return value;
         }
 
     }
-    
+
     private static String documentTypeName;
-    
-    /* (non-Javadoc)
+
+    /**
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
         if (documentTypeName == null) {
-            String args[] = {
-                "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya",
-                "test"                
-            };
+            String args[] = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
             PublicationHelper.extractPublicationArguments(args);
             documentTypeName = "simple";
         }

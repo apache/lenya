@@ -6,6 +6,7 @@
 
 package org.apache.lenya.cms.workflow;
 
+import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.workflow.Situation;
 
@@ -16,27 +17,24 @@ import org.apache.lenya.workflow.Situation;
 public class CMSSituation implements Situation {
 
     /** Creates a new instance of Situation */
-    protected CMSSituation(User user) {
-
-        assert user != null;
-        this.user = user;
-
+    protected CMSSituation(Role roles[]) {
+        this.roles = roles;
     }
 
-    private User user;
+    private Role roles[];
 
     /**
      * @return
      */
-    public User getUser() {
-        return user;
+    public Role[] getRoles() {
+        return roles;
     }
 
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "(user: " + user + ")"; 
+        return "(roles: " + roles + ")"; 
     }
 
 }
