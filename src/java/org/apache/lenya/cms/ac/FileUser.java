@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.15 2003/06/19 13:38:31 egli Exp $
+ * $Id: FileUser.java,v 1.16 2003/06/19 13:55:38 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -77,7 +77,7 @@ public class FileUser extends User {
 	public static final String ID_ATTRIBUTE = "id";
 	public static final String CLASS_ATTRIBUTE = "class";
 
-	protected Publication publication;
+	private Publication publication;
 
 	/**
 	 * @param publication
@@ -202,5 +202,12 @@ public class FileUser extends User {
 		File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
 		xmlfile.delete();
 	}
+
+    /**
+     * @return
+     */
+    protected Publication getPublication() {
+        return publication;
+    }
 
 }
