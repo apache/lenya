@@ -1,5 +1,5 @@
 /*
-$Id: XopusHandlerAction.java,v 1.33 2003/07/23 13:21:30 gregor Exp $
+$Id: XopusHandlerAction.java,v 1.34 2003/07/23 15:32:35 michi Exp $
 <License>
 
  ============================================================================
@@ -268,7 +268,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
                         true));
                 new DOMWriter(new FileOutputStream(tempFile)).printWithoutFormatting(contentDocument);
             } catch (Exception e) {
-                getLogger().error(".act(): Exception during writing to temp file: " + e);
+                getLogger().error(".act(): Exception during writing to temp file", e);
             }
         }
 
@@ -286,15 +286,21 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
                     throw new Exception("No session");
                 }
 
-                Identity identity = (Identity) session.getAttribute(
-                        "org.apache.lenya.cms.ac.Identity");
-                getLogger().debug(".act(): Checkin: " + reqFile + "::" + identity.getUsername());
-                rc.reservedCheckIn(xmlRoot + reqFile, identity.getUsername(), true);
+                Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
+                org.apache.lenya.cms.ac2.Identity identityTwo = (org.apache.lenya.cms.ac2.Identity) session.getAttribute("org.apache.lenya.cms.ac2.Identity");
+                String username = null;
+                if (identity != null) {
+                    username = identity.getUsername();
+                } else if (identityTwo != null) {
+                    username = identityTwo.getUser().getId();
+                } else {
+                    getLogger().error(".act(): No identity!");
+                }
+                getLogger().debug(".act(): Checkin: " + reqFile + "::" + username);
+                rc.reservedCheckIn(xmlRoot + reqFile, username, true);
                 FileUtil.copyFile(tempFile, permFile);
             } catch (Exception e) {
-                getLogger().error(".act(): Exception during checkin of " + xmlRoot + reqFile +
-                    " (" + e + ")");
-
+                getLogger().error(".act(): Exception during checkin of " + xmlRoot + reqFile, e);
                 return null;
             }
         }
