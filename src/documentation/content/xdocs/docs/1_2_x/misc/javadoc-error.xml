@@ -32,8 +32,8 @@
 <p>The javadoc files are not yet generated. To do so, execute the following commands
 in your Lenya source directory:</p>
 <source>
-$ ant javadocs
-$ ant install
+$ build javadocs
+$ build install
 </source>
   </body>
 </document>
