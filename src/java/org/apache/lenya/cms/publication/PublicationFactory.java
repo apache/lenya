@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationFactory.java,v 1.26 2004/05/03 13:52:46 andreas Exp $  */
+/* $Id: PublicationFactory.java,v 1.27 2004/06/28 08:32:13 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -97,7 +97,9 @@ public final class PublicationFactory {
             }
         }
 
-//        assert publication != null;
+        if (publication == null) {
+            throw new PublicationException("The publication for ID [" + id + "] could not be created.");
+        }
         return publication;
     }
 
