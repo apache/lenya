@@ -1,5 +1,5 @@
 /*
- * $Id: IMLAuthenticatorAction.java,v 1.14 2003/06/17 07:28:47 michi Exp $
+ * $Id: IMLAuthenticatorAction.java,v 1.15 2003/06/19 14:45:44 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -178,7 +178,7 @@ public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticato
     /**
      *
      */
-    private Document getIdentityDoc(String username, int port, String context)
+    protected Document getIdentityDoc(String username, int port, String context)
         throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
