@@ -4,11 +4,27 @@ form {
 	padding: 0px;
 }
 
-.lenya-table td.lenya-entry-caption {
+td.lenya-entry-caption {
 	text-align: right;
+	color: 606060;
 }
 
 .lenya-form-element {
     width: 300px;
     font-family: Verdana, sans-serif;
+}
+
+.lenya-form-element-narrow {
+    width: 150px;
+    font-family: Verdana, sans-serif;
+}
+
+.lenya-form-message-error {
+    font-weight: bold;
+    color: red;
+}
+
+.lenya-form-message-success {
+    font-weight: bold;
+    color: navy;
 }

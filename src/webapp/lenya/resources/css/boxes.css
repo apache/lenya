@@ -1,9 +1,10 @@
 div.lenya-box {
 	border: solid 1px #CCCCCC;
-	font-size: small;
 	width: auto;
 	min-width: auto;
 	max-width: 100%;
+	font-size: small;
+	margin-bottom: 10px;
 }
 
 div.lenya-box-title {
