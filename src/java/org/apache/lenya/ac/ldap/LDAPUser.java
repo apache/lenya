@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.1 2003/11/13 16:07:12 andreas Exp $ <License>
+ * $Id: LDAPUser.java,v 1.2 2003/11/24 14:06:49 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -49,6 +49,8 @@ import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.file.*;
 import org.apache.log4j.Category;
+
+import com.sun.jndi.ldap.LdapCtxFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -267,22 +269,31 @@ public class LDAPUser extends FileUser {
 
 		String principal =
 			"uid=" + getLdapId() + "," + defaultProperties.getProperty(PARTIAL_USER_DN);
-		Context ctx;
+		Context ctx = null;
 
-		log.debug("Authenticating with principal [" + principal + "]");
+        if (log.isDebugEnabled()) {
+            log.debug("Authenticating with principal [" + principal + "]");
+        }
+        
+        boolean authenticated = false;
 
 		try {
 			ctx = bind(principal, password);
-			close(ctx);
-			log.debug("Context closed.");
+            authenticated = true;
+            close(ctx);
+            if (log.isDebugEnabled()) {
+                log.debug("Context closed.");
+            }
 		} catch (NamingException e) {
 			// log this failure
 			// StringWriter writer = new StringWriter();
 			// e.printStackTrace(new PrintWriter(writer));
-			log.info("Bind for user " + principal + " to Ldap server failed: ", e);
+            if (log.isInfoEnabled()) {
+                log.info("Bind for user " + principal + " to Ldap server failed: ", e);
+            }
 		}
 
-		return true;
+		return authenticated;
 	}
 
 	/**
@@ -348,7 +359,7 @@ public class LDAPUser extends FileUser {
 				+ File.separator
 				+ defaultProperties.getProperty(KEY_STORE));
 
-		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+		env.put(Context.INITIAL_CONTEXT_FACTORY, LdapCtxFactory.class.getName());
 		env.put(Context.PROVIDER_URL, defaultProperties.getProperty(PROVIDER_URL));
 		env.put(Context.SECURITY_PROTOCOL, defaultProperties.getProperty(SECURITY_PROTOCOL));
 		env.put(
