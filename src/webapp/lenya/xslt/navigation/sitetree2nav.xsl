@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    $Id: sitetree2nav.xsl,v 1.17 2004/02/22 17:52:59 roku Exp $
+    $Id: sitetree2nav.xsl,v 1.18 2004/03/02 14:04:39 egli Exp $
 
     Document   : stylesheet.xsl
     Created on : 30. April 2003, 10:53
@@ -142,7 +142,16 @@ Apply nodes recursively
       <xsl:attribute name="current">true</xsl:attribute>
     </xsl:if>
     
-    <xsl:attribute name="href"><xsl:value-of select="concat($path-to-context, $canonical-url)"/></xsl:attribute>
+    <xsl:attribute name="href">
+      <xsl:choose>
+        <xsl:when test="@href">
+          <xsl:value-of select="@href"/>
+        </xsl:when>
+        <xsl:otherwise>
+	  <xsl:value-of select="concat($path-to-context, $canonical-url)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
     
     <xsl:choose>
       <xsl:when test="tree:label[lang($existinglanguage)]">
