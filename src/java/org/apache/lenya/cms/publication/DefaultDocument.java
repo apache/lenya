@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.24 2003/08/13 09:57:31 egli Exp $
+$Id: DefaultDocument.java,v 1.25 2003/08/13 15:05:59 egli Exp $
 <License>
 
  ============================================================================
@@ -187,9 +187,12 @@ public class DefaultDocument implements Document {
         SiteTree sitetree;
         try {
             sitetree = getPublication().getSiteTree(getArea());
-            Label[] labels = sitetree.getNode(getId()).getLabels();
-            for (int i = 0; i < labels.length; i++) {
-                languages.add(labels[i].getLanguage());
+            SiteTreeNode node = sitetree.getNode(getId());
+            if (node != null) {
+                Label[] labels = node.getLabels();
+                for (int i = 0; i < labels.length; i++) {
+                    languages.add(labels[i].getLanguage());
+                }
             }
         } catch (SiteTreeException e) {
             throw new DocumentException(e);
