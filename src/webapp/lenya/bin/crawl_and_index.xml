@@ -42,7 +42,7 @@
   </path>
 </target>
 
-<target name="crawl" description="Crawl and dump hypertext documents" depends="init">
+<target name="crawl" description="Crawl and dump hypertext documents. Usage: -Dcrawler.xconf=/foo/bar/crawler.xconf" depends="init">
   <echo>INFO: Crawl and dump hypertext documents (${crawler.xconf})</echo>
 
   <exec executable="${lenya.dir}/src/webapp/lenya/bin/crawl_and_index.sh">
