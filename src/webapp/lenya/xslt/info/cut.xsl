@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: cut.xsl,v 1.12 2004/02/25 11:32:09 roku Exp $
+ $Id: cut.xsl,v 1.13 2004/02/25 14:01:40 roku Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -11,7 +11,7 @@
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   >
   
-  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
