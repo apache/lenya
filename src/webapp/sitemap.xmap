@@ -332,8 +332,13 @@
    <map:selector logger="sitemap.selector.host" name="host" src="org.apache.cocoon.selection.HostSelector"/>
   
 
+<!-- FIXME: Cocoon M1 -->
 <!--
     <map:selector name="auth-media" src="org.apache.cocoon.webapps.authentication.selection.MediaSelector"/>
+-->
+<!-- FIXME: Latest Cocoon CVS -->
+<!--
+    <map:selector name="auth-media" src="org.apache.cocoon.webapps.session.selection.MediaSelector"/>
 -->
 </map:selectors>
 
