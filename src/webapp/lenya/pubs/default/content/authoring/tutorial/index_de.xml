@@ -23,7 +23,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   limitations under the License.
 -->
 
-<!-- $Id: index_de.xml,v 1.11 2004/03/17 19:49:28 gregor Exp $ -->
+<!-- $Id: index_de.xml,v 1.12 2004/04/15 10:17:50 roku Exp $ -->
     <lenya:meta>
         <dc:title>DC Title</dc:title>
         <dc:creator>Christian Egli</dc:creator>
@@ -50,10 +50,6 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
     <p>This tutorial gives you a short introduction into the Apache
     Lenya content management system. We'll look at a typical use case
     where we create a new document, edit and publish it.</p>
-
-    <p>It's probably best if you keep the tutorial in one browser
-    window and <a target="_blank" href="">open another browser
-    window</a> to do your first steps in Apache Lenya CMS</p>
 
     <h2>Creating a new document</h2>
 
