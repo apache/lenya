@@ -27,8 +27,8 @@ Several items, e.g. the servlet container, may be replaced by other products.
   
   <li>
     <p>
-    <strong>Apache Tomcat</strong> for JDK 1.4 (recommended: 4.1.24)<br/>
-    <link href="http://jakarta.apache.org/builds/jakarta-tomcat-4.0/release/v4.1.24/bin/">Tomcat release builds</link><br/>
+    <strong>Apache Tomcat</strong> for JDK 1.4 (recommended: 4.1.29)<br/>
+    <link href="http://www.apache.org/dist/jakarta/tomcat-4/v4.1.29/bin/">Tomcat release builds</link><br/>
     Pick one of the <code>jakarta-tomcat-4.1.24-LE-jdk14</code> files!
     </p>
   </li>
@@ -42,7 +42,7 @@ Several items, e.g. the servlet container, may be replaced by other products.
   
   <li>
     <p>
-    <strong>Apache Cocoon</strong> (required: Cocoon 2.1.2 or later)<br/>
+    <strong>Apache Cocoon</strong> (required: Cocoon 2.1.2)<br/>
     <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>
     </p>
   </li>
