@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XPSAssembler.java,v 1.21 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id: XPSAssembler.java,v 1.22 2004/03/24 22:11:41 michi Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -305,7 +305,7 @@ public class XPSAssembler implements XPSInclude {
             InputStream is = readXML(currentInfo);
             document = dpf.getDocument(is);
         } catch (Exception e) {
-            log.warn(".include() 1056: " + e);
+            log.warn(e + ", currentInfo: " + currentInfo.url.getFile() + " , sourceInfo: " + sourceInfo.url.getFile());
 
             Element newRoot = dpf.newElementNode(newDocument, XPSEXCEPTION_ELEMENT_NAME);
             newRoot.appendChild(dpf.newTextNode(newDocument, "" + e));
