@@ -1,5 +1,5 @@
 /*
- * $Id: CopyJavaSourcesTask.java,v 1.4 2003/03/04 19:44:43 gregor Exp $
+ * $Id: CopyJavaSourcesTask.java,v 1.5 2003/03/07 15:30:36 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,6 +47,7 @@ import org.apache.tools.ant.types.Path;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
@@ -61,15 +62,13 @@ public class CopyJavaSourcesTask extends Task {
     private String javaDir;
     private String buildDir;
 
-    private int numberOfEmptyDirectoriesCreated;
-    private int numberOfFilesCopied;
-
     /**
      *
      */
     public void execute() throws BuildException {
-        numberOfEmptyDirectoriesCreated = 0;
-        numberOfFilesCopied = 0;
+        int numberOfDirectoriesCreated = 0;
+        int numberOfFilesCopied = 0;
+        TwoTuple twoTuple = new TwoTuple(numberOfDirectoriesCreated, numberOfFilesCopied);
 
         File absoluteBuildDir = new File(project.getBaseDir(), project.translatePath(buildDir));
         //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
@@ -88,13 +87,15 @@ public class CopyJavaSourcesTask extends Task {
                     //System.out.println("CopyJavaSourcesTask.execute(): " + pubJavaDir);
 
                     //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
-                    copyDir(pubJavaDir, absoluteBuildDir);
+                    copyDir(pubJavaDir, absoluteBuildDir, twoTuple, new JavaFilenameFilter());
                 }
             } else {
                 throw new BuildException("No such directory: " + path);
             }
         }
-        System.out.println("Copying " + numberOfEmptyDirectoriesCreated + " directories to " + absoluteBuildDir);
+        numberOfDirectoriesCreated = twoTuple.x;
+        numberOfFilesCopied = twoTuple.y;
+        System.out.println("Copying " + numberOfDirectoriesCreated + " directories to " + absoluteBuildDir);
         System.out.println("Copying " + numberOfFilesCopied + " files to "+absoluteBuildDir);
     }
 
@@ -102,18 +103,21 @@ public class CopyJavaSourcesTask extends Task {
     /**
      *
      */
-    public void copyDir(File source, File destination) {
+    static public void copyDir(File source, File destination, TwoTuple twoTuple, FilenameFilter filenameFilter) {
         if (source.isDirectory()) {
-            String[] files = source.list();
+            String[] files;
+            if (filenameFilter != null) {
+                files = source.list(filenameFilter);
+            } else {
+                files = source.list();
+            }
             for (int i = 0; i < files.length; i++) {
                 File file = new File(source, files[i]);
                 if (file.isFile()) {
-                    if (getExtension(file).equals("java")) {
-                        copyFile(file, new File(destination, files[i]));
-                    }
+                    copyFile(file, new File(destination, files[i]), twoTuple);
                 } else if (file.isDirectory()) {
                     //System.out.println("CopyJavaSourcesTask.copyDir(): " + source + " " + destination);
-                    copyDir(file, new File(destination, files[i]));
+                    copyDir(file, new File(destination, files[i]), twoTuple, filenameFilter);
                 } else {
                     System.err.println("CopyJavaSourcesTask.copyDir(): Neither file nor directory: " + file);
                 }
@@ -125,13 +129,16 @@ public class CopyJavaSourcesTask extends Task {
     /**
      *
      */
-    public void copyFile(File source, File destination) {
+    static public void copyFile(File source, File destination, TwoTuple twoTuple) {
         if (source.isFile()) {
             File parentDest = new File(destination.getParent());
             if (!parentDest.exists()) {
                 parentDest.mkdirs();
+
                 //System.out.println("CopyJavaSourcesTask.copyFile(): Directory created: " + parentDest);
-                numberOfEmptyDirectoriesCreated++;
+                int numberOfDirectoriesCreated = twoTuple.x;
+                numberOfDirectoriesCreated++;
+                twoTuple.x = numberOfDirectoriesCreated;
             }
 
             if (destination.isFile()) {
@@ -140,7 +147,6 @@ public class CopyJavaSourcesTask extends Task {
                 }
             }
 
-            //System.out.println("CopyJavaSourcesTask.copyFile(): " + source + " " + destination);
             try {
                 byte[] buffer = new byte[1024];
                 int bytesRead = -1;
@@ -151,25 +157,15 @@ public class CopyJavaSourcesTask extends Task {
                 }
                 out.close();
                 in.close();
+
+                int numberOfFilesCopied = twoTuple.y;
                 numberOfFilesCopied++;
+                twoTuple.y = numberOfFilesCopied;
+                //System.out.println("CopyJavaSourcesTask.copyFile(): File copied (" + numberOfFilesCopied  + "): " + source + " " + destination);
             } catch (Exception e) {
                 System.err.println("CopyJavaSourcesTask.copyFile(): " + e);
             }
         }
-    }
-
-
-    /**
-     *
-     */
-    public String getExtension(File file) {
-        StringTokenizer st = new StringTokenizer(file.getName(),".");
-        st.nextToken();
-        String extension="";
-        while (st.hasMoreTokens()) {
-            extension = st.nextToken();
-        }
-        return extension;
     }
 
 

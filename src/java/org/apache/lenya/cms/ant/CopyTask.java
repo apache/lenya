@@ -1,5 +1,5 @@
 /*
- * $Id: Main.java,v 1.6 2003/03/07 15:30:37 michi Exp $
+ * $Id: CopyTask.java,v 1.1 2003/03/07 15:30:36 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -36,51 +36,59 @@
  * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
  * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
  * THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene;
+package org.lenya.cms.ant;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.types.Path;
 
-import java.util.Iterator;
-
+import java.io.File;
+import java.util.StringTokenizer;
 
 /**
- * DOCUMENT ME!
- *
- * @author $author$
- * @version $Revision: 1.6 $
+ * @author <a href="mailto:michael.wechner@wyona.org">Michael Wechner</a>
  */
-public class Main {
+public class CopyTask extends Task {
+    private Path pubsRootDirs;
+    private Path toDir;
+
     /**
-     * DOCUMENT ME!
      *
-     * @param args DOCUMENT ME!
      */
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: " + new Main().getClass().getName() + " uri");
+    public void execute() throws BuildException {
+        int numberOfDirectoriesCreated = 0;
+        int numberOfFilesCopied = 0;
+        TwoTuple twoTuple = new TwoTuple(numberOfDirectoriesCreated, numberOfFilesCopied);
 
-            return;
+        //System.out.println("CopyTask.execute(): " + toDir);
+        //System.out.println("CopyTask.execute(): " + pubsRootDirs);
+
+        StringTokenizer st = new StringTokenizer(pubsRootDirs.toString(),File.pathSeparator);
+        while (st.hasMoreTokens()) {
+            String pubsRootDir = st.nextToken();
+            //System.out.println("CopyTask.execute(): " + pubsRootDir);
+            CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(toDir.toString()), twoTuple, null);
         }
 
-        try {
-            new Main().crawl(new URL(args[0]));
-        } catch (MalformedURLException e) {
-            System.err.println(e);
-        }
+        numberOfDirectoriesCreated = twoTuple.x;
+        numberOfFilesCopied = twoTuple.y;
+        System.out.println("Copying " + numberOfDirectoriesCreated + " directories to " + toDir);
+        System.out.println("Copying " + numberOfFilesCopied + " files to "+toDir);
     }
 
     /**
-     * DOCUMENT ME!
      *
-     * @param start_url DOCUMENT ME!
      */
-    public void crawl(URL start_url) {
-        System.out.println(".crawl(): INFO: "+start_url);
+    public void setPubsRootDirs(Path pubsRootDirs) {
+        this.pubsRootDirs = pubsRootDirs;
+    }
+
+    /**
+     *
+     */
+    public void setToDir(Path toDir) {
+        this.toDir = toDir;
     }
 }

@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.41 2003/03/06 17:21:20 andreas Exp $
+   @version CVS $Id: build.xml,v 1.42 2003/03/07 15:30:36 michi Exp $
 
 -->
 
@@ -198,9 +198,9 @@
   <target name="build-custom-tasks" depends="init">
     <echo>INFO: Building Custom Tasks</echo>
 
-    <mkdir dir="tools/anttasks"/>
+    <mkdir dir="build/tools/anttasks"/>
     <javac srcdir="src/java"
-           destdir="tools/anttasks"
+           destdir="build/tools/anttasks"
            debug="${debug}"
            optimize="{optimize}"
            deprecation="${deprecation}"
@@ -209,7 +209,8 @@
            includes="org/lenya/cms/ant/**"
            classpathref="classpath"/>
 
-    <taskdef name="copyJavaSources" classpath="tools/anttasks" classname="org.lenya.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="copyJavaSources" classpath="build/tools/anttasks" classname="org.lenya.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="copyPubs"        classpath="build/tools/anttasks" classname="org.lenya.cms.ant.CopyTask"/>
   </target>
 
   <!-- ============================================================ -->
@@ -428,15 +429,8 @@
     Copy publications
     -->
     <echo>INFO: Copy publications from ${src.webapp.dir}/lenya/pubs to ${build.webapp}/lenya/pubs</echo>
-    <copy todir="${build.webapp}/lenya/pubs">
-<!--
-      <fileset dir="/home/michiii/src/lenya-pubs"/>
--->
-<!--
-      <fileset dir="${pubs.root.dirs}"/>
--->
-      <fileset dir="${src.webapp.dir}/lenya/pubs"/>
-    </copy>
+    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}">
+    </copyPubs>
 
     <!-- create directory classes within webapp -->
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
