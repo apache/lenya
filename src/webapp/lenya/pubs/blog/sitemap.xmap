@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.10 2003/08/21 18:52:07 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.11 2003/08/21 21:21:27 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -60,6 +60,7 @@
       <map:handle-errors type="500">
         <!-- FIXME: can also contain other errors than "not published yet" -->
         <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
+        <map:transform src="../../xslt/util/page2xhtml.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
@@ -102,13 +103,19 @@
               <map:parameter name="source" value="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
             </map:transform>
             <map:transform type="write-source"/>
+            <map:serialize type="xml" status-code="204"/>
+            <!-- HTTP status code: 204 No Content -->
+<!--
+      <map:handle-errors type="204"/>
+-->
           </map:when>
           <map:otherwise> <!-- GET -->
             <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+            <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>
-        <map:serialize type="xml"/>
       </map:match>
+      <map:handle-errors type="500"/>
     </map:pipeline>
     <!-- /GET and PUT -->
     <map:pipeline>
@@ -119,9 +126,7 @@
       <map:match pattern="*/entries/*/*/*/*/entry-bxeng.css">
         <map:read src="resources/misc/bxeng/entry.css" mime-type="text/css"/>
       </map:match>
-      <map:handle-errors type="500">
-        <map:serialize type="xml"/>
-      </map:handle-errors>
+      <map:handle-errors type="500"/>
     </map:pipeline>
     <!-- /BX Editor: Entries -->
 
@@ -151,6 +156,7 @@
       <map:handle-errors type="500">
         <!-- FIXME: can also contain other errors than "not published yet" -->
         <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
+        <map:transform src="../../xslt/util/page2xhtml.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
