@@ -100,6 +100,13 @@ table.lenya-menubar-menu img {border:0px}
 	background-position: 0% 50%;
 }
 
+.lenya-menubar-infoline {
+	margin-right: 10px;
+	color: #FFFFFF;
+	font-size: x-small;
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+}
+
 .menuBg a.mI:hover {
 	background:#FFFFFF;
 	color: black;

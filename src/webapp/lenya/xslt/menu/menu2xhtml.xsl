@@ -70,7 +70,7 @@
         </td>
         
         <td valign="bottom" align="right" colspan="2" background="{$image-prefix}/grau-bg2.gif">
-        	<div style="margin-right: 10px; color: #FFFFFF; font-size: 7pt; font-family: verdana, arial, sans-serif">
+        	<div class="lenya-menubar-infoline">
         	  
         	  <xsl:if test="$workflowstate != ''">
         	    <xsl:call-template name="workflow"/>
