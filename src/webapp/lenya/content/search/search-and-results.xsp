@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsp,v 1.13 2004/05/08 21:25:59 michi Exp $ -->
+<!-- $Id: search-and-results.xsp,v 1.14 2004/05/09 00:01:28 michi Exp $ -->
 
 <xsp:page language="java"
           xmlns:xsp="http://apache.org/xsp"
@@ -29,6 +29,7 @@
     <xsp:include>org.apache.lucene.analysis.Analyzer</xsp:include>
     <xsp:include>org.apache.lucene.analysis.standard.StandardAnalyzer</xsp:include>
     <xsp:include>org.apache.lucene.document.Document</xsp:include>
+    <xsp:include>org.apache.lucene.document.Field</xsp:include>
     <xsp:include>org.apache.lucene.queryParser.QueryParser</xsp:include>
     <xsp:include>org.apache.lucene.queryParser.MultiFieldQueryParser</xsp:include>
     <xsp:include>org.apache.lucene.search.Hits</xsp:include>
@@ -53,7 +54,7 @@
    File excerptDir=null;
 
    String[] fields={"contents","title"};
-   String field="contents";
+   String field = "contents";
 
 /** 
  * Contextualize this class 
@@ -380,7 +381,10 @@
                     <fields>
 		    <xsp:logic>
                     while (lfields.hasMoreElements()) {
-                        <field><xsp:expr>lfields.nextElement()</xsp:expr></field>
+                        Field lfield = (Field)lfields.nextElement();
+                        String slfield = lfield.toString();
+                        <field><xsp:expr>slfield</xsp:expr></field>
+                        <xsp:element><xsp:param name="name"><xsp:expr>lfield.name()</xsp:expr></xsp:param><xsp:attribute name="type"><xsp:expr>slfield.substring(0, slfield.indexOf("&lt;"))</xsp:expr></xsp:attribute><xsp:expr>lfield.stringValue()</xsp:expr></xsp:element>
                     }
 		    </xsp:logic>
                     </fields>
