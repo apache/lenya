@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.49 2003/04/02 12:37:00 andreas Exp $
+   @version CVS $Id: build.xml,v 1.50 2003/04/02 12:56:30 andreas Exp $
 
 -->
 
@@ -258,17 +258,6 @@
       <fileset dir="src/webapp/lenya/pubs/docs-new/WEB-INF/lib">
       </fileset>
     </copy>
-    
-    <!-- copy forrest libraries -->
-    <!--
-    <echo>Install forrest publication</echo>
-    <mkdir dir="${build.webapp}/lenya/pubs/forrest"/>
-    <copy todir="${build.webapp}/lenya/pubs/forrest" filtering="off">
-      <fileset dir="${src.forrest.dir}">
-        <exclude name="WEB-INF"/>
-      </fileset>
-    </copy>
-    -->
     
     <!-- patch cocoon.xconf -->
     <echo>INFO: patching cocoon.xconf with XSLT stylesheet</echo>
