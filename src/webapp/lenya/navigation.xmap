@@ -68,12 +68,17 @@ This sitemap creates default navigation components.
     <!-- sitetree -->
     <!-- pattern: {pub-id}/{area}/sitetree/{url}.xml -->
     <map:match pattern="*/*/sitetree/**.xml">
-      <map:select type="resource-exists">
-        <map:when test="pubs/{1}/content/{2}/sitetree.xml">
-          <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
+      <map:select type="parameter">
+        <map:parameter name="parameter-selector-test" value="{2}"/>
+
+        <!-- NOTE: Does it really make sense to use the sitetree framework for the admin area? -->
+        <map:when test="admin">
+          <map:generate src="content/admin/sitetree.xml"/>
         </map:when>
         <map:otherwise>
-          <map:generate src="content/{2}/sitetree.xml"/>
+	  <map:generate type="sitetree">
+	    <map:parameter name="area" value="{2}"/>
+          </map:generate>
         </map:otherwise>
       </map:select>
       <map:transform type="i18n">      
