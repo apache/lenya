@@ -1,5 +1,5 @@
 /*
-$Id: AbstractTask.java,v 1.12 2003/07/09 13:44:51 egli Exp $
+$Id: AbstractTask.java,v 1.13 2003/11/27 14:01:26 andreas Exp $
 <License>
 
  ============================================================================
@@ -96,5 +96,22 @@ public abstract class AbstractTask implements Task {
      * @param label DOCUMENT ME!
      */
     public void setLabel(String label) {
+    }
+    
+    private int result = SUCCESS;
+
+    /**
+     * @see org.apache.lenya.cms.task.Task#getResult()
+     */
+    public int getResult() {
+        return result;
+    }
+    
+    /**
+     * Sets the result of this task.
+     * @param result An integer ({@link Task#SUCCESS}, {@link Task#FAILURE}).
+     */
+    protected void setResult(int result) {
+        this.result = result;
     }
 }

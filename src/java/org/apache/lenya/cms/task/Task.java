@@ -1,5 +1,5 @@
 /*
-$Id: Task.java,v 1.17 2003/10/22 16:32:55 egli Exp $
+$Id: Task.java,v 1.18 2003/11/27 14:01:26 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,6 +68,8 @@ public interface Task extends Parameterizable {
     
     String NAMESPACE = "http://apache.org/cocoon/lenya/task/1.0";
     String DEFAULT_PREFIX = "task";
+    int SUCCESS = 0;
+    int FAILURE = 1;
 
     /**
      * The path of the servlet
@@ -114,4 +116,10 @@ public interface Task extends Parameterizable {
      * @param label the label
      */
     void setLabel(String label);
+    
+    /**
+     * Returns the result of the task ({@link #SUCCESS}, {@link FAILURE}).
+     * @return
+     */
+    int getResult();
 }
