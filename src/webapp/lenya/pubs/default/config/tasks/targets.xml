@@ -103,36 +103,6 @@
 		/>
 </target>
 
-  <!-- Remove a language from an existing document -->
-  <target name="remove-language">
-    
-    <property name="remove.label.document-id" value=""/>
-    <property name="remove.label.label-name" value=""/>
-    <property name="remove.label.language" value=""/>
-    
-    <!-- Remove a label from a node in the tree -->
-    <echo>Remove label: ${remove.label.label-name}</echo>
-    <echo>for language: ${remove.label.language}</echo>
-    <echo>from document: ${remove.label.document-id}</echo>
-    <echo>in area: ${authoring.area}</echo>
-    <taskdef name="removelabel" classname="org.apache.lenya.cms.ant.RemoveLabelTask"/>
-    <removelabel
-      documentid="${remove.label.document-id}"
-      labelName="${remove.label.label-name}"
-      language="${remove.label.language}"
-      area="${authoring.area}"
-      />
-    <!-- Remove the language document -->
-    <property name="document.file" value=""/>
-    <mapdocumentidtofile
-      area="${authoring.area}" 
-      documentid="${remove.label.document-id}"
-      language="${remove.label.language}"
-      propertyname="document.file" 
-      />
-    <echo>Remove file: ${document.file}</echo>
-    <delete file="${document.file}"/>
-  </target>
 
   <!-- Save the dublin core meta data -->
   <target name="save-meta-data">
