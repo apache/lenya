@@ -42,7 +42,7 @@
 <!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/matrix/"+projectid+".html"</xsp:expr>?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
 -->
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/matrix/"+projectid+".html,/lenya/oscom/matrix/index.html&amp;sources=/matrix/"+projectid+".xml&amp;task-id=publish"</xsp:expr></xsp:attribute>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/live/matrix/"+projectid+".html,/lenya/oscom/live/matrix/index.html&amp;sources=/matrix/"+projectid+".xml&amp;task-id=publish"</xsp:expr></xsp:attribute>Publish</item>
       </block>
       <block>
         <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
