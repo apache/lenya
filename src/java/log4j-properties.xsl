@@ -16,7 +16,7 @@
 -->
 
 <!--
-    $Id: log4j-properties.xsl,v 1.16 2004/08/03 16:27:22 andreas Exp $
+    $Id$
     Description: Create log4j.properties file
 -->
 
@@ -27,6 +27,7 @@
 <xsl:output method="text"/>
 
 <xsl:param name="log4j-rollingFileAppender"/>
+<xsl:param name="log4j-rollingFileAppender-File" select="'/no/log4j/file/specified/log4j.log'"/>
 <xsl:param name="webapp-directory"/>
 
 <!-- remove single quotes -->
@@ -46,13 +47,19 @@ log4j.rootCategory=WARN, A1
 #log4j.appender.A1=org.apache.log4j.ConsoleAppender
 
 log4j.appender.A1=org.apache.log4j.RollingFileAppender
+log4j.appender.A1.File=<xsl:value-of select="$log4j-rollingFileAppender-File"/>
+<!--
 log4j.appender.A1.File=<xsl:value-of select="$directory"/>/WEB-INF/logs/log4j.log
+-->
 </xsl:when>
 <xsl:otherwise>
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
 
 #log4j.appender.A1=org.apache.log4j.RollingFileAppender
+#log4j.appender.A1.File=<xsl:value-of select="$log4j-rollingFileAppender-File"/>
+<!--
 #log4j.appender.A1.File=<xsl:value-of select="$directory"/>/WEB-INF/logs/log4j.log
+-->
 </xsl:otherwise>
 </xsl:choose>
 
