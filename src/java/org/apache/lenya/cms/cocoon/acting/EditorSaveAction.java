@@ -26,7 +26,6 @@ import org.apache.cocoon.util.Tokenizer;
 
 /**
  * @author Martin Lüthi
- * @created 2002.01.10
  * @version 2002.01.10
  */
 public class EditorSaveAction extends AbstractValidatorAction implements ThreadSafe{

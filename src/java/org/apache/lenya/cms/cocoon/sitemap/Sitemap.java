@@ -8,7 +8,6 @@ import org.dom4j.io.SAXReader;
 
 /**
  * @author Michael Wechner
- * @created 2002.3.17
  * @version 2002.3.18
  */
 public class Sitemap{

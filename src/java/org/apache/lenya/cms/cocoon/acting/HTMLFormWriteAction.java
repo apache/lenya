@@ -22,7 +22,6 @@ import org.wyona.util.Stack;
 
 /**
  * @author Michael Wechner
- * @created 2001.11.18
  * @version 2001.12.28
  */
 public class HTMLFormWriteAction extends AbstractComplementaryConfigurableAction implements Configurable{

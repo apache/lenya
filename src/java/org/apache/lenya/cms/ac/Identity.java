@@ -10,7 +10,6 @@ import org.apache.xpath.XPathAPI;
 
 /**
  * @author Michael Wechner
- * @created 1.12.22
  * @version 1.12.22
  */
 public class Identity{

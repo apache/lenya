@@ -28,7 +28,6 @@ import org.wyona.cms.ac.Policy;
 
 /**
  * @author Michael Wechner
- * @created 1.11.18
  * @version 2.1.6
  */
 public class PMLAuthorizerAction extends AbstractAuthorizerAction implements ThreadSafe {

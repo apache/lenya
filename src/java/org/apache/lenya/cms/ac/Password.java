@@ -4,8 +4,6 @@ import org.w3c.tools.crypt.Md5;
 
 /**
  * @author Michael Wechner
- * @created 1.12.26
- * @created 1.12.28
  */
 public class Password{
 /**

@@ -28,8 +28,7 @@ import org.wyona.util.Stack;
 
 /**
  * @author Michael Wechner
- * @created 2001.11.18
- * @version $Id: AbstractAuthorizerAction.java,v 1.3 2002/06/21 23:40:01 michicms Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.4 2002/07/02 11:18:49 egliwyona Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction implements Configurable {
     REProgram [] public_matchers;

@@ -2,7 +2,7 @@ package org.wyona.util;
 
 /**
  * StringUtil.java
- * $Id: StringUtil.java,v 1.1 2002/01/24 18:40:57 tinuwyonacms Exp $
+ * $Id: StringUtil.java,v 1.2 2002/07/02 11:15:26 egliwyona Exp $
  *
  * Created: Thu Jan 24 18:27:05 2002
  *
@@ -15,7 +15,6 @@ package org.wyona.util;
 public class StringUtil {
 
   /**
-   * @author beh
    *
    * http://jguru.com/forums/view.jsp?EID=539354
    *

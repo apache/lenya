@@ -7,7 +7,6 @@ import org.apache.log4j.Category;
 
 /**
  * @author Michael Wechner
- * @created 1.7.29
  * @version 1.8.10
  */
 public class Configuration{

@@ -44,10 +44,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * $Id: EditorMainAction.java,v 1.6 2002/03/11 15:09:33 memo Exp $
+ * $Id: EditorMainAction.java,v 1.7 2002/07/02 11:18:49 egliwyona Exp $
  *
  * @author Martin Lüthi
- * @created 2002.01.22
  * @version 2002.01.22
  */
 public class EditorMainAction extends AbstractComplementaryConfigurableAction implements Configurable{

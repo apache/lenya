@@ -21,7 +21,6 @@ import org.wyona.cms.ac.Password;
 
 /**
  * @author Michael Wechner
- * @created 1.12.29
  * @version 1.12.29
  */
 public abstract class AbstractUsernamePasswordAuthenticatorAction extends AbstractAuthenticatorAction{

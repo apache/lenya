@@ -59,7 +59,7 @@ import org.apache.log4j.Category;
 
 /**
  * @author Michael Wechner
- * @created 0.4.16
+
  * @version 1.9.11
  */
 public class DOMParserFactory{

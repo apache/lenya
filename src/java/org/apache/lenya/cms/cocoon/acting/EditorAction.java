@@ -32,7 +32,6 @@ import org.wyona.util.Stack;
 
 /**
  * @author Martin Lüthi
- * @created 2002.01.20
  * @version 2002.01.27
  */
 public class EditorAction extends AbstractComplementaryConfigurableAction implements Configurable{

@@ -41,7 +41,6 @@ import org.xml.sax.SAXException;
  * Interfaces with Xopus: handles the requests and replies to them
  *
  * @author Memo Birgi
- * @created 2002.02.21
  * @version 0.1
  */
 public class XopusHandlerAction extends ConfigurableComposerAction {

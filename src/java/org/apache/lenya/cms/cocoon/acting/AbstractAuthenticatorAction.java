@@ -17,7 +17,6 @@ import java.util.Map;
 
 /**
  * @author Michael Wechner
- * @created 2001.11.18
  * @version 2001.12.10
  */
 public abstract class AbstractAuthenticatorAction extends AbstractComplementaryConfigurableAction implements Configurable{

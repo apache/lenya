@@ -29,7 +29,6 @@ import org.dom4j.io.SAXReader;
 
 /**
  * @author Michael Wechner
- * @created 2002.02.03
  * @version 2002.02.04
  */
 public class PublisherAction extends AbstractComplementaryConfigurableAction implements Configurable{

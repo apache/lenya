@@ -22,7 +22,6 @@ import org.wyona.cms.ac.Password;
 
 /**
  * @author Michael Wechner
- * @created 1.12.29
  * @version 2.1.6
  */
 public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticatorAction implements ThreadSafe {

@@ -8,7 +8,6 @@ import org.apache.xpath.XPathAPI;
 
 /**
  * @author Michael Wechner
- * @created 1.12.23
  * @version 1.12.28
  */
 public class Policy{

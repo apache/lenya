@@ -5,7 +5,6 @@ import java.util.*;
 
 /**
  * @author Michael Wechner
- * @created 0.5.30
  * @version 1.12.22
  */
 public class Stack extends Vector{

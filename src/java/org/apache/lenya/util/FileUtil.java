@@ -58,7 +58,6 @@ import org.apache.log4j.Category;
 
 /**
  * @author Michael Wechner
- * @created 0.1.1
  * @version 1.11.14
  */
 public class FileUtil{

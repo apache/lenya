@@ -29,7 +29,6 @@ import org.wyona.util.Stack;
  * this class does nothing but provide the name of the tempfile to the sitemap
  *
  * @author Martin Lüthi
- * @created 2002.02.06
  * @version 2002.02.06
  */
 public class EditorTempfileAction extends AbstractComplementaryConfigurableAction implements Configurable{
