@@ -67,7 +67,7 @@
          <MediaType FormalName="Text"/>
          <MimeType FormalName="text/vnd.IPTC.NITF"/>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
-           <nitf>
+          <nitf>
 <!--
             <head>
               <hedline>
@@ -84,6 +84,7 @@
             <body>
               <body.head>
                 <dateline>
+		  <story.date norm="30.07.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>Spaziergang in die Vergangenheit</hl1>

@@ -58,7 +58,7 @@
          <MediaType FormalName="Text"/>
          <MimeType FormalName="text/vnd.IPTC.NITF"/>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
-           <nitf>
+          <nitf>
             <head>
               <hedline>
                 <hl1>Blabla</hl1>
@@ -73,7 +73,7 @@
             <body>
               <body.head>
                 <dateline>
-                  <story.date norm="03.04.2002"/>
+                  <story.date norm="23.05.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>&#171;Die Geschichte ist nie zu Ende geschrieben&#187;</hl1>
@@ -111,7 +111,7 @@ Jean-Fran&#231;ois Bergier nahm am Dienstag in einem Vortrag Stellung zur Arbeit
                </body.end>
              </body>
             </nitf>
-           </DataContent>
+             </DataContent>
           </ContentItem>
        </NewsComponent>
 
