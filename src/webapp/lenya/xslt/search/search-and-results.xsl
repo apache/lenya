@@ -55,7 +55,7 @@
 <xsl:template match="hit">
 <tr>
   <td><xsl:value-of select="position()"/></td>
-  <td><xsl:value-of select="score"/></td>
+  <td><xsl:value-of select="score/@percent"/>%</td>
   <xsl:choose>
     <xsl:when test="path">
       <td>File: <xsl:value-of select="path"/></td>
@@ -64,7 +64,11 @@
 <!--
       <td>URL: <xsl:value-of select="uri"/></td>
 -->
-      <td>URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/><xsl:apply-templates select="no-title"/></a></td>
+      <td>
+        Title: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/><xsl:apply-templates select="no-title"/></a>
+        <br />
+        <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="uri"/></a></font>
+      </td>
     </xsl:when>
     <xsl:otherwise>
       <td>Neither PATH nor URL</td>
