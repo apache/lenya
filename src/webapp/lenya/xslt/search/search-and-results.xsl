@@ -7,7 +7,7 @@
 <html>
 <head>
   <title>Search</title>
-  <link rel="stylesheet" type="text/css" href="/lenya/wyona/default.css" />
+  <link rel="stylesheet" type="text/css" href="/lenya/lenya/default.css" />
 </head>
 <body>
 <h1>Wyona CMS Search Interface -- powered by Lucene</h1>

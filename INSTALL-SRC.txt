@@ -51,34 +51,34 @@
      [unix]  cd /home/lenya/src
              choose 1) or 2)
              1) wget http://www.lenya.org/builds/lenya-2.0/nightly/src/lenya-2.0-src-200201102354.tar.gz
-                (take the apropriate wyonacms (src not bin) version, this one might not exist anymore)
+                (take the apropriate lenyacms (src not bin) version, this one might not exist anymore)
                 tar -xzf lenya-2.0-src-200201102354.tar.gz
-                mv lenya-2.0-src wyonacms 
+                mv lenya-2.0-src lenyacms 
              2) or get it from the public cvs:
-                cvs -d :pserver:anonwyonacms@194.191.122.220:/repository checkout wyonacms
-             cd wyonacms
+                cvs -d :pserver:anonlenyacms@194.191.122.220:/repository checkout lenyacms
+             cd lenyacms
              ls
 
 
   4) Get, build and copy Cocoon 
      (OPTIONAL: Just in case you want the most recent Cocoon. If not, then go to 5)
 
-     [unix]  cd /home/wyona/src
+     [unix]  cd /home/lenya/src
              wget http://cvs.apache.org/snapshots/xml-cocoon2/xml-cocoon2_20020110171938.tar.gz
              (take the apropriate cocoon version, this one might not exist anymore)
              tar -xzf xml-cocoon2_20020110171938.tar.gz
              cd xml-cocoon2
              export JAVA_HOME=/usr/local/jdk1.3.1
              ./build.sh -Dinclude.webapp.libs=yes webapp
-             cp build/cocoon/cocoon.war ../wyonacms/.
+             cp build/cocoon/cocoon.war ../lenyacms/.
 
 
   5) Build Wyona
 
-     [unix]  cd /home/wyona/src/wyonacms
+     [unix]  cd /home/lenya/src/lenyacms
              export JAVA_HOME=/usr/local/jdk1.3.1
-             export ANT_HOME=/home/wyona/build/jakarta-ant-1.4.1
-             export PATH=/home/wyona/build/jakarta-ant-1.4.1/bin:$PATH
+             export ANT_HOME=/home/lenya/build/jakarta-ant-1.4.1
+             export PATH=/home/lenya/build/jakarta-ant-1.4.1/bin:$PATH
              ant
              ls build/lenya/webapp
 
@@ -89,22 +89,22 @@
              vi build.properties (Set install.dir and cache.dir)
              ant install
              ls install.dir (Check if things actually got copied into "install.dir", where "install.dir" is not the string "install.dir", but the value you have set within build.properties)
-             vi /home/wyona/build/jakarta-tomcat-4.0/conf/server.xml
+             vi /home/lenya/build/jakarta-tomcat-4.0/conf/server.xml
              To allow class reloading, insert the following line:
              <Context path="/lenya" docBase="lenya" debug="0" reloadable="true" crossContext="true"/>
 
 
   7) Start Wyona
 
-     [unix]  (/home/wyona/build/jakarta-tomcat-4.0/bin/shutdown.sh)
-             ("rm -r /home/wyona/build/jakarta-tomcat-4.0/work/*" OR "ant reset". This is the "cache.dir" directory which can be set within build.properties)
-             /home/wyona/build/jakarta-tomcat-4.0/bin/startup.sh
+     [unix]  (/home/lenya/build/jakarta-tomcat-4.0/bin/shutdown.sh)
+             ("rm -r /home/lenya/build/jakarta-tomcat-4.0/work/*" OR "ant reset". This is the "cache.dir" directory which can be set within build.properties)
+             /home/lenya/build/jakarta-tomcat-4.0/bin/startup.sh
              lynx http://localhost:8080/lenya/
 
 
   8) Start Hacking Wyona
 
-     [unix]  cd /home/wyona/src/wyonacms
+     [unix]  cd /home/lenya/src/lenyacms
              ls src/java
              ls src/webapp
              vi src/webapp/WEB-INF/logkit.xconf   (DEBUG, ERROR)
@@ -116,8 +116,8 @@
 
   9) Stop Wyona
 
-     [unix]  /home/wyona/build/jakarta-tomcat-4.0/bin/shutdown.sh
-             "rm -r /home/wyona/build/jakarta-tomcat-4.0/work/*" OR "ant reset"
+     [unix]  /home/lenya/build/jakarta-tomcat-4.0/bin/shutdown.sh
+             "rm -r /home/lenya/build/jakarta-tomcat-4.0/work/*" OR "ant reset"
              ps aux | grep java | wc ("killall java")
 
 

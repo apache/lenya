@@ -8,7 +8,7 @@
     <html>
       <head>
 	<title>Image Upload</title>
-    <link rel="stylesheet" type="text/css" href="/lenya/wyona/default.css" />
+    <link rel="stylesheet" type="text/css" href="/lenya/lenya/default.css" />
       </head>
       <body>
 	<xsl:apply-templates/>

@@ -11,16 +11,16 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: lenya.js,v 1.2 2002/11/11 18:09:15 felixcms Exp $
+// $Id: lenya.js,v 1.3 2003/03/05 15:07:44 gregor Exp $
 var p = new XMLHttpRequest();
 
-function BX_wyona_save()
+function BX_lenya_save()
 {
 /*	document.forms.poster.action = BX_posturl;
 	document.forms.poster.method = "POST";
     document.forms.poster.content.value = calculateMarkup(BX_getResultXML(),true);
     document.forms.poster.submit();*/
-// wyona way
+// lenya way
 
 	p.onload = BX_responseXML;
 	var WyonaRequest = BX_xml.createElement("request");

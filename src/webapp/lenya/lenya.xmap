@@ -17,12 +17,12 @@
   <map:pipelines>
     <map:pipeline>
       <map:match pattern="menu/**">
-        <map:read src="resources/cms/misc/menu/{1}"/>
+        <map:read src="resources/misc/menu/{1}"/>
       </map:match>
     </map:pipeline>
     <map:pipeline>
       <map:match pattern="**.css">
-        <map:read src="resources/cms/css/{1}.css" mime-type="text/css"/>
+        <map:read src="resources/css/{1}.css" mime-type="text/css"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>

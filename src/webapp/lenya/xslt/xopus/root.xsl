@@ -10,9 +10,9 @@
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:variable name="context_prefix" select="/wyona/menu/context_prefix"/>
+<xsl:variable name="context_prefix" select="/lenya/menu/context_prefix"/>
 
-<xsl:template match="wyona">
+<xsl:template match="lenya">
   <html>
     <xsl:call-template name="xopus_html_attribute"/>
     <xsl:call-template name="xopus_top"/>
@@ -21,12 +21,12 @@
       <title>Authoring</title>
     <style type="text/css">
       <xsl:comment>
-        .awyona {
+        .alenya {
             color: #0066FF;
             text-decoration: none;
         }
 
-        .awyona:visited {
+        .alenya:visited {
             <!--color: #669999;-->
             color: #0066FF;
             text-decoration: none;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: transformxmlback.xsl,v 1.5 2002/11/23 11:47:33 felixcms Exp $ -->
+<!-- $Id: transformxmlback.xsl,v 1.6 2003/03/05 15:07:44 gregor Exp $ -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" encoding="iso-8859-1"/>
 <!-- the following 2 lines are not needed for this simpler example, they are needed for the 
-wyona uni_zh integration :
+lenya uni_zh integration :
 
 <xsl:include href="../../xml/transformxmlback.xsl"/>
 <xsl:variable name="attributes" select="document('../../wysiwyg_config/xml/attributes.xml')/attributes"/>

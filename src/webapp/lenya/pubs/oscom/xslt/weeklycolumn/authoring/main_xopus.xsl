@@ -4,7 +4,7 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:include href="../../../../../../../stylesheets/cms/xopus/root.xsl"/>
+<xsl:include href="../../../../../xslt/xopus/root.xsl"/>
 
 <xsl:template match="cmsbody">
   <xsl:apply-templates select="oscom"/>

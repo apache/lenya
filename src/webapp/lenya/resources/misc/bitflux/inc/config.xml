@@ -37,16 +37,16 @@
 		<output>
 			<!-- looks like not implemented -->
 			<!--
-			<file name="BX_posturl" method="wyona" >http://cvs.wyona.org:8080/lenya/unipublic/xopus/XopusInterface</file>
+			<file name="BX_posturl" method="lenya" >http://cvs.lenya.org:8080/lenya/unipublic/xopus/XopusInterface</file>
 -->
-			<file name="BX_posturl" method="wyona" isParam="true">url-post</file>
+			<file name="BX_posturl" method="lenya" isParam="true">url-post</file>
 		</output>
 		<scripts>
 			<file>./bxe/js/bitfluxeditor_table.js</file>
 			<file>./bxe/js/bitfluxeditor_sc.js</file>
 			<file>./bxe/js/bitfluxcms.js</file>
 			<file>./bxe/js/td/http.js</file>
-			<file>./bxe/js/td/wyona.js</file>
+			<file>./bxe/js/td/lenya.js</file>
 		</scripts>
 		<transform>
 			<includes>

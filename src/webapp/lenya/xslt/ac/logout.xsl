@@ -5,7 +5,7 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:param name="publication_name"/>
-<xsl:variable name="copyright">copyright &#169; 2003 wyona.org</xsl:variable>
+<xsl:variable name="copyright">copyright &#169; 2003 lenya.org</xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates/>
@@ -15,7 +15,7 @@
   <html>
    <head>
     <title><xsl:value-of select="$publication_name"/> - <xsl:call-template name="html-title"/></title>
-    <link rel="stylesheet" type="text/css" href="/lenya/wyona/default.css" />
+    <link rel="stylesheet" type="text/css" href="/lenya/lenya/default.css" />
     </head>
     <body bgcolor="#ffffff">
      <h2><xsl:value-of select="$publication_name"/></h2>

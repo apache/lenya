@@ -8,13 +8,13 @@
 
 2002-11-15  Christian Stocker  <chregu@bitflux.ch>
 
-    * js/td/wyona.js
+    * js/td/lenya.js
       xml/transformxmlback.xsl: MFG
 
     * xml/transformxmlback.xsl:
     do not delete elements with only id and no bxe_internalid
 
-    * js/td/wyona.js: fix by wyona
+    * js/td/lenya.js: fix by lenya
 
 2002-10-31  Christian Stocker  <chregu@bitflux.ch>
 
@@ -133,23 +133,23 @@
       js/xmldoc.js: jsdoc adjustements
 
     * js/td/http.js
-      js/td/wyona.js
+      js/td/lenya.js
       js/xmldoc.js: jsdoc additions and fixes
 
-    * js/td/wyona.js: more typos
+    * js/td/lenya.js: more typos
 
-    * js/td/wyona.js: fixes
+    * js/td/lenya.js: fixes
 
     * js/bitfluxeditor_core.js:
     this shouldn't hang up mozilla anymore (bug #14)
     plus "better" home/end key handling
 
-    * js/td/wyona.js: one bracket to much
+    * js/td/lenya.js: one bracket to much
 
     * js/bitfluxeditor_core.js: dumping of stack trace did not work ...
 
     * js/td/http.js
-      js/td/wyona.js: jsdoc comments and fixups
+      js/td/lenya.js: jsdoc comments and fixups
 
     * js/bitfluxeditor_load.js: fixes (BX_init_alert doesn't exist anymore)
 
@@ -234,7 +234,7 @@
 
 2002-10-15  Christian Stocker  <chregu@bitflux.ch>
 
-    * js/td/wyona.js: some fixes here as well
+    * js/td/lenya.js: some fixes here as well
 
     * js/td/http.js
       js/bitfluxeditor_load.js: make save work again
@@ -301,7 +301,7 @@
     cleaner. more about the changes in an email this afternoon
 
     * js/td/http.js
-      js/td/wyona.js:
+      js/td/lenya.js:
     Changed the format of the TransportDriver Files to be ObjectOrientated
 
 2002-10-02  Christian Stocker  <chregu@bitflux.ch>
@@ -361,7 +361,7 @@
 
     * img/wt_save_exit_n.gif: better...
 
-    * js/td/wyona.js: implement an save&exit option
+    * js/td/lenya.js: implement an save&exit option
 
     * js/bitfluxeditor_load.js: make it possible to add options to BX_submit
 
@@ -538,16 +538,16 @@
 
     * js/bitfluxeditor.js: mv bx_debug into this file
 
-    * js/wyona.js: DocumentID
+    * js/lenya.js: DocumentID
 
     * js/bitfluxcms.js
       js/bitfluxeditor.js
       js/bitfluxeditor_core.js
-      js/http.js: wyona stuff went to wyona.js
+      js/http.js: lenya stuff went to lenya.js
 
     * js/bitfluxeditor_load.js: load (and save) specific stuff
 
-    * js/wyona.js: wyona specific stuff
+    * js/lenya.js: lenya specific stuff
 
     * js/bitfluxcms.js:
     cleaned up a little (still too much functions in here, which don't belong in here...)

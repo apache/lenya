@@ -11,24 +11,24 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: lenya.js,v 1.5 2002/11/23 11:47:33 felixcms Exp $
+// $Id: lenya.js,v 1.6 2003/03/05 15:07:44 gregor Exp $
 /**
  * @file
- * Implements the wyona TransportDriver (only save for now)
+ * Implements the lenya TransportDriver (only save for now)
  *
  */
 
 /**
- * wyona TransportDriver
+ * lenya TransportDriver
  * @ctor
  * The constructor
  * @tparam Object parent the "parent" Object (the loader)
  * @see BXE_TransportDriver
- * @todo implement load (maybe not needed, as httpget is enough for wyona)
+ * @todo implement load (maybe not needed, as httpget is enough for lenya)
  */
 
 
-function BXE_TransportDriver_wyona(parent)
+function BXE_TransportDriver_lenya(parent)
 {
 	/**
 	* XMLHttpRequest Object
@@ -49,7 +49,7 @@ function BXE_TransportDriver_wyona(parent)
 	this.parent = parent;
 
 	/**
-	* Save a file over the wyona protocol. 
+	* Save a file over the lenya protocol. 
 	* It wraps the original xml around some additional tags.
 	* @tparam String filename the filename (can be http://... or just a relative path)
 	* @tparam Mixed options 
@@ -57,7 +57,7 @@ function BXE_TransportDriver_wyona(parent)
 	*/
 	function  save(filename,options)
 	{
-	   // wyona way
+	   // lenya way
 	   this.p.onload = this._responseXML;
 	   this.p.options = options;
 	   var WyonaRequest = BX_xml.doc.createElement("request");
@@ -71,7 +71,7 @@ function BXE_TransportDriver_wyona(parent)
    	   // BX_show_xml(WyonaRequest);
 	   this.p.send(calculateMarkup(WyonaRequest,true));
 	}
-	BXE_TransportDriver_wyona.prototype.save = save;
+	BXE_TransportDriver_lenya.prototype.save = save;
 	
 	/**
 	* Handles the response of the save method.
@@ -109,7 +109,7 @@ function BXE_TransportDriver_wyona(parent)
 			alert(alerttext + p.responseText) ;
 		}
 	}
-	BXE_TransportDriver_wyona.prototype._responseXML = _responseXML;
+	BXE_TransportDriver_lenya.prototype._responseXML = _responseXML;
 }
 
 

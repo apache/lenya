@@ -10,7 +10,7 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:sch="http://www.wyona.org/2002/sch"
+    xmlns:sch="http://www.lenya.org/2002/sch"
     >
 
   <!-- ============================================================= -->

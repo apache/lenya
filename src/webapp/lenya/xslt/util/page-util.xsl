@@ -16,7 +16,7 @@
 <xsl:template name="include-css">
   <xsl:param name="context-prefix"/>
   <link rel="stylesheet" type="text/css"
-    href="{$context-prefix}/wyona/css/default.css" title="default css"/>
+    href="{$context-prefix}/lenya/css/default.css" title="default css"/>
 </xsl:template>
     
 <!-- prints a list of $separator-separated strings -->

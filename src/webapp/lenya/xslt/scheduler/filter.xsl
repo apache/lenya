@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-  xmlns:sch="http://www.wyona.org/2002/sch">
+  xmlns:sch="http://www.lenya.org/2002/sch">
   
 <xsl:variable name="params" select="/sch:scheduler/sch:parameters"/>
 

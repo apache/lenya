@@ -2,7 +2,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:rc="http://www.wyona.org/2002/rc">
+  xmlns:rc="http://www.lenya.org/2002/rc">
 
 
 <xsl:output method="html"/>
@@ -22,7 +22,7 @@
 <xsl:template match="rc:revisions/XPSRevisionControl">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/lenya/wyona/default.css" />
+<link rel="stylesheet" type="text/css" href="/lenya/lenya/default.css" />
 </head>	
 <body>
 	
