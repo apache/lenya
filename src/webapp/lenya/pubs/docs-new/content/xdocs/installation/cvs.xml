@@ -27,9 +27,9 @@ cvs -d :pserver:anonymous@cvs.wyona.org:/usr/local/repositories checkout lenya
 -->
 
 <section>
-<title>CVS at Apache (public)</title>
+<title>CVS for the public</title>
 <p>
-The CVS command line for the Apache CVS server:
+Start the shell of your choice and enter:
 </p>
 <source>
 cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login
@@ -39,14 +39,21 @@ cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic checkout cocoon-lenya
 </section>
 
 <section>
-<title>CVS at Apache (commit)</title>
+<title>CVS for committers</title>
 <p>
-The CVS command line for the Apache CVS server:
+Start the shell of your choice and enter:
 </p>
 <source>
 export CVS_RSH=ssh
 cvs -d :ext:userid@cvs.apache.org:/home/cvs checkout cocoon-lenya
 </source>
+</section>
+
+<section>
+<title>ViewCVS</title>
+<p>
+<link href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/</link>
+</p>
 </section>
 
 <section>
