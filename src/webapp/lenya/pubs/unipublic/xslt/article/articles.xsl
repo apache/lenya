@@ -61,6 +61,9 @@
 </xsl:template>
 
 <xsl:template match="p">
+<p>
+  <a href="uploadImage?xpath=/article/body/p[{position()}]">Upload Image</a>
+</p>
   <p>
     <xsl:if test="not(preceding-sibling::p)">
       <xsl:apply-templates select="../hl2" mode="block"/>

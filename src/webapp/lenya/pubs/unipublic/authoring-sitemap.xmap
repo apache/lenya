@@ -360,7 +360,18 @@
         </map:act>
         <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
-      </map:match>                                                                                                                          
+      </map:match>
+
+
+      <map:match pattern="*/*/*/*/uploadImage.xml">
+        <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/*/*/*/uploadImage">
+        <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+        <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
 
       <map:match pattern="*/*/*/*/index.xml">
         <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
