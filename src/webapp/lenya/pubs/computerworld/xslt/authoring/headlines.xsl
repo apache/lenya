@@ -15,7 +15,7 @@
 					<!-- NEWS TITEL -->
 					<a href="{$href}" class="txt-l-black">
 						<b>
-							TITEL: <xsl:value-of select="head/title"/>
+							<xsl:value-of select="head/title"/>
 						</b>
 					</a>
 				</td>
@@ -34,9 +34,9 @@
 </xsl:apply-templates>
 					<!-- NEWS LAUFTEXT -->
 					<span class="txt-s-black">
-						<xsl:value-of select="body"/>
-						<!-- WEITER BUTTON --> ;<a href="{$href}" class="txt-link-red">
-							<img border="0" src="/img/layout/arrow-red.gif" width="9" height="7" alt=";"/>weiter</a>
+						<xsl:value-of select="head/abstract"/><br />
+						<!-- WEITER BUTTON --><a href="{$href}" class="txt-link-red">
+							<img border="0" src="/img/layout/arrow-red.gif" width="9" height="7" alt=""/>weiter</a>
 					</span>
 				</td>
 			</tr>

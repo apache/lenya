@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:bxe="http://bitfluxeditor.org/schema/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="p">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Paragraph</xs:documentation>
@@ -17,7 +17,7 @@
 			<xs:documentation xml:lang="en">Body</xs:documentation>
 			<xs:appinfo>
 				<bxe:name>Body</bxe:name>
-				<bxe:returnelement>none</bxe:returnelement>
+				<bxe:returnelement>p</bxe:returnelement>
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">
@@ -58,6 +58,7 @@
 			<xs:documentation xml:lang="en">Title</xs:documentation>
 			<xs:appinfo>
 				<bxe:name>Title</bxe:name>
+				<bxe:returnelement>abstract</bxe:returnelement>
 			</xs:appinfo>
 		</xs:annotation>
 	</xs:element>
@@ -138,8 +139,8 @@
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Article</xs:documentation>
 			<xs:appinfo>
-				<bxe:name>Title</bxe:name>
-				<bxe:returnelement><![CDATA[<head>head</head>]]></bxe:returnelement>
+				<bxe:name>Article</bxe:name>
+				<bxe:returnelement></bxe:returnelement>
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">

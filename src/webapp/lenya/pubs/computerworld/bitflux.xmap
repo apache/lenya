@@ -28,8 +28,8 @@
 				<xsl href="stylesheets/publication"/>
 				<xsd href="docs/publication/doctypes/schemas"/>
 				<temp href="temp"/>
-                                <rcmlDirectory href="docs/publication/rcml"/>
-                                <backupDirectory href="docs/publication/rcbak"/>
+				<rcmlDirectory href="docs/publication/rcml"/>
+				<backupDirectory href="docs/publication/rcbak"/>
 			</map:action>
 		</map:actions>
 	</map:components>
@@ -112,14 +112,21 @@
 			</map:match>
 		</map:pipeline>
 		<!-- /GET -->
-
-
 		<!-- POST (in the case of Bitflux the action only is used for saving and NOT for opening) -->
 		<map:pipeline>
+			<map:match pattern="save/*/*">
+				<map:act type="xopushandler">
+					<map:parameter name="save-filename" value="{1}/{2}"/>
+					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
+					<map:serialize type="xml"/>
+				</map:act>
+				<map:generate src="xopus_error.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
 			<map:match pattern="save/*">
 				<map:act type="xopushandler">
 					<map:parameter name="save-filename" value="{1}"/>
-                                        <map:generate src="docs/cms/bitflux_response_ok.xml"/>
+					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
 					<map:serialize type="xml"/>
 				</map:act>
 				<map:generate src="xopus_error.xml"/>
@@ -131,7 +138,5 @@
 			</map:handle-errors>
 		</map:pipeline>
 		<!-- /POST -->
-
-
 	</map:pipelines>
 </map:sitemap>

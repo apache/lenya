@@ -89,11 +89,11 @@
      <!-- Indicates how many objects will be hold in the cache.
      When the number of maxobjects has been reached. The last object in the 
      cache will be thrown out. -->
-     <parameter name="maxobjects" value="100"/>
+     <parameter name="maxobjects" value="1"/>
 
      <!-- Turns the swapping of the objects into persistent cache on
           and off. -->
-     <parameter name="use-persistent-cache" value="true"/>
+     <parameter name="use-persistent-cache" value="false"/>
   </cache-transient>
 
   <!-- Store Janitor:
