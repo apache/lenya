@@ -16,16 +16,15 @@ import org.apache.lenya.cms.workflow.Workflow;
  *
  * @author  andreas
  */
-public class WorkflowImpl
-    implements Workflow {
-    
+public class WorkflowImpl implements Workflow {
+
     /** Creates a new instance of WorkflowImpl */
     public WorkflowImpl(State initialState) {
         this.initialState = initialState;
     }
-    
+
     private State initialState;
-    
+
     /** Returns the initial state of this workflow.
      * @return The initial state.
      *
@@ -33,9 +32,9 @@ public class WorkflowImpl
     public State getInitialState() {
         return initialState;
     }
-    
+
     private Set transitions = new HashSet();
-    
+
     /**
      * Adds a transition.
      */
@@ -43,11 +42,12 @@ public class WorkflowImpl
         assert transition != null;
         transitions.add(transition);
     }
-    
+
     protected TransitionImpl[] getTransitions() {
-        return (TransitionImpl[]) transitions.toArray(new TransitionImpl[transitions.size()]);
+        return (TransitionImpl[]) transitions.toArray(
+            new TransitionImpl[transitions.size()]);
     }
-    
+
     /** Returns the destination state of a transition.
      * @param transition A transition.
      * @return The destination state.
@@ -57,7 +57,7 @@ public class WorkflowImpl
         assert transition instanceof TransitionImpl;
         return ((TransitionImpl) transition).getDestination();
     }
-    
+
     /** Returns the transitions that leave a state.
      * @param state A state.
      * @return The transitions that leave the state.
@@ -71,7 +71,26 @@ public class WorkflowImpl
                 leavingTransitions.add(transitions[i]);
             }
         }
-        return (Transition[]) leavingTransitions.toArray(new Transition[leavingTransitions.size()]);
+        return (Transition[]) leavingTransitions.toArray(
+            new Transition[leavingTransitions.size()]);
     }
-    
+
+    /**
+     * Checks if this workflow contains a state.
+     * @param state The state to check.
+     * @return <code>true</code> if the state is contained, <code>false</code> otherwise.
+     */
+    protected boolean containsState(State state) {
+        Transition transitions[] = getTransitions();
+        boolean result = false;
+        for (int i = 0; i < transitions.length; i++) {
+            TransitionImpl transition = (TransitionImpl) transitions[i];
+            if (transition.getSource().equals(state)
+                || transition.getDestination().equals(state)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
 }
