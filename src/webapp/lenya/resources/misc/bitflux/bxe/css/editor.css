@@ -1,0 +1,390 @@
+wbody {
+	background-color : #FFFFFF;
+	margin-top : 0px;
+	margin-left : 0px;
+	margin-right : 6px;
+  	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size : 12px;    
+	margin-bottom: 100px;
+
+}
+h2 {
+	font-size : 16px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: Black;
+}
+
+.greenH2 {
+	font-size : 16px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	color: #00FF00;
+}
+
+.redH2 {
+	font-size : 16px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	color: #FF0000;
+}
+
+h3 {
+	font-size : 14px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: White;
+}
+.blackH3 {
+	font-size : 14px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: Black;
+}
+
+.redH3 {
+	font-size : 14px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #FF0000;
+}
+
+.redboldH3 {
+	font-size : 14px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	color: #FF0000;
+}
+
+.darkRedBoldH3 {
+	font-size : 14px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	color: #770000;
+}
+
+h4 {
+	font-size : 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: Black;
+}
+
+.redH4{
+	font-size : 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: Red;
+}
+
+h5 {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #49669e;
+}
+
+.blackH5 {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+}
+
+
+.whiteH5 {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #ffffff;
+}
+a:link.whiteH5 {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #ffffff;
+}
+a:visited.whiteH5 {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #ffffff;
+}
+.tagBelow, a:link:not([class]) {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: black;
+}
+
+a:visited:not([class]) {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #003366;
+}
+a:active:not([class]) {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #CC66FF;
+}
+
+input {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+}
+option {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+}
+textarea {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+}
+
+
+.mediumTitle {
+	font-size : 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: black;
+	text-align : left;
+	vertical-align : top;
+}
+
+.usualTd {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: white;
+	text-align : left;
+	vertical-align : top;
+}
+
+.usualBlackTd {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: black;
+	text-align : left;
+}
+
+
+input.whiteH5      {
+             font-family:      Verdana, Arial, Helvetica, sans-serif;
+             font-size:        11px;
+//             font-weight:      bolder;
+             color:            #000000;
+             width:            500px;
+             //background-color: #FFE066;
+//             background-color: #ffffff;
+             }
+
+textarea.whiteH5      {
+             font-family:      Verdana, Arial, Helvetica, sans-serif;
+             font-size:        11px;
+
+             color:            #000000;
+             width:            500px;
+
+             background-color: #fFFFFF;
+             }
+select.whiteH5      {
+             font-family:      Verdana, Arial, Helvetica, sans-serif;
+             font-size:        11px;
+  //           font-weight:      bolder;
+  //           letter-spacing:   -1px;
+             color:            #000000;
+             width:            470px;
+  //           border-color:     #666666;
+             //background-color: #FFE066;
+             background-color: #ffffff;
+             }
+
+select 	{
+             font-family:      Verdana, Arial, Helvetica, sans-serif;
+             font-size:        11px;
+      //       font-weight:      bolder;
+    //         letter-spacing:   -1px;
+             width:            500px;
+    //         border-color:     #666666;
+             //background-color: #FFE066;
+             background-color: #ffffff;
+             }
+
+select.length280 	{
+             	font-size : 11px;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+				font-style: normal;
+				font-weight: normal;
+             	width: 280px;
+             background-color: #ffffff;
+             }
+			 
+select.wysiwyg, select.wysiwygShaded 	{
+             	font-size : 10px;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+				font-style: normal;
+				font-weight: bold;
+             	width: 150px;
+				height: 20px;
+                color: #000000;
+             background-color: #ffffff;
+             }
+
+select.wysiwygShaded {               	color: #b4b4b4;}
+
+
+
+select.chooser 	{
+             	font-size : 11px;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+				font-style: normal;
+				font-weight: normal;
+             	width: 350px;
+    //         border-color:     #666666;
+             //background-color: #FFE066;
+             background-color: #ffffff;
+             }
+
+
+input.whiteH5checkBox      {
+             font-family:      Verdana, Arial, Helvetica, sans-serif;
+             font-size:        11px;
+             letter-spacing:   -1px;
+
+
+
+             }
+/*das folgende ist fürs neue layout */
+
+.titlebalken, .titlelinks {
+	font-size : 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	color: #FFFFFF;
+    background-color: #00cc00;
+}
+a.titlebalken {
+	
+	color: #FFFFFF;
+	font-size : 11px;
+    
+}
+
+.titlelinks {
+	
+	color: #000000;
+	font-size : 11px;
+    
+}
+
+.titlebalkenGross {
+	font-size : 18px;
+	font-weight: bold;
+}
+
+.navigationsbalken {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	color: black;
+    background-color: #daf7d9;
+}
+
+select.navigationsbalken 	{
+    width:            200px;
+    background-color: #ffffff;
+}
+
+.chooser {
+    background-color: #ffffff;
+  	font-size : 12px;
+}
+
+.popup {
+    position:absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0px 0px 3px 0px;
+    border-color: #FFFFFF;
+    border-style: outset;
+    border-width: 2px;
+    z-index: 200;
+
+    visibility: hidden;
+    background-color: #CCCCCC;
+    layer-background-color: #CCCCCC;
+}
+
+.popupline {  
+	font-family: Arial, Helvetica, sans-serif; 
+    font-size: 12px; 
+    text-decoration: none; 
+    color: #000000;
+}
+
+a:hover.popupline {
+	background: #555555;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+div:hover.popupline {
+	background: #555555;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#BX_cursor {
+	color: #009900;
+    text-decoration: blink;
+    font-weight: normal;
+    
+    }
+
+body
+{	
+	margin-bottom: 100px;
+    }
+
+[name="bitfluxspan"] { min-height: 20px; min-width: 20px;}
+span[name="bitfluxspan"] { padding-right: 10px; }
+[contentEditable="true"] { padding-right: 10px; border-width: thin; border-style: dotted; border-color: #CCCCCC;}
+
+.clipboardtext {
+    COLOR: #000000;
+    FONT-FAMILY: arial, helvetica, geneva, sans-serif;
+    FONT-SIZE: 12px;   
+    FONT-WEIGHT: normal;
+}
+
+.buttonklein {
+
+  	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10px;    
+	margin-top: 5px;
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="xml" indent="no" />
+
+<xsl:template match="*[@id != 'bx_cursor']">
+
+<xsl:param name="indent" select="'  '"/>
+
+<xsl:variable name="oriName">
+<xsl:choose>
+        <xsl:when test="@bx_originalname">
+		<xsl:value-of select="@bx_originalname"/>
+        </xsl:when>
+        <xsl:otherwise>
+                <xsl:value-of select="name()"/>
+        </xsl:otherwise>
+</xsl:choose>
+</xsl:variable>
+
+<xsl:text>
+</xsl:text><xsl:value-of select="$indent"/><xsl:element name="{$oriName}">
+	   <xsl:for-each select="@*">
+	            <xsl:if test="not(name() = 'bx_originalname') and not(name() = 'style') and not(name() = 'internalid') and not(name() = 'id' and ../@internalid)">
+					<xsl:copy/>
+                 </xsl:if>
+		</xsl:for-each>
+        <xsl:apply-templates >
+			<xsl:with-param name="indent"><xsl:value-of select="$indent"/><xsl:value-of select="'  '"/></xsl:with-param>
+    	</xsl:apply-templates>
+<xsl:if test="text() != .">
+<xsl:text>
+</xsl:text><xsl:value-of select="$indent"/></xsl:if></xsl:element>
+
+</xsl:template>
+
+
+<xsl:template match="text()">
+<xsl:param name="indent" select="'  '"/>
+<xsl:value-of select="normalize-space()"/>
+</xsl:template>
+</xsl:stylesheet>
+

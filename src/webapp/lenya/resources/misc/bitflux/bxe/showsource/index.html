@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript">
+//<![CDATA[
+
+var xmlfile = "default.xml";
+var xslfile = "default.xsl";
+var BX_xmldone = 0;
+
+function onload_ ()
+{
+//xml = document.implementation.createDocument("","",null);
+xsl = document.implementation.createDocument("","",null);
+xml = opener.BX_xml_source;
+//xml.onload = xml_loaded;
+xsl.onload = xml_loaded;
+//xml.load(xmlfile);
+xsl.load(xslfile);
+
+}
+
+function xml_loaded ()
+{
+  BX_xmldone++;
+
+    if (BX_xmldone > 0)
+    {
+		var xmltransformed = document.implementation.createDocument("","",null);
+		BX_xsltProcessor = new XSLTProcessor();
+		BX_xsltProcessor.transformDocument( xml, xsl, xmltransformed, null);
+
+		document.getElementById("output").appendChild(xmltransformed.documentElement);
+	}
+
+}
+
+//]]>
+</script>
+      <STYLE src="default.css" type="text/css"/>
+
+      <SCRIPT type="text/javascript" src="default.js"/>
+
+<title>Bitflux Editor - Show Source</title>
+</head>
+<body id="body" onLoad="onload_()">
+<div id="output">
+</div>
+
+
+</body>
+</html>
+

@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--xml-stylesheet href="sonderzeichenSVG.xsl" type="text/xml"-->
+<?xml-stylesheet href="sonderzeichenInsert.xsl" type="text/xml"?>
+
+<!--
+SUBSETS or UNICODEBLOCKS
+(difference: Subsets are customized; Unicodeblocks, even if not complete, have the same name as the real Unicodeblocks)
+selection = Auswahl Sonderzeichen
+latin-1 = Lateinisch-1
+extendedlatin-a = Erweitertes Lateinisch-A
+extendedlatin-b	= Erweitertes Lateinisch-B
+spacingmodifierletters = Buchstaben zur Abstanddefinition
+greek = Griechisch
+generalpunctuation = Allgemeine Interpunktion
+currencysymbols = Währungssymbole
+letterlikesymbols = Buchstabenähnliche Sonderzeichen
+arrows = Pfeile
+mathematicaloperators = Mathematische Operanden
+miscellaneoustechnical = Technisch Verschiedenes
+geometricshapes = Geometrische Muster
+miscellaneoussymbols = Symbole Verschiedenes
+
+-->
+<specialcharacters>
+<subset name="Selection" name-de="Auswahl Sonderzeichen">
+<character hexref="U20AC" meaning="Euro sign" bedeutung="Eurozeichen">&#x20AC;</character>
+<character hexref="U2014" meaning="Emdash" bedeutung="Geviertstrich">&#x2014;</character>
+<character hexref="U2013" meaning="Endash" bedeutung="Gedankenstrich">&#x2013;</character>
+<character hexref="U00A9" meaning="Copyright sign" bedeutung="Copyright">&#xA9;</character>
+<character hexref="U00AE" meaning="Registered trademark sign" bedeutung="Eingetragene Marke">&#xAE;</character>
+<character hexref="U2122" meaning="Trademark sign" bedeutung="Marke">&#x2122;</character>
+<character hexref="U2026" meaning="Horizontal ellipsis" bedeutung="Auslassungspunkte">&#x2026;</character>
+<character hexref="U2018" meaning="Left single quotation mark" bedeutung="Einfaches öffnendes Anführungszeichen">&#x2018;</character>
+<character hexref="U2019" meaning="Right single quotation mark" bedeutung="Einfaches schliessendes Anführungszeichen">&#x2019;</character>
+<character hexref="U201C" meaning="Left double quotation mark" bedeutung="Öffnendes Anführungszeichen">&#x201C;</character>
+<character hexref="U201D" meaning="Right double quotation mark" bedeutung="Schliessendes Anführungszeichen">&#x201D;</character>
+<character hexref="U00AB" meaning="Left-pointing double angle quotation mark, left-pointing guillemot">&#xAB;</character>
+<character hexref="U00BB" meaning="Right-pointing double angle quotation mark, right-pointing guillemot">&#xBB;</character>
+<character hexref="U00F7" meaning="Division sign">&#xF7;</character>
+<character hexref="U00D7" meaning="Multiplication sign">&#xD7;</character>
+<character hexref="U00C6" meaning="Latin capital letter AE">&#xC6;</character>
+<character hexref="U00E6" meaning="Latin small letter ae">&#xE6;</character>
+<character hexref="U00DF" meaning="Latin small letter sharp s, esszett">&#xDF;</character>
+<character hexref="U00BF" meaning="Inverted question mark">&#xBF;</character>
+<character hexref="U00C7" meaning="Latin capital letter C with cedilla">&#xC7;</character>
+</subset>
+<unicodeblock name="Latin-1" name-de="Lateinisch-1">
+<character hexref="U00A0" meaning="Nonbreaking space">&#xA0;</character>
+<character hexref="U00A1" meaning="Inverted exclamation mark">&#xA1;</character>
+<character hexref="U00A2" meaning="Cent sign">&#xA2;</character>
+<character hexref="U00A3" meaning="Pound sign">&#xA3;</character>
+<character hexref="U00A4" meaning="Currency sign">&#xA4;</character>
+<character hexref="U00A5" meaning="Yen sign">&#xA5;</character>
+<character hexref="U00A6" meaning="Broken vertical bar">&#xA6;</character>
+<character hexref="U00A7" meaning="Section sign">&#xA7;</character>
+<character hexref="U00A8" meaning="Dieresis, spacing dieresis">&#xA8;</character>
+<character hexref="U00A9" meaning="Copyright sign">&#xA9;</character>
+<character hexref="U00AA" meaning="Feminine ordinal indicator">&#xAA;</character>
+<character hexref="U00AB" meaning="Left-pointing double angle quotation mark, left-pointing guillemot">&#xAB;</character>
+<character hexref="U00AC" meaning="Not sign">&#xAC;</character>
+<!-- doesn't display well
+<character hexref="U00AD" meaning="Soft hyphen, discretionary hyphen">&#xAD;</character>
+-->
+<character hexref="U00AE" meaning="Registered trademark sign">&#xAE;</character>
+<character hexref="U00AF" meaning="Macron, overline, APL overbar">&#xAF;</character>
+<character hexref="U00B0" meaning="Degree sign">&#xB0;</character>
+<character hexref="U00B1" meaning="Plus-or-minus sign">&#xB1;</character>
+<character hexref="U00B2" meaning="Superscript digit two, squared">&#xB2;</character>
+<character hexref="U00B3" meaning="Superscript digit three, cubed">&#xB3;</character>
+<character hexref="U00B4" meaning="Acute accent, spacing acute">&#xB4;</character>
+<character hexref="U00B5" meaning="Micro sign">&#xB5;</character>
+<character hexref="U00B6" meaning="Pilcrow sign, paragraph sign">&#xB6;</character>
+<character hexref="U00B7" meaning="Middle dot, Georgian comma">&#xB7;</character>
+<character hexref="U00B8" meaning="Cedilla, spacing cedilla">&#xB8;</character>
+<character hexref="U00B9" meaning="Superscript digit one">&#xB9;</character>
+<character hexref="U00BA" meaning="Masculine ordinal indicator">&#xBA;</character>
+<character hexref="U00BB" meaning="Right-pointing double angle quotation mark, right-pointing guillemot">&#xBB;</character>
+<character hexref="U00BC" meaning="Vulgar fraction one-quarter">&#xBC;</character>
+<character hexref="U00BD" meaning="Vulgar fraction one-half">&#xBD;</character>
+<character hexref="U00BE" meaning="Vulgar fraction three-quarters">&#xBE;</character>
+<character hexref="U00BF" meaning="Inverted question mark">&#xBF;</character>
+<character hexref="U00C0" meaning="Latin capital letter A with grave">&#xC0;</character>
+<character hexref="U00C1" meaning="Latin capital letter A with acute">&#xC1;</character>
+<character hexref="U00C2" meaning="Latin capital letter A with circumflex">&#xC2;</character>
+<character hexref="U00C3" meaning="Latin capital letter A with tilde">&#xC3;</character>
+<character hexref="U00C4" meaning="Latin capital letter A with dieresis">&#xC4;</character>
+<character hexref="U00C5" meaning="Latin capital letter A with ring above">&#xC5;</character>
+<character hexref="U00C6" meaning="Latin capital letter AE">&#xC6;</character>
+<character hexref="U00C7" meaning="Latin capital letter C with cedilla">&#xC7;</character>
+<character hexref="U00C8" meaning="Latin capital letter E with grave">&#xC8;</character>
+<character hexref="U00C9" meaning="Latin capital letter E with acute">&#xC9;</character>
+<character hexref="U00CA" meaning="Latin capital letter E with circumflex">&#xCA;</character>
+<character hexref="U00CB" meaning="Latin capital letter E with dieresis">&#xCB;</character>
+<character hexref="U00CC" meaning="Latin capital letter I with grave">&#xCC;</character>
+<character hexref="U00CD" meaning="Latin capital letter I with acute">&#xCD;</character>
+<character hexref="U00CE" meaning="Latin capital letter I with circumflex">&#xCE;</character>
+<character hexref="U00CF" meaning="Latin capital letter I with dieresis">&#xCF;</character>
+<character hexref="U00D0" meaning="Latin capital letter eth">&#xD0;</character>
+<character hexref="U00D1" meaning="Latin capital letter N with tilde">&#xD1;</character>
+<character hexref="U00D2" meaning="Latin capital letter O with grave">&#xD2;</character>
+<character hexref="U00D3" meaning="Latin capital letter O with acute">&#xD3;</character>
+<character hexref="U00D4" meaning="Latin capital letter O with circumflex">&#xD4;</character>
+<character hexref="U00D5" meaning="Latin capital letter O with tilde">&#xD5;</character>
+<character hexref="U00D6" meaning="Latin capital letter O with dieresis">&#xD6;</character>
+<character hexref="U00D7" meaning="Multiplication sign">&#xD7;</character>
+<character hexref="U00D8" meaning="Latin capital letter O with stroke">&#xD8;</character>
+<character hexref="U00D9" meaning="Latin capital letter U with grave">&#xD9;</character>
+<character hexref="U00DA" meaning="Latin capital letter U with acute">&#xDA;</character>
+<character hexref="U00DB" meaning="Latin capital letter U with circumflex">&#xDB;</character>
+<character hexref="U00DC" meaning="Latin capital letter U with dieresis">&#xDC;</character>
+<character hexref="U00DD" meaning="Latin capital letter Y with acute">&#xDD;</character>
+<character hexref="U00DE" meaning="Latin capital letter thorn">&#xDE;</character>
+<character hexref="U00DF" meaning="Latin small letter sharp s, esszett">&#xDF;</character>
+<character hexref="U00E0" meaning="Latin small letter a with grave">&#xE0;</character>
+<character hexref="U00E1" meaning="Latin small letter a with acute">&#xE1;</character>
+<character hexref="U00E2" meaning="Latin small letter a with circumflex">&#xE2;</character>
+<character hexref="U00E3" meaning="Latin small letter a with tilde">&#xE3;</character>
+<character hexref="U00E4" meaning="Latin small letter a with dieresis">&#xE4;</character>
+<character hexref="U00E5" meaning="Latin small letter a with ring above">&#xE5;</character>
+<character hexref="U00E6" meaning="Latin small letter ae">&#xE6;</character>
+<character hexref="U00E7" meaning="Latin small letter c with cedilla">&#xE7;</character>
+<character hexref="U00E8" meaning="Latin small letter e with grave">&#xE8;</character>
+<character hexref="U00E9" meaning="Latin small letter e with acute">&#xE9;</character>
+<character hexref="U00EA" meaning="Latin small letter e with circumflex">&#xEA;</character>
+<character hexref="U00EB" meaning="Latin small letter e with dieresis">&#xEB;</character>
+<character hexref="U00EC" meaning="Latin small letter i with grave">&#xEC;</character>
+<character hexref="U00ED" meaning="Latin small letter i with acute">&#xED;</character>
+<character hexref="U00EE" meaning="Latin small letter i with circumflex">&#xEE;</character>
+<character hexref="U00EF" meaning="Latin small letter i with dieresis">&#xEF;</character>
+<character hexref="U00F0" meaning="Latin small letter eth">&#xF0;</character>
+<character hexref="U00F1" meaning="Latin small letter n with tilde">&#xF1;</character>
+<character hexref="U00F2" meaning="Latin small letter o with grave">&#xF2;</character>
+<character hexref="U00F3" meaning="Latin small letter o with acute">&#xF3;</character>
+<character hexref="U00F4" meaning="Latin small letter o with circumflex">&#xF4;</character>
+<character hexref="U00F5" meaning="Latin small letter o with tilde">&#xF5;</character>
+<character hexref="U00F6" meaning="Latin small letter o with dieresis">&#xF6;</character>
+<character hexref="U00F7" meaning="Division sign">&#xF7;</character>
+<character hexref="U00F8" meaning="Latin small letter o with stroke">&#xF8;</character>
+<character hexref="U00F9" meaning="Latin small letter u with grave">&#xF9;</character>
+<character hexref="U00FA" meaning="Latin small letter u with acute">&#xFA;</character>
+<character hexref="U00FB" meaning="Latin small letter u with circumflex">&#xFB;</character>
+<character hexref="U00FC" meaning="Latin small letter u with dieresis">&#xFC;</character>
+<character hexref="U00FD" meaning="Latin small letter y with acute">&#xFD;</character>
+<character hexref="U00FE" meaning="Latin small letter thorn">&#xFE;</character>
+<character hexref="U00FF" meaning="Latin small letter y with dieresis">&#xFF;</character>
+</unicodeblock>
+<unicodeblock name="Extended Latin-A" name-de="Erweitertes Lateinisch-A">
+<character hexref="U0100" decref="&amp;#256;" meaning="Latin capital letter A with macron">&#x100;</character>
+<character hexref="U0101" decref="&amp;#257;" meaning="Latin small letter a with macron">&#x101;</character>
+<character hexref="U0102" decref="&amp;#258;" meaning="Latin capital letter A with breve">&#x102;</character>
+<character hexref="U0103" decref="&amp;#259;" meaning="Latin small letter a with breve">&#x103;</character>
+<character hexref="U0104" decref="&amp;#260;" meaning="Latin capital letter A with ogonek">&#x104;</character>
+<character hexref="U0105" decref="&amp;#261;" meaning="Latin small letter a with ogonek">&#x105;</character>
+<character hexref="U0106" decref="&amp;#262;" meaning="Latin capital letter C with acute">&#x106;</character>
+<character hexref="U0107" decref="&amp;#263;" meaning="Latin small letter c with acute">&#x107;</character>
+<character hexref="U0108" decref="&amp;#264;" meaning="Latin capital letter C with circumflex">&#x108;</character>
+<character hexref="U0109" decref="&amp;#265;" meaning="Latin small letter c with circumflex">&#x109;</character>
+<character hexref="U010A" decref="&amp;#266;" meaning="Latin capital letter C with dot above">&#x10A;</character>
+<character hexref="U010B" decref="&amp;#267;" meaning="Latin small letter c with dot above">&#x10B;</character>
+<character hexref="U010C" decref="&amp;#268;" meaning="Latin capital letter C with caron">&#x10C;</character>
+<character hexref="U010D" decref="&amp;#269;" meaning="Latin small letter c with caron">&#x10D;</character>
+<character hexref="U010E" decref="&amp;#270;" meaning="Latin capital letter D with caron">&#x10E;</character>
+<character hexref="U010F" decref="&amp;#271;" meaning="Latin small letter d with caron">&#x10F;</character>
+<character hexref="U0110" decref="&amp;#272;" meaning="Latin capital letter D with stroke">&#x110;</character>
+<character hexref="U0111" decref="&amp;#273;" meaning="Latin small letter d with stroke">&#x111;</character>
+<character hexref="U0112" decref="&amp;#274;" meaning="Latin capital letter E with macron">&#x112;</character>
+<character hexref="U0113" decref="&amp;#275;" meaning="Latin small letter e with macron">&#x113;</character>
+<character hexref="U0114" decref="&amp;#276;" meaning="Latin capital letter E with breve">&#x114;</character>
+<character hexref="U0115" decref="&amp;#277;" meaning="Latin small letter e with breve">&#x115;</character>
+<character hexref="U0116" decref="&amp;#278;" meaning="Latin capital letter E with dot above">&#x116;</character>
+<character hexref="U0117" decref="&amp;#279;" meaning="Latin small letter e with dot above">&#x117;</character>
+<character hexref="U0118" decref="&amp;#280;" meaning="Latin capital letter E with ogonek">&#x118;</character>
+<character hexref="U0119" decref="&amp;#281;" meaning="Latin small letter e with ogonek">&#x119;</character>
+<character hexref="U011A" decref="&amp;#282;" meaning="Latin capital letter E with caron">&#x11A;</character>
+<character hexref="U011B" decref="&amp;#283;" meaning="Latin small letter e with caron">&#x11B;</character>
+<character hexref="U011C" decref="&amp;#284;" meaning="Latin capital letter G with circumflex">&#x11C;</character>
+<character hexref="U011D" decref="&amp;#285;" meaning="Latin small letter g with circumflex">&#x11D;</character>
+<character hexref="U011E" decref="&amp;#286;" meaning="Latin capital letter G with breve">&#x11E;</character>
+<character hexref="U011F" decref="&amp;#287;" meaning="Latin small letter g with breve">&#x11F;</character>
+<character hexref="U0120" decref="&amp;#288;" meaning="Latin capital letter G with dot above">&#x120;</character>
+<character hexref="U0121" decref="&amp;#289;" meaning="Latin small letter g with dot above">&#x121;</character>
+<character hexref="U0122" decref="&amp;#290;" meaning="Latin capital letter G with cedilla">&#x122;</character>
+<character hexref="U0123" decref="&amp;#291;" meaning="Latin small letter g with cedilla">&#x123;</character>
+<character hexref="U0124" decref="&amp;#292;" meaning="Latin capital letter H with circumflex">&#x124;</character>
+<character hexref="U0125" decref="&amp;#293;" meaning="Latin small letter h with circumflex">&#x125;</character>
+<character hexref="U0126" decref="&amp;#294;" meaning="Latin capital letter H with stroke">&#x126;</character>
+<character hexref="U0127" decref="&amp;#295;" meaning="Latin small letter h with stroke">&#x127;</character>
+<character hexref="U0128" decref="&amp;#296;" meaning="Latin capital letter I with tilde">&#x128;</character>
+<character hexref="U0129" decref="&amp;#297;" meaning="Latin small letter i with tilde">&#x129;</character>
+<character hexref="U012A" decref="&amp;#298;" meaning="Latin capital letter I with macron">&#x12A;</character>
+<character hexref="U012B" decref="&amp;#299;" meaning="Latin small letter i with macron">&#x12B;</character>
+<character hexref="U012C" decref="&amp;#300;" meaning="Latin capital letter I with breve">&#x12C;</character>
+<character hexref="U012D" decref="&amp;#301;" meaning="Latin small letter i with breve">&#x12D;</character>
+<character hexref="U012E" decref="&amp;#302;" meaning="Latin capital letter I with ogonek">&#x12E;</character>
+<character hexref="U012F" decref="&amp;#303;" meaning="Latin small letter i with ogonek">&#x12F;</character>
+<character hexref="U0130" decref="&amp;#304;" meaning="Latin capital letter I with dot above">&#x130;</character>
+<character hexref="U0131" decref="&amp;#305;" meaning="Latin small letter dotless i" >&#x131;</character>
+<character hexref="U0132" decref="&amp;#306;" meaning="Latin capital ligature IJ">&#x132;</character>
+<character hexref="U0133" decref="&amp;#307;" meaning="Latin small ligature ij">&#x133;</character>
+<character hexref="U0134" decref="&amp;#308;" meaning="Latin capital letter J with circumflex">&#x134;</character>
+<character hexref="U0135" decref="&amp;#309;" meaning="Latin small letter J with circumflex">&#x135;</character>
+<character hexref="U0136" decref="&amp;#310;" meaning="Latin capital letter K with cedilla">&#x136;</character>
+<character hexref="U0137" decref="&amp;#311;" meaning="Latin small letter k with cedilla">&#x137;</character>
+<character hexref="U0138" decref="&amp;#312;" meaning="Latin small letter kra">&#x138;</character>
+<character hexref="U0139" decref="&amp;#313;" meaning="Latin capital letter L with acute">&#x139;</character>
+<character hexref="U013A" decref="&amp;#314;" meaning="Latin small letter l with acute">&#x13A;</character>
+<character hexref="U013B" decref="&amp;#315;" meaning="Latin capital letter L with cedilla">&#x13B;</character>
+<character hexref="U013C" decref="&amp;#316;" meaning="Latin small letter l with cedilla">&#x13C;</character>
+<character hexref="U013D" decref="&amp;#317;" meaning="Latin capital letter L with caron">&#x13D;</character>
+<character hexref="U013E" decref="&amp;#318;" meaning="Latin small letter l with caron">&#x13E;</character>
+<character hexref="U013F" decref="&amp;#319;" meaning="Latin capital letter L with middle dot">&#x13F;</character>
+<character hexref="U0140" decref="&amp;#320;" meaning="Latin small letter l with middle dot">&#x140;</character>
+<character hexref="U0141" decref="&amp;#321;" meaning="Latin capital letter L with stroke">&#x141;</character>
+<character hexref="U0142" decref="&amp;#322;" meaning="Latin small letter l with stroke">&#x142;</character>
+<character hexref="U0143" decref="&amp;#323;" meaning="Latin capital letter N with acute">&#x143;</character>
+<character hexref="U0144" decref="&amp;#324;" meaning="Latin small letter n with acute">&#x144;</character>
+<character hexref="U0145" decref="&amp;#325;" meaning="Latin capital letter N with cedilla">&#x145;</character>
+<character hexref="U0146" decref="&amp;#326;" meaning="Latin small letter n with cedilla">&#x146;</character>
+<character hexref="U0147" decref="&amp;#327;" meaning="Latin capital letter N with caron">&#x147;</character>
+<character hexref="U0148" decref="&amp;#328;" meaning="Latin small letter n with caron">&#x148;</character>
+<character hexref="U0149" decref="&amp;#329;" meaning="Latin small letter n preceded by apostrophe">&#x149;</character>
+<character hexref="U014A" decref="&amp;#330;" meaning="Latin capital letter ENG">&#x14A;</character>
+<character hexref="U014B" decref="&amp;#331;" meaning="Latin small letter eng">&#x14B;</character>
+<character hexref="U014C" decref="&amp;#332;" meaning="Latin capital letter O with macron">&#x14C;</character>
+<character hexref="U014D" decref="&amp;#333;" meaning="Latin small letter o with macron">&#x14D;</character>
+<character hexref="U014E" decref="&amp;#334;" meaning="Latin capital letter O with breve">&#x14E;</character>
+<character hexref="U014F" decref="&amp;#335;" meaning="Latin small letter o with breve">&#x14F;</character>
+<character hexref="U0150" decref="&amp;#336;" meaning="Latin capital letter O with double acute">&#x150;</character>
+<character hexref="U0151" decref="&amp;#337;" meaning="Latin small letter o with double acute">&#x151;</character>
+<character hexref="U0152" decref="&amp;#338;" meaning="Latin capital ligature OE">&#x152;</character>
+<character hexref="U0153" decref="&amp;#339;" meaning="Latin small ligature oe">&#x153;</character>
+<character hexref="U0154" decref="&amp;#340;" meaning="Latin capital letter R with acute">&#x154;</character> 
+<character hexref="U0155" decref="&amp;#341;" meaning="Latin small letter r with acute">&#x155;</character>
+<character hexref="U0156" decref="&amp;#342;" meaning="Latin capital letter R with cedilla">&#x156;</character>
+<character hexref="U0157" decref="&amp;#343;" meaning="Latin small letter r with cedilla">&#x157;</character>
+<character hexref="U0158" decref="&amp;#344;" meaning="Latin capital letter R with caron">&#x158;</character>
+<character hexref="U0159" decref="&amp;#345;" meaning="Latin small letter r with caron">&#x159;</character>
+<character hexref="U015A" decref="&amp;#346;" meaning="Latin capital letter S with acute">&#x15A;</character>
+<character hexref="U015B" decref="&amp;#347;" meaning="Latin small letter s with acute">&#x15B;</character>
+<character hexref="U015C" decref="&amp;#348;" meaning="Latin capital letter S with circumflex">&#x15C;</character>
+<character hexref="U015D" decref="&amp;#349;" meaning="Latin small letter s with circumflex">&#x15D;</character>
+<character hexref="U015E" decref="&amp;#350;" meaning="Latin capital letter S with cedilla">&#x15E;</character>
+<character hexref="U015F" decref="&amp;#351;" meaning="Latin small letter s with cedilla">&#x15F;</character>
+<character hexref="U0160" decref="&amp;#352;" meaning="Latin capital letter S with caron">&#x160;</character>
+<character hexref="U0161" decref="&amp;#353;" meaning="Latin small letter s with caron">&#x161;</character>
+<character hexref="U0162" decref="&amp;#354;" meaning="Latin capital letter T with cedilla">&#x162;</character>
+<character hexref="U0163" decref="&amp;#355;"  meaning="Latin small letter t with cedilla">&#x163;</character>
+<character hexref="U0164" decref="&amp;#356;"  meaning="Latin capital letter T with caron">&#x164;</character>
+<character hexref="U0165" decref="&amp;#357;" meaning="Latin small letter t with caron">&#x165;</character>
+<character hexref="U0166" decref="&amp;#358;" meaning="Latin capital letter T with stroke">&#x166;</character>
+<character hexref="U0167" decref="&amp;#359;" meaning="Latin small letter t with stroke">&#x167;</character>
+<character hexref="U0168" decref="&amp;#360;" meaning="Latin capital letter U with tilde">&#x168;</character>
+<character hexref="U0169" decref="&amp;#361;" meaning="Latin small letter u with tilde">&#x169;</character>
+<character hexref="U016A" decref="&amp;#362;" meaning="Latin capital letter U with macron">&#x16A;</character>
+<character hexref="U016B" decref="&amp;#363;" meaning="Latin small letter u with macron">&#x16B;</character>
+<character hexref="U016C" decref="&amp;#364;" meaning="Latin capital letter U with breve">&#x16C;</character>
+<character hexref="U016D" decref="&amp;#365;" meaning="Latin small letter u with breve">&#x16D;</character>
+<character hexref="U016E" decref="&amp;#366;" meaning="Latin capital letter U with ring above">&#x16E;</character>
+<character hexref="U016F" decref="&amp;#367;" meaning="Latin small letter u with ring above">&#x16F;</character>
+<character hexref="U0170" decref="&amp;#368;" meaning="Latin capital letter U with double acute">&#x170;</character>
+<character hexref="U0171" decref="&amp;#369;" meaning="Latin small letter u with double acute">&#x171;</character>
+<character hexref="U0172" decref="&amp;#370;" meaning="Latin capital letter U with ogonek">&#x172;</character>
+<character hexref="U0173" decref="&amp;#371;" meaning="Latin small letter u with ogonek">&#x173;</character>
+<character hexref="U0174" decref="&amp;#372;" meaning="Latin capital letter W with circumflex">&#x174;</character>
+<character hexref="U0175" decref="&amp;#373;" meaning="Latin small letter w with circumflex">&#x175;</character>
+<character hexref="U0176" decref="&amp;#374;" meaning="Latin capital letter Y with circumflex">&#x176;</character>
+<character hexref="U0177" decref="&amp;#375;" meaning="Latin small letter y with circumflex">&#x177;</character>
+<character hexref="U0178" decref="&amp;#376;" meaning="Latin capital letter Y with dieresis">&#x178;</character>
+<character hexref="U0179" decref="&amp;#377;" meaning="Latin capital letter Z with acute">&#x179;</character>
+<character hexref="U017A" decref="&amp;#378;" meaning="Latin small letter z with acute">&#x17A;</character>
+<character hexref="U017B" decref="&amp;#379;" meaning="Latin capital letter Z with dot above">&#x17B;</character>
+<character hexref="U017C" decref="&amp;#380;" meaning="Latin small letter z with dot above">&#x17C;</character>
+<character hexref="U017D" decref="&amp;#381;" meaning="Latin capital letter Z with caron">&#x17D;</character>
+<character hexref="U017E" decref="&amp;#382;" meaning="Latin small letter z with caron">&#x17E;</character>
+<character hexref="U017F" decref="&amp;#383;" meaning="Latin small letter long s">&#x17F;</character>
+</unicodeblock>
+
+<unicodeblock name="Extended Latin-B" name-de="Erweitertes Lateinisch-B">
+<!-- the florin or function is in the HTML Symbol Entity Set. All other do not display well -->
+<character hexref="U0192" decref="&amp;#402;" meaning="Latin small f with hook, function, florin">&#x192;</character>
+</unicodeblock>
+
+<unicodeblock name="Spacing Modifier Letters" name-de="Buchstaben zur Abstanddefinition">
+<!-- the following are in the HTML Special Characters Entity Set. All other do not display well -->
+<character hexref="U02C6" decref="&amp;#710;" meaning="Modifier letter circumflex accent">&#x2C6;</character>
+<character hexref="U02DC" decref="&amp;#732;" meaning="Small tilde">&#x2DC;</character>
+</unicodeblock>
+
+<unicodeblock name="Greek" name-de="Griechisch">
+<!-- the following are in the HTML Special Characters Entity Set. -->
+<character hexref="U0391" decref="&amp;#913;" meaning="Greek capital letter alpha">&#x391;</character>
+<character hexref="U0392" decref="&amp;#914;" meaning="Greek capital letter beta">&#x392;</character>
+<character hexref="U0393" decref="&amp;#915;" meaning="Greek capital letter gamma">&#x393;</character>
+<character hexref="U0394" decref="&amp;#916;" meaning="Greek capital letter delta">&#x394;</character>
+<character hexref="U0395" decref="&amp;#917;" meaning="Greek capital letter epsilon">&#x395;</character>
+<character hexref="U0396" decref="&amp;#918;" meaning="Greek capital letter zeta">&#x396;</character>
+<character hexref="U0397" decref="&amp;#919;" meaning="Greek capital letter eta">&#x397;</character>
+<character hexref="U0398" decref="&amp;#920;" meaning="Greek capital letter theta">&#x398;</character>
+<character hexref="U0399" decref="&amp;#921;" meaning="Greek capital letter iota">&#x399;</character>
+<character hexref="U039A" decref="&amp;#922;" meaning="Greek capital letter kappa">&#x39A;</character>
+<character hexref="U039B" decref="&amp;#923;" meaning="Greek capital letter lambda">&#x39B;</character>
+<character hexref="U039C" decref="&amp;#924;" meaning="Greek capital letter mu">&#x39C;</character>
+<character hexref="U039D" decref="&amp;#925;" meaning="Greek capital letter nu">&#x39D;</character>
+<character hexref="U039E" decref="&amp;#926;" meaning="Greek capital letter xi">&#x39E;</character>
+<character hexref="U039F" decref="&amp;#927;" meaning="Greek capital letter omicron">&#x39F;</character>
+<character hexref="U03A0" decref="&amp;#928;" meaning="Greek capital letter pi">&#x3A0;</character>
+<character hexref="U03A1" decref="&amp;#929;" meaning="Greek capital letter rho">&#x3A1;</character>
+<character hexref="U03A3" decref="&amp;#931;" meaning="Greek capital letter sigma">&#x3A3;</character>
+<character hexref="U03A4" decref="&amp;#932;" meaning="Greek capital letter tau">&#x3A4;</character>
+<character hexref="U03A5" decref="&amp;#933;" meaning="Greek capital letter upsilon">&#x3A5;</character>
+<character hexref="U03A6" decref="&amp;#934;" meaning="Greek capital letter phi">&#x3A6;</character>
+<character hexref="U03A7" decref="&amp;#935;" meaning="Greek capital letter chi">&#x3A7;</character>
+<character hexref="U03A8" decref="&amp;#936;" meaning="Greek capital letter psi">&#x3A8;</character>
+<character hexref="U03A9" decref="&amp;#937;" meaning="Greek capital letter omega">&#x3A9;</character>
+<character hexref="U03B1" decref="&amp;#945;" meaning="Greek small letter alpha">&#x3B1;</character>
+<character hexref="U03B2" decref="&amp;#946;" meaning="Greek small letter beta">&#x3B2;</character>
+<character hexref="U03B3" decref="&amp;#947;" meaning="Greek small letter gamma">&#x3B3;</character>
+<character hexref="U03B4" decref="&amp;#948;" meaning="Greek small letter delta">&#x3B4;</character>
+<character hexref="U03B5" decref="&amp;#949;" meaning="Greek small letter epsilon">&#x3B5;</character>
+<character hexref="U03B6" decref="&amp;#950;" meaning="Greek small letter zeta">&#x3B6;</character>
+<character hexref="U03B7" decref="&amp;#951;" meaning="Greek small letter eta">&#x3B7;</character>
+<character hexref="U03B8" decref="&amp;#952;" meaning="Greek small letter theta">&#x3B8;</character>
+<character hexref="U03B9" decref="&amp;#953;" meaning="Greek small letter iota">&#x3B9;</character>
+<character hexref="U03BA" decref="&amp;#954;" meaning="Greek small letter kappa">&#x3BA;</character>
+<character hexref="U03BB" decref="&amp;#955;" meaning="Greek small letter lambda">&#x3BB;</character>
+<character hexref="U03BC" decref="&amp;#956;" meaning="Greek small letter mu">&#x3BC;</character>
+<character hexref="U03BD" decref="&amp;#957;" meaning="Greek small letter nu">&#x3BD;</character>
+<character hexref="U03BE" decref="&amp;#958;" meaning="Greek small letter xi">&#x3BE;</character>
+<character hexref="U03BF" decref="&amp;#959;" meaning="Greek small letter omicron">&#x3BF;</character>
+<character hexref="U03C0" decref="&amp;#960;" meaning="Greek small letter pi">&#x3C0;</character>
+<character hexref="U03C1" decref="&amp;#961;" meaning="Greek small letter rho">&#x3C1;</character>
+<character hexref="U03C2" decref="&amp;#962;" meaning="Greek small letter final sigma">&#x3C2;</character>
+<character hexref="U03C3" decref="&amp;#963;" meaning="Greek small letter sigma">&#x3C3;</character>
+<character hexref="U03C4" decref="&amp;#964;" meaning="Greek small letter tau">&#x3C4;</character>
+<character hexref="U03C5" decref="&amp;#965;" meaning="Greek small letter upsilon">&#x3C5;</character>
+<character hexref="U03C6" decref="&amp;#966;" meaning="Greek small letter phi">&#x3C6;</character>
+<character hexref="U03C7" decref="&amp;#967;" meaning="Greek small letter chi">&#x3C7;</character>
+<character hexref="U03C8" decref="&amp;#968;" meaning="Greek small letter psi">&#x3C8;</character>
+<character hexref="U03C9" decref="&amp;#969;" meaning="Greek small letter omega">&#x3C9;</character>
+<!-- they don't display well
+<character hexref="U03D1" decref="&amp;#977;" meaning="Greek small letter theta symbol">&#x3D1;</character>
+<character hexref="U03D2" decref="&amp;#978;" meaning="Greek upsilon with hook symbol">&#x3D2;</character>
+<character hexref="U03D6" decref="&amp;#982;" meaning="Greek pi symbol">&#x3D6;</character>
+-->
+</unicodeblock>
+
+<unicodeblock name="General Punctuation" name-de="Allgemeine Interpunktion">
+<!-- the following are in the HTML Special Characters and the HTML Symbol Entity Set. -->
+<!-- doesn't display well
+<character hexref="U2002" decref="&amp;#8194;" meaning="En space">&#x2002;</character>
+<character hexref="U2003" decref="&amp;#8195;" meaning="Em space">&#x2003;</character>
+<character hexref="U2009" decref="&amp;#8201;" meaning="Thin space">&#x2009;</character>
+-->
+<!-- here would come some non-printing characters, that we left out-->
+<character hexref="U2013" decref="&amp;#8211;" meaning="En dash">&#x2013;</character>
+<character hexref="U2014" decref="&amp;#8212;" meaning="Em dash">&#x2014;</character>
+
+<character hexref="U2018" decref="&amp;#8216;" meaning="Left single quotation mark">&#x2018;</character>
+<character hexref="U2019" decref="&amp;#8217;" meaning="Right single quotation mark">&#x2019;</character>
+<character hexref="U201A" decref="&amp;#8218;" meaning="Single low-9 quotation mark">&#x201A;</character>
+<!-- not part of HTML entity sets
+<character hexref="U201B" decref="&amp;#8219;">&#x201B;</character>
+-->
+<character hexref="U201C" decref="&amp;#8220;" meaning="Left double quotation mark">&#x201C;</character>
+<character hexref="U201D" decref="&amp;#8221;" meaning="Right double quotation mark">&#x201D;</character>
+<character hexref="U201E" decref="&amp;#8222;" meaning="Double low-9 quotation mark">&#x201E;</character>
+<!-- doesn't display 
+<character hexref="U201F" decref="&amp;#8223;">&#x201F;</character>
+-->
+<character hexref="U2020" decref="&amp;#8224;" meaning="Dagger">&#x2020;</character>
+<character hexref="U2021" decref="&amp;#8225;" meaning="Double dagger">&#x2021;</character>
+<character hexref="U2022" decref="&amp;#8226;" meaning="Bullet, black small circle">&#x2022;</character>
+<character hexref="U2026" decref="&amp;#8230;" meaning="Horizontal ellipsis, three-dot leader">&#x2026;</character>
+<character hexref="U2030" decref="&amp;#8240;" meaning="Per mille sign">&#x2030;</character>
+<character hexref="U2032" decref="&amp;#8242;" meaning="Prime, minutes, feet">&#x2032;</character>
+<character hexref="U2033" decref="&amp;#8243;" meaning="Double prime, seconds, inches">&#x2033;</character>
+<character hexref="U2039" decref="&amp;#8249;" meaning="Single left-pointing angle quotation mark">&#x2039;</character>
+<character hexref="U203A" decref="&amp;#8250;" meaning="Single right-pointing angle quotation mark">&#x203A;</character>
+<character hexref="U203E" decref="&amp;#8254;" meaning="Overline, spacing overscore">&#x203E;</character>
+<character hexref="U2044" decref="&amp;#8260;" meaning="Fraction slash">&#x2044;</character>
+<!-- doesn't display well
+<character hexref="U2111" decref="&amp;#8465;" meaning="Black letter capital I, imaginary part">&#x2111;</character>
+-->
+</unicodeblock>
+
+
+<unicodeblock name="Currency Symbols" name-de="Währungssymbole">
+<character hexref="U20AC" decref="&amp;#8364;" meaning="Euro sign">&#x20AC;</character>
+</unicodeblock>
+
+
+<unicodeblock name="Letter-like Symbols" name-de="Buchstabenähnliche Sonderzeichen">
+<!-- doesn't display well
+<character hexref="U2111" decref="&amp;#8465;" meaning="Black letter capital I, imaginary part">&#x2111;</character>
+<character hexref="U2118" decref="&amp;#8472;" meaning="Script captial P, power set, Weierstrass p">&#x2118;</character>
+<character hexref="U211C" decref="&amp;#8476;" meaning="Black letter capital R, real part symbol">&#x211C;</character>
+-->
+<character hexref="U2122" decref="&amp;#8482;" meaning="Trademark sign">&#x2122;</character>
+<!--
+<character hexref="U2135" decref="&amp;#8501;" meaning="Aleph symbol, first transfinite cardinal">&#x2135;</character>
+-->
+</unicodeblock>
+
+
+<unicodeblock name="Arrows" name-de="Pfeile">
+<character hexref="U2190" decref="&amp;#8592;" meaning="Leftward arrow">&#x2190;</character>
+<character hexref="U2191" decref="&amp;#8593;" meaning="Upward arrow">&#x2191;</character>
+<character hexref="U2192" decref="&amp;#8594;" meaning="Rightward arrow">&#x2192;</character>
+<character hexref="U2193" decref="&amp;#8595;" meaning="Downward arrow">&#x2193;</character>
+<character hexref="U2194" decref="&amp;#8596;" meaning="Left-right arrow">&#x2194;</character>
+<!-- U2195 is not a HTML Entity -->
+<character hexref="U2195" decref="&amp;#8597;" meaning="Up-down arrow">&#x2195;</character>
+<!-- doesn't display well
+<character hexref="U21B5" decref="&amp;#8629;" meaning="Downward arrow with corner leftward, carriage return">&#x21B5</character>
+<character hexref="U21D0" decref="&amp;#8656;" meaning="Leftward double arrow">&#x21D0;</character>
+<character hexref="U21D1" decref="&amp;#8657;" meaning="Upward double arrow">&#x21D1;</character>
+-->
+<character hexref="U21D2" decref="&amp;#8658;" meaning="Rightward double arrow">&#x21D2;</character>
+<!-- doesn't display well
+<character hexref="U21D3" decref="&amp;#8659;" meaning="Downward double arrow">&#x21D3;</character>
+-->
+<character hexref="U21D4" decref="&amp;#8660;" meaning="Left-right double arrow">&#x21D4;</character>
+</unicodeblock>
+
+
+<unicodeblock name="Mathematical Operators" name-de="Mathematische Operanden">
+<character hexref="U2200" decref="&amp;#8704;" meaning="For all">&#x2200;</character>
+<character hexref="U2202" decref="&amp;#8706;" meaning="Partial differential">&#x2202;</character>
+<character hexref="U2203" decref="&amp;#8707;" meaning="There exists">&#x2203;</character>
+<!-- doesn't display well
+<character hexref="U2205" decref="&amp;#8709;" meaning="Empty set, null set, diameter">&#x2205;</character>
+-->
+<character hexref="U2206" decref="&amp;#8710;" meaning="Increment, forward difference">&#x2206;</character>
+<character hexref="U2207" decref="&amp;#8711;" meaning="Nabla, backward difference">&#x2207;</character>
+<character hexref="U2208" decref="&amp;#8712;" meaning="Element of">&#x2208;</character>
+<!-- doesn't display well
+<character hexref="U2209" decref="&amp;#8713;" meaning="Not an element of">&#x2209;</character>
+-->
+<character hexref="U220B" decref="&amp;#8715;" meaning="Contains as member">&#x220B;</character>
+<character hexref="U220F" decref="&amp;#8719;" meaning="N-ary product, product sign">&#x220F;</character>
+<character hexref="U2211" decref="&amp;#8721;" meaning="N-ary summation">&#x2211;</character>
+<character hexref="U2212" decref="&amp;#8722;" meaning="Minus sign">&#x2212;</character>
+<!-- doesn't display well
+<character hexref="U2217" decref="&amp;#8727;" meaning="Asterisk operator">&#x2217;</character>
+-->
+<character hexref="U221A" decref="&amp;#8730;" meaning="Square root, radical sign">&#x221A;</character>
+<character hexref="U221D" decref="&amp;#8733;" meaning="Proportional to">&#x221D;</character>
+<character hexref="U221E" decref="&amp;#8734;" meaning="Infinity">&#x221E;</character>
+<!-- U221F is not a HTML Entity -->
+<character hexref="U221F" decref="&amp;#8735;" meaning="Right angle">&#x221F;</character>
+<character hexref="U2220" decref="&amp;#8736;" meaning="Angle">&#x2220;</character>
+<character hexref="U2227" decref="&amp;#8743;" meaning="Logical and, wedge">&#x2227;</character>
+<character hexref="U2228" decref="&amp;#8744;" meaning="Logical or, vee">&#x2228;</character>
+<character hexref="U2229" decref="&amp;#8745;" meaning="Intersection, cap">&#x2229;</character>
+<character hexref="U222A" decref="&amp;#8746;" meaning="Union, cap">&#x222A;</character>
+<character hexref="U222B" decref="&amp;#8747;" meaning="Integral">&#x222B;</character>
+<character hexref="U2234" decref="&amp;#8756;" meaning="Therefore">&#x2234;</character>
+
+<character hexref="U223C" decref="&amp;#8764;" meaning="Tilde operator, varies with, similar to">&#x223C;</character>
+<!-- U223D ist not a HTML Entity -->
+<character hexref="U223D" decref="&amp;#8765;" meaning="Reversed tilde, lazy S">&#x223D;</character>
+<!-- doesn't display well
+<character hexref="U2245" decref="&amp;#8773;" meaning="Approximately equal to">&#x2245;</character>
+-->
+<character hexref="U2248" decref="&amp;#8776;" meaning="Almost equal to, asymptotic to">&#x2248;</character>
+<character hexref="U2260" decref="&amp;#8800;" meaning="Not equal to">&#x2260;</character>
+<character hexref="U2261" decref="&amp;#8801;" meaning="Identical to">&#x2261;</character>
+<character hexref="U2264" decref="&amp;#8804;" meaning="Less than or equal to">&#x2264;</character>
+<character hexref="U2265" decref="&amp;#8805;" meaning="Greater than or equal to">&#x2265;</character>
+
+<!-- U2266, U2267 aren't HTML Entities-->
+<character hexref="U2266" decref="&amp;#8806;" meaning="Less than over equal to">&#x2266;</character>
+<character hexref="U2267" decref="&amp;#8807;" meaning="Greater than over equal to">&#x2267;</character> 
+
+<character hexref="U2282" decref="&amp;#8834;" meaning="Subset of">&#x2282;</character>
+<character hexref="U2283" decref="&amp;#8835;" meaning="Superset of">&#x2283;</character>
+<!-- doesn't display well
+<character hexref="U2284" decref="&amp;#8836;" meaning="Not a subset of">&#x2284;</character>
+-->
+<character hexref="U2286" decref="&amp;#8838;" meaning="Subset of or equal to">&#x2286;</character>
+<character hexref="U2287" decref="&amp;#8839;" meaning="Superset of or equal to">&#x2287;</character>
+<!-- doesn't display well
+<character hexref="U2295" decref="&amp;#8853;" meaning="Circled plus, direct sum">&#x2295;</character>
+<character hexref="U2297" decref="&amp;#8855;" meaning="Circled times, vector product">&#x2297;</character>
+-->
+<!-- U2299 ist not a HTML Entity -->
+<character hexref="U2299" decref="&amp;#8857;" meaning="Circled dot operator">&#x2299;</character>
+<character hexref="U22A5" decref="&amp;#8869;" meaning="Up tack, orthogonal to, perpendicular">&#x22A5;</character>
+<!-- doesn't display well
+<character hexref="U22C5" decref="&amp;#8901;" meaning="Dot operator">&#x22C5;</character>
+-->
+</unicodeblock>
+
+
+<!--
+miscellaneous technical doesn't display very well
+<unicodeblock name="miscellaneoustechnical">-->
+<!-- doesn't display well
+<character hexref="U2308" decref="&amp;#8968;" meaning="Left ceiling, APL upstile">&#x2308;</character>
+<character hexref="U2309" decref="&amp;#8969;" meaning="Right ceiling">&#x2309;</character>
+<character hexref="U230A" decref="&amp;#8970;" meaning="Left floor, APL downstile">&#x230A;</character>
+<character hexref="U230B" decref="&amp;#8971;" meaning="Right floor">&#x230B;</character>
+-->
+<!-- U2320, U2321 are not HTML Entities, they display more or less good 
+<character hexref="U2320" decref="&amp;#8992;" meaning="Top half integral">&#x2320;</character>
+<character hexref="U2321" decref="&amp;#8993;" meaning="Bottom half integral">&#x2321;</character>
+-->
+<!-- doesn't display well
+<character hexref="U2329" decref="&amp;#9001;" meaning="Left-pointing angle bracket, bra">&#x2329;</character>
+<character hexref="U232A" decref="&amp;#9002;" meaning="Right-pointing angle bracket, ket">&#x232A;</character>
+-->
+<!--</unicodeblock>-->
+
+
+<unicodeblock name="Geometric Shapes" named-de="Geometrische Muster">
+<character hexref="U25CA" decref="&amp;#9674;" meaning="Lozenge">&#x25CA;</character>
+</unicodeblock>
+
+
+<unicodeblock name="Miscellaneous Symbols" name-de="Symbole Verschiedenes">
+<character hexref="U2660" decref="&amp;#9824;" meaning="Black spade suit">&#x2660;</character>
+<character hexref="U2663" decref="&amp;#9827;" meaning="Black club suit, shamrock">&#x2663;</character>
+<character hexref="U2665" decref="&amp;#9829;" meaning="Black heart suit, valentine">&#x2665;</character>
+<!-- doesn't display well
+<character hexref="U2666" decref="&amp;#9830;" meaning="Black diamond suit">&#x2666;</character>
+-->
+<!-- U266F is not a HTML Entity -->
+<character hexref="U266F" decref="&amp;#9839;" meaning="Music sharp sign">&#x266F;</character>
+
+</unicodeblock>
+
+<!-- start of experimental blocks -->
+<unicodeblock name="Cyrillic" name-de="Kyrillisch">
+<!-- doesn't display well
+<character hexref="U0400" decref="&amp;1024;" meaning="cyrillic capital letter ie with grave">&#x0400;</character>
+-->
+<character hexref="U0401" decref="&amp;1025;" meaning="cyrillic capital letter io">&#x0401;</character>
+<character hexref="U0402" decref="&amp;1026;" meaning="cyrillic capital letter dje">&#x0402;</character>
+<character hexref="U0403" decref="&amp;1027;" meaning="cyrillic capital letter gje">&#x0403;</character>
+<character hexref="U0404" decref="&amp;1028;" meaning="cyrillic capital letter ukrainian ie">&#x0404;</character>
+<character hexref="U0405" decref="&amp;1029;" meaning="cyrillic capital letter dze">&#x0405;</character>
+<character hexref="U0406" decref="&amp;1030;" meaning="cyrillic capital letter byelorussian-ukrainian i">&#x0406;</character>
+<character hexref="U0407" decref="&amp;1031;" meaning="cyrillic capital letter yi">&#x0407;</character>
+<character hexref="U0408" decref="&amp;1032;" meaning="cyrillic capital letter je">&#x0408;</character>
+<character hexref="U0409" decref="&amp;1033;" meaning="cyrillic capital letter lje">&#x0409;</character>
+<character hexref="U040a" decref="&amp;1034;" meaning="cyrillic capital letter nje">&#x040a;</character>
+<character hexref="U040b" decref="&amp;1035;" meaning="cyrillic capital letter tshe">&#x040b;</character>
+<character hexref="U040c" decref="&amp;1036;" meaning="cyrillic capital letter kje">&#x040c;</character>
+<!-- doesn't display well
+<character hexref="U040d" decref="&amp;1037;" meaning="cyrillic capital letter i with grave">&#x040d;</character>
+-->
+<character hexref="U040e" decref="&amp;1038;" meaning="cyrillic capital letter short u">&#x040e;</character>
+<character hexref="U040f" decref="&amp;1039;" meaning="cyrillic capital letter dzhe">&#x040f;</character>
+<character hexref="U0410" decref="&amp;1040;" meaning="cyrillic capital letter a">&#x0410;</character>
+<character hexref="U0411" decref="&amp;1041;" meaning="cyrillic capital letter be">&#x0411;</character>
+<character hexref="U0412" decref="&amp;1042;" meaning="cyrillic capital letter ve">&#x0412;</character>
+<character hexref="U0413" decref="&amp;1043;" meaning="cyrillic capital letter ghe">&#x0413;</character>
+<character hexref="U0414" decref="&amp;1044;" meaning="cyrillic capital letter de">&#x0414;</character>
+<character hexref="U0415" decref="&amp;1045;" meaning="cyrillic capital letter ie">&#x0415;</character>
+<character hexref="U0416" decref="&amp;1046;" meaning="cyrillic capital letter zhe">&#x0416;</character>
+<character hexref="U0417" decref="&amp;1047;" meaning="cyrillic capital letter ze">&#x0417;</character>
+<character hexref="U0418" decref="&amp;1048;" meaning="cyrillic capital letter i">&#x0418;</character>
+<character hexref="U0419" decref="&amp;1049;" meaning="cyrillic capital letter short i">&#x0419;</character>
+<character hexref="U041a" decref="&amp;1050;" meaning="cyrillic capital letter ka">&#x041a;</character>
+<character hexref="U041b" decref="&amp;1051;" meaning="cyrillic capital letter el">&#x041b;</character>
+<character hexref="U041c" decref="&amp;1052;" meaning="cyrillic capital letter em">&#x041c;</character>
+<character hexref="U041d" decref="&amp;1053;" meaning="cyrillic capital letter en">&#x041d;</character>
+<character hexref="U041e" decref="&amp;1054;" meaning="cyrillic capital letter o">&#x041e;</character>
+<character hexref="U041f" decref="&amp;1055;" meaning="cyrillic capital letter pe">&#x041f;</character>
+<character hexref="U0420" decref="&amp;1056;" meaning="cyrillic capital letter er">&#x0420;</character>
+<character hexref="U0421" decref="&amp;1057;" meaning="cyrillic capital letter es">&#x0421;</character>
+<character hexref="U0422" decref="&amp;1058;" meaning="cyrillic capital letter te">&#x0422;</character>
+<character hexref="U0423" decref="&amp;1059;" meaning="cyrillic capital letter u">&#x0423;</character>
+<character hexref="U0424" decref="&amp;1060;" meaning="cyrillic capital letter ef">&#x0424;</character>
+<character hexref="U0425" decref="&amp;1061;" meaning="cyrillic capital letter ha">&#x0425;</character>
+<character hexref="U0426" decref="&amp;1062;" meaning="cyrillic capital letter tse">&#x0426;</character>
+<character hexref="U0427" decref="&amp;1063;" meaning="cyrillic capital letter che">&#x0427;</character>
+<character hexref="U0428" decref="&amp;1064;" meaning="cyrillic capital letter sha">&#x0428;</character>
+<character hexref="U0429" decref="&amp;1065;" meaning="cyrillic capital letter shcha">&#x0429;</character>
+<character hexref="U042a" decref="&amp;1066;" meaning="cyrillic capital letter hard sign">&#x042a;</character>
+<character hexref="U042b" decref="&amp;1067;" meaning="cyrillic capital letter yeru">&#x042b;</character>
+<character hexref="U042c" decref="&amp;1068;" meaning="cyrillic capital letter soft sign">&#x042c;</character>
+<character hexref="U042d" decref="&amp;1069;" meaning="cyrillic capital letter e">&#x042d;</character>
+<character hexref="U042e" decref="&amp;1070;" meaning="cyrillic capital letter yu">&#x042e;</character>
+<character hexref="U042f" decref="&amp;1071;" meaning="cyrillic capital letter ya">&#x042f;</character>
+
+<character hexref="U0430" decref="&amp;1072;" meaning="cyrillic small letter a">&#x0430;</character>
+<character hexref="U0431" decref="&amp;1073;" meaning="cyrillic small letter be">&#x0431;</character>
+<character hexref="U0432" decref="&amp;1074;" meaning="cyrillic small letter ve">&#x0432;</character>
+<character hexref="U0433" decref="&amp;1075;" meaning="cyrillic small letter ghe">&#x0433;</character>
+<character hexref="U0434" decref="&amp;1076;" meaning="cyrillic small letter de">&#x0434;</character>
+<character hexref="U0435" decref="&amp;1077;" meaning="cyrillic small letter ie">&#x0435;</character>
+<character hexref="U0436" decref="&amp;1078;" meaning="cyrillic small letter zhe">&#x0436;</character>
+<character hexref="U0437" decref="&amp;1079;" meaning="cyrillic small letter ze">&#x0437;</character>
+<character hexref="U0438" decref="&amp;1080;" meaning="cyrillic small letter i">&#x0438;</character>
+<character hexref="U0439" decref="&amp;1081;" meaning="cyrillic small letter short i">&#x0439;</character>
+<character hexref="U043a" decref="&amp;1082;" meaning="cyrillic small letter ka">&#x043a;</character>
+<character hexref="U043b" decref="&amp;1083;" meaning="cyrillic small letter el">&#x043b;</character>
+<character hexref="U043c" decref="&amp;1084;" meaning="cyrillic small letter em">&#x043c;</character>
+<character hexref="U043d" decref="&amp;1085;" meaning="cyrillic small letter en">&#x043d;</character>
+<character hexref="U043e" decref="&amp;1086;" meaning="cyrillic small letter o">&#x043e;</character>
+<character hexref="U043f" decref="&amp;1087;" meaning="cyrillic small letter pe">&#x043f;</character>
+<character hexref="U0440" decref="&amp;1088;" meaning="cyrillic small letter er">&#x0440;</character>
+<character hexref="U0441" decref="&amp;1089;" meaning="cyrillic small letter es">&#x0441;</character>
+<character hexref="U0442" decref="&amp;1090;" meaning="cyrillic small letter te">&#x0442;</character>
+<character hexref="U0443" decref="&amp;1091;" meaning="cyrillic small letter u">&#x0443;</character>
+<character hexref="U0444" decref="&amp;1092;" meaning="cyrillic small letter ef">&#x0444;</character>
+<character hexref="U0445" decref="&amp;1093;" meaning="cyrillic small letter ha">&#x0445;</character>
+<character hexref="U0446" decref="&amp;1094;" meaning="cyrillic small letter tse">&#x0446;</character>
+<character hexref="U0447" decref="&amp;1095;" meaning="cyrillic small letter che">&#x0447;</character>
+<character hexref="U0448" decref="&amp;1096;" meaning="cyrillic small letter sha">&#x0448;</character>
+<character hexref="U0449" decref="&amp;1097;" meaning="cyrillic small letter shcha">&#x0449;</character>
+<character hexref="U044a" decref="&amp;1098;" meaning="cyrillic small letter hard sign">&#x044a;</character>
+<character hexref="U044b" decref="&amp;1099;" meaning="cyrillic small letter yeru">&#x044b;</character>
+<character hexref="U044c" decref="&amp;1100;" meaning="cyrillic small letter soft sign">&#x044c;</character>
+<character hexref="U044d" decref="&amp;1101;" meaning="cyrillic small letter e">&#x044d;</character>
+<character hexref="U044e" decref="&amp;1102;" meaning="cyrillic small letter yu">&#x044e;</character>
+<character hexref="U044f" decref="&amp;1103;" meaning="cyrillic small letter ya">&#x044f;</character>
+<!-- doesn't display well
+<character hexref="U0450" decref="&amp;1104;" meaning="cyrillic small letter ie with grave">&#x0450;</character>
+-->
+<character hexref="U0451" decref="&amp;1105;" meaning="cyrillic small letter io">&#x0451;</character>
+<character hexref="U0452" decref="&amp;1106;" meaning="cyrillic small letter dje">&#x0452;</character>
+<character hexref="U0453" decref="&amp;1107;" meaning="cyrillic small letter gje">&#x0453;</character>
+<character hexref="U0454" decref="&amp;1108;" meaning="cyrillic small letter ukrainian ie">&#x0454;</character>
+<character hexref="U0455" decref="&amp;1109;" meaning="cyrillic small letter dze">&#x0455;</character>
+<character hexref="U0456" decref="&amp;1110;" meaning="cyrillic small letter byelorussian-ukrainian i">&#x0456;</character>
+<character hexref="U0457" decref="&amp;1111;" meaning="cyrillic small letter yi">&#x0457;</character>
+<character hexref="U0458" decref="&amp;1112;" meaning="cyrillic small letter je">&#x0458;</character>
+<character hexref="U0459" decref="&amp;1113;" meaning="cyrillic small letter lje">&#x0459;</character>
+<character hexref="U045a" decref="&amp;1114;" meaning="cyrillic small letter nje">&#x045a;</character>
+<character hexref="U045b" decref="&amp;1115;" meaning="cyrillic small letter tshe">&#x045b;</character>
+<character hexref="U045c" decref="&amp;1116;" meaning="cyrillic small letter kje">&#x045c;</character>
+<!-- doesn't display well
+<character hexref="U045d" decref="&amp;1117;" meaning="cyrillic small letter i with grave">&#x045d;</character>
+-->
+<character hexref="U045e" decref="&amp;1118;" meaning="cyrillic small letter short u">&#x045e;</character>
+<character hexref="U045f" decref="&amp;1119;" meaning="cyrillic small letter dzhe">&#x045f;</character>
+</unicodeblock>
+
+<!-- armenian doesn't display well
+<unicodeblock name="armenian">
+<character hexref="U531" decref="&amp;#1329;">&#x531;</character>
+<character hexref="U532" decref="&amp;#1330;">&#x532;</character>
+<character hexref="U547" decref="&amp;#1351;">&#x547;</character>
+</unicodeblock>
+-->
+
+<unicodeblock name="Hebrew" name-de="Hebräisch">
+<character hexref="U05D0" meaning="Hebrew letter alef">&#x05D0;</character>
+<character hexref="U05D1" meaning="Hebrew letter bet">&#x05D1;</character>
+<character hexref="U05D2" meaning="Hebrew letter gimel">&#x05D2;</character>
+<character hexref="U05D3" meaning="Hebrew letter dalet">&#x05D3;</character>
+<character hexref="U05D4" meaning="Hebrew letter he">&#x05D4;</character>
+<character hexref="U05D5" meaning="Hebrew letter vav">&#x05D5;</character>
+<character hexref="U05D6" meaning="Hebrew letter zayin">&#x05D6;</character>
+<character hexref="U05D7" meaning="Hebrew letter het">&#x05D7;</character>
+<character hexref="U05D8" meaning="Hebrew letter tet">&#x05D8;</character>
+<character hexref="U05D9" meaning="Hebrew letter yod">&#x05D9;</character>
+<character hexref="U05DA" meaning="Hebrew letter final kaf">&#x05DA;</character>
+<character hexref="U05DB" meaning="Hebrew letter kaf">&#x05DB;</character>
+<character hexref="U05DC" meaning="Hebrew letter lamed">&#x05DC;</character>
+<character hexref="U05DD" meaning="Hebrew letter final mem">&#x05DD;</character>
+<character hexref="U05DE" meaning="Hebrew letter mem">&#x05DE;</character>
+<character hexref="U05DF" meaning="Hebrew letter final nun">&#x05DF;</character>
+<character hexref="U05E0" meaning="Hebrew letter nun">&#x05E0;</character>
+<character hexref="U05E1" meaning="Hebrew letter samekh">&#x05E1;</character>
+<character hexref="U05E2" meaning="Hebrew letter ayin">&#x05E2;</character>
+<character hexref="U05E3" meaning="Hebrew letter final pe">&#x05E3;</character>
+<character hexref="U05E4" meaning="Hebrew letter pe">&#x05E4;</character>
+<character hexref="U05E5" meaning="Hebrew letter final tsadi">&#x05E5;</character>
+<character hexref="U05E6" meaning="Hebrew letter tsadi">&#x05E6;</character>
+<character hexref="U05E7" meaning="Hebrew letter qof">&#x05E7;</character>
+<character hexref="U05E8" meaning="Hebrew letter resh">&#x05E8;</character>
+<character hexref="U05E9" meaning="Hebrew letter shin">&#x05E9;</character>
+<character hexref="U05EA" meaning="Hebrew letter tav">&#x05EA;</character>
+</unicodeblock>
+
+<unicodeblock name="Arabic" name-de="Arabisch">
+<character hexref="U060c" decref="&amp;1548;" meaning="arabic comma">&#x060c;</character>
+<!-- doesn't display well
+<character hexref="U061b" decref="&amp;1563;" meaning="arabic semicolon">&#x061b;</character>
+-->
+<character hexref="U061f" decref="&amp;1567;" meaning="arabic question mark">&#x061f;</character>
+
+<character hexref="U0621" decref="&amp;1569;" meaning="arabic letter hamza">&#x0621;</character>
+<character hexref="U0622" decref="&amp;1570;" meaning="arabic letter alef with madda above">&#x0622;</character>
+<character hexref="U0623" decref="&amp;1571;" meaning="arabic letter alef with hamza above">&#x0623;</character>
+<character hexref="U0624" decref="&amp;1572;" meaning="arabic letter waw with hamza above">&#x0624;</character>
+<character hexref="U0625" decref="&amp;1573;" meaning="arabic letter alef with hamza below">&#x0625;</character>
+<character hexref="U0626" decref="&amp;1574;" meaning="arabic letter yeh with hamza above">&#x0626;</character>
+<character hexref="U0627" decref="&amp;1575;" meaning="arabic letter alef">&#x0627;</character>
+<character hexref="U0628" decref="&amp;1576;" meaning="arabic letter beh">&#x0628;</character>
+<character hexref="U0629" decref="&amp;1577;" meaning="arabic letter teh marbuta">&#x0629;</character>
+<character hexref="U062a" decref="&amp;1578;" meaning="arabic letter teh">&#x062a;</character>
+<character hexref="U062b" decref="&amp;1579;" meaning="arabic letter theh">&#x062b;</character>
+<character hexref="U062c" decref="&amp;1580;" meaning="arabic letter jeem">&#x062c;</character>
+<character hexref="U062d" decref="&amp;1581;" meaning="arabic letter hah">&#x062d;</character>
+<character hexref="U062e" decref="&amp;1582;" meaning="arabic letter khah">&#x062e;</character>
+<character hexref="U062f" decref="&amp;1583;" meaning="arabic letter dal">&#x062f;</character>
+<character hexref="U0630" decref="&amp;1584;" meaning="arabic letter thal">&#x0630;</character>
+<character hexref="U0631" decref="&amp;1585;" meaning="arabic letter reh">&#x0631;</character>
+<character hexref="U0632" decref="&amp;1586;" meaning="arabic letter zain">&#x0632;</character>
+<character hexref="U0633" decref="&amp;1587;" meaning="arabic letter seen">&#x0633;</character>
+<character hexref="U0634" decref="&amp;1588;" meaning="arabic letter sheen">&#x0634;</character>
+<character hexref="U0635" decref="&amp;1589;" meaning="arabic letter sad">&#x0635;</character>
+<character hexref="U0636" decref="&amp;1590;" meaning="arabic letter dad">&#x0636;</character>
+<character hexref="U0637" decref="&amp;1591;" meaning="arabic letter tah">&#x0637;</character>
+<character hexref="U0638" decref="&amp;1592;" meaning="arabic letter zah">&#x0638;</character>
+<character hexref="U0639" decref="&amp;1593;" meaning="arabic letter ain">&#x0639;</character>
+<character hexref="U063a" decref="&amp;1594;" meaning="arabic letter ghain">&#x063a;</character>
+<character hexref="U0640" decref="&amp;1600;" meaning="arabic tatweel">&#x0640;</character>
+<character hexref="U0641" decref="&amp;1601;" meaning="arabic letter feh">&#x0641;</character>
+<character hexref="U0642" decref="&amp;1602;" meaning="arabic letter qaf">&#x0642;</character>
+<character hexref="U0643" decref="&amp;1603;" meaning="arabic letter kaf">&#x0643;</character>
+<character hexref="U0644" decref="&amp;1604;" meaning="arabic letter lam">&#x0644;</character>
+<character hexref="U0645" decref="&amp;1605;" meaning="arabic letter meem">&#x0645;</character>
+<character hexref="U0646" decref="&amp;1606;" meaning="arabic letter noon">&#x0646;</character>
+<character hexref="U0647" decref="&amp;1607;" meaning="arabic letter heh">&#x0647;</character>
+<character hexref="U0648" decref="&amp;1608;" meaning="arabic letter waw">&#x0648;</character>
+<character hexref="U0649" decref="&amp;1609;" meaning="arabic letter alef maksura">&#x0649;</character>
+<character hexref="U064a" decref="&amp;1610;" meaning="arabic letter yeh">&#x064a;</character>
+<character hexref="U064b" decref="&amp;1611;" meaning="arabic fathatan">&#x064b;</character>
+<character hexref="U064c" decref="&amp;1612;" meaning="arabic dammatan">&#x064c;</character>
+<character hexref="U064d" decref="&amp;1613;" meaning="arabic kasratan">&#x064d;</character>
+<character hexref="U064e" decref="&amp;1614;" meaning="arabic fatha">&#x064e;</character>
+<character hexref="U064f" decref="&amp;1615;" meaning="arabic damma">&#x064f;</character>
+<character hexref="U0650" decref="&amp;1616;" meaning="arabic kasra">&#x0650;</character>
+<character hexref="U0651" decref="&amp;1617;" meaning="arabic shadda">&#x0651;</character>
+<character hexref="U0652" decref="&amp;1618;" meaning="arabic sukun">&#x0652;</character>
+<!-- doesn't display well
+<character hexref="U0653" decref="&amp;1619;" meaning="arabic maddah above">&#x0653;</character>
+<character hexref="U0654" decref="&amp;1620;" meaning="arabic hamza above">&#x0654;</character>
+<character hexref="U0655" decref="&amp;1621;" meaning="arabic hamza below">&#x0655;</character>
+-->
+<character hexref="U0660" decref="&amp;1632;" meaning="arabic-indic digit zero">&#x0660;</character>
+<character hexref="U0661" decref="&amp;1633;" meaning="arabic-indic digit one">&#x0661;</character>
+<character hexref="U0662" decref="&amp;1634;" meaning="arabic-indic digit two">&#x0662;</character>
+<character hexref="U0663" decref="&amp;1635;" meaning="arabic-indic digit three">&#x0663;</character>
+<character hexref="U0664" decref="&amp;1636;" meaning="arabic-indic digit four">&#x0664;</character>
+<character hexref="U0665" decref="&amp;1637;" meaning="arabic-indic digit five">&#x0665;</character>
+<character hexref="U0666" decref="&amp;1638;" meaning="arabic-indic digit six">&#x0666;</character>
+<character hexref="U0667" decref="&amp;1639;" meaning="arabic-indic digit seven">&#x0667;</character>
+<character hexref="U0668" decref="&amp;1640;" meaning="arabic-indic digit eight">&#x0668;</character>
+<character hexref="U0669" decref="&amp;1641;" meaning="arabic-indic digit nine">&#x0669;</character>
+<character hexref="U066a" decref="&amp;1642;" meaning="arabic percent sign">&#x066a;</character>
+<character hexref="U066b" decref="&amp;1643;" meaning="arabic decimal separator">&#x066b;</character>
+<!-- doesn't display well
+<character hexref="U066c" decref="&amp;1644;" meaning="arabic thousands separator">&#x066c;</character>
+-->
+<character hexref="U066d" decref="&amp;1645;" meaning="arabic five pointed star">&#x066d;</character>
+<!-- doesn't display well
+<character hexref="U0670" decref="&amp;1648;" meaning="arabic letter superscript alef">&#x0670;</character>
+<character hexref="U0671" decref="&amp;1649;" meaning="arabic letter alef wasla">&#x0671;</character>
+<character hexref="U0672" decref="&amp;1650;" meaning="arabic letter alef with wavy hamza above">&#x0672;</character>
+<character hexref="U0673" decref="&amp;1651;" meaning="arabic letter alef with wavy hamza below">&#x0673;</character>
+<character hexref="U0674" decref="&amp;1652;" meaning="arabic letter high hamza">&#x0674;</character>
+<character hexref="U0675" decref="&amp;1653;" meaning="arabic letter high hamza alef">&#x0675;</character>
+<character hexref="U0676" decref="&amp;1654;" meaning="arabic letter high hamza waw">&#x0676;</character>
+<character hexref="U0677" decref="&amp;1655;" meaning="arabic letter u with hamza above">&#x0677;</character>
+<character hexref="U0678" decref="&amp;1656;" meaning="arabic letter high hamza yeh">&#x0678;</character>
+<character hexref="U0679" decref="&amp;1657;" meaning="arabic letter tteh">&#x0679;</character>
+<character hexref="U067a" decref="&amp;1658;" meaning="arabic letter tteheh">&#x067a;</character>
+<character hexref="U067b" decref="&amp;1659;" meaning="arabic letter beeh">&#x067b;</character>
+<character hexref="U067c" decref="&amp;1660;" meaning="arabic letter teh with ring">&#x067c;</character>
+<character hexref="U067d" decref="&amp;1661;" meaning="arabic letter teh with three dots above downwards">&#x067d;</character>
+-->
+<character hexref="U067e" decref="&amp;1662;" meaning="arabic letter peh">&#x067e;</character>
+<!-- doesn't display well
+<character hexref="U067f" decref="&amp;1663;" meaning="arabic letter teheh">&#x067f;</character>
+<character hexref="U0680" decref="&amp;1664;" meaning="arabic letter beheh">&#x0680;</character>
+<character hexref="U0681" decref="&amp;1665;" meaning="arabic letter hah with hamza above">&#x0681;</character>
+<character hexref="U0682" decref="&amp;1666;" meaning="arabic letter hah with two dots vertical above">&#x0682;</character>
+<character hexref="U0683" decref="&amp;1667;" meaning="arabic letter nyeh">&#x0683;</character>
+<character hexref="U0684" decref="&amp;1668;" meaning="arabic letter dyeh">&#x0684;</character>
+<character hexref="U0685" decref="&amp;1669;" meaning="arabic letter hah with three dots above">&#x0685;</character>
+-->
+<character hexref="U0686" decref="&amp;1670;" meaning="arabic letter tcheh">&#x0686;</character>
+<!-- doesn't display well
+<character hexref="U0687" decref="&amp;1671;" meaning="arabic letter tcheheh">&#x0687;</character>
+<character hexref="U0688" decref="&amp;1672;" meaning="arabic letter ddal">&#x0688;</character>
+<character hexref="U0689" decref="&amp;1673;" meaning="arabic letter dal with ring">&#x0689;</character>
+<character hexref="U068a" decref="&amp;1674;" meaning="arabic letter dal with dot below">&#x068a;</character>
+<character hexref="U068b" decref="&amp;1675;" meaning="arabic letter dal with dot below and small tah">&#x068b;</character>
+<character hexref="U068c" decref="&amp;1676;" meaning="arabic letter dahal">&#x068c;</character>
+<character hexref="U068d" decref="&amp;1677;" meaning="arabic letter ddahal">&#x068d;</character>
+<character hexref="U068e" decref="&amp;1678;" meaning="arabic letter dul">&#x068e;</character>
+<character hexref="U068f" decref="&amp;1679;" meaning="arabic letter dal with three dots above downwards">&#x068f;</character>
+<character hexref="U0690" decref="&amp;1680;" meaning="arabic letter dal with four dots above">&#x0690;</character>
+<character hexref="U0691" decref="&amp;1681;" meaning="arabic letter rreh">&#x0691;</character>
+<character hexref="U0692" decref="&amp;1682;" meaning="arabic letter reh with small v">&#x0692;</character>
+<character hexref="U0693" decref="&amp;1683;" meaning="arabic letter reh with ring">&#x0693;</character>
+<character hexref="U0694" decref="&amp;1684;" meaning="arabic letter reh with dot below">&#x0694;</character>
+<character hexref="U0695" decref="&amp;1685;" meaning="arabic letter reh with small v below">&#x0695;</character>
+<character hexref="U0696" decref="&amp;1686;" meaning="arabic letter reh with dot below and dot above">&#x0696;</character>
+<character hexref="U0697" decref="&amp;1687;" meaning="arabic letter reh with two dots above">&#x0697;</character>
+<character hexref="U0698" decref="&amp;1688;" meaning="arabic letter jeh">&#x0698;</character>
+<character hexref="U0699" decref="&amp;1689;" meaning="arabic letter reh with four dots above">&#x0699;</character>
+<character hexref="U069a" decref="&amp;1690;" meaning="arabic letter seen with dot below and dot above">&#x069a;</character>
+<character hexref="U069b" decref="&amp;1691;" meaning="arabic letter seen with three dots below">&#x069b;</character>
+<character hexref="U069c" decref="&amp;1692;" meaning="arabic letter seen with three dots below and three dots above">&#x069c;</character>
+<character hexref="U069d" decref="&amp;1693;" meaning="arabic letter sad with two dots below">&#x069d;</character>
+<character hexref="U069e" decref="&amp;1694;" meaning="arabic letter sad with three dots above">&#x069e;</character>
+<character hexref="U069f" decref="&amp;1695;" meaning="arabic letter tah with three dots above">&#x069f;</character>
+<character hexref="U06a0" decref="&amp;1696;" meaning="arabic letter ain with three dots above">&#x06a0;</character>
+<character hexref="U06a1" decref="&amp;1697;" meaning="arabic letter dotless feh">&#x06a1;</character>
+<character hexref="U06a2" decref="&amp;1698;" meaning="arabic letter feh with dot moved below">&#x06a2;</character>
+<character hexref="U06a3" decref="&amp;1699;" meaning="arabic letter feh with dot below">&#x06a3;</character>
+<character hexref="U06a4" decref="&amp;1700;" meaning="arabic letter veh">&#x06a4;</character>
+<character hexref="U06a5" decref="&amp;1701;" meaning="arabic letter feh with three dots below">&#x06a5;</character>
+<character hexref="U06a6" decref="&amp;1702;" meaning="arabic letter peheh">&#x06a6;</character>
+<character hexref="U06a7" decref="&amp;1703;" meaning="arabic letter qaf with dot above">&#x06a7;</character>
+<character hexref="U06a8" decref="&amp;1704;" meaning="arabic letter qaf with three dots above">&#x06a8;</character>
+-->
+<character hexref="U06a9" decref="&amp;1705;" meaning="arabic letter keheh">&#x06a9;</character>
+<!-- doesn't display well
+<character hexref="U06aa" decref="&amp;1706;" meaning="arabic letter swash kaf">&#x06aa;</character>
+<character hexref="U06ab" decref="&amp;1707;" meaning="arabic letter kaf with ring">&#x06ab;</character>
+<character hexref="U06ac" decref="&amp;1708;" meaning="arabic letter kaf with dot above">&#x06ac;</character>
+<character hexref="U06ad" decref="&amp;1709;" meaning="arabic letter ng">&#x06ad;</character>
+<character hexref="U06ae" decref="&amp;1710;" meaning="arabic letter kaf with three dots below">&#x06ae;</character>
+-->
+<character hexref="U06af" decref="&amp;1711;" meaning="arabic letter gaf">&#x06af;</character>
+<!-- doesn't display well
+<character hexref="U06b0" decref="&amp;1712;" meaning="arabic letter gaf with ring">&#x06b0;</character>
+<character hexref="U06b1" decref="&amp;1713;" meaning="arabic letter ngoeh">&#x06b1;</character>
+<character hexref="U06b2" decref="&amp;1714;" meaning="arabic letter gaf with two dots below">&#x06b2;</character>
+<character hexref="U06b3" decref="&amp;1715;" meaning="arabic letter gueh">&#x06b3;</character>
+<character hexref="U06b4" decref="&amp;1716;" meaning="arabic letter gaf with three dots above">&#x06b4;</character>
+<character hexref="U06b5" decref="&amp;1717;" meaning="arabic letter lam with small v">&#x06b5;</character>
+<character hexref="U06b6" decref="&amp;1718;" meaning="arabic letter lam with dot above">&#x06b6;</character>
+<character hexref="U06b7" decref="&amp;1719;" meaning="arabic letter lam with three dots above">&#x06b7;</character>
+<character hexref="U06b8" decref="&amp;1720;" meaning="arabic letter lam with three dots below">&#x06b8;</character>
+<character hexref="U06b9" decref="&amp;1721;" meaning="arabic letter noon with dot below">&#x06b9;</character>
+<character hexref="U06ba" decref="&amp;1722;" meaning="arabic letter noon ghunna">&#x06ba;</character>
+<character hexref="U06bb" decref="&amp;1723;" meaning="arabic letter rnoon">&#x06bb;</character>
+<character hexref="U06bc" decref="&amp;1724;" meaning="arabic letter noon with ring">&#x06bc;</character>
+<character hexref="U06bd" decref="&amp;1725;" meaning="arabic letter noon with three dots above">&#x06bd;</character>
+<character hexref="U06be" decref="&amp;1726;" meaning="arabic letter heh doachashmee">&#x06be;</character>
+<character hexref="U06bf" decref="&amp;1727;" meaning="arabic letter tcheh with dot above">&#x06bf;</character>
+<character hexref="U06c0" decref="&amp;1728;" meaning="arabic letter heh with yeh above">&#x06c0;</character>
+<character hexref="U06c1" decref="&amp;1729;" meaning="arabic letter heh goal">&#x06c1;</character>
+<character hexref="U06c2" decref="&amp;1730;" meaning="arabic letter heh goal with hamza above">&#x06c2;</character>
+<character hexref="U06c3" decref="&amp;1731;" meaning="arabic letter teh marbuta goal">&#x06c3;</character>
+<character hexref="U06c4" decref="&amp;1732;" meaning="arabic letter waw with ring">&#x06c4;</character>
+<character hexref="U06c5" decref="&amp;1733;" meaning="arabic letter kirghiz oe">&#x06c5;</character>
+<character hexref="U06c6" decref="&amp;1734;" meaning="arabic letter oe">&#x06c6;</character>
+<character hexref="U06c7" decref="&amp;1735;" meaning="arabic letter u">&#x06c7;</character>
+<character hexref="U06c8" decref="&amp;1736;" meaning="arabic letter yu">&#x06c8;</character>
+<character hexref="U06c9" decref="&amp;1737;" meaning="arabic letter kirghiz yu">&#x06c9;</character>
+<character hexref="U06ca" decref="&amp;1738;" meaning="arabic letter waw with two dots above">&#x06ca;</character>
+<character hexref="U06cb" decref="&amp;1739;" meaning="arabic letter ve">&#x06cb;</character>
+-->
+<character hexref="U06cc" decref="&amp;1740;" meaning="arabic letter farsi yeh">&#x06cc;</character>
+<!-- doesn't display well
+<character hexref="U06cd" decref="&amp;1741;" meaning="arabic letter yeh with tail">&#x06cd;</character>
+<character hexref="U06ce" decref="&amp;1742;" meaning="arabic letter yeh with small v">&#x06ce;</character>
+<character hexref="U06cf" decref="&amp;1743;" meaning="arabic letter waw with dot above">&#x06cf;</character>
+<character hexref="U06d0" decref="&amp;1744;" meaning="arabic letter e">&#x06d0;</character>
+<character hexref="U06d1" decref="&amp;1745;" meaning="arabic letter yeh with three dots below">&#x06d1;</character>
+<character hexref="U06d2" decref="&amp;1746;" meaning="arabic letter yeh barree">&#x06d2;</character>
+<character hexref="U06d3" decref="&amp;1747;" meaning="arabic letter yeh barree with hamza above">&#x06d3;</character>
+<character hexref="U06d4" decref="&amp;1748;" meaning="arabic full stop">&#x06d4;</character>
+-->
+<character hexref="U06d5" decref="&amp;1749;" meaning="arabic letter ae">&#x06d5;</character>
+<!-- doesn't display well
+<character hexref="U06d6" decref="&amp;1750;" meaning="arabic small high ligature sad with lam with alef maksura">&#x06d6;</character>
+<character hexref="U06d7" decref="&amp;1751;" meaning="arabic small high ligature qaf with lam with alef maksura">&#x06d7;</character>
+<character hexref="U06d8" decref="&amp;1752;" meaning="arabic small high meem initial form">&#x06d8;</character>
+<character hexref="U06d9" decref="&amp;1753;" meaning="arabic small high lam alef">&#x06d9;</character>
+<character hexref="U06da" decref="&amp;1754;" meaning="arabic small high jeem">&#x06da;</character>
+<character hexref="U06db" decref="&amp;1755;" meaning="arabic small high three dots">&#x06db;</character>
+<character hexref="U06dc" decref="&amp;1756;" meaning="arabic small high seen">&#x06dc;</character>
+<character hexref="U06dd" decref="&amp;1757;" meaning="arabic end of ayah">&#x06dd;</character>
+<character hexref="U06de" decref="&amp;1758;" meaning="arabic start of rub el hizb">&#x06de;</character>
+<character hexref="U06df" decref="&amp;1759;" meaning="arabic small high rounded zero">&#x06df;</character>
+<character hexref="U06e0" decref="&amp;1760;" meaning="arabic small high upright rectangular zero">&#x06e0;</character>
+<character hexref="U06e1" decref="&amp;1761;" meaning="arabic small high dotless head of khah">&#x06e1;</character>
+<character hexref="U06e2" decref="&amp;1762;" meaning="arabic small high meem isolated form">&#x06e2;</character>
+<character hexref="U06e3" decref="&amp;1763;" meaning="arabic small low seen">&#x06e3;</character>
+<character hexref="U06e4" decref="&amp;1764;" meaning="arabic small high madda">&#x06e4;</character>
+<character hexref="U06e5" decref="&amp;1765;" meaning="arabic small waw">&#x06e5;</character>
+<character hexref="U06e6" decref="&amp;1766;" meaning="arabic small yeh">&#x06e6;</character>
+<character hexref="U06e7" decref="&amp;1767;" meaning="arabic small high yeh">&#x06e7;</character>
+<character hexref="U06e8" decref="&amp;1768;" meaning="arabic small high noon">&#x06e8;</character>
+<character hexref="U06e9" decref="&amp;1769;" meaning="arabic place of sajdah">&#x06e9;</character>
+<character hexref="U06ea" decref="&amp;1770;" meaning="arabic empty centre low stop">&#x06ea;</character>
+<character hexref="U06eb" decref="&amp;1771;" meaning="arabic empty centre high stop">&#x06eb;</character>
+<character hexref="U06ec" decref="&amp;1772;" meaning="arabic rounded high stop with filled centre">&#x06ec;</character>
+<character hexref="U06ed" decref="&amp;1773;" meaning="arabic small low meem">&#x06ed;</character>
+-->
+<character hexref="U06f0" decref="&amp;1776;" meaning="extended arabic-indic digit zero">&#x06f0;</character>
+<character hexref="U06f1" decref="&amp;1777;" meaning="extended arabic-indic digit one">&#x06f1;</character>
+<character hexref="U06f2" decref="&amp;1778;" meaning="extended arabic-indic digit two">&#x06f2;</character>
+<character hexref="U06f3" decref="&amp;1779;" meaning="extended arabic-indic digit three">&#x06f3;</character>
+<character hexref="U06f4" decref="&amp;1780;" meaning="extended arabic-indic digit four">&#x06f4;</character>
+<character hexref="U06f5" decref="&amp;1781;" meaning="extended arabic-indic digit five">&#x06f5;</character>
+<character hexref="U06f6" decref="&amp;1782;" meaning="extended arabic-indic digit six">&#x06f6;</character>
+<character hexref="U06f7" decref="&amp;1783;" meaning="extended arabic-indic digit seven">&#x06f7;</character>
+<character hexref="U06f8" decref="&amp;1784;" meaning="extended arabic-indic digit eight">&#x06f8;</character>
+<character hexref="U06f9" decref="&amp;1785;" meaning="extended arabic-indic digit nine">&#x06f9;</character>
+<!-- doesn't display well
+<character hexref="U06fa" decref="&amp;1786;" meaning="arabic letter sheen with dot below">&#x06fa;</character>
+<character hexref="U06fb" decref="&amp;1787;" meaning="arabic letter dad with dot below">&#x06fb;</character>
+<character hexref="U06fc" decref="&amp;1788;" meaning="arabic letter ghain with dot below">&#x06fc;</character>
+<character hexref="U06fd" decref="&amp;1789;" meaning="arabic sign sindhi ampersand">&#x06fd;</character>
+<character hexref="U06fe" decref="&amp;1790;" meaning="arabic sign sindhi postposition men">&#x06fe;</character>
+-->
+
+
+
+</unicodeblock>
+<!-- end of experimental blocks -->
+
+</specialcharacters>

@@ -1,0 +1,840 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Sonderzeichen</title>
+<style type="text/css"><!--
+body 	{background-color:#ffffff;
+		 }
+table	{
+		border-collapse: collapse;
+      	margin-left:15px;
+		padding:0px;
+		border-right: medium none;border-top: medium none;border-left: medium none;border-bottom: 	medium none;
+		border:none;
+		padding-right: 0px;  padding-left: 0px; padding-bottom: 0px;  padding-top: 0px;
+		}
+#Sonderzeichen {
+		background-color: #f9f9f9; 
+		padding-right: 0px;  padding-left: 0px; padding-bottom: 0px;  padding-top: 0px;
+		margin: 0px; width: 360px; height: 390px; text-align: left;
+		}
+select  {
+		background-color: #ffffff;
+		font-size: 12px;font-family: arial,verdana,helvetica,sans-serif;color:black;
+		margin-top:15px;
+		margin-left:15px;
+		}
+.button {
+		background: white; 
+		width: 25px;height: 25px;
+		font-size: 12px;font-family:georgia,'times new roman',times,serif;color: black;
+		text-align: center; 
+		border-right: #cccccc 1px solid;border-top: #cccccc 1px solid;border-left: #cccccc 1px solid;border-bottom: #cccccc 1px solid;
+		padding-right: 4px;padding-left: 4px;padding-bottom: 4px;padding-top: 4px; 
+		margin:0px;
+		}
+.raised {
+		background: #000066;
+		width: 25px;height: 25px;
+		font-size: 12px;font-family: arial,verdana,helvetica,sans-serif;color: white;
+		text-align: center; 
+		padding-right: 4px; padding-left: 4px;padding-bottom: 4px; padding-top: 4px;  
+		}
+.pressed {
+		background: #000066; 
+		width: 25px; height: 25px;
+		font-size: 12px;font-family: arial,verdana,helvetica,sans-serif;color: white; 
+		text-align: center;
+		border-right: #0000FF 1px solid;border-top:#0000FF 1px solid;border-left:#0000FF 1px solid;border-bottom: #0000FF 1px solid;   
+		padding-left: 4px;padding-bottom: 4px;padding-right: 4px;padding-top: 4px;
+		}
+p 		{
+		margin-left:10px;border: 1px dashed #cccccc; width: 340px; line-height:18px;
+		text-align:center;
+		font-size: 11px;font-family:georgia,'times new roman',times,serif;}
+--></style>
+<script type="text/javascript"><!--
+		
+		//works only in IE 6 because of Create Range
+function insertSz(mySz) {
+opener.BX_insertContent(mySz);
+return;
+/*
+  	var str = document.selection.createRange().text;
+  	document.my_form.my_textarea.focus();
+    	if (mySz != null) {
+    	var sel = document.selection.createRange();
+		sel.text = mySz;
+  		}
+  	return;*/
+}
+
+
+function mouseover(el) {
+  el.className = "raised";
+}
+
+function mouseout(el) {
+  el.className = "button";
+}
+
+function mousedown(el) {
+  el.className = "pressed";
+}
+
+function mouseup(el) {
+  el.className = "raised";
+}
+
+
+function displaydesc(which){
+	document.getElementById(visiblediv).style.visibility = 'hidden' ;
+	document.getElementById(which).style.visibility = 'visible' ;
+	visiblediv = which;
+}
+
+/* vielleicht spaeter einmal - behaviour ist nicht ganz, das was man moechte
+function changefont(fontname){
+ 	var fontname;
+	stsh = document.styleSheets[0]; 
+	cssB= stsh.cssRules[5];
+	cssR= stsh.cssRules[6];
+	cssP= stsh.cssRules[7];
+	cssB.style.fontFamily=fontname;
+	cssR.style.fontFamily=fontname;
+	cssP.style.fontFamily=fontname;
+	alert(cssB.style.fontFamily);
+	}
+*/
+
+
+var visiblediv =   'id2588406';
+   --></script>
+</head>
+<body>
+<div id="Sonderzeichen"><form name="subsets" id="subsets"><select id="blocks" name="blocks" size="1" onChange="displaydesc(this.value)"><option value="id2588406">Selection</option>
+<option value="id2589030">Latin-1</option>
+<option value="id2591259">Extended Latin-A</option>
+<option value="id2592877">Extended Latin-B</option>
+<option value="id2592905">Spacing Modifier Letters</option>
+<option value="id2592943">Greek</option>
+<option value="id2593570">General Punctuation</option>
+<option value="id2593855">Currency Symbols</option>
+<option value="id2593876">Letter-like Symbols</option>
+<option value="id2593912">Arrows</option>
+<option value="id2594037">Mathematical Operators</option>
+<option value="id2594574">Geometric Shapes</option>
+<option value="id2594596">Miscellaneous Symbols</option>
+<option value="id2594666">Cyrillic</option>
+<option value="id2595848">Hebrew</option>
+<option value="id2596122">Arabic</option></select></form></div>
+<div id="id2588406" style="top:60px; position:absolute;visibility:visible;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8364;');" title="Euro sign">&#8364;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8212;');" title="Emdash">&#8212;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8211;');" title="Endash">&#8211;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('©');" title="Copyright sign">©</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('®');" title="Registered trademark sign">®</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8482;');" title="Trademark sign">&#8482;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8230;');" title="Horizontal ellipsis">&#8230;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8216;');" title="Left single quotation mark">&#8216;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8217;');" title="Right single quotation mark">&#8217;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8220;');" title="Left double quotation mark">&#8220;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8221;');" title="Right double quotation mark">&#8221;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('«');" title="Left-pointing double angle quotation mark, left-pointing guillemot">«</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('»');" title="Right-pointing double angle quotation mark, right-pointing guillemot">»</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('÷');" title="Division sign">÷</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('×');" title="Multiplication sign">×</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Æ');" title="Latin capital letter AE">Æ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('æ');" title="Latin small letter ae">æ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ß');" title="Latin small letter sharp s, esszett">ß</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¿');" title="Inverted question mark">¿</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ç');" title="Latin capital letter C with cedilla">Ç</td>
+ </tr>
+</table></div>
+<div id="id2589030" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz(' ');" title="Nonbreaking space"> </td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¡');" title="Inverted exclamation mark">¡</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¢');" title="Cent sign">¢</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('£');" title="Pound sign">£</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¤');" title="Currency sign">¤</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¥');" title="Yen sign">¥</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¦');" title="Broken vertical bar">¦</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('§');" title="Section sign">§</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¨');" title="Dieresis, spacing dieresis">¨</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('©');" title="Copyright sign">©</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ª');" title="Feminine ordinal indicator">ª</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('«');" title="Left-pointing double angle quotation mark, left-pointing guillemot">«</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¬');" title="Not sign">¬</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('®');" title="Registered trademark sign">®</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¯');" title="Macron, overline, APL overbar">¯</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('°');" title="Degree sign">°</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('±');" title="Plus-or-minus sign">±</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('²');" title="Superscript digit two, squared">²</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('³');" title="Superscript digit three, cubed">³</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('´');" title="Acute accent, spacing acute">´</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('µ');" title="Micro sign">µ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¶');" title="Pilcrow sign, paragraph sign">¶</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('·');" title="Middle dot, Georgian comma">·</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¸');" title="Cedilla, spacing cedilla">¸</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¹');" title="Superscript digit one">¹</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('º');" title="Masculine ordinal indicator">º</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('»');" title="Right-pointing double angle quotation mark, right-pointing guillemot">»</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¼');" title="Vulgar fraction one-quarter">¼</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('½');" title="Vulgar fraction one-half">½</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¾');" title="Vulgar fraction three-quarters">¾</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('¿');" title="Inverted question mark">¿</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('À');" title="Latin capital letter A with grave">À</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Á');" title="Latin capital letter A with acute">Á</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Â');" title="Latin capital letter A with circumflex">Â</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ã');" title="Latin capital letter A with tilde">Ã</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ä');" title="Latin capital letter A with dieresis">Ä</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Å');" title="Latin capital letter A with ring above">Å</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Æ');" title="Latin capital letter AE">Æ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ç');" title="Latin capital letter C with cedilla">Ç</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('È');" title="Latin capital letter E with grave">È</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('É');" title="Latin capital letter E with acute">É</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ê');" title="Latin capital letter E with circumflex">Ê</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ë');" title="Latin capital letter E with dieresis">Ë</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ì');" title="Latin capital letter I with grave">Ì</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Í');" title="Latin capital letter I with acute">Í</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Î');" title="Latin capital letter I with circumflex">Î</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ï');" title="Latin capital letter I with dieresis">Ï</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ð');" title="Latin capital letter eth">Ð</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ñ');" title="Latin capital letter N with tilde">Ñ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ò');" title="Latin capital letter O with grave">Ò</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ó');" title="Latin capital letter O with acute">Ó</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ô');" title="Latin capital letter O with circumflex">Ô</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Õ');" title="Latin capital letter O with tilde">Õ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ö');" title="Latin capital letter O with dieresis">Ö</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('×');" title="Multiplication sign">×</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ø');" title="Latin capital letter O with stroke">Ø</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ù');" title="Latin capital letter U with grave">Ù</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ú');" title="Latin capital letter U with acute">Ú</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Û');" title="Latin capital letter U with circumflex">Û</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ü');" title="Latin capital letter U with dieresis">Ü</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Ý');" title="Latin capital letter Y with acute">Ý</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('Þ');" title="Latin capital letter thorn">Þ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ß');" title="Latin small letter sharp s, esszett">ß</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('à');" title="Latin small letter a with grave">à</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('á');" title="Latin small letter a with acute">á</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('â');" title="Latin small letter a with circumflex">â</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ã');" title="Latin small letter a with tilde">ã</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ä');" title="Latin small letter a with dieresis">ä</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('å');" title="Latin small letter a with ring above">å</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('æ');" title="Latin small letter ae">æ</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ç');" title="Latin small letter c with cedilla">ç</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('è');" title="Latin small letter e with grave">è</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('é');" title="Latin small letter e with acute">é</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ê');" title="Latin small letter e with circumflex">ê</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ë');" title="Latin small letter e with dieresis">ë</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ì');" title="Latin small letter i with grave">ì</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('í');" title="Latin small letter i with acute">í</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('î');" title="Latin small letter i with circumflex">î</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ï');" title="Latin small letter i with dieresis">ï</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ð');" title="Latin small letter eth">ð</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ñ');" title="Latin small letter n with tilde">ñ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ò');" title="Latin small letter o with grave">ò</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ó');" title="Latin small letter o with acute">ó</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ô');" title="Latin small letter o with circumflex">ô</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('õ');" title="Latin small letter o with tilde">õ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ö');" title="Latin small letter o with dieresis">ö</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('÷');" title="Division sign">÷</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ø');" title="Latin small letter o with stroke">ø</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ù');" title="Latin small letter u with grave">ù</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ú');" title="Latin small letter u with acute">ú</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('û');" title="Latin small letter u with circumflex">û</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ü');" title="Latin small letter u with dieresis">ü</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ý');" title="Latin small letter y with acute">ý</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('þ');" title="Latin small letter thorn">þ</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('ÿ');" title="Latin small letter y with dieresis">ÿ</td>
+ </tr>
+</table></div>
+<div id="id2591259" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#256;');" title="Latin capital letter A with macron">&#256;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#257;');" title="Latin small letter a with macron">&#257;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#258;');" title="Latin capital letter A with breve">&#258;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#259;');" title="Latin small letter a with breve">&#259;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#260;');" title="Latin capital letter A with ogonek">&#260;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#261;');" title="Latin small letter a with ogonek">&#261;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#262;');" title="Latin capital letter C with acute">&#262;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#263;');" title="Latin small letter c with acute">&#263;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#264;');" title="Latin capital letter C with circumflex">&#264;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#265;');" title="Latin small letter c with circumflex">&#265;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#266;');" title="Latin capital letter C with dot above">&#266;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#267;');" title="Latin small letter c with dot above">&#267;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#268;');" title="Latin capital letter C with caron">&#268;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#269;');" title="Latin small letter c with caron">&#269;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#270;');" title="Latin capital letter D with caron">&#270;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#271;');" title="Latin small letter d with caron">&#271;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#272;');" title="Latin capital letter D with stroke">&#272;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#273;');" title="Latin small letter d with stroke">&#273;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#274;');" title="Latin capital letter E with macron">&#274;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#275;');" title="Latin small letter e with macron">&#275;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#276;');" title="Latin capital letter E with breve">&#276;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#277;');" title="Latin small letter e with breve">&#277;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#278;');" title="Latin capital letter E with dot above">&#278;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#279;');" title="Latin small letter e with dot above">&#279;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#280;');" title="Latin capital letter E with ogonek">&#280;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#281;');" title="Latin small letter e with ogonek">&#281;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#282;');" title="Latin capital letter E with caron">&#282;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#283;');" title="Latin small letter e with caron">&#283;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#284;');" title="Latin capital letter G with circumflex">&#284;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#285;');" title="Latin small letter g with circumflex">&#285;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#286;');" title="Latin capital letter G with breve">&#286;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#287;');" title="Latin small letter g with breve">&#287;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#288;');" title="Latin capital letter G with dot above">&#288;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#289;');" title="Latin small letter g with dot above">&#289;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#290;');" title="Latin capital letter G with cedilla">&#290;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#291;');" title="Latin small letter g with cedilla">&#291;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#292;');" title="Latin capital letter H with circumflex">&#292;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#293;');" title="Latin small letter h with circumflex">&#293;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#294;');" title="Latin capital letter H with stroke">&#294;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#295;');" title="Latin small letter h with stroke">&#295;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#296;');" title="Latin capital letter I with tilde">&#296;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#297;');" title="Latin small letter i with tilde">&#297;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#298;');" title="Latin capital letter I with macron">&#298;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#299;');" title="Latin small letter i with macron">&#299;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#300;');" title="Latin capital letter I with breve">&#300;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#301;');" title="Latin small letter i with breve">&#301;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#302;');" title="Latin capital letter I with ogonek">&#302;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#303;');" title="Latin small letter i with ogonek">&#303;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#304;');" title="Latin capital letter I with dot above">&#304;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#305;');" title="Latin small letter dotless i">&#305;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#306;');" title="Latin capital ligature IJ">&#306;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#307;');" title="Latin small ligature ij">&#307;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#308;');" title="Latin capital letter J with circumflex">&#308;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#309;');" title="Latin small letter J with circumflex">&#309;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#310;');" title="Latin capital letter K with cedilla">&#310;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#311;');" title="Latin small letter k with cedilla">&#311;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#312;');" title="Latin small letter kra">&#312;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#313;');" title="Latin capital letter L with acute">&#313;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#314;');" title="Latin small letter l with acute">&#314;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#315;');" title="Latin capital letter L with cedilla">&#315;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#316;');" title="Latin small letter l with cedilla">&#316;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#317;');" title="Latin capital letter L with caron">&#317;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#318;');" title="Latin small letter l with caron">&#318;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#319;');" title="Latin capital letter L with middle dot">&#319;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#320;');" title="Latin small letter l with middle dot">&#320;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#321;');" title="Latin capital letter L with stroke">&#321;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#322;');" title="Latin small letter l with stroke">&#322;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#323;');" title="Latin capital letter N with acute">&#323;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#324;');" title="Latin small letter n with acute">&#324;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#325;');" title="Latin capital letter N with cedilla">&#325;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#326;');" title="Latin small letter n with cedilla">&#326;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#327;');" title="Latin capital letter N with caron">&#327;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#328;');" title="Latin small letter n with caron">&#328;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#329;');" title="Latin small letter n preceded by apostrophe">&#329;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#330;');" title="Latin capital letter ENG">&#330;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#331;');" title="Latin small letter eng">&#331;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#332;');" title="Latin capital letter O with macron">&#332;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#333;');" title="Latin small letter o with macron">&#333;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#334;');" title="Latin capital letter O with breve">&#334;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#335;');" title="Latin small letter o with breve">&#335;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#336;');" title="Latin capital letter O with double acute">&#336;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#337;');" title="Latin small letter o with double acute">&#337;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#338;');" title="Latin capital ligature OE">&#338;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#339;');" title="Latin small ligature oe">&#339;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#340;');" title="Latin capital letter R with acute">&#340;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#341;');" title="Latin small letter r with acute">&#341;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#342;');" title="Latin capital letter R with cedilla">&#342;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#343;');" title="Latin small letter r with cedilla">&#343;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#344;');" title="Latin capital letter R with caron">&#344;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#345;');" title="Latin small letter r with caron">&#345;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#346;');" title="Latin capital letter S with acute">&#346;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#347;');" title="Latin small letter s with acute">&#347;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#348;');" title="Latin capital letter S with circumflex">&#348;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#349;');" title="Latin small letter s with circumflex">&#349;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#350;');" title="Latin capital letter S with cedilla">&#350;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#351;');" title="Latin small letter s with cedilla">&#351;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#352;');" title="Latin capital letter S with caron">&#352;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#353;');" title="Latin small letter s with caron">&#353;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#354;');" title="Latin capital letter T with cedilla">&#354;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#355;');" title="Latin small letter t with cedilla">&#355;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#356;');" title="Latin capital letter T with caron">&#356;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#357;');" title="Latin small letter t with caron">&#357;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#358;');" title="Latin capital letter T with stroke">&#358;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#359;');" title="Latin small letter t with stroke">&#359;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#360;');" title="Latin capital letter U with tilde">&#360;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#361;');" title="Latin small letter u with tilde">&#361;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#362;');" title="Latin capital letter U with macron">&#362;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#363;');" title="Latin small letter u with macron">&#363;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#364;');" title="Latin capital letter U with breve">&#364;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#365;');" title="Latin small letter u with breve">&#365;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#366;');" title="Latin capital letter U with ring above">&#366;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#367;');" title="Latin small letter u with ring above">&#367;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#368;');" title="Latin capital letter U with double acute">&#368;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#369;');" title="Latin small letter u with double acute">&#369;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#370;');" title="Latin capital letter U with ogonek">&#370;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#371;');" title="Latin small letter u with ogonek">&#371;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#372;');" title="Latin capital letter W with circumflex">&#372;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#373;');" title="Latin small letter w with circumflex">&#373;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#374;');" title="Latin capital letter Y with circumflex">&#374;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#375;');" title="Latin small letter y with circumflex">&#375;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#376;');" title="Latin capital letter Y with dieresis">&#376;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#377;');" title="Latin capital letter Z with acute">&#377;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#378;');" title="Latin small letter z with acute">&#378;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#379;');" title="Latin capital letter Z with dot above">&#379;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#380;');" title="Latin small letter z with dot above">&#380;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#381;');" title="Latin capital letter Z with caron">&#381;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#382;');" title="Latin small letter z with caron">&#382;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#383;');" title="Latin small letter long s">&#383;</td>
+ </tr>
+</table></div>
+<div id="id2592877" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0"><tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#402;');" title="Latin small f with hook, function, florin">&#402;</td>
+ </tr></table></div>
+<div id="id2592905" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0"><tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#710;');" title="Modifier letter circumflex accent">&#710;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#732;');" title="Small tilde">&#732;</td>
+ </tr></table></div>
+<div id="id2592943" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#913;');" title="Greek capital letter alpha">&#913;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#914;');" title="Greek capital letter beta">&#914;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#915;');" title="Greek capital letter gamma">&#915;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#916;');" title="Greek capital letter delta">&#916;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#917;');" title="Greek capital letter epsilon">&#917;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#918;');" title="Greek capital letter zeta">&#918;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#919;');" title="Greek capital letter eta">&#919;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#920;');" title="Greek capital letter theta">&#920;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#921;');" title="Greek capital letter iota">&#921;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#922;');" title="Greek capital letter kappa">&#922;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#923;');" title="Greek capital letter lambda">&#923;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#924;');" title="Greek capital letter mu">&#924;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#925;');" title="Greek capital letter nu">&#925;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#926;');" title="Greek capital letter xi">&#926;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#927;');" title="Greek capital letter omicron">&#927;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#928;');" title="Greek capital letter pi">&#928;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#929;');" title="Greek capital letter rho">&#929;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#931;');" title="Greek capital letter sigma">&#931;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#932;');" title="Greek capital letter tau">&#932;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#933;');" title="Greek capital letter upsilon">&#933;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#934;');" title="Greek capital letter phi">&#934;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#935;');" title="Greek capital letter chi">&#935;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#936;');" title="Greek capital letter psi">&#936;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#937;');" title="Greek capital letter omega">&#937;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#945;');" title="Greek small letter alpha">&#945;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#946;');" title="Greek small letter beta">&#946;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#947;');" title="Greek small letter gamma">&#947;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#948;');" title="Greek small letter delta">&#948;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#949;');" title="Greek small letter epsilon">&#949;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#950;');" title="Greek small letter zeta">&#950;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#951;');" title="Greek small letter eta">&#951;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#952;');" title="Greek small letter theta">&#952;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#953;');" title="Greek small letter iota">&#953;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#954;');" title="Greek small letter kappa">&#954;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#955;');" title="Greek small letter lambda">&#955;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#956;');" title="Greek small letter mu">&#956;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#957;');" title="Greek small letter nu">&#957;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#958;');" title="Greek small letter xi">&#958;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#959;');" title="Greek small letter omicron">&#959;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#960;');" title="Greek small letter pi">&#960;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#961;');" title="Greek small letter rho">&#961;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#962;');" title="Greek small letter final sigma">&#962;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#963;');" title="Greek small letter sigma">&#963;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#964;');" title="Greek small letter tau">&#964;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#965;');" title="Greek small letter upsilon">&#965;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#966;');" title="Greek small letter phi">&#966;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#967;');" title="Greek small letter chi">&#967;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#968;');" title="Greek small letter psi">&#968;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#969;');" title="Greek small letter omega">&#969;</td>
+ </tr>
+</table></div>
+<div id="id2593570" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8211;');" title="En dash">&#8211;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8212;');" title="Em dash">&#8212;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8216;');" title="Left single quotation mark">&#8216;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8217;');" title="Right single quotation mark">&#8217;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8218;');" title="Single low-9 quotation mark">&#8218;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8220;');" title="Left double quotation mark">&#8220;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8221;');" title="Right double quotation mark">&#8221;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8222;');" title="Double low-9 quotation mark">&#8222;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8224;');" title="Dagger">&#8224;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8225;');" title="Double dagger">&#8225;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8226;');" title="Bullet, black small circle">&#8226;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8230;');" title="Horizontal ellipsis, three-dot leader">&#8230;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8240;');" title="Per mille sign">&#8240;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8242;');" title="Prime, minutes, feet">&#8242;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8243;');" title="Double prime, seconds, inches">&#8243;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8249;');" title="Single left-pointing angle quotation mark">&#8249;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8250;');" title="Single right-pointing angle quotation mark">&#8250;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8254;');" title="Overline, spacing overscore">&#8254;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8260;');" title="Fraction slash">&#8260;</td>
+ </tr>
+</table></div>
+<div id="id2593855" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0"><tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8364;');" title="Euro sign">&#8364;</td>
+ </tr></table></div>
+<div id="id2593876" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0"><tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8482;');" title="Trademark sign">&#8482;</td>
+ </tr></table></div>
+<div id="id2593912" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0"><tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8592;');" title="Leftward arrow">&#8592;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8593;');" title="Upward arrow">&#8593;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8594;');" title="Rightward arrow">&#8594;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8595;');" title="Downward arrow">&#8595;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8596;');" title="Left-right arrow">&#8596;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8597;');" title="Up-down arrow">&#8597;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8658;');" title="Rightward double arrow">&#8658;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8660;');" title="Left-right double arrow">&#8660;</td>
+ </tr></table></div>
+<div id="id2594037" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8704;');" title="For all">&#8704;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8706;');" title="Partial differential">&#8706;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8707;');" title="There exists">&#8707;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8710;');" title="Increment, forward difference">&#8710;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8711;');" title="Nabla, backward difference">&#8711;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8712;');" title="Element of">&#8712;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8715;');" title="Contains as member">&#8715;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8719;');" title="N-ary product, product sign">&#8719;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8721;');" title="N-ary summation">&#8721;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8722;');" title="Minus sign">&#8722;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8730;');" title="Square root, radical sign">&#8730;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8733;');" title="Proportional to">&#8733;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8734;');" title="Infinity">&#8734;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8735;');" title="Right angle">&#8735;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8736;');" title="Angle">&#8736;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8743;');" title="Logical and, wedge">&#8743;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8744;');" title="Logical or, vee">&#8744;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8745;');" title="Intersection, cap">&#8745;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8746;');" title="Union, cap">&#8746;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8747;');" title="Integral">&#8747;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8756;');" title="Therefore">&#8756;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8764;');" title="Tilde operator, varies with, similar to">&#8764;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8765;');" title="Reversed tilde, lazy S">&#8765;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8776;');" title="Almost equal to, asymptotic to">&#8776;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8800;');" title="Not equal to">&#8800;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8801;');" title="Identical to">&#8801;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8804;');" title="Less than or equal to">&#8804;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8805;');" title="Greater than or equal to">&#8805;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8806;');" title="Less than over equal to">&#8806;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8807;');" title="Greater than over equal to">&#8807;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8834;');" title="Subset of">&#8834;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8835;');" title="Superset of">&#8835;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8838;');" title="Subset of or equal to">&#8838;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8839;');" title="Superset of or equal to">&#8839;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8857;');" title="Circled dot operator">&#8857;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#8869;');" title="Up tack, orthogonal to, perpendicular">&#8869;</td>
+ </tr>
+</table></div>
+<div id="id2594574" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0"><tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#9674;');" title="Lozenge">&#9674;</td>
+ </tr></table></div>
+<div id="id2594596" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0"><tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#9824;');" title="Black spade suit">&#9824;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#9827;');" title="Black club suit, shamrock">&#9827;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#9829;');" title="Black heart suit, valentine">&#9829;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#9839;');" title="Music sharp sign">&#9839;</td>
+ </tr></table></div>
+<div id="id2594666" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1025;');" title="cyrillic capital letter io">&#1025;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1026;');" title="cyrillic capital letter dje">&#1026;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1027;');" title="cyrillic capital letter gje">&#1027;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1028;');" title="cyrillic capital letter ukrainian ie">&#1028;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1029;');" title="cyrillic capital letter dze">&#1029;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1030;');" title="cyrillic capital letter byelorussian-ukrainian i">&#1030;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1031;');" title="cyrillic capital letter yi">&#1031;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1032;');" title="cyrillic capital letter je">&#1032;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1033;');" title="cyrillic capital letter lje">&#1033;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1034;');" title="cyrillic capital letter nje">&#1034;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1035;');" title="cyrillic capital letter tshe">&#1035;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1036;');" title="cyrillic capital letter kje">&#1036;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1038;');" title="cyrillic capital letter short u">&#1038;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1039;');" title="cyrillic capital letter dzhe">&#1039;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1040;');" title="cyrillic capital letter a">&#1040;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1041;');" title="cyrillic capital letter be">&#1041;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1042;');" title="cyrillic capital letter ve">&#1042;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1043;');" title="cyrillic capital letter ghe">&#1043;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1044;');" title="cyrillic capital letter de">&#1044;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1045;');" title="cyrillic capital letter ie">&#1045;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1046;');" title="cyrillic capital letter zhe">&#1046;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1047;');" title="cyrillic capital letter ze">&#1047;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1048;');" title="cyrillic capital letter i">&#1048;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1049;');" title="cyrillic capital letter short i">&#1049;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1050;');" title="cyrillic capital letter ka">&#1050;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1051;');" title="cyrillic capital letter el">&#1051;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1052;');" title="cyrillic capital letter em">&#1052;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1053;');" title="cyrillic capital letter en">&#1053;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1054;');" title="cyrillic capital letter o">&#1054;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1055;');" title="cyrillic capital letter pe">&#1055;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1056;');" title="cyrillic capital letter er">&#1056;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1057;');" title="cyrillic capital letter es">&#1057;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1058;');" title="cyrillic capital letter te">&#1058;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1059;');" title="cyrillic capital letter u">&#1059;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1060;');" title="cyrillic capital letter ef">&#1060;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1061;');" title="cyrillic capital letter ha">&#1061;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1062;');" title="cyrillic capital letter tse">&#1062;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1063;');" title="cyrillic capital letter che">&#1063;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1064;');" title="cyrillic capital letter sha">&#1064;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1065;');" title="cyrillic capital letter shcha">&#1065;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1066;');" title="cyrillic capital letter hard sign">&#1066;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1067;');" title="cyrillic capital letter yeru">&#1067;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1068;');" title="cyrillic capital letter soft sign">&#1068;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1069;');" title="cyrillic capital letter e">&#1069;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1070;');" title="cyrillic capital letter yu">&#1070;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1071;');" title="cyrillic capital letter ya">&#1071;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1072;');" title="cyrillic small letter a">&#1072;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1073;');" title="cyrillic small letter be">&#1073;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1074;');" title="cyrillic small letter ve">&#1074;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1075;');" title="cyrillic small letter ghe">&#1075;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1076;');" title="cyrillic small letter de">&#1076;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1077;');" title="cyrillic small letter ie">&#1077;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1078;');" title="cyrillic small letter zhe">&#1078;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1079;');" title="cyrillic small letter ze">&#1079;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1080;');" title="cyrillic small letter i">&#1080;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1081;');" title="cyrillic small letter short i">&#1081;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1082;');" title="cyrillic small letter ka">&#1082;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1083;');" title="cyrillic small letter el">&#1083;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1084;');" title="cyrillic small letter em">&#1084;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1085;');" title="cyrillic small letter en">&#1085;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1086;');" title="cyrillic small letter o">&#1086;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1087;');" title="cyrillic small letter pe">&#1087;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1088;');" title="cyrillic small letter er">&#1088;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1089;');" title="cyrillic small letter es">&#1089;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1090;');" title="cyrillic small letter te">&#1090;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1091;');" title="cyrillic small letter u">&#1091;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1092;');" title="cyrillic small letter ef">&#1092;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1093;');" title="cyrillic small letter ha">&#1093;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1094;');" title="cyrillic small letter tse">&#1094;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1095;');" title="cyrillic small letter che">&#1095;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1096;');" title="cyrillic small letter sha">&#1096;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1097;');" title="cyrillic small letter shcha">&#1097;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1098;');" title="cyrillic small letter hard sign">&#1098;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1099;');" title="cyrillic small letter yeru">&#1099;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1100;');" title="cyrillic small letter soft sign">&#1100;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1101;');" title="cyrillic small letter e">&#1101;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1102;');" title="cyrillic small letter yu">&#1102;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1103;');" title="cyrillic small letter ya">&#1103;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1105;');" title="cyrillic small letter io">&#1105;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1106;');" title="cyrillic small letter dje">&#1106;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1107;');" title="cyrillic small letter gje">&#1107;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1108;');" title="cyrillic small letter ukrainian ie">&#1108;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1109;');" title="cyrillic small letter dze">&#1109;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1110;');" title="cyrillic small letter byelorussian-ukrainian i">&#1110;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1111;');" title="cyrillic small letter yi">&#1111;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1112;');" title="cyrillic small letter je">&#1112;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1113;');" title="cyrillic small letter lje">&#1113;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1114;');" title="cyrillic small letter nje">&#1114;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1115;');" title="cyrillic small letter tshe">&#1115;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1116;');" title="cyrillic small letter kje">&#1116;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1118;');" title="cyrillic small letter short u">&#1118;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1119;');" title="cyrillic small letter dzhe">&#1119;</td>
+ </tr>
+</table></div>
+<div id="id2595848" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1488;');" title="Hebrew letter alef">&#1488;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1489;');" title="Hebrew letter bet">&#1489;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1490;');" title="Hebrew letter gimel">&#1490;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1491;');" title="Hebrew letter dalet">&#1491;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1492;');" title="Hebrew letter he">&#1492;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1493;');" title="Hebrew letter vav">&#1493;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1494;');" title="Hebrew letter zayin">&#1494;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1495;');" title="Hebrew letter het">&#1495;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1496;');" title="Hebrew letter tet">&#1496;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1497;');" title="Hebrew letter yod">&#1497;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1498;');" title="Hebrew letter final kaf">&#1498;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1499;');" title="Hebrew letter kaf">&#1499;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1500;');" title="Hebrew letter lamed">&#1500;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1501;');" title="Hebrew letter final mem">&#1501;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1502;');" title="Hebrew letter mem">&#1502;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1503;');" title="Hebrew letter final nun">&#1503;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1504;');" title="Hebrew letter nun">&#1504;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1505;');" title="Hebrew letter samekh">&#1505;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1506;');" title="Hebrew letter ayin">&#1506;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1507;');" title="Hebrew letter final pe">&#1507;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1508;');" title="Hebrew letter pe">&#1508;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1509;');" title="Hebrew letter final tsadi">&#1509;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1510;');" title="Hebrew letter tsadi">&#1510;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1511;');" title="Hebrew letter qof">&#1511;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1512;');" title="Hebrew letter resh">&#1512;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1513;');" title="Hebrew letter shin">&#1513;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1514;');" title="Hebrew letter tav">&#1514;</td>
+ </tr>
+</table></div>
+<div id="id2596122" style="top:60px; position:absolute;visibility:hidden;"><table name="blocks" cellspacing="0" cellpadding="0">
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1548;');" title="arabic comma">&#1548;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1567;');" title="arabic question mark">&#1567;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1569;');" title="arabic letter hamza">&#1569;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1570;');" title="arabic letter alef with madda above">&#1570;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1571;');" title="arabic letter alef with hamza above">&#1571;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1572;');" title="arabic letter waw with hamza above">&#1572;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1573;');" title="arabic letter alef with hamza below">&#1573;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1574;');" title="arabic letter yeh with hamza above">&#1574;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1575;');" title="arabic letter alef">&#1575;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1576;');" title="arabic letter beh">&#1576;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1577;');" title="arabic letter teh marbuta">&#1577;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1578;');" title="arabic letter teh">&#1578;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1579;');" title="arabic letter theh">&#1579;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1580;');" title="arabic letter jeem">&#1580;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1581;');" title="arabic letter hah">&#1581;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1582;');" title="arabic letter khah">&#1582;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1583;');" title="arabic letter dal">&#1583;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1584;');" title="arabic letter thal">&#1584;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1585;');" title="arabic letter reh">&#1585;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1586;');" title="arabic letter zain">&#1586;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1587;');" title="arabic letter seen">&#1587;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1588;');" title="arabic letter sheen">&#1588;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1589;');" title="arabic letter sad">&#1589;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1590;');" title="arabic letter dad">&#1590;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1591;');" title="arabic letter tah">&#1591;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1592;');" title="arabic letter zah">&#1592;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1593;');" title="arabic letter ain">&#1593;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1594;');" title="arabic letter ghain">&#1594;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1600;');" title="arabic tatweel">&#1600;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1601;');" title="arabic letter feh">&#1601;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1602;');" title="arabic letter qaf">&#1602;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1603;');" title="arabic letter kaf">&#1603;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1604;');" title="arabic letter lam">&#1604;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1605;');" title="arabic letter meem">&#1605;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1606;');" title="arabic letter noon">&#1606;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1607;');" title="arabic letter heh">&#1607;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1608;');" title="arabic letter waw">&#1608;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1609;');" title="arabic letter alef maksura">&#1609;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1610;');" title="arabic letter yeh">&#1610;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1611;');" title="arabic fathatan">&#1611;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1612;');" title="arabic dammatan">&#1612;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1613;');" title="arabic kasratan">&#1613;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1614;');" title="arabic fatha">&#1614;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1615;');" title="arabic damma">&#1615;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1616;');" title="arabic kasra">&#1616;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1617;');" title="arabic shadda">&#1617;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1618;');" title="arabic sukun">&#1618;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1632;');" title="arabic-indic digit zero">&#1632;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1633;');" title="arabic-indic digit one">&#1633;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1634;');" title="arabic-indic digit two">&#1634;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1635;');" title="arabic-indic digit three">&#1635;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1636;');" title="arabic-indic digit four">&#1636;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1637;');" title="arabic-indic digit five">&#1637;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1638;');" title="arabic-indic digit six">&#1638;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1639;');" title="arabic-indic digit seven">&#1639;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1640;');" title="arabic-indic digit eight">&#1640;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1641;');" title="arabic-indic digit nine">&#1641;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1642;');" title="arabic percent sign">&#1642;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1643;');" title="arabic decimal separator">&#1643;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1645;');" title="arabic five pointed star">&#1645;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1662;');" title="arabic letter peh">&#1662;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1670;');" title="arabic letter tcheh">&#1670;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1705;');" title="arabic letter keheh">&#1705;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1711;');" title="arabic letter gaf">&#1711;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1740;');" title="arabic letter farsi yeh">&#1740;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1749;');" title="arabic letter ae">&#1749;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1776;');" title="extended arabic-indic digit zero">&#1776;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1777;');" title="extended arabic-indic digit one">&#1777;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1778;');" title="extended arabic-indic digit two">&#1778;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1779;');" title="extended arabic-indic digit three">&#1779;</td>
+ </tr>
+<tr>
+<td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1780;');" title="extended arabic-indic digit four">&#1780;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1781;');" title="extended arabic-indic digit five">&#1781;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1782;');" title="extended arabic-indic digit six">&#1782;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1783;');" title="extended arabic-indic digit seven">&#1783;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1784;');" title="extended arabic-indic digit eight">&#1784;</td>
+ <td class="button" onmouseover="mouseover(this);" onmouseout="mouseout(this);" onmousedown="mousedown(this);" onmouseup="mouseup(this);" onclick="insertSz('&#1785;');" title="extended arabic-indic digit nine">&#1785;</td>
+ </tr>
+</table></div>
+<p> Characters are shown as serif and sans-serif (mouseover).</p>
+</body>
+</html>
