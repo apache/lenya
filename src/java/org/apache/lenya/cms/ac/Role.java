@@ -15,6 +15,7 @@ public class Role {
     /** Creates a new instance of Role */
     public Role(String name) {
         assert name != null;
+        this.name = name;
     }
     
     private String name;
