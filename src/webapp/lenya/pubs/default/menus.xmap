@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menus.xmap,v 1.4 2004/03/13 12:47:21 gregor Exp $ -->
+<!-- $Id: menus.xmap,v 1.5 2004/08/17 21:57:39 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -34,6 +34,13 @@
         <map:serialize type="xml"/>
       </map:match>
       
+      <!-- document type: links -->
+      <map:match pattern="authoring/links**">
+        <map:generate type="serverpages" src="config/menus/links.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- all other document types: xhtml, ... -->
       <map:match pattern="**">
         <map:generate type="serverpages" src="config/menus/generic.xsp"/>
         <map:serialize type="xml"/>
