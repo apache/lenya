@@ -95,10 +95,11 @@
             <tr>
               <td/>
               <td>
-				        <form method="GET">
-                  <input type="hidden" name="lenya.usecase" value="groupChangeMembers"/>
-				          <input i18n:attr="value" type="submit" value="Edit Members"/>
-				        </form>
+		<form method="GET">
+                 <input type="hidden" name="lenya.usecase" value="admin.groupMembers"/>
+                 <input name="groupId" type="hidden" value="{id}"/>
+		 <input type="submit" i18n:attr="value" value="Edit Members"/>
+		</form>
               </td>
             </tr>
           </table>
