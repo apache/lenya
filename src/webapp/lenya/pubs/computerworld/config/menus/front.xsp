@@ -73,14 +73,12 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/overview.html
-						</xsp:attribute>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/overview.html</xsp:attribute>
 						Articles&#160;Overview
 					</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/pubid/computerworld
-						</xsp:attribute>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication</xsp:attribute>
 						Scheduler&#160;Admin
 					</item>
 				</block>
