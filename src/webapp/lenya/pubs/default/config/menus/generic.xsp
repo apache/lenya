@@ -42,29 +42,23 @@
       String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
       String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/live" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
       String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
+      
+      Object documentObject = <input:get-attribute as="object" module="page-envelope" name="document"/>;
+      Document document = null;
+      if (documentObject != null &amp;&amp; !"".equals(documentObject)) {
+          document = (Document) documentObject;
+      }
 
+      boolean isDocument = false;
       String docType = "";
       try {
-      Document document = (Document) <input:get-attribute as="object" module="page-envelope" name="document"/>;
-          if (document.exists()) {
+          if (document != null &amp;&amp; document.exists()) {
+              isDocument = true;
               docType = <input:get-attribute as="string" module="page-envelope" name="document-type"/>;
           }
       }
       catch (Exception e) {
           throw new ProcessingException(e);
-      }
-      
-      boolean isDocument = false;
-      {
-        Object document = <input:get-attribute module="page-envelope" as="object" name="document"/>;
-        try {
-          if (document != "" &amp;&amp; ((Document) document).exists()) {
-            isDocument = true;
-          }
-        }
-        catch (Exception e) {
-          throw new ProcessingException(e);
-        }
       }
     </xsp:logic>
     
@@ -74,27 +68,27 @@
           
           <xsp:logic>
             {
-        if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
-          <item><i18n:text>XHTML Document</i18n:text></item>
-          <item><i18n:text>Links Document</i18n:text></item>
-        }
-        else {
-          <item uc:usecase="site.create" href="?doctype=xhtml"><i18n:text>XHTML Document</i18n:text></item>
-          <item uc:usecase="site.create" href="?doctype=links"><i18n:text>Links Document</i18n:text></item>
-        }
+                if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
+                    <item><i18n:text>XHTML Document</i18n:text></item>
+                    <item><i18n:text>Links Document</i18n:text></item>
+                }
+                else {
+                    <item uc:usecase="site.create" href="?doctype=xhtml"><i18n:text>XHTML Document</i18n:text></item>
+                    <item uc:usecase="site.create" href="?doctype=links"><i18n:text>Links Document</i18n:text></item>
+                }
             }
           </xsp:logic>
         </block>
         <block>
           <xsp:logic>
             {
-
-               String[] availableLanguages = (String[]) <input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
-              if (isDocument
-            &amp;&amp; Publication.AUTHORING_AREA.equals(area)
-                  ) {
-                  
-            Document document = (Document) <input:get-attribute as="object" module="page-envelope" name="document"/>;
+            
+              String[] availableLanguages = { };
+              if (isDocument) {
+                  availableLanguages = (String[]) <input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
+              }
+            
+              if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
                   String[] allLanguages = document.getPublication().getLanguages();
                   
                   if (availableLanguages.length &lt; allLanguages.length) {
@@ -109,10 +103,7 @@
                   }
               }
             
-              if (isDocument
-            &amp;&amp; Publication.AUTHORING_AREA.equals(area)
-                  &amp;&amp; availableLanguages.length &gt; 1
-                  ) {
+              if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area) &amp;&amp; availableLanguages.length &gt; 1) {
                 <xsp:content>
                   <item uc:usecase="site.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
                 </xsp:content>
