@@ -157,7 +157,7 @@
     <echo message="INFO: Patch Lucene"/>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${src.webapp.dir}">
-        <include name="WEB-INF/lib/lucene-1.3-dev1.jar"/>
+        <include name="WEB-INF/lib/lucene-1.3.jar"/>
       </fileset>
     </copy>
 

@@ -9,7 +9,6 @@ LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 JAVA=/usr/lib/j2sdk1.4/bin/java
 
 XPDF=$HOME/bin/xpdf-2.02pl1-linux/pdftotext
-#XPDF=$HOME/bin/xpdf-2.01-linux/pdftotext
 
 CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.5.0.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar
 
@@ -23,7 +22,7 @@ case "$1" in
         echo "Target: $1"
         echo "=========================================================="
         echo ""
-        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.3-dev1.jar
+        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.3.jar
         echo "INFO: classpath = $CLASSPATH"
 
         LUCENE_CONF=$2
