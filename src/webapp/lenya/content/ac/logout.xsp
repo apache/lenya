@@ -3,8 +3,8 @@
 <xsp:page
        language="java"
        xmlns:xsp="http://apache.org/xsp"  
-       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
        >
+       
   <xsp:structure>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
     <xsp:include>java.util.Vector</xsp:include>
@@ -14,18 +14,14 @@
 <body>
 <logout>
 
-  <!-- Import Lenya Page Envelope -->
-  <xsp-lenya:util/>
-
   <xsp:logic>
-    Session session=request.getSession(false);
+    Session session = request.getSession(false);
     if(session != null){
-      session.removeAttribute("org.apache.lenya.cms.ac.Identity");
       session.removeAttribute("org.apache.lenya.cms.ac2.Identity");
-     Vector history=(Vector)session.getAttribute("org.apache.lenya.cms.cocoon.acting.History");
-      if(history != null){
-        for(int i=0;i&lt;history.size();i++){
-          String uri=(String)history.elementAt(i);
+      Vector history = (Vector) session.getAttribute("org.apache.lenya.cms.cocoon.acting.History");
+      if (history != null) {
+        for (int i = 0; i &lt; history.size(); i++) {
+          String uri = (String) history.elementAt(i);
           <xsp:content><uri><xsp:expr>uri</xsp:expr></uri></xsp:content>
         }
       }
