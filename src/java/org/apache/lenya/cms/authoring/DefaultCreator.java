@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.4 2003/02/10 14:45:45 egliwyona Exp $
+ * $Id: DefaultCreator.java,v 1.5 2003/02/10 14:49:39 egliwyona Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,8 +43,6 @@
  */
 package org.wyona.cms.authoring;
 
-import org.apache.log4j.Category;
-
 import org.dom4j.Node;
 
 import org.wyona.cms.authoring.AbstractParentChildCreator;
@@ -58,7 +56,7 @@ import java.io.File;
  * @author <a href="mailto:juergen.bigalke@wyona.org">Juergen Bigalke</a>
  */
 public class DefaultCreator extends DefaultParentChildCreator {
-    // static Category log=Category.getInstance(DefaultParentChildCreator.class);                                         
+
     private String prefix = null;
     private String fname = "/index.xml";
     private String fnameMeta = "/index-meta.xml";

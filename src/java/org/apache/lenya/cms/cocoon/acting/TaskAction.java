@@ -1,5 +1,5 @@
 /*
- * $Id: TaskAction.java,v 1.6 2003/02/07 12:14:08 ah Exp $
+ * $Id: TaskAction.java,v 1.7 2003/02/10 14:53:06 egliwyona Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,8 +57,6 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 
-import org.apache.log4j.Category;
-
 import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.task.*;
 
@@ -72,7 +70,6 @@ import java.util.HashMap;
  * @author <a href="mailto:ah@wyona.org">Andreas Hartmann</a>
  */
 public class TaskAction extends AbstractComplementaryConfigurableAction {
-    static Category log = Category.getInstance(TaskAction.class);
     private String taskId = null;
 
     /**
@@ -97,9 +94,9 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
 
         try {
             taskId = configuration.getChild("task").getAttribute(TaskManager.TASK_ID_ATTRIBUTE);
-            log.debug("CONFIGURATION:\ntask id = " + taskId);
+            getLogger().debug("CONFIGURATION:\ntask id = " + taskId);
         } catch (ConfigurationException e) {
-            log.debug("CONFIGURATION:\nNo task id provided");
+            getLogger().debug("CONFIGURATION:\nNo task id provided");
         }
     }
 
@@ -126,22 +123,22 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         // Remove "file:" protocol
         publicationPath = publicationPath.substring(5);
 
-        log.info("######### " + publicationPath);
+        getLogger().info("######### " + publicationPath);
 
         if (publicationPath.endsWith("/")) {
             publicationPath = publicationPath.substring(0, publicationPath.length() - 1);
         }
 
-        log.info("######### " + publicationPath);
+        getLogger().info("######### " + publicationPath);
 
         int lastSlashIndex = publicationPath.lastIndexOf("/");
         String publicationId = publicationPath.substring(lastSlashIndex + 1);
 
-        log.info("#######id " + publicationId);
+        getLogger().info("#######id " + publicationId);
 
         publicationPath = publicationPath.substring(0, lastSlashIndex + 1);
 
-        log.info("######### " + publicationPath);
+        getLogger().info("######### " + publicationPath);
 
         String publicationPrefix = PublishingEnvironment.PUBLICATION_PREFIX;
 
@@ -149,7 +146,7 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         String contextPath = publicationPath.substring(0,
                 publicationPath.length() - publicationPrefix.length());
 
-        log.info("######### " + contextPath);
+        getLogger().info("######### " + contextPath);
 
         publicationPath += publicationId;
 
@@ -165,7 +162,7 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         taskId = parameters.getParameter("task-id", taskId);
 
         if (taskId == null) {
-            log.error("No task id provided! ", new IllegalStateException());
+            getLogger().error("No task id provided! ", new IllegalStateException());
         }
 
         //------------------------------------------------------------
@@ -189,7 +186,7 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         //------------------------------------------------------------
         // execute task
         //------------------------------------------------------------
-        log.debug("\n-------------------------------------------------" + "\n- Executing task '" +
+        getLogger().debug("\n-------------------------------------------------" + "\n- Executing task '" +
             getTaskId() + "'" + "\n-------------------------------------------------");
 
         TaskManager manager = new TaskManager(publicationPath);
