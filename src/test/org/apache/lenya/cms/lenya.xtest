@@ -148,6 +148,11 @@
         shorthand="authenticator"
         default-class="org.apache.lenya.cms.ac2.UserAuthenticator"/>
 
+<!--
+  <role name="org.apache.lenya.cms.ac2.cache.PolicyCache"
+        shorthand="sourcecache"
+        default-class="org.apache.lenya.cms.ac2.cache.PolicyCacheImpl"/>
+-->
   </roles>
 
   <components>
@@ -170,40 +175,18 @@
   </authorizers>
   
   <policy-managers>
-    <component-instance class="org.apache.lenya.cms.ac2.file.FilePolicyManager" logger="lenya.ac.policymanager" name="file">
-      <parameter name="directory" value="context:///lenya/config/ac/policies"/>
-    </component-instance>
-    <component-instance class="org.apache.lenya.cms.ac2.file.PublicationFilePolicyManager" logger="lenya.ac.policymanager" name="publication-file">
-      <parameter name="directory" value="context:///"/>
-    </component-instance>
-    <component-instance class="org.apache.lenya.cms.ac2.sitemap.SitemapPolicyManager" logger="lenya.ac.policymanager" name="sitemap"/>
+    <component-instance class="org.apache.lenya.cms.ac2.file.FilePolicyManager" logger="lenya.ac.policymanager.file" name="file"/>
+    <component-instance class="org.apache.lenya.cms.ac2.sitemap.SitemapPolicyManager" logger="lenya.ac.policymanager.sitemap" name="sitemap"/>
+    <component-instance class="org.apache.lenya.cms.ac2.DocumentPolicyManagerWrapper" logger="lenya.ac.policymanager.document" name="document"/>
   </policy-managers>
   
   <component logger="lenya.ac.accesscontroller"
-      class="org.apache.lenya.cms.ac2.DefaultAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/global">
-    <accreditable-manager type="file"/>
-    <policy-manager type="file"/>
-    <authorizer type="policy"/>
-  </component>
+      class="org.apache.lenya.cms.ac2.BypassableAccessController"
+      role="org.apache.lenya.cms.ac2.AccessController/bypassable"/>
   
   <component logger="lenya.ac.accesscontroller"
       class="org.apache.lenya.cms.ac2.DefaultAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/publication-file">
-    <accreditable-manager type="file"/>
-    <policy-manager type="publication-file"/>
-    <authorizer type="policy"/>
-    <authorizer type="workflow"/>
-  </component>
-  
-  <component logger="lenya.ac.accesscontroller"
-      class="org.apache.lenya.cms.ac2.DefaultAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/sitemap">
-    <accreditable-manager type="file"/>
-    <policy-manager type="sitemap"/>
-    <authorizer type="policy"/>
-    <authorizer type="workflow"/>
-  </component>
+      role="org.apache.lenya.cms.ac2.AccessController/default"/>
   
   <access-controller-resolvers>
     <component-instance logger="lenya.ac.accesscontrollerresolver"
@@ -221,6 +204,12 @@
       class="org.apache.lenya.cms.ac2.UserAuthenticator"
       role="org.apache.lenya.cms.ac2.Authenticator"/>
     
+    <!--
+  <component logger="lenya.ac.cache"
+  	  class="org.apache.lenya.cms.ac2.cache.PolicyCacheImpl"
+  	  role="org.apache.lenya.cms.ac2.cache.PolicyCache"/>
+  	  -->
+
   </components>
   
 </testcase>

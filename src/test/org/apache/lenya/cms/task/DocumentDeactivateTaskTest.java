@@ -89,7 +89,8 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
 		TestRunner.run(getSuite());
 	}
 
-	public static final String DOCUMENT_ID = "tutorial";
+	public static final String DOCUMENT_ID = "/tutorial";
+    public static final String LANGUAGE = "en";
 	public static final String AUTHORING_PATH = "content/authoring".replace('/', File.separatorChar);
 	public static final String LIVE_PATH = "content/live".replace('/', File.separatorChar);
 	
@@ -99,6 +100,7 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
 	protected Parameters getTaskParameters() {
 		Parameters parameters = super.getTaskParameters();
 		parameters.setParameter("properties.node.firstdocumentid", DOCUMENT_ID);
+        parameters.setParameter("properties.node.language", LANGUAGE);
 		return parameters;
 	}
     
@@ -130,24 +132,24 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
         File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
 		File liveDirectory = new File(publicationPath, LIVE_PATH);
         
-		String filepath = DOCUMENT_ID + File.separator + "index.xml";  
+		String filepath = DOCUMENT_ID.substring(1) + File.separator + "index_en.xml";  
 
 		File authoringDocumentFile = new File(authoringDirectory, filepath);
+        System.out.println("Authoring document: " + authoringDocumentFile.getAbsolutePath());
         assertTrue(authoringDocumentFile.exists());
-		System.out.println("Document exists already in authoring: " + authoringDocumentFile.getAbsolutePath());
 		File liveDocumentFile = new File(liveDirectory, filepath);
+        System.out.println("Live document: " + liveDocumentFile.getAbsolutePath());
 		assertFalse(liveDocumentFile.exists());
-		System.out.println("Document was deleted from live: " + liveDocumentFile.getAbsolutePath());
 
         //TODO evaluation of resources, meta, workflow
         
 		SiteTree authoringSitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
 		SiteTreeNode node = authoringSitetree.getNode(DOCUMENT_ID);
 		assertNotNull(node);
-		System.out.println("Sitetree node with id "+node.getId()+"is always in authoring");
+        System.out.println("Sitetree node with id ["+node.getId()+"] is always in authoring");
 		SiteTree liveSitetree = PublicationHelper.getPublication().getSiteTree(Publication.LIVE_AREA);
 		SiteTreeNode livenode = liveSitetree.getNode(DOCUMENT_ID);
 		assertNull(livenode);
-		System.out.println("Sitetree node for document id "+DOCUMENT_ID+" was deleted from the live tree");
+        System.out.println("Sitetree node for document id ["+DOCUMENT_ID+"] was deleted from the live tree");
 	}
 }
