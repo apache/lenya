@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowBuilder.java,v 1.7 2003/07/23 13:21:08 gregor Exp $
+$Id: WorkflowBuilder.java,v 1.8 2003/08/20 18:54:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -156,6 +156,7 @@ public class WorkflowBuilder {
             EventImpl event = buildEvent((Element) eventElements.item(i));
             String id = event.getName();
             events.put(id, event);
+            workflow.addEvent(event);
         }
 
         // load transitions
