@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.7 2003/07/30 15:10:32 egli Exp $
+$Id: DublinCore.java,v 1.8 2003/07/30 15:29:33 gregor Exp $
 <License>
 
  ============================================================================
@@ -63,6 +63,7 @@ import org.apache.lenya.xml.DocumentHelper;
 import java.io.File;
 
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 
 /**
  * A publication.
