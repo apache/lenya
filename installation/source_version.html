@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.7-dev">
+<meta name="Forrest-version" content="0.6">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Installation of the Source Version</title>
 <link type="text/css" href="../skin/basic.css" rel="stylesheet">
@@ -135,6 +135,7 @@
     |start content
     +-->
 <div id="content">
+<div id="skinconf-txtlink"></div>
 <div title="Portable Document Format" class="pdflink">
 <a class="dida" href="source_version.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
@@ -143,26 +144,52 @@
 <div id="minitoc-area">
 <ul class="minitoc">
 <li>
+<a href="#introduction">Introduction</a>
+</li>
+<li>
 <a href="#prerequisites">Prerequisites</a>
 </li>
 <li>
-<a href="#Standalone+Installation+%28using+the+built-in+Jetty%29">Standalone Installation (using the built-in Jetty)</a>
+<a href="#1%3A+Standalone+Installation+%28using+the+built-in+Jetty%29">1: Standalone Installation (using the built-in Jetty)</a>
 </li>
 <li>
-<a href="#Installation+with+Apache+Tomcat">Installation with Apache Tomcat</a>
+<a href="#2%3A+Installation+with+Apache+Tomcat">2: Installation with Apache Tomcat</a>
 </li>
 </ul>
 </div>
-    
-<a name="N1001B"></a><a name="prerequisites"></a>
-<h2 class="underlined_10">Prerequisites</h2>
+  	
+<a name="N1001B"></a><a name="introduction"></a>
+<h2 class="underlined_10">Introduction</h2>
 <div class="section">
 <p>
-        The following list describes the setup that is tested and
-        recommended.  Please note that you can use other servlet
-        containers as well, but Jetty and Tomcat are the tested ones.
-      </p>
+  			This document explains how to install Lenya from source.
+  			There are different ways to install and run Lenya:
+  			<br>
+  			Choose between
+  		</p>
+<ol>
+            
+<li>running Lenya standalone using the built-in Jetty servlet container</li>
+            
+<li>using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
+            <!--<li>creating a webapp for Tomcat (and other servlet containers) to be deployed manually on a remote server</li>-->
+        
+</ol>
+<p>
+  			Please note that you can use other servlet
+        	containers as well, but Jetty and Tomcat are the tested ones.
+        </p>
+<p>
+  			In all cases, you will need to meet the following prerequisites,
+  			that describe the setup that is tested and recommended. 
+  		</p>
+</div>
+    
+<a name="N10038"></a><a name="prerequisites"></a>
+<h2 class="underlined_10">Prerequisites</h2>
+<div class="section">
 <ul>
+      	      	
         
 <li>
           
@@ -171,11 +198,67 @@
 <strong>Java 2 Platform, Standard Edition</strong>
             
 <br>
-            version: 1.4.2 or newer, 1.5.x not tested.
+            version 1.4.2 or newer, 1.5.x is not tested yet.
             <br>
-            source: <a href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>
+            Get it from <a href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>
           
 </p>
+        
+</li>
+        
+        
+<li>
+      		
+<p>
+      		
+<strong>Recommended: Create a directory</strong> to better organise the various source files
+      		<br>
+      		In this document, we will assume the name <span class="codefrag">src/</span> for that directory. It is important to not have
+      		spaces in any of the directory names (so on Windows, make sure you don't create <span class="codefrag">src/</span> in
+      		<span class="codefrag">My Documents</span> but rather directly in <span class="codefrag">c:\</span>).
+      		This directory will contain the Lenya distribution as well as Cocoon.
+      		</p>
+      		
+      		
+<p>
+      		After expanding the	downloaded archives or after a <a href="http://subversion.tigris.org/">svn checkout</a>,
+      		the directory structure should look like this:
+      		</p>
+      		
+      		
+<pre class="code">
+            your_home/ (or c:\ on Windows, NOT My Documents)
+              `-- src/
+                   |-- lenya-1.2.x/            $LENYA_HOME
+                   `-- cocoon-2.1.6/           $COCOON_HOME
+                        `-- build/
+                             `-- webapp/       $COCOON_WEBAPP
+     		</pre>
+     		
+     		
+<p>
+     		The directories inside cocoon-2.1.6/ will be created when you build Cocoon. 
+     		The variables will later be used in the local.build.properties file that configures the Lenya build process.
+      		</p>
+      		
+      	
+</li>
+      	
+      	
+<li>
+          
+<p>
+            
+<strong>Get Apache Lenya</strong>
+            
+<br>
+            (see <a href="../installation/index.html">Download Lenya</a>)
+            <br>
+            Extract the downloaded Lenya archive in the
+            <span class="codefrag">src/</span> directory described above. This will create <span class="codefrag">lenya-1.2.x/</span> inside <span class="codefrag">src/</span>.
+            If you use <a href="http://subversion.tigris.org/">Subversion</a>, checkout Lenya inside the
+            <span class="codefrag">src/</span> directory. 
+          </p>
         
 </li>
 
@@ -184,20 +267,24 @@
           
 <p>
             
-<strong>Apache Cocoon</strong>
+<strong>Get Apache Cocoon</strong>
             
 <br>
-            version: 2.1.5.1
+            version: 2.1.6
             <br>
-            source: <a href="http://cocoon.apache.org/mirror.cgi">http://cocoon.apache.org/mirror.cgi</a>
-          
-</p>
+            Get it from <a href="http://cocoon.apache.org/mirror.cgi">http://cocoon.apache.org/mirror.cgi</a>
+<br>
+            Unpack Coccon in <span class="codefrag">src/</span>.
+          </p>
 
+			
+<br>
+			
           
 <p>
-            Note that Cocoon is needed when building the source
+            Note that Cocoon is needed to build the source
             version of Lenya, but the resulting Lenya webapp is
-            completely self contained and therefore it does not need
+            completely self contained and therefore  does not need
             the Cocoon webapp to be installed. See the <a href="http://wiki.apache.org/lenya/FAQ">FAQ</a>
             for details of configuration changes required when running
             multiple Cocoon based applications.
@@ -206,101 +293,18 @@
 </li>
 
         
+        
 <li>
           
 <p>
             
-<strong>(optional) Apache Tomcat</strong> for JDK 1.4
-            <br>
-            version: 5.0.28 or newer, 5.5.x not tested.
-            <br>
-            source: <a href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>
+<strong>Build Cocoon</strong>
           
 </p>
 
           
 <p>
-            Note that Lenya ships with <a href="http://jetty.mortbay.org/jetty/">Jetty</a> and
-            therefore does not need a servlet container to be installed.
-          </p>
-        
-</li>
-      
-</ul>
-</div>
-
-
-    
-<a name="N10069"></a><a name="Standalone+Installation+%28using+the+built-in+Jetty%29"></a>
-<h2 class="underlined_10">Standalone Installation (using the built-in Jetty)</h2>
-<div class="section">
-<ol>
-        
-<li>
-          
-<p>
-            
-<strong>Get the Java SDK</strong> (see <a href="#prerequisites">Prerequisites</a>)
-          </p>
-        
-</li>
-
-        
-<li>
-          
-<p>
-            
-<strong>Get Apache Cocoon</strong> (see <a href="#prerequisites">Prerequisites</a>)
-          </p>
-        
-</li>
-
-        
-<li>
-          
-<p>
-            
-<strong>Get Apache Lenya</strong> (see <a href="../installation/index.html">Download Lenya</a>)
-          </p>
-        
-</li>
-
-        
-<li>
-          
-<p>
-            Extract the downloaded Lenya archive to the
-            <span class="codefrag">lenya-1.2.x</span> directory as described below. If
-            you use <a href="http://subversion.tigris.org/">Subversion</a>, create your Lenya checkout inside the
-            <span class="codefrag">src</span> directory as described below.  It is
-            recommended to use the following directory structure for an
-            easier build experience.
-          </p>
-
-          
-<pre class="code">
-            your_home/ (or c:\ on Windows, NOT My Documents)
-              `-- src/
-                   |-- lenya-1.2.x/            $LENYA_HOME
-                   `-- cocoon/                 $COCOON_HOME
-                        `-- build/
-                             `-- webapp/       $COCOON_WEBAPP
-          </pre>
-        
-</li>
-
-        
-<li>
-          
-<p>
-            
-<strong>Copy the Cocoon build properties supplied by Lenya</strong>
-          
-</p>
-
-          
-<p>
-            Copy the files
+       		Copy the Cocoon build properties supplied by Lenya
           </p>
 
           
@@ -358,13 +362,24 @@
           </pre>
         
 </li>
+        
+      
+</ul>
+</div>
+
+
+    
+<a name="N100F4"></a><a name="1%3A+Standalone+Installation+%28using+the+built-in+Jetty%29"></a>
+<h2 class="underlined_10">1: Standalone Installation (using the built-in Jetty)</h2>
+<div class="section">
+<ol>
 
         
 <li>
           
 <p>
             
-<strong>Configure Lenya</strong>
+<strong>Configure Lenya to point to Coccon</strong>
           
 </p>
 
@@ -372,7 +387,7 @@
 <p>
             If your Cocoon source tree is set up as described above, you
             can skip this step.  If your Cocoon source tree is not at
-            <span class="codefrag">../cocoon</span> relative to Lenya, you need
+            <span class="codefrag">../cocoon-2.1.6</span> relative to Lenya, you need
             to edit your build properties. To do this, copy
             <span class="codefrag">$LENYA_HOME/build.properties</span> to
             <span class="codefrag">$LENYA_HOME/local.build.properties</span>.
@@ -504,24 +519,27 @@
 </div>
 
     
-<a name="N10176"></a><a name="Installation+with+Apache+Tomcat"></a>
-<h2 class="underlined_10">Installation with Apache Tomcat</h2>
+<a name="N10189"></a><a name="2%3A+Installation+with+Apache+Tomcat"></a>
+<h2 class="underlined_10">2: Installation with Apache Tomcat</h2>
 <div class="section">
-<p>
-        Installing Lenya with Tomcat is mostly the same
-        procedure. Follow Steps 1-6, then do the steps below.
-      </p>
 <ol>
-        
+
+		
 <li>
           
 <p>
             
-<strong>get Apache Tomcat</strong> (see <a href="#prerequisites">Prerequisites</a>)
-          </p>
+<strong>Get Apache Tomcat</strong> for JDK 1.4
+            <br>
+            version: 5.0.28 or newer, 5.5.x not tested.
+            <br>
+            Get it from  <a href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>
+          
+</p>
+
         
 </li>
-
+        
         
 <li>
           
@@ -545,8 +563,8 @@
             
 <br>
 
-            Basically this is setting the <span class="codefrag">JAVA_HOME</span>
-            environment variable and running the Tomcat
+            Basically you only need to set the <span class="codefrag">JAVA_HOME</span>
+            environment variable and run the Tomcat
             installer. Decide to run Tomcat as a Windows
             NT/2000/XP-Service.
           </p>
@@ -555,7 +573,7 @@
 <div class="frame warning">
 <div class="label">Warning</div>
 <div class="content">
-            Make sure you do not install at a location with spaces in
+            Make sure you do not install Tomcat at a location with spaces in
             the path.
           </div>
 </div>
@@ -588,7 +606,7 @@
             <span class="codefrag">tomcat.home.dir</span> is an absolute path. Replace
             <span class="codefrag">$TOMCAT_HOME</span> by your Tomcat installation
             directory.  If your Cocoon source directory is not at
-            <span class="codefrag">../cocoon-2.1.5.1</span> relative to Lenya, then change
+            <span class="codefrag">../cocoon-2.1.6</span> relative to Lenya, then change
             the <span class="codefrag">cocoon.webapp.dir</span> and
             <span class="codefrag">cocoon.src.dir</span> properties.
           </p>
@@ -619,7 +637,7 @@
 
           
 <p>
-            Execute <span class="codefrag">ant install</span> in your Lenya source directory.
+            Execute <span class="codefrag">build install</span> in your Lenya source directory.
           </p>
         
 </li>
