@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublication.java,v 1.5 2003/12/01 16:05:29 andreas Exp $
+$Id: AbstractPublication.java,v 1.6 2003/12/01 16:46:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -507,8 +507,7 @@ public abstract class AbstractPublication implements Publication {
                     + "]does not exist!");
         }
 
-        Label[] labels = node.getLabels();
-        if (labels.length == 1 && node.getChildren().length > 0) {
+        if (node.getLabels().length == 1 && node.getChildren().length > 0) {
             throw new PublicationException(
                 "Cannot delete last language version of document ["
                     + document
@@ -517,7 +516,7 @@ public abstract class AbstractPublication implements Publication {
 
         node.removeLabel(label);
 
-        if (labels.length == 0) {
+        if (node.getLabels().length == 0) {
             tree.removeNode(document.getId());
         }
 
