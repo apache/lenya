@@ -15,14 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: page2xhtml.xsl,v 1.19 2004/03/25 08:34:52 gregor Exp $ -->
+<!-- $Id: page2xhtml.xsl,v 1.20 2004/04/17 17:14:05 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-    exclude-result-prefixes="page xhtml"
+    exclude-result-prefixes="page xhtml i18n"
     >
 
 <xsl:param name="contextprefix"/>
