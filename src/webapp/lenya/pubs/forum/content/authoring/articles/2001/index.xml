@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <article>
-			<meta>
-				<id>2001</id><editor>martin</editor><author>michael</author><date><year>2002</year>
-					<month name="July"/>
-					<day name="Saturday"/>
-					<hour>01</hour>
-					<minute>01</minute></date>
-				<category/>
-			</meta>
-			<head><title>Hello Levi? Go To Jahannum (Hell)</title>
-			</head>
-			<body>
-				<p>Another paragraph<quotation>Quotation works very fine.</quotation></p><p>new p<quotation>new q uotation</quotation></p><p>And another paragraph<quotation>new quotation</quotation></p><p>A paragrah</p>
-				<p>Kars writes: 
-				<quotation>Who needs XML anyway?</quotation></p>
-			</body>
-			<comments/>
-		</article>
+<meta>
+  <id>2001</id>
+  <editor>michiii</editor>
+  <author>michael</author>
+  <date>
+    <year>2002</year>
+    <month name="August">8</month>
+    <day name="Tuesday">27</day>
+    <hour>01</hour>
+    <minute>01</minute>
+  </date>
+  <category/>
+</meta>
+<head>
+  <title>Beta version of Wyona's ProxyGenerator ready</title>
+</head>
+<body>
+<p>
+The ProxyGenerator is very similar to Ivelin Ivanov's WebServiceProxyGenerator, which is shipped with Cocoon 2.1-dev. The main difference is that Ivelin's Generator is using the HttpMultiClient and Wyona's Generator is using the HttpClient.
+</p>
+</body>
+<comments/>
+</article>
