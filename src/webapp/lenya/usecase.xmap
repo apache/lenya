@@ -1,58 +1,52 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-
+  
   <!-- =========================== Components ================================ -->
-
   <map:components>
+    
     <map:generators default="file"/>
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
+    
     <map:actions>
-      <map:action name="user-admin-add"
-	src="org.apache.lenya.cms.cocoon.acting.UserAdminAddAction"/> 
-      <map:action name="user-admin-modify"
-	src="org.apache.lenya.cms.cocoon.acting.UserAdminModifyAction"/> 
-      <map:action name="user-admin-delete"
-	src="org.apache.lenya.cms.cocoon.acting.UserAdminDeleteAction"/> 
+      <map:action name="user-admin-add" src="org.apache.lenya.cms.cocoon.acting.UserAdminAddAction"/>
+      <map:action name="user-admin-modify" src="org.apache.lenya.cms.cocoon.acting.UserAdminModifyAction"/>
+      <map:action name="user-admin-delete" src="org.apache.lenya.cms.cocoon.acting.UserAdminDeleteAction"/>
     </map:actions>
+    
     <map:selectors>
-      <map:selector name="exception" logger="sitemap.selector.exception"
-	src="org.apache.cocoon.selection.ExceptionSelector">
-	<exception name="execution" class="org.apache.lenya.cms.task.ExecutionException" />
-	<exception name="publishing" class="org.apache.lenya.cms.publishing.PublishingException"/>
-	<exception name="sitetree" class="org.apache.lenya.cms.publication.SiteTreeException"/>
+      <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
+        <exception class="org.apache.lenya.cms.task.ExecutionException" name="execution"/>
+        <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/>
+        <exception class="org.apache.lenya.cms.publication.SiteTreeException" name="sitetree"/>
       </map:selector>
     </map:selectors>
+    
   </map:components>
   
   <map:views>
-    <map:view name="aggregation" from-label="aggregation">
+    <map:view from-label="aggregation" name="aggregation">
       <map:serialize type="xml"/>
     </map:view>
-    <map:view name="xsp" from-label="xsp">
+    <map:view from-label="xsp" name="xsp">
       <map:serialize type="xml"/>
     </map:view>
   </map:views>
-
+  
   <!-- =========================== Resources ================================ -->
-  
   <map:resources>
-  
+    
     <map:resource name="scheduler-page">
-        
-      <map:aggregate element="scheduler" prefix="sch"
-	ns="http://www.lenya.org/2002/sch" label="aggregation">
+      <map:aggregate element="scheduler" label="aggregation" ns="http://www.lenya.org/2002/sch" prefix="sch">
         <map:part src="cocoon:/document-types/{publication-id}"/>
         <map:part src="cocoon:/tasks/{publication-id}"/>
         <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
         <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
       </map:aggregate>
       <map:transform src="xslt/scheduler/filter.xsl"/>
-        
-      <map:act type="uriparametrizer" src="{uri}">
+      <map:act src="{uri}" type="uriparametrizer">
         <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
         <map:transform src="xslt/scheduler/filterTasks-new.xsl">
           <map:parameter name="documentType" value="{doctype}"/>
@@ -70,32 +64,29 @@
       </map:transform>
       <map:serialize type="html"/>
     </map:resource>
-  
+    
     <map:resource name="usecase-create">
       <!-- use publication-specific schema if available -->
-      <map:act type="resource-exists" src="pubs/{publication-id}/content/authoring/create.xsp">
-	<map:generate type="serverpages" src="pubs/{../publication-id}/content/authoring/create.xsp"/>
-	<map:transform src="pubs/{../publication-id}/xslt/authoring/create.xsl"/>
-	<map:serialize />
+      <map:act src="pubs/{publication-id}/content/authoring/create.xsp" type="resource-exists">
+        <map:generate src="pubs/{../publication-id}/content/authoring/create.xsp" type="serverpages"/>
+        <map:transform src="pubs/{../publication-id}/xslt/authoring/create.xsl"/>
+        <map:serialize/>
       </map:act>
-
       <!-- otherwise use default schema -->
-      <map:generate type="serverpages" src="content/authoring/create.xsp"/>
+      <map:generate src="content/authoring/create.xsp" type="serverpages"/>
       <map:transform src="xslt/authoring/create.xsl"/>
-      <map:serialize />
+      <map:serialize/>
     </map:resource>
-
+    
   </map:resources>
   
   <!-- =========================== Pipelines ================================ -->
-
   <!-- FIXME: Reorder the pipelines in here neatly. Maybe alphabetically? -->
-  
   <map:pipelines>
-
-    <map:pipeline>
     
-      <!-- load document types -->    
+    <map:pipeline>
+      
+      <!-- load document types -->
       <map:match pattern="document-types/*">
         <map:generate src="pubs/{1}/config/doctypes/doctypes.xconf"/>
         <map:serialize type="xml"/>
@@ -109,50 +100,41 @@
       
       <!-- create the current date -->
       <map:match pattern="scheduler-xsp">
-        <map:generate type="serverpages" src="content/scheduler/scheduler-new.xsp"/>
+        <map:generate src="content/scheduler/scheduler-new.xsp" type="serverpages"/>
         <map:serialize type="xml"/>
       </map:match>
       
       <!-- create the current job snapshot -->
       <map:match pattern="scheduler-servlet">
-        <map:generate type="servletproxy" src="/lenya/servlet/QuartzSchedulerServlet"/>
+        <map:generate src="/lenya/servlet/QuartzSchedulerServlet" type="servletproxy"/>
         <map:transform src="xslt/scheduler/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
-      
     </map:pipeline>
-
+    
     <map:pipeline>
-    
-    <!-- {publication-id}/{area}/{uri}-->
-    <map:match pattern="*/*/**">
-    
-      <!-- mount publication-specific usecase sitemap -->
-      <map:act type="resource-exists" src="pubs/{1}/usecase.xmap">
-        <map:mount
-            uri-prefix="{../1}"
-            src="pubs/{../1}/usecase.xmap"
-            check-reload="true"
-            reload-method="synchron"/>
-      </map:act>
       
-      <!-- Scheduler -->
-      
-      <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
-      <map:match type="usecase" pattern="schedule">
-      
-	  <!-- add job: redirect to page -->
-	  <map:match type="step" pattern="add">
-	    <map:call resource="scheduler-page">
-	      <map:parameter name="publication-id" value="{../../1}"/>
-	      <map:parameter name="uri" value="{../../2}/{../../3}"/>
-	    </map:call>
-	    <map:transform src="xslt/util/redirect.xsl">
-	      <map:parameter name="url" value="{request:requestURI}"/>
-	    </map:transform>
-	    <map:serialize/>
-	  </map:match>
-
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        <!-- mount publication-specific usecase sitemap -->
+        <map:act src="pubs/{1}/usecase.xmap" type="resource-exists">
+          <map:mount check-reload="true" reload-method="synchron" src="pubs/{../1}/usecase.xmap" uri-prefix="{../1}"/>
+        </map:act>
+        
+        <!-- Scheduler -->
+        <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
+        <map:match pattern="schedule" type="usecase">
+          <!-- add job: redirect to page -->
+          <map:match pattern="add" type="step">
+            <map:call resource="scheduler-page">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="uri" value="{../../2}/{../../3}"/>
+            </map:call>
+            <map:transform src="xslt/util/redirect.xsl">
+              <map:parameter name="url" value="{request:requestURI}"/>
+            </map:transform>
+            <map:serialize/>
+          </map:match>
           <map:call resource="scheduler-page">
             <map:parameter name="publication-id" value="{../1}"/>
             <map:parameter name="uri" value="{../2}/{../3}"/>
@@ -167,86 +149,90 @@
             <map:parameter name="context-prefix" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize type="html"/>
-
-      </map:match> <!-- usecase -->
-      
-      <!-- Schedule Publication -->
-      <map:match type="usecase" pattern="schedule-publication">
-        <map:match type="step" pattern="showscreen">
-          <map:call resource="scheduler-page">
-            <map:parameter name="publication-id" value="{../../1}"/>
-            <map:parameter name="uri" value="{../../2}"/>
-          </map:call>
-          <map:transform src="xslt/scheduler/admin-publication.xsl"/>
-          <map:serialize type="html"/>
-        </map:match> <!-- step -->
-      </map:match> <!-- usecase -->
-      
-      <!-- View Logs -->
-      <map:match type="usecase" pattern="view-logs">
-      
-        <map:match type="step" pattern="overview">
-          <map:generate type="directory" src="pubs/{../../1}/logs/tasks"/>
-          <map:transform src="xslt/logs/directory2html.xsl"/>
-          <map:transform src="xslt/util/page2xhtml.xsl">
-            <map:parameter name="context-prefix" value="{request:contextPath}"/>
-          </map:transform>
-          <map:serialize/>
-        </map:match> <!-- step -->
-      
-        <map:match type="step" pattern="log">
-          <map:act type="request">
-            <map:parameter name="parameters" value="true"/>
-            <map:generate src="pubs/{../../../1}/logs/tasks/{logfile}"/>
-          </map:act>
-          <map:transform src="xslt/logs/antlog2html.xsl"/>
-          <map:transform src="xslt/logs/antlog2page.xsl"/>
-          <map:transform src="xslt/util/page2xhtml.xsl">
-            <map:parameter name="context-prefix" value="{request:contextPath}"/>
-          </map:transform>
-        <map:serialize/>
-        </map:match> <!-- step -->
-      
-      </map:match> <!-- usecase -->
-      
-    </map:match> <!-- uri -->
-    
-    </map:pipeline>
-      
-    <map:pipeline>
-    
-    <!-- {publication-id}/{area}/{uri}-->
-    <map:match pattern="*/*/**">
-      
-      <!-- Publish -->
-      <map:match type="usecase" pattern="publish">
-      
-        <map:match type="step" pattern="showscreen">
-          <map:act type="resource-exists"
-	      src="pubs/{../../1}/lenya/content/publishing/publish-screen.xsp">
-            <map:generate type="serverpages" label="xsp"
-                src="pubs/{../../../1}/lenya/content/publishing/publish-screen.xsp"/>
-            <map:call resource="style-publish"/>
-          </map:act>
-          <map:generate type="serverpages" label="xsp"
-              src="content/publishing/publish-screen-usecase.xsp"/>
-          <map:call resource="style-publish"/>
         </map:match>
         
-        <map:match type="step" pattern="publish">
-          <map:act type="task">
-            <map:parameter name="publication-id" value="{../../1}"/>
-            <map:parameter name="task-id" value="{request-param:task-id}"/>
-            <map:redirect-to uri="{request:requestURI}" session="true"/>
-          </map:act>
+        <!-- usecase -->
+        <!-- Schedule Publication -->
+        <map:match pattern="schedule-publication" type="usecase">
+          <map:match pattern="showscreen" type="step">
+            <map:call resource="scheduler-page">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="uri" value="{../../2}"/>
+            </map:call>
+            <map:transform src="xslt/scheduler/admin-publication.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          <!-- step -->
         </map:match>
+        
+        <!-- usecase -->
+        <!-- View Logs -->
+        <map:match pattern="view-logs" type="usecase">
+          
+          <map:match pattern="overview" type="step">
+            <map:generate src="pubs/{../../1}/logs/tasks" type="directory"/>
+            <map:transform src="xslt/logs/directory2html.xsl"/>
+            <map:transform src="xslt/util/page2xhtml.xsl">
+              <map:parameter name="context-prefix" value="{request:contextPath}"/>
+            </map:transform>
+            <map:serialize/>
+          </map:match>
+          
+          <!-- step -->
+          <map:match pattern="log" type="step">
+            <map:act type="request">
+              <map:parameter name="parameters" value="true"/>
+              <map:generate src="pubs/{../../../1}/logs/tasks/{logfile}"/>
+            </map:act>
+            <map:transform src="xslt/logs/antlog2html.xsl"/>
+            <map:transform src="xslt/logs/antlog2page.xsl"/>
+            <map:transform src="xslt/util/page2xhtml.xsl">
+              <map:parameter name="context-prefix" value="{request:contextPath}"/>
+            </map:transform>
+            <map:serialize/>
+          </map:match>
+          <!-- step -->
+          
+        </map:match>
+        <!-- usecase -->
         
       </map:match>
+      <!-- uri -->
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <!-- Publish -->
+        <map:match pattern="publish" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:act src="pubs/{../../1}/lenya/content/publishing/publish-screen.xsp" type="resource-exists">
+              <map:generate label="xsp"
+                src="pubs/{../../../1}/lenya/content/publishing/publish-screen.xsp" type="serverpages"/>
+              <map:call resource="style-publish"/>
+            </map:act>
+            <map:generate label="xsp" src="content/publishing/publish-screen-usecase.xsp" type="serverpages"/>
+            <map:call resource="style-publish"/>
+          </map:match>
+          
+          <map:match pattern="publish" type="step">
+            <map:act type="task">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="task-id" value="{request-param:task-id}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
+          </map:match>
+          
+        </map:match>
         
       </map:match>
       
       <map:handle-errors type="500">
-<!--
+        <!--
         <map:select type="exception">  
           <map:when test="publishing">
             <map:generate src= "sitetreeException.xml"/> 
@@ -255,67 +241,74 @@
         <map:serialize/>
 -->
       </map:handle-errors>
-        
+      
     </map:pipeline>
-
+    
     <!-- Create -->
     <map:pipeline>
+      
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
-	
-	<map:match type="usecase" pattern="create">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:call resource="usecase-create">
-	      <map:parameter name="publication-id" value="{../../1}"/>
-	    </map:call>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="create">
-	    <map:act type="default-create">
-	      <!-- if the action suceeds redirect to the requestURI -->
-	      <map:redirect-to uri="{request:requestURI}"/>
-	    </map:act>
-	    <!-- otherwise the action could not validate some of the -->
-	    <!-- input and we present the upload form again -->
-	    <map:call resource="usecase-create">
-	      <map:parameter name="publication-id" value="{../../1}"/>
-	    </map:call>
-	  </map:match>
-	  
-	</map:match>
+        
+        <map:match pattern="create" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:call resource="usecase-create">
+              <map:parameter name="publication-id" value="{../../1}"/>
+            </map:call>
+          </map:match>
+          
+          <map:match pattern="create" type="step">
+            <map:act type="default-create">
+              <!-- if the action suceeds redirect to the requestURI -->
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
+            <!-- otherwise the action could not validate some of the -->
+            <!-- input and we present the upload form again -->
+            <map:call resource="usecase-create">
+              <map:parameter name="publication-id" value="{../../1}"/>
+            </map:call>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
+      
     </map:pipeline>
-
+    
     <!--Rollback-->
     <map:pipeline>
-    <!-- {publication-id}/{area}/{uri}-->
-    <map:match pattern="*/*/**">
-      <map:match type="usecase" pattern="rollback">
-
-        <map:match type="step" pattern="showscreen">
-          <map:generate type="serverpages" src="content/rc/versions-screen.xsp"/>
-          <map:transform src="xslt/rc/rollback.xsl"/>
-          <map:serialize type="html"/>
-        </map:match>
-
-        <map:match type="step" pattern="view">
-          <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-        </map:match>
-
-        <map:match type="step" pattern="rollback">
-            <map:act type="rollback">
-              <map:redirect-to uri="{location}" session="true"/>
-            </map:act>
-            <map:redirect-to uri="{request:requestURI}" session="true"/>
-	  </map:match>
-	</map:match>
       
-	<!-- CheckOut -->
-	<map:match type="usecase" pattern="checkout">
-	  <map:match type="step" pattern="checkout">
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <map:match pattern="rollback" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/rc/versions-screen.xsp" type="serverpages"/>
+            <map:transform src="xslt/rc/rollback.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="view" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+          <map:match pattern="rollback" type="step">
+            <map:act type="rollback">
+              <map:redirect-to session="true" uri="{location}"/>
+            </map:act>
+            <map:redirect-to session="true" uri="{request:requestURI}"/>
+          </map:match>
+          
+        </map:match>
+        
+        <!-- CheckOut -->
+        <map:match pattern="checkout" type="usecase">
+          
+          <map:match pattern="checkout" type="step">
             <map:act type="reserved-checkout">
-              <map:generate type="serverpages" src="content/rc/{exception}.xsp">
+              <map:generate src="content/rc/{exception}.xsp" type="serverpages">
                 <map:parameter name="user" value="{user}"/>
                 <map:parameter name="filename" value="{filename}"/>
                 <map:parameter name="date" value="{date}"/>
@@ -323,15 +316,17 @@
               <map:transform src="xslt/rc/rco-exception.xsl"/>
               <map:serialize type="html"/>
             </map:act>
-            <map:redirect-to uri="{request:requestURI}" session="true"/>
-	  </map:match>
-	</map:match>
-
-	<!-- CheckIn -->
-	<map:match type="usecase" pattern="checkin">
-	  <map:match type="step" pattern="checkin">
+            <map:redirect-to session="true" uri="{request:requestURI}"/>
+          </map:match>
+          
+        </map:match>
+        
+        <!-- CheckIn -->
+        <map:match pattern="checkin" type="usecase">
+          
+          <map:match pattern="checkin" type="step">
             <map:act type="reserved-checkin">
-              <map:generate type="serverpages" src="content/rc/{exception}.xsp">
+              <map:generate src="content/rc/{exception}.xsp" type="serverpages">
                 <map:parameter name="user" value="{user}"/>
                 <map:parameter name="filename" value="{filename}"/>
                 <map:parameter name="checkType" value="{checkType}"/>
@@ -340,317 +335,381 @@
               <map:transform src="xslt/rc/rco-exception.xsl"/>
               <map:serialize type="html"/>
             </map:act>
-            <map:redirect-to uri="{request:requestURI}" session="true"/>
-	  </map:match>
-	</map:match>
+            <map:redirect-to session="true" uri="{request:requestURI}"/>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
-
+      
     </map:pipeline>
     
     <!-- Info area use cases start here -->
-
     <map:pipeline>
+      
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="add-child">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/add-child.xsp"/>
-	    <map:transform src="xslt/info/add-child.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="add-child">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
+        
+        <map:match pattern="add-child" type="usecase">
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/add-child.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/add-child.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          <map:match pattern="add-child" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+        </map:match>
+        
       </map:match>
+      
     </map:pipeline>
-
+    
     <map:pipeline>
+      
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="add-sibling">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/add-sibling.xsp"/>
-	    <map:transform src="xslt/info/add-sibling.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="add-sibling">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
+        
+        <map:match pattern="add-sibling" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/add-sibling.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/add-sibling.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="add-sibling" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <map:match pattern="approval-reject" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/approval-reject.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/approval-reject.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="approval-reject" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
+      </map:match>
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <map:match pattern="approval-submit" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/approval-submit.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/approval-submit.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="approval-submit" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
+      </map:match>
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <map:match pattern="archive" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/archive.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/archive.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="archive" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
+      </map:match>
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <map:match pattern="copy" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/copy.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/copy.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="copy" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
+      </map:match>
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <map:match pattern="cut" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/cut.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/cut.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="cut" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
+      </map:match>
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+        
+        <map:match pattern="deactivate" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/deactivate.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/deactivate.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="deactivate" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
+      </map:match>
+      
     </map:pipeline>
     
     <map:pipeline>
       <!-- {publication-id}/{area}/{uri}-->
+      
       <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="approval-reject">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/approval-reject.xsp"/>
-	    <map:transform src="xslt/info/approval-reject.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="approval-reject">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
+        
+        <map:match pattern="delete" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/delete.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/delete.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="delete" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
+      
     </map:pipeline>
     
     <map:pipeline>
+      
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="approval-submit">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/approval-submit.xsp"/>
-	    <map:transform src="xslt/info/approval-submit.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="approval-submit">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
+        
+        <map:match pattern="move-down" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/move-down.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/move-down.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="move-down" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
+      
     </map:pipeline>
     
     <map:pipeline>
+      
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="archive">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/archive.xsp"/>
-	    <map:transform src="xslt/info/archive.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="archive">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
+        
+        <map:match pattern="move-up" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/move-up.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/move-up.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="move-up" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
+      
     </map:pipeline>
     
     <map:pipeline>
+      
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="copy">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/copy.xsp"/>
-	    <map:transform src="xslt/info/copy.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="copy">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
+        
+        <map:match pattern="paste" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/paste.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/paste.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="paste" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
+      
     </map:pipeline>
     
     <map:pipeline>
+      
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="cut">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/cut.xsp"/>
-	    <map:transform src="xslt/info/cut.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="cut">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
+        
+        <map:match pattern="rename" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/rename.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/rename.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="rename" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
+      
     </map:pipeline>
-    
-    <map:pipeline>
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="deactivate">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/deactivate.xsp"/>
-	    <map:transform src="xslt/info/deactivate.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="deactivate">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
-      </map:match>
-    </map:pipeline>
-    
-    <map:pipeline>
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="delete">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/delete.xsp"/>
-	    <map:transform src="xslt/info/delete.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="delete">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
-      </map:match>
-    </map:pipeline>
-    
-    <map:pipeline>
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="move-down">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/move-down.xsp"/>
-	    <map:transform src="xslt/info/move-down.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="move-down">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
-      </map:match>
-    </map:pipeline>
-    
-    <map:pipeline>
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="move-up">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/move-up.xsp"/>
-	    <map:transform src="xslt/info/move-up.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="move-up">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
-      </map:match>
-    </map:pipeline>
-    
-    <map:pipeline>
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="paste">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/paste.xsp"/>
-	    <map:transform src="xslt/info/paste.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="paste">
-          <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
-      </map:match>
-    </map:pipeline>
-    
-    <map:pipeline>
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
-	<map:match type="usecase" pattern="rename">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/info/rename.xsp"/>
-	    <map:transform src="xslt/info/rename.xsl"/>
-	    <map:serialize type="html"/>
-	  </map:match>
-	  
-	  <map:match type="step" pattern="rename">
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
-	  </map:match>
-	</map:match>
-      </map:match>
-    </map:pipeline>
-    
     
     <!-- UserAdmin -->
     <map:pipeline>
+      
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
-	
-	<map:match type="usecase" pattern="user-admin">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/ac/user-admin.xsp"/>
-	    <map:transform src="xslt/ac/user-admin.xsl"/>
-	    <map:serialize />
-	  </map:match>
-	  
-	</map:match>
-	
-	<map:match type="usecase" pattern="user-add">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/ac/user-add.xsp"/>
-	    <map:transform src="xslt/ac/user-add.xsl"/>
-	    <map:serialize />
-	  </map:match>
-	  
-	  <map:match type="step" pattern="add">
-	    <map:act type="user-admin-add">
-	      <map:redirect-to uri="{request:requestURI}"/>
-	    </map:act>
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/> 
-	  </map:match>
-	  
-	</map:match>
-	
-	<map:match type="usecase" pattern="user-modify">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/ac/user-modify.xsp"/>
-	    <map:transform src="xslt/ac/user-modify.xsl"/>
-	    <map:serialize />
-	  </map:match>
-	  
-	  <map:match type="step" pattern="modify">
-	    <map:act type="user-admin-modify">
-	      <map:redirect-to uri="{request:requestURI}"/>
-	    </map:act>
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/> 
-	  </map:match>
-	  
-	</map:match>
-	
-	<map:match type="usecase" pattern="user-delete">
-	  
-	  <map:match type="step" pattern="showscreen">
-	    <map:generate type="serverpages" src="content/ac/user-modify.xsp"/>
-	    <map:transform src="xslt/ac/user-delete.xsl"/>
-	    <map:serialize />
-	  </map:match>
-	  
-	  <map:match type="step" pattern="delete">
-	    <map:act type="user-admin-delete">
-	      <map:redirect-to uri="{request:requestURI}"/>
-	    </map:act>
-	    <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/> 
-	  </map:match>
-	  
-	</map:match>
-	
+        
+        <map:match pattern="user-admin" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/ac/user-admin.xsp" type="serverpages"/>
+            <map:transform src="xslt/ac/user-admin.xsl"/>
+            <map:serialize/>
+          </map:match>
+          
+        </map:match>
+        
+        <map:match pattern="user-add" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/ac/user-add.xsp" type="serverpages"/>
+            <map:transform src="xslt/ac/user-add.xsl"/>
+            <map:serialize/>
+          </map:match>
+          
+          <map:match pattern="add" type="step">
+            <map:act type="user-admin-add">
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
+            <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
+          </map:match>
+          
+        </map:match>
+        
+        <map:match pattern="user-modify" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/ac/user-modify.xsp" type="serverpages"/>
+            <map:transform src="xslt/ac/user-modify.xsl"/>
+            <map:serialize/>
+          </map:match>
+          
+          <map:match pattern="modify" type="step">
+            <map:act type="user-admin-modify">
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
+            <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
+          </map:match>
+          
+        </map:match>
+        
+        <map:match pattern="user-delete" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/ac/user-modify.xsp" type="serverpages"/>
+            <map:transform src="xslt/ac/user-delete.xsl"/>
+            <map:serialize/>
+          </map:match>
+          
+          <map:match pattern="delete" type="step">
+            <map:act type="user-admin-delete">
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
+            <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
+          </map:match>
+          
+        </map:match>
+        
       </map:match>
+      
     </map:pipeline>
     
   </map:pipelines>
