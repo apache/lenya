@@ -1,2 +1,6 @@
 <?xml version="1.0"?>
-<test></test>
+
+<dir:directory name="2002" lastModified="" date="" requested="" xmlns:dir="http://apache.org/cocoon/directory/2.0">
+  <dir:directory name="0508" lastModified="" date=""/>
+  <dir:directory name="0465" lastModified="" date=""/>
+</dir:directory>

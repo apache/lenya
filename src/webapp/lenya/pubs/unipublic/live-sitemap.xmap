@@ -84,25 +84,41 @@
         <map:generate src="docs/publication/live/frontpage/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
-       </map:match>
+      </map:match>
       <map:match pattern="index.html">
         <map:generate src="docs/publication/live/frontpage/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
-       </map:match>
+      </map:match>
+      <map:match pattern="index.xml">
+        <map:generate src="docs/publication/live/frontpage/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl"/>
+        <map:transform type="xinclude"/>
+        <map:serialize type="xml"/>
+      </map:match>
 
       <!-- Section -->
+      <map:match pattern="*/*/">
+        <map:redirect-to uri="2002/" session="true"/>
+      </map:match>
       <map:match pattern="*/*/*/">
-        <map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>
+        <!--<map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>-->
+        <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
+        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl"/>
+        <map:transform type="xinclude"/>
         <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl"/>
         <map:serialize type="html"/>
-       </map:match>
+      </map:match>
 
       <!-- Article -->
       <map:match pattern="*/*/*/*/">
         <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Article/Live/main.xsl"/>
         <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="*/*/*/*/index.xml">
+        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
  </map:pipelines>

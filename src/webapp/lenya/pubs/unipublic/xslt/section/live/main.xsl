@@ -174,103 +174,14 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 <tr>
 <td width="5" bgcolor="white" valign="top">&#160;</td>
 <td width="295" bgcolor="white" class="tsr-text"><br />
- <a href="0515/"><span class="tsr-title">Rauschen im musikalischen
-Museum</span></a><br />
- In der Vorlesungsreihe &#171;Inventur im Museum&#187; des
-Musikwissenschaftlichen Seminars wird unser musikalischer Kanon
-hinterfragt. Gastreferenten aus Deutschland und der Schweiz
-sezieren jeweils ein &#171;grosses&#187; Werk. Zum Auftakt
-konfrontierte Hans-Joachim Hinrichsen gewohnte H&#246;rweisen von
-Bruckners &#171;Achter&#187; mit neuen T&#246;nen. (3.4.2002) 
 
-<p><span class="tsr-title">Heilige und Huren im Alten
-Testament</span><br />
- Eva, Maria Magdalena, Rahab und Tamar: In der Bibel gibt es nicht
-nur die jungfr&#228;uliche Gottesmutter, sondern auch einige
-verworfene Frauengestalten. Die Doktorandin und Pfarrerin Christine
-Stark will es genauer wissen. Es besteht der &#171;dringende
-Verdacht&#187;, dass nicht alles &#171;hurte&#187;, was danach
-t&#246;nt. Dieses Forschungsprojekt wird durch den Forschungskredit
-der Universit&#228;t Z&#252;rich finanziert. unipublic hat mit
-Christine Stark gesprochen. (15.3.2002)</p>
+<xsl:for-each select="/section/articles/article">
+<p>
+<a href="{@href}/"><span class="tsr-title"><xsl:apply-templates select="body.head/hedline/hl1"/></span></a><br />
+<xsl:apply-templates select="body.head/abstract"/> (3.4.2002)
+</p>
+</xsl:for-each>
 
-<p><span class="tsr-title">Vorbilder und Vorw&#228;nde</span><br />
- Thomas Hirschhorn hat den Kunstkiosk an der Universit&#228;t
-Z&#252;rich Irchel neu gestaltet. Im Zentrum der siebten Auflage,
-welche bis Ende August zu besichtigen ist, steht die russische
-K&#252;nstlerin Ljubov Popova (1889 bis 1924). In einem
-Gespr&#228;ch mit unipublic gab der in Paris lebende Schweizer
-K&#252;nstler zu Hintergr&#252;nden seines Projekt Auskunft.
-(4.3.2002)</p>
-
-<p><span class="tsr-title">Unruhige Jugend</span><br />
- &#171;Wir wollen alles, und zwar subito!&#187; heisst ein
-multimedialer Dokumentarband, der die Jugendunruhen der fr&#252;hen
-1980er Jahre in der Schweiz und ihre Folgen beleuchtet.
-Herausgegeben hat ihn Heinz Nigg. In einem Interview &#228;ussert
-sich der freie Kulturschaffende und Lehrbeauftragte am
-Ethnologischen Seminar zu Hintergr&#252;nden der Publikation.
-(22.2.2002)</p>
-
-<p><span class="tsr-title">Die Chancen eines verg&#228;nglichen
-Nationalereignisses<br />
-</span> Die Universit&#228;t Z&#252;rich und die ETH werden mit dem
-&#171;intelligenten Raum Ada&#187; an der Expo.02 pr&#228;sent
-sein. Anders als ein Grossteil der Expo-Bauten wird
-&#171;Ada&#187; nach der Landesausstellung nicht abgerissen und
-entsorgt, sondern am Institut f&#252;r Neuroinformatik weiter
-entwickelt werden. Weshalb wird jedoch gerade diese
-Landesausstellung so hartn&#228;ckig kritisiert, verg&#228;nglich
-zu sein? fragte Expo-Pr&#228;sidentin Nelly Wenger diesen Montag,
-18. Februar 2002, vor nicht allzu zahlreich erschienenem Publikum.
-Das Ephemere birgt doch zahlreiche Vorteile. (21.2.2002)</p>
-
-<p><span class="tsr-title">Erfahrung zwischen Authentizit&#228;t
-und Sprachspiel</span><br />
- An der 11. Schweizerischen HistorikerInnentagung in Z&#252;rich
-vom 15./16. Februar wurde der Erfahrungsbegriff ins Zentrum
-ger&#252;ckt. Erfahrungsberichte sind wichtige Quellen in der
-Geschichtswissenschaft, sie sind jedoch nicht unproblematisch.
-(18.2.2002)</p>
-
-<p><span class="tsr-title">&#171;A whole way of
-life&#187;</span><br />
- Cultural Studies werden in der Schweiz zwar seit l&#228;ngerem
-betrieben, doch fehlte bisher eine zentrale Stelle, die sich
-daf&#252;r einsetzte. Vor kurzem wurde dieser Missstand nun behoben
-und offiziell die Schweizerische Gesellschaft f&#252;r
-Kulturwissenschaften (SGKW) gegr&#252;ndet. Die Initiative dazu kam
-von Mittelbau-Leuten der Universit&#228;t Z&#252;rich.
-(14.2.2002)</p>
-
-<p><span class="tsr-title">Neue K&#228;mpfe um Troia</span><br />
- Der T&#252;binger Arch&#228;ologieprofessor Manfred Korfmann steht
-im Mittelpunkt einer heftigen Debatte um Troia. Darin geht es um
-den Streit zweier Disziplinen, das Verh&#228;ltnis von
-dichterischer Fiktion zu arch&#228;ologischen Funden und nicht
-zuletzt um die Wurzeln europ&#228;ischer Kultur. Professor Korfmann
-h&#228;lt am 4. Februar an der Universit&#228;t Z&#252;rich einen
-Vortrag, der schon lange vor der Debatte vereinbart worden ist. Aus
-diesem Anlass gew&#228;hrte er &#171;unipublic&#187; ein
-Exklusiv-Interview. (31.1.2002)</p>
-
-<p><span class="tsr-title">Avantgarde und Tradition im
-Einklang</span><a href="../../../../magazin/gesellschaft/2002/0396/"><br />
-</a> Am 30. Januar 2002 kommt J&#252;rg Baur, einer der
-interessantesten deutschen Komponisten der Nachkriegszeit, auf
-Einladung des Musikwissenschaftlichen Seminars f&#252;r ein
-Gespr&#228;chskonzert nach Z&#252;rich. Die Pianistin Sona Shaboian
-wird Kostproben aus Baurs Schaffen erklingen lassen.
-(24.1.2002)</p>
-
-<p><span class="tsr-title">Arbeit am Untergrund</span><br />
- Das interdisziplin&#228;re Forum &#171;Philosophie der Geistes-
-und Sozialwissenschaften&#187; will die F&#228;cher der
-gleichnamigen Fakult&#228;t in einen Dialog &#252;ber ihre
-gemeinsamen Grundlagen bringen. Damit erh&#228;lt die vor zwei
-Jahren von einer Gruppe von Mitgliedern der Philosophischen
-Fakult&#228;t unter F&#252;hrung des Philosophischen Seminars
-gestartete Initiative eine institutionelle Basis. (14.1.2002)</p>
 </td>
 </tr>
 </table>
