@@ -76,6 +76,9 @@
     <component-instance logger="core.modules.input.sitetree" name="sitetree"
         class="org.apache.lenya.cms.cocoon.components.modules.input.SitetreeModule"/>
         
+    <component-instance logger="core.modules.input.sitetree" name="fallback"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule"/>
+        
   </xsl:copy>
 </xsl:template>
 
