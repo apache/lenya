@@ -1,5 +1,5 @@
 /*
-$Id: TaskAction.java,v 1.22 2003/07/23 13:21:30 gregor Exp $
+$Id: TaskAction.java,v 1.23 2003/07/29 17:54:24 edith Exp $
 <License>
 
  ============================================================================
@@ -202,24 +202,26 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         Task task = manager.getTask(getTaskId());
 
         task.parameterize(taskParameters);
+
+        //FIXME The new workflow is set before the end of the transition because the document id
+        // and so the document are sometimes changing during the transition (ex archiving , ...) 
+		if (eventName != null && hasWorkflow) {
+			WorkflowInstance instance = factory.buildInstance(document);
+			Situation situation = factory.buildSituation(objectModel);
+
+			Event event = null;
+			Event[] events = instance.getExecutableEvents(situation);
+
+			for (int i = 0; i < events.length; i++) {
+				if (events[i].getName().equals(eventName)) {
+					event = events[i];
+				}
+			}
+
+			assert event != null;
+			instance.invoke(situation, event);
+		}
         task.execute(publication.getServletContext().getCanonicalPath());
-
-        if (eventName != null && hasWorkflow) {
-            WorkflowInstance instance = factory.buildInstance(document);
-            Situation situation = factory.buildSituation(objectModel);
-
-            Event event = null;
-            Event[] events = instance.getExecutableEvents(situation);
-
-            for (int i = 0; i < events.length; i++) {
-                if (events[i].getName().equals(eventName)) {
-                    event = events[i];
-                }
-            }
-
-            assert event != null;
-            instance.invoke(situation, event);
-        }
 
         //------------------------------------------------------------
         // get session
