@@ -830,6 +830,20 @@
           </map:match>
           
         </map:match>
+        
+        <!-- initialize the workflow -->
+        <map:match type="usecase" pattern="initworkflow">
+          <map:act type="task">
+            <map:parameter name="task-id" value="ant"/>
+            <map:parameter name="target" value="initworkflow"/>
+            <map:parameter name="properties.initworkflow.document-id" value="{page-envelope:document-id}"/>
+            <map:parameter name="properties.initworkflow.document-type" value="{page-envelope:document-type}"/>
+            <map:parameter name="properties.initworkflow.language" value="{page-envelope:document-language}"/>
+            <map:parameter name="properties.initworkflow.user-id" value="{access-control:user-id}"/>
+            <map:parameter name="properties.initworkflow.machine-ip" value="{access-control:ip-address}"/>
+            <map:redirect-to session="true" uri="{request:requestURI}"/>
+          </map:act>
+        </map:match>
 
         <map:match pattern="transition" type="usecase">
           <map:act type="task">
