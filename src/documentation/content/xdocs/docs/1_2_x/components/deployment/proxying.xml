@@ -43,11 +43,9 @@
 </section>
 
 <section>
-<title>Configuration in publication.xconf</title>
-<p>The publication.xconf of the default publication has proxying disabled by default:
-</p>
-<source>
-<![CDATA[
+  <title>Configuration in publication.xconf</title>
+  <p>The publication.xconf of the default publication has proxying disabled by default: </p>
+  <source> <![CDATA[
 <publication>
   <languages>
     <language default="true">en</language>
@@ -64,11 +62,9 @@
   <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
   -->
 </publication>
-]]>
-</source>
-<p>A possible configuration for two servers (an authoring server and a live server) may look like:</p>
-<source>
-<![CDATA[
+]]> </source>
+  <p>A possible configuration for two servers (an authoring server and a live server) may look like:</p>
+  <source> <![CDATA[
 <publication>
   <languages>
     <language default="true">de</language>
@@ -83,27 +79,22 @@
   <proxy url="https://cms.authoring.ch/lenya/sandbox/authoring" ssl="true" area="authoring"/>
   <proxy url="http://cms.authoring.ch/lenya/sandbox/authoring" ssl="false" area="authoring"/>
 </publication>
-]]>
-</source>
-<ul><li> There is an ssl enabled authoring server (cms.authoring.ch) and the URL you get is e.g.
-         <code>http://cms.authoring.com/lenya/sandbox/authoring/index.html</code>.</li>
-    <li> There is an ssl enabled live server with (cms.live.ch and cms.sandbox.live.ch) and the URL you get on 
-        the live side is e.g. <code>http://cms.sandbox.live.ch/lenya/index.html</code> </li></ul>
-<p><strong>Note:</strong>
-Up to now, session is only working if you add /lenya after your domain because the cookie which is  
-sent to the client stores the web application context. Therefore the browser did not send back the cookie 
-if you request a page like http://cms.sandbox.live.ch/index.html. 
-This is also mentioned on the <link href="http://wiki.apache.org/cocoon/ApacheModProxy">Cocoon Wiki page on proxying</link>. 
-With Apache 2.1 a recently introduced proxy directive for translating the cookie path 
-    <code>ProxyPassReverseCookiePath</code> will be available, which will allow you to get 
-    the cookie path translated by Apache with <code>ProxyPassReverseCookiePath&#160;/lenya&#160;/</code>
-     so that the cookie is always sent back to the server. 
-        As of today even the trunk version of Apache httpd does not have this feature. 
-            If you still want to use it with Apache 2.0 you will have to apply a patch 
-                <link href="http://issues.apache.org/bugzilla/show_bug.cgi?id=10722">
-http://issues.apache.org/bugzilla/show_bug.cgi?id=10722</link> and rebuild the Apache modules mod_proxy and 
-mod_http_proxy. The patch should work with Apache 2.0.49+ (I use it with 2.0.52 without any problems). 
-   The configuration of the Apache webserver that goes with this configuration is described next.</p>
+]]> </source>
+  <ul>
+    <li> There is an ssl enabled authoring server (cms.authoring.ch) and the URL you get is e.g. <code>http://cms.authoring.com/lenya/sandbox/authoring/index.html</code>.</li>
+    <li> There is an ssl enabled live server with (cms.live.ch and cms.sandbox.live.ch) and the URL you get on the live side is e.g. <code>http://cms.sandbox.live.ch/lenya/index.html</code> </li>
+  </ul>
+  <p><strong>Note:</strong> Up to now, session is only working if you add /lenya after your domain because the cookie which is sent to the client stores the web application context. Therefore the browser did not send back the cookie if you request a page like http://cms.sandbox.live.ch/index.html. 
+    This is also mentioned on the <link href="http://wiki.apache.org/cocoon/ApacheModProxy">Cocoon Wiki page on proxying</link>. With Apache 2.1 a recently introduced proxy directive for translating the cookie path <code>ProxyPassReverseCookiePath</code> will be available, which will allow you to 
+    get the cookie path translated by Apache with <code>ProxyPassReverseCookiePath&#160;/lenya&#160;/</code> so that the cookie is always sent back to the server. As of today even the trunk version of Apache httpd does not have this feature. If you still want to use it with Apache 2.0 you will have 
+    to apply a patch <link href="http://issues.apache.org/bugzilla/show_bug.cgi?id=10722"> http://issues.apache.org/bugzilla/show_bug.cgi?id=10722</link> and rebuild the Apache modules mod_proxy and mod_http_proxy. The patch should work with Apache 2.0.49+ (I use it with 2.0.52 without any 
+    problems). </p>
+  <p> As an alternative to patching Apache, you could install Lenya within the ROOT context, because 
+    then the CookiePath will contain "/" instead of "/lenya" and it will work with the common mod_proxy settings.
+    Note that you'll have to adjust the proxy rules to get rid of "/lenya" in this case. If you run Jetty,
+    which runs Lenya in the ROOT context, you'll have to remove the "/lenya" parts as well. 
+    Another solution might be to use Squid. The configuration of the Apache web server that goes
+     with this configuration is described next.</p>
 </section>
 <section>
 <title>Apache Webserver setup / Rewrite Rules</title>
@@ -112,6 +103,7 @@ mod_http_proxy. The patch should work with Apache 2.0.49+ (I use it with 2.0.52 
 <title>Rules for the authoring server</title>
 <p>This sample configuration uses <code>cms.authoring.ch</code> as the host name.</p>
 <ul><li>  redirects logins to SSL </li>
+<li>  assumes Tomcat, with Lenya running under /lenya (for Jetty, remove /lenya from the configuration)</li>
 <li>  runs the authoring server over port 80 </li>
 <li>  publications are all mounted under cms.client.com/yourpub </li>
 <li>  you can use this setup for your live server if you do not want to mount your publication in a 
@@ -156,7 +148,8 @@ mod_http_proxy. The patch should work with Apache 2.0.49+ (I use it with 2.0.52 
 <title>Rules for the live server</title>
 <p>This sample configuration uses <code>cms.sandbox.live.ch</code> as the host name.</p>
 <ul><li>  each publication is mounted as a seperate virtualhost </li>
-<li>The publication in this sample is named sandbox</li>
+<li>  assumes Tomcat, with Lenya running under /lenya (for Jetty, remove /lenya from the configuration)</li>
+  <li>The publication in this sample is named sandbox</li>
 <li>  Files within the directory static and files with the extension php are not redirected to Lenya. </li>
 <li>  Certificate is issued for www.client.com </li></ul>
 <source>
