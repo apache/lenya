@@ -10,6 +10,7 @@ import java.io.StringReader;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.excalibur.io.IOUtil;
 import org.apache.avalon.framework.component.ComponentException;
@@ -29,18 +30,24 @@ import org.apache.cocoon.serialization.Serializer;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.cocoon.util.PostInputStream;
 import org.apache.cocoon.xml.dom.DOMStreamer;
+
 import org.dom4j.io.DOMReader;
 import org.dom4j.io.XMLWriter;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import org.wyona.cms.rc.RevisionController;
 
 /**
  * Interfaces with Xopus: handles the requests and replies to them
  *
  * @author Memo Birgi
- * @version 0.1
+ * @author Michael Wechner
+ * @version 2003.1.4
  */
 public class XopusHandlerAction extends ConfigurableComposerAction {
 
@@ -173,7 +180,17 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
     // save to permanent file, if needed
     if ("checkin".equals(reqType)) {
         getLogger().debug(".act(): Save to permanent file: "+permFile);
-        FileUtil.copyFile(tempFile, permFile);
+
+        RevisionController rc=new RevisionController(sitemapPath+"/docs/publication/rcml",sitemapPath+"/docs/publication/rcbak");
+        try{
+          rc.reservedCheckIn(permFile.getAbsolutePath(),"wyona",true);
+
+          FileUtil.copyFile(tempFile, permFile);
+          }
+        catch(Exception e){
+          getLogger().error(".act(): Exception during checkin: "+permFile);
+          return null;
+          }
     }
       
     return sitemapParams;
