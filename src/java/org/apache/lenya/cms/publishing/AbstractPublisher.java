@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractPublisher.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
+ * $Id: AbstractPublisher.java,v 1.4 2003/02/12 23:30:22 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,18 +43,7 @@
  */
 package org.wyona.cms.publishing;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.log4j.Category;
-
 import org.wyona.cms.task.AbstractTask;
-import org.wyona.cms.task.Task;
-
-import java.net.URL;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
 
 
 /**

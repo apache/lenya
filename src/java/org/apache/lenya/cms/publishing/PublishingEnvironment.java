@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.4 2003/02/07 12:14:11 ah Exp $
+ * $Id: PublishingEnvironment.java,v 1.5 2003/02/12 23:30:22 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,15 +43,12 @@
  */
 package org.wyona.cms.publishing;
 
-import org.apache.avalon.framework.configuration.*;
-
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Category;
 
-import org.xml.sax.SAXException;
-
 import java.io.File;
-
-import java.net.URL;
 
 
 /**

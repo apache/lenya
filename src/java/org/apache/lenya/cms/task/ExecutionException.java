@@ -1,5 +1,5 @@
 /*
- * $Id: ExecutionException.java,v 1.1 2003/02/12 23:18:29 andreas Exp $
+ * $Id: ExecutionException.java,v 1.2 2003/02/12 23:30:22 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,12 +62,12 @@ public class ExecutionException
     
     /** Creates a new instance of ExecutionException */
     public ExecutionException(String message, Throwable cause) {
-        super(message, cause);
+        super(message + " " + cause.getMessage());
     }
     
     /** Creates a new instance of ExecutionException */
     public ExecutionException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
     
     

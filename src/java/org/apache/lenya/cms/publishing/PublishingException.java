@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingException.java,v 1.1 2003/02/12 23:06:09 andreas Exp $
+ * $Id: PublishingException.java,v 1.2 2003/02/12 23:30:22 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -70,13 +70,13 @@ public class PublishingException
      * Creates a new PublishingException.
      */
     public PublishingException(String message, Throwable cause) {
-        super(message, cause);
+        super(message + " " + cause.getMessage());
     }
 
     /**
      * Creates a new PublishingException.
      */
     public PublishingException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 }

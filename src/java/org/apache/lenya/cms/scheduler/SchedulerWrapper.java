@@ -1,5 +1,5 @@
 /*
- * $Id: SchedulerWrapper.java,v 1.7 2003/02/11 20:33:17 andreas Exp $
+ * $Id: SchedulerWrapper.java,v 1.8 2003/02/12 23:30:22 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -53,13 +53,11 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 
 import org.apache.log4j.Category;
 
-import org.quartz.CronTrigger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 
 import org.quartz.impl.StdSchedulerFactory;
@@ -69,16 +67,9 @@ import org.wyona.cms.scheduler.TaskJob;
 import org.wyona.cms.scheduler.xml.TriggerHelper;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import org.w3c.dom.Document;
@@ -299,7 +290,6 @@ public class SchedulerWrapper {
                 Configuration conf = triggerConfigurations[i];
                 String type = conf.getAttribute(TYPE_ATTRIBUTE);
                 String className = conf.getAttribute(CLASS_ATTRIBUTE);
-                String title = conf.getChild(TITLE_ELEMENT).getValue();
 
                 Element triggerElement = helper.createElement("trigger");
                 triggerElement.setAttribute("name", type);
@@ -362,7 +352,6 @@ public class SchedulerWrapper {
     }
 
     protected ServletJob createJob(JobDetail jobDetail) {
-        JobDataMap map = jobDetail.getJobDataMap();
         Class cl = jobDetail.getJobClass();
 
         try {
@@ -483,36 +472,27 @@ public class SchedulerWrapper {
             }
         }
 
-        ServletJob job = null;
-
         try {
             Class cl = Class.forName(className);
-            job = (ServletJob) cl.newInstance();
+            ServletJob job = (ServletJob) cl.newInstance();
+            JobDetail jobDetail = job.load(jobElement, getServletContextPath());
+
+            Element triggerElement = helper.getFirstChild(jobElement, "trigger");
+
+            if (triggerElement != null) {
+                Trigger trigger = TriggerHelper.createTrigger(triggerElement, jobDetail.getName(),
+                        jobDetail.getGroup());
+
+                // FIXME: In the case of CronTrigger, getFinalFireTime does not make sense!
+                addJob(jobDetail, trigger);
+
+            } else {
+                addJob(jobDetail);
+            }
         } catch (Exception e) {
             log.error("Could not restore job: ", e);
         }
 
-        JobDetail jobDetail = job.load(jobElement, getServletContextPath());
-
-        Element triggerElement = helper.getFirstChild(jobElement, "trigger");
-
-        if (triggerElement != null) {
-            Trigger trigger = TriggerHelper.createTrigger(triggerElement, jobDetail.getName(),
-                    jobDetail.getGroup());
-
-            // FIXME: In the case of CronTrigger, getFinalFireTime does not make sense!
-            addJob(jobDetail, trigger);
-
-            /*
-                        GregorianCalendar now = new GregorianCalendar();
-                        if (trigger.getFinalFireTime().after(now.getTime()))
-                            addJob(jobDetail, trigger);
-                        else
-                            addJob(jobDetail);
-            */
-        } else {
-            addJob(jobDetail);
-        }
     }
     
     /** The namespace for the <code>jobs.xml</code> file. */
