@@ -51,6 +51,7 @@ Edit Document <b><xsl:value-of select="$docid"/></b> (Form: <xsl:value-of select
 <!-- Copy mixed content -->
 <!-- also see oneform.xsl -->
 
+<!-- FIXME: There seems to be a problem with xalan-2.5.1 (endorsed) re including XSLT files -->
 <!--
 <xsl:include href="copy-mixed-content.xsl"/>
 -->
