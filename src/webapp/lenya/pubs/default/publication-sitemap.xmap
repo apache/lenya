@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.49 2003/09/12 09:49:14 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.50 2003/09/12 12:58:46 andreas Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -66,21 +66,20 @@
     the navigational elements (breadcrumb, tabs, menu) with the actual
     content of the document. -->
     <map:pipeline>
-      
-      <!-- /lenyabody/{publication-id}/{area}/{doctype}/{document-id} -->
+      <!-- /lenyabody/{publication-id}/{area}/{doctype}/{url} -->
       <map:match pattern="lenyabody/*/*/*/**">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon://navigation/{1}/{2}/breadcrumb/{4}.xml"/>
           <map:part src="cocoon://navigation/{1}/{2}/tabs/{4}.xml"/>
           <map:part src="cocoon://navigation/{1}/{2}/menu/{4}.xml"/>
-          <map:part src="cocoon://{1}/lenya-document/{2}/{3}/{page-envelope:document-path}"/>
+          <map:part src="cocoon:/lenya-document/{2}/{3}/{page-envelope:document-path}"/>
         </map:aggregate>
         <map:transform src="xslt/page2xhtml.xsl">
           <map:parameter name="root" value="{page-envelope:context-prefix}/{1}/{2}"/>
+          <map:parameter name="url" value="{4}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
-      
     </map:pipeline>
     
     <!-- This is the main entry point into the publication. This
@@ -88,20 +87,21 @@
     request. It then aggregates the lenya menu (for the given area) and
     the lenya body, the actual document. -->
     <map:pipeline>
-      
-      <map:match pattern="*/**.html">
-        <map:act src="{1}/{2}.html" type="uriparametrizer">
+      <map:match pattern="**.html">
+        <map:act src="{1}.html" type="uriparametrizer">
           <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
-          <map:generate src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{doctype}/{page-envelope:document-id}"/>
-          <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}/{../2}.xml"/>
+          <map:generate src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{doctype}{page-envelope:document-url}"/>
+          <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}.xml"/>
         </map:act>
         <map:serialize type="html"/>
       </map:match>
       
       <map:handle-errors type="500">
         <!-- FIXME: other exceptions are also caught here! -->
+        <!--
         <map:transform src="../../xslt/exception/not-published-yet.xsl"/>
         <map:serialize type="html"/>
+        -->
       </map:handle-errors>
     </map:pipeline>
   </map:pipelines>
