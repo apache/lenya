@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document>
+  <header>
+    <title>Login/Logout</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+<section>
+<title>Login</title>
+<p>
+There is no special Login link/button for Lenya.
+Just click on any link or enter any URL you want to view and if the URL is protected
+by Lenya, then you will be redirected to a Login screen.
+</p>
+</section>
+
+<section>
+<title>Logout</title>
+<p>
+Click on the menu File (of the Lenya menu bar) and then click on the menu item Logout.
+</p>
+</section>
+  </body>
+</document>
