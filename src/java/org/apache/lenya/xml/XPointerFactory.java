@@ -69,7 +69,7 @@ import java.util.*;
  * DOCUMENT ME!
  *
  * @author Michael Wechner, lenya
- * @version $Id: XPointerFactory.java,v 1.14 2003/12/15 17:31:49 michi Exp $
+ * @version $Id: XPointerFactory.java,v 1.15 2004/01/12 17:56:21 michi Exp $
  */
 public class XPointerFactory {
     static Category log = Category.getInstance(XPointerFactory.class);
@@ -173,12 +173,12 @@ public class XPointerFactory {
     }
 
     /**
-     * Select nodes by xpaths
+     * Select nodes by xpointer
      *
-     * @param node DOCUMENT ME!
-     * @param reference DOCUMENT ME!
+     * @param node Document Node
+     * @param reference xmls(...)xpointer(...)
      *
-     * @return DOCUMENT ME!
+     * @return nodes
      *
      * @exception Exception ...
      */
@@ -198,6 +198,20 @@ public class XPointerFactory {
         }
 
         return nodes;
+    }
+
+    /**
+     * Select nodes by xpointer and return node at specific position
+     *
+     * @param node Document Node
+     * @param reference xmls(...)xpointer(...)
+     *
+     * @return node
+     *
+     * @exception Exception ...
+     */
+    public Node selectAt(Node node, String reference, int i) throws Exception {
+        return (Node)select(node, reference).elementAt(i);
     }
 
     /**
