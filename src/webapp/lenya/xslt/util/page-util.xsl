@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!--
-    Document   : page-util.xsl.xsl
-    Created on : November 18, 2002, 10:47 AM
-    Author     : ah
-    Description: Purpose of transformation follows.
--->
+<!-- $Id: page-util.xsl,v 1.6 2003/08/07 10:23:55 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format">
+    >
 
 <!-- includes the default CSS stylesheet -->
 <xsl:template name="include-css">
   <link rel="stylesheet" type="text/css"
-    href="/lenya/lenya/css/default.css" title="default css"/>
+    href="/lenya/lenya/css/default.css" media="screen"/>
 </xsl:template>
     
 <!-- prints a list of $separator-separated strings -->
