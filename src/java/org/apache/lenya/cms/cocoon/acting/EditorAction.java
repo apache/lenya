@@ -1,5 +1,5 @@
 /*
- * $Id: EditorAction.java,v 1.7 2003/02/13 19:17:35 andreas Exp $
+ * $Id: EditorAction.java,v 1.8 2003/02/17 16:20:56 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -61,8 +61,6 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.util.Tokenizer;
 
 import org.w3c.dom.Document;
-
-import org.wyona.util.Stack;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

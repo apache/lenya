@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLFormWriteAction.java,v 1.3 2003/02/07 12:14:08 ah Exp $
+ * $Id: HTMLFormWriteAction.java,v 1.4 2003/02/17 16:20:56 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,8 +57,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.util.Tokenizer;
-
-import org.wyona.util.Stack;
 
 import java.util.HashMap;
 import java.util.Map;

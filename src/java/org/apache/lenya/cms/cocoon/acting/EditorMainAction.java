@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.10 2003/02/17 11:38:29 egli Exp $
+ * $Id: EditorMainAction.java,v 1.11 2003/02/17 16:20:56 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,8 +66,6 @@ import org.apache.cocoon.xml.AbstractXMLConsumer;
 
 import org.w3c.dom.Document;
 
-import org.wyona.util.Stack;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -95,7 +93,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
- * $Id: EditorMainAction.java,v 1.10 2003/02/17 11:38:29 egli Exp $
+ * $Id: EditorMainAction.java,v 1.11 2003/02/17 16:20:56 egli Exp $
  *
  * @author Martin Lüthi
  * @version 2002.01.22
