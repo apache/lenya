@@ -24,9 +24,12 @@
   </installation>
   
   <documentation href="docs/" label="Documentation">
+    <components href="components/" label="Components">
+      <uri-parametrizer href="URIParametrizer.html" label="URI Parametrizer"/>
+    </components>
     <concepts href="concepts/" label="Concepts and Best Practises">
       <sitetree href="siteTree.html" label="Site tree"/>
-<!--    
+
       <page-envelope href="pageEnvelope.html" label="Page envelope"/>
       <navigation href="navigation.html" label="Navigation"/>
       <standard-uri href="standardURI.html" label="URI Scheme"/>
@@ -45,13 +48,13 @@
         </node-45>
         <node-50 href="development.html" label="Developing Tasks"/>
       </node-40>
-      -->
     </concepts>
-    <!--
+    <specs href="specs/" label="Specifications">
+      <namespaces href="namespaces.html" label="Namespaces"/>
+    </specs>
     <node-94 href="proposals/" label="Proposals / Requests for Comment (RFC)">
       <sitetree-proposal href="siteTree.html" label="Site tree"/>
     </node-94>
-    -->
   </documentation>
   
   <community href="community/" label="Community">
