@@ -1,5 +1,5 @@
 /*
-$Id: ProxyGenerator.java,v 1.20 2004/02/02 02:50:41 stefano Exp $
+$Id: ProxyGenerator.java,v 1.21 2004/02/21 16:14:47 gregor Exp $
 <License>
 
  ============================================================================
@@ -70,6 +70,7 @@ import org.apache.cocoon.environment.Cookie;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpRequest;
+import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -187,16 +188,15 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
                 String name = (String) e.nextElement();
                 httpMethod.addRequestHeader(name, request.getHeader(name));
             }
+            HostConfiguration hostConfiguration  = new HostConfiguration();
+            hostConfiguration.setHost(url.getHost(), url.getPort());
 
-            httpClient.startSession(url.getHost(), url.getPort());
-
-            // /FIXME
-            log.debug("\n----------------------------------------------------------------" +
+             log.debug("\n----------------------------------------------------------------" +
                 "\n- Starting session at URI: " + url + "\n- Host:                    " +
                 url.getHost() + "\n- Port:                    " + url.getPort() +
                 "\n----------------------------------------------------------------");
 
-            int result = httpClient.executeMethod(httpMethod);
+            int result = httpClient.executeMethod(hostConfiguration, httpMethod);
 
             log.debug("\n----------------------------------------------------------------" +
                 "\n- Result:                    " + result +
@@ -204,7 +204,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
             byte[] sresponse = httpMethod.getResponseBody();
 
-            httpClient.endSession();
+            httpMethod.releaseConnection();
 
             // Return XML
             InputSource input = new InputSource(new ByteArrayInputStream(sresponse));
@@ -255,8 +255,6 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             log.debug(".createURL(): " + url);
         } catch (MalformedURLException e) {
             url = new URL("http://127.0.0.1:" + request.getServerPort() + this.source);
-
-            //FIXME
             log.debug(".createURL(): Add localhost and port: " + url);
         }
 
