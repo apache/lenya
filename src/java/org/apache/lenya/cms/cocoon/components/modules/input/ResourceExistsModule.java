@@ -32,8 +32,8 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 
 /**
- * Checks if a certain resource exists.
- * @version $Id: ResourceExistsModule.java,v 1.1 2004/04/15 09:35:17 andreas Exp $
+ * Checks if a certain resource exists and returns either the string "true" or "false".
+ * @version $Id: ResourceExistsModule.java,v 1.2 2004/04/15 09:42:29 andreas Exp $
  */
 public class ResourceExistsModule extends AbstractInputModule implements Serviceable, Disposable {
 
