@@ -29,7 +29,7 @@ import org.w3c.dom.Element;
  * Implementation of a Collection. In the collection are xlink inserted.
  * @author <a href="mailto:edith@apache.org">Edith Chevrier</a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: XlinkCollection.java,v 1.4 2004/04/13 15:08:59 andreas Exp $
+ * @version $Id: XlinkCollection.java,v 1.5 2004/04/14 17:41:08 andreas Exp $
  */
 public class XlinkCollection extends CollectionImpl {
 
@@ -67,8 +67,8 @@ public class XlinkCollection extends CollectionImpl {
         throws DocumentException {
         Element element = super.createDocumentElement(document, helper);
         String path = getXlinkHref(document);
-        element.setAttributeNS(XLink.XLINK_NAMESPACE, "xlink:href", path);
-        element.setAttributeNS(XLink.XLINK_NAMESPACE, "xlink:show", "embed");
+        element.setAttributeNS(XLink.XLINK_NAMESPACE, "xlink:" + XLink.ATTRIBUTE_HREF, path);
+        element.setAttributeNS(XLink.XLINK_NAMESPACE, "xlink:" + XLink.ATTRIBUTE_SHOW, "embed");
 
         return element;
     }
