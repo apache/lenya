@@ -34,9 +34,11 @@ public class WGet{
     try{
       WGet wget=new WGet();
 
+/*
       //System.out.println(wget.grep("src=\"(.*)\"","<img src=\"wyonacmsunipublicimagegif\" alt=\"Image\"> <br> <img src=\"/wyona-cms/unipublic/another_image.gif\" alt=\"Another Image\">"));
       System.out.println(wget.grep("src=S(.*)E","<img src=SwyonacmsunipublicimagegifE alt=SImageE> <br> <img src=S/wyona-cms/unipublic/another_image.gifE alt=SAnother ImageE>"));
       if(true){return;}
+*/
 
       for(int i=0;i<args.length;i++){
         if(args[i].indexOf("-P") == 0){
@@ -45,8 +47,8 @@ public class WGet{
         }
       System.out.println(wget);
       byte[] response=wget.download(new URL(args[0]));
-      wget.saveToFile(new URL(args[0]).getFile(),response);
-      System.out.println(".main(): Response from remote server:\n\n"+new String(response));
+      //wget.saveToFile(new URL(args[0]).getFile(),response);
+      //System.out.println(".main(): Response from remote server:\n\n"+new String(response));
       }
     catch(MalformedURLException e){
       System.err.println(e);
@@ -72,6 +74,35 @@ public class WGet{
  */
   public byte[] download(URL url) throws IOException, HttpException{
     log.debug(".download(): "+url);
+
+
+
+
+    String command="/usr/bin/wget "+"-P"+directory_prefix+" "+"--page-requisites"+" "+url;
+    //String command="/usr/bin/wget "+"-P"+directory_prefix+" "+"--convert-links"+" "+"--page-requisites"+" "+url;
+    try{
+      log.info("WGET");
+      byte[] wget_response=runProcess(command);
+      File file=new File(directory_prefix+"/127.0.0.1:8080"+url.getFile());
+
+
+      log.info("SED");
+      command="/usr/bin/sed --expression=s/\\/wyona-cms\\/oscom//g "+file.getAbsolutePath();
+      byte[] wget_response_sed=runProcess(command);
+      java.io.ByteArrayInputStream bain=new java.io.ByteArrayInputStream(wget_response_sed);
+      //FileOutputStream fout=new FileOutputStream(file.getAbsolutePath()+".tmp");
+      FileOutputStream fout=new FileOutputStream(file.getAbsolutePath());
+      int bytes_read=0;
+      byte[] buffer=new byte[1024];
+      while((bytes_read=bain.read(buffer)) != -1){
+        fout.write(buffer,0,bytes_read);
+        }
+      }
+    catch(Exception e){
+      log.error(".download(): "+e);
+      }
+
+
     HttpClient httpClient=new HttpClient();
 
     HttpMethod httpMethod=new GetMethod();
@@ -83,7 +114,7 @@ public class WGet{
     byte[] sresponse=httpMethod.getResponseBody();
     httpClient.endSession();
 
-    log.debug(".download(): Response from remote server: "+new String(sresponse));
+    //log.debug(".download(): Response from remote server: "+new String(sresponse));
     return sresponse;
     }
 /**
@@ -125,5 +156,28 @@ public class WGet{
       log.error(e);
       return null;
       }
+    }
+/**
+ *
+*/
+  public byte[] runProcess(String command) throws Exception{
+    Process process=Runtime.getRuntime().exec(command);
+    java.io.InputStream in=process.getInputStream();
+    byte[] buffer=new byte[1024];
+    int bytes_read=0;
+    java.io.ByteArrayOutputStream baout=new java.io.ByteArrayOutputStream();
+    while((bytes_read=in.read(buffer)) != -1){
+      baout.write(buffer,0,bytes_read);
+      }
+    log.debug(".download(): InputStream: "+baout.toString());
+
+    java.io.InputStream in_e=process.getErrorStream();
+    java.io.ByteArrayOutputStream baout_e=new java.io.ByteArrayOutputStream();
+    while((bytes_read=in_e.read(buffer)) != -1){
+      baout_e.write(buffer,0,bytes_read);
+      }
+    log.error(".download(): ErrorStream: "+baout_e.toString());
+
+    return baout.toByteArray();
     }
   }

@@ -141,7 +141,6 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
 	}
 
     // Export static HTML
-    log.debug("KUCKUCK 1");
     exportStaticHTML(docid,request.getServerPort(),exportDirectory);
 	
 	// Get session
@@ -182,7 +181,6 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
  * Export Static HTML
  */
   public void exportStaticHTML(String docid,int port,String exportDirectory){
-    log.debug("KUCKUCK 2");
     try{
       org.wyona.net.WGet wget=new org.wyona.net.WGet();
       getLogger().info("Export directory: "+exportDirectory);
