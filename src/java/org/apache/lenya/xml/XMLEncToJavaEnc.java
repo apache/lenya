@@ -1,5 +1,5 @@
 /*
-$Id: XMLEncToJavaEnc.java,v 1.10 2004/02/02 02:50:36 stefano Exp $
+$Id: XMLEncToJavaEnc.java,v 1.11 2004/02/21 17:59:53 gregor Exp $
 <License>
 
  ============================================================================
@@ -138,7 +138,6 @@ public class XMLEncToJavaEnc extends Hashtable {
      * @return DOCUMENT ME!
      */
     public static String getJava(String xmlencoding) {
-        String javaencoding;
 
         try {
             return ((String) ((new XMLEncToJavaEnc()).get(xmlencoding.toLowerCase())));
