@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.7 2003/06/02 17:18:22 egli Exp $
+ * $Id: User.java,v 1.8 2003/06/03 13:45:48 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,8 +52,6 @@ package org.apache.lenya.cms.ac;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import org.apache.lenya.cms.publication.Publication;
 
 /**
  *
@@ -165,7 +163,7 @@ public abstract class User {
 	 * @param publication
 	 * @throws AccessControlException
 	 */
-	public abstract void save(Publication publication)
+	public abstract void save()
 		throws AccessControlException;
 
 	/* (non-Javadoc)

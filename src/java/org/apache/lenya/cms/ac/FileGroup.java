@@ -1,5 +1,5 @@
 /*
- * $Id: FileGroup.java,v 1.2 2003/06/02 17:15:00 egli Exp $
+ * $Id: FileGroup.java,v 1.3 2003/06/03 13:45:48 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -70,21 +70,44 @@ public class FileGroup extends Group {
 	public static final String ROLE = "role";
 	public static final String NAME_ATTRIBUTE = "name";
 	public static final String CLASS_ATTRIBUTE = "class";
+	
+	private Publication publication;
 
-	public FileGroup(Configuration config) throws ConfigurationException {
-		name = config.getAttribute(name);
-		Configuration[] groups = config.getChildren(ROLES);
-		//		for (int i = 0; i < groups.length; i++) {
-		//			Configuration group = groups[i];
-		//		}		
+	/**
+	 * @param name
+	 */
+	public FileGroup(Publication publication, String name) {
+		super(name);
+		this.publication = publication;
+	}
+
+	public FileGroup(Publication publication, Configuration config)
+		throws ConfigurationException {
+		super(config.getAttribute(NAME_ATTRIBUTE));
+		this.publication = publication;
+
+		Configuration[] roles = config.getChildren(ROLES)[0].getChildren(ROLE);
+		for (int i = 0; i < roles.length; i++) {
+			String roleName = roles[i].getValue();
+			RoleManager manager = null;
+			try {
+				manager = RoleManager.instance(publication);
+			} catch (AccessControlException e) {
+				throw new ConfigurationException(
+					"Exception when trying to fetch RoleManager for publication: "
+						+ publication,
+					e);
+			}
+			addRole(manager.getRole(roleName));
+		}
 	}
 	
-	public void save(Publication publication) throws AccessControlException {
+	public void save() throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
 		File xmlPath = GroupManager.instance(publication).getPath();
-		File xmlfile = new File(xmlPath, name + GroupManager.SUFFIX);
+		File xmlfile = new File(xmlPath, getName() + GroupManager.SUFFIX);
 		try {
 			serializer.serializeToFile(xmlfile, config);
 		} catch (Exception e) {
@@ -98,17 +121,17 @@ public class FileGroup extends Group {
 	private Configuration createConfiguration() {
 		
 		DefaultConfiguration config = new DefaultConfiguration(GROUP);
-		config.setAttribute(NAME_ATTRIBUTE, name);
+		config.setAttribute(NAME_ATTRIBUTE, getName());
 		config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
 		DefaultConfiguration child = null;
 		// add roles node
-		child = new DefaultConfiguration(GROUP);
+		child = new DefaultConfiguration(ROLES);
 		config.addChild(child);		
 
 		Iterator groupsIter = getRoles();
 		while (groupsIter.hasNext()) {
 			DefaultConfiguration groupNode = new DefaultConfiguration(ROLE);
-			groupNode.setValue(((Group) groupsIter.next()).getName());
+			groupNode.setValue(((Role) groupsIter.next()).getName());
 			child.addChild(groupNode);
 		}
 		return config;

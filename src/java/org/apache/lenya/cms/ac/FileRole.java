@@ -1,5 +1,5 @@
 /*
- * $Id: FileRole.java,v 1.2 2003/06/02 17:15:00 egli Exp $
+ * $Id: FileRole.java,v 1.3 2003/06/03 13:45:48 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -68,27 +68,29 @@ public class FileRole extends Role {
 	public static final String NAME_ATTRIBUTE = "name";
 	public static final String CLASS_ATTRIBUTE = "class";
 
-
+	private Publication publication;
 	/**
 	 * @param name
 	 */
-	public FileRole(String name) {
+	public FileRole(Publication publication, String name) {
 		super(name);
+		this.publication = publication;
 	}
 
 	/**
 	 * @param config
 	 * @throws ConfigurationException
 	 */
-	public FileRole(Configuration config) throws ConfigurationException {
+	public FileRole(Publication publication, Configuration config) throws ConfigurationException {
 		super(config.getAttribute(NAME_ATTRIBUTE));
+		this.publication = publication;
 	}
 	
 	/**
 	 * @param publication
 	 * @throws AccessControlException
 	 */
-	public void save(Publication publication) throws AccessControlException {
+	public void save() throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();

@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.4 2003/06/02 17:15:00 egli Exp $
+ * $Id: FileUser.java,v 1.5 2003/06/03 13:45:48 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -75,6 +75,8 @@ public class FileUser extends User {
 	public static final String ID_ATTRIBUTE = "id";
 	public static final String CLASS_ATTRIBUTE = "class";
 
+	private Publication publication;
+	
 	/**
 	 * @param id
 	 */
@@ -82,15 +84,26 @@ public class FileUser extends User {
 		super(id);
 	}
 	
-	public FileUser(Configuration config) throws ConfigurationException {
+	public FileUser(Publication publication, Configuration config)
+		throws ConfigurationException {
 		id = config.getAttribute(ID);
 		setEmail(config.getValue(EMAIL));
 		setFullName(config.getValue(FULL_NAME));
 		setPassword(config.getValue(PASSWORD));
 		Configuration[] groups = config.getChildren(GROUPS);
-		//		for (int i = 0; i < groups.length; i++) {
-		//			Configuration group = groups[i];
-		//		}
+		GroupManager manager = null;
+		try {
+			manager = GroupManager.instance(publication);
+		} catch (AccessControlException e) {
+			throw new ConfigurationException(
+				"Exception when trying to fetch GroupManager for publication: "
+					+ publication,
+				e);
+		}
+		for (int i = 0; i < groups.length; i++) {
+			String groupName = groups[i].getValue();
+			addGroup(manager.getGroup(groupName));
+		}
 	}
 
 
@@ -132,7 +145,7 @@ public class FileUser extends User {
 	/* (non-Javadoc)
 	 * @see org.apache.lenya.cms.ac.User#save()
 	 */
-	public void save(Publication publication) throws AccessControlException {
+	public void save() throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
