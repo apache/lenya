@@ -37,7 +37,7 @@
 </tr>
 <tr><td>
 <textarea name="content" cols="80" rows="80">
-<xsl:apply-templates mode="mixed"/>
+<xsl:apply-templates mode="mixedcontent"/>
 </textarea>
 </td></tr>
 <tr>
@@ -51,16 +51,30 @@
 </page:page>
 </xsl:template>
 
+
+
+
+
+<xsl:include href="copy-mixed-content.xsl"/>
+
+
+
+
+
+
+
+
 <!-- Copy mixed content -->
 
-<xsl:template match="//*" mode="mixed">
+<!--
+<xsl:template match="//*" mode="mixedcontent">
 <xsl:variable name="prefix"><xsl:if test="contains(name(),':')">:<xsl:value-of select="substring-before(name(),':')"/></xsl:if></xsl:variable>
 
 <xsl:choose>
 <xsl:when test="node()">
 <xsl:text>&lt;</xsl:text><xsl:value-of select="name()"/>
 
-<xsl:apply-templates select="@*" mode="mixed"/>
+<xsl:apply-templates select="@*" mode="mixedcontent"/>
 
 <xsl:for-each select="namespace::*">
 <xsl:variable name="prefix"><xsl:if test="local-name() != ''">:<xsl:value-of select="local-name()"/></xsl:if></xsl:variable>
@@ -71,18 +85,17 @@
 
 <xsl:text>&gt;</xsl:text>
 
-<xsl:apply-templates select="node()" mode="mixed"/>
+<xsl:apply-templates select="node()" mode="mixedcontent"/>
 
 <xsl:text>&lt;/</xsl:text><xsl:value-of select="name()"/><xsl:text>&gt;</xsl:text>
 
 </xsl:when>
 
-<!-- EMPTY TAG -->
 <xsl:otherwise>
 
 <xsl:text>&lt;</xsl:text><xsl:value-of select="name()"/>
 
-<xsl:apply-templates select="@*" mode="mixed"/>
+<xsl:apply-templates select="@*" mode="mixedcontent"/>
 
 <xsl:for-each select="namespace::*">
 <xsl:variable name="prefix"><xsl:if test="local-name() != ''">:<xsl:value-of select="local-name()"/></xsl:if></xsl:variable>
@@ -98,6 +111,7 @@
 
 
 
-<xsl:template match="@*" mode="mixed"><xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"</xsl:template>
+<xsl:template match="@*" mode="mixedcontent"><xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"</xsl:template>
+-->
  
 </xsl:stylesheet>

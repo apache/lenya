@@ -23,6 +23,13 @@
 
 
 
+<!-- NOTE: Mixed content is currently being handled by copy-mixed-content.xsl, which is being called by form-layout.xsl -->
+
+
+
+
+
+
 <!-- Copy mixed content -->
 <!-- also see oneform.xsl -->
 
@@ -30,6 +37,7 @@
 <!--
 <xsl:include href="copy-mixed-content.xsl"/>
 -->
+<!--
 <xsl:template match="//*" mode="mixedcontent">
 <xsl:variable name="prefix"><xsl:if test="contains(name(),':')">:<xsl:value-of select="substring-before(name(),':')"/></xsl:if></xsl:variable>
 
@@ -72,6 +80,13 @@
 </xsl:template>
 
 <xsl:template match="@*" mode="mixedcontent"><xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"</xsl:template>
+-->
+
+
+
+
+
+
 
 
 
@@ -98,4 +113,6 @@
 <xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"<xsl:if test="namespace-uri()"><xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="namespace-uri()"/>"</xsl:if></xsl:template>
 -->
  
+
+
 </xsl:stylesheet>  
