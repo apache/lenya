@@ -58,7 +58,9 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
             resolvedUri = resolver.getURI();
 
         } catch (Exception e) {
-            throw new ConfigurationException("Resolving path [" + name + "] failed: ", e);
+            String message = "Resolving path [" + name + "] failed: ";
+            getLogger().error(message, e);
+            throw new ConfigurationException(message, e);
         }
         return resolvedUri;
     }
