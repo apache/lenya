@@ -41,6 +41,8 @@
 					<namespaces href="htmlform.html" label="HTML Form Editor"/>
 					<namespaces href="1form.html" label="HTML One Form Editor"/>
 					<namespaces href="bxeng.html" label="Bitflux Editor"/>
+					<namespaces href="epoz.html" label="Epoz"/>
+					<namespaces href="xopus.html" label="Xopus"/>
 				</misc>
 				<layout href="layout/" label="Layout">
 					<navigation href="navigation.html" label="Navigation"/>
