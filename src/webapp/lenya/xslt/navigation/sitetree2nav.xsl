@@ -72,11 +72,12 @@ Apply nodes recursively
     <xsl:variable name="suffix">
       <xsl:if test="not(@href)">
          <xsl:choose>
-            <xsl:when test="tree:label[lang($chosenlanguage)]">
+            <xsl:when test="not($defaultlanguage = $chosenlanguage) and tree:label[lang($chosenlanguage)]">
       	       <xsl:text>_<xsl:value-of select="$chosenlanguage"/></xsl:text>
             </xsl:when>
             <xsl:otherwise>
-      	       <xsl:text>_<xsl:value-of select="$defaultlanguage"/></xsl:text>
+            	<!-- no suffix for default language -->
+      	       <!--<xsl:text>_<xsl:value-of select="$defaultlanguage"/></xsl:text>-->
             </xsl:otherwise>
           </xsl:choose>
           <xsl:text>.</xsl:text>
