@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: link.xsl,v 1.3 2004/02/25 15:39:09 gregor Exp $
+ $Id: link.xsl,v 1.4 2004/02/26 19:46:13 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -51,7 +51,7 @@
           var title = document.forms["link"].title.value;
           var prefix ='<xsl:value-of select="$contextprefix"/>' + '/<xsl:value-of select="$publicationid"/>' + '/<xsl:value-of select="$area"/>';
           var url = document.forms["link"].url.value;
-          if (url.startsWith("/")) {
+          if (url.charAt(0) == "/") {
            // prepend hostname etc for internal links
            url = prefix + url;
           }
