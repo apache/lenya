@@ -23,7 +23,6 @@
     <exception class="org.apache.tools.ant.BuildException" name="build" unroll="true"/>
     <exception class="org.xml.sax.SAXParseException" name="sax-parsing"/>
     <exception class="org.xml.sax.SAXException" name="sax" unroll="true"/>
-    <exception class="org.apache.cocoon.ResourceNotFoundException" name="resourcenotfound"/>
     <exception class="org.apache.cocoon.ProcessingException" name="processing" unroll="true"/>
     <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException" name="parent-node-not-found"/>
     <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
