@@ -253,10 +253,11 @@ public class ArticleImageUploadCreatorAction
 	    getLogger().debug("imagePath: " + imagePath);
 	    
 	    File dir = (new File(imagePath)).getParentFile();
-	    if(!dir.exists()){
-              getLogger().info(".act(): Create directories: "+dir);
-              dir.mkdirs();
-              }
+
+	    if (!dir.exists()) {
+		getLogger().info(".act(): Create directories: " + dir);
+		dir.mkdirs();
+	    }
 
 	    if (obj instanceof FilePartFile) {
 		((FilePartFile)obj).getFile().renameTo(new File(imagePath));
@@ -316,10 +317,11 @@ public class ArticleImageUploadCreatorAction
 	    root.addElement(tagName).addText(tagValue);
 	}
 
-        File parentDir=new File(new File(metaDataFilePathName).getParent());
-        if(!parentDir.exists()){
-          parentDir.mkdirs();
-          }
+        File parentDir = (new File(metaDataFilePathName)).getParentFile();
+        if (!parentDir.exists()) {
+	    getLogger().info(".act(): Create directories: " + parentDir);
+	    parentDir.mkdirs();
+	}
 
 	OutputStream out =
 	    new BufferedOutputStream(new FileOutputStream(metaDataFilePathName));
