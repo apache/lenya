@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree2nav.xsl,v 1.20 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id: sitetree2nav.xsl,v 1.21 2004/04/20 12:58:50 roku Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -68,7 +68,7 @@ the default language.
 <!--
 Apply nodes recursively
 -->
-<xsl:template match="tree:node">
+<xsl:template match="tree:node[not(@visible = 'false')]">
 
   <!-- basic url of parent node -->
   <xsl:param name="previous-url" select="''"/>
