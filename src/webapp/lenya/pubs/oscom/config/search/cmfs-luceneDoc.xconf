@@ -15,13 +15,15 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmfs-luceneDoc.xconf,v 1.5 2004/03/13 12:42:11 gregor Exp $ -->
+<!-- $Id: cmfs-luceneDoc.xconf,v 1.6 2004/05/16 23:27:54 michi Exp $ -->
 
 <luc:document xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0">
 <!--
   <luc:variable name="" value=""/>
 -->
-  <luc:field name="title" type="Text" xpath="/system/system_name"/>
+  <luc:field name="title" type="Text">
+    <xpath>/system/system_name</xpath>
+  </luc:field>
   <luc:field name="contents" type="UnStored" xpath="/system/description"/>
   <luc:field name="license" type="UnStored" xpath="/system/license/license_name"/>
   <luc:field name="plang" type="UnStored" xpath="/system/programming-language"/>
