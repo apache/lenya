@@ -22,11 +22,11 @@
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
 
-  <page:title><i18n:text>Publish</i18n:text></page:title>
+  <page:title><i18n:text>Deactivate</i18n:text></page:title>
   <page:body>
     <div class="lenya-box">
       <div class="lenya-box-title">
-        <i18n:text>Publish</i18n:text>
+        <i18n:text>Deactivate</i18n:text>
       </div>
       <div class="lenya-box-body">
         <form>
@@ -47,11 +47,6 @@
                       <i18n:text>
                         <jx:out value="${message}"/>
                       </i18n:text>
-                    </li>
-                  </jx:forEach>
-                  <jx:forEach var="missingDocument" items="${usecase.getParameter('missingDocuments')}">
-                    <li>
-                      <a href="${request.getContextPath() + missingDocument.getCanonicalWebappURL()}"><jx:out value="${missingDocument.getId()}"/> [<jx:out value="${missingDocument.getLanguage()}"/>]</a>
                     </li>
                   </jx:forEach>
                   <jx:forEach var="message" items="${usecase.getInfoMessages()}">
@@ -79,13 +74,13 @@
                     <input name="subtree" type="checkbox" checked="checked"/>
                   </jx:otherwise>
                 </jx:choose>
-                <i18n:text>publish complete subtree</i18n:text>
+                <i18n:text>deactivate complete subtree</i18n:text>
               </td>
             </tr>
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" type="submit" name="submit" value="Publish"/>
+                <input i18n:attr="value" type="submit" name="submit" value="Deactivate"/>
                 &#160;
                 <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
               </td>

@@ -244,8 +244,8 @@
         <block>
           <item uc:usecase="workflow.submit" wf:event="submit" href="?"><i18n:text>Submit</i18n:text></item>
           <item uc:usecase="workflow.reject" wf:event="reject" href="?"><i18n:text>Reject</i18n:text></item>
-          <item uc:usecase="workflow.publish" wf:event="publish" href="?"><i18n:text>Publish</i18n:text></item>
-          <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?task-id=deactivateDocument"><i18n:text>Deactivate</i18n:text></item>
+          <item uc:usecase="workflow.publish" href="?"><i18n:text>Publish</i18n:text></item>
+          <item uc:usecase="workflow.deactivate" href="?"><i18n:text>Deactivate</i18n:text></item>
        </block><block>
           <item uc:usecase="schedule" uc:step="showscreen" href="?"><i18n:text>Schedule</i18n:text></item>
         </block>
