@@ -7,9 +7,22 @@
 <xsl:param name="section"/>
 <xsl:param name="year"/>
 
-<xsl:template match="/">
-  <xsl:apply-templates/>
-</xsl:template>
+<xsl:template match="/" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <Page> 
+    <Content>
+<!--      FirstColumn-->
+          <MainNavigation>
+            <Channels> 
+             <xi:include xml:base="cocoon:" href="navigation.xml#xpointer(/FirstColumn/MainNavigation/Channels/Channel[@name='{$channel}'])"/>
+            </Channels> 
+          </MainNavigation>   
+<!--      End FirstColumn-->
+      <MainColumn>
+        <xsl:apply-templates select="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0"/>
+      </MainColumn>
+    </Content>
+  </Page>
+</xsl:template>                                                                                                                             
 
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
 <section type="{$section}">

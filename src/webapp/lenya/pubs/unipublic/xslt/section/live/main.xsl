@@ -4,12 +4,18 @@
 
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
+<xsl:include href="../../navigation.xsl"/>
 <xsl:include href="../../variables.xsl"/>
 
-<xsl:template match="/">
+<xsl:variable name="sectiontext"><xsl:apply-templates select="/Page/Content/MainColumn/section" mode="section-name"/></xsl:variable>
+
+<xsl:template match="/Page/Content">
 <html>
 <head>
-<title>unipublic - Geist und Gesellschaft ELEMENT:<xsl:apply-templates select="/section/type" mode="section-name"/> ATTRIBUTE:<xsl:apply-templates select="/section" mode="section-name"/> (<xsl:value-of select="/section/@type"/>)</title>
+<!--
+<title>unipublic - TEXT: <xsl:value-of select="$sectiontext"/> ELEMENT:<xsl:apply-templates select="MainColumn/section/type" mode="section-name"/> ATTRIBUTE:<xsl:apply-templates select="MainColumn/section" mode="section-name"/> (<xsl:value-of select="MainColumn/section/@type"/>)</title>
+-->
+<title>unipublic - <xsl:value-of select="$sectiontext"/> (<xsl:value-of select="MainColumn/section/@type"/>)</title>
 
 <xsl:call-template name="styles"/>
 
@@ -35,108 +41,36 @@
 </tr>
 </table>
 </td>
+<!--
 <td width="135" valign="bottom"></td>
+-->
 </tr>
 
 <tr>
-<td width="135" valign="bottom" align="right"><img height="21" width="120" src="{$img-unipub}/t_magazin.gif" alt="magazin"/></td>
-<td width="315" valign="bottom"><img src="{$img-unipub}/r_{/section/@type}.gif" width="138" height="13" border="0" alt="geist &#38; gesellschaft"/></td>
-
-<td width="135" valign="bottom" align="right"></td>
-</tr>
-
-<tr>
-<td width="135" align="right" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" width="115">
-<tr>
-<td><img height="25" src="{$img-unipub}/m_gesund.gif" border="0" alt="gesundheit" width="115"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" src="{$img-unipub}/m_d_{/section/@type}.gif" border="0" name="geist" alt="geist &#38; gesellschaft" width= "115"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src= "{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src= "{$img-unipub}/m_umwelt.gif" border="0" alt="umwelt &#38; technik"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src= "{$img-unipub}/1.gif"/></td>
-
-</tr>
-
-<tr>
-<td><img height="25" src="{$img-unipub}/m_recht.gif" border="0" alt="recht &#38; wirtschaft" width="115"/></td>
-</tr>
-</table>
-
-<p>&#160;</p>
-
-<table border="0" cellpadding="0" cellspacing="0" width="115">
-<tr>
-<td align="right"><img height="21" width="103" src="{$img-unipub}/t_camp.gif" alt="magazin"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_news.gif" border="0" alt="uni-news"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_portrait.gif" border="0" alt="Portraits"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_lorbeer.gif" border="0" alt="lorbeeren"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_beruf.gif" border="0" alt="berufungen"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_publik.gif" border="0" alt="publikationen"/></td>
-</tr>
-</table>
-
-<p><img src="{$unipublic}/img/dossiers.gif" width="120" height="21" border="0"/></p>
+<td width="135" align="right" valign="top" rowspan="3">
+<xsl:apply-templates select="MainNavigation"/>
 </td>
-<td valign="top" colspan="2">
+<td width="315" height="21" valign="bottom"><img src="{$img-unipub}/r_{MainColumn/section/@type}.gif" border="0" alt="{$sectiontext}"/></td>
+
+<!--
+<td width="135" valign="top" align="right"></td>
+-->
+</tr>
+
+<tr>
+<td valign="top">
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 <td width="5" valign="top" bgcolor="white">&#160;</td>
-<td width="295" bgcolor="white"><font size="1" face="Geneva,Helvetica,Arial,Swiss,Nu Sans Regular"><br />
+<td width="100%" bgcolor="white"><font size="1" face="Geneva,Helvetica,Arial,Swiss,Nu Sans Regular"><br />
  <b>2002</b> | 2001 | 2000 | 1999</font></td>
 </tr>
 
 <tr>
 <td width="5" bgcolor="white" valign="top">&#160;</td>
-<td width="295" bgcolor="white" class="tsr-text"><br />
+<td width="100%" bgcolor="white" class="tsr-text"><br />
 
-<xsl:for-each select="/section/articles/article">
+<xsl:for-each select="MainColumn/section/articles/article">
 <p>
 <a href="{@href}/"><span class="tsr-title"><xsl:apply-templates select="body.head/hedline/hl1"/></span></a><br />
 <xsl:apply-templates select="body.head/abstract"/> (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>)
@@ -150,8 +84,7 @@
 </tr>
 
 <tr>
-<td width="135"></td>
-<td colspan="2" bgcolor="white"><br />
+<td bgcolor="white"><br />
   
 
 <div align="left"><a href="#topofpage"><font size="1">zum
@@ -170,12 +103,42 @@ Anfang<br />
 </html>
 </xsl:template>
 
+<!-- Logik -->
+
+<xsl:template match="section[@type='gesundheit']" mode="section-name">
+Gesundheit
+</xsl:template>
+
 <xsl:template match="section[@type='geist']" mode="section-name">
 Geist &#38; Gesellschaft
 </xsl:template>
 
-<xsl:template match="section[@type='gesundheit']" mode="section-name">
-Gesundheit
+<xsl:template match="section[@type='umwelt']" mode="section-name">
+Umwelt &#38; Technik
+</xsl:template>
+
+<xsl:template match="section[@type='recht']" mode="section-name">
+Recht &#38; Wirtschaft
+</xsl:template>
+
+<xsl:template match="section[@type='uni-news']" mode="section-name">
+Uni-News
+</xsl:template>
+
+<xsl:template match="section[@type='portraits']" mode="section-name">
+Portraits
+</xsl:template>
+
+<xsl:template match="section[@type='lorbeeren']" mode="section-name">
+Lorbeeren
+</xsl:template>
+
+<xsl:template match="section[@type='berufungen']" mode="section-name">
+Berufungen
+</xsl:template>
+
+<xsl:template match="section[@type='publikationen']" mode="section-name">
+Publikationen
 </xsl:template>
 
 <xsl:template match="section" mode="section-name">
