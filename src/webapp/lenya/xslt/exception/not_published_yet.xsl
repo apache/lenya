@@ -8,6 +8,7 @@
 <html>
 <head>
   <title>Document not published yet!</title>
+  <link rel="stylesheet" type="text/css" href="/wyona-cms/wyona/default.css" />
 </head>
 <body>
 Document not published yet!
