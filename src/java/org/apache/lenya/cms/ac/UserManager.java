@@ -1,5 +1,5 @@
 /*
- * $Id: UserManager.java,v 1.5 2003/06/10 13:53:17 egli Exp $
+ * $Id: UserManager.java,v 1.6 2003/06/11 08:33:46 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -78,6 +78,8 @@ public class UserManager extends ItemManager {
 
 	public static UserManager instance(Publication publication)
 		throws AccessControlException {
+			
+		assert publication != null;
 		if (!instances.containsKey(publication))
 			instances.put(publication, new UserManager(publication));
 		return (UserManager) instances.get(publication);
