@@ -94,7 +94,11 @@
       <menu name="Edit" label="Search">
         
         <block info="false">
+          <xsp:logic>
+            if (docType.equals("xhtml")) {
           <item wf:event="edit" uc:usecase="epoz" uc:step="open" href="?">Edit&#160;with&#160;Epoz</item>
+            }
+          </xsp:logic>
           <item wf:event="edit" uc:usecase="bxe" uc:step="open" href="?">Edit&#160;with&#160;BXE</item>
           <item uc:usecase="edit" uc:step="open" wf:event="edit"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute>Edit&#160;with&#160;Forms</item>
           <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?">Edit&#160;with&#160;one&#160;Form</item>
