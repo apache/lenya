@@ -15,12 +15,18 @@
   limitations under the License.
 -->
 
-<!-- $Id: ac.xconf,v 1.5 2004/03/13 12:34:17 gregor Exp $ -->
+<!-- $Id$ -->
 
 <access-controller type="bypassable">
   
   <accreditable-manager type="file">
     <parameter name="directory" value="context:///lenya/pubs/default/config/ac/passwd"/>
+
+    <user-manager>
+       <user-type class="org.apache.lenya.ac.file.FileUser" create-use-case="userAddUser">Local User</user-type>
+       <!-- uncomment the following line if you want LDAP support -->
+       <!-- <user-type class="org.apache.lenya.ac.file.LDAPUser" create-use-case="userAddUserLdap">LDAP User</user-type> -->
+    </user-manager>
   </accreditable-manager>
   
   <policy-manager type="document">

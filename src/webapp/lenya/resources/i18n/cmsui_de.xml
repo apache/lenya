@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.65 2004/05/23 20:34:29 roku Exp $ -->
+<!-- $Id$ -->
 
 <catalogue xml:lang="de">
 
@@ -183,7 +183,7 @@
   <message key="Change Password">Passwort ändern</message>
   <message key="Edit Group Affiliation">Mitgliedschaften ändern</message>
   
-    <!-- IP Range Administration -->
+  <!-- IP Range Administration -->
   <message key="IP Range">IP&#160;Bereich</message>
   <message key="IP Range ID">IP&#160;Bereichs-ID</message>
   <message key="Network Address">IP&#160;Adresse</message>
@@ -191,6 +191,10 @@
   <message key="IP Range Administration">IP Administration</message>
   <message key="Add IP Range">IP Bereich&#160;hinzufügen</message>
   <message key="IP Range Profile">IP Bereichsprofil</message>
+
+  <!-- User Types -->
+  <message key="LDAP User">LDAP User</message>
+  <message key="Local User">CMS User</message>
 
   <!-- Site tab (info screens) -->
   <message key="Available Languages">Verfügbare Sprachen</message>

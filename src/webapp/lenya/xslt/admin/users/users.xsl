@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: users.xsl,v 1.11 2004/06/01 14:29:23 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -101,10 +101,27 @@
   
   
   <xsl:template name="add-user">
-    <form method="GET">
-      <input type="hidden" name="lenya.usecase" value="userAddUser"/>
-      <input i18n:attr="value" type="submit" value="Add User"/>
-    </form>
+    <table class="lenya-table-noborder">
+  	  <tr>
+	    <td>
+  		  <i18n:text>Add User</i18n:text>:&#160;
+	    </td>
+	    <xsl:for-each select="types/type">
+	      <td>
+	        <form method="GET">
+              <input type="hidden" name="lenya.usecase">
+		        <xsl:attribute name="value"><xsl:value-of
+		          select="@create-use-case"/></xsl:attribute>
+		      </input>
+              <input i18n:attr="value" type="submit">
+		        <xsl:attribute name="value"><xsl:value-of
+		          select="normalize-space(.)"/></xsl:attribute>
+		      </input>
+            </form>
+	      </td>
+	    </xsl:for-each>
+      </tr>
+    </table>
   </xsl:template>
   
   

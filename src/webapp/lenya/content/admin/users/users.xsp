@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: users.xsp,v 1.7 2004/04/30 16:34:23 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page
   language="java"
@@ -27,6 +27,7 @@
   <xsp:structure>
     <xsp:include>org.apache.lenya.ac.UserManager</xsp:include>
     <xsp:include>org.apache.lenya.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.ac.UserType</xsp:include>
     <xsp:include>org.apache.lenya.ac.Group</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.Iterator</xsp:include>
@@ -73,6 +74,22 @@
       <xsp:logic>
         }
       </xsp:logic>
+
+      <types>
+         <xsp:logic>
+            UserType[] types = userManager.getUserTypes();
+            for (int i = 0; i &lt; types.length; i++) {
+                <xsp:content>
+                  <type>
+                    <xsp:attribute name="class-name"><xsp:expr>types[i].getClassName()</xsp:expr></xsp:attribute>
+                    <xsp:attribute name="create-use-case"><xsp:expr>types[i].getCreateUseCase()</xsp:expr></xsp:attribute>
+                    <xsp:expr>types[i].getKey()</xsp:expr>
+                  </type>  
+                </xsp:content>
+          }
+         </xsp:logic>
+      </types>
+
     </users>
   </page>
   
