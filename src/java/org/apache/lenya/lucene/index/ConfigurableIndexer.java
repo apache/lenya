@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableIndexer.java,v 1.14 2004/04/03 23:26:30 michi Exp $  */
+/* $Id: ConfigurableIndexer.java,v 1.15 2004/04/04 00:06:39 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -34,7 +34,10 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.log4j.Category;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class ConfigurableIndexer extends AbstractIndexer {
     Category log = Category.getInstance(ConfigurableIndexer.class);
@@ -68,7 +71,7 @@ public class ConfigurableIndexer extends AbstractIndexer {
 
         URL configurationCreatorURL = ConfigurableIndexer.class.getClassLoader().getResource(CONFIGURATION_CREATOR_STYLESHEET);
         File configurationStylesheetFile = new File(new URI(configurationCreatorURL.toString()));
-        org.w3c.dom.Document configurationDocument = DocumentHelper.readDocument(configurationFile);
+        Document configurationDocument = DocumentHelper.readDocument(configurationFile);
 
         TransformerFactory tFactory = TransformerFactory.newInstance();
         Transformer configurationTransformer = tFactory.newTransformer(new StreamSource(configurationStylesheetFile));
@@ -103,10 +106,10 @@ public class ConfigurableIndexer extends AbstractIndexer {
     private String getLuceneDocConfigFileName(Element indexer) {
         String luceneDocConfigFileName = null;
 
-        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        NodeList nl = indexer.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
-            org.w3c.dom.Node node = nl.item(i);
-            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("configuration")) {
+            Node node = nl.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("configuration")) {
                 log.debug(".getLuceneDocConfigFileName(): Node configuration exists!");
                 luceneDocConfigFileName = ((Element)node).getAttribute("src");
             }
@@ -124,10 +127,10 @@ public class ConfigurableIndexer extends AbstractIndexer {
     private String getExtensions(Element indexer) {
         String extensions = null;
 
-        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        NodeList nl = indexer.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
-            org.w3c.dom.Node node = nl.item(i);
-            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("extensions")) {
+            Node node = nl.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("extensions")) {
                 log.debug("Node extensions exists!");
                 extensions = ((Element)node).getAttribute("src");
             }
@@ -145,10 +148,10 @@ public class ConfigurableIndexer extends AbstractIndexer {
     private FileFilter getFilterFromConfiguration(Element indexer) {
         String className = null;
 
-        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        NodeList nl = indexer.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
-            org.w3c.dom.Node node = nl.item(i);
-            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("filter")) {
+            Node node = nl.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("filter")) {
                 log.debug("Node filter exists!");
                 className = ((Element)node).getAttribute("class");
             }
@@ -170,10 +173,10 @@ public class ConfigurableIndexer extends AbstractIndexer {
      *
      */
     private boolean extensionsExists(Element indexer) {
-        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        NodeList nl = indexer.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
-            org.w3c.dom.Node node = nl.item(i);
-            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("extensions")) {
+            Node node = nl.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("extensions")) {
                 log.error("Node extensions exists!");
                 return true;
             }
@@ -185,10 +188,10 @@ public class ConfigurableIndexer extends AbstractIndexer {
      *
      */
     private boolean filterExists(Element indexer) {
-        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        NodeList nl = indexer.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
-            org.w3c.dom.Node node = nl.item(i);
-            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("filter")) {
+            Node node = nl.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("filter")) {
                 log.debug("Node filter exists!");
                 return true;
             }
