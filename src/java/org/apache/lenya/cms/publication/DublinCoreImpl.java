@@ -1,5 +1,4 @@
 /*
-$Id: DublinCoreImpl.java,v 1.1 2003/08/28 09:51:53 egli Exp $
 <License>
 
  ============================================================================
@@ -75,6 +74,7 @@ import org.xml.sax.SAXException;
  * This class uses the dublin core specification from 2003-03-04.
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
+ * @version $Id: DublinCoreImpl.java,v 1.2 2004/01/06 17:55:49 michi Exp $
  */
 public class DublinCoreImpl implements DublinCore {
     private Document cmsdocument;
@@ -227,6 +227,7 @@ public class DublinCoreImpl implements DublinCore {
             throw new DocumentException(e);
         }
             
+        // FIXME: what if "lenya:meta" element doesn't exist yet? Currently a NullPointerException will be thrown!
         Element metaElement = getMetaElement(doc);
 
         String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
