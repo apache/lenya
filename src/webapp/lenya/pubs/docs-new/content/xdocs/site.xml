@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: site.xml,v 1.59 2004/04/26 09:44:02 gregor Exp $ -->
+<!-- $Id: site.xml,v 1.60 2004/05/24 11:39:11 andreas Exp $ -->
 
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya">
 	<home href="index.html">Home</home>
@@ -37,6 +37,7 @@
 	<documentation href="docs/" label="Documentation">
 		<integrator-dev-guide label="Integrator/Dev Guide">
 			<components href="components/" label="Components">
+				<resource-types href="resource-types/" label="Resource&#160;Types"/>
 				<accesscontrol href="accesscontrol/" label="Access&#160;Control">
 					<ac-terms href="terms.html" label="Basic Terms"/>
 					<accesscontrollers href="accesscontrollers.html" label="Access&#160;Controllers"/>
