@@ -33,7 +33,7 @@ public interface Operation {
     /**
      * Returns the unit of work object.
      * @return A unit of work.
-     * @throws a service exception if the unit-of-work component could not be retrieved by the service manager
+     * @throws ServiceException if the unit-of-work component could not be retrieved by the service manager
      */
     UnitOfWork getUnitOfWork() throws ServiceException;
     
