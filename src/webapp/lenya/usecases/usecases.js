@@ -39,13 +39,6 @@ function passRequestParameters(flowHelper, usecase) {
 }
 
 
-function selectView(usecaseName) { 
-    var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
-    var view = "view/" + usecaseView;
-    return view;
-}
-
-
 /* Returns the query string to attach to the target URL. This is used in the site area. */
 function getTargetQueryString(usecaseName) {
     var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
@@ -59,7 +52,7 @@ function getTargetQueryString(usecaseName) {
 
 function executeUsecase() {
     var usecaseName = cocoon.request.getParameter("lenya.usecase");
-    var isInteractive;
+    var view;
     var proxy;
     
     var usecaseResolver;
@@ -74,7 +67,7 @@ function executeUsecase() {
         var sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
         usecase.setSourceURL(sourceUrl);
         usecase.setName(usecaseName);
-        isInteractive = usecase.isInteractive();
+        view = usecase.getView();
 
         passRequestParameters(flowHelper, usecase);
         usecase.checkPreconditions();
@@ -90,12 +83,11 @@ function executeUsecase() {
     var success = false;
     var targetUrl;
 
-    if (isInteractive) {
-        var view = selectView(usecaseName);
+    if (view) {
         var ready = false;
         while (!ready) {
         
-            cocoon.sendPageAndWait(view, {
+            cocoon.sendPageAndWait("view/" + view.getTemplateURI(), {
                 "usecase" : proxy
             });
             
@@ -137,6 +129,7 @@ function executeUsecase() {
         try {
             usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
             usecase = usecaseResolver.resolve(usecaseName);
+            proxy.setup(usecase);
                 
             usecase.execute();
             if (usecase.getErrorMessages().isEmpty()) {

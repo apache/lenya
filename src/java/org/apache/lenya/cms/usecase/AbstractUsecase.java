@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
@@ -33,7 +36,8 @@ import org.apache.cocoon.servlet.multipart.Part;
  * 
  * @version $Id$
  */
-public class AbstractUsecase extends AbstractOperation implements Usecase, Contextualizable {
+public class AbstractUsecase extends AbstractOperation implements Usecase, Contextualizable,
+        Configurable {
 
     /**
      * Ctor.
@@ -67,8 +71,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     }
 
     /**
-     * Checks if the operation can be executed and returns the error messages.
-     * Error messages prevent the operation from being executed.
+     * Checks if the operation can be executed and returns the error messages. Error messages
+     * prevent the operation from being executed.
      * @return A boolean value.
      */
     public List getErrorMessages() {
@@ -77,8 +81,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
 
     /**
      * Returns the information messages to show on the confirmation screen.
-     * @return An array of strings. Info messages do not prevent the operation
-     *         from being executed.
+     * @return An array of strings. Info messages do not prevent the operation from being executed.
      */
     public List getInfoMessages() {
         return Collections.unmodifiableList(this.infoMessages);
@@ -247,8 +250,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     private Map parameters = new HashMap();
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
-     *      java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
     public void setParameter(String name, Object value) {
         if (getLogger().isDebugEnabled()) {
@@ -285,8 +287,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     }
 
     /**
-     * Returns one of the strings "true" or "false" depending on whether the
-     * corresponding checkbox was checked.
+     * Returns one of the strings "true" or "false" depending on whether the corresponding checkbox
+     * was checked.
      * @param name The parameter name.
      * @return A string.
      */
@@ -373,13 +375,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         this.parameters.remove(name);
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#isInteractive()
-     */
-    public boolean isInteractive() {
-        return true;
-    }
-
     private String name;
 
     /**
@@ -411,5 +406,25 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         setParameter(SOURCE_URL, url);
         initParameters();
     }
-    
+
+    private UsecaseView view;
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#getView()
+     */
+    public UsecaseView getView() {
+        return this.view;
+    }
+
+    /**
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration config) throws ConfigurationException {
+        Configuration viewConfig = config.getChild("view", false);
+        if (viewConfig != null) {
+            this.view = new UsecaseView();
+            view.configure(viewConfig);
+        }
+    }
+
 }

@@ -4,24 +4,32 @@
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow">
       <event id="submit"/>
+      <view template="workflow/submit"/>
     </component-instance>
                         
     <component-instance name="default/workflow.reject"
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow">
       <event id="reject"/>
+      <view template="workflow/reject"/>
     </component-instance>
                         
     <component-instance name="default/workflow.publish"
                         logger="lenya.usecases.workflow"
-                        class="org.apache.lenya.defaultpub.cms.usecases.Publish"/>
+                        class="org.apache.lenya.defaultpub.cms.usecases.Publish">
+      <view template="workflow/publish"/>
+    </component-instance>
 
     <component-instance name="default/workflow.deactivate"
                         logger="lenya.usecases.workflow"
-                        class="org.apache.lenya.defaultpub.cms.usecases.Deactivate"/>
+                        class="org.apache.lenya.defaultpub.cms.usecases.Deactivate">
+      <view template="workflow/deactivate"/>
+    </component-instance>
 
     <component-instance name="default/site.delete"
                         logger="lenya.usecases.delete"
-                        class="org.apache.lenya.defaultpub.cms.usecases.Delete"/>
+                        class="org.apache.lenya.defaultpub.cms.usecases.Delete">
+      <view template="site/delete"/>
+    </component-instance>
 
   </xconf>

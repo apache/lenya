@@ -142,12 +142,6 @@ public interface Usecase {
     String getTargetURL(boolean success);
 
     /**
-     * @return If the usecase is interactive, i.e. a confirmation screen should
-     *         be shown.
-     */
-    boolean isInteractive();
-    
-    /**
      * @param name The name of this usecase.
      */
     void setName(String name);
@@ -156,5 +150,10 @@ public interface Usecase {
      * @return The name of this usecase.
      */
     String getName();
+    
+    /**
+     * @return The view of the usecase.
+     */
+    UsecaseView getView();
 
 }
