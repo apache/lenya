@@ -66,7 +66,6 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 	
 	if (this.getLogger().isDebugEnabled()) {
 	    this.getLogger().debug("processing file " + src);
-	    this.getLogger().debug("file resolved to " + inputSource.getURI());
 	}
         
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -76,6 +75,10 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 	    String parameterSrc = parameters.getParameter(parameterNames[i])
                 + request.getRequestURI();
 	    inputSource = resolver.resolveURI(parameterSrc);
+	    
+	    if (this.getLogger().isDebugEnabled()) {
+		this.getLogger().debug("file resolved to " + inputSource.getURI());
+	    }
 	    resolver.toSAX(inputSource, xmlConsumer);
 	    map.put(parameterNames[i], xmlConsumer.getParameter());
         }
