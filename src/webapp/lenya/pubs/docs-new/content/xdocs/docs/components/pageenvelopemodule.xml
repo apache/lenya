@@ -34,6 +34,8 @@ of the Cocoon documentation.
   <dd>The document ID, i.e. the path of the document in the sitetree.</dd>
   <dt>document-url</dt>
   <dd>The URL of the document within the area, e.g., <code>/news/index.html</code></dd>
+  <dt>publication</dt>
+  <dd>The current publication</dd>
 </dl>
 </section>
 
