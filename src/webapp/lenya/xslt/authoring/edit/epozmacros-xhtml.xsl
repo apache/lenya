@@ -8,8 +8,9 @@
 <xsl:param name="document-path"/>
 <xsl:param name="contentfile"/>
 <xsl:param name="save-destination"/>
-<xsl:param name="reload-on-save" value="1"/>
-<xsl:param name="usecss" value="1"/>
+<xsl:param name="reload-on-save" select="'1'"/>
+<xsl:param name="usecss" select="'1'"/>
+<xsl:param name="redirect-to" select="'http://cocoon.apache.org/lenya/'"/>
 
 
 <xsl:template match="xhtml:body/xhtml:div/xhtml:div/xhtml:div/xhtml:iframe/@src">
@@ -18,6 +19,10 @@
 	<xsl:attribute name="reloadsrc">0</xsl:attribute>
 	<!--<xsl:attribute name="reloadsrc"><xsl:value-of select="reload-on-save"/></xsl:attribute>-->
 	<xsl:attribute name="usecss"><xsl:value-of select="use-css"/></xsl:attribute>
+</xsl:template>
+
+<xsl:template match="xhtml:body/xhtml:div/xhtml:div/xhtml:div/xhtml:span/xhtml:span/xhtml:button[contains(@class,'exit')]">
+  <button class="epoz-save-and-exit" title="Save and Exit" onclick="epozui.saveAndExitButtonHandler('{$redirect-to}')">&#160;</button>
 </xsl:template>
 
 <xsl:template match="xhtml:title">
