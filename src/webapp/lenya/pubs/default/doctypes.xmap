@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: doctypes.xmap,v 1.16 2004/03/13 12:47:21 gregor Exp $ -->
+<!-- $Id: doctypes.xmap,v 1.17 2004/03/24 13:20:08 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -33,11 +33,15 @@
   <map:pipelines>
 
     <map:pipeline>
-      <map:match pattern="*/*/**.xml">
+      <map:match pattern="*/*/*/**.xml">
         <map:match type="step" pattern="view-revision">
           <map:generate type="serverpages" src="../../content/rc/view.xsp">
           </map:generate>
-          <map:transform src="xslt/toDoc.xsl"/>
+          <map:transform src="../../xslt/rc/toDoc.xsl"/>
+        <map:transform src="xslt/{../3}2xhtml.xsl">
+          <map:parameter name="rendertype" value="{1}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+        </map:transform>
           <map:serialize type="xml"/>
         </map:match>
       </map:match>
