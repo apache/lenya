@@ -3,6 +3,7 @@
 <xsp:page 
     language="java" 
     xmlns:xsp="http://apache.org/xsp"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
     xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
     xmlns:xsp-request="http://apache.org/xsp/request/2.0"
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
@@ -20,21 +21,21 @@
   </xsp:logic>
 
   <menus>
-    <menu name="File" label="File">
+    <menu i18n:attr="name" name="File" label="File">
       <block>
-        <item>Passwd</item>
-        <item>Switch&#160;User</item>
-        <item href="?lenya.usecase=logout&amp;lenya.step=showscreen">Logout</item>
+        <item><i18n:text>Passwd</i18n:text></item>
+        <item><i18n:text>Switch User</i18n:text></item>
+        <item href="?lenya.usecase=logout&amp;lenya.step=showscreen"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
 
-    <menu name="Edit" label="Search">
+    <menu i18n:attr="name" name="Edit" label="Search">
     </menu>
 
-    <menu name="Workflow" label="Help">
+    <menu i18n:attr="name" name="Workflow" label="Help">
     </menu>
 
-    <menu name="Debug" label="Debug">
+    <menu i18n:attr="name" name="Debug" label="Debug">
     </menu>
   </menus>
 
