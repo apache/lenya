@@ -92,7 +92,7 @@
         <td>
         
         <form name="form_publish">
-          
+          <input type="hidden" name="lenya.usecase" value="publish"/>          
           <input type="hidden" name="lenya.step" value="publish"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
           
@@ -135,7 +135,7 @@
                 <tr>
                   <td/>
                   <td>
-                    <input i18n:attr="value" type="submit" name="lenya.usecase" value="Publish"/>
+                    <input i18n:attr="value" type="submit" value="Publish"/>
                     <xsl:text> </xsl:text>
                     <input i18n:attr="value" type="button" onClick="location.href='{$referer}';" value="Cancel"/>
                   </td>
