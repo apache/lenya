@@ -123,6 +123,7 @@
       <xslt-processor-role>xsltc</xslt-processor-role>
       <check-includes>true</check-includes>
     </map:transformer>
+  </map:transformers>
 
   <!-- ========================================================================== -->
   <!-- Serializers -->
