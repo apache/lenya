@@ -1,252 +1,888 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> Changes</title><link>changes.html</link><description> Changes</description><language>en-us</language><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              antonio
-              :
-              Disable HSQLDB block (not used by Lenya) </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+<rss version="0.91"><channel><title> Changes</title><link>changes.html</link><description> Changes</description><language>en-us</language><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
-              lenya TLP changes </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            Readded dependency on Lucene block as the Lenya search XSP relies on it. Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Renamed XPSInclude to XInclude and XPSAssembler to XIncludeImpl. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed obsolete xhtml-iso serializer from the blog sitemap. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Changed ant install to build install in the install instructions. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Readded dependency on Lucene block as the Lenya search XSP relies on it. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Made install instructions clearer, thanks to a patch by Hubertus Groepper. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32768 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Fixed the creator test by changing the resource type to xhtml. Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added new compile-xsp target to precompile XSP. This can be used to detect errors in XSP files that would otherwise go unnoticed. This uses code submitted by Simon Mieth (http://issues.apache.org/bugzilla/show_bug.cgi?id=29360) Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added new compile-xsp target to precompile XSP. This can be used to detect errors in XSP files that would otherwise go unnoticed. This uses code submitted by Simon Mieth (http://issues.apache.org/bugzilla/show_bug.cgi?id=29360) Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Fixed path to legal dir Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Added kupu to be build for dist-bin target.
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            * Fixed target dist-bin ; removed copying of endorsed libs, since the
+folder does not exist anymore
+* excluded dist folder from copy process
+
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Changing to kupu 1.2 branch.
+Guido Wesdorp created it yesterday from trunk.
+ Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed empty promise from the code. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed empty promise from the code. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added resource type to the site area overview tab. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=32615 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              michi
+              :
+              [1.4] 
+            do not build Cocoon every time during Lenya build Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              michi
+              :
+              [1.4] 
+            hardcoded 127.0.0.1 address replaced by server name Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed setLanguageTabs() Javascript function from the site tree. It was no longer needed and caused problems with some language settings. Also made the sitetree code more defensive to get rid of some Javascript errors in the insert link popup. Thanks to Josias Thoeny for reporting. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Removed setLanguageTabs() Javascript function from the site tree. It was no longer needed and caused problems with some language settings. Also made the sitetree code more defensive to get rid of some Javascript errors in the insert link popup. Thanks to Josias Thoeny for reporting. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Improved the warning message if Kupu is not installed correctly. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Improved the warning message if Kupu is not installed correctly. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added fallback:// protocol to more pipelines. This enables to easily overwrite the look and feel of Lenya by providing custom stylesheets. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Switched from deprecated resolver.resolve() to resolver.resolveURI() Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Switched from deprecated resolver.resolve() to resolver.resolveURI() Diff
+         </description></item><item><title>Docs </title><link>changes.html</link><description>Docs 
+              by 
+              gregor
+              :
+              [Docs] 
+            Substantially extended the Lenya proxying howto, and enabled the section on resource types. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Improved the Lucene documentation. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Updated install instructions to reflect that Cocoon 2.1.6 is now the required version. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Set cocoon.src.dir to cocoon-2.1.6 by default Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Added two live sites to the list. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Removed support for hsqldb Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed support for hsqldb Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added preview for images to asset upload screens and asset lists. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed support for hsqldb Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Removed support for hsqldb Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Moved styling information from inline to CSS. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Moved styling information from inline to CSS. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Make building of Cocoon condidational to allow Gump to sidestep it. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Made the start page for the export target valid. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Made the start page for the export target valid. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed reliance of export targets on Tomcat. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Removed reliance of export targets on Tomcat. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Made Identity serializable (forward-ported from 1.2 branch) Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Removed spurious debugging statements and improved language Diff
+         </description></item><item><title>1.2 </title><link>changes.html</link><description>1.2 
+              by 
+              gregor
+              :
+              [1.2] 
+            Removed the links sample page from the default publication until the doctype is completed. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Changed text of the login screen to explicitly mention both default users. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32570 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Changed text of the login screen to explicitly mention both default users. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32570 Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added patch by Marc Kuester to enable per-doctype CSS. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29325 Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Fixed a typo in the documentation. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Changed property name from "gump.build" to "gump.skipcocoonbuild" to avoid clashes. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Make building of Cocoon condidational to allow Gump to sidestep it. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added support for Macromedia Flash to the insert image screen. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Added support for Macromedia Flash to the insert image screen. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
               by 
               thorsten
               :
-              Fixed the entity bug </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [Docs] 
+            changed install note for forrest Diff
+         </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+              by 
+              thorsten
+              :
+              [Site] 
+            deployed the site with last changes Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            String fixed such that it actually compiles because I mixed up versions Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Apply patch by Hubertus Groepper to better describe the patch preparation procedure. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            hardcoded 127.0.0.1 replaced by serverName such also WebLogic Server works re Scheduling Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            name fixed Diff
+         </description></item><item><title>1.2 </title><link>changes.html</link><description>1.2 
+              by 
+              edith
+              :
+              [1.2] 
+            The namespaces are needed in order that the XPSAssembler work with the new xalan Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              edith
+              :
+              [1.2] 
+            The namespaces are needed in order that the XPSAssembler work with the new xalan Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Apply patch by Doug Chestnut to make BXE work with 2.1.6. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32574 Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Clarified install instructions. Thanks to Martin Luethi. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            The XML serializer is now set to UTF-8 by default, therefore cleaning out references to xml-utf-8 serializers. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=32554, thanks to Doug Chestnut. Diff
+         </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+              by 
+              thorsten
+              :
+              [Site] 
+            deployed changes that have been done by committers that not have deployed the site afterwards Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              tschlabach
+              :
+              [Docs] 
+            removed "&lt;strong&gt;" for Torsten Schlabach afert having read at the bottom of the page what the type means Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              tschlabach
+              :
+              [Docs] 
+            added "Torsten Schlabach" (tschlabach at apache.org) to the list of active committers Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
               by 
               andreas
               :
-              escape special characters in BXE link sitetree </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [Docs] 
+            added unibe.ch Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               andreas
               :
-              OneFormEditor: check wellformedness before validation </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            using xsl:element again since it works at least with Xalan Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
-              508 compliance </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            Fixed undeclared variables in flowscript. Thanks to Doug Chestnut and Jeremy Torres. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32544 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
-              charter moved to site </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              resolution moved to site </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              jwkaltz
-              :
-              added more parameter descriptions
- </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              added support for multi paragraph paste into BXE to config </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              sitemap components cleanup </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              jwkaltz
-              :
-              Removed hard-coding of ou=People branch, added possibility to search a
-subtree for a user, and added option to support MS Active Directory
- </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              jwkaltz
-              :
-              A sample for ldap.properties; the usage of the various options
-(especially the new ones) are documented within the file
- </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              move more validation out of XSL and into javascript validation.xml </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              move client side ip range validation to validation.xml (currently unused)
-sync trunk with 1.2 for validation.xml </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              move js to includes to avoid problems with XML and &amp;&amp; </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              #30039 make addMetaData.xsl consistent </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              #32000 reliance on cocoon deprecated classes removed </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              BAD practice to log standard messages with log.error. </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              BAD practice to log standard messages with log.error. </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              project-logo.gif is no longer used </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              this is needed to edit homepage documents in bxe </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              remove misleading comments </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              eol-style set to native </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              eol-style set to native </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              #32119  org.apache.forrest.components.sourcetype.SourceTypeAction references </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              remove misleading comments </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            Fixed undeclared variables in flowscript. Thanks to Doug Chestnut and Jeremy Torres. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32544 Diff
+         </description></item><item><title> update</title><link>changes.html</link><description> update
               by 
               michi
               :
-              recommended version added </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [] 
+            debugging improved Diff
+         </description></item><item><title> update</title><link>changes.html</link><description> update
               by 
               michi
               :
-              thanks to Josias the javascript is now copied properly </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [] 
+            logging off added Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              edith
+              :
+              [1.2] 
+            Fix the uri, because the publication id has no / Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            allowing 5-character language extensions instead of 4-character Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
               by 
               gregor
               :
-              change to ../cocooon to match what the docs say </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [Docs] 
+            Extended BXE documentation. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
-              #32183 keep the visibility attribute if a usecase as archive is invoked </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            Fix setup method of DocumentIndexTransformer to work with Cocoon 2.1.6 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
-              eol style set </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            Fix setup method of DocumentIndexTransformer to work with Cocoon 2.1.6 Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
               by 
               gregor
               :
-              getting tests to run </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [Docs] 
+            New live site added. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
               by 
               gregor
               :
-              getting tests to run </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              getting tests to run </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-               </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              line endings </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              #29135 convert spaces in asset filenames to underscores </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              michi
-              :
-              timestamp format fixed </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              michi
-              :
-              thanks to Josias the IE problem re UTF-8 has been fixed </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              michi
-              :
-              more details on how to build Cocoon </description></item><item><title> fix</title><link>changes.html</link><description> fix
-              by 
-              blautenb
-              :
-              Migrate lenya to TLP
- </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [Docs] 
+            Live site added. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               antonio
               :
-              Fixing typos </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              gregor
-              :
-              factor out js validation
-add check for empty title to all asset / image upload screens </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            Add mising keys Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               antonio
               :
-              Don't use underscore text decoration in the lenya menu </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            Add &amp;#160; Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Use the same key as i18n files Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Improved the BXE documentation. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Fix typo. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Language improvements Diff
+         </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Made search.properties work out of the box. Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Made search.properties work out of the box. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Expanded Lucene documentation. Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Replace references to cocoon-lenya Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Improve usability of edit menu. Thanks to Jean-Pierre LeJacq. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32514 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Improve usability of edit menu. Thanks to Jean-Pierre LeJacq. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32514 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Set default publication serialization to html to deal with rendering problems from spurious namespace definitions when using XHTML. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Fixed edit flowscript to no longer use the getSourceURI method. Thanks to Doug Chestnut. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Switch to HTML / XHTML / XML serializers from the serializers block. This improves compliance with UTF-8 and fixes various serialization bugs. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            We don't use pizza compiler. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Fix typo Diff
+         </description></item><item><title>1.2 </title><link>changes.html</link><description>1.2 
+              by 
+              antonio
+              :
+              [1.2] 
+            Use cocoon log4j Diff
+         </description></item><item><title>1.2 </title><link>changes.html</link><description>1.2 
+              by 
+              antonio
+              :
+              [1.2] 
+            We don't include xalan in the distribution Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Use cocoon XConfToolTask.class Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Remove unused local variables. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Fix lenya wiki link Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Adapted published check to API changes in 1.4. Thanks to Doug Chestnut. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Set encoding to UTF-8 for admin pipelines Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Remove encoding from stylesheet Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Set enable.uploads=false Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Eclipse project now use cocoon 2.1.6 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Update info based in cocoon 2.1.6 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Set java 1.4 as source vm Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Remove trailing spaces Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Comment hsqldb port variable. It is not needed. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Allow to run in cygwin Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Use issue.apache.org + remove trailing spaces. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Remove unused imports. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Fix typo. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            must return a value. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Define xalan as the default xslt tranformer again (run with cocoon-2.1.6) Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Remove unused imports. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Remove unused import Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Comment hsqldb port variable. Set cocon dir to 2.1.6 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Update info based in cocoon 2.16 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Set java 1.4 as source vm Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Allow to run in cygwin Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Use issue.apache.org Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              roku
+              :
+              [1.4] 
+            Added kupu build script Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            formatting Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            - Print out error and fail if xsltproc is not available
+- Removed redundant call of make on windows Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Added note for xsltproc Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              roku
+              :
+              [1.4] 
+            Added note for xsltproc Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              roku
+              :
+              [1.4] 
+            Updated svn:external prop for bxe Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Updated svn:external prop for bxe Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Updated svn:external prop for bxe Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              egli
+              :
+              [1.2] 
+            When saving in Xopus the workflow state is now set back to
+"authoring". This is similar to the behaviour in bitflux.
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               andreas
               :
-              adding lenya:asset/@size attribute </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            avoid arrayindexoutofboundsexception (URL length check) Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               andreas
               :
-              adding button to insert asset (fixes bug #31953) </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            check wellformedness Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              michi
+              andreas
               :
-              hardcoded Xopus path removed </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            calling super.setup() to avoid NPE in startPrefixMapping() Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              michi
+              andreas
               :
-              schema added </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            calling super.setup() to avoid NPE in startPrefixMapping() Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              michi
+              andreas
               :
-              false readded </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              michi
-              :
-              homepage readded </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              michi
-              :
-              homepage readded </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
-              by 
-              michi
-              :
-              serialize Identity </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            adding missing 18n namespace declaration Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
               by 
               gregor
               :
-              bring schema for object closer in snyc with xhtml 2 draft and allow the href attritube
-
-we should really migrate to the rng for xhtml 2 </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [Docs] 
+            Expanded the Xopus integration documentation. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
-              remove xul from 1.2 branch </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.2] 
+            Improved Xopus installation instructions Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
-              #29156  i18n for checkout exceptions </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            Improved Xopus installation instructions Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              gregor
+              andreas
               :
-              #29156  i18n for checkout exceptions </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            removed unnecessary component declarations Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              gregor
+              andreas
               :
-              update lenya 1.2.1 issues </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            fixed XLink namespace URI Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              gregor
+              andreas
               :
-              documentation was moved to its own branch </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              [1.4] 
+            fixed XLink namespace URI Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              gregor
+              andreas
               :
-              documentation was moved to its own branch </description></item></channel></rss>
+              [1.2] 
+            fixed XLink namespace URI Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            fixed XLink namespace URI Diff
+         </description></item></channel></rss>
