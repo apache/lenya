@@ -1,5 +1,5 @@
 /*
- * $Id: SetIdentifier.java,v 1.4 2003/10/21 09:51:54 andreas Exp $ <License>
+ * $Id: SetIdentifier.java,v 1.5 2004/02/21 16:53:41 gregor Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -122,7 +122,7 @@ public class SetIdentifier extends PublicationTask {
 		Document document = null;
 		document = publication.getDocumentBuilder().buildDocument(publication, url);
 		DublinCore dublincore = document.getDublinCore();
-		dublincore.setIdentifier(documentid);
+        dublincore.setValue("identifier", documentid);
 		dublincore.save();
 	}
 
