@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: website-update.xml 47579 2004-09-30 12:25:51Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Updating the Lenya Website</title>
+    <version/>
+    <type/>
+  </header>
+  <body>
+<section><title>Updating the Lenya website</title>
+<ul>
+  <li>For further information see the Wiki page <link href="ext:wiki.CocoonWebsiteUpdate">CocoonWebsiteUpdate</link></li>
+  <li>Checkout the <code>cocoon-site</code> module from <code>svn.apache.org</code></li>
+  <li>You can do that by using <code>svn co https://svn.apache.org/repos/asf/cocoon/site/site/lenya/ lenya-website</code></li>
+  <li><link href="ext:forrest.build">Build Forrest</link></li>
+  <li><code>cd $LENYA_HOME</code></li>
+  <li><code>forrest</code></li>
+  <li>Copy the pages from <code>$LENYA_HOME/build/site</code> to <code>cocoon-site/site/lenya</code></li>
+  <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>$TOMCAT_HOME/webapps/lenya/lenya/pubs/docs-new/resources/html/apidocs</code> to <code>cocoon-site/site/lenya</code>)</li>
+  <li>Add, remove, commit to <code>cocoon-site</code></li>
+</ul>
+<p>There is a cron job on minotaur which will do 'svn update'
+every 12 hours (see ~thorsten/bin/mycrontab). If you want to do it manually then ...</p>
+<ul>
+  <li>Login to <code>minotaur.apache.org</code></li>
+  <li><code>minotaur@apache.org &gt; ~thorsten/bin/lenya-update.sh</code></li>
+</ul>
+</section>
+  </body>
+</document>
