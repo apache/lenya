@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: page2xhtml.xsl,v 1.17 2004/08/10 18:38:49 roku Exp $ -->
+<!-- $Id: page2xhtml.xsl,v 1.18 2004/08/24 12:12:25 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -28,7 +28,7 @@
     >
     
     
-<!-- servlet context prefix i.e. /lenya/ -->
+<!-- {context-prefix}/{publication-id}/{area} -->
 <xsl:param name="root"/>
 
 <!-- i.e. doctypes/xhtml-document -->
