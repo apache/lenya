@@ -7,6 +7,8 @@
 
 <xsl:param name="edit" select="'No node selected yet'"/>
 
+<xsl:include href="copy-mixed-content.xsl"/>
+
 <xsl:template match="form">
 <page:page>
 <page:title>Edit Document</page:title>
@@ -106,20 +108,25 @@
 </xsl:template>
 
 <xsl:template match="content">
-<xsl:copy-of select="node()"/>
-<!--
 <xsl:choose>
 <xsl:when test="$edit = ../@select">
-<xsl:copy-of select="node()"/>
+  <xsl:apply-templates select="textarea"/>
+  <xsl:copy-of select="input"/>
 </xsl:when>
 <xsl:otherwise>
-<p>
-<xsl:value-of select="input/@value"/>
-<xsl:copy-of select="textarea/node()"/>
-</p>
+  <p>
+    <xsl:value-of select="input/@value"/>
+    <xsl:copy-of select="textarea/node()"/>
+  </p>
 </xsl:otherwise>
 </xsl:choose>
--->
+</xsl:template>
+
+<xsl:template match="textarea">
+<xsl:copy>
+  <xsl:copy-of select="@*"/>
+  <xsl:apply-templates mode="mixedcontent"/>
+</xsl:copy>
 </xsl:template>
 
 <xsl:template match="insert">

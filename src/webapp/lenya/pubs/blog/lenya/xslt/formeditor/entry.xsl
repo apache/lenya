@@ -13,7 +13,14 @@
 <!-- FIXME: In the case of text input field, < and > need to be replaced by &lt; and &gt;
   <content><input type="text" name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:apply-templates select="echo:title/node()" mode="mixed"/></xsl:attribute></input></content>
 -->
-  <content><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" cols="40" rows="1"><xsl:apply-templates select="echo:title/node()" mode="mixedcontent"/></textarea></content>
+  <content>
+    <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" cols="40" rows="1">
+      <xsl:copy-of select="echo:title/node()"/>
+<!--
+      <xsl:apply-templates select="echo:title/node()" mode="mixedcontent"/>
+-->
+    </textarea>
+  </content>
 </node>
 
 <xsl:if test="not(echo:summary)">
@@ -40,7 +47,10 @@
   <action><delete name="&lt;xupdate:remove select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
     <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">
-      <xsl:apply-templates mode="mixedcontent" />
+      <xsl:copy-of select="node()"/>
+<!--
+      <xsl:apply-templates mode="mixedcontent"/>
+-->
     </textarea>
   </content>
 </node>
@@ -66,7 +76,10 @@
   <action><delete name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
     <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">
+      <xsl:copy-of select="node()"/>
+<!--
       <xsl:apply-templates mode="mixedcontent"/>
+-->
     </textarea>
   </content>
 </node>

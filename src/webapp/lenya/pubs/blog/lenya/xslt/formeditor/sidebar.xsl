@@ -17,11 +17,18 @@
 <node name="Block">
   <action><delete name="&lt;xupdate:remove select=&quot;/sidebar/block[@tagID='{@tagID}']&quot;/&gt;"/></action>
 </node>
-<node name="Title">
+<node name="Title" select="/sidebar/block/title[@tagID='{title/@tagID}']">
   <content type="plain"><input type="text" name="&lt;xupdate:update select=&quot;/sidebar/block/title[@tagID='{title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="title" /></xsl:attribute></input></content>
 </node>
-<node name="Content">
-  <content type="mixed"><textarea name="&lt;xupdate:update select=&quot;/sidebar/block/content[@tagID='{content/@tagID}']&quot;&gt;" cols="40" rows="3"><xsl:apply-templates select="content/node()" mode="mixedcontent" /></textarea></content>
+<node name="Content" select="/sidebar/block/content[@tagID='{content/@tagID}']">
+  <content type="mixed">
+    <textarea name="&lt;xupdate:update select=&quot;/sidebar/block/content[@tagID='{content/@tagID}']&quot;&gt;" cols="40" rows="3">
+      <xsl:copy-of select="content/node()"/>
+<!--
+      <xsl:apply-templates select="content/node()" mode="mixedcontent"/>
+-->
+    </textarea>
+  </content>
 
 <!--
   <content type="non-editable"><pre><xsl:copy-of select="content/@*|content/node()" /></pre></content>
