@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.36 2004/02/02 02:50:39 stefano Exp $
+$Id: LoadQuartzServlet.java,v 1.37 2004/02/25 13:26:35 andreas Exp $
 <License>
 
  ============================================================================
@@ -91,7 +91,7 @@ import org.w3c.dom.Document;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.36 2004/02/02 02:50:39 stefano Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.37 2004/02/25 13:26:35 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -109,7 +109,7 @@ public class LoadQuartzServlet extends HttpServlet {
      * Returns the scheduler wrapper.
      * @return A scheduler wrapper.
      */
-    protected static SchedulerWrapper getScheduler() {
+    public static SchedulerWrapper getScheduler() {
         return scheduler;
     }
 
@@ -251,25 +251,7 @@ public class LoadQuartzServlet extends HttpServlet {
         log.debug("----------------------------------------------------------------");
         log.debug("Request parameters:");
 
-        Map parameterMap = new HashMap();
-        List keys = new ArrayList();
-        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
-            String key = (String) e.nextElement();
-            keys.add(key);
-        }
-        Collections.sort(keys);
-        for (Iterator i = keys.iterator(); i.hasNext();) {
-            String key = (String) i.next();
-            String[] values = request.getParameterValues(key);
-            log.debug("    [" + key + "] = [" + values[0] + "]");
-            if (values.length == 1) {
-                parameterMap.put(key, values[0]);
-            } else {
-                parameterMap.put(key, values);
-            }
-        }
-
-        NamespaceMap schedulerParameters = new NamespaceMap(parameterMap, PREFIX);
+        NamespaceMap schedulerParameters = getSchedulerParameters(request);
 
         try {
             String publicationId = (String) schedulerParameters.get(PARAMETER_PUBLICATION_ID);
@@ -319,6 +301,34 @@ public class LoadQuartzServlet extends HttpServlet {
             log.error("Can't create job snapshot: ", e);
             throw new IOException(e.getMessage() + " (view log for details)");
         }
+    }
+
+    /**
+     * Extracts the scheduler parameters from a request.
+     * @param request The request.
+     * @return A namespace map.
+     */
+    public static NamespaceMap getSchedulerParameters(HttpServletRequest request) {
+        Map parameterMap = new HashMap();
+        List keys = new ArrayList();
+        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+            String key = (String) e.nextElement();
+            keys.add(key);
+        }
+        Collections.sort(keys);
+        for (Iterator i = keys.iterator(); i.hasNext();) {
+            String key = (String) i.next();
+            String[] values = request.getParameterValues(key);
+            log.debug("    [" + key + "] = [" + values[0] + "]");
+            if (values.length == 1) {
+                parameterMap.put(key, values[0]);
+            } else {
+                parameterMap.put(key, values);
+            }
+        }
+        
+        NamespaceMap schedulerParameters = new NamespaceMap(parameterMap, PREFIX);
+        return schedulerParameters;
     }
 
     /**

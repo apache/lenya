@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.37 2004/02/21 13:44:43 gregor Exp $
+$Id: TaskJob.java,v 1.38 2004/02/25 13:28:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -90,30 +90,15 @@ public class TaskJob extends ServletJob {
     private static Category log = Category.getInstance(TaskJob.class);
 
     /**
-     * Get the parameters.
+     * Un-prefix the parameters.
      * 
-     * @param request the request
+     * @param wrapperMap the prefixed parameters.
      * 
      * @return the parameters
      * @throws SchedulerException when something went wrong.
      */
-    protected Map getParameters(HttpServletRequest request)
+    protected Map stripPrefixes(Map wrapperMap)
         throws SchedulerException {
-        
-        Enumeration parameters = request.getParameterNames();
-        Map wrapperMap = new HashMap();
-        while (parameters.hasMoreElements()) {
-            String key = (String) parameters.nextElement();
-            Object value;
-            String[] values = request.getParameterValues(key);
-            if (values.length == 1) {
-                value = values[0];
-            }
-            else {
-                value = values;
-            }
-            wrapperMap.put(key, value);
-        }
         
         NamespaceMap taskParameters = new NamespaceMap(TaskParameters.PREFIX);
         taskParameters.putAll(wrapperMap);
@@ -132,11 +117,27 @@ public class TaskJob extends ServletJob {
      * @return A job data map.
      * @throws SchedulerException when something went wrong.
      */
-    public JobDataMap createJobData(String servletContextPath, HttpServletRequest request)
+    public JobDataMap createJobData(HttpServletRequest request)
         throws SchedulerException {
         log.debug("Creating job data map:");
-        JobDataMap map = super.createJobData(servletContextPath, request);
-        map.putAll(getParameters(request));
+        JobDataMap map = super.createJobData(request);
+
+        Enumeration parameters = request.getParameterNames();
+        Map wrapperMap = new HashMap();
+        while (parameters.hasMoreElements()) {
+            String key = (String) parameters.nextElement();
+            Object value;
+            String[] values = request.getParameterValues(key);
+            if (values.length == 1) {
+                value = values[0];
+            }
+            else {
+                value = values;
+            }
+            wrapperMap.put(key, value);
+        }
+
+        map.putAll(stripPrefixes(wrapperMap));
         return map;
     }
 

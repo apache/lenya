@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.27 2004/02/02 02:50:39 stefano Exp $
+$Id: SchedulerWrapper.java,v 1.28 2004/02/25 13:28:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -190,10 +190,49 @@ public class SchedulerWrapper {
      * Adds a job.
      * @param jobGroup The job group.
      * @param startTime The start time.
+     * @param jobClass The class of the job.
+     * @param map The job parameters.
+     * @throws SchedulerException if an error occurs.
+     * @throws PublicationException if an error occurs.
+     */
+    protected void addJob(String jobGroup, Date startTime, Class jobClass, JobDataMap map)
+        throws SchedulerException, PublicationException {
+        String uniqueJobId = getNextJobId();
+        log.debug("Job ID: [" + uniqueJobId + "]");
+        
+        JobDetail jobDetail = new JobDetail(uniqueJobId, jobGroup, jobClass);
+        jobDetail.setJobDataMap(map);
+        
+        Date now = new GregorianCalendar().getTime();
+        if (log.isDebugEnabled()) {
+            DateFormat format = new SimpleDateFormat();
+            log.debug("Trigger time: [" + format.format(startTime) + "]");
+            log.debug("Current time: [" + format.format(now) + "]");
+        }
+        
+        if (startTime.after(now)) {
+            Trigger trigger =
+                TriggerHelper.createSimpleTrigger(uniqueJobId, jobGroup, startTime);
+            addJob(jobDetail, trigger);
+            log.debug("Scheduling job.");
+        } else {
+            addJob(jobDetail);
+            log.debug("Adding job without scheduling.");
+        }
+        
+        log.debug("----------------------------------------------");
+        
+        store.writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
+    }
+
+    /**
+     * Adds a job.
+     * @param jobGroup The job group.
+     * @param startTime The start time.
      * @param request The request to obtain the parameters from.
      * @throws SchedulerException when something went wrong.
      */
-    protected void addJob(String jobGroup, Date startTime, HttpServletRequest request)
+    public void addJob(String jobGroup, Date startTime, HttpServletRequest request)
         throws SchedulerException {
 
         if (jobGroup == null) {
@@ -208,34 +247,9 @@ public class SchedulerWrapper {
             Class jobClass = TaskJob.class;
 
             ServletJob job = ServletJobFactory.createJob(jobClass);
-            JobDataMap map = job.createJobData(getServletContextPath(), request);
+            JobDataMap map = job.createJobData(request);
 
-            String uniqueJobId = getNextJobId();
-            log.debug("Job ID: [" + uniqueJobId + "]");
-
-            JobDetail jobDetail = new JobDetail(uniqueJobId, jobGroup, jobClass);
-            jobDetail.setJobDataMap(map);
-
-            Date now = new GregorianCalendar().getTime();
-            if (log.isDebugEnabled()) {
-                DateFormat format = new SimpleDateFormat();
-                log.debug("Trigger time: [" + format.format(startTime) + "]");
-                log.debug("Current time: [" + format.format(now) + "]");
-            }
-
-            if (startTime.after(now)) {
-                Trigger trigger =
-                    TriggerHelper.createSimpleTrigger(uniqueJobId, jobGroup, startTime);
-                addJob(jobDetail, trigger);
-                log.debug("Scheduling job.");
-            } else {
-                addJob(jobDetail);
-                log.debug("Adding job without scheduling.");
-            }
-
-            log.debug("----------------------------------------------");
-
-            store.writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
+            addJob(jobGroup, startTime, jobClass, map);
         } catch (Exception e) {
             log.error("Adding job failed: ", e);
             throw new SchedulerException(e);

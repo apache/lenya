@@ -1,5 +1,5 @@
 /*
-$Id: ServletJob.java,v 1.16 2004/02/02 02:50:39 stefano Exp $
+$Id: ServletJob.java,v 1.17 2004/02/25 13:28:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,15 +73,14 @@ import org.w3c.dom.Element;
 public abstract class ServletJob implements Job {
 
     private static Category log = Category.getInstance(ServletJob.class);
-
+    
     /**
      * Creates the job data from an HTTP request.
-     * @param servletContextPath The servlet context path.
      * @param request The request.
      * @return A job data map.
      * @throws SchedulerException when something went wrong.
      */
-    public JobDataMap createJobData(String servletContextPath, HttpServletRequest request)
+    public JobDataMap createJobData(HttpServletRequest request)
         throws SchedulerException {
         JobDataMap map = new JobDataMap();
         String key = NamespaceMap.getFullName(LoadQuartzServlet.PREFIX, PARAMETER_DOCUMENT_URL);
