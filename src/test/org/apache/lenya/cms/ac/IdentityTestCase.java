@@ -19,7 +19,7 @@ import org.apache.lenya.cms.ac.Identity;
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: IdentityTestCase.java,v 1.5 2003/04/24 13:53:15 gregor Exp $
+ * @version CVS $Id: IdentityTestCase.java,v 1.6 2003/04/25 14:03:44 gregor Exp $
  */
 public final class IdentityTestCase extends TestCase {
     private Identity identity = null;
@@ -52,7 +52,7 @@ public final class IdentityTestCase extends TestCase {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            doc = db.parse(new FileInputStream("/home/michi/src/lenya/src/webapp/lenya/pubs/oscom/content/ac/passwd/lenya.iml"));
+            doc = db.parse(new FileInputStream("/home/michi/src/lenya/src/webapp/lenya/pubs/oscom/config/ac/passwd/lenya.iml"));
             identity = new Identity(doc);
             //new org.apache.lenya.xml.DOMWriter(System.out).printWithoutFormatting(identity.createDocument());
         } catch (Exception e) {

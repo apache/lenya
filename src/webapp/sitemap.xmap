@@ -376,7 +376,7 @@
    <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
         <tree-authoring href="content/authoring/tree.xml"/>
         <docs href="content/authoring"/>
-        <doctypes href="content/doctypes/"/>
+        <doctypes href="config/doctypes/"/>
    </map:action>
 <!--
       <map:action name="xopushandler" logger="sitemap.action.xopus" src="org.apache.lenya.cms.cocoon.acting.XopusHandlerAction">
@@ -385,7 +385,7 @@
         <xsd href="content"/>
 -->
 <!--
-        <xsd href="content/doctypes/schemas"/>
+        <xsd href="config/doctypes/schemas"/>
 -->
 <!--
         <temp href="temp"/>
