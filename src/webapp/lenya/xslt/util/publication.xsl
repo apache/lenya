@@ -31,9 +31,9 @@
 </div>
 
 <div class="lenya-frontpage">
-<h2>About</h2>
-<h3><xsl:value-of select="lenya:name"/></h3>
+<h2><xsl:value-of select="lenya:name"/></h2>
 <p>
+<h3>About</h3>
   <xsl:copy-of select="lenya:description"/>
   <br/><br/>
   <xsl:apply-templates select="lenya:readme"/>
@@ -46,12 +46,13 @@
 </xsl:template>
 
 <xsl:template match="lenya:readme">
+<h3>Readme</h3>
   <xsl:copy-of select="*"/>
 </xsl:template>
 
 <xsl:template match="lenya:tests">
 <a name="lenya:tests" />
-<h2>Tests</h2>
+<h3>Tests</h3>
 <ol>
   <xsl:apply-templates select="lenya:test"/>
 </ol>
