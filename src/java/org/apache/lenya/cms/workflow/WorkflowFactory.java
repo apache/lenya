@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.22 2003/09/01 17:01:48 andreas Exp $
+$Id: WorkflowFactory.java,v 1.23 2003/09/09 10:29:14 edith Exp $
 <License>
 
  ============================================================================
@@ -262,10 +262,10 @@ public class WorkflowFactory {
      * @param destinationDocument The document to initialize the history for.
      * @throws WorkflowException When something goes wrong.
      */
-    public static void initHistory(Document sourceDocument, Document destinationDocument)
+    public static void initHistory(Document sourceDocument, Document destinationDocument, Situation situation)
         throws WorkflowException {
         CMSHistory history = new CMSHistory(sourceDocument);
-        history.initialize(destinationDocument, null);
+        history.initialize(destinationDocument, situation);
     }
 
 }
