@@ -1,5 +1,5 @@
 /*
- * $Id: Group.java,v 1.3 2003/06/03 13:49:36 egli Exp $
+ * $Id: Group.java,v 1.4 2003/06/03 16:37:39 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -128,4 +128,21 @@ public class Group {
 		users.remove(user);
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof Group) {
+			return getName().equals(((Group) obj).getName());
+		}
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return getName().hashCode();
+	}
+
 }
