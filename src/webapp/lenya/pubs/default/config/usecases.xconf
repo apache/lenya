@@ -20,4 +20,8 @@
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.defaultpub.cms.usecases.Deactivate"/>
 
+    <component-instance name="default/site.delete"
+                        logger="lenya.usecases.delete"
+                        class="org.apache.lenya.defaultpub.cms.usecases.Delete"/>
+
   </xconf>
