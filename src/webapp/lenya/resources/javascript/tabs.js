@@ -1,8 +1,8 @@
-// $Id: tabs.js,v 1.4 2003/07/24 13:02:42 andreas Exp $
+// $Id: tabs.js,v 1.5 2003/07/29 15:18:29 gregor Exp $
 
 function Tab(i){
 	// Variables for customisation:
-	var numberOfTabs = 7;
+	var numberOfTabs = 5;
 	var colourOfInactiveTab = "#999966";
 	var colourOfActiveTab = "#cccc99";
 	var colourOfInactiveLink = "#333333";
