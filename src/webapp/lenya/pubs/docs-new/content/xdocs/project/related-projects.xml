@@ -16,19 +16,19 @@ This list is featuring projects which are closely related to Apache Lenya.
 </p>
 
 <p>
-Open Source Content Management Systems/Frameworks overviews can be found at
+Open Source Content Management Systems overviews can be found at
 <link href="http://www.oscom.org">oscom.org</link> or
 <link href="http://www.cmsinfo.org">cmsinfo.org</link>.
 </p>
 
 <p>
 More information on Cocoon-based projects can be found at
-<link href="http://cocoon.apache.org/2.0/link/projects.html">http://cocoon.apache.org/2.0/link/projects.html</link>.
+<link href="http://cocoon.apache.org/link/projects.html">http://cocoon.apache.org/link/projects.html</link>.
 </p>
 
 <section><title>CocoBlog</title>
 <p>
-CocoBlog is a free <link href="http://newhome.weblogs.com/historyOfWeblogs">weblogging</link> software tool based on Apache Cocoon and Apache XIndice
+CocoBlog is a free <link href="http://newhome.weblogs.com/historyOfWeblogs">weblog</link> software based on Apache Cocoon and Apache XIndice
 <link href="http://www.beblogging.com/blog/docs">http://www.beblogging.com/blog/docs</link>.
 </p>
 </section>
@@ -46,20 +46,6 @@ create, deploy, and maintain rock-solid XML server applications.
 <link href="http://cocoon.apache.org">http://cocoon.apache.org</link>
 </p>
 </section>
-
-
-<section><title>Maverick</title>
-<p>
-Maverick is a Model-View-Controller (aka "Model 2") framework for web publishing
-using Java and J2EE. It is a minimalist framework which focuses solely on MVC logic,
-allowing you to generate presentation using a variety of templating and transformation
-technologies.
-</p>
-<p>
-<link href="http://mav.sourceforge.net">http://mav.sourceforge.net</link>
-</p>
-</section>
-
 
 <section><title>Slide</title>
 <p>
