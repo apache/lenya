@@ -20,7 +20,7 @@ The output of this stylesheet is HTML of the form:
 
 which is then merged by site2xhtml.xsl
 
-$Id: tab2menu.xsl,v 1.2 2003/05/08 12:03:48 andreas Exp $
+$Id: tab2menu.xsl,v 1.3 2003/05/09 15:19:52 andreas Exp $
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -98,6 +98,44 @@ $Id: tab2menu.xsl,v 1.2 2003/05/08 12:03:48 andreas Exp $
         </table>
       </div>
     </td>
+  </xsl:template>
+
+  <!-- override for homepage: always first tab selected -->
+  <xsl:template match="tab">
+    <xsl:choose>
+      <xsl:when test="@dir = $longest-dir or @href = $longest-dir
+                      or $path='index' and @dir = /tabs/tab[1]/@dir">
+        <xsl:call-template name="selected"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="not-selected"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- Called from 'not-selected' -->
+  <xsl:template name="base-not-selected">
+    <a>
+      <xsl:attribute name="href">
+        <xsl:choose>
+          <xsl:when test="$path = 'index'">
+            <xsl:call-template name="unselected-tab-href">
+              <xsl:with-param name="tab" select="."/>
+              <xsl:with-param name="path" select="$path"/>
+            </xsl:call-template>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="unselected-tab-href">
+              <xsl:with-param name="tab" select="."/>
+              <xsl:with-param name="path" select="$path"/>
+            </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
+      <font face="Arial, Helvetica, Sans-serif">
+        <xsl:value-of select="@label"/>
+      </font>
+    </a>
   </xsl:template>
 
 </xsl:stylesheet>

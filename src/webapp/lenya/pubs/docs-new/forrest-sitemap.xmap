@@ -162,14 +162,14 @@
       <!-- OUTPUT FORMATS                                               -->
       <!--                  Serves content directly to the user         -->
       <!-- +==========================================================+ -->
-
+      
       <map:match type="regexp" pattern="^.+$">
         <map:act type="resource-exists">
           <map:parameter name="url" value="content/{0}" />
           <map:mount uri-prefix="" src="raw.xmap" check-reload="yes" />
         </map:act>
       </map:match>
-
+      
       <map:match pattern="*.html">
         <map:aggregate element="site">
           <map:part src="cocoon:/tab-{1}.xml"/>
@@ -229,7 +229,8 @@
     <!--                          Tabs, menus and body HTML.          -->
     <!--                       Called from output format pipelines    -->
     <!-- ============================================================ -->
-    <map:pipeline internal-only="true">
+<!--    <map:pipeline internal-only="true">-->
+    <map:pipeline internal-only="false">
 
       <!-- External matches -->
       <!-- (HTML rendered directly from special formats) -->
@@ -263,6 +264,19 @@
         </map:call>
       </map:match>
 
+      <!-- lenya: special homepage -->
+      <map:match pattern="menu-index.xml">
+        <map:generate src="cocoon:/project/book.xml"/>
+        <map:transform type="linkrewriter" src="cocoon:/linkmap">
+          <map:parameter name="schemes" value="site ext"/>
+        </map:transform>
+        <map:call resource="skinit">
+          <map:parameter name="type" value="book2menu"/>
+          <map:parameter name="path" value="/index.xml"/>
+        </map:call>
+      </map:match>
+      <!-- /lenya -->
+
       <map:match pattern="**menu-*.xml">
         <map:generate src="cocoon:/{1}book.xml"/>
         <map:transform type="linkrewriter" src="cocoon:/{1}linkmap">
@@ -274,6 +288,19 @@
         </map:call>
       </map:match>
 
+      <!-- lenya: special homepage -->
+      <map:match pattern="tab-index.xml">
+        <map:generate src="cocoon:/project/tab.xml" />
+        <map:transform type="linkrewriter" src="cocoon:/project/linkmap">
+          <map:parameter name="schemes" value="site ext"/>
+        </map:transform>
+        <map:call resource="skinit">
+          <map:parameter name="type" value="tab2menu"/>
+          <map:parameter name="path" value="index"/>
+        </map:call>
+      </map:match>
+      <!-- /lenya -->
+      
       <map:match pattern="**tab-*.xml">
         <map:generate src="cocoon:/{1}tab.xml" />
         <map:transform type="linkrewriter" src="cocoon:/{1}linkmap">
@@ -290,7 +317,8 @@
     <!-- SOURCE FORMATS                                               -->
     <!--                 Raw XML sources, typically doc-v11 format    -->
     <!-- ============================================================ -->
-    <map:pipeline internal-only="true">
+    <map:pipeline internal-only="false">
+    <!--<map:pipeline internal-only="true">-->
  
       <map:match pattern="**book.xml">
         <map:mount uri-prefix="" src="navigation.xmap" check-reload="yes" />
