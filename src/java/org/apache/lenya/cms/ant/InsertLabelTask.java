@@ -1,5 +1,5 @@
 /*
-$Id: InsertLabelTask.java,v 1.2 2003/08/08 14:19:47 egli Exp $
+$Id: InsertLabelTask.java,v 1.3 2003/08/13 08:41:55 egli Exp $
 <License>
 
  ============================================================================
@@ -88,11 +88,11 @@ public class InsertLabelTask extends PublicationTask {
     }
 
     /**
-     * Set the value of the area of the tree.
+     * Set the area of the site tree
      * 
      * @param area the area of the tree.
      */
-    public void setAbsolutetreepath(String area) {
+    public void setArea(String area) {
         this.area = area;
     }
 
