@@ -17,12 +17,12 @@
 
 <!-- $Id$ -->
 
-<xsp:page 
-    language="java" 
+<xsp:page
+    language="java"
     xmlns:xsp="http://apache.org/xsp"
     xmlns:xsp-request="http://apache.org/xsp/request/2.0"
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
-    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
     xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
@@ -32,12 +32,12 @@
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
   </xsp:structure>
-  
+
   <menu>
-  	
+
     <xsp:logic>
       String projectid = parameters.getParameter("projectid","null");
-      
+
       String xmlSource = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
       String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
       String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/live" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
@@ -53,7 +53,7 @@
       catch (Exception e) {
           throw new ProcessingException(e);
       }
-      
+
       boolean isDocument = false;
       {
         Object document = <input:get-attribute module="page-envelope" as="object" name="document"/>;
@@ -67,11 +67,11 @@
         }
       }
     </xsp:logic>
-    
+
     <menus>
       <menu i18n:attr="name" name="File" label="File">
 	<block>
-	  
+
 	  <xsp:logic>
 	    {
         if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
@@ -98,7 +98,7 @@
             <item><i18n:text>New Language Version</i18n:text></item>
           </xsp:content>
 	      }
-	    
+
 	      String[] availableLanguages = (String[])<input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
 	      if (isDocument
             &amp;&amp; Publication.AUTHORING_AREA.equals(area)
@@ -111,7 +111,7 @@
 	        <xsp:content>
 	          <item><i18n:text>Remove Language Version</i18n:text></item>
 	        </xsp:content>
-	      } 
+	      }
 	    }
 	  </xsp:logic>
 	</block>
@@ -119,9 +119,9 @@
 	  <item uc:usecase="logout" href="?"><i18n:text>Logout</i18n:text></item>
 	</block>
       </menu>
-      
+
       <menu i18n:attr="name" name="Edit" label="Search">
-        
+
         <block info="false">
           <item wf:event="edit" uc:usecase="kupu" uc:step="open" href="?"><i18n:text>Edit with Kupu</i18n:text></item>
           <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?"><i18n:text>Edit with BXE</i18n:text></item>
@@ -135,12 +135,12 @@
         </block>
 
         <block authoring="false">
-        
+
         <xsp:logic>
-          
+
         {
           String docId = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
-          
+
           if (isDocument
               &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
@@ -150,7 +150,7 @@
           else {
             <item><i18n:text>Cut</i18n:text></item>
           }
-        
+
           if (isDocument
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
               &amp;&amp; !"/index".equals(docId)) {
@@ -159,10 +159,10 @@
           else {
             <item><i18n:text>Copy</i18n:text></item>
           }
-        
+
         	String clipboard = (String) <input:get-attribute module="session-attr" as="object" name="org.apache.lenya.cms.info.firstdocid"/> + "/";
         	String currentDocumentId = <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "/";
-        	
+
         	if (clipboard != null
         	    &amp;&amp; !"".equals(clipboard)
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
@@ -175,7 +175,7 @@
         	}
         }
         </xsp:logic>
-        
+
       </block>
       <block authoring="false">
         <xsp:logic>
@@ -186,7 +186,7 @@
           else {
             <item>Rename URL</item>
           }
-          
+
           if (isDocument) {
             <item wf:event="edit" uc:usecase="rename-label" uc:step="showscreen" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
           }
@@ -217,10 +217,10 @@
         </xsp:logic>
       </block>
       <block authoring="false">
-        
+
         <xsp:logic>
        	{
-       	
+
        	  if (isDocument &amp;&amp;
        	    !"/index".equals(<input:get-attribute module="page-envelope" as="string" name="document-id"/>)) {
             <item wf:event="delete" uc:usecase="delete" uc:step="showscreen" href="?"><i18n:text>Delete</i18n:text></item>
@@ -230,7 +230,7 @@
             <item><i18n:text>Delete</i18n:text></item>
             <item><i18n:text>Archive</i18n:text></item>
        	  }
-       	
+
         	if (isDocument &amp;&amp; (area.equals(Publication.TRASH_AREA) || area.equals(Publication.ARCHIVE_AREA))) {
             <item wf:event="restore" uc:usecase="restore" uc:step="showscreen" href="?">Restore</item>
         	}
@@ -239,11 +239,11 @@
         	}
       	}
         </xsp:logic>
-        
+
       </block>
-	
+
       </menu>
-      
+
       <menu i18n:attr="name" name="Workflow" label="Help">
 	  <xsp:logic>
       {
@@ -273,7 +273,7 @@
 
       <menu i18n:attr="name" name="Help" label="Debug">
 	<block>
-	  <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>System&#160;Documentation</i18n:text></item>
+	  <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>System Documentation</i18n:text></item>
 	  <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
 	</block>
   <block>
@@ -286,6 +286,6 @@
 	</block>
       </menu>
     </menus>
-    
+
   </menu>
 </xsp:page>
