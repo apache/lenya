@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-$Id: xhtml2xhtml.xsl,v 1.6 2004/02/27 17:22:24 gregor Exp $
+$Id: xhtml2xhtml.xsl,v 1.7 2004/02/27 17:29:43 gregor Exp $
 -->
 
 <xsl:stylesheet version="1.0"
@@ -68,6 +68,7 @@ $Id: xhtml2xhtml.xsl,v 1.6 2004/02/27 17:22:24 gregor Exp $
   </xsl:template>
   
     <xsl:template match="xhtml:object" priority="3">
+     <xsl:choose>
       <xsl:when test="@href != ''">
         <a href="{@href}">
           <img border="0">
@@ -126,6 +127,7 @@ $Id: xhtml2xhtml.xsl,v 1.6 2004/02/27 17:22:24 gregor Exp $
         </xsl:if>         
         </img>
       </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>  
 
   <xsl:template match="dc:metadata"/>
