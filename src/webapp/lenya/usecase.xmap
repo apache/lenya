@@ -7,7 +7,11 @@
     <map:generators default="file"/>
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
-    <map:serializers default="xhtml"/>
+    <map:serializers default="xhtml">
+        <map:serializer logger="sitemap.serializer.htmlnoi" mime-type="text/html" name="htmlnoi" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
+            <indent>no</indent>
+        </map:serializer>
+    </map:serializers>
     <map:matchers default="wildcard"/>
     <map:actions>
       <map:action name="save" logger="sitemap.action.save" src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
@@ -420,7 +424,7 @@
               <map:transform src="xslt/authoring/edit/oneform.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
               </map:transform>
-              <map:serialize type="html" />
+              <map:serialize type="htmlnoi" />
             </map:match>
           </map:match>
 
@@ -445,7 +449,7 @@
                 <map:parameter name="language" value="{page-envelope:document-language}"/>
                 <map:parameter name="event" value="edit"/>
               </map:act>
-              <map:serialize type="html" />
+              <map:serialize type="htmlnoi" />
             </map:match>
           </map:match>
         </map:match>

@@ -4,6 +4,8 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
 
+<xsl:output indent="no"/>
+
 <xsl:param name="docid"/>
 <xsl:param name="cols" select="'80'"/>
 <xsl:param name="rows" select="'30'"/>
@@ -54,30 +56,46 @@ Edit Document <b><xsl:value-of select="$docid"/></b>
 
 <xsl:choose>
 <xsl:when test="node()">
-&lt;<xsl:value-of select="name()"/><xsl:if test="namespace-uri()"><xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="namespace-uri()"/>"</xsl:if><xsl:apply-templates select="@*" mode="mixed"/>&gt;
-<xsl:apply-templates select="node()" mode="mixed"/>
-&lt;/<xsl:value-of select="name()"/>&gt;
-</xsl:when>
-<xsl:otherwise>
-&lt;<xsl:value-of select="name()"/><xsl:if test="namespace-uri()"><xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="namespace-uri()"/>"</xsl:if><xsl:apply-templates select="@*" mode="mixed"/> /&gt;
-</xsl:otherwise>
-</xsl:choose>
+<xsl:text>&lt;</xsl:text><xsl:value-of select="name()"/>
 
-<!-- FIXME: <br /> are transformed into <br> by the html serializer -->
-<!--
-<xsl:copy>
-<xsl:copy-of select="@*"/>
+<xsl:apply-templates select="@*" mode="mixed"/>
+
+<xsl:for-each select="namespace::*">
+<xsl:variable name="prefix"><xsl:if test="local-name() != ''">:<xsl:value-of select="local-name()"/></xsl:if></xsl:variable>
+<xsl:if test=". != 'http://www.w3.org/XML/1998/namespace'">
+<xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="."/><xsl:text>"</xsl:text>
+</xsl:if>
+</xsl:for-each>
+
+<xsl:text>&gt;</xsl:text>
+
 <xsl:apply-templates select="node()" mode="mixed"/>
-</xsl:copy>
--->
+
+<xsl:text>&lt;/</xsl:text><xsl:value-of select="name()"/><xsl:text>&gt;</xsl:text>
+
+</xsl:when>
+
+<!-- EMPTY TAG -->
+<xsl:otherwise>
+
+<xsl:text>&lt;</xsl:text><xsl:value-of select="name()"/>
+
+<xsl:apply-templates select="@*" mode="mixed"/>
+
+<xsl:for-each select="namespace::*">
+<xsl:variable name="prefix"><xsl:if test="local-name() != ''">:<xsl:value-of select="local-name()"/></xsl:if></xsl:variable>
+<xsl:if test=". != 'http://www.w3.org/XML/1998/namespace'">
+<xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="."/><xsl:text>"</xsl:text>
+</xsl:if>
+</xsl:for-each>
+
+<xsl:text>/&gt;</xsl:text></xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 
 
 
-<xsl:template match="@*" mode="mixed">
-<xsl:variable name="prefix"><xsl:if test="contains(name(),':')">:<xsl:value-of select="substring-before(name(),':')"/></xsl:if></xsl:variable>
-
-<xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"<xsl:if test="namespace-uri()"><xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="namespace-uri()"/>"</xsl:if></xsl:template>
+<xsl:template match="@*" mode="mixed"><xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"</xsl:template>
  
-</xsl:stylesheet>  
+</xsl:stylesheet>
