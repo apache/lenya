@@ -39,8 +39,7 @@
     <xsp:logic>
       try {
           Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
-          SiteTree authoringTree = document.getPublication().getSiteTree(Publication.AUTHORING_AREA);
-          SiteTreeNode authoringNode = authoringTree.getNode(document.getId());
+          SiteTreeNode authoringNode = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="authoring-node"/>;
           String authoringParentId = authoringNode.getAbsoluteParentId();
           
           SiteTree liveTree = document.getPublication().getSiteTree(Publication.LIVE_AREA);
@@ -87,6 +86,7 @@
 						if (versions[i].getEvent().getName().equals("submit")) {
 								userId = ((CMSVersion) versions[i]).getUserId();
 						}
+						i--;
 				}
 		  }
 		
