@@ -82,7 +82,7 @@ Crawl a website by running
 </p>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml crawl -Dcrawler.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/crawler-live.xconf
+ant -f src/webapp/lenya/bin/crawl_and_index.xml crawl -Dcrawler.xconf=/home/username/src/lenya/src/webapp/lenya/pubs/default/config/search/crawler-live.xconf
 ]]>
 </source>
 <p>
@@ -128,7 +128,7 @@ Disallow: /do/not/crawl/this/page.html
 <title>Creating an index from the command line</title>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
+ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=/home/username/src/lenya/src/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
 ]]>
 </source>
 <p>
@@ -215,7 +215,7 @@ Concatenating element values and setting default values in case element value do
 <title>Extract text from a PDF document</title>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dhtdocs.dump.dir=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/work/search/lucene/htdocs_dump xpdf
+ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dhtdocs.dump.dir=/home/username/src/lenya/src/webapp/lenya/pubs/default/work/search/lucene/htdocs_dump xpdf
 ]]>
 </source>
 <p>

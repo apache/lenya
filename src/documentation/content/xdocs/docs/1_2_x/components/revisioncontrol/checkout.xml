@@ -118,9 +118,9 @@
       Filename:	/content/authoring/index/index_de.xml
 	  </source>
 	  <p>The serverpage</p>
-      <source> cocoon-lenya/src/webapp/lenya/content/rc/fileReservedCheckOutException.xsp</source>
+      <source> lenya/src/webapp/lenya/content/rc/fileReservedCheckOutException.xsp</source>
       <p>generates the xml which will be transformed with </p>
-      <source> cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</source>
+      <source> lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</source>
     </section>
 
     <section>
@@ -133,9 +133,9 @@
       Check the log files :-)
       Filename:	/content/authoring/malaVida/index_de.xml	  </source>
 	  <p>The serverpage</p>
-      <source> cocoon-lenya/src/webapp/lenya/content/rc/exception.xsp</source>
+      <source> lenya/src/webapp/lenya/content/rc/exception.xsp</source>
       <p>generates the xml which will be transformed with </p>
-      <source> cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</source>
+      <source> lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</source>
     </section>
 
   </body>

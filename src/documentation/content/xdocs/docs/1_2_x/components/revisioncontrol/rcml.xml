@@ -39,7 +39,7 @@
       </source>
       <p> which can be configured in </p>
 	  <source>
-        cocoon-lenya/src/webapp/lenya/config/rc/revision-controller.xconf
+        lenya/src/webapp/lenya/config/rc/revision-controller.xconf
       </source>
       <p>For a document with an xml file {publication}/content/authoring/{filename}, the rcml file is </p> 	  
 	  <source>

@@ -39,7 +39,7 @@
       </source>
       <p> which can be configured in </p>
 	  <source>
-        cocoon-lenya/src/webapp/lenya/config/rc/revision-controller.xconf
+        lenya/src/webapp/lenya/config/rc/revision-controller.xconf
       </source>
       <p>For a document with an xml file {publication}/content/authoring/{filename}, the backup files are </p> 	  
 	  <source>
@@ -50,7 +50,7 @@
     <section>
 	  <title>Revision Screen</title>
       <p>To get the revision screen, use the serverpage</p>
-      <source>cocoon-lenya/src/webapp/lenya/content/rc/versions-screen.xsp</source> 
+      <source>lenya/src/webapp/lenya/content/rc/versions-screen.xsp</source> 
 
       <p>Sitemap :</p>
       <source><![CDATA[
@@ -64,7 +64,7 @@
     <section>
 	  <title>View of an old version</title>
       <p>To get the view of a backup version, use the serverpage</p>
-      <source>cocoon-lenya/src/webapp/lenya/content/rc/view.xsp</source> 
+      <source>lenya/src/webapp/lenya/content/rc/view.xsp</source> 
       <p>It needs  the check-in time as request parameter</p>
 
       <p>Sitemap in the publication :</p>
