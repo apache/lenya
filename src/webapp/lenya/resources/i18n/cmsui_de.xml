@@ -246,6 +246,7 @@
       <!--Rename document -->
   <message key="Rename Document">Dokument umbenennen</message>
   <message key="rename-doc">Dokument {0} umbenennen</message>
+  <message key="rename-label-doc">Navigationstitel von Dokument {0} ändern</message>
       <!-- Copy document -->
   <message key="Copy Document">Dokument kopieren</message>
   <message key="copy-doc">Kopieren von Dokument {0}</message>
