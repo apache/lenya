@@ -18,7 +18,7 @@
 <!--
           <sch:parameter name="server-uri" value="http://127.0.0.1"/>
           <sch:parameter name="server-port" value="1313"/>
-          <sch:parameter name="servlet-context" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/"/>
+          <sch:parameter name="servlet-context" value="/usr/local/jakarta-tomcat-4.0.4-b3/webapps/lenya/"/>
           <sch:parameter name="authoring-path" value="content/authoring"/>
           <sch:parameter name="tree-authoring-path" value="content/authoring/tree.xml"/>
           <sch:parameter name="uris" value="/lenya/oscom/weekly-column.html"/>

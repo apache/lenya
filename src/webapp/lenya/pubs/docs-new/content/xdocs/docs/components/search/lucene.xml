@@ -60,7 +60,7 @@ src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
 <title>Crawling a website</title>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dcrawler.xconf=/home/michi/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/crawler-live.xconf crawl
+ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dcrawler.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/crawler-live.xconf crawl
 ]]>
 </source>
 </section>
@@ -69,7 +69,7 @@ ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dcrawler.xconf=/home/michi/src/
 <title>Creating an index from the command line</title>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=/home/michi/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
+ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
 ]]>
 </source>
 </section>

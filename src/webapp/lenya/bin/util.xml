@@ -15,14 +15,11 @@
   <echo message="INFO: Init"/>
 
   <property name="lenya.dir" value="../../../.."/>
-<!--
-  <property name="lenya.dir" value="/home/michi/src/lenya-0.8-dev-src-20030325022718"/>
--->
 
 
   <!-- Dummy arguments -->
   <property name="password" value="levi"/>
-  <property name="jtidy-in.html" value="index.html"/>
+  <property name="jtidy-in.html" value="file:///home/lenya/html/index.html"/>
   <!-- /Dummy arguments -->
 
   <property name="lenya.dir.web-inf" value="${lenya.dir}/build/lenya/webapp/WEB-INF"/>
@@ -69,9 +66,6 @@
 
   <java classname="org.apache.lenya.util.TidyCommandLine">
     <arg value="${jtidy-in.html}"/>
-<!--
-    <arg value="file:///home/michi/html/index.html"/>
--->
     <arg value="jtidy-out.xhtml"/>
     <arg value="error.log"/>
     <classpath refid="class.path"/>

@@ -22,11 +22,11 @@ Configure and compile mod_dav:
 <source>
 <![CDATA[
 wget http://www.webdav.org/mod_dav/mod_dav-1.0.3-1.3.6.tar.gz
-cd /home/michiii/src/mod_dav-1.0.3-1.3.6
-./configure --with-apache=/home/michiii/src/apache_1.3.24
+cd /usr/local/src/mod_dav-1.0.3-1.3.6
+./configure --with-apache=/usr/local/src/apache_1.3.24
 make
 make install
-cd /home/michiii/src/apache_1.3.24
+cd /usr/local/src/apache_1.3.24
 find . -name "*dav*" -print
 ./configure --prefix=/usr/local/apache --activate-module=src/modules/dav/libdav.a
 (./configure --prefix=/usr/local/apache --enable-module=proxy --activate-module=src/modules/dav/libdav.a)
@@ -42,8 +42,8 @@ You need to reconfigure <code>httpd.conf</code>, e.g.:
 </p>
 <source>
 <![CDATA[
-DAVLockDB /home/michiii/build/apache/logs/DavLock
-<Directory "/home/michiii/build/apache/htdocs">
+DAVLockDB /usr/local/apache/logs/DavLock
+<Directory "/usr/local/build/apache/htdocs">
 Dav On
 ]]>
 </source>
@@ -70,10 +70,10 @@ Configure and compile Apache:
 </p>
 <source>
 <![CDATA[
-./configure --prefix=/home/michiii/build/apache2 --with-dav --enable-dav
+./configure --prefix=/usr/local/apache2 --with-dav --enable-dav
 make 
 make install
-/home/michiii/build/apache2/bin/httpd -l | grep dav
+/usr/local/apache2/bin/httpd -l | grep dav
 ]]>
 </source>
 
@@ -82,8 +82,8 @@ You need to reconfigure Apache:
 </p>
 <source>
 <![CDATA[
-DAVLockDB /home/michiii/build/apache2/logs/DavLock
-<Directory "/home/michiii/build/apache2/htdocs">
+DAVLockDB /usr/local/apache2/logs/DavLock
+<Directory "/usr/local/apache2/htdocs">
 Dav On
 </Directory>
 ]]>
@@ -127,7 +127,7 @@ One needs to configure <code>Domain.xml</code>
 <source>
 <![CDATA[
 <contentstore classname="slidestore.reference.FileContentStore">
-  <parameter name="rootpath">/home/michiii/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/notimes/content/authoring/articles</parameter>
+  <parameter name="rootpath">/usr/local/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/notimes/content/authoring/articles</parameter>
   ...
 ]]>
 </source>
@@ -150,7 +150,7 @@ One needs to configure <code>Domain.xml</code>
 <title>Monitoring the WebDAV exchange</title>
 <source>
 <![CDATA[
-cd /home/michiii/build/axis-1_1RC2
+cd /usr/local/axis-1_1RC2
 java -cp lib/axis.jar org.apache.axis.utils.tcpmon
 
 Enter "Listen Port# 3333" for instance

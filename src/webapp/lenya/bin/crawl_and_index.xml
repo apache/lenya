@@ -15,9 +15,6 @@
   <echo message="INFO: Init"/>
 
   <property name="lenya.dir" value="../../../.."/>
-<!--
-  <property name="lenya.dir" value="/home/michi/src/lenya-0.8-dev-src-20030325022718"/>
--->
 
 
   <!-- Dummy arguments -->

@@ -9,7 +9,7 @@
 # --------------------                              --------------------
 
 # Has to be defined for tomcat
-USER="michi"
+USER="username"
 
 # Has to be defined for tomcat
 JAVA_HOME="/usr/local/j2sdk1.4.1_02"
@@ -18,7 +18,7 @@ JAVA_HOME="/usr/local/j2sdk1.4.1_02"
 DAEMONS="/usr/local/jakarta-tomcat-4.1.21-LE-jdk14/bin"
 
 # where you can also set more than one server, e.g.
-#DAEMONS="/usr/local/jakarta-tomcat-4.1.21-LE-jdk14/bin /home/michi/build/jakarta-tomcat-4.1.21-LE-jdk14/bin"
+#DAEMONS="/usr/local/jakarta-tomcat-4.1.21-LE-jdk14/bin /home/username/build/jakarta-tomcat-4.1.21-LE-jdk14/bin"
 #
 # --------------------                              --------------------
 # ||||||||||||||||||||   END CONFIGURATION SECTION  ||||||||||||||||||||
