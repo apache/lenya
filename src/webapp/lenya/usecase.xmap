@@ -477,7 +477,7 @@
           
           <map:match pattern="copy" type="step">
             <map:act type="session-propagator">
-              <map:parameter name="org.apache.lenya.cms.info.documentid" value="{request-param:documentid}"/>
+              <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
               <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
@@ -496,7 +496,7 @@
           
           <map:match pattern="cut" type="step">
             <map:act type="session-propagator">
-              <map:parameter name="org.apache.lenya.cms.info.documentid" value="{request-param:documentid}"/>
+              <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
               <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
               <map:redirect-to uri="{request:requestURI}"/>
             </map:act>
@@ -533,7 +533,29 @@
           </map:match>
           
           <map:match pattern="delete" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+            <map:act type="task">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="task-id" value="{request-param:task-id}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
+          </map:match>
+          
+        </map:match>
+
+        <map:match pattern="deleteTrash" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/deleteTrash.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/deleteTrash.xsl"/>
+            <map:call resource="style-cms-page"/>
+          </map:match>
+          
+          <map:match pattern="deleteTrash" type="step">
+            <map:act type="task">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="task-id" value="{request-param:task-id}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
           </map:match>
           
         </map:match>
@@ -559,7 +581,7 @@
             <map:act type="task">
               <map:parameter name="publication-id" value="{../../1}"/>
               <map:parameter name="task-id" value="moveDownNode"/>
-              <map:parameter name="org.apache.lenya.cms.info.documentid" value="{session-attr:documentid}"/>
+              <map:parameter name="org.apache.lenya.cms.info.documentid" value="{session-attr:org.apache.lenya.cms.info.target}"/>
               <map:redirect-to session="true" uri="{request:requestURI}"/>
             </map:act>
           </map:match>
@@ -573,7 +595,7 @@
             <map:act type="task">
               <map:parameter name="publication-id" value="{../../1}"/>
               <map:parameter name="task-id" value="moveUpNode"/>
-              <map:parameter name="org.apache.lenya.cms.info.documentid" value="{session-attr:documentid}"/>
+              <map:parameter name="org.apache.lenya.cms.info.documentid" value="{session-attr:org.apache.lenya.cms.info.target}"/>
               <map:redirect-to session="true" uri="{request:requestURI}"/>
             </map:act>
           </map:match>
