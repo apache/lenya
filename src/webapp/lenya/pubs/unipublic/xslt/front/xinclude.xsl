@@ -3,8 +3,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!--<xsl:include href="Live/dossier.xsl"/>-->
-<xsl:include href="Live/webperls.xsl"/>
-<xsl:include href="services.xsl"/>
+<!--<xsl:include href="Live/webperls.xsl"/>-->
+<!--<xsl:include href="services.xsl"/>-->
 
 
 <xsl:template match="/" xmlns:xi="http://www.w3.org/2001/XInclude">
