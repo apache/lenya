@@ -2,6 +2,9 @@
 
 <oscom xmlns:xi="http://www.w3.org/2001/XInclude">
 
+<!--
+<xi:include href="navigation.xml"/>
+-->
 <xi:include xml:base="cocoon:" href="/authoring/navigation.xml"/>
 
 <about>

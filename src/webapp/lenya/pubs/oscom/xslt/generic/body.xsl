@@ -5,7 +5,9 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template name="body">
-  <xsl:apply-templates select="html"/>
+  <div id_xopus="generic_body" xml_xopus="conferences/sanfrancisco2002/cfp.xhtml" xsl_xopus="Page/Generic/Authoring/xopus.xsl" xsd_xopus="generic.xsd">
+    <xsl:apply-templates select="html"/>
+  </div>
 </xsl:template>
 
 <xsl:template match="html">

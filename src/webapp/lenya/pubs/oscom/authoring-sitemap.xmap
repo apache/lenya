@@ -93,14 +93,23 @@
         <map:generate type="serverpages" src="docs/publication/menus/home.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
-      <map:match pattern="authoring/menus/*.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/{1}.xsp"/>
+      <map:match pattern="authoring/menus/board.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/board.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="authoring/menus/mailing-lists.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/mailing-lists.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="authoring/menus/**.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/generic.xsp"/>
+        <!--<map:generate type="serverpages" src="../../docs/cms/menus/live.xsp"/>-->
         <map:serialize type="xml"/>
       </map:match>
 
       <!-- XML Navigation -->
-      <map:match pattern="authoring/navigation.xml">
-        <map:generate src="docs/publication/authoring/navigation.xml"/>
+      <map:match pattern="authoring/**navigation.xml">
+        <map:generate src="docs/publication/authoring/{1}navigation.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -152,6 +161,25 @@
         <map:generate src="cocoon:/authoring/board.xml"/>
         <map:transform src="stylesheets/publication/Page/Board/Authoring/main.xsl"/>
         <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Generic (XHTML) -->
+      <map:match pattern="authoring/**.html">
+        <map:generate src="cocoon:/authoring/{1}.xml"/>
+        <map:select>
+          <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Generic/Authoring/main_xopus.xsl"/>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="stylesheets/publication/Page/Generic/Authoring/main.xsl"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="authoring/**.xhtml">
+        <!--<map:read src="docs/publication/authoring/{1}" mime-type="text/xml"/>-->
+        <map:generate src="docs/publication/authoring/{1}.xhtml"/>
+        <map:serialize type="xml"/>
       </map:match>
    </map:pipeline>
 
