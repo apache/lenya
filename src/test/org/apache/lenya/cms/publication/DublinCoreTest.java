@@ -26,7 +26,7 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 /**
  * Dublin Core test.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DublinCoreTest extends TestCase {
 
@@ -37,16 +37,15 @@ public class DublinCoreTest extends TestCase {
 
     /**
      * Constructor for DublinCoreTest.
-     * @param arg0 a test 
+     * @param arg0 a test
      */
     public DublinCoreTest(String arg0) {
         super(arg0);
     }
 
     /**
-     * The main program.
-     * The parameters are set from the command line arguments.
-     *
+     * The main program. The parameters are set from the command line arguments.
+     * 
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
@@ -55,23 +54,15 @@ public class DublinCoreTest extends TestCase {
     }
 
     /**
-     * Test the fetching, modification and refetching of a dc core object. 
+     * Test the fetching, modification and refetching of a dc core object.
      * 
      * @throws DocumentBuildException if an error occurs
      * @throws DocumentException if an error occurs
      */
-    final public void testModifySaveAndReload()
-        throws DocumentBuildException, DocumentException {
+    final public void testModifySaveAndReload() throws DocumentBuildException, DocumentException {
         Publication publication = PublicationHelper.getPublication();
-        DocumentBuilder builder = new DefaultDocumentBuilder();
-        Document doc =
-            builder.buildDocument(
-                publication,
-                builder.buildCanonicalUrl(
-                    publication,
-                    AREA,
-                    DOCUMENT_ID,
-                    LANGUAGE));
+        DocumentIdentityMap map = new DocumentIdentityMap(publication);
+        Document doc = map.get(AREA, DOCUMENT_ID, LANGUAGE);
         DublinCore dcCore = doc.getDublinCore();
         String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
         String subject = dcCore.getFirstValue(DublinCore.ELEMENT_SUBJECT);
@@ -81,14 +72,7 @@ public class DublinCoreTest extends TestCase {
         dcCore.setValue(DublinCore.ELEMENT_CREATOR, CREATOR);
         dcCore.save();
 
-        Document doc2 =
-            builder.buildDocument(
-                publication,
-                builder.buildCanonicalUrl(
-                    publication,
-                    AREA,
-                    DOCUMENT_ID,
-                    LANGUAGE));
+        Document doc2 = map.get(AREA, DOCUMENT_ID, LANGUAGE);
 
         DublinCore dcCore2 = doc2.getDublinCore();
         assertEquals(title, dcCore2.getFirstValue(DublinCore.ELEMENT_TITLE));
@@ -101,9 +85,7 @@ public class DublinCoreTest extends TestCase {
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {
         if (PublicationHelper.getPublication() == null) {
-            String[] args =
-                {
-                    "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya",
+            String[] args = { "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya",
                     "test" };
             PublicationHelper.extractPublicationArguments(args);
         }

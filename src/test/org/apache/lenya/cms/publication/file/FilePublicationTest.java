@@ -28,12 +28,14 @@ import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
  * To change the template for this generated type comment go to
@@ -106,20 +108,18 @@ public class FilePublicationTest extends TestCase {
         System.out.println("    Destination language:    [" + destinationLanguage + "]");
 
         Publication publication = PublicationHelper.getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
+        DocumentIdentityMap map = new DocumentIdentityMap(publication);
 
-        String sourceUrl = builder.buildCanonicalUrl(publication, sourceArea, sourceDocumentId,
-                sourceLanguage);
-        Document sourceDocument = builder.buildDocument(publication, sourceUrl);
-        String destinationUrl = builder.buildCanonicalUrl(publication, destinationArea,
-                destinationDocumentId, destinationLanguage);
-        Document destinationDocument = builder.buildDocument(publication, destinationUrl);
+        Document sourceDocument = map.get(sourceArea, sourceDocumentId, sourceLanguage);
+        Document destinationDocument = map.get(destinationArea, destinationDocumentId,
+                destinationLanguage);
 
         publication.copyDocument(sourceDocument, destinationDocument);
 
         assertTrue(destinationDocument.exists());
 
-        SiteTree destinationTree = publication.getSiteTree(destinationArea);
+        TreeSiteManager manager = (TreeSiteManager) publication.getSiteManager(map);
+        SiteTree destinationTree = manager.getTree(destinationArea);
         SiteTreeNode destinationNode = destinationTree.getNode(destinationDocumentId);
         assertNotNull(destinationNode);
         Label destinationLabel = destinationNode.getLabel(destinationLanguage);

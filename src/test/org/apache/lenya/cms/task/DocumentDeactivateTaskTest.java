@@ -27,106 +27,112 @@ import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
-
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
- * Class for testing the task to deactivate a document.
- * Extend the AntTask class.
+ * Class for testing the task to deactivate a document. Extend the AntTask class.
  */
 public class DocumentDeactivateTaskTest extends AntTaskTest {
 
-	private long time = 0;
+    private long time = 0;
 
-	/**
+    /**
      * Creates a new DocumentDeactivateTaskTest object.
-	 * @param test The test.
-	 */
-	public DocumentDeactivateTaskTest(String test) {
-		super(test);
-	}
+     * @param test The test.
+     */
+    public DocumentDeactivateTaskTest(String test) {
+        super(test);
+    }
 
-	/** 
-	 * Creates a test suite.
-	 * @return Test 
-	 **/
-	public static Test getSuite() {
-		return new TestSuite(DocumentDeactivateTaskTest.class);
-	}
+    /**
+     * Creates a test suite.
+     * @return Test
+     */
+    public static Test getSuite() {
+        return new TestSuite(DocumentDeactivateTaskTest.class);
+    }
 
-	/**
-	 * The main program for the DocumentDeactivateTaskTest class
-	 *
-	 * @param args The command line arguments
-	 */
-	public static void main(String[] args) {
-		AntTaskTest.initialize(args);
-		TestRunner.run(getSuite());
-	}
+    /**
+     * The main program for the DocumentDeactivateTaskTest class
+     * 
+     * @param args The command line arguments
+     */
+    public static void main(String[] args) {
+        AntTaskTest.initialize(args);
+        TestRunner.run(getSuite());
+    }
 
-	public static final String DOCUMENT_ID = "/tutorial";
+    public static final String DOCUMENT_ID = "/tutorial";
     public static final String LANGUAGE = "en";
-	public static final String AUTHORING_PATH = "content/authoring".replace('/', File.separatorChar);
-	public static final String LIVE_PATH = "content/live".replace('/', File.separatorChar);
-	
-	/**
-	 * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
-	 **/
-	protected Parameters getTaskParameters() {
-		Parameters parameters = super.getTaskParameters();
-		parameters.setParameter("properties.node.firstdocumentid", DOCUMENT_ID);
-        parameters.setParameter("properties.node.language", LANGUAGE);
-		return parameters;
-	}
-    
-	/**
-	 * Returns the target test.
-	 * @return target.
-	 */
-	protected String getTarget() {
-		return "deactivateDocument";
-	}
+    public static final String AUTHORING_PATH = "content/authoring"
+            .replace('/', File.separatorChar);
+    public static final String LIVE_PATH = "content/live".replace('/', File.separatorChar);
 
-	/** (non-Javadoc)
+    /**
+     * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
+     */
+    protected Parameters getTaskParameters() {
+        Parameters parameters = super.getTaskParameters();
+        parameters.setParameter("properties.node.firstdocumentid", DOCUMENT_ID);
+        parameters.setParameter("properties.node.language", LANGUAGE);
+        return parameters;
+    }
+
+    /**
+     * Returns the target test.
+     * @return target.
+     */
+    protected String getTarget() {
+        return "deactivateDocument";
+    }
+
+    /**
+     * (non-Javadoc)
      * @see org.apache.lenya.cms.task.AntTaskTest#prepareTest()
      */
     protected void prepareTest() throws Exception {
-		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
+        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
+        String publicationPath = publicationDirectory.getAbsolutePath() + File.separator;
 
+        // TODO generate the resources
+    }
 
-		// TODO generate the resources  
-}
-
-	/** (non-Javadoc)
+    /**
+     * (non-Javadoc)
      * @see org.apache.lenya.cms.task.AntTaskTest#evaluateTest()
      */
     protected void evaluateTest() throws Exception {
-		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-		String publicationPath = publicationDirectory.getAbsolutePath(); 
+        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
+        String publicationPath = publicationDirectory.getAbsolutePath();
         File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
-		File liveDirectory = new File(publicationPath, LIVE_PATH);
-        
-		String filepath = DOCUMENT_ID.substring(1) + File.separator + "index_en.xml";  
+        File liveDirectory = new File(publicationPath, LIVE_PATH);
 
-		File authoringDocumentFile = new File(authoringDirectory, filepath);
+        String filepath = DOCUMENT_ID.substring(1) + File.separator + "index_en.xml";
+
+        File authoringDocumentFile = new File(authoringDirectory, filepath);
         System.out.println("Authoring document: " + authoringDocumentFile.getAbsolutePath());
         assertTrue(authoringDocumentFile.exists());
-		File liveDocumentFile = new File(liveDirectory, filepath);
+        File liveDocumentFile = new File(liveDirectory, filepath);
         System.out.println("Live document: " + liveDocumentFile.getAbsolutePath());
-		assertFalse(liveDocumentFile.exists());
+        assertFalse(liveDocumentFile.exists());
 
         //TODO evaluation of resources, meta, workflow
-        
-		SiteTree authoringSitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
-		SiteTreeNode node = authoringSitetree.getNode(DOCUMENT_ID);
-		assertNotNull(node);
-        System.out.println("Sitetree node with id ["+node.getId()+"] is always in authoring");
-		SiteTree liveSitetree = PublicationHelper.getPublication().getSiteTree(Publication.LIVE_AREA);
-		SiteTreeNode livenode = liveSitetree.getNode(DOCUMENT_ID);
-		assertNull(livenode);
-        System.out.println("Sitetree node for document id ["+DOCUMENT_ID+"] was deleted from the live tree");
-	}
+
+        Publication pub = PublicationHelper.getPublication();
+        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        TreeSiteManager manager = (TreeSiteManager) pub.getSiteManager(map);
+        SiteTree authoringSitetree = manager.getTree(Publication.AUTHORING_AREA);
+        SiteTreeNode node = authoringSitetree.getNode(DOCUMENT_ID);
+        assertNotNull(node);
+        System.out.println("Sitetree node with id [" + node.getId() + "] is always in authoring");
+        SiteTree liveSitetree = manager.getTree(Publication.LIVE_AREA);
+        SiteTreeNode livenode = liveSitetree.getNode(DOCUMENT_ID);
+        assertNull(livenode);
+        System.out.println("Sitetree node for document id [" + DOCUMENT_ID
+                + "] was deleted from the live tree");
+    }
 }

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TestPageEnvelope.java,v 1.5 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -35,7 +35,8 @@ public class TestPageEnvelope extends PageEnvelope {
         setContext("");
 
         try {
-            setDocument(publication.getDocumentBuilder().buildDocument(publication, url));
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            setDocument(map.get(url));
         } catch (DocumentBuildException e) {
             throw new PageEnvelopeException(e);
         }

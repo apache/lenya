@@ -27,16 +27,18 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
-
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
+ * To change the template for this generated type comment go to Window>Preferences>Java>Code
+ * Generation>Code and Comments
  */
 public class DocumentCreatorTest extends TestCase {
     /**
@@ -48,9 +50,8 @@ public class DocumentCreatorTest extends TestCase {
     }
 
     /**
-     * The main program.
-     * The parameters are set from the command line arguments.
-     *
+     * The main program. The parameters are set from the command line arguments.
+     * 
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
@@ -71,24 +72,35 @@ public class DocumentCreatorTest extends TestCase {
      * @throws CreatorException when something went wrong.
      * @throws SiteException when something went wrong.
      */
-    public void testCreator()
-        throws CreatorException, SiteException {
+    public void testCreator() throws CreatorException, SiteException {
         Publication publication = PublicationHelper.getPublication();
         DocumentCreator creator = new DocumentCreator();
         File authoringDirectory = new File(publication.getDirectory(), AUTHORING_DIR);
 
         creator.create(publication, authoringDirectory, AREA, PARENT_ID, CHILD_ID, CHILD_NAME,
-            CHILD_TYPE, DOCUMENT_TYPE, DOCUMENT_LANGUAGE);
+                CHILD_TYPE, DOCUMENT_TYPE, DOCUMENT_LANGUAGE);
 
         File documentFile = new File(authoringDirectory, CREATED_FILE);
         assertTrue(documentFile.exists());
         System.out.println("File was created: " + documentFile.getAbsolutePath());
 
-        SiteTree sitetree = publication.getSiteTree(AREA);
+        DocumentIdentityMap map = new DocumentIdentityMap(publication);
+        SiteTree sitetree;
+        try {
+            SiteManager manager = publication.getSiteManager(map);
+            if (!(manager instanceof TreeSiteManager)) {
+                throw new RuntimeException("Only supported for site trees.");
+            }
+            sitetree = ((TreeSiteManager) manager).getTree(AREA);
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         SiteTreeNode node = sitetree.getNode(PARENT_ID + "/" + CHILD_ID);
         assertNotNull(node);
-        System.out.println("Sitetree node was created: " + node.getId() + " (label: " +
-            node.getLabel(DOCUMENT_LANGUAGE) + ")");
+        System.out.println("Sitetree node was created: " + node.getId() + " (label: "
+                + node.getLabel(DOCUMENT_LANGUAGE) + ")");
     }
 
     protected static final String AUTHORING_DIR = "content" + File.separator + "authoring";
@@ -104,7 +116,8 @@ public class DocumentCreatorTest extends TestCase {
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {
         if (PublicationHelper.getPublication() == null) {
-            String[] args = { "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya", "test" };
+            String[] args = { "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya",
+                    "test" };
             PublicationHelper.extractPublicationArguments(args);
         }
     }

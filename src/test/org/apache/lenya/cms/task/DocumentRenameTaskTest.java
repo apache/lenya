@@ -28,10 +28,12 @@ import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 
 /**
@@ -180,7 +182,10 @@ public class DocumentRenameTaskTest extends AntTaskTest {
 		//TODO evaluation of meta, workflow
         
         //evaluate the node
-		SiteTree sitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
+        Publication pub = PublicationHelper.getPublication();
+        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        TreeSiteManager manager = (TreeSiteManager) pub.getSiteManager(map);
+		SiteTree sitetree = manager.getTree(Publication.AUTHORING_AREA);
 		SiteTreeNode node = sitetree.getNode(secdocumentid);
 		assertNotNull(node);
         System.out.println(

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultDocumentBuilderTest.java,v 1.5 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -67,8 +67,6 @@ public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
 	protected Document getDocument(DocumentTestSet set) throws DocumentBuildException {
 		Publication pub = PublicationHelper.getPublication();
 
-		return pub.getDocumentBuilder().buildDocument(
-			pub,
-			"/" + pub.getId() + "/" + set.getArea() + set.getUrl());
+		return getIdentityMap().get(pub.getId() + "/" + set.getArea() + set.getUrl());
 	}
 }

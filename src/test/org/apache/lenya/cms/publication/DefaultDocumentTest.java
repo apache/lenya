@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultDocumentTest.java,v 1.6 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -26,11 +26,10 @@ import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
 
-
 /**
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
+ * To change the template for this generated type comment go to Window>Preferences>Java>Code
+ * Generation>Code and Comments
  */
 public class DefaultDocumentTest extends TestCase {
     /**
@@ -42,9 +41,8 @@ public class DefaultDocumentTest extends TestCase {
     }
 
     /**
-     * The main program.
-     * The parameters are set from the command line arguments.
-     *
+     * The main program. The parameters are set from the command line arguments.
+     * 
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
@@ -61,18 +59,17 @@ public class DefaultDocumentTest extends TestCase {
     }
 
     protected static final DocumentTestSet[] testSets = {
-        new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),
-        new DocumentTestSet("/index_en.htm", "/index", Publication.AUTHORING_AREA, "en", "htm"),
-        new DocumentTestSet("/index_de.html", "/index", Publication.AUTHORING_AREA, "de", "html")
-    };
+            new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),
+            new DocumentTestSet("/index_en.htm", "/index", Publication.AUTHORING_AREA, "en", "htm"),
+            new DocumentTestSet("/index_de.html", "/index", Publication.AUTHORING_AREA, "de",
+                    "html") };
 
     /**
      * Tests a document test set.
      * @param testSet The test set.
      * @throws DocumentBuildException when something went wrong.
      */
-    protected void doDocumentTest(DocumentTestSet testSet)
-        throws DocumentBuildException {
+    protected void doDocumentTest(DocumentTestSet testSet) throws DocumentBuildException {
         Document document = getDocument(testSet);
         System.out.println("ID:           " + document.getId());
         System.out.println("Area:         " + document.getArea());
@@ -87,8 +84,8 @@ public class DefaultDocumentTest extends TestCase {
         assertEquals(document.getArea(), testSet.getArea());
         assertEquals(document.getLanguage(), testSet.getLanguage());
         assertEquals(document.getDocumentURL(), testSet.getUrl());
-        assertEquals(document.getCompleteURL(),
-            "/" + publication.getId() + "/" + document.getArea() + testSet.getUrl());
+        assertEquals(document.getCompleteURL(), "/" + publication.getId() + "/"
+                + document.getArea() + testSet.getUrl());
         assertEquals(document.getExtension(), testSet.getExtension());
 
         System.out.println("-----------------------------------------------");
@@ -104,16 +101,26 @@ public class DefaultDocumentTest extends TestCase {
         }
     }
 
+    private DocumentIdentityMap identityMap;
+
+    protected DocumentIdentityMap getIdentityMap() {
+        if (this.identityMap == null) {
+            Publication pub = PublicationHelper.getPublication();
+            this.identityMap = new DocumentIdentityMap(pub);
+        }
+        return this.identityMap;
+    }
+
     /**
      * Returns the test document for a given test set.
      * @param testSet A document test set.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    protected Document getDocument(DocumentTestSet testSet)
-        throws DocumentBuildException {
-        DefaultDocument document = new DefaultDocument(PublicationHelper.getPublication(),
-                testSet.getId(), testSet.getArea());
+    protected Document getDocument(DocumentTestSet testSet) throws DocumentBuildException {
+
+        DefaultDocument document = new DefaultDocument(getIdentityMap(), testSet.getId(), testSet
+                .getArea());
         document.setDocumentURL(testSet.getUrl());
         document.setLanguage(testSet.getLanguage());
         document.setExtension(testSet.getExtension());

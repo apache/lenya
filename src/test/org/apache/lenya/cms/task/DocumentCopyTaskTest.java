@@ -28,108 +28,114 @@ import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
-
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
  * Class for testing the task to copy a document.
  */
 public class DocumentCopyTaskTest extends AntTaskTest {
 
-	/**
+    /**
      * Creates a new DocumentCopyTaskTest object.
-	 * @param test the test
-	 */
-	public DocumentCopyTaskTest(String test) {
-		super(test);
-	}
+     * @param test the test
+     */
+    public DocumentCopyTaskTest(String test) {
+        super(test);
+    }
 
-	/** 
-	 * Creates a test suite.
-	 * @return Test 
-	 **/
-	public static Test getSuite() {
-		return new TestSuite(DocumentCopyTaskTest.class);
-	}
+    /**
+     * Creates a test suite.
+     * @return Test
+     */
+    public static Test getSuite() {
+        return new TestSuite(DocumentCopyTaskTest.class);
+    }
 
-	/**
-	 * The main program for the DocumentCopyTaskTest class
-	 *
-	 * @param args The command line arguments
-	 */
-	public static void main(String[] args) {
-		AntTaskTest.initialize(args);
-		TestRunner.run(getSuite());
-	}
+    /**
+     * The main program for the DocumentCopyTaskTest class
+     * 
+     * @param args The command line arguments
+     */
+    public static void main(String[] args) {
+        AntTaskTest.initialize(args);
+        TestRunner.run(getSuite());
+    }
 
-	public static final String FIRST_DOCUMENT_ID = "/tutorial";
-	public static final String SEC_DOCUMENT_ID = "/features";
-	public static final String AUTHORING_PATH = "content/authoring".replace('/', File.separatorChar);
-	public static final String TREE_FILE = "sitetree.xml";
-	public static final String AUTHORING_RESOURCE = "resources/authoring";
-	public static final String RCML_DIR = "content/rcml";
-	public static final String RCBAK_DIR = "content/rcbak";
-	
-	/**
-	 * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
-	 **/
-	protected Parameters getTaskParameters() {
-		Parameters parameters = super.getTaskParameters();
-		parameters.setParameter("properties.node.firstdocumentid", FIRST_DOCUMENT_ID);
-		parameters.setParameter("properties.node.secdocumentid", SEC_DOCUMENT_ID);
-		return parameters;
-	}
-    
-	/**
-	 * Returns the target test.
-	 * @return target.
-	 */
-	protected String getTarget() {
-		return "copyDocument";
-	}
+    public static final String FIRST_DOCUMENT_ID = "/tutorial";
+    public static final String SEC_DOCUMENT_ID = "/features";
+    public static final String AUTHORING_PATH = "content/authoring"
+            .replace('/', File.separatorChar);
+    public static final String TREE_FILE = "sitetree.xml";
+    public static final String AUTHORING_RESOURCE = "resources/authoring";
+    public static final String RCML_DIR = "content/rcml";
+    public static final String RCBAK_DIR = "content/rcbak";
 
-	/**
-	 * prepare the test
+    /**
+     * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
+     */
+    protected Parameters getTaskParameters() {
+        Parameters parameters = super.getTaskParameters();
+        parameters.setParameter("properties.node.firstdocumentid", FIRST_DOCUMENT_ID);
+        parameters.setParameter("properties.node.secdocumentid", SEC_DOCUMENT_ID);
+        return parameters;
+    }
+
+    /**
+     * Returns the target test.
+     * @return target.
+     */
+    protected String getTarget() {
+        return "copyDocument";
+    }
+
+    /**
+     * prepare the test
      * 
      * @throws Exception if an error occurs
-	 */
-	protected void prepareTest() throws Exception {
-		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
-		File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
-
-		// TODO generate the resources  
-	}
-
-	/**
-	 * evaluate the test
-     * 
-     * @throws Exception if an error occurs
-	 */
-	protected void evaluateTest() throws Exception {
-		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-		String publicationPath = publicationDirectory.getAbsolutePath(); 
+     */
+    protected void prepareTest() throws Exception {
+        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
+        String publicationPath = publicationDirectory.getAbsolutePath() + File.separator;
         File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
-        
-		StringTokenizer st = new StringTokenizer(FIRST_DOCUMENT_ID , "/", true);
-		int l = st.countTokens();
-		for (int i=1; i<l; i++) {
-		  st.nextToken();
-		}
-		String secdocumentid = SEC_DOCUMENT_ID+"/"+st.nextToken();      
 
-		String filepath = secdocumentid + File.separator + "index.xml";  
+        // TODO generate the resources
+    }
 
-		File documentFile = new File(authoringDirectory, filepath);
+    /**
+     * evaluate the test
+     * 
+     * @throws Exception if an error occurs
+     */
+    protected void evaluateTest() throws Exception {
+        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
+        String publicationPath = publicationDirectory.getAbsolutePath();
+        File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
+
+        StringTokenizer st = new StringTokenizer(FIRST_DOCUMENT_ID, "/", true);
+        int l = st.countTokens();
+        for (int i = 1; i < l; i++) {
+            st.nextToken();
+        }
+        String secdocumentid = SEC_DOCUMENT_ID + "/" + st.nextToken();
+
+        String filepath = secdocumentid + File.separator + "index.xml";
+
+        File documentFile = new File(authoringDirectory, filepath);
         assertTrue(documentFile.exists());
-		System.out.println("Document was copied: " + documentFile.getAbsolutePath());
+        System.out.println("Document was copied: " + documentFile.getAbsolutePath());
 
-        SiteTree sitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
+        Publication pub = PublicationHelper.getPublication();
+        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        TreeSiteManager manager = (TreeSiteManager) pub.getSiteManager(map);
+
+        SiteTree sitetree = manager.getTree(Publication.AUTHORING_AREA);
         SiteTreeNode node = sitetree.getNode(secdocumentid);
         assertNotNull(node);
-        System.out.println("Sitetree node with id " + node.getId() +
-            " was created as child of node with id: " + node.getAbsoluteParentId());
+        System.out.println("Sitetree node with id " + node.getId()
+                + " was created as child of node with id: " + node.getAbsoluteParentId());
     }
 }

@@ -17,10 +17,10 @@
 
 /* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.site.tree;
 
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 import junit.framework.TestCase;

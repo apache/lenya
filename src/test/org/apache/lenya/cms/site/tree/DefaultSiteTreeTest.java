@@ -17,7 +17,7 @@
 
 /* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.site.tree;
 
 import java.io.IOException;
 
@@ -26,9 +26,9 @@ import javax.xml.transform.TransformerException;
 
 import junit.framework.TestCase;
 
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.xml.sax.SAXException;
 
