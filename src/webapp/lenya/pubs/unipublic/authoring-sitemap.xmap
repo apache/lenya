@@ -455,8 +455,12 @@
 	</map:match>
 	<map:match type="step" pattern="upload">
 	  <map:act type="file-upload">
+	    <!-- if the action suceeds it returns the referer and we
+	    simply redirect to it. --> 
 	    <map:redirect-to uri="{$referer}"/>
           </map:act>
+	  <!-- otherwise the action could not validate some of the
+	  input and we present the upload form again -->
 	  <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
 	  <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
 	  <map:serialize type="html"/>
