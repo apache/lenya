@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.6 2003/07/29 17:55:28 edith Exp $
+$Id: CMSHistory.java,v 1.7 2003/07/30 16:40:32 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,7 +77,7 @@ import java.io.File;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class CMSHistory extends History {
-    public static final String HISTORY_PATH = "history".replace('/', File.separatorChar);
+    public static final String HISTORY_PATH = "content/workflow/history".replace('/', File.separatorChar);
 
     /**
      * Creates a new CMSHistory object.
@@ -111,9 +111,7 @@ public class CMSHistory extends History {
 	 * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
 	 */
     protected File getHistoryFile() {
-        File workflowDirectory = new File(document.getPublication().getDirectory(),
-                WorkflowFactory.WORKFLOW_DIRECTORY);
-        File historyDirectory = new File(workflowDirectory, HISTORY_PATH);
+        File historyDirectory = new File(document.getPublication().getDirectory(), HISTORY_PATH);
 		DocumentIdToPathMapper pathMapper=document.getPublication().getPathMapper();
 		String documentPath = pathMapper.getPath(getDocument().getId(), ""); 
         File historyFile = new File(historyDirectory, documentPath);
