@@ -6,7 +6,7 @@
   xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
 >
 
-  <bar>
+  <menu>
     <xsp-lenya:util/>
     
     <live_uri><xsp:expr>xsp_lenya_pub_url</xsp:expr></live_uri>
@@ -26,51 +26,41 @@
 
     <menus>
       <menu name="File" label="File">
-	<block>
+<block>
 	  <item><xsp:attribute name="href">xopus2<xsp:expr>xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
 	  <!--
 	  <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
 	  -->
-	  <item><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/xdoc.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/xdoc.xsd&amp;url-css="+bitflux_prefix+"/css/xdoc.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+xsp_lenya_context_prefix+"/authoring"+xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit with Bitflux</item>
-	  
-	</block>
-	<block>
-	  <item>
-	    <xsp:attribute name="href">
-	      <xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/ParentChildScreenNewArticle?parentid=/"+"&amp;doctype=XDoc"</xsp:expr>
-	    </xsp:attribute>New Document</item>
-	</block>
-	<block>
+	  <item><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/xdoc.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/xdoc.xsd&amp;url-css="+bitflux_prefix+"/css/xdoc.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+xsp_lenya_context_prefix+"/authoring"+xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit with Bitflux</item>	  
+	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/ParentChildScreenNewArticle?parentid=/"+"&amp;doctype=XDoc"</xsp:expr></xsp:attribute>New Document</item>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
-	</block>
+</block>
       </menu>
       
       <menu name="Edit" label="Edit">
-	<block>
-	  <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
+<block>
+<item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
 	  <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
-	</block>
+</block>
       </menu>
       
       <menu name="Tools" label="Tools">
-	<block>
-	  <item><xsp:attribute name="href">../xopus<xsp:expr>xsp_lenya_pub_url.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
+<block>
+<item><xsp:attribute name="href">../xopus<xsp:expr>xsp_lenya_pub_url.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
 	  <item href="../xopus/xdoc.xsd">View&#160;Xopus&#160;XSD</item>
 	  <item href="../xopus/xdoc.xsl">View&#160;Xopus&#160;XSLT</item>
-	</block>
-      </menu>
+</block>
+</menu>
 
       <menu name="Help" label="Help">
-	<block>
+<block>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
-	</block>
-	<block>
 	  <item href="http://www.lenya.org">About&#160;Lenya</item>
-	</block>
+</block>
       </menu>
     </menus>
     
-  </bar>
+  </menu>
 </xsp:page>

@@ -25,11 +25,11 @@
   <xs:element name="header">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="lenya:page-title"/>
+        <xs:element ref="lenya:document-title"/>
         <xs:element ref="lenya:abstract"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="page-title" type="xs:string"/>
+  <xs:element name="document-title" type="xs:string"/>
   <xs:element name="abstract" type="xs:string"/>
 </xs:schema>

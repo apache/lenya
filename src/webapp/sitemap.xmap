@@ -379,20 +379,14 @@
         <docs href="content/authoring"/>
         <doctypes href="config/doctypes/"/>
    </map:action>
-<!--
       <map:action name="xopushandler" logger="sitemap.action.xopus" src="org.apache.lenya.cms.cocoon.acting.XopusHandlerAction">
         <xml href="content/authoring/"/>
         <xsl href="xslt"/>
-        <xsd href="content"/>
--->
-<!--
         <xsd href="config/doctypes/schemas"/>
--->
-<!--        <temp href="temp"/>
+        <temp href="temp"/>
         <rcmlDirectory href="content/rcml"/>
         <backupDirectory href="content/rcbak"/>
       </map:action>
--->
       <map:action name="page-envelope" src="org.apache.lenya.cms.cocoon.acting.PageEnvelopeAction" logger="sitemap.action.page-envelope"/> 
 	  <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout"/>
 	  <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
@@ -405,6 +399,12 @@
         <insert-image-before value="false"/>
       </map:action>
       <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
+    <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
+      <map:action name="default-create" src="org.apache.lenya.cms.cocoon.acting.DefaultCreatorAction" logger="sitemap.action.default-create">
+        <tree-authoring href="content/authoring/sitetree.xml"/>
+        <docs href="content/authoring"/>
+        <doctypes href="config/doctypes/"/>
+      </map:action>
    </map:actions>
 
   <!--+

@@ -16,30 +16,26 @@
     >
     
 <xsl:param name="root"/>
+<xsl:param name="document-id"/>
 
-
-<xsl:output method="html"/>
-
-
-<xsl:template match="/page:page">
+<xsl:template match="cmsbody">
   <html>
     <head>
       <link rel="stylesheet" href="{$root}/css/page.css" mime-type="text/css"/>
-    </head>
+    </head>	
     <body>
       <div style="text-align: center">
         <img src="{$root}/images/project-logo.gif"/>
       </div>
-      <xsl:apply-templates select="xhtml:div[@id = 'tabs']"/>
-      <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
+      <xsl:apply-templates select="/page:page/xhtml:div[@id = 'tabs']"/>
+      <xsl:apply-templates select="/page:page/xhtml:div[@id = 'menu']"/>
       <div id="main">
-        <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
-        <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
+        <xsl:apply-templates select="/page:page/xhtml:div[@id = 'breadcrumb']"/>
+        <xsl:apply-templates select="/page:page/xhtml:div[@id = 'body']"/>
       </div>
     </body>
   </html>
 </xsl:template>
-
 
 <xsl:template match="@*|node()" priority="-1">
   <xsl:copy>

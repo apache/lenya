@@ -1,32 +1,13 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.22 2003/05/09 13:26:15 michi Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.23 2003/05/10 15:43:25 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
     <map:generators default="file" />
     <map:matchers default="wildcard"/>
-    <map:actions>
-      <!-- FIXME: Factor out to root sitemap -->
-<!--
-      <map:action name="task" logger="sitemap.action.task"
-	src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
-      <map:action name="page-envelope"
-      logger="sitemap.action.page-envelope"
-	src="org.apache.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
--->
-      <map:action name="uriparametrizer"
-	src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction"
-	logger="sitemap.action.uriparametrizer"/>
-      <map:action name="default-create"
-	src="org.apache.lenya.cms.cocoon.acting.DefaultCreatorAction"
-	logger="sitemap.action.default-create">
-        <tree-authoring href="content/authoring/sitetree.xml"/>
-        <docs href="content/authoring"/>
-        <doctypes href="config/doctypes/"/>
-      </map:action>
-    </map:actions>
+    <map:actions />
   </map:components>
 
   <map:views>
@@ -162,9 +143,11 @@
             <map:part src="cocoon:/lenyamenubar/{../area}/article.xml"/>
             <map:part src="cocoon:/lenyabody/{../publication-id}/{../area}/{doctype}/{document-id}"/>
           </map:aggregate>
-          <map:transform src="xslt/page2xhtml.xsl">
+
+        <map:transform src="xslt/{doctype}-{../area}.xsl">
             <map:parameter name="root" value="{../context-prefix}/{../publication-id}"/>
-          </map:transform>
+            <map:parameter name="document-id" value="{../area}/{doctype}/{document-id}"/>
+          </map:transform> 
 	</map:act>
       </map:act>
       <map:serialize type="html"/>
