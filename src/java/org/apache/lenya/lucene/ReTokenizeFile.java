@@ -1,5 +1,5 @@
 /*
- * $Id: ReTokenizeFile.java,v 1.11 2003/03/06 20:45:52 gregor Exp $
+ * $Id: ReTokenizeFile.java,v 1.12 2003/04/02 13:16:28 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,7 +57,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class ReTokenizeFile {
     /**
@@ -174,25 +174,59 @@ public class ReTokenizeFile {
     }
 
     /**
-     * DOCUMENT ME!
+     * Encloses all words in <code>words</code> that appear in <code>string</code> in
+     * &lt;word&gt; tags. The whole string is enclosed in &lt;excerpt&gt; tags.
      *
-     * @param string DOCUMENT ME!
-     * @param words DOCUMENT ME!
+     * @param string The string to process.
+     * @param words The words to emphasize.
      *
      * @return DOCUMENT ME!
      */
     public String emphasizeAsXML(String string, String[] words) {
         String emphasizedString = "... Hello <word>World</word>! ...";
+        
+        String lowerCaseString = string.toLowerCase();
 
         for (int i = 0; i < words.length; i++) {
-            int index = string.toLowerCase().indexOf(words[i].toLowerCase());
+            
+            String word = words[i].toLowerCase();
+            
+            // use uppercase tags so that they are not replaced
+            lowerCaseString = lowerCaseString.replaceAll(word, "<WORD>" + word + "</WORD>");
 
-            if (index >= 0) {
-                emphasizedString = string.substring(0, index) + "<word>" + words[i] + "</word>" +
-                    string.substring(index + words[i].length());
+        }
+        
+        lowerCaseString = lowerCaseString.toLowerCase();
+        //if (true) return "<excerpt>" + lowerCaseString + "</excerpt>";
+        
+        String result = "";
+        
+        int sourceIndex = 0;
+        int index = 0;
+        String tags[] = { "<word>", "</word>" };
+        
+        while (lowerCaseString.indexOf(tags[0], index) != -1) {
+            
+            for (int tag = 0; tag < 2; tag++) {
+                int subStringLength = lowerCaseString.indexOf(tags[tag], index) - index;
+                String subString = string.substring(sourceIndex, sourceIndex + subStringLength);
+                result += includeInCDATA(subString) + tags[tag];
+                sourceIndex += subStringLength;
+                index += subStringLength + tags[tag].length();
             }
         }
+        
+        result += includeInCDATA(string.substring(sourceIndex));
 
-        return "<excerpt>" + emphasizedString + "</excerpt>";
+        return "<excerpt>" + result + "</excerpt>";
     }
+    
+    /**
+     * Includes a string in CDATA delimiters.
+     */
+    protected String includeInCDATA(String string) {
+        return "<![CDATA[" + string + "]]>";
+    }
+    
+    
 }
