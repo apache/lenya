@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml,v 1.26 2004/06/03 08:16:48 andreas Exp $ -->
+<!-- $Id: webapp-build.xml,v 1.27 2004/06/03 08:18:53 andreas Exp $ -->
 
 <project name="webapp">
 
@@ -186,10 +186,10 @@
 
   <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
     <!-- Empty server cache - this directory is set in the "build.properties" file -->
-    <echo>INFO: Delete ${tomcat.cache.dir}</echo>
+    <echo>INFO: Delete Tomcat Cache Dir: ${tomcat.cache.dir}</echo>
     <delete dir="${tomcat.cache.dir}"/>
     <mkdir dir="${tomcat.webapps.dir}" />
-    <echo>INFO: Delete ${tomcat.webapps.dir}</echo>
+    <echo>INFO: Delete Tomcat Lenya Webapp Dir: ${tomcat.webapps.dir}</echo>
     <delete includeEmptyDirs="true">
       <fileset dir="${tomcat.webapps.dir}" excludes="${target.reset.excludes}" />
     </delete>
