@@ -126,7 +126,7 @@
   <echo>INFO: Publish Index</echo>
 </target>
 
-<target name="xpdf" description="Extract text from PDF with Xpdf" depends="init">
+<target name="xpdf" description="Extract text from PDF with Xpdf. Usage: -Dhtdocs.dump.dir=/usr/local/apache/htdocs" depends="init">
   <echo>INFO: Extract text from PDF with Xpdf (${htdocs.dump.dir})</echo>
 
   <exec executable="${lenya.dir}/src/webapp/lenya/bin/crawl_and_index.sh">
