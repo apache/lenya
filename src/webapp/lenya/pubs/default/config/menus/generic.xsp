@@ -38,9 +38,7 @@
     <xsp:logic>
       String projectid = parameters.getParameter("projectid","null");
       
-      String xmlSource = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
       String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
-      String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/live" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
       String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
       
       Object documentObject = <input:get-attribute as="object" module="page-envelope" name="document"/>;
@@ -64,56 +62,13 @@
     
     <menus>
       <menu i18n:attr="name" name="File">
-            <block>
-          
-          <xsp:logic>
-            {
-                if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
-                    <item><i18n:text>XHTML Document</i18n:text></item>
-                    <item><i18n:text>Links Document</i18n:text></item>
-                }
-                else {
-                    <item uc:usecase="site.create" href="?doctype=xhtml"><i18n:text>XHTML Document</i18n:text></item>
-                    <item uc:usecase="site.create" href="?doctype=links"><i18n:text>Links Document</i18n:text></item>
-                }
-            }
-          </xsp:logic>
+        <block>
+          <item uc:usecase="site.create" href="?doctype=xhtml"><i18n:text>XHTML Document</i18n:text></item>
+          <item uc:usecase="site.create" href="?doctype=links"><i18n:text>Links Document</i18n:text></item>
         </block>
         <block>
-          <xsp:logic>
-            {
-            
-              String[] availableLanguages = { };
-              if (isDocument) {
-                  availableLanguages = (String[]) <input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
-              }
-            
-              if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
-                  String[] allLanguages = document.getPublication().getLanguages();
-                  
-                  if (availableLanguages.length &lt; allLanguages.length) {
-              <xsp:content>
-                <item uc:usecase="site.createLanguage" href="?"><i18n:text>New Language Version</i18n:text></item>
-              </xsp:content>
-                  }
-                  else {
-              <xsp:content>
-                <item><i18n:text>New Language Version</i18n:text></item>
-              </xsp:content>
-                  }
-              }
-            
-              if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area) &amp;&amp; availableLanguages.length &gt; 1) {
-                <xsp:content>
-                  <item uc:usecase="site.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
-                </xsp:content>
-              } else {
-                <xsp:content>
-                  <item><i18n:text>Remove Language Version</i18n:text></item>
-                </xsp:content>
-              } 
-            }
-          </xsp:logic>
+          <item uc:usecase="site.createLanguage" href="?"><i18n:text>New Language Version</i18n:text></item>
+          <item uc:usecase="site.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
         </block>
         <block>
           <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
@@ -130,7 +85,7 @@
         </block>
         <block info="false">
           <item wf:event="edit" uc:usecase="info-meta" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/info-<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute><i18n:text>Edit Metadata</i18n:text></item>
-          <item wf:event="edit" uc:usecase="site.changeLabel"><xsp:attribute name="href"><xsp-request:get-uri/>?</xsp:attribute><i18n:text>Edit Navigation Title</i18n:text></item>
+          <item wf:event="edit" uc:usecase="site.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
         </block>
 
         <block authoring="false">
@@ -177,22 +132,8 @@
         
       </block>
       <block authoring="false">
-        <xsp:logic>
-          if (isDocument &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
-              &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
-            <item uc:usecase="site.changeNodeID" href="?"><i18n:text>Rename URL</i18n:text></item>
-          }
-          else {
-            <item>Rename URL</item>
-          }
-          
-          if (isDocument) {
-            <item wf:event="edit" uc:usecase="rename-label" uc:step="showscreen" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
-          }
-          else {
-            <item>Edit Navigation Title</item>
-          }
-        </xsp:logic>
+        <item uc:usecase="site.changeNodeID" href="?"><i18n:text>Rename URL</i18n:text></item>
+        <item uc:usecase="site.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
       </block>
       <block authoring="false">
         <xsp:logic>
