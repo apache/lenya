@@ -1,5 +1,5 @@
 /*
- * $Id: MailTask.java,v 1.20 2003/02/12 23:06:09 andreas Exp $
+ * $Id: MailTask.java,v 1.21 2003/02/14 17:00:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,6 +43,7 @@
  */
 package org.wyona.cms.mail;
 
+import com.sun.mail.smtp.SMTPMessage;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.log4j.Category;
@@ -215,7 +216,10 @@ public class MailTask extends AbstractTask {
 
             Session mailSession = Session.getInstance(props, null);
 
-            MimeMessage pm = new MimeMessage(mailSession);
+            SMTPMessage pm = new SMTPMessage(mailSession);
+            
+            // avoid "quoted printable" problems
+            pm.setAllow8bitMIME(true);
 
             // set from
             pm.setFrom(new InternetAddress(from));
