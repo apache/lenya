@@ -16,8 +16,9 @@ A:hover
 
 A.txt-link-red:hover
 {
-	text-decoration: underline
+	color: #CC6666
 }
+
 A.txt-link-red
 {
 	color: #CE0000;
@@ -26,21 +27,22 @@ A.txt-link-red
 	text-decoration: none
 }
 
-.txt-s-black
+
+..txt-s-black
 {
 	color: black;
 	font-size: 11px;
 	font-family: Tahoma, Arial, Helvetica, sans-serif;
 	text-decoration: none
 }
-.txt-s-red
+..txt-s-red
 {
 	color: #CE0000;
 	font-size: 11px;
 	font-family: Tahoma, Arial, Helvetica, sans-serif;
 	text-decoration: none
 }
-.txt-s-white
+..txt-s-white
 {
 	color: white;
 	font-size: 11px;
@@ -48,7 +50,7 @@ A.txt-link-red
 	text-decoration: none
 }
 
-.txt-m-black
+..txt-m-black
 {
 	color: black;
 	font-size: 12px;
@@ -56,23 +58,29 @@ A.txt-link-red
 	text-decoration: none
 }
 
-.txt-m-black-bold
+..txt-m-black-bold
 {
 	color: black;
 	font-size: 12px;
-	  font-weight: bold;
+  font-weight: bold;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	text-decoration: none
 }
 
-.txt-m-red
+..txt-m-red
 {
 	color: #CE0000;
 	font-size: 12px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	text-decoration: none
 }
-.txt-m-white
+
+A.txt-m-red:hover
+{
+	color: #CC6666
+}
+
+..txt-m-white
 {
 	color: white;
 	font-size: 12px;
@@ -80,24 +88,48 @@ A.txt-link-red
 	text-decoration: none
 }
 
-.txt-l-black
+..txt-l-black
 {
 	color: black;
 	font-size: 15px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	text-decoration: none
 }
-.txt-l-red
+..txt-l-black-bold
+{
+	color: black;
+	font-size: 15px;
+  font-weight: bold;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: none
+}
+
+..txt-l-red
 {
 	color: #CE0000;
 	font-size: 15px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	text-decoration: none
 }
-.txt-l-white
+
+A.txt-l-red:hover
+{
+	color: #CC6666
+}
+
+..txt-l-white
 {
 	color: white;
 	font-size: 15px;
+	font-weight: bold;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: none
+}
+
+..txt-xl-black
+{
+	color: black;
+	font-size: 17px;
 	font-weight: bold;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	text-decoration: none
