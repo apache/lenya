@@ -50,6 +50,7 @@
 	  <item href="../xopus/xdoc.xsd">View&#160;Xopus&#160;XSD</item>
 	  <item href="../xopus/xdoc.xsl">View&#160;Xopus&#160;XSLT</item>
           <item href="../logs/tasks/index.html">View Task Logs</item>
+          <item href="?lenya.usecase=schedule-page&amp;lenya.step=showscreen">Scheduler</item>
 </block>
 </menu>
 
