@@ -11,12 +11,14 @@ import java.util.Vector;
 /**
  * @author Michael Wechner (http://www.wyona.com)
  * @version 0.12.17
+ *
+ * WARNING: This class does not work properly!!!
+ * NOTE: matchNew() should be working properly!!!
  */
 public class WildcardFilter
      {
 /**
- * WARNING: This class does not work properly!!!
- * NOTE: matchNew() should be working properly!!!
+ *
  */
      public static void main(String[] args)
           {

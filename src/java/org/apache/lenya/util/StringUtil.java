@@ -2,7 +2,7 @@ package org.wyona.util;
 
 /**
  * StringUtil.java
- * $Id: StringUtil.java,v 1.2 2002/07/02 11:15:26 egliwyona Exp $
+ * $Id: StringUtil.java,v 1.3 2002/08/23 07:07:01 michicms Exp $
  *
  * Created: Thu Jan 24 18:27:05 2002
  *
@@ -15,15 +15,12 @@ package org.wyona.util;
 public class StringUtil {
 
   /**
-   *
-   * http://jguru.com/forums/view.jsp?EID=539354
-   *
-   * Replaces one substring with another within a main string.
-   *
    * @param       s       Main string.
    * @param       find    The substring to find.
    * @param       rep     Replaces the find substring.
    * @return      The new string. 
+   *
+   * Replaces one substring with another within a main string.
    */
   public static String replace(String s, String find, String rep) {
     return replace(new StringBuffer(s), find, rep).toString();                                   
