@@ -386,12 +386,10 @@
                   <map:serialize type="html"/>
                 </map:act>
 
-                <!-- FIXME: It would be nice to reuse the original macros file -->
-                <!--<map:generate src="resources/epoz/common/epozmacros.html"/>-->
-                <map:generate src="resources/misc/epoz/epozmacros.html"/>
+                <map:generate src="resources/epoz/apache-lenya/epozmacros.html"/>
                 <map:transform src="xslt/authoring/edit/epozmacros-xhtml.xsl">
                   <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=content"/>
-
+                  <map:parameter name="context" value="{request:contextPath}"/>
                   <map:parameter name="document-path" value="{page-envelope:document-path}"/>
                   <map:parameter name="root" value="{page-envelope:context-prefix}"/>
                   <map:parameter name="save-destination" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=save"/>
@@ -443,7 +441,7 @@
                   <map:part element="original" src="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
                 </map:aggregate>
 
-                <map:transform src="xslt/authoring/edit/epozsave-xhtml.xsl"/>
+                <map:transform src="resources/epoz/apache-lenya/epozsave-xhtml.xsl"/>
 
                 <map:act type="reserved-checkin">
                   <map:generate src="content/rc/{exception}.xsp" type="serverpages">
@@ -458,11 +456,10 @@
 
                 <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
                   <map:parameter name="source" value="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
-                  <!--<map:parameter name="source" value="pubs/{page-envelope:publication-id}/test-epoz.xml"/>-->
                 </map:transform>
                 <map:transform type="write-source"/>
 			
-                <!-- Trigger worklfow with *edit* action -->
+                <!-- Trigger workflow with *edit* action -->
                 <map:act type="workflow">
                   <map:parameter name="area" value="{page-envelope:area}"/>
                   <map:parameter name="document-id" value="{page-envelope:document-id}"/>
@@ -477,13 +474,6 @@
 
         </map:match>
 
-<!-- Defined outside of usecase pipeline. See above. -->
-<!--
-        <map:match pattern="epoz-stream">
-          <map:generate type="epozstream"/>
-          <map:serialize type="xml"/>
-        </map:match>
--->
         <!-- ************************************************************** -->
         <!-- ********  /Epoz Editor *************************************** -->
         <!-- ************************************************************** -->
