@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.12 2003/09/23 13:53:14 edith Exp $
+ $Id: rename.xsl,v 1.13 2003/12/08 14:40:52 egli Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -47,7 +47,7 @@
           <table class="lenya-table-noborder">
             <tr>
               <td class="lenya-entry-caption">New Document ID:</td>
-              <td><input type="text" class="lenya-form-element" name="properties.node.secdocumentid" value="{$destination-id}"/></td>
+              <td><input type="text" class="lenya-form-element" name="properties.node.secdocumentid" value="{$destination-id}"/> (No whitespace, no special characters)</td>
             </tr>
             <tr>
               <td/>
