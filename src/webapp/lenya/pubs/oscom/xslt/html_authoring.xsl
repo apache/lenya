@@ -9,7 +9,6 @@
 <xsl:variable name="CONTEXT_PREFIX">/lenya/oscom</xsl:variable>
 <xsl:variable name="images"><xsl:value-of select="$CONTEXT_PREFIX"/>/images</xsl:variable>
 
-<xsl:include href="navigation_authoring.xsl"/>
 <xsl:include href="oscom.xsl"/>
  
 </xsl:stylesheet>  

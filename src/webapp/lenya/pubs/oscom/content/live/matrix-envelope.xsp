@@ -12,8 +12,6 @@
   String projectid=parameters.getParameter("projectid","null");
 </xsp:logic>
 
-<xi:include href="navigation-cms-matrix.xml"/>
-
 <xi:include><xsp:attribute name="href">matrix/<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute></xi:include>
 
 </oscom>

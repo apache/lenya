@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-
-<oscom_navigation xmlns:oscom="http://www.oscom.org/2002/oscom">
-<leaf name="Home" href="index.html"/>
-<leaf name="CMF/S&#160;Overview" href="matrix/index.html"/>
-</oscom_navigation>

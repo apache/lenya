@@ -69,38 +69,6 @@
      </map:match>
 <!-- /CMS/F Matrix (Creating, etc.) -->
 
-
-
-
-<!-- Editor Matrix Project -->
-     <map:match pattern="**/editor-matrix/*.html.acml">
-       <map:generate src="config/ac/policies/editor-matrix.acml"/>
-       <map:serialize type="xml"/>
-     </map:match>
-<!--
-     <map:match pattern="authoring/editor-matrix/*.html.acml">
-       <map:generate src="config/ac/policies/editor-matrix.acml"/>
-       <map:serialize type="xml"/>
-     </map:match>
-     <map:match pattern="authoring/editor-matrix/body-*.xml.acml">
-       <map:generate src="config/ac/policies/editor-matrix.acml"/>
-       <map:serialize type="xml"/>
-     </map:match>
-     <map:match pattern="authoring/xopus2/editor-matrix/*.html.acml">
-       <map:generate src="config/ac/policies/editor-matrix.acml"/>
-       <map:serialize type="xml"/>
-     </map:match>
--->
-
-     <!-- FIXME: This is quite generic, because it's not just for the editor matrix! -->
-     <map:match pattern="authoring/xopus/XopusInterface.acml">
-       <map:generate src="config/ac/policies/editor-matrix.acml"/>
-       <map:serialize type="xml"/>
-     </map:match>
-<!-- /Editor Matrix Project -->
-
-
-
 <!-- Authoring -->
      <map:match pattern="authoring/**">
        <map:generate src="config/ac/policies/root.acml"/>

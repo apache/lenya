@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 
 <oscom xmlns:xi="http://www.w3.org/2001/XInclude">
-
-<xi:include xml:base="cocoon:" href="/authoring/navigation.xml"/>
-
 <xi:include xml:base="cocoon:" href="authoring/overview-body.xml#xpointer(/lenya/cmsbody/oscom/system)"/>
 </oscom>
