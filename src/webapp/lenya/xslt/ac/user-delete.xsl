@@ -29,6 +29,9 @@
     <form method="GET">
       <input type="hidden" name="lenya.usecase" value="user-delete"/>
       <input type="hidden" name="lenya.step" value="delete"/>
+      <input type="hidden" name="user-id">
+	<xsl:attribute name="value"><xsl:value-of select="id"/></xsl:attribute>
+      </input>
 
       <p>
 	Really delete user <xsl:value-of select="id"/> (<xsl:value-of select="fullName"/>)?
