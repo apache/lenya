@@ -546,7 +546,11 @@
           <map:match pattern="removelabel" type="step">
             <map:act type="task">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
-              <map:redirect-to session="true" uri="{page-envelope:context-prefix}{page-envelope:document-url-without-language}"/>
+              <map:generate type="serverpages" src="{fallback:content/util/redirect-language.xsp}">
+                <map:parameter name="language" value="{page-envelope:default-language}"/>
+              </map:generate>
+              <map:transform src="{fallback:xslt/util/redirect-language.xsl}"/>
+              <map:serialize/>
             </map:act>
           </map:match>
 
