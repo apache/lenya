@@ -1,5 +1,5 @@
 /*
-$Id: Collection.java,v 1.1 2003/12/04 14:17:21 andreas Exp $
+$Id: Collection.java,v 1.2 2003/12/05 15:27:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -102,10 +102,17 @@ public interface Collection extends Document {
     void remove(Document document) throws DocumentException;
     
     /**
+     * Removes all documents from this collection.
+     * @throws DocumentException when something went wrong.
+     */
+    void clear() throws DocumentException;
+    
+    /**
      * Checks if this collection contains a specific document.
      * @param document The document to check.
      * @return A boolean value.
      * @throws DocumentException when something went wrong.
      */
     boolean contains(Document document) throws DocumentException;
+    
 }

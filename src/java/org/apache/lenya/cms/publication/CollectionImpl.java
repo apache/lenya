@@ -1,5 +1,5 @@
 /*
-$Id: CollectionImpl.java,v 1.2 2003/12/04 16:06:51 andreas Exp $
+$Id: CollectionImpl.java,v 1.3 2003/12/05 15:27:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -236,6 +236,13 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     public boolean contains(Document document) throws DocumentException {
         return documents.contains(document);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Collection#clear()
+     */
+    public void clear() throws DocumentException {
+        documents.clear();
     }
 
 }
