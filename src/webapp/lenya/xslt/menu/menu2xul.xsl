@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu2xul.xsl,v 1.1 2004/09/01 21:59:46 michi Exp $ -->
+<!-- $Id: menu2xul.xsl,v 1.2 2004/09/01 23:27:30 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -174,11 +174,13 @@
   </xsl:template>  
   
   <xsl:template match="menu:menu" mode="menu">
+    <xsl:if test="menu:block">
       <xul:menu label="{@name}">
      	 <xul:menupopup style="background-image: url({$contextprefix}/lenya/menu/images/bottombg.gif);">
-	      	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
+           <xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
        </xul:menupopup>
-    </xul:menu>
+      </xul:menu>
+    </xsl:if>
   </xsl:template>
   
   
