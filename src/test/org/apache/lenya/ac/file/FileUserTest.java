@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileUserTest.java,v 1.3 2004/03/04 15:37:59 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 
@@ -27,9 +27,15 @@ import java.util.Map;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserType;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
 
+/**
+ * File user test.
+ * 
+ * @version $Id$
+ */
 public class FileUserTest extends AccessControlTest {
     private HashMap groups = new HashMap();
 
@@ -100,7 +106,9 @@ public class FileUserTest extends AccessControlTest {
         editorGroup.save();
         adminGroup.save();
         user.save();
-        FileUserManager manager = FileUserManager.instance(configDir);
+        
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
         manager.add(user);
 
         return user;
@@ -117,7 +125,8 @@ public class FileUserTest extends AccessControlTest {
      */
     final public FileUser loadUser(String userName) throws AccessControlException {
         File configDir = getAccreditablesDirectory();
-        FileUserManager manager = FileUserManager.instance(configDir);
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
 
         return (FileUser) manager.getUser(userName);
     }
@@ -199,8 +208,8 @@ public class FileUserTest extends AccessControlTest {
         String id = "albert";
         FileUser user = createAndSaveUser(id, "Albert Einstein", "albert@physics.org", "secret");
         File configDir = getAccreditablesDirectory();
-        FileUserManager manager = null;
-        manager = FileUserManager.instance(configDir);
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
         assertNotNull(manager);
 
         assertNotNull(manager.getUser(id));
@@ -220,8 +229,8 @@ public class FileUserTest extends AccessControlTest {
         assertTrue(user.authenticate(password));
 
         File configDir = getAccreditablesDirectory();
-        FileUserManager manager = null;
-        manager = FileUserManager.instance(configDir);
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
         assertNotNull(manager);
 
         User lenya = manager.getUser("lenya");

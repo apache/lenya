@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: UserManagerTest.java,v 1.3 2004/03/04 15:40:19 egli Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import java.io.File;
@@ -24,6 +22,8 @@ import java.io.File;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserType;
+import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FileGroup;
 import org.apache.lenya.ac.file.FileGroupManager;
 import org.apache.lenya.ac.file.FileRole;
@@ -31,6 +31,11 @@ import org.apache.lenya.ac.file.FileUser;
 import org.apache.lenya.ac.file.FileUserManager;
 import org.apache.lenya.cms.PublicationHelper;
 
+/**
+ * User manager test.
+ * 
+ * @version $Id$
+ */
 public class UserManagerTest extends AccessControlTest {
 
     /**
@@ -66,7 +71,8 @@ public class UserManagerTest extends AccessControlTest {
      */
     final public void testInstance() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
-        FileUserManager manager = FileUserManager.instance(configDir);
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
         assertNotNull(manager);
     }
 
@@ -107,9 +113,9 @@ public class UserManagerTest extends AccessControlTest {
         adminGroup.add(user);
         user.save();
 
-        FileUserManager userManager = null;
         FileGroupManager groupManager = null;
-        userManager = FileUserManager.instance(configDir);
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager userManager = FileUserManager.instance(configDir, userTypes);
         assertNotNull(userManager);
 
         groupManager = FileGroupManager.instance(configDir);
@@ -129,7 +135,6 @@ public class UserManagerTest extends AccessControlTest {
      */
     final public void testGetUser() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
-        FileUserManager manager = null;
         String userName = "testuser";
         FileUser user =
             new FileUser(
@@ -138,7 +143,8 @@ public class UserManagerTest extends AccessControlTest {
                 "Alice in Wonderland",
                 "alice@wonderland.com",
                 "secret");
-        manager = FileUserManager.instance(configDir);
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
         assertNotNull(manager);
         manager.add(user);
 
