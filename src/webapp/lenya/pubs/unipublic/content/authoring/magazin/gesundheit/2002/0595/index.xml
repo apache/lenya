@@ -2,6 +2,12 @@
 
 <NewsML>
   <NewsItem>
+    <Identification>
+      <NewsIdentifier>
+        <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
+      </NewsIdentifier>
+    </Identification>
+    <NewsManagement/>
     <NewsComponent EquivalentsList="no">
       <ContentItem>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf">
