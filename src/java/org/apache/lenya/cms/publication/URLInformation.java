@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URLInformation.java,v 1.4 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id: URLInformation.java,v 1.5 2004/04/30 08:19:21 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -85,6 +85,9 @@ public class URLInformation {
             
             if (completeArea.startsWith(Publication.INFO_AREA_PREFIX)) {
 				this.area = completeArea.substring(Publication.INFO_AREA_PREFIX.length());
+            }
+            if (completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
+                this.area = completeArea.substring(Publication.SEARCH_AREA_PREFIX.length());
             }
             else {
             	this.area = completeArea;

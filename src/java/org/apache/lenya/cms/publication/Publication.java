@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publication.java,v 1.48 2004/04/07 10:05:52 michi Exp $  */
+/* $Id: Publication.java,v 1.49 2004/04/30 08:19:21 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -50,6 +50,7 @@ public interface Publication {
     String CONFIGURATION_PATH = "config";
     String CONTENT_PATH = "content";
     String INFO_AREA_PREFIX = "info-";
+    String SEARCH_AREA_PREFIX = "search-";
     String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator + "publication.xconf";
 
     /**
