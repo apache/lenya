@@ -27,6 +27,7 @@
     <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
     <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/>.html</document-id>
+    <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
     <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
     <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
   </url-info>
