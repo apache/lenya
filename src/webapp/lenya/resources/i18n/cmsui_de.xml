@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.44 2004/02/25 20:42:39 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.45 2004/03/03 09:46:51 roku Exp $ 
    
 -->
 
@@ -65,7 +65,8 @@
   <message key="Date">Datum</message>
   <message key="Back">Zur&#252;ck</message>
   <message key="Add">Hinzuf&#252;gen</message>
-
+  <message key="Create">Erstellen</message>  
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -242,6 +243,10 @@
   <message key="Active jobs">Aktive Aufgaben</message>
   <message key="Publish and Export">Ver&#246;ffentlichen und&#160;exportieren</message>
   <message key="doc-has-links-to-unpublished">Dieses Dokument hat Referenzen auf folgende unver&#246;ffentlichte Dokumente:</message>
+
+   <!-- New Document -->
+   <message key="Please check the following possible causes of the exception">Bitte &#252;berpr&#252;fen Sie folgende Ursachen f&#252;r die Ausnahme.</message>
+   <message key="Parent ID">&#220;bergerodnete ID</message>
 
 </catalogue>
 

@@ -1,16 +1,22 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  $Id: create.xsl,v 1.6 2004/03/03 09:46:51 roku Exp $
+-->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns="http://www.w3.org/1999/xhtml">
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+>
   
-  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
   <xsl:param name="lenya.usecase" select="'create'"/>
   
   <xsl:template match="/">
 	  <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
-	  <page:title>Create Document</page:title>
+	  <page:title><i18n:text>New Document</i18n:text></page:title>
 	  <page:body>
 	    <xsl:apply-templates/>
     </page:body>
@@ -23,7 +29,7 @@
     
     <xsl:if test="not(exception)">
       <div class="lenya-box">
-        <div class="lenya-box-title">New Document</div>
+        <div class="lenya-box-title"><i18n:text>New Document</i18n:text></div>
       <div class="lenya-box-body">  
         <script Language="JavaScript">
 function validRequired(formField,fieldLabel)
@@ -77,19 +83,19 @@ function validateForm(theForm)
 	  <input type="hidden" name="properties.create.doctype" value="{/parent-child/doctype}"/>
 	  <table class="lenya-table-noborder">
 	    <tr>
-	      <td class="lenya-form-caption">Parent ID:</td><td><xsl:value-of select="/parent-child/parentid"/></td>
+	      <td class="lenya-form-caption"><i18n:text>Parent ID</i18n:text>:</td><td><xsl:value-of select="/parent-child/parentid"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Document ID:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-id"/></td>
+	      <td class="lenya-form-caption"><i18n:text>Document ID</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-id"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Name:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
+	      <td class="lenya-form-caption"><i18n:text>Name</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
 	    </tr>
 	    <tr>
 	      <td/>
 	      <td>
-            <input type="submit" value="Create"/>&#160;
-            <input type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel"/>
+            <input i18n:attr="value" type="submit" value="Create"/>&#160;
+            <input i18n:attr="value" type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel"/>
 	      </td>
 	    </tr>
 	  </table>
@@ -100,17 +106,14 @@ function validateForm(theForm)
   </xsl:template>
   
   <xsl:template match="exception">
-    <font color="red">EXCEPTION</font><br />
-    Go <a href="{../referer}">back</a> to page.<br />
-    <p>
-      Exception handling isn't very good at the moment. 
-      For further details please take a look at the log-files
-      of Cocoon. In most cases it's one of the two possible exceptions:
+    <font color="red"><i18n:text>EXCEPTION</i18n:text></font><br />
+    <a href="{../referer}"><i18n:text>Back</i18n:text></a><br />
+    <p><i18n:text>Please check the following possible causes of the exception</i18n:text>
       <ol>
-	<li>The id is not allowed to have whitespaces</li>
-	<li>The id is already in use</li>
+	<li><i18n:text>The id is not allowed to have whitespaces</i18n:text></li>
+	<li><i18n:text>The id is already in use</i18n:text></li>
       </ol>
-      Exception handling will be improved in the near future.
+      <i18n:text>Exception handling will be improved in the near future</i18n:text>
     </p>
   </xsl:template>
   

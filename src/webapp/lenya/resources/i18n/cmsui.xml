@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.40 2004/03/02 16:02:33 egli Exp $
+   $Id: cmsui.xml,v 1.41 2004/03/03 09:46:51 roku Exp $
    
 -->
 
@@ -65,6 +65,7 @@
   <message key="Date">Date</message>
   <message key="Back">Back</message>
   <message key="Add">Add</message>
+  <message key="Create">Create</message>  
   
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
@@ -242,4 +243,8 @@ c
   <message key="Publish and Export">Publish and&#160;Export</message>
   <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
 
+   <!-- New Document -->
+   <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>
+   <message key="Parent ID">Parent ID</message>
+    
 </catalogue>
