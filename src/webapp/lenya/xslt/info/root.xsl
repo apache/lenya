@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.10 2003/07/10 10:29:22 gregor Exp $
+ $Id: root.xsl,v 1.11 2003/07/10 13:05:16 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -10,6 +10,9 @@
 
 <xsl:include href="../menu/root.xsl"/>
 
+<xsl:param name="contextprefix"/>
+<xsl:param name="publicationid"/>
+<xsl:param name="area"/>
 <xsl:param name="language"/>
 <xsl:param name="defaultlanguage"/>
     
@@ -24,14 +27,22 @@
 </head>
 
 <body >
-<a href="#" id="link1"><xsl:call-template name="activate"><xsl:with-param name="tablanguage">de</xsl:with-param></xsl:call-template></a>
-<a href="#" id="link2"><xsl:call-template name="activate"><xsl:with-param name="tablanguage">en</xsl:with-param></xsl:call-template></a>
+<a>
+	<xsl:call-template name="activate">
+		<xsl:with-param name="tablanguage">de</xsl:with-param>
+	</xsl:call-template>
+</a>
+<a> 
+	<xsl:call-template name="activate">
+		<xsl:with-param name="tablanguage">en</xsl:with-param>
+	</xsl:call-template>
+</a>
 
 <div id="lenya-info-treecanvas">
 <!-- Build the tree. -->
 
    <div id="lenya-info-tree">
-      <div style="display:none; "><table border="0"><tr><td><a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a></td></tr></table></div>
+      <div style="display:none;"><table border="0"><tr><td><a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a></td></tr></table></div>
    <script>initializeDocument()</script>
    </div>
 </div>
@@ -43,6 +54,7 @@
 
 <xsl:template name="activate">
 	<xsl:param name="tablanguage"/>
+   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.language=<xsl:value-of select="$tablanguage"/></xsl:attribute>
    <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$language = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
 
