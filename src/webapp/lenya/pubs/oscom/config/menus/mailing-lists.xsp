@@ -13,7 +13,7 @@
   <live_uri>/mailing-lists.html</live_uri>
 
   <menus>
-    <menu name="File">
+    <menu name="File" label="File">
       <block>
         <item>Edit</item>
         <item>Publish</item>
@@ -28,17 +28,22 @@
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
-    <menu name="Search">
+    <menu name="Search" label="Search">
       <block>
         <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
         <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
       </block>
     </menu>
-    <menu name="Help">
+    <menu name="Help" label="Help">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#devguide</xsp:attribute>Developer's&#160;Guide</item>
+        <item href="http://www.lenya.org">About&#160;Lenya</item>
+      </block>
+    </menu>
+    <menu name="Debug" label="Debug">
+      <block>
         <item href="http://www.lenya.org">About&#160;Lenya</item>
       </block>
     </menu>

@@ -474,7 +474,7 @@
       <!-- Mailing Lists -->
       <map:match pattern="authoring/mailing-lists.html">
         <map:generate src="cocoon:/authoring/mailing-lists.xml"/>
-        <map:transform src="xslt/Mailing-Lists/authoring/main.xsl"/>
+        <map:transform src="xslt/mailing-lists/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
