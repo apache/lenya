@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.30 2003/07/17 14:31:43 gregor Exp $
+$Id: PageEnvelope.java,v 1.31 2003/07/17 14:52:38 gregor Exp $
 <License>
 
  ============================================================================
@@ -87,6 +87,7 @@ public class PageEnvelope {
 	public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
 	public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
 	public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
+	public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
     private String context;
 
     /**
@@ -306,6 +307,14 @@ public class PageEnvelope {
 		return getDocument().getDublinCore().getRights();
 	}
 
+	/**
+	 * Returns the last modified date for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentLastModified() {
+		return getDocument().getLastModified();
+	}
+
     /**
      * The names of the page envelope parameters.
      */
@@ -323,7 +332,8 @@ public class PageEnvelope {
 			PageEnvelope.DOCUMENT_DC_CREATOR,
 			PageEnvelope.DOCUMENT_DC_SUBJECT,
 			PageEnvelope.DOCUMENT_DC_DESCRIPTION,
-			PageEnvelope.DOCUMENT_DC_RIGHTS           
+			PageEnvelope.DOCUMENT_DC_RIGHTS,           
+			PageEnvelope.DOCUMENT_LASTMODIFIED
         };
 
     /**

@@ -103,6 +103,12 @@ public interface Document {
      */
     String getLanguage();
 
+	/**
+	 * Returns the date of the last modification of this document.
+	 * @return A string denoting the language.
+	 */
+	String getLastModified();
+
     /**
      * Returns the area this document belongs to.
      * @return The area.

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.12 2003/07/15 12:19:17 egli Exp $
+$Id: DefaultDocument.java,v 1.13 2003/07/17 14:52:38 gregor Exp $
 <License>
 
  ============================================================================
@@ -115,6 +115,13 @@ public class DefaultDocument implements Document {
     public Publication getPublication() {
         return publication;
     }
+
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getLastModified()
+	 */
+	public String getLastModified() {
+		return null;
+	}
 
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDublinCore()
