@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.50 2003/04/02 12:56:30 andreas Exp $
+   @version CVS $Id: build.xml,v 1.51 2003/04/06 11:34:55 michi Exp $
 
 -->
 
@@ -270,7 +270,7 @@
       <outputproperty name="indent" value="yes"/>
     </xslt>
     
-    <!-- patch web.xmlf -->
+    <!-- patch web.xml -->
     <echo>INFO: patching web.xml with XSLT stylesheet</echo>
     <xslt
         in="${src.cocoon.dir}/WEB-INF/web.xml"
