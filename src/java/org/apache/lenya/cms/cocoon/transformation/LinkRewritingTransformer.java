@@ -261,6 +261,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * 
      * @param newAttrs The new attributes.
      * @param targetDocument The target document.
+     * @param anchor The anchor (the string after the # character in the URL).
      * @throws AccessControlException when something went wrong.
      * @throws PublicationException when something went wrong.
      */
