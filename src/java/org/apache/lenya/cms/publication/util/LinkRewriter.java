@@ -70,8 +70,10 @@ public class LinkRewriter {
      * language versions.
      * @param originalTargetDocument The original target document.
      * @param newTargetDocument The new target document.
+     * @param contextPath The servlet context path.
      */
-    public void rewriteLinks(Document originalTargetDocument, Document newTargetDocument) {
+    public void rewriteLinks(Document originalTargetDocument, Document newTargetDocument,
+            String contextPath) {
 
         Publication publication = originalTargetDocument.getPublication();
         String area = originalTargetDocument.getArea();
@@ -83,7 +85,7 @@ public class LinkRewriter {
             for (int fileIndex = 0; fileIndex < files.length; fileIndex++) {
                 org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(files[fileIndex]);
                 boolean linksRewritten = false;
-                
+
                 String[] xPaths = publication.getRewriteAttributeXPaths();
                 for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
                     NodeList nodes = XPathAPI.selectNodeList(xmlDocument, xPaths[xPathIndex]);
@@ -94,21 +96,26 @@ public class LinkRewriter {
                                     + "] may only match attribute nodes!");
                         }
                         Attr attribute = (Attr) node;
-                        String url = attribute.getValue();
-                        if (builder.isDocument(publication, url)) {
-                            Document targetDocument = builder.buildDocument(publication, url);
+                        final String url = attribute.getValue();
 
-                            if (matches(targetDocument, originalTargetDocument)) {
-                                String newTargetUrl = getNewTargetURL(targetDocument,
-                                        originalTargetDocument,
-                                        newTargetDocument);
-                                attribute.setValue(newTargetUrl);
-                                linksRewritten = true;
+                        if (url.startsWith(contextPath + "/" + publication.getId())) {
+                            final String webappUrl = url.substring(contextPath.length());
+                            
+                            if (builder.isDocument(publication, webappUrl)) {
+                                Document targetDocument = builder.buildDocument(publication, webappUrl);
+
+                                if (matches(targetDocument, originalTargetDocument)) {
+                                    String newTargetUrl = getNewTargetURL(targetDocument,
+                                            originalTargetDocument,
+                                            newTargetDocument);
+                                    attribute.setValue(contextPath + newTargetUrl);
+                                    linksRewritten = true;
+                                }
                             }
                         }
                     }
                 }
-                
+
                 if (linksRewritten) {
                     DocumentHelper.writeDocument(xmlDocument, files[fileIndex]);
                 }

@@ -115,7 +115,7 @@ public class LinkRewriteTask extends PublicationTask {
             Document newTargetDocument = builder.buildDocument(pub, newTargetUrl);
             
             LinkRewriter rewriter = new LinkRewriter();
-            rewriter.rewriteLinks(oldTargetDocument, newTargetDocument);
+            rewriter.rewriteLinks(oldTargetDocument, newTargetDocument, getContextPrefix());
             
         } catch (Exception e) {
             throw new BuildException(e);
