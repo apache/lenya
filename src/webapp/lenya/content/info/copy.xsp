@@ -3,18 +3,16 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
-  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:xsp-cookie="http://apache.org/xsp/cookie/2.0">
 
-<xsp:structure>
-  <xsp:include>org.apache.cocoon.environment.Cookie</xsp:include>
-</xsp:structure>
-
 <info>
-  <document-id>
-    <xsp-cookie:getCookie as="string" name="org.apache.lenya.cms.info.target"/>
-  </document-id>
+  <xsp:logic>
+    String documentid= <xsp-cookie:getValue name="org.apache.lenya.cms.info.targett2"/>;
+  </xsp:logic>
+
+  <request-uri><xsp-request:get-uri/></request-uri>
+  <document-id><xsp:expr>documentid</xsp:expr></document-id>
   <action>copyDocument</action>
 </info>
 

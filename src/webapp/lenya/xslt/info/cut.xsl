@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: cut.xsl,v 1.6 2003/06/25 17:14:54 edith Exp $
+ $Id: cut.xsl,v 1.7 2003/07/01 17:57:23 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -13,6 +13,7 @@
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
+  <xsl:variable name="request-uri"><xsl:value-of select="/info/request-uri"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/info/document-id"/></xsl:variable>
   <xsl:variable name="action"><xsl:value-of select="/info/action"/></xsl:variable>
 
@@ -34,7 +35,7 @@
     <div class="lenya-box">
       <div class="lenya-box-title">Cut Document</div>
       <div class="lenya-box-body">
-        <form method="post">
+        <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
           <p>
             <input type="hidden" name="documentid" value="{$document-id}"/>
@@ -45,7 +46,7 @@
 	        clipboard, ready to be pasted at the location of your choosing.
           </p>
           <input type="submit" class="lenya-form-element" value="Cut"/>
-          &#160;&#160;&#160;<input type="button" onClick="location.href='{referer}';" value="Cancel"/>
+          &#160;&#160;&#160;<input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
         </form>
       </div>
     </div>

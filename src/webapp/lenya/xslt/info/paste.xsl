@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: paste.xsl,v 1.6 2003/06/25 17:14:54 edith Exp $
+ $Id: paste.xsl,v 1.7 2003/07/01 17:57:23 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -13,6 +13,7 @@
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
+  <xsl:variable name="request-uri"><xsl:value-of select="/info/request-uri"/></xsl:variable>
   <xsl:variable name="first-document-id"><xsl:value-of select="/info/first-document-id"/></xsl:variable>
   <xsl:variable name="sec-document-id"><xsl:value-of select="/info/sec-document-id"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/info/task-id"/></xsl:variable>
@@ -47,7 +48,7 @@
 	      Do you really want to paste <xsl:value-of select="first-document-id"/> from the clipboard?
           </p>
           <input type="submit" class="lenya-form-element" value="Paste"/>
-            &#160;&#160;&#160;<input type="button" onClick="location.href='{referer}';" value="Cancel"/>
+          &#160;&#160;&#160;<input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
         </form>
       </div>
     </div>
