@@ -36,13 +36,17 @@ import java.util.Map;
  */
 public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements Parameterizable {
   static Category log=Category.getInstance(ServletProxyGenerator.class);
+  protected org.apache.avalon.excalibur.source.Source src;
+  //protected org.apache.cocoon.environment.Source src;
 
     /** The URI of the namespace of this generator. */
+/*
     private String URI="http://xml.apache.org/cocoon/requestgenerator/2.0";
     private String global_container_encoding;
     private String global_form_encoding;
     private String container_encoding;
     private String form_encoding;
+*/
 /**
  *
  */
@@ -50,18 +54,27 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
     throws ParameterException {
         // super.parameterize(parameters);
 
+/*
         global_container_encoding = parameters.getParameter("container-encoding", "ISO-8859-1");
         global_form_encoding = parameters.getParameter("form-encoding", null);
+*/
     }
 /**
  *
  */
-    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
-    throws ProcessingException, SAXException, IOException {
-        super.setup(resolver, objectModel, src, par);
-
+  public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par) throws ProcessingException, SAXException, IOException{
+    super.setup(resolver, objectModel, src, par);
+    try{
+      log.warn("SETUP: "+src);
+      this.src=resolver.resolveURI(src);
+      }
+    catch(Exception e){
+      log.error(e);
+      }
+/*
         container_encoding = par.getParameter("container-encoding", global_container_encoding);
         form_encoding = par.getParameter("form-encoding", global_form_encoding);
+*/
     }
 /**
  * Generate XML data.
@@ -70,50 +83,56 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
     //Request request = ObjectModelHelper.getRequest(objectModel);
     HttpRequest httpRequest = (HttpRequest)objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
 
-    String httpMethod=httpRequest.getMethod();
+    String submitMethod=httpRequest.getMethod();
 
 
         Parser parser = null;
         try{
           // Debug
-          Enumeration params=httpRequest.getParameterNames();
-          //String[] paramValues=httpRequest.getParameterValues();
-          while(params.hasMoreElements()){
-            String paramName=(String)params.nextElement();
-            log.warn("Parameter name:"+paramName);
-            log.warn("Parameter value:"+httpRequest.getParameter(paramName));
-            }
-
-          if(httpMethod.equals("POST")){
+          if(submitMethod.equals("POST")){
             java.io.InputStream is=intercept(httpRequest.getInputStream());
-            log.warn("HTTP method:"+httpMethod);
+            log.warn("HTTP method:"+submitMethod);
             }
-          else if(httpMethod.equals("GET")){
-            log.warn("HTTP method:"+httpMethod);
+          else if(submitMethod.equals("GET")){
+            log.warn("HTTP method:"+submitMethod);
             }
           else{
-            log.warn("HTTP method:"+httpMethod);
+            log.warn("HTTP method:"+submitMethod);
             }
 
+          // Get servlet name from sitemap
+          //org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
+          log.error("SERVLET: "+this.src.getSystemId());
+
           // Forward InputStream to Servlet
-          URL url=new URL("http://127.0.0.1:8080/wyona-cms/servlet/HelloWorld?param1=levi&param2=vanya");
-          org.apache.commons.httpclient.HttpMethod postMethod=null;
-          if(httpMethod.equals("POST")){
-            postMethod=new PostMethod();
+          URL url=new URL(this.src.getSystemId());
+          //URL url=new URL("http://127.0.0.1:8080/wyona-cms/servlet/HelloWorld");
+          org.apache.commons.httpclient.HttpMethod httpMethod=null;
+          if(submitMethod.equals("POST")){
+            httpMethod=new PostMethod();
+            Enumeration params=httpRequest.getParameterNames();
+            while(params.hasMoreElements()){
+              String paramName=(String)params.nextElement();
+              String[] paramValues=httpRequest.getParameterValues(paramName);
+              for(int i=0;i<paramValues.length;i++){
+                ((PostMethod)httpMethod).setParameter(paramName,paramValues[i]);
+                }
+              }
             }
-          else if(httpMethod.equals("GET")){
-            postMethod=new org.apache.commons.httpclient.methods.GetMethod();
+          else if(submitMethod.equals("GET")){
+            httpMethod=new org.apache.commons.httpclient.methods.GetMethod();
+            httpMethod.setQueryString(httpRequest.getQueryString());
             }
-          //postMethod.setQueryString("param1=levi&param2=vanya");
-          //PostMethod postMethod=new PostMethod();
+
           //postMethod.setRequestBody("LeviVanya");
-          postMethod.setRequestHeader("Content-type","text/plain");
-          postMethod.setPath(url.getPath());
+
+          httpMethod.setRequestHeader("Content-type","text/plain");
+          httpMethod.setPath(url.getPath());
 
           HttpClient httpClient=new HttpClient();
           httpClient.startSession(url);
-          httpClient.executeMethod(postMethod);
-          byte[] sresponse=postMethod.getResponseBody();
+          httpClient.executeMethod(httpMethod);
+          byte[] sresponse=httpMethod.getResponseBody();
           log.warn("Response: "+new String(sresponse));
           httpClient.endSession();
 
@@ -143,31 +162,39 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
 /**
  *
  */
+/*
     private void attribute(AttributesImpl attr, String name, String value) {
         attr.addAttribute("",name,name,"CDATA",value);
     }
+*/
 /**
  *
  */
+/*
     private void start(String name, AttributesImpl attr)
     throws SAXException {
         super.contentHandler.startElement(URI,name,name,attr);
         attr.clear();
     }
+*/
 /**
  *
  */
+/*
     private void end(String name)
     throws SAXException {
         super.contentHandler.endElement(URI,name,name);
     }
+*/
 /**
  *
  */
+/*
     private void data(String data)
     throws SAXException {
         super.contentHandler.characters(data.toCharArray(),0,data.length());
     }
+*/
 /**
  * Log input stream for debugging
  *

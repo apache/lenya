@@ -32,9 +32,11 @@ public class HelloWorld extends HttpServlet {
     log.warn("GET");
     response.setContentType("text/xml");
     PrintWriter writer = response.getWriter();
+    writer.print("<servlet class=\""+this.getClass().getName()+"\">");
     writer.print("<request method=\"GET\">");
     writer.print(getParameters(request));
     writer.print("</request>");
+    writer.print("</servlet>");
     }
 /**
  *
@@ -43,9 +45,11 @@ public class HelloWorld extends HttpServlet {
     log.warn("POST");
     response.setContentType("text/xml");
     PrintWriter writer = response.getWriter();
+    writer.print("<servlet class=\""+this.getClass().getName()+"\">");
     writer.print("<request method=\"POST\">");
     writer.print(getParameters(request));
     writer.print("</request>");
+    writer.print("</servlet>");
     }
 /**
  *
@@ -53,16 +57,21 @@ public class HelloWorld extends HttpServlet {
   public String getParameters(HttpServletRequest request){
     StringBuffer sb=new StringBuffer("");
     Enumeration parameters=request.getParameterNames();
-sb=sb.append("<parameters/>");
-    if(parameters.hasMoreElements()){
-      sb=sb.append("<parameters>");
+    boolean hasParameters=parameters.hasMoreElements();
+    if(hasParameters){
+      sb.append("<parameters>");
       }
     while(parameters.hasMoreElements()){
       String name=(String)parameters.nextElement();
-      sb=sb.append("<parameter/>");
+      String[] values=request.getParameterValues(name);
+      sb.append("<parameter name=\""+name+"\">");
+      for(int i=0;i<values.length;i++){
+        sb.append("<value>"+values[i]+"</value>");
+        }
+      sb.append("</parameter>");
       }
-    if(parameters.hasMoreElements()){
-      sb=sb.append("</parameters>");
+    if(hasParameters){
+      sb.append("</parameters>");
       }
     return sb.toString();
     }
