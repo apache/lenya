@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.26 2003/08/28 09:51:53 egli Exp $
+$Id: DefaultDocument.java,v 1.27 2003/08/29 12:27:15 egli Exp $
 <License>
 
  ============================================================================
@@ -277,4 +277,32 @@ public class DefaultDocument implements Document {
     public String getDocumentURL() {
         return documentURL;
     }
+
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.Document#exists()
+	 */
+	public boolean exists() throws DocumentException {
+		SiteTree sitetree;
+		try {
+			sitetree = getPublication().getSiteTree(getArea());
+			SiteTreeNode node = sitetree.getNode(getId());
+			return (node != null) && (node.getLabel(getLanguage()) != null);
+		} catch (SiteTreeException e) {
+			throw new DocumentException(e);
+		}
+	}
+
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
+	 */
+	public boolean existsInAnyLanguage() throws DocumentException {
+		SiteTree sitetree;
+		try {
+			sitetree = getPublication().getSiteTree(getArea());
+			SiteTreeNode node = sitetree.getNode(getId());
+			return (node != null);
+		} catch (SiteTreeException e) {
+			throw new DocumentException(e);
+		}
+	}
 }

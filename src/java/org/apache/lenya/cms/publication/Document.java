@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.16 2003/08/27 12:45:17 egli Exp $
+$Id: Document.java,v 1.17 2003/08/29 12:27:15 egli Exp $
 <License>
 
  ============================================================================
@@ -153,4 +153,24 @@ public interface Document {
      */
     String getExtension();
     
+    /**
+     * Check if a document with the given document-id, language and in the given
+     * area actually exists.
+     * 
+     * @return true if the document exists, false otherwise
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    boolean exists() throws DocumentException;
+    
+    /**
+     * Check if a document exists with the given document-id and the given area
+     * independently of the given language.
+     * 
+     * @return true if a document with the given document-id and area exists,
+     * null otherwise
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    boolean existsInAnyLanguage() throws DocumentException;
 }
