@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.40 2003/05/22 14:13:25 michi Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.41 2003/06/11 09:57:38 andreas Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -64,8 +64,10 @@
 
     <!-- Menubar -->
     <map:pipeline>
+        
       <map:match pattern="lenyamenubar/authoring/article.xml">
         <map:generate type="serverpages" src="config/menus/generic.xsp"/>
+        <map:transform type="menufilter"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="lenyamenubar/live/article.xml">
@@ -89,7 +91,7 @@
             <map:part src="cocoon://{1}/{2}/{3}/{4}.xml"/>
           </map:aggregate>
 	  <map:transform src="xslt/page2xhtml.xsl">
-	    <map:parameter name="root" value="{page-envelope:context-prefix}/{1}"/>
+	    <map:parameter name="root" value="{page-envelope:context-prefix}/{1}/{2}"/>
 	  </map:transform>
         <map:serialize type="xml"/>
       </map:match>
