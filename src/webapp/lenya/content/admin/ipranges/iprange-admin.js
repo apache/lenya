@@ -91,7 +91,8 @@ function iprangeChangeProfile(newRange) {
 		
 		var net = new Array(4);
 		var mask = new Array(4);
-	
+
+        var i = 0;
 		for (i = 0; i < 4; i++) {
 	        net[i] = getInt(range.getNetworkAddress().getAddress()[i]);
 	        mask[i] = getInt(range.getSubnetMask().getAddress()[i]);
