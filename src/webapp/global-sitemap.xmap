@@ -132,13 +132,6 @@
 
 <!-- =========================== Pipelines ================================= -->
 
-    <!-- Usecases -->
-    <map:pipeline>
-      <map:match type="usecase" pattern="*">
-        <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-    </map:pipeline>
-
     <map:pipeline>
       <map:match pattern="publications.xml">
         <map:generate type="directory" src="lenya/pubs"/>
@@ -148,42 +141,6 @@
       </map:match>
     </map:pipeline>
 
-    <map:pipeline>
-      <map:match pattern="">
-        <map:redirect-to uri="index.html"/>
-      </map:match>
-      <map:match pattern="index.html">
-        <map:aggregate element="lenya" ns="http://apache.org/cocoon/lenya/publication/1.0" prefix="lenya" label="aggregate">
-          <map:part src="cocoon:/publications.xml"/>
-          <map:part src="lenya/content/introduction.xml"/>
-        </map:aggregate>
-        <map:transform src="lenya/xslt/util/welcome.xsl"/>
-        <map:call resource="style-cms-page"/>
-      </map:match>
-      <map:match pattern="about.html">
-        <map:generate src="lenya/content/about.xml"/>
-        <map:call resource="style-cms-page"/>
-      </map:match>
-    
-      <map:handle-errors>
-        <map:select type="exception">
-           <map:when test="resourcenotfound">
-             <map:generate src="lenya/content/util/empty.xml" />
-            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-      <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-      </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>    
-      </map:pipeline>
 
     <!-- Search with Lucene -->
     <map:pipeline>
@@ -362,14 +319,58 @@
         </map:match>
       </map:pipeline>
 
-      <!-- Info area -->
-        <map:match pattern="*/*/info-sitetree/**">
-          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-        <map:match pattern="*/info-*/**">
-          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
+      <!-- Usecases -->
+      <map:match type="usecase" pattern="*">
+        <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
 
+      <!-- Info area -->
+      <map:match pattern="*/*/info-sitetree/**">
+        <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      <map:match pattern="*/info-*/**">
+        <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline>
+      <map:match pattern="">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:aggregate element="lenya" ns="http://apache.org/cocoon/lenya/publication/1.0" prefix="lenya" label="aggregate">
+          <map:part src="cocoon:/publications.xml"/>
+          <map:part src="lenya/content/introduction.xml"/>
+        </map:aggregate>
+        <map:transform src="lenya/xslt/util/welcome.xsl"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+      <map:match pattern="about.html">
+        <map:generate src="lenya/content/about.xml"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+    
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="lenya/content/util/empty.xml" />
+            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+      <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+      </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>    
+    </map:pipeline>
+
+    <map:pipeline>
       <!-- Publications -->
       <map:match pattern="*/">
         <map:redirect-to uri="introduction.html"/>
