@@ -1,5 +1,5 @@
 /*
-$Id: LDAPUser.java,v 1.12 2003/08/21 12:06:16 andreas Exp $
+$Id: LDAPUser.java,v 1.13 2003/08/21 12:40:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,6 +64,8 @@ import org.apache.log4j.Category;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import java.util.Hashtable;
 import java.util.Properties;
@@ -206,18 +208,22 @@ public class LDAPUser extends FileUser {
      * @see org.apache.lenya.cms.ac.User#authenticate(java.lang.String)
      */
     public boolean authenticate(String password) {
+        
         String principal =
             "uid=" + getLdapId() + "," + defaultProperties.getProperty(PARTIAL_USER_DN);
         Context ctx;
 
+        log.debug("Authenticating with principal [" + principal + "]");
+        
         try {
             ctx = bind(principal, password);
             close(ctx);
+            log.debug("Context closed.");
         } catch (NamingException e) {
             // log this failure
+            // StringWriter writer = new StringWriter();
+            // e.printStackTrace(new PrintWriter(writer));
             log.info("Bind for user " + principal + " to Ldap server failed: ", e);
-
-            return false;
         }
 
         return true;
@@ -269,6 +275,9 @@ public class LDAPUser extends FileUser {
      * @throws NamingException if there are problems establishing the Ldap connection
      */
     private LdapContext bind(String principal, String credentials) throws NamingException {
+        
+        log.info("Binding principal: [" + principal + "]");
+        
         Hashtable env = new Hashtable();
 
         System.setProperty(
@@ -287,6 +296,8 @@ public class LDAPUser extends FileUser {
         env.put(Context.SECURITY_CREDENTIALS, credentials);
 
         LdapContext ctx = new InitialLdapContext(env, null);
+        
+        log.info("Finished binding principal.");
 
         return ctx;
     }
