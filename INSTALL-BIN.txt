@@ -41,6 +41,10 @@
   3) Tomcat shutdown port: TOMCAT/conf/server.xml (default: 8005)
   4) HypersonicSQL DB port: TOMCAT/webapps/wyona-cms/WEB-INF/cocoon.xconf (default: 9002)
 
-  NOTE: /usr/local/bin/nmap localhost -p 1-65535
+  NOTE: To find out which ports are used:
+        /usr/local/bin/nmap localhost -p 1-65535
         (http://www.insecure.org/nmap/index.html)
-        (to find out which ports are used)
+
+        or
+
+        netstat -nt -l

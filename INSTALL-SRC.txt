@@ -143,6 +143,10 @@
      4) HypersonicSQL DB port(http://www.hsqldb.org): TOMCAT/webapps/wyona-cms/WEB-INF/cocoon.xconf (default: 9002)
                                                       (In case you work with Cocoon Source: src/java/org/apache/cocoon/components/hsqldb/hsqldb.xconf)
 
-     NOTE: /usr/local/bin/nmap localhost -p 1-65535
-        (http://www.insecure.org/nmap/index.html)
-        (to find out which ports are used)
+     NOTE: To find out which ports are used:
+           /usr/local/bin/nmap localhost -p 1-65535
+           (http://www.insecure.org/nmap/index.html)
+ 
+           or
+
+           netstat -nt -l
