@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.18 2003/10/27 17:56:14 andreas Exp $ <License>
+ * $Id: LDAPUser.java,v 1.19 2003/10/27 18:13:13 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -137,9 +137,10 @@ public class LDAPUser extends FileUser {
 	
 	/**
 	 * Checks if a user exists.
-	 * @param ldapId
-	 * @return
-	 * @throws AccessControlException
+	 * @param ldapId The LDAP id.
+	 * @return A boolean value.
+	 * @throws AccessControlException when an error occurs.
+	 * FIXME: This method does not work.
 	 */
 	public boolean existsUser(String ldapId) throws AccessControlException {
 		
