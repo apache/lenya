@@ -55,9 +55,11 @@ There are also plans to organize one in Japan.
     <xi:include href="rss-rdf/fm.rdf"/>
     <!--<xi:include href="fm.rdf"/>-->
   </site>
+<!--
   <site name="Slashdot">
     <xi:include href="rss-rdf/slashdot.rdf"/>
   </site>
+-->
   <site name="CMSWatch">
     <xi:include href="rss-rdf/cmswatch.xml"/>
     <!--<xi:include xml:base="http://www.cmswatch.com" href="/RSS/cmswatch.xml"/>-->

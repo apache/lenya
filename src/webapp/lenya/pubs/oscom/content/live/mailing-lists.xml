@@ -13,6 +13,14 @@
    <public>http://www.oscom.org/mailman/listinfo/general</public>
    <admin>http://www.oscom.org/mailman/admin/general</admin>
  </list>
+ <list>
+   <name>Participants</name>
+   <description>To be informed on news about the
+   next conference in San Francisco</description>
+   <address>participants@oscom.org</address>
+   <public>http://www.oscom.org/mailman/listinfo/participants</public>
+   <admin>http://www.oscom.org/mailman/admin/participants</admin>
+ </list>
 </public>
 
 <private>

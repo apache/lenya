@@ -44,7 +44,8 @@
   <!--<xsl:apply-templates select="error:notify"/>-->
 </xsl:template>
 
-<xsl:template match="rdf:RDF|rss">
+<xsl:template match="rdf:RDF">
+<!--<xsl:template match="rdf:RDF|rss">-->
  <table cellpadding="0" cellspacing="0" border="0" width="150">
   <tr>
     <td bgcolor="{$tablecolor}">&#160;</td>
@@ -59,13 +60,53 @@
     <td>&#160;</td>
     <td>
   <font face="verdana" size="-2">
-  <!--  rdf:RDF -->
   <xsl:variable name="n">5</xsl:variable>
+  <!--  rdf:RDF -->
   <xsl:for-each select="n-rdf:item[position() &lt;= $n]">
     <p>
     <a href="{n-rdf:link}" target="_blank"><xsl:value-of select="n-rdf:title"/></a>
     </p>
   </xsl:for-each>
+  <!-- rss -->
+<!--
+  <xsl:for-each select="channel/item[position() &lt;= $n]">
+    <p>
+    <a href="{link}" target="_blank"><xsl:value-of select="title"/></a>
+    </p>
+  </xsl:for-each>
+-->
+  </font>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">&#160;</td>
+  </tr>
+ </table>
+
+<!--
+  <p>
+  <i><xsl:apply-templates/></i>
+  <RDF><xsl:copy-of select="*"/></RDF>
+  </p>
+-->
+</xsl:template>
+
+<xsl:template match="rss">
+ <table cellpadding="0" cellspacing="0" border="0" width="150">
+  <tr>
+    <td bgcolor="{$tablecolor}">&#160;</td>
+    <td bgcolor="{$tablecolor}">
+      <p>
+        <font face="verdana" color="white"><xsl:value-of select="../@name"/>
+        &#160;<a href="{channel/link}" target="_blank">&#187;</a></font>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>&#160;</td>
+    <td>
+  <font face="verdana" size="-2">
+  <xsl:variable name="n">5</xsl:variable>
   <!-- rss -->
   <xsl:for-each select="channel/item[position() &lt;= $n]">
     <p>
