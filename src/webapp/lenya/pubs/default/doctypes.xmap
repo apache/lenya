@@ -1,23 +1,13 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: doctypes.xmap,v 1.8 2003/05/15 09:48:25 egli Exp $ -->
+<!-- CVS: $Id: doctypes.xmap,v 1.9 2003/05/21 10:05:30 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
     <map:generators default="file" />
     <map:matchers default="wildcard"/>
-    <map:actions>
-      <!-- FIXME: Factor out to root sitemap -->
-      <map:action name="task" logger="sitemap.action.task"
-	src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
-      <map:action name="page-envelope"
-      logger="sitemap.action.page-envelope"
-	src="org.apache.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
-      <map:action name="uriparametrizer"
-	src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction"
-	logger="sitemap.action.uriparametrizer"/>
-    </map:actions>
+    <map:actions/>
   </map:components>
 
   <map:views>
