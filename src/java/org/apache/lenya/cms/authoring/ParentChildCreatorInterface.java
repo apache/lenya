@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ParentChildCreatorInterface.java,v 1.9 2003/07/04 14:25:50 egli Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,7 @@ public interface ParentChildCreatorInterface {
      * however.
      *
      */
-    public final short BRANCH_NODE = 1;
+    short BRANCH_NODE = 1;
 
     /**
      * Constant for a leaf node. Leaf nodes are somewhat related to
@@ -82,14 +82,14 @@ public interface ParentChildCreatorInterface {
      * however.
      *
      */
-    public final short LEAF_NODE = 0;
+    short LEAF_NODE = 0;
 
     /**
      * DOCUMENT ME!
      *
      * @param doctypeConf DOCUMENT ME!
      */
-    public void init(Configuration doctypeConf);
+    void init(Configuration doctypeConf);
 
     /**
      * Return the type of node this creator will create. It can be
@@ -131,6 +131,8 @@ public interface ParentChildCreatorInterface {
      * @param childId the document id of the new document
      * @param childType the type of the new document.
      * @param childName the name of the new document.
+     * @param parameters additional parameters that can be used when creating the child
+     * 
      * @exception Exception if an error occurs
      */
     void create(File samplesDir, File parentDir, String childId, short childType, String childName,

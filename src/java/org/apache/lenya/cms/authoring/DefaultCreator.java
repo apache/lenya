@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DefaultCreator.java,v 1.20 2003/07/04 14:25:51 egli Exp $
 <License>
 
  ============================================================================
@@ -74,20 +74,21 @@ import java.util.Map;
  * @author <a href="mailto:juergen.bigalke@lenya.org">Juergen Bigalke</a>
  */
 public class DefaultCreator implements ParentChildCreatorInterface {
-    static Category log = Category.getInstance(DefaultCreator.class);
-    protected final String RESOURCE_NAME = "resource-name";
-    protected final String RESOURCE_META_NAME = "resource-meta-name";
-    protected final String SAMPLE_NAME = "sample-name";
-    protected final String SAMPLE_META_NAME = "sample-meta-name";
-    protected String resourceName = null;
-    protected String resourceMetaName = null;
-    protected String sampleResourceName = null;
-    protected String sampleMetaName = null;
+    private static Category log = Category.getInstance(DefaultCreator.class);
+    public static final String RESOURCE_NAME = "resource-name";
+    public static final String RESOURCE_META_NAME = "resource-meta-name";
+    public static final String SAMPLE_NAME = "sample-name";
+    public static final String SAMPLE_META_NAME = "sample-meta-name";
+    
+    private String resourceName = null;
+    private String resourceMetaName = null;
+    private String sampleResourceName = null;
+    private String sampleMetaName = null;
 
     /**
      * DOCUMENT ME!
      *
-     * @param creatorNode DOCUMENT ME!
+     * @param conf DOCUMENT ME!
      */
     public void init(Configuration conf) {
         if (conf == null) {
@@ -163,6 +164,9 @@ public class DefaultCreator implements ParentChildCreatorInterface {
       * @param parentDir DOCUMENT ME!
       * @param childId DOCUMENT ME!
       * @param childType DOCUMENT ME!
+      * @param childName the name of the child
+      * @param parameters additional parameters that can be considered when 
+      *  creating the child
       *
       * @throws Exception DOCUMENT ME!
       */
@@ -216,18 +220,56 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         }
     }
 
+	/**
+	 * Apply some transformation on the newly created child.
+	 * 
+	 * @param doc the xml document
+	 * @param childId the id of the child
+	 * @param childType the type of child
+	 * @param childName the name of the child
+	 * @param parameters additional parameters that can be used in the transformation
+	 * 
+	 * @throws Exception if the transformation fails
+	 */
     protected void transformXML(Document doc, String childId, short childType, String childName,
         Map parameters) throws Exception {
     }
 
+	/**
+	 * Apply some transformation on the meta file of newly created child.
+	 * 
+	 * @param doc the xml document
+	 * @param childId the id of the child
+	 * @param childType the type of child
+	 * @param childName the name of the child
+	 * @param parameters additional parameters that can be used in the transformation
+	 * 
+	 * @throws Exception if the transformation fails
+	 */
     protected void transformMetaXML(Document doc, String childId, short childType,
         String childName, Map parameters) throws Exception {
     }
 
+	/**
+	 * Get the file name of the child
+	 * 
+	 * @param parentDir the parent directory
+	 * @param childId the id of the child
+	 * 
+	 * @return the file name of the child
+	 */
     protected String getChildFileName(File parentDir, String childId) {
         return null;
     }
 
+	/**
+	 * Get the file name of the meta file
+	 * 
+	 * @param parentDir the parent directory
+	 * @param childId the id of the child
+	 * 
+	 * @return the name of the meta file
+	 */
     protected String getChildMetaFileName(File parentDir, String childId) {
         return null;
     }
