@@ -1,0 +1,321 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Adding a new Document Creator</title>
+<link type="text/css" href="../../skin/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+<!--================= start Banner ==================-->
+<table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--================= start Group Logo ==================-->
+<td valign="bottom" bgcolor="#FFFFFF">
+<div class="headerlogo">
+<a href="http://cocoon.apache.org"><img border="0" class="logoImage" alt="Apache Cocoon" src="../../images/cocoon-project-logo-big.png"></a>
+</div>
+<span class="textheader">Apache Cocoon</span>
+<!--================= start Tabs ==================-->
+<div class="tab">
+<table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="10" valign="bottom">
+<div class="tab-separator">
+<img alt="" width="10" src="../../skin/images/spacer.gif"></div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../project/index.html"><font face="Arial, Helvetica, Sans-serif">Project Information</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../installation/index.html"><font face="Arial, Helvetica, Sans-serif">Installation</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-selected">
+<a href="../index.html"><font color="#000000">Documentation</font></a>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../../skin/images/tab-corner-right-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../community/index.html"><font face="Arial, Helvetica, Sans-serif">Community</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<!--================= end Tabs ==================-->
+</td>
+<!--================= end Group Logo ==================-->
+<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<div style="padding: 10px" class="headerlogo">
+<a href="http://cocoon.apache.org/lenya"><img border="0" class="logoImage" alt="Lenya" src="../../images/apache-lenya-light.png"></a>
+</div>
+<div class="tab-separator"></div>
+</td>
+<!--================= end Project Logo ==================-->
+</tr>
+</table>
+<!--================= end Banner ==================-->
+<div class="tab-bar">
+<img alt="" height="5" src="../../skin/images/spacer.gif"></div>
+<!--================= start Menu, NavBar, Content ==================-->
+<table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top">
+<table summary="menu" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<!--================= start left top NavBar ==================-->
+<!--================= end left top NavBar ==================-->
+<td valign="top">
+<div class="tab-subbar">
+<img width="10" height="5" alt="" src="../../skin/images/spacer.gif"></div>
+</td><td valign="top">
+<!--================= start Menu items ==================-->
+<div class="menu">
+<div class="menutitle"></div>
+<div class="menuitemgroup">
+<div class="menutitle">Customization</div>
+<div class="menuitemgroup">
+<div class="menupage">
+<div class="menupagetitle">Adding a new document creator</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Adding+a+new+Menu+Item%3A+%22New+MyDocument%22">Adding a new Menu Item: "New MyDocument"</a>
+</div>
+<div class="menupageitem">
+<a href="#Adding+usecase+%22create%22+to+the+sitemap">Adding usecase "create" to the sitemap</a>
+</div>
+<div class="menupageitem">
+<a href="#Create+">Create doctypes.xconf</a>
+</div>
+<div class="menupageitem">
+<a href="#Create+a+sample+document">Create a sample document</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--================= end Menu items ==================-->
+</td><td valign="top">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<tr>
+<td></td><td height="5"><img alt="" width="150" height="1" src="../../skin/images/spacer.gif"></td><td></td>
+</tr>
+</table>
+</td><td valign="top" width="100%">
+<table summary="content" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" colspan="3">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<!--================= start Content==================-->
+<tr>
+<td align="left" width="10"><img width="10" height="1" alt="" src="../../skin/images/spacer.gif"></td><td align="left" width="100%">
+<div class="content">
+<table cellspacing="0" cellpadding="0" class="title">
+<tr>
+<td valign="middle">
+<h1>Adding a new Document Creator</h1>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="adding-document-creator.pdf"><img alt="PDF" src="../../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+</tr>
+</table> 
+
+
+<a name="N101CB"></a><a name="Adding+a+new+Menu+Item%3A+%22New+MyDocument%22"></a>
+<h3>Adding a new Menu Item: "New MyDocument"</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The Menubars can be found within the directory <span class="codefrag">config/menus</span>.
+Add the "New MyDocument" menu item to the appropriate menubar:
+</p>
+<pre class="code">
+
+&lt;menus&gt;
+  &lt;menu name="File" label="File"&gt;
+    &lt;block&gt;
+      &lt;item&gt;&lt;xsp:attribute name="href"&gt;?lenya.usecase=create&amp;amp;lenya.step=showscreen&lt;/xsp:attribute&gt;New&amp;#160;MyDocument&lt;/item&gt;
+    &lt;/block&gt;
+
+</pre>
+</div>
+
+
+<a name="N101DD"></a><a name="Adding+usecase+%22create%22+to+the+sitemap"></a>
+<h3>Adding usecase "create" to the sitemap</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The pipelines of the usecases are located within <span class="codefrag">usecase.xmap</span>:
+</p>
+<pre class="code">
+
+&lt;map:pipeline&gt;
+  &lt;map:match pattern="*/*/*/*/*/index.html"&gt;
+    &lt;map:match type="lenya-usecase" pattern="create"&gt;
+      &lt;map:match type="lenya-step" pattern="showscreen"&gt;
+        &lt;map:generate type="serverpages" src="../../content/authoring/parent-child.xsp"/&gt;
+        &lt;map:transform src="../../xslt/authoring/parent-child.xsl"/&gt;
+        &lt;map:serialize type="html"/&gt;
+      &lt;/map:match&gt;
+
+      &lt;map:match type="lenya-step" pattern="execute"&gt;
+        &lt;map:act type="parent-child"&gt;
+          &lt;map:redirect-to uri="{parent_uri}" session="true"/&gt;
+        &lt;/map:act&gt;
+        &lt;map:redirect-to uri="index.html?lenya.usecase=create&amp;amp;lenya.step=showscreen&amp;amp;status=failed" session="true"/&gt;
+      &lt;/map:match&gt;
+    &lt;/map:match&gt;
+  &lt;/map:match&gt;
+&lt;/map:pipeline&gt;
+
+</pre>
+</div>
+
+
+
+<a name="N101EF"></a><a name="Create+"></a>
+<h3>Create doctypes.xconf</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The file <span class="codefrag">doctypes.xconf</span> is supposed to be located within the directory <span class="codefrag">config/doctypes</span>.
+</p>
+<pre class="code">
+
+&lt;doctypes&gt;
+  &lt;doc type="nitf"&gt;
+    &lt;creator src="org.apache.lenya.cms.authoring.DefaultLeafCreator"&gt;
+      &lt;sample-name&gt;nitf.xml&lt;/sample-name&gt;
+    &lt;/creator&gt;
+  &lt;/doc&gt;
+
+  &lt;doc type="xhtml"&gt;
+    &lt;creator src="org.apache.lenya.cms.authoring.DefaultLeafCreator"&gt;
+      &lt;sample-name&gt;xhtml.xml&lt;/sample-name&gt;
+    &lt;/creator&gt;
+  &lt;/doc&gt;
+&lt;/doctypes&gt;
+
+</pre>
+</div>
+
+
+<a name="N10206"></a><a name="Create+a+sample+document"></a>
+<h3>Create a sample document</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The sample documents are located within the directory <span class="codefrag">config/doctypes/samples</span>.
+</p>
+<pre class="code">
+
+&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;nitf&gt;
+  &lt;head&gt;
+    &lt;docdata&gt;
+      &lt;doc-id regsrc="nitf_export.pl" id-string="0"/&gt;
+      &lt;date.issue norm="20030314T041021Z"/&gt;
+      &lt;doc.copyright holder="New OSCOM Times"/&gt;
+    &lt;/docdata&gt;
+    &lt;pubdata position.section="finance" position.sequence="1"/&gt;
+  &lt;/head&gt;
+  &lt;body.head&gt;
+    &lt;hedline&gt;
+      &lt;hl1&gt;Local OSCOM Sprint @ Zurich, Switzerland&lt;/hl1&gt;
+
+</pre>
+</div>
+
+
+</div>
+</td><td width="10"><img width="10" height="1" alt="" src="../../skin/images/spacer.gif"></td>
+</tr>
+<!--================= end Content==================-->
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+<br>
+</td>
+</tr>
+</table>
+<!--================= end Menu, NavBar, Content ==================-->
+<!--================= start Footer ==================-->
+<div class="footer">
+<table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+<td colspan="2" height="1"><img height="1" width="1" alt="" src="../../skin/images/spacer.gif"><a href="../../skin/images/label.gif"></a><a href="../../skin/images/page.gif"></a><a href="../../skin/images/chapter.gif"></a><a href="../../skin/images/chapter_open.gif"></a><a href="../../skin/images/current.gif"></a></td>
+</tr>
+<tr>
+<td colspan="2" class="copyright" align="center" width="90%"><span class="footnote">Copyright &copy;
+                2002-2003&nbsp;The Apache Software Foundation. All rights reserved.
+                <br>
+<script type="text/javascript" language="JavaScript"><!--
+                  document.write(" - "+"Last Published: " + document.lastModified);
+                  //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img width="88" height="31" alt="Valid HTML 4.01!" src="../../skin/images/valid-html401.png" class="logoImage" border="0"></a><a href="http://jigsaw.w3.org/css-validator/"><img width="88" height="31" alt="Valid CSS!" src="../../skin/images/vcss.png" class="logoImage" border="0"></a></td>
+</tr>
+</table>
+</div>
+<!--================= end Footer ==================-->
+</body>
+</html>
