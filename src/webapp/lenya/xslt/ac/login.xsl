@@ -34,7 +34,7 @@
   </xsl:template>
   
   
-  <xsl:template name="html-title">LOGIN to <xsl:value-of select="$publication_name"/></xsl:template>
+  <xsl:template name="html-title">LOGIN to the <xsl:call-template name="pubname" /> Publication</xsl:template>
   
   
   <xsl:template match="login">
@@ -79,7 +79,10 @@
     </div>
   </xsl:template>
   
-  
+ <xsl:template name="pubname">
+   <xsl:value-of select="translate($publication_name, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+ </xsl:template>
+ 
   <xsl:template match="current_username">
     <br/>Current username: <xsl:apply-templates/>
   </xsl:template>

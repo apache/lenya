@@ -20,10 +20,7 @@
   <page:page>
     <page:title><xsl:call-template name="html-title"/></page:title>
     <page:body>
-     <h2><xsl:value-of select="$publication_name"/></h2>
-
      <xsl:apply-templates select="body"/>
-
      <p style="font-size: small">
        <xsl:value-of select="$copyright"/>
      </p>
@@ -36,8 +33,12 @@
 </xsl:template>
 
 <xsl:template name="html-title">
-LOGOUT from <xsl:value-of select="$publication_name"/>
+LOGOUT from the <xsl:call-template name="pubname" /> Publication
 </xsl:template>
+
+<xsl:template name="pubname">
+   <xsl:value-of select="translate($publication_name, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+ </xsl:template>
 
 <xsl:template match="logout">
   
