@@ -29,6 +29,11 @@
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
+      <map:match pattern="mirror/*.css">
+        <map:read src="resources/publication/styles/live/{1}.css" mime-type="text/css">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
+      </map:match>
 
       <map:match pattern="mirror/**.html">
         <map:read src="resources/publication/html/live/{1}.html" mime-type="text/html"/>
