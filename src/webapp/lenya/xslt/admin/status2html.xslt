@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- 
-  CVS $Id: status2html.xslt,v 1.1 2003/06/25 22:22:11 michi Exp $
+  CVS $Id: status2html.xslt,v 1.2 2004/02/09 23:09:36 gregor Exp $
 -->
 
 <xsl:stylesheet version="1.0"
@@ -14,10 +14,6 @@
     <html>
       <head>
         <title>Lenya Status [<xsl:value-of select="@status:host"/>]</title>
-<!--
-        <link href="{$contextPath}/styles/main.css" type="text/css" rel="stylesheet"/>
-        <script src="{$contextPath}/scripts/main.js" type="text/javascript"/>
--->
       </head>
 
       <body>
@@ -55,12 +51,6 @@
           <ul>
              <xsl:apply-templates />
           </ul>
-<!--
-          <span class="switch" id="{@status:name}-switch" onclick="toggle('{@status:name}')">[show]</span>
-          <ul id="{@status:name}" style="display: none">
-             <xsl:apply-templates />
-          </ul>
--->
         </xsl:otherwise>
       </xsl:choose>
     </li>
