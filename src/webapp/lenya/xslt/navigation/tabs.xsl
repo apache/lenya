@@ -27,7 +27,7 @@
     </xsl:call-template>
   </xsl:variable>
   
-  <div class="tabs">
+  <div id="tabs">
 
     <xsl:call-template name="pre-separator"/>
     <xsl:for-each select="tree:node">
@@ -75,7 +75,7 @@
 
 
 <xsl:template name="separator">
-   &#160;
+   <xsl:text>&#160;</xsl:text>
 </xsl:template>
 
 

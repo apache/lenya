@@ -21,7 +21,7 @@
 
 
 <xsl:template match="tree:site">
-  <div class="menu">
+  <div id="menu">
     <xsl:apply-templates select="tree:node">
       <xsl:with-param name="relative-path" select="''"/>
     </xsl:apply-templates>
