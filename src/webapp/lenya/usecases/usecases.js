@@ -44,10 +44,10 @@ function executeUsecase() {
 		    "usecase" : usecase
 		});
 		
-		if (cocoon.request.getParameter("submit")) {
+		passRequestParameters(flowHelper, usecase);
+		usecase.advance();
 		
-		    passRequestParameters(flowHelper, usecase);
-			
+		if (cocoon.request.getParameter("submit")) {
 			usecase.checkExecutionConditions();
 			if (usecase.getErrorMessages().isEmpty()) {
 				usecase.execute();
