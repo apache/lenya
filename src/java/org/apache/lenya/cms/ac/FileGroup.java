@@ -1,5 +1,5 @@
 /*
-$Id: FileGroup.java,v 1.10 2003/07/23 13:21:15 gregor Exp $
+$Id: FileGroup.java,v 1.11 2003/07/24 10:25:57 michi Exp $
 <License>
 
  ============================================================================
@@ -73,9 +73,6 @@ import java.io.File;
 public class FileGroup extends Group implements Item {
     private static Category log = Category.getInstance(FileGroup.class);
 
-    public static final String ROLES = "roles";
-    public static final String ROLE = "role";
-
     /**
      * @see org.apache.lenya.cms.ac.Group#delete()
      */
@@ -107,29 +104,6 @@ public class FileGroup extends Group implements Item {
      */
     public void configure(Configuration config) throws ConfigurationException {
         new ItemConfiguration().configure(this, config);
-
-        Configuration[] rolesConfig = config.getChildren(ROLES);
-
-        if (rolesConfig.length == 1) {
-            Configuration[] roles = rolesConfig[0].getChildren(ROLE);
-
-            for (int i = 0; i < roles.length; i++) {
-                String roleName = roles[i].getValue();
-                RoleManager manager = null;
-
-                try {
-                    manager = RoleManager.instance(getConfigurationDirectory());
-                } catch (AccessControlException e) {
-                    throw new ConfigurationException(
-                        "Exception when trying to fetch RoleManager for publication: " +
-                        getConfigurationDirectory(), e);
-                }
-            }
-        } else {
-            // the Group should have a Roles node
-            log.error("The group " + getId() +
-                "doesn't appear to have the mandatory roles node");
-        }
     }
     
     /**
@@ -169,12 +143,6 @@ public class FileGroup extends Group implements Item {
     private Configuration createConfiguration() {
         DefaultConfiguration config = new DefaultConfiguration(GROUP);
         new ItemConfiguration().save(this, config);
-
-        DefaultConfiguration child = null;
-
-        // add roles node
-        child = new DefaultConfiguration(ROLES);
-        config.addChild(child);
 
         return config;
     }
