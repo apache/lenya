@@ -10,8 +10,10 @@ function user_change_profile(userId) {
 	var description = user.getDescription();
 	
 	var ldapId;
+	var ldap = false;
 	if (user.getClass().getName().endsWith("LDAPUser")) {
 		ldapId = user.getLdapId();
+		ldap = true;
 	}
 	
 	// at the moment the loop is executed only once (no form validation)
@@ -22,7 +24,8 @@ function user_change_profile(userId) {
 	    	"fullname" : fullName,
 	    	"email" : email,
 	    	"description" : description,
-	    	"page-title" : "Edit Profile"
+	    	"page-title" : "Edit Profile",
+	    	"ldap" : ldap
 	    });
 	    
 	    if (cocoon.request.get("cancel")) {
@@ -205,7 +208,8 @@ function add_user(ldap) {
 	    	"description" : description,
 	    	"message" : message,
 	    	"ldap-id" : ldapId,
-	    	"new-user" : true
+	    	"new-user" : true,
+	    	"ldap" : ldap
 		});
 		
 	    if (cocoon.request.get("cancel")) {
