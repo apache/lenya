@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.6 2003/05/13 15:56:04 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.7 2003/05/14 13:57:06 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,6 +57,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -88,9 +89,24 @@ public class DefaultSiteTree
 
     public DefaultSiteTree(File treefile)
 	throws ParserConfigurationException, SAXException, IOException {
-        // Read tree
 	this.treefile = treefile;
-	document = DocumentHelper.readDocument(treefile);
+        if (!treefile.isFile()) {
+          //the treefile does'nt exists, so create it
+          document = createDocument();
+        } else {
+          // Read tree
+	  document = DocumentHelper.readDocument(treefile);
+        }
+    }
+
+    public Document createDocument()
+        throws DOMException, ParserConfigurationException {
+
+        document = DocumentHelper.createDocument(NAMESPACE_URI, "site", null);
+        Element root=document.getDocumentElement();
+        root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        root.setAttribute("xsi:schemaLocation", "http://www.lenya.org/2003/sitetree  ../../../../resources/entities/sitetree.xsd"); 
+        return document;
     }
 
     protected Node findNode(Node node, List ids) {
@@ -134,16 +150,12 @@ public class DefaultSiteTree
 	
 	log.debug("PARENT ELEMENT: " + parentNode);
 	
-//         // Check if child already exists
-//         String newChildXPath = xpath_string + "/" + "node";
-//         log.debug("CHECK: " + newChildXPath);
-	
-//         if (doc.selectSingleNode(newChildXPath + "[@id='" + id + "']") != null) {
-//             log.error("Exception: XPath exists: " + newChildXPath + "[@id='" + id + "']");
-//             log.error("No child added");
-	    
-//             return;
-//         }
+        // Check if child already exists
+        Node childNode = getNodeInternal(id); 
+        if (childNode != null) {
+          log.info("This node (id = "+ id +") was already insert");
+          return;
+        }          
 
         // Add node
 	NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
