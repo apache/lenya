@@ -20,12 +20,15 @@ import org.wyona.util.XPSFileOutputStream;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import org.apache.log4j.Category;
+
 /**
  * @author Michael Wechner (http://www.wyona.com)
  * @version 1.5.1
  */
 public class RevisionController
      {
+     static Category log=Category.getInstance(RevisionController.class);
      String rcmlDirectory=null;
      String rootDir=null;
      String backupDir=null;
@@ -47,7 +50,7 @@ public class RevisionController
           {
           if(args.length != 4)
             {
-            System.err.println("Usage: "+new RevisionController().getClass().getName()+" username source username destination");
+            log.info("Usage: "+new RevisionController().getClass().getName()+" username(user who checkout) source(document to checkout) username(user who checkin) destination(document to checkin)");
             return;
             }
           String identityS=args[0];
@@ -62,22 +65,22 @@ public class RevisionController
             }
           catch(FileNotFoundException e) // No such source file
             {
-            System.err.println(e);
+            log.error(e);
             }
           catch(FileReservedCheckOutException e) // Source has been checked out already
             {
-            System.err.println(e);
-            System.err.println(e.source +"is already check out by "+e.checkOutUsername+" since "+e.checkOutDate);
+            log.error(e);
+            log.error(e.source +"is already check out by "+e.checkOutUsername+" since "+e.checkOutDate);
             return;
             }
           catch(IOException e) // Cannot create rcml file
             {
-            System.err.println(e);
+            log.error(e);
             return;
             }
           catch(Exception e)
             {
-            System.err.println(e);
+            log.error(e);
             return;
             }
 /*
@@ -87,12 +90,12 @@ public class RevisionController
             {
             while((line=buffer.readLine()) != null)
                  {
-                 System.out.println(line);
+                 log.info(line);
                  }
             }
           catch(IOException e)
             {
-            System.err.println(e);
+            log.error(e);
             }
 */
 
@@ -102,17 +105,17 @@ public class RevisionController
             }
           catch(FileReservedCheckInException e)
             {
-            System.err.println(e);
+            log.error(e);
             }
           catch(Exception e)
             {
-            System.err.println(e);
+            log.error(e);
             }
 
 /*
           if(args.length != 2)
             {
-            System.err.println("Usage: "+new RevisionController().getClass().getName()+" time destination");
+            log.info("Usage: "+new RevisionController().getClass().getName()+" time destination");
             return;
             }
           long time=new Long(args[0]).longValue();
@@ -124,7 +127,7 @@ public class RevisionController
             }
           catch(Exception e)
             {
-            System.err.println(e);
+            log.error(e);
             }
 */
           }
@@ -182,9 +185,9 @@ public class RevisionController
           // having to check back in first.
           //
           
-          System.err.println("entry: " + entry);
-          System.err.println("entry.type:" + entry.type);
-          System.err.println("entry.identity" + entry.identity);
+          log.debug("entry: " + entry);
+          log.debug("entry.type:" + entry.type);
+          log.debug("entry.identity" + entry.identity);
           
           if (entry != null && entry.type != RCML.ci && !entry.identity.equals(identity)) {
             throw new FileReservedCheckOutException(source, rcml);
@@ -273,7 +276,7 @@ public class RevisionController
 			if (!parent.isDirectory()){
                                 parent.mkdirs();
 			}
-			System.err.println("Backup: copy "+originalFile.getAbsolutePath()+" "+backupFile.getAbsolutePath());
+			log.info("Backup: copy "+originalFile.getAbsolutePath()+" to "+backupFile.getAbsolutePath());
 			InputStream in=new FileInputStream(originalFile.getAbsolutePath());
 			//OutputStream out=new FileOutputStream(backupFile.getAbsolutePath());
 			OutputStream out=new XPSFileOutputStream(backupFile.getAbsolutePath());
@@ -289,11 +292,11 @@ public class RevisionController
 		rcml.write();
 
 		try{
-		  System.err.println(this.getClass().getName()+": Send Signal: "+originalFile.getAbsolutePath());
+//		  log.debug(this.getClass().getName()+": Send Signal: "+originalFile.getAbsolutePath());
 //		  StatusChangeSignalHandler.emitSignal("file:"+originalFile.getAbsolutePath(),"reservedCheckIn");
 		  }
         catch(Exception e){
-		  System.err.println(this.getClass().getName()+".reservedCheckIn(): "+e);
+		  log.error(this.getClass().getName()+".reservedCheckIn(): "+e);
 		  }
 
 		return time;
@@ -325,7 +328,7 @@ public class RevisionController
 		long time=new Date().getTime();
 		if(backup && originalFile.isFile()) {
 			File backupFile=new File(backupDir+"/"+time+".bak");
-			System.err.println("Backup: copy "+originalFile.getAbsolutePath()+" "+backupFile.getAbsolutePath());
+			log.info("Backup: copy "+originalFile.getAbsolutePath()+" to "+backupFile.getAbsolutePath());
 			InputStream in=new FileInputStream(originalFile.getAbsolutePath());
 			//OutputStream out=new FileOutputStream(backupFile.getAbsolutePath());
 			OutputStream out=new XPSFileOutputStream(backupFile.getAbsolutePath());
@@ -429,7 +432,7 @@ public class RevisionController
                {
                out.write(buffer,0,length);
                }
-          System.out.println("Undo: copy "+backup.getAbsolutePath()+" "+current.getAbsolutePath());
+          log.info("Undo: copy "+backup.getAbsolutePath()+" "+current.getAbsolutePath());
           
           rcml.deleteFirstCheckIn();
           out.close();

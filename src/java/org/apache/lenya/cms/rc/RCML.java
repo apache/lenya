@@ -22,12 +22,15 @@ import org.w3c.dom.Node;
 
 import java.util.AbstractList;
 
+import org.apache.log4j.Category;
+
 /**
  * @author Michael Wechner
  * @author Marc Liyanage
  * @version 0.7.19
  */
 public class RCML{
+  static Category log=Category.getInstance(RCML.class);
   private File rcmlFile;
   private Document document = null;
   private boolean dirty = false;
@@ -41,7 +44,7 @@ public class RCML{
           {
           if(args.length != 1)
             {
-            System.err.println("Usage: java RCML rcmlDirectory datafilename");
+            log.info("Usage: java RCML rcmlDirectory datafilename");
             return;
             }
           try
@@ -53,19 +56,19 @@ public class RCML{
             //rcml.checkOutIn(RCML.ci,"michi",new Date().getTime());
             new DOMWriter(new PrintWriter(System.out)).print(rcml.document);
             CheckOutEntry coe=rcml.getLatestCheckOutEntry();
-            System.out.print("\n");
+            log.info("\n");
             if(coe == null)
               {
-              System.out.println("Not checked out");
+              log.info("Not checked out");
               }
             else
               {
-              System.out.println("Checked out: "+coe.identity+" "+coe.time);
+              log.info("Checked out: "+coe.identity+" "+coe.time);
               }
             }
           catch(Exception e)
             {
-            System.err.println(e);
+            log.error(e);
             }
           }
 /**
@@ -84,7 +87,7 @@ public class RCML{
 	public void finalize() throws IOException, Exception {
 	
 		if (this.isDirty()) {
-			System.err.println("RCML.finalize(): calling write()");
+			log.debug("RCML.finalize(): calling write()");
 			write();
 		}
 		
@@ -93,7 +96,7 @@ public class RCML{
 
 	public void write() throws IOException, Exception {
 	
-		System.err.println("RCML.write(): writing out file: " + rcmlFile.getAbsolutePath());
+		log.debug("RCML.write(): writing out file: " + rcmlFile.getAbsolutePath());
 
 //		new DOMWriter(new PrintWriter(new FileWriter(rcmlFile.getAbsolutePath()))).print(document);
 
@@ -172,7 +175,7 @@ public class RCML{
             }
           else
             {
-            System.err.println("ERROR: "+this.getClass().getName()+".checkOutIn(): No such type");
+            log.error("ERROR: "+this.getClass().getName()+".checkOutIn(): No such type");
             return;
             }
           checkOutElement.appendChild(identityElement);

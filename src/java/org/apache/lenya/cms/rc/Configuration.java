@@ -25,15 +25,15 @@ public class Configuration
      public static void main(String[] args)
           {
           Configuration conf=new Configuration();
-          System.out.println(conf.rcmlDirectory);
-          System.out.println(conf.backupDirectory);
-          //System.out.println(conf.documentRootDirectory);
-          System.out.println(conf.mountPoints);
-          System.out.println(conf.password);
-          System.out.println(conf.servlet);
+          log.debug("rcmlDirectory: "+conf.rcmlDirectory);
+          log.debug("backupDirectory: "+conf.backupDirectory);
+          //log.debug("documentRootDirectory :"+conf.documentRootDirectory);
+          log.debug("mountPoints :"+conf.mountPoints);
+          log.debug("password :"+conf.password);
+          log.debug("servlet :"+conf.servlet);
 
-          System.out.println(conf.xslt);
-          System.out.println(conf.xslt_rcmlrollback);
+          log.debug("xslt :"+conf.xslt);
+          log.debug("xslt_rcmlrollback :"+conf.xslt_rcmlrollback);
           }
 /**
  *
