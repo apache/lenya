@@ -17,8 +17,11 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
@@ -64,15 +67,7 @@ public class ChangeNodeID extends DocumentUsecase {
         super.doExecute();
 
         Document document = getSourceDocument();
-        DocumentIdentityMap identityMap = document.getIdentityMap();
-        Publication publication = identityMap.getPublication();
-
-        String newDocumentId = getNewDocumentId();
-        Document newDocument = identityMap.getFactory().get(document.getArea(),
-                newDocumentId,
-                document.getLanguage());
-
-        publication.moveDocument(document, newDocument);
+        Document newDocument = moveAllLanguageVersions(document);
 
         LinkRewriter rewriter = null;
         try {
@@ -85,6 +80,42 @@ public class ChangeNodeID extends DocumentUsecase {
         }
 
         setTargetDocument(newDocument);
+    }
+
+    /**
+     * Moves all language versions of a document.
+     * @param document The document.
+     * @return The moved version of the document.
+     * @throws DocumentException if an error occurs.
+     * @throws DocumentBuildException if an error occurs.
+     * @throws PublicationException if an error occurs.
+     */
+    protected Document moveAllLanguageVersions(Document document) throws DocumentException,
+            DocumentBuildException, PublicationException {
+        Document newDocument = null;
+
+        DocumentIdentityMap identityMap = document.getIdentityMap();
+        Publication publication = identityMap.getPublication();
+        String newDocumentId = getNewDocumentId();
+
+        String[] availableLanguages = document.getLanguages();
+
+        for (int i = 0; i < availableLanguages.length; i++) {
+            Document languageVersion = identityMap.getFactory().get(document.getArea(),
+                    document.getId(),
+                    availableLanguages[i]);
+
+            Document newLanguageVersion = identityMap.getFactory().get(document.getArea(),
+                    newDocumentId,
+                    availableLanguages[i]);
+
+            publication.moveDocument(languageVersion, newLanguageVersion);
+
+            if (availableLanguages[i].equals(document.getLanguage())) {
+                newDocument = newLanguageVersion;
+            }
+        }
+        return newDocument;
     }
 
     /**
