@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.7 2003/03/24 11:19:09 felix Exp $ -->
+<!-- $Id: publication.xml,v 1.8 2003/04/09 09:34:55 felix Exp $ -->
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 	<lenya:name>Unipublic</lenya:name>
 	<lenya:version>1.0</lenya:version>
@@ -102,9 +102,17 @@ We hope deeply that they will receive the appropriate ROI.
 			<li>The <a href="todo.html">TODOs</a>
 			</li>
 		</ol><![CDATA[
+WARNING
+*******
+Bitfluxeditor has to be configured to take the unipublic transformation file (and not the one for Computerworld):
+In src\webapp\lenya\resources\misc\bitflux\inc\config.xml change to
+  <file name="BX_xmltransformfile">/lenya/unipublic/bitflux/stylesheets/bitflux-include.xsl</file>
+  <file name="BX_xmltransformbackfile">/lenya/unipublic/bitflux/stylesheets/bitflux-back-include.xsl</file>
+
+
 Deployment
 **********
-
+- Adjust Bitluxeditor configuration (see warning above)
 - Change/add users
 - Modify smtp server for newsletter (in src/webapp/lenya/pubs/unipublic/content/tasks.xconf): mail.unizh.ch
 - Modify sender address for newsletter  (in src/webapp/lenya/pubs/unipublic/content/tasks.xconf): unipublic@unicom.unizh.ch
@@ -114,14 +122,12 @@ Deployment
 - Adapt replication (in src/webapp/lenya/bin/replicate.sh)
 - Add cronjob for replication (0-59/1 * * * * sh /home/wcms/build/jakarta-tomcat-4.0.4/webapps/lenya/lenya/bin/replicate.sh > /home/wcms/logs/replicate.log 2>&1)
 
-18.12.02/fm
+09.04.03/fm
 
 Changes
 *******
-
-patched two BXE files to revert unipublic-specific configuration settings. revert locally.
+patched two BXE files to revert unipublic-specific configuration settings. revert locally (see warning above).
 the files are:
-
 src/webapp/lenya/resources/misc/bitflux/inc/config.xml
 src/webapp/lenya/bitflux.xmap
 
