@@ -15,29 +15,29 @@
         "http://www.lenya.org/2003/sitetree
         ../../../../resources/entities/sitetree.xsd">
     
-  <node id="index.html">
+  <node id="index">
     <label>Home</label>
   </node>
   
   <node id="demo">
     <label>Demo</label>
-    <node id="unipublic.html">
+    <node id="unipublic">
       <label>Unipublic</label>
     </node>
-    <node id="news.html">
+    <node id="news">
       <label>Wyona News and Comments</label>
     </node>
-    <node id="oscom.html">
+    <node id="oscom">
       <label>OSCOM</label>
     </node>
   </node>
   
   <node id="download">
     <label>Download</label>
-    <node id="source.html">
+    <node id="source">
       <label>Source Version</label>
     </node>
-    <node id="binary.html">
+    <node id="binary">
       <label>Binary Version</label>
     </node>
   </node>
@@ -46,7 +46,7 @@
     <label>Documentation</label>
   </node>
 
-  <node id="simple-document.html">
+  <node id="simple-document">
     <label>Test</label>
   </node>
 </site>

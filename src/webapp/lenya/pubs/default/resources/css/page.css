@@ -47,6 +47,13 @@ root { }
 
 /* body */
 
-#body { float: left; border: none; padding: 1em; }
+#body { float: left; border: none; padding: 1em; font-family: Verdana, Arial, Sans-serif; }
 
 #main { float: left; width: 70%; margin: 10px; border: none; }
+
+h1 { font-size: 140%; }
+p { font-size: 80%; }
+li { font-size: 80%; }
+
+
+
