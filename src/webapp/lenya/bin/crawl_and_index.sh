@@ -44,6 +44,8 @@ find $HTDOCS_DUMP_DIR -name "*.pdf.txt" -print
 CLASSPATH=$CLASSPATH:$PDFBOX/classes
 ##$JAVA -cp $CLASSPATH org.pdfbox.Main $FILE_PDF $FILE_PDF.txt
 
+##http://www.adobe.com/products/acrobat/access_simple_form.html
+
 
 echo ""
 echo "=========================================================="
