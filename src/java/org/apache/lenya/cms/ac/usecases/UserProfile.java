@@ -27,6 +27,8 @@ public class UserProfile extends AccessControlUsecase {
     protected static final String FULL_NAME = "fullName";
     protected static final String EMAIL = "email";
     protected static final String DESCRIPTION = "description";
+    protected static final String MENU_LOCALE = "defaultMenuLocale";
+    protected static final String DOCUMENT_LOCALE = "defaultDocumentLocale";
     
     /**
      * Ctor.
@@ -55,10 +57,14 @@ public class UserProfile extends AccessControlUsecase {
         String fullName = getParameterAsString(UserProfile.FULL_NAME);
         String description = getParameterAsString(UserProfile.DESCRIPTION);
         String email = getParameterAsString(UserProfile.EMAIL);
+        String defaultMenuLocale = getParameterAsString(UserProfile.MENU_LOCALE);
+        String defaultDocumentLocale = getParameterAsString(UserProfile.DOCUMENT_LOCALE);
         
         getUser().setEmail(email);
         getUser().setName(fullName);
         getUser().setDescription(description);
+        getUser().setDefaultMenuLocale(defaultMenuLocale);
+        getUser().setDefaultDocumentLocale(defaultDocumentLocale);
         getUser().save();
         
     }
@@ -88,6 +94,8 @@ public class UserProfile extends AccessControlUsecase {
             
             setParameter(EMAIL, this.user.getEmail());
             setParameter(DESCRIPTION, this.user.getDescription());
+            setParameter(MENU_LOCALE, this.user.getDefaultMenuLocale());
+            setParameter(DOCUMENT_LOCALE, this.user.getDefaultDocumentLocale());
             setParameter(FULL_NAME, this.user.getName());
         }
     }

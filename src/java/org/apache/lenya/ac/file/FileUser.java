@@ -37,6 +37,8 @@ public class FileUser extends AbstractUser implements Item {
 
     protected static final String ID = "identity";
     protected static final String EMAIL = "email";
+    protected static final String MENU_LOCALE = "default-menu-locale";
+    protected static final String DOCUMENT_LOCALE = "default-document-locale";
     protected static final String PASSWORD = "password";
     protected static final String GROUPS = "groups";
     protected static final String GROUP = "group";
@@ -71,6 +73,8 @@ public class FileUser extends AbstractUser implements Item {
     public void configure(Configuration config) throws ConfigurationException {
         new ItemConfiguration().configure(this, config);
         setEmail(config.getChild(EMAIL).getValue(""));
+        setDefaultMenuLocale(config.getChild(MENU_LOCALE).getValue(""));
+        setDefaultDocumentLocale(config.getChild(DOCUMENT_LOCALE).getValue(""));
         setEncryptedPassword(config.getChild(PASSWORD).getValue(null));
 
         removeFromAllGroups();
@@ -124,6 +128,16 @@ public class FileUser extends AbstractUser implements Item {
         child.setValue(getEmail());
         config.addChild(child);
 
+        // add defaultMenuLocale node
+        child = new DefaultConfiguration(MENU_LOCALE);
+        child.setValue(getDefaultMenuLocale());
+        config.addChild(child);
+
+        // add defaultDocumentLocale node
+        child = new DefaultConfiguration(DOCUMENT_LOCALE);
+        child.setValue(getDefaultDocumentLocale());
+        config.addChild(child);
+        
         // add password node
         child = new DefaultConfiguration(PASSWORD);
         child.setValue(getEncryptedPassword());
