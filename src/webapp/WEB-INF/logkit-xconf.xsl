@@ -43,7 +43,7 @@
 
 
 <xsl:template match="category">
-  <category name="@name" log-level="INFO">
+  <category name="{@name}" log-level="INFO">
     <xsl:apply-templates/>
   </category>
 </xsl:template>
