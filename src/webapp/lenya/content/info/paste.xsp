@@ -9,8 +9,11 @@
   create-session="true">
   
   <info>
+    <xsp:logic>
+      String secdocumentid= <xsp-cookie:getValue name="org.apache.lenya.cms.info.targett2"/>;
+    </xsp:logic>
     <first-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.documentid"/></first-document-id>
-    <sec-document-id><xsp-cookie:getValue name="org.apache.lenya.cms.info.targett2"/></sec-document-id>
+    <sec-document-id><xsp:expr>secdocumentid</xsp:expr></sec-document-id>
     <task-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.action"/></task-id>
     <request-uri><xsp-request:get-uri/></request-uri>
   </info>
