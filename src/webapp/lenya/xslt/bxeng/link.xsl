@@ -16,7 +16,7 @@
 -->
 
 <!--
- $Id: link.xsl,v 1.5 2004/03/29 07:20:04 egli Exp $
+ $Id: link.xsl,v 1.6 2004/04/13 12:16:04 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -41,6 +41,7 @@
 <xsl:template match="/">
     <page:page>
       <page:title>Insert Link</page:title>
+      <page:body>
       <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js">&#160;</script>
       <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js">&#160;</script>
       <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/{$documenturl}?lenya.usecase=bxeng&amp;lenya.step=link-tree">&#160;</script>
@@ -75,8 +76,7 @@
           window.close();
           }
       </script>
-      <page:body>
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 <td valign="top" width="20%">
     <div id="lenya-info-treecanvas">
