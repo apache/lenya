@@ -97,9 +97,9 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
     on the live site.
 
     The user lenya (which you are probably currently logged in as) has
-    the role author, i.e. he can create new documents and submit them
+    the role edit, i.e. he can create new documents and submit them
     for approval (with <code>Workflow->Submit for review</code>). The
-    user alice has the role reviewer which allows her to approve,
+    user alice has the role review which allows her to approve,
     i.e. publish documents.</p>
 
     <p>In order to publish your newly created document simply press
