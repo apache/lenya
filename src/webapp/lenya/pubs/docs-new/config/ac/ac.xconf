@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<access-controller type="publication-file">
+  <accreditable-manager>
+    <parameter name="directory" value="context:///lenya/pubs/docs-new/config/ac/passwd"/>
+  </accreditable-manager>
+</access-controller>
