@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.27 2003/04/24 13:52:38 gregor Exp $
+ * $Id: XopusHandlerAction.java,v 1.28 2003/04/28 09:34:02 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -295,12 +295,11 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
                 }
 
                 Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
-//                rc.reservedCheckIn(permFile.getAbsolutePath(), identity.getUsername(), true);
-                rc.reservedCheckIn(reqFile, identity.getUsername(), true);
+                getLogger().debug(".act(): Checkin: " + reqFile + "::" + identity.getUsername());
+                rc.reservedCheckIn(xmlRoot + reqFile, identity.getUsername(), true);
                 FileUtil.copyFile(tempFile, permFile);
             } catch (Exception e) {
-                getLogger().error(".act(): Exception during checkin: " + permFile);
-
+                getLogger().error(".act(): Exception during checkin of " + xmlRoot + reqFile + " (" + e + ")");
                 return null;
             }
         }
