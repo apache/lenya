@@ -594,6 +594,25 @@
         </map:match>
         
         
+        <map:match pattern="restore" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/restore.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/restore.xsl"/>
+            <map:call resource="style-cms-page"/>
+          </map:match>
+          
+          <map:match pattern="restore" type="step">
+            <map:act type="task">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="task-id" value="{request-param:task-id}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
+          </map:match>
+          
+        </map:match>
+        
+
         <map:match pattern="copy" type="usecase">
           
           <map:match pattern="showscreen" type="step">
