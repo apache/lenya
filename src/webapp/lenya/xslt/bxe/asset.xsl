@@ -35,9 +35,8 @@
 
 <xsl:template name="pre-body">
   <script>
-    function insertAsset(src, size) {
+    function insertAsset(src, size, title) {
     
-      var title = document.forms["assetlibrary"].title.value;
       <![CDATA[
       window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'" size="'+size+'" type="">'+title+'</asset>',window.opener.BXE_SELECTION,window.opener.BXE_SPLIT_IF_INLINE);
       ]]>
@@ -70,5 +69,15 @@
     }
   </script>
 </xsl:template>
+
+
+<xsl:template name="library-buttons">
+  <input i18n:attr="value" type="submit"
+         onClick="insertAsset(document.getElementById('assetSource').value,
+                              document.getElementById('assetExtent').value,
+                              document.getElementById('assetTitle').value);" value="Submit"/>&#160;
+  <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
+</xsl:template>
+
 
 </xsl:stylesheet>  
