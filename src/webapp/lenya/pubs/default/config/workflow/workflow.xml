@@ -19,8 +19,7 @@
 
 <workflow xmlns="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://apache.org/cocoon/lenya/workflow/1.0
-        ../../../resources/entities/workflow/workflow.xsd">
+    xsi:schemaLocation="http://apache.org/cocoon/lenya/workflow/1.0 ../../../../resources/entities/workflow.xsd">
 
   <state id="authoring" initial="true"/>
   <state id="review"/>
