@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.19 2003/08/22 12:42:47 gregor Exp $
+ $Id: root.xsl,v 1.20 2003/08/22 12:45:41 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -60,7 +60,7 @@ function findIDbyLink(srclink)
 </script>
 <style>
 #lenya-info-tree {
-    font-size: 8em; 
+    font-size: 8px; 
     font-family: verdana,helvetica, sans-serif; 
     text-decoration: none;
     color: black;	
@@ -73,7 +73,7 @@ function findIDbyLink(srclink)
 }
    
 #lenya-info-tree td {
-    font-size: 8pt; 
+    font-size: 8px; 
     font-family: verdana,helvetica, sans-serif; 
 }
    
