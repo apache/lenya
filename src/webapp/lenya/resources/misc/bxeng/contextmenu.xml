@@ -5,6 +5,7 @@
          <element name="acronym" ns="http://www.w3.org/1999/xhtml"/>
          <element name="big" ns="http://www.w3.org/1999/xhtml"/>
          <element name="button" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="caption" ns="http://www.w3.org/1999/xhtml"/>
          <element name="dfn" ns="http://www.w3.org/1999/xhtml"/>
          <element name="input" ns="http://www.w3.org/1999/xhtml"/>
          <element name="kbd" ns="http://www.w3.org/1999/xhtml"/>
