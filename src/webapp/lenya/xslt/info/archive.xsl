@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: archive.xsl,v 1.12 2004/02/23 19:43:41 roku Exp $
+ $Id: archive.xsl,v 1.13 2004/02/25 12:52:54 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -60,23 +60,17 @@
           
           <table class="lenya-table-noborder">
             <tr>
-              <td/>
               <td>
                 <i18n:translate>
                   <i18n:text key="archive-doc?"/>
-                  <i18n:param><q><xsl:value-of select="document-id"/></q></i18n:param>
+                  <i18n:param><strong><xsl:value-of select="document-id"/></strong></i18n:param>
                 </i18n:translate><br/><br/>
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>Document</i18n:text>:</td>
-              <td><xsl:value-of select="document-id"/></td>
+	          <xsl:apply-templates select="inconsistent-documents"/>
             </tr>
             <tr>
-	      <xsl:apply-templates select="inconsistent-documents"/>
-            </tr>
-            <tr>
-              <td/>
               <td>
                 <br/>
                 <input i18n:attr="value" type="submit" value="Archive"/>&#160;

@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.35 2004/02/25 11:32:09 roku Exp $
+   $Id: cmsui.xml,v 1.36 2004/02/25 12:52:54 roku Exp $
    
 -->
 
@@ -201,8 +201,9 @@ c
   <message key="deactivate-doc">Deactivate document {0}</message>
   <message key="deactivate-doc?">Do you really want to deactivate the document {0}?</message>
   <message key="Delete Document">Delete Document</message>
+  <message key="delete-doc">Delete document {0}</message>
   <message key="cannot-deactivate-unless-children-deactivated">This document cannot be deactivated unless the following child documents are deactivated</message>
-  <message key="delete-language-versions?">Do you really want to delete all language versions of this document?</message>      
+  <message key="delete-language-versions?">Do you really want to delete all language versions of the document {0}?</message>      
       <!-- Archive document -->
   <message key="Archive Document">Archive Document</message>
   <message key="archive-doc">Archive document {0}</message>

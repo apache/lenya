@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: delete.xsl,v 1.12 2004/02/23 15:01:41 roku Exp $
+ $Id: delete.xsl,v 1.13 2004/02/25 12:52:54 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -37,7 +37,12 @@
   
   <xsl:template match="info">
     <div class="lenya-box">
-      <div class="lenya-box-title"><i18n:text>Delete Document</i18n:text></div>
+      <div class="lenya-box-title">
+        <i18n:translate>
+          <i18n:text key="delete-doc"/>
+          <i18n:param><q><xsl:value-of select="document-id"/></q></i18n:param>
+        </i18n:translate>      
+      </div>
       <div class="lenya-box-body">
         <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
@@ -55,18 +60,18 @@
           
           <table class="lenya-table-noborder">
             <tr>
-              <td/>
-              <td><i18n:text key="delete-language-versions?"/><br/><br/></td>
+              <td>
+                <i18n:translate>
+                  <i18n:text key="delete-language-versions?"/>
+                  <i18n:param><strong><xsl:value-of select="document-id"/></strong></i18n:param>
+                </i18n:translate>    
+                <br/><br/>
+              </td>               
             </tr>
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>Document</i18n:text>:</td>
-              <td><xsl:value-of select="document-id"/></td>
+              <xsl:apply-templates select="inconsistent-documents"/>
             </tr>
             <tr>
-	      <xsl:apply-templates select="inconsistent-documents"/>
-            </tr>
-            <tr>
-              <td/>
               <td>
                 <br/>
                 <input i18n:attr="value" type="submit" value="Delete"/>&#160;
