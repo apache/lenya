@@ -38,7 +38,7 @@ The positioning diagram is based on a hard look at where we currently stand. The
 <ol>
 <li><strong>Community</strong><br />How viable is the community supporting the product? Are there independent contributors?
 How active are mailing lists, web sites? Is the community healthy, friendly and welcoming to newcomers?<br /><br /></li>
-<li><strong>Low Entry Barrier</strong><br />How easy is it to get started? Is the prodcuct a turn-key solution with immediate
+<li><strong>Low Entry Barrier</strong><br />How easy is it to get started? Is the product a turn-key solution with immediate
 value after download? How consistent is the documentation,
 how hard is it to familiarize oneself with the codebase?<br /><br /></li>
 <li><strong>Product Maturity</strong><br />How robust is the underlying code? Are sound software engineering practices in use? Is the
@@ -302,7 +302,7 @@ used for bug fixes, e.g. 1.0.2.
 </ul>
 
 </section></section>
-<p>$Id: roadmap.xml,v 1.4 2003/05/14 14:17:31 andreas Exp $</p>
+<p>$Id: roadmap.xml,v 1.5 2003/05/23 15:07:55 gregor Exp $</p>
   </body>
 </document>
 
