@@ -100,6 +100,10 @@ table.lenya-menubar-menu img {border:0px}
 	background-position: 0% 50%;
 }
 
+.lenya-menubar-td-infoline {
+        text-align:right;
+}
+
 .lenya-menubar-infoline {
 	margin-right: 10px;
 	color: #FFFFFF;

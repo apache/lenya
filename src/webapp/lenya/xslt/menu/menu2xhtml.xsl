@@ -88,7 +88,7 @@
           
         </td>
         
-        <td valign="bottom" align="right" colspan="2" background="{$image-prefix}/grau-bg2.gif">
+        <td class="lenya-menubar-td-infoline" valign="bottom" align="right" colspan="2" background="{$image-prefix}/grau-bg2.gif">
         	<div class="lenya-menubar-infoline">
         	  
         	  <xsl:if test="$workflowstate != ''">
