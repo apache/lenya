@@ -77,7 +77,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:balld@apache.org">Donald Ball</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: ResourceExistsAction.java,v 1.2 2003/06/23 16:27:39 michi Exp $
+ * @version CVS $Id: ResourceExistsAction.java,v 1.3 2003/06/25 14:51:46 andreas Exp $
  */
 public class ResourceExistsAction extends ComposerAction implements ThreadSafe {
 
