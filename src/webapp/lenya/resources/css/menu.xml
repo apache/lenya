@@ -14,8 +14,6 @@
 	top: 55px;
 	left: 0px;
 	z-index: 1;
-        // FIXME: seems to be inherited
-	//text-align: center;
 }
 
 table.lenya-menubar-menu a { color: #3360AA; text-decoration:none; background-color: transparent; }
@@ -28,7 +26,7 @@ table.lenya-menubar-menu img {border:0px}
 #navTopBG {
 	font-family: verdana, helvetica, sans-serif;
 	height: 22px;
-  background-image: url('<context-prefix/>/lenya/menu/images/menu-bg_2.gif');
+    background-image: url('<context-prefix/>/lenya/menu/images/menu-bg_2.gif');
 	background-repeat: repeat-x;
 	font-size: 10pt;
 	color: #333333;
@@ -37,8 +35,8 @@ table.lenya-menubar-menu img {border:0px}
 #navBlue {
 	height: 6px;
 	background-image: url('<context-prefix/>/lenya/menu/images/unten.gif');
-  background-repeat: repeat-x;
-  padding-top: 1px
+    background-repeat: repeat-x;
+    padding-top: 1px
 }
                
 #menuSearch, #menuHelp, #menuFile, #menuDebug  {
@@ -59,7 +57,6 @@ table.lenya-menubar-menu img {border:0px}
 #menuHelp {left:214px;}
 #menuDebug {left:314px;}
 
-
 .menuOutline {
 	border: 1px solid #666666;
 	border-top: 0px;
@@ -68,16 +65,11 @@ table.lenya-menubar-menu img {border:0px}
 }
 
 .menuBg {
-
-/*	width: 150; */
 	padding: 2px;
 	background-color: #EEEEEE;
 	background-repeat: repeat;
 	background-attachment: scroll;
-	
-/*	border: 1px solid #FFFFFF; */
-
-  background-image: url('<context-prefix/>/lenya/menu/images/bottombg.gif');
+    background-image: url('<context-prefix/>/lenya/menu/images/bottombg.gif');
 	background-position: 0%;
 	color: black;
 }
@@ -111,8 +103,8 @@ table.lenya-menubar-menu img {border:0px}
 .lenya-menubar-infoline {
 	margin-right: 10px;
 	color: #FFFFFF;
-	font-size: x-small;
-	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 11px;
+	font-family: verdana, helvetica, sans-serif;
 }
 
 .menuBg a.mI:hover {
