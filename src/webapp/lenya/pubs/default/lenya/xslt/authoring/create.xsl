@@ -44,22 +44,22 @@
 	      <td class="lenya-form-caption">Name:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Language:</td><td><input class="lenya-form-element" type="text" name="properties.create.language"/></td>
+	      <td class="lenya-form-caption">Language:</td><td><input class="lenya-form-element" type="text" name="properties.create.language" value="{/parent-child/dc:language}"/></td>
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.create.creator" value="{/parent-child/dc:creator}"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Subject:</td><td><input class="lenya-form-element" type="text" name="properties.create.language"/></td>
+	      <td class="lenya-form-caption">Subject:</td><td><input class="lenya-form-element" type="text" name="properties.create.subject"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Publisher:</td><td><input class="lenya-form-element" type="text" name="properties.create.language"/></td>
+	      <td class="lenya-form-caption">Publisher:</td><td><input class="lenya-form-element" type="text" name="properties.create.publisher" value="{/parent-child/dc:publisher}"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Date:</td><td><input class="lenya-form-element" type="text" name="properties.create.language"/></td>
+	      <td class="lenya-form-caption">Date:</td><td><input class="lenya-form-element" type="text" name="properties.create.date" value="{/parent-child/dc:date}"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.create.language"/></td>
+	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.create.rights"/></td>
 	    </tr>
 	    <tr>
 	      <td/>
