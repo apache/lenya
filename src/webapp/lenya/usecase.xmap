@@ -592,7 +592,7 @@
           <map:match pattern="removelabel" type="step">
             <map:act type="task">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
-              <map:redirect-to session="true" uri="{page-envelope:complete-url-without-language}"/>
+              <map:redirect-to session="true" uri="{page-envelope:context-prefix}{page-envelope:document-url-without-language}"/>
             </map:act>
           </map:match>
 
