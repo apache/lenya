@@ -441,9 +441,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document[] descendantsArray = manager.getRequiringResources(document);
         OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
         descendants.add(document);
-
-        DocumentVisitor visitor = new DeleteVisitor(this, document);
-        descendants.visitDescending(visitor);
+        delete(descendants);
     }
 
     /**
@@ -464,21 +462,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public class DeleteVisitor implements DocumentVisitor {
 
-        private Document rootSource;
         private DocumentManager manager;
 
         /**
          * Ctor.
          * @param manager The document manager.
-         * @param source The root source.
          */
-        public DeleteVisitor(DocumentManager manager, Document source) {
+        public DeleteVisitor(DocumentManager manager) {
             this.manager = manager;
-            this.rootSource = source;
-        }
-
-        protected Document getRootSource() {
-            return rootSource;
         }
 
         protected DocumentManager getDocumentManager() {
@@ -492,5 +483,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             getDocumentManager().deleteAllLanguageVersions(document);
         }
 
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentManager#delete(org.apache.lenya.cms.publication.util.DocumentSet)
+     */
+    public void delete(DocumentSet documents) throws PublicationException {
+        OrderedDocumentSet set = new OrderedDocumentSet(documents.getDocuments());
+        DocumentVisitor visitor = new DeleteVisitor(this);
+        set.visitDescending(visitor);
     }
 }

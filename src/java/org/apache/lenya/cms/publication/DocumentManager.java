@@ -109,7 +109,7 @@ public interface DocumentManager {
      * @return A document.
      * @throws DocumentBuildException if the new document could not be built.
      */
-    public Document getAvailableDocument(Document document) throws DocumentBuildException;
+    Document getAvailableDocument(Document document) throws DocumentBuildException;
 
     /**
      * Moves a document to another location, incl. all requiring documents. If a
@@ -118,7 +118,7 @@ public interface DocumentManager {
      * @param target The target document.
      * @throws PublicationException if an error occurs.
      */
-    public void moveAll(Document source, Document target) throws PublicationException;
+    void moveAll(Document source, Document target) throws PublicationException;
 
     /**
      * Moves all language versions of a document to another location.
@@ -126,7 +126,7 @@ public interface DocumentManager {
      * @param target The target.
      * @throws PublicationException if the documents could not be moved.
      */
-    public void moveAllLanguageVersions(Document source, Document target)
+    void moveAllLanguageVersions(Document source, Document target)
             throws PublicationException;
 
     /**
@@ -136,7 +136,7 @@ public interface DocumentManager {
      * @param target The target document.
      * @throws PublicationException if an error occurs.
      */
-    public void copyAll(Document source, Document target) throws PublicationException;
+    void copyAll(Document source, Document target) throws PublicationException;
 
     /**
      * Copies all language versions of a document to another location.
@@ -144,7 +144,7 @@ public interface DocumentManager {
      * @param target The target.
      * @throws PublicationException if the documents could not be copied.
      */
-    public void copyAllLanguageVersions(Document source, Document target)
+    void copyAllLanguageVersions(Document source, Document target)
             throws PublicationException;
     
     /**
@@ -153,13 +153,20 @@ public interface DocumentManager {
      * @param document The document.
      * @throws PublicationException if an error occurs.
      */
-    public void deleteAll(Document document) throws PublicationException;
+    void deleteAll(Document document) throws PublicationException;
     
     /**
      * Deletes all language versions of a document.
      * @param document The document.
      * @throws PublicationException if the documents could not be copied.
      */
-    public void deleteAllLanguageVersions(Document document) throws PublicationException;
+    void deleteAllLanguageVersions(Document document) throws PublicationException;
+    
+    /**
+     * Deletes a set of documents.
+     * @param documents The documents.
+     * @throws PublicationException if an error occurs.
+     */
+    void delete(DocumentSet documents) throws PublicationException;
 
 }
