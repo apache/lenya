@@ -50,7 +50,7 @@ src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
 <p>URL:</p>
 <source>
 <![CDATA[
-/lenya/$PUB_ID/osearch-$AREA/lucene
+/lenya/$PUB_ID/search-$AREA/lucene
 ]]>
 </source>
 </section>
