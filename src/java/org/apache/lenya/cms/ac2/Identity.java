@@ -59,9 +59,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.lenya.cms.ac.User;
+
 
 /**
  * @author andreas
+ * @author Michael Wechner
  *
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
@@ -118,4 +121,17 @@ public class Identity implements Identifiable {
 
         return string;
     }
+
+    /**
+     * Get user from identity
+     */
+     public User getUser() {
+         User user = null;
+         Identifiable[] identifiables = getIdentifiables();
+         for (int i = 0; i < identifiables.length; i++) {
+             user = (User) identifiables[i];
+             if (user != null) return user;
+         }
+     return null;
+     }
 }
