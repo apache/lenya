@@ -41,7 +41,7 @@
 	<section>
 		<title>Preparing a Patch</title>
 			<ul>
-				<li>See the Cocoon documentation <link href="site:cocoon.howto.patch">How to Prepare a Patch</link> and <link href="site:cocoon.howto.bugzilla">How to Contribute a Patch via Bugzilla</link>.</li>
+				<li>For general procedures please see the Cocoon documentation <link href="site:cocoon.howto.patch">How to Prepare a Patch</link> and <link href="site:cocoon.howto.bugzilla">How to Contribute a Patch via Bugzilla</link>. Note that the actual command to create the patch is <code>svn diff</code> (instead of <code>cvs diff -u</code> as suggested in said documents).</li>
 				<li>Make sure you follow the <link href="site:coding">coding guidelines</link>.</li>
 				<li>Test your patch by applying it to a fresh checkout of Lenya. In Eclipse for instance, this is done by choosing "apply patch" in the team perspective.</li>
 				<li>Follow this link to enter your patch in Bugzilla: <link href="site:issue.add">add a new patch</link>.</li>
