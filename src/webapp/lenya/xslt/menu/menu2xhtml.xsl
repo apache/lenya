@@ -190,13 +190,19 @@
   
   <!-- match blocks with not area='false' -->
   <xsl:template match="menu:block">
-		<xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
+    <xsl:apply-templates select="menu:title"/>
+    <xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
 		
-		<xsl:if test="position() != last()">
-			<div class="lenya-menubar-separator">
-				<img src="{$image-prefix}/pixel.gif" height="1" alt="" />
-			</div>
-		</xsl:if>
+    <xsl:if test="position() != last()">
+      <div class="lenya-menubar-separator">
+        <img src="{$image-prefix}/pixel.gif" height="1" alt="" />
+      </div>
+    </xsl:if>
+  </xsl:template>
+  
+  
+  <xsl:template match="menu:title">
+    <span class="mI"><strong><xsl:apply-templates/></strong></span>
   </xsl:template>
   	
   <!-- match items with not area='false' -->
