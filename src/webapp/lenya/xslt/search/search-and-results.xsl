@@ -96,6 +96,8 @@
         <font size="-1">Excerpt: <xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
         <br />
         <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="uri"/></a></font>
+        <br />
+        <font size="-1">Mime-Type: <xsl:apply-templates select="mime-type"/><xsl:apply-templates select="no-mime-type"/></font>
       </td>
     </xsl:when>
     <xsl:otherwise>
@@ -119,6 +121,14 @@ No Title!
 
 <xsl:template match="no-excerpt">
 No excerpt available: <xsl:value-of select="file/@src"/>
+</xsl:template>
+
+<xsl:template match="mime-type">
+<xsl:value-of select="."/>
+</xsl:template>
+
+<xsl:template match="no-mime-type">
+No mime-type!
 </xsl:template>
 
 <xsl:template match="exception">

@@ -24,25 +24,44 @@ public class CrawlerEnvironment implements Configurable{
  *
  */
   public static void main(String[] args){
-    if(args.length != 1){
-      System.err.println("Usage: org.wyona.search.crawler.CrawlerEnvironment crawler.xconf");
+    if(args.length == 0){
+      System.err.println("Usage: org.wyona.search.crawler.CrawlerEnvironment crawler.xconf [-name <name>]");
       return;
       }
     CrawlerEnvironment ce=new CrawlerEnvironment(args[0]);
     String parameter;
-    parameter=ce.getBaseURL();
-    System.out.println(parameter);
 
-    parameter=ce.getScopeURL();
-    System.out.println(parameter);
+    String name=null;
+    for(int i=0;i<args.length;i++){
+      if(args[i].equals("-name")){
+        if(i+1 < args.length) name=args[i+1];
+        }
+      }
 
-    parameter=ce.getURIList();
-    System.out.println(parameter);
-    System.out.println(ce.resolvePath(parameter));
+    if(name != null){
+      if(name.equals("htdocs-dump-dir")){
+        parameter=ce.getHTDocsDumpDir();
+        System.out.println(ce.resolvePath(parameter));
+        }
+      else{
+        System.out.println("No such element: "+name);
+        }
+      }    
+    else{
+      parameter=ce.getBaseURL();
+      System.out.println(parameter);
 
-    parameter=ce.getHTDocsDumpDir();
-    System.out.println(parameter);
-    System.out.println(ce.resolvePath(parameter));
+      parameter=ce.getScopeURL();
+      System.out.println(parameter);
+
+      parameter=ce.getURIList();
+      System.out.println(parameter);
+      System.out.println(ce.resolvePath(parameter));
+
+      parameter=ce.getHTDocsDumpDir();
+      System.out.println(parameter);
+      System.out.println(ce.resolvePath(parameter));
+      }
     }
 /**
  *

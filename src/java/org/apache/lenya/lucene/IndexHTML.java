@@ -69,6 +69,8 @@ class IndexHTML {
   private static IndexWriter writer;		  // new index being built
   private static TermEnum uidIter;		  // document id iterator
 
+  private static int numberOfAddedDocs=0;
+
   public static void main(String[] argv) {
     try {
       String index = "index";
@@ -195,19 +197,25 @@ class IndexHTML {
 	  }
 	  uidIter.next();
 	}
-	if (uidIter.term() != null && uidIter.term().field() == "uid" &&
-	    uidIter.term().text().compareTo(uid) == 0) {
+	if(uidIter.term() != null && uidIter.term().field() == "uid" &&
+	  uidIter.term().text().compareTo(uid) == 0) {
 	  uidIter.next();			  // keep matching docs
-	} else if (!deleting) {			  // add new docs
+	  } 
+        else if (!deleting) {			  // add new docs
 	  Document doc = HTMLDocument.Document(file,root);
-	  System.out.println("IndexHTML.indexDocs(File,File): adding " + doc.get("url"));
-	writer.addDocument(doc);
-	}
-      } else {					  // creating a new index
-	Document doc = HTMLDocument.Document(file,root);
-	System.out.println("IndexHTML.indexDocs(File,File): adding " + doc.get("url"));
-	writer.addDocument(doc);		  // add docs unconditionally
+	  System.out.println("IndexHTML.indexDocs(File,File): adding (!deleting==true) " + doc.get("url"));
+	  writer.addDocument(doc);
+          numberOfAddedDocs++;
+	  System.out.println("IndexHTML.indexDocs(File,File): added ("+numberOfAddedDocs+")!");
+	  }
+        } 
+      else{					  // creating a new index
+        Document doc = HTMLDocument.Document(file,root);
+        System.out.println("IndexHTML.indexDocs(File,File): adding (unconditionally) " + doc.get("url"));
+        writer.addDocument(doc);		  // add docs unconditionally
+        numberOfAddedDocs++;
+	System.out.println("IndexHTML.indexDocs(File,File): added ("+numberOfAddedDocs+")!");
+        }
       }
-    }
   }
 }

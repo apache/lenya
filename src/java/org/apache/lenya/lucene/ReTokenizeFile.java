@@ -58,6 +58,10 @@ public class ReTokenizeFile{
  *
  */
   public String getExcerpt(File file,String[] words) throws Exception{
+    if(file.getName().substring(file.getName().length()-4).equals(".pdf")){
+      file=new File(file.getAbsolutePath()+".txt");
+      }
+
     System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Get excerpt from "+file);
 
     java.io.Reader reader=new HTMLParser(file).getReader();

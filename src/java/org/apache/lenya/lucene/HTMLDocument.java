@@ -86,15 +86,42 @@ public class HTMLDocument {
  *
  */
   public static Document Document(File f,File htdocsDumpDir)
-       throws IOException, InterruptedException  {
+    throws IOException, InterruptedException  {
+
+
     // make a new, empty document
     Document doc = new Document();
 
+
+
     // Add the url as a field named "url".  Use an UnIndexed field, so
     // that the url is just stored with the document, but is not searchable.
+    //String requestURI=f.getPath().replace(dirSep,'/');
     String requestURI=f.getPath().replace(dirSep,'/').substring(htdocsDumpDir.getPath().length());
+    if(requestURI.substring(requestURI.length()-8).equals(".pdf.txt")){
+      requestURI=requestURI.substring(0,requestURI.length()-4); // Remove .txt extension from PDF text file
+      System.out.println(requestURI);
+      }
     doc.add(Field.UnIndexed("url", requestURI));
-    //doc.add(Field.UnIndexed("url", f.getPath().replace(dirSep, '/')));
+
+
+    // Add the mime-type as a field named "mime-type"
+    if(requestURI.substring(requestURI.length()-5).equals(".html")){
+      doc.add(Field.UnIndexed("mime-type","text/html"));
+      }
+    else if(requestURI.substring(requestURI.length()-4).equals(".txt")){
+      doc.add(Field.UnIndexed("mime-type","text/plain"));
+      }
+    else if(requestURI.substring(requestURI.length()-4).equals(".pdf")){
+      doc.add(Field.UnIndexed("mime-type","application/pdf"));
+      }
+    else{
+      doc.add(Field.UnIndexed("mime-type","null"));
+      }
+
+
+
+
 
     // Add the last modified date of the file a field named "modified".  Use a
     // Keyword field, so that it's searchable, but so that no attempt is made
