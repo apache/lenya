@@ -125,9 +125,11 @@ The schema of the CMS/F matrix is currently based on <a href="http://cvs.oscom.o
 <a class="nnbr" target="_blank" href="http://www.content-wire.com">Content-Wire</a>
 </div>
 
+<!--
 <div class="nnbe" style="padding-left: 10px;">
 <a class="nnbr" target="_blank" href="http://www.clueful.com.au/cgi-bin/cmsdirectory/browse/Products%3aFree%20systems">Clueful Consulting</a>
 </div>
+-->
 
 <div class="nnbe" style="padding-left: 10px;">
 <a class="nnbr" target="_blank" href="http://www.steptwo.com.au/cm/vendors/list/index.html">Step Two</a>
