@@ -18,6 +18,12 @@
 		<xsl:apply-templates select="/wyona/files"/>
 	</xsl:template>
 	
+	<!-- Replace Page title -->
+<xsl:template match="head/title">
+   <title>IT-<xsl:value-of select="$files"/></title>
+</xsl:template>
+
+	
 	<xsl:template match="files">
 			<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
 			<table border="0" cellpadding="2" cellspacing="0" width="440">

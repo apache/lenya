@@ -2,8 +2,6 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:param name="files"/>
-
-	<xsl:include href="../../../../../../stylesheets/cms/Page/root-dhtml.xsl"/>
 	
 	<xsl:template match="wyona/cmsbody">
 		<xsl:apply-templates/>
@@ -18,7 +16,12 @@
 		<!-- Process the headlines here... -->
 		<xsl:apply-templates select="/wyona/files"/>
 	</xsl:template>
-	
+
+<!-- Replace Page title -->
+<xsl:template match="head/title">
+   <title>IT-<xsl:value-of select="$files"/></title>
+</xsl:template>
+
 	<xsl:template match="files">
 			<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
 			<table border="0" cellpadding="2" cellspacing="0" width="440">
