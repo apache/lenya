@@ -1,5 +1,5 @@
 /*
-$Id: TwoNodesTask.java,v 1.3 2003/07/09 12:02:19 egli Exp $
+$Id: TwoNodesTask.java,v 1.4 2003/07/25 16:38:53 edith Exp $
 <License>
 
  ============================================================================
@@ -62,11 +62,16 @@ import org.apache.tools.ant.Task;
 
 
 /**
- * Abstract base class for Ant tasks, which manipulates two nodes of the same tree.
+ * Abstract base class for Ant tasks, which manipulates two nodes.
+ * The first node corresponds to the document with id firstdocumentid and
+ * is in the tree corresponding to the path absolutefirsttreepath.
+ * The 2nd node corresponds to the document with id secdocumentid and
+ * is in the tree corresponding to the path absolutesectreepath.
  * @author edith
  */
 public abstract class TwoNodesTask extends Task {
-    private String absolutetreepath;
+    private String absolutefirsttreepath;
+	private String absolutesectreepath;
     private String firstdocumentid;
     private String secdocumentid;
 
@@ -78,20 +83,36 @@ public abstract class TwoNodesTask extends Task {
     }
 
     /**
-     * @return absolutetreepath, the absolute path of the tree
+     * @return absolutefirsttreepath, the absolute path of the tree of the first node
      */
-    protected String getAbsolutetreepath() {
-        return absolutetreepath;
+    protected String getAbsolutefirsttreepath() {
+        return absolutefirsttreepath;
     }
 
     /**
-     * Set the value of the absolute path of the tree
+     * Set the value of the absolute path of the tree of the first node
      * 
-     * @param string the absolute path of the tree
+     * @param string The absolute path of the tree of the first node.
      */
-    public void setAbsolutetreepath(String string) {
-        absolutetreepath = string;
+    public void setAbsolutefirsttreepath(String string) {
+        absolutefirsttreepath = string;
     }
+
+	/**
+     * @return absolutesectreepath, the absolute path of the tree of the 2nd node
+	 */
+	public String getAbsolutesectreepath() {
+		return absolutesectreepath;
+	}
+
+	/**
+     * Set the value of the absolute path of the tree of the 2nd node
+     * 
+     * @param string The absolute path of the tree of the 2nd node.
+	 */
+	public void setAbsolutesectreepath(String string) {
+		absolutesectreepath = string;
+	}
 
     /**
      * return the document-id corresponding to the first node
@@ -129,16 +150,17 @@ public abstract class TwoNodesTask extends Task {
     }
 
     /**
-     * Copy a node of a tree and insert this in the same tree.
-     * 
+     * To be overriden.
+     * Manipulation of two nodes . 
      * @param firstdocumentid : id of the copied document
      * @param secdocumentid : id of the new document
-     * @param absolutetreepath : absolute path of the tree
+     * @param absolutefirsttreepath : absolute path of the tree of the first node
+     * @param absolutesectreepath : absolute path of the tree of the 2nd node
      * 
      * @throws SiteTreeException if an error occurs
      */
     public abstract void manipulateTree(String firstdocumentid, String secdocumentid,
-        String absolutetreepath)
+        String absolutefirsttreepath, String absolutesectreepath)
         throws SiteTreeException;
 
     /** (non-Javadoc)
@@ -148,8 +170,9 @@ public abstract class TwoNodesTask extends Task {
         try {
             log("document-id corresponding to the first node: " + getFirstdocumentid());
             log("document-id corresponding to the second node: " + getSecdocumentid());
-            log("Absolute Tree Path: " + getAbsolutetreepath());
-            manipulateTree(getFirstdocumentid(), getSecdocumentid(), getAbsolutetreepath());
+            log("Absolute Tree Path of the first node: " + getAbsolutefirsttreepath());
+			log("Absolute Tree Path of the second node: " + getAbsolutesectreepath());
+            manipulateTree(getFirstdocumentid(), getSecdocumentid(), getAbsolutefirsttreepath(), getAbsolutesectreepath());
         } catch (Exception e) {
             throw new BuildException(e);
         }

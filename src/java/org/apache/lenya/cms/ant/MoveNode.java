@@ -1,5 +1,5 @@
 /*
-$Id: MoveNode.java,v 1.3 2003/07/08 16:12:01 egli Exp $
+$Id: MoveNode.java,v 1.4 2003/07/25 16:38:53 edith Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,16 @@ $Id: MoveNode.java,v 1.3 2003/07/08 16:12:01 egli Exp $
 */
 package org.apache.lenya.cms.ant;
 
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -73,34 +80,63 @@ public class MoveNode extends TwoNodesTask {
         super();
     }
 
-    /**
-     * Move a node in a tree.
-     * 
-     * @param firstdocumentid : id of the moved document
-     * @param secdocumentid : id of the new document
-     * @param absolutetreepath : absolute path of the tree
-     * 
-     * @throws SiteTreeException if the manipulation failed
-     */
-    public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutetreepath)
-        throws SiteTreeException {
-        DefaultSiteTree tree = null;
+	/**
+	 * Move a node in a tree.
+	 * 
+     * @param firstdocumentid The document-id of the document correponding to the source node.
+     * @param secdocumentid  The ment-id of the document corresponding to the destination node.
+     * @param absolutefirsttreepath The absolute path of the tree of the src node.
+     * @param absolutesectreepath The absolute path of the tree of the destination node.
+     * @throws SiteTreeException if there are problems with creating or saving the site tree.  
+	 */
+	public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutefirsttreepath, String absolutesectreepath)
+		throws SiteTreeException {
+		DefaultSiteTree firsttree = null;
+		DefaultSiteTree sectree = null;
 
-        try {
-            tree = new DefaultSiteTree(absolutetreepath);
+		try {
+			firsttree = new DefaultSiteTree(absolutefirsttreepath);
+			if (absolutefirsttreepath.equals(absolutesectreepath)) {
+				sectree = firsttree;
+			} else {
+				sectree = new DefaultSiteTree(absolutesectreepath);
+			}
 
-            SiteTreeNode node = tree.removeNode(firstdocumentid);
+			String parentid = "";
+			StringTokenizer st = new StringTokenizer(secdocumentid, "/");
+			int length = st.countTokens();
 
-            if (node != null) {
-                tree.addNode(secdocumentid, node.getLabels(), node.getHref(), node.getSuffix(),
-                    node.hasLink());
-            } else {
-                throw new SiteTreeException("Node " + node + " couldn't be removed");
-            }
+			for (int i = 0; i < (length - 1); i++) {
+				parentid = parentid + "/" + st.nextToken();
+			}
+			String newid = st.nextToken();
+			
+			SiteTreeNode node = firsttree.removeNode(firstdocumentid);
+			if (node != null){
+				SiteTreeNode parentNode = sectree.getNode(parentid);
+				if (parentNode != null) {
+					sectree.importSubtree(parentNode, node, newid);
+				} else {
+					throw new SiteTreeException("The parent node " + parentNode + " where the removed node shall be inserted not found");
+				}
+			} else {
+				throw new SiteTreeException("Node " + node + " couldn't be removed");
+			}
 
-            tree.save();
-        } catch (Exception e) {
-            throw new SiteTreeException(e);
-        }
-    }
+			if (absolutefirsttreepath.equals(absolutesectreepath)) {
+				firsttree.save();
+			} else {
+				firsttree.save();
+				sectree.save();
+			}
+		} catch (ParserConfigurationException e) {
+			throw new SiteTreeException("Exception when creating the site tree", e);
+		} catch (SAXException e) {
+			throw new SiteTreeException("Exception when creating the site tree", e);
+		} catch (IOException e) {
+			throw new SiteTreeException("Exception when saving the tree file", e);
+		} catch (TransformerException e) {
+			throw new SiteTreeException("Exception when saving the tree file", e);
+		}
+	}
 }

@@ -1,5 +1,5 @@
 /*
-$Id: InsertCopyNode.java,v 1.3 2003/07/09 12:00:39 egli Exp $
+$Id: InsertCopyNode.java,v 1.4 2003/07/25 16:38:53 edith Exp $
 <License>
 
  ============================================================================
@@ -68,7 +68,7 @@ import javax.xml.transform.TransformerException;
 
 
 /**
- * Ant task that copies a node of a tree and inserts it in the same tree
+ * Ant task that copies a node of a tree and inserts it in  tree
  * @author edith
  *
  **/
@@ -80,30 +80,71 @@ public class InsertCopyNode extends TwoNodesTask {
         super();
     }
 
+	/**
+	 * copies a node corresponding to a document with id firstdocumentid
+	 * and inserts it in the same tree like a node corresponding to a document with id secdocumentid.
+	 * @param firstdocumentid The document-id of the document correponding to the source node.
+	 * @param secdocumentid  The ment-id of the document corresponding to the destination node.
+	 * @param absolutetreepath The absolute path of the tree of the node.
+	 * @throws SiteTreeException if there are problems with creating or saving the site tree.  
+	 */
+	private void manipulateTree(String firstdocumentid, String secdocumentid, String absolutetreepath) throws SiteTreeException {
+		DefaultSiteTree tree = null;
+
+		try {
+			tree = new DefaultSiteTree(absolutetreepath);
+
+			SiteTreeNode node = tree.getNode(firstdocumentid);
+
+			if (node != null) {
+				tree.addNode(secdocumentid, node.getLabels(), node.getHref(), node.getSuffix(),
+					node.hasLink());
+			} else {
+				throw new SiteTreeException("Node " + node + " couldn't be found");
+			}
+
+				tree.save();
+			} catch (ParserConfigurationException e) {
+				throw new SiteTreeException("Exception when creating the site tree", e);
+			} catch (SAXException e) {
+				throw new SiteTreeException("Exception when creating the site tree", e);
+			} catch (IOException e) {
+				throw new SiteTreeException("Exception when saving the tree file", e);
+			} catch (TransformerException e) {
+				throw new SiteTreeException("Exception when saving the tree file", e);
+			}
+	}
     /**
-     * copies a node of a tree and inserts it in the same tree
-     * @param firstdocumentid : document-id of the copied document
-     * @param secdocumentid : document-id of the new document
-     * @param absolutetreepath : absolute path of the tree
-     *
+     * copies a node corresponding to a document with id firstdocumentid
+     * and inserts it like a node orresponding to a document with id secdocumentid.
+     * @param firstdocumentid The document-id of the document correponding to the source node.
+     * @param secdocumentid  The ment-id of the document corresponding to the destination node.
+     * @param absolutefirsttreepath The absolute path of the tree of the src node.
+     * @param absolutesectreepath The absolute path of the tree of the destination node.
      * @throws SiteTreeException if there are problems with creating or saving the site tree.  
      */
-    public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutetreepath) throws SiteTreeException {
-        DefaultSiteTree tree = null;
+    public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutefirsttreepath, String absolutesectreepath) throws SiteTreeException {
+        if (absolutefirsttreepath.equals(absolutesectreepath)) {
+			manipulateTree(firstdocumentid, secdocumentid, absolutefirsttreepath);
+            return;
+        }
+        DefaultSiteTree firsttree = null;
+		DefaultSiteTree sectree = null;
 
-            try {
-                tree = new DefaultSiteTree(absolutetreepath);
+        try {
+            firsttree = new DefaultSiteTree(absolutefirsttreepath);
+			sectree = new DefaultSiteTree(absolutesectreepath);
 
-            SiteTreeNode node = tree.getNode(firstdocumentid);
+            SiteTreeNode node = firsttree.getNode(firstdocumentid);
 
             if (node != null) {
-                tree.addNode(secdocumentid, node.getLabels(), node.getHref(), node.getSuffix(),
+                sectree.addNode(secdocumentid, node.getLabels(), node.getHref(), node.getSuffix(),
                     node.hasLink());
             } else {
                 throw new SiteTreeException("Node " + node + " couldn't be found");
             }
 
-                tree.save();
+                sectree.save();
 			} catch (ParserConfigurationException e) {
 				throw new SiteTreeException("Exception when creating the site tree", e);
 			} catch (SAXException e) {
