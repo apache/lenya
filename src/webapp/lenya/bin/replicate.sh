@@ -30,6 +30,18 @@ RDOCS_2_1=/usr/local/apache/htdocs_oscom
 RU_2_2=michi
 RH_2_2=cvs.wyona.org
 RDOCS_2_2=/usr/local/apache/htdocs_oscom
+
+
+
+EXPORT_DIR_3=$PUBLICATION_DIR/forum/resources/publication/export
+PENDING_DIR_3=$EXPORT_DIR_3/pending/127.0.0.1/wyona-cms/forum
+REPLICATION_DIR_3=$EXPORT_DIR_3/replication
+RU_3_1=michi
+RH_3_1=cvs.wyona.org
+RDOCS_3_1=/usr/local/apache/htdocs_oscom/news
+RU_3_2=michi
+RH_3_2=cvs.wyona.org
+RDOCS_3_2=/usr/local/apache/htdocs_oscom/news
 #
 #
 #
@@ -142,6 +154,55 @@ if [ -d $REPLICATION_DIR_2 ];then
   rm -r $TEMP_DIR
 else
   echo "FATAL: No such directory: $REPLICATION_DIR_2"
+  exit 0
+fi
+
+
+
+#### PUBLICATION 3
+
+mkdir $REPLICATION_DIR_3
+
+if [ -d $REPLICATION_DIR_3 ];then
+  echo "DEBUG: Replication Directory: $REPLICATION_DIR_3"
+
+  PROCESS_ID=$$
+  DATUM=`date +%Y.%m.%d_%H.%M.%S`
+  TEMP_ID=$DATUM\_$PROCESS_ID
+
+  TEMP_DIR=$REPLICATION_DIR_3/temp\_$TEMP_ID
+  mkdir -p $TEMP_DIR
+  echo "DEBUG: Temporary Directory: $TEMP_DIR"
+
+  if [ -d $PENDING_DIR_3 ];then
+    echo "DEBUG: Pending Directory: $PENDING_DIR_3"
+
+    if [ -d $PENDING_DIR_3 ];then
+      mv $PENDING_DIR_3/* $TEMP_DIR/.
+    fi
+
+
+#    $JAVA -classpath $CLASSPATH org.wyona.xps.publish.Replicator $TEMP_DIR
+
+
+
+
+    if [ -d $TEMP_DIR ];then
+##      cp -r $TEMP_DIR/* $RDOCS_3_1/.
+      $SCP -r $TEMP_DIR/* $RU_3_1@$RH_3_1:$RDOCS_3_1/.
+    fi
+    if [ -d $TEMP_DIR ];then
+##      cp -r $TEMP_DIR/* $RDOCS_3_2/.
+      $SCP -r $TEMP_DIR/* $RU_3_2@$RH_2_2:$RDOCS_3_2/.
+    fi
+
+
+  else
+    echo "WARN: No such directory: $PENDING_DIR_3"
+  fi
+  rm -r $TEMP_DIR
+else
+  echo "FATAL: No such directory: $REPLICATION_DIR_3"
   exit 0
 fi
 
