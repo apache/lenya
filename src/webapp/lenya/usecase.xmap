@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.241 2004/08/19 20:38:08 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.242 2004/08/19 20:52:22 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -379,7 +379,7 @@
           <map:match pattern="imagedrawerxsl" type="step">
             <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/imagedrawer.xsl}" 
               type="jx">
-              <map:parameter name="stylesheetUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/imagedrawer/librarydrawer.xsl"/>
+              <map:parameter name="stylesheetUrl" value="{page-envelope:context-prefix}/kupu/common/kupudrawers/librarydrawer.xsl"/>
             </map:generate>  
             <map:serialize type="xml"/>
           </map:match>
