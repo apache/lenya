@@ -22,6 +22,9 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
+import org.apache.avalon.framework.logger.Log4JLogger;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -30,6 +33,7 @@ import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.task.AntTask;
+import org.apache.log4j.Category;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
@@ -85,7 +89,8 @@ public abstract class PublicationTask extends Task {
     protected DocumentIdentityMap getIdentityMap() {
         if (this.identityMap == null) {
             try {
-                Publication publication = PublicationFactory.getPublication(getPublicationId(),
+                PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+                Publication publication = factory.getPublication(getPublicationId(),
                         getServletContext().getCanonicalPath());
                 this.identityMap = new DocumentIdentityMap(publication);
             } catch (IOException e) {

@@ -67,7 +67,8 @@ public class LanguageExistsAction extends AbstractAction {
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
 
-        Publication pub = PublicationFactory.getPublication(objectModel);
+        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+        Publication pub = factory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(pub);
         PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
                 objectModel);

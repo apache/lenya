@@ -49,7 +49,8 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
         try {
             PublicationTemplateManager templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
-            Publication publication = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication publication = factory.getPublication(objectModel);
             templateManager.setup(publication);
 
             ExistingSourceResolver resolver = new ExistingSourceResolver();

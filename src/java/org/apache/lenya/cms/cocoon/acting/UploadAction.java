@@ -100,7 +100,8 @@ public class UploadAction extends AbstractConfigurableAction {
 
         Map results = new HashMap();
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Publication pub = PublicationFactory.getPublication(objectModel);
+        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+        Publication pub = factory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(pub);
         pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         document = pageEnvelope.getDocument();

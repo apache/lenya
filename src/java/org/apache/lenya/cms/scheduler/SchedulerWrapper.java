@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -217,7 +218,8 @@ public class SchedulerWrapper {
      * @throws PublicationException when the publication does not exist.
      */
     protected Publication getPublication(String jobGroup) throws PublicationException {
-        return PublicationFactory.getPublication(jobGroup, getServletContextPath());
+        PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+        return factory.getPublication(jobGroup, getServletContextPath());
     }
 
     /**

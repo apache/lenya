@@ -77,7 +77,8 @@ public class DocumentUsecase extends WorkflowUsecase {
 
     /**
      * Returns the document to be redirected to after the usecase has been
-     * completed.
+     * completed. If the parameter <code>success</code> is false, the source
+     * document is returned (override this method to change this behaviour).
      * @param success If the usecase was successfully completed.
      * @return A document.
      */
@@ -130,6 +131,15 @@ public class DocumentUsecase extends WorkflowUsecase {
      */
     protected void triggerWorkflow(String event) {
         triggerWorkflow(event, getSourceDocument());
+    }
+    
+    /**
+     * Checks if an event can be executed on the source document.
+     * @param event The event.
+     * @return A boolean value.
+     */
+    protected boolean canExecuteWorkflow(String event) {
+        return canExecuteWorkflow(event, getSourceDocument());
     }
 
     /**

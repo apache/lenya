@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -72,10 +73,10 @@ public abstract class PublicationTask extends AbstractTask {
         if (this.map == null) {
             try {
                 String publicationId = getParameters().getParameter(Task.PARAMETER_PUBLICATION_ID);
-                String servletContextPath = getParameters().getParameter(
-                        Task.PARAMETER_SERVLET_CONTEXT);
-                Publication publication = PublicationFactory.getPublication(publicationId,
-                        servletContextPath);
+                String servletContextPath = getParameters()
+                        .getParameter(Task.PARAMETER_SERVLET_CONTEXT);
+                PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+                Publication publication = factory.getPublication(publicationId, servletContextPath);
                 this.map = new DocumentIdentityMap(publication);
             } catch (Exception e) {
                 throw new ExecutionException(e);
@@ -225,13 +226,14 @@ public abstract class PublicationTask extends AbstractTask {
     }
 
     /**
-     * Returns the executable event for the provided {@link #PARAMETER_WORKFLOW_EVENT}parameter.
+     * Returns the executable event for the provided
+     * {@link #PARAMETER_WORKFLOW_EVENT}parameter.
      * @param instance The workflow instance.
      * @param situation The situation.
      * @return An event.
      * @throws WorkflowException when something went wrong.
-     * @throws ParameterException when the {@link #PARAMETER_WORKFLOW_EVENT}parameter could not be
-     *             resolved.
+     * @throws ParameterException when the {@link #PARAMETER_WORKFLOW_EVENT}
+     *             parameter could not be resolved.
      */
     protected Event getExecutableEvent(SynchronizedWorkflowInstances instance, Situation situation)
             throws WorkflowException, ParameterException {

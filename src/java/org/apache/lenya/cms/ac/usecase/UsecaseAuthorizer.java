@@ -93,7 +93,8 @@ public class UsecaseAuthorizer
                 if (getConfigurationURI() != null) {
                     configurationUri = getConfigurationURI();
                 } else {
-                    Publication publication = PublicationFactory.getPublication(resolver, request);
+                    PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+                    Publication publication = factory.getPublication(resolver, request);
                     configurationUri = getConfigurationURI(publication);
                 }
 

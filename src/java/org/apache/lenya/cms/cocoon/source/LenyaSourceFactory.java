@@ -101,7 +101,8 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
 
                 Map objectModel = ContextHelper.getObjectModel(this.context);
                 try {
-                    Publication pub = PublicationFactory.getPublication(objectModel);
+                    PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+                    Publication pub = factory.getPublication(objectModel);
                     DocumentIdentityMap map = new DocumentIdentityMap(pub);
                     PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
 

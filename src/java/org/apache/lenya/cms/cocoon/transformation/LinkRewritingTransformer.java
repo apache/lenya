@@ -93,7 +93,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         super.setup(resolver, objectModel, source, parameters);
 
         try {
-            Publication pub = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication pub = factory.getPublication(objectModel);
             this.identityMap = new DocumentIdentityMap(pub);
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
                     this.identityMap, objectModel);

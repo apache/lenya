@@ -68,7 +68,8 @@ public class RevisionControllerAction extends AbstractAction {
         }
 
         PageEnvelope envelope = null;
-        Publication publication = PublicationFactory.getPublication(objectModel);
+        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+        Publication publication = factory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
         Document document = null;
 

@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
@@ -150,8 +151,8 @@ public class LoadQuartzServlet extends HttpServlet {
     }
 
     /**
-     * This method sets a ShutdownHook to the system This traps the CTRL+C or kill signal and
-     * shutdows Correctly the system.
+     * This method sets a ShutdownHook to the system This traps the CTRL+C or
+     * kill signal and shutdows Correctly the system.
      * 
      * @throws Exception when something went wrong.
      */
@@ -239,13 +240,14 @@ public class LoadQuartzServlet extends HttpServlet {
                 getScheduler().deleteJob(jobId, publicationId);
             } else if (action.equals(DOCUMENT_DELETED)) {
 
-                Publication publication = PublicationFactory.getPublication(publicationId,
+                PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+                Publication publication = factory.getPublication(publicationId,
                         getServletContextDirectory().getAbsolutePath());
 
                 String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
                 DocumentIdentityMap map = new DocumentIdentityMap(publication);
-                org.apache.lenya.cms.publication.Document document = map.getFactory().getFromURL(
-                        documentUrl);
+                org.apache.lenya.cms.publication.Document document = map.getFactory()
+                        .getFromURL(documentUrl);
                 deleteDocumentJobs(document);
             }
 
@@ -300,7 +302,8 @@ public class LoadQuartzServlet extends HttpServlet {
      */
     public void deleteDocumentJobs(org.apache.lenya.cms.publication.Document document)
             throws DocumentBuildException, SchedulerException, PublicationException {
-        log.debug("Requested to delete jobs for document URL [" + document.getCanonicalWebappURL() + "]");
+        log.debug("Requested to delete jobs for document URL [" + document.getCanonicalWebappURL()
+                + "]");
         getScheduler().deleteJobs(document);
     }
 
@@ -382,7 +385,8 @@ public class LoadQuartzServlet extends HttpServlet {
     }
 
     /**
-     * Generates the request URI needed to delete the jobs for a certain document.
+     * Generates the request URI needed to delete the jobs for a certain
+     * document.
      * @param document The document.
      * @return A string.
      */

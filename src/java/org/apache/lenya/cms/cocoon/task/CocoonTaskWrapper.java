@@ -22,6 +22,7 @@ package org.apache.lenya.cms.cocoon.task;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -62,7 +63,8 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
 
 		Publication publication;
 		try {
-			publication = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+			publication = factory.getPublication(objectModel);
 		} catch (PublicationException e) {
 			throw new ExecutionException(e);
 		}

@@ -73,7 +73,8 @@ public class WorkflowInvokerAction extends AbstractAction {
             getLogger().debug("    Event:       [" + eventName + "]");
         }
 
-        Publication pub = PublicationFactory.getPublication(objectModel);
+        PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
+        Publication pub = pubFactory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(pub);
         Document document = map.getFactory().get(area, documentId, language);
 

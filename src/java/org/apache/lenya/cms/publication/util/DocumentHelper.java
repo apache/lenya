@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -55,7 +56,8 @@ public class DocumentHelper {
         this.objectModel = objectModel;
         Publication publication;
         try {
-            publication = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+            publication = factory.getPublication(objectModel);
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }

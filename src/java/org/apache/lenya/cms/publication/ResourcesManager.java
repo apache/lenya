@@ -29,30 +29,30 @@ import org.apache.cocoon.servlet.multipart.Part;
  */
 public interface ResourcesManager {
 
-    public static final String CONTENT_PREFIX = "content";
-    public static final String RESOURCES_PREFIX = "resources";
-    public static final String RESOURCES_META_SUFFIX = ".meta";
+    final String CONTENT_PREFIX = "content";
+    final String RESOURCES_PREFIX = "resources";
+    final String RESOURCES_META_SUFFIX = ".meta";
 
-    public static final String UPLOADASSET_PARAM_NAME = "properties.asset.data";
-    public static final String UPLOADASSET_PARAM_PREFIX = "properties.asset.";
+    final String UPLOADASSET_PARAM_NAME = "properties.asset.data";
+    final String UPLOADASSET_PARAM_PREFIX = "properties.asset.";
 
-    public static final String UPLOADASSET_RETURN_FILESIZE = "file-size";
-    public static final String UPLOADASSET_RETURN_MIMETYPE = "mime-type";
+    final String UPLOADASSET_RETURN_FILESIZE = "file-size";
+    final String UPLOADASSET_RETURN_MIMETYPE = "mime-type";
 
-    public static final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_.]+";
-    public static final String[] IMAGE_FILE_EXTENSIONS = {".jpg", ".png", ".bmp", ".gif", ".svg"};
+    final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_.]+";
+    final String[] IMAGE_FILE_EXTENSIONS = { ".jpg", ".png", ".bmp", ".gif", ".svg" };
 
     // optional parameters for meta data according to dublin core
-    public static final String[] DUBLIN_CORE_PARAMETERS = { "title", "creator", "subject",
-            "description", "publisher", "contributor", "date", "type", "format", "identifier",
-            "source", "language", "relation", "coverage", "rights" };
+    final String[] DUBLIN_CORE_PARAMETERS = { "title", "creator", "subject", "description",
+            "publisher", "contributor", "date", "type", "format", "identifier", "source",
+            "language", "relation", "coverage", "rights" };
 
     /**
      * Add a resource to the document.
      * @param part the part that contains the uploaded file
      * @param metadata the metadata for the resource
      */
-    public void addResource(Part part, Map metadata) throws Exception;
+    void addResource(Part part, Map metadata) throws Exception;
 
     /**
      * Get the path to the resources.
@@ -60,50 +60,59 @@ public interface ResourcesManager {
      * @return the path to the resources
      * @deprecated the resource manager should not expose storage details.
      */
-    public File getPath();
+    File getPath();
 
     /**
      * Returns the path of a resource relative to the context prefix.
      * @return The path of a resource relative to the context prefix.
      */
-    public String getResourceUrl(File resource);
-    
+    String getResourceUrl(File resource);
+
     /**
      * Get all resources for the associated document.
      * 
      * @return all resources of the associated document
      */
-    public File[] getResources();
+    File[] getResources();
 
     /**
      * Return all resources which are images.
      * @return All image resources.
      */
-    public File[] getImageResources();
-    
+    File[] getImageResources();
+
     /**
      * Get the meta data for all resources for the associated document.
      * 
-     * @return all meta data files for the resources for the associated document.
+     * @return all meta data files for the resources for the associated
+     *         document.
      */
-    public File[] getMetaFiles();
+    File[] getMetaFiles();
 
     /**
      * Returns a meta file for a given resource.
      * @param resource A resource the meta file should be returned for.
-     * @return A file containing meta information about a resource. 
-     * Returns null if no meta file was found.
+     * @return A file containing meta information about a resource. Returns null
+     *         if no meta file was found.
      * @throws IllegalArgumentException If resource is a meta file itself.
      */
-    public File getMetaFile(final File resource) throws IllegalArgumentException;
-    
+    File getMetaFile(final File resource) throws IllegalArgumentException;
+
     /**
      * Deletes all resources.
      */
-    public void deleteResources();
+    void deleteResources();
 
     /**
      * Gets the document this resource manager belongs to.
      */
-    public Document getDocument();
+    Document getDocument();
+
+    /**
+     * Copies the resources of a document to another document.
+     * @param destinationDocument The destination document.
+     * @throws Exception when something went wrong.
+     */
+    void copyResourcesTo(Document destinationDocument) throws Exception;
+
 }

@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.LogEnabled;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.site.SiteException;
@@ -33,7 +36,7 @@ import org.apache.lenya.cms.site.SiteManager;
 /**
  * A typical CMS document.
  */
-public class DefaultDocument implements Document {
+public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     private String id;
     private DublinCore dublincore;
@@ -41,8 +44,8 @@ public class DefaultDocument implements Document {
     private ResourcesManager resourcesManager;
 
     /**
-     * Creates a new instance of DefaultDocument. The language of the document is the default
-     * language of the publication.
+     * Creates a new instance of DefaultDocument. The language of the document
+     * is the default language of the publication.
      * @param map The identity map the document belongs to.
      * @param id The document ID (starting with a slash).
      * @param area The area.
@@ -59,10 +62,9 @@ public class DefaultDocument implements Document {
         this.identityMap = map;
 
         setArea(area);
-        setLanguage(identityMap.getPublication().getDefaultLanguage());
+        setLanguage(this.identityMap.getPublication().getDefaultLanguage());
 
         this.dublincore = new DublinCoreProxy(this);
-
     }
 
     /**
@@ -87,8 +89,6 @@ public class DefaultDocument implements Document {
         setArea(area);
 
         this.dublincore = new DublinCoreProxy(this);
-        this.resourcesManager = new DefaultResourcesManager(this);
-
     }
 
     /**
@@ -134,7 +134,9 @@ public class DefaultDocument implements Document {
      * @return A file object.
      */
     public File getFile() {
-        return getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(),
+        return getPublication().getPathMapper().getFile(getPublication(),
+                getArea(),
+                getId(),
                 getLanguage());
     }
 
@@ -211,7 +213,6 @@ public class DefaultDocument implements Document {
         return "/" + getPublication().getId() + "/" + Publication.INFO_AREA_PREFIX + getArea()
                 + getCanonicalDocumentURL();
     }
-
 
     /**
      * Sets the area.
@@ -333,6 +334,10 @@ public class DefaultDocument implements Document {
      * @see org.apache.lenya.cms.publication.Document#getResourcesManager()
      */
     public ResourcesManager getResourcesManager() {
+        if (this.resourcesManager == null) {
+            this.resourcesManager = new DefaultResourcesManager(this);
+            ContainerUtil.enableLogging(this.resourcesManager, getLogger());
+        }
         return this.resourcesManager;
     }
 

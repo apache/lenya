@@ -74,7 +74,7 @@ public class PolicyHelper {
      * @return A logger.
      */
     protected Logger getLogger() {
-        return logger;
+        return this.logger;
     }
 
     /**
@@ -89,22 +89,23 @@ public class PolicyHelper {
 
         this.manager = manager;
 
-        accessController = null;
-        selector = null;
-        resolver = null;
-        policyManager = null;
+        this.accessController = null;
+        this.selector = null;
+        this.resolver = null;
+        this.policyManager = null;
 
-        url = computeUrl(objectModel, area);
+        this.url = computeUrl(objectModel, area);
 
         try {
-            selector = (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE
+            this.selector = (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
-            resolver = (AccessControllerResolver) selector
+            this.resolver = (AccessControllerResolver) this.selector
                     .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
-            accessController = (DefaultAccessController) resolver.resolveAccessController(url);
+            this.accessController = (DefaultAccessController) this.resolver
+                    .resolveAccessController(this.url);
 
-            policyManager = (InheritingPolicyManager) accessController.getPolicyManager();
+            this.policyManager = (InheritingPolicyManager) this.accessController.getPolicyManager();
         } catch (Exception e) {
             throw new ProcessingException("Obtaining credentials failed: ", e);
         }
@@ -135,8 +136,8 @@ public class PolicyHelper {
     }
 
     /**
-     * Returns the credential wrappers for the parent URI of the URL belonging to the request of
-     * this object model.
+     * Returns the credential wrappers for the parent URI of the URL belonging
+     * to the request of this object model.
      * @return An array of CredentialWrappers.
      * @throws ProcessingException when something went wrong.
      */
@@ -146,8 +147,8 @@ public class PolicyHelper {
 
     /**
      * Returns the credentials of the policy of the selected URL.
-     * @param urlOnly If true, the URL policy credentials are returned. If false, the credentials of
-     *            all ancestor policies are returned.
+     * @param urlOnly If true, the URL policy credentials are returned. If
+     *            false, the credentials of all ancestor policies are returned.
      * @return An array of CredentialWrappers.
      * @throws ProcessingException when something went wrong.
      */
@@ -175,16 +176,18 @@ public class PolicyHelper {
     }
 
     /**
-     * Computes the webapp URL belonging to an object model with respect to the selected area.
+     * Computes the webapp URL belonging to an object model with respect to the
+     * selected area.
      * @param objectModel The Cocoon object model.
      * @param area The selected area.
      * @return A string.
      * @throws ProcessingException when something went wrong.
      */
-    private static String computeUrl(Map objectModel, String area) throws ProcessingException {
+    private String computeUrl(Map objectModel, String area) throws ProcessingException {
         PageEnvelope envelope;
         try {
-            Publication publication = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication publication = factory.getPublication(objectModel);
             DocumentIdentityMap map = new DocumentIdentityMap(publication);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         } catch (Exception e) {
@@ -197,8 +200,8 @@ public class PolicyHelper {
 
     /**
      * Returns the policies for a certain URL.
-     * @param onlyUrl If true, only the URL policies are returned. Otherwise, all ancestor policies
-     *            are returned.
+     * @param onlyUrl If true, only the URL policies are returned. Otherwise,
+     *            all ancestor policies are returned.
      * @return An array of DefaultPolicy objects.
      * @throws ProcessingException when something went wrong.
      */

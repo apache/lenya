@@ -113,7 +113,8 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         PageEnvelope envelope = null;
 
         try {
-            Publication pub = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication pub = factory.getPublication(objectModel);
             DocumentIdentityMap map = new DocumentIdentityMap(pub);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         } catch (Exception e) {

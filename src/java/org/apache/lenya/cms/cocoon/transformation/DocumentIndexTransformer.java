@@ -99,7 +99,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
         	parameterize(parameters);
 
             PageEnvelope envelope = null;
-            Publication pub = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication pub = factory.getPublication(objectModel);
             this.identityMap = new DocumentIdentityMap(pub);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
                     objectModel);

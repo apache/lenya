@@ -17,31 +17,20 @@
 
 package org.apache.lenya.cms.publication;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
+
 /**
  * Default document builder implementation.
  * 
  * @version $Id$
  */
-public class DefaultDocumentBuilder implements DocumentBuilder {
+public class DefaultDocumentBuilder extends AbstractLogEnabled implements DocumentBuilder {
     /**
      * Non-public constructor.
      */
-    protected DefaultDocumentBuilder() {
-    }
-
-    private static DefaultDocumentBuilder instance;
-
-    /**
-     * Returns the singleton instance.
-     * 
-     * @return A document builder.
-     */
-    public static DefaultDocumentBuilder getInstance() {
-        if (instance == null) {
-            instance = new DefaultDocumentBuilder();
-        }
-
-        return instance;
+    public DefaultDocumentBuilder() {
     }
 
     /**
@@ -75,6 +64,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         }
 
         DefaultDocument document = createDocument(map, info.getArea(), documentId, language);
+        ContainerUtil.enableLogging(document, getLogger());
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
 

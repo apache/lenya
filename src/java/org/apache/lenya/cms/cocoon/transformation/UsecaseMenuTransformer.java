@@ -115,7 +115,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         try {
             roles = PolicyAuthorizer.getRoles(request);
 
-            publication = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            publication = factory.getPublication(objectModel);
 
             serviceSelector =
                 (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");

@@ -126,7 +126,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             File servletContext = SourceUtil.getFile(source);
             getLogger().debug("    Webapp URL:      [" + url + "]");
             getLogger().debug("    Serlvet context: [" + servletContext.getAbsolutePath() + "]");
-            publication = PublicationFactory.getPublication(url, servletContext);
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            publication = factory.getPublication(url, servletContext);
         } catch (Exception e) {
             throw new AccessControlException(e);
         } finally {

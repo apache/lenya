@@ -36,7 +36,8 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 /**
  * Manager for publication templates.
  * 
- * @version $Id$
+ * @version $Id: PublicationTemplateManagerImpl.java 123348 2004-12-25 22:49:57Z
+ *          gregor $
  */
 public class PublicationTemplateManagerImpl extends AbstractLogEnabled implements
         PublicationTemplateManager, Serviceable {
@@ -72,8 +73,9 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
                 Configuration[] templateConfigs = templatesConfig.getChildren(ELEMENT_TEMPLATE);
                 for (int i = 0; i < templateConfigs.length; i++) {
                     String templateId = templateConfigs[i].getAttribute(ATTRIBUTE_ID);
-                    Publication template = PublicationFactory.getPublication(templateId,
-                            publication.getServletContext().getAbsolutePath());
+                    PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+                    Publication template = factory.getPublication(templateId, publication
+                            .getServletContext().getAbsolutePath());
                     templates.add(template);
                 }
                 this.templatePublications = (Publication[]) templates
@@ -162,7 +164,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         for (int i = 0; i < publications.length; i++) {
             uris.add(getBaseURI(publications[i]));
         }
-        
+
         String coreBaseURI = "context://";
         uris.add(coreBaseURI);
 
@@ -220,7 +222,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         for (int i = 0; i < templates.length; i++) {
             publications.add(templates[i]);
         }
-        
+
         return (Publication[]) publications.toArray(new Publication[publications.size()]);
     }
 

@@ -136,7 +136,8 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
         Map objectModel = ContextHelper.getObjectModel(getContext());
         Publication publication;
         try {
-            publication = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            publication = factory.getPublication(objectModel);
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }

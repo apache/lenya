@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -32,19 +35,32 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.file.FilePublication;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.log4j.Category;
 
 /**
  * Factory for creating publication objects.
  */
-public final class PublicationFactory {
-
-    private static Category log = Category.getInstance(PublicationFactory.class);
+public final class PublicationFactory extends AbstractLogEnabled {
 
     /**
      * Create a new <code>PublicationFactory</code>.
+     * @param logger The logger to use.
      */
-    private PublicationFactory() {
+    private PublicationFactory(Logger logger) {
+        ContainerUtil.enableLogging(this, logger);
+    }
+    
+    private static PublicationFactory instance;
+    
+    /**
+     * Returns the publication factory instance.
+     * @param logger The logger to use.
+     * @return A publication factory.
+     */
+    public static PublicationFactory getInstance(Logger logger) {
+        if (instance == null) {
+            instance = new PublicationFactory(logger);
+        }
+        return instance;
     }
 
     private static Map keyToPublication = new HashMap();
@@ -60,7 +76,7 @@ public final class PublicationFactory {
      * 
      * @throws PublicationException if there was a problem creating the publication.
      */
-    public static Publication getPublication(Map objectModel) throws PublicationException {
+    public Publication getPublication(Map objectModel) throws PublicationException {
 
         assert objectModel != null;
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -79,7 +95,7 @@ public final class PublicationFactory {
      * 
      * @throws PublicationException if there was a problem creating the publication.
      */
-    public static Publication getPublication(String id, String servletContextPath)
+    public Publication getPublication(String id, String servletContextPath)
         throws PublicationException {
 
         assert id != null;
@@ -93,6 +109,7 @@ public final class PublicationFactory {
         } else {
             if (PublicationFactory.existsPublication(id, servletContextPath)) {
                 publication = new FilePublication(id, servletContextPath);
+                ContainerUtil.enableLogging(publication, getLogger());
                 keyToPublication.put(key, publication);
             }
         }
@@ -137,10 +154,10 @@ public final class PublicationFactory {
      * 
      * @throws PublicationException if there was a problem creating the publication.
      */
-    public static Publication getPublication(Request request, Context context)
+    public Publication getPublication(Request request, Context context)
         throws PublicationException {
 
-        log.debug("Creating publication from Cocoon object model");
+        getLogger().debug("Creating publication from Cocoon object model");
         String webappUrl = ServletHelper.getWebappURI(request);
         String servletContextPath = context.getRealPath("");
         return getPublication(webappUrl, new File(servletContextPath));
@@ -153,11 +170,11 @@ public final class PublicationFactory {
      * @return A publication
      * @throws PublicationException when something went wrong
      */
-    public static Publication getPublication(String webappUrl, File servletContext)
+    public Publication getPublication(String webappUrl, File servletContext)
         throws PublicationException {
-        log.debug("Creating publication from webapp URL and servlet context");
+        getLogger().debug("Creating publication from webapp URL and servlet context");
 
-        log.debug("    Webapp URL:       [" + webappUrl + "]");
+        getLogger().debug("    Webapp URL:       [" + webappUrl + "]");
         String publicationId = new URLInformation(webappUrl).getPublicationId();
         Publication publication = getPublication(publicationId, servletContext.getAbsolutePath());
         return publication;
@@ -197,16 +214,16 @@ public final class PublicationFactory {
      * @return A publication.
      * @throws PublicationException when something went wrong.
      */
-    public static Publication getPublication(SourceResolver resolver, Request request)
+    public Publication getPublication(SourceResolver resolver, Request request)
         throws PublicationException {
-        log.debug("Creating publication from resolver and request");
+        getLogger().debug("Creating publication from resolver and request");
         Publication publication;
         String webappUri = ServletHelper.getWebappURI(request);
         Source source = null;
         try {
             source = resolver.resolveURI("context:///");
             File servletContext = SourceUtil.getFile(source);
-            publication = PublicationFactory.getPublication(webappUri, servletContext);
+            publication = getPublication(webappUri, servletContext);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {

@@ -27,6 +27,8 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
@@ -35,7 +37,7 @@ import org.apache.log4j.Category;
 /**
  * A publication.
  */
-public abstract class AbstractPublication implements Publication {
+public abstract class AbstractPublication extends AbstractLogEnabled implements Publication {
 
     private static Category log = Category.getInstance(AbstractPublication.class);
 
@@ -264,12 +266,12 @@ public abstract class AbstractPublication implements Publication {
      */
     public DocumentBuilder getDocumentBuilder() {
 
-        if (documentBuilder == null) {
+        if (this.documentBuilder == null) {
             throw new IllegalStateException(
                     "The document builder was not defined in publication.xconf!");
         }
-
-        return documentBuilder;
+        ContainerUtil.enableLogging(this.documentBuilder, getLogger());
+        return this.documentBuilder;
     }
 
     /**

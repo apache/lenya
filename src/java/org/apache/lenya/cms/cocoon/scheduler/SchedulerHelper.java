@@ -20,6 +20,7 @@ package org.apache.lenya.cms.cocoon.scheduler;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
@@ -70,7 +71,8 @@ public class SchedulerHelper {
 
             NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
 
-            Publication pub = PublicationFactory.getPublication(objectModel);
+            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+            Publication pub = factory.getPublication(objectModel);
             DocumentIdentityMap identityMap = new DocumentIdentityMap(pub);
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(identityMap,
                     objectModel);

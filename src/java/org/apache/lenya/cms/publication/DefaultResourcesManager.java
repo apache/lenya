@@ -24,10 +24,10 @@ import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,24 +38,17 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 
-import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.cocoon.servlet.multipart.PartInMemory;
-import org.apache.cocoon.servlet.multipart.PartOnDisk;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 
-import org.w3c.dom.Element;
 
 /**
  * Manager for resources of a CMS document.
  */
-public class DefaultResourcesManager extends AbstractLogEnabled 
-	implements ResourcesManager {
+public class DefaultResourcesManager extends AbstractLogEnabled implements ResourcesManager {
 
-	private Document document = null;
-	private DublinCoreImpl dc = null;
+    private Document document = null;
+    private DublinCoreImpl dc = null;
 
     /**
      * Create a new instance of Resources.
@@ -65,7 +58,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled
     public DefaultResourcesManager(Document document) {
         this.document = document;
     }
-
 
     /**
      * Add the file in the Part either as a resource or content
@@ -82,7 +74,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled
         if (!fileName.matches(FILE_NAME_REGEXP)) {
             // the file name contains characters which mean trouble
             // and are therefore not allowed.
-            getLogger().warn("The filename [" + fileName + "] is not valid for an asset.");
+            getLogger().warn("The filename [" + fileName + "]ï¿½ is not valid for an asset.");
         }
         // convert spaces in the file name to underscores
         fileName = fileName.replace(' ', '_');
@@ -92,25 +84,23 @@ public class DefaultResourcesManager extends AbstractLogEnabled
         metadata.put("format", mimeType);
         metadata.put("extent", Integer.toString(fileSize));
 
-/*        if (type.equals("resource")) { */
-            resourceFile = new File(this.getPath(), fileName);
+        /* if (type.equals("resource")) { */
+        resourceFile = new File(this.getPath(), fileName);
 
-            if (!this.getPath().exists()) {
-                this.getPath().mkdirs();
-            }
-
-            // create an extra file containing the meta description for
-            // the resource.
-            File metaDataFile = new File(this.getPath(), fileName + RESOURCES_META_SUFFIX);
-            createMetaData(metaDataFile, metadata);
-
-/*        }
-        // must be a content upload then
-        else {
-            resourceFile = new File(document.getFile().getParent(), fileName);
-            getLogger().debug("resourceFile: " + resourceFile);
+        if (!this.getPath().exists()) {
+            this.getPath().mkdirs();
         }
-*/
+
+        // create an extra file containing the meta description for
+        // the resource.
+        File metaDataFile = new File(this.getPath(), fileName + RESOURCES_META_SUFFIX);
+        createMetaData(metaDataFile, metadata);
+
+        /*
+         * } // must be a content upload then else { resourceFile = new
+         * File(document.getFile().getParent(), fileName);
+         * getLogger().debug("resourceFile: " + resourceFile); }
+         */
         saveResource(resourceFile, part);
     }
 
@@ -125,7 +115,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled
         if (!resourceFile.exists()) {
             boolean created = resourceFile.createNewFile();
             if (!created) {
-                throw new RuntimeException("The file [" + resourceFile + "] could not be created.");
+                throw new RuntimeException("The file [" + resourceFile + "]ï¿½could not be created.");
             }
         }
 
@@ -160,17 +150,17 @@ public class DefaultResourcesManager extends AbstractLogEnabled
 
         assert (metaDataFile.getParentFile().exists());
         try {
-	        dc = new DublinCoreImpl(metaDataFile);
-	        Iterator iter = metadata.keySet().iterator();
-	
-	        while (iter.hasNext()) {
-	            String key = (String) iter.next();
-	            String value = (String) metadata.get(key);
-	            dc.setValue(key, value);
-	        }
-	        dc.save();
-        } catch(Exception e) {
-            getLogger().error("Saving of [" + metaDataFile + "] failed.");
+            dc = new DublinCoreImpl(metaDataFile);
+            Iterator iter = metadata.keySet().iterator();
+
+            while (iter.hasNext()) {
+                String key = (String) iter.next();
+                String value = (String) metadata.get(key);
+                dc.setValue(key, value);
+            }
+            dc.save();
+        } catch (Exception e) {
+            getLogger().error("Saving of [" + metaDataFile + "]ï¿½failed.");
         }
     }
 
@@ -200,15 +190,10 @@ public class DefaultResourcesManager extends AbstractLogEnabled
      * @return The path of a resource relative to the context prefix.
      */
     public String getResourceUrl(File resource) {
-        return 
-            getDocument().getPublication().getId() 
-            + "/" 
-            + getDocument().getArea()
-            + getDocument().getId()
-            + "/" 
-            + resource.getName();   
+        return getDocument().getPublication().getId() + "/" + getDocument().getArea()
+                + getDocument().getId() + "/" + resource.getName();
     }
-    
+
     /**
      * Get all resources for the associated document.
      * 
@@ -232,16 +217,16 @@ public class DefaultResourcesManager extends AbstractLogEnabled
      * @return All image resources.
      */
     public File[] getImageResources() {
-        return getFiles( new FileFilter() {
-                public boolean accept(File file) {
-                    for(int i=0; i<IMAGE_FILE_EXTENSIONS.length; i++)
-                        if (file.getName().toLowerCase().endsWith(IMAGE_FILE_EXTENSIONS[i]))
-                            return true;
-                    return false;
-                }
-            });
+        return getFiles(new FileFilter() {
+            public boolean accept(File file) {
+                for (int i = 0; i < IMAGE_FILE_EXTENSIONS.length; i++)
+                    if (file.getName().toLowerCase().endsWith(IMAGE_FILE_EXTENSIONS[i]))
+                        return true;
+                return false;
+            }
+        });
     }
-    
+
     /**
      * Returns the resources that are matched by a certain file filter.
      * @param filter A file filter.
@@ -259,7 +244,8 @@ public class DefaultResourcesManager extends AbstractLogEnabled
     /**
      * Get the meta data for all resources for the associated document.
      * 
-     * @return all meta data files for the resources for the associated document.
+     * @return all meta data files for the resources for the associated
+     *         document.
      */
     public File[] getMetaFiles() {
         FileFilter filter = new FileFilter() {
@@ -274,47 +260,78 @@ public class DefaultResourcesManager extends AbstractLogEnabled
     /**
      * Returns a meta file for a given resource.
      * @param resource A resource the meta file should be returned for.
-     * @return A file containing meta information about a resource. 
-     * Returns null if no meta file was found.
+     * @return A file containing meta information about a resource. Returns null
+     *         if no meta file was found.
      * @throws IllegalArgumentException If resource is a meta file itself.
      */
     public File getMetaFile(final File resource) throws IllegalArgumentException {
-        if(resource.getName().endsWith(RESOURCES_META_SUFFIX))
+        if (resource.getName().endsWith(RESOURCES_META_SUFFIX))
             throw new IllegalArgumentException("File is itself a meta file.");
-        
+
         final FileFilter filter = new FileFilter() {
             public boolean accept(File file) {
-                return file.isFile() && 
-                    file.getName().equals(resource.getName().concat(RESOURCES_META_SUFFIX));
+                return file.isFile()
+                        && file.getName().equals(resource.getName().concat(RESOURCES_META_SUFFIX));
             }
         };
-        
+
         final File[] metaFiles = getFiles(filter);
-        assert(metaFiles.length == 0);
+        assert (metaFiles.length == 0);
         return metaFiles[0];
     }
-    
+
     /**
      * Deletes all resources.
      */
     public void deleteResources() {
 
-        File stopDirectory = new File(getDocument().getPublication().getDirectory(), RESOURCES_PREFIX);
+        File stopDirectory = new File(getDocument().getPublication().getDirectory(),
+                RESOURCES_PREFIX);
 
         File[] resources = getResources();
         for (int i = 0; i < resources.length; i++) {
             resources[i].delete();
-           //TODO replace with excalibur FileUtil.deleteParentDirs(resources[i], stopDirectory);
+            //TODO replace with excalibur
+            // FileUtil.deleteParentDirs(resources[i], stopDirectory);
         }
 
         File[] metas = getMetaFiles();
         for (int i = 0; i < metas.length; i++) {
             metas[i].delete();
-            //TODO replace with excalibur FileUtil.deleteParentDirs(metas[i], stopDirectory);
+            //TODO replace with excalibur FileUtil.deleteParentDirs(metas[i],
+            // stopDirectory);
         }
     }
 
     public Document getDocument() {
         return document;
     }
+
+    /**
+     * @see org.apache.lenya.cms.publication.ResourcesManager#copyResourcesTo(org.apache.lenya.cms.publication.Document)
+     */
+    public void copyResourcesTo(Document destinationDocument) throws Exception {
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Copying resources of document [" + getDocument() + "]");
+        }
+
+        ResourcesManager destinationManager = destinationDocument.getResourcesManager();
+
+        List resourcesList = new ArrayList(Arrays.asList(getResources()));
+        resourcesList.addAll(Arrays.asList(getMetaFiles()));
+        File[] resources = (File[]) resourcesList.toArray(new File[resourcesList.size()]);
+        File destinationDirectory = destinationManager.getPath();
+
+        for (int i = 0; i < resources.length; i++) {
+            File destinationResource = new File(destinationDirectory, resources[i].getName());
+
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Copy file [" + resources[i].getAbsolutePath() + "] to ["
+                        + destinationResource.getAbsolutePath() + "]");
+            }
+            FileUtil.copyFile(resources[i], destinationResource);
+        }
+    }
+
 }

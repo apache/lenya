@@ -31,7 +31,7 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 /**
  * Abstract base class for operations on documents.
  * 
- * @version $Id: UnitOfWork.java,v 1.2 2004/06/28 20:25:32 andreas Exp $
+ * @version $Id$
  */
 public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Contextualizable {
 
@@ -53,7 +53,8 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Co
             Map objectModel = ContextHelper.getObjectModel(this.context);
             Publication publication;
             try {
-                publication = PublicationFactory.getPublication(objectModel);
+                PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+                publication = factory.getPublication(objectModel);
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }

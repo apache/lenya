@@ -76,7 +76,8 @@ public class DocumentIdExistsAction extends AbstractAction {
             return null;
         }
 
-        Publication publication = PublicationFactory.getPublication(objectModel);
+        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+        Publication publication = factory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
         PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         Document document = map.getFactory().get(envelope.getDocument().getArea(), documentId);

@@ -63,10 +63,9 @@ public class WorkflowUsecase extends AbstractUsecase {
      * @param document The document.
      */
     protected void triggerWorkflow(String event, Document document) {
-        WorkflowFactory factory = WorkflowFactory.newInstance();
         try {
-            WorkflowInstance instance = factory.buildInstance(document);
-            Event executableEvent = getExecutableEvent(instance, event);
+            WorkflowInstance instance = getWorkflowInstance(document);
+            Event executableEvent = getExecutableEvent(event, document);
 
             if (executableEvent == null) {
                 throw new RuntimeException("The event [" + event
@@ -79,14 +78,30 @@ public class WorkflowUsecase extends AbstractUsecase {
     }
 
     /**
-     * Returns the event object if an event is exectuable.
-     * @param instance The workflow instance.
-     * @param event The name of the event.
-     * @return An event or <code>null</code> if the event is not executable.
+     * Returns the workflow instance for a document.
+     * @param document The document.
+     * @return A workflow instance.
      * @throws WorkflowException if an error occurs.
      */
-    protected Event getExecutableEvent(WorkflowInstance instance, String event) throws WorkflowException {
-        Event[] events = instance.getExecutableEvents(getSituation());
+    protected WorkflowInstance getWorkflowInstance(Document document) throws WorkflowException {
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        WorkflowInstance instance = factory.buildInstance(document);
+        return instance;
+    }
+
+    /**
+     * Returns the event object if an event is exectuable.
+     * @param document The document.
+     * @param event The name of the event.
+     * @return An event or <code>null</code> if the event is not executable.
+     */
+    protected Event getExecutableEvent(String event, Document document) {
+        Event[] events;
+        try {
+            events = getWorkflowInstance(document).getExecutableEvents(getSituation());
+        } catch (WorkflowException e) {
+            throw new RuntimeException(e);
+        }
         Event executableEvent = null;
         for (int i = 0; i < events.length; i++) {
             if (events[i].getName().equals(event)) {
@@ -94,6 +109,16 @@ public class WorkflowUsecase extends AbstractUsecase {
             }
         }
         return executableEvent;
+    }
+
+    /**
+     * Checks if a certain event can be executed on a workflow instance.
+     * @param document The document.
+     * @param event The event.
+     * @return A boolean value.
+     */
+    protected boolean canExecuteWorkflow(String event, Document document) {
+        return getExecutableEvent(event, document) != null;
     }
 
 }

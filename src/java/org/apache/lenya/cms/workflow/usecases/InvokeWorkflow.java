@@ -29,7 +29,7 @@ import org.apache.lenya.workflow.WorkflowInstance;
  */
 public class InvokeWorkflow extends DocumentUsecase {
 
-    protected static final String EVENT = "lenya.event";
+    public static final String EVENT = "lenya.event";
 
     /**
      * @return The workflow event to use.
@@ -45,11 +45,7 @@ public class InvokeWorkflow extends DocumentUsecase {
         super.doCheckPreconditions();
         String eventName = getParameterAsString(EVENT);
 
-        WorkflowInstance instance = WorkflowFactory.newInstance()
-                .buildInstance(getSourceDocument());
-        Event event = getExecutableEvent(instance, eventName);
-
-        if (event == null) {
+        if (canExecuteWorkflow(eventName, getSourceDocument())) {
             addErrorMessage("The event [" + eventName + "] is not executable on document ["
                     + getSourceDocument() + "].");
         }

@@ -98,4 +98,8 @@
   	    shorthand="usecase-resolver"
   	    default-class="org.apache.lenya.cms.publication.DocumentTypeResolverImpl"/>
         
+  <role name="org.apache.lenya.cms.cocoon.flow.FlowHelper"
+  	    shorthand="flowhelper"
+  	    default-class="org.apache.lenya.cms.cocoon.flow.FlowHelperImpl"/>
+        
 </role-list>
