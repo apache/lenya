@@ -1,5 +1,5 @@
 /*
-$Id: CopyJavaSourcesTask.java,v 1.13 2003/08/04 10:08:45 gregor Exp $
+$Id: CopyJavaSourcesTask.java,v 1.14 2003/08/04 14:52:55 gregor Exp $
 <License>
 
  ============================================================================
@@ -79,7 +79,7 @@ public class CopyJavaSourcesTask extends Task {
     private Path pubsRootDirs;
     private String javaDir;
     private String buildDir;
-	private static final String FILENAMEPATTERN = "*\\.java";
+	private static final String FILENAMEPATTERN = ".*\\.java";
 
     /**
      *

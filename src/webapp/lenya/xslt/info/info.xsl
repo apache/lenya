@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.11 2003/07/30 15:03:24 gregor Exp $
+ $Id: info.xsl,v 1.12 2003/08/04 14:52:55 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -31,11 +31,11 @@
 	 -->
 	<a href="#" onclick="Tab(1)" id="link1" class="lenya-tablink">Overview</a>
 	<a href="#" onclick="Tab(2)" id="link2" class="lenya-tablink">Meta</a>
-<!--	<a href="#" onclick="Tab(3)" id="link3" class="lenya-tablink">Assets</a>
-	<a href="#" onclick="Tab(4)" id="link4" class="lenya-tablink">Workflow</a> -->
-	<a href="#" onclick="Tab(3)" id="link3" class="lenya-tablink">Revisions</a>
-	<a href="#" onclick="Tab(4)" id="link4" class="lenya-tablink">AC Auth.</a>
-	<a href="#" onclick="Tab(5)" id="link5" class="lenya-tablink">AC Live</a>
+    <a href="#" onclick="Tab(3)" id="link3" class="lenya-tablink">Assets</a>
+	<a href="#" onclick="Tab(4)" id="link4" class="lenya-tablink">Workflow</a>
+	<a href="#" onclick="Tab(5)" id="link3" class="lenya-tablink">Revisions</a>
+	<a href="#" onclick="Tab(6)" id="link4" class="lenya-tablink">AC Auth.</a>
+	<a href="#" onclick="Tab(7)" id="link5" class="lenya-tablink">AC Live</a>
 
 	<!--  
 		These are the different content blocks of the tabs, each one needs to
@@ -55,7 +55,7 @@
              <input type="submit" value="Update Metadata"/>
           </form>
 		</div>
-<!--	<div id="contentblock3" class="lenya-tab">
+	<div id="contentblock3" class="lenya-tab">
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="lenya-info:assets"/>
           </table>
@@ -68,18 +68,18 @@
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="wf:version"/>
           </table>
-	</div> -->
-	<div id="contentblock3" class="lenya-tab">
+	</div>
+	<div id="contentblock5" class="lenya-tab">
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="rc:revisions/XPSRevisionControl"/>
           </table>
 	</div>
-	<div id="contentblock4" class="lenya-tab">
+	<div id="contentblock6" class="lenya-tab">
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="lenya-info:permissions[@area='authoring']"/>
           </table>
 	</div>
-	<div id="contentblock5" class="lenya-tab">
+	<div id="contentblock7" class="lenya-tab">
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="lenya-info:permissions[@area='live']"/>
           </table>
