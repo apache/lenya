@@ -73,14 +73,7 @@
     
     <!-- flip transform -->
     <g transform="scale({$flip-lr-scale},{$flip-tb-scale}) translate({$flip-lr-translate}, {$flip-tb-translate})"> 
-      <xsl:call-template name = "figure" >
-     	<xsl:with-param name="isize"><xsl:value-of select="$isize" /></xsl:with-param>
-     	<xsl:with-param name="smallersize"><xsl:value-of select="$smallersize" /></xsl:with-param>
-     	<xsl:with-param name="biggersize"><xsl:value-of select="$biggersize" /></xsl:with-param>
-     	<xsl:with-param name="bg"><xsl:value-of select="$bg" /></xsl:with-param>
-     	<xsl:with-param name="fill"><xsl:value-of select="$fill" /></xsl:with-param>
-     	<xsl:with-param name="stroke"><xsl:value-of select="$stroke" /></xsl:with-param>
-      </xsl:call-template>   
+      <xsl:call-template name="figure" />
     </g>
 </svg>
 </xsl:template>

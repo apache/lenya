@@ -15,143 +15,69 @@
   limitations under the License.
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-
-  <xsl:import href="../../common/css/forrest.css.xslt"/>
-
   <!-- This is not used by Forrest but makes it possible to debug the 
        stylesheet in standalone editors -->
   <xsl:output method = "text"  omit-xml-declaration="yes"  />
+
+<!--
+  If the skin doesn't override this, at least aural styles 
+  and extra-css are present 
+-->
+  <xsl:template match="skinconfig">
+
+   <xsl:call-template name="aural"/>
+   <xsl:call-template name="a-external"/>
+   <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="colors">
+   <xsl:apply-templates/>
+  </xsl:template>
   
-<!-- ==================== main block colors ============================ -->
+  <xsl:template name="aural">
 
-<xsl:template match="color[@name='header']">
-.header         { background-color: <xsl:value-of select="@value"/>;}  
-</xsl:template>
+/* ==================== aural ============================ */
 
-<xsl:template match="color[@name='tab-selected']"> 
-.tab.selected      { background-color: <xsl:value-of select="@value"/>;} 
-.tab.selected a:link {  color: <xsl:value-of select="@link"/>;  }
-.tab.selected a:visited { color: <xsl:value-of select="@vlink"/>; }
-.tab.selected a:hover { color: <xsl:value-of select="@hlink"/>; }
-.border         { background-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='tab-unselected']"> 
-.tab.unselected      { background-color: <xsl:value-of select="@value"/>;} 
-.tab.unselected a:link {  color: <xsl:value-of select="@link"/>;  }
-.tab.unselected a:visited { color: <xsl:value-of select="@vlink"/>; }
-.tab.unselected a:hover { color: <xsl:value-of select="@hlink"/>; }
-</xsl:template> 
-
-<xsl:template match="color[@name='subtab-selected']">
-.level2tabstrip a:link {  color: <xsl:value-of select="@link"/>;  }
-.level2tabstrip a:visited { color: <xsl:value-of select="@vlink"/>; }
-.level2tabstrip a:hover { color: <xsl:value-of select="@hlink"/>; }
-</xsl:template> 
-
-<xsl:template match="color[@name='subtab-unselected']">
-.level2tabstrip { background-color: <xsl:value-of select="@value"/>;}
-.datenote { background-color: <xsl:value-of select="@value"/>;} 
-.level2tabstrip.unselected a:link {  color: <xsl:value-of select="@link"/>;  }
-.level2tabstrip.unselected a:visited { color: <xsl:value-of select="@vlink"/>; }
-.level2tabstrip.unselected a:hover { color: <xsl:value-of select="@hlink"/>; }
-</xsl:template> 
-
-<xsl:template match="color[@name='heading']">
-.heading { background-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='subheading']">
-.subheading { background-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='published']">
-.published { color: <xsl:value-of select="@value"/>;}
-</xsl:template> 
-
-<xsl:template match="color[@name='navstrip']">
-.subborder      { color: <xsl:value-of select="@font"/>;
-                  background-color: <xsl:value-of select="@value"/>;}
-.subborder a:link {  color: <xsl:value-of select="@link"/>;  }
-.subborder a:visited { color: <xsl:value-of select="@vlink"/>; }
-.subborder a:hover { color: <xsl:value-of select="@hlink"/>; }
-.menu .menupagetitle  { background-color: <xsl:value-of select="@value"/>;}
-</xsl:template> 
-
-<xsl:template match="color[@name='toolbox']">
-.menu .menupagetitle  { background-color: <xsl:value-of select="@value"/>}
-</xsl:template> 
-
-<xsl:template match="color[@name='border']">
-.subborder.trail {border-bottom: 1px solid <xsl:value-of select="@value"/>;
-                  border-top: 1px solid <xsl:value-of select="@value"/>; } 
-.footer          {border-top: 1px solid <xsl:value-of select="@value"/>; }
-.menu           { border-color: <xsl:value-of select="@value"/>;}
-.menu .menupagetitle  { border-color: <xsl:value-of select="@value"/>;}
-.menu .menupageitemgroup  { border-color: <xsl:value-of select="@value"/>;}
-</xsl:template> 
-
-<xsl:template match="color[@name='menu']">
-.menu      { background-color: <xsl:value-of select="@value"/>;} 
-.menu  {  color: <xsl:value-of select="@font"/>;} 
-.menu a:link {  color: <xsl:value-of select="@link"/>;} 
-.menu a:visited {  color: <xsl:value-of select="@vlink"/>;} 
-.menu a:hover {  background-color: <xsl:value-of select="@value"/>;
-                 color: <xsl:value-of select="@hlink"/>;} 
-.menu .menupagetitle  { color: <xsl:value-of select="@hlink"/>;}     
-</xsl:template> 
-
-<xsl:template match="color[@name='dialog']"> 
-.dialog      { background-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='body']">
-body         { background-color: <xsl:value-of select="@value"/>;
-               color: <xsl:value-of select="@font"/>;} 
-a:link { color:<xsl:value-of select="@link"/>} 
-a:visited { color:<xsl:value-of select="@vlink"/>} 
-a:hover { color:<xsl:value-of select="@hlink"/>} 
-.menupage a:link { background-color: <xsl:value-of select="@value"/>;
-                                color:<xsl:value-of select="@link"/>} 
-.menupage a:visited { background-color: <xsl:value-of select="@value"/>;
-                                color:<xsl:value-of select="@vlink"/>} 
-.menupage a:hover { background-color: <xsl:value-of select="@value"/>;
-                                color:<xsl:value-of select="@hlink"/>} 
-</xsl:template>
-
-<xsl:template match="color[@name='footer']"> 
-.footer      { background-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-
-<!-- ==================== other colors ============================ -->
-<xsl:template match="color[@name='highlight']"> 
-.highlight        { background-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='fixme']"> 
-.fixme        { border-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='note']"> 
-.note         { border-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='warning']"> 
-.warning         { border-color: <xsl:value-of select="@value"/>;} 
-</xsl:template>
-
-<xsl:template match="color[@name='code']"> 
-.code         { border-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='table']"> 
-.content .ForrestTable      { background-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
-<xsl:template match="color[@name='table-cell']"> 
-.content .ForrestTable td   { background-color: <xsl:value-of select="@value"/>;} 
-</xsl:template> 
-
+@media aural {
+  h1, h2, h3, h4, h5, h6 { voice-family: paul, male; stress: 20; richness: 90 }
+  h1 { pitch: x-low; pitch-range: 90 }
+  h2 { pitch: x-low; pitch-range: 80 }
+  h3 { pitch: low; pitch-range: 70 }
+  h4 { pitch: medium; pitch-range: 60 }
+  h5 { pitch: medium; pitch-range: 50 }
+  h6 { pitch: medium; pitch-range: 40 }
+  li, dt, dd { pitch: medium; richness: 60 }
+  dt { stress: 80 }
+  pre, code, tt { pitch: medium; pitch-range: 0; stress: 0; richness: 80 }
+  em { pitch: medium; pitch-range: 60; stress: 60; richness: 50 }
+  strong { pitch: medium; pitch-range: 60; stress: 90; richness: 90 }
+  dfn { pitch: high; pitch-range: 60; stress: 60 }
+  s, strike { richness: 0 }
+  i { pitch: medium; pitch-range: 60; stress: 60; richness: 50 }
+  b { pitch: medium; pitch-range: 60; stress: 90; richness: 90 }
+  u { richness: 0 }
+  
+  :link { voice-family: harry, male }
+  :visited { voice-family: betty, female }
+  :active { voice-family: betty, female; pitch-range: 80; pitch: x-high }
+}
+  </xsl:template>
+  
+  <xsl:template name="a-external">
+a.external  {
+  padding: 0 20px 0px 0px;
+	display:inline;
+  background-repeat: no-repeat;
+	background-position: center right;
+	background-image: url(images/external-link.gif);
+}
+  </xsl:template>
+  
+  <xsl:template match="extra-css">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  
+  <xsl:template match="*"></xsl:template>
+  <xsl:template match="text()"></xsl:template>
 
 </xsl:stylesheet>

@@ -5,10 +5,10 @@
 /Producer (FOP 0.20.5) >>
 endobj
 5 0 obj
-<< /Length 445 /Filter [ /ASCII85Decode /FlateDecode ]
+<< /Length 397 /Filter [ /ASCII85Decode /FlateDecode ]
  >>
 stream
-GarW6?#P<K'Sc)R/'b!'YdT86EiI5eZG^:C,eM]PJQRIk_,]:M^Y]'FG*sL&jj<bdHTi2OR4SLP+_?c%#]!cb@?;-4$m/_/Uq!'`U`hb6qda83;c`_Y%]2R,r&[KNXnu3BD-8akpCi^f%Nb@\*uG0E7_ohL\N'8^b_jp:?/Wt<7:khA;o$9i4H:rT4ce&m0%hg8&hoT#EiCo*6J9QFQ'7uof%Y8sPdM<EC:?D:(CYjGohKC`g[FEK>Gocf6UJLXIm:S0!oYl3OVDIs;3"*U+PN!bE/a/2W0Rd>?qjtK+rSlgLG9N6n^8kF2:l(2[Q;-HQN":YGOp?e;A(M8er<NM_&Cu!*bJ&oZ^s:VE=hifk;5-#SUBdW!7$=mdmB`3B9#VNis8JTHH:M_]\"tm)FsW8&n+]Z[,Wj.n%G.R:3uMGc,nUVZh;cD"_UB*Sc~>
+Gb!;^9i&YL(r#SlhIA\WiMDM$k_qTjlsN<B5s9<A?(4MK=k2lr$gf^:nIGm3mJF^%cbm*=jE;gLF36a,KS<2j)!hM5k,2R78o^Y9?@[K[QY^N_d+R7F#%je@?d22Ia'`t-SK3+N%J8Zd^6l-'^q#PK0$]"%;r#(SWjXb]R!:MhCQ5sA.H("DG[++cq1PZhmG7sK)+n&h`;cjHK1Tu/J[9,O:R-K9#V'jTiUO8oYIfqqm_804&#B5GGenX_'F&)mk5V*ra(UIJbWhb`?MC)tUF<qrBZLii#".?<<CR?q?CL(*.4?hL3L+=lm(P]S>dnL(punn0H&Rh>SG=Il.G^F0g`=NeNAl8AI$ZJ-XSP^sQUBA/RV^_+2B+<2=PB1<EF5T?Oo#ZH5d3*~>
 endstream
 endobj
 6 0 obj
@@ -28,7 +28,38 @@ endobj
 8 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 191.652 596.541 212.304 584.541 ]
+/Rect [ 12.0 601.541 54.008 589.541 ]
+/C [ 0 0 0 ]
+/Border [ 0 0 0 ]
+/A 9 0 R
+/H /I
+>>
+endobj
+10 0 obj
+<< /Length 480 /Filter [ /ASCII85Decode /FlateDecode ]
+ >>
+stream
+Gar>C>Ao*I(k(kVp`B+E%pCB8^$.;=/6T8QhW>jrQ:mt%<RgBmYM<q16W2VOcK.-0PnJ!eJ;38T=qDcJ6GYUA=UcW)7iFdW*oM*/E=NAr4++IslFL\*F81@Z`COs@CliW#;%d7b#55@-CdZ`fGL"rH3G>J[r\Wk85b9uCIS7:+e@F7l3M'.>6O%o4GQpJJM@jJJ#=Bir!6h5Ir,;`2-=tC)>[^"VaXWjk\qJfX<l<3\8M*G*[kVLK)V"/PgKE(8`s9phVd(6=l-bb3Bh%^6&\[Se%YM5Wfj1:[Os#ZM&2?OehS&ifP\o6@I8M3V,dOS4l1"^3NV/O3o*RGa%T2]S,NGFC'LN8bRbkSr&RZeVWW\Mn1k3\@Bt]n'h&l)!`_;'@l%fQk4;brfc_EQ#lFO'#/$rlX3jQKG(1mk)PZEh3nsJP,H)$8jRV<"0G;gf5mM\-nrSAUl!)A;QSts*A*STNP!2N5uU&~>
+endstream
+endobj
+11 0 obj
+<< /Type /Page
+/Parent 1 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources 3 0 R
+/Contents 10 0 R
+/Annots 12 0 R
+>>
+endobj
+12 0 obj
+[
+13 0 R
+]
+endobj
+13 0 obj
+<< /Type /Annot
+/Subtype /Link
+/Rect [ 191.652 701.666 212.304 689.666 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
 /A << /URI (http://oscom.org/events/sprints/)
@@ -36,41 +67,41 @@ endobj
 /H /I
 >>
 endobj
-11 0 obj
+15 0 obj
 <<
  /Title (\376\377\0\61\0\40\0\123\0\160\0\162\0\151\0\156\0\164\0\163)
- /Parent 9 0 R
- /A 10 0 R
+ /Parent 14 0 R
+ /A 9 0 R
 >> endobj
-12 0 obj
+16 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F3
 /BaseFont /Helvetica-Bold
 /Encoding /WinAnsiEncoding >>
 endobj
-13 0 obj
+17 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F5
 /BaseFont /Times-Roman
 /Encoding /WinAnsiEncoding >>
 endobj
-14 0 obj
+18 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F1
 /BaseFont /Helvetica
 /Encoding /WinAnsiEncoding >>
 endobj
-15 0 obj
+19 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F2
 /BaseFont /Helvetica-Oblique
 /Encoding /WinAnsiEncoding >>
 endobj
-16 0 obj
+20 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F7
@@ -79,57 +110,61 @@ endobj
 endobj
 1 0 obj
 << /Type /Pages
-/Count 1
-/Kids [6 0 R ] >>
+/Count 2
+/Kids [6 0 R 11 0 R ] >>
 endobj
 2 0 obj
 << /Type /Catalog
 /Pages 1 0 R
- /Outlines 9 0 R
+ /Outlines 14 0 R
  /PageMode /UseOutlines
  >>
 endobj
 3 0 obj
 << 
-/Font << /F3 12 0 R /F5 13 0 R /F1 14 0 R /F2 15 0 R /F7 16 0 R >> 
+/Font << /F3 16 0 R /F5 17 0 R /F1 18 0 R /F2 19 0 R /F7 20 0 R >> 
 /ProcSet [ /PDF /ImageC /Text ] >> 
 endobj
 9 0 obj
 <<
- /First 11 0 R
- /Last 11 0 R
->> endobj
-10 0 obj
-<<
 /S /GoTo
-/D [6 0 R /XYZ -5.0 625.875 null]
+/D [11 0 R /XYZ -5.0 731.0 null]
 >>
 endobj
+14 0 obj
+<<
+ /First 15 0 R
+ /Last 15 0 R
+>> endobj
 xref
-0 17
+0 21
 0000000000 65535 f 
-0000001612 00000 n 
-0000001670 00000 n 
-0000001761 00000 n 
+0000002420 00000 n 
+0000002485 00000 n 
+0000002577 00000 n 
 0000000015 00000 n 
 0000000071 00000 n 
-0000000607 00000 n 
-0000000727 00000 n 
-0000000752 00000 n 
-0000001884 00000 n 
-0000001934 00000 n 
-0000000937 00000 n 
-0000001056 00000 n 
-0000001169 00000 n 
-0000001279 00000 n 
-0000001387 00000 n 
-0000001503 00000 n 
+0000000559 00000 n 
+0000000679 00000 n 
+0000000704 00000 n 
+0000002700 00000 n 
+0000000837 00000 n 
+0000001409 00000 n 
+0000001532 00000 n 
+0000001559 00000 n 
+0000002763 00000 n 
+0000001745 00000 n 
+0000001864 00000 n 
+0000001977 00000 n 
+0000002087 00000 n 
+0000002195 00000 n 
+0000002311 00000 n 
 trailer
 <<
-/Size 17
+/Size 21
 /Root 2 0 R
 /Info 4 0 R
 >>
 startxref
-1999
+2814
 %%EOF

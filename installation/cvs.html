@@ -2,249 +2,536 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lenya CVS Guide</title>
-<link type="text/css" href="../skin/page.css" rel="stylesheet">
-<link type="text/css" href="../skin/forrest.css" rel="stylesheet">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.6-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Lenya Code Repository Guide</title>
+<link type="text/css" href="../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../skin/profile.css" rel="stylesheet">
+<script src="../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../skin/fontsize.js" language="javascript" type="text/javascript"></script>
 <link rel="shortcut icon" href="../">
-<script src="../skin/fontsize.js" language="javascript" type="text/javascript"></script><script src="../skin/menu.js" language="javascript" type="text/javascript"></script>
 </head>
 <body onload="init()">
 <script type="text/javascript">ndeSetTextSize();</script>
-<table width="100%" border="0" cellpadding="0" cellspacing="0" class="header">
-<tr>
-<td>
-<div class="headerlogo">
-<a href="http://cocoon.apache.org"><img class="logoImage" alt="Apache Cocoon" src="../images/cocoon-project-logo-big.png"></a>
+<div id="top">
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://cocoon.apache.org"><img class="logoImage" alt="Apache Cocoon" src="../images/cocoon-project-logo-big.png" title="
+  	The Apache Cocoon Project is the open source community project developing Apache Cocoon 
+  	and Cocoon-based application frameworks.
+  "></a>
 </div>
-</td><td valign="bottom" colspan="3" align="right">
-<div class="headerlogo right">
-<a href="http://cocoon.apache.org/lenya"><img class="logoImage" alt="Lenya" src="../images/apache-lenya-light.png"></a>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogoA1">
+<a href="http://cocoon.apache.org/lenya"><img class="logoImage" alt="Lenya" src="../images/apache-lenya-light.png" title="
+  	Apache Lenya is a Java-based Open-Source Content Management System. 
+  	It is based on open standards such as XML and XSLT. 
+  	One of its core components is Cocoon from the Apache Software Foundation.
+  "></a>
 </div>
-</td>
-</tr>
-<tr>
-<td class="tabstrip" colspan="4">
-<table border="0" cellpadding="0" cellspacing="0" class="tab">
-<tr>
-<td class="tab pre-separator"></td><td>
-<table border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="tab unselected top-left TUTL"></td><td class="tab unselected corner"><a class="base-not-selected" href="../index.html">Project</a></td><td class="tab unselected top-right TUTR"></td>
-</tr>
-<tr>
-<td class="spacer" colspan="3"></td>
-</tr>
-</table>
-</td><td class="tab separator"></td><td class="tab selected top-left TSTL"></td><td class="tab selected"><a class="base-selected" href="../installation/index.html">Installation</a></td><td class="tab selected top-right TSTR"></td><td class="tab separator"></td><td>
-<table border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="tab unselected top-left TUTL"></td><td class="tab unselected corner"><a class="base-not-selected" href="../docs/index.html">Documentation</a></td><td class="tab unselected top-right TUTR"></td>
-</tr>
-<tr>
-<td class="spacer" colspan="3"></td>
-</tr>
-</table>
-</td><td class="tab separator"></td><td>
-<table border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="tab unselected top-left TUTL"></td><td class="tab unselected corner"><a class="base-not-selected" href="../community/index.html">Community</a></td><td class="tab unselected top-right TUTR"></td>
-</tr>
-<tr>
-<td class="spacer" colspan="3"></td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td class="level2tabstrip" colspan="2"></td><td class="datenote level2tabstrip" colspan="2">
-<div class="published">
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="../installation/index.html">Installation</a>
+</li>
+<li>
+<a class="base-not-selected" href="../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="base-not-selected" href="../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
 <script type="text/javascript" language="JavaScript"><!--
               document.write("Published: " + document.lastModified);
               //  --></script>
 </div>
-</td>
-</tr>
-</table>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td valign="top">
-<table class="menuarea" cellspacing="0" cellpadding="0">
-<tr>
-<td width="6px" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" class="leftpagemargin">
-<tr>
-<td class="subborder trail">&nbsp;</td>
-</tr>
-</table>
-</td><td class="dialog">
-<div class="menu">
-<div onclick="SwitchMenu('menu_selected_1.1')" id="menu_selected_1.1Title" class="menutitle">Installation</div>
-<div id="menu_selected_1.1" class="selectedmenuitemgroup">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://cocoon.apache.org/">cocoon</a><script src="../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', '../skin/')" id="menu_1.1Title" class="menutitle">Project</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="../index.html">About</a>
+</div>
+<div class="menuitem">
+<a href="../history.html">History</a>
+</div>
+<div class="menuitem">
+<a href="../roadmap.html">Roadmap</a>
+</div>
+<div class="menuitem">
+<a href="../release.html">Release 1.2</a>
+</div>
+<div class="menuitem">
+<a href="../license.html">License</a>
+</div>
+<div class="menuitem">
+<a href="../related-projects.html">Related Projects</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.2', '../skin/')" id="menu_1.2Title" class="menutitle">Installation</div>
+<div id="menu_1.2" class="menuitemgroup">
 <div class="menuitem">
 <a href="../installation/prerequisites.html">Prerequisites</a>
 </div>
 <div class="menuitem">
 <a href="../installation/index.html">Download</a>
 </div>
-<div class="menupage">
-<div class="menupagetitle">CVS Access</div>
+<div class="menuitem">
+<a href="../installation/subversion.html">Subversion Access</a>
 </div>
 <div class="menuitem">
 <a href="../installation/source_version.html">Installation Instructions</a>
 </div>
 </div>
+<div onclick="SwitchMenu('menu_1.3', '../skin/')" id="menu_1.3Title" class="menutitle">Documentation</div>
+<div id="menu_1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/index.html">Documentation</a>
 </div>
-</td>
-</tr>
-<tr>
-<td></td><td>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="border bottom-left"></td><td class="border bottomborder"></td><td class="border bottom-right"></td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td colspan="2" height="10"></td>
-</tr>
-</table>
-</td><td width="100%" valign="top">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="subborder trail">
-	         &nbsp;<a href="http://www.apache.org/">apache</a> &gt; <a href="http://cocoon.apache.org/">cocoon</a><script src="../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>&nbsp;
-          </td><td nowrap="true" align="right" class="subborder trail"></td>
-</tr>
-<tr>
-<td colspan="2" align="left">
-<div class="content">
-<table class="title">
-<tr>
-<td valign="middle">
-<h1>Lenya CVS Guide</h1>
-</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="cvs.pdf"><img alt="PDF" src="../skin/images/pdfdoc.gif" class="skin"><br>
-        PDF</a></td>
-</tr>
-</table>
+<div class="menuitem">
+<a href="../docu.pdf">pdf docu (whole)</a>
+</div>
+<div class="menuitem">
+<a href="../docu.html">html docu (whole)</a>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4', '../skin/')" id="menu_1.3.4Title" class="menutitle">Integrator/Dev Guide</div>
+<div id="menu_1.3.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.3.4.1', '../skin/')" id="menu_1.3.4.1Title" class="menutitle">Components</div>
+<div id="menu_1.3.4.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/index.html">Components</a>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.2', '../skin/')" id="menu_1.3.4.1.2Title" class="menutitle">Access&nbsp;Control</div>
+<div id="menu_1.3.4.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/accesscontrol/terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/accesscontrol/authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/accesscontrol/authorizers.html">Authorizers</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/accesscontrol/ssl.html">SSL Encryption</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.3', '../skin/')" id="menu_1.3.4.1.3Title" class="menutitle">Deployment</div>
+<div id="menu_1.3.4.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/deployment/mod_proxy.html">mod_proxy</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.4', '../skin/')" id="menu_1.3.4.1.4Title" class="menutitle">Editors</div>
+<div id="menu_1.3.4.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/editors/htmlform.html">HTML Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/editors/1form.html">HTML One Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/editors/bxeng.html">Bitflux Editor</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/editors/kupu.html">Kupu</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/editors/xopus.html">Xopus</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.5', '../skin/')" id="menu_1.3.4.1.5Title" class="menutitle">Layout</div>
+<div id="menu_1.3.4.1.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/layout/navigation.html">Navigation</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/layout/xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/layout/static-resources.html">Serving static resources</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/layout/lenya-menubar.html">Lenya Menubar</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.6', '../skin/')" id="menu_1.3.4.1.6Title" class="menutitle">Publication</div>
+<div id="menu_1.3.4.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/publication/siteTree.html">Site tree</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.7', '../skin/')" id="menu_1.3.4.1.7Title" class="menutitle">Revision Control</div>
+<div id="menu_1.3.4.1.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/revisioncontrol/rcml.html">RCML</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/revisioncontrol/checkin.html">Check In</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/revisioncontrol/checkout.html">Check Out</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/revisioncontrol/version.html">Revisions</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/revisioncontrol/rollback.html">Rollback</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.8', '../skin/')" id="menu_1.3.4.1.8Title" class="menutitle">Repository</div>
+<div id="menu_1.3.4.1.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/repository/webdav.html">WebDAV Servers</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.9', '../skin/')" id="menu_1.3.4.1.9Title" class="menutitle">Search</div>
+<div id="menu_1.3.4.1.9" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/search/lucene.html">Searching with Lucene</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.10', '../skin/')" id="menu_1.3.4.1.10Title" class="menutitle">URI Handling</div>
+<div id="menu_1.3.4.1.10" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/uri-handling/standardURI.html">URI Scheme</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/uri-handling/usecases.html">Usecases</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.11', '../skin/')" id="menu_1.3.4.1.11Title" class="menutitle">Asset Management</div>
+<div id="menu_1.3.4.1.11" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/asset-management/management.html">Asset Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.12', '../skin/')" id="menu_1.3.4.1.12Title" class="menutitle">Link Management</div>
+<div id="menu_1.3.4.1.12" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/link-management/link-management.html">Link Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.13', '../skin/')" id="menu_1.3.4.1.13Title" class="menutitle">Meta Data</div>
+<div id="menu_1.3.4.1.13" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/metadata/metadata.html">Meta Data Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.14', '../skin/')" id="menu_1.3.4.1.14Title" class="menutitle">Multilingual Documents</div>
+<div id="menu_1.3.4.1.14" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.15', '../skin/')" id="menu_1.3.4.1.15Title" class="menutitle">Tasks</div>
+<div id="menu_1.3.4.1.15" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/tasks/taskaction.html">The TaskAction</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.15.5', '../skin/')" id="menu_1.3.4.1.15.5Title" class="menutitle">Included tasks</div>
+<div id="menu_1.3.4.1.15.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../docs/components/tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.16', '../skin/')" id="menu_1.3.4.1.16Title" class="menutitle">Workflow</div>
+<div id="menu_1.3.4.1.16" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/workflow/terms.html">Terms</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/workflow/state-machine.html">The State Machine</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/workflow/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/workflow/implementation.html">Implementation</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.1.17', '../skin/')" id="menu_1.3.4.1.17Title" class="menutitle">Site Management</div>
+<div id="menu_1.3.4.1.17" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/archive.html">Archive</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/copy.html">Copy</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/deactivate.html">Deactivate</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/delete.html">Delete</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/deletetrash.html">Delete the trash</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/move.html">Move</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/rename.html">Rename</a>
+</div>
+<div class="menuitem">
+<a href="../docs/components/sitemanagement/restore.html">Restore</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.2', '../skin/')" id="menu_1.3.4.2Title" class="menutitle">Specifications</div>
+<div id="menu_1.3.4.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/specs/namespaces.html">Namespaces</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4.3', '../skin/')" id="menu_1.3.4.3Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.3.4.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../docs/misc/coding-guidelines.html">Coding Guidelines</a>
+</div>
+<div class="menuitem">
+<a href="../docs/misc/unittests.html">Unit Tests</a>
+</div>
+<div class="menuitem">
+<a href="../docs/misc/xinclude-processor.html">XInclude Processor</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../apidocs/index.html">API (Javadoc)</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.4', '../skin/')" id="menu_1.4Title" class="menutitle">Community</div>
+<div id="menu_1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../community/index.html">Contributing</a>
+</div>
+<div class="menuitem">
+<a href="../community/acknowledgements.html">Credits</a>
+</div>
+<div class="menuitem">
+<a href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">CVS Web</a>
+</div>
+<div class="menuitem">
+<a href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Lenya&short_desc=&short_desc_type=allwordssubstr&long_desc=&long_desc_type=allwordssubstr&bug_file_loc=&bug_file_loc_type=allwordssubstr&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&order=%27Importance%27">Bug Tracker</a>
+</div>
+<div class="menuitem">
+<a href="../community/mailing-lists.html">Mailing Lists</a>
+</div>
+<div class="menuitem">
+<a href="../community/irc.html">IRC</a>
+</div>
+<div class="menuitem">
+<a href="../community/meetings.html">Meetings and Sprints</a>
+</div>
+<div class="menuitem">
+<a href="../community/live-sites.html">Live Sites</a>
+</div>
+<div class="menuitem">
+<a href="../community/website-update.html">Website Update</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternativ credits
+  +-->
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div id="skinconf-txtlink"></div>
+<div class="pdflink">
+<a class="dida" href="cvs.pdf"><img alt="PDF" src="../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Lenya Code Repository Guide</h1>
+<div id="minitoc-area">
 <ul class="minitoc">
 <li>
-<a href="#CVS+for+the+public">CVS for the public</a>
+<a href="#SVN">SVN</a>
 </li>
 <li>
-<a href="#CVS+for+committers">CVS for committers</a>
+<a href="#SVN+for+committers">SVN for committers</a>
 </li>
 <li>
-<a href="#ViewCVS">ViewCVS</a>
+<a href="#ViewSVN">ViewSVN</a>
 </li>
 <li>
 <a href="#CVS+Tips">CVS Tips</a>
 </li>
-</ul> 
+</ul>
+</div> 
 
 
-<a name="N1001B"></a><a name="CVS+for+the+public"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h3">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h3>CVS for the public</h3>
-</td><td></td>
-</tr>
-<tr class="heading ">
-<td class="bottom-left"></td><td class="bottomborder"></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<a name="N10014"></a><a name="SVN"></a>
+<h2 class="underlined_10">SVN</h2>
 <div class="section">
-
-
 <p>
 Start the shell of your choice and enter:
 </p>
-
 <pre class="code">
-cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login
-(password: anoncvs)
-cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic checkout cocoon-lenya
+svn co http://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
 </pre>
+<p>Comitters must access SVN with <span class="codefrag">https</span>
+  to have write access.
+</p>
+<p>Use the following URL pattern to checkout out other tags or branches.</p>
+<ul>
 
+<li>
+<span class="codefrag">svn co http://svn.apache.org/repos/asf/incubator/lenya/branches/[branch_name]</span>
+</li>
+
+<li>
+<span class="codefrag">svn co http://svn.apache.org/repos/asf/incubator/lenya/tags/[tag]</span>
+</li>
+
+</ul>
+<p>Release tags are named <span class="codefrag">RELEASE_X_Y_Z</span> i.e. <span class="codefrag">RELEASE_1_2</span>, 
+  where X is the major version number and Y and Z are the minor version numbers.</p>
+<ul>
+  
+<li>
+<a class="external" href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/?root=Apache-SVN">Browse the Lenya 
+    code repository</a>
+</li>
+  
+<li>
+    
+<a class="external" href="http://www.apache.de/dev/version-control.html">ASF documention on source code 
+      repositories</a>
+  
+</li>
+
+</ul>
 </div>
 
 
-<a name="N10029"></a><a name="CVS+for+committers"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h3">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h3>CVS for committers</h3>
-</td><td></td>
-</tr>
-<tr class="heading ">
-<td class="bottom-left"></td><td class="bottomborder"></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<a name="N1004E"></a><a name="SVN+for+committers"></a>
+<h2 class="underlined_10">SVN for committers</h2>
 <div class="section">
-
-
 <p>
 Start the shell of your choice and enter:
 </p>
-
 <pre class="code">
-export CVS_RSH=ssh
-cvs -d :ext:userid@cvs.apache.org:/home/cvs checkout cocoon-lenya
+svn co https://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
 </pre>
-
 </div>
 
 
-<a name="N10037"></a><a name="ViewCVS"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h3">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h3>ViewCVS</h3>
-</td><td></td>
-</tr>
-<tr class="heading ">
-<td class="bottom-left"></td><td class="bottomborder"></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<a name="N1005C"></a><a name="ViewSVN"></a>
+<h2 class="underlined_10">ViewSVN</h2>
 <div class="section">
-
-
 <p>
 
-<a class="external" href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/</a>
+<a class="external" href="http://svn.apache.org/repos/asf/incubator/lenya/">
+  http://svn.apache.org/repos/asf/incubator/lenya/</a>
 
 </p>
-
 </div>
 
 
-<a name="N10045"></a><a name="CVS+Tips"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h3">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h3>CVS Tips</h3>
-</td><td></td>
-</tr>
-<tr class="heading ">
-<td class="bottom-left"></td><td class="bottomborder"></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<a name="N1006A"></a><a name="CVS+Tips"></a>
+<h2 class="underlined_10">CVS Tips</h2>
 <div class="section">
-  
-  
-  
 <ul>
     
 <li>Please make sure that you use the -kb option when adding binary files, 
@@ -296,7 +583,6 @@ As a reminder here's a excerpt from the CVS info pages:
 </li>
   
 </ul>
-
 <pre class="code">
 &gt;    CVS tries to set up reasonable file permissions for new directories
 &gt; that are added inside the tree, but you must fix the permissions
@@ -318,40 +604,33 @@ As a reminder here's a excerpt from the CVS info pages:
 &gt; versions of CVS; do not rely on the setting of `CVSUMASK' on the client
 &gt; having no effect.
 </pre>
-  
-
 </div>
 
 
-<p align="right">
-<font size="-2">by&nbsp;Andreas Hartmann</font>
-</p>
 </div>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<table>
-<tr>
-<td>
-<br>
-<br>
-</td>
-</tr>
-</table>
-<table class="footer">
-<tr>
-<td colspan="2" align="center" width="90%"><span class="footnote"><a href="http://www.apache.org/licenses/LICENSE-2.0">
-                Copyright &copy; 2002-2004&nbsp;
-                The Apache Software Foundation.</a>
-            All rights reserved.
-            <br>
-<script type="text/javascript" language="JavaScript"><!--
-              document.write(" - "+"Last Published: " + document.lastModified);
-              //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"></td>
-</tr>
-</table>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+ Copyright &copy; 2002-2004 The Apache Software Foundation.</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:lenya-user@cocoon.apache.org?subject=Feedback %C2%A0installation/cvs.html">lenya-user@cocoon.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
 </body>
 </html>

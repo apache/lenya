@@ -2,87 +2,99 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.6-dev">
+<meta name="Forrest-skin-name" content="pelt">
 <title>The Lenya Menubar</title>
-<link type="text/css" href="../../../skin/page.css" rel="stylesheet">
-<link type="text/css" href="../../../skin/forrest.css" rel="stylesheet">
+<link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../../skin/profile.css" rel="stylesheet">
+<script src="../../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
 <link rel="shortcut icon" href="../../../">
-<script src="../../../skin/fontsize.js" language="javascript" type="text/javascript"></script><script src="../../../skin/menu.js" language="javascript" type="text/javascript"></script>
 </head>
 <body onload="init()">
 <script type="text/javascript">ndeSetTextSize();</script>
-<table width="100%" border="0" cellpadding="0" cellspacing="0" class="header">
-<tr>
-<td>
-<div class="headerlogo">
-<a href="http://cocoon.apache.org"><img class="logoImage" alt="Apache Cocoon" src="../../../images/cocoon-project-logo-big.png"></a>
+<div id="top">
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://cocoon.apache.org"><img class="logoImage" alt="Apache Cocoon" src="../../../images/cocoon-project-logo-big.png" title="
+  	The Apache Cocoon Project is the open source community project developing Apache Cocoon 
+  	and Cocoon-based application frameworks.
+  "></a>
 </div>
-</td><td valign="bottom" colspan="3" align="right">
-<div class="headerlogo right">
-<a href="http://cocoon.apache.org/lenya"><img class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png"></a>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogoA1">
+<a href="http://cocoon.apache.org/lenya"><img class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png" title="
+  	Apache Lenya is a Java-based Open-Source Content Management System. 
+  	It is based on open standards such as XML and XSLT. 
+  	One of its core components is Cocoon from the Apache Software Foundation.
+  "></a>
 </div>
-</td>
-</tr>
-<tr>
-<td class="tabstrip" colspan="4">
-<table border="0" cellpadding="0" cellspacing="0" class="tab">
-<tr>
-<td class="tab pre-separator"></td><td>
-<table border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="tab unselected top-left TUTL"></td><td class="tab unselected corner"><a class="base-not-selected" href="../../../index.html">Project</a></td><td class="tab unselected top-right TUTR"></td>
-</tr>
-<tr>
-<td class="spacer" colspan="3"></td>
-</tr>
-</table>
-</td><td class="tab separator"></td><td>
-<table border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="tab unselected top-left TUTL"></td><td class="tab unselected corner"><a class="base-not-selected" href="../../../installation/index.html">Installation</a></td><td class="tab unselected top-right TUTR"></td>
-</tr>
-<tr>
-<td class="spacer" colspan="3"></td>
-</tr>
-</table>
-</td><td class="tab separator"></td><td class="tab selected top-left TSTL"></td><td class="tab selected"><a class="base-selected" href="../../../docs/index.html">Documentation</a></td><td class="tab selected top-right TSTR"></td><td class="tab separator"></td><td>
-<table border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="tab unselected top-left TUTL"></td><td class="tab unselected corner"><a class="base-not-selected" href="../../../community/index.html">Community</a></td><td class="tab unselected top-right TUTR"></td>
-</tr>
-<tr>
-<td class="spacer" colspan="3"></td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td class="level2tabstrip" colspan="2"></td><td class="datenote level2tabstrip" colspan="2">
-<div class="published">
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../../../index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../installation/index.html">Installation</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
 <script type="text/javascript" language="JavaScript"><!--
               document.write("Published: " + document.lastModified);
               //  --></script>
 </div>
-</td>
-</tr>
-</table>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td valign="top">
-<table class="menuarea" cellspacing="0" cellpadding="0">
-<tr>
-<td width="6px" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" class="leftpagemargin">
-<tr>
-<td class="subborder trail">&nbsp;</td>
-</tr>
-</table>
-</td><td class="dialog">
-<div class="menu">
-<div onclick="SwitchMenu('menu_selected_1.1')" id="menu_selected_1.1Title" class="menutitle">Documentation</div>
-<div id="menu_selected_1.1" class="selectedmenuitemgroup">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://cocoon.apache.org/">cocoon</a><script src="../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Documentation</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../docs/index.html">Documentation</a>
 </div>
@@ -92,14 +104,14 @@
 <div class="menuitem">
 <a href="../../../docu.html">html docu (whole)</a>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.4')" id="menu_selected_1.1.4Title" class="menutitle">Integrator/Dev Guide</div>
-<div id="menu_selected_1.1.4" class="selectedmenuitemgroup">
-<div onclick="SwitchMenu('menu_selected_1.1.4.1')" id="menu_selected_1.1.4.1Title" class="menutitle">Components</div>
-<div id="menu_selected_1.1.4.1" class="selectedmenuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Integrator/Dev Guide</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_selected_1.1.4.1', '../../../skin/')" id="menu_selected_1.1.4.1Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Components</div>
+<div id="menu_selected_1.1.4.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../docs/components/index.html">Components</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.2')" id="menu_1.1.4.1.2Title" class="menutitle">Access&nbsp;Control</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.2', '../../../skin/')" id="menu_1.1.4.1.2Title" class="menutitle">Access&nbsp;Control</div>
 <div id="menu_1.1.4.1.2" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/accesscontrol/terms.html">Basic Terms</a>
@@ -125,17 +137,14 @@
 <div class="menuitem">
 <a href="../../../docs/components/accesscontrol/ssl.html">SSL Encryption</a>
 </div>
-<div class="menuitem">
-<a href="../../../docs/components/accesscontrol/faq.html">FAQ</a>
 </div>
-</div>
-<div onclick="SwitchMenu('menu_1.1.4.1.3')" id="menu_1.1.4.1.3Title" class="menutitle">Deployment</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.3', '../../../skin/')" id="menu_1.1.4.1.3Title" class="menutitle">Deployment</div>
 <div id="menu_1.1.4.1.3" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/deployment/mod_proxy.html">mod_proxy</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.4')" id="menu_1.1.4.1.4Title" class="menutitle">Editors</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.4', '../../../skin/')" id="menu_1.1.4.1.4Title" class="menutitle">Editors</div>
 <div id="menu_1.1.4.1.4" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/editors/htmlform.html">HTML Form Editor</a>
@@ -153,8 +162,8 @@
 <a href="../../../docs/components/editors/xopus.html">Xopus</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.4.1.5')" id="menu_selected_1.1.4.1.5Title" class="menutitle">Layout</div>
-<div id="menu_selected_1.1.4.1.5" class="selectedmenuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1.4.1.5', '../../../skin/')" id="menu_selected_1.1.4.1.5Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Layout</div>
+<div id="menu_selected_1.1.4.1.5" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../docs/components/layout/navigation.html">Navigation</a>
 </div>
@@ -168,7 +177,7 @@
 <div class="menupagetitle">Lenya Menubar</div>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.6')" id="menu_1.1.4.1.6Title" class="menutitle">Publication</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.6', '../../../skin/')" id="menu_1.1.4.1.6Title" class="menutitle">Publication</div>
 <div id="menu_1.1.4.1.6" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
@@ -177,7 +186,7 @@
 <a href="../../../docs/components/publication/siteTree.html">Site tree</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.7')" id="menu_1.1.4.1.7Title" class="menutitle">Revision Control</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.7', '../../../skin/')" id="menu_1.1.4.1.7Title" class="menutitle">Revision Control</div>
 <div id="menu_1.1.4.1.7" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
@@ -198,19 +207,19 @@
 <a href="../../../docs/components/revisioncontrol/rollback.html">Rollback</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.8')" id="menu_1.1.4.1.8Title" class="menutitle">Repository</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.8', '../../../skin/')" id="menu_1.1.4.1.8Title" class="menutitle">Repository</div>
 <div id="menu_1.1.4.1.8" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/repository/webdav.html">WebDAV Servers</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.9')" id="menu_1.1.4.1.9Title" class="menutitle">Search</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.9', '../../../skin/')" id="menu_1.1.4.1.9Title" class="menutitle">Search</div>
 <div id="menu_1.1.4.1.9" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/search/lucene.html">Searching with Lucene</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.10')" id="menu_1.1.4.1.10Title" class="menutitle">URI Handling</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.10', '../../../skin/')" id="menu_1.1.4.1.10Title" class="menutitle">URI Handling</div>
 <div id="menu_1.1.4.1.10" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
@@ -222,31 +231,31 @@
 <a href="../../../docs/components/uri-handling/usecases.html">Usecases</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.11')" id="menu_1.1.4.1.11Title" class="menutitle">Asset Management</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.11', '../../../skin/')" id="menu_1.1.4.1.11Title" class="menutitle">Asset Management</div>
 <div id="menu_1.1.4.1.11" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/asset-management/management.html">Asset Management</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.12')" id="menu_1.1.4.1.12Title" class="menutitle">Link Management</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.12', '../../../skin/')" id="menu_1.1.4.1.12Title" class="menutitle">Link Management</div>
 <div id="menu_1.1.4.1.12" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/link-management/link-management.html">Link Management</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.13')" id="menu_1.1.4.1.13Title" class="menutitle">Meta Data</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.13', '../../../skin/')" id="menu_1.1.4.1.13Title" class="menutitle">Meta Data</div>
 <div id="menu_1.1.4.1.13" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/metadata/metadata.html">Meta Data Handling</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.14')" id="menu_1.1.4.1.14Title" class="menutitle">Multilingual Documents</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.14', '../../../skin/')" id="menu_1.1.4.1.14Title" class="menutitle">Multilingual Documents</div>
 <div id="menu_1.1.4.1.14" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/multilingual/multilingual.html">Multilingual Document Handling</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.15')" id="menu_1.1.4.1.15Title" class="menutitle">Tasks</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.15', '../../../skin/')" id="menu_1.1.4.1.15Title" class="menutitle">Tasks</div>
 <div id="menu_1.1.4.1.15" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/tasks/concept.html">The Task Concept</a>
@@ -260,7 +269,7 @@
 <div class="menuitem">
 <a href="../../../docs/components/tasks/scheduling.html">Scheduling a Task</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.15.5')" id="menu_1.1.4.1.15.5Title" class="menutitle">Included tasks</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.15.5', '../../../skin/')" id="menu_1.1.4.1.15.5Title" class="menutitle">Included tasks</div>
 <div id="menu_1.1.4.1.15.5" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/tasks/anttask.html">AntTask</a>
@@ -279,7 +288,7 @@
 <a href="../../../docs/components/tasks/development.html">Developing Tasks</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.16')" id="menu_1.1.4.1.16Title" class="menutitle">Workflow</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.16', '../../../skin/')" id="menu_1.1.4.1.16Title" class="menutitle">Workflow</div>
 <div id="menu_1.1.4.1.16" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/workflow/terms.html">Terms</a>
@@ -294,7 +303,7 @@
 <a href="../../../docs/components/workflow/implementation.html">Implementation</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.1.17')" id="menu_1.1.4.1.17Title" class="menutitle">Site Management</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.17', '../../../skin/')" id="menu_1.1.4.1.17Title" class="menutitle">Site Management</div>
 <div id="menu_1.1.4.1.17" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/components/sitemanagement/archive.html">Archive</a>
@@ -325,13 +334,13 @@
 </div>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.2')" id="menu_1.1.4.2Title" class="menutitle">Specifications</div>
+<div onclick="SwitchMenu('menu_1.1.4.2', '../../../skin/')" id="menu_1.1.4.2Title" class="menutitle">Specifications</div>
 <div id="menu_1.1.4.2" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/specs/namespaces.html">Namespaces</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.4.3')" id="menu_1.1.4.3Title" class="menutitle">Miscellaneous</div>
+<div onclick="SwitchMenu('menu_1.1.4.3', '../../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Miscellaneous</div>
 <div id="menu_1.1.4.3" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../docs/misc/coding-guidelines.html">Coding Guidelines</a>
@@ -348,40 +357,27 @@
 </div>
 </div>
 </div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternativ credits
+  +-->
 </div>
-</td>
-</tr>
-<tr>
-<td></td><td>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="border bottom-left"></td><td class="border bottomborder"></td><td class="border bottom-right"></td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td colspan="2" height="10"></td>
-</tr>
-</table>
-</td><td width="100%" valign="top">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="subborder trail">
-	         &nbsp;<a href="http://www.apache.org/">apache</a> &gt; <a href="http://cocoon.apache.org/">cocoon</a><script src="../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>&nbsp;
-          </td><td nowrap="true" align="right" class="subborder trail"></td>
-</tr>
-<tr>
-<td colspan="2" align="left">
-<div class="content">
-<table class="title">
-<tr>
-<td valign="middle">
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div id="skinconf-txtlink"></div>
+<div class="pdflink">
+<a class="dida" href="lenya-menubar.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
 <h1>The Lenya Menubar</h1>
-</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="lenya-menubar.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
-        PDF</a></td>
-</tr>
-</table>
+<div id="minitoc-area">
 <ul class="minitoc">
 <li>
 <a href="#Defining+the+Menubar">Defining the Menubar</a>
@@ -432,44 +428,16 @@
 </li>
 <li>
 <a href="#Applying+the+Menubar+-+Classic+Approach">Applying the Menubar - Classic Approach</a>
-<ul class="minitoc">
-<li>
-<a href="#XSLT">XSLT</a>
 </li>
 </ul>
-</li>
-</ul>
+</div>
   
 
 <a name="N1001F"></a><a name="Defining+the+Menubar"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h3">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h3>Defining the Menubar</h3>
-</td><td></td>
-</tr>
-<tr class="heading ">
-<td class="bottom-left"></td><td class="bottomborder"></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h2 class="underlined_10">Defining the Menubar</h2>
 <div class="section">
-
-
 <a name="N10024"></a><a name="The+XML+Structure"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h4">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h4>The XML Structure</h4>
-</td><td></td>
-</tr>
-<tr class="subheading">
-<td class="bottom-left"></td><td></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h3 class="underlined_5">The XML Structure</h3>
 <p>
   A menubar declaration contains the definition of several menus.
   Each menu consists of a set of blocks containing items.
@@ -493,21 +461,8 @@
   &lt;/menus&gt;
 
 &lt;/menu&gt;</pre>
-
-
 <a name="N10031"></a><a name="Showing+Blocks+and+Items+Only+in+Certain+Tabs"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h4">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h4>Showing Blocks and Items Only in Certain Tabs</h4>
-</td><td></td>
-</tr>
-<tr class="subheading">
-<td class="bottom-left"></td><td></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h3 class="underlined_5">Showing Blocks and Items Only in Certain Tabs</h3>
 <p>
   When you use the same menu declaration for different tabs,
   it might be wished that a menu item shouldn't appear in all
@@ -525,21 +480,8 @@
   ...
 &lt;/block&gt;
 </pre>
-
-
 <a name="N10050"></a><a name="Specifying+Usecases+and+Workflow+Events"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h4">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h4>Specifying Usecases and Workflow Events</h4>
-</td><td></td>
-</tr>
-<tr class="subheading">
-<td class="bottom-left"></td><td></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h3 class="underlined_5">Specifying Usecases and Workflow Events</h3>
 <p>
   When a menu item calls a usecase or triggers a workflow transition,
   and the corresponding action is not allowed, the <span class="codefrag">href</span>
@@ -604,27 +546,12 @@
   or to execute the usecase <span class="codefrag">edit-forms</span>, the menu
   item will be disabled.
 </p>
-
-
 </div>
   
 
 <a name="N1009B"></a><a name="Applying+the+Menubar+-+Meta+Stylesheet+Approach"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h3">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h3>Applying the Menubar - Meta Stylesheet Approach</h3>
-</td><td></td>
-</tr>
-<tr class="heading ">
-<td class="bottom-left"></td><td class="bottomborder"></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h2 class="underlined_10">Applying the Menubar - Meta Stylesheet Approach</h2>
 <div class="section">
-
-
 <p>
 In this approach, the publication simply builds its XHTML
 page without any additional XML. The Lenya menubar is added using
@@ -633,21 +560,8 @@ You find more information on meta stylesheets on the page
 <a class="external" href="http://wiki.cocoondev.org/Wiki.jsp?page=MetaStylesheets">MetaStylesheets</a>
 in the cocoondev wiki.
 </p>
-
-
 <a name="N100A7"></a><a name="The+Big+Picture+%28literally%29"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h4">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h4>The Big Picture (literally)</h4>
-</td><td></td>
-</tr>
-<tr class="subheading">
-<td class="bottom-left"></td><td></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h3 class="underlined_5">The Big Picture (literally)</h3>
 <p>
 
 <img alt="Lenya page processing" src="images/live/lenya-page-processing.png">
@@ -689,21 +603,8 @@ In the left column you see the XML flow within the publication sitemaps,
   additional CSS file entries and modifies the HTML title.</li>
 
 </ul>
-
-
 <a name="N100F0"></a><a name="Configuring+the+Publication"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h4">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h4>Configuring the Publication</h4>
-</td><td></td>
-</tr>
-<tr class="subheading">
-<td class="bottom-left"></td><td></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h3 class="underlined_5">Configuring the Publication</h3>
 <a name="N100F5"></a><a name="Requesting+the+lenya-page+Meta+Stylesheet"></a>
 <h4>Requesting the lenya-page Meta Stylesheet</h4>
 <p>The lenya-page meta stylesheet request looks as follows:</p>
@@ -765,21 +666,8 @@ select a menu.</p>
 <pre class="code">cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:document-type}</pre>
 <p>Using the document URL:</p>
 <pre class="code">cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:document-url}</pre>
-
-
 <a name="N10162"></a><a name="Creating+a+Customized+Menu"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h4">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h4>Creating a Customized Menu</h4>
-</td><td></td>
-</tr>
-<tr class="subheading">
-<td class="bottom-left"></td><td></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h3 class="underlined_5">Creating a Customized Menu</h3>
 <p>
   It is also possible to get the menu XML before it is transformed
   to XHTML using a request to the core. For this purpose, the prefix
@@ -791,53 +679,23 @@ select a menu.</p>
   &lt;map:part src="cocoon:/lenyabody/{1}/{2}.xml"/&gt;
   &lt;map:part src="cocoon://menu-xml/{page-envelope:publication-id}/{1}.xml"/&gt;
 &lt;/map:aggregate&gt;</pre>
-
-
 </div>
 
 
 
 <a name="N10176"></a><a name="Applying+the+Menubar+-+Classic+Approach"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h3">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h3>Applying the Menubar - Classic Approach</h3>
-</td><td></td>
-</tr>
-<tr class="heading ">
-<td class="bottom-left"></td><td class="bottomborder"></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h2 class="underlined_10">Applying the Menubar - Classic Approach</h2>
 <div class="section">
-
-
 <div class="frame note">
 <div class="label">Note</div>
 <div class="content">This approach is deprecated.</div>
 </div>
-
-
 <a name="N1017E"></a><a name="XSLT"></a>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h4">
-<tbody>
-<tr>
-<td height="10" width="9"></td><td>
-<h4>XSLT</h4>
-</td><td></td>
-</tr>
-<tr class="subheading">
-<td class="bottom-left"></td><td></td><td class="bottom-right"></td>
-</tr>
-</tbody>
-</table>
+<h3 class="underlined_5">XSLT</h3>
 <p>
 By editing <span class="codefrag">src/webapp/lenya/xslt/menu/menu.xsl</span> one can change the look and feel of the Lenya menu bar.
 This XSLT template is being included by <span class="codefrag">src/webapp/lenya/xslt/menu/root.xsl</span>.
 </p>
-
-
 </div>
 
 
@@ -845,31 +703,29 @@ This XSLT template is being included by <span class="codefrag">src/webapp/lenya/
 <font size="-2">by&nbsp;Michael Wechner,&nbsp;Andreas Hartmann</font>
 </p>
 </div>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<table>
-<tr>
-<td>
-<br>
-<br>
-</td>
-</tr>
-</table>
-<table class="footer">
-<tr>
-<td colspan="2" align="center" width="90%"><span class="footnote"><a href="http://www.apache.org/licenses/LICENSE-2.0">
-                Copyright &copy; 2002-2004&nbsp;
-                The Apache Software Foundation.</a>
-            All rights reserved.
-            <br>
-<script type="text/javascript" language="JavaScript"><!--
-              document.write(" - "+"Last Published: " + document.lastModified);
-              //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"></td>
-</tr>
-</table>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+ Copyright &copy; 2002-2004 The Apache Software Foundation.</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:lenya-user@cocoon.apache.org?subject=Feedback %C2%A0docs/components/layout/lenya-menubar.html">lenya-user@cocoon.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
 </body>
 </html>
