@@ -77,14 +77,6 @@ public class SiteTreeNodeImplTest extends TestCase {
     }
 
     /**
-     * Test getParentId.
-     *
-     */
-    final public void testGetParentId() {
-        assertEquals(node.getParentId(), "foo");
-    }
-
-    /**
      * Test getAbsoluteId
      * 
      */

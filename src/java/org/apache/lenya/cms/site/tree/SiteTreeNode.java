@@ -32,13 +32,6 @@ import org.apache.lenya.cms.site.Label;
 public interface SiteTreeNode {
 
     /**
-     * Get the parent-id of this node.
-     * 
-     * @return the parent-id.
-     */
-    String getParentId();
-    
-    /**
      * Returns the parent node of this node.
      * @return A sitetree node.
      */

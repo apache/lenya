@@ -59,32 +59,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getParentId()
-     * @deprecated use getParent().getId() instead
-     */
-    public String getParentId() {
-        Node parent = node.getParentNode();
-
-        if (parent == null) {
-            return "/";
-        }
-
-        NamedNodeMap attributes = parent.getAttributes();
-
-        if (attributes == null) {
-            return "/";
-        }
-
-        Node idAttribute = attributes.getNamedItem(ID_ATTRIBUTE_NAME);
-
-        if (idAttribute == null) {
-            return "/";
-        }
-
-        return idAttribute.getNodeValue();
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getId()
      */
     public String getId() {
