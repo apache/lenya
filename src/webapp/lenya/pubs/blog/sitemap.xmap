@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.19 2003/08/27 22:28:38 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.20 2003/08/28 10:19:48 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -32,6 +32,9 @@
         <map:redirect-to uri="introduction.html"/>
       </map:match>
       <map:match pattern="*/">
+        <map:redirect-to uri="feeds/all/index.html"/>
+      </map:match>
+      <map:match pattern="*/index.html">
         <map:redirect-to uri="feeds/all/index.html"/>
       </map:match>
     </map:pipeline>
