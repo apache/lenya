@@ -33,18 +33,19 @@ import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Checks if a certain resource exists and returns either the string "true" or "false".
- * @version $Id: ResourceExistsModule.java,v 1.3 2004/04/15 14:11:02 andreas Exp $
+ * @version $Id$
  */
 public class ResourceExistsModule extends AbstractInputModule implements Serviceable, Disposable {
 
-    /* (non-Javadoc)
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+    /**
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
 
         String resourceURI = name;
-        
+
         Source source = null;
         boolean exists = false;
         try {
@@ -64,18 +65,19 @@ public class ResourceExistsModule extends AbstractInputModule implements Service
         return Boolean.toString(exists);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+    /**
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         return Collections.EMPTY_SET.iterator();
     }
 
     private ServiceManager manager;
     private SourceResolver resolver;
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
     public void service(ServiceManager manager) throws ServiceException {
@@ -83,7 +85,7 @@ public class ResourceExistsModule extends AbstractInputModule implements Service
         this.resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
     }
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
     public void dispose() {
@@ -93,13 +95,14 @@ public class ResourceExistsModule extends AbstractInputModule implements Service
         this.manager = null;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+    /**
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         Object result = this.getAttribute(name, modeConf, objectModel);
-        return (result == null ? null : new Object[] {result});
+        return (result == null ? null : new Object[] { result });
     }
 
 }

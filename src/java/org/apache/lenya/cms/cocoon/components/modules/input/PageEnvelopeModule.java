@@ -36,7 +36,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 
@@ -131,31 +130,6 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
                     StringUtils.join(
                         envelope.getDocument().getLanguages(),
                         ',');
-            } else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
-                value =
-                    envelope.getDocument().getDublinCore().getFirstValue(DublinCore.ELEMENT_TITLE);
-            } else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {
-                value =
-                    envelope.getDocument().getDublinCore().getFirstValue(
-                        DublinCore.ELEMENT_CREATOR);
-            } else if (name.equals(PageEnvelope.DOCUMENT_DC_PUBLISHER)) {
-                value =
-                    envelope.getDocument().getDublinCore().getFirstValue(
-                        DublinCore.ELEMENT_PUBLISHER);
-            } else if (name.equals(PageEnvelope.DOCUMENT_DC_SUBJECT)) {
-                value =
-                    envelope.getDocument().getDublinCore().getFirstValue(
-                        DublinCore.ELEMENT_SUBJECT);
-            } else if (name.equals(PageEnvelope.DOCUMENT_DC_DESCRIPTION)) {
-                value =
-                    envelope.getDocument().getDublinCore().getFirstValue(
-                        DublinCore.ELEMENT_DESCRIPTION);
-            } else if (name.equals(PageEnvelope.DOCUMENT_DC_RIGHTS)) {
-                value =
-                    envelope.getDocument().getDublinCore().getFirstValue(DublinCore.ELEMENT_RIGHTS);
-            } else if (name.equals(PageEnvelope.DOCUMENT_DC_DATE_CREATED)) {
-                value =
-                    envelope.getDocument().getDublinCore().getFirstValue(DublinCore.TERM_CREATED);
             } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
                 Date date = envelope.getDocument().getLastModified();
                 value = new SimpleDateFormat(DATE_FORMAT).format(date);

@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.util.Arrays;
@@ -31,6 +29,11 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.tree.SiteTree;
 
+/**
+ * Module for sitetree access.
+ *
+ * @version $Id:$
+ */
 public class SitetreeModule extends AbstractInputModule {
 
     public static final String AUTHORING_NODE = "authoring-node";

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PageEnvelope.java,v 1.59 2004/03/16 11:12:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -51,27 +51,6 @@ public class PageEnvelope {
     public static final String DOCUMENT_LANGUAGE = "document-language";
     public static final String DOCUMENT_LANGUAGES = "document-languages";
     public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
-    public static final String DOCUMENT_DC_TITLE = "document-dc-title";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
-    public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
-    public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
-    public static final String DOCUMENT_DC_PUBLISHER = "document-dc-publisher";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
-    public static final String DOCUMENT_DC_DATE_CREATED = "document-dc-date-created";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
-    public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
-    
-    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
-    public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
 
@@ -289,13 +268,6 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_LANGUAGE,
             PageEnvelope.DOCUMENT_LANGUAGES,
             PageEnvelope.DOCUMENT_LANGUAGES_CSV,
-            PageEnvelope.DOCUMENT_DC_TITLE,
-            PageEnvelope.DOCUMENT_DC_CREATOR,
-            PageEnvelope.DOCUMENT_DC_PUBLISHER,
-            PageEnvelope.DOCUMENT_DC_SUBJECT,
-            PageEnvelope.DOCUMENT_DC_DATE_CREATED,
-            PageEnvelope.DOCUMENT_DC_DESCRIPTION,
-            PageEnvelope.DOCUMENT_DC_RIGHTS,
             PageEnvelope.DOCUMENT_LASTMODIFIED,
             PageEnvelope.BREADCRUMB_PREFIX,
             PageEnvelope.SSL_PREFIX };

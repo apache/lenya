@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: WorkflowModule.java,v 1.6 2004/08/16 12:16:45 andreas Exp $  */
-
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.util.Arrays;
@@ -33,6 +31,11 @@ import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.WorkflowInstance;
 
+/**
+ * Module for workflow access.
+ * 
+ * @version $Id:$
+ */
 public class WorkflowModule extends AbstractInputModule {
 
     public static final String STATE = "state";
