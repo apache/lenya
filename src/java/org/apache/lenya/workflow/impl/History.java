@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.9 2003/08/05 16:29:06 andreas Exp $
+$Id: History.java,v 1.10 2003/08/15 13:13:28 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,6 +77,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.xml.transform.TransformerException;
 
@@ -96,6 +98,7 @@ public abstract class History implements WorkflowListener {
     public static final String VARIABLE_ELEMENT = "variable";
     public static final String NAME_ATTRIBUTE = "name";
     public static final String VALUE_ATTRIBUTE = "value";
+    public static final String DATE_ATTRIBUTE = "date";
 
     /**
      * Creates a new history object. A new history file is created and initialized.
@@ -239,6 +242,10 @@ public abstract class History implements WorkflowListener {
         Element versionElement = helper.createElement(VERSION_ELEMENT);
         versionElement.setAttribute(STATE_ATTRIBUTE, state.getId());
         versionElement.setAttribute(EVENT_ATTRIBUTE, event.getName());
+        
+        Date now = new Date();
+        String dateString = SimpleDateFormat.getDateTimeInstance().format(now);
+        versionElement.setAttribute(DATE_ATTRIBUTE, dateString);
 
         return versionElement;
     }
