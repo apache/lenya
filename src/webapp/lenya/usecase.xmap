@@ -468,6 +468,20 @@
           </map:match>
           
         </map:match>
+
+        <map:match pattern="info" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/info/info.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/info.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+          
+          <map:match pattern="update" type="step">
+            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+          </map:match>
+          
+        </map:match>
         
         
         <map:match pattern="move-down" type="usecase">
