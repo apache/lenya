@@ -32,21 +32,29 @@ src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="4" height="4" /></td>
      <img border="0" src="/lenya/lenya/menu/images/admin_inactive.gif" />
     </xsl:otherwise></xsl:choose>
   </a>
-  <a href="{url-info/context-prefix}/{url-info/publication-id}/info{url-info/document-url}">
+  
+  <xsl:variable name="document-url">
+  	<xsl:choose>
+  		<xsl:when test="url-info/area = 'admin'">/index.html</xsl:when>
+  		<xsl:otherwise><xsl:value-of select="url-info/document-url"/></xsl:otherwise>
+  	</xsl:choose>
+  </xsl:variable>
+  
+  <a href="{url-info/context-prefix}/{url-info/publication-id}/info{$document-url}">
    <xsl:choose><xsl:when test="url-info/area = 'info'">
     <img border="0" src="/lenya/lenya/menu/images/info_active.gif" />
     </xsl:when><xsl:otherwise>
      <img border="0" src="/lenya/lenya/menu/images/info_inactive.gif" />
     </xsl:otherwise></xsl:choose>
   </a>
-  <a href="{url-info/context-prefix}/{url-info/publication-id}/authoring{url-info/document-url}">
+  <a href="{url-info/context-prefix}/{url-info/publication-id}/authoring{$document-url}">
    <xsl:choose><xsl:when test="url-info/area = 'authoring'">
     <img border="0" src="/lenya/lenya/menu/images/authoring_active.gif" />
     </xsl:when><xsl:otherwise>
      <img border="0" src="/lenya/lenya/menu/images/authoring_inactive.gif" />
     </xsl:otherwise></xsl:choose>
   </a>
-  <a target="_blank" href="{url-info/context-prefix}/{url-info/publication-id}/live{url-info/document-url}">
+  <a target="_blank" href="{url-info/context-prefix}/{url-info/publication-id}/live{$document-url}">
     <img border="0" src="/lenya/lenya/menu/images/live_inactive.gif" />
   </a>
 </td>
