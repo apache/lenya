@@ -84,6 +84,7 @@
         <item href="config-bxeng.xml">Config&#160;for&#160;BXENG</item>
         <item href="index-bxeng.xml">XML&#160;for&#160;BXENG</item>
         <item href="entry-bxeng.xsl">XSLT&#160;for&#160;BXENG</item>
+        <item href="entry-bxeng.css">CSS&#160;for&#160;BXENG</item>
         <item href="entry-relaxng-bxeng.xml">RelaxNG&#160;for&#160;BXENG</item>
       </block>
     </menu>

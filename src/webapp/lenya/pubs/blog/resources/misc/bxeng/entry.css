@@ -1,0 +1,11 @@
+.title {
+  font-size: x-large;
+  font-weight: bold;
+  /*border: 1pt solid red;*/
+}
+
+.subtitle {
+  font-size: large;
+  font-weight: bold;
+  /*border: 1pt solid red;*/
+}
