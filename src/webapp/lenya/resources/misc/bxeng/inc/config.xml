@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<!-- $Id: config.xml,v 1.1 2003/08/15 09:55:34 michi Exp $ -->
+<config>
+    <files>
+        <input>
+            <!-- The XML-document with the actual data -->
+            <file name="BX_xmlfile" isParam="true">xml</file>
+            <!-- The XSL-document which transforms the xml to the output format -->
+            <file name="BX_xslfile">test.xsl</file>
+        </input>
+        
+        <!-- You can't provide a different "method" than http.get for the following files -->
+        <css>
+            <!-- Document specific css
+                This is the one, which you should adjust.
+             -->
+             <file>css/site.css</file>
+          
+        </css>
+        
+        <scripts>
+        <!-- These are the to be included js files 
+            the important .js files are included by bxeLoader.js, but you should
+            not have to worry about them. 
+            You can also add your own js-files here.
+            -->
+           <file>js/bxehtmltb.js</file>
+           <file>js/jsdav.js</file>
+           <file>td/webdav.js</file>
+           <file>mozile/mozilekb.js</file>
+
+        </scripts>
+        
+        
+    </files>
+
+</config>
