@@ -76,7 +76,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.38 2004/02/16 11:19:19 gregor Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.39 2004/02/16 12:43:49 gregor Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when 
  * namespaces are not declared within the root element. Unfortunately the XSLTs 
@@ -87,8 +87,8 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
  *
  * FIXME: There seems to be another problem with default namespaces
  *
- * WARNING: Internet Explorer does not send the name without the coordinates if 
- * input type is equals image. Mozilla does.
+ * WARNING: Internet Explorer sends X and Y coordinates for image buttons. These have to
+ * be treated differently. Mozilla does not send these coordinates.
  */
 public class HTMLFormSaveAction
 	extends AbstractConfigurableAction
