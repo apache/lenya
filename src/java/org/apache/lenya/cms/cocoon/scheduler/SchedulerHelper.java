@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerHelper.java,v 1.1 2003/08/28 10:09:34 andreas Exp $
+$Id: SchedulerHelper.java,v 1.2 2003/08/29 11:33:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,6 @@ package org.apache.lenya.cms.cocoon.scheduler;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -67,6 +66,7 @@ import org.apache.lenya.cms.cocoon.task.CocoonTaskWrapper;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
+import org.apache.lenya.cms.scheduler.ServletJob;
 import org.apache.lenya.cms.task.TaskWrapper;
 import org.apache.lenya.util.NamespaceMap;
 
@@ -107,16 +107,15 @@ public class SchedulerHelper {
             TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
 
             logger.debug("Adding task wrapper parameters");
-            Parameters wrapperParameters = wrapper.getParameters();
-            Properties wrapperMap = Parameters.toProperties(wrapperParameters);
-            map.putAll(wrapperMap);
+            Map wrapperParameters = wrapper.getParameters();
+            map.putAll(wrapperParameters);
 
             NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
 
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
 
             schedulerParameters.put(
-                LoadQuartzServlet.PARAMETER_DOCUMENT_URL,
+                ServletJob.PARAMETER_DOCUMENT_URL,
                 envelope.getDocument().getCompleteURL());
             schedulerParameters.put(
                 LoadQuartzServlet.PARAMETER_PUBLICATION_ID,
