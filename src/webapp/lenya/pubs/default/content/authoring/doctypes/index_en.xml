@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+xmlns:dc="http://purl.org/dc/elements/1.1/" 
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
+xhtml:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" 
+lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
+
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -15,17 +23,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index_en.xml,v 1.8 2004/03/13 12:42:17 gregor Exp $ -->
-
-<html xmlns="http://www.w3.org/1999/xhtml" 
-xmlns:xhtml="http://www.w3.org/1999/xhtml" 
-xmlns:dc="http://purl.org/dc/elements/1.1/" 
-xmlns:dcterms="http://purl.org/dc/terms/"
-xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
-xhtml:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" 
-lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
-
-    <!-- the root element indicates the doctype -->
+<!-- $Id: index_en.xml,v 1.9 2004/03/17 19:49:28 gregor Exp $ -->
     <lenya:meta>
         <dc:title>DC Title</dc:title>
         <dc:creator>Christian Egli</dc:creator>
