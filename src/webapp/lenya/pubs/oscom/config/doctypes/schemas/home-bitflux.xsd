@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:bxe="http://bitfluxeditor.org/schema/1.0"
+>
+
+<xs:element name='dossier' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Dossier</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Dossier</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+ 	  <bxe:noaddparas>1</bxe:noaddparas>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='hl1' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Headline 1</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Headline 1</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+ 	  <bxe:noaddparas>1</bxe:noaddparas>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='abstract'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Abstract</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Abstract</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+ 	  <bxe:noaddparas>1</bxe:noaddparas>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='byline' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Byline</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Byline</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+ 	  <bxe:noaddparas>1</bxe:noaddparas>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='block'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Block</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Block</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>block</bxe:element>
+ 	  </bxe:insertafter>
+ 	  <bxe:addalso><![CDATA[hl2]]></bxe:addalso>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='hl2' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='p' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='article'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Article</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Article</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='block' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='p'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Paragraph</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Paragraph</bxe:name>
+ 	  <bxe:returnelement>p</bxe:returnelement>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>hl2</bxe:element>
+ 	    <bxe:element>p</bxe:element>
+ 	  </bxe:insertafter>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='bold' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='subscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='superscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='email' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='itemizedlist' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='emphasize'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Italic</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Italic</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='bold' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='subscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='superscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='bold'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Bold</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Bold</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='subscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='superscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='subscript' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Subscript</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Subscript</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='superscript'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Superscript</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Superscript</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='ulink'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>External Link</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>External Link</bxe:name>
+ 	  <bxe:requiredattributes>url</bxe:requiredattributes>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='email'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Email</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Email</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='hl2' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Headline 2</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Headline 2</bxe:name>
+ 	  <bxe:returnelement><![CDATA[<p>#para</p>]]></bxe:returnelement>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>p</bxe:element>
+ 	  </bxe:insertafter>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='informaltable'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Informaltable</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Informaltable</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='tgroup' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='tgroup'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Table Group</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Table Group</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='tbody' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='tbody'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Table Body</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Table Body</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='row' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='row'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Row</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Row</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='entry' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='entry'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Entry</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Entry</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='bold' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='email' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='itemizedlist'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Itemized List</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Itemized List</bxe:name>
+ 	  <bxe:addalso><![CDATA[bxlistitem]]></bxe:addalso>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='bxlistitem' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='bxlistitem'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Listitem</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Listitem</bxe:name>
+ 	  <bxe:returnelement>bxlistitem</bxe:returnelement>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='bold' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='subscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='superscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='itemizedlist' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='newscomponent'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>NewsComponent</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>NewsComponent</bxe:name>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>newscomponent</bxe:element>
+ 	  </bxe:insertafter>
+ 	  <bxe:addalso><![CDATA[role]]></bxe:addalso>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='newslines' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='relatedcontent'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>RelatedContent</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>RelatedContent</bxe:name>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>relatedcontent</bxe:element>
+ 	  </bxe:insertafter>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='newscomponent' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='newslines'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>NewsLines</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>NewsLines</bxe:name>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>newslines</bxe:element>
+ 	  </bxe:insertafter>
+ 	  <bxe:addalso><![CDATA[<headline href='#href'>#headline</headline>]]></bxe:addalso>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='headline' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='slugline' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='role' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Role</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Role</bxe:name>
+ 	  <bxe:returnelement><![CDATA[<newslines><headline href='#link'>headline</headline></newslines>]]></bxe:returnelement>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>newslines</bxe:element>
+ 	  </bxe:insertafter>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='headline' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>HeadLine</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>HeadLine</bxe:name>
+ 	  <bxe:returnelement><![CDATA[<slugline>#slugline</slugline>]]></bxe:returnelement>
+ 	  <!-- <bxe:originalname>HeadLine</bxe:originalname> --> 
+ 	  <bxe:requiredattributes>href</bxe:requiredattributes>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>headline</bxe:element>
+ 	    <bxe:element>slugline</bxe:element>
+ 	  </bxe:insertafter>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='slugline' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>SlugLine</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>SlugLine</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+ 	  <!-- <bxe:originalname>SlugLine</bxe:originalname> --> 
+ 	  <bxe:insertafter>
+ 	    <bxe:element>headline</bxe:element>
+ 	    <bxe:element>slugline</bxe:element>
+ 	  </bxe:insertafter>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='img' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>img</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Image</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+ 	  <bxe:altmenu>BX_onContextMenuImg</bxe:altmenu>	  
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+</xs:schema>

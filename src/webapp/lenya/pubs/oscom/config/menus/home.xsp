@@ -16,7 +16,7 @@
     <menu name="File">
       <block>
         <item href="xopus2/index.html">Edit&#160;with&#160;Xopus2</item>
-        <item href="/wyona-cms/bitfluxeditor/index.html">Edit&#160;with&#160;Bitflux</item>
+        <item href="/wyona-cms/bitfluxeditor/index.html?url-xml=/wyona-cms/oscom/bitflux/home.xml&amp;url-xslt=/wyona-cms/oscom/bitflux/home.xsl&amp;url-xsd=/wyona-cms/oscom/bitflux/home.xsd&amp;url-css=/wyona-cms/oscom/bitflux/home.css&amp;url-post=/wyona-cms/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
         <item href="wyona/publishScreen?docid=/index.html&amp;docids=/home.xml">Publish</item>
       </block>
       <block>
@@ -55,6 +55,15 @@
     <menu name="Debug">
       <block>
         <item href="index.xml">View&#160;XML</item>
+      </block>
+      <block>
+        <item>-----------------</item>
+      </block>
+      <block>
+        <item href="../bitflux/home.xml">View&#160;Bitflux&#160;XML</item>
+        <item href="../bitflux/home.xsl">View&#160;Bitflux&#160;XSLT</item>
+        <item href="../bitflux/home.xsd">View&#160;Bitflux&#160;XSD</item>
+        <item href="../bitflux/home.css">View&#160;Bitflux&#160;CSS</item>
       </block>
     </menu>
   </menus>
