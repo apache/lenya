@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.50 2004/09/01 23:26:48 michi Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -89,19 +89,37 @@
       </map:match>
       <map:match pattern="*/matrix/index.html">
         <map:generate src="cocoon:/{1}/matrix/overview.xml"/>
+	<!--<map:serialize type="xml"/>-->
         <map:transform src="xslt/overview/{1}/main.xsl">
           <map:parameter name="relativePrefix" value="../"/>
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
-        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/matrix/overview.xml"/>
-        <map:serialize type="html"/>
+        <!--<map:transform src="../../xslt/util/strip_namespaces.xsl"/>-->
+
+        <map:select type="browser">
+          <map:when test="mozilla5DISABLE">
+            <map:match pattern="authoring/**">
+              <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}/matrix/overview.xml?uiml=xul"/>
+              <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
+            </map:match>
+            <map:serialize type="html"/>
+          </map:when>
+          <map:otherwise>
+            <map:match pattern="authoring/**">
+              <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}/matrix/overview.xml"/>
+            </map:match>
+            <map:serialize type="html"/>
+          </map:otherwise>
+        </map:select>
       </map:match>
+
       <map:match pattern="*/matrix/overview.xml">
         <map:aggregate element="lenya">
           <map:part src="cocoon:/{1}/matrix/index.xml" element="cmsbody"/>
         </map:aggregate>
         <map:serialize type="xml"/>
       </map:match>
+
       <map:match pattern="*/matrix/index.xml">
         <map:generate type="directory" src="content/{1}/matrix/"/>
         <map:transform src="xslt/matrix/xinclude.xsl"/>
