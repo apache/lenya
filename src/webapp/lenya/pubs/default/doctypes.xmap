@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: doctypes.xmap,v 1.17 2004/03/24 13:20:08 edith Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -32,6 +32,7 @@
 
   <map:pipelines>
 
+    <!-- View Revision? -->
     <map:pipeline>
       <map:match pattern="*/*/*/**.xml">
         <map:match type="step" pattern="view-revision">
