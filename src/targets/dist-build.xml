@@ -99,3 +99,12 @@
     <delete dir="${build.root}"/>
     <delete dir="${dist.root}"/>
   </target>
+
+
+  <target name="zip-webapp" depends="init" description="Zips the webapp in order to deploy within another servlet container">
+    <echo>Create ./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar.gz</echo>
+
+    <tar tarfile="./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar" basedir="${build.webapp}"/>
+    <gzip zipfile="./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar.gz" src="./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar"/>
+    <delete file="./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar"/>
+  </target>
