@@ -1,5 +1,5 @@
 /*
-$Id: Identity.java,v 1.5 2003/07/14 14:35:34 egli Exp $
+$Id: Identity.java,v 1.6 2003/07/15 13:50:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,6 +77,7 @@ public class Identity implements Identifiable {
      * Ctor.
      */
     public Identity() {
+        addIdentifiable(World.getInstance());
     }
 
     /**

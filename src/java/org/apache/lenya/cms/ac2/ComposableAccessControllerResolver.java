@@ -1,5 +1,5 @@
 /*
-$Id: ComposableAccessControllerResolver.java,v 1.2 2003/07/15 12:24:51 egli Exp $
+$Id: ComposableAccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,6 +61,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.ac.AccessControlException;
 
@@ -77,34 +78,106 @@ public class ComposableAccessControllerResolver
     /**
      * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.util.Map)
      */
-    public AccessController resolveAccessController(String url)
-        throws AccessControlException {
-        // TODO Auto-generated method stub
-        return null;
+    public AccessController resolveAccessController(String url) throws AccessControlException {
+        
+        AccessController controller = null;
+        
+        try {
+            selector = (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE + "Selector");
+            
+            String[] types = getResolverTypes();
+            int i = 0;
+            while (controller == null && i < types.length) {
+                
+                getLogger().debug("Trying to resolve AC resolver for type [" + types[i] + "]");
+                AccessControllerResolver resolver = (AccessControllerResolver) selector.select(types[i]);
+                controller = resolver.resolveAccessController(url);
+                getLogger().debug("Resolved access controller [" + controller + "]");
+                i++;
+            }
+        
+        } catch (ServiceException e) {
+            throw new AccessControlException(e);
+        }
+        
+        return controller;
     }
 
     /**
      * @see org.apache.lenya.cms.ac2.AccessControllerResolver#release(org.apache.lenya.cms.ac2.AccessController)
      */
     public void release(AccessController controller) {
-        // TODO Auto-generated method stub
+        assert controller != null;
+        if (selector != null) {
+            if (resolver != null) {
+                resolver.release(controller);
+                selector.release(resolver);
+            }
+            getManager().release(selector);
+        }
 
     }
+    
+    private ServiceManager manager;
 
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager arg0) throws ServiceException {
-        // TODO Auto-generated method stub
-
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
-    /** (non-Javadoc)
+    protected static final String RESOLVER_ELEMENT = "resolver";
+    protected static final String TYPE_ATTRIBUTE = "type";
+
+    private String[] resolverTypes;
+    private AccessControllerResolver resolver;
+    private ServiceSelector selector;
+
+    /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
-    public void configure(Configuration arg0) throws ConfigurationException {
-        // TODO Auto-generated method stub
-        
+    public void configure(Configuration configuration) throws ConfigurationException {
+        Configuration[] accessControllerConfigs =
+            configuration.getChildren(RESOLVER_ELEMENT);
+        resolverTypes = new String[accessControllerConfigs.length];
+        for (int i = 0; i < accessControllerConfigs.length; i++) {
+            resolverTypes[i] = accessControllerConfigs[i].getAttribute(TYPE_ATTRIBUTE);
+        }
+    }
+
+    /**
+     * Returns the access controller types.
+     * @return A string array.
+     */
+    protected String[] getResolverTypes() {
+        return resolverTypes;
+    }
+
+    /**
+     * Returns the service manager of this Serviceable.
+     * @return A service manager.
+     */
+    protected ServiceManager getManager() {
+        return manager;
+    }
+
+    /**
+     * Returns the selected access controller resolver.
+     * @return An access controller resolver.
+     */
+    public AccessControllerResolver getResolver() {
+        return resolver;
+    }
+
+    /**
+     * Sets the selected access controller resolver.
+     * @param resolver An access controller resolver.
+     */
+    public void setResolver(AccessControllerResolver resolver) {
+        assert resolver != null;
+        this.resolver = resolver;
     }
 
 }
+

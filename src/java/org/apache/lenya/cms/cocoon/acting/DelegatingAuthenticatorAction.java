@@ -1,5 +1,5 @@
 /*
-$Id: AccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas Exp $
+$Id: DelegatingAuthenticatorAction.java,v 1.1 2003/07/15 13:50:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,33 +53,35 @@ $Id: AccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.ac2;
 
-import org.apache.avalon.framework.component.Component;
-import org.apache.lenya.cms.ac.AccessControlException;
+package org.apache.lenya.cms.cocoon.acting;
+
+import java.util.Collections;
+import java.util.Map;
+
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.SourceResolver;
 
 /**
- * An access controller resolver resolves the appropriate access controller
- * for a given Cocoon object model.
- * 
+ * Authenticator action that delegates the authentication to an access controller.
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public interface AccessControllerResolver extends Component {
-    
-    String ROLE = AccessControllerResolver.class.getName();
+public class DelegatingAuthenticatorAction extends AccessControlAction {
 
     /**
-     * Resolves an access controller for a certain URL.
-     * @param webappUrl The URL within the web application (without context prefix).
-     * @return An access controller or <code>null</code> if no controller could be resolved.
-     * @throws AccessControlException when something went wrong.
+     * @see org.apache.lenya.cms.cocoon.acting.AccessControlAction#doAct(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    AccessController resolveAccessController(String webappUrl) throws AccessControlException;
-    
-    /**
-     * Releases a resolved access controller. 
-     * @param controller The access controller to release.
-     */
-    void release(AccessController controller);
+    protected Map doAct(Redirector redirector, SourceResolver resolver, Map objectModel, String source, Parameters parameters) throws Exception {
+        
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Map result = null;
+        if (getAccessController().authenticate(request)) {
+            result = Collections.EMPTY_MAP;
+        }
+        return result;
+    }
 
 }

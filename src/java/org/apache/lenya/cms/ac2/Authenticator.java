@@ -1,5 +1,5 @@
 /*
-$Id: AccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas Exp $
+$Id: Authenticator.java,v 1.1 2003/07/15 13:50:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,33 +53,20 @@ $Id: AccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
+
 package org.apache.lenya.cms.ac2;
 
 import org.apache.avalon.framework.component.Component;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.ac.AccessControlException;
 
 /**
- * An access controller resolver resolves the appropriate access controller
- * for a given Cocoon object model.
- * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public interface AccessControllerResolver extends Component {
-    
-    String ROLE = AccessControllerResolver.class.getName();
+public interface Authenticator extends Component {
 
-    /**
-     * Resolves an access controller for a certain URL.
-     * @param webappUrl The URL within the web application (without context prefix).
-     * @return An access controller or <code>null</code> if no controller could be resolved.
-     * @throws AccessControlException when something went wrong.
-     */
-    AccessController resolveAccessController(String webappUrl) throws AccessControlException;
-    
-    /**
-     * Releases a resolved access controller. 
-     * @param controller The access controller to release.
-     */
-    void release(AccessController controller);
+    String ROLE = Authenticator.class.getName();
 
+    boolean authenticate(AccreditableManager accreditableManager, Request request)
+        throws AccessControlException;
 }

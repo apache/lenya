@@ -1,5 +1,5 @@
 /*
-$Id: AccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas Exp $
+$Id: UserAuthenticator.java,v 1.1 2003/07/15 13:50:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,33 +53,66 @@ $Id: AccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
+
 package org.apache.lenya.cms.ac2;
 
-import org.apache.avalon.framework.component.Component;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.User;
 
 /**
- * An access controller resolver resolves the appropriate access controller
- * for a given Cocoon object model.
- * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public interface AccessControllerResolver extends Component {
-    
-    String ROLE = AccessControllerResolver.class.getName();
+public class UserAuthenticator extends AbstractLogEnabled implements Authenticator {
 
     /**
-     * Resolves an access controller for a certain URL.
-     * @param webappUrl The URL within the web application (without context prefix).
-     * @return An access controller or <code>null</code> if no controller could be resolved.
-     * @throws AccessControlException when something went wrong.
+     * @see org.apache.lenya.cms.ac2.Authenticator#authenticate(org.apache.cocoon.environment.Request)
      */
-    AccessController resolveAccessController(String webappUrl) throws AccessControlException;
-    
+    public boolean authenticate(AccreditableManager accreditableManager, Request request)
+        throws AccessControlException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if (username == null || password == null) {
+            throw new AccessControlException("Username or password is null!");
+        }
+
+        Identity identity =
+            (Identity) request.getSession(false).getAttribute(Identity.class.getName());
+        boolean authenticated = authenticate(accreditableManager, username, password, identity);
+        return authenticated;
+    }
+
     /**
-     * Releases a resolved access controller. 
-     * @param controller The access controller to release.
+     * Authenticates a user with a given username and password.
+     * When the authentication is successful, the user is added to the identity.
+     * @param accreditableManager The accreditable manager.
+     * @param username The username.
+     * @param password The password.
+     * @param identity The identity to add the user to.
+     * @throws AccessControlException when something went wrong.
+     * @return <code>true</code> if the user was authenticated, <code>false</code> otherwise.
      */
-    void release(AccessController controller);
+    protected boolean authenticate(
+        AccreditableManager accreditableManager,
+        String username,
+        String password,
+        Identity identity)
+        throws AccessControlException {
+
+        User user = accreditableManager.getUserManager().getUser(username);
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Authenticating user: " + user);
+        }
+
+        boolean authenticated = false;
+        if (user.authenticate(password)) {
+            identity.addIdentifiable(user);
+            authenticated = true;
+        }
+
+        return authenticated;
+    }
 
 }

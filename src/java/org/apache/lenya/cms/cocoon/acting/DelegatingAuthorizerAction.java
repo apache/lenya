@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.8 2003/07/14 18:07:18 andreas Exp $
+$Id: DelegatingAuthorizerAction.java,v 1.9 2003/07/15 13:50:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,66 +57,141 @@ package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.parameters.Parameters;
 
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
-import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.ac2.AccessControllerResolver;
+import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac2.Identity;
+import org.apache.lenya.cms.ac2.Machine;
+import org.apache.lenya.util.Stack;
 
+import java.util.Collections;
 import java.util.Map;
-
 
 /**
  * AuthorizerAction that delegates the authorizing to an AccessController.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
-    
+public class DelegatingAuthorizerAction extends AccessControlAction {
+
     /**
-     * @see org.apache.lenya.cms.cocoon.acting.AbstractAuthorizerAction#authorize(org.apache.cocoon.environment.Request, java.util.Map)
+     * Authorizes a request.
+     * @param request The request.
+     * @return <code>true</code if the request is authorized, <code>false</code> otherwise.
+     * @throws AccessControlException when something went wrong.
      */
-    public boolean authorize(Request request, Map ignore)
-        throws Exception {
-            
-        AccessControllerResolver resolver = null;
-        AccessController accessController = null;
-        boolean authorized;
-        try {
-            resolver = (AccessControllerResolver) manager.lookup(AccessControllerResolver.ROLE);
-            
-            String requestURI = request.getRequestURI();
-            String context = request.getContextPath();
-            if (context == null) {
-                context = "";
-            }
-            String url = requestURI.substring(context.length());
-            
-            accessController = resolver.resolveAccessController(url);
-            authorized = accessController.authorize(request);
-        }
-        finally {
-            if (resolver !=  null) {
-                if (accessController != null) {
-                    resolver.release(accessController);
-                }
-                manager.release(resolver);
-            }
-        }
+    protected boolean authorize(Request request) throws AccessControlException {
+
+        boolean authorized = getAccessController().authorize(request);
         return authorized;
     }
-    
+
     private Map objectModel;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
+    public Map act(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String src,
+        Parameters parameters)
+        throws Exception {
         this.objectModel = objectModel;
 
         return super.act(redirector, resolver, objectModel, src, parameters);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.cocoon.acting.AccessControlAction#doAct(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     */
+    protected Map doAct(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String source,
+        Parameters parameters)
+        throws Exception {
+
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        
+        initializeIdentity(request);
+        setHistory(request);
+        setProtectedDestination(request);
+
+        boolean authorized = authorize(request);
+
+        Map result = null;
+        if (authorized) {
+            result = Collections.EMPTY_MAP;
+        }
+
+        return result;
+    }
+
+    public static final String HISTORY =
+        DelegatingAuthorizerAction.class.getPackage().getName() + ".History";
+
+    /**
+     * Adds the current URL to the history.
+     * @param request The request.
+     */
+    protected void setHistory(Request request) {
+        Session session = request.getSession(true);
+
+        Stack history = (Stack) session.getAttribute(HISTORY);
+
+        if (history == null) {
+            history = new Stack(10);
+            session.setAttribute(HISTORY, history);
+        }
+        
+        String url = request.getRequestURI();
+        String context = request.getContextPath();
+        if (context == null) {
+            context = "";
+        }
+        url = url.substring(context.length());
+
+        history.push(url);
+
+    }
+    
+    public static final String PROTECTED_DESTINATION = "protected_destination";
+    
+    /**
+     * Adds the "protected_destination" attribute to the session.
+     * @param request The request.
+     */
+    protected void setProtectedDestination(Request request) {
+        String queryString = request.getQueryString();
+        Session session = request.getSession(true);
+        String url = request.getRequestURI();
+        if (queryString != null) {
+            url += "?" + queryString;
+        }
+
+        session.setAttribute("protected_destination", url);
+    }
+    
+    /**
+     * Initializes the identity, adding the current machine.
+     * @param request The request.
+     */
+    protected void initializeIdentity(Request request) {
+        Identity identity = new Identity();
+        
+        String remoteAddress = request.getRemoteAddr();
+        Machine machine = new Machine(remoteAddress);
+        identity.addIdentifiable(machine);
+        
+        Session session = request.getSession(true);
+        session.setAttribute(Identity.class.getName(), identity);
     }
 
 }

@@ -35,8 +35,19 @@
     <hint shorthand="sitemap" class="org.apache.cms.ac2.sitemap.SitemapPolicyManager"/>
   </role>
   
-  <role name="org.apache.lenya.cms.ac2.AccessControllerResolver"
-        shorthand="access-controller-resolver"
-        default-class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
+  <role name="org.apache.lenya.cms.ac2.AccessController"
+        shorthand="access-controller"
+        default-class="org.apache.lenya.cms.ac2.DefaultAccessController"/>
+        
+  <role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
+        shorthand="access-controller-resolvers"
+        default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
+    <hint shorthand="composable" class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/>
+    <hint shorthand="publication" class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
+  </role>
+  
+  <role name="org.apache.lenya.cms.ac2.Authenticator"
+        shorthand="authenticator"
+        default-class="org.apache.lenya.cms.ac2.UserAuthenticator"/>
 
 </role-list>

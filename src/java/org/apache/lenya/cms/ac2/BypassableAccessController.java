@@ -1,5 +1,5 @@
 /*
-$Id: BypassableAccessController.java,v 1.1 2003/07/14 18:07:01 andreas Exp $
+$Id: BypassableAccessController.java,v 1.2 2003/07/15 13:50:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -161,6 +161,27 @@ public class BypassableAccessController extends DefaultAccessController {
         throws AccessControlException {
         
         assert request != null;
+        
+        boolean authorized = false;
+        
+        String uri = request.getRequestURI();
+        String context = request.getContextPath();
+        if (context == null) {
+            context = "";
+        }
+        uri = uri.substring(context.length());
+        
+        // Check public uris from configuration above. Should only be used during development before the implementation of a concrete authorizer.
+        int i = 0;
+        while (!authorized && i < publicMatchers.length) {
+            if (preparedMatch(publicMatchers[i], uri)) {
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Permission granted for free: [" + uri + "]");
+                }
+                authorized = true;
+            }
+            i++;
+        }
         
         return super.authorize(request);
     }

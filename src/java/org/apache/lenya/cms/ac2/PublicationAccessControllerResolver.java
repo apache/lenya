@@ -1,5 +1,5 @@
 /*
-$Id: PublicationAccessControllerResolver.java,v 1.1 2003/07/14 18:07:01 andreas Exp $
+$Id: PublicationAccessControllerResolver.java,v 1.2 2003/07/15 13:50:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -99,6 +99,8 @@ public class PublicationAccessControllerResolver
         throws AccessControlException {
 
         assert webappUrl.startsWith("/");
+        
+        getLogger().debug("Resolving controller for URL [" + webappUrl + "]");
 
         AccessController controller = null;
 
@@ -127,12 +129,19 @@ public class PublicationAccessControllerResolver
             }
 
             String publicationId = webappUrl.split("/")[0];
-            Publication publication =
-                PublicationFactory.getPublication(publicationId, contextDir.getAbsolutePath());
 
-            if (publication != null) {
+            if (PublicationFactory
+                .existsPublication(publicationId, contextDir.getAbsolutePath())) {
+                
+                getLogger().debug("Publication [" + publicationId + "] exists.");
+                Publication publication =
+                    PublicationFactory.getPublication(publicationId, contextDir.getAbsolutePath());
+
                 String publicationUrl = webappUrl.substring(("/" + publicationId).length());
                 controller = resolveAccessController(publication, publicationUrl);
+            }
+            else {
+                getLogger().debug("Publication [" + publicationId + "] does not exist.");
             }
         }
 
@@ -153,21 +162,24 @@ public class PublicationAccessControllerResolver
 
         AccessController accessController = null;
         File configurationFile = new File(publication.getDirectory(), CONFIGURATION_FILE);
-        try {
-            Configuration configuration =
-                new DefaultConfigurationBuilder().buildFromFile(configurationFile);
-            String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
-            boolean authorized;
-            accessController =
-                (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
+        if (configurationFile.isFile()) {
+            try {
+                Configuration configuration =
+                    new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
-            if (accessController instanceof Configurable) {
-                ((Configurable) accessController).configure(configuration);
+                boolean authorized;
+                accessController =
+                    (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
+
+                if (accessController instanceof Configurable) {
+                    ((Configurable) accessController).configure(configuration);
+                }
+
+            } catch (Exception e) {
+                throw new AccessControlException(e);
             }
-
-        } catch (Exception e) {
-            throw new AccessControlException(e);
         }
 
         return accessController;
