@@ -15,11 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree2tree.xsl,v 1.3 2004/04/13 12:21:01 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:s="http://apache.org/cocoon/lenya/navigation/1.0">
+
+<xsl:import href="../info/sitetree2tree.xsl"/>
 
 <xsl:output omit-xml-declaration="yes" encoding = "iso-8859-1" />    
 
@@ -115,20 +117,5 @@ foldersTree.treeID = "t2"
   </xsl:apply-templates>
 </xsl:template>
 
-<xsl:template name="getLabel">
-  <xsl:choose>
-    <xsl:when test="s:label[lang($chosenlanguage)]">
-    	<xsl:value-of select="s:label[lang($chosenlanguage)]"/>
-    </xsl:when>
-    <xsl:when test="s:label[lang($defaultlanguage)]">
-    	<xsl:value-of select="s:label[lang($defaultlanguage)]"/>
-    </xsl:when>
-    <xsl:otherwise>
-    	<xsl:value-of select="s:label"/>
-    </xsl:otherwise>
-  </xsl:choose>	
-</xsl:template>
-
-<xsl:template match="s:label"/>
 
 </xsl:stylesheet> 
