@@ -20,7 +20,7 @@
   <!-- Prepares the test publication -->
   <target name="test.pub.prepare">
     
-    <property name="test.pub.dir" value="${install.dir}/lenya/pubs/${test.pub.id}"/>
+    <property name="test.pub.dir" value="${tomcat.home.dir}/${tomcat.webapps.dir}/lenya/pubs/${test.pub.id}"/>
     
     <delete dir="${test.pub.dir}"/>
     <mkdir dir="${test.pub.dir}"/>
@@ -73,7 +73,7 @@
   <!-- Identity Test -->
   <target name="test.identity">
     <java fork="yes" classname="org.apache.lenya.cms.ac.IdentityTestCase">
-      <arg value="${install.dir}"/>
+      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="oscom"/>
       <classpath refid="classpath"/>
       <classpath>
@@ -91,7 +91,7 @@
     	classname="org.apache.lenya.cms.task.AntTaskTest"
     	>
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/>
+      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -102,7 +102,7 @@
   <target name="test.workflow" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.workflow.WorkflowTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/>
+      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
       <arg value="simple"/> <!-- document type -->
       <classpath refid="classpath.default"/>
@@ -114,7 +114,7 @@
   <target name="test.creator" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.authoring.DocumentCreatorTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/>
+      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -124,7 +124,7 @@
   <target name="test.publisher" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.task.PublisherTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/>
+      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -134,7 +134,7 @@
   <target name="test.accesscontrol" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.ac.AccessControlTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/>
+      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -144,7 +144,7 @@
   <target name="test.publication" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.publication.PublicationTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/>
+      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -154,7 +154,7 @@
   <target name="test.deactivate" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.task.DocumentDeactivateTaskTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/>
+      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>

@@ -120,32 +120,42 @@
 
   <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
     <!-- Empty server cache - this directory is set in the "build.properties" file -->
-    <delete dir="${cache.dir}"/>
-    <mkdir dir="${install.dir}" />
+    <delete dir="${tomcat.home.dir}/${tomcat.cache.dir}"/>
+    <mkdir dir="${tomcat.home.dir}/${tomcat.webapps.dir}" />
     <delete includeEmptyDirs="true">
-      <fileset dir="${install.dir}" excludes="${target.reset.excludes}" />
+      <fileset dir="${tomcat.home.dir}/${tomcat.webapps.dir}" excludes="${target.reset.excludes}" />
     </delete>
   </target>
+
+
 
   <!-- ============================================================ -->
   <!-- Install webapp                                               -->
   <!-- ============================================================ -->
   <target name="install" depends="webapp" description="Install the webapp into servlet engine context">
-    <copy todir="${install.dir}" filtering="off">
-      <fileset dir="${build.webapp}" excludes="${target.install.excludes}">
-      </fileset>
+    <echo>INFO: Copy webapp to Tomcat</echo>
+    <echo>INFO: Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.home.dir}/${tomcat.webapps.dir}</echo>
+    <copy todir="${tomcat.home.dir}/${tomcat.webapps.dir}" filtering="off">
+      <fileset dir="${build.webapp}" excludes="${target.install.excludes}"/>
     </copy>
-    <echo>INFO: Copy From build.webapp=${build.webapp} To install.dir=${install.dir}</echo>
+
+    <echo>INFO: Copy endorsed libraries</echo>
+    <copy todir="${tomcat.home.dir}/${tomcat.endorsed.dir}">
+      <fileset dir="${build.webapp}/WEB-INF/lib/endorsed"/>
+    </copy>
+    <copy file="${build.webapp}/WEB-INF/lib/xercesImpl-2.5.0.jar" todir="${tomcat.home.dir}/${tomcat.endorsed.dir}"/>
+    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.home.dir}/${tomcat.endorsed.dir}"/>
   </target>
+
+
 
   <!-- ============================================================ -->
   <!-- Reload Tomcat                                                -->
   <!-- ============================================================ -->
-  
   <target name="reload">
       <!-- For Tomcat Tasks -->
     <path id="tomcat.classpath">
-        <fileset dir="${install.dir}/../../server/lib" 
+        <fileset dir="${tomcat.home.dir}/${tomcat.webapps.dir}/../../server/lib" 
             includes="catalina-ant.jar" />
     </path>
     <taskdef name="reload" 

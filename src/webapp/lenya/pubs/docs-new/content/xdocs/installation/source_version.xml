@@ -152,15 +152,14 @@ $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
     <p>
     Edit <code>build.properties</code>. For the described configuration the following
     settings will work (<strong>MS Windows:</strong> Don't use backslashes "<code>\</code>"
-    for directory separation.). It is important that <code>install.dir</code> is an
+    for directory separation.). It is important that <code>tomcat.home.dir</code> is an
     absolute path. The asterisk (*) has to be replaced by the appropriate version number.
     Replace <code>$TOMCAT_HOME</code> by your tomcat installation directory.
     </p>
     <ul>
       <li><code>cocoon.webapp.dir=$COCOON_HOME/build/webapp</code></li>
       <li><code>pubs.root.dirs=src/webapp/lenya/pubs</code></li>
-      <li><code>install.dir=$TOMCAT_HOME/webapps/lenya</code></li>
-      <li><code>cache.dir=$TOMCAT_HOME/work/Standalone/localhost/lenya</code></li>
+      <li><code>tomcat.home.dir=$TOMCAT_HOME</code></li>
     </ul>
     <p/>
   </li>

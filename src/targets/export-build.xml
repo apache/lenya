@@ -56,7 +56,7 @@
   <classpath>
     <pathelement location="${build.webapp}/WEB-INF/classes"/>
     <fileset dir="${build.webapp}/WEB-INF/lib" includes="*.jar"/>
-    <fileset dir="${install.dir}/../../common/lib" includes="servlet**.jar"/>
+    <fileset dir="${tomcat.home.dir}/${tomcat.webapps.dir}/../../common/lib" includes="servlet**.jar"/>
   </classpath>
   
     <jvmarg value="-Djava.endorsed.dirs=${build.webapp}/WEB-INF/lib/endorsed${path.separator}${java.endorsed.dirs}"/>
