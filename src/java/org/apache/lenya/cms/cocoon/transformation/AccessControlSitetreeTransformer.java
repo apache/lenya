@@ -186,7 +186,7 @@ public class AccessControlSitetreeTransformer
             String area = attr.getValue("area"); // FIXME: don't hardcode
             String base = attr.getValue("base");
             if (area!=null && base!=null) {
-                documentId = "/"+area+base;
+                this.documentId = "/"+area+base;
             }
         }
         if (isNode(uri, localName)) {
