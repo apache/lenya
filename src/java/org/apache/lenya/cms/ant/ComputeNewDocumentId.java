@@ -1,5 +1,5 @@
 /*
-$Id: ComputeNewDocumentId.java,v 1.2 2003/07/23 13:21:23 gregor Exp $
+$Id: ComputeNewDocumentId.java,v 1.3 2003/08/20 16:50:33 edith Exp $
 <License>
 
  ============================================================================
@@ -55,28 +55,28 @@ $Id: ComputeNewDocumentId.java,v 1.2 2003/07/23 13:21:23 gregor Exp $
 */
 package org.apache.lenya.cms.ant;
 
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.UniqueDocumentId;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
-import org.apache.tools.ant.Task;
 
 
 /**
  * Ant task to set the property "newdocumentid" in the project with the 
  * value of computed unique document id, needed for the destination file
  * Overriden for copy/move/rename.  
- * @param absolutetreepath The path of the sitetree.
+ * @param area The area in which is the sitetree.
  * @param firstdocumentid The document id of the source
  * @param secdocumentid The document id of the parent of the destination
  * or in case of rename the new name
  * @author edith
  */
-public class ComputeNewDocumentId extends Task {
-    private String absolutetreepath;
-    private String firstdocumentid;
-    private String secdocumentid;
+public class ComputeNewDocumentId extends PublicationTask{
+	private String area;
+	private String firstdocumentid;
+	private String secdocumentid;
 
     /**
      * Creates a new instance of ComputeNewDocumentId
@@ -85,20 +85,20 @@ public class ComputeNewDocumentId extends Task {
         super();
     }
 
-    /**
-     * @return absolutetreepath The absolute path of the tree
-     */
-    protected String getAbsolutetreepath() {
-        return absolutetreepath;
-    }
+	/**
+	 * @return string The area in which is the sitetree.
+	 */
+	public String getArea() {
+		return area;
+	}
 
-    /**
-     * set the value of the absolute path of the tree
-     * @param string The absolute path of the tree
-     */
-    public void setAbsolutetreepath(String string) {
-        absolutetreepath = string;
-    }
+	/**
+	 * set the value of the area in which is the sitetree
+	 * @param string The area of the sitetree.
+	 */
+	public void setArea(String string) {
+		area = string;
+	}
 
     /**
      * @return string The document id of the source 
@@ -146,13 +146,15 @@ public class ComputeNewDocumentId extends Task {
      * Compute the unique document id: append a "_version number" to the id,
      * if there is already a node in the sitetree with this id.
      * @param documentid  The document id.
-     * @param absolutetreepath The absolute path of the tree.
+     * @param area The area in which is the sitetree.
      * @return newdocumentid The unique document id. 
      */
-	protected String computeUniqueId(String documentid, String absolutetreepath) {
+	protected String computeUniqueId(String documentid, String area) {
 
-        UniqueDocumentId uniqueDocumentId = new UniqueDocumentId();
-        String newdocumentid = uniqueDocumentId.computeUniqueDocumentId(absolutetreepath, documentid);
+		Publication publication = getPublication();
+
+		UniqueDocumentId uniqueDocumentId = new UniqueDocumentId();
+        String newdocumentid = uniqueDocumentId.computeUniqueDocumentId(publication, area, documentid);
 		return newdocumentid;
 
     }
@@ -174,9 +176,9 @@ public class ComputeNewDocumentId extends Task {
         try {
             log("first-document-id " + getFirstdocumentid());
             log("sec-document-id " + getSecdocumentid());
-            log("Absolute Tree Path: " + getAbsolutetreepath());
+            log("area: " + getArea());
             String documentId = compute(getFirstdocumentid(), getSecdocumentid());
-			String uniqueId = computeUniqueId(documentId, getAbsolutetreepath());
+			String uniqueId = computeUniqueId(documentId, getArea());
             setNewProperty(uniqueId);
         } catch (Exception e) {
             throw new BuildException(e);

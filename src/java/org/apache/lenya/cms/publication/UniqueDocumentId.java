@@ -1,5 +1,5 @@
 /*
-$Id: UniqueDocumentId.java,v 1.5 2003/07/23 13:21:12 gregor Exp $
+$Id: UniqueDocumentId.java,v 1.6 2003/08/20 16:50:33 edith Exp $
 <License>
 
  ============================================================================
@@ -73,12 +73,10 @@ public class UniqueDocumentId {
      * @param documentid The documentid .
      * @return the unique documentid
      */
-    public String computeUniqueDocumentId(String absolutetreepath, String documentid) {
-        DefaultSiteTree tree = null;
-
-        try {
-            tree = new DefaultSiteTree(absolutetreepath);
-
+    public String computeUniqueDocumentId(Publication publication, String area, String documentid) {
+		SiteTree tree;
+		try {
+			tree = publication.getSiteTree(area);
             SiteTreeNode node = tree.getNode(documentid);
             String suffix = null;
             int version = 0;
@@ -104,9 +102,9 @@ public class UniqueDocumentId {
                     node = tree.getNode(documentid);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		} catch (SiteTreeException e) {
+			e.printStackTrace();
+		}
 
         return documentid;
     }
