@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecases.xml,v 1.4 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id: usecases.xml,v 1.5 2004/05/21 12:28:34 andreas Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document> 
@@ -348,46 +348,88 @@
         <td></td>
       </tr>
       <tr>
-        <td>User Admin</td>
-        <td>user-admin</td>
-        <td>showscreen</td>
-        <td>Show an overview page listing all users</td>
-      </tr>
-      <tr>
+        <td>Administration</td>
+        <td>userAddUser</td>
         <td></td>
-        <td>user-add</td>
-        <td>showscreen</td>
-        <td>Show a form for adding users</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td>add</td>
         <td>Add a user</td>
       </tr>
       <tr>
         <td></td>
-        <td>user-modify</td>
-        <td>showscreen</td>
-        <td>Show a form for modifying users</td>
+        <td>userDeleteUser</td>
+        <td></td>
+        <td>Show a form for adding users</td>
       </tr>
       <tr>
         <td></td>
+        <td>userChangeProfile</td>
         <td></td>
-        <td>modify</td>
-        <td>Modify a user</td>
+        <td>Change the profile of a user</td>
       </tr>
       <tr>
         <td></td>
-        <td>user-delete</td>
-        <td>showscreen</td>
-        <td>Confirm the deletion of a user</td>
+        <td>userChangePasswordUser</td>
+        <td></td>
+        <td>Change the password as a user</td>
       </tr>
       <tr>
         <td></td>
+        <td>userChangePasswordAdmin</td>
         <td></td>
-        <td>delete</td>
-        <td>Delete a user</td>
+        <td>Change the password as an administrator</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>userChangeGroups</td>
+        <td></td>
+        <td>Change the group affiliation of a user</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>iprangeAddIPRange</td>
+        <td></td>
+        <td>Add an IP range</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>iprangeDeleteIPRange</td>
+        <td></td>
+        <td>Delete an IP range</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>iprangeChangeProfile</td>
+        <td></td>
+        <td>Change the profile of an IP range</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>iprangeChangeGroups</td>
+        <td></td>
+        <td>Change the group affiliation of an IP range</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>groupAddGroup</td>
+        <td></td>
+        <td>Add a group</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>groupDeleteGroup</td>
+        <td></td>
+        <td>Delete a group</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>groupChangeProfile</td>
+        <td></td>
+        <td>Change the profile of a group</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>groupChangeMembers</td>
+        <td></td>
+        <td>Change the members of a group</td>
       </tr>
       <tr>
         <td>View Logs</td>
