@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.23 2003/08/12 13:26:58 egli Exp $
+$Id: DefaultDocument.java,v 1.24 2003/08/13 09:57:31 egli Exp $
 <License>
 
  ============================================================================
@@ -56,10 +56,9 @@ $Id: DefaultDocument.java,v 1.23 2003/08/12 13:26:58 egli Exp $
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import org.apache.lenya.util.RegexFilter;
-
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -74,7 +73,6 @@ public class DefaultDocument implements Document {
 	private NodeList nodelist;
 	
 	private static final String PAGEENVELOPE_NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
-	private static final String FILENAMEPATTERN = "index_.*\\.xml";
 
     /**
      * Creates a new instance of DefaultDocument.
@@ -184,15 +182,21 @@ public class DefaultDocument implements Document {
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getLanguage()
 	 */
-	public String[] getLanguages() {
-		String[] filelist, finallist;
-		filelist = getFile().getParentFile().list(new RegexFilter(FILENAMEPATTERN));
-		finallist = new String[filelist.length];
-		for (int y=0; y<filelist.length; y++) {
-			finallist[y] = filelist[y].substring(6, 8);
-			} 	
-		return finallist;	
-	}
+    public String[] getLanguages() throws DocumentException {
+        ArrayList languages = new ArrayList();
+        SiteTree sitetree;
+        try {
+            sitetree = getPublication().getSiteTree(getArea());
+            Label[] labels = sitetree.getNode(getId()).getLabels();
+            for (int i = 0; i < labels.length; i++) {
+                languages.add(labels[i].getLanguage());
+            }
+        } catch (SiteTreeException e) {
+            throw new DocumentException(e);
+        }
+
+        return (String[])languages.toArray(new String[languages.size()]);
+    }
 
 
 

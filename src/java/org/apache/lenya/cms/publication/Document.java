@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.13 2003/08/12 13:26:58 egli Exp $
+$Id: Document.java,v 1.14 2003/08/13 09:57:31 egli Exp $
 <License>
 
  ============================================================================
@@ -115,8 +115,10 @@ public interface Document {
 	/**
 	 * Returns all the languages this document is available in.
 	 * @return An array of strings denoting the languages.
+     * 
+     * @throws DocumentException if an error occurs
 	 */
-	String[] getLanguages();
+	String[] getLanguages() throws DocumentException;
 
 	/**
 	 * Returns the date of the last modification of this document.
