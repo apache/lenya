@@ -42,7 +42,6 @@
       <insert-image-before value="false"/>
    </map:action>
    <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
-   <map:action name="validate" logger="sitemap.action.validateAction" src="org.apache.lenya.cms.cocoon.acting.ValidateAction" />
    <map:action name="workflow" logger="sitemap.action.workflow" src="org.apache.lenya.cms.cocoon.acting.WorkflowInvokerAction"/>
    <map:action name="session-propagator" logger="sitemap.action.session-propagator" src="org.apache.cocoon.acting.SessionPropagatorAction"/>
 </xmap>
