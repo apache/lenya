@@ -11,7 +11,7 @@
     History
     =======
     
-    When        Who               What
+    when        Who               What
     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     2001-01-06  Marc Liyanage     Initial version
     
@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.12 2002/01/22 10:44:51 michicms Exp $
+   @version CVS $Id: build.xml,v 1.13 2002/01/22 13:42:15 giacomo Exp $
 
 -->
 
@@ -33,8 +33,8 @@
   <!-- ============================================================ -->
 
   <!--
-    Give user a chance to override without editing this file
-    (and without typing -D each time he compiles it)
+  Give user a chance to override without editing this file
+  (and without typing -D each time he compiles it)
   -->
   <property file=".ant.properties"/>
   <property file="${user.home}/.ant.properties"/>
@@ -120,8 +120,8 @@
   <property name="tools.jar" value="${java.home}/../lib/tools.jar"/>
 
   <!--
-    these are here only for those who use jikes compiler. For other
-    developers this part makes no difference.
+  these are here only for those who use jikes compiler. For other
+  developers this part makes no difference.
   -->
   <property name="build.compiler.emacs" value="on"/>
   <property name="build.compiler.pedantic" value="false"/>
@@ -279,8 +279,8 @@
   <!-- Creates the API documentation                                -->
   <!-- ============================================================ -->
   <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done"
-      unless="javadocs.notrequired"
-      description="Generates the API documentation">
+          unless="javadocs.notrequired"
+          description="Generates the API documentation">
     <mkdir dir="${dist.bin.javadocs}"/>
     <javadoc packagenames="${packages}"
              sourcepath="${build.src}"
@@ -310,8 +310,8 @@
   in the server.xml configuration is set to true so changes in the classes
   are reflected immediately.
   -->
-<!--   <target name="webapp" depends="compile,javadocs"  -->
-<!--           description="Builds the webapp directory ready to be linked into a servlet engines context directory"> -->
+  <!--   <target name="webapp" depends="compile,javadocs"  -->
+  <!--           description="Builds the webapp directory ready to be linked into a servlet engines context directory"> -->
   <target name="webapp" depends="compile" 
           description="Builds the webapp directory ready to be linked into a servlet engines context directory">
 
@@ -393,7 +393,7 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="snapshot" depends="distclean, war" description="Build a binary distribution tar ball">
+  <target name="snapshot" depends="distclean,war" description="Build a binary distribution tar ball">
 
     <copy todir="${dist.root}/${fullname}">
       <fileset dir="${basedir}">
@@ -402,7 +402,11 @@
       </fileset>
     </copy>
 
-    <tar tarfile="${snapshot.bin.tarfile}" basedir="${dist.root}" includes="${fullname}/**"/>
+    <copy todir="${dist.root}/${fullname}-${SNAPSHOT_STAMP}">
+      <fileset dir="${dist.root}/${fullname}"/>
+    </copy>
+
+    <tar tarfile="${snapshot.bin.tarfile}" basedir="${dist.root}" includes="${fullname}-${SNAPSHOT_STAMP}/**"/>
 
     <gzip zipfile="${snapshot.bin.tarfile}.gz" src="${snapshot.bin.tarfile}"/>
     <delete file="${snapshot.bin.tarfile}"/>
