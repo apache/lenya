@@ -120,12 +120,17 @@ public class MailTask
                     Node child = children.item(i);
                     if (child.getNodeType() == Node.ELEMENT_NODE) {
                         Element element = (Element) child;
-                        if (element.getChildNodes().getLength() > 0 &&
-                            element.getChildNodes().item(0) instanceof Text) {
-                            Text text = (Text) element.getChildNodes().item(0);
-                            String key = element.getLocalName();
-                            if (Arrays.asList(keys).contains(key)) {
-                                taskParameters.setParameter(key, text.getNodeValue());
+                        log.debug("\nElement:  " + element.getLocalName());
+                        log.debug("\nChildren: " + element.getChildNodes().getLength());
+                        if (element.getChildNodes().getLength() > 0) {
+                            Node firstChild = element.getChildNodes().item(0);
+                            if (firstChild instanceof Text) {
+                                Text text = (Text) firstChild;
+                                log.debug("\nText:     " + text.getNodeValue());
+                                String key = element.getLocalName();
+                                if (Arrays.asList(keys).contains(key)) {
+                                    taskParameters.setParameter(key, text.getNodeValue());
+                                }
                             }
                         }
                     }
@@ -139,9 +144,9 @@ public class MailTask
                 taskParameters.getParameter(ELEMENT_SERVER),
                 taskParameters.getParameter(ELEMENT_FROM),
                 taskParameters.getParameter(ELEMENT_TO),
-                taskParameters.getParameter(ELEMENT_CC),
-                taskParameters.getParameter(ELEMENT_SUBJECT),
-                taskParameters.getParameter(ELEMENT_BODY));
+                taskParameters.getParameter(ELEMENT_CC, ""),
+                taskParameters.getParameter(ELEMENT_SUBJECT, ""),
+                taskParameters.getParameter(ELEMENT_BODY, ""));
         }
         catch(Exception e) {
             log.error("Sending mail failed: ", e);
@@ -176,13 +181,16 @@ public class MailTask
             // set to
             pm.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             // set cc
-            pm.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc));
+            if (!cc.equals(""))
+                pm.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc));
              // set subject
-            pm.setSubject(subject);
+            if (!subject.equals(""))
+              pm.setSubject(subject);
             // set date
             pm.setSentDate(new Date());
             // set content
-            pm.setText(body);
+            if (!body.equals(""))
+              pm.setText(body);
             // send mail
             Transport trans = mailSession.getTransport("smtp");
             Transport.send(pm);
