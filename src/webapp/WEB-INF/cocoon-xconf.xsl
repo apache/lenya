@@ -146,6 +146,8 @@
       |     <parameter name="verbosity" value="2"/>
       +-->
 
+  <xsl:apply-templates select="*"/>
+
   <accreditable-managers>
     <component-instance logger="lenya.ac.accreditablemanager"
         class="org.apache.lenya.ac.file.FileAccreditableManager" name="file"/>
