@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: paste.xsl,v 1.12 2003/09/05 14:42:59 andreas Exp $
+ $Id: paste.xsl,v 1.13 2003/09/09 10:30:27 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -18,6 +18,8 @@
   <xsl:variable name="sec-document-id"><xsl:value-of select="/page/info/sec-document-id"/></xsl:variable>
   <xsl:variable name="first-area"><xsl:value-of select="/page/info/first-area"/></xsl:variable>
   <xsl:variable name="sec-area"><xsl:value-of select="/page/info/sec-area"/></xsl:variable>
+  <xsl:variable name="userid"><xsl:value-of select="/page/info/user-id"/></xsl:variable>
+  <xsl:variable name="ipaddress"><xsl:value-of select="/page/info/ip-address"/></xsl:variable>
   <xsl:variable name="doctype"><xsl:value-of select="/page/info/doctype"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
 
@@ -72,7 +74,8 @@
   <input type="hidden" name="{$prefix}properties.node.secdocumentid" value="{$sec-document-id}"/>
   <input type="hidden" name="{$prefix}properties.firstarea" value="{$first-area}"/>
   <input type="hidden" name="{$prefix}properties.secarea" value="{$sec-area}"/>
-  <input type="hidden" name="{$prefix}properties.wf.doctype" value="{$doctype}"/>
+  <input type="hidden" name="{$prefix}properties.copy.userid" value="{$userid}"/>
+  <input type="hidden" name="{$prefix}properties.copy.ipaddress" value="{$ipaddress}"/>
 </xsl:template>
 
 </xsl:stylesheet>

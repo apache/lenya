@@ -14,7 +14,8 @@
     <sec-document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></sec-document-id>
     <first-area><xsp-session:get-attribute name="org.apache.lenya.cms.info.firstarea"/></first-area>
     <sec-area><input:get-attribute module="page-envelope" as="string" name="area"/></sec-area>
-    <doctype><xsp-session:get-attribute name="org.apache.lenya.cms.info.documentType"/></doctype>
+    <user-id><input:get-attribute module="access-control" name="user-id"/></user-id>
+    <ip-address><input:get-attribute module="access-control" name="ip-address"/></ip-address>
     <task-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.action"/></task-id>
     <request-uri><xsp-request:get-uri/></request-uri>
   </info>
