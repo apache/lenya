@@ -1,5 +1,5 @@
 /*
-$Id: NamespaceMap.java,v 1.6 2003/08/25 09:55:37 andreas Exp $
+$Id: NamespaceMap.java,v 1.7 2003/08/28 10:16:43 andreas Exp $
 <License>
 
  ============================================================================
@@ -141,7 +141,7 @@ public class NamespaceMap {
      * @param key The key without prefix.
      * @param value The value.
      */
-    public void put(String key, String value) {
+    public void put(String key, Object value) {
         getMapObject().put(getFullName(getPrefix(), key), value);
     }
 
@@ -187,7 +187,7 @@ public class NamespaceMap {
     public void putAll(Map map) {
         for (Iterator i = map.keySet().iterator(); i.hasNext(); ) {
             String key = (String) i.next();
-            put(key, (String) map.get(key));
+            put(key, map.get(key));
         }
     }
     
