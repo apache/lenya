@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: live-sites.xml,v 1.5 2004/03/24 09:55:02 gregor Exp $ -->
+<!-- $Id: live-sites.xml,v 1.6 2004/05/17 09:50:59 gregor Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -37,15 +37,16 @@ If you want to suggest additional sites for inclusion, please send an email to t
 <link href="mailto:lenya-user@cocoon.apache.org?Subject=New Lenya Live Site">Lenya User mailing list</link>.
 </p>
 <ul>
-  <li><link href="http://www.bostonlawcollaborative.com/">Boston Law Collaborative</link></li>
-  <li><link href="http://www.cocooncenter.org">Cocoon Center</link></li>
-  <li><link href="http://www.computerworld.ch">Computerworld Switzerland (IT newspaper)</link></li>
-  <li><link href="http://www.ejo.ch">European Journalism Observatory</link></li>
-  <li><link href="http://www.nzz.ch">Neue Zürcher Zeitung (daily swiss newspaper)</link></li>
-  <li><link href="http://www.oscom.org/matrix/">OSCOM CMS matrix</link></li>  
+  <li><link href="http://bostonlawcollaborative.com/">Boston Law Collaborative</link></li>
+  <li><link href="http://cocooncenter.org">Cocoon Center</link></li>
+  <li><link href="http://computerworld.ch">Computerworld Switzerland (IT newspaper)</link></li>
+  <li><link href="http://ejo.ch">European Journalism Observatory</link></li>
+  <li><link href="http://gurit.ch">Gurit Heberlein Group</link></li>
+  <li><link href="http://nzz.ch">Neue Zürcher Zeitung (daily swiss newspaper)</link></li>
+  <li><link href="http://oscom.org/matrix/">OSCOM CMS matrix</link></li>  
   <li><link href="http://www.unipublic.unizh.ch">Online Journal of the University of Zurich</link></li>
-  <li><link href="http://www.univ-reunion.fr">University of Reunion</link></li>
-  <li><link href="http://www.wyona.com">Wyona</link></li>
+  <li><link href="http://univ-reunion.fr">University of Reunion</link></li>
+  <li><link href="http://wyona.com">Wyona</link></li>
 </ul>
 </section>
 
