@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.23 2003/10/02 15:28:25 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.24 2003/10/08 12:15:37 egli Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,6 @@ import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 
 import org.xml.sax.Attributes;
