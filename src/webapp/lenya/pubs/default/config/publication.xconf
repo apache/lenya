@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xconf,v 1.9 2004/05/17 09:43:46 gregor Exp $ -->
+<!-- $Id: publication.xconf,v 1.10 2004/07/22 13:44:53 andreas Exp $ -->
 
 <publication>
   <languages>
@@ -25,8 +25,12 @@
   <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
   <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
   <breadcrumb-prefix/>
-  <!-- enable to rewrite SSL urls 
-  <ssl-prefix/> -->
-  <!-- enable to rewrite live urls 
-  <live-mount-point>/</live-mount-point> -->    
+  
+  <!--
+  <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
+  <proxy area="live" ssl="false" url="http://www.host.com/default"/>
+  <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
+  <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
+  -->
+  
 </publication>
