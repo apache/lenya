@@ -36,7 +36,7 @@ function sitetree_link_library() {
     var flowHelper = new FlowHelper();
     var documentHelper = flowHelper.getDocumentHelper(cocoon);
     var pageEnvelope = flowHelper.getPageEnvelope(cocoon);
-    var siteTree = pageEnvelope.getPublication().getSiteTree(pageEnvelope.getDocument().getArea());
+    var siteTree = pageEnvelope.getPublication().getTree(pageEnvelope.getDocument().getArea());
     var allNodes = siteTree.getNode("/").preOrder();
     var resources = new ArrayList(allNodes.size()-1);
     var addedResourcesCount = 0;
