@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.3 2003/07/08 10:10:36 egli Exp $
+$Id: DefaultSiteTreeTest.java,v 1.4 2003/07/10 17:25:46 edith Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,10 @@ $Id: DefaultSiteTreeTest.java,v 1.3 2003/07/08 10:10:36 egli Exp $
  
 package org.apache.lenya.cms.publication;
 
+import java.io.IOException;
+
+import javax.xml.transform.TransformerException;
+
 import junit.framework.TestCase;
 
 /**
@@ -90,14 +94,20 @@ public class DefaultSiteTreeTest extends TestCase {
      */
     protected void setUp() throws Exception {
         super.setUp();
-		siteTree = new DefaultSiteTree("testTree");
+		siteTree = new DefaultSiteTree("testTree.xml");
 		Label label = new Label("Foo", "en");
 		Label[] fooLabels = { label };
 		siteTree.addNode("/foo", fooLabels, null, null, false);
+		label = new Label("Home", "en");
+		Label[] homeLabels = { label };
+		siteTree.addNode("/index", homeLabels, null, null, false);
 		label = new Label("Bar", "en");
 		Label label_de = new Label("Stab", "de");
 		Label[] barLabels = { label, label_de };
 		siteTree.addNode("/foo/bar", barLabels, "http://exact.biz", "suffix", true);
+		label = new Label("Lala", "en");
+		Label[] lalaLabels = { label };
+		siteTree.addNode("/foo/lala", lalaLabels, null, null, false);
 	}
 
     /**
@@ -252,5 +262,19 @@ public class DefaultSiteTreeTest extends TestCase {
     final public void testSave() {
         //TODO Implement save().
     }
-
+	/**
+	 * Test removeNode
+	 * 
+	 * @throws SiteTreeException if an error occurs
+	 */
+	final public void testMoveUp() throws SiteTreeException, IOException, TransformerException {
+		siteTree.moveUp("/foo/lala");
+		siteTree.save();
+		assertNotNull(siteTree.getNode("/foo/lala"));
+	}
+	final public void testMoveDown() throws SiteTreeException, IOException, TransformerException {
+		siteTree.moveDown("/foo");
+		siteTree.save();
+		assertNotNull(siteTree.getNode("/foo"));
+	}
 }
