@@ -40,7 +40,7 @@
             </xsl:choose>
           </xsl:variable>
           
-          <a id="info-tab" href="{url-info/context-prefix}/{url-info/publication-id}/info{$document-url}">
+          <a id="info-tab" href="{url-info/context-prefix}/{url-info/publication-id}/{url-info/area}{$document-url}?lenya.usecase=info-overview&amp;lenya.step=showscreen">
             <xsl:choose><xsl:when test="url-info/area = 'info'">
                 <img border="0" src="/lenya/lenya/menu/images/info_active.gif" />
               </xsl:when><xsl:otherwise>
