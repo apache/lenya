@@ -1,5 +1,5 @@
 /*
-$Id: Machine.java,v 1.4 2003/07/23 19:18:17 andreas Exp $
+$Id: Machine.java,v 1.5 2003/07/29 14:25:10 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,8 @@ $Id: Machine.java,v 1.4 2003/07/23 19:18:17 andreas Exp $
 package org.apache.lenya.cms.ac;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.lenya.cms.ac2.Accreditable;
 import org.apache.lenya.cms.ac2.Identifiable;
@@ -104,7 +105,12 @@ public class Machine implements Identifiable {
      * @see org.apache.lenya.cms.ac2.Accreditable#getAccreditables()
      */
     public Accreditable[] getAccreditables() {
-        Accreditable[] accreditables = { this };
+        Accreditable[] ranges = getIPRanges();
+        Accreditable[] accreditables = new Accreditable[ranges.length + 1];
+        accreditables[0] = this;
+        for (int i = 0; i < ranges.length; i++) {
+            accreditables[i+1] = ranges[i];
+        }
         return accreditables;
     }
 
@@ -169,4 +175,16 @@ public class Machine implements Identifiable {
         this.address = address;
     }
 
+    private List ipRanges = new ArrayList();
+    
+    public void addIPRange(IPRange range) {
+        assert range != null;
+        assert !ipRanges.contains(range);
+        ipRanges.add(range);
+    }
+    
+    public IPRange[] getIPRanges() {
+        return (IPRange[]) ipRanges.toArray(new IPRange[ipRanges.size()]);
+    }
+    
 }
