@@ -17,7 +17,7 @@
 </xsl:template>
 
 <xsl:template match="parent-child">
-<h1>New Document</h1>
+<h1>New Article</h1>
 
 <xsl:apply-templates select="exception"/>
 
@@ -29,19 +29,13 @@
 <input type="hidden" name="doctype" value="Article"/>
 <table>
   <tr>
-    <td>parentid:</td><td>hidden value="<xsl:value-of select="/parent-child/parentid"/>"</td>
-  </tr>
-  <tr>
-    <td>id:</td><td><input type="text" name="childid"/></td>
-  </tr>
-  <tr>
-   <td colspan="2"><font size="2">(No whitespaces or slashes allowed since the ID is used in the URL.)</font></td>
+    <td>id:</td><td><input type="text" name="childid"/> (No whitespaces or slashes allowed since the ID is used in the URL.)</td>
   </tr>
   <tr>
     <td colspan="2">&#160;</td>
   </tr>
   <tr>
-    <td>Titel:</td><td><input type="text" name="childname"/></td>
+    <td>Title:</td><td><input type="text" name="childname"/></td>
   </tr>
 </table>
 <input type="submit" value="create"/>&#160;&#160;&#160;<a href="{referer}">CANCEL</a>

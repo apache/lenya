@@ -8,6 +8,7 @@
     <html>
       <head>
 	<title>Image Upload</title>
+		<link rel="stylesheet" type="text/css" href="/wyona-cms/wyona/default.css" />
       </head>
       <body>
 	<xsl:apply-templates/>
@@ -17,7 +18,7 @@
   
   <xsl:template match="upload-image">
     <h1>Upload a Teaser Image</h1>
-    <p>Please browse for an image (80 x 60 pixel) on your harddisk. </p>
+    <p>Please browse for an image (42 x 42 pixel) on your harddisk. </p>
     <form action="{request-uri}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="xpath" value="{xpath}"/>
       <input type="hidden" name="documentid" value="{documentid}"/>
@@ -30,28 +31,6 @@
 	<tr>
 	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile"/></td>
 	</tr>
-<!--
-	<tr>
-	  <td>Identifier&#160;</td><td><input type="text" name="identifier"/></td>
-	</tr>
-	<tr><td>&#160;</td></tr>
-	<tr><td colspan="2"><h3>Metadata (Dublin Core)</h3></td></tr>
-	<tr>
-	  <td>Author (Creator)&#160;</td><td><input type="text" name="creator" size="40"/></td>
-	</tr>
-	<tr>
-	  <td>Alt-Text (Image Title)&#160;</td><td><input type="text" name="title" size="40"/></td>
-	</tr>
-	<tr>
-	  <td>Subject (Keywords)&#160;</td><td><input type="text" name="subject" size="40"/></td>
-	</tr>
-	<tr>
-	  <td>Caption (Image Description)&#160;</td><td><input type="text" name="description" size="40"/></td>
-	</tr>
-	<tr>
-	  <td>Rights (Copyright)&#160;</td><td><input type="text" name="rights" size="40"/></td>
-	</tr>
--->
 	<tr><td>&#160;</td></tr>
 	<tr>
 	  <td><input type="submit" value="Upload"/><input type="reset" value="Reset"/></td>

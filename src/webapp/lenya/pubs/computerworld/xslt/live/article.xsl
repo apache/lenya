@@ -32,19 +32,7 @@
 
 			<tr>
 				<td width="440" align="left" valign="top" colspan="2">
-				          <div align="left">
-          <table border="0" cellpadding="0" cellspacing="0" align="left">
-						<tr>
-							<td width="140" height="148" valign="top" align="left"><img border="0" src="/img/news/{head/media/media-reference/@source}" align="left" height="148" width="140"/></td>
-							<td width="3" valign="top" align="left" rowspan="4"><img src="/img/layout/trans1x1.gif" width="3" height="1"/></td>
-						</tr>
-						<tr><td width="140" height="3" valign="top" align="left" style="background-image:url(/img/layout/lines/linecontent440x3.gif)"><img src="/img/layout/trans1x1.gif" width="1" height="3"/></td></tr>
-						<tr bgcolor="#EFEFE7">
-							<td width="140" height="25" valign="middle" align="left"><span class="txt-s-black"><xsl:value-of select="head/media/media-caption"/></span></td>
-						</tr>
-						<tr bgcolor="#EFEFE7"><td width="140" height="3" valign="top" align="left" style="background-image:url(/img/layout/lines/linecontent440x3.gif)"><img src="/img/layout/trans1x1.gif" width="1" height="3"/></td></tr>
-					</table>
-          </div>
+<xsl:apply-templates select="body/media"/>
 <span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
         	<span class="txt-m-black">   <xsl:apply-templates select="body"/>
           &#160;<a href="../impressum/" class="txt-m-red">(gis)</a></span></td>
@@ -62,5 +50,21 @@
 			<tr><td width="440" height="3" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>
 		</table>
   </xsl:template>
+  
+  <xsl:template match="body/media">
+  				          <div align="left">
+          <table border="0" cellpadding="0" cellspacing="0" align="left">
+						<tr>
+							<td width="140" height="148" valign="top" align="left"><img border="0" src="/img/news/{head/media/media-reference/@source}" align="left" height="148" width="140"/></td>
+							<td width="3" valign="top" align="left" rowspan="4"><img src="/img/layout/trans1x1.gif" width="3" height="1"/></td>
+						</tr>
+						<tr><td width="140" height="3" valign="top" align="left" style="background-image:url(/img/layout/lines/linecontent440x3.gif)"><img src="/img/layout/trans1x1.gif" width="1" height="3"/></td></tr>
+						<tr bgcolor="#EFEFE7">
+							<td width="140" height="25" valign="middle" align="left"><span class="txt-s-black"><xsl:value-of select="head/media/media-caption"/></span></td>
+						</tr>
+						<tr bgcolor="#EFEFE7"><td width="140" height="3" valign="top" align="left" style="background-image:url(/img/layout/lines/linecontent440x3.gif)"><img src="/img/layout/trans1x1.gif" width="1" height="3"/></td></tr>
+					</table>
+          </div>
+</xsl:template>
     
 </xsl:stylesheet>

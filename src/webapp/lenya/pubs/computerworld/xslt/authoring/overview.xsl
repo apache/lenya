@@ -19,7 +19,7 @@
 							<td>Published on</td>
 						</tr>
 						<xsl:for-each select="article">
-						<xsl:sort select="head/dateline/body.date/@millis"/>
+						<xsl:sort select="head/dateline/story.date/@millis" order="descending"/>
 							<xsl:variable name="href">
 								<xsl:value-of select="@href"/>
 							</xsl:variable>
@@ -35,7 +35,7 @@
 								<td height="30" width="120" valign="middle" align="right">
 									<!-- DATUM -->
 									<span class="txt-s-black">
-										<xsl:value-of select="head/dateline/body.date/@norm"/>
+										<xsl:value-of select="head/dateline/story.date/@norm"/>
 									</span>
 								</td>
 							</tr>

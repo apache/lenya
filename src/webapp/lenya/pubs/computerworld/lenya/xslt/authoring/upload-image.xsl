@@ -35,26 +35,12 @@
 	  <td>Identifier&#160;</td><td><input type="text" name="identifier"/></td>
 	</tr>
 	<tr><td>&#160;</td></tr>
-	<tr><td colspan="2"><h3>Metadata (Dublin Core)</h3></td></tr>
-	<tr>
-	  <td>Author (Creator)&#160;</td><td><input type="text" name="creator" size="40"/></td>
-	</tr>
 	<tr>
 	  <td>Alt-Text (Image Title)&#160;</td><td><input type="text" name="title" size="40"/></td>
 	</tr>
-<!--
-	<tr>
-	  <td>Subject (Keywords)&#160;</td><td><input type="text" name="subject" size="40"/></td>
-	</tr>
--->
 	<tr>
 	  <td>Caption (Image Description)&#160;</td><td><input type="text" name="description" size="40"/></td>
 	</tr>
-<!--
-	<tr>
-	  <td>Rights (Copyright)&#160;</td><td><input type="text" name="rights" size="40"/></td>
-	</tr>
--->
 	<tr><td>&#160;</td></tr>
 	<tr>
 	  <td><input type="submit" value="Upload"/><input type="reset" value="Reset"/></td>
