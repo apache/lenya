@@ -98,7 +98,7 @@
           <map:match pattern="*/authoring/**.html">
             <!-- Check if Kupu is installed -->
             <map:act type="resource-exists" 
-              src="{global:basedir}/resources/kupu/common/kupueditor.js">
+              src="{global:basedir}/resources/kupu/apache-lenya/kupu/kupumacros.html">
               <map:act type="reserved-checkout">
                 <map:generate type="serverpages" 
                   src="{global:basedir}/content/rc/{exception}.xsp">
