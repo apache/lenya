@@ -17,6 +17,8 @@
 
 package org.apache.lenya.ac;
 
+import java.util.Collection;
+
 /**
  * User manager.
  * @version $Id$
