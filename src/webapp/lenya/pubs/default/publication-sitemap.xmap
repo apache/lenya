@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.37 2003/05/21 16:24:34 edith Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.38 2003/05/22 11:47:36 egli Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -75,23 +75,31 @@
     </map:pipeline>
 
 
-
+    <!-- This is the pipeline that builds the page. It aggregates all
+    the navigational elements (breadcrumb, tabs, menu) with the actual
+    content of the document. -->
     <map:pipeline>
+      <!-- /lenyabody/{publication-id}/{area}/{doctype}/{document-id} -->
       <map:match pattern="lenyabody/*/*/*/**">
         <map:aggregate element="cmsbody">
-<!--
-          <map:aggregate element="body" prefix="page" ns="http://www.lenya.org/2003/page" label="aggregation">
--->
-	    <!-- /lenya.body/{publication-id}/{area}/{doctype}/{document-id} -->
+	  <!-- <map:aggregate element="body" prefix="page" ns="http://www.lenya.org/2003/page" label="aggregation"> -->
             <map:part src="cocoon://navigation/{1}/{2}/breadcrumb/{4}.xml"/>
             <map:part src="cocoon://navigation/{1}/{2}/tabs/{4}.xml"/>
             <map:part src="cocoon://navigation/{1}/{2}/menu/{4}.xml"/>
             <map:part src="cocoon://{1}/{2}/{3}/{4}.xml"/>
           </map:aggregate>
+	  <map:transform src="xslt/page2xhtml.xsl">
+	    <map:parameter name="root" value="{page-envelope:context-prefix}/{1}"/>
+	  </map:transform>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
 
+
+    <!-- This is the main entry point into the publication. This
+    pipeline uses the uriparametrizer to determine the doctype of this
+    request. It then aggregates the lenya menu (for the given area) and
+    the lenya body, the actual document. -->
     <map:pipeline>
       <map:match pattern="**.html">
 	<map:act type="uriparametrizer" src="{1}.html">
@@ -101,13 +109,7 @@
 	    <map:part src="cocoon:/lenyamenubar/{page-envelope:area}/article.xml"/>
 	    <map:part src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{doctype}/{document-id}"/>
 	  </map:aggregate>
-	  
-	  <map:transform src="xslt/page2xhtml.xsl">
-	    <map:parameter name="root" value="{page-envelope:context-prefix}/{page-envelope:publication-id}"/>
-	    <map:parameter name="document-id" value="{page-envelope:area}/{doctype}/{document-id}"/>
-	  </map:transform> 
 	  <map:transform src="xslt/{doctype}-{page-envelope:area}.xsl"/>
-	  
 	</map:act>
 	<map:serialize type="html"/>
       </map:match>
@@ -117,19 +119,6 @@
 	<map:serialize/>
       </map:handle-errors>
     </map:pipeline>
-
-    <!-- Redirect to introduction -->
-    <!-- FIXME: Factor out to root sitemap -->
-<!--
-    <map:pipeline>
-      <map:match pattern="">
-        <map:redirect-to uri="introduction.html"/>
-      </map:match>
-      <map:match pattern="index.html">
-        <map:redirect-to uri="introduction.html"/>
-      </map:match>
-    </map:pipeline>
--->
 
   </map:pipelines>
 </map:sitemap>
