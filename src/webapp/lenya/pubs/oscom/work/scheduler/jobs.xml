@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sch:scheduler xmlns:sch="http://www.wyona.org/2002/sch">
+  <sch:triggers>
+    <sch:trigger name="cron" src="org.quartz.CronTrigger"/>
+    <sch:trigger name="date" src="org.quartz.SimpleTrigger"/>
+    <sch:trigger name="andreas" src="org.quartz.AndreasTrigger"/>
+  </sch:triggers>
+  <sch:publication name="oscom">
+    <sch:jobs>
+      <sch:job>
+        <sch:task>
+          <sch:parameter name="sources" value="/weekly-column-body.xml"/>
+          <sch:parameter name="id" value="hello-world"/>
+          <sch:parameter name="server-uri" value="http://127.0.0.1"/>
+          <sch:parameter name="publication-id" value="oscom"/>
+          <sch:parameter name="tree-authoring-path" value="docs/publication/authoring/tree.xml"/>
+          <sch:parameter name="server-port" value="1313"/>
+          <sch:parameter name="context-path" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
+          <sch:parameter name="authoring-path" value="docs/publication/authoring"/>
+          <sch:parameter name="uris" value="/wyona-cms/oscom/weekly-column.html"/>
+        </sch:task>
+        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="group" value="oscom"/>
+        <sch:parameter name="id" value="job_01037570742547"/>
+        <sch:parameter name="documentUri" value="weekly-column.html"/>
+        <sch:trigger type="once">
+          <sch:parameter name="year" value="2002"/>
+          <sch:parameter name="month" value="12"/>
+          <sch:parameter name="day" value="17"/>
+          <sch:parameter name="hour" value="23"/>
+          <sch:parameter name="minute" value="10"/>
+        </sch:trigger>
+      </sch:job>
+    </sch:jobs>
+  </sch:publication>
+</sch:scheduler>
