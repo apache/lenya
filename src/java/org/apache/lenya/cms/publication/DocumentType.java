@@ -6,28 +6,30 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.workflow.Workflow;
-
 /**
+ * A document type.
  *
- * @author  andreas
+ * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class DocumentType {
     
+	public static final String NAMESPACE = "http://www.lenya.org/2003/doctype";
+	public static final String DEFAULT_PREFIX = "dt";
+    
     /** Creates a new instance of DocumentTypeImpl */
-    public DocumentType(Workflow workflow) {
-        assert workflow != null;
-        this.workflow = workflow;
+    public DocumentType(String name) {
+        assert name != null;
+    	this.name = name;
     }
     
-    private Workflow workflow;
+    private String name;
     
-    /** Returns the workflow of this DocumentType.
-     * @return The workflow of this DocumentType.
-     *
-     */
-    public Workflow getWorkflow() {
-        return workflow;
-    }
-    
+	/**
+     * Returns the name of this document type.
+	 * @return A string value.
+	 */
+	public String getName() {
+		return name;
+	}
+
 }

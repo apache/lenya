@@ -7,18 +7,16 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import org.apache.lenya.cms.workflow.Workflow;
-import org.apache.lenya.cms.workflow.impl.WorkflowBuildException;
-import org.apache.lenya.cms.workflow.impl.WorkflowBuilder;
-import org.apache.lenya.cms.workflow.impl.WorkflowBuilderFactory;
+
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
+ * A builder for document types.
  *
- * @author  andreas
+ * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class DocumentTypeBuilder {
     
@@ -26,60 +24,40 @@ public class DocumentTypeBuilder {
     public DocumentTypeBuilder() {
     }
     
-    public static final String NAMESPACE = "http://www.lenya.org/2003/doctype";
-    public static final String DEFAULT_PREFIX = "dt";
+    /**
+     * The default document types configuration file, relative to the publication directory.
+     */
+    public static final String CONFIG_FILE
+    	= "config/doctypes/doctypes.xconf".replace('/', File.separatorChar);
     
-    public static final String WORKFLOW_ELEMENT = "workflow";
-    public static final String SRC_ATTRIBUTE = "src";
-    
-    public DocumentType buildDocumentType(File file, Publication publication)
+    /**
+     * Builds a document type for a given name.
+     * 
+     * @param name A string value.
+     * @param publication The publication the document type belongs to.
+     * @return A document type object.
+     */
+    public DocumentType buildDocumentType(String name, Publication publication)
         throws DocumentTypeBuildException {
-        DocumentType type;
-        
-        try {
-            Document document = DocumentHelper.readDocument(file);
-            type = buildDocumentType(document, publication);
-        }
-        catch (Exception e) {
+    	
+    	File configFile = new File(publication.getDirectory(), CONFIG_FILE);
+    	
+    	try {
+			Document document = DocumentHelper.readDocument(configFile);  
+			DocumentHelper helper = new DocumentHelper();
+			
+			String xPath = "doctypes/doc[@type = '" + name + "']";
+			Node doctypeNode = XPathAPI.selectSingleNode(document, xPath);
+			
+			// TODO add doctype initialization code
+    	}
+    	catch (Exception e) {
             throw new DocumentTypeBuildException(e);
-        }
-        
+    	}
+    	
+        DocumentType type = new DocumentType(name);
         return type;
     }
 
-    public static final String WORKFLOW_DIRECTORY
-        = "config/workflow/".replace('/', File.separatorChar);
-    
-    
-    protected DocumentType buildDocumentType(Document document, Publication publication)
-        throws DocumentTypeBuildException {
-            
-        NamespaceHelper helper = new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, document);
-        Element root = document.getDocumentElement();
-           
-        Element workflowElement
-            = (Element) root.getElementsByTagNameNS(NAMESPACE, WORKFLOW_ELEMENT).item(0);
-        
-        String source = workflowElement.getAttribute(SRC_ATTRIBUTE);
-        assert source != null;
-        
-        File publicationDirectory = publication.getEnvironment().getPublicationDirectory();
-        String fileName = WORKFLOW_DIRECTORY + source;
-        File workflowFile = new File(publicationDirectory, fileName);
-        
-        WorkflowBuilderFactory factory = new WorkflowBuilderFactory();
-        WorkflowBuilder builder = factory.createBuilder();
-        Workflow workflow;
-        
-        try {
-            workflow = builder.buildWorkflow(workflowFile);
-        }
-        catch (WorkflowBuildException e) {
-            throw new DocumentTypeBuildException(e);
-        }
-        
-        DocumentType type = new DocumentType(workflow);
-        return type;
-    }
     
 }
