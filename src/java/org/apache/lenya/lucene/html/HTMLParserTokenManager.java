@@ -1,5 +1,5 @@
 /*
-$Id: HTMLParserTokenManager.java,v 1.9 2003/07/23 13:21:17 gregor Exp $
+$Id: HTMLParserTokenManager.java,v 1.10 2004/02/21 17:10:02 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ package org.apache.lenya.lucene.html;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class HTMLParserTokenManager implements HTMLParserConstants {
     static final long[] jjbitVec0 = { 0x0L, 0x0L, 0xffffffffffffffffL, 0xffffffffffffffffL };
@@ -161,19 +161,6 @@ public class HTMLParserTokenManager implements HTMLParserConstants {
         jjmatchedPos = pos;
 
         return pos + 1;
-    }
-
-    private final int jjStartNfaWithStates_0(int pos, int kind, int state) {
-        jjmatchedKind = kind;
-        jjmatchedPos = pos;
-
-        try {
-            curChar = input_stream.readChar();
-        } catch (java.io.IOException e) {
-            return pos + 1;
-        }
-
-        return jjMoveNfa_0(state, pos + 1);
     }
 
     private final int jjMoveStringLiteralDfa0_0() {
@@ -289,20 +276,13 @@ public class HTMLParserTokenManager implements HTMLParserConstants {
         } while (start++ != end);
     }
 
-    private final void jjCheckNAddStates(int start) {
-        jjCheckNAdd(jjnextStates[start]);
-        jjCheckNAdd(jjnextStates[start + 1]);
-    }
-
     private final int jjMoveNfa_0(int startState, int curPos) {
-        int[] nextStates;
         int startsAt = 0;
         jjnewStateCnt = 25;
 
         int i = 1;
         jjstateSet[0] = startState;
 
-        int j;
         int kind = 0x7fffffff;
 
         for (;;) {
@@ -737,14 +717,12 @@ MatchLoop:
     }
 
     private final int jjMoveNfa_4(int startState, int curPos) {
-        int[] nextStates;
         int startsAt = 0;
         jjnewStateCnt = 2;
 
         int i = 1;
         jjstateSet[0] = startState;
 
-        int j;
         int kind = 0x7fffffff;
 
         for (;;) {
@@ -851,30 +829,6 @@ MatchLoop:
         }
     }
 
-    private final int jjStopStringLiteralDfa_6(int pos, long active0) {
-        switch (pos) {
-        default:
-            return -1;
-        }
-    }
-
-    private final int jjStartNfa_6(int pos, long active0) {
-        return jjMoveNfa_6(jjStopStringLiteralDfa_6(pos, active0), pos + 1);
-    }
-
-    private final int jjStartNfaWithStates_6(int pos, int kind, int state) {
-        jjmatchedKind = kind;
-        jjmatchedPos = pos;
-
-        try {
-            curChar = input_stream.readChar();
-        } catch (java.io.IOException e) {
-            return pos + 1;
-        }
-
-        return jjMoveNfa_6(state, pos + 1);
-    }
-
     private final int jjMoveStringLiteralDfa0_6() {
         switch (curChar) {
         case 62:
@@ -886,14 +840,12 @@ MatchLoop:
     }
 
     private final int jjMoveNfa_6(int startState, int curPos) {
-        int[] nextStates;
         int startsAt = 0;
         jjnewStateCnt = 1;
 
         int i = 1;
         jjstateSet[0] = startState;
 
-        int j;
         int kind = 0x7fffffff;
 
         for (;;) {
@@ -987,14 +939,12 @@ MatchLoop:
     }
 
     private final int jjMoveNfa_3(int startState, int curPos) {
-        int[] nextStates;
         int startsAt = 0;
         jjnewStateCnt = 2;
 
         int i = 1;
         jjstateSet[0] = startState;
 
-        int j;
         int kind = 0x7fffffff;
 
         for (;;) {
@@ -1101,30 +1051,6 @@ MatchLoop:
         }
     }
 
-    private final int jjStopStringLiteralDfa_2(int pos, long active0) {
-        switch (pos) {
-        default:
-            return -1;
-        }
-    }
-
-    private final int jjStartNfa_2(int pos, long active0) {
-        return jjMoveNfa_2(jjStopStringLiteralDfa_2(pos, active0), pos + 1);
-    }
-
-    private final int jjStartNfaWithStates_2(int pos, int kind, int state) {
-        jjmatchedKind = kind;
-        jjmatchedPos = pos;
-
-        try {
-            curChar = input_stream.readChar();
-        } catch (java.io.IOException e) {
-            return pos + 1;
-        }
-
-        return jjMoveNfa_2(state, pos + 1);
-    }
-
     private final int jjMoveStringLiteralDfa0_2() {
         switch (curChar) {
         case 34:
@@ -1139,14 +1065,12 @@ MatchLoop:
     }
 
     private final int jjMoveNfa_2(int startState, int curPos) {
-        int[] nextStates;
         int startsAt = 0;
         jjnewStateCnt = 3;
 
         int i = 1;
         jjstateSet[0] = startState;
 
-        int j;
         int kind = 0x7fffffff;
 
         for (;;) {
@@ -1307,19 +1231,6 @@ MatchLoop:
         return jjMoveNfa_5(jjStopStringLiteralDfa_5(pos, active0), pos + 1);
     }
 
-    private final int jjStartNfaWithStates_5(int pos, int kind, int state) {
-        jjmatchedKind = kind;
-        jjmatchedPos = pos;
-
-        try {
-            curChar = input_stream.readChar();
-        } catch (java.io.IOException e) {
-            return pos + 1;
-        }
-
-        return jjMoveNfa_5(state, pos + 1);
-    }
-
     private final int jjMoveStringLiteralDfa0_5() {
         switch (curChar) {
         case 45:
@@ -1380,14 +1291,12 @@ MatchLoop:
     }
 
     private final int jjMoveNfa_5(int startState, int curPos) {
-        int[] nextStates;
         int startsAt = 0;
         jjnewStateCnt = 2;
 
         int i = 1;
         jjstateSet[0] = startState;
 
-        int j;
         int kind = 0x7fffffff;
 
         for (;;) {
@@ -1494,17 +1403,6 @@ MatchLoop:
         }
     }
 
-    private final int jjStopStringLiteralDfa_1(int pos, long active0) {
-        switch (pos) {
-        default:
-            return -1;
-        }
-    }
-
-    private final int jjStartNfa_1(int pos, long active0) {
-        return jjMoveNfa_1(jjStopStringLiteralDfa_1(pos, active0), pos + 1);
-    }
-
     private final int jjStartNfaWithStates_1(int pos, int kind, int state) {
         jjmatchedKind = kind;
         jjmatchedPos = pos;
@@ -1535,14 +1433,12 @@ MatchLoop:
     }
 
     private final int jjMoveNfa_1(int startState, int curPos) {
-        int[] nextStates;
         int startsAt = 0;
         jjnewStateCnt = 6;
 
         int i = 1;
         jjstateSet[0] = startState;
 
-        int j;
         int kind = 0x7fffffff;
 
         for (;;) {
@@ -1757,8 +1653,6 @@ MatchLoop:
      * @return DOCUMENT ME!
      */
     public final Token getNextToken() {
-        int kind;
-        Token specialToken = null;
         Token matchedToken;
         int curPos = 0;
 
