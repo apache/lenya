@@ -3,8 +3,6 @@
   
 <xsl:param name="contextprefix"/>
 
-<xsl:output method="text"/>
-
 <xsl:template match="css">
   <xsl:apply-templates/>
 </xsl:template>
