@@ -15,6 +15,8 @@
  *
  */
 
+/* @version $Id: DefaultSiteTree.java,v 1.41 2004/03/02 15:36:59 michi Exp $ */
+
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
@@ -39,9 +41,6 @@ import org.xml.sax.SAXException;
 
 /**
  * DOCUMENT ME!
- *
- * @author Christian Egli
- * @version $Id: DefaultSiteTree.java,v 1.40 2004/03/02 15:33:33 michi Exp $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);

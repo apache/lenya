@@ -15,13 +15,12 @@
  *
  */
 
+/* @version $Id: Label.java,v 1.10 2004/03/02 15:37:43 michi Exp $ */
+
 package org.apache.lenya.cms.publication;
 
 /**
  * The Label class encapsulates a string label and a associated language.
- *
- * @author Christian Egli
- * @version $Id: Label.java,v 1.9 2004/03/02 15:32:56 michi Exp $
  */
 public class Label {
     private String label = null;
