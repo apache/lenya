@@ -9,7 +9,7 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions>
-      <map:action name="xopushandler" src="org.wyona.cms.cocoon.acting.XopusHandlerAction" logger="sitemap.action.xopus-handler">
+      <map:action name="xopushandler" src="org.wyona.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.xopus-handler">
         <xml href="docs/publication/authoring"/>
         <xsl href="stylesheets/publication"/>
         <xsd href="docs/publication/doctypes/schemas"/>
@@ -40,8 +40,14 @@
 
     <map:pipeline>
     <!-- POST (in the case of Bitflux the action only is used for saving and NOT for opening) -->
-      <map:match pattern="XopusInterface">
+      <map:match pattern="save/*/*/*/*">
         <map:act type="xopushandler">
+          <map:parameter name="save-filename" value="{1}/{2}/articles/{3}/{4}/index.xml"/>
+
+<!--
+          <map:redirect-to uri="/wyona-cms/unipublic/authoring/{1}/{2}/{3}/{4}/index.html"/>
+-->
+          <!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
           <map:generate src="{reqFilePath}"/>
           <map:transform src="xopus_response.xsl">
             <map:parameter name="reqId" value="{reqId}"/>
@@ -50,6 +56,7 @@
             <map:parameter name="fileType" value="{fileType}"/>
           </map:transform>
           <map:serialize type="xml"/>
+
         </map:act>
         <map:generate src="xopus_error.xml"/>
         <map:serialize type="xml"/>
