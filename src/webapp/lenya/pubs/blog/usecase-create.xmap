@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: usecase-create.xmap,v 1.1 2003/08/05 19:50:47 michi Exp $ -->
+<!-- CVS: $Id: usecase-create.xmap,v 1.2 2004/02/06 19:25:18 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -8,7 +8,22 @@
 
   <map:views />
 
-  <map:resources />
+  <map:resources>
+          <map:resource name="style-cms-page">
+      <map:transform src="../../xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:select type="parameter">
+        <map:parameter name="statusCode" value="{statusCode}"/>
+        <map:when test="">
+          <map:serialize/>
+        </map:when>
+        <map:otherwise>
+          <map:serialize status-code="{statusCode}"/>
+        </map:otherwise>
+      </map:select>
+    </map:resource>
+  </map:resources>
 
   <map:pipelines>
 
@@ -18,7 +33,7 @@
           <map:match type="step" pattern="showscreen">
             <map:generate type="serverpages" src="content/create.xsp"/>
             <map:transform src="xslt/create.xsl"/>
-            <map:serialize type="html"/>
+            <map:call resource="style-cms-page"/>
           </map:match>
 
           <map:match type="step" pattern="execute">
