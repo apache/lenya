@@ -189,7 +189,11 @@ function group_delete_group() {
 		
 		if (cocoon.request.get("submit")) {
 			groupManager.remove(group);
+			var members = group.getMembers();
 			group['delete']();
+			for (var i = 0; i < members.length; i++) {
+			    members[i].save();
+			}
 			showPage = false;
 		}
 	}
