@@ -125,10 +125,8 @@ public class WorkflowMenuTransformer
             throw new ProcessingException(e);
         }
       
-        Role role = new Role("editor");
-      
         Group group = new Group();
-        group.addRole(role);
+        group.addRole(new Role("editor"));
       
         User user = new FileUser("testuser");
         user.addGroup(group);
