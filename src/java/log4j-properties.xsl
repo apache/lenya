@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    Document   : log4j-properties.xsl
-    Created on : 6. March 2003, 15:51
-    Author     : Andreas Hartmann
-    Author     : Michael Wechner
+    $Id: log4j-properties.xsl,v 1.8 2004/01/21 18:13:50 edith Exp $
     Description: Create log4j.properties file
 -->
 
@@ -37,10 +34,10 @@ log4j.appender.A1=org.apache.log4j.RollingFileAppender
 log4j.appender.A1.File=<xsl:value-of select="$directory"/>/WEB-INF/logs/log4j.log
 </xsl:when>
 <xsl:otherwise>
-#log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
 
-log4j.appender.A1=org.apache.log4j.RollingFileAppender
-log4j.appender.A1.File=<xsl:value-of select="$directory"/>/WEB-INF/logs/log4j.log
+#log4j.appender.A1=org.apache.log4j.RollingFileAppender
+#log4j.appender.A1.File=<xsl:value-of select="$directory"/>/WEB-INF/logs/log4j.log
 </xsl:otherwise>
 </xsl:choose>
 
@@ -50,7 +47,6 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # Showing the method might slow down logging. In order to improve performance use the pattern above
 log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c.%M():%L %x - %m%n
 
-log4j.category.org.apache.lenya.cms.rc.RevisionController=DEBUG
 #log4j.category.org.apache.lenya.cms.cocoon.transformation.IncludeTransformer=DEBUG
 #log4j.category.org.apache.lenya.cms.pubs.forum.NewArticleCreator=DEBUG
 </xsl:template>
