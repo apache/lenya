@@ -14,6 +14,18 @@
 <table>
 <tr>
 <td valign="top">
+This&#160;Publication
+<br />
+&#160;&#160;&#160;<a href="authoring/">Login&#160;as&#160;Editor</a>
+<br />
+&#160;&#160;&#160;Document&#160;Types
+<br />
+&#160;&#160;&#160;Collection&#160;Types
+<br />
+&#160;&#160;&#160;Use&#160;Cases
+<br />
+&#160;&#160;&#160;Features
+<br />
 <a href="../index.html">Other&#160;Publications</a>
 <br />
 <a href="../docs/index.html">Documentation</a>

@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.35 2003/03/01 23:01:48 michi Exp $
+   @version CVS $Id: build.xml,v 1.36 2003/03/04 00:16:37 michi Exp $
 
 -->
 
@@ -115,13 +115,13 @@
   The unit testing source code
   (See http://www-106.ibm.com/developerworks/java/library/j-ant/)
   -->
-  <property name="src.test.dir" value="./src/test"/>
+  <property name="src.test.dir" value="src/test"/>
 
   <!--
   Our own webapp resources to be merged with the
   contents of the cocoon webapp are here
   -->
-  <property name="src.webapp.dir" value="./src/webapp"/>
+  <property name="src.webapp.dir" value="src/webapp"/>
 
   <property name="tools.jar" value="${java.home}/../lib/tools.jar"/>
 
@@ -387,36 +387,45 @@
   in the server.xml configuration is set to true so changes in the classes
   are reflected immediately.
   -->
-  <!--   <target name="webapp" depends="compile,javadocs"  -->
-  <!--           description="Builds the webapp directory ready to be linked into a servlet engines context directory"> -->
-  <target name="webapp" depends="compile,javadocs" 
-          description="Builds the webapp directory ready to be linked into a servlet engines context directory">
+  <target name="webapp" depends="compile,javadocs" description="Builds the webapp directory ready to be linked into a servlet engines context directory">
 
     <!--
-    overwrite some parts of the previously unpacked 
-    cocoon webapp package with our customized files
+    Copy CMS files and overwrite some parts of the previously unpacked cocoon webapp package with our customized files
     -->
+    <echo>INFO: Copy files from ${src.webapp.dir} to ${build.webapp}</echo>
     <copy todir="${build.webapp}">
       <fileset dir="${src.webapp.dir}">
-        <include name="**/*"/>
+        <exclude name="wyona/cms/pubs/**"/>
       </fileset>
     </copy>
-    <echo>INFO: src.webapp.dir=${src.webapp.dir}</echo>
-    <echo>INFO: build.src=${build.src}</echo>
-    <echo>INFO: build.webapp=${build.webapp}</echo>
-    <echo>INFO: build.dest=${build.dest}</echo>
+
+    <!--
+    Copy publications
+    -->
+    <echo>INFO: Copy publications from ${src.webapp.dir}/wyona/cms/pubs to ${build.webapp}/wyona/cms/pubs</echo>
+    <copy todir="${build.webapp}/wyona/cms/pubs">
+<!--
+      <fileset dir="/home/michiii/src/lenya-pubs"/>
+-->
+<!--
+      <fileset dir="${pubs.root.dirs}"/>
+-->
+      <fileset dir="${src.webapp.dir}/wyona/cms/pubs"/>
+    </copy>
 
     <!-- create directory classes within webapp -->
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
 
     <!-- now copy our compiled classes -->
+    <echo>INFO: Copy classes from ${build.dest} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.dest}">
-        <include name="**/*"/>
+        <include name="**/*.class"/>
       </fileset>
     </copy>
 
     <!-- now copy our logicsheets -->
+    <echo>INFO: Copy logicsheets from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.xsl"/>
@@ -424,6 +433,7 @@
     </copy>
 
     <!-- now copy our properties -->
+    <echo>INFO: Copy properties from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.properties"/>
@@ -433,6 +443,7 @@
     <!-- now copy any additional libraries in ./lib -->
     <mkdir dir="${build.webapp}/WEB-INF/lib"/>
 
+    <echo>INFO: Copy libraries from ${lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
     <echo>INFO: exclude: servlet.jar</echo>
     <copy todir="${build.webapp}/WEB-INF/lib">
       <fileset dir="${lib.dir}">
