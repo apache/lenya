@@ -19,6 +19,8 @@
 
 package org.apache.lenya.cms.cocoon.flow;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -40,6 +42,9 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
+import org.apache.lenya.cms.rc.FileReservedCheckInException;
+import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.workflow.WorkflowDocument;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
@@ -199,5 +204,45 @@ public class FlowHelper {
     throws WorkflowException, PageEnvelopeException, AccessControlException {
         final WorkflowDocument wf = (WorkflowDocument)WorkflowFactory.newInstance().buildInstance(getPageEnvelope(cocoon).getDocument());
         wf.invoke(getSituation(cocoon), event);
+    }
+    
+    /**
+     * Get a RevisionController instance.
+     * @param cocoon The Cocoon Flow Object Model
+     * @throws PageEnvelopeException Page envelope can not operate properly.
+     * @throws IOException If an IOException occurs.
+     * @see PageEnvelope
+     * @see RevisionController
+     */
+    public RevisionController getRevisionController(FOM_Cocoon cocoon) 
+    throws PageEnvelopeException, IOException {        
+        final RevisionController rc = null;
+        final Publication publication = getPageEnvelope(cocoon).getPublication();
+        final String publicationPath = publication.getDirectory().getCanonicalPath();
+        final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
+        String rcmlDirectory = rcEnvironment.getRCMLDirectory();
+        rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
+        String backupDirectory = rcEnvironment.getBackupDirectory();
+        backupDirectory = publicationPath + File.separator + backupDirectory;
+
+        return new RevisionController(rcmlDirectory, backupDirectory, publicationPath);     
+    }
+    
+    /**
+     * Checkis in the current document from the PageEnvelope context.
+     * @param cocoon The Cocoon Flow Object Model
+     * @param backup Wether a new revision should be created.
+     * @throws FileReservedCheckInException 
+     * @throws Exception
+     * @see RevisionController#reservedCheckIn(String, String, boolean)
+     */
+    public void reservedCheckIn(FOM_Cocoon cocoon, boolean backup) 
+    throws FileReservedCheckInException, Exception
+    {
+        final Identity identity = (Identity) ObjectModelHelper.getRequest(cocoon.getObjectModel()).getSession().getAttribute(Identity.class.getName());
+        final PageEnvelope pageEnvelope = getPageEnvelope(cocoon);
+        final Publication publication = getPageEnvelope(cocoon).getPublication();
+        final String filename = pageEnvelope.getDocument().getFile().getCanonicalPath().substring(publication.getDirectory().getCanonicalPath().length());   
+        getRevisionController(cocoon).reservedCheckIn(filename, identity.getUser().getId(), backup);
     }
 }
