@@ -16,8 +16,16 @@
     exclude-result-prefixes="page xhtml"
     >
     
+    
+<!-- servlet context prefix i.e. /lenya/ -->
 <xsl:param name="root"/>
+
+<!-- i.e. doctypes/xhtml-document -->
 <xsl:param name="document-id"/>
+
+<!-- The rquest url i.e. /lenya/doctypes/xhtml-document_en.html -->
+<xsl:param name="url"/>
+
 
 <xsl:template match="cmsbody">
   <html>
