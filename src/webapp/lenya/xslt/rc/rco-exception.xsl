@@ -22,9 +22,9 @@
       <page:title>File Reserved Checkout Exception</page:title>
       <page:body>
  	    <div class="lenya-box">
-    	  <div class="lenya-box-title">File not checked out yet</div>
+    	  <div class="lenya-box-title"> Could not check out the file </div>
 	      <div class="lenya-box-body">
-	        <p> The resource has already been checked out:
+	        <p> Reason : The resource has already been checked out by another user
             </p>
             <table>
               <tr><td>User:</td><td><xsl:value-of select="rc:user"/></td></tr>
