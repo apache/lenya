@@ -41,9 +41,11 @@
       </div>
       <table class="lenya-body" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td class="lenya-sidebar">
-            <xsl:copy-of select="//xhtml:div[@class = 'lenya-sidebar']/node()"/>
-          </td>
+          <xsl:if test="//xhtml:div[@class = 'lenya-sidebar']">
+            <td class="lenya-sidebar" width="20%">
+              <xsl:copy-of select="//xhtml:div[@class = 'lenya-sidebar']/node()"/>
+            </td>
+          </xsl:if>
           <td class="lenya-content">
             <xsl:copy-of select="page:body/node()[local-name() != 'div' or @class != 'lenya-sidebar']"/>
           </td>
