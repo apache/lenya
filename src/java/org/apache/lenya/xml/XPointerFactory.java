@@ -69,7 +69,7 @@ import java.util.*;
  * DOCUMENT ME!
  *
  * @author Michael Wechner, lenya
- * @version $Id: XPointerFactory.java,v 1.13 2003/12/08 18:03:44 michi Exp $
+ * @version $Id: XPointerFactory.java,v 1.14 2003/12/15 17:31:49 michi Exp $
  */
 public class XPointerFactory {
     static Category log = Category.getInstance(XPointerFactory.class);
@@ -190,7 +190,6 @@ public class XPointerFactory {
         Vector nodes = new Vector();
 
         for (int i = 0; i < xpaths.size(); i++) {
-            log.error((String) xpaths.elementAt(i));
             Vector n = xpointer.select(node, (String) xpaths.elementAt(i), namespaces);
 
             for (int j = 0; j < n.size(); j++) {

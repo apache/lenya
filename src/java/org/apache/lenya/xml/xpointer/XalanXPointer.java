@@ -69,7 +69,7 @@ import java.util.*;
  * XPointer implementation
  *
  * @author Michael Wechner
- * @version $Id: XalanXPointer.java,v 1.13 2003/12/08 18:03:44 michi Exp $
+ * @version $Id: XalanXPointer.java,v 1.14 2003/12/15 17:31:49 michi Exp $
  */
 public class XalanXPointer implements XPointer {
     private static Category log = Category.getInstance(XalanXPointer.class);
@@ -135,7 +135,7 @@ public class XalanXPointer implements XPointer {
     public Vector select(Node node, String xpath, Vector namespaces) throws Exception {
         NodeList children = node.getChildNodes();
 
-        log.error("Select " + xpath + " from node " + node.getNodeName());
+        log.debug("Select " + xpath + " from node " + node.getNodeName());
 
         NodeList nl = null;
         if (namespaces.size() > 0) {

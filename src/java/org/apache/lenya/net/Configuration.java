@@ -65,7 +65,7 @@ import java.util.Properties;
  * Read configuration
  *
  * @author Michael Wechner
- * @version $Id: Configuration.java,v 1.14 2003/12/15 16:22:34 michi Exp $
+ * @version $Id: Configuration.java,v 1.15 2003/12/15 17:31:49 michi Exp $
  */
 public class Configuration {
     static Category log = Category.getInstance(Configuration.class);
@@ -123,12 +123,14 @@ public class Configuration {
             //return null;
         }
 
+	log.debug(url);
+
         Properties properties = new Properties();
 
         try {
             properties.load(Configuration.class.getResourceAsStream("conf.properties"));
         } catch (Exception e) {
-            log.error(".load(): " + e);
+            log.error(e);
         }
 
         return properties;

@@ -71,7 +71,7 @@ import java.util.Vector;
  *
  * @author Philipp Klaus
  * @author Michael Wechner
- * @version $Id: ProxyManager.java,v 1.12 2003/12/15 16:22:34 michi Exp $
+ * @version $Id: ProxyManager.java,v 1.13 2003/12/15 17:31:49 michi Exp $
  */
 public class ProxyManager {
     static Category log = Category.getInstance(ProxyManager.class);
@@ -186,9 +186,9 @@ public class ProxyManager {
 
         try {
             proxyElements = xpf.select(document.getDocumentElement(), "xpointer(/conf/Proxy)");
+            if (proxyElements.size() == 0) log.warn("No proxy defined (" + configFile + ")");
         } catch (Exception e) {
-            log.warn("No such element: /conf/Proxy (" + configFile  + ")");
-
+            log.error(e);
             return null;
         }
 
