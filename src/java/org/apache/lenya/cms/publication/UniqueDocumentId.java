@@ -45,17 +45,18 @@ package org.apache.lenya.cms.publication;
 import org.apache.log4j.Category;
 
 /**
- * class to compute a new id for a document, if there is already a node in 
- * the tree for a document with this id
+ * class to compute an unique document id for a document, if there is 
+ * already a node in the sitetree for a document with this id. It will
+ * documentid_"number of version" 
  * @author edith
  *  
  */
 public class UniqueDocumentId {
-  static Category log = Category.getInstance(UniqueDocumentId.class);
+  private static Category log = Category.getInstance(UniqueDocumentId.class);
   
-  /**
- * @param absolutetreepath: path of the tree
- * @param documentid: documentid to test
+/** compute an unique document id
+ * @param absolutetreepath The absolute path of the tree.
+ * @param documentid The documentid .
  * @return the unique documentid
  */
 public String computeUniqueDocumentId(String absolutetreepath,String documentid){
@@ -64,19 +65,25 @@ public String computeUniqueDocumentId(String absolutetreepath,String documentid)
 	  tree = new DefaultSiteTree(absolutetreepath);
 	  SiteTreeNode node = tree.getNode(documentid);
 	  String suffix = null;
+      int version = 0;
+	  String idwithoutsuffix = null;
 	  if (node != null) {
-	    int l = documentid.length();
-	    int index=documentid.lastIndexOf("_");
-	    if ((index < l) & (index > 0)) {
-	      suffix = documentid.substring(index);       
-	      documentid= documentid.substring(0,index);
-	      int version = Integer.parseInt(suffix);
-	      version = version + 1; 
-	      suffix= (new Integer(version+1)).toString();
-	    } else {
-	      suffix="1";
-	    }
-	    documentid= documentid+"_"+suffix;
+		int l = documentid.length();
+		int index=documentid.lastIndexOf("_");
+		if ((index < l) & (index > 0)) {
+		  suffix = documentid.substring(index);       
+		  idwithoutsuffix= documentid.substring(0,index);
+		  version = Integer.parseInt(suffix);
+		} else { 
+			idwithoutsuffix= documentid;
+		}
+        while (node!=null) {  
+          version= version + 1;
+		  suffix= (new Integer(version)).toString();
+		  documentid= idwithoutsuffix+"_"+suffix;
+		  log.debug("version: "+version);  
+		  node = tree.getNode(documentid);
+        }
 	  }
 	} catch (Exception e) {
 		e.printStackTrace();
