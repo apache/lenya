@@ -25,37 +25,6 @@
     <parameter name="properties.text" value="The test was successful."/>
   </task>
 
-
-
-
-  <task id="publish">
-    <label>Publish and Export</label>
-    <task id="publish" class="org.apache.lenya.defaultpub.cms.task.Publish"/>
-    <task id="delect-cache" class="org.apache.lenya.cms.task.AntTask">
-      <label>Delete Cache</label>
-      <parameter name="target" value="deletecache"/>
-      <parameter name="properties.cachedir" value="work/cache"/>
-    </task>
-    <!--
-    <task id="export" class="org.apache.lenya.cms.publishing.StaticHTMLExporter">
-      <parameter name="export-path" value="work/export/pending"/>
-      <parameter name="substitute-regexp" value="/lenya/default/live/"/>
-      <parameter name="substitute-replacement" value="/"/>
-      <parameter name="my-server-port" value="1313"/>
-    </task>
-    -->
-  </task>
-
-  <task id="remove-language" class="org.apache.lenya.cms.task.AntTask">
-    <label>RemoveLanguage</label>
-    <parameter name="target" value="remove-language"/>
-  </task>
-
-  <task id="rename-label" class="org.apache.lenya.cms.task.AntTask">
-    <label>Edit Navigation Title</label>
-    <parameter name="target" value="rename-label"/>
-  </task>
-
   <task id="save-meta-data" class="org.apache.lenya.cms.task.AntTask">
     <label>SaveMetaData</label>
     <parameter name="target" value="save-meta-data"/>
