@@ -27,7 +27,7 @@
 
 <tr>
   <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
-  <td colspan="2">Content (text/plain)</td>
+  <td colspan="2">Content (text/plain as CDATA)</td>
 </tr>
 </xsl:template>
 
@@ -42,11 +42,11 @@
 <xsl:template match="echo:content[@type='text/plain']">
 <tr>
   <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;" value="LENYA"/></td>
-  <td colspan="2">Content (text/plain)</td>
+  <td colspan="2">Content (text/plain as CDATA)</td>
 </tr>
 <tr>
   <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
-  <td valign="top">Content (text/plain)</td>
+  <td valign="top">Content (text/plain as CDATA)</td>
   <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;![CDATA[" cols="40" rows="5"><xsl:value-of select="."/></textarea></td>
 </tr>
 </xsl:template>
