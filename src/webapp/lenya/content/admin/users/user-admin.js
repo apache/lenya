@@ -17,7 +17,7 @@ function user_change_profile(userId) {
 	// at the moment the loop is executed only once (no form validation)
 	
     while (true) {
-	    sendPageAndWait("users/profile.xml", {
+	    sendPageAndWait("users/" + userId + "/profile.xml", {
 	    	"user-id" : userId,
 	    	"fullname" : fullName,
 	    	"email" : email,
@@ -72,7 +72,7 @@ function user_change_password(checkPassword, userId) {
     var message = "";
     
     while (true) {
-	    sendPageAndWait("users/password.xml", {
+	    sendPageAndWait("users/" + userId + "/password.xml", {
 	    	"user-id" : userId,
 	    	"new-password" : newPassword,
 	    	"confirm-password" : confirmPassword,
@@ -127,7 +127,7 @@ function user_change_groups(userId) {
     }
     
     while (true) {
-	    sendPageAndWait("users/groups.xml", {
+	    sendPageAndWait("users/" + userId + "/groups.xml", {
 	    	"user-id" : userId,
 	    	"groups" : groups,
 	    	"user-groups" : userGroups
