@@ -45,9 +45,9 @@
  */
 package org.apache.lenya.cms.task;
 
-import org.apache.lenya.cms.task.ExecutionException;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -155,10 +155,11 @@ public class AntTask
      */
     protected File getDefaultLogFile(File publicationDirectory) {
         Calendar now = new GregorianCalendar();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
-        return new File(publicationDirectory, LOG_PATH + format.format(now.getTime()) + ".xml");
+        return new File(publicationDirectory, LOG_PATH + dateFormat.format(now.getTime()) + ".xml");
     }
     
+    
+    public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
     public static final String PUBLICATION_DIRECTORY = "pub.dir";
     public static final String PUBLICATION_ID = "pub.id";
     public static final String SERVLET_CONTEXT_PATH = "servlet.context";
