@@ -325,7 +325,7 @@
       </map:match>
 
       <map:handle-errors>
-        <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
+        <map:transform src="../../xslt/exception/not-published-yet.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
    </map:pipeline>
@@ -343,7 +343,7 @@
       </map:match>
 
       <map:handle-errors>
-        <map:transform src="../../xslt/Exception/not_published_yet.xsl"/>
+        <map:transform src="../../xslt/Exception/not-published-yet.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
    </map:pipeline>

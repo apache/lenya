@@ -805,7 +805,7 @@
       <map:handle-errors type="500">
         <map:select type="exception">
           <map:when test="parent-node-not-found">
-	    <map:transform src="xslt/exception/parent_node_not_found.xsl"/>
+	    <map:transform src="xslt/exception/parent-node-not-found.xsl"/>
 	    <map:call resource="style-cms-page"/>
           </map:when>
         </map:select>

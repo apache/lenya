@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.46 2003/08/10 17:39:32 michi Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.47 2003/09/09 15:06:52 egli Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -119,7 +119,7 @@
      
       <map:handle-errors type="500">
         <!-- FIXME: other exceptions are also caught here! -->
-        <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
+        <map:transform src="../../xslt/exception/not-published-yet.xsl"/>
 	<map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
