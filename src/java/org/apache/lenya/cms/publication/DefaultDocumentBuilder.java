@@ -1,5 +1,4 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.15 2003/09/04 17:04:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,6 +59,7 @@ import java.util.HashMap;
 
 /**
  * @author andreas
+ * @version $Id: DefaultDocumentBuilder.java,v 1.16 2003/09/17 15:17:22 michi Exp $
  *
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
@@ -119,6 +119,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
         
+/*
         if (defaultLanguageForced) {
             // unfortunatelly we cannot count on the document to always be available 
             // in the default language. So if the default language is not in the list
@@ -142,6 +143,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
                 }
             }
         }
+*/
 
         return document;
     }

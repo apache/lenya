@@ -1,5 +1,4 @@
 /*
-$Id: InitWorkflowHistoryTask.java,v 1.7 2003/09/01 17:02:20 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,6 +67,7 @@ import org.apache.tools.ant.BuildException;
 
 /**
  * @author andreas
+ * @version $Id: InitWorkflowHistoryTask.java,v 1.8 2003/09/17 15:17:22 michi Exp $
  *
  */
 public class InitWorkflowHistoryTask extends PublicationTask {
@@ -111,20 +111,16 @@ public class InitWorkflowHistoryTask extends PublicationTask {
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
-        // FIXME: URL as parameter
-        String url =
-            "/"
-                + getPublication().getId()
-                + "/"
-                + Publication.AUTHORING_AREA
-                + getDocumentId()
-                + "_"
-                + getLanguage()
-                + ".html";
-        Document document;
+        String language = getLanguage();
 
+        if (language == null) {
+            language = getPublication().getDefaultLanguage();
+        }
+        String url = DefaultDocumentBuilder.getInstance().buildCanonicalUrl(getPublication(), Publication.AUTHORING_AREA, getDocumentId(), language);
+        Document document;
         try {
             document = DefaultDocumentBuilder.getInstance().buildDocument(getPublication(), url);
+            log(".execute(): " + document.getLanguage());
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }

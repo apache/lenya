@@ -1,5 +1,4 @@
 /*
-$Id: CMSHistory.java,v 1.16 2003/09/11 16:19:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,17 +63,21 @@ import org.apache.lenya.workflow.impl.Version;
 import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 import org.apache.lenya.xml.NamespaceHelper;
 
+import org.apache.log4j.Category;
+
 import org.w3c.dom.Element;
 
 import java.io.File;
 
 /**
  * @author andreas
+ * @version $Id: CMSHistory.java,v 1.17 2003/09/17 15:17:22 michi Exp $
  *
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class CMSHistory extends History {
+    private static final Category log = Category.getInstance(CMSHistory.class);
     public static final String HISTORY_PATH = "content/workflow/history";
 
     /**
