@@ -66,19 +66,6 @@
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:transform src="xslt/util/strip_namespaces.xsl"/>
-      <!-- NOTE: iso-8859-1 is necessary for the form editors, else special characters won't be handled correctly -->
-      <map:serialize type="xhtml-iso-8859-1"/>
-    </map:resource>
-    
-    <map:resource name="style-cms-page-utf-8">
-      <map:transform type="i18n">      
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="xslt/util/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
-      </map:transform>
-      <map:transform src="xslt/util/strip_namespaces.xsl"/>
-      <!-- NOTE: iso-8859-1 is necessary for the form editors, else special characters won't be handled correctly -->
       <map:serialize type="xhtml"/>
     </map:resource>
     
@@ -159,7 +146,7 @@
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/schedule.xsl"/>
             <map:transform src="cocoon://scheduler/{../../1}/{page-envelope:area}/{../../3}.xsl"/>
-            <map:call resource="style-cms-page-utf-8"/>
+            <map:call resource="style-cms-page"/>
           </map:match>
           
           <!-- other steps: add job (redirect to page) -->
