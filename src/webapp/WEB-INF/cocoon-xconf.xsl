@@ -303,7 +303,10 @@
 <xsl:template match="datasources">
   <xsl:copy>
     <jdbc logger="core.datasources.lenya.scheduler" name="LenyaScheduler">
-      <pool-controller max="10" min="5"/>
+      <pool-controller max="10" min="5">
+        <!-- use custom keep-alive query because HSQL does not accept 'SELECT 1' -->
+        <keep-alive>SELECT 1 FROM QRTZ_LOCKS</keep-alive>
+      </pool-controller>
       <dburl>jdbc:hsqldb:hsql://localhost:9002</dburl>
       <user>sa</user>
       <password/>
