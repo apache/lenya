@@ -117,7 +117,7 @@ be used to configure the chosen Forrest skin.
   @location ("page","menu","page,menu")
   Where to show the TOC.
   -->
-  <toc max-depth="3" min-sections="1" location="page"/>
+  <toc max-depth="3" min-sections="2" location="page"/>
 
   <!-- Heading types can be clean|underlined|boxed  -->
   <headings type="underlined"/>
@@ -126,72 +126,7 @@ be used to configure the chosen Forrest skin.
   </extra-css>
   
   <colors>
-  
-  <!-- Krysalis -->
-<!-- 
-
-    <color name="header"    value="#FFFFFF"/>
-
-    <color name="tab-selected" value="#a5b6c6" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="tab-unselected" value="#F7F7F7"  link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="subtab-selected" value="#a5b6c6"  link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="subtab-unselected" value="#a5b6c6"  link="#000000" vlink="#000000" hlink="#000000"/>
-
-    <color name="heading" value="#a5b6c6"/>
-    <color name="subheading" value="#CFDCED"/>
-       
-    <color name="navstrip" value="#CFDCED" font="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="toolbox" value="#a5b6c6"/>
-    <color name="border" value="#a5b6c6"/>
-        
-    <color name="menu" value="#F7F7F7" link="#000000" vlink="#000000" hlink="#000000"/>    
-    <color name="dialog" value="#F7F7F7"/>
-            
-    <color name="body"    value="#000000" link="#000000" vlink="#009999" hlink="#000066"/>
-    
-    <color name="table" value="#a5b6c6"/>    
-    <color name="table-cell" value="#ffffff"/>    
-    <color name="highlight" value="#ffff00"/>
-    <color name="fixme" value="#cc6600"/>
-    <color name="note" value="#006699"/>
-    <color name="warning" value="#990000"/>
-    <color name="code" value="#a5b6c6"/>
-        
-    <color name="footer" value="#a5b6c6"/>
--->
-  
-  <!-- Forrest -->
-<!--
-    <color name="header"    value="#294563"/>
-
-    <color name="tab-selected" value="#4a6d8c" link="link="#0F3660" " vlink="#0F3660" hlink="#000066"/>
-    <color name="tab-unselected" value="#b5c7e7" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="subtab-selected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="subtab-unselected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-
-    <color name="heading" value="#294563"/>
-    <color name="subheading" value="#4a6d8c"/>
-        
-    <color name="navstrip" value="#cedfef" font="#0F3660" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="toolbox" value="#4a6d8c"/>
-    <color name="border" value="#294563"/>
-    
-    <color name="menu" value="#4a6d8c" font="#cedfef" link="#ffffff" vlink="#ffffff" hlink="#ffcf00"/>    
-    <color name="dialog" value="#4a6d8c"/>
-            
-    <color name="body" value="#ffffff"  link="#0F3660" vlink="#009999" hlink="#000066"/>
-    
-    <color name="table" value="#7099C5"/>    
-    <color name="table-cell" value="#f0f0ff"/>    
-    <color name="highlight" value="#ffff00"/>
-    <color name="fixme" value="#cc6600"/>
-    <color name="note" value="#006699"/>
-    <color name="warning" value="#990000"/>
-    <color name="code" value="#CFDCED"/>
-        
-    <color name="footer" value="#cedfef"/>
--->
-
+ 
   <!-- Lenya  -->
 
     <color name="header" value="#ffffff"/>

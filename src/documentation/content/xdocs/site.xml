@@ -15,17 +15,15 @@
   limitations under the License.
 -->
 
-<!-- $Id: site.xml,v 1.3 2004/07/22 20:07:17 thorsten Exp $ -->
+<!-- $Id: site.xml,v 1.4 2004/07/27 19:41:17 thorsten Exp $ -->
 
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" tab="project">
     <project-information href="" label="Project" tab="project">
-        <index_pm href="index.html" label="Project Information"/>
+        <index_pm href="index.html" label="About"/>
+		<history href="history.html" label="History"/>
         <node-d href="roadmap.html" label="Roadmap"/>
         <release1.2 href="release.html" label="Release 1.2"/>
-        <node-e href="community/mailing-lists.html" label="Mailing Lists"/>
-        <node-h href="acknowledgements.html" label="Credits"/>
         <node-i href="license.html" label="License"/>
-        <node-zz href="community/live-sites.html" label="Live Sites"/>
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
     <installation href="installation/" label="Installation" tab="installation">
@@ -197,43 +195,57 @@
             </integrator-dev-guide>
         </documentation>
     <community href="community/" label="Community" tab="community">
-        <index_com href="index.html" label="Community"/>
+        <index_com href="index.html" label="Contributing"/>
+		<node-h href="acknowledgements.html" label="Credits"/>
         <node-f href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/" 
             label="CVS Web"/>
         <node-g 
             href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=%27Importance%27" 
             label="Bug Tracker"/>
-        <node-e href="mailing-lists.html" label="Mailing Lists"/>
+        <ml href="mailing-lists.html" label="Mailing Lists"/>
         <irc href="irc.html" label="IRC"/>
         <meetings href="meetings.html" label="Meetings and Sprints"/>
         <live-sites href="live-sites.html" label="Live Sites"/>
         <website-update href="website-update.html" label="Website Update"/>
     </community>
     
-    <external-refs>
-       <nightly.builds href="http://cvs.wyona.org/nightly-builds/"/>
-        <asf href="http://www.apache.org/"/>
-        <cocoon href="http://cocoon.apache.org/">
-            <cocoon.2.1.features href="2.1/features.html"/>
-            <lenya href="lenya/"/>
-        </cocoon>
-     <cvs.asf href="http://cvs.apache.org/">
-        <cvs.incubator href="dist/incubator/">
-            <incubator.lenya href="lenya/"/>
-        </cvs.incubator>
-     </cvs.asf>
-        <forrest.apache.org href="http://forrest.apache.org/">
-            <forrest.build href="build.html"/>
-        </forrest.apache.org>
-     <opensource.org href="http://www.opensource.org/"/>
-     <w3c href="http://www.w3c.org/">
-         <w3c.xml href="XML/"/>
-         <w3c.xslt href="TR/xslt/"/>
-     </w3c>
-<wiki href="http://wiki.cocoondev.org/">
-   <wiki.CocoonWebsiteUpdate href="Wiki.jsp?page=CocoonWebsiteUpdate"/>
-</wiki>
-
-
-  </external-refs>
+	<external-refs>
+		<asf href="http://www.apache.org/"/>
+		<cocoon href="http://cocoon.apache.org/">
+			<cocoon.2.1 href="2.1/">
+				<cocoon.howto href="howto/">
+					<cocoon.howto.patch href="howto-patch.html"/>
+					<cocoon.howto.bugzilla href="bugzilla.html"/>
+				</cocoon.howto>
+				<cocoon.2.1.features href="features.html"/>
+			</cocoon.2.1>
+			<lenya href="lenya/"/>
+		</cocoon>
+		<cvs.asf href="http://cvs.apache.org/">
+			<cvs.incubator href="dist/incubator/">
+				<incubator.lenya href="lenya/"/>
+			</cvs.incubator>
+		</cvs.asf>
+		<forrest.apache.org href="http://forrest.apache.org/">
+			<forrest.build href="build.html"/>
+		</forrest.apache.org>
+		<issues href="http://nagoya.apache.org/bugzilla/">
+			<issue.add href="enter_bug.cgi?reporter=&amp;product=Lenya&amp;version=Current+CVS&amp;component=core&amp;rep_platform=Other&amp;op_sys=other&amp;priority=Other&amp;bug_severity=Enhancement&amp;bug_status=NEW&amp;assigned_to=&amp;cc=&amp;bug_file_loc=&amp;short_desc=%5BPatch%5D&amp;comment=&amp;maketemplate=Remember+values+as+bookmarkable+template&amp;form_name=enter_bug"/>
+			<issues.list href="buglist.cgi?">
+				<issues.open.patches href="bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=Blocker&amp;bug_severity=Critical&amp;bug_severity=Major&amp;bug_severity=Normal&amp;bug_severity=Minor&amp;bug_severity=Enhancement&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=short_desc&amp;type0-0-0=substring&amp;value0-0-0=%5BPatch%5D&amp;field0-0-1=noop&amp;type0-0-1=noop&amp;value0-0-1=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time"/>
+				<issues.open.bugs.enhancement href="bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=Enhancement&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=short_desc&amp;type0-0-0=notsubstring&amp;value0-0-0=%5BPatch%5D&amp;field0-0-1=noop&amp;type0-0-1=noop&amp;value0-0-1=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time"/>
+			</issues.list>
+		</issues>
+		<nightly.builds href="http://cvs.wyona.org/nightly-builds/"/>
+		<nzz href="http://www.nzz.ch"/>
+		<opensource.org href="http://www.opensource.org/"/>
+		<w3c href="http://www.w3c.org/">
+			<w3c.xml href="XML/"/>
+			<w3c.xslt href="TR/xslt/"/>
+		</w3c>
+		<wiki href="http://wiki.cocoondev.org/">
+			<wiki.CocoonWebsiteUpdate href="Wiki.jsp?page=CocoonWebsiteUpdate"/>
+		</wiki>
+		<wyona href="http://www.wyona.com" />
+	</external-refs>
 </site>

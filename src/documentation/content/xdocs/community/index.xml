@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index.xml,v 1.1 2004/07/01 23:59:22 thorsten Exp $ -->
+<!-- $Id: index.xml,v 1.2 2004/07/27 19:41:17 thorsten Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -24,13 +24,40 @@
     <title>The Apache Lenya Community</title>
     <version/>
     <type/>
-    <authors>
-      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
-    </authors>
   </header>
   <body>
-
-<p>Here you will find information on how to interact with, and become a member of the Apache Lenya community.</p>
-
+	<p>
+		Here you will find information on how to interact with and become a member 
+		of the Apache Lenya community.
+	</p>
+<section>
+	<title>Contribute code</title>
+	<p>
+		You can contribute code as e.g. an "Enhancement Patch". 
+		For this, you file a bug entry in Bugzilla, using the links provided below. 
+		The bug entries in Bugzilla should provide a description of what the patch does, 
+		and how to apply it. Any further discussion should occur on the Lenya Developer list (see <link href="site:ml">mailing lists</link>)
+	</p>
+	<section>
+		<title>Preparing a Patch</title>
+			<ul>
+				<li>See the Cocoon documentation <link href="site:cocoon.howto.patch">How to Prepare a Patch</link> and <link href="site:cocoon.howto.bugzilla">How to Contribute a Patch via Bugzilla</link>.</li>
+				<li>Make sure you follow the <link href="site:coding">coding guidelines</link>.</li>
+				<li>Test your patch by applying it to a fresh checkout of Lenya. In Eclipse for instance, this is done by choosing "apply patch" in the team perspective.</li>
+				<li>Follow this link to enter your patch in Bugzilla: <link href="site:issue.add">add a new patch</link>.</li>
+			</ul>
+	</section>
+	<section>
+		<title>Apply open patches</title>
+		<p>
+			If you as committer feel that you have some spare time, here is a list of open issues.
+			Just go ahead fix them ;-).
+		</p>
+		<ul>
+			<li><link href="ext:issues.open.bugs.enhancement">list of all provided enhancement bugs</link></li>
+			<li><link href="ext:issues.open.patches">list of all provided patches</link></li>
+		</ul>
+	</section>
+</section>
   </body>
 </document>

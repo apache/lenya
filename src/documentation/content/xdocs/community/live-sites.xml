@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: live-sites.xml,v 1.2 2004/07/02 13:37:59 gregor Exp $ -->
+<!-- $Id: live-sites.xml,v 1.3 2004/07/27 19:41:17 thorsten Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -24,10 +24,7 @@
     <title>Apache Lenya Live Sites</title>
     <version/>
     <type/>
-    <authors>
-      <person name="Gregor J. Rothfuss" email="gregor@apache.org"/>
-    </authors>
-  </header>
+    </header>
   <body>
  
 <section><title>List of Apache Lenya Live Sites</title>
@@ -41,17 +38,18 @@ If you want to suggest additional sites for inclusion, please send an email to t
   <li><link href="http://cocooncenter.org">Cocoon Center</link></li>
   <li><link href="http://computerworld.ch">Computerworld Switzerland (IT newspaper)</link></li>
   <li><link href="http://ejo.ch">European Journalism Observatory</link></li>
+  <li><link href="http://web3d.dimi.uniud.it/ffp6/index.html">FFP6 Symposium, Udine</link></li>
   <li><link href="http://gurit.ch">Gurit Heberlein Group</link></li>
   <li><link href="http://www.ingenieurbuero-metzing.de/">Ingenieurbüro Metzing</link></li>
   <li><link href="http://www.krista-sager.de/">Krista Sager (german MP)</link></li>
   <li><link href="http://netcom.no">Netcom AS</link></li>
-  <li><link href="http://nzz.ch">Neue Zürcher Zeitung (daily swiss newspaper)</link></li>
+  <li><link href="ext:nzz">Neue Zürcher Zeitung (daily swiss newspaper)</link></li>
   <li><link href="http://oscom.org/matrix/">OSCOM CMS matrix</link></li>  
   <li><link href="http://www.unipublic.unizh.ch">Online Journal of the University of Zurich</link></li>
   <li><link href="http://www.preferredms.net/">Preferred</link></li>
-  <li><link href="http://web3d.dimi.uniud.it/ffp6/index.html">FFP6 Symposium, Udine</link></li>
+  <li><link href="http://www.publicstaticvoidmain.de">public static void main (german JAVA knowledge base)</link></li>
   <li><link href="http://www.univ-reunion.fr">University of Reunion</link></li>
-  <li><link href="http://wyona.com">Wyona</link></li>
+  <li><link href="ext:wyona">Wyona</link></li>
 </ul>
 </section>
 
