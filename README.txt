@@ -19,6 +19,8 @@
   Point your favorite browser to http://jakarta.apache.org/ant and get a 
   version 1.4 or greater distribution and installation instructions there.
 
+  (To view targets: ant -projecthelp)
+
 
   Installation
   ------------
