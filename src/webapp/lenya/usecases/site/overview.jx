@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: meta.xsp 42702 2004-03-13 12:34:18Z gregor $ -->
+<!-- $Id$ -->
 
 <page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
            xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
