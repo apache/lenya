@@ -1,5 +1,5 @@
 /*
-$Id: Index.java,v 1.11 2004/02/08 17:20:38 andreas Exp $
+$Id: Index.java,v 1.12 2004/02/17 10:07:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,6 @@ import java.io.File;
 import java.util.Date;
 
 import org.apache.lenya.lucene.IndexConfiguration;
-import org.apache.lenya.util.DebugConfiguration;
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPath;
@@ -82,9 +81,9 @@ public class Index {
             boolean create = false;
             File root = null;
 
-            String usage = "Index <lucene.xconf> <debug(true/false)>";
+            String usage = "Index <lucene.xconf>";
 
-            if (argv.length != 2) {
+            if (argv.length != 1) {
                 System.err.println("Usage: " + usage);
 
                 return;
@@ -102,16 +101,6 @@ public class Index {
                 System.err.println("ERROR: No such update-index/@type: " + ie.getUpdateIndexType());
 
                 return;
-            }
-
-            String debug = argv[1];
-
-            if (debug.equalsIgnoreCase("false") || debug.equalsIgnoreCase("no")) {
-                DebugConfiguration.setDebug(false);
-            } else if (debug.equalsIgnoreCase("true") || debug.equalsIgnoreCase("yes")) {
-                DebugConfiguration.setDebug(true);
-            } else {
-                System.err.println("ERROR: <debug> must be one of 'yes', 'true', 'no', or 'false'");
             }
 
             /*

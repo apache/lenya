@@ -1,5 +1,5 @@
 /*
-$Id: IndexInformation.java,v 1.6 2004/02/02 02:50:38 stefano Exp $
+$Id: IndexInformation.java,v 1.7 2004/02/17 10:07:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,16 +66,19 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.apache.lenya.util.CommandLineLogger;
+import org.apache.log4j.Category;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 
 
 /**
- *
- * @author  hrt
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class IndexInformation {
+    
+    private static Category log = Category.getInstance(IndexInformation.class);
+    
     /**
      * Creates a new IndexInformation object.
      *
@@ -85,14 +88,13 @@ public class IndexInformation {
      * @param create DOCUMENT ME!
      */
     public IndexInformation(String index, File dumpDirectory, FileFilter filter, boolean create) {
-        CommandLineLogger logger = new CommandLineLogger(getClass());
-        logger.log("collecting index information for index '" + index + "'...");
+        log.debug("collecting index information for index '" + index + "'...");
 
         creating = create;
         collectFiles(dumpDirectory, filter, index);
         this.startTime = new GregorianCalendar();
 
-        logger.log(getFileNumber() + " files to index");
+        log.debug(getFileNumber() + " files to index");
     }
 
     private String index;
@@ -207,7 +209,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.6 $
+     * @version $Revision: 1.7 $
      */
     public class CreateHandler extends AbstractIndexIteratorHandler {
         /** Handles a file.
@@ -222,7 +224,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.6 $
+     * @version $Revision: 1.7 $
      */
     public class UpdateHandler extends AbstractIndexIteratorHandler {
         /** Handles a new document.

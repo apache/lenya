@@ -1,5 +1,5 @@
 /*
-$Id: PreParser.java,v 1.5 2004/02/02 02:50:38 stefano Exp $
+$Id: PreParser.java,v 1.6 2004/02/17 10:07:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,8 +59,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.apache.lenya.util.CommandLineLogger;
-
+import org.apache.log4j.Category;
 
 /**
  * The Java HTML parser cannot handle self-closing text.
@@ -69,9 +68,12 @@ import org.apache.lenya.util.CommandLineLogger;
  * @author  nobby
  */
 public class PreParser {
+    
+    private static Category log = Category.getInstance(PreParser.class);
+    
     /** Creates a new instance of PreParser */
     public PreParser() {
-        new CommandLineLogger(getClass()).log("creating new object");
+        log.debug("creating new object");
     }
 
     /**

@@ -68,7 +68,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.lenya.util.CommandLineLogger;
+import org.apache.log4j.Category;
 import org.apache.lucene.document.DateField;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
@@ -77,19 +77,16 @@ import org.apache.lucene.index.TermEnum;
 
 /**
  * @author Andreas Hartmann
- * @version $Id: IndexIterator.java,v 1.8 2004/02/02 02:50:38 stefano Exp $
+ * @version $Id: IndexIterator.java,v 1.9 2004/02/17 10:07:12 andreas Exp $
  */
 public class IndexIterator {
+    
+    private static Category log = Category.getInstance(IndexIterator.class);
+    
     /** Creates a new instance of IndexItertor */
     public IndexIterator(String index, FileFilter filter) {
         this.filter = filter;
         this.index = index;
-    }
-
-    private CommandLineLogger logger = new CommandLineLogger(getClass());
-
-    protected CommandLineLogger getLogger() {
-        return logger;
     }
 
     private String index;
@@ -160,7 +157,7 @@ public class IndexIterator {
      * @param dumpDirectory DOCUMENT ME!
      */
     public void iterate(File dumpDirectory) {
-        getLogger().debug("Iterating files for index " + getIndex());
+        log.debug("Iterating files for index " + getIndex());
 
         try {
             reader = IndexReader.open(getIndex());
@@ -182,35 +179,35 @@ public class IndexIterator {
             iterator.close();
             reader.close();
         } catch (IOException e) {
-            getLogger().log(e);
+            log.error(e);
         }
     }
 
     protected void iterateFiles(TermEnum iterator, File file, File dumpDirectory)
         throws IOException {
         String uid = createUID(file, dumpDirectory);
-        getLogger().debug("-----------------------------------------------------");
-        getLogger().debug("[file]  file uid: " + uid2url(uid));
+        log.debug("-----------------------------------------------------");
+        log.debug("[file]  file uid: " + uid2url(uid));
 
         handleFile(file);
 
         // handle all terms with a smaller uid than the modified file and delete their documents
         while (isStale(iterator.term(), uid)) {
-            getLogger().debug("[stale] term uid: " + uid2url(iterator.term().text()));
+            log.debug("[stale] term uid: " + uid2url(iterator.term().text()));
             handleStaleDocument(iterator.term());
             iterator.next();
         }
 
         // handle un-modified file
         if (hasEqualUID(iterator.term(), uid)) {
-            getLogger().debug("[unmod] term uid: " + uid2url(iterator.term().text()));
+            log.debug("[unmod] term uid: " + uid2url(iterator.term().text()));
             handleUnmodifiedDocument(iterator.term(), file);
             iterator.next();
         }
         // handle new file
         else {
             if (iterator.term() != null) {
-                getLogger().debug("[new]   term uid: " + uid2url(iterator.term().text()));
+                log.debug("[new]   term uid: " + uid2url(iterator.term().text()));
                 handleNewDocument(iterator.term(), file);
             }
         }
@@ -225,7 +222,7 @@ public class IndexIterator {
         try {
             enum = reader.terms(new Term("uid", ""));
         } catch (IOException e) {
-            getLogger().log("Term enumeration failed: ", e);
+            log.error("Term enumeration failed: ", e);
         }
             
         return enum;

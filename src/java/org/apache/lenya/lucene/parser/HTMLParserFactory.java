@@ -56,16 +56,18 @@ package org.apache.lenya.lucene.parser;
 
 import java.io.File;
 
-import org.apache.lenya.util.CommandLineLogger;
-
+import org.apache.log4j.Category;
 
 /**
  * Factory to create HTML parsers that are used for indexing HTML.
  *
  * @author Andreas Hartmann
- * @version $Id: HTMLParserFactory.java,v 1.8 2004/02/02 02:50:38 stefano Exp $
+ * @version $Id: HTMLParserFactory.java,v 1.9 2004/02/17 10:07:12 andreas Exp $
  */
 public class HTMLParserFactory {
+    
+    public static Category log = Category.getInstance(HTMLParserFactory.class);
+    
     /**
      * Returns an HTMLParser.
      */
@@ -81,10 +83,10 @@ public class HTMLParserFactory {
             parser = new PDFParserWrapper();
         } else {
             parser = new SwingHTMLParser();
-            new CommandLineLogger(HTMLParserFactory.class).debug(".newInstance(): WARNING: Suffix did no match (" + file.getName()  + "). SwingHTMLParser as default parser selected!");
+            log.debug(".newInstance(): WARNING: Suffix did no match (" + file.getName()  + "). SwingHTMLParser as default parser selected!");
         }
 
-        new CommandLineLogger(HTMLParserFactory.class).debug("returning a " + parser.getClass().getName() + " for " + file.getName());
+        log.debug("returning a " + parser.getClass().getName() + " for " + file.getName());
 
         return parser;
     }

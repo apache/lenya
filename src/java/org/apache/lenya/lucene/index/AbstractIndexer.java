@@ -59,7 +59,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.apache.lenya.util.CommandLineLogger;
+import org.apache.log4j.Category;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
@@ -75,20 +75,18 @@ import org.w3c.dom.Element;
  *
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: AbstractIndexer.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
+ * @version $Id: AbstractIndexer.java,v 1.11 2004/02/17 10:07:12 andreas Exp $
  */
 public abstract class AbstractIndexer implements Indexer {
-    private CommandLineLogger logger = new CommandLineLogger(getClass());
+    
+    private static Category log = Category.getInstance(Indexer.class); 
+    
     private DocumentCreator documentCreator;
     private Element indexer;
     private String configFileName;
 
     /** Creates a new instance of AbstractIndexer */
     public AbstractIndexer() {
-    }
-
-    protected CommandLineLogger getLogger() {
-        return logger;
     }
 
     /**
@@ -171,7 +169,7 @@ public abstract class AbstractIndexer implements Indexer {
             writer.optimize();
             writer.close();
         } catch (IOException e) {
-            getLogger().log(e);
+            log.error(e);
         }
     }
 
@@ -180,12 +178,12 @@ public abstract class AbstractIndexer implements Indexer {
      */
     protected void deleteStaleDocuments(File dumpDirectory, String index)
         throws Exception {
-        getLogger().debug("Deleting stale documents");
+        log.debug("Deleting stale documents");
 
         IndexIterator iterator = new IndexIterator(index, getFilter(indexer, configFileName));
         iterator.addHandler(new DeleteHandler());
         iterator.iterate(dumpDirectory);
-        getLogger().debug("Deleting stale documents finished");
+        log.debug("Deleting stale documents finished");
     }
 
     /**
@@ -252,15 +250,15 @@ public abstract class AbstractIndexer implements Indexer {
          *
          */
         public void handleStaleDocument(IndexReader reader, Term term) {
-            AbstractIndexer.this.getLogger().debug("deleting " +
+            log.debug("deleting " +
                 IndexIterator.uid2url(term.text()));
 
             try {
                 int deletedDocuments = reader.delete(term);
-                AbstractIndexer.this.getLogger().debug("deleted " + deletedDocuments +
+                log.debug("deleted " + deletedDocuments +
                     " documents.");
             } catch (IOException e) {
-                getLogger().log(e);
+                log.error(e);
             }
         }
     }
@@ -269,7 +267,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.10 $
+     * @version $Revision: 1.11 $
      */
     public class IndexHandler extends AbstractIndexIteratorHandler {
         /**
@@ -304,17 +302,17 @@ public abstract class AbstractIndexer implements Indexer {
         }
 
         protected void addFile(File file) {
-            getLogger().debug("adding document: " + file.getAbsolutePath());
+            log.debug("adding document: " + file.getAbsolutePath());
 
             try {
                 Document doc = getDocumentCreator().getDocument(file, dumpDirectory);
                 writer.addDocument(doc);
             } catch (Exception e) {
-                getLogger().log(e);
+                log.error(e);
             }
 
             info.increase();
-            getLogger().log(info.printProgress());
+            log.debug(info.printProgress());
         }
     }
 
@@ -322,7 +320,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.10 $
+     * @version $Revision: 1.11 $
      */
     public class CreateIndexHandler extends IndexHandler {
         /**
@@ -348,7 +346,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.10 $
+     * @version $Revision: 1.11 $
      */
     public class UpdateIndexHandler extends IndexHandler {
         /**
