@@ -162,14 +162,18 @@
         </map:match>
 
         <map:match pattern="tabs/workflow">
-        	<map:act type="resource-exists" src="pubs/{page-envelope:publication-id}/{workflow:history-path}">
-						<map:generate src="pubs/{page-envelope:publication-id}/{workflow:history-path}"/>
-						<map:transform src="xslt/info/workflow2info.xsl"/>
-						<map:transform src="xslt/info/info.xsl">
-							<map:parameter name="tab" value="workflow"/>
-						</map:transform>
-						<map:serialize/>
-        	</map:act>
+          <map:select type="parameter">
+            <map:parameter name="parameter-selector-test" value="{workflow:history-path}"/>
+              <map:when test=""/>
+              <map:otherwise>
+                <map:generate src="pubs/{page-envelope:publication-id}/{workflow:history-path}"/>
+                <map:transform src="xslt/info/workflow2info.xsl"/>
+                <map:transform src="xslt/info/info.xsl">
+                  <map:parameter name="tab" value="workflow"/>
+                </map:transform>
+              <map:serialize/>
+            </map:otherwise>
+          </map:select>
         </map:match>
 
         <map:match pattern="tabs/*">
