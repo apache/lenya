@@ -201,6 +201,7 @@
   <!-- Clean targets                                                -->
   <!-- ============================================================ -->
   <target name="clean" depends="init" description="Cleans the build directories">
+    <mkdir dir="${build.root}"/> <!-- Create dir in case it doesn't exist and build does not fail -->
     <delete includeEmptyDirs="true">
       <fileset dir="${build.root}" excludes="${target.reset.excludes}" />
     </delete>
