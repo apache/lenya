@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReservedCheckoutTestAction.java,v 1.4 2004/05/23 12:52:43 gregor Exp $  */
+/* $Id: ReservedCheckoutTestAction.java,v 1.5 2004/08/16 12:12:43 andreas Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -49,7 +49,7 @@ public class ReservedCheckoutTestAction extends RevisionControllerAction {
         try {
             RCMLEntry entry =getRc().getRCML(getFilename()).getLatestEntry();
 
-			if ((entry == null) | (entry.getType() != RCML.co) | !entry.getIdentity().equals(getUsername())) {
+			if ((entry == null) || (entry.getType() != RCML.co) || !entry.getIdentity().equals(getUsername())) {
 				//check out
 	            getRc().reservedCheckOut(getFilename(),getUsername());   
 			}
