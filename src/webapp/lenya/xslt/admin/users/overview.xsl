@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <xsl:if test="not(user/@ldap = 'false')">
+    <xsl:if test="not(@ldap = 'true')">
       <xsl:call-template name="password"/>
     </xsl:if>
     
