@@ -403,6 +403,7 @@
       </map:action>
       
       <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
+      <map:action name="workflow" logger="sitemap.action.workflow" src="org.apache.lenya.cms.cocoon.acting.WorkflowInvokerAction"/>
       
       <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
     
