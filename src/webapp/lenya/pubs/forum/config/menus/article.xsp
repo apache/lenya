@@ -21,7 +21,7 @@
     <menu name="File" label="File">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/xopus2/articles/<xsp:expr>article_id</xsp:expr>/index.html?filename=content/authoring/articles/<xsp:expr>article_id</xsp:expr>/index.xml</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
-	<item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/articles/<xsp:expr>article_id</xsp:expr>/index.html?usecase=rollback&amp;step=showscreen&amp;documentid=articles/<xsp:expr>article_id</xsp:expr>/index.xml</xsp:attribute>Rollback</item>
+	<item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/articles/<xsp:expr>article_id</xsp:expr>/index.html?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=articles/<xsp:expr>article_id</xsp:expr>/index.xml</xsp:attribute>Rollback</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/lenya/publishScreen?uris=<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/articles/<xsp:expr>article_id</xsp:expr>/index.html,<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/index.html&amp;sources=/articles/<xsp:expr>article_id</xsp:expr>/index.xml</xsp:attribute>Publish</item>
       </block>
       <separator>

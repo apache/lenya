@@ -18,7 +18,7 @@
       <tr>
         <td class="tsr-text"><b>Teaser-Image</b></td>
 	<td class="tsr-text">
-         <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
+         <a href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
           <xsl:choose>
             <xsl:when test="body/body.head/media">
               <img src="{body/body.head/media[1]/media-reference/@source}" border="0" alt="Teaser Image" align="middle" /> Change Image
@@ -44,7 +44,7 @@
     <div class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </div>
     <div class="art-author"><xsl:apply-templates select="body/body.head/byline"/></div>
     <xsl:if test="$authoring">
-      <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[1]/*[1]&amp;insertBefore=true"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+      <a href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[1]/*[1]&amp;insertBefore=true"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
     </xsl:if>
     <xsl:apply-templates select="body/body.content/block"/>
     <div class="art-author"><xsl:apply-templates select="body/body.end/tagline"/></div>
@@ -68,7 +68,7 @@
     <xsl:apply-templates/>
     <xsl:if test="$authoring">
 	<br/>
-	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+	<a href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
     </xsl:if>
   </p>
 </xsl:template>

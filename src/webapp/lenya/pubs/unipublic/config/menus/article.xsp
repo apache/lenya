@@ -58,7 +58,7 @@
 					<item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/newsletter/index.html</xsp:attribute>Newsletter</item>
 				</block>
 <block>
-<item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html?usecase=rollback&amp;step=showscreen&amp;documentid="+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
+<item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid="+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
 </block>
 <!--
 <block>

@@ -85,8 +85,9 @@
 
     <map:generator label="content,data" logger="sitemap.generator.principallist" name="principallist" src="org.apache.cocoon.generation.PrincipalListGenerator"/>
 
-  <map:generator label="content,data" logger="sitemap.generator.proxy" name="proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
+    <map:generator label="content,data" logger="sitemap.generator.proxy" name="proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
 
+    <map:generator name="notifying" src="org.apache.cocoon.sitemap.NotifyingGenerator"/>
 
     <!-- =================== XML:DB Generators ========================= -->
     <!-- BEWARE: these are unmaintained XML:DB generators, going to be   -->
@@ -276,10 +277,10 @@
       <header-name>referer</header-name>
     </map:matcher>
       <map:matcher name="usecase" logger="sitemap.matcher.usecase" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
-        <parameter-name>usecase</parameter-name>
+        <parameter-name>lenya.usecase</parameter-name>
       </map:matcher>
       <map:matcher name="step" logger="sitemap.matcher.step" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
-        <parameter-name>step</parameter-name>
+        <parameter-name>lenya.step</parameter-name>
       </map:matcher>
   </map:matchers>
 
@@ -627,7 +628,7 @@
         <map:transform src="lenya/xslt/search/search-and-results.xsl"/>
         <map:serialize type="html"/>
       </map:match>
-      <map:handle-errors>
+      <map:handle-errors type="500">
         <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>

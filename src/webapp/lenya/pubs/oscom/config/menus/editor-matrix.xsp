@@ -20,7 +20,7 @@
     <menu name="File" label="File">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/editor-matrix/"+projectid+".html"</xsp:expr>?filename=content/authoring/editor-matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/editor-matrix/"+projectid+".html"</xsp:expr>?usecase=rollback&amp;step=showscreen&amp;documentid=editor-matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/editor-matrix/"+projectid+".html"</xsp:expr>?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=editor-matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/editor-matrix/"+projectid+".html,/lenya/oscom/editor-matrix/index.html&amp;sources=/editor-matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
       </block>
       <separator>

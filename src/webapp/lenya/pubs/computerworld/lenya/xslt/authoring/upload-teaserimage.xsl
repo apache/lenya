@@ -22,8 +22,8 @@
     <form action="{request-uri}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="xpath" value="{xpath}"/>
       <input type="hidden" name="documentid" value="{documentid}"/>
-      <input type="hidden" name="usecase" value="{usecase}"/>
-      <input type="hidden" name="step" value="upload"/>
+      <input type="hidden" name="lenya.usecase" value="{usecase}"/>
+      <input type="hidden" name="lenya.step" value="upload"/>
       <input type="hidden" name="publisher" value="{current_username}"/>
       <input type="hidden" name="referer" value="{referer}"/>
       <table border="0">

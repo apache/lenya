@@ -14,7 +14,7 @@
 <!--
     <div class="art-pretitle">
     <p>&#160;</p>
-    <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
+    <a href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
       <xsl:choose>
         <xsl:when test="body/body.head/media">
           <xsl:apply-templates select="body/body.head/media[1]/media-reference" mode="image"/>
@@ -56,7 +56,7 @@
     <xsl:apply-templates/>
 <!--
 	<br/>
-	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+	<a href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
 -->
   </p>
 </xsl:template>

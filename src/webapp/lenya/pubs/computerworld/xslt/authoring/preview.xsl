@@ -38,7 +38,7 @@ style="background-image:url(/img/layout/dot1x3-black.gif)">
 alt="Aktuelle Ausgabe jetzt am Kiosk" />
 <br/>
                                         <a 
-href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid=preview.xml&amp;xpath=/preview/*[1]">
+href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showscreen&amp;documentid=preview.xml&amp;xpath=/preview/*[1]">
                                                 <img src="/lenya/lenya/images/util/reddot.gif" alt="Insert 
 Image" border="0"/>
                                         </a>

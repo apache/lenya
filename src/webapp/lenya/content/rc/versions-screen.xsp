@@ -25,7 +25,7 @@
       String filename=xspUtilPublication.getEnvironment().getAuthoringPath() + "/" +docId;
 
       <xsp:content><filename><xsp:expr>filename</xsp:expr></filename></xsp:content>
-      <xsp:content><usecase><xsp:expr>request.getParameter("usecase")</xsp:expr></usecase></xsp:content>
+      <xsp:content><usecase><xsp:expr>request.getParameter("lenya.usecase")</xsp:expr></usecase></xsp:content>
 
       String rootDir=xspUtilPublicationPath;
       RCEnvironment rcEnvironment = new RCEnvironment(xspUtilServletContextPath);

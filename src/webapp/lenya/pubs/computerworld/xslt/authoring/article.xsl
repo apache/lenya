@@ -18,7 +18,7 @@
       <tr>
         <td class="txt-s-black"><b>Teaser-Image</b></td>
 	<td class="txt-s-black">
-         <a href="../{$documentid}?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/article/head/*[1]">
+         <a href="../{$documentid}?lenya.usecase=uploadimage&amp;lenya.step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/article/head/*[1]">
           <xsl:choose>
             <xsl:when test="head/media">
               <img src="/img/news/{head/media/media-reference/@source}" border="0" alt="Teaser Image" align="middle" /> Change Image
@@ -53,7 +53,7 @@
 			<tr>
 				<td width="440" align="left" valign="top" colspan="2">
 					<br/>
-	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/body/*[1]"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a>
+	<a href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/body/*[1]"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a>
 <xsl:apply-templates select="body/media[1]"/>
 	<span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
         	<span class="txt-m-black"><xsl:apply-templates select="body/p"/>

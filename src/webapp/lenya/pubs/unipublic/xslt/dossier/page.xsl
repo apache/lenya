@@ -97,7 +97,7 @@
                     <td align="left" width="90" class="rel-text">
 		     <xsl:choose>
 		      <xsl:when test="$authoring">
-    		        <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/dossier/head/title">
+    		        <a href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/dossier/head/title">
       		        <xsl:choose>
         		  <xsl:when test="head/media/media-reference">
                             <img height="60" alt="" src="{head/media/media-reference/@source}" width="80" border="0"/>
