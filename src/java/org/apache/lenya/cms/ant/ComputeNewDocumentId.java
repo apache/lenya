@@ -1,5 +1,5 @@
 /*
-$Id: ComputeNewDocumentId.java,v 1.3 2003/08/20 16:50:33 edith Exp $
+$Id: ComputeNewDocumentId.java,v 1.4 2003/09/23 09:18:10 edith Exp $
 <License>
 
  ============================================================================
@@ -174,8 +174,8 @@ public class ComputeNewDocumentId extends PublicationTask{
      **/
     public void execute() throws BuildException {
         try {
-            log("first-document-id " + getFirstdocumentid());
-            log("sec-document-id " + getSecdocumentid());
+            log("document id of the source" + getFirstdocumentid());
+            log("document id of the destination" + getSecdocumentid());
             log("area: " + getArea());
             String documentId = compute(getFirstdocumentid(), getSecdocumentid());
 			String uniqueId = computeUniqueId(documentId, getArea());
