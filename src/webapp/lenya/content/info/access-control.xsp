@@ -16,12 +16,17 @@
   <xsp:structure>
     <xsp:include>java.io.IOException</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Accreditable</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.ac.GroupManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.IPRange</xsp:include>
+    <xsp:include>org.apache.lenya.ac.IPRangeManager</xsp:include>
     <xsp:include>org.apache.lenya.ac.Item</xsp:include>
-    <xsp:include>org.apache.lenya.ac.ItemManager</xsp:include>
     <xsp:include>org.apache.lenya.ac.Role</xsp:include>
     <xsp:include>org.apache.lenya.ac.RoleManager</xsp:include>
-    <xsp:include>org.apache.lenya.ac.Accreditable</xsp:include>
-    <xsp:include>org.apache.lenya.ac.Credential</xsp:include>
+    <xsp:include>org.apache.lenya.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.ac.UserManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.impl.Credential</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.cocoon.PolicyHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.cocoon.CredentialWrapper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
@@ -40,26 +45,29 @@
 				<li:items>
 					<xsp:attribute name="type"><xsp:expr>types[i]</xsp:expr></xsp:attribute>
 				<xsp:logic>
-				ItemManager manager = null;
+				Item[] items = null;
 				
 				if (types[i].equals("user")) {
-						manager = (ItemManager) <input:get-attribute module="access-control" name="user-manager" as="object"/>;
+						UserManager manager = (UserManager) <input:get-attribute module="access-control" name="user-manager" as="object"/>;
+						items = manager.getUsers();
 				}
 				else if (types[i].equals("group")) {
-						manager = (ItemManager) <input:get-attribute module="access-control" name="group-manager" as="object"/>;
+						GroupManager manager = (GroupManager) <input:get-attribute module="access-control" name="group-manager" as="object"/>;
+						items = manager.getGroups();
 				}
 				else if (types[i].equals("iprange")) {
-						manager = (ItemManager) <input:get-attribute module="access-control" name="iprange-manager" as="object"/>;
+						IPRangeManager manager = (IPRangeManager) <input:get-attribute module="access-control" name="iprange-manager" as="object"/>;
+						items = manager.getIPRanges();
 				}
 				else if (types[i].equals("role")) {
-						manager = (ItemManager) <input:get-attribute module="access-control" name="role-manager" as="object"/>;
+						RoleManager manager = (RoleManager) <input:get-attribute module="access-control" name="role-manager" as="object"/>;
+						items = manager.getRoles();
 				}
 						 
-				for (java.util.Iterator items = manager.getItems(); items.hasNext(); ) {
-						Item item = (Item) items.next();
+				for (int j = 0; j &lt; items.length; j++) {
 						<li:item>
-							<xsp:attribute name="id"><xsp:expr>item.getId()</xsp:expr></xsp:attribute>
-							<xsp:expr>item.getName()</xsp:expr>
+							<xsp:attribute name="id"><xsp:expr>items[j].getId()</xsp:expr></xsp:attribute>
+							<xsp:expr>items[j].getName()</xsp:expr>
 						</li:item>
 				}
 				</xsp:logic>
@@ -72,11 +80,21 @@
 								String roleId = request.getParameter("role_id");
 								
 								String accreditableId = request.getParameter("accreditable_id");
-								Item item = manager.getItem(accreditableId);
+								Item item = null;
+								for (int k = 0; k &lt; items.length; k++) {
+								    if (accreditableId.equals(items[k].getId())) {
+								        item = items[k];
+								    }
+								}
 								
 								RoleManager roleManager = (RoleManager)
 										<input:get-attribute module="access-control" name="role-manager" as="object"/>;
 								Role role = roleManager.getRole(roleId);
+								
+								if (role == null) {
+								    throw new ProcessingException("Role [" + roleId + "] does not exist!");
+								}
+								
 								helper.manipulateCredential(item, role, operations[j]);
 						}
 				}
