@@ -129,9 +129,9 @@ public class RevisionControllerAction extends AbstractAction {
         String servletContextPath = publication.getServletContext().getCanonicalPath();
         RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
         rcmlDirectory = rcEnvironment.getRCMLDirectory();
-        rcmlDirectory = publicationPath + rcmlDirectory;
+        rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
         backupDirectory = rcEnvironment.getBackupDirectory();
-        backupDirectory = publicationPath + backupDirectory;
+        backupDirectory = publicationPath + File.separator + backupDirectory;
 
         // Initialize Revision Controller
         rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
@@ -151,9 +151,8 @@ public class RevisionControllerAction extends AbstractAction {
         getLogger().debug(".act(): Identity: " + identity);
 
         String docId = request.getParameter("documentid");
-        String authoringPath = new File(publication.getDirectory().getCanonicalPath(),
-                "content" + File.separator + Publication.AUTHORING_AREA).getCanonicalPath();
-        filename = authoringPath + "/" + docId;
+		String authoringPath = File.separator+"content" + File.separator + Publication.AUTHORING_AREA;
+        filename = authoringPath + File.separator+docId.replace('/', File.separatorChar);
         getLogger().debug(".act(): publicationAuthPath + docId : " + authoringPath + " : " + docId);
         username = null;
 
