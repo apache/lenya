@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-$Id: xhtml2xhtml.xsl,v 1.5 2004/02/27 17:14:45 gregor Exp $
+$Id: xhtml2xhtml.xsl,v 1.6 2004/02/27 17:22:24 gregor Exp $
 -->
 
 <xsl:stylesheet version="1.0"
@@ -126,7 +126,6 @@ $Id: xhtml2xhtml.xsl,v 1.5 2004/02/27 17:14:45 gregor Exp $
         </xsl:if>         
         </img>
       </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>  
 
   <xsl:template match="dc:metadata"/>
