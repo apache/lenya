@@ -17,14 +17,6 @@
     <head>
      <title>unipublic - Das Online-Magazin der Universit&#228;t Z&#252;rich</title>
 
-     <script type="text/javascript" language="JavaScript1.2">
-       <xsl:comment>
-         function aboWindow() {
-           newWind = open("newsletter.html","Display", "toolbar='no', statusbar='no', height='280', width='225'" );
-         }
-       </xsl:comment>        
-     </script>
-
      <xsl:call-template name="styles"/>
 
      <xsl:call-template name="jscript"/>
@@ -73,7 +65,7 @@
             <td colspan="2">
 	      <!-- Footer -->
               <xsl:call-template name="footer">
-                <xsl:with-param name="footer_date" select="/wyona/cmsbody/Page/Content/MainColumn/Articles/Article[1]/body.head/dateline/story.date/@norm" />
+                <xsl:with-param name="footer_date" select="MainColumn/Articles/Article[1]/body.head/dateline/story.date/@norm" />
               </xsl:call-template>
 
             </td>

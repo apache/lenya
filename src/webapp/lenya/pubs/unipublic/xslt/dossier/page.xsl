@@ -52,7 +52,7 @@
              <td width="5" bgcolor="white"></td>
 	     <td width="393" bgcolor="white">
                <xsl:call-template name="footer">
-                 <xsl:with-param name="footer_date"></xsl:with-param>
+	         <xsl:with-param name="footer_date" select="articles/article[1]/body.head/dateline/story.date/@norm" />
                </xsl:call-template>
              </td>
            </tr>

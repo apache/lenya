@@ -17,7 +17,7 @@
 				</tr>
 				<tr>
 					<td><font size="1">&#169; Universit&#228;t Z&#252;rich,&#160;<!--
-				           --><xsl:if test="$footer_date"><xsl:value-of select="$footer_date" />,&#160;</xsl:if><!--
+				           --><xsl:if test="$footer_date and not($footer_date = '')"><xsl:value-of select="$footer_date" />,&#160;</xsl:if><!--
 					   --><a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum.html">Impressum</a></font>
 					</td>
 				</tr>

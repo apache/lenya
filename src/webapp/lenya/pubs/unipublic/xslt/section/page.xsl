@@ -70,7 +70,7 @@ alt="{$sectiontext}"/>
 
 <!-- <xsl:apply-templates select="MainColumn/section/articles" mode="Section_copyright"/> -->
 <xsl:call-template name="footer">
-  <xsl:with-param name="footer_date" select="/wyona/cmsbody/Page/Content/MainColumn/section/articles/article[1]/body.head/dateline/story.date/@norm" />
+  <xsl:with-param name="footer_date" select="MainColumn/section/articles/article[1]/body.head/dateline/story.date/@norm" />
 </xsl:call-template>
 
 </td>
