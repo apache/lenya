@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeFactory.java,v 1.5 2003/08/12 15:18:19 andreas Exp $
+$Id: PageEnvelopeFactory.java,v 1.6 2003/09/08 19:29:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -100,10 +100,10 @@ public class PageEnvelopeFactory {
         Request request = ObjectModelHelper.getRequest(objectModel);
         PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
 
-        if (envelope == null) {
+//        if (envelope == null) {
             envelope = new PageEnvelope(objectModel, true);
             request.setAttribute(PageEnvelope.class.getName(), envelope);
-        }
+//        }
 
         return envelope;
     }

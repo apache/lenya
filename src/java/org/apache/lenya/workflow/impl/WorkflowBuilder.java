@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowBuilder.java,v 1.9 2003/09/02 13:17:21 andreas Exp $
+$Id: WorkflowBuilder.java,v 1.10 2003/09/08 19:29:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,6 +61,7 @@ import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
+import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -82,6 +83,8 @@ import javax.xml.parsers.ParserConfigurationException;
  * @author  andreas
  */
 public class WorkflowBuilder {
+    
+    private static final Category log = Category.getInstance(WorkflowBuilder.class);
     
     /**
      * Ctor.
@@ -237,6 +240,11 @@ public class WorkflowBuilder {
      */
     protected static TransitionImpl buildTransition(Element element, Map states, Map events,
         Map variables) throws WorkflowException {
+            
+        if (log.isDebugEnabled()) {
+            log.debug("Building transition");
+        }
+            
         assert element.getLocalName().equals(TRANSITION_ELEMENT);
 
         String sourceId = element.getAttribute(SOURCE_ATTRIBUTE);
@@ -264,6 +272,10 @@ public class WorkflowBuilder {
 
         transition.setEvent(event);
 
+        if (log.isDebugEnabled()) {
+            log.debug("    Event: [" + event + "]");
+        }
+            
         // load conditions
         NodeList conditionElements = element.getElementsByTagNameNS(Workflow.NAMESPACE,
                 CONDITION_ELEMENT);

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.21 2003/09/02 13:16:13 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.22 2003/09/08 19:26:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,7 +77,6 @@ import org.xml.sax.helpers.AttributesImpl;
 
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -161,6 +160,14 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             
             try {
                 this.events = getInstance().getExecutableEvents(situation);
+                
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Executable events: ");
+                    for (int i = 0; i < events.length; i++) {
+                        getLogger().debug("    [" + events[i] + "]");
+                    }
+                }
+                
             } catch (WorkflowException e) {
                 throw new ProcessingException(e);
             }

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInstanceImpl.java,v 1.8 2003/09/02 13:17:21 andreas Exp $
+$Id: WorkflowInstanceImpl.java,v 1.9 2003/09/08 19:29:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,6 +66,7 @@ import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.WorkflowListener;
+import org.apache.log4j.Category;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,6 +83,9 @@ import java.util.Set;
  * @author  andreas
  */
 public abstract class WorkflowInstanceImpl implements WorkflowInstance {
+    
+    private static final Category log = Category.getInstance(WorkflowInstanceImpl.class);
+    
     /**
      * Creates a new instance of WorkflowInstanceImpl.
      */
@@ -112,15 +116,32 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @throws WorkflowException when something went wrong.
      */
     public Event[] getExecutableEvents(Situation situation) throws WorkflowException {
+        
+        if (log.isDebugEnabled()) {
+            log.debug("Resolving executable events");
+        }
+        
         Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
         Set executableEvents = new HashSet();
 
         for (int i = 0; i < transitions.length; i++) {
             if (transitions[i].canFire(situation, this)) {
                 executableEvents.add(transitions[i].getEvent());
+                if (log.isDebugEnabled()) {
+                    log.debug("    [" + transitions[i].getEvent() + "] can fire.");
+                }
+            }
+            else {
+                if (log.isDebugEnabled()) {
+                    log.debug("    [" + transitions[i].getEvent() + "] can not fire.");
+                }
             }
         }
 
+        if (log.isDebugEnabled()) {
+            log.debug("    Resolving executable events completed.");
+        }
+        
         return (Event[]) executableEvents.toArray(new Event[executableEvents.size()]);
     }
 

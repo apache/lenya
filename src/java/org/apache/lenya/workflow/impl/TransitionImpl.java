@@ -1,5 +1,5 @@
 /*
-$Id: TransitionImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
+$Id: TransitionImpl.java,v 1.7 2003/09/08 19:29:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,7 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Transition;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.log4j.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,8 @@ import java.util.List;
  * @author  andreas
  */
 public class TransitionImpl implements Transition {
+    
+    private static final Category log = Category.getInstance(TransitionImpl.class);
     
     /**
      * Ctor.
@@ -182,10 +185,13 @@ public class TransitionImpl implements Transition {
         Condition[] conditions = getConditions();
         boolean canFire = true;
 
-        for (int i = 0; i < conditions.length; i++) {
-            if (!conditions[i].isComplied(situation, instance)) {
-                canFire = false;
+        int i = 0;
+        while (canFire && i < conditions.length) {
+            canFire = canFire && conditions[i].isComplied(situation, instance);
+            if (log.isDebugEnabled()) {
+                log.debug("Condition [" + conditions[i] + "] returns [" + canFire + "]");
             }
+            i++;
         }
 
         return canFire;

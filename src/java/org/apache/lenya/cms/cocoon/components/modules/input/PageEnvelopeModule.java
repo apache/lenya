@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.26 2003/09/03 12:10:08 egli Exp $
+$Id: PageEnvelopeModule.java,v 1.27 2003/09/08 19:26:26 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,6 +59,8 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import java.util.Arrays;
@@ -86,6 +88,11 @@ public class PageEnvelopeModule extends AbstractInputModule {
      */
     protected PageEnvelope getEnvelope(Map objectModel) throws ConfigurationException {
         PageEnvelope envelope = null;
+        
+        if (getLogger().isDebugEnabled()) {
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
+        }
 
         try {
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
@@ -169,6 +176,11 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 "Getting attribute for name [" + name + "] failed: ",
                 e);
         }
+        
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Returning [" + name + "] = [" + value + "]");
+        }
+        
         return value;
     }
 

@@ -1,5 +1,5 @@
 /*
-$Id: BooleanVariableCondition.java,v 1.1 2003/09/02 13:17:21 andreas Exp $
+$Id: BooleanVariableCondition.java,v 1.2 2003/09/08 19:29:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,6 +58,7 @@ package org.apache.lenya.workflow.impl;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.log4j.Category;
 
 /**
  * @author andreas
@@ -66,6 +67,8 @@ import org.apache.lenya.workflow.WorkflowInstance;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class BooleanVariableCondition extends AbstractCondition {
+    
+    private static final Category log = Category.getInstance(BooleanVariableCondition.class);
 
     private String variableName;
     private boolean value;
@@ -96,14 +99,25 @@ public class BooleanVariableCondition extends AbstractCondition {
             throw new WorkflowException(
                 "The expression '" + expression + "' must be of the form 'name = [true|false]'");
         }
+        
         variableName = sides[0].trim();
-        value = Boolean.getBoolean(sides[1]);
+        value = Boolean.valueOf(sides[1].trim()).booleanValue();
+        
+        if (log.isDebugEnabled()) {
+            log.debug("Expression:    [" + sides[1].trim() + "]");
+            log.debug("Setting value: [" + value + "]");
+        }
     }
 
     /**
      * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Situation)
      */
     public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
+        if (log.isDebugEnabled()) {
+            log.debug("Checking boolean variable condition");
+            log.debug("    Condition value: [" + getValue() + "]");
+            log.debug("    Variable value:  [" + instance.getValue(getVariableName()) + "]");
+        }
         return instance.getValue(getVariableName()) == getValue();
     }
 

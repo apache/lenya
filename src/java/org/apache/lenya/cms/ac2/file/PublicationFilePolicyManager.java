@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFilePolicyManager.java,v 1.9 2003/09/05 14:39:28 andreas Exp $
+$Id: PublicationFilePolicyManager.java,v 1.10 2003/09/08 19:26:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,6 +68,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.URLInformation;
 
 /**
  * A FilePolicyManager that resolves policies relative to the {publication}/config/ac/policies directory.<br/>
@@ -89,7 +90,7 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
 
         getLogger().debug("Resolving policy URI for URL [" + url + "]");
 
-        String publicationId = PublicationFactory.getPublicationId(url);
+        String publicationId = new URLInformation(url).getPublicationId();
         url = url.substring(("/" + publicationId).length());
         if (!url.startsWith("/") && !url.equals("")) {
             url = "/" + url;

@@ -1,5 +1,5 @@
 /*
-$Id: URLInformation.java,v 1.1 2003/09/04 17:04:01 andreas Exp $
+$Id: URLInformation.java,v 1.2 2003/09/08 19:29:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,7 @@ public class URLInformation {
      * Returns the area (without the "info-" prefix).
      * @return A string.
      */
-    protected String getArea() {
+    public String getArea() {
         return area;
     }
 
@@ -78,7 +78,7 @@ public class URLInformation {
      * Returns the document URL.
      * @return A string.
      */
-    protected String getDocumentUrl() {
+    public String getDocumentUrl() {
         return documentUrl;
     }
 
@@ -86,7 +86,7 @@ public class URLInformation {
      * Returns the publication ID.
      * @return A string.
      */
-    protected String getPublicationId() {
+    public String getPublicationId() {
         return publicationId;
     }
 
@@ -96,14 +96,22 @@ public class URLInformation {
      */
     public URLInformation(String webappUrl) {
         assert webappUrl.startsWith("/");
+        
         String url = webappUrl.substring(1);
         
         String[] fragments = url.split("/");
         this.publicationId = fragments[0];
         
-        if (fragments.length > 0) {
+        if (fragments.length > 1) {
             String completeArea = fragments[1];
-            this.documentUrl = url.substring((this.publicationId + "/" + completeArea).length());
+            
+            if (url.length() > (this.publicationId + "/" + completeArea).length()) {
+                this.documentUrl = url.substring((this.publicationId + "/" + completeArea).length());
+            }
+            else {
+                this.documentUrl = "";
+            }
+            
             if (completeArea.startsWith(Publication.INFO_AREA_PREFIX)) {
                 completeArea = completeArea.substring(Publication.INFO_AREA_PREFIX.length());
             }
