@@ -253,8 +253,10 @@ public class ArticleImageUploadCreatorAction
 	    getLogger().debug("imagePath: " + imagePath);
 	    
 	    File dir = (new File(imagePath)).getParentFile();
-	    if (!dir.exists())
-		dir.mkdir();
+	    if(!dir.exists()){
+              getLogger().info(".act(): Create directories: "+dir);
+              dir.mkdirs();
+              }
 
 	    if (obj instanceof FilePartFile) {
 		((FilePartFile)obj).getFile().renameTo(new File(imagePath));
