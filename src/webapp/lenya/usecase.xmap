@@ -31,6 +31,7 @@
 	src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
     </map:actions>
 
+
     <map:selectors>
       <map:selector logger="sitemap.selector.exception" name="exception" 
 	src="org.apache.cocoon.selection.ExceptionSelector">
@@ -68,6 +69,9 @@
       <map:transform src="xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>      
       <!-- NOTE: iso-8859-1 is necessary for the form editors, else special characters won't be handled correctly -->
       <map:serialize type="xhtml-iso-8859-1"/>
     </map:resource>
