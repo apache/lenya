@@ -25,9 +25,11 @@
 <input type="hidden" name="childtype" value="branch"/>
 <input type="hidden" name="doctype" value="Article"/>
 <table>
+<!--
   <tr>
     <td>parentid:</td><td>hidden value="<xsl:value-of select="/parent-child/parentid"/>"</td>
   </tr>
+-->
   <tr>
     <td>id:</td><td><input type="text" name="childid"/></td>
   </tr>

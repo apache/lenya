@@ -21,10 +21,14 @@
   <menus>
     <menu name="File">
       <block>
+<!--
         <item>Edit</item>
         <item>Publish</item>
+-->
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/wyona/ParentChildScreenNewArticle?parentid=/"+channel+"/"+section+"/articles/"+year</xsp:expr></xsp:attribute>New&#160;Article</item>
+<!--
         <item>New&#160;Article</item>
+-->
 <!--
         <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
 -->
