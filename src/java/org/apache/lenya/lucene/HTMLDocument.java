@@ -83,7 +83,7 @@ public class HTMLDocument {
     return url.substring(0, url.lastIndexOf('/')); // remove date from end
   }
 /**
- *
+ * @return org.apache.lucene.document.Document
  */
   public static Document Document(File f,File htdocsDumpDir)
     throws IOException, InterruptedException  {
@@ -138,25 +138,34 @@ public class HTMLDocument {
     // tokenized prior to indexing.
     doc.add(new Field("uid", uid(f,htdocsDumpDir), false, true, false));
 
+
+
+
+
+
+
     HTMLParser parser = new HTMLParser(f);
+    HtmlDocument htmlDoc=new HtmlDocument(f);
 
     // Add the tag-stripped contents as a Reader-valued Text field so it will
     // get tokenized and indexed.
-    doc.add(Field.Text("contents", parser.getReader()));
+    doc.add(Field.Text("contents",htmlDoc.getBody()));
+    //doc.add(Field.Text("contents", parser.getReader()));
 
-    //System.out.println("LEVI");
+    //System.out.println(".getLuceneDocument(): contents field added");
 
     // Add the summary as an UnIndexed field, so that it is stored and returned
     // with hit documents for display.
     doc.add(Field.UnIndexed("summary", parser.getSummary()));
 
-    //System.out.println("VANYA");
+    //System.out.println(".getLuceneDocument(): summary field added");
 
     // Add the title as a separate Text field, so that it can be searched
     // separately.
-    doc.add(Field.Text("title", parser.getTitle()));
+    doc.add(Field.Text("title", htmlDoc.getTitle()));
+    //doc.add(Field.Text("title", parser.getTitle()));
 
-    //System.out.println("KARIN");
+    //System.out.println(".getLuceneDocument(): title field added");
 
     return doc;
   }
