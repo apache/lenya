@@ -22,6 +22,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tree="http://apache.org/cocoon/lenya/sitetree/1.0"
     xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
     exclude-result-prefixes="tree"
     >
 
@@ -39,6 +40,22 @@
       <xsl:with-param name="local-url" select="substring-after($local-url, '/')"/>
     </xsl:call-template>
   </xsl:if>
+</xsl:template>
+
+<xsl:template match="tree:fragment">
+  <nav:fragment>
+    <xsl:copy-of select="@*"/> 
+    <xsl:choose>
+      <xsl:when test="@base">
+         <xsl:apply-templates>
+          <xsl:with-param name="previous-url" select="concat(substring-after(@base, '/'), '/')"/>
+        </xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </nav:fragment>
 </xsl:template>
 
 
@@ -83,6 +100,7 @@ Apply nodes recursively
     <xsl:copy-of select="@id"/>
     <xsl:copy-of select="@visibleinnav"/>
     <xsl:copy-of select="@protected"/>
+    <xsl:copy-of select="@folder"/>
   
     <!-- basic url - for all nodes -->
   
@@ -185,11 +203,10 @@ Apply nodes recursively
 
 <xsl:template match="tree:label">
   <nav:label>
-  	<xsl:copy-of select="@*"/>
+    <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
   </nav:label>
 </xsl:template>
-
 
 <xsl:template match="@*|node()" priority="-1">
   <xsl:copy>

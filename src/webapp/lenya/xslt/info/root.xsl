@@ -32,6 +32,7 @@
   <xsl:param name="languages"/>
   <xsl:param name="chosenlanguage"/>
   <xsl:param name="defaultlanguage"/>
+  <xsl:param name="cutdocumentid"/>
   
   <xsl:variable name="extension"><xsl:if test="$documentextension != ''">.</xsl:if><xsl:value-of select="$documentextension"/></xsl:variable>
   
@@ -42,16 +43,35 @@
         <link href="{$contextprefix}/lenya/css/default.css" rel="stylesheet" type="text/css"/>
         
         <!-- These three scripts define the tree, do not remove-->
-        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js"/>
-        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js"/>
-        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/sitetree.js?language={$chosenlanguage}"/>
+        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js" type="text/javascript" />
+        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/navtree.js" type="text/javascript" />
+        <script type="text/javascript" >
+          CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
+          PUBLICATION_ID = "<xsl:value-of select="$publicationid"/>";
+          CHOSEN_LANGUAGE = "<xsl:value-of select="$chosenlanguage"/>";
+          DEFAULT_LANGUAGE = "<xsl:value-of select="$defaultlanguage"/>";
+          IMAGE_PATH = "<xsl:value-of select="$contextprefix"/>/lenya/images/tree/";
+          CUT_DOCUMENT_ID = "<xsl:value-of select="$cutdocumentid"/>";
+          ALL_AREAS = "authoring,trash,archive"
+          PIPELINE_PATH = '/authoring/info-sitetree/sitetree-fragment.xml'
+          
+          function buildTree() {
+            var placeholder = document.getElementById('tree');
+            var root = new NavRoot(document, placeholder);
+            root.init(PUBLICATION_ID);
+            root.render();
+            root.loadInitialTree('<xsl:value-of select="$area"/>', '<xsl:value-of select="$documentid"/>');
+          };
+       
+         </script>
+
       </head>
 
       <body>
         <div id="lenya-info-body">
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>
-              <td valign="top" width="20%">
+              <td valign="top" width="25%">
                 <div id="lenya-info-treecanvas">
                   <!-- Build the tree. -->
                   
@@ -66,24 +86,15 @@
                   </table>
                   
                   <div id="lenya-info-tree">
-                    <div style="display:none;">
-                      <table border="0">
-                        <tr>
-                          <td>
-                            <a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a>
-                          </td>
-                        </tr>
-                      </table>
+                    <div id="tree">
+                      <script type="text/javascript">
+                        buildTree();
+                      </script>
                     </div>
-                    <script>
-                      initializeDocument();
-                      <xsl:variable name="language-suffix"><xsl:if test="$chosenlanguage != $defaultlanguage">_<xsl:value-of select="$chosenlanguage"/></xsl:if></xsl:variable>
-                      loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/info-<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/><xsl:value-of select="$language-suffix"/><xsl:value-of select="$extension"/>');
-                    </script>
                   </div>
                 </div>
               </td>     
-              <td valign="top" width="80%">
+              <td valign="top" width="75%">
                 <div id="lenya-info-content">
                   <xsl:copy-of select="*"/>
                 </div>

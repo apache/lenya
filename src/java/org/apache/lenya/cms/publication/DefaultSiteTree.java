@@ -455,6 +455,24 @@ public class DefaultSiteTree implements SiteTree {
     }
 
     /**
+     * @see org.apache.lenya.cms.publication.SiteTree#getTopNodes()
+     */
+    public SiteTreeNode[] getTopNodes() {
+        List childElements = new ArrayList();
+
+        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
+ 
+        Element[] elements = helper.getChildren((Element) document.getDocumentElement(), SiteTreeNodeImpl.NODE_NAME);
+
+        for (int i = 0; i < elements.length; i++) {
+            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            childElements.add(newNode);
+        }
+
+        return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
+    }
+    
+    /**
      * Move up the node amongst its siblings.
      * 
      * @param documentid The document id for the node.
