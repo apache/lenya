@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.28 2003/05/14 13:36:37 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.29 2003/05/14 14:00:04 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -21,39 +21,24 @@
   <map:pipelines>
     <!-- Publisher  -->
     <map:pipeline>
-    
-<!--
       <map:match type="usecase" pattern="publish">
         <map:match type="step" pattern="showscreen">
--->
-        <map:match pattern="lenya/publishScreen*">
           <map:generate type="serverpages" src="../../content/publishing/publish-screen.xsp"/>
-          <map:transform src="../../xslt/publishing/main.xsl">
+          <map:transform src="../../xslt/publishing/screen.xsl">
             <map:parameter name="use-request-parameters" value="true"/>
           </map:transform>
           <map:serialize type="html"/>
         </map:match>
-<!--
-      </map:match>
-      <map:match type="usecase" pattern="publish">
         <map:match type="step" pattern="publish">
--->
-        <map:match pattern="lenya/publish*">
           <map:act type="request">
             <map:parameter name="parameters" value="true"/>
             <map:act type="task">
               <map:parameter name="task-id" value="{task-id}"/>
               <map:redirect-to uri="{parent_uri}" session="true"/>
             </map:act>
-            <map:redirect-to uri="publishScreen?status=failed" session="true"/>
-<!--
-            <map:redirect-to uri="?lenya.usecase=publish&amp;lenya.step=showscreen" session="true"/>
--->
           </map:act>
         </map:match>
-<!--
       </map:match>
--->
     </map:pipeline>
     <!-- /Publisher  -->
 

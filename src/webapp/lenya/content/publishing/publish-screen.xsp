@@ -20,6 +20,7 @@
     <xsp:content><sources><xsp:expr>request.getParameter("sources")</xsp:expr></sources></xsp:content>
     <xsp:content><task-id><xsp:expr>request.getParameter("task-id")</xsp:expr></task-id></xsp:content>
     <xsp:content><publication-id><xsp:expr>request.getSession().getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id")</xsp:expr></publication-id></xsp:content>
+    <xsp:content><document-id><xsp-lenya:document-id/></document-id></xsp:content>
   </xsp:logic>
 </publish>
 

@@ -17,7 +17,9 @@
 <!-- publishing properties -->
 <property name="authoring.dir" value="content/authoring"/>
 <property name="authoring.tree" value="sitetree.xml"/>
+<property name="authoring.resource.dir" value="resources/images/authoring"/>
 <property name="live.dir" value="content/live"/>
+<property name="live.resource.dir" value="resources/images/live"/>
 <property name="replication.dir" value="content/replication/pending"/>
 
 <property name="export.server" value="http://localhost:8080"/>
@@ -26,6 +28,7 @@
 <property name="export.replacement" value=""/>
 <property name="export.uris" value=""/>
 
+<property name="publish.documentid" value=""/>
 <property name="publish.sources" value=""/>
 <property name="servlet.context" value=""/>
 
@@ -35,17 +38,43 @@
 
 <target name="publish">
   <echo>-${servlet.context}-</echo>
-  <echo>Copying files ${publish.sources}, ${authoring.tree}</echo>
+  <echo>Publish document</echo>
+  <echo>Copying files ${publish.sources}</echo>
   <echo>from ${authoring.dir}</echo>
   <echo>to ${live.dir}</echo>
   
+  <echo>pub dir : ${pub.dir}</echo>
+
   <copy todir="${pub.dir}/${live.dir}">
     <fileset dir="${pub.dir}/${authoring.dir}">
       <include name="${publish.sources}"/>
-      <include name="${authoring.tree}"/>
     </fileset>
   </copy>
   
+  <echo>Publish resources</echo>
+  <echo>Copying files ${publish.documentid}</echo>
+  <echo>from ${pub.dir}/${authoring.resource.dir}</echo>
+  <echo>to ${pub.dir}/${live.resource.dir}</echo>
+
+  <copy todir="${pub.dir}/${live.resource.dir}/${publish.documentid}">
+    <fileset dir="${pub.dir}/${authoring.resource.dir}">
+      <include name="${publish.documentid}/*"/>
+    </fileset>
+  </copy>
+
+  <taskdef name="publishtree" classname="org.apache.lenya.cms.ant.TreePublisher"/>
+
+  <echo>Publish tree</echo>
+  <echo>Copy node for ${publish.documentid}</echo>
+  <echo>from tree ${pub.dir}/${authoring.dir}/${authoring.tree}</echo>
+  <echo>and insert it in tree ${pub.dir}/${live.dir}/${authoring.tree}</echo>
+
+  <publishtree 
+      documentid= "${publish.documentid}" 
+      absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${authoring.tree}"
+      absolutetreelivepath = "${pub.dir}/${live.dir}/${authoring.tree}" 
+      />
+
   <taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter"/>
   
   <echo>Export:</echo>
@@ -56,7 +85,6 @@
       replacement="${export.replacement}"
       server="${export.server}"
       />
-  
 </target>
 
 </project>
