@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.21 2003/08/08 08:35:58 gregor Exp $
+$Id: DefaultDocument.java,v 1.22 2003/08/08 09:10:34 egli Exp $
 <License>
 
  ============================================================================
@@ -114,9 +114,11 @@ public class DefaultDocument implements Document {
 
 	/**
 	 * Creates a new instance of DefaultDocument.
+	 * 
 	 * @param publication The publication the document belongs to.
 	 * @param id The document ID (starting with a slash).
 	 * @param area The area.
+	 * @param language the language
 	 */
 	protected DefaultDocument(Publication publication, String id, String area, String language) {
 		assert id != null;
