@@ -13,6 +13,7 @@
   <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.SiteTree</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.Label</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</xsp:include>
 </xsp:structure>
 
@@ -27,7 +28,7 @@
       try {
           Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
           SiteTreeNode liveNode = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="live-node"/>;
-          SiteTreeNode[] liveChildren = liveNode.getChildren(document.getLanguage());
+          SiteTreeNode[] liveChildren = liveNode.getChildren();
           Publication publication = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
           
           if (liveChildren.length &gt; 0) {
@@ -36,15 +37,18 @@
           
           DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
           for (int i = 0; i &lt; liveChildren.length; i++) {
+              Label[] languages = liveChildren[i].getLabels(); 
+              for (int j = 0; j &lt; languages.length; j++){
+                  String language = languages[j].getLanguage();
+                  String url = builder.buildCanonicalUrl(publication,
+                      document.getArea(), document.getId() + "/" + liveChildren[i].getId(), language);
           
-              String url = builder.buildCanonicalUrl(publication,
-                  document.getArea(), document.getId() + "/" + liveChildren[i].getId(), document.getLanguage());
-          
-              <live-child>
-                <xsp:attribute name="href"><xsp-request:get-context-path/><xsp:expr>url</xsp:expr></xsp:attribute>
-                <xsp:attribute name="id"><xsp:expr>liveChildren[i].getId()</xsp:expr></xsp:attribute>
-                <xsp:attribute name="language"><xsp:expr>document.getLanguage()</xsp:expr></xsp:attribute>
-              </live-child>
+                  <live-child>
+                    <xsp:attribute name="href"><xsp-request:get-context-path/><xsp:expr>url</xsp:expr></xsp:attribute>
+                    <xsp:attribute name="id"><xsp:expr>liveChildren[i].getId()</xsp:expr></xsp:attribute>
+                    <xsp:attribute name="language"><xsp:expr>language</xsp:expr></xsp:attribute>
+                  </live-child>
+              }
           }
 	  DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
 	  String[] references = helper.getReferences(Publication.LIVE_AREA);
