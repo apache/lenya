@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.23 2003/08/20 18:57:59 andreas Exp $
+ $Id: info.xsl,v 1.24 2003/08/21 14:24:58 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -92,6 +92,12 @@
         <tr><td>Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
         <tr><td>Rights:</td><td><input type="text" id="dc:rights" name="properties.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
       </table>
+      <input type="hidden" name="properties.save.meta.documentid" value="{lenya-info:documentid}"/>
+      <input type="hidden" name="properties.save.meta.area" value="{lenya-info:area}"/>
+      <input type="hidden" name="properties.save.meta.language" value="{dc:language}"/>
+      <input type="hidden" name="lenya.usecase" value="info-meta"/>
+      <input type="hidden" name="lenya.step" value="update"/>
+      <input type="hidden" name="task-id" value="save-meta-data"/>
       <input type="submit" value="Update Metadata"/>
     </form>
   </xsl:template>

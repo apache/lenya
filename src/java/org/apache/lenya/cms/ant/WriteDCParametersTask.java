@@ -1,5 +1,5 @@
 /*
-$Id: WriteDCParametersTask.java,v 1.2 2003/08/14 15:30:58 egli Exp $
+$Id: WriteDCParametersTask.java,v 1.3 2003/08/21 14:24:58 egli Exp $
 <License>
 
  ============================================================================
@@ -68,6 +68,8 @@ import org.apache.tools.ant.BuildException;
  * @author egli
  */
 public class WriteDCParametersTask extends PublicationTask {
+    private String documentId = null;
+    private String area = null;
     private String creator = null;
     private String title = null;
     private String description = null;
@@ -192,8 +194,65 @@ public class WriteDCParametersTask extends PublicationTask {
     }
 
     /**
+     * Get the area
+     * 
+     * @return the area
+     */
+    public String getArea() {
+        return area;
+    }
+
+    /**
+     * Set the area
+     * 
+     * @param string the area
+     */
+    public void setArea(String string) {
+        area = string;
+    }
+
+    /**
+     * Get the document-id
+     * 
+     * @return the document-id
+     */
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    /**
+     * Set the document-id
+     * 
+     * @param string the document-id
+     */
+    public void setDocumentId(String string) {
+        documentId = string;
+    }
+
+    /**
+     * Get the language
+     * 
+     * @return the language
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * Set the language.
+     * 
+     * @param string the language
+     */
+    public void setLanguage(String string) {
+        language = string;
+    }
+
+    /**
      * Write the dublin core params.
      * 
+     * @param documentId the document-id
+     * @param area the area
+     * @param lang the language
      * @param creator the creator.
      * @param title the title
      * @param description the description
@@ -206,6 +265,9 @@ public class WriteDCParametersTask extends PublicationTask {
      * @throws DocumentException if an error occurs
      */
     public void writeDublinCoreParameters(
+        String documentId,
+        String area,
+        String lang,
         String creator,
         String title,
         String description,
@@ -214,9 +276,8 @@ public class WriteDCParametersTask extends PublicationTask {
         String rights)
         throws BuildException, DocumentBuildException, DocumentException {
 
-        String url = null;
-
         DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+        String url = builder.buildCanonicalUrl(getPublication(), area, documentId, lang);
         Document doc = builder.buildDocument(getPublication(), url);
         DublinCore dc = doc.getDublinCore();
         dc.setCreator(creator);
@@ -234,6 +295,9 @@ public class WriteDCParametersTask extends PublicationTask {
     public void execute() throws BuildException {
         try {
             writeDublinCoreParameters(
+                getDocumentId(),
+                getArea(),
+                getLanguage(),
                 getCreator(),
                 getTitle(),
                 getDescription(),
@@ -245,4 +309,5 @@ public class WriteDCParametersTask extends PublicationTask {
             throw new BuildException(e);
         }
     }
+
 }

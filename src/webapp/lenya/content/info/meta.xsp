@@ -11,25 +11,21 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:request="http://apache.org/xsp/request/2.0"
->
-
-  <xsp:structure>
-    <xsp:include>java.io.IOException</xsp:include>
-    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-    <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
-  </xsp:structure>
-    
-<lenya-info:info>
-  <lenya-info:meta>  
-        <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
-        <dc:creator><input:get-attribute module="page-envelope" as="object" name="document-dc-creator"/></dc:creator>
-        <dc:subject><input:get-attribute module="page-envelope" as="object" name="document-dc-subject"/></dc:subject>
-        <dc:description><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></dc:description>
-        <dc:date><input:get-attribute module="page-envelope" as="object" name="document-dc-date-created"/></dc:date>
-        <dc:publisher><input:get-attribute module="page-envelope" as="object" name="document-dc-publisher"/></dc:publisher>
-        <dc:rights><input:get-attribute module="page-envelope" as="object" name="document-dc-rights"/></dc:rights>
-  </lenya-info:meta>
-</lenya-info:info>
-
+  >
+  
+  <lenya-info:info>
+    <lenya-info:meta>  
+      <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
+      <lenya-info:area><input:get-attribute module="page-envelope" name="area"/></lenya-info:area>
+      <dc:language><input:get-attribute module="page-envelope" name="document-language"/></dc:language>
+      <dc:title><input:get-attribute module="page-envelope" name="document-dc-title"/></dc:title>
+      <dc:creator><input:get-attribute module="page-envelope" name="document-dc-creator"/></dc:creator>
+      <dc:subject><input:get-attribute module="page-envelope" name="document-dc-subject"/></dc:subject>
+      <dc:description><input:get-attribute module="page-envelope" name="document-dc-description"/></dc:description>
+      <dc:date><input:get-attribute module="page-envelope" name="document-dc-date-created"/></dc:date>
+      <dc:publisher><input:get-attribute module="page-envelope" name="document-dc-publisher"/></dc:publisher>
+      <dc:rights><input:get-attribute module="page-envelope" as="object" name="document-dc-rights"/></dc:rights>
+    </lenya-info:meta>
+  </lenya-info:info>
+  
 </xsp:page>
