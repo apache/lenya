@@ -112,6 +112,7 @@ public class MailTask
                 factory.setExpandEntityReferences(true);
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 
+                
 // <debug>                                
                 
                 String factoryId = "javax.xml.parsers.DocumentBuilderFactory";
@@ -166,6 +167,16 @@ public class MailTask
         } catch( Exception ex ) {
         }
 
+        
+                org.apache.xerces.jaxp.DocumentBuilderFactoryImpl factoryImpl
+                 = (org.apache.xerces.jaxp.DocumentBuilderFactoryImpl) factory;
+//                factoryImpl.getAttribute("org.apache.xerces.xni.parser.XMLParserConfiguration);
+                    log.debug(
+                        "\n---------------------------" +
+                        "\n- DOMImplementation: " + builder.getDOMImplementation().getClass().getName() +
+                        "\n---------------------------");
+        
+        
 // </debug>                
                 
                 
@@ -198,7 +209,7 @@ public class MailTask
                                 Text text = (Text) firstChild;
                                 String key = element.getLocalName();
                                 if (Arrays.asList(keys).contains(key)) {
-                                    taskParameters.setParameter(key, text.getNodeValue());
+                                    taskParameters.setParameter(key, text.getData());
                                 }
                             }
                         }
