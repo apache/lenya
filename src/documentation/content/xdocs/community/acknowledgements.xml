@@ -88,14 +88,6 @@ The Lenya logo has been designed by Stephen.  <br />&#160;
 <li><strong>Martin Hitz</strong></li>
 </ul>
 </section>
-<section id="notes">
-      <title>Notes</title>
-      <p>Strong type denotes <strong>PMC member</strong></p>
-      <p>Emphasis type denotes <em>PMC chair</em></p>
-      <p>See the <a href="http://apache.org/foundation/how-it-works.html#roles">ASF role definitions</a> for detailed role information.</p>
-      <p> All <a href="http://cocoon.apache.org/community/members.html">Cocoon committers</a>
-        also have rights to commit to Forrest.</p>
-    </section>
     <section id="credits-software">
       <title>Credits</title>
 
@@ -108,6 +100,12 @@ The Lenya logo has been designed by Stephen.  <br />&#160;
       <p>This product includes software developed by the XML:DB
       Initiative (http://www.xmldb.org/).</p>
 
+    </section>
+<section id="notes">
+      <title>Notes</title>
+      <p>Strong type denotes <strong>PMC member</strong></p>
+      <p>Emphasis type denotes  <strong><em>PMC chair</em></strong></p>
+      <p>See the <a href="http://apache.org/foundation/how-it-works.html#roles">ASF role definitions</a> for detailed role information.</p>
     </section>
 
   </body>
