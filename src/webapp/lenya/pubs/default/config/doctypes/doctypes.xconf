@@ -2,23 +2,8 @@
 
 <doctypes>
 
-  <doc type="simple">
-    <children>
-      <doc type="simple"/>
-      <doc type="xhtml"/>
-    </children>
-    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-      <sample-name>simple.xml</sample-name>
-    </creator>
-    <tasks>
-      <task id="publish"/>
-    </tasks>
-    <workflow src="workflow.xml"/>
-  </doc>
-
   <doc type="xhtml">
     <children>
-      <doc type="simple"/>
       <doc type="xhtml"/>
     </children>
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">

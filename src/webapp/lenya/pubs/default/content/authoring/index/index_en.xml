@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<simple-document xmlns="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:simple="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" simple:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" lenya:dummy="FIXME:keepNamespace">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" html:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" lenya:dummy="FIXME:keepNamespace">
     <!-- the root element indicates the doctype -->
     <lenya:meta>
         <dc:title>Welcome to the Lenya default publication</dc:title>
@@ -18,6 +18,9 @@
         <dc:coverage/>
         <dc:rights>DC Rights</dc:rights>
     </lenya:meta>
+  <head>
+    <title>Welcome to the Default publication</title>
+  </head>
   <body>
     <p>Hello and welcome to the Lenya default publication!</p>
 
@@ -27,32 +30,32 @@
     Cocoon.</p>
 
     <p>For an overview of the concepts and the terminology used in
-    Apache Lenya please see the <ulink url="concepts.html">Concepts
-    section</ulink>. To see what you can do with Apache Lenya please
-    refer to the <ulink url="features.html">Features
-    section</ulink>.</p>
+    Apache Lenya please see the <a href="concepts.html">Concepts
+    section</a>. To see what you can do with Apache Lenya please
+    refer to the <a href="features.html">Features
+    section</a>.</p>
 
     <p>If you'd like to get a quick introduction on how to use Apache
-    Lenya CMS please go through the <ulink
-    url="tutorial.html">tutorial</ulink>.</p>
+    Lenya CMS please go through the <a
+    href="tutorial.html">tutorial</a>.</p>
 
     <p>The purpose of this publication is</p>
 
-    <itemizedlist>
-      <listitem>to show beginners the basic functionality of the Apache
-      Lenya CMS,</listitem>
+    <ul>
+      <li>to show beginners the basic functionality of the Apache
+      Lenya CMS,</li>
 
-      <listitem>to provide an "out of the box" publication that can be
-      easily adapted and used,</listitem>
+      <li>to provide an "out of the box" publication that can be
+      easily adapted and used,</li>
 
-      <listitem>and to provide a basis for reference implementations of new
-      concepts and best practices.</listitem>
+      <li>and to provide a basis for reference implementations of new
+      concepts and best practices.</li>
 
-    </itemizedlist>
+    </ul>
 
     <p>This publication does not go to the limit of what's possible
     with Apache Lenya CMS, there are no fancy bells and whistles to
     confuse you, this publication simply contains everything you need
     to get started.</p>
     </body>
-</simple-document>
+</html>

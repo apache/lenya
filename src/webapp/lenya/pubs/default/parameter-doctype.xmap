@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: parameter-doctype.xmap,v 1.11 2004/01/08 16:13:41 michi Exp $ -->
+<!-- CVS: $Id: parameter-doctype.xmap,v 1.12 2004/01/14 01:52:16 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -12,12 +12,6 @@
     <map:matchers default="wildcard"/>
     <map:actions>
       <map:action logger="sitemap.action.sourcetype" name="sourcetype" src="org.apache.forrest.components.sourcetype.SourceTypeAction">
-        <sourcetype name="simple">
-          <document-element local-name="simple-document"/>
-        </sourcetype>
-        <sourcetype name="simple">
-          <document-element local-name="document"/>
-        </sourcetype>
         <sourcetype name="xhtml">
           <document-element namespace="http://www.w3.org/1999/xhtml" />
         </sourcetype>

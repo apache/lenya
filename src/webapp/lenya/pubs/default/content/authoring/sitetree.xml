@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--$Id: sitetree.xml,v 1.13 2003/07/28 20:11:02 gregor Exp $ -->
+<!--$Id: sitetree.xml,v 1.14 2004/01/14 01:52:15 gregor Exp $ -->
 
 <site
     xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
@@ -31,10 +31,6 @@
   <node id="doctypes">
     <label xml:lang="en">Document Type Examples</label>
     <label xml:lang="de">Dokumenttyp Beispiele</label>
-    <node id="simple-document">
-      <label xml:lang="en">Simple Doctype</label>
-      <label xml:lang="de">Einfacher Dokumenttyp</label>
-    </node>
      <node id="xhtml-document">
       <label xml:lang="en">XHTML Doctype</label>
       <label xml:lang="de">XHTML Dokumenttyp</label>

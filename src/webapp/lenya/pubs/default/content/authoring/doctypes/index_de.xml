@@ -25,19 +25,9 @@
   <body>
     <h1>Dokumenttyp Beispiele</h1>
 
-    <p>The default publication comes with two doctypes:</p>
-
-    <ul>
-      <li>the <a href="doctypes/simple-document.html">Simple Doctype</a> and </li>
-      <li>the <a href="doctypes/xhtml-document.html">XHTML Doctype</a></li>
-    </ul>
+    <p>The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype.</a>
     
-    <p>The Simple Doctype is typically used for situations when you
-    want control over what information has to be included in a
-    document. The Simple Document defines a set of tags that a
-    document has to be comprised of.</p>
-
-    <p>The XHTML Doctype on the other hand is for situations where
+    <p>The XHTML Doctype is for situations where
     users ask for complete freedom on what information can be inserted
     into a document. While this approach doesn't restrict you, it also
     looses some of the major benefits of well defined document types.</p>

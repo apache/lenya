@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- $Id: lenya-header.xsl,v 1.6 2003/11/04 10:23:12 andreas Exp $ -->
-<!-- RKUPATCH -->
+<!-- $Id: lenya-header.xsl,v 1.7 2004/01/14 01:52:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -15,7 +14,7 @@
 <xsl:template match="dc:title">
   <h1>
     <xsl:if test="$rendertype = 'edit'">
-      <xsl:attribute name="bxe_xpath">/simple:simple-document/lenya:meta/dc:title</xsl:attribute>
+      <xsl:attribute name="bxe_xpath">/html/lenya:meta/dc:title</xsl:attribute>
     </xsl:if>
     <xsl:apply-templates/>
   </h1>
