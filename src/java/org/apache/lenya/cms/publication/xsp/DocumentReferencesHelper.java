@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.10 2003/10/31 15:26:59 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.11 2003/10/31 15:50:53 egli Exp $
 <License>
 
  ============================================================================
@@ -82,7 +82,7 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class DocumentReferencesHelper {
 
@@ -192,15 +192,21 @@ public class DocumentReferencesHelper {
                             area,
                             inconsistentFiles[i]);
                     language = fileMapper.getLanguage(inconsistentFiles[i]);
-                    if (language == null) {
-                        language = "";
+                    String url = null;
+                    if (language != null) {
+                        url =
+                            builder.buildCanonicalUrl(
+                                publication,
+                                area,
+                                documentId,
+                                language);
+                    } else {
+                        url =
+                            builder.buildCanonicalUrl(
+                                publication,
+                                area,
+                                documentId);
                     }
-                    String url =
-                        builder.buildCanonicalUrl(
-                            publication,
-                            area,
-                            documentId,
-                            language);
                     documents.add(builder.buildDocument(publication, url));
                 }
             } catch (IOException e) {
