@@ -86,10 +86,6 @@
 -->
 
       <!-- Menus -->
-      <map:match pattern="authoring/menus/index.xml">
-        <map:generate type="serverpages" src="config/menus/home.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
       <map:match pattern="authoring/menus/weekly-column-page.xml">
         <map:generate type="serverpages" src="config/menus/weekly-column.xsp"/>
         <map:serialize type="xml"/>
@@ -330,15 +326,12 @@
       </map:match>
 
       <map:match pattern="authoring/index.html">
-        <map:generate src="cocoon:/authoring/index.xml"/>
-        <map:select>
-          <map:when test="explorer">
-            <map:transform src="xslt/home/authoring/main.xsl"/>
-          </map:when>
-          <map:otherwise>
-            <map:transform src="xslt/home/authoring/main.xsl"/>
-          </map:otherwise>
-        </map:select>
+        <map:generate src="content/authoring/index.xml"/>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="content/authoring/{1}.xml"/>
+        </map:transform>
+        <map:transform src="xslt/home/authoring/main.xsl"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/authoring/home.xml"/>
         <map:serialize type="html"/>
       </map:match>
 

@@ -5,7 +5,7 @@
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="oscom">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>OSCOM - Open Source Content Management</title></head>
 <body bgcolor="#ffffff">
   <table cellpadding="0" cellspacing="0" border="0">
