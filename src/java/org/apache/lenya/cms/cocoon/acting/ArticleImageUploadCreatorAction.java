@@ -24,6 +24,8 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
+import org.dom4j.io.OutputFormat;
 
 public class ArticleImageUploadCreatorAction
     extends AbstractConfigurableAction implements ThreadSafe  {
@@ -286,9 +288,21 @@ public class ArticleImageUploadCreatorAction
 	list.add(parent.indexOf(node) + 1, mediaTag);
 
 	// write it back to the file
+/*
 	FileWriter out = new FileWriter(requestingDocumentName);
 	document.write(out);
 	out.close();
+*/
+OutputFormat format = OutputFormat.createPrettyPrint();
+    try {
+      XMLWriter writer = new XMLWriter(
+                         new BufferedOutputStream(
+                         new FileOutputStream(requestingDocumentName)), format);
+      writer.write(document);
+      writer.close();
+    } catch (Exception e) {
+      getLogger().debug(""+e);
+    }
     }
 }
 
