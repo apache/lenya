@@ -130,6 +130,8 @@
 <div class="menu">
 <div class="menutitle"></div>
 <div class="menuitemgroup">
+<div class="menutitle">Integrator/Dev Guide</div>
+<div class="menuitemgroup">
 <div class="menutitle">Concepts and Best Practises</div>
 <div class="menuitemgroup">
 <div class="menutitle">Tasks</div>
@@ -171,6 +173,7 @@
 </div>
 <div class="menuitem">
 <a href="development.html">Developing Tasks</a>
+</div>
 </div>
 </div>
 </div>
@@ -259,7 +262,7 @@ A complete XML document could look like this:
 </p>
 <pre class="code">
 
-&lt;mail:mail xmlns:mail="http://www.lenya.org/2002/mail"&gt;
+&lt;mail:mail xmlns:mail="http://apache.org/cocoon/lenya/mail/1.0"&gt;
   &lt;mail:server&gt;mail.yourhost.com&lt;/mail:server&gt;
   &lt;mail:from&gt;you@yourhost.com&lt;/mail:from&gt;
   &lt;mail:to&gt;friend@mail.com&lt;/mail:to&gt;
@@ -293,9 +296,9 @@ In <span class="codefrag">tasks.xconf</span>, a typical mail task looks like fol
 
   &lt;task id="send-newsletter" class="org.lenya.cms.mail.MailTask"&gt;
     &lt;label&gt;Send Newsletter&lt;/label&gt;
-    &lt;parameter name="server" value="mail.lenya.net"/&gt;
-    &lt;parameter name="from" value="info@lenya.org"/&gt;
-    &lt;parameter name="to" value="newsletter-subscribers@lenya.org"/&gt;
+    &lt;parameter name="server" value="mail.example.com"/&gt;
+    &lt;parameter name="from" value="info@example.com"/&gt;
+    &lt;parameter name="to" value="newsletter-subscribers@example.com"/&gt;
     &lt;parameter name="uri" value="/authoring/newsletter/mail.xml"/&gt;
   &lt;/task&gt;
 

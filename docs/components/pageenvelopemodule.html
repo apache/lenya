@@ -130,6 +130,8 @@
 <div class="menu">
 <div class="menutitle"></div>
 <div class="menuitemgroup">
+<div class="menutitle">Integrator/Dev Guide</div>
+<div class="menuitemgroup">
 <div class="menutitle">Components</div>
 <div class="menuitemgroup">
 <div class="menuitem">
@@ -149,6 +151,7 @@
 </div>
 <div class="menupageitem">
 <a href="#XSP+usage">XSP usage</a>
+</div>
 </div>
 </div>
 </div>
@@ -189,10 +192,9 @@
 <h3>Overview</h3>
 <div style="margin-left: 0 ; border: 2px">
 <p>
-The <span class="codefrag">PageEnvelopeModule</span> is an <span class="codefrag">InputModule</span> that provides
-access to the <span class="codefrag">PageEnvelope</span> parameters. For documentation on
-input modules see section
-<a href="http://cocoon.apache.org/2.1/userdocs/concepts/modules.html">Modules</a>
+The <span class="codefrag">PageEnvelopeModule</span> is an <span class="codefrag">InputModule</span>
+that provides access to the <span class="codefrag">PageEnvelope</span> parameters. For
+documentation on input modules see section <a href="http://cocoon.apache.org/2.1/userdocs/concepts/modules.html">Modules</a>
 of the Cocoon documentation.
 </p>
 </div>
@@ -215,6 +217,10 @@ of the Cocoon documentation.
   
 <dd>The CMS area, <span class="codefrag">authoring</span> or <span class="codefrag">live</span>.</dd>
   
+<dt>publication</dt>
+  
+<dd>The current publication</dd>
+  
 <dt>document-id</dt>
   
 <dd>The document ID, i.e. the path of the document in the sitetree.</dd>
@@ -224,15 +230,20 @@ of the Cocoon documentation.
 <dd>The URL of the document within the area, e.g., <span class="codefrag">/news/index.html</span>
 </dd>
   
-<dt>publication</dt>
+<dt>document-path</dt>
   
-<dd>The current publication</dd>
+<dd>The file path where this document is physically located in the
+  file system.</dd>
+  
+<dt>document-language</dt>
+  
+<dd>The language of this document.</dd>
 
 </dl>
 </div>
 
 
-<a name="N10217"></a><a name="Sitemap+usage"></a>
+<a name="N10223"></a><a name="Sitemap+usage"></a>
 <h3>Sitemap usage</h3>
 <div style="margin-left: 0 ; border: 2px">
 <pre class="code">
@@ -241,7 +252,7 @@ of the Cocoon documentation.
 </div>
 
 
-<a name="N10222"></a><a name="XSP+usage"></a>
+<a name="N1022E"></a><a name="XSP+usage"></a>
 <h3>XSP usage</h3>
 <div style="margin-left: 0 ; border: 2px">
 <pre class="code">
