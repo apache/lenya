@@ -27,4 +27,11 @@ public class ActionImpl
         return id;
     }
     
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getId();
+    }
+
 }
