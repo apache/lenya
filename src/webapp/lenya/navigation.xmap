@@ -24,9 +24,10 @@ This sitemap creates default navigation components.
     
       <!-- use publication-specific navigation schema if available -->
       <map:act type="resource-exists">
-        <map:parameter name="url" value="pubs/{publication-id}/xslt/lenya/navigation/{stylesheet}.xsl"/>
-        <map:transform src="pubs/{../publication-id}/xslt/lenya/navigation/{../stylesheet}.xsl">
+        <map:parameter name="url" value="pubs/{publication-id}/lenya/xslt/navigation/{stylesheet}.xsl"/>
+        <map:transform src="pubs/{../publication-id}/lenya/xslt/navigation/{../stylesheet}.xsl">
           <map:parameter name="url" value="{../url}"/>
+          <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:act>
