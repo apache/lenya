@@ -49,6 +49,11 @@ Edit Document <b><xsl:value-of select="$docid"/></b> (Form: <xsl:value-of select
 
 <!-- Copy mixed content -->
 
+<xsl:include href="copy-mixed-content.xsl"/>
+<!-- also see oneform.xsl -->
+
+<!-- FIXME: namespaces occur multiple times, e.g. xlink:show="" xlink:href="" xmlns:xlink="" xmlns:xlink="" -->
+<!--
 <xsl:template match="//*" mode="mixedcontent">
 <xsl:variable name="prefix"><xsl:if test="contains(name(),':')">:<xsl:value-of select="substring-before(name(),':')"/></xsl:if></xsl:variable>
 
@@ -62,22 +67,12 @@ Edit Document <b><xsl:value-of select="$docid"/></b> (Form: <xsl:value-of select
 &lt;<xsl:value-of select="name()"/><xsl:if test="namespace-uri()"><xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="namespace-uri()"/>"</xsl:if><xsl:apply-templates select="@*[local-name()!='tagID']" mode="mixedcontent"/> /&gt;
 </xsl:otherwise>
 </xsl:choose>
-
-<!-- FIXME: <br /> are transformed into <br> by the html serializer -->
-<!--
-<xsl:copy>
-<xsl:copy-of select="@*"/>
-<xsl:apply-templates select="node()" mode="mixedcontent"/>
-</xsl:copy>
--->
 </xsl:template>
-
-
-
 
 <xsl:template match="@*" mode="mixedcontent">
 <xsl:variable name="prefix"><xsl:if test="contains(name(),':')">:<xsl:value-of select="substring-before(name(),':')"/></xsl:if></xsl:variable>
 
 <xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"<xsl:if test="namespace-uri()"><xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="namespace-uri()"/>"</xsl:if></xsl:template>
+-->
  
 </xsl:stylesheet>  
