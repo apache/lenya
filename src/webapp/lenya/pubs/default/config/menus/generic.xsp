@@ -17,10 +17,6 @@
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
     <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
     <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
-<!--
-    <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
-    <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
--->
   </url-info>
     
     <live_uri>/live<xsp:expr>xsp_lenya_pub_url</xsp:expr></live_uri>
@@ -47,16 +43,17 @@
 	<block>
 	  <item><xsp:attribute name="href">?lenya.usecase=create&amp;lenya.step=showscreen&amp;doctype=simple</xsp:attribute>New Document (simple)</item>
 	  <item><xsp:attribute name="href">?lenya.usecase=create&amp;lenya.step=showscreen&amp;doctype=xhtml</xsp:attribute>New Document (xhtml)</item>
-	  <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
+	  <item event="publish"><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+	  <item event="approve" href="index.html">Approve</item>
 	</block>
       </menu>
       
       <menu name="Edit" label="Search">
 	<block>
-	  <item><xsp:attribute name="href">?lenya.usecase=midas&amp;lenya.step=open</xsp:attribute>Edit&#160;with&#160;Midas</item>
-	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2"+xmlSource</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
-	  <item><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+xsp_lenya_context_prefix+"/authoring"+xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit with Bitflux</item>	  
+	  <item event="edit"><xsp:attribute name="href">?lenya.usecase=midas&amp;lenya.step=open</xsp:attribute>Edit&#160;with&#160;Midas</item>
+	  <item event="edit"><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2"+xmlSource</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
+	  <item event="edit"><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+xsp_lenya_context_prefix+"/authoring"+xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit with Bitflux</item>	  
 	</block>
       </menu>
       
