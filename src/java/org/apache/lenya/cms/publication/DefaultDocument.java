@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -515,7 +516,14 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @return A string.
      */
     public File getHistoryFile() {
+        if (getIdentityMap().getUnitOfWork() == null) {
+            return getRealHistoryFile();
+        } else {
+            return getWorkHistoryFile();
+        }
+    }
 
+    protected File getRealHistoryFile() {
         DocumentIdToPathMapper pathMapper = getPublication().getPathMapper();
         String documentPath = pathMapper.getPath(getId(), getLanguage());
 
@@ -525,6 +533,21 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         }
 
         String path = CMSHistory.HISTORY_PATH + "/" + area + "/" + documentPath;
+        path = path.replace('/', File.separatorChar);
+        return new File(getPublication().getDirectory(), path);
+    }
+
+    protected File getWorkHistoryFile() {
+        DocumentIdToPathMapper pathMapper = getPublication().getPathMapper();
+        String documentPath = pathMapper.getPath(getId(), getLanguage());
+
+        String area = getArea();
+        if (!area.equals(Publication.ARCHIVE_AREA) && !area.equals(Publication.TRASH_AREA)) {
+            area = Publication.AUTHORING_AREA;
+        }
+
+        String path = "work/" + getUserId() + "/" + CMSHistory.HISTORY_PATH + "/" + area + "/"
+                + documentPath;
         path = path.replace('/', File.separatorChar);
         return new File(getPublication().getDirectory(), path);
     }
@@ -555,6 +578,11 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         try {
             getDublinCore().save();
             getHistory().save();
+
+            if (getWorkHistoryFile().exists()) {
+                FileUtil.copyFile(getWorkHistoryFile(), getRealHistoryFile());
+                getWorkHistoryFile().delete();
+            }
 
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             realSource = (ModifiableSource) sourceResolver.resolveURI(getRealSourceURI());
@@ -588,7 +616,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     private boolean isCheckedOut = false;
-    
+
     protected void checkin(boolean backup) throws TransactionException {
         try {
             String userName = getUserId();
