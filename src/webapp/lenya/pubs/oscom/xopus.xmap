@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.2 2002/09/15 12:29:13 michicms Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.3 2002/09/15 22:18:15 michicms Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -28,12 +28,25 @@
     </map:actions>
   </map:components>
 
-  <!-- =========================== Views =================================== -->
-  <!-- =========================== Resources ================================= -->
-  <!-- ========================== Action sets ================================ -->
-  <!-- =========================== Pipelines ================================= -->
 
   <map:pipelines>
+    <!-- DEBUG:GET  -->
+    <map:pipeline>
+      <map:match pattern="home.xml">
+        <map:generate src="docs/publication/authoring/home.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="home.xsl">
+        <map:generate src="stylesheets/publication/Page/Home/Authoring/xopus.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="home.xsd">
+        <map:read src="docs/publication/doctypes/schemas/home.xsd" mime-type="text/xml"/>
+      </map:match>
+    </map:pipeline>
+    <!-- /DEBUG:GET -->
+
+
     <map:pipeline>
 
       <map:match pattern="XopusInterface">

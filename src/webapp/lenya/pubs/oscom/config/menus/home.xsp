@@ -56,13 +56,20 @@
 
     <menu name="Debug" label="Debug">
       <block>
-        <item href="index.xml">View&#160;XML</item>
+        <item href="index.xml">View&#160;Page&#160;XML</item>
+        <item href="../bitflux/home.xml">View&#160;Body&#160;XML</item>
       </block>
       <separator>
         <item>-----------------</item>
       </separator>
       <block>
-        <item href="../bitflux/home.xml">View&#160;Bitflux&#160;XML</item>
+        <item href="../xopus/home.xsl">View&#160;Xopus&#160;XSLT</item>
+        <item href="../xopus/home.xsd">View&#160;Xopus&#160;XSD</item>
+      </block>
+      <separator>
+        <item>-----------------</item>
+      </separator>
+      <block>
         <item href="../bitflux/home.xsl">View&#160;Bitflux&#160;XSLT</item>
         <item href="../bitflux/home.xsd">View&#160;Bitflux&#160;XSD</item>
         <item href="../bitflux/home.css">View&#160;Bitflux&#160;CSS</item>
