@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: targets.xml,v 1.29 2004/08/11 18:52:17 gregor Exp $ -->
+<!-- $Id$ -->
 
 <project name="Ant Test Project" default="test" basedir=".">
 
@@ -712,5 +712,9 @@
     direction="${movenode.direction}"
   />
 </target>
+
+  <target name="deletecache">
+    <delete dir="${cachedir}"/>
+  </target>
 
 </project>
