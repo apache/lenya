@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileItemManager.java,v 1.4 2004/04/26 12:08:24 andreas Exp $  */
+/* $Id: FileItemManager.java,v 1.5 2004/04/28 12:48:22 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -34,8 +34,11 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManagerListener;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 import org.apache.log4j.Category;
 
@@ -99,13 +102,20 @@ public abstract class FileItemManager {
             for (int i = 0; i < removedFiles.length; i++) {
                 String fileName = removedFiles[i].getName();
                 String id = fileName.substring(0, fileName.length() - getSuffix().length());
-                
+
                 Item item = (Item) items.get(id);
-                
+
                 if (item == null) {
                     throw new AccessControlException("Item with ID [" + id + "] not found.");
                 }
-                
+
+                if (item instanceof Groupable) {
+                    ((Groupable) item).removeFromAllGroups();
+                }
+                if (item instanceof Group) {
+                    ((Group) item).removeAllMembers();
+                }
+
                 remove(item);
             }
 
@@ -128,26 +138,28 @@ public abstract class FileItemManager {
     protected Item loadItem(File file) throws AccessControlException {
         Configuration config = getItemConfiguration(file);
 
+        String fileName = file.getName();
+        String id = fileName.substring(0, fileName.length() - getSuffix().length());
+        Item item = (Item) items.get(id);
+
         String klass = getItemClass(config);
+        if (item == null) {
+            try {
+                item = (Item) Class.forName(klass).newInstance();
+            } catch (Exception e) {
+                String errorMsg =
+                    "Exception when trying to instanciate: "
+                        + klass
+                        + " with exception: "
+                        + e.fillInStackTrace();
 
-        Item item = null;
-
-        try {
-            item = (Item) Class.forName(klass).newInstance();
-        } catch (Exception e) {
-            String errorMsg =
-                "Exception when trying to instanciate: "
-                    + klass
-                    + " with exception: "
-                    + e.fillInStackTrace();
-
-            // an exception occured when trying to instanciate
-            // a user.
-            log.error(errorMsg);
-            throw new AccessControlException(errorMsg, e);
+                // an exception occured when trying to instanciate
+                // a user.
+                log.error(errorMsg);
+                throw new AccessControlException(errorMsg, e);
+            }
+            item.setConfigurationDirectory(configurationDirectory);
         }
-
-        item.setConfigurationDirectory(configurationDirectory);
 
         try {
             item.configure(config);
