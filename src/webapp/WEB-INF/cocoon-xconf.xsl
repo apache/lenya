@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cocoon-xconf.xsl,v 1.42 2004/03/13 14:29:20 gregor Exp $ -->
+<!-- $Id: cocoon-xconf.xsl,v 1.43 2004/04/15 09:36:14 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -95,6 +95,9 @@
         
     <component-instance logger="core.modules.input.sitetree" name="fallback"
         class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule"/>
+                
+    <component-instance logger="core.modules.input.sitetree" name="resource-exists"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.ResourceExistsModule"/>
                 
     <component-instance name="date-i18n" logger="core.modules.input" class="org.apache.cocoon.components.modules.input.DateInputModule">
       <format>yyyy-M-dd HH:mm:ss Z</format>
@@ -230,12 +233,11 @@
   <parameter name="port" value="{$hsqldb-server-port}"/>
 </xsl:template>
 
+
 <xsl:template match="@*|node()">
   <xsl:copy>
     <xsl:apply-templates select="@*|node()"/>
   </xsl:copy>
 </xsl:template>
-
-
    
 </xsl:stylesheet> 
