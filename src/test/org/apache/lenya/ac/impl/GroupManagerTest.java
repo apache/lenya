@@ -55,11 +55,11 @@ public class GroupManagerTest extends AccessControlTest {
     public final void testInstance() throws AccessControlException {
         FileGroupManager _manager = null;
         File configDir = getAccreditablesDirectory();
-        _manager = FileGroupManager.instance(configDir, getLogEnabledLogger());
+        _manager = FileGroupManager.instance(configDir, getLogger());
         assertNotNull(_manager);
 
         FileGroupManager anotherManager = null;
-        anotherManager = FileGroupManager.instance(configDir, getLogEnabledLogger());
+        anotherManager = FileGroupManager.instance(configDir, getLogger());
         assertNotNull(anotherManager);
         assertEquals(_manager, anotherManager);
     }

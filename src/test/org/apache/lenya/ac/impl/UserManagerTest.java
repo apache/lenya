@@ -58,7 +58,7 @@ public class UserManagerTest extends AccessControlTest {
     /**
      * @see junit.framework.TestCase#setUp()
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
     }
 
@@ -70,7 +70,7 @@ public class UserManagerTest extends AccessControlTest {
         File configDir = getAccreditablesDirectory();
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
         FileUserManager _manager = FileUserManager.instance(configDir, userTypes,
-                getLogEnabledLogger());
+                getLogger());
         assertNotNull(_manager);
     }
 
@@ -113,10 +113,10 @@ public class UserManagerTest extends AccessControlTest {
         FileGroupManager groupManager = null;
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
         FileUserManager userManager = FileUserManager.instance(configDir, userTypes,
-                getLogEnabledLogger());
+                getLogger());
         assertNotNull(userManager);
 
-        groupManager = FileGroupManager.instance(configDir, getLogEnabledLogger());
+        groupManager = FileGroupManager.instance(configDir, getLogger());
         assertNotNull(groupManager);
 
         Group fetchedGroup = groupManager.getGroup(editorGroupId);
@@ -137,7 +137,7 @@ public class UserManagerTest extends AccessControlTest {
                 "alice@wonderland.com", "secret");
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
         FileUserManager _manager = FileUserManager.instance(configDir, userTypes,
-                getLogEnabledLogger());
+                getLogger());
         assertNotNull(_manager);
         _manager.add(user);
 

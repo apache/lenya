@@ -52,10 +52,10 @@ public class RoleManagerTest extends AccessControlTest {
      */
     final public void testInstance() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
-        FileRoleManager _manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
+        FileRoleManager _manager = FileRoleManager.instance(configDir, getLogger());
         assertNotNull(_manager);
 
-        FileRoleManager anotherManager = FileRoleManager.instance(configDir, getLogEnabledLogger());
+        FileRoleManager anotherManager = FileRoleManager.instance(configDir, getLogger());
         assertNotNull(anotherManager);
         assertEquals(_manager, anotherManager);
     }
@@ -75,7 +75,7 @@ public class RoleManagerTest extends AccessControlTest {
         File configDir = getAccreditablesDirectory();
         String name = "test";
         FileRoleManager _manager = null;
-        _manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
+        _manager = FileRoleManager.instance(configDir, getLogger());
         assertNotNull(_manager);
         Role role = new FileRole(_manager.getConfigurationDirectory(), name);
         _manager.add(role);
@@ -94,7 +94,7 @@ public class RoleManagerTest extends AccessControlTest {
         FileRoleManager _manager = null;
 
         try {
-            _manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
+            _manager = FileRoleManager.instance(configDir, getLogger());
         } catch (AccessControlException e) {
             e.printStackTrace();
         }

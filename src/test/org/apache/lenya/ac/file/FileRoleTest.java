@@ -24,7 +24,7 @@ import org.apache.lenya.cms.PublicationHelper;
 /**
  * File role test.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class FileRoleTest extends AccessControlTest {
     /**
@@ -57,7 +57,7 @@ public class FileRoleTest extends AccessControlTest {
         role.save();
 
         File path = null;
-        path = FileRoleManager.instance(configDir, getLogEnabledLogger())
+        path = FileRoleManager.instance(configDir, getLogger())
                 .getConfigurationDirectory();
 
         File roleFile = new File(path, name + FileRoleManager.SUFFIX);
@@ -77,7 +77,7 @@ public class FileRoleTest extends AccessControlTest {
         role.save();
 
         File path = null;
-        path = FileRoleManager.instance(configDir, getLogEnabledLogger())
+        path = FileRoleManager.instance(configDir, getLogger())
                 .getConfigurationDirectory();
 
         File roleFile = new File(path, name + FileRoleManager.SUFFIX);

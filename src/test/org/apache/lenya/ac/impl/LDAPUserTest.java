@@ -59,7 +59,7 @@ public class LDAPUserTest extends AccessControlTest {
     /**
      * @see junit.framework.TestCase#setUp()
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
     }
 
@@ -81,7 +81,7 @@ public class LDAPUserTest extends AccessControlTest {
         String publicationId = "default";
         String servletContextPath = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
 
-        PublicationFactory factory = PublicationFactory.getInstance(getLogEnabledLogger());
+        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         return factory.getPublication(publicationId, servletContextPath);
     }
 
@@ -139,7 +139,7 @@ public class LDAPUserTest extends AccessControlTest {
     final public LDAPUser loadUser(String userName) throws AccessControlException {
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
         FileUserManager _manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
-                getLogEnabledLogger());
+                getLogger());
 
         return (LDAPUser) _manager.getUser(userName);
     }

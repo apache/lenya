@@ -89,7 +89,7 @@ public class WorkflowTest extends AccessControlTest {
         
         WorkflowResolver resolver = null;
         try {
-            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+            resolver = (WorkflowResolver) getManager().lookup(WorkflowResolver.ROLE);
 
 
             String[] emptyRoles = {};

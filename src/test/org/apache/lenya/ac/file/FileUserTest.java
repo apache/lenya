@@ -61,7 +61,7 @@ public class FileUserTest extends AccessControlTest {
      * (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
     }
 
@@ -121,7 +121,7 @@ public class FileUserTest extends AccessControlTest {
     protected FileUserManager getUserManager() throws AccessControlException {
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
         FileUserManager _manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
-                getLogEnabledLogger());
+                getLogger());
         return _manager;
     }
 
