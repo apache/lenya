@@ -61,18 +61,27 @@ package org.apache.lenya.workflow;
  * @author  andreas
  */
 public interface Transition {
+	
     /**
      * Returns the event of this transition.
+     * 
+     * @return the event
      */
     Event getEvent();
 
     /**
      * Returns the actions of this transition.
+     * 
+     * @return the actions
      */
     Action[] getActions();
 
     /**
      * Returns if the transition can fire in a certain situation.
+     * 
+     * @param situation the situation for which the query is requested.
+     * 
+     * @return true if the transition can fire in the given situation.
      */
     boolean canFire(Situation situation);
 }

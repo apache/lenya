@@ -59,15 +59,16 @@ package org.apache.lenya.workflow;
 /**
  * @author andreas
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface WorkflowListener {
     /**
      * This method is invoked when a transition has fired.
+     * 
      * @param instance The workflow instance.
      * @param situation The situation before the transition has fired.
      * @param event The event that was invoked.
+     * 
+     * @throws WorkflowException if an error occured
      */
     void transitionFired(WorkflowInstance instance, Situation situation, Event event)
         throws WorkflowException;

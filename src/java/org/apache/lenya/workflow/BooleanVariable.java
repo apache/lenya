@@ -61,8 +61,12 @@ package org.apache.lenya.workflow;
  * @author  andreas
  */
 public interface BooleanVariable {
+	
     /**
      * Returns the name of this variable.
+     * 
+     * @return the name
+     * 
      */
     String getName();
 

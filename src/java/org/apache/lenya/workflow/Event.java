@@ -61,5 +61,11 @@ package org.apache.lenya.workflow;
  * @author  andreas
  */
 public interface Event {
+	
+	/**
+	 * Get the name of this event
+	 * 
+	 * @return the name
+	 */
     String getName();
 }

@@ -61,8 +61,13 @@ package org.apache.lenya.workflow;
  * @author  andreas
  */
 public interface Action {
+	
     /**
      * Executes this action for a given workflow instance.
+     * 
+     * @param instance the workflow instance
+     * 
+     * @throws WorkflowException if the execution failed
      */
     void execute(WorkflowInstance instance) throws WorkflowException;
 }

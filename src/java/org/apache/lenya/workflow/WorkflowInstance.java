@@ -69,16 +69,17 @@ public interface WorkflowInstance {
 
     /**
      * Returns the current state of this WorkflowInstance.
+     * 
+     * @return the current state
      */
     State getCurrentState();
 
-    /**
-     * Returns the transitions that can fire for this user.
-     */
+
     Event[] getExecutableEvents(Situation situation);
 
     /**
      * Indicates that the user invoked an event.
+     * 
      * @param user The user who invoked the event.
      * @param event The event that was invoked.
      * @throws WorkflowException
