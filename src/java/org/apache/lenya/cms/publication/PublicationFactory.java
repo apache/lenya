@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.14 2003/08/13 13:15:16 andreas Exp $
+$Id: PublicationFactory.java,v 1.15 2003/08/13 17:03:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -226,16 +226,14 @@ public final class PublicationFactory {
      */
     public static boolean existsPublication(String id, String servletContextPath) {
 
-        boolean exists = false;
-        File servletContext = new File(servletContextPath);
-        if (servletContext.isDirectory()) {
-            File publicationDirectory =
-                new File(servletContext, Publication.PUBLICATION_PREFIX + File.separator + id);
-            if (publicationDirectory.isDirectory()) {
-                exists = true;
-            }
+        if (servletContextPath.endsWith("/")) {
+            servletContextPath = servletContextPath.substring(0, servletContextPath.length() - 1);
         }
-        return exists;
+
+        File publicationDirectory =
+            new File(servletContextPath + File.separator + Publication.PUBLICATION_PREFIX + File.separator + id);
+            
+        return publicationDirectory.isDirectory();
     }
 
     /**
