@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.30 2003/08/19 18:46:53 andreas Exp $
+$Id: LoadQuartzServlet.java,v 1.31 2003/08/28 10:13:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,8 @@ $Id: LoadQuartzServlet.java,v 1.30 2003/08/19 18:46:53 andreas Exp $
 package org.apache.lenya.cms.scheduler;
 
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
+import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.DocumentHelper;
 
 import org.apache.log4j.Category;
@@ -69,9 +71,14 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -84,7 +91,7 @@ import javax.servlet.http.HttpServletResponse;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.30 2003/08/19 18:46:53 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.31 2003/08/28 10:13:55 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -93,8 +100,11 @@ public class LoadQuartzServlet extends HttpServlet {
     private String servletContextPath;
     private String schedulerConfigurations;
 
-    public static final String PARAMETER_PUBLICATION_ID = "publication-id";
+    public static final String PREFIX = "scheduler";
+    public static final String PARAMETER_INVOKED = "invoked";
     public static final String PARAMETER_ACTION = "action";
+    public static final String PARAMETER_PUBLICATION_ID = "publication-id";
+    public static final String PARAMETER_DOCUMENT_URL = "document-url";
     public static final String CONFIGURATION_ELEMENT = "scheduler-configurations";
 
     /**
@@ -220,54 +230,64 @@ public class LoadQuartzServlet extends HttpServlet {
         log.debug("- Incoming request at URI: ");
         log.debug(
             request.getServerName() + ":" + request.getServerPort() + request.getRequestURI());
-        log.debug("\n----------------------------------------------------------------");
-
-        String action = request.getParameter(PARAMETER_ACTION);
-
-        // in the case of modification or deletion the jobId is also
-        // passed through a hidden field.
-        String parameterName =
-            JobDataMapWrapper.getFullName(SchedulerWrapper.JOB_PREFIX, SchedulerWrapper.JOB_ID);
-        String jobId = request.getParameter(parameterName);
-
-        String publicationId = request.getParameter(PARAMETER_PUBLICATION_ID);
-        String documentUri = request.getParameter(SchedulerWrapper.DOCUMENT_URL);
-
-        log.debug("--- Request Parameters -----------------------------------------");
-        log.debug("Action:         [" + action + "]");
-        log.debug("Job ID:         [" + jobId + "]");
-        log.debug("Publication ID: [" + publicationId + "]");
-        log.debug("Document URI:   [" + documentUri + "]");
         log.debug("----------------------------------------------------------------");
+        log.debug("Request parameters:");
 
-        logSessionAttributes(request);
+        Map parameterMap = new HashMap();
+        List keys = new ArrayList();
+        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+            String key = (String) e.nextElement();
+            keys.add(key);
+        }
+        Collections.sort(keys);
+        for (Iterator i = keys.iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            String[] values = request.getParameterValues(key);
+            log.debug("    [" + key + "] = [" + values[0] + "]");
+            if (values.length == 1) {
+                parameterMap.put(key, values[0]);
+            } else {
+                parameterMap.put(key, values);
+            }
+        }
+
+        NamespaceMap schedulerParameters = new NamespaceMap(parameterMap, PREFIX);
 
         try {
+            String publicationId = (String) schedulerParameters.get(PARAMETER_PUBLICATION_ID);
+            log.debug("Scheduler invoked.");
+
+            String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
+
+            log.debug("Scheduler Parameters:");
+            log.debug("    scheduler.publication-id: [" + publicationId + "]");
+            log.debug("    scheduler.document-url:   [" + documentUrl + "]");
+
+            logSessionAttributes(request);
+
             // check if the request wants to submit, modify or delete a job.
+            String action = (String) schedulerParameters.get(PARAMETER_ACTION);
+            log.debug("    scheduler.action:         [" + action + "]");
             if (action == null) {
             } else if (action.equals(ADD)) {
-                Date startTime = getDate(request);
-                getScheduler().addJob(documentUri, publicationId, startTime, request);
+                Date startTime = TriggerHelper.getDate(schedulerParameters);
+                getScheduler().addJob(documentUrl, publicationId, startTime, request);
             } else if (action.equals(MODIFY)) {
-                Date startTime = getDate(request);
+                Date startTime = TriggerHelper.getDate(schedulerParameters);
+                String jobId = getJobId(schedulerParameters);
                 getScheduler().deleteJob(jobId, publicationId);
-                getScheduler().addJob(documentUri, publicationId, startTime, request);
+                getScheduler().addJob(documentUrl, publicationId, startTime, request);
             } else if (action.equals(DELETE)) {
+                String jobId = getJobId(schedulerParameters);
                 getScheduler().deleteJob(jobId, publicationId);
             }
 
             // handle the remainder of the request by simply returning all
-            // scheduled jobs (for the gived documentID).
+            // scheduled jobs (for the given publication ID).
             PrintWriter writer = response.getWriter();
             response.setContentType("text/xml");
 
-            Document snapshot;
-
-            if (publicationId == null) {
-                snapshot = getScheduler().getSnapshot();
-            } else {
-                snapshot = getScheduler().getSnapshot(publicationId);
-            }
+            Document snapshot = getScheduler().getSnapshot(publicationId);
 
             DocumentHelper.writeDocument(snapshot, writer);
         } catch (Exception e) {
@@ -277,47 +297,16 @@ public class LoadQuartzServlet extends HttpServlet {
     }
 
     /**
-     * Extracts the date from the request parameters.
-     * @param request A request.
-     * @return A date.
-     * @throws IOException when something went wrong.
+     * Extracts the job ID from the scheduler parameters.
+     * @param schedulerParameters A namespace map.
+     * @return A string.
      */
-    protected Date getDate(HttpServletRequest request) throws IOException {
-        String startDay = request.getParameter("trigger.startDay");
-        String startMonth = request.getParameter("trigger.startMonth");
-        String startYear = request.getParameter("trigger.startYear");
-        String startHour = request.getParameter("trigger.startHour");
-        String startMin = request.getParameter("trigger.startMin");
-
-        Date startTime = null;
-
-        try {
-            // Month value is 0-based
-            startTime =
-                new GregorianCalendar(
-                    Integer.parseInt(startYear),
-                    Integer.parseInt(startMonth) - 1,
-                    Integer.parseInt(startDay),
-                    Integer.parseInt(startHour),
-                    Integer.parseInt(startMin))
-                    .getTime();
-        } catch (NumberFormatException e) {
-            log.error(
-                "NumberFormatException with parameters "
-                    + "startYear, startMonth, startDay, startHour, startMin: "
-                    + startDay
-                    + ", "
-                    + startMonth
-                    + ", "
-                    + startDay
-                    + ", "
-                    + startHour
-                    + ", "
-                    + startMin,
-                e);
-            throw new IOException("Parsing scheduling date/time failed!");
-        }
-        return startTime;
+    protected String getJobId(NamespaceMap schedulerParameters) {
+        String parameterName =
+            JobDataMapWrapper.getFullName(SchedulerWrapper.JOB_PREFIX, SchedulerWrapper.JOB_ID);
+        String jobId = (String) schedulerParameters.get(parameterName);
+        log.debug("    scheduler.job.id:         [" + jobId + "]");
+        return jobId;
     }
 
     /**
