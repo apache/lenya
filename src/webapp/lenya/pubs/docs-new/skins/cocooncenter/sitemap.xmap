@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+<!-- =========================== Components ================================ -->
+
+ <map:components>
+
+  <map:generators default="file">
+   <map:generator  name="file"        src="org.apache.cocoon.generation.FileGenerator" label="content"/>
+   <map:generator  name="directory"   src="org.apache.cocoon.generation.DirectoryGenerator" label="content"/>
+   <map:generator  name="html"        src="org.apache.cocoon.generation.HTMLGenerator" label="content"/>
+   <map:generator  name="file-nolabel" src="org.apache.cocoon.generation.FileGenerator"/>
+  </map:generators>
+
+  <map:transformers default="xslt">
+  <!--
+   <map:transformer     name="xslt"      src="org.apache.cocoon.transformation.TraxTransformer">
+    <use-request-parameters>false</use-request-parameters>
+    <use-browser-capabilities-db>false</use-browser-capabilities-db>
+   </map:transformer>
+  -->
+    <map:transformer name="xslt" src="org.apache.cocoon.transformation.TraxTransformer"
+                        logger="sitemap.transformer.xsltc"
+                        pool-max="32" pool-min="8" pool-grow="2">
+      <use-request-parameters>false</use-request-parameters>
+      <use-browser-capabilities-db>false</use-browser-capabilities-db>
+      <use-deli>false</use-deli>
+      <!-- transformer-factory>org.apache.xalan.xsltc.trax.TransformerFactoryImpl</transformer-factory -->
+    </map:transformer>
+  </map:transformers>
+      
+  <map:readers default="resource">
+   <map:reader name="resource"       src="org.apache.cocoon.reading.ResourceReader"/>
+  </map:readers>
+
+  <map:serializers default="html">
+   <map:serializer name="html"   mime-type="text/html"        src="org.apache.cocoon.serialization.HTMLSerializer">
+    <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
+     <encoding>ISO-8859-1</encoding>
+   </map:serializer>
+
+   <map:serializer name="xml"    mime-type="text/xml"         src="org.apache.cocoon.serialization.XMLSerializer">
+     <encoding>ISO-8859-1</encoding>
+   </map:serializer>
+
+   <map:serializer name="fo2pdf"
+                src="org.apache.cocoon.serialization.FOPSerializer"
+                mime-type="application/pdf"/>
+
+
+   <map:serializer name="links"                               src="org.apache.cocoon.serialization.LinkSerializer">
+     <encoding>ISO-8859-1</encoding>
+   </map:serializer>
+   <map:serializer name="svg2jpeg" mime-type="image/jpeg"     src="org.apache.cocoon.serialization.SVGSerializer">
+       <parameter name="quality" type="float" value="1.0"/>
+   </map:serializer>
+   <map:serializer name="svg2png" mime-type="image/png"       src="org.apache.cocoon.serialization.SVGSerializer"/>
+  </map:serializers>
+
+  <map:matchers default="wildcard">
+   <map:matcher name="wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>
+  </map:matchers>
+  
+  <map:actions>
+    <map:action logger="sitemap.action.request" name="request" src="org.apache.cocoon.acting.RequestParamAction"/>
+  </map:actions>
+
+
+    <!--
+     The different pipeline implementations
+  -->
+  <map:pipelines default="caching">
+     <map:pipeline name="caching" src="org.apache.cocoon.components.pipeline.impl.CachingProcessingPipeline"/>
+     <map:pipeline name="noncaching" src="org.apache.cocoon.components.pipeline.impl.NonCachingProcessingPipeline"/>
+     <!-- The following two can be used for profiling:
+     <map:pipeline name="profile-caching" src="org.apache.cocoon.components.profiler.ProfilingCachingProcessingPipeline"/>
+     <map:pipeline name="profile-noncaching" src="org.apache.cocoon.components.profiler.ProfilingNonCachingProcessingPipeline"/>
+     -->
+  </map:pipelines>
+  
+ </map:components>
+
+<!-- =========================== Views =================================== -->
+
+ <map:views>
+  <map:view name="content" from-label="content">
+   <map:serialize type="xml"/>
+  </map:view>
+
+  <map:view name="xhtml" from-label="xhtml">
+   <map:serialize type="xml"/>
+  </map:view>
+
+  <map:view name="xml" from-label="xml">
+   <map:serialize type="xml"/>
+  </map:view>
+
+  <map:view name="aggregation" from-label="aggregation">
+   <map:serialize type="xml"/>
+  </map:view>
+
+  <map:view name="links" from-position="last">
+   <map:transform src="library/xslt/filterlinks.xsl"/>
+   <map:serialize type="links"/>
+  </map:view>
+ </map:views>
+
+<!-- =========================== Pipelines ================================= -->
+
+ <map:pipelines>
+ 
+ 
+  <map:pipeline>
+    
+    <map:match pattern="images/*/*alert.jpeg">
+      <map:generate type="file" src="images/svg/empty.xml"/>
+      <map:transform src="xslt/images/{2}-svg.xsl">
+        <map:parameter name="text" value="{1}"/>
+        <map:parameter name="text-color" value="#A00000"/>
+        <map:parameter name="title-background" value="#F0E0E0"/>
+        <map:parameter name="background" value="#F0E0E0"/>
+        <map:parameter name="border" value="#A00000"/>
+      </map:transform>
+      <map:serialize type="svg2jpeg"/>
+    </map:match>	
+    
+    <map:match pattern="images/*/*.jpeg">
+      <map:generate type="file" src="images/svg/empty.xml"/>
+      <map:transform src="xslt/images/{2}-svg.xsl">
+        <map:parameter name="text" value="{1}"/>
+        <map:parameter name="text-color" value="Navy"/>
+        <map:parameter name="title-background" value="#E0E0F0"/>
+        <map:parameter name="background" value="#E0E0F0"/>
+        <map:parameter name="border" value="Navy"/>
+        <map:parameter name="menubar-background" value="#8686BD"/>
+        <map:parameter name="menu-background" value="#CCCCE0"/>
+<!--        <map:parameter name="menu-background" value="#DDDDE0"/>-->
+        <map:parameter name="menu-background-current" value="white"/>
+        <map:parameter name="framebox-title-background" value="#8686BD"/>
+        <map:parameter name="framebox-background" value="#E0E0F0"/>
+      </map:transform>
+      <map:serialize type="svg2jpeg"/>
+    </map:match>	
+    
+    <map:match pattern="images/*/*/*.jpeg">
+      <map:generate type="file" src="images/svg/empty.xml"/>
+      <map:transform src="xslt/images/{3}-svg.xsl">
+        <map:parameter name="text" value="{1}"/>
+        <map:parameter name="width" value="{2}"/>
+        <map:parameter name="text-color" value="Navy"/>
+        <map:parameter name="title-background" value="#E0E0F0"/>
+        <map:parameter name="background" value="#E0E0F0"/>
+        <map:parameter name="border" value="Navy"/>
+      </map:transform>
+      <map:serialize type="svg2jpeg"/>
+    </map:match>	
+    
+    <map:match pattern="images/*alert.jpeg">
+      <map:generate type="file" src="images/svg/empty.xml"/>
+      <map:transform src="xslt/images/{1}-svg.xsl">
+        <map:parameter name="text" value="{1}"/>
+        <map:parameter name="text-color" value="#A00000"/>
+        <map:parameter name="title-background" value="#F0E0E0"/>
+        <map:parameter name="background" value="#FEF0F0"/>
+        <map:parameter name="border" value="#A00000"/>
+      </map:transform>
+      <map:serialize type="svg2jpeg"/>
+    </map:match>	
+    
+    <map:match pattern="images/*tsc.jpeg">
+      <map:generate type="file" src="images/svg/empty.xml"/>
+      <map:transform src="xslt/images/{1}-svg.xsl">
+        <map:parameter name="text" value="{1}"/>
+        <map:parameter name="text-color" value="#A00000"/>
+        <map:parameter name="title-background" value="#F0E0E0"/>
+        <map:parameter name="background" value="#E0E0C2"/>
+        <map:parameter name="border" value="#A00000"/>
+      </map:transform>
+      <map:serialize type="svg2jpeg"/>
+    </map:match>	
+    
+    <map:match pattern="images/*.jpeg">
+      <map:generate type="file" src="images/svg/empty.xml"/>
+      <map:transform src="xslt/images/{1}-svg.xsl"/>
+      <map:serialize type="svg2jpeg"/>
+    </map:match>	
+    
+    <map:match pattern="images/*.png">
+      <map:read src="images/{1}.png" mime-type="image/png"/>
+    </map:match>
+    
+    <map:match pattern="images/**.gif">
+      <map:read src="images/{1}.gif" mime-type="image/gif"/>
+    </map:match>
+    
+    <map:match pattern="images/**.jpg">
+      <map:read src="images/{1}.jpg" mime-type="image/jpg"/>
+    </map:match>
+    
+  </map:pipeline>
+
+
+
+
+
+ </map:pipelines>
+
+</map:sitemap>
+
