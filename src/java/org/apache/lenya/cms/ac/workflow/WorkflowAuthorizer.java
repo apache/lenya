@@ -30,9 +30,6 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.Situation;
@@ -42,8 +39,8 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 
 /**
- * If the client requested invoking a workflow event, this authorizer checks if
- * the current document state and identity roles allow this transition.
+ * If the client requested invoking a workflow event, this authorizer checks if the current document
+ * state and identity roles allow this transition.
  */
 public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer, Serviceable {
 
@@ -87,12 +84,10 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
-                Publication publication = pubFactory.getPublication(resolver, request);
-                DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
-                if (map.getFactory().isDocument(publication, webappUrl)) {
+                DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+                if (map.isDocument(webappUrl)) {
 
-                    Document document = map.getFactory().getFromURL(publication, webappUrl);
+                    Document document = map.getFromURL(webappUrl);
                     workflowResolver = (WorkflowResolver) this.manager
                             .lookup(WorkflowResolver.ROLE);
 
@@ -106,8 +101,6 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
             } catch (final ServiceException e) {
                 throw new AccessControlException(e);
             } catch (final DocumentBuildException e) {
-                throw new AccessControlException(e);
-            } catch (final PublicationException e) {
                 throw new AccessControlException(e);
             } catch (final WorkflowException e) {
                 throw new AccessControlException(e);

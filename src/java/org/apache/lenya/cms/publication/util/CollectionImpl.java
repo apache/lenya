@@ -33,6 +33,7 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -100,7 +101,11 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     public void add(Document document) throws DocumentException {
         documents().add(document);
-        save();
+        try {
+            save();
+        } catch (TransactionException e) {
+            throw new DocumentException(e);
+        }
     }
 
     /**
@@ -109,7 +114,11 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     public void add(int position, Document document) throws DocumentException {
         documents().add(position, document);
-        save();
+        try {
+            save();
+        } catch (TransactionException e) {
+            throw new DocumentException(e);
+        }
     }
 
     /**
@@ -121,7 +130,11 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                     + document + "]");
         }
         documents().remove(document);
-        save();
+        try {
+            save();
+        } catch (TransactionException e) {
+            throw new DocumentException(e);
+        }
     }
 
     private boolean isLoaded = false;
@@ -163,7 +176,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
-        Document document = getIdentityMap().getFactory().get(getPublication(),
+        Document document = getIdentityMap().get(getPublication(),
                 getArea(),
                 documentId,
                 getLanguage());
@@ -171,10 +184,9 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * Saves the XML source of this collection.
-     * @throws DocumentException when something went wrong.
+     * @see org.apache.lenya.transaction.Transactionable#save()
      */
-    public void save() throws DocumentException {
+    public void save() throws TransactionException {
         try {
 
             NamespaceHelper helper = getNamespaceHelper();
@@ -204,10 +216,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             }
             DocumentHelper.writeDocument(helper.getDocument(), getFile());
 
-        } catch (DocumentException e) {
-            throw e;
         } catch (Exception e) {
-            throw new DocumentException(e);
+            throw new TransactionException(e);
         }
     }
 

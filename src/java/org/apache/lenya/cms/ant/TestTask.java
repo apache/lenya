@@ -42,7 +42,7 @@ public class TestTask extends PublicationTask {
         DocumentTypeResolver resolver = null;
         try {
             resolver = (DocumentTypeResolver) manager.lookup(DocumentTypeResolver.ROLE);
-            Document document = getIdentityMap().getFactory().get(getPublication(), Publication.AUTHORING_AREA, "/index");
+            Document document = getIdentityMap().get(getPublication(), Publication.AUTHORING_AREA, "/index");
             DocumentType doctype = resolver.resolve(document);
             String message = "Document type of [" + document + "] is [" + doctype.getName() + "]";
             log(message);

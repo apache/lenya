@@ -84,8 +84,8 @@ public class DocumentLanguagesHelper {
     protected Document getDocument(String language) throws ProcessingException {
         Document document;
         try {
-            document = this.identityMap.getFactory().getLanguageVersion(
-                    this.pageEnvelope.getDocument(), language);
+            document = this.identityMap.getLanguageVersion(this.pageEnvelope.getDocument(),
+                    language);
         } catch (DocumentBuildException e) {
             throw new ProcessingException(e);
         }

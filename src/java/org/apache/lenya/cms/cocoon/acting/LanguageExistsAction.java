@@ -66,7 +66,7 @@ public class LanguageExistsAction extends ServiceableAction {
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
 
-        DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
+        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
         PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
                 objectModel);
 

@@ -100,7 +100,7 @@ public class CreateBlogEntry extends DocumentUsecase {
         }
 
         String area = parent.getArea();
-        Document document = parent.getIdentityMap().getFactory().get(parent.getPublication(),
+        Document document = parent.getIdentityMap().get(parent.getPublication(),
                 area,
                 documentId,
                 language);

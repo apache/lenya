@@ -73,7 +73,7 @@ public abstract class DocumentTask extends PublicationTask {
     protected Document getDocument(String documentId, String area, String language)
             throws ExecutionException {
         try {
-            return getIdentityMap().getFactory().get(getPublication(), area, documentId, language);
+            return getIdentityMap().get(getPublication(), area, documentId, language);
         } catch (DocumentBuildException e) {
             throw new ExecutionException(e);
         }

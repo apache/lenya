@@ -121,7 +121,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         WorkflowResolver workflowResolver = null;
 
         try {
-            DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
+            DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, _objectModel);
 
             Document document = envelope.getDocument();

@@ -43,12 +43,12 @@ public class ResourcePublisher extends PublicationTask {
     public void execute() throws BuildException {
 
         try {
-            Document authoringDocument = getIdentityMap().getFactory().get(getPublication(),
+            Document authoringDocument = getIdentityMap().get(getPublication(),
                     Publication.AUTHORING_AREA,
                     this.documentId);
             ResourcesManager authoringManager = authoringDocument.getResourcesManager();
 
-            Document liveDocument = getIdentityMap().getFactory().get(getPublication(),
+            Document liveDocument = getIdentityMap().get(getPublication(),
                     Publication.LIVE_AREA,
                     this.documentId);
             ResourcesManager liveManager = liveDocument.getResourcesManager();

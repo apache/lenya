@@ -41,8 +41,7 @@ import org.apache.lenya.cms.rc.RevisionController;
 /**
  * Revision controller action.
  * 
- * @version $Id: RevisionControllerAction.java 152682 2005-02-08 18:13:39Z
- *          gregor $
+ * @version $Id$
  */
 public class RevisionControllerAction extends ServiceableAction {
 
@@ -54,8 +53,8 @@ public class RevisionControllerAction extends ServiceableAction {
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
-     *      org.apache.cocoon.environment.SourceResolver, java.util.Map,
-     *      java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
             Parameters parameters) throws Exception {
@@ -71,7 +70,7 @@ public class RevisionControllerAction extends ServiceableAction {
         PageEnvelope envelope = null;
         PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         Publication publication = factory.getPublication(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
+        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
         Document document = null;
 
         try {
@@ -134,10 +133,7 @@ public class RevisionControllerAction extends ServiceableAction {
                 }
             }
 
-            Document srcDoc = map.getFactory().get(publication,
-                    document.getArea(),
-                    documentid,
-                    language);
+            Document srcDoc = map.get(publication, document.getArea(), documentid, language);
             File newFile = srcDoc.getFile();
             this.filename = newFile.getCanonicalPath();
 

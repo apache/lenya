@@ -185,7 +185,7 @@ public class PolicyHelper {
     private String computeUrl(Map objectModel, String area) throws ProcessingException {
         PageEnvelope envelope;
         try {
-            DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
+            DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         } catch (PageEnvelopeException e) {
             throw new ProcessingException(e);

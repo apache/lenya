@@ -35,6 +35,7 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.History;
+import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -179,7 +180,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         for (int i = 0; i < allLanguages.length; i++) {
             Document version;
             try {
-                version = getIdentityMap().getFactory().getLanguageVersion(this, allLanguages[i]);
+                version = getIdentityMap().getLanguageVersion(this, allLanguages[i]);
             } catch (DocumentBuildException e) {
                 throw new DocumentException(e);
             }
@@ -320,8 +321,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         try {
             String[] languages = getLanguages();
             for (int i = 0; i < languages.length; i++) {
-                Document languageVersion = getIdentityMap().getFactory().getLanguageVersion(this,
-                        languages[i]);
+                Document languageVersion = getIdentityMap().getLanguageVersion(this, languages[i]);
                 exists = exists || languageVersion.exists();
             }
         } catch (DocumentBuildException e) {
@@ -482,9 +482,64 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         getHistory().newVersion(workflow, version, situation);
     }
 
-    protected void save() throws DocumentException {
-        getDublinCore().save();
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#save()
+     */
+    public void save() throws TransactionException {
+        try {
+            getDublinCore().save();
+        } catch (DocumentException e) {
+            throw new TransactionException(e);
+        }
         getHistory().save();
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#checkin()
+     */
+    public void checkin() throws TransactionException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#checkout()
+     */
+    public void checkout() throws TransactionException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
+     */
+    public boolean isCheckedOut() throws TransactionException {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#lock()
+     */
+    public void lock() throws TransactionException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#unlock()
+     */
+    public void unlock() throws TransactionException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#isLocked()
+     */
+    public boolean isLocked() throws TransactionException {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

@@ -68,10 +68,9 @@ public class DocumentReferencesHelper {
     }
 
     /**
-     * Construct a search string for the search of references, i.e. links from
-     * other documents to the current document. This is done using the
-     * assumption that internal links look as if they were copied directly from
-     * the browser, e.g. /lenya/default/authoring/doctypes/2columns.html
+     * Construct a search string for the search of references, i.e. links from other documents to
+     * the current document. This is done using the assumption that internal links look as if they
+     * were copied directly from the browser, e.g. /lenya/default/authoring/doctypes/2columns.html
      * 
      * @return the search string
      */
@@ -83,10 +82,9 @@ public class DocumentReferencesHelper {
     }
 
     /**
-     * Construct a search string for the search of internal references, i.e from
-     * the current document to others. This is done using the assumption that
-     * internal links look as if they were copied directly from the browser,
-     * e.g. /lenya/default/authoring/doctypes/2columns.html
+     * Construct a search string for the search of internal references, i.e from the current
+     * document to others. This is done using the assumption that internal links look as if they
+     * were copied directly from the browser, e.g. /lenya/default/authoring/doctypes/2columns.html
      * 
      * @return the search string
      */
@@ -113,12 +111,11 @@ public class DocumentReferencesHelper {
     }
 
     /**
-     * Find a list of document-ids which have references to the current
-     * document.
+     * Find a list of document-ids which have references to the current document.
      * @param area The area.
      * 
-     * @return an <code>array</code> of documents if there are references, an
-     *         empty <code>array</code> otherwise
+     * @return an <code>array</code> of documents if there are references, an empty
+     *         <code>array</code> otherwise
      * 
      * @throws ProcessingException if the search for references failed.
      */
@@ -193,10 +190,7 @@ public class DocumentReferencesHelper {
                     }
                     log.debug("language: " + language);
 
-                    documents.add(this.identityMap.getFactory().get(publication,
-                            area,
-                            documentId,
-                            language));
+                    documents.add(this.identityMap.get(publication, area, documentId, language));
                 }
             } catch (IOException e) {
                 throw new ProcessingException(e);
@@ -210,12 +204,11 @@ public class DocumentReferencesHelper {
     }
 
     /**
-     * Find all internal references in the current document to documents which
-     * have not been published yet.
+     * Find all internal references in the current document to documents which have not been
+     * published yet.
      * 
-     * @return an <code>array</code> of <code>Document</code> of references
-     *         from the current document to documents which have not been
-     *         published yet.
+     * @return an <code>array</code> of <code>Document</code> of references from the current
+     *         document to documents which have not been published yet.
      * 
      * @throws ProcessingException if the current document cannot be opened.
      */
@@ -245,7 +238,7 @@ public class DocumentReferencesHelper {
                 }
                 log.debug("language: " + language);
 
-                Document liveDocument = this.identityMap.getFactory().get(publication,
+                Document liveDocument = this.identityMap.get(publication,
                         Publication.LIVE_AREA,
                         docId,
                         language);
@@ -255,8 +248,8 @@ public class DocumentReferencesHelper {
                     if (liveLanguage == null) {
                         liveLanguage = publication.getDefaultLanguage();
                     }
-                    unpublishedReferences.add(this.identityMap.getFactory()
-                            .getLanguageVersion(liveDocument, liveLanguage));
+                    unpublishedReferences.add(this.identityMap.getLanguageVersion(liveDocument,
+                            liveLanguage));
                 }
             }
         } catch (final DocumentBuildException e) {

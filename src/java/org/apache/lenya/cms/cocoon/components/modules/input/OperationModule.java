@@ -21,8 +21,9 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
-import org.apache.lenya.cms.usecase.Operation;
-import org.apache.lenya.cms.usecase.UnitOfWork;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.transaction.Operation;
+import org.apache.lenya.transaction.UnitOfWork;
 
 /**
  * Super class for operation-based input modules.
@@ -39,6 +40,15 @@ public class OperationModule extends AbstractInputModule implements Operation, S
     }
 
     private UnitOfWork unitOfWork;
+    
+    private DocumentIdentityMap documentIdentityMap;
+    
+    protected DocumentIdentityMap getDocumentIdentityMap() {
+        if (this.documentIdentityMap == null) {
+            this.documentIdentityMap = new DocumentIdentityMap(this.manager, getLogger());
+        }
+        return this.documentIdentityMap;
+    }
 
     /**
      * Retrieves a unit-of-work, which gives the operation access to business
@@ -47,7 +57,7 @@ public class OperationModule extends AbstractInputModule implements Operation, S
      * @return a UnitOfWork, the interface to access the objects
      * @throws ServiceException if the unit-of-work component can not be initialized by the component framework
      *
-     * @see org.apache.lenya.cms.usecase.Operation#getUnitOfWork()
+     * @see org.apache.lenya.transaction.Operation#getUnitOfWork()
      */
     public UnitOfWork getUnitOfWork() throws ServiceException {
         if (this.unitOfWork == null) {
@@ -55,6 +65,7 @@ public class OperationModule extends AbstractInputModule implements Operation, S
                getLogger().debug("OperationModule.getUnitOfWork() does not yet have instance, looking up role [" + UnitOfWork.ROLE + "]");
 
            this.unitOfWork = (UnitOfWork) this.manager.lookup(UnitOfWork.ROLE);
+           this.unitOfWork.addIdentityMap(getDocumentIdentityMap());
         }
 
         return this.unitOfWork;

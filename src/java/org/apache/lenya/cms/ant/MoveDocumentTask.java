@@ -128,11 +128,11 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 
             log("move workflow history");
             try {
-                document = getIdentityMap().getFactory().get(getPublication(),
+                document = getIdentityMap().get(getPublication(),
                         this.firstarea,
                         srcDocumentid,
                         language);
-                newDocument = getIdentityMap().getFactory().get(getPublication(),
+                newDocument = getIdentityMap().get(getPublication(),
                         this.secarea,
                         destDocumentid,
                         language);

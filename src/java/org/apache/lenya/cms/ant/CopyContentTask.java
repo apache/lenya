@@ -57,7 +57,7 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
             String language = labels[i].getLanguage();
             Document srcDoc;
             try {
-                srcDoc = getIdentityMap().getFactory().get(getPublication(),
+                srcDoc = getIdentityMap().get(getPublication(),
                         getFirstarea(),
                         srcDocumentid,
                         language);
@@ -71,7 +71,7 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
             }
             Document destDoc;
             try {
-                destDoc = getIdentityMap().getFactory().get(getPublication(),
+                destDoc = getIdentityMap().get(getPublication(),
                         getSecarea(),
                         destDocumentid,
                         language);

@@ -30,7 +30,6 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -177,9 +176,8 @@ public abstract class Create extends AbstractUsecase {
         Document document = null;
         String url = getSourceURL();
         try {
-            DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
-            if (factory.isDocument(getPublication(), url)) {
-                document = factory.getFromURL(getPublication(), url);
+            if (getDocumentIdentityMap().isDocument(url)) {
+                document = getDocumentIdentityMap().getFromURL(url);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

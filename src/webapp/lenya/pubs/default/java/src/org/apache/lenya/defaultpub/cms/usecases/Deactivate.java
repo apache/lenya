@@ -19,7 +19,6 @@ package org.apache.lenya.defaultpub.cms.usecases;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -96,7 +95,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         DocumentManager documentManager = null;
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            Document liveDocument = authoringDocument.getIdentityMap().getFactory()
+            Document liveDocument = authoringDocument.getIdentityMap()
                     .getAreaVersion(authoringDocument, Publication.LIVE_AREA);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
@@ -203,12 +202,12 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     protected void deactivateAllLanguageVersions(Document document) throws PublicationException,
             WorkflowException {
         String[] languages = document.getPublication().getLanguages();
-        DocumentFactory factory = document.getIdentityMap().getFactory();
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             for (int i = 0; i < languages.length; i++) {
-                Document version = factory.getLanguageVersion(document, languages[i]);
+                Document version = document.getIdentityMap().getLanguageVersion(document,
+                        languages[i]);
                 if (version.exists()) {
                     if (wfManager.canInvoke(getSourceDocument(), getEvent())) {
                         deactivate(version);

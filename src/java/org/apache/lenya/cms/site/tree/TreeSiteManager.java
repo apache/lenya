@@ -78,7 +78,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         List ancestors = new ArrayList();
         Document parent;
         try {
-            parent = resource.getIdentityMap().getFactory().getParent(resource);
+            parent = resource.getIdentityMap().getParent(resource);
         } catch (DocumentBuildException e) {
             throw new SiteException(e);
         }
@@ -128,7 +128,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         try {
             for (int i = 0; i < resources.length; i++) {
                 SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
-                resources[i] = resource.getIdentityMap().getFactory()
+                resources[i] = resource.getIdentityMap()
                         .get(resource.getPublication(),
                                 resource.getArea(),
                                 descendant.getAbsoluteId());
@@ -327,7 +327,7 @@ public class TreeSiteManager extends AbstractSiteManager {
 
             for (int i = 1; i < allNodes.size(); i++) {
                 SiteTreeNode node = (SiteTreeNode) allNodes.get(i);
-                documents[i - 1] = map.getFactory().get(publication, area, node.getAbsoluteId());
+                documents[i - 1] = map.get(publication, area, node.getAbsoluteId());
             }
             return documents;
         } catch (DocumentBuildException e) {

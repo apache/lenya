@@ -30,6 +30,8 @@ import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.transaction.AbstractOperation;
 
 /**
  * Abstract usecase implementation.
@@ -394,11 +396,19 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         this.context = _context;
     }
 
+    private DocumentIdentityMap documentIdentityMap;
+    
+    protected DocumentIdentityMap getDocumentIdentityMap() {
+        return this.documentIdentityMap;
+    }
+    
     /**
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public final void initialize() throws Exception {
         super.initialize();
+        this.documentIdentityMap = new DocumentIdentityMap(this.manager, getLogger());
+        getUnitOfWork().addIdentityMap(this.documentIdentityMap);
     }
 
     /**

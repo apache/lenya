@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.workflow.WorkflowManager;
@@ -57,11 +56,11 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 
             WorkflowManager wfManager = null;
             try {
-                srcDoc = getIdentityMap().getFactory().get(getPublication(),
+                srcDoc = getIdentityMap().get(getPublication(),
                         getFirstarea(),
                         srcDocumentid,
                         language);
-                destDoc = getIdentityMap().getFactory().get(getPublication(),
+                destDoc = getIdentityMap().get(getPublication(),
                         getSecarea(),
                         destDocumentid,
                         language);

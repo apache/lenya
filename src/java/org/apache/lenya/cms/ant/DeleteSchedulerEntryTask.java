@@ -91,7 +91,7 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
             String language = labels[i].getLanguage();
 
             try {
-                Document document = getIdentityMap().getFactory().get(getPublication(),
+                Document document = getIdentityMap().get(getPublication(),
                         this.area,
                         this.documentId,
                         language);

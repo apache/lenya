@@ -14,14 +14,14 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.transaction;
 
 import org.apache.avalon.framework.service.ServiceException;
 
 /**
  * Operation interface.
  * 
- * @version $Id$
+ * @version $Id: Operation.java 158432 2005-03-21 09:56:48Z andreas $
  */
 public interface Operation {
 

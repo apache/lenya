@@ -66,12 +66,10 @@ import org.xml.sax.helpers.AttributesImpl;
  * These links are rewritten using the following rules:
  * </p>
  * <ul>
- * <li>The area is replaced by the current area (obtained from the page
- * envelope).</li>
- * <li>A URL prefix is added depending on the proxy configuration of the
- * publication.</li>
- * <li>If the target document does not exist, the <code>&lt;a/&gt;</code>
- * element is removed to disable the link.</li>
+ * <li>The area is replaced by the current area (obtained from the page envelope).</li>
+ * <li>A URL prefix is added depending on the proxy configuration of the publication.</li>
+ * <li>If the target document does not exist, the <code>&lt;a/&gt;</code> element is removed to
+ * disable the link.</li>
  * </ul>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
@@ -90,15 +88,14 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
-     *      java.util.Map, java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
+     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver _resolver, Map _objectModel, String _source,
             Parameters _parameters) throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, _source, _parameters);
 
         try {
-            this.identityMap = new DocumentIdentityMap(this.manager);
+            this.identityMap = new DocumentIdentityMap(this.manager, getLogger());
             PageEnvelope envelope = PageEnvelopeFactory.getInstance()
                     .getPageEnvelope(this.identityMap, _objectModel);
             this.currentDocument = envelope.getDocument();
@@ -165,8 +162,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     private String indent = "";
 
     /**
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
-     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
+     *      java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String name, String qname, Attributes attrs)
             throws SAXException {
@@ -215,20 +212,18 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                             getLogger().debug(this.indent + "webapp URL: [" + webappUrl + "]");
                             getLogger().debug(this.indent + "anchor:     [" + anchor + "]");
                         }
-                        if (this.identityMap.getFactory().isDocument(publication, webappUrl)) {
+                        if (this.identityMap.isDocument(webappUrl)) {
 
-                            Document targetDocument = this.identityMap.getFactory()
-                                    .getFromURL(publication, webappUrl);
+                            Document targetDocument = this.identityMap.getFromURL(webappUrl);
 
                             if (getLogger().isDebugEnabled()) {
                                 getLogger().debug(this.indent + "Resolved target document: ["
                                         + targetDocument + "]");
                             }
 
-                            targetDocument = this.identityMap.getFactory().get(publication,
-                                    getCurrentDocument().getArea(),
-                                    targetDocument.getId(),
-                                    targetDocument.getLanguage());
+                            targetDocument = this.identityMap.get(publication, getCurrentDocument()
+                                    .getArea(), targetDocument.getId(), targetDocument
+                                    .getLanguage());
 
                             if (targetDocument.exists()) {
                                 rewriteLink(newAttrs, targetDocument, anchor);
@@ -308,8 +303,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * 
      * @param attr The attributes.
      * @param value The value.
-     * @throws IllegalArgumentException if the href attribute is not contained
-     *             in this attributes.
+     * @throws IllegalArgumentException if the href attribute is not contained in this attributes.
      */
     protected void setHrefAttribute(AttributesImpl attr, String value) {
         int position = attr.getIndex(ATTRIBUTE_HREF);
@@ -320,8 +314,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     }
 
     /**
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
-     *      java.lang.String, java.lang.String)
+     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String,
+     *      java.lang.String)
      */
     public void endElement(String uri, String name, String qname) throws SAXException {
         if (getLogger().isDebugEnabled()) {

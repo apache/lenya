@@ -63,13 +63,13 @@ public class DocumentHelper {
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
-        this.identityMap = new DocumentIdentityMap(manager);
+        this.identityMap = new DocumentIdentityMap(manager, new ConsoleLogger());
     }
 
     /**
-     * Creates a document URL. <br/>If the document ID is null, the current
-     * document ID is used. <br/>If the document area is null, the current area
-     * is used. <br/>If the language is null, the current language is used.
+     * Creates a document URL. <br/>If the document ID is null, the current document ID is used.
+     * <br/>If the document area is null, the current area is used. <br/>If the language is null,
+     * the current language is used.
      * @param documentId The target document ID.
      * @param documentArea The target area.
      * @param language The target language.
@@ -102,7 +102,7 @@ public class DocumentHelper {
                 language = envelope.getDocument().getLanguage();
             }
 
-            Document document = this.identityMap.getFactory().get(this.publication,
+            Document document = this.identityMap.get(this.publication,
                     documentArea,
                     documentId,
                     language);
@@ -125,9 +125,9 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns the complete URL of the parent document. If the document is a
-     * top-level document, the /index document is chosen. If the parent does not
-     * exist in the appropriate language, the default language is chosen.
+     * Returns the complete URL of the parent document. If the document is a top-level document, the
+     * /index document is chosen. If the parent does not exist in the appropriate language, the
+     * default language is chosen.
      * @return A string.
      * @throws ProcessingException when something went wrong.
      */
@@ -143,7 +143,7 @@ public class DocumentHelper {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             contextPath = request.getContextPath();
 
-            Document parent = this.identityMap.getFactory().getParent(document, "/index");
+            Document parent = this.identityMap.getParent(document, "/index");
             parentUrl = parent.getCanonicalWebappURL();
         } catch (final DocumentBuildException e) {
             throw new ProcessingException(e);
@@ -159,10 +159,9 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns an existing language version of a document. If the document
-     * exists in the default language, the default language version is returned.
-     * Otherwise, a random language version is returned. If no language version
-     * exists, a DocumentException is thrown.
+     * Returns an existing language version of a document. If the document exists in the default
+     * language, the default language version is returned. Otherwise, a random language version is
+     * returned. If no language version exists, a DocumentException is thrown.
      * 
      * @param document The document.
      * @return A document.
@@ -173,11 +172,10 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns an existing language version of a document. If the document
-     * exists in the preferred language, this version is returned. Otherwise, if
-     * the document exists in the default language, the default language version
-     * is returned. Otherwise, a random language version is returned. If no
-     * language version exists, a DocumentException is thrown.
+     * Returns an existing language version of a document. If the document exists in the preferred
+     * language, this version is returned. Otherwise, if the document exists in the default
+     * language, the default language version is returned. Otherwise, a random language version is
+     * returned. If no language version exists, a DocumentException is thrown.
      * 
      * @param document The document.
      * @param preferredLanguage The preferred language.
@@ -210,7 +208,7 @@ public class DocumentHelper {
 
         Document existingVersion = null;
         try {
-            existingVersion = document.getIdentityMap().getFactory().getLanguageVersion(document,
+            existingVersion = document.getIdentityMap().getLanguageVersion(document,
                     existingLanguage);
         } catch (DocumentBuildException e) {
             throw new DocumentException(e);

@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.transaction;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.activity.Initializable;
@@ -26,7 +26,7 @@ import org.apache.avalon.framework.service.Serviceable;
 /**
  * Abstract operation implementation.
  * 
- * @version $Id$
+ * @version $Id: AbstractOperation.java 158088 2005-03-18 16:17:38Z jwkaltz $
  */
 public class AbstractOperation extends AbstractLogEnabled implements Operation, Serviceable,
         Initializable, Disposable {
@@ -47,7 +47,7 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
      * @return a UnitOfWork, the interface to access the objects
      * @throws ServiceException if the unit-of-work component can not be initialized by the component framework
      *
-     * @see org.apache.lenya.cms.usecase.Operation#getUnitOfWork()
+     * @see org.apache.lenya.transaction.Operation#getUnitOfWork()
      */
     public UnitOfWork getUnitOfWork() throws ServiceException {
         if (this.unitOfWork == null) {

@@ -232,7 +232,7 @@ public class WriteDCParametersTask extends PublicationTask {
             String _publisher, String _rights) throws BuildException, DocumentBuildException,
             DocumentException {
 
-        Document doc = getIdentityMap().getFactory()
+        Document doc = getIdentityMap()
                 .get(getPublication(), _area, _documentId, lang);
         DublinCore dc = doc.getDublinCore();
         dc.setValue(DublinCore.ELEMENT_CREATOR, _creator);

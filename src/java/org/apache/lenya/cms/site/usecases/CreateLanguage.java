@@ -26,7 +26,7 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
@@ -72,9 +72,9 @@ public class CreateLanguage extends Create {
         Document source = getSourceDocument();
         List nonExistingLanguages = new ArrayList();
         String[] languages = source.getPublication().getLanguages();
-        DocumentFactory factory = source.getIdentityMap().getFactory();
+        DocumentIdentityMap map = source.getIdentityMap();
         for (int i = 0; i < languages.length; i++) {
-            Document version = factory.get(source.getPublication(), source.getArea(), source
+            Document version = map.get(source.getPublication(), source.getArea(), source
                     .getId(), languages[i]);
             if (!version.exists()) {
                 nonExistingLanguages.add(languages[i]);
@@ -129,17 +129,17 @@ public class CreateLanguage extends Create {
         }
 
         Publication publication = source.getPublication();
+        DocumentIdentityMap map = source.getIdentityMap();
         String area = source.getArea();
-        DocumentFactory factory = source.getIdentityMap().getFactory();
-        Document document = factory.get(publication, area, source.getId(), language);
+        Document document = map.get(publication, area, source.getId(), language);
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);
 
         String parentId = "";
-        Document parent = factory.getParent(document);
+        Document parent = map.getParent(document);
         if (parent != null) {
-            parentId = factory.getParent(document).getId().substring(1);
+            parentId = map.getParent(document).getId().substring(1);
         }
 
         String childId = document.getName();

@@ -103,9 +103,4 @@ public interface Collection extends Document {
      */
     int size() throws DocumentException;
     
-    /**
-     * Saves the XML source of this collection.
-     * @throws DocumentException when something went wrong.
-     */
-    void save() throws DocumentException;
 }

@@ -32,7 +32,7 @@
       <jx:forEach var="language" items="${document.getPublication().getLanguages()}">
         
         <jx:set var="languageVersion"
-                value="${document.getIdentityMap().getFactory().getLanguageVersion(document, language)}"/>
+                value="${document.getIdentityMap().getLanguageVersion(document, language)}"/>
         <jx:set var="languageUrl"
                 value="${request.contextPath + publicationId + '/info-' + area + languageVersion.getCanonicalDocumentURL()}"/>
         

@@ -78,7 +78,7 @@ public abstract class PublicationTask extends AbstractTask {
      */
     protected DocumentIdentityMap getIdentityMap() throws ExecutionException {
         if (this.map == null) {
-            this.map = new DocumentIdentityMap(getServiceManager());
+            this.map = new DocumentIdentityMap(getServiceManager(), new ConsoleLogger());
         }
         return this.map;
     }

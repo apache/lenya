@@ -84,7 +84,7 @@ public abstract class PublicationTask extends LenyaTask {
      */
     protected DocumentIdentityMap getIdentityMap() {
         if (this.identityMap == null) {
-            this.identityMap = new DocumentIdentityMap(getServiceManager());
+            this.identityMap = new DocumentIdentityMap(getServiceManager(), new ConsoleLogger());
         }
         return this.identityMap;
     }

@@ -47,7 +47,7 @@ public class Delete extends DocumentUsecase {
         }
 
         Document document = getSourceDocument();
-        DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
+        DocumentIdentityMap identityMap = getDocumentIdentityMap();
 
         ServiceSelector selector = null;
         SiteManager siteManager = null;
@@ -69,7 +69,7 @@ public class Delete extends DocumentUsecase {
         set.add(document);
         Document[] documents = set.getDocuments();
         for (int i = 0; i < documents.length; i++) {
-            Document liveVersion = identityMap.getFactory().getAreaVersion(documents[i],
+            Document liveVersion = identityMap.getAreaVersion(documents[i],
                     Publication.LIVE_AREA);
             if (liveVersion.exists()) {
                 addErrorMessage("Cannot delete because document [" + liveVersion + "] is live!");
@@ -90,7 +90,7 @@ public class Delete extends DocumentUsecase {
         Document target;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            target = identityMap.getFactory().getAreaVersion(source, Publication.TRASH_AREA);
+            target = identityMap.getAreaVersion(source, Publication.TRASH_AREA);
             target = documentManager.getAvailableDocument(target);
             documentManager.moveAll(source, target);
         } finally {

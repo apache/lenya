@@ -102,13 +102,13 @@ public class SetIdentifier extends PublicationTask {
         try {
             if (labels.length < 1) {
                 log("no languages found for the node with id : " + node.getId());
-                writeDCIdentifier(getIdentityMap().getFactory().get(getPublication(),
+                writeDCIdentifier(getIdentityMap().get(getPublication(),
                         this.area,
                         this.documentid));
             } else {
                 for (int i = 0; i < labels.length; i++) {
                     language = labels[i].getLanguage();
-                    writeDCIdentifier(getIdentityMap().getFactory().get(getPublication(),
+                    writeDCIdentifier(getIdentityMap().get(getPublication(),
                             this.area,
                             this.documentid,
                             language));

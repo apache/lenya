@@ -188,8 +188,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copyToArea(Document sourceDocument, String destinationArea)
             throws PublicationException {
-        DocumentFactory factory = sourceDocument.getIdentityMap().getFactory();
-        Document destinationDocument = factory.getAreaVersion(sourceDocument, destinationArea);
+        Document destinationDocument = sourceDocument.getIdentityMap()
+                .getAreaVersion(sourceDocument, destinationArea);
         copy(sourceDocument, destinationDocument);
     }
 
@@ -251,8 +251,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             errorMessages.add("The document ID is required.");
         } else if (nodeId.indexOf("/") > -1) {
             errorMessages.add("The document ID may not contain a slash ('/').");
-        } else if (identityMap.getFactory().isValidDocumentId(newDocumentId)) {
-            Document newDocument = identityMap.getFactory().get(parent.getPublication(),
+        } else if (identityMap.isValidDocumentId(newDocumentId)) {
+            Document newDocument = identityMap.get(parent.getPublication(),
                     area,
                     newDocumentId,
                     language);
@@ -272,8 +272,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public Document getAvailableDocument(Document document) throws DocumentBuildException {
         String availableDocumentId = computeUniqueDocumentId(document);
-        DocumentFactory factory = document.getIdentityMap().getFactory();
-        Document availableDocument = factory.get(document.getPublication(),
+        Document availableDocument = document.getIdentityMap().get(document.getPublication(),
                 document.getArea(),
                 availableDocumentId,
                 document.getLanguage());
@@ -287,7 +286,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     protected String computeUniqueDocumentId(Document document) {
         String documentId = document.getId();
-        
+
         SiteManager siteManager = null;
         ServiceSelector selector = null;
         try {
@@ -406,9 +405,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         String[] languages = source.getLanguages();
         for (int i = 0; i < languages.length; i++) {
 
-            Document sourceVersion = identityMap.getFactory().getLanguageVersion(source,
-                    languages[i]);
-            Document targetVersion = identityMap.getFactory().get(target.getPublication(),
+            Document sourceVersion = identityMap.getLanguageVersion(source, languages[i]);
+            Document targetVersion = identityMap.get(target.getPublication(),
                     target.getArea(),
                     target.getId(),
                     languages[i]);
@@ -518,8 +516,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String rootTargetId = getRootTarget().getId();
             String childId = source.getId().substring(rootSourceId.length());
             String targetId = rootTargetId + childId;
-            DocumentFactory factory = getRootTarget().getIdentityMap().getFactory();
-            return factory.get(getRootTarget().getPublication(),
+            return getRootTarget().getIdentityMap().get(getRootTarget().getPublication(),
                     getRootTarget().getArea(),
                     targetId,
                     source.getLanguage());
@@ -586,7 +583,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         DocumentIdentityMap identityMap = document.getIdentityMap();
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            Document version = identityMap.getFactory().getLanguageVersion(document, languages[i]);
+            Document version = identityMap.getLanguageVersion(document, languages[i]);
             delete(version);
         }
     }

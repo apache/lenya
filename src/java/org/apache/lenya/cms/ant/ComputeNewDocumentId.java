@@ -122,7 +122,7 @@ public class ComputeNewDocumentId extends PublicationTask {
         DocumentManager docManager = null;
         try {
             docManager = (DocumentManager) getServiceManager().lookup(DocumentManager.ROLE);
-            Document document = getIdentityMap().getFactory().get(getPublication(), _area, documentid);
+            Document document = getIdentityMap().get(getPublication(), _area, documentid);
             document = docManager.getAvailableDocument(document);
             return document.getId();
         } catch (Exception e) {

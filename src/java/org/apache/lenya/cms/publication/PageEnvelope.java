@@ -207,9 +207,8 @@ public class PageEnvelope {
                         .getPublication(this.webappUrl, this.servletContext);
                 if (pub.exists()) {
                     this.publication = pub;
-                    if (getIdentityMap().getFactory().isDocument(publication, this.webappUrl)) {
-                        Document _document = getIdentityMap().getFactory().getFromURL(publication,
-                                this.webappUrl);
+                    if (getIdentityMap().isDocument(this.webappUrl)) {
+                        Document _document = getIdentityMap().getFromURL(this.webappUrl);
                         setDocument(_document);
                     }
                 }
@@ -273,11 +272,9 @@ public class PageEnvelope {
      */
     public Document getDocument() {
         if (this.document == null) {
-            DocumentFactory factory = getIdentityMap().getFactory();
             try {
-                if (factory.isDocument(getPublication(), this.webappUrl)) {
-                    this.document = getIdentityMap().getFactory().getFromURL(getPublication(),
-                            this.webappUrl);
+                if (getIdentityMap().isDocument(this.webappUrl)) {
+                    this.document = getIdentityMap().getFromURL(this.webappUrl);
                 }
             } catch (final DocumentBuildException e) {
                 throw new RuntimeException(e);

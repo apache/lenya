@@ -27,6 +27,7 @@ import java.util.List;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -96,9 +97,9 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             }
 
             Publication publication = document.getPublication();
-            DocumentFactory factory = document.getIdentityMap().getFactory();
+            DocumentIdentityMap map = document.getIdentityMap();
 
-            Document liveDocument = factory.getAreaVersion(document, Publication.LIVE_AREA);
+            Document liveDocument = map.getAreaVersion(document, Publication.LIVE_AREA);
 
             List missingDocuments = new ArrayList();
 
@@ -110,7 +111,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 Document[] requiredDocuments = siteManager.getRequiredResources(liveDocument);
                 for (int i = 0; i < requiredDocuments.length; i++) {
                     if (!siteManager.containsInAnyLanguage(requiredDocuments[i])) {
-                        Document authoringVersion = factory.getAreaVersion(requiredDocuments[i],
+                        Document authoringVersion = map.getAreaVersion(requiredDocuments[i],
                                 Publication.AUTHORING_AREA);
                         missingDocuments.add(authoringVersion);
                     }
@@ -276,13 +277,13 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected void publishAllLanguageVersions(Document document) throws PublicationException,
             WorkflowException {
         String[] languages = document.getPublication().getLanguages();
-        DocumentFactory factory = document.getIdentityMap().getFactory();
 
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             for (int i = 0; i < languages.length; i++) {
-                Document version = factory.getLanguageVersion(document, languages[i]);
+                Document version = document.getIdentityMap().getLanguageVersion(document,
+                        languages[i]);
                 if (version.exists()) {
                     if (wfManager.canInvoke(version, getEvent())) {
                         publish(version);

@@ -40,7 +40,7 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
-import org.apache.lenya.cms.usecase.AbstractOperation;
+import org.apache.lenya.transaction.AbstractOperation;
 
 /**
  * Source factory following the fallback principle.

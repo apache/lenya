@@ -83,7 +83,7 @@ public class EmptyTrash extends AbstractUsecase {
     protected Document[] getTrashDocuments() throws PublicationException, SiteException {
         PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         Publication publication = factory.getPublication(this.manager, getSourceURL());
-        DocumentIdentityMap identityMap = new DocumentIdentityMap(this.manager);
+        DocumentIdentityMap identityMap = getDocumentIdentityMap();
         Document[] documents;
         
         ServiceSelector selector = null;

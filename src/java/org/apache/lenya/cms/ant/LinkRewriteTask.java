@@ -41,13 +41,11 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
- * This task is used to rewrite internal links after a cut'n'paste operation,
- * i.e. after a document has changed its document-id. It finds all relevant
- * documents which have a link to the document that changed its document-id and
- * changes this link with the help of an xslt.
+ * This task is used to rewrite internal links after a cut'n'paste operation, i.e. after a document
+ * has changed its document-id. It finds all relevant documents which have a link to the document
+ * that changed its document-id and changes this link with the help of an xslt.
  * 
- * @deprecated Use o.a.l.cms.site.usecases.LinkRewriter instead (see bug
- *             #29861).
+ * @deprecated Use o.a.l.cms.site.usecases.LinkRewriter instead (see bug #29861).
  */
 public class LinkRewriteTask extends PublicationTask {
 
@@ -222,8 +220,8 @@ public class LinkRewriteTask extends PublicationTask {
     }
 
     /**
-     * Rewrites links by traversing a directory tree and applying a rewrite
-     * transformation to XML files in the directory.
+     * Rewrites links by traversing a directory tree and applying a rewrite transformation to XML
+     * files in the directory.
      * @param rootDirName The root directory for the rewrite
      * @param _stylesheet The stylesheet to use for rewriting
      * @param _area The area to use for rewriting
@@ -273,10 +271,7 @@ public class LinkRewriteTask extends PublicationTask {
     protected String getUrl(String _area, String documentId, String language) {
         org.apache.lenya.cms.publication.Document newDocument;
         try {
-            newDocument = getIdentityMap().getFactory().get(getPublication(),
-                    _area,
-                    documentId,
-                    language);
+            newDocument = getIdentityMap().get(getPublication(), _area, documentId, language);
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }

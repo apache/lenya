@@ -48,13 +48,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * This transformer lists the children of a document if the tag
- * <namespaceURI:children>is present in this document. The list of the children
- * is in the form :<namespaceURI:children><child href="....html> <ci:include
- * src="..." element="included"/> </child> ... </namespaceURI:children> Multiple
- * language : if a child doesn't exist in the parent language, then the version
- * in the default language will be considered. If it doesn't exist too, any
- * other existent language will be considered.
+ * This transformer lists the children of a document if the tag <namespaceURI:children>is present in
+ * this document. The list of the children is in the form :<namespaceURI:children><child
+ * href="....html> <ci:include src="..." element="included"/> </child> ... </namespaceURI:children>
+ * Multiple language : if a child doesn't exist in the parent language, then the version in the
+ * default language will be considered. If it doesn't exist too, any other existent language will be
+ * considered.
  */
 public class DocumentIndexTransformer extends AbstractSAXTransformer implements Parameterizable {
 
@@ -94,8 +93,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
-     *      java.util.Map, java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
+     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters _parameters)
             throws ProcessingException, SAXException, IOException {
@@ -110,13 +108,13 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             PageEnvelope envelope = null;
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
             this.publication = factory.getPublication(_objectModel);
-            this.identityMap = new DocumentIdentityMap(this.manager);
+            this.identityMap = new DocumentIdentityMap(this.manager, getLogger());
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
                     _objectModel);
 
             setDocument(envelope.getDocument());
             setArea(this.document.getArea());
-            
+
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (TreeSiteManager) selector.select(this.publication.getSiteManagerHint());
 
@@ -130,8 +128,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     }
 
     /**
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
-     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
+     *      java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String localName, String raw, Attributes attr)
             throws SAXException {
@@ -163,10 +161,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     // document
                     Document doc;
                     try {
-                        doc = this.identityMap.getFactory().get(this.publication,
-                                this.area,
-                                childId,
-                                language);
+                        doc = this.identityMap.get(this.publication, this.area, childId, language);
                     } catch (DocumentBuildException e) {
                         throw new SAXException(e);
                     }
@@ -206,7 +201,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                         while (!doc.exists() && j < languages.size()) {
                             String newlanguage = (String) languages.get(j);
                             try {
-                                doc = this.identityMap.getFactory().get(this.publication,
+                                doc = this.identityMap.get(this.publication,
                                         this.area,
                                         childId,
                                         newlanguage);

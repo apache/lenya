@@ -14,9 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
-
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+package org.apache.lenya.transaction;
 
 /**
  * This is a "Unit of Work" object (see "Unit of Work" pattern by Martin Fowler, 
@@ -28,7 +26,7 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
  *
  * <p>This interface may be extended in the future to allow for access to further types of business objects.</p>
  * 
- * @version $Id$
+ * @version $Id: UnitOfWork.java 157924 2005-03-17 09:27:53Z jwkaltz $
  */
 public interface UnitOfWork {
 
@@ -38,9 +36,15 @@ public interface UnitOfWork {
     String ROLE = UnitOfWork.class.getName();
 
     /**
-     * Returns the document identity map.
-     * @return An identity map.
+     * Returns the identity maps.
+     * @return An array of identity maps.
      */
-    DocumentIdentityMap getIdentityMap();
+    IdentityMap[] getIdentityMaps();
+    
+    /**
+     * Adds an identity map.
+     * @param map The map to add.
+     */
+    void addIdentityMap(IdentityMap map);
 
 }

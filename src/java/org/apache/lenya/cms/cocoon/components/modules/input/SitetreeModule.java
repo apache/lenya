@@ -77,7 +77,7 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             _manager = (TreeSiteManager) selector.select(publication.getSiteManagerHint());
             
-            DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
+            DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
 
             if (name.equals(AUTHORING_NODE)) {
                 SiteTree authoringTree = _manager.getTree(map,

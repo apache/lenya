@@ -29,9 +29,8 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task, to init the rc files of the destination's documents corresponding
- * to a given source subtree. Evry destination file is checked in. (Visitor
- * pattern)
+ * Ant task, to init the rc files of the destination's documents corresponding to a given source
+ * subtree. Evry destination file is checked in. (Visitor pattern)
  */
 public class InitRCTask extends TwoDocumentsOperationTask {
     private String rcmlDir = "";
@@ -89,7 +88,7 @@ public class InitRCTask extends TwoDocumentsOperationTask {
             for (int i = 0; i < labels.length; i++) {
                 String language = labels[i].getLanguage();
                 Document destDoc;
-                destDoc = getIdentityMap().getFactory().get(getPublication(),
+                destDoc = getIdentityMap().get(getPublication(),
                         getSecarea(),
                         destDocumentid,
                         language);

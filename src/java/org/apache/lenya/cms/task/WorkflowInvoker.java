@@ -19,6 +19,7 @@ package org.apache.lenya.cms.task;
 
 import java.util.Map;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
@@ -192,8 +193,8 @@ public class WorkflowInvoker extends ParameterWrapper {
             log.debug("Workflow event: [" + eventName + "]");
             // check for workflow instance first (task can initialize the workflow history)
             try {
-                DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
-                this.document = map.getFactory().getFromURL(publication, webappUrl);
+                DocumentIdentityMap map = new DocumentIdentityMap(this.manager, new ConsoleLogger());
+                this.document = map.getFromURL(webappUrl);
             } catch (DocumentBuildException e) {
                 throw new ExecutionException(e);
             }

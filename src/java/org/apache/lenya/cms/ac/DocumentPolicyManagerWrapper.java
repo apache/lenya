@@ -58,7 +58,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * Ctor.
      */
     public DocumentPolicyManagerWrapper() {
-	    // do nothing
+        // do nothing
     }
 
     private InheritingPolicyManager policyManager;
@@ -79,9 +79,9 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         Publication publication = getPublication(webappUrl);
         String url = null;
         try {
-            DocumentIdentityMap map = new DocumentIdentityMap(getServiceManager());
-            if (map.getFactory().isDocument(publication, webappUrl)) {
-                Document document = map.getFactory().getFromURL(publication, webappUrl);
+            DocumentIdentityMap map = new DocumentIdentityMap(getServiceManager(), getLogger());
+            if (map.isDocument(webappUrl)) {
+                Document document = map.getFromURL(webappUrl);
                 if (document.existsInAnyLanguage()) {
                     url = "/" + document.getArea() + document.getId();
                     if (getLogger().isDebugEnabled()) {
@@ -242,13 +242,12 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
-        Configuration policyManagerConfiguration = configuration.getChild(
-                this.ELEMENT_POLICY_MANAGER, false);
+        Configuration policyManagerConfiguration = configuration
+                .getChild(this.ELEMENT_POLICY_MANAGER, false);
         if (policyManagerConfiguration != null) {
             String type = null;
             try {
-                type = policyManagerConfiguration
-                        .getAttribute(this.ATTRIBUTE_TYPE);
+                type = policyManagerConfiguration.getAttribute(this.ATTRIBUTE_TYPE);
 
                 this.policyManagerSelector = (ServiceSelector) getServiceManager()
                         .lookup(PolicyManager.ROLE + "Selector");
@@ -257,8 +256,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
                         .select(type);
 
                 if (!(_policyManager instanceof InheritingPolicyManager)) {
-                    throw new AccessControlException("The "
-                            + getClass().getName()
+                    throw new AccessControlException("The " + getClass().getName()
                             + " can only be used with an "
                             + InheritingPolicyManager.class.getName() + ".");
                 }
@@ -267,21 +265,17 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
                         policyManagerConfiguration);
                 setPolicyManager((InheritingPolicyManager) _policyManager);
             } catch (final ConfigurationException e1) {
-                throw new ConfigurationException(
-                        "Obtaining policy manager for type [" + type
-                                + "] failed: ", e1);
+                throw new ConfigurationException("Obtaining policy manager for type [" + type
+                        + "] failed: ", e1);
             } catch (final ServiceException e1) {
-                throw new ConfigurationException(
-                        "Obtaining policy manager for type [" + type
-                                + "] failed: ", e1);
+                throw new ConfigurationException("Obtaining policy manager for type [" + type
+                        + "] failed: ", e1);
             } catch (final ParameterException e1) {
-                throw new ConfigurationException(
-                        "Obtaining policy manager for type [" + type
-                                + "] failed: ", e1);
+                throw new ConfigurationException("Obtaining policy manager for type [" + type
+                        + "] failed: ", e1);
             } catch (final AccessControlException e1) {
-                throw new ConfigurationException(
-                        "Obtaining policy manager for type [" + type
-                                + "] failed: ", e1);
+                throw new ConfigurationException("Obtaining policy manager for type [" + type
+                        + "] failed: ", e1);
             }
         }
     }

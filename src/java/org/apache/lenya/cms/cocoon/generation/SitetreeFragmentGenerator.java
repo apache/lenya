@@ -149,7 +149,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         }
 
         try {
-            this.identityMap = new DocumentIdentityMap(this.manager);
+            this.identityMap = new DocumentIdentityMap(this.manager, getLogger());
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
                     _objectModel);
         } catch (final PageEnvelopeException e) {

@@ -36,7 +36,6 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
@@ -91,8 +90,6 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
             }
         }
 
-        DocumentFactory docFactory = identityMap.getFactory();
-
         DocumentTypeResolver doctypeResolver = null;
         SourceResolver sourceResolver = null;
 
@@ -140,9 +137,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                 if (url.startsWith(contextPath + "/" + publication.getId())) {
                                     final String webappUrl = url.substring(contextPath.length());
 
-                                    if (docFactory.isDocument(publication, webappUrl)) {
-                                        Document targetDocument = docFactory
-                                                .getFromURL(publication, webappUrl);
+                                    if (identityMap.isDocument(webappUrl)) {
+                                        Document targetDocument = identityMap.getFromURL(webappUrl);
 
                                         if (matches(targetDocument, originalTargetDocument)) {
                                             String newTargetUrl = getNewTargetURL(targetDocument,

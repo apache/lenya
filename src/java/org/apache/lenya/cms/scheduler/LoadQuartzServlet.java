@@ -181,8 +181,8 @@ public class LoadQuartzServlet extends HttpServlet {
     }
 
     /**
-     * This method sets a ShutdownHook to the system This traps the CTRL+C or
-     * kill signal and shutdows Correctly the system.
+     * This method sets a ShutdownHook to the system This traps the CTRL+C or kill signal and
+     * shutdows Correctly the system.
      * 
      * @throws Exception when something went wrong.
      */
@@ -268,15 +268,9 @@ public class LoadQuartzServlet extends HttpServlet {
                 String jobId = getJobId(schedulerParameters);
                 getScheduler().deleteJob(jobId, publicationId);
             } else if (action.equals(DOCUMENT_DELETED)) {
-
-                PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-                Publication publication = factory.getPublication(publicationId,
-                        getServletContextDirectory().getAbsolutePath());
-
                 String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
-                DocumentIdentityMap map = new DocumentIdentityMap(null);
-                org.apache.lenya.cms.publication.Document document = map.getFactory()
-                        .getFromURL(publication, documentUrl);
+                DocumentIdentityMap map = new DocumentIdentityMap(null, null);
+                org.apache.lenya.cms.publication.Document document = map.getFromURL(documentUrl);
                 deleteDocumentJobs(document);
             }
 
@@ -430,8 +424,7 @@ public class LoadQuartzServlet extends HttpServlet {
     }
 
     /**
-     * Generates the request URI needed to delete the jobs for a certain
-     * document.
+     * Generates the request URI needed to delete the jobs for a certain document.
      * @param port The port of the servlet
      * @param servletContextPath The context path of the servlet
      * @param document The document.

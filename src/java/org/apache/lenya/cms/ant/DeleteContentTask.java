@@ -31,9 +31,8 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to delete the contents (xml files) of documents corresponding to a
- * defined subtree Visitor of the defined subtree (visitor pattern). The subtree
- * is reverse visited.
+ * Ant task to delete the contents (xml files) of documents corresponding to a defined subtree
+ * Visitor of the defined subtree (visitor pattern). The subtree is reverse visited.
  */
 public class DeleteContentTask extends TwoDocumentsOperationTask {
 
@@ -58,7 +57,7 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
             String language = labels[i].getLanguage();
             Document doc;
             try {
-                doc = getIdentityMap().getFactory().get(getPublication(),
+                doc = getIdentityMap().get(getPublication(),
                         getFirstarea(),
                         srcDocumentid,
                         language);

@@ -25,8 +25,8 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
- * Clipboard for cut/copy/paste of documents. The clipping method is either
- * {@link #METHOD_CUT}or {@link #METHOD_COPY}.
+ * Clipboard for cut/copy/paste of documents. The clipping method is either {@link #METHOD_CUT}or
+ * {@link #METHOD_COPY}.
  * 
  * @version $Id:$
  */
@@ -67,15 +67,11 @@ public class Clipboard {
         PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
         Publication publication;
         try {
-            publication = factory.getPublication(this.publicationId,
-                    this.servletContextPath);
+            publication = factory.getPublication(this.publicationId, this.servletContextPath);
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
-        Document document = identityMap.getFactory().get(publication,
-                this.area,
-                this.documentId,
-                this.language);
+        Document document = identityMap.get(publication, this.area, this.documentId, this.language);
         return document;
     }
 

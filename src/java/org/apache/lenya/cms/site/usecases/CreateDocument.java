@@ -66,7 +66,7 @@ public class CreateDocument extends Create {
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            String[] messages = documentManager.canCreate(getUnitOfWork().getIdentityMap(),
+            String[] messages = documentManager.canCreate(getDocumentIdentityMap(),
                     getArea(),
                     parent,
                     nodeId,
@@ -101,7 +101,7 @@ public class CreateDocument extends Create {
 
         Publication publication = parent.getPublication();
         String area = parent.getArea();
-        Document document = parent.getIdentityMap().getFactory().get(getPublication(),
+        Document document = parent.getIdentityMap().get(getPublication(),
                 area,
                 documentId,
                 language);

@@ -20,7 +20,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -59,8 +58,7 @@ public class ChangeNodeID extends DocumentUsecase {
         if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         } else {
-            DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
-            Document liveVersion = factory.getAreaVersion(getSourceDocument(),
+            Document liveVersion = getDocumentIdentityMap().getAreaVersion(getSourceDocument(),
                     Publication.LIVE_AREA);
             if (liveVersion.exists()) {
                 addErrorMessage("This usecase cannot be invoked when the live version exists!");
@@ -77,7 +75,7 @@ public class ChangeNodeID extends DocumentUsecase {
         DocumentIdentityMap identityMap = getSourceDocument().getIdentityMap();
 
         String nodeId = getParameterAsString(NODE_ID);
-        Document parent = identityMap.getFactory().getParent(getSourceDocument());
+        Document parent = identityMap.getParent(getSourceDocument());
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
@@ -135,15 +133,11 @@ public class ChangeNodeID extends DocumentUsecase {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             for (int i = 0; i < availableLanguages.length; i++) {
-                Document languageVersion = identityMap.getFactory().get(document.getPublication(),
-                        document.getArea(),
-                        document.getId(),
-                        availableLanguages[i]);
+                Document languageVersion = identityMap.get(document.getPublication(), document
+                        .getArea(), document.getId(), availableLanguages[i]);
 
-                Document newLanguageVersion = identityMap.getFactory().get(document.getPublication(),
-                        document.getArea(),
-                        newDocumentId,
-                        availableLanguages[i]);
+                Document newLanguageVersion = identityMap.get(document.getPublication(), document
+                        .getArea(), newDocumentId, availableLanguages[i]);
 
                 documentManager.move(languageVersion, newLanguageVersion);
 
@@ -156,7 +150,7 @@ public class ChangeNodeID extends DocumentUsecase {
                 this.manager.release(documentManager);
             }
         }
-        
+
         return newDocument;
     }
 

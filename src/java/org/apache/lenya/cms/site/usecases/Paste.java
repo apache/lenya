@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -55,9 +54,7 @@ public class Paste extends DocumentUsecase {
         if (clipboard != null) {
             String id;
             try {
-                id = clipboard.getDocument(getUnitOfWork().getIdentityMap()).getId();
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
+                id = clipboard.getDocument(getDocumentIdentityMap()).getId();
             } catch (DocumentBuildException e) {
                 throw new RuntimeException(e);
             }
@@ -71,7 +68,7 @@ public class Paste extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
+        DocumentIdentityMap identityMap = getDocumentIdentityMap();
         String targetArea = getSourceDocument().getArea();
 
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
@@ -81,8 +78,7 @@ public class Paste extends DocumentUsecase {
         String nodeId = clippedDocument.getName();
         String potentialDocumentId = getSourceDocument().getId() + "/" + nodeId;
 
-        Document potentialDocument = identityMap.getFactory().get(getSourceDocument()
-                .getPublication(),
+        Document potentialDocument = identityMap.get(getSourceDocument().getPublication(),
                 targetArea,
                 potentialDocumentId,
                 language);

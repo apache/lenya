@@ -14,18 +14,20 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.transaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
 
 /**
  * Default implementation of a unit of work.
  * 
- * @version $Id$
+ * @version $Id: UnitOfWorkImpl.java 159567 2005-03-31 07:27:09Z andreas $
  */
 public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Serviceable {
 
@@ -36,17 +38,13 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Se
         // do nothing
     }
 
-    private DocumentIdentityMap identityMap;
+    private List identityMaps = new ArrayList();
 
     /**
-     * Returns the document identity map.
-     * @return A document identity map.
+     * @see org.apache.lenya.transaction.UnitOfWork#getIdentityMaps()
      */
-    public DocumentIdentityMap getIdentityMap() {
-        if (this.identityMap == null) {
-            this.identityMap = new DocumentIdentityMap(this.manager);
-        }
-        return this.identityMap;
+    public IdentityMap[] getIdentityMaps() {
+        return (IdentityMap[]) this.identityMaps.toArray(new IdentityMap[this.identityMaps.size()]);
     }
 
     protected ServiceManager manager;
@@ -56,6 +54,13 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Se
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.UnitOfWork#addIdentityMap(org.apache.lenya.transaction.IdentityMap)
+     */
+    public void addIdentityMap(IdentityMap map) {
+        this.identityMaps.add(map);
     }
 
 }

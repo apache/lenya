@@ -67,7 +67,7 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
         String servletContextPath = context.getRealPath("");
 
         try {
-            DocumentIdentityMap map = getUnitOfWork().getIdentityMap();
+            DocumentIdentityMap map = getDocumentIdentityMap();
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
                     contextPath,
                     webappUrl,
@@ -78,7 +78,7 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
 
         return envelope;
     }
-    
+
     /**
      * @param name The original attribute name.
      * @return The attribute name without URL attachment.

@@ -114,7 +114,7 @@ public class UploadAction extends ServiceableAction {
 
         Map results = new HashMap();
         Request request = ObjectModelHelper.getRequest(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
+        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
         this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         this.document = this.pageEnvelope.getDocument();
 
