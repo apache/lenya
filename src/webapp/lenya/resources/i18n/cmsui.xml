@@ -17,7 +17,7 @@
 
 <!-- $Id$ -->
 
-<catalogue xml:lang="en">
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- common used words -->
   <message key="Save">Save</message>
@@ -27,7 +27,7 @@
   <message key="NOTE">NOTE</message>
   <message key="No referer">No referer</message>
   <message key="Referer">Referer</message>
-  <message key="EXCEPTION">EXCEPTION</message>  
+  <message key="EXCEPTION">EXCEPTION</message>
   <message key="User">User</message>
   <message key="live">live</message>
   <message key="not">not</message>
@@ -86,11 +86,11 @@
   <message key="All rights reserved">All rights reserved.</message>
 
   <!-- submit screen -->
-  <message key="submit-for-approval">Submit {0} for approval</message>  
+  <message key="submit-for-approval">Submit {0} for approval</message>
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
 
-  <!-- publish screen -->     
-  <message key="Publish">Publish</message>  
+  <!-- publish screen -->
+  <message key="Publish">Publish</message>
   <message key="Source File(s)">Source File(s)</message>
 
   <!-- login screen -->
@@ -109,17 +109,17 @@
   <!-- reject screen -->
   <message key="Reject">Reject</message>
   <message key="reject-doc?">Do you want to reject the document {0}?</message>
-  
+
   <!-- cms menu -->
   <message key="New Document">New Document</message>
   <message key="New Language Version">New Language Version</message>
   <message key="Remove Language Version">Remove Language Version</message>
-  <message key="File">File</message>  
+  <message key="File">File</message>
   <message key="Edit">Edit</message>
   <message key="Workflow">Workflow</message>
   <message key="Deactivate">Deactivate</message>
   <message key="Schedule">Schedule</message>
-  <message key="Copy">Copy</message>  
+  <message key="Copy">Copy</message>
   <message key="Paste">Paste</message>
   <message key="Cut">Cut</message>
   <message key="Help">Help</message>
@@ -136,16 +136,20 @@
   <message key="User Documentation">User Documentation</message>
   <message key="About Apache Lenya">About Apache Lenya</message>
   <message key="Apache Lenya Homepage">Apache Lenya Homepage</message>
-  <message key="Edit with Kupu">Edit with Kupu</message>
-  <message key="Edit with BXE">Edit with BXE</message>
-  <message key="Edit with one Form">Edit with one Form</message>
-  <message key="Edit with Forms">Edit with Forms</message>
+  <message key="Edit with Kupu">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(Kupu)
+  </message>
+  <message key="Edit with BXE">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(BXE)
+  </message>
+  <message key="Edit with one Form">Source&#160;Editor</message>
+  <message key="Edit with Forms">Forms&#160;Editor</message>
   <message key="Edit Metadata">Edit&#160;Metadata</message>
   <message key="Edit Navigation Title">Edit&#160;Navigation&#160;Title</message>
   <message key="Rename URL">Rename&#160;URL</message>
-  
+
   <!-- cms tabs -->
-  <message key="Server Time">Server Time</message>  
+  <message key="Server Time">Server Time</message>
   <message key="Workflow State">Workflow State</message>
 
   <!-- Administration tab -->
@@ -158,7 +162,7 @@
   <message key="Switch User">Switch User</message>
   <message key="Delete Trash">Delete Trash</message>
   <message key="Cocoon and Server Status">Cocoon and Server Status</message>
-  
+
     <!-- Group Administration -->
   <message key="Profile">Profile</message>
   <message key="Members">Members</message>
@@ -187,7 +191,7 @@
     <!-- User Types -->
   <message key="LDAP User">LDAP User</message>
   <message key="Local User">CMS User</message>
-  
+
     <!-- IP Range Administration -->
   <message key="IP Range">IP&#160;Range</message>
   <message key="IP Range ID">IP&#160;Range&#160;ID</message>
@@ -196,7 +200,7 @@
   <message key="IP Range Administration">IP&#160;Range&#160;Administration</message>
   <message key="Add IP Range">Add&#160;IP&#160;Range</message>
   <message key="IP Range Profile">IP&#160;Range&#160;Profile</message>
- 
+
   <!-- Site tab (info screens) -->
   <message key="Available Languages">Available Languages</message>
   <message key="This document is not available in this language.">This document is not available in this language.</message>
@@ -230,7 +234,7 @@
   <message key="Delete Document">Delete Document</message>
   <message key="delete-doc">Delete document {0}</message>
   <message key="cannot-deactivate-unless-children-deactivated">This document cannot be deactivated unless the following child documents are deactivated</message>
-  <message key="delete-language-versions?">Do you really want to delete all language versions of the document {0}?</message>      
+  <message key="delete-language-versions?">Do you really want to delete all language versions of the document {0}?</message>
       <!-- Archive document -->
   <message key="Archive Document">Archive Document</message>
   <message key="archive-doc">Archive document {0}</message>
@@ -264,26 +268,26 @@
   <message key="Insert a new Image">Insert a new Image</message>
   <message key="Upload an Asset">Upload an Asset</message>
 
-  <!-- Info workflow  --> 
+  <!-- Info workflow  -->
   <message key="Value">Value</message>
   <message key="Event">Event</message>
   <message key="Variables">Variables</message>
   <message key="History">History</message>
-  <message key="State">State</message>   
-  <message key="IP Address">IP Address</message>   
+  <message key="State">State</message>
+  <message key="IP Address">IP Address</message>
   <message key="edit">edit</message>
   <message key="submit">submit</message>
   <message key="reject">reject</message>
   <message key="publish">publish</message>
 
-  <!-- Info asset  --> 
+  <!-- Info asset  -->
   <message key="New Asset">New Asset</message>
-  
-  <!-- Info RC  --> 
+
+  <!-- Info RC  -->
   <message key="Current Version">Current Version</message>
   <message key="Rollback to this revision">Rollback to this revision</message>
 
-  <!-- Info AC  --> 
+  <!-- Info AC  -->
   <message key="SSL Encryption">SSL&#160;Encryption</message>
   <message key="Access Object">Access&#160;Object</message>
   <message key="visit">visit</message>
@@ -292,17 +296,17 @@
   <message key="admin">admin</message>
   <message key="world">world</message>
   <message key="the world">the world</message>
-  
-  <!-- Scheduler --> 
+
+  <!-- Scheduler -->
   <message key="New job">New&#160;job</message>
   <message key="Active jobs">Active&#160;jobs</message>
   <message key="Publish and Export">Publish and&#160;Export</message>
   <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
 
   <!-- New Document -->
-  <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>   
+  <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>
   <message key="exception.cause.createdoc.whitespace-in-id">The id is not allowed to have whitespaces</message>
-  <message key="exception.cause.createdoc.id-in-use">The id is already in use</message>   
+  <message key="exception.cause.createdoc.id-in-use">The id is already in use</message>
   <message key="failmessage.createdoc.invalidformat">Please enter a valid value in the ID field. A-Z, a-z, 0-9 or - are vaild characters.</message>
   <message key="failmessage.createdoc.required">Please input all required (*)  values.</message>
 
@@ -311,12 +315,12 @@
   <message key="Asset Library">Asset Library</message>
   <message key="No assets available">No assets available</message>
   <message key="Insert Asset">Insert Asset</message>
-  
+
   <!-- Image Upload/Insert Dialog -->
   <message key="lenya.imageupload.title">Insert Image</message>
   <message key="lenya.imageupload.selectimage.label">Select Image</message>
-  <message key="lenya.imageupload.info.noimages">No images available.</message>  
-  <message key="lenya.imageupload.links.hint">External links have to start with 'http://', internal links have to start with '/'</message>  
+  <message key="lenya.imageupload.info.noimages">No images available.</message>
+  <message key="lenya.imageupload.links.hint">External links have to start with 'http://', internal links have to start with '/'</message>
 
   <!-- Revision Controller -->
   <message key="Reason">Reason</message>

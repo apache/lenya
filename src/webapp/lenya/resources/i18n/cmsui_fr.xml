@@ -16,11 +16,11 @@
 -->
 
 <!-- 
-	$Id: cmsui_fr.xml,v 1.5 2004/04/17 18:01:40 roku Exp $ 
+	$Id$ 
 	@translators Olivier Lange <wire at petit-atelier dot ch>
 	-->
 
-<catalogue xml:lang="fr">
+<catalogue xml:lang="fr" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- common used words -->
   <message key="Save">Enregistrer</message>
@@ -136,10 +136,14 @@
   <message key="User Documentation">Documentation utilisateur</message>
   <message key="About Apache Lenya">A propos de Apache Lenya</message>
   <message key="Apache Lenya Homepage">Accueil de Apache Lenya</message>
-  <message key="Edit with Kupu">Editer avec Kupu</message>
-  <message key="Edit with BXE">Editer avec BXE</message>
-  <message key="Edit with one Form">Editer avec un formulaire&#160;simple</message>
-  <message key="Edit with Forms">Editer avec l'assistant Formulaire</message>
+  <message key="Edit with Kupu">Rédacteur&#160;<xhtml:abbr
+    title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;(Kupu)
+  </message>
+  <message key="Edit with BXE">Rédacteur&#160;<xhtml:abbr
+    title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;(BXE)
+  </message>
+  <message key="Edit with one Form">Rédacteur&#160;De&#160;Source</message>
+  <message key="Edit with Forms">Rédacteur&#160;De&#160;Formes</message>
   <message key="Edit Metadata">Editer&#160;les&#160;méta-données</message>
   <message key="Edit Navigation Title">Editer&#160;le&#160;titre&#160;de&#160;navigation</message>
   <message key="Rename URL">Renommer&#160;URL</message>
