@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.59 2004/04/02 13:12:53 roku Exp $ -->
+<!-- $Id: info.xsl,v 1.60 2004/04/02 13:22:32 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -210,8 +210,8 @@
                 </xsl:attribute>
               </input>
               <xsl:choose>
-                <xsl:when test="$area = 'authoring'"><input type="submit" value="Delete"/></xsl:when>
-                <xsl:otherwise><input type="submit" disabled="disabled" value="Delete"/></xsl:otherwise>
+                <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="Delete"/></xsl:when>
+                <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="Delete"/></xsl:otherwise>
               </xsl:choose>              
             </form>
           </td>
@@ -228,8 +228,8 @@
         </xsl:attribute>
       </input>
       <xsl:choose>
-         <xsl:when test="$area = 'authoring'"><input type="submit" value="Upload New Asset"/></xsl:when>
-         <xsl:otherwise><input type="submit" disabled="disabled" value="Upload New Asset"/></xsl:otherwise>
+         <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="New Asset"/></xsl:when>
+         <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="New Asset"/></xsl:otherwise>
        </xsl:choose>              
     </form>
   </xsl:template>

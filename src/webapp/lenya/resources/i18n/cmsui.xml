@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml,v 1.51 2004/04/02 13:12:53 roku Exp $ -->
+<!-- $Id: cmsui.xml,v 1.52 2004/04/02 13:22:32 roku Exp $ -->
 
 <catalogue xml:lang="en">
 
@@ -77,6 +77,7 @@
   <message key="upload-with-invalid-extension">You tried to upload a file with an invalid extension. Valid extensions are{0}</message>
   <message key="filename-format-exception">The file name of the file you are trying to upload either has no extension, or contains characters which are not allowed, such as spaces or umlauts.</message>
   <message key="Creation Date">Creation Date</message>
+  <message key="File Size">File Size</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
@@ -248,25 +249,28 @@
   <message key="Upload an Asset">Upload an Asset</message>
 
   <!-- Info workflow  --> 
-   <message key="Value">Value</message>
-   <message key="Event">Event</message>
-   <message key="Variables">Variables</message>
-   <message key="History">History</message>
-   <message key="State">State</message>   
-   <message key="IP Address">IP Address</message>   
+  <message key="Value">Value</message>
+  <message key="Event">Event</message>
+  <message key="Variables">Variables</message>
+  <message key="History">History</message>
+  <message key="State">State</message>   
+  <message key="IP Address">IP Address</message>   
   
-   <!-- Scheduler --> 
-   <message key="New job">New&#160;job</message>
-   <message key="Active jobs">Active&#160;jobs</message>
-   <message key="Publish and Export">Publish and&#160;Export</message>
-   <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
+  <!-- Info asset  --> 
+  <message key="New Asset">New Asset</message>
+  
+  <!-- Scheduler --> 
+  <message key="New job">New&#160;job</message>
+  <message key="Active jobs">Active&#160;jobs</message>
+  <message key="Publish and Export">Publish and&#160;Export</message>
+  <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
 
-   <!-- New Document -->
-   <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>   
-   <message key="exception.cause.createdoc.whitespace-in-id">The id is not allowed to have whitespaces</message>
-   <message key="exception.cause.createdoc.id-in-use">The id is already in use</message>   
-   <message key="failmessage.createdoc.invalidformat">Please enter a valid value in the ID field. A-Z, a-z, 0-9 or - are vaild characters.</message>
-   <message key="failmessage.createdoc.required">Please input all required (*)  values.</message>
+  <!-- New Document -->
+  <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>   
+  <message key="exception.cause.createdoc.whitespace-in-id">The id is not allowed to have whitespaces</message>
+  <message key="exception.cause.createdoc.id-in-use">The id is already in use</message>   
+  <message key="failmessage.createdoc.invalidformat">Please enter a valid value in the ID field. A-Z, a-z, 0-9 or - are vaild characters.</message>
+  <message key="failmessage.createdoc.required">Please input all required (*)  values.</message>
 
   <!-- Asset Upload/Insert Dialog -->
   <message key="Add to Asset Library">Add to Asset Library</message>
