@@ -62,7 +62,7 @@ import org.apache.log4j.Category;
  * A utility class for InetAddress
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.4 2003/10/27 17:24:39 andreas Exp $
+ * @version $Id: InetAddressUtil.java,v 1.5 2003/10/27 18:36:54 andreas Exp $
  */
 public class InetAddressUtil {
 	
@@ -83,7 +83,7 @@ public class InetAddressUtil {
     	boolean contained = true;
     	
     	short part = 0;
-    	while (contained && part < 3) {
+    	while (contained && part < 4) {
     		
 			int networkC = getClassPart(network, part);
 			int netmaskC = getClassPart(netmask, part);
@@ -108,6 +108,8 @@ public class InetAddressUtil {
 				log.debug("    Last host address:  [" + lastHostAddress + "]");
 				log.debug("    Contained:          [" + contained + "]");
 //			}
+				
+			part++;
 
     	}
     	
