@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<page>
+  <error>
+    <code>XXX</code>
+    <stat>true</stat>
+    <desc>generic</desc>
+  </error>
+</page>
