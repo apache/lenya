@@ -21,7 +21,6 @@
         <xsp:include>org.apache.excalibur.source.Source</xsp:include>
         <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-        <xsp:include>org.apache.lenya.cms.publication.PublicationException</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PublicationFactory</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PageEnvelope</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PageEnvelopeFactory</xsp:include>
@@ -38,9 +37,7 @@
         xspPageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
     } catch (Exception e) {}
     
-    Publication xspUtilPublication = null;
     String xspUtilServletContextPath = null;
-    String xspUtilPublicationPath = null;
     {
         Source inputSource = resolver.resolveURI("");
         String publicationPath = inputSource.getURI();
@@ -55,13 +52,6 @@
         publicationPath = publicationPath.replace('/', File.separatorChar);
         
         xspUtilServletContextPath = path;
-        xspUtilPublicationPath = publicationPath;
-        try {
-            xspUtilPublication = PublicationFactory.getPublication(publicationId, path);
-        }
-        catch (PublicationException e) {
-            throw new ProcessingException(e);
-        }
     }
     
     Date xsp_lenya_server_time = new Date();
