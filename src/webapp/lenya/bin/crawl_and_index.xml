@@ -5,7 +5,7 @@
 
 
 <target name="main" description="Says Hi" depends="crawl, index">
-  <echo>Hi</echo>
+  <echo>Hello</echo>
 </target>
 
 
@@ -14,12 +14,15 @@
 <target name="init">
   <echo message="INFO: Init"/>
 
-  <property name="lenya.dir" value="../../../.."/>
+  <property name="lenya.dir" value="/home/username/src/cocoon-lenya"/>
+  <!--<property name="lenya.dir" value="../../../.."/>-->
+  <!--<property name="lenya.dir" value="."/>-->
   
   <!-- Dummy arguments -->
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
   <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
   <property name="debug" value="false"/>
+  <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene"/>
   <!-- /Dummy arguments -->
 
   <property name="lenya.dir.web-inf" value="${lenya.dir}/build/lenya/webapp/WEB-INF"/>
@@ -64,7 +67,7 @@
     <classpath refid="class.path"/>
   </java>
 
-  <exec executable="${lenya.dir}/lenya/bin/crawl_and_index.sh">
+  <exec executable="${lenya.dir}/src/webapp/lenya/bin/crawl_and_index.sh">
     <arg value="index"/>
     <arg value="${lucene.xconf}"/>
     <arg value="${debug}"/>
@@ -101,8 +104,13 @@
   <echo>INFO: Publish Index</echo>
 </target>
 
-<target name="pdf" description="Extract text from PDF" depends="init">
-  <echo>INFO: Extract text from PDF</echo>
+<target name="xpdf" description="Extract text from PDF with Xpdf" depends="init">
+  <echo>INFO: Extract text from PDF with Xpdf (${htdocs.dump.dir})</echo>
+
+  <exec executable="${lenya.dir}/src/webapp/lenya/bin/crawl_and_index.sh">
+    <arg value="xpdf"/>
+    <arg value="${htdocs.dump.dir}"/>
+  </exec>
 </target>
 
 <target name="show-config" description="Show configuration" depends="init">

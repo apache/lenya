@@ -3,6 +3,7 @@
 DIRNAME=`dirname $0`
 echo "INFO: dirname = $DIRNAME"
 
+echo "INFO: HOME = $HOME"
 WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 JAVA=/usr/lib/j2sdk1.4/bin/java
@@ -41,8 +42,20 @@ case "$1" in
         echo "=========================================================="
         echo ""
 	;;
+    xpdf)
+        echo ""
+        echo "=========================================================="
+        echo "Target: $1"
+        echo "=========================================================="
+        echo ""
+
+        HTDOCS_DUMP_DIR=$2
+
+        echo "INFO: HTDOCS_DUMP_DIR = $HTDOCS_DUMP_DIR"
+        ##find $HTDOCS_DUMP_DIR -name "*.pdf" -print -exec $XPDF -htmlmeta {} {}.txt \;
+	;;
     *)
-        echo "Usage: $0 {crawl|index}"
+        echo "Usage: $0 {crawl|index|xpdf}"
         exit 1
         ;;
 esac
@@ -73,54 +86,14 @@ exit 0
 
 
 
-CRAWLER_CONF=$1
-LUCENE_CONF=$2
-
-if ! ([ $CRAWLER_CONF ] && [ $LUCENE_CONF ]);then
-  echo ""
-  echo "Usage: crawl_and_index.sh crawler.xconf lucene.xconf"
-  exit 0
-fi
-
-echo ""
-echo "=========================================================="
-echo "Target: crawl"
-echo "=========================================================="
-echo ""
-$JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.CrawlerEnvironment $CRAWLER_CONF
-#$JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
-
-
 
 echo ""
 echo "=========================================================="
 echo "Target: extract_text_from_pdf"
 echo "=========================================================="
 echo ""
-HTDOCS_DUMP_DIR=`$JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.CrawlerEnvironment $CRAWLER_CONF -name htdocs-dump-dir`
-##find $HTDOCS_DUMP_DIR -name "*.pdf" -print -exec $XPDF -htmlmeta {} {}.txt \;
-find $HTDOCS_DUMP_DIR -name "*.pdf.txt" -print
-
-##$XPDF -htmlmeta $FILE_PDF $FILE_PDF.txt
 
 CLASSPATH=$CLASSPATH:$PDFBOX/classes
 ##$JAVA -cp $CLASSPATH org.pdfbox.Main $FILE_PDF $FILE_PDF.txt
 
 ##http://www.adobe.com/products/acrobat/access_simple_form.html
-
-
-
-echo ""
-echo "=========================================================="
-echo "Target: Regression Test"
-echo "=========================================================="
-echo ""
-
-
-
-
-echo ""
-echo "=========================================================="
-echo "Target: Move index and htdocs_dump"
-echo "=========================================================="
-echo ""
