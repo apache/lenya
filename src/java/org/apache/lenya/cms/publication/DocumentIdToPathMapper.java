@@ -1,5 +1,5 @@
 /*
-$Id: DocumentIdToPathMapper.java,v 1.8 2003/07/23 13:21:11 gregor Exp $
+$Id: DocumentIdToPathMapper.java,v 1.9 2003/09/29 10:18:13 egli Exp $
 <License>
 
  ============================================================================
@@ -77,8 +77,8 @@ public interface DocumentIdToPathMapper {
     String getPath(String documentId, String language);
 
     /**
-     * Compute the document-path for a given publication, area
-     * and document-id
+     * Compute the document-path for a given publication, area, 
+     * document-id and language
      *
      * @param publication the publication of the document
      * @param area the area of the document
@@ -90,13 +90,17 @@ public interface DocumentIdToPathMapper {
     File getFile(Publication publication, String area, String documentId,
         String language);
 
-	/**
-	 * 
-	 * @param publication The publication.
-	 * @param area The area.
-	 * @param documentId The document id.
-	 * @return File The directory in which are all the files with the same
-	 * document id
-	 */
-	File getDirectory(Publication publication, String area, String documentId);
+    /**
+     * Compute the document-path for a given publication, area and 
+     * document-id. As there are possibly multiple files for the same 
+     * document-id (for different languages) the return value is a directory.
+     *  
+     * @param publication The publication.
+     * @param area The area.
+     * @param documentId The document id.
+     * 
+     * @return The directory where all the files with the same 
+     * document-id are located
+     */
+    File getDirectory(Publication publication, String area, String documentId);
 }
