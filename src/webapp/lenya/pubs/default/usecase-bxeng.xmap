@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase-bxeng.xmap,v 1.12 2004/04/15 11:33:28 gregor Exp $ -->
+<!-- $Id: usecase-bxeng.xmap,v 1.13 2004/04/20 17:13:29 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -54,10 +54,10 @@
       <map:select type="parameter">
         <map:parameter name="statusCode" value="{statusCode}"/>
         <map:when test="">
-          <map:serialize/>
+          <map:serialize type="html" />
         </map:when>
         <map:otherwise>
-          <map:serialize status-code="{statusCode}"/>
+          <map:serialize type="html" status-code="{statusCode}"/>
         </map:otherwise>
       </map:select>
     </map:resource>
@@ -137,19 +137,21 @@
             <map:act type="upload">
               <map:redirect-to uri="{request:requestURI}?lenya.usecase=bxeng&amp;lenya.step=asset-upload-show"/>
             </map:act>
-            <map:generate type="serverpages" src="info/assets.xsp"/>
-            <map:transform src="bxeng/asset.xsl"/>
-            <map:serialize/>
+            <map:call resource="cms-screen">
+              <map:parameter name="serverpage" value="info/assets.xsp"/>
+              <map:parameter name="stylesheet" value="bxeng/asset.xsl"/>
+            </map:call>
           </map:match>
 
           <map:match type="step" pattern="image-upload">
             <map:act type="upload">
               <map:redirect-to uri="{request:requestURI}?lenya.usecase=bxeng&amp;lenya.step=image-upload-show"/>
             </map:act>
-            <map:generate type="serverpages" src="info/assets.xsp"/>
-            <map:transform src="bxeng/image.xsl"/>
-            <map:serialize/>
-          </map:match>
+	        <map:call resource="cms-screen">
+	           <map:parameter name="serverpage" value="info/assets.xsp"/>
+	           <map:parameter name="stylesheet" value="bxeng/image.xsl"/>
+	        </map:call>
+	       </map:match>
 
       <map:match pattern="link-show" type="step">
             <!-- just a dummy xsp since we call the info area directly -->
