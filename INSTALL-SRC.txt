@@ -7,6 +7,25 @@
 +----------------------------------------------------------------+
 
 
+PREREQUISITES
+=============
+by Andreas Hartmann
+The following list describes the setup that is tested and recommended.
+Several items, e.g. the servlet container, may be replaced by other products.
+
+* Java 2 Platform, Standard Edition (recommended: J2SE 1.4.2)http://java.sun.com/j2se/1.4.2/download.html [http://java.sun.com/j2se/1.4.2/download.html]
+
+* Apache Tomcat for JDK 1.4 (recommended: 4.1.29)Tomcat release builds [http://www.apache.org/dist/jakarta/tomcat-4/v4.1.29/bin/]
+    Pick one of the jakarta-tomcat-4.1.24-LE-jdk14 files!
+
+* Apache Ant (recommended: 1.6b2)Ant main distribution directory [http://www.apache.org/dist/ant/]
+
+* Apache Cocoon (required: Cocoon 2.1.2)Cocoon download page [http://cocoon.apache.org/mirror.cgi]
+
+* Endorsed Libraries (recommended: Xalan 2.5.0 Xerces 2.5.0)
+
+
+
 INSTALLATION OF THE SOURCE VERSION
 ==================================
 by Jan Prill, Andreas Hartmann, Gregor J. Rothfuss
@@ -89,11 +108,11 @@ MS Windows
 
 
 
-*. JAVA_HOME = C:\Programme\j2sdk1.4.1_01
-*. ANT_HOME = C:\Programme\Apache Group\apache-ant-1.5.2
-*. CATALINA_HOME = C:\build\tomcat-4.1.24
-*. CLASSPATH = .\;C:\Programme\Apache Group\apache-ant-1.5.2\lib
-*. PATH = <snip>;C:\Programme\j2sdk1.4.1_01\bin;C:\Programme\Apache Group\apache-ant-1.5.2\bin
+* JAVA_HOME = C:\Programme\j2sdk1.4.1_01
+* ANT_HOME = C:\Programme\Apache Group\apache-ant-1.5.2
+* CATALINA_HOME = C:\build\tomcat-4.1.24
+* CLASSPATH = .\;C:\Programme\Apache Group\apache-ant-1.5.2\lib
+* PATH = <snip>;C:\Programme\j2sdk1.4.1_01\bin;C:\Programme\Apache Group\apache-ant-1.5.2\bin
 
 8. Get Apache Cocoon (see Prerequisites [prerequisites.html])
     
@@ -106,8 +125,8 @@ MS Windows
 
 
 
-*. local.build.properties
-*. local.blocks.properties
+* local.build.properties
+* local.blocks.properties
       from $LENYA_HOME/src/cocoon to $COCOON_HOME.
     
 
@@ -151,9 +170,9 @@ See also Installing Apache Cocoon [http://cocoon.apache.org/2.0/installing/index
 
 
 
-*. cocoon.webapp.dir=$COCOON_HOME/build/webapp
-*. pubs.root.dirs=src/webapp/lenya/pubs
-*. tomcat.home.dir=$TOMCAT_HOME
+* cocoon.webapp.dir=$COCOON_HOME/build/webapp
+* pubs.root.dirs=src/webapp/lenya/pubs
+* tomcat.home.dir=$TOMCAT_HOME
 
 13. Build Lenya
 $LENYA_HOME > ant install
@@ -170,7 +189,6 @@ or
 
 $TOMCAT_HOME\bin > shutdown.bat
 $TOMCAT_HOME\bin > startup.bat
-
 
 
 Unix:
