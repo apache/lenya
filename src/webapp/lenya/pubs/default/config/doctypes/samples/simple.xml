@@ -10,7 +10,7 @@
     <dc:title>The Simple Document Type</dc:title>
     <dc:creator>Andreas Hartmann</dc:creator>
     <dc:subject>DC Subject</dc:subject>
-    <dc:description>DC Description</dc:description>
+    <dc:description>Abstract that can be used on an overview page</dc:description>
     <dc:publisher></dc:publisher>
     <dc:contributor></dc:contributor>
     <dc:date>First published date</dc:date>
@@ -23,12 +23,6 @@
     <dc:coverage></dc:coverage>
     <dc:rights>dcrights</dc:rights>
   </lenya:meta>
-  <lenya:header>
-    <lenya:page-title>Page Title (can be used on overview
-    pages)</lenya:page-title>
-    <lenya:abstract>Abstract that can be used on an overview
-    page</lenya:abstract>
-  </lenya:header>
   <body>
     <subtitle></subtitle>
     <crossheading></crossheading>

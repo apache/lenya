@@ -12,7 +12,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="lenya:meta"/>
-        <xs:element ref="lenya:header"/>
         <xs:element ref="s:body"/>
       </xs:sequence>
     </xs:complexType>

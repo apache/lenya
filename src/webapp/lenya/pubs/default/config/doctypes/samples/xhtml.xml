@@ -13,7 +13,7 @@
         <dc:title>dctitle</dc:title>
         <dc:creator>dccreator</dc:creator>
         <dc:subject>dcsubject</dc:subject>
-        <dc:description>dcdescription</dc:description>
+        <dc:description>Abstract that can be used on an overview page</dc:description>
         <dc:publisher/>
         <dc:contributor/>
         <dc:date>2003-5-21</dc:date>
@@ -26,10 +26,6 @@
         <dc:coverage/>
         <dc:rights>dcrights</dc:rights>
     </lenya:meta>
-    <lenya:header>
-        <lenya:document-title>Default Publication</lenya:document-title>
-        <lenya:abstract>Abstract that can be used on an overview page</lenya:abstract>
-    </lenya:header>
   <head>
     <title>Default Publication</title>
   </head>

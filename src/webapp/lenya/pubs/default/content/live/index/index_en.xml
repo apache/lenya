@@ -5,7 +5,7 @@
         <dc:title>DC Title</dc:title>
         <dc:creator>Christian Egli</dc:creator>
         <dc:subject>DC Subject</dc:subject>
-        <dc:description>DC Description</dc:description>
+        <dc:description>Abstract that can be used on an overview page</dc:description>
         <dc:publisher/>
         <dc:contributor/>
         <dc:date>2003-5-21</dc:date>
@@ -18,10 +18,6 @@
         <dc:coverage/>
         <dc:rights>DC Rights</dc:rights>
     </lenya:meta>
-    <lenya:header>
-        <lenya:document-title>Default Publication</lenya:document-title>
-        <lenya:abstract>Abstract that can be used on an overview page</lenya:abstract>
-    </lenya:header>
   <body>
     <p>Hello and welcome to the Lenya default publication!</p>
 
