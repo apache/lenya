@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.User;
 
 
@@ -71,6 +72,13 @@ import org.apache.lenya.cms.ac.User;
  */
 public class Identity implements Identifiable {
     private Set identifiables = new HashSet();
+    
+    /**
+     * Ctor.
+     * @param manager The accreditable manager this identity belongs to.
+     */
+    public Identity() {
+    }
 
     /**
      * Returns the identifiables of this identity.
@@ -121,17 +129,42 @@ public class Identity implements Identifiable {
 
         return string;
     }
+    
+    /**
+     * Checks if this identity belongs to a certain accreditable manager.
+     * @param manager The accreditable manager to check for.
+     * @return A boolean value.
+     */
+    public boolean belongsTo(AccreditableManager manager) throws AccessControlException {
+        
+        boolean belongs = true;
+        
+        Identifiable identifiables[] = getIdentifiables();
+        int i = 0;
+        while (belongs && i < identifiables.length) {
+            if (identifiables[i] instanceof User) {
+                User user = (User) identifiables[i];
+                User otherUser = manager.getUserManager().getUser(user.getId());
+                belongs = belongs && user == otherUser;
+            }
+            i++;
+        }
+        
+        return belongs;
+    }
 
     /**
-     * Get user from identity
+     * Returns the user of this identity.
+     * @return A user.
      */
-     public User getUser() {
-         User user = null;
-         Identifiable[] identifiables = getIdentifiables();
-         for (int i = 0; i < identifiables.length; i++) {
-             user = (User) identifiables[i];
-             if (user != null) return user;
-         }
-     return null;
+    public User getUser() {
+        User user = null;
+        Identifiable[] identifiables = getIdentifiables();
+        int i = 0;
+        while (user == null && i < identifiables.length) {
+            user = (User) identifiables[i];
+            i++;
+        }
+        return user;
      }
 }
