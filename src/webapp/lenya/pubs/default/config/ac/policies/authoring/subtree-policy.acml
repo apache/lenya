@@ -9,8 +9,4 @@
     <role id="reviewer"/>
   </group>
 
-  <machine id="192.168.0.23"/>
-  
-  <world>...</world>
-
 </policy> 

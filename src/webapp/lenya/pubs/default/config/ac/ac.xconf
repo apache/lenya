@@ -2,6 +2,6 @@
 
 <access-controller type="publication-file">
   <accreditable-manager>
-    <parameter name="directory" value="context:///lenya/pubs/unizh/config/ac/passwd"/>
+    <parameter name="directory" value="context:///lenya/pubs/default/config/ac/passwd"/>
   </accreditable-manager>
 </access-controller>

@@ -1,18 +1,9 @@
 <?xml version="1.0"?>
 
-<ac>
-<request>
-  <action name="read"/>
-</request>
-<policy>
- <object match="/">
-  <subjects>
-    <world>
-      <actions>
-        <read/>
-      </actions>
-    </world>
-  </subjects>
- </object>
-</policy>
-</ac>
+<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+
+  <world>
+    <role id="visitor"/>
+  </group>
+
+</policy> 

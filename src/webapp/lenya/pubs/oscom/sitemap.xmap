@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.27 2003/07/09 13:11:14 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.28 2003/07/17 16:26:50 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -20,17 +20,6 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard" />
 
-    <map:actions>
-      <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
-        <authenticator type="oscom"/>
-        <policies>oscom/policies/</policies>
-        <public>login-screen|do-login|switch-user|logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
-      </map:action>
-      <map:action name="authenticator" src="org.apache.lenya.cms.cocoon.acting.IMLAuthenticatorAction" logger="sitemap.action.iml-authenticator">
-        <type>oscom</type>
-        <passwd>oscom/passwd/</passwd>
-      </map:action>
-    </map:actions>
   </map:components>
 
   <map:views>
@@ -148,29 +137,6 @@
           </map:match>
           
       <map:match pattern="**">
-        <map:act type="authorizer">
-          <map:match pattern="login-screen">
-            <map:call resource="login"/>
-          </map:match>
-          
-          <map:match pattern="do-login">
-            <map:act type="authenticator">
-              <map:redirect-to uri="{protected_destination}" session="true"/>
-            </map:act>
-            <map:redirect-to uri="login-screen?status=failed" session="true"/>
-          </map:match>
-
-          <map:match pattern="logout">
-            <map:generate type="serverpages" src="../../content/ac/logout.xsp"/>
-            <map:transform src="../../xslt/ac/logout.xsl">
-              <map:parameter name="publication_name" value="OSCOM"/>
-            </map:transform>
-            <map:serialize/>
-          </map:match>
-
-          <!--  ####################################################################### -->
-          <!--          Everything below is "protected" by policies-sitemap.xmap        -->
-          <!--  ####################################################################### -->
 
           <!-- The authoring area -->
           <map:match pattern="authoring/**">
@@ -186,8 +152,6 @@
             <map:mount uri-prefix="live" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
           </map:match>
 
-        </map:act>
-        <map:call resource="login"/>
       </map:match>
 
 <!--
