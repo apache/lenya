@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: entry.rng,v 1.12 2004/05/16 14:29:04 gregor Exp $ -->
+<!-- $Id$ -->
 
 <grammar xmlns:echo="http://purl.org/atom/ns#" ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
@@ -66,10 +66,10 @@
                   <text/>
                 </element>
                 <element name="strong">
-                  <data type="NCName"/>
+                  <text/>
                 </element>
                 <element name="em">
-                  <data type="NCName"/>
+                  <text/>
                 </element>
               </choice>
             </oneOrMore>
