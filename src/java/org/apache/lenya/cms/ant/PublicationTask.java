@@ -7,7 +7,7 @@
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
-import org.apache.lenya.cms.publication.Publication;
+
 import org.apache.lenya.cms.task.AntTask;
 import org.apache.tools.ant.Task;
 

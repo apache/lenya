@@ -9,9 +9,9 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import org.apache.lenya.cms.publishing.ExportException;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 /**
  * Ant task that exports a set of HTML URIs as static HTML files.

@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreatorAction.java,v 1.3 2003/05/20 18:24:58 egli Exp $
+ * $Id: DefaultCreatorAction.java,v 1.4 2003/05/27 14:52:38 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,9 +46,7 @@ package org.apache.lenya.cms.cocoon.acting;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -69,9 +67,6 @@ import org.apache.cocoon.environment.SourceResolver;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
 import org.apache.lenya.cms.publication.DefaultSiteTree;
