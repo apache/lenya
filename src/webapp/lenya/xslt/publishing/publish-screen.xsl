@@ -5,10 +5,11 @@
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
     xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
+    xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
     >
  
 <xsl:import href="../util/page-util.xsl"/>
-<xsl:import href="../scheduler/common.xsl"/>
+<xsl:import href="../scheduler/joblist.xsl"/>
 
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
@@ -38,43 +39,48 @@
 				<input type="hidden" name="properties.publish.documentid" value="{$document-id}"/>
 				<input type="hidden" name="properties.export.uris" value="{$uris}"/>
 				<input type="hidden" name="properties.publish.language" value="{$document-language}"/>
-        
-        <div class="menu">Do you really want to publish the following source<xsl:text/>
-          <xsl:if test="contains($sources, $separator)">s</xsl:if>
-          <xsl:text/>?
+				
+        <div class="lenya-box">
+        	<div class="lenya-box-title">Publish</div>
+        	<div class="lenya-box-body">
+						<table class="lenya-table-noborder">
+							<tr>
+								<td class="lenya-entry-caption">Source&#160;File(s):</td>
+								<td>
+									<xsl:call-template name="print-list-simple">
+										<xsl:with-param name="list-string" select="$sources"/>
+									</xsl:call-template>
+								</td>
+							</tr>
+							<tr>
+								<td class="lenya-entry-caption">URI(s):</td>
+								<td>
+									<xsl:call-template name="print-list-simple">
+										<xsl:with-param name="list-string" select="$uris"/>
+									</xsl:call-template>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+						<input type="submit" name="lenya.usecase" value="publish"/>
+						&#160;&#160;&#160;
+						<input type="button" onClick="location.href='';" value="Cancel"/>
+								</td>
+							</tr>
+						</table>
+						
+	        </div>
         </div>
-        
-        <ul>
-          <xsl:call-template name="print-list">
-            <xsl:with-param name="list-string" select="$sources"/>
-          </xsl:call-template>
-        </ul>
-        
-        <div class="menu">And do you really want to publish the following uri<xsl:text/>
-          <xsl:if test="contains($uris, $separator)">s</xsl:if>
-          <xsl:text/>?
-        </div>
-        
-        <ul>
-          <xsl:call-template name="print-list">
-            <xsl:with-param name="list-string" select="$uris"/>
-          </xsl:call-template>
-        </ul>
-        
+
         <not:notification>
         	<not:preset>
         		<xsl:apply-templates select="not:users/not:user"/>
         	</not:preset>
         	<not:textarea/>
         </not:notification>
-
-        <input type="submit" name="lenya.usecase" value="publish"/>
-        &#160;&#160;&#160;
-        <input type="button" onClick="location.href='';" value="Cancel"/>
-
-        <xsl:call-template name="scheduler-form">
-        	<xsl:with-param name="form-name">form_publish</xsl:with-param>
-        </xsl:call-template>
+        
+        <sch:scheduler-form/>
 
       </form>
     </page:body>
