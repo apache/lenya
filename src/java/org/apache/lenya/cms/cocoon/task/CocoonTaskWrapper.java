@@ -1,5 +1,5 @@
 /*
-$Id: CocoonTaskWrapper.java,v 1.3 2003/08/28 10:10:22 andreas Exp $
+$Id: CocoonTaskWrapper.java,v 1.4 2003/08/29 12:52:46 andreas Exp $
 <License>
 
  ============================================================================
@@ -147,7 +147,7 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
         }
 
         NamespaceMap notificationMap =
-            new NamespaceMap(requestParameters, Notifier.NOTIFICATION_PREFIX);
+            new NamespaceMap(requestParameters, Notifier.PREFIX);
 
         log.debug("    Notification parameters:");
         for (Iterator i = notificationMap.getMap().keySet().iterator(); i.hasNext(); ) {
@@ -162,7 +162,7 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
             log.debug("    Initializing notification");
 
             String toKey =
-                NamespaceMap.getFullName(Notifier.NOTIFICATION_PREFIX, Notifier.PARAMETER_TO);
+                NamespaceMap.getFullName(Notifier.PREFIX, Notifier.PARAMETER_TO);
             String toString = "";
             String[] toValues = request.getParameterValues(toKey);
 
