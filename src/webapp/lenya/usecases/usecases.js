@@ -79,9 +79,13 @@ function executeUsecase() {
     }
     finally {
         /* done with usecase component, tell usecaseResolver to release it */
-        usecaseResolver.release(usecase);
-        usecase = undefined;
-        cocoon.releaseComponent(usecaseResolver);
+        if (usecaseResolver != null) {
+            if (usecase != null) {
+                usecaseResolver.release(usecase);
+                usecase = undefined;
+            }
+            cocoon.releaseComponent(usecaseResolver);
+        }
     }
     
     var success = false;
