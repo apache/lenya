@@ -68,6 +68,11 @@ public class DocumentUsecase extends AbstractUsecase {
         this.targetDocument = document;
     }
 
+    /**
+     * Returns the document to be redirected to after the usecase has been completed.
+     * @param success If the usecase was successfully completed.
+     * @return A document.
+     */
     protected Document getTargetDocument(boolean success) {
         Document document;
         if (this.targetDocument != null) {
