@@ -92,17 +92,17 @@
       </map:match>
     </map:pipeline>
 
-<!-- the main pipeline. the nested pipelines check if the language and the default tab to be shown are set.
-     very ugly, i guess it could be done diferently -->    
+<!-- FIXME: the main pipeline. the nested pipelines check if the language and the default tab to be shown are set.
+     very ugly, i guess it could be done diferently. What about a resource? -->    
     <map:pipeline>
       <map:match pattern="**">
       	<map:match pattern="*" type="language">
       	  <map:match pattern="*" type="tab">
-	       <map:aggregate element="lenya" label="aggregate">
-             <map:part src="cocoon:/menus/info.xml"/>
-	         <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
-	       </map:aggregate>
-	       <map:transform src="xslt/info/root.xsl" label="content">
+	    <map:aggregate element="lenya" label="aggregate">
+              <map:part src="cocoon:/menus/info.xml"/>
+	      <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
+	    </map:aggregate>
+	    <map:transform src="xslt/info/root.xsl" label="content">
               <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
               <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
               <map:parameter name="tab" value="{1}"/>
@@ -110,54 +110,61 @@
               <map:parameter name="chosenlanguage" value="{../1}"/>
               <map:parameter name="documentid" value="{../../1}"/>
               <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-           </map:transform>
-	       <map:serialize/>
+            </map:transform>
+	    <map:serialize/>
           </map:match>
-	       <map:aggregate element="lenya" label="aggregate">
-             <map:part src="cocoon:/menus/info.xml"/>
-	         <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
-	       </map:aggregate>
-	       <map:transform src="xslt/info/root.xsl" label="content">
-              <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
-              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-              <map:parameter name="tab" value=""/>
-              <map:parameter name="area" value="{page-envelope:area}"/>
-              <map:parameter name="chosenlanguage" value="{1}"/>
-              <map:parameter name="documentid" value="{../1}"/>
-              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-           </map:transform>
-	       <map:serialize/>
+
+          <!-- No tab parameter -->
+	  <map:aggregate element="lenya" label="aggregate">
+            <map:part src="cocoon:/menus/info.xml"/>
+	    <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
+	  </map:aggregate>
+	  <map:transform src="xslt/info/root.xsl" label="content">
+            <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+            <map:parameter name="tab" value=""/>
+            <map:parameter name="area" value="{page-envelope:area}"/>
+            <map:parameter name="chosenlanguage" value="{1}"/>
+            <map:parameter name="documentid" value="{../1}"/>
+            <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+          </map:transform>
+	  <map:serialize/>
         </map:match>
-      	  <map:match pattern="*" type="tab">
-	       <map:aggregate element="lenya" label="aggregate">
-             <map:part src="cocoon:/menus/info.xml"/>
-	         <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
-	       </map:aggregate>
-	       <map:transform src="xslt/info/root.xsl" label="content">
-              <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
-              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-              <map:parameter name="area" value="{page-envelope:area}"/>
-              <map:parameter name="tab" value="{1}"/>
-              <map:parameter name="chosenlanguage" value=""/>
-              <map:parameter name="documentid" value="{../1}"/>
-              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-           </map:transform>
-	       <map:serialize/>
-          </map:match>
-	       <map:aggregate element="lenya" label="aggregate">
-             <map:part src="cocoon:/menus/info.xml"/>
-	         <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
-	       </map:aggregate>
-	       <map:transform src="xslt/info/root.xsl" label="content">
-              <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
-              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-              <map:parameter name="area" value="{page-envelope:area}"/>
-              <map:parameter name="tab" value=""/>
-              <map:parameter name="chosenlanguage" value=""/>
-              <map:parameter name="documentid" value="{1}"/>
-              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-           </map:transform>
-	       <map:serialize/>
+
+        <!-- No language -->
+      	<map:match pattern="*" type="tab">
+	  <map:aggregate element="lenya" label="aggregate">
+            <map:part src="cocoon:/menus/info.xml"/>
+	    <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
+	  </map:aggregate>
+	  <map:transform src="xslt/info/root.xsl" label="content">
+            <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+            <map:parameter name="area" value="{page-envelope:area}"/>
+            <map:parameter name="tab" value="{1}"/>
+            <map:parameter name="chosenlanguage" value=""/>
+            <map:parameter name="documentid" value="{../1}"/>
+            <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+          </map:transform>
+	  <map:serialize/>
+        </map:match>
+
+
+        <!-- No language and no tab -->
+	<map:aggregate element="lenya" label="aggregate">
+          <map:part src="cocoon:/menus/info.xml"/>
+	  <map:part element="cmsbody" type="serverpages" src="content/info/overview.xsp"/>
+	</map:aggregate>
+	<map:transform src="xslt/info/root.xsl" label="content">
+          <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
+          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+          <map:parameter name="area" value="{page-envelope:area}"/>
+          <map:parameter name="tab" value=""/>
+          <map:parameter name="chosenlanguage" value=""/>
+          <map:parameter name="documentid" value="{1}"/>
+          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+        </map:transform>
+	<map:serialize/>
       </map:match>
     </map:pipeline>
   </map:pipelines>
