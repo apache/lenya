@@ -456,7 +456,11 @@
           </map:match>
           
           <map:match pattern="archive" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
+            <map:act type="task">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="task-id" value="{request-param:task-id}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
           </map:match>
           
         </map:match>
