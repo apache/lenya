@@ -21,12 +21,18 @@ This sitemap creates default navigation components.
   <map:pipelines>
   
     <map:pipeline>
+    
+    <!-- load sitetree -->
+    <map:match pattern="*/sitetree.xml">
+      <map:generate src="pubs/{1}/content/authoring/sitetree.xml"/>
+      <map:serialize type="xml"/>
+    </map:match>
   
     <!-- pattern: <pub-id>/<nav-element>/<path>.xml -->
     <map:match pattern="*/*/**.xml">
     
       <!-- load sitetree -->
-      <!--<map:generate src="cocoon://{1}/sitetree.xml"/>-->
+      <!--<map:generate src="cocoon:/{1}/sitetree.xml"/>-->
       <map:generate src="pubs/{1}/content/authoring/sitetree.xml"/>
       
       <!-- use publication-specific presentation if available -->
