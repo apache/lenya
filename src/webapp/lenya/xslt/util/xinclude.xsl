@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xinclude.xsl,v 1.6 2004/03/13 12:42:09 gregor Exp $ -->
+<!-- $Id: xinclude.xsl,v 1.7 2004/04/20 14:06:20 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -32,7 +32,7 @@
 <lenya:publications>
   <xsl:for-each select="dir:directory">
     <lenya:publication pid="{@name}">
-      <lenya:publication xlink:href="{@name}/publication.xml" xlink:show="embed"/>
+      <lenya:publication xlink:href="{@name}/publication.xml" xlink:show="replace"/>
     </lenya:publication>
   </xsl:for-each>
 </lenya:publications>
