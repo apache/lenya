@@ -85,7 +85,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @return A string.
      */
     protected String getSourceURL() {
-        return sourceUrl;
+        return this.sourceUrl;
     }
 
     /**
@@ -94,7 +94,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @return A boolean value.
      */
     public List getErrorMessages() {
-        return Collections.unmodifiableList(errorMessages);
+        return Collections.unmodifiableList(this.errorMessages);
     }
 
     /**
@@ -102,7 +102,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @return An array of strings. Info messages do not prevent the operation from being executed.
      */
     public List getInfoMessages() {
-        return Collections.unmodifiableList(infoMessages);
+        return Collections.unmodifiableList(this.infoMessages);
     }
 
     private List errorMessages = new ArrayList();
@@ -113,7 +113,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @param message The message.
      */
     public void addErrorMessage(String message) {
-        errorMessages.add(message);
+        this.errorMessages.add(message);
     }
 
     /**
@@ -131,7 +131,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @param message The message.
      */
     public void addInfoMessage(String message) {
-        infoMessages.add(message);
+        this.infoMessages.add(message);
     }
 
     /**
@@ -188,14 +188,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * Clears the error messages.
      */
     protected void clearErrorMessages() {
-        errorMessages.clear();
+        this.errorMessages.clear();
     }
 
     /**
      * Clears the info messages.
      */
     protected void clearInfoMessages() {
-        infoMessages.clear();
+        this.infoMessages.clear();
     }
 
     /**
@@ -264,9 +264,9 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     private Map parameters = new HashMap();
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
-    public void setParameter(String name, String value) {
+    public void setParameter(String name, Object value) {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Setting parameter [" + name + "] = [" + value + "]");
         }
@@ -276,10 +276,21 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String)
      */
-    public String getParameter(String name) {
-        return (String) parameters.get(name);
+    public Object getParameter(String name) {
+        return this.parameters.get(name);
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#getParameterAsString(java.lang.String)
+     */
+    public String getParameterAsString(String name) {
+        String valueString = null;
+        Object value = getParameter(name);
+        if (value != null) {
+            valueString = value.toString();
+        }
+        return valueString;
+    }
     /**
      * Returns one of the strings "true" or "false" depending on whether the corresponding checkbox
      * was checked.
@@ -356,5 +367,19 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         String webappUri = ServletHelper.getWebappURI(request);
         
         setup(webappUri, situation);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#advance()
+     */
+    public void advance() {
+    }
+    
+    /**
+     * Deletes a parameter.
+     * @param name The parameter name.
+     */
+    protected void deleteParameter(String name) {
+        this.parameters.remove(name);
     }
 }

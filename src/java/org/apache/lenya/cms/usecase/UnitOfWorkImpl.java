@@ -64,7 +64,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Co
             this.identityMap = new DocumentIdentityMap(publication);
         }
         
-        return identityMap;
+        return this.identityMap;
     }
 
     /**

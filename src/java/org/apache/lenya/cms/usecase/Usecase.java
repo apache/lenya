@@ -38,14 +38,21 @@ public interface Usecase {
      * @param name The parameter name.
      * @param value The parameter value.
      */
-    void setParameter(String name, String value);
+    void setParameter(String name, Object value);
     
     /**
      * Returns the current value of a parameter.
      * @param name The parameter name.
-     * @return A string.
+     * @return An object.
      */
-    String getParameter(String name);
+    Object getParameter(String name);
+    
+    /**
+     * Returns the current value of a parameter as a string.
+     * @param name The parameter name.
+     * @return A string or <code>null</code> if the parameter was not set.
+     */
+    String getParameterAsString(String name);
     
     /**
      * Sets a parameter from the form. This method is called for parts in multipart requests.
@@ -53,6 +60,12 @@ public interface Usecase {
      * @param value The parameter value.
      */
     void setPart(String name, Part value);
+    
+    /**
+     * Advances the usecase to the next step. This method is called when all
+     * parameters are set.
+     */
+    void advance();
     
     /**
      * Passes the source URL and the workflow situation to the usecase.

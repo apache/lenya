@@ -46,7 +46,7 @@ public class DocumentUsecase extends AbstractUsecase {
      * @return A document.
      */
     protected Document getSourceDocument() {
-        return sourceDocument;
+        return this.sourceDocument;
     }
 
     private Document targetDocument = null;

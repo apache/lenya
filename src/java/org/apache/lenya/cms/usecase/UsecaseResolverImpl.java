@@ -73,7 +73,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      */
     public void dispose() {
         if (this.selector != null) {
-            this.manager.release(selector);
+            this.manager.release(this.selector);
         }
     }
     
