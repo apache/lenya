@@ -119,7 +119,7 @@ public class PolicyTest extends AccessControlTest {
     protected Policy getPolicy(String url) throws AccessControlException {
         Policy policy =
             new FilePolicyManager().getPolicy(
-                getAccessController(),
+                getAccreditableManager(),
                 PublicationHelper.getPublication(),
                 url);
 
@@ -134,7 +134,7 @@ public class PolicyTest extends AccessControlTest {
         PolicyManager manager = new FilePolicyManager();
         DefaultPolicy urlPolicy =
             manager.buildURLPolicy(
-                getAccessController(),
+                getAccreditableManager(),
                 PublicationHelper.getPublication(),
                 URL);
         DefaultPolicy newPolicy = new DefaultPolicy();
@@ -164,7 +164,7 @@ public class PolicyTest extends AccessControlTest {
 
         newPolicy =
             manager.buildURLPolicy(
-                getAccessController(),
+                getAccreditableManager(),
                 PublicationHelper.getPublication(),
                 SAVE_URL);
         assertEquals(

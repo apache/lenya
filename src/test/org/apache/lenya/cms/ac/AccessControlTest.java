@@ -62,13 +62,14 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.ac2.AccessControllerTest;
 import org.apache.lenya.cms.ac2.AccreditableManager;
+import org.apache.lenya.cms.ac2.IdentityTest;
 import org.apache.lenya.cms.ac2.PolicyTest;
 import org.apache.lenya.cms.ac2.file.FileAccreditableManager;
 import org.apache.lenya.cms.publication.Publication;
 
 import java.io.File;
-
 
 /**
  * @author andreas
@@ -94,11 +95,19 @@ public class AccessControlTest extends TestCase {
         TestRunner.run(getSuite());
     }
 
-    protected static final Class[] classes = {
-        FileGroupTest.class, FileRoleTest.class, FileUserTest.class, 
+    protected static final Class[] classes =
+        {
+            FileGroupTest.class,
+            FileRoleTest.class,
+            FileUserTest.class,
         //        LDAPUserTest.class,
-        GroupManagerTest.class, RoleManagerTest.class, UserManagerTest.class, PolicyTest.class
-    };
+            GroupManagerTest.class,
+            RoleManagerTest.class,
+            UserManagerTest.class,
+            PolicyTest.class,
+            AccessControllerTest.class,
+            IdentityTest.class,
+            };
 
     /**
      * Creates a test suite.
@@ -128,7 +137,7 @@ public class AccessControlTest extends TestCase {
      * Returns the access controller.
      * @return An access controller object.
      */
-    public static AccreditableManager getAccessController() {
+    public static AccreditableManager getAccreditableManager() {
         Publication publication = PublicationHelper.getPublication();
         File configDir = new File(publication.getDirectory(), "config/ac");
 

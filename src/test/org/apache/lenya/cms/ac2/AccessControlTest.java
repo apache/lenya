@@ -81,7 +81,7 @@ public class AccessControlTest extends org.apache.lenya.cms.ac.AccessControlTest
      * @throws AccessControlException when something went wrong.
      */
     protected Identity getIdentity() throws AccessControlException {
-        User user = getAccessController().getUserManager().getUser(USERNAME);
+        User user = getAccreditableManager().getUserManager().getUser(USERNAME);
         assertNotNull(user);
 
         Identity identity = new Identity();

@@ -79,7 +79,7 @@ public class AccessControllerTest extends AccessControlTest {
      */
     public static void main(String[] args) {
         PublicationHelper.extractPublicationArguments(args);
-        TestRunner.run(AccessControlTest.class);
+        TestRunner.run(AccessControllerTest.class);
     }
 
     private static String[] URLS = { "/authoring/index.html" };
@@ -92,7 +92,7 @@ public class AccessControllerTest extends AccessControlTest {
         for (int i = 0; i < URLS.length; i++) {
             Policy policy =
                 new FilePolicyManager().getPolicy(
-                    getAccessController(),
+                    getAccreditableManager(),
                     PublicationHelper.getPublication(),
                     URLS[i]);
             assertNotNull(policy);

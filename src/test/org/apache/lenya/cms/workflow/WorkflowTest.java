@@ -143,8 +143,8 @@ public class WorkflowTest extends TestCase {
         assertTrue(configDir.exists());
 
         File configurationDirectory = new File(publication.getDirectory(), "config/ac");
-        FileAccreditableManager accessController = new FileAccreditableManager(configurationDirectory);
-        Policy policy = new FilePolicyManager().getPolicy(accessController, publication, URL);
+        FileAccreditableManager accreditableManager = new FileAccreditableManager(configurationDirectory);
+        Policy policy = new FilePolicyManager().getPolicy(accreditableManager, publication, URL);
 
         DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
         String workflowId = type.getWorkflowFileName();
