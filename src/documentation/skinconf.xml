@@ -34,7 +34,7 @@ which will be used to configure the chosen Forrest skin.
     no search box. @domain will enable sitesearch for the specific domain with google.
     In other words google will search the @domain for the query string.
   -->
-  <search name="Apache Lenya" domain="cocoon.apache.org"/>
+  <search name="Apache Lenya" domain="lenya.apache.org"/>
 
   <!-- Disable the print link? If enabled, invalid HTML 4.0.1 -->
   <disable-print-link>true</disable-print-link>
@@ -69,7 +69,7 @@ which will be used to configure the chosen Forrest skin.
   <disable-font-script>true</disable-font-script>
 
   <!-- mandatory project logo
-       default skin: renders it at the top -->
+       default skin: renders it at the top 
   <project-name>Lenya</project-name>
   <project-description>
   	Apache Lenya is a Java-based Open-Source Content Management System.
@@ -78,7 +78,26 @@ which will be used to configure the chosen Forrest skin.
   </project-description>
   <project-url>http://lenya.apache.org</project-url>
   <project-logo>images/apache-lenya-light.png</project-logo>
+-->
+  <!-- mandatory project logo
+       default skin: renders it at the top -->
+  <project-name></project-name>
+  <project-description/>
+  <project-url/>
+  <project-logo/>
 
+  
+    <!-- mandatory project logo
+       default skin: renders it at the top -->
+  <group-name>Lenya</group-name>
+  <group-description>
+  	Apache Lenya is a Java-based Open-Source Content Management System.
+  	It is based on open standards such as XML and XSLT.
+  	One of its core components is Cocoon from the Apache Software Foundation.
+  </group-description>
+  <group-url>http://lenya.apache.org</group-url>
+  <group-logo>images/apache-lenya-light.png</group-logo>
+  
   <!-- Alternative static image:
   <project-logo>images/project-logo.gif</project-logo> -->
 
@@ -118,7 +137,7 @@ which will be used to configure the chosen Forrest skin.
   -->
   <trail>
     <link1 name="apache" href="http://www.apache.org/"/>
-    <link2 name="" href=""/>
+    <link2 name="lenya" href="http://lenya.apache.org/"/>
     <link3 name="" href=""/>
   </trail>
 
@@ -140,8 +159,8 @@ which will be used to configure the chosen Forrest skin.
     feedback link in the footer with the page pathname appended:
     <a href="@href">{@to}</a>
     -->
-  <feedback to="lenya-dev@cocoon.apache.org"
-    href="mailto:lenya-dev@cocoon.apache.org?subject=Feedback&#160;for&#160;" >
+  <feedback to="dev@lenya.apache.org"
+    href="mailto:dev@lenya.apache.org?subject=Feedback&#160;for&#160;" >
     Send feedback about the website to:
   </feedback>
   <!--

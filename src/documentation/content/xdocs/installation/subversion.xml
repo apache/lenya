@@ -37,7 +37,7 @@
 Start the shell of your choice and enter:
 </p>
 <source>
-svn co http://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
+svn co http://svn.apache.org/repos/asf/lenya/trunk lenya-trunk
 </source>
 </section>
 
@@ -58,7 +58,7 @@ svn sw --relocate http://svn.apache.org/repos/asf/incubator/lenya https://svn.ap
 <section>
 <title>View Subversion</title>
 <p>
-<link href="http://svn.apache.org/repos/asf/incubator/lenya/trunk/">http://svn.apache.org/repos/asf/incubator/lenya/trunk/</link>
+<link href="http://svn.apache.org/repos/asf/lenya/trunk/">http://svn.apache.org/repos/asf/lenya/trunk/</link>
 </p>
 </section>
 

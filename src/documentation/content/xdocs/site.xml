@@ -36,7 +36,7 @@
             <index_doc href="index.html" label="Documentation" wholesite="true"/>
             <whole_docu href="../docu.pdf" label="pdf docu 1.2.x (whole)" />
             <whole_docu href="../docu.html" label="html docu 1.2.x (whole)" />
-            <docu1.2.x href="1.2.x/" label="1.2.x">
+            <docu1.2.x href="1_2_x/" label="1.2.x">
                     
                         <components href="components/" label="Components" 
                             wholesite="true">
@@ -188,16 +188,16 @@
                             <node-e href="xinclude-processor.html" 
                                 label="XInclude Processor"/>
                         </misc>
-                        <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
+                        <javadoc href="../../apidocs/index.html" label="API (Javadoc)"/>
 
             </docu1.2.x>
-            <docu1.4 href="1.4/index.html" label="1.4" />
-            <docu2.x href="2.1/index.html" label="2" />
+            <docu1.4 href="1_4/index.html" label="1.4" />
+            <docu2.x href="2_1/index.html" label="2" />
         </documentation>
     <community href="community/" label="Community" tab="community">
         <index_com href="index.html" label="Contributing"/>
 		<node-h href="acknowledgements.html" label="Credits"/>
-        <node-f href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/#dirlist" 
+        <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" 
             label="SVN Web"/>
         <node-g 
             href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=%27Importance%27" 

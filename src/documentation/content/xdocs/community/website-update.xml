@@ -28,12 +28,13 @@
   <body>
 <section><title>Updating the Lenya website</title>
 <ul>
-  <li>Checkout <code>https://svn.apache.org/repos/asf/lenya/site/</code></li>
+  <li><code>svn co https://svn.apache.org/repos/asf/lenya/docu/ lenya.docu</code> ->This is our documentation and website source tree</li>
+  <li><code>svn co https://svn.apache.org/repos/asf/lenya/site/ lenya.apache.org</code> ->This is our deployed website tree (it is the svn-root for our website)</li>
   <li><link href="ext:forrest.build">Build Forrest</link></li>
-  <li><code>go to the root of lenya/site</code></li>
+  <li><code>go to the root of lenya/docu</code></li>
   <li><code>forrest</code></li>
-<!--  <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>$T/lenya/pubs/docs-new/resources/html/apidocs</code> to <code>lenya-site</code>)</li>
--->  <li>Add, remove, commit to <code>lenya-site</code></li>
+  <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>$T/lenya/pubs/docs-new/resources/html/apidocs</code> to <code>lenya/site/apidocs</code>)</li>
+  <li>Add, remove, commit to <code>lenya/site</code></li>
 </ul>
 <p>There is a cron job on minotaur which will do 'svn update'
 every 12 hours (see ~thorsten/bin/mycrontab). If you want to do it manually then ...</p>

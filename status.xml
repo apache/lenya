@@ -35,6 +35,10 @@
   <changes>
     <release version="all" date="unreleased">
       <action dev="TS" type="update" context="website">
+         Fixed the directory naming because there is a bug in forrest aggregation
+         that is prevending to use points in the dir naming.
+      </action>
+      <action dev="TS" type="update" context="website">
          Lenya is now a TLP. I moved all website releated issues to the new rep
          location.
       </action>
