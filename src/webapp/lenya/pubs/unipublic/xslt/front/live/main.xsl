@@ -138,6 +138,11 @@
       <td width="150"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
       <td width="5"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
     </tr>
+  <tr height="5">
+    <td width="5" height="1"><img height="1" width="1" src="img_unipublic/1.gif"/></td>
+    <td colspan="4" bgcolor="#cccc99" width="306" height="1"><img height="1" width="10" src="img_unipublic/1.gif"/></td>
+    <td width="5" height="1"><img height="1" width="1" src="img_unipublic/1.gif"/></td>
+  </tr>
   </table>
 
   <br />
