@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://purl.org/atom/ns#" xmlns:echo="http://purl.org/atom/ns#">
+  <xs:element name="entry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="echo:title"/>
+        <xs:element ref="echo:author"/>
+        <xs:element ref="echo:link"/>
+        <xs:element ref="echo:id"/>
+        <xs:element ref="echo:created"/>
+        <xs:element ref="echo:issued"/>
+        <xs:element ref="echo:modified"/>
+        <xs:element ref="echo:content"/>
+      </xs:sequence>
+      <xs:attribute name="version" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="title" type="xs:NCName"/>
+  <xs:element name="author">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="echo:name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:NCName"/>
+  <xs:element name="link" type="xs:anyURI"/>
+  <xs:element name="id" type="xs:string"/>
+  <xs:element name="created" type="xs:NMTOKEN"/>
+  <xs:element name="issued" type="xs:NMTOKEN"/>
+  <xs:element name="modified" type="xs:NMTOKEN"/>
+  <xs:element name="content">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="p" form="unqualified">
+          <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="a" form="unqualified">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:NCName">
+                      <xs:attribute name="href" use="required" type="xs:anyURI"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="b" form="unqualified" type="xs:NCName"/>
+              <xs:element name="i" form="unqualified" type="xs:NCName"/>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="type" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
