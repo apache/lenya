@@ -29,7 +29,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FilePolicyManager;
-import org.apache.lenya.cms.ExcaliburTest;
+import org.apache.cocoon.SitemapComponentTestCase;
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
 
@@ -37,7 +37,7 @@ import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class AccessControlTest extends ExcaliburTest {
+public class AccessControlTest extends SitemapComponentTestCase {
 
     private ComponentSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
@@ -49,7 +49,6 @@ public class AccessControlTest extends ExcaliburTest {
      * @param test The test.
      */
     public AccessControlTest(String test) {
-        super(test);
     }
 
     /**
@@ -63,7 +62,7 @@ public class AccessControlTest extends ExcaliburTest {
     protected static final String URL = "/test/authoring/index.html";
 
     /** @see junit.framework.TestCase#setUp() */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         if (PublicationHelper.getPublication() == null) {
             String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
@@ -72,7 +71,7 @@ public class AccessControlTest extends ExcaliburTest {
 
         super.setUp();
 
-        this.accessControllerResolverSelector = (ComponentSelector) this.manager
+        this.accessControllerResolverSelector = (ComponentSelector) getManager()
                 .lookup(AccessControllerResolver.ROLE + "Selector");
         assertNotNull(this.accessControllerResolverSelector);
 
@@ -114,7 +113,7 @@ public class AccessControlTest extends ExcaliburTest {
                 }
                 this.accessControllerResolverSelector.release(this.accessControllerResolver);
             }
-            this.manager.release(this.accessControllerResolver);
+            getManager().release(this.accessControllerResolver);
         }
     }
 
@@ -131,7 +130,7 @@ public class AccessControlTest extends ExcaliburTest {
         assertNotNull(user);
 
         Identity identity = new Identity();
-        identity.enableLogging(getLogEnabledLogger());
+        identity.enableLogging(getLogger());
         identity.addIdentifiable(user);
 
         return identity;
