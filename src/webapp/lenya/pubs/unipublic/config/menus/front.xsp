@@ -16,7 +16,7 @@
     <menu name="File" label="File">
       <block>
         <item>Edit&#160;Headlines</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/frontpage/headlines.xml</xsp:attribute>Publish&#160;Headlines</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/frontpage/headlines.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Headlines</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid/index.html?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/frontpage/headlines.xml&amp;documentType=Headlines</xsp:attribute>Schedule&#160;Headlines</item>
       </block>
       <separator>

@@ -13,6 +13,12 @@
   <xsp:logic>
     String year=parameters.getParameter("year","null");
     String dossierId=parameters.getParameter("dossierId","null");
+
+    String sourcesParameter =
+            "sources=/dossiers/" + year + "/" + dossierId + "/index.xml";
+    String urisParameter =
+            "uris=" + xsp_wyona_context_prefix + "/dossiers/" + dossierId + "/index.html";
+    
   </xsp:logic>                                                                                                                              
 
   <live_uri><xsp:expr>"/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr></live_uri>
@@ -30,7 +36,7 @@
       </block>
 
       <block>
-        <item href="index.xml">Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-dossier</xsp:attribute>Publish</item>
 <!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?docid=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+dossierId</xsp:expr>/index.html&amp;docids=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+dossierId</xsp:expr>/index.xml</xsp:attribute>Publish</item>            
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+dossierId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            

@@ -17,9 +17,9 @@
   
   <task id="publish-dossier">
     <label>Publish Dossier</label>
+    <task id="insert" class="ch.unizh.unipublic.wyona.cms.InsertDossierTask"/>
     <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
     <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
-    <!-- FIXME: insert on front page -->
   </task>
 
   <!-- different task names for scheduler

@@ -46,10 +46,8 @@
         <backupDirectory href="docs/publication/rcbak"/>
       </map:action>
 
-      <!-- publishing -->
-      <map:action name="task" src="org.wyona.cms.cocoon.acting.TaskAction">
-        <task id="publish"/>
-      </map:action>
+      <!-- tasks -->
+      <map:action name="task" src="org.wyona.cms.cocoon.acting.TaskAction"/>
       
       <!-- dossier selection -->
       <map:action name="dossier" src="ch.unizh.unipublic.wyona.cms.DossierAction"/>
@@ -147,28 +145,38 @@
     <map:pipeline>
     
       <!-- ===================================================================== -->      
-      <!-- Publish: Article -->
+      <!-- Publish
+           The task ID of the publishing task is forwarded as request parameter 
+           from the menu.
+      -->
       <!-- ===================================================================== -->      
-      <map:match pattern="wyona/publishArticleScreen*">
+      <map:match pattern="wyona/publishScreen*">
         <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
         <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
+<!--          
           <map:parameter name="title" value="Publish Article"/>
           <map:parameter name="action" value="publishArticle"/>
+-->          
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
       
-      <map:match pattern="wyona/publishArticle*">
-        <map:act type="task">
-          <map:parameter name="task-id" value="publish-article"/>
-          <map:redirect-to uri="{parent_uri}" session="true"/>
+      <map:match pattern="wyona/publish*">
+        <map:act type="request-parameters">
+          <map:parameter name="parameters" value="true"/>
+          <map:act type="task">
+            <map:parameter name="task-id" value="{task-id}"/>
+            <map:redirect-to uri="{parent_uri}" session="true"/>
+          </map:act>
+          <map:redirect-to uri="publishScreen?status=failed" session="true"/>
         </map:act>
-        <map:redirect-to uri="publishScreen?status=failed" session="true"/>
       </map:match>
 
       <!-- ===================================================================== -->      
       <!-- Publish: Frontpage, etc. -->
       <!-- ===================================================================== -->      
+<!--      
       <map:match pattern="wyona/publishScreen*">
         <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
         <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
@@ -182,7 +190,7 @@
         </map:act>
         <map:redirect-to uri="publishScreen?status=failed" session="true"/>
       </map:match>
-
+-->
     </map:pipeline>
     <!-- /Publisher  -->
 
