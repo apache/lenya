@@ -60,6 +60,13 @@
         <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
         <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
       </block>
+      <separator>
+        <item>-----------</item>
+      </separator>
+      <block>
+        <item href="/wyona-cms/lucene/create">Create&#160;Lucene&#160;Index</item>
+        <item href="/wyona-cms/lucene/search">Search&#160;with&#160;Lucene</item>
+      </block>
     </menu>
 
     <menu name="Help" label="Help">

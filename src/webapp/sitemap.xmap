@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.24 2002/11/07 00:03:57 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.25 2002/11/20 21:46:49 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -13,6 +13,8 @@
    <map:generator name="file"           logger="sitemap.generator.file"           label="content,data"
                   src="org.apache.cocoon.generation.FileGenerator"
                   pool-max="32" pool-min="16" pool-grow="4"/>
+
+   <map:generator name="file-nolabel" logger="sitemap.generator.file-nolabel" src="org.apache.cocoon.generation.FileGenerator" pool-max="32" pool-min="16" pool-grow="4"/>
 
    <map:generator name="directory"      logger="sitemap.generator.directory"      label="content,data"
                   src="org.apache.cocoon.generation.DirectoryGenerator"/>

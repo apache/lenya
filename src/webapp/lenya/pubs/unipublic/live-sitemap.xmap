@@ -13,11 +13,28 @@
       <map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
     </map:transformers>
     <map:readers default="resource"/>
-    <map:serializers default="html"/>
+    <map:serializers default="html">
+      <map:serializer name="links" src="org.apache.cocoon.serialization.LinkSerializer"/>
+    </map:serializers>
     <map:matchers default="wildcard"/>
     <map:actions/>
     <map:selectors/>
   </map:components>
+
+  <!-- =========================== Views ================================ -->
+
+  <map:views>
+    <!-- Lucene Content -->
+    <map:view name="content" from-label="content">
+      <map:serialize type="xml"/>
+    </map:view>
+
+    <!-- Lucene Links -->
+    <map:view name="links" from-position="last">
+      <map:serialize type="links"/>
+    </map:view>
+  </map:views>
+
 
   <!-- =========================== Pipelines ================================ -->
 
@@ -84,7 +101,7 @@
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
       <map:match pattern="index.html">
-        <map:generate src="cocoon:/index.xml"/> 
+        <map:generate src="cocoon:/index.xml" label="content"/> 
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl">
           <map:parameter name="year" value="2002"/>
         </map:transform>
@@ -101,7 +118,7 @@
       </map:match>
 
       <map:match pattern="index.xml">
-        <map:generate src="docs/publication/live/frontpage/index.xml"/>
+        <map:generate type="file-nolabel" src="docs/publication/live/frontpage/index.xml"/>
         <map:transform type="xlink">
           <map:parameter name="href" value="docs/publication/live/frontpage/index.xml"/>
         </map:transform>
