@@ -11,10 +11,10 @@ import java.io.File;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * A Lenya publication.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: Publication.java,v 1.41 2004/02/09 16:56:43 andreas Exp $
  */
 public interface Publication {
 
