@@ -10,6 +10,7 @@ import org.quartz.JobExecutionException;
 
 /**
  * @author Michael Wechner
+ * @version 2002.10.8
  */
 public class HelloWorldJob implements Job{
   static Category log = Category.getInstance(HelloWorldJob.class);
@@ -20,6 +21,6 @@ public class HelloWorldJob implements Job{
     JobDetail jobDetail = context.getJobDetail();
     JobDataMap jobDataMap = jobDetail.getJobDataMap();
     String sentence = jobDataMap.getString("sentence");
-    log.fatal(".execute(): "+sentence);
+    log.debug(".execute(): "+sentence);
     }
 }
