@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- CAUTION: this tree is handcrafted -->
+<!-- Necessary are the channels, sections, and years; the article entries are not used -->
+<!-- To add a new year just add the respective year branches -->
+<tree>
+	<branch relURI="" doctype="Front" menuName="Home">
+		<branch relURI="news" doctype="Article" menuName="News">
+		</branch>
+	</branch>
+</tree>
