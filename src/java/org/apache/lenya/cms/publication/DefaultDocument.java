@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.28 2003/09/03 12:10:08 egli Exp $
+$Id: DefaultDocument.java,v 1.29 2003/09/03 17:44:46 egli Exp $
 <License>
 
  ============================================================================
@@ -138,7 +138,10 @@ public class DefaultDocument implements Document {
 	 * @see org.apache.lenya.cms.publication.Document#getNodeId()
 	 */
 	public String getNodeId() {
-		return id.substring(id.lastIndexOf("/"), id.length());
+		String[] ids = id.split("/");
+		String nodeId = ids[ids.length - 1];
+
+		return nodeId;
 	}
 	
     /**
