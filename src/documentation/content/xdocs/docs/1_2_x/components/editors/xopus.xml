@@ -32,6 +32,13 @@
 <body> 
 
 <section>
+<title>About Xopus</title>
+<p>Xopus is a browser based validating in-place wysiwyg XML editor. It uses Javascript, XML Schema and XSLT.
+    At this time, it only works on Internet Explorer. If you need a cross-platform solution, take a look at
+    BXE. Note that Xopus is not open source, but a commerical product by Q42.</p>
+</section>
+    
+<section>
 <title>Demo</title>
 <p>Try Xopus at:</p>
 <source>
@@ -43,13 +50,12 @@ http://www.xopus.com/demo/index.html
 
 <section>
 <title>Configuration</title>
-<p>Lenya needs to know the prefix of Xopus:</p>
-<source>
-<![CDATA[
-src/webapp/lenya/usecase.xmap
-src/webapp/lenya/resources/misc/xopus/index.html
-]]>
-</source>
+<p>Lenya is expecting an <em>@XOPUS:CONTEXT@</em> (e.g. Xopus-2.1.66) directory 
+within your <em>@XOPUS:PATH@</em> (e.g. <em>webapps/ROOT</em>) directory. 
+<em>@XOPUS:CONTEXT@</em> and <em>@XOPUS:PATH@</em> are configured 
+within your <em>local.build.properties</em> (xopus.context resp. xopus.path). 
+The path is relative to <em>usecase.xmap</em>. 
+</p>
 </section>
 
 <section>
@@ -111,16 +117,21 @@ $PUBLICATION/lenya/xslt/xopus/$DOCTYPE.xsl
 ]]>
 </source>
 <p>
-whereas one might want to use <link href="http://www.thaiopensource.com/relaxng/trang.html">Trang</link> to generate XML Schemas.
+You might want to use <link href="http://www.thaiopensource.com/relaxng/trang.html">Trang</link> to generate XML Schemas.
 </p>
 <p>
 Editing with Xopus is implemented as a usecase. One can add a menu item as follows:
 </p>
 <source>
 <![CDATA[
-<item uc:usecase="xopus" href="?lenya.step=open&amp;doctype=$DOCTYPE">Edit&#160;with&#160;Xopus</item>
+<item uc:usecase="xopus" uc:step="open" href="?doctype=$DOCTYPE">Edit&#160;with&#160;Xopus</item>
 ]]>
 </source>
+<p>In addition, you may want to study the oscom publication which has an Xopus integration example, 
+    as well as the root xopus.xmap, the xopus.xmap in the oscom publication, and the section in 
+    usecase.xmap pertaining to xopus. This will help you understand how the integration was done
+    (which admittedly is a bit clunky as it predates many Lenya concepts).
+    </p>
 </section>
 </body>
 </document>
