@@ -2,6 +2,7 @@ body {
 	font-size: 12px;
 	font-family: Verdana, Arial, Helvetica;
 	background-color: #ffffff;
+	display: block;
 }
 
 title {
