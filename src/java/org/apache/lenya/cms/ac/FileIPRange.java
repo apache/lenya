@@ -1,5 +1,4 @@
 /*
-$Id: FileIPRange.java,v 1.1 2003/07/22 17:01:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,9 +64,33 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 /**
  * IP range that is stored in a file.
  * 
- * @author andreas
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: FileIPRange.java,v 1.2 2003/07/24 16:29:50 michi Exp $
  */
 public class FileIPRange extends IPRange {
+
+    /**
+     *
+     */
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Usage: network, netmask, ip (e.g. 192.168.0.64 255.255.255.240 192.168.0.70)");
+            return;
+        }
+        IPRange ipr = new FileIPRange();
+        try {
+            ipr.setNetworkAddress(args[0]);
+            ipr.setSubnetMask(args[1]);
+            if (ipr.contains(new Machine(args[2]))) {
+                System.out.println("true");
+            } else {
+                System.out.println("false");
+            }
+        } catch(Exception e) {
+            System.err.println(e);
+        }
+    }
 
     /**
      * Ctor.
