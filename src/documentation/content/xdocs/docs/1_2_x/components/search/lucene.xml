@@ -32,48 +32,18 @@
 <body> 
 
 <section>
-<title>Generic Search</title>
-<p>URL:</p>
-<source>
-<![CDATA[
-/lenya/$PUB_ID/search-$AREA/lucene
-]]>
-</source>
+<title>Overview</title>
+<p>There are two URL for the search screen relative to your publication: 
+    <code>search-live/lucene</code> to search the live area, <code>search-authoring/lucene</code> to 
+    search the authoring area of your publication.</p>
+<p>If you want to customize the layout of  the search screen for your publication, 
+    place a stylesheet at <code>lenya/xslt/search/search-and-results.xsl</code>
+     relative to your publication root.</p>
+<p>Lucene indices are stored within the <code>work/search/index/$AREA/index</code> directory of your 
+    publication. The <code>work/search/htdocs_dump/$AREA</code> directory holds content from crawling (see below).</p>
 
-<p>Indices and Excerpts:</p>
-<source>
-<![CDATA[
-src/webapp/lenya/pubs/$PUB_ID/work/search/index/$AREA/index
-src/webapp/lenya/pubs/$PUB_ID/work/search/htdocs_dump/$AREA
-]]>
-</source>
-
-<p>Configuration:</p>
-<source>
-<![CDATA[
-src/webapp/global-sitemap.xmap
-src/webapp/lenya/lucene.xmap
-]]>
-</source>
+<p>The search pipelines are defined within <code>global-sitemap.xmap</code> and <code>lucene.xmap</code></p>
 </section>
-
-<section>
-<title>Customizing/Overwriting Generic Search Interface</title>
-<p>XSLT:</p>
-<source>
-<![CDATA[
-src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
-]]>
-</source>
-
-<p>URL:</p>
-<source>
-<![CDATA[
-/lenya/$PUB_ID/search-$AREA/lucene
-]]>
-</source>
-</section>
-
 
 <section>
 <title>Crawling a website</title>
@@ -82,11 +52,12 @@ Crawl a website by running
 </p>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml crawl -Dcrawler.xconf=/home/username/src/lenya/src/webapp/lenya/pubs/default/config/search/crawler-live.xconf
+ant -f build/lenya/webapp/lenya/bin/crawl_and_index.xml -Dcrawler.xconf=build/lenya/webapp/lenya/pubs/default/config/search/crawler-live.xconf crawl
 ]]>
 </source>
 <p>
-whereas the crawler.xconf has the following elements
+Note that there is a search.properties file in build/lenya/webapp/lenya/bin that you may have to change.
+crawler.xconf needs to have the following elements:
 </p>
 <source>
 <![CDATA[
@@ -104,7 +75,7 @@ whereas the crawler.xconf has the following elements
 ]]>
 </source>
 <p>
-where the element robots is optional.
+the robots element is optional.
 </p>
 <p>
 In case you don't have access to the server and want to disallow certain  URLs from being crawled, then
@@ -128,11 +99,12 @@ Disallow: /do/not/crawl/this/page.html
 <title>Creating an index from the command line</title>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=/home/username/src/lenya/src/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
+ant -f build/lenya/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=build/lenya/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
 ]]>
 </source>
 <p>
-whereas the lucene.xconf has the following elements
+Note that there is a search.properties file in build/lenya/webapp/lenya/bin that you may have to change.
+lucene-live.xconf has the following elements
 </p>
 <source>
 <![CDATA[
@@ -146,18 +118,6 @@ whereas the lucene.xconf has the following elements
     <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump"/>
 
     <indexer class="org.apache.lenya.lucene.index.DefaultIndexer"/>
-<!--
-    <indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer">
-      <configuration src="cmfs-luceneDoc.xconf"/>
-      <extensions src="xml"/>
-    </indexer>
--->
-<!--
-    <indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer">
-      <configuration src="cmfs-luceneDoc.xconf"/>
-      <filter class="foo.bar.FileFilter"/>
-    </indexer>
--->
 </lucene>
 ]]>
 </source>
@@ -215,7 +175,7 @@ Concatenating element values and setting default values in case element value do
 <title>Extract text from a PDF document</title>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dhtdocs.dump.dir=/home/username/src/lenya/src/webapp/lenya/pubs/default/work/search/lucene/htdocs_dump xpdf
+ant -f build/lenya/webapp/lenya/bin/crawl_and_index.xml -Dhtdocs.dump.dir=build/lenya/webapp/lenya/pubs/default/work/search/lucene/htdocs_dump xpdf
 ]]>
 </source>
 <p>
