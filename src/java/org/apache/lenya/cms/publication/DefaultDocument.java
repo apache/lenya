@@ -52,50 +52,140 @@ import java.io.File;
  */
 public class DefaultDocument implements Document {
 
-    /** Creates a new instance of DefaultDocument */
+    /**
+     * Creates a new instance of DefaultDocument.
+     * @param publication The publication the document belongs to.
+     * @param id The document ID (starting with a slash).
+     * @deprecated Use {@link DefaultDocumentBuilder} instead.
+     */
     public DefaultDocument(Publication publication, String id) {
         assert id != null;
+        assert id.startsWith("/");
         this.id = id;
-        
-        assert publication != null;
+
+        assert publication != null && !"".equals(publication);
         this.publication = publication;
     }
-    
+
+    /**
+     * Creates a new instance of DefaultDocument.
+     * @param publication The publication the document belongs to.
+     * @param id The document ID (starting with a slash).
+     * @param area The area.
+     */
+    protected DefaultDocument(Publication publication, String id, String area) {
+        assert id != null;
+        assert id.startsWith("/");
+        this.id = id;
+
+        assert publication != null && !"".equals(publication);
+        this.publication = publication;
+
+        setArea(area);
+    }
+
     private String id;
     private Publication publication;
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.publication.Document#getFile()
      */
     public String getId() {
         return id;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
     public Publication getPublication() {
         return publication;
     }
-    
+
     /**
-     * Returns the file for this document in a certain area and language.
-     * @param area The area.
-     * @param language The language.
+     * Returns the file for this document.
      * @return A file object.
      */
-    public File getFile(String area, String language) {
+    public File getFile() {
         return getPublication().getPathMapper().getFile(
-            getPublication(), area, getId(), language);
+            getPublication(),
+            getArea(),
+            getId(),
+            getLanguage());
     }
-    
+
+    private String language = "";
+
     /**
-     * Returns the files for this document in a certain area and all languages.
-     * @param area The area.
-     * @return A file object.
+     * @see org.apache.lenya.cms.publication.Document#getLanguage()
      */
-    public File[] getFiles(String area) {
-        return getPublication().getPathMapper().getFiles(getPublication(), area, getId());
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * Sets the language of this document.
+     * @param language The language.
+     */
+    public void setLanguage(String language) {
+        assert language != null;
+        this.language = language;
+    }
+
+    private String area;
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getArea()
+     */
+    public String getArea() {
+        return area;
+    }
+
+    /**
+     * @see Document#getCompleteUrl(String)
+     */
+    public String getCompleteUrl() {
+        String languageSuffix = "".equals(getLanguage()) ? "" : "_" + getLanguage();
+
+        String extensionSuffix = "".equals(getExtension()) ? "" : "." + getExtension();
+
+        return "/" + getPublication().getId() + "/" + getArea() + getDocumentUrl();
+    }
+
+    /**
+     * Sets the area.
+     * @param area A string.
+     */
+    protected void setArea(String area) {
+        assert area != null
+            && (area.equals(Publication.AUTHORING_AREA) || area.equals(Publication.LIVE_AREA));
+        this.area = area;
+    }
+
+    private String extension = "html";
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getExtension()
+     */
+    public String getExtension() {
+        return extension;
+    }
+
+    /**
+     * Sets the extension of the file in the URL.
+     * @param extension A string.
+     */
+    protected void setExtension(String extension) {
+        assert extension != null;
+        this.extension = extension;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getDocumentUrl()
+     */
+    public String getDocumentUrl() {
+        String languageSuffix = "".equals(getLanguage()) ? "" : "_" + getLanguage();
+        String extensionSuffix = "".equals(getExtension()) ? "" : "." + getExtension();
+        return getId() + languageSuffix + extensionSuffix;
     }
 
 }
