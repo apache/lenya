@@ -1,5 +1,4 @@
 /*
-$Id: DateUtil.java,v 1.9 2003/07/17 10:20:46 egli Exp $
 <License>
 
  ============================================================================
@@ -55,12 +54,16 @@ $Id: DateUtil.java,v 1.9 2003/07/17 10:20:46 egli Exp $
 */
 package org.apache.lenya.util;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * DOCUMENT ME!
  *
  * @author Edith Chevrier
- * @version 2002.7.8
+ * @author Christian Egli
+ * @author Michael Wechner
+ * @version $Id: DateUtil.java,v 1.10 2003/08/11 22:19:25 michi Exp $
  * @deprecated use java.text.DateFormat instead
  */
 public class DateUtil {
@@ -267,5 +270,19 @@ public class DateUtil {
         }
 
         return name;
+    }
+
+    /**
+     * 2003-08-11T23:14:48
+     */
+    public static String getCurrentDate() {
+        Calendar cal = new GregorianCalendar();
+        String year = "" + cal.get(Calendar.YEAR);
+        String month = oneToTwoDigits("" + (cal.get(Calendar.MONTH) + 1));
+        String day = oneToTwoDigits("" + cal.get(Calendar.DAY_OF_MONTH));
+        String hour = oneToTwoDigits("" + cal.get(Calendar.HOUR));
+        String minute = oneToTwoDigits("" + cal.get(Calendar.MINUTE));
+        String second = oneToTwoDigits("" + cal.get(Calendar.SECOND));
+        return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
     }
 }

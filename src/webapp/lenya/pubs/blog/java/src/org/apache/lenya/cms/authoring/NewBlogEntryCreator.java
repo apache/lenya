@@ -61,7 +61,7 @@ import java.util.Map;
 
 /**
  * @author Michael Wechner
- * @version $Id: NewBlogEntryCreator.java,v 1.1 2003/08/05 19:50:48 michi Exp $
+ * @version $Id: NewBlogEntryCreator.java,v 1.2 2003/08/11 22:19:25 michi Exp $
  */
 public class NewBlogEntryCreator extends DefaultBranchCreator {
     private static Category log = Category.getInstance(NewBlogEntryCreator.class);
@@ -110,5 +110,11 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         // Replace author
         Identity identity = (Identity)parameters.get("org.apache.lenya.cms.ac2.Identity");
         du.setElementValue(doc, "/echo:entry/echo:author/echo:name", identity.getUser().getId());
+
+        // Replace date created (and issued and modified, FIXME: issued should be set during first time publishing, modified should be set during re-publishing)
+        String date = org.apache.lenya.util.DateUtil.getCurrentDate();
+        du.setElementValue(doc, "/echo:entry/echo:created", date);
+        du.setElementValue(doc, "/echo:entry/echo:issued", date);
+        du.setElementValue(doc, "/echo:entry/echo:modified", date);
     }
 }
