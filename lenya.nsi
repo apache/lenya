@@ -1,5 +1,5 @@
 ;NSIS Lenya Installer script
-; $Id: lenya.nsi,v 1.5 2004/01/08 14:49:16 gregor Exp $
+; $Id: lenya.nsi,v 1.6 2004/01/31 19:12:05 gregor Exp $
 
 ;--------------------------------
 ;Include Modern UI
@@ -60,6 +60,7 @@ Section "Apache Lenya" SecDummy
   SetOutPath $INSTDIR
   File lenya.bat
   File README.txt
+  File CREDITS.txt
   File /r tools
 
   CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Lenya Home Page.lnk" \
