@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<wf:history xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0" doctype="simple">
+<wf:history xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0" doctype="simple-document">
   
-  <version state="redaktion" event="create" user="karl" date=""/>
-  <version state="review" event="publish" user="karl" date=""/>
+  <wf:version state="redaktion" event="create" user="karl" date=""/>
   
 </wf:history>
