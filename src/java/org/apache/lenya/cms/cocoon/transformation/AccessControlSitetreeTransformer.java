@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlSitetreeTransformer.java,v 1.3 2004/02/17 14:06:25 andreas Exp $
+$Id: AccessControlSitetreeTransformer.java,v 1.4 2004/02/18 09:08:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,8 +59,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.component.ComponentManager;
 import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -92,7 +94,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * with a <code>protected="true"</code> attribute.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.3 2004/02/17 14:06:25 andreas Exp $
+ * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.4 2004/02/18 09:08:45 andreas Exp $
  */
 public class AccessControlSitetreeTransformer
     extends AbstractSAXTransformer
@@ -197,13 +199,13 @@ public class AccessControlSitetreeTransformer
             if (acResolver != null) {
                 componentSelector.release(acResolver);
             }
-            manager.release(componentSelector);
+            ((ComponentManager) manager).release(componentSelector);
         }
         if (serviceSelector != null) {
             if (acResolver != null) {
                 serviceSelector.release(acResolver);
             }
-            manager.release(serviceSelector);
+            ((ServiceManager) manager).release(serviceSelector);
         }
     }
 
