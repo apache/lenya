@@ -125,6 +125,9 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
 
             situation = new CMSSituation(roleIds, userId, machineIp);
         }
+        else {
+            situation = new CMSSituation(new String[0], null, null);
+        }
         return situation;
     }
 
