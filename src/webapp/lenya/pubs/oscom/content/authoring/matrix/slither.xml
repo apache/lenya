@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="framework">
+  <id>slither</id>
+  <editor email="pshafaee@hostway.com">John Shafaee</editor>
+  <system_name>Slither</system_name>
+<description>
+Slither is a Python based web application
+development framework. It provides you an environment that helps construct
+fully functional, powerful web applications with minimal effort, leveraging
+the power of Python. By comparison to JSP, Servlets, Zope and ASPs, it has a
+little bit of influence from each, but not nearly as heavy or complex.
+</description>
+  <main_url>http://slither.toolsofcomputing.com/</main_url>
+  <license>
+    <license_name>GNU GPL</license_name>
+    <license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+  </license>
+</system>
