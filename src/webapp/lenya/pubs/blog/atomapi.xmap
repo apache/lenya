@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<!-- CVS: $Id: atomapi.xmap,v 1.1 2003/09/09 23:09:44 michi Exp $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:selectors default="browser">
+      <map:selector logger="sitemap.selector.request-method" name="request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
+      <map:selector logger="sitemap.selector.request-parameter" name="request-parameter" src="org.apache.cocoon.selection.RequestParameterSelector"/>
+    </map:selectors>
+  </map:components>
+
+  <map:views/>
+
+  <map:resources/>
+
+  <map:pipelines>
+
+    <!-- Introspection -->
+    <map:pipeline type="noncaching">
+      <map:match pattern="">
+        <map:generate src="content/introspection.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:handle-errors type="500"/>
+    </map:pipeline>
+
+    <!-- search-entries -->
+    <map:pipeline type="noncaching">
+      <map:match pattern="search">
+        <map:select type="request-parameter">
+           <map:parameter name="parameter-name" value="atom-all"/>
+          <map:when test="">
+            <map:generate type="directory" src="content/authoring/entries/{1}/"/>
+            <map:serialize type="xml"/>
+          </map:when>
+          <map:otherwise> <!-- Introspection -->
+            <map:generate src="sitemap.xmap"/>
+            <map:serialize type="xml"/>
+          </map:otherwise>
+        </map:select>
+
+        <map:select type="request-parameter">
+           <map:parameter name="parameter-name" value="entry"/>
+          <map:when test="">
+            <map:generate src="content/authoring/entries/2003/07/28/1/index.xml"/>
+            <map:serialize type="xml"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate src="content/authoring/entries/1998/10/29/levi/index.xml"/>
+            <map:serialize type="xml"/>
+          </map:otherwise>
+        </map:select>
+      </map:match>
+      <map:handle-errors type="500"/>
+    </map:pipeline>
+
+  </map:pipelines>
+</map:sitemap>

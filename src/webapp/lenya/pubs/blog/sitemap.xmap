@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.32 2003/09/09 20:18:50 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.33 2003/09/09 23:09:44 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -16,6 +16,20 @@
     <map:pipeline>
       <map:match pattern="**/css/styles.css">
         <map:read src="resources/css/styles.css" mime-type="text/css"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- WebDAV -->
+    <map:pipeline>
+      <map:match pattern="webdav/**">
+        <map:mount src="webdav.xmap" uri-prefix="webdav" check-reload="yes"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- AtomAPI -->
+    <map:pipeline>
+      <map:match pattern="atomapi/**">
+        <map:mount src="atomapi.xmap" uri-prefix="atomapi" check-reload="yes"/>
       </map:match>
     </map:pipeline>
   
@@ -36,13 +50,6 @@
       <!-- The HTML Form Editor does send a redirect -->
       <map:match pattern="*/sidebar.html">
         <map:redirect-to uri="feeds/all/index.html"/>
-      </map:match>
-    </map:pipeline>
-
-    <!-- WebDAV -->
-    <map:pipeline>
-      <map:match pattern="webdav/**">
-        <map:mount src="webdav.xmap" uri-prefix="webdav" check-reload="yes"/>
       </map:match>
     </map:pipeline>
 
