@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: NewBlogEntryCreator.java,v 1.4 2004/03/20 11:47:01 gregor Exp $  */
+/* $Id: NewBlogEntryCreator.java,v 1.5 2004/03/20 12:08:56 gregor Exp $  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -93,7 +93,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         DateFormat ofsfmt = new SimpleDateFormat("Z");
 
         String dateofs = ofsfmt.format(date);
-        String datestr = datefmt.format(date) + dateofs.substring(0, 3) + ":" dateofs.substring(3, 5);
+        String datestr = datefmt.format(date) + dateofs.substring(0, 3) + ":" + dateofs.substring(3, 5);
 
         du.setElementValue(doc, "/echo:entry/echo:created", datestr);
         du.setElementValue(doc, "/echo:entry/echo:issued", datestr);
