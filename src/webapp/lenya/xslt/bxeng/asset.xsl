@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.9 2004/03/31 17:40:11 gregor Exp $ -->
+<!-- $Id: asset.xsl,v 1.10 2004/04/15 11:33:28 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -28,7 +28,7 @@
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
     disable-output-escaping="yes"
-    exclude-result-prefixes="lenya-info wf rc dc usecase"
+    exclude-result-prefixes="lenya-info wf rc dc usecase page i18n"
     >
 
   <xsl:param name="lenya.usecase" select="'asset'"/>
@@ -46,7 +46,9 @@
 function insertAsset(src, size) {
 
   var title = document.forms["assetlibrary"].title.value;
+  <![CDATA[
   window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'" size="'+size+'" type="">'+title+'</asset>',window.opener.BXE_SELECTION,window.opener.BXE_SPLIT_IF_INLINE);
+  ]]>
   window.close();
 }
 

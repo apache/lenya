@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase-bxeng.xmap,v 1.11 2004/04/13 13:16:36 gregor Exp $ -->
+<!-- $Id: usecase-bxeng.xmap,v 1.12 2004/04/15 11:33:28 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -50,6 +50,7 @@
       <map:transform src="../../xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
+      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
       <map:select type="parameter">
         <map:parameter name="statusCode" value="{statusCode}"/>
         <map:when test="">

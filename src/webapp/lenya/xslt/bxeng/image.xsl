@@ -15,10 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: image.xsl,v 1.7 2004/03/31 17:40:11 gregor Exp $ -->
+<!-- $Id: image.xsl,v 1.8 2004/04/15 11:33:28 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0" 
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0" 
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0" 
     xmlns:dc="http://purl.org/dc/elements/1.1/" 
@@ -31,7 +32,7 @@
     <xsl:variable name="noimages"/>
     <xsl:param name="error"/>
 
-    <xsl:param name="extensions" select="'doc dot rtf txt asc ascii xls xlw xlt ppt pot gif jpg png tif eps pct m3u kar mid smf mp3 swa mpg mpv mp4 mov bin sea hqx sit zip jmx jcl qz jbc jmt cfg pdf'"/>
+    <xsl:param name="extensions" select="'gif jpg png'"/>
 
     <xsl:template match="lenya-info:assets">
         <page:page>
@@ -40,10 +41,13 @@
                 <script> 
                    window.onload = insertCaption
                    function insertImage(src) { 
+                      var nodeid = '<xsl:value-of select="lenya-info:documentnodeid"/>/';
                       var link = document.forms["image"].link.value;
                       var caption = document.forms["image"].caption.value;
                       var title = document.forms["image"].title.value;
-                      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" data="{lenya-info:documentnodeid}/'+src+'">'+caption+'</object>'; 
+                      <![CDATA[
+                      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" data="'+nodeid + src+'">'+caption+'</object>'; 
+                      ]]>
                       window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
                       window.close();
                    }
@@ -55,7 +59,6 @@
                     } 
                     focus(); 
                   } 
-
                   function check(fileinput) {
                     var i = 0;
                     var ext = '<xsl:value-of select="$extensions"/>';
@@ -68,7 +71,7 @@
                            return true; 
                       } 
                      } // file does not have one of the accepted extensions. 
-                     alert("You tried to upload a file with an invalid extension. Valid extensions are:\n\n<xsl:value-of select="$extensions"/>"); 
+                     alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n<xsl:value-of select="$extensions"/></i18n:param></i18n:translate>"); 
                      return false;
                   } 
                 </script>
