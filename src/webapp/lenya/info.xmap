@@ -122,8 +122,8 @@
               <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
               <map:parameter name="tab" value=""/>
               <map:parameter name="area" value="{page-envelope:area}"/>
-              <map:parameter name="chosenlanguage" value="{../1}"/>
-              <map:parameter name="documentid" value="{../../1}"/>
+              <map:parameter name="chosenlanguage" value="{1}"/>
+              <map:parameter name="documentid" value="{../1}"/>
               <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
            </map:transform>
 	       <map:serialize/>
