@@ -89,6 +89,7 @@ Configure and compile Apache:
 <source>
 <![CDATA[
 ./configure --prefix=/usr/local/apache2 --with-dav --enable-dav
+(./configure --prefix=/usr/local/apache2 --with-dav --enable-dav --enable-proxy --enable-proxy-http)
 make 
 make install
 /usr/local/apache2/bin/httpd -l | grep dav
