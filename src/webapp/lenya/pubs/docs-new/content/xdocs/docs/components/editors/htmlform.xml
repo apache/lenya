@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: htmlform.xml,v 1.5 2004/03/13 14:45:54 gregor Exp $ -->
+<!-- $Id: htmlform.xml,v 1.6 2004/06/03 13:18:57 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -37,7 +37,7 @@
 You can test-drive the XUpdate engine in Lenya by doing the following:</p>
 <source>
 <![CDATA[
-java -classpath lib/xmldb-common-2003-09-02.jar:lib/xmldb-xupdate-2003-09-02.jar:lib/log4j-1.2.3.jar:build/lenya/webapp/WEB-INF/lib/xercesImpl-2.4.0.jar:build/lenya/webapp/WEB-INF/lib/xalan-2.5.1.jar org.xmldb.xupdate.lexus.XUpdateQueryImpl xupdate.xml entry.xml
+java -classpath lib/xmldb-common-2003-09-02.jar:lib/xmldb-xupdate-2003-09-02.jar:lib/log4j-1.2.8.jar:build/lenya/webapp/WEB-INF/lib/xercesImpl-2.4.0.jar:build/lenya/webapp/WEB-INF/lib/xalan-2.5.1.jar org.xmldb.xupdate.lexus.XUpdateQueryImpl xupdate.xml entry.xml
 ]]>
 </source>
 </section>

@@ -27,7 +27,7 @@ XPDF=`grep xpdf.bin $DIRNAME/search.properties | grep -v "#" | sed -e 's/xpdf.bi
 
 JAVA_XMX=64M
 
-CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar:$LIB_DIR/websphinx.jar
+CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.8.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar:$LIB_DIR/websphinx.jar
 
 echo "INFO: classpath = $CLASSPATH"
 
