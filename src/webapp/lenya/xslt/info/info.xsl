@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.21 2003/08/20 12:35:27 egli Exp $
+ $Id: info.xsl,v 1.22 2003/08/20 18:36:47 felix Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -73,8 +73,8 @@
    <tr><td>Title:</td><td><xsl:value-of select="dc:title"/></td></tr>
    <tr><td>Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
    <tr><td>Status:</td><td><xsl:value-of select="lenya-info:status"/></td></tr>
-   <tr><td>Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
-   <tr><td>Other Languages:</td><td><xsl:value-of select="lenya-info:languages"/></td></tr>
+   <tr><td>Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
+   <tr><td>Available Languages:</td><td><xsl:value-of select="lenya-info:languages"/></td></tr>
    <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr>
    <tr><td>Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
    <tr><td>Document ID:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
