@@ -675,7 +675,24 @@
       <!-- Lenya page transformation -->
       <!-- lenya-page/{publication-id}/{complete-area}/... -->
       <map:match pattern="lenya-page/*/*/**">
-      	<map:generate src="cocoon:/menu/{1}/{2}/{3}"/>
+      	<map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
+      	
+      	<map:act type="resource-exists" src="lenya/pubs/{1}/config/workflow/">
+          <map:transform type="workflowmenu"/>
+        </map:act>
+        
+      	<map:act type="resource-exists" src="lenya/pubs/{1}/config/ac/usecase-policies.xml">
+          <map:transform type="usecasemenu"/>
+        </map:act>
+        
+        <map:transform src="lenya/xslt/menu/menu2xhtml.xsl">
+          <map:parameter name="context-prefix" value="{request:contextPath}"/>
+          <map:parameter name="publication-id" value="{1}"/>
+          <map:parameter name="complete-area" value="{2}"/>
+          <map:parameter name="document-area" value="{page-envelope:area}"/>
+          <map:parameter name="document-url" value="{page-envelope:document-url}"/>
+        </map:transform>
+        
         <map:transform src="lenya/xslt/menu/menu2xslt.xsl">
           <map:parameter name="context-prefix" value="{request:contextPath}"/>
           <map:parameter name="publication-id" value="{1}"/>
@@ -686,21 +703,14 @@
       </map:match>
       
       <!-- menus -->
-      <!-- menu/{publication-id}/{complete-area}/... -->
-      <map:match pattern="menu/*/*/**">
-      	<map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
-        <map:transform type="workflowmenu"/>
-        <map:transform type="usecasemenu"/>
-        <map:transform src="lenya/xslt/menu/menu2xhtml.xsl">
-          <map:parameter name="context-prefix" value="{request:contextPath}"/>
-          <map:parameter name="publication-id" value="{1}"/>
-          <map:parameter name="complete-area" value="{2}"/>
-          <map:parameter name="document-area" value="{page-envelope:area}"/>
-          <map:parameter name="document-url" value="{page-envelope:document-url}"/>
-        </map:transform>
+      
+      <!-- menu-xml/{publication-id}/admin/... -->
+      <map:match pattern="menu-xml/*/admin/**" internal-only="true">
+        <map:generate type="serverpages" src="lenya/content/menus/admin.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       
+      <!-- menu-xml/{publication-id}/... -->
       <map:match pattern="menu-xml/*/**" internal-only="true">
         <map:mount uri-prefix="menu-xml/{1}/" src="lenya/pubs/{1}/menus.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>

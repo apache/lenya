@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: page2xhtml.xsl,v 1.3 2003/09/02 13:49:36 andreas Exp $ -->
+<!-- $Id: page2xhtml.xsl,v 1.4 2003/09/12 12:59:40 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
 	  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -13,18 +13,16 @@
 <xsl:param name="contextprefix"/>
 
 <xsl:template match="/cmsbody">
-  <xsl:copy>
     <html>
       <head>
         <title><xsl:value-of select="page:page/page:title"/></title>
         <link rel="stylesheet" type="text/css"
-          href="{$contextprefix}/lenya/css/default.css" title="default css"/>
+          href="{$contextprefix}/lenya/css/admin.css" title="admin css"/>
       </head>
       <body>
         <xsl:apply-templates/>
       </body>
     </html>
-  </xsl:copy>
 </xsl:template>
 
 

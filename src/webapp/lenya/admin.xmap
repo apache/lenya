@@ -8,11 +8,12 @@
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
+    <map:flow-interpreters default="javascript"/>
     <map:actions/>
     <map:selectors/>
   </map:components>
 
-  <map:flow language="JavaScript">
+  <map:flow language="javascript">
     <map:script src="content/ac/passwd.js"/>
     <map:script src="content/admin/common/access-control.js"/>
     <map:script src="content/admin/users/user-admin.js"/>
@@ -58,14 +59,6 @@
 
   <map:pipelines>
     
-    <!-- Menus -->
-    <map:pipeline>
-      <map:match pattern="menus/admin.xml">
-        <map:generate type="serverpages" src="content/menus/admin.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-
     <!-- =================================================================== -->
     <!-- FlowScript continuations -->
     <!-- =================================================================== -->
@@ -205,7 +198,11 @@
     
     <map:pipeline>
       
-      <map:match pattern="cmsbody/**">
+      <map:match pattern="">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+
+      <map:match pattern="**">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml"/>
           <map:part src="cocoon:/internal/{1}"/>
@@ -213,19 +210,7 @@
         <map:transform src="xslt/admin/page2xhtml.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="">
-        <map:redirect-to uri="index.html"/>
-      </map:match>
-
-      <map:match pattern="**">
-        <map:aggregate element="lenya" label="aggregate">
-          <map:part src="cocoon:/menus/admin.xml"/>
-          <map:part src="cocoon:/cmsbody/{1}"/>
-        </map:aggregate>
-        <map:transform src="xslt/admin/root.xsl" label="content" />
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/admin/{1}" label="content" />
         <map:serialize type="html-iso-8859-1"/>
       </map:match>
       
