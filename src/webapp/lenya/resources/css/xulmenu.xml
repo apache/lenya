@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<css>
+    
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+<!--
+    @import url("chrome://global/skin/");
+-->
+
+<!--
+window, page, dialog, wizard { 
+	background-color: #C7D0D9;
+	font: message-box;
+}
+-->
+
+#lenya-content-box {
+	background-color: white;
+	<!--font: caption; -->
+	font-size-adjust: 0.5;
+}
+
+#lenya-logo {
+	width: 115px;
+	height: 36px;
+	margin-left: 25px;
+	margin-right: 5px;
+}
+
+#lenya-menubar {
+	padding-top: 5px;
+	background-image: url(<xsl:value-of select="concat($contextprefix, '/lenya/menu/images/grau-bg.gif')"/>);
+}
+
+#lenya-xul-menubar {
+	<!-- -moz-border-radius-topright: 1000px; -->
+	background-image: url(<xsl:value-of select="concat($contextprefix, '/lenya/menu/images/grau-bg2.gif')"/>);
+	background-color: red;
+}
+
+
+<!--tab {-->
+	<!--background-color: red;--> <!-- does not work - it only works in the real mozilla with the modern theme not with the classic theme -->
+<!--	font-family: Verdana, sans-serif;	
+	font-size: 80%;
+	font-weight: bold;
+	color: #838383;-->
+	<!--color: black;-->
+	
+	<!-- copy from modern theme -->
+<!--	margin: 0px;
+	border: 3px solid;
+	border-bottom-width: 3px;
+	-moz-border-top-colors: #B1B1B1 #CFCFCF #E4E4E4;
+	-moz-border-right-colors: #B1B1B1 #CFCFCF #E4E4E4;
+	-moz-border-bottom-colors: #B1B1B1 #CFCFCF #E4E4E4;>
+	-moz-border-left-colors: #000000 #90A0B0 #B1B1B1;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	padding: 1px 3px;
+	
+	
+	
+	background-color: #E5F5F8;
+	
+}-->
+
+<!--tab[selected="true"] {
+	-moz-border-top-colors: #000000 #DFE2E6 #D0D7DD;
+	-moz-border-right-colors: #000000 #BAC2CD #C1C9D3;
+	-moz-border-bottom-colors: #E5F5F8;
+	-moz-border-left-colors: #000000 #DFE2E6 #D0D7DD;
+	background-color: #E5F5F8;
+	color: red;
+}-->
+
+<!--
+menubar {
+	background-color: #E5F5F8;
+	border-bottom: solid 1px #B1B1B1;
+}
+
+menupopup {
+	background-color: #E5F5F8;
+}
+-->
+
+</css>
