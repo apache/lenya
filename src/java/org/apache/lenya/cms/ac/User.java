@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.9 2003/06/03 16:37:12 egli Exp $
+ * $Id: User.java,v 1.10 2003/06/04 13:19:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -64,8 +64,6 @@ public abstract class User {
 	protected String email;
 	protected String password;
 	protected Set groups = new HashSet();
-
-	private Group group;
 
 	public User() {
 		this(null, null, null, null);
