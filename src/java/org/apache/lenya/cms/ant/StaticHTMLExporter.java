@@ -111,7 +111,7 @@ public class StaticHTMLExporter
             
         try {
             log("Server URL: " + getServer());
-            log("Publication ID: " + getPublication().getId());
+            log("Publication Directory: " + getPublicationDirectory());
             log("Export directory: " + getPath());
             log("URIs: " + uris);
             log("Substitute expression: " + getExpression());
