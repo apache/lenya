@@ -28,29 +28,37 @@ import java.util.StringTokenizer;
 
 import websphinx.RobotExclusion;
 
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Category;
 
 
 /**
  * Crawl iteratively
  */
-public class IterativeHTMLCrawler {
+public class IterativeHTMLCrawler implements Configurable {
     static Category log = Category.getInstance(IterativeHTMLCrawler.class);
 
     java.util.Vector urlsToCrawl;
     java.util.TreeSet urlsToCrawlLowerCase;
-    String url_list_file = "url_file.txt";
-    String html_dump_directory = "html_dump";
+    String uriList = "url_file.txt";
+    String htdocsDumpDir = "html_dump";
+    private String baseURL;
     private String rootURL;
     private String[] scopeURL;
+    private String userAgent;
     private RobotExclusion robot;
+    private String robotsFile;
+    private String robotsDomain;
+    private String configurationFilePath;
 
     /**
      * Command line interface
      *
      * @param args Configuration file crawler.xconf
      */
-    public static void main(String[] args) {
+    public void main(String[] args) {
         if (args.length == 0) {
             System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
 
@@ -59,15 +67,17 @@ public class IterativeHTMLCrawler {
 
         try {
             if (args.length == 1) {
-                CrawlerConfiguration ce = new CrawlerConfiguration(args[0]);
-                new IterativeHTMLCrawler(new File(args[0])).crawl(new URL(ce.getBaseURL()), ce.getScopeURL());
+                configurationFilePath = args[0];
+                try {
+                    DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+                    Configuration configuration = builder.buildFromFile(configurationFilePath);
+                    configure(configuration);
+                } catch (Exception e) {
+                	System.err.println("Cannot load crawler configuration!");
+                }
+                new IterativeHTMLCrawler(new File(args[0])).crawl(new URL(baseURL), scopeURL[0]);
 	    } else {
                 System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
-/*
-                new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),
-                    ce.resolvePath(ce.getHTDocsDumpDir()), ce.getUserAgent()).crawl(new URL(
-                        ce.getBaseURL()), ce.getScopeURL());
-*/
             }
         } catch (MalformedURLException e) {
             log.error("" + e);
@@ -75,15 +85,34 @@ public class IterativeHTMLCrawler {
     }
 
     /**
+     * DOCUMENT ME!
+     *
+     * @param configuration DOCUMENT ME!
+     *
+     * @throws org.apache.avalon.framework.configuration.ConfigurationException DOCUMENT ME!
+     */
+    public void configure(org.apache.avalon.framework.configuration.Configuration configuration)
+        throws org.apache.avalon.framework.configuration.ConfigurationException {
+
+    	this.baseURL = configuration.getChild("base-url").getAttribute("href");
+    	this.scopeURL[0] = configuration.getChild("scope-url").getAttribute("href");
+    	this.userAgent = configuration.getChild("user-agent").getValue();
+    	this.uriList = configuration.getChild("uri-list").getAttribute("src");
+    	this.htdocsDumpDir = configuration.getChild("htdocs-dump-dir").getAttribute("src");
+    	this.robotsFile = configuration.getChild("robots").getAttribute("src");
+    	this.robotsDomain = configuration.getChild("robots").getAttribute("domain");
+    }
+
+    /**
      * Creates a new IterativeHTMLCrawler object.
      *
-     * @param url_list_file File where all dumped files will be listed
-     * @param html_dump_directory Directory where htdocs should be dumped
+     * @param uriList File where all dumped files will be listed
+     * @param htdocsDumpDir Directory where htdocs should be dumped
      * @param userAgent User-agent for robots.txt
      */
-    public IterativeHTMLCrawler(String url_list_file, String html_dump_directory, String userAgent) {
-        this.url_list_file = url_list_file;
-        this.html_dump_directory = html_dump_directory;
+    public IterativeHTMLCrawler(String uriList, String htdocsDumpDir, String userAgent) {
+        this.uriList = uriList;
+        this.htdocsDumpDir = htdocsDumpDir;
 
         robot = new RobotExclusion(userAgent);
     }
@@ -94,19 +123,19 @@ public class IterativeHTMLCrawler {
      * @param config Configuration File
      */
     public IterativeHTMLCrawler(File config) {
-        CrawlerConfiguration ce = new CrawlerConfiguration(config.getAbsolutePath());
+        try {
+            DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+            Configuration configuration = builder.buildFromFile(config);
+            configure(configuration);
+        } catch (Exception e) {
+        	System.err.println("Cannot load crawler configuration! ");
+        }
 
+        robot = new RobotExclusion(this.userAgent);
 
-        this.url_list_file = ce.resolvePath(ce.getURIList());
-        this.html_dump_directory = ce.resolvePath(ce.getHTDocsDumpDir());
-
-        robot = new RobotExclusion(ce.getUserAgent());
-
-        String robots_file = ce.getRobotsFile();
-        String robots_domain = ce.getRobotsDomain();
-        if (robots_file != null && robots_domain != null) {
-            log.debug(robots_file + " " + robots_domain);
-            robot.addLocalEntries(robots_domain, new File(ce.resolvePath(robots_file)));
+        if (this.robotsFile != null && this.robotsDomain != null) {
+            log.debug(this.robotsFile + " " + this.robotsDomain);
+            robot.addLocalEntries(robotsDomain, new File(robotsFile));
         }
     }
 
@@ -178,12 +207,12 @@ public class IterativeHTMLCrawler {
 
         // Write all crawled URLs into file
         try {
-            File parent = new File(new File(url_list_file).getParent());
+            File parent = new File(new File(uriList).getParent());
             if (!parent.isDirectory()) {
                 parent.mkdirs();
                 log.warn("Directory has been created: " + parent);
             }
-            java.io.PrintWriter out = new java.io.PrintWriter(new FileOutputStream(url_list_file));
+            java.io.PrintWriter out = new java.io.PrintWriter(new FileOutputStream(uriList));
 
             for (int i = 0; i < urlsToCrawl.size(); i++) {
                 out.println("" + urlsToCrawl.elementAt(i));
@@ -454,7 +483,7 @@ public class IterativeHTMLCrawler {
     public void dumpHTDoc(URL url) {
         String ext = getExtension(url);
 
-        String filename = html_dump_directory + url.getFile();
+        String filename = htdocsDumpDir + url.getFile();
         File file = new File(filename);
 
         if (filename.charAt(filename.length() - 1) == '/') {
