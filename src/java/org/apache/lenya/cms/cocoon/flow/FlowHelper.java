@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FlowHelper.java,v 1.12 2004/08/27 21:08:43 roku Exp $  */
+/* $Id: FlowHelper.java,v 1.13 2004/08/27 22:23:38 roku Exp $  */
 
 package org.apache.lenya.cms.cocoon.flow;
 
@@ -39,8 +39,10 @@ import org.apache.lenya.cms.publication.DocumentHelper;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.workflow.WorkflowDocument;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.log4j.Category;
 
 /**
@@ -201,5 +203,19 @@ public class FlowHelper {
               bos.close(); // Not needed for ByteArrayOutputStream, but it cleaner this way.    
             }
         }
+    }
+    
+    /**
+     * Trigger a workflow event for the current document associated with the PageEnevelope.
+     * @param cocoon The Cocoon Flow Object Model
+     * @param event The name of the workflow event to trigger.
+     * @throws WorkflowException If an workflow error occurs
+     * @throws PageEnvelopeException Page envelope can not operate properly.
+     * @throws AccessControlException If an access control violation occurs.
+     */
+    public void triggerWorkflow(FOM_Cocoon cocoon, String event) 
+    throws WorkflowException, PageEnvelopeException, AccessControlException {
+        final WorkflowDocument wf = (WorkflowDocument)WorkflowFactory.newInstance().buildInstance(getPageEnvelope(cocoon).getDocument());
+        wf.invoke(getSituation(cocoon), event);
     }
 }
