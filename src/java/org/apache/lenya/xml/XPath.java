@@ -1,5 +1,4 @@
 /*
-$Id: XPath.java,v 1.5 2003/07/23 13:21:29 gregor Exp $
 <License>
 
  ============================================================================
@@ -66,8 +65,7 @@ import java.util.StringTokenizer;
 
 /**
  * @author Michael Wechner
- * @created 1.7.23
- * @version 1.7.24
+ * @version $Id: XPath.java,v 1.6 2003/10/14 23:02:16 michi Exp $
  */
 public class XPath {
     String xpath = null;
