@@ -36,9 +36,9 @@
     </menu>
     <menu name="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>context</xsp:expr>/docs/index.html#devguide</xsp:attribute>Developer's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#devguide</xsp:attribute>Developer's&#160;Guide</item>
         <item href="http://www.wyona.org">About&#160;Wyona</item>
       </block>
     </menu>
