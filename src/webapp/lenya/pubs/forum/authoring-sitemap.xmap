@@ -180,6 +180,29 @@
         </map:select>
         <map:serialize type="html"/>
       </map:match>
+<!-- Needed if you want to use Xopus' default databasedriver.js -->
+<!-- Not needed if you use wyona_databasedriver.js -->
+<!--
+      <map:match pattern="xopus2/articles/*/**/xopus2.xsl">
+        <map:generate src="stylesheets/publication/{2}/xopus2.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="xopus2/articles/*/**/tree.xsl">
+        <map:generate src="stylesheets/publication/{2}/tree.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="xopus2/articles/*/*.xsd">
+        <map:generate src="docs/publication/doctypes/schemas/{2}.xsd"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="xopus2/articles/*/articles/2001/index.xml">
+        <map:generate src="docs/publication/authoring/articles/2001/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+-->
+
+
+
 
       <map:match pattern="**.xml">
         <map:generate src="docs/publication/authoring/{1}.xml"/>
