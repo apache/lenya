@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.33 2003/10/31 18:16:18 andreas Exp $
+$Id: Publication.java,v 1.34 2003/11/20 15:26:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,13 +56,10 @@ $Id: Publication.java,v 1.33 2003/10/31 18:16:18 andreas Exp $
 package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
