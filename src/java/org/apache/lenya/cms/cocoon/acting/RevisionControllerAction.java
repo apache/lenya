@@ -22,7 +22,7 @@ import org.wyona.cms.rc.FileReservedCheckOutException;
 
 /**
  * @author Michael Wechner
- * @version 2002.6.17
+ * @version 2003.1.5
  */
 public class RevisionControllerAction extends AbstractComplementaryConfigurableAction implements Configurable{
   String rcmlDirectory=null;
@@ -52,7 +52,7 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
     org.apache.cocoon.environment.Source inputSource=resolver.resolve("");
     String sitemapParentPath=inputSource.getSystemId();
     sitemapParentPath=sitemapParentPath.substring(5); // Remove "file:" protocoll
-    getLogger().error("RESOLVED SOURCE: "+sitemapParentPath);
+    getLogger().debug(".act(): RESOLVED SOURCE: "+sitemapParentPath);
     // /Get Absolute Path of sitemap
 
     // Initialize Revision Controller
@@ -63,42 +63,29 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
     // Get request object
     Request request = ObjectModelHelper.getRequest(objectModel);
     if(request == null){
-      getLogger().error ("No request object");
+      getLogger().error (".act(): No request object");
       return null;
       }
     // Get session
     Session session=request.getSession(true);
     if(session == null){
-      getLogger().error("No session object");
+      getLogger().error(".act(): No session object");
       return null;
       }
 
     Identity identity=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
-    getLogger().debug("Identity"+identity);
+    getLogger().debug(".act(): Identity: "+identity);
 
     filename = sitemapParentPath+parameters.getParameter("filename");
     username= null;
     if(identity != null) {
       username=identity.getUsername();
       }
-    else {
-      getLogger().warn("No identity yet");
-    }                                                                                                                           
-    getLogger().debug("username"+username);
+    else{
+      getLogger().error(".act(): No identity yet");
+      }                                                                                                                           
+    getLogger().debug(".act(): Username: "+username);
 
     return null;                                                                                                                 
-
-/*
-    if(true){
-      HashMap actionMap=new HashMap();
-      actionMap.put("user",username);
-      actionMap.put("filename",filename);
-      getLogger().warn("Document already checked-out");
-      return actionMap;
-      }
-    else{
-      return null;
-      }
-*/
     }
   }

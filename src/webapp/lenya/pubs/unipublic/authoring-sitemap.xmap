@@ -601,13 +601,7 @@
   <!-- Checkout -->
       <map:match pattern="rco/*/*/*/*/index.xml">
         <map:act type="reserved-checkout">
-            <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
-<!--
-          <map:generate src="../../docs/cms/revision-control/file-reserved-checkout-exception.xml">
--->
-<!--
-          <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkout-exception.xsp">
--->
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
           <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
             <map:parameter name="filename" value="{filename}"/>

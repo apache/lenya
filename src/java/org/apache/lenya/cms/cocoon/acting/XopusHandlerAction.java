@@ -23,6 +23,7 @@ import org.apache.cocoon.components.parser.Parser;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.ProcessingException;
@@ -40,6 +41,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import org.wyona.cms.ac.Identity;
 import org.wyona.cms.rc.RevisionController;
 
 /**
@@ -57,9 +59,12 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
   private String tempRoot=null;
   private Map relRootDirs = new HashMap();
 
-  /**
-   * Gets the configuration from the sitemap
-   */
+  private String rcmlDirectory=null;
+  private String backupDirectory=null;
+
+/**
+ * Gets the configuration from the sitemap
+ */
   public void configure(Configuration conf) throws ConfigurationException{
     super.configure(conf);
     xmlRoot=conf.getChild("xml").getAttribute("href");
@@ -76,6 +81,10 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
     relRootDirs.put("xsl", xslRoot);
     relRootDirs.put("xsd", xsdRoot);
     relRootDirs.put("temp", tempRoot);
+
+    // Revision Control Parameters
+    rcmlDirectory=conf.getChild("rcmlDirectory").getAttribute("href");
+    backupDirectory=conf.getChild("backupDirectory").getAttribute("href");
     }
 
   public java.util.Map act (Redirector redirector, 
@@ -181,9 +190,14 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
     if ("checkin".equals(reqType)) {
         getLogger().debug(".act(): Save to permanent file: "+permFile);
 
-        RevisionController rc=new RevisionController(sitemapPath+"/docs/publication/rcml",sitemapPath+"/docs/publication/rcbak");
+        RevisionController rc=new RevisionController(sitemapPath+rcmlDirectory,sitemapPath+backupDirectory);
         try{
-          rc.reservedCheckIn(permFile.getAbsolutePath(),"wyona",true);
+          Session session=httpReq.getSession(false);
+          if(session == null){
+            throw new Exception("No session");
+            }
+          Identity identity=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
+          rc.reservedCheckIn(permFile.getAbsolutePath(),identity.getUsername(),true);
 
           FileUtil.copyFile(tempFile, permFile);
           }

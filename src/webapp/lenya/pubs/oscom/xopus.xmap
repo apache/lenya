@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.5 2002/10/25 21:33:44 michicms Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.6 2003/01/06 00:57:52 michicms Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -24,6 +24,8 @@
         <xsl href="stylesheets/publication"/>
         <xsd href="docs/publication/doctypes/schemas"/>
         <temp href="temp"/>
+        <rcmlDirectory href="docs/publication/rcml"/>
+        <backupDirectory href="docs/publication/rcbak"/>
       </map:action>
     </map:actions>
   </map:components>

@@ -33,8 +33,12 @@ public class ReservedCheckoutAction extends RevisionControllerAction{
 
 //check out
     try{
+      getLogger().debug(".act(): Filename: "+filename);
+      getLogger().debug(".act(): Username: "+username);
+      if(filename == null) throw new Exception("Filename is null");
+      if(username == null) throw new Exception("Username is null");
       rc.reservedCheckOut(filename, username);
-     }
+      }
     catch(FileReservedCheckOutException e){
       actionMap.put("exception","fileReservedCheckOutException");
       actionMap.put("filename",filename);
@@ -44,24 +48,11 @@ public class ReservedCheckoutAction extends RevisionControllerAction{
       return actionMap;
       }  
     catch(Exception e){
-      actionMap.put("exception","exception");
+      actionMap.put("exception","genericException");
       actionMap.put("filename",filename);
-      getLogger().warn("The document "+filename+" couldn't be checked out");
+      getLogger().warn(".act(): The document "+filename+" couldn't be checked out: "+e);
       return actionMap; 
       }
-    return null;                                                                                                                 
-
-/*
-    if(true){
-      HashMap actionMap=new HashMap();
-      actionMap.put("user",username);
-      actionMap.put("filename",filename);
-      getLogger().warn("Document already checked-out");
-      return actionMap;
-      }
-    else{
-      return null;
-      }
-*/
+    return null;
     }
   }
