@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentHelper.java,v 1.8 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -242,4 +242,25 @@ public class DocumentHelper {
         return parent;
     }
 
+    /** 
+     * Returns e.g. context:/lenya/pubs/default/content/authoring/tutorial/index_en.xml
+     * @param document The document to calculate the path for.
+     * @return The path of a document within Lenya (excluding the servlet context).
+     */
+    public String getSourceUri(final Document document) {
+        return 
+            "context:/" // Use lenya:/ protocoll here later
+            + Publication.PUBLICATION_PREFIX_URI 
+            + "/"
+            + document.getPublication().getId()
+            + "/"
+            + Publication.CONTENT_PATH
+            + "/"
+            + document.getArea()
+            + "/"
+            + document.getPublication().getPathMapper().getPath(
+                    document.getId(),
+                    document.getLanguage());
+        
+    }
 }
