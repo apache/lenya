@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentHelper.java,v 1.28 2004/07/16 14:50:16 andreas Exp $  */
+/* $Id: DocumentHelper.java,v 1.29 2004/07/29 16:09:29 andreas Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -99,7 +99,7 @@ public class DocumentHelper {
             name += (":" + qualifiedName.substring(0, index));
         }
 
-        document.getDocumentElement().setAttribute(name, namespaceUri);
+        document.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", name, namespaceUri);
 
         return document;
     }
