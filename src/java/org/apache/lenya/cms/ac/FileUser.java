@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.9 2003/06/06 13:58:49 egli Exp $
+ * $Id: FileUser.java,v 1.10 2003/06/06 17:20:06 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -184,7 +184,10 @@ public class FileUser extends User {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
-		File xmlPath = UserManager.instance(publication).getPath();
+		UserManager manager = UserManager.instance(publication);
+		manager.add(this);
+		
+		File xmlPath = manager.getPath();
 		File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
 		try {
 			serializer.serializeToFile(xmlfile, config);
