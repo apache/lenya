@@ -51,6 +51,7 @@
     <menu name="Help">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html</xsp:attribute>About&#160;this&#160;Publication</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/xdocs/xopus2.html</xsp:attribute>About&#160;Xopus</item>
       </block>
       <block>
         <item>----------------------</item>
