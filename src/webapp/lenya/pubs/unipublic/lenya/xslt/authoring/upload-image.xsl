@@ -18,7 +18,7 @@
   <xsl:template match="upload-image">
     <h1>Image Upload</h1>
     <p>Please browse for an image (gif, jpg) on your harddisk.</p>
-    <form action="{request-uri}" method="post" enctype="multipart/form-data">
+    <form action="{request-uri}" method="post" enctype="multipart/form-data" accept-charset="iso-8859-1">
       <input type="hidden" name="xpath" value="{xpath}"/>
       <input type="hidden" name="documentid" value="{documentid}"/>
       <input type="hidden" name="usecase" value="{usecase}"/>
