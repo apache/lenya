@@ -8,6 +8,7 @@
 
 <xsl:template match="weekly-column">
 <div>
+<h3>Tom's Weekly Column</h3>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>
