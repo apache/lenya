@@ -69,6 +69,7 @@ import org.apache.cocoon.xml.AbstractXMLConsumer;
 
 import org.apache.excalibur.source.Source;
 
+import org.apache.lenya.util.CacheMap;
 import org.apache.log4j.Category;
 
 import org.xml.sax.Attributes;
@@ -77,14 +78,12 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class URIParametrizerAction extends ConfigurableComposerAction {
     private static Category log = Category.getInstance(URIParametrizerAction.class);
@@ -93,7 +92,7 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.12 $
+     * @version $Revision: 1.13 $
      */
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
         private boolean inParamElement = false;
@@ -179,54 +178,42 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
         Request request = ObjectModelHelper.getRequest(objectModel);
         String uri = request.getRequestURI();
 
-        Map map = (Map) srcToParameters.get(uri);
-
-        if (map == null) {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Creating new map for URI [" + uri + "]");
-            }
-            map = new HashMap();
-            
-            if (srcToParameters.size() == MAX_ENTRIES) {
-                srcToParameters.remove(srcToParameters.firstKey());
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Cache map full - removing first element.");
-                }
-            }
-            
-            srcToParameters.put(uri, map);
-        }
-
-        parameterize(src, map, parameters, resolver);
+        Map map = parameterize(uri, src, parameters, resolver);
         return map;
 
     }
     
-    protected static final int MAX_ENTRIES = 1000;
+    protected static final int CACHE_CAPACITY = 1000;
 
-    private static SortedMap srcToParameters = new TreeMap();
+    private static Map cache = new CacheMap(CACHE_CAPACITY);
 
     /**
      * Receives the URI parameters for a source.
+     * @param uri The URI.
      * @param src The source.
-     * @param uriParameters The URI parameters.
      * @param parameters The Action parameters.
      * @param resolver The source resolver.
+     * @return The URI parameters.
      * @throws ParameterException when something went wrong.
      * @throws ProcessingException when something went wrong.
      * @throws SAXException when something went wrong.
      * @throws IOException when something went wrong.
      */
-    protected void parameterize(String src, Map uriParameters, Parameters parameters, SourceResolver resolver)
+    protected Map parameterize(String uri, String src, Parameters parameters, SourceResolver resolver)
         throws ParameterException, ProcessingException, SAXException, IOException {
         Source inputSource = null;
         URIParametrizerConsumer xmlConsumer = new URIParametrizerConsumer();
+        Map uriParameters = new HashMap();
 
         String[] parameterNames = parameters.getNames();
 
         for (int i = 0; i < parameterNames.length; i++) {
             
-            if (!uriParameters.containsKey(parameterNames[i])) {
+            String key = uri + "_" + parameterNames[i];
+            
+            String value = (String) cache.get(key);
+            
+            if (value == null) {
                 String parameterSrc = parameters.getParameter(parameterNames[i]) + "/" + src;
                 inputSource = resolver.resolveURI(parameterSrc);
 
@@ -235,11 +222,14 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
                 }
 
                 SourceUtil.toSAX(inputSource, xmlConsumer);
-                uriParameters.put(parameterNames[i], xmlConsumer.getParameter());
+                value = xmlConsumer.getParameter();
+                cache.put(key, value);
             }
             
+            uriParameters.put(parameterNames[i], value);
         }
-
+        return uriParameters;
     }
 
 }
+

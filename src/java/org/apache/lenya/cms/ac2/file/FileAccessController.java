@@ -67,8 +67,11 @@ import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyManager;
 import org.apache.lenya.cms.ac2.URLPolicy;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.CacheMap;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 
 /**
@@ -155,8 +158,23 @@ public class FileAccessController implements AccessController {
             setConfigurationDirectory(directory);
         }
 
-        return getPolicy(url);
+        String key;
+        try {
+            key = publication.getDirectory().getCanonicalPath() + ":" + url;
+        } catch (IOException e) {
+            throw new AccessControlException(e);
+        }
+        Policy policy = (Policy) cache.get(key);
+        if (policy == null) {
+            policy = getPolicy(url);
+            cache.put(key, policy);
+        }
+        
+        return policy;
     }
+    
+    protected static final int CACHE_CAPACITY = 1000; 
+    private static Map cache = new CacheMap(CACHE_CAPACITY);
 
     /**
      * Returns the policy for a given URL.
@@ -165,8 +183,8 @@ public class FileAccessController implements AccessController {
      * @throws AccessControlException when something went wrong.
      */
     protected Policy getPolicy(String url) throws AccessControlException {
+        
         URLPolicy policy = new URLPolicy(url, getPolicyManager());
-
         return policy;
     }
 
