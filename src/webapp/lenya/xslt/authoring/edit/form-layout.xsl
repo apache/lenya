@@ -36,11 +36,9 @@
 <page:page>
 <page:title>Edit Document</page:title>
 <page:body>
-  
 <div class="lenya-box">
   <div class="lenya-box-title">Information</div>
   <div class="lenya-box-body">
-  
 <table class="lenya-table-noborder">
   <tr>
     <td class="lenya-entry-caption">Document:</td>
@@ -123,6 +121,35 @@
 </ul>
 </div>
 </div>
+
+ <xsl:variable name="currentTagID">
+    <xsl:value-of select="substring-before(substring-after($edit, &quot;@tagID='&quot;), &quot;'&quot;)"/>
+  </xsl:variable>
+  <xsl:if test="$currentTagID != ''">
+    <script type="text/javascript">
+
+      function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function') {
+          window.onload = func;
+        } else {
+          window.onload = function() {
+            oldonload();
+            func();
+          }
+        }
+      }
+
+     addLoadEvent(goAnchor);
+
+      function goAnchor() {
+         document.location.hash = '<xsl:value-of select="$currentTagID"/>';
+         window.scrollBy(0, -150);
+      }
+    </script>
+  </xsl:if>
+
+
 
 </page:body>
 </page:page>
@@ -225,6 +252,12 @@
 <xsl:template match="@select">
 <xsl:text> </xsl:text>
 <!-- FIXME: Internet Explorer does not send the value of input type equals image. Mozilla does. -->
+
+<xsl:variable name="tagID">
+    <xsl:value-of select="substring-before(substring-after(., &quot;@tagID='&quot;), &quot;'&quot;)"/>
+</xsl:variable>
+<xsl:value-of select="@tagID"/>
+<a name="{$tagID}"/>
 <input type="image" src="{$imagesPath}/edit.png" name="edit[{.}]" value="{.}"/>
 </xsl:template>
 
