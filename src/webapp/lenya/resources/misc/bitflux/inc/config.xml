@@ -50,6 +50,14 @@
 		</scripts>
 		<transform>
 			<includes>
+			<!-- BX_xmltransformfile: Transformation of xml before it is loaded in Bitfluxeditor
+			     BX_xmltransformbackfile: Transformation of xml before it is sent back to the server
+				-->
+				<!-- Unipublic specific configuration
+				<file name="BX_xmltransformfile">/lenya/unipublic/bitflux/stylesheets/bitflux-include.xsl</file>
+				<file name="BX_xmltransformbackfile">/lenya/unipublic/bitflux/stylesheets/bitflux-back-include.xsl</file>
+				-->
+				<!-- Computerworld specific configuration -->
 				<file name="BX_xmltransformfile">/lenya/computerworld/bitflux/stylesheets/bitflux-include.xsl</file>
 				<file name="BX_xmltransformbackfile">/lenya/computerworld/bitflux/stylesheets/bitflux-back-include.xsl</file>
 
