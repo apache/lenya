@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.30 2003/01/09 01:11:44 michicms Exp $
+   @version CVS $Id: build.xml,v 1.31 2003/02/13 23:11:03 andreas Exp $
 
 -->
 
@@ -261,6 +261,24 @@
            deprecation="${deprecation}"
            target="${target.vm}"
            nowarn="${nowarn}">
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- The compilation target with deprecation on -->
+  <!-- ============================================================ -->
+  <target name="deprecation" depends="prepare-src"
+          description="Compile the sources with deprecation messages">
+    <delete dir="${build.dest}"/>
+    <mkdir dir="${build.dest}"/>
+    <javac srcdir="${build.src}"
+           destdir="${build.dest}"
+           debug="${debug}"
+           optimize="${optimize}"
+           deprecation="on"
+           target="${target.vm}"
+           nowarn="off">
       <classpath refid="classpath"/>
     </javac>
   </target>
