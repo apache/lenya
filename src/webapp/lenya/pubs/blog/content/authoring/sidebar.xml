@@ -4,7 +4,7 @@
 <block>
 <title>Feeds</title>
 <content>
-<a href="index.xml">Echo Feed</a>
+<a href="index.xml">Echo/Atom Feed</a>
 <br />RSS Feed
 </content>
 </block>
