@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.12 2003/07/21 13:39:05 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.13 2003/07/29 14:24:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,7 @@ $Id: WorkflowAuthorizer.java,v 1.12 2003/07/21 13:39:05 andreas Exp $
 */
 package org.apache.lenya.cms.ac2.workflow;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
@@ -66,6 +67,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac2.AccreditableManager;
+import org.apache.lenya.cms.ac2.Authorizer;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyAuthorizer;
@@ -89,7 +91,7 @@ import java.util.Arrays;
  *
  * @author andreas
  */
-public class WorkflowAuthorizer extends PolicyAuthorizer implements Serviceable {
+public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer, Serviceable {
 
     protected static final String EVENT_PARAMETER = "lenya.event";
 
@@ -118,7 +120,7 @@ public class WorkflowAuthorizer extends PolicyAuthorizer implements Serviceable 
 
         Policy policy = policyManager.getPolicy(accessController, url);
         Role[] roles = policy.getRoles(identity);
-        saveRoles(request.getSession(), roles);
+        saveRoles(request, roles);
 
         String event = request.getParameter(EVENT_PARAMETER);
         SourceResolver resolver = null;
@@ -171,15 +173,14 @@ public class WorkflowAuthorizer extends PolicyAuthorizer implements Serviceable 
      * Saves the roles of the current identity to the request.
      * @param request The request.
      * @param roles The roles.
-     * TODO: change session to request
      */
-    protected void saveRoles(Session session, Role[] roles) {
+    protected void saveRoles(Request request, Role[] roles) {
         String rolesString = "";
         for (int i = 0; i < roles.length; i++) {
             rolesString += " " + roles[i];
         }
-        getLogger().debug("Adding roles [" + rolesString + " ] to session [" + session + "]");
-        session.setAttribute(Role.class.getName(), Arrays.asList(roles));
+        getLogger().debug("Adding roles [" + rolesString + " ] to request [" + request + "]");
+        request.setAttribute(Role.class.getName(), Arrays.asList(roles));
     }
 
     private ServiceManager manager;
