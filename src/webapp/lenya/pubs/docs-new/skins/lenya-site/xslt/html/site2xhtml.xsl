@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.5 2003/05/08 12:03:48 andreas Exp $
+$Id: site2xhtml.xsl,v 1.6 2003/05/09 23:26:37 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -81,7 +81,7 @@ $Id: site2xhtml.xsl,v 1.5 2003/05/08 12:03:48 andreas Exp $
           </tr>
         </table>
         <xsl:comment>================= end Banner ==================</xsl:comment>
-        <div class="tab-bar"><img src="{$spacer}" height="5" /></div>
+        <div class="tab-bar"><img src="{$spacer}" height="5" alt=""/></div>
 
         <xsl:comment>================= start Menu, NavBar, Content ==================</xsl:comment>
         <table cellspacing="0" cellpadding="0" border="0" width="100%" bgcolor="#ffffff" summary="page content">
@@ -115,7 +115,7 @@ $Id: site2xhtml.xsl,v 1.5 2003/05/08 12:03:48 andreas Exp $
                 <tr>
                   <td/>
                   <td height="5">
-                    <img src="{$spacer}" height="1" width="150" />
+                    <img src="{$spacer}" height="1" width="150" alt=""/>
                   </td>
                   <td/>
                 </tr>                
