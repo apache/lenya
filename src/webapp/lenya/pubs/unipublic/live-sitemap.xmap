@@ -266,16 +266,13 @@
       </map:match>
 
       <map:handle-errors>
-        <map:transform src="../../stylesheets/cms/Page/Exception/not_published_yet.xsl"/>
-        <map:serialize type="html"/>
+        <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>
 
+<!--
     <map:pipeline>
       <map:match pattern="*/*/*/*/article.xml">
-<!--
-        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
--->
         <map:generate type="serverpages" src="docs/publication/live/article.xsp">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
@@ -283,11 +280,12 @@
           <map:parameter name="id" value="{4}"/>
         </map:generate>
         <map:transform type="xlink"/>
-<!--
-        <map:transform type="xinclude"/>
--->
         <map:serialize type="xml"/>
       </map:match>
+    </map:pipeline>
+-->
+
+    <map:pipeline>
 
       <map:match pattern="*/*/*/*/">
         <map:redirect-to uri="index.html" session="true"/>
@@ -308,6 +306,14 @@
         </map:transform>                                                                                                                
         <map:serialize type="html"/>
       </map:match>
+
+      <map:handle-errors>
+        <map:transform src="../../stylesheets/cms/Page/Exception/not_published_yet.xsl"/>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <map:pipeline>
 
       <!-- XML -->
       <map:match pattern="**.xml">
