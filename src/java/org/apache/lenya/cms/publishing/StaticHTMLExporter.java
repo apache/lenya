@@ -20,6 +20,7 @@
 package org.apache.lenya.cms.publishing;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.StringTokenizer;
@@ -83,7 +84,9 @@ public class StaticHTMLExporter extends AbstractExporter {
 
                 wget.download(uri, substituteExpression, substituteReplacement);
             }
-        } catch (Exception e) {
+        } catch (final MalformedURLException e) {
+            throw new ExportException(e);
+        } catch (final IOException e) {
             throw new ExportException(e);
         }
     }

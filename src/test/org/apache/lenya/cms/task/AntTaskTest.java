@@ -46,11 +46,27 @@ import org.xml.sax.SAXException;
  * Override {@link #evaluateTest()} to add your evaluation code.
  */
 public class AntTaskTest extends TestCase {
+    
+    private static final class LastModifiedFilter implements FileFilter {
+        private final GregorianCalendar beforeExecution;
+
+        private LastModifiedFilter(GregorianCalendar _beforeExecution) {
+            super();
+            this.beforeExecution = _beforeExecution;
+        }
+
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+            return file.lastModified() > this.beforeExecution.getTimeInMillis();
+        }
+    }
+
     private static String target = "test";
 
     /**
      * Creates a new AntTaskTest object.
-     * 
      * @param test the test
      */
     public AntTaskTest(String test) {
@@ -82,7 +98,6 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Creates a test suite.
-     * 
      * @return the test suite
      */
     public static Test getSuite() {
@@ -92,7 +107,6 @@ public class AntTaskTest extends TestCase {
     /**
      * Tests the AntTask class.
      * Template method, please override {@link #evaluateTest()} and {@link #getTarget()} and {@link #prepareTest()}.
-     * 
      * @throws Exception if an error occurs
      */
     public final void testAntTask() throws Exception {
@@ -112,7 +126,6 @@ public class AntTaskTest extends TestCase {
     /**
      * Tests an AntTask.
      * @param _target the target of the task to test.
-     * 
      * @throws ExecutionException if an error occurs
      * @throws IOException if an error occurs
      * @throws ParameterException if an error occurs
@@ -140,11 +153,7 @@ public class AntTaskTest extends TestCase {
         task.execute(publication.getServletContext().getCanonicalPath());
 
         File logDirectory = new File(publication.getDirectory(), AntTask.LOG_PATH);
-        File[] logFiles = logDirectory.listFiles(new FileFilter() {
-                    public boolean accept(File file) {
-                        return file.lastModified() > beforeExecution.getTimeInMillis();
-                    }
-                });
+        File[] logFiles = logDirectory.listFiles(new LastModifiedFilter(beforeExecution));
 
         assertTrue(logFiles.length == 1);
 

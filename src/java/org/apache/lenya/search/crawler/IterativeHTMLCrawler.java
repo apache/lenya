@@ -39,6 +39,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -78,7 +79,11 @@ public class IterativeHTMLCrawler implements Configurable {
                     DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
                     Configuration configuration = builder.buildFromFile(this.configurationFilePath);
                     configure(configuration);
-                } catch (Exception e) {
+                } catch (final ConfigurationException e1) {
+                	System.err.println("Cannot load crawler configuration!");
+                } catch (final SAXException e1) {
+                	System.err.println("Cannot load crawler configuration!");
+                } catch (final IOException e1) {
                 	System.err.println("Cannot load crawler configuration!");
                 }
                 new IterativeHTMLCrawler(new File(args[0])).crawl(new URL(this.baseURL), this.scopeURL[0]);
@@ -128,8 +133,12 @@ public class IterativeHTMLCrawler implements Configurable {
             DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
             Configuration configuration = builder.buildFromFile(config);
             configure(configuration);
-        } catch (Exception e) {
-        	System.err.println("Cannot load crawler configuration! ");
+        } catch (final ConfigurationException e) {
+        	System.err.println("Cannot load crawler configuration! " + e.toString());
+        } catch (final SAXException e) {
+        	System.err.println("Cannot load crawler configuration! " + e.toString());
+        } catch (final IOException e) {
+        	System.err.println("Cannot load crawler configuration! " + e.toString());
         }
 
         this.robot = new RobotExclusion(this.userAgent);

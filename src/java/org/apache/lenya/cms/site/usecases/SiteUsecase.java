@@ -51,8 +51,8 @@ public class SiteUsecase extends DocumentUsecase {
      * may need to take special areas into acccount, such as info-authoring */
     protected void doInitialize() {
         super.doInitialize();
-        this.doc = getSourceDocument();
         try {
+            this.doc = getSourceDocument();
             if (hasWorkflow(getSourceDocument())) {
                 this.instance = getWorkflowInstance(getSourceDocument());
                 setParameter(STATE, this.instance.getCurrentState().toString());
@@ -63,7 +63,7 @@ public class SiteUsecase extends DocumentUsecase {
             } else {
                 setParameter("state", "");
             }
-        } catch (final WorkflowException e) {
+        } catch (WorkflowException e) {
         	getLogger().error("Could not get workflow state.");
         	addErrorMessage("Could not get workflow state.");
         }

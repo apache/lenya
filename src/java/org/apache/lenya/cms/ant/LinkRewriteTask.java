@@ -48,6 +48,26 @@ import org.xml.sax.SAXException;
  */
 public class LinkRewriteTask extends PublicationTask {
 
+    private static final class XMLFilenameFilter implements FilenameFilter {
+        /**
+         * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
+         */
+        public boolean accept(File dir, String name) {
+            File _file = new File(dir, name);
+            return _file.isFile() && FileUtil.getExtension(name).equals("xml");
+        }
+    }
+
+    private static final class DirectoryFilter implements FilenameFilter {
+        /**
+         * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
+         */
+        public boolean accept(File dir, String name) {
+            File _file = new File(dir, name);
+            return _file.isDirectory();
+        }
+    }
+
     private String baseDir;
     private String stylesheet;
     private String area;
@@ -128,7 +148,6 @@ public class LinkRewriteTask extends PublicationTask {
 
     /**
      * Get the base dir.
-     * 
      * @return the base dir
      */
     private String getBaseDir() {
@@ -166,21 +185,9 @@ public class LinkRewriteTask extends PublicationTask {
     private void replace_internal(File file, Transformer transformer)
         throws TransformerException, ParserConfigurationException, SAXException, IOException {
 
-        FilenameFilter directoryFilter = new FilenameFilter() {
+        FilenameFilter directoryFilter = new DirectoryFilter();
 
-            public boolean accept(File dir, String name) {
-                File _file = new File(dir, name);
-                return _file.isDirectory();
-            }
-        };
-
-        FilenameFilter xmlFileFilter = new FilenameFilter() {
-
-            public boolean accept(File dir, String name) {
-                File _file = new File(dir, name);
-                return _file.isFile() && FileUtil.getExtension(name).equals("xml");
-            }
-        };
+        FilenameFilter xmlFileFilter = new XMLFilenameFilter();
 
         log("root file: " + file.getCanonicalPath());
         assert(file.isDirectory());

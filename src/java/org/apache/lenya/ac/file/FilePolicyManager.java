@@ -61,6 +61,34 @@ import org.w3c.dom.Document;
 public class FilePolicyManager extends AbstractLogEnabled implements InheritingPolicyManager,
         Parameterizable, Disposable, Serviceable {
 
+    private static final class SubtreeFileFilter implements FileFilter {
+        private final String url;
+        private final String subtree;
+
+        private SubtreeFileFilter(String _url, String _subtree) {
+            super();
+            this.url = _url;
+            this.subtree = _subtree;
+        }
+
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+            return file.getName().equals(this.subtree)
+                    || file.getName().equals(this.url);
+        }
+    }
+
+    private static final class IsDirectoryFileFilter implements FileFilter {
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+            return file.isDirectory();
+        }
+    }
+
     /**
      * Creates a new FilePolicyManager.
      */
@@ -379,12 +407,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     protected void removeAccreditable(AccreditableManager manager, Accreditable accreditable,
             File policyDirectory) throws AccessControlException {
 
-        File[] policyFiles = policyDirectory.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.getName().equals(SUBTREE_FILENAME)
-                        || file.getName().equals(URL_FILENAME);
-            }
-        });
+        File[] policyFiles = policyDirectory.listFiles(new SubtreeFileFilter(URL_FILENAME, SUBTREE_FILENAME));
 
         try {
             RemovedAccreditablePolicyBuilder builder = new RemovedAccreditablePolicyBuilder(manager);
@@ -409,11 +432,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             throw new AccessControlException(e1);
         }
 
-        File[] directories = policyDirectory.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.isDirectory();
-            }
-        });
+        File[] directories = policyDirectory.listFiles(new IsDirectoryFileFilter());
 
         for (int i = 0; i < directories.length; i++) {
             removeAccreditable(manager, accreditable, directories[i]);

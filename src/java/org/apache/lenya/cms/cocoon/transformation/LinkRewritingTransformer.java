@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -40,9 +41,11 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
@@ -100,10 +103,12 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
                     this.identityMap, _objectModel);
             this.currentDocument = envelope.getDocument();
-
-        } catch (Exception e) {
-            throw new ProcessingException(e);
+        } catch (final PublicationException e1) {
+            throw new ProcessingException(e1);
+        } catch (final PageEnvelopeException e1) {
+            throw new ProcessingException(e1);
         }
+
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Setting up transformer");
@@ -141,7 +146,9 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Using policy manager [" + this.policyManager + "]");
             }
-        } catch (Exception e) {
+        } catch (final ServiceException e) {
+            throw new ProcessingException(e);
+        } catch (final AccessControlException e) {
             throw new ProcessingException(e);
         }
     }

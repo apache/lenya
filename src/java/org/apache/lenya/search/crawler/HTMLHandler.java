@@ -20,6 +20,7 @@
 package org.apache.lenya.search.crawler;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
@@ -335,9 +336,8 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
     public void parse(InputStream in) {
         try {
             reset();
-
             pd.parse(new BufferedReader(new InputStreamReader(in)), this, true);
-        } catch (Exception e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }

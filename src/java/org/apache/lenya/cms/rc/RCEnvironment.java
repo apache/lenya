@@ -20,6 +20,7 @@
 package org.apache.lenya.cms.rc;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 
 /**
  * Helper class that holds the revision controller configuration
@@ -82,7 +84,11 @@ public class RCEnvironment implements Configurable {
             DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
             Configuration configuration = builder.buildFromFile(configurationFile);
             configure(configuration);
-        } catch (Exception e) {
+        } catch (final ConfigurationException e) {
+            log.error("Cannot load revision controller configuration! ", e);
+        } catch (final SAXException e) {
+            log.error("Cannot load revision controller configuration! ", e);
+        } catch (final IOException e) {
             log.error("Cannot load revision controller configuration! ", e);
         }
     }

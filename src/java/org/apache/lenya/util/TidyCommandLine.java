@@ -21,9 +21,12 @@ package org.apache.lenya.util;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.w3c.tidy.Tidy;
@@ -44,9 +47,11 @@ public class TidyCommandLine {
         }
 
         try {
-        	new TidyCommandLine().tidy(new URL(args[0]), new File(args[1]), new File(args[2]), true);
-        } catch (Exception e) {
-            System.err.println(e);
+            new TidyCommandLine().tidy(new URL(args[0]), new File(args[1]), new File(args[2]), true);
+        } catch (final MalformedURLException e) {
+            System.err.println("Malformed URL: " +e.toString());
+        } catch (final IOException e) {
+            System.err.println("IO error: " +e.toString());
         }
     }
 
@@ -56,16 +61,23 @@ public class TidyCommandLine {
      * @param file The file
      * @param err The file to hold error messages
      * @param xhtml Whether to produce XHTML
-     * @throws Exception if an error occurs
+     * @throws IOException if an error occurs
      */
-    public void tidy(URL url, File file, File err, boolean xhtml)
-        throws Exception {
-        Tidy tidy = new Tidy();
-        tidy.setXmlOut(xhtml);
-        tidy.setErrout(new PrintWriter(new FileWriter(err.getAbsolutePath()), true));
+    public void tidy(URL url, File file, File err, boolean xhtml) throws IOException {
+        try {
+            Tidy tidy = new Tidy();
+            tidy.setXmlOut(xhtml);
+            tidy.setErrout(new PrintWriter(new FileWriter(err.getAbsolutePath()), true));
 
-        BufferedInputStream in = new BufferedInputStream(url.openStream());
-        FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
-        tidy.parse(in, out);
+            BufferedInputStream in = new BufferedInputStream(url.openStream());
+            FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
+            tidy.parse(in, out);
+        } catch (final FileNotFoundException e) {
+            System.err.println("File not found " +e.toString());
+            throw new IOException(e.toString());
+        } catch (final IOException e) {
+            System.err.println("IO error " +e.toString());
+            throw e;
+        }
     }
 }

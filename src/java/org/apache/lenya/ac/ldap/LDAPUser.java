@@ -136,12 +136,15 @@ public class LDAPUser extends FileUser {
             SearchResult entry = getDirectoryEntry(_ldapId);
 
             exists = (entry != null);
-
-        } catch (Exception e) {
-	    if (getLogger().isDebugEnabled())
-            getLogger().debug("existsUser() for id " + _ldapId + " got exception: " + e);
-            throw new AccessControlException("Exception during search: ", e);
-        } 
+        } catch (final IOException e) {
+    	    if (getLogger().isDebugEnabled())
+                getLogger().debug("existsUser() for id " + _ldapId + " got exception: " + e);
+                throw new AccessControlException("Exception during search: ", e);
+        } catch (final NamingException e) {
+    	    if (getLogger().isDebugEnabled())
+                getLogger().debug("existsUser() for id " + _ldapId + " got exception: " + e);
+                throw new AccessControlException("Exception during search: ", e);
+        }
 
         return exists;
     }

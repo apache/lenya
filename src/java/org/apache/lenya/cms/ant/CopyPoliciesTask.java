@@ -32,7 +32,16 @@ import org.apache.tools.ant.BuildException;
  * Ant task to copy the policies of a document
  */
 public class CopyPoliciesTask extends TwoDocumentsOperationTask {
-	private String policiesDir;
+	private static final class IsFileFileFilter implements FileFilter {
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+        	return file.isFile();
+        }
+    }
+
+    private String policiesDir;
 
 	/**
 	 * 
@@ -61,12 +70,7 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 	 * @return List of files
 	 */
 	public File[] getFiles(File directory) {
-		FileFilter filter = new FileFilter() {
-
-			public boolean accept(File file) {
-				return file.isFile();
-			}
-		};
+		FileFilter filter = new IsFileFileFilter();
 		if (directory.exists() && directory.isDirectory()) {
 			return directory.listFiles(filter);
 		}

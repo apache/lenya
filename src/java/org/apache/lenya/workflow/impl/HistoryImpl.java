@@ -124,17 +124,17 @@ public abstract class HistoryImpl implements History, WorkflowListener {
             historyElement.appendChild(initialVersionElement);
 
             DocumentHelper.writeDocument(helper.getDocument(), file);
-        } catch (DOMException e) {
+        } catch (final DOMException e) {
             throw new WorkflowException(e);
-        } catch (TransformerConfigurationException e) {
+        } catch (final TransformerConfigurationException e) {
             throw new WorkflowException(e);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new WorkflowException(e);
-        } catch (ParserConfigurationException e) {
+        } catch (final ParserConfigurationException e) {
             throw new WorkflowException(e);
-        } catch (WorkflowException e) {
+        } catch (final WorkflowException e) {
             throw new WorkflowException(e);
-        } catch (TransformerException e) {
+        } catch (final TransformerException e) {
             throw new WorkflowException(e);
         }
     }

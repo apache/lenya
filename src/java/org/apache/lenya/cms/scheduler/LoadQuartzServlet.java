@@ -59,6 +59,15 @@ import org.w3c.dom.Document;
  * A simple servlet that starts an instance of a Quartz scheduler.
  */
 public class LoadQuartzServlet extends HttpServlet {
+    private static final class IsDirectoryFileFilter implements FileFilter {
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+            return file.isDirectory();
+        }
+    }
+
     private static Logger log = Logger.getLogger(LoadQuartzServlet.class);
     private static SchedulerWrapper scheduler = null;
     private ServletContext servletContext;
@@ -387,11 +396,7 @@ public class LoadQuartzServlet extends HttpServlet {
         File publicationsDirectory = new File(getServletContextDirectory(),
                 PublishingEnvironment.PUBLICATION_PREFIX);
 
-        File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.isDirectory();
-            }
-        });
+        File[] publicationDirectories = publicationsDirectory.listFiles(new IsDirectoryFileFilter());
 
         log.debug("=========================================");
         log.debug("  Restoring jobs.");

@@ -34,6 +34,15 @@ import org.apache.tools.ant.BuildException;
  * Visitor of the defined subtree (visitor pattern). The subtree is reverse visited.
  */
 public class DeletePoliciesTask extends TwoDocumentsOperationTask {
+    private static final class IsFileFileFilter implements FileFilter {
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+        	return file.isFile();
+        }
+    }
+
     private String policiesDir;
 
 	/**
@@ -63,12 +72,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 	 * @return List of files
 	 */
 	public File[] getFiles(File directory) {
-		FileFilter filter = new FileFilter() {
-
-			public boolean accept(File file) {
-				return file.isFile();
-			}
-		};
+		FileFilter filter = new IsFileFileFilter();
 		if (directory.exists() && directory.isDirectory()) {
 			return directory.listFiles(filter);
 		}

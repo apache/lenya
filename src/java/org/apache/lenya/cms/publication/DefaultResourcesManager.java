@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -43,6 +44,53 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
  * Manager for resources of a CMS document.
  */
 public class DefaultResourcesManager extends AbstractLogEnabled implements ResourcesManager {
+
+    private static final class MetaSuffixFileFilter implements FileFilter {
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+            return file.isFile() && file.getName().endsWith(RESOURCES_META_SUFFIX);
+        }
+    }
+
+    private static final class NotMetaSuffixFileFilter implements FileFilter {
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+            return file.isFile() && !file.getName().endsWith(RESOURCES_META_SUFFIX);
+        }
+    }
+
+    private static final class ImageExtensionsFileFilter implements FileFilter {
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+            for (int i = 0; i < IMAGE_FILE_EXTENSIONS.length; i++)
+                if (file.getName().toLowerCase(Locale.ENGLISH).endsWith(IMAGE_FILE_EXTENSIONS[i]))
+                    return true;
+            return false;
+        }
+    }
+
+    private static final class ResourceMetaFileFilter implements FileFilter {
+        private final File resource;
+
+        private ResourceMetaFileFilter(File _resource) {
+            super();
+            this.resource = _resource;
+        }
+
+        /**
+         * @see java.io.FileFilter#accept(java.io.File)
+         */
+        public boolean accept(File file) {
+            return file.isFile()
+                    && file.getName().equals(this.resource.getName().concat(RESOURCES_META_SUFFIX));
+        }
+    }
 
     private Document document = null;
     private DublinCoreImpl dc = null;
@@ -208,12 +256,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     public File[] getResources() {
 
         // filter the meta files out. We only want to see the "real" resources.
-        FileFilter filter = new FileFilter() {
-
-            public boolean accept(File file) {
-                return file.isFile() && !file.getName().endsWith(RESOURCES_META_SUFFIX);
-            }
-        };
+        FileFilter filter = new NotMetaSuffixFileFilter();
 
         return getFiles(filter);
     }
@@ -223,14 +266,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      * @return All image resources.
      */
     public File[] getImageResources() {
-        return getFiles(new FileFilter() {
-            public boolean accept(File file) {
-                for (int i = 0; i < IMAGE_FILE_EXTENSIONS.length; i++)
-                    if (file.getName().toLowerCase().endsWith(IMAGE_FILE_EXTENSIONS[i]))
-                        return true;
-                return false;
-            }
-        });
+        return getFiles(new ImageExtensionsFileFilter());
     }
 
     /**
@@ -253,12 +289,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      *         document.
      */
     public File[] getMetaFiles() {
-        FileFilter filter = new FileFilter() {
-
-            public boolean accept(File file) {
-                return file.isFile() && file.getName().endsWith(RESOURCES_META_SUFFIX);
-            }
-        };
+        FileFilter filter = new MetaSuffixFileFilter();
         return getFiles(filter);
     }
 
@@ -273,12 +304,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         if (resource.getName().endsWith(RESOURCES_META_SUFFIX))
             throw new IllegalArgumentException("File is itself a meta file.");
 
-        final FileFilter filter = new FileFilter() {
-            public boolean accept(File file) {
-                return file.isFile()
-                        && file.getName().equals(resource.getName().concat(RESOURCES_META_SUFFIX));
-            }
-        };
+        final FileFilter filter = new ResourceMetaFileFilter(resource);
 
         final File[] metaFiles = getFiles(filter);
         assert (metaFiles.length == 0);

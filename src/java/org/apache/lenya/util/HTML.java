@@ -88,8 +88,8 @@ public class HTML {
             while (link_href_iterator.hasNext()) {
                 System.out.println((String) link_href_iterator.next());
             }
-        } catch (Exception e) {
-            System.err.println(".main(): " + e);
+        } catch (final IOException e) {
+            System.err.println("IO error : " + e);
         }
     }
 

@@ -19,6 +19,7 @@
 
 package org.apache.lenya.cms.task;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -28,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.Identity;
@@ -37,6 +40,7 @@ import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * The default task wrapper
@@ -236,8 +240,16 @@ public class DefaultTaskWrapper implements TaskWrapper {
             Parameters _parameters = Parameters.fromProperties(properties);
 
             task.parameterize(_parameters);
-        } catch (Exception e) {
+        } catch (final ConfigurationException e) {
             throw new ExecutionException(e);
+        } catch (final ParameterException e) {
+            throw new ExecutionException(e);
+        } catch (final SAXException e) {
+            throw new ExecutionException(e);
+        } catch (final IOException e) {
+            throw new ExecutionException(e);
+        } catch (ExecutionException e) {
+            throw e;
         }
 
 		log.debug("-----------------------------------");
