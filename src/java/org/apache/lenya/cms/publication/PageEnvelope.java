@@ -82,7 +82,6 @@ public class PageEnvelope {
     public static final String DOCUMENT_ID = "document-id";
     public static final String DOCUMENT_URL = "document-url";
     public static final String DOCUMENT_PATH = "document-path";
-    private RCEnvironment rcEnvironment;
     private String context;
 
     /**
@@ -116,7 +115,6 @@ public class PageEnvelope {
                     webappURI);
             setDocument(document);
 
-            rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }
@@ -173,9 +171,10 @@ public class PageEnvelope {
     /**
      * Returns the rcEnvironment.
      * @return a <code>RCEnvironment</code> value
+     * @deprecated We should detach the RC environment from the page envelope.
      */
     public RCEnvironment getRCEnvironment() {
-        return rcEnvironment;
+        return RCEnvironment.getInstance(getPublication().getServletContext().getAbsolutePath());
     }
 
     /**
@@ -232,14 +231,6 @@ public class PageEnvelope {
      */
     protected void setContext(String string) {
         context = string;
-    }
-
-    /**
-     * @param environment The revision control environment.
-     * @deprecated We should detach the RC environment from the page envelope.
-     */
-    protected void setRcEnvironment(RCEnvironment environment) {
-        rcEnvironment = environment;
     }
 
     private Document document;

@@ -62,6 +62,8 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Category;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -77,6 +79,22 @@ public class RCEnvironment implements Configurable {
     public static final String BACKUP_DIRECTORY = "backup-directory";
     private String rcmlDirectory;
     private String backupDirectory;
+    
+    private static Map instances = new HashMap();
+    
+    /**
+     * Returns the singleton RC environment for this context path.
+     * @param contextPath The context path (the Lenya webapp directory).
+     * @return An RC environment.
+     */
+    public static RCEnvironment getInstance(String contextPath) {
+        RCEnvironment instance = (RCEnvironment) instances.get(contextPath); 
+        if (instance == null) {
+            instance = new RCEnvironment(contextPath);
+            instances.put(contextPath, instance);
+        }
+        return instance;
+    }
 
     /**
      * Creates a new RCEnvironment object.
