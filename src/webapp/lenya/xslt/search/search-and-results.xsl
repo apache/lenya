@@ -118,7 +118,7 @@
       <td>URL: <xsl:value-of select="uri"/></td>
 -->
       <td>
-        Title: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/><xsl:apply-templates select="no-title"/></a>
+        Title: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
         <br />
         <font size="-1">Excerpt: <xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
         <br />
@@ -139,7 +139,7 @@
 </xsl:template>
 
 <xsl:template match="no-title">
-No Title!
+(No Title!)
 </xsl:template>
 
 <xsl:template match="excerpt">
