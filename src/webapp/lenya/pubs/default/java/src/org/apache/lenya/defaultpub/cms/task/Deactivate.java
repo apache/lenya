@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Deactivate.java,v 1.2 2004/03/20 11:46:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.defaultpub.cms.task;
 
@@ -97,7 +97,7 @@ public class Deactivate extends PublicationTask {
         Document authoringDocument = getPublication().getAreaVersion(liveDocument, Publication.AUTHORING_AREA);
         OK = OK && canWorkflowFire(authoringDocument);
 
-        SiteTree tree = getPublication().getSiteTree(liveDocument.getArea());
+        SiteTree tree = getPublication().getTree(liveDocument.getArea());
         SiteTreeNode node = tree.getNode(liveDocument.getId());
 
         if (node == null) {

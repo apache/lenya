@@ -149,7 +149,7 @@ public class Publish extends PublicationTask {
         Document liveDocument = getPublication().getAreaVersion(document, Publication.LIVE_AREA);
         Document liveParent = DocumentHelper.getParentDocument(liveDocument);
         if (liveParent != null) {
-            SiteTree liveTree = getPublication().getSiteTree(Publication.LIVE_AREA);
+            SiteTree liveTree = getPublication().getTree(Publication.LIVE_AREA);
             SiteTreeNode liveParentNode = liveTree.getNode(liveParent.getId());
             if (liveParentNode == null) {
                 log.error("Cannot execute task: live parent node does not exist.");
