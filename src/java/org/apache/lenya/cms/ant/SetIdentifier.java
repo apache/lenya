@@ -1,5 +1,5 @@
 /*
-$Id: SetIdentifier.java,v 1.2 2003/08/14 10:45:34 egli Exp $
+$Id: SetIdentifier.java,v 1.3 2003/08/20 16:47:45 edith Exp $
 <License>
 
  ============================================================================
@@ -59,23 +59,21 @@ import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DublinCore;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
+import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-import org.apache.lenya.cms.publication.SiteTreeNodeVisitor;
 import org.apache.tools.ant.BuildException;
 
 /**
- * anttask visitor to set the document-id in the dc:identifier
+ * anttask to set the document-id in the dc:identifier of all existing files
+ * corresponding to this document-id 
  * @author edith
  *
  */
-public class SetIdentifier
-	extends PublicationTask
-	implements SiteTreeNodeVisitor {
+public class SetIdentifier extends PublicationTask {
 
 	private String area;
 	private String documentid;
@@ -115,57 +113,66 @@ public class SetIdentifier
 		documentid = string;
 	}
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
-     */
-    public void visitSiteTreeNode(SiteTreeNode node) throws DocumentException {
-        Publication publication = getPublication();
-        DocumentIdToPathMapper pathMapper = publication.getPathMapper();
-        Label[] labels = node.getLabels();
-        for (int i = 0; i < labels.length; i++) {
-            String language = labels[i].getLanguage();
-            String parentid = node.getAbsoluteParentId();
-            String documentid = parentid + "/" + node.getId();
-            String url =
-                "/"
-                    + publication.getId()
-                    + "/"
-                    + area
-                    + documentid
-                    + "_"
-                    + language
-                    + ".html";
-            log("url : " + url);
-            Document document = null;
-            try {
-                document =
-                    DefaultDocumentBuilder.getInstance().buildDocument(
-                        publication,
-                        url);
-            } catch (DocumentBuildException e) {
-                e.printStackTrace();
-            }
-            DublinCore dublincore = document.getDublinCore();
-            dublincore.setIdentifier(documentid);
-            dublincore.save();
-        }
-    }
+	/**
+	 * write the document id in the DC Identifier of a document corresponding to this url
+	 * @param publication The publication the document belongs to.
+	 * @param url The URL of the form /{publication-id}/...
+	 * @throws DocumentBuildException when something went wrong when building the cms document.
+	 * @throws DocumentException when something went wrong when getting the DublinCore.
+	 */
+	public void writeDCIdentifier(Publication publication, String url)
+		throws DocumentBuildException, DocumentException {
+		assert url != null;
+
+		Document document = null;
+		document =
+			DefaultDocumentBuilder.getInstance().buildDocument(
+				publication,
+				url);
+		DublinCore dublincore = document.getDublinCore();
+		dublincore.setIdentifier(documentid);
+		dublincore.save();
+	}
 
 	/** 
 	 * @see org.apache.tools.ant.Task#execute()
 	 **/
 	public void execute() throws BuildException {
+		log("document-id " + this.getDocumentid());
+		log("area " + this.getArea());
+
+		Publication publication = getPublication();
+
+		String language = null;
+		String url = null;
+		SiteTree tree;
+
 		try {
-			log("document-id " + this.getDocumentid());
-			log("area " + this.getArea());
-
-			Publication publication = getPublication();
-			SiteTree tree = publication.getSiteTree(area);
-			SiteTreeNode node = tree.getNode(documentid);
-
-			node.acceptSubtree(this);
-		} catch (Exception e) {
+			tree = publication.getSiteTree(area);
+		} catch (SiteTreeException e) {
 			throw new BuildException(e);
+		}
+		SiteTreeNode node = tree.getNode(documentid);
+		Label[] labels = node.getLabels();
+
+		try {
+			if (labels.length < 1) {
+				log(
+					"no languages found for the node with id : "
+						+ node.getId());
+				url = DefaultDocumentBuilder.getInstance().buildCanonicalUrl(publication, area, documentid);
+				writeDCIdentifier(publication, url);
+			} else {
+				for (int i = 0; i < labels.length; i++) {
+					language = labels[i].getLanguage();
+					url = DefaultDocumentBuilder.getInstance().buildCanonicalUrl(publication, area, documentid, language);
+					writeDCIdentifier(publication, url);
+				}
+			}
+		} catch (DocumentException e1) {
+			throw new BuildException(e1);
+		} catch (DocumentBuildException e2) {
+			throw new BuildException(e2);
 		}
 	}
 
