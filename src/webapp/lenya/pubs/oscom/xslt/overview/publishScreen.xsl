@@ -8,6 +8,7 @@
 
 <xsl:template match="publish-all">
 <publish>
+  <task-id>publish</task-id>
   <referer>/lenya/oscom/authoring/matrix/index.html</referer>
   <publication-id>oscom</publication-id>
   <current_username/>
@@ -15,7 +16,7 @@
   <prefix>/lenya/oscom</prefix>
 
 <uris>
-/lenya/oscom/matrix/index.html<xsl:for-each select="oscom/system">,/lenya/oscom/matrix/<xsl:value-of select="id"/>.html</xsl:for-each>
+/lenya/oscom/live/matrix/index.html<xsl:for-each select="oscom/system">,/lenya/oscom/live/matrix/<xsl:value-of select="id"/>.html</xsl:for-each>
 </uris>
 
 <sources>

@@ -203,7 +203,7 @@
 
    <!-- Lenya CMS -->
    <map:pipeline>
-     <map:match pattern="authoring/lenya/publishAllCMSProjectsScreen*">
+     <map:match pattern="authoring/lenya/publishAllCMSProjectsScreen">
        <map:aggregate element="publish-all" label="xml">
          <map:part src="cocoon:/authoring/matrix/index.xml"/>
        </map:aggregate>
@@ -212,19 +212,12 @@
        <map:serialize type="html"/>
      </map:match>
 
-     <!--
-     <map:match pattern="authoring/lenya/publishScreen*">
-       <map:generate type="serverpages" src="../../content/publishing/publish-screen.xsp" label="xml"/>
-       <map:transform src="../../xslt/publishing/main.xsl"/>
-       <map:serialize type="html"/>
-     </map:match>
-     <map:match pattern="authoring/lenya/publish*">
+     <map:match pattern="authoring/lenya/publish">
        <map:act type="publisher">
          <map:redirect-to uri="{parent_uri}" session="true"/>
        </map:act>
        <map:redirect-to uri="publishScreen?status=failed" session="true"/>
      </map:match>
-     -->
    </map:pipeline>
 
 
