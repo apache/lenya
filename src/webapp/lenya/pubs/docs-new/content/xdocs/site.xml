@@ -59,6 +59,7 @@
     </proposals>
     <misc href="misc/" label="Miscellaneous">
       <namespaces href="webdav.html" label="WebDAV Servers"/>
+      <namespaces href="image-upload.html" label="Image Upload"/>
     </misc>
     <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
     <javadoc-error href="javadoc-error.html"/>

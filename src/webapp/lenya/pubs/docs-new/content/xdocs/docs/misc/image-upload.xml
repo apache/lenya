@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Image Upload (Multipart Requests)</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>web.xml</title>
+<p>
+In order to enable multipart requests (e.g. image upload), one needs to enable the upload option within the file <code>.../webapps/lenya/WEB-INF/web.xml</code>
+</p>
+<source>
+<![CDATA[
+<init-param>
+  <param-name>enable-uploads</param-name>
+  <param-value>true</param-value>
+</init-param>
+]]>
+</source>
+<p>
+Please restart your servlet engine after editing <code>web.xml</code>.
+</p>
+</section>
+</body>
+</document>
