@@ -1,5 +1,5 @@
 /*
-$Id: CopyResourcesTask.java,v 1.2 2003/09/09 12:12:41 edith Exp $
+$Id: CopyResourcesTask.java,v 1.3 2003/09/12 10:22:11 egli Exp $
 <License>
 
  ============================================================================
@@ -77,76 +77,97 @@ import org.apache.tools.ant.BuildException;
  */
 public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
-	/**
-	 * 
-	 */
-	public CopyResourcesTask() {
-		super();
-	}
+    /**
+     * 
+     */
+    public CopyResourcesTask() {
+        super();
+    }
 
-	/**
-     * copy the resources files belongs to the documents corresponding to this node 
+    /**
+     * Copy the resources files belongs to the documents corresponding to this node
+     *  
      * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
      */
-public void visitSiteTreeNode(SiteTreeNode node) {
-		log("visitSiteTreeNode in ");
-		Publication publication = getPublication();
-		DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+    public void visitSiteTreeNode(SiteTreeNode node) {
+        log("visitSiteTreeNode in ");
+        Publication publication = getPublication();
+        DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
 
-		String parentid = node.getAbsoluteParentId();
-		String srcDocumentid = parentid + "/" +node.getId();
-		log("srcDocumentid  "+srcDocumentid );
-		String destDocumentid = srcDocumentid.replaceFirst(getFirstdocumentid(),getSecdocumentid());
-		log("destDocumentid "+destDocumentid);
- 
-		Label[] labels = node.getLabels(); 
+        String parentid = node.getAbsoluteParentId();
+        String srcDocumentid = parentid + "/" + node.getId();
+        log("srcDocumentid  " + srcDocumentid);
+        String destDocumentid =
+            srcDocumentid.replaceFirst(
+                getFirstdocumentid(),
+                getSecdocumentid());
+        log("destDocumentid " + destDocumentid);
 
-		//FIXME: if the resources differ for different languages, so iterate on all languages
-		//	for (int i=0 ; i<labels.length; i ++){
+        Label[] labels = node.getLabels();
 
-			String language = labels[0].getLanguage();
-		log("language "+language);
-			String srcUrl = builder.buildCanonicalUrl(publication, getFirstarea(), srcDocumentid, language);
-		log("srcUrl "+srcUrl);
-			Document srcDoc;
-			try {
-				srcDoc = builder.buildDocument(publication, srcUrl);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-			ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
-			File [] srcFiles = resourcesMgr.getResources();
+        // FIXME: if the resources differ for different languages, so iterate 
+        // on all languages
 
-			if (srcFiles == null) {
-				log("There are no resources for the document "+getFirstdocumentid());
-				return;
-			} 
+        String language = labels[0].getLanguage();
+        log("language " + language);
+        String srcUrl =
+            builder.buildCanonicalUrl(
+                publication,
+                getFirstarea(),
+                srcDocumentid,
+                language);
+        log("srcUrl " + srcUrl);
+        Document srcDoc;
+        try {
+            srcDoc = builder.buildDocument(publication, srcUrl);
+        } catch (DocumentBuildException e) {
+            throw new BuildException(e);
+        }
+        ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
+        File[] srcFiles = resourcesMgr.getResources();
 
-			String destUrl = builder.buildCanonicalUrl(publication, getSecarea(), destDocumentid, language);
-		log("destUrl "+destUrl);
-			Document destDoc;
-			try {
-				destDoc = builder.buildDocument(publication, destUrl);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-			resourcesMgr = new ResourcesManager(destDoc);
-			File destFilePath = resourcesMgr.getPath();
+        if (srcFiles == null) {
+            log(
+                "There are no resources for the document "
+                    + getFirstdocumentid());
+            return;
+        }
 
-			for (int i=0; i<srcFiles.length; i++) {
-				String srcName = srcFiles[i].getName();
-				String destPath = destFilePath.getAbsolutePath() + File.separator + srcName ;
+        String destUrl =
+            builder.buildCanonicalUrl(
+                publication,
+                getSecarea(),
+                destDocumentid,
+                language);
+        log("destUrl " + destUrl);
+        Document destDoc;
+        try {
+            destDoc = builder.buildDocument(publication, destUrl);
+        } catch (DocumentBuildException e) {
+            throw new BuildException(e);
+        }
+        resourcesMgr = new ResourcesManager(destDoc);
+        File destFilePath = resourcesMgr.getPath();
 
-				log("copy file "+srcFiles[i].getAbsolutePath() + "to file " + destPath);
-				try {
-					FileUtil.copy(srcFiles[i].getAbsolutePath(), destPath);
-				} catch (FileNotFoundException e) {
-					throw new BuildException(e);
-				} catch (IOException e) {
-					throw new BuildException(e);
-				} 
-			}
-			
-	}
+        for (int i = 0; i < srcFiles.length; i++) {
+            String srcName = srcFiles[i].getName();
+            String destPath =
+                destFilePath.getAbsolutePath() + File.separator + srcName;
+
+            log(
+                "copy file "
+                    + srcFiles[i].getAbsolutePath()
+                    + "to file "
+                    + destPath);
+            try {
+                FileUtil.copy(srcFiles[i].getAbsolutePath(), destPath);
+            } catch (FileNotFoundException e) {
+                throw new BuildException(e);
+            } catch (IOException e) {
+                throw new BuildException(e);
+            }
+        }
+
+    }
 
 }
