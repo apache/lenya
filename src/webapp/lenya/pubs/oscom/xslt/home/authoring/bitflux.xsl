@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
 
-<xsl:output method="html" encoding="iso-8859-1"/>
+<xsl:output encoding="iso-8859-1"/>
 
 <xsl:template match="/">
     <head>

@@ -5,9 +5,6 @@
   xmlns:rc="http://www.lenya.org/2002/rc"
   >
 
-
-<xsl:output method="html"/>
-
 <xsl:template match="/">
   <xsl:apply-templates/>
 </xsl:template>

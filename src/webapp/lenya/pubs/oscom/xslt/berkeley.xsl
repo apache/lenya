@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:oscom="http://www.oscom.org/2002/oscom">
 
-<xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="oscom">
 <html>
@@ -10,9 +10,6 @@
 <meta name="generator" content="HTML Tidy, see www.w3.org" />
 <title>OSCOM - Open Source Content Management - Conference 2002, Berkeley</title>
 <link type="text/css" rel="stylesheet" href="http://oscom.smokinggun.com/site.css" />
-<!--
-<link type="text/css" rel="stylesheet" href="site.css" />
--->
 <script type="text/javascript">
     
     function titleOver()
@@ -32,9 +29,6 @@
 
 <div id="top">
 <img src="http://oscom.smokinggun.com/images/logo.gif" id="logo" alt="#2" />
-<!--
-<a href="../../index.html"><img src="http://oscom.smokinggun.com/images/logo.gif" id="logo" alt="#2" /></a>
--->
 <a href="../../index.html" onmouseover="titleOver()" onmouseout="titleOut()" id="title"><img src="http://oscom.smokinggun.com/images/title.gif" id="titleImage" alt="OSCOM | Berkeley Conference" /></a>
 </div>
 
@@ -50,9 +44,6 @@ href="sponsoring.html"><img src="http://oscom.smokinggun.com/images/sponsor.gif"
 href="contact.html"><img src="http://oscom.smokinggun.com/images/contact.gif" alt="Contact" /></a></div>
 
 <div id="contents">
-<!--
-      <xsl:apply-templates select="oscom_navigation"/>
--->
       <xsl:call-template name="body"/>
 </div>
 

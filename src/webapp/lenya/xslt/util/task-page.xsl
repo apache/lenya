@@ -5,7 +5,7 @@
     xmlns:session="http://www.lenya.org/2002/session"
     >
  
-  <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
   <xsl:param name="title"/>
   <xsl:param name="action"/>  <!-- action URI after http://www.host.com/context/publication-id/ -->

@@ -5,7 +5,7 @@
   
   <xsl:param name="documentID"/>
 
-  <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
   <xsl:template match="/">
     <xsl:apply-templates/>

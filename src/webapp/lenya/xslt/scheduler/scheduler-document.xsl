@@ -6,7 +6,7 @@
   <xsl:import href="../util/page-util.xsl"/>
   <xsl:import href="util.xsl"/>
 
-  <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
   <xsl:param name="publication-id" select="''"/>
   <xsl:param name="documentUri" select="''"/>

@@ -2,16 +2,13 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:error="http://apache.org/cocoon/error/2.0" xmlns:n-rdf="http://my.netscape.com/rdf/simple/0.9/" xmlns:oscom="http://www.oscom.org/2002/oscom">
  
-<xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="oscom">
 <html>
 <head><title>OSCOM - Open Source Content Management</title></head>
 <body bgcolor="#ffffff">
   <table cellpadding="0" cellspacing="0" border="0">
-<!--
-  <table width="750" cellpadding="0" cellspacing="0" border="0">
--->
     <tr>
       <td bgcolor="{$tablecolor}" colspan="8">
        <font face="verdana" color="white" size="+2"><b>OSCOM</b></font><br />

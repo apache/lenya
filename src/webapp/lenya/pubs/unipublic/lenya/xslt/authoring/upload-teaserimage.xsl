@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   
-  <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
   <xsl:template match="/">
     <html>
@@ -31,28 +31,6 @@
 	<tr>
 	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile" size="80"/></td>
 	</tr>
-<!--
-	<tr>
-	  <td>Identifier&#160;</td><td><input type="text" name="identifier"/></td>
-	</tr>
-	<tr><td>&#160;</td></tr>
-	<tr><td colspan="2"><h3>Metadata (Dublin Core)</h3></td></tr>
-	<tr>
-	  <td>Author (Creator)&#160;</td><td><input type="text" name="creator" size="40"/></td>
-	</tr>
-	<tr>
-	  <td>Alt-Text (Image Title)&#160;</td><td><input type="text" name="title" size="40"/></td>
-	</tr>
-	<tr>
-	  <td>Subject (Keywords)&#160;</td><td><input type="text" name="subject" size="40"/></td>
-	</tr>
-	<tr>
-	  <td>Caption (Image Description)&#160;</td><td><input type="text" name="description" size="40"/></td>
-	</tr>
-	<tr>
-	  <td>Rights (Copyright)&#160;</td><td><input type="text" name="rights" size="40"/></td>
-	</tr>
--->
 	<tr><td>&#160;</td></tr>
 	<tr>
 	  <td><input type="submit" value="Upload"/><input type="reset" value="Reset"/></td>

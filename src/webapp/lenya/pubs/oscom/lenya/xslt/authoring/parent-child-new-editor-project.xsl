@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
  
-<xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="/">
 <html>
@@ -27,11 +27,6 @@
 <input type="hidden" name="childtype" value="leaf"/>
 <input type="hidden" name="doctype" value="EditorProject"/>
 <table>
-<!--
-  <tr>
-    <td>parentid:</td><td>hidden value="<xsl:value-of select="/parent-child/parentid"/>"</td>
-  </tr>
--->
   <tr>
     <td>project id:</td><td><input type="text" name="childid"/> (e.g. xopus)</td>
   </tr>
@@ -41,28 +36,6 @@
   <tr>
     <td>project home url:</td><td><input type="text" name="project_url"/> (e.g. http://www.xopus.org)</td>
   </tr>
-<!--
-  <tr>
-    <td>child type:</td>
-    <td>
-      <input type="radio" name="childtype" value="branch"><xsl:attribute name="checked"/></input>Branch
-      <input type="radio" name="childtype" value="leaf"/>Leaf
-    </td>
-  </tr>
--->
-<!--
-  <tr>
-    <td valign="top">doc type:</td>
-    <td>
-      <select name="doctype" size="3">
-        <option value="generic"><xsl:attribute name="selected"/>Generic</option>
-        <option value="Group">Group</option>
-        <option value="Person">Member</option>
-        <option value="MemberOverview">Members</option>
-      </select>
-    </td>
-  </tr>
--->
 </table>
 <input type="submit" value="create"/>&#160;&#160;&#160;<a href="{referer}">CANCEL</a>
 </form>
