@@ -14,9 +14,11 @@
     <xsp:logic>
       String bitflux_prefix=""+xsp_lenya_context_prefix+"/bitflux";
       String domain_prefix_bitflux=""+xsp_lenya_context_prefix;
-      String xmlSource = xsp_lenya_pub_url.replaceFirst("\\.html", ".xml");
+      String xmlSource = xsp_lenya_pub_url
+            .replaceFirst("\\.html", ".xml")
+            .replaceFirst("/", "");
       String sourcesParameter = "sources=" + xmlSource;
-      String urisParameter = "uris=" + xsp_lenya_pub_url;
+      String urisParameter = "uris=" + xsp_lenya_context_prefix + xsp_lenya_pub_url;
     </xsp:logic>
     
     <tabs>
@@ -34,6 +36,7 @@
 	</block>
 	<block> -->
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/ParentChildScreenNewArticle?parentid=/"+"&amp;doctype=XDoc"</xsp:expr></xsp:attribute>New Document</item>
+          <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/lenya/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr></xsp:attribute>Publish + Export</item>
 <!--	</block>
 	<block> -->
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
