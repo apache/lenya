@@ -19,6 +19,7 @@ package org.apache.lenya.cms.usecase;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentFactory;
 
 /**
  * <p>
@@ -28,13 +29,13 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
  * Some parameters are initialized by default:
  * </p>
  * <ul>
- * <li><code>document</code> - the document</li>
+ * <li><code>document</code>- the document</li>
  * </ul>
  */
 public class DocumentUsecase extends WorkflowUsecase {
 
     protected static final String DOCUMENT = "document";
-    
+
     /**
      * Ctor.
      */
@@ -43,13 +44,25 @@ public class DocumentUsecase extends WorkflowUsecase {
     }
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (getSourceDocument() == null) {
+            addErrorMessage("This usecase can only be invoked on documents!");
+        }
+    }
+    
+    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
      */
     protected void doInitialize() {
         super.doInitialize();
         try {
-            this.sourceDocument = getUnitOfWork().getIdentityMap().getFactory().getFromURL(
-                    getSourceURL());
+            DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
+            if (factory.isDocument(getSourceURL())) {
+                this.sourceDocument = factory.getFromURL(getSourceURL());
+            }
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }
@@ -130,13 +143,13 @@ public class DocumentUsecase extends WorkflowUsecase {
     protected void triggerWorkflow(String event) {
         triggerWorkflow(event, getSourceDocument());
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {
         super.initParameters();
-        
+
         setParameter(DOCUMENT, getSourceDocument());
     }
 }
