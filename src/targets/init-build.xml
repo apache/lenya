@@ -21,7 +21,7 @@
     <property name="optimize"       value="off"/>
     <property name="deprecation"    value="off"/>
     <property name="nowarn"         value="on"/>
-    <property name="build.compiler" value="classic"/>
+    <property name="build.compiler" value="modern"/>
     <property name="target.vm"      value="1.4"/>
 
     <property name="packages"      value="*.*"/>
