@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.17 2003/05/07 16:41:48 egli Exp $
+ * $Id: DefaultCreator.java,v 1.18 2003/05/08 15:27:26 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,11 +50,8 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.log4j.Category;
 
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.DOMWriter;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.net.URL;
 import java.util.Map;
 
 /**
@@ -170,8 +167,9 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
 	// Read sample file
         log.debug("Read sample file: " + doctypeSample);
-        Document doc = DocumentHelper.readDocument(new URL("file:" + doctypeSample));
+        Document doc = DocumentHelper.readDocument(new File(doctypeSample));
 
+        log.debug("sample document: " + doc);
 	// transform the xml if needed
         log.debug("transform sample file: ");
 	transformXML(doc, id, childType, childName, parameters);
@@ -184,14 +182,12 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 	
         // Write file
         log.debug("write file: " + filename);
-        FileOutputStream out = new FileOutputStream(filename);
-        new DOMWriter(out).printWithoutFormatting(doc);
-        out.close();
+	DocumentHelper.writeDocument(doc, new File(filename));
 
 	// now do the same thing for the meta document if the
 	// sampleMetaName is specified
 	if (sampleMetaName != null) {
-	    doc = DocumentHelper.readDocument(new URL("file:" + doctypeMeta));
+	    doc = DocumentHelper.readDocument(new File(doctypeMeta));
 
 	    transformMetaXML(doc, id, childType, childName, parameters);
 	    
@@ -200,9 +196,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 		parent.mkdirs();
 	    }
 	    
-	    out = new FileOutputStream(filenameMeta);
-	    new DOMWriter(out).printWithoutFormatting(doc);
-	    out.close();
+	    DocumentHelper.writeDocument(doc, new File(filenameMeta));
 	}
     }
 
