@@ -55,19 +55,12 @@ public abstract class WorkflowFactory {
      * @return
      * @throws WorkflowBuildException
      */
-    public abstract Workflow buildWorkflow() throws WorkflowBuildException;
+    public abstract Workflowable buildWorkflowable() throws WorkflowBuildException;
 
     /**
     * @return
     * @throws WorkflowBuildException
     */
     public abstract Situation buildSituation() throws WorkflowBuildException;
-
-    /**
-     * @return
-     * @throws WorkflowBuildException
-     */
-    public abstract WorkflowInstance buildInstance()
-        throws WorkflowBuildException;
 
 }
