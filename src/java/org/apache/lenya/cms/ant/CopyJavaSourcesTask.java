@@ -1,5 +1,5 @@
 /*
-$Id: CopyJavaSourcesTask.java,v 1.15 2003/08/06 09:18:25 egli Exp $
+$Id: CopyJavaSourcesTask.java,v 1.16 2003/08/06 14:02:26 michi Exp $
 <License>
 
  ============================================================================
@@ -60,26 +60,26 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 
-import org.apache.lenya.util.RegexFilter;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.StringTokenizer;
+
+import org.apache.lenya.util.RegexFilter;
 
 
 /**
- * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
+ * @author Michael Wechner
  */
 public class CopyJavaSourcesTask extends Task {
     private Path pubsRootDirs;
     private String javaDir;
     private String buildDir;
-	private static final String FILENAMEPATTERN = ".*\\.java";
+
+    private static final String FILENAMEPATTERN = ".*\\.java";
 
     /**
      *
@@ -91,26 +91,35 @@ public class CopyJavaSourcesTask extends Task {
 
         File absoluteBuildDir = new File(getProject().getBaseDir(), Project.translatePath(buildDir));
 
+        //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
+        //System.out.println("CopyJavaSourcesTask.execute(): " + pubsRootDirs);
         StringTokenizer st = new StringTokenizer(pubsRootDirs.toString(), File.pathSeparator);
 
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
 
+            //System.out.println("CopyJavaSourcesTask.execute(): " + pubsRootDir);
             File path = new File(pubsRootDir);
 
             if (path.isDirectory()) {
                 if (new File(path, "publication.xml").isFile()) {
-                    copyContentOfDir(new File(path, javaDir), absoluteBuildDir, twoTuple,
-					new RegexFilter(FILENAMEPATTERN));
+                    // FIXME: RegexFilter doesn't work properly
+                    //copyContentOfDir(new File(path, javaDir), absoluteBuildDir, twoTuple, new RegexFilter(FILENAMEPATTERN));
+                    copyContentOfDir(new File(path, javaDir), absoluteBuildDir, twoTuple, new JavaFilenameFilter());
                 } else {
                     // FIXME: Look for publications defined by the file "publication.xml"
                     String[] pubs = path.list();
 
                     for (int i = 0; i < pubs.length; i++) {
-                         File pubJavaDir = new File(path, new File(pubs[i], javaDir).toString());
+                        //System.out.println("CopyJavaSourcesTask.execute(): " + pubs[i]);
+                        File pubJavaDir = new File(path, new File(pubs[i], javaDir).toString());
 
-                        copyContentOfDir(pubJavaDir, absoluteBuildDir, twoTuple,
-						new RegexFilter(FILENAMEPATTERN));
+                        //System.out.println("CopyJavaSourcesTask.execute(): " + pubJavaDir);
+                        //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
+
+                        // FIXME: RegexFilter doesn't work properly
+                        //copyContentOfDir(pubJavaDir, absoluteBuildDir, twoTuple, new RegexFilter(FILENAMEPATTERN));
+                        copyContentOfDir(pubJavaDir, absoluteBuildDir, twoTuple, new JavaFilenameFilter());
                     }
                 }
             } else {
@@ -125,14 +134,9 @@ public class CopyJavaSourcesTask extends Task {
         System.out.println("Copying " + numberOfFilesCopied + " files to " + absoluteBuildDir);
     }
 
-	/**
-	 * Copies the directory "source" into the directory "destination"
-	 * 
-	 * @param source from where the files are copied
-	 * @param destination to where the files are copied
-	 * @param twoTuple DOCUMENT ME!
-	 * @param filenameFilter for file filtering
-	 */
+    /**
+     * Copies the directory "source" into the directory "destination"
+     */
     static public void copyDir(File source, File destination, TwoTuple twoTuple,
         FilenameFilter filenameFilter) {
         File actualDestination = new File(destination, source.getName());
@@ -143,8 +147,7 @@ public class CopyJavaSourcesTask extends Task {
     /**
      * Copies the content of a directory into another directory
      */
-    static public void copyContentOfDir(File source, File destination, TwoTuple twoTuple,
-        FilenameFilter filenameFilter) {
+    static public void copyContentOfDir(File source, File destination, TwoTuple twoTuple, FilenameFilter filenameFilter) {
         if (source.isDirectory()) {
             String[] files;
 
@@ -153,6 +156,7 @@ public class CopyJavaSourcesTask extends Task {
             } else {
                 files = source.list();
             }
+            //System.out.println("CopyJavaSourcesTask.copyContentOfDir(): Number of files found: " + files.length);
 
             for (int i = 0; i < files.length; i++) {
                 File file = new File(source, files[i]);
@@ -160,6 +164,7 @@ public class CopyJavaSourcesTask extends Task {
                 if (file.isFile()) {
                     copyFile(file, new File(destination, files[i]), twoTuple);
                 } else if (file.isDirectory()) {
+                    //System.out.println("CopyJavaSourcesTask.copyContentOfDir(): " + source + " " + destination);
                     copyContentOfDir(file, new File(destination, files[i]), twoTuple, filenameFilter);
                 } else {
                     System.err.println(
@@ -167,6 +172,7 @@ public class CopyJavaSourcesTask extends Task {
                 }
             }
         } else {
+            //System.err.println("CopyJavaSourcesTask.copyContentOfDir(): No such directory: " + source);
         }
     }
 
@@ -181,6 +187,7 @@ public class CopyJavaSourcesTask extends Task {
             if (!parentDest.exists()) {
                 parentDest.mkdirs();
 
+                //System.out.println("CopyJavaSourcesTask.copyFile(): Directory created: " + parentDest);
                 int numberOfDirectoriesCreated = twoTuple.x;
                 numberOfDirectoriesCreated++;
                 twoTuple.x = numberOfDirectoriesCreated;
@@ -209,6 +216,7 @@ public class CopyJavaSourcesTask extends Task {
                 numberOfFilesCopied++;
                 twoTuple.y = numberOfFilesCopied;
 
+                //System.out.println("CopyJavaSourcesTask.copyFile(): File copied (" + numberOfFilesCopied  + "): " + source + " " + destination);
             } catch (Exception e) {
                 System.err.println("CopyJavaSourcesTask.copyFile(): " + e);
             }
