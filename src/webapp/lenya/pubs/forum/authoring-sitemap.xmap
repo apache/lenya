@@ -119,6 +119,7 @@
           <map:parameter name="view" value="authoring"/>
         </map:transform>
         <map:transform type="xlink"/>
+        <map:transform src="stylesheets/publication/Page/Front/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
