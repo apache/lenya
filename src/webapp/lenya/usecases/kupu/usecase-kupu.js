@@ -88,9 +88,10 @@ function publication_image_library() {
  */
 function save() {
     cocoon.log.debug("Starting to save Kupu doc.");
-
+    var flowHelper = new FlowHelper();
     try {        
-        new FlowHelper().savePipelineToDocument(cocoon, cocoon.parameters["template"]);
+        flowHelper.savePipelineToDocument(cocoon, cocoon.parameters["template"]);
+        flowHelper.triggerWorkflow(cocoon, "edit");
         cocoon.response.setStatus(204); // Expected by Kupu upon successful save
     } catch(e) { 
         cocoon.log.error("Error saving Kupu doc.", e);
