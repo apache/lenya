@@ -30,9 +30,10 @@
     rcmlDirectory=rootDir+"/"+rcmlDirectory;
     backupDirectory=rootDir+"/"+backupDirectory;
 
-   
-    String artId = parameters.getParameter("docid","null");
-    String uriprefix = request_uri.substring(0,request_uri.indexOf("/authoring")) + File.separator + "authoring";
+    String docId = parameters.getParameter("docid","null");
+    String docUri = parameters.getParameter("documentUri","null");
+    <xsp:content><documentId><xsp:expr>docId</xsp:expr></documentId></xsp:content>
+    <xsp:content><documentUri><xsp:expr>docUri</xsp:expr></documentUri></xsp:content>
 
     RevisionController rc = new RevisionController(rcmlDirectory,backupDirectory);
     org.w3c.dom.Document rcmlDoc=null;
@@ -42,11 +43,10 @@
       <rc:exception>rollback: Unable to get DOM doc for rcml file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
     }                                                                                                                                    
     org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
-    rootE.setAttribute("id", artId);     
-    rootE.setAttribute("uriprefix", uriprefix);     
-    rootE.setAttribute("request_uri", xsp_lenya_request_uri);     
-    rootE.setAttribute("sitemap_uri", xsp_lenya_sitemap_uri);     
-
+<!--
+    rootE.setAttribute("documentId", docId);     
+    rootE.setAttribute("documentUri", docUri);     
+-->
     org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
 
     for (int i = 0; i &lt; timeElements.getLength(); i++) {
@@ -55,7 +55,6 @@
     }
   </xsp:logic>
 
-  <sitemap-path><xsp:expr>sitemapPath</xsp:expr></sitemap-path>
   <xsp:expr>rootE</xsp:expr>
 
 </rc:revisions>
