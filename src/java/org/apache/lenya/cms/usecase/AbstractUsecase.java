@@ -282,6 +282,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     }
 
     /**
+     * Return a map of all parameters
+     * @return the map
+     */
+    public Map getParameters() {
+        return Collections.unmodifiableMap(this.parameters);
+    }
+
+    /**
      * Returns one of the strings "true" or "false" depending on whether the
      * corresponding checkbox was checked.
      * @param name The parameter name.
