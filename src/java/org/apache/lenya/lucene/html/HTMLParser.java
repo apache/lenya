@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLParser.java,v 1.14 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.html;
 
@@ -908,8 +908,8 @@ label_5:
 
             boolean exists = false;
 
-            for (java.util.Enumeration enum = jj_expentries.elements(); enum.hasMoreElements();) {
-                int[] oldentry = (int[]) (enum.nextElement());
+            for (java.util.Enumeration elenum = jj_expentries.elements(); elenum.hasMoreElements();) {
+                int[] oldentry = (int[]) (elenum.nextElement());
 
                 if (oldentry.length == jj_expentry.length) {
                     exists = true;

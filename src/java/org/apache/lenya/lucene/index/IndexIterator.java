@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexIterator.java,v 1.14 2004/07/31 05:32:02 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 
@@ -190,15 +190,15 @@ public class IndexIterator {
      * Returns an term enumerator beginning with the first term that represents a UID field.
      */
     protected TermEnum enumerateUIDs(IndexReader reader) {
-        TermEnum enum = null;
+        TermEnum tEnum = null;
 
         try {
-            enum = reader.terms(new Term("uid", ""));
+            tEnum = reader.terms(new Term("uid", ""));
         } catch (IOException e) {
             log.error("Term enumeration failed: ", e);
         }
             
-        return enum;
+        return tEnum;
     }
 
     /**

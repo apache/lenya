@@ -182,7 +182,7 @@ public class LDAPUser extends FileUser {
 		if (attributes != null) {
 		    Attribute userNames = attributes.get(usrNameAttr);
 		    if (userNames != null) {
-			for (NamingEnumeration enum = userNames.getAll(); enum.hasMore(); enum.next()) {
+			for (NamingEnumeration nenum = userNames.getAll(); nenum.hasMore(); nenum.next()) {
 			    name.append((String)userNames.get());
 			}
 		    }
