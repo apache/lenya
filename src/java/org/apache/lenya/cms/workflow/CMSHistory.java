@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.15 2003/09/02 13:41:19 andreas Exp $
+$Id: CMSHistory.java,v 1.16 2003/09/11 16:19:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -147,9 +147,10 @@ public class CMSHistory extends History {
 
     /**
      * Returns the path of the history file inside the publication directory.
+     * @param Document A CMS document.
      * @return A string.
      */
-    public String getHistoryPath() {
+    public String getHistoryPath(Document document) {
         DocumentIdToPathMapper pathMapper = document.getPublication().getPathMapper();
         String documentPath = pathMapper.getPath(document.getId(), document.getLanguage());
         String path = HISTORY_PATH + "/" + document.getArea() + "/" + documentPath;
@@ -168,7 +169,7 @@ public class CMSHistory extends History {
      * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
      */
     protected File getHistoryFile(Document document) {
-        File historyFile = new File(document.getPublication().getDirectory(), getHistoryPath());
+        File historyFile = new File(document.getPublication().getDirectory(), getHistoryPath(document));
         return historyFile;
     }
 
@@ -235,6 +236,14 @@ public class CMSHistory extends History {
         cmsVersion.setUserId(userId);
 
         return cmsVersion;
+    }
+
+    /**
+     * Returns the history path of this history.
+     * @return A string.
+     */
+    public String getHistoryPath() {
+        return getHistoryPath(getDocument());
     }
 
 }
