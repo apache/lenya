@@ -15,12 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: about.xml,v 1.5 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id$ -->
 
 <page:page  
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
 
-<page:title>Apache Lenya 1.2</page:title>
+<page:title>Apache Lenya 1.4-dev</page:title>
 <page:body>
 <div class="lenya-box">
 <p>

@@ -15,12 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xml,v 1.20 2004/07/27 16:33:44 michi Exp $ -->
+<!-- $Id$ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false">
 <lenya:name>OSCOM</lenya:name>
 <lenya:pub-version>1.0.1</lenya:pub-version>
-<lenya:lenya-version>1.2.1-dev</lenya:lenya-version>
+<lenya:lenya-version>1.4-dev</lenya:lenya-version>
 <lenya:cocoon-version>2.1.5.1</lenya:cocoon-version>
 <lenya:description>OSCOM is an international, not-for-profit organization dedicated to Open Source
 Content Management.
