@@ -72,7 +72,12 @@ Edit Document <b><xsl:value-of select="$docid"/></b>
 -->
 </xsl:template>
 
+
+
+
 <xsl:template match="@*" mode="mixed">
-<xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"</xsl:template>
+<xsl:variable name="prefix"><xsl:if test="contains(name(),':')">:<xsl:value-of select="substring-before(name(),':')"/></xsl:if></xsl:variable>
+
+<xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"<xsl:if test="namespace-uri()"><xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="namespace-uri()"/>"</xsl:if></xsl:template>
  
 </xsl:stylesheet>  
