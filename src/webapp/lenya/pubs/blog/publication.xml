@@ -15,12 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xml,v 1.17 2004/06/06 19:33:51 roku Exp $ -->
+<!-- $Id$ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 <lenya:pub-version>1.0</lenya:pub-version>
-<lenya:lenya-version>1.2</lenya:lenya-version>
-<lenya:cocoon-version>2.1.5</lenya:cocoon-version>
+<lenya:lenya-version>1.4-dev</lenya:lenya-version>
+<lenya:cocoon-version>2.1.5.1</lenya:cocoon-version>
 <lenya:name>Lenya's Weblog</lenya:name>
 <lenya:description>
 This publication is an initiative to implement the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">"Echo/Atom"</a> specification for syndicating, archiving and
