@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: create.xsl,v 1.14 2004/03/13 14:42:38 gregor Exp $ -->
+<!-- $Id: create.xsl,v 1.15 2004/03/14 16:42:15 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -102,7 +102,7 @@ function validateForm(theForm)
           <table class="lenya-table-noborder">
             <xsl:if test="$status != ''">
               <tr>
-                <td class="lenya-form-message-error" colspan="2"><i18n:text key="default.createdoce.idtaken"/></td>
+                <td class="lenya-form-message-error" colspan="2"><i18n:text key="default.createdoc.idtaken"/></td>
               </tr>
             </xsl:if>
             <tr>
