@@ -1,6 +1,6 @@
 
 /*
- * $Id: Grep.java,v 1.2 2003/09/30 09:03:28 egli Exp $
+ * $Id: Grep.java,v 1.3 2003/10/02 12:33:58 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,7 +62,7 @@ import java.util.regex.Pattern;
  * 
  * Utility class to provide a subset of the grep functionality. 
  *  
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class Grep {
 
@@ -104,6 +104,50 @@ public class Grep {
         fis.close();
 
         return result;
+    }
+
+    /**
+     * Find all occurences of pattern in a file.
+     * 
+     * @param file the file to search for occurences of pattern
+     * @param pattern the pattern to search for
+     * @param group which group in the pattern to return
+     * 
+     * @return an <code>array</code> of occurences of pattern 
+     * (i.e. the groupth group of the match)
+     * 
+     * @throws IOException if the file could not be read.
+     * 
+     */
+    public static String[] findPattern(File file, Pattern pattern, int group)
+        throws IOException {
+
+        ArrayList occurences = new ArrayList();
+
+        // Open the file and then get a channel from the stream
+        FileInputStream fis = new FileInputStream(file);
+        FileChannel fc = fis.getChannel();
+
+        // Get the file's size and then map it into memory
+        int sz = (int)fc.size();
+        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, sz);
+
+        // Decode the file into a char buffer
+        CharBuffer cb = decoder.decode(bb);
+
+        // Perform the search
+        Matcher pm = pattern.matcher(cb); // Pattern matcher
+
+        while (pm.find()) {
+            occurences.add(pm.group(group));
+        }
+
+        // Close the channel and the stream
+        fc.close();
+        fis.close();
+
+        return (String[])occurences.toArray(new String[occurences.size()]);
+
     }
 
     /**
