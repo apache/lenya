@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.18 2003/08/18 17:13:40 andreas Exp $
+$Id: SchedulerWrapper.java,v 1.19 2003/08/28 10:14:29 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,6 +67,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
+import org.apache.lenya.cms.task.TaskWrapperParameters;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 
@@ -99,7 +100,6 @@ import javax.servlet.http.HttpServletRequest;
 public class SchedulerWrapper {
     private static Category log = Category.getInstance(SchedulerWrapper.class);
     public static final String JOB_PREFIX = "job";
-    public static final String DOCUMENT_URL = "document-url";
     public static final String JOB_ID = "id";
     public static final String JOB_CLASS = "class";
     private static int jobId = 0;
@@ -236,7 +236,7 @@ public class SchedulerWrapper {
 
             mapWrapper.put(JOB_ID, uniqueJobId);
             mapWrapper.put(JOB_CLASS, jobClass.getName());
-            mapWrapper.put(DOCUMENT_URL, documentUri);
+            mapWrapper.put(TaskWrapperParameters.WEBAPP_URL, documentUri);
 
             JobDetail jobDetail = new JobDetail(uniqueJobId, jobGroup, jobClass);
             jobDetail.setJobDataMap(map);
