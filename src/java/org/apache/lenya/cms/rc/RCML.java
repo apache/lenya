@@ -30,7 +30,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.lenya.xml.XPointerFactory;
+import org.apache.xpath.XPathAPI;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -74,7 +74,7 @@ public class RCML {
      *
      * @param rcmlDirectory The rcml directory.
      * @param filename The path of the file from the publication (e.g. for file with 
-     * absolute path home/.../jakarta-tomcat-4.1.24/webapps/lenya/lenya/pubs/{publication id}/content/authoring/foo/bar.xml
+     * absolute path home/...//lenya/pubs/{publication id}/content/authoring/foo/bar.xml
      * the filename is content/authoring/foo/bar.xml)
      * @param rootDirectory The publication directory
      *
@@ -209,23 +209,22 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public CheckOutEntry getLatestCheckOutEntry() throws Exception {
-        XPointerFactory xpf = new XPointerFactory();
+        Element parent = document.getDocumentElement();
+        Node identity = null;
+        Node time = null;
+        String rcIdentity = null;
 
-        Vector firstCheckOut =
-            xpf.select(
-                document.getDocumentElement(),
-                "xpointer(/XPSRevisionControl/CheckOut[1]/Identity)xpointer(/XPSRevisionControl/CheckOut[1]/Time)");
+       identity = (Node) XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckOut[1]/Identity/text()");
+       time = (Node) XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckOut[1]/Time/text()");
 
-        if (firstCheckOut.size() == 0) {
+        if (identity == null && time == null) {
             // No checkout at all
-            //
             return null;
         }
+        rcIdentity = identity.getNodeValue();
+        long rcTime = new Long(time.getNodeValue()).longValue();
 
-        String[] fcoValues = xpf.getNodeValues(firstCheckOut);
-        long fcoTime = new Long(fcoValues[1]).longValue();
-
-        return new CheckOutEntry(fcoValues[0], fcoTime);
+        return new CheckOutEntry(rcIdentity, rcTime);
     }
 
     /**
@@ -236,23 +235,22 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public CheckInEntry getLatestCheckInEntry() throws Exception {
-        XPointerFactory xpf = new XPointerFactory();
+        Element parent = document.getDocumentElement();
+        Node identity = null;
+        Node time = null;
+        String rcIdentity = null;
 
-        Vector firstCheckIn =
-            xpf.select(
-                document.getDocumentElement(),
-                "xpointer(/XPSRevisionControl/CheckIn[1]/Identity)xpointer(/XPSRevisionControl/CheckIn[1]/Time)");
+       identity = (Node) XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckIn[1]/Identity/text()");
+       time = (Node) XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckIn[1]/Time/text()");
 
-        if (firstCheckIn.size() == 0) {
-            // No checkin at all
-            //
+        if (identity == null && time == null) {
+            // No checkout at all
             return null;
         }
+        rcIdentity = identity.getNodeValue();
+        long rcTime = new Long(time.getNodeValue()).longValue();
 
-        String[] fciValues = xpf.getNodeValues(firstCheckIn);
-        long fciTime = new Long(fciValues[1]).longValue();
-
-        return new CheckInEntry(fciValues[0], fciTime);
+        return new CheckInEntry(rcIdentity, rcTime);
     }
 
     /**
@@ -289,16 +287,13 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public Vector getEntries() throws Exception {
-        XPointerFactory xpf = new XPointerFactory();
-
-        Vector entries =
-            xpf.select(
-                document.getDocumentElement(),
-                "xpointer(/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn)");
+    	Element parent = document.getDocumentElement();
+    	NodeList entries =
+    		XPathAPI.selectNodeList(parent, "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
         Vector RCMLEntries = new Vector();
 
-        for (int i = 0; i < entries.size(); i++) {
-            Element elem = (Element) entries.get(i);
+        for (int i = 0; i < entries.getLength(); i++) {
+            Element elem = (Element) entries.item(i);
             String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
             String identity =
                 elem.getElementsByTagName("Identity").item(0).getFirstChild().getNodeValue();
@@ -322,15 +317,12 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public void pruneEntries(String backupDir) throws Exception {
-        XPointerFactory xpf = new XPointerFactory();
+    	Element parent = document.getDocumentElement();
+    	NodeList entries =
+    		XPathAPI.selectNodeList(parent, "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
 
-        Vector entries =
-            xpf.select(
-                document.getDocumentElement(),
-                "xpointer(/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn)");
-
-        for (int i = maximalNumberOfEntries; i < entries.size(); i++) {
-            Element current = (Element) entries.get(i);
+        for (int i = maximalNumberOfEntries; i < entries.getLength(); i++) {
+            Element current = (Element) entries.item(i);
 
             // remove the backup file associated with this entry
             String time =
@@ -386,10 +378,9 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public void deleteFirstCheckIn() throws Exception {
-        XPointerFactory xpf = new XPointerFactory();
         Node root = document.getDocumentElement();
-        Vector firstCheckIn = xpf.select(root, "xpointer(/XPSRevisionControl/CheckIn[1])");
-        root.removeChild((Node) firstCheckIn.elementAt(0));
+        Node firstCheckIn = XPathAPI.selectSingleNode(root, "/XPSRevisionControl/CheckIn[1]");
+        root.removeChild(firstCheckIn);
         root.removeChild(root.getFirstChild()); // remove EOL (end of line)
         setDirty();
     }
@@ -402,16 +393,13 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public String[] getBackupsTime() throws Exception {
-        XPointerFactory xpf = new XPointerFactory();
+        Node root = document.getDocumentElement();
+        NodeList entries = XPathAPI.selectNodeList(root, "/XPSRevisionControl/CheckIn");
 
-        Vector entries =
-            xpf.select(
-                document.getDocumentElement(),
-                "xpointer(/XPSRevisionControl/CheckIn)");
         ArrayList times = new ArrayList();
 
-        for (int i = 0; i < entries.size(); i++) {
-            Element elem = (Element) entries.get(i);
+        for (int i = 0; i < entries.getLength(); i++) {
+            Element elem = (Element) entries.item(i);
             String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
             NodeList backupNodes = elem.getElementsByTagName(ELEMENT_BACKUP);
             if (backupNodes != null && backupNodes.getLength()>0) {
