@@ -194,7 +194,7 @@
   <component logger="lenya.ac.accesscontroller.bypassable"
       class="org.apache.lenya.ac.impl.BypassableAccessController"
       role="org.apache.lenya.ac.AccessController/bypassable">
-    <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif|.*[.]png|.*[.]rng|.*[.]xsl</public>
+    <public>.*[.]css|.*[.]jpg|.*[.]gif|.*[.]png|.*[.]rng|.*[.]xsl</public>
   </component>
   
   <access-controller-resolvers>
