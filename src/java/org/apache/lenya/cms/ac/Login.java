@@ -18,12 +18,8 @@ package org.apache.lenya.cms.ac;
 
 import java.util.Map;
 
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.admin.AccessControlUsecase;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -41,7 +37,6 @@ public class Login extends AccessControlUsecase {
     public Login() {
         super();
     }
-
 
     /**
      * Validates the request parameters.
@@ -70,11 +65,9 @@ public class Login extends AccessControlUsecase {
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
-     * TODO check if there is a cleaner way to pass data to the authenticator
      */
     protected void doExecute() throws Exception {
-
-        Map objectModel = ContextHelper.getObjectModel(super.getContext());
+        Map objectModel = ContextHelper.getObjectModel(getContext());
         Request request = ObjectModelHelper.getRequest(objectModel);
         if (getAccessController().authenticate(request)) {
         	setTargetURL(request.getRequestURI());
