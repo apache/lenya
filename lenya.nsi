@@ -14,7 +14,7 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 
-; $Id: lenya.nsi,v 1.9 2004/04/12 11:44:17 gregor Exp $
+; $Id: lenya.nsi,v 1.10 2004/06/11 14:39:33 roku Exp $
 
 ;--------------------------------
 ;Include Modern UI
@@ -26,7 +26,7 @@
 
   ;General
   Name "Apache Lenya 1.2"
-  OutFile "Lenya-1.2-install.exe"
+  OutFile "incubating-lenya-1.2-bin.exe"
   
   CRCCheck on
   SetCompress force
