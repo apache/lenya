@@ -1,0 +1,292 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span
+class="txt-xl-black">Modellierung als Aspirin und
+Vitamin</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>Grady Booch, Chief
+Scientist bei der Programmschmiede Rational und Entwickler der
+Designsprache UML (Unified Modeling Language), will
+Kreativit&#228;t und wirtschaftlichen Druck in unternehmensweiten
+Softwareprojekten unter einen Hut bringen.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 01.11.2002<br />
+ <b>Rubrik:</b> Hintergrund<br />
+ <b>Autor:</b> Tom Sullivan (Redaktor Infoworld), Beat
+Hochuli<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">F&#252;r gew&#246;hnlich
+gelten "Befreiung" und "Freiheit" als philosophische Begriffe, die
+andere Felder abdecken als die Entwicklung von Applikationen. Das
+sieht Grady Booch anders. Der Chefwissenschaftler der
+Softwareschmiede Rational setzt nach eigenen Angaben alles daran,
+um die Programmierer dieser Welt von den Ketten zu befreien, die
+ihre Kreativit&#228;t einschr&#228;nken. Im folgenden Interview
+legt Booch dar, wie das heikle Gleichgewicht zwischen Planung und
+Kreativit&#228;t bei unternehmensweiten Softwareprojekten gewahrt
+werden kann, wie sich die Designsprache UML (Unified Modeling
+Language) weiterentwickelt und welche Ver&#228;nderungen in der
+Applikationsentwicklung er f&#252;r die n&#228;chsten drei bis
+f&#252;nf Jahre erwartet.<br />
+<br />
+ <b>Tom Sullivan:</b> <i>Was tut eigentlich Rational
+gegenw&#228;rtig?<br />
+<br />
+</i> <b>Grady Booch:</b> Wir arbeiten intensiv daran, den
+Entwicklerteams mehr Freiheit zu geben. Softwareprogrammierung ist
+grunds&#228;tzlich eine harte Sache. Rational hat Werkzeuge,
+Techniken, Prinzipien und Dienste, die Chief Technology Officers
+(CTO) als Aspirin und Vitamine einsetzen k&#246;nnen - Aspirin, das
+die Schmerzen bei Grossprojekten lindert, und Vitamine, die
+daf&#252;r sorgen, dass die Softwareentwicklung &#252;ber die Jahre
+immer besser wird.<br />
+<br />
+ <i>Was genau meinen Sie, wenn Sie von Befreiung
+sprechen?</i><br />
+<br />
+ Letzten Endes sind es die Code Warriors, die Schreiber, die
+Schwerstarbeit verrichten. Ei-nerseits will sie der CTO
+m&#246;glichst wenig behindern, damit sie wirklich gute Software
+schreiben k&#246;nnen. Andererseits besteht st&#228;ndig ein
+wirtschaftlicher Druck. Gefordert wird ein schneller Return on
+Investment bei Softwareprojekten. Die Teams sind also gezwungen,
+Programme zu schreiben, die von Beginn weg als wertvoll f&#252;r
+das Unternehmen gesehen werden. Diese gesunde Spannung ist immer
+da. "Gesund" und "Spannung" deswegen, weil es zwei Arten von Zielen
+gibt: Die wirtschaftlichen auf der einen und die technischen und
+teilweise sehr k&#252;nstlerischen auf der anderen. Quasi innerhalb
+der Freiheit etwas zu schaffen, besteht ein Bed&#252;rfnis, diese
+Ziele miteinander zu vers&#246;hnen.<br />
+<br />
+ Meine Frau ist K&#252;nstlerin, und sie sagt, am schwierigsten sei
+es, vor einem leeren Blatt Papier zu sitzen, weil es zu diesem
+Zeitpunkt keinerlei Zwang gibt. Alles ist m&#246;glich - und das
+kann bedeuten, dass sie gar nicht in der Lage ist, anzufangen.
+Strukturen und Standards sind wertvoll, weil sie die Energie
+kreativer Leute kanalisieren. Die Herausforderung bei der
+Softwareentwicklung besteht darin, die besten Leute mit den Best
+Practices zu versorgen, diese aber in Tools einfliessen zu lassen,
+so dass sie "unsichtbar" sind. Sie sollen die Atmosph&#228;re so
+beeinflussen, dass die Programmierer gleichzeitig kreativ und
+zielgerichtet arbeiten.<br />
+<br />
+ <i>Damit sprechen Sie die Modellierung im Allgemeinen und UML?im
+Besonderen an. Wie passt UML in diesen Reifungsprozess der Best
+Practices?</i><br />
+<br />
+ Wirklich cool an UML ist, dass sie den verschiedenen
+Interessenvertretern in einem Unternehmen - auch denen, die von
+Software keine Ahnung haben - eine gemeinsame Sprache zur
+Verf&#252;gung stellt. Niemand will beispielsweise aus einem
+W&#228;hrungsspezialisten einen Programmierer machen. Es ist aber
+wichtig, dass sich der W&#228;hrungsspezialist und der Code-Experte
+auf einem gemeinsamen Abstraktionsniveau finden und miteinander
+kommunizieren k&#246;nnen. UML beinhaltet Elemente, die genau dies
+erm&#246;glichen.<br />
+<br />
+ Ich bin angenehm &#252;berrascht, zu sehen, dass UML in Richtungen
+weiterentwickelt wird, die wir nie vorhergesehen haben. Ich habe
+mit Leuten gesprochen, die sie f&#252;r das Design von Systemteilen
+verwenden, bei denen sie noch nicht entschieden haben, ob sie
+sp&#228;ter als Hardware oder Software implementiert werden sollen.
+Ich habe beispielsweise von einem Schiffbauprojekt geh&#246;rt, in
+dem UML f&#252;r die Beschreibung des Designs des Zerst&#246;rers
+selbst und der darin zur Anwendung kommenden Softwaresubsysteme
+eingesetzt wird.<br />
+<br />
+ <i>Welche Rolle spielt Rational in der ganzen
+UML-Geschichte?</i><br />
+<br />
+ Unsere anf&#228;nglichen Ziele waren sehr bescheiden, weil wir
+einfach versuchten, der Fragmentierung in der Modellierungsarena
+entgegen zu wirken. Dann wurde uns klar, dass es von h&#246;chstem
+Wert sein w&#252;rde, die unterschiedlichen Modellierungsmethoden
+wirklich zu vereinheitlichen. Gleichzeitig begann sich die Object
+Management Group (OMG) mit der Standardisierung einer Sprache
+f&#252;r objektorientiertes Programmieren zu befassen. Das erste
+Mitglied dieser Gruppe war - erstaunlich genug - Microsoft, weil
+sie damals mit COM und COM+ besch&#228;ftigt war und nach
+Mechanismen f&#252;r die Realisierung h&#246;herer
+Abstraktionsebenen suchte. Damit sollte es ihrer Klientel leichter
+fallen, Systeme zu entwickeln, die auf Windows aufsetzen. Bald
+darauf stiessen IBM?und Sun Microsystems zur Gruppe - eine
+einzigartige Situation: diese Drei in einer Arena, ohne dass sie
+sich gegenseitig umbrachten. Dann wurden Oracle, Unisys und 20
+weitere Unternehmen Mitglieder des Konsortiums. Rationals Rolle bei
+der Arbeit an UML ist heute eine unter vielen. Wir sind zwar die
+urspr&#252;nglichen Autoren. Um aber zu verhindern, dass eine
+propriet&#228;re Sache daraus wird, musste UML unter die Fittiche
+der OMG gegeben werden.<br />
+<br />
+ <i>In welchem Stadium befindet sich die UML-Spezifikation
+heute?</i><br />
+<br />
+ Wir arbeiten aktiv an der Version 2.0, und wir rechnen damit, dass
+diese Spezifikation Ende Jahr fertiggestellt ist. Sp&#228;testens
+Anfang 2003 wird sie der &#214;ffentlichkeit zur Diskussion
+vorgelegt.<br />
+<br />
+ <i>Welche Neuerungen beinhaltet UML 2.0?</i><br />
+<br />
+ Einerseits fliessen die Erfahrungen der letzten Jahre mit UML 1.x
+in die Version 2.0 ein, andererseits ging es darum, die Sprache wo
+immer m&#246;glich zu vereinfachen. Viele &#196;nderungen werden
+f&#252;r die Entwickler unsichtbar bleiben. Unter der
+Oberfl&#228;che ist aber viel geschehen. Tool-Hersteller werden
+viel leichter auf modellgesteuerte Entwicklung umsteigen
+k&#246;nnen. Die F&#228;higkeiten von UML f&#252;r die
+Code-Generierung einerseits und Reverse Engineering andererseits
+werden in der Version 2.0 erweitert.<br />
+<br />
+ <i>Wie ver&#228;ndert sich die Applikationsentwicklung im
+n&#228;chsten Jahr?</i><br />
+<br />
+ In den kommenden Monaten werden Techniken, die bislang dem
+Analytiker und dem Architekten vorbehalten waren, vermehrt von den
+Code Warriors genutzt. Mit anderen Worten: Der Programmschreiber
+selber wird Modeling-Methoden einsetzen. Er wird also nicht mehr
+nur auf ein St&#252;ck Java starren und auf Textebene codieren,
+sondern verf&#252;gt in Gestalt von grafischen Tools &#252;ber eine
+zus&#228;tzliche Perspektive. Des weiteren glaube ich, dass Dotnet
+von Microsoft und J2EE von Sun im n&#228;chsten Jahr an Bedeutung
+gewinnen werden. Allerdings besteht immer noch eine breite Kluft
+zwischen dem, was diese Plattformen bieten, und dem, was
+Unternehemen effektiv brauchen.<br />
+<br />
+ <i>Kann der Graben zwischen J2EE und Dotnet &#252;berbr&#252;ckt
+werden?</i><br />
+<br />
+ Das ist ein religi&#246;ser Graben. Nicht einmal der Papst
+k&#246;nnte hier eine Br&#252;cke bauen. Spass beiseite: Die
+Unterschiede zwischen diesen Plattformen sind fundamental. Rational
+ist diesbez&#252;glich unvoreingenommen - aggressiv agnostisch,
+w&#252;rde ich sagen. Unsere Tools unterst&#252;tzen beide, und
+zwar einfach deshalb, weil weltweit extrem wenige Organisationen
+nur auf die eine oder andere setzen. Mit UML k&#246;nnen
+Architekturelemente dargestellt werden, die schlicht
+unabh&#228;ngig von diesen Plattformen sind. Klar, je tiefer
+hinunter man geht, desto schwerer wiegen sie. Auf h&#246;heren
+Abstraktionsebenen lassen sich aber Test- und Analyseverfahren
+durchf&#252;hren, die sowohl Dotnet als auch J2EE
+transzendieren.<br />
+<br />
+ <i>Zur&#252;ck zur Zukunft: In welche Richtung geht es nach
+2003?</i><br />
+<br />
+ Als Chief Scientist bei Rational bin ich sehr stark mit der
+Zukunft besch&#228;ftigt. Mein Zeithorizont umfasst drei bis
+f&#252;nf Jahre. Also bin ich st&#228;ndig in Kontakt mit einem
+vielf&#228;ltigen Netzwerk, zu dem andere Chefwissenschaftler,
+Forscher und Akademiker aus aller Welt geh&#246;ren. Wir alle
+verfolgen die Softwareentwicklung mit Argusaugen und fragen uns,
+wie wir an der Zukunft mitbauen k&#246;nnen.<br />
+<br />
+ Mit Blick &#252;ber 2003 hinaus sehe ich vor allem eine weitere
+Ausbreitung der Modell-gesteuerten Softwareentwicklung. UML 2.0
+wird weiter reifen, und dadurch werden zahlreiche
+M&#246;glichkeiten geschaffen, Code direkt aus Modellen heraus
+auszuf&#252;hren. Ein Beispiel daf&#252;r ist Nuvis, die wir
+k&#252;rzlich &#252;bernommen haben. Die Leute dort arbeiten an
+sehr interessanten Verfahren der Modellierung, aus der heraus
+brauchbarer Code gewonnen werden kann. Die liegen genau auf unserer
+Linie.<br />
+<br />
+ Was die noch fernere Zukunft angeht, habe ich mein Auge auf die
+Techniken geworfen, die Gregor Kiczales am Xerox Parc und Charles
+Simonyi bei Microsoft entwickeln. Simonyi arbeitet an etwas, das er
+"Intentional Programming"?nennt. Das ist sehr nah an dem, was
+Kiczales mit seinem "Aspect-oriented Programming" tut. Das Problem
+lautet: In einem komplexen System gibt es keinen einzelnen
+Standpunkt, von dem aus sich alle wesentlichen Aspekte gleichzeitig
+erfassen liessen. Es wimmelt von unterschiedlichen
+Interessenvertretern: Analytikern, Testern, Sicherheits- und
+Business-Experten. Wie lassen sich die verschiedenen Weltsichten
+artikulieren und miteinander so verweben, dass in einem
+Softwareprojekt alle auf ihre Rechnung kommen? Diese Frage - und
+die Entwicklung entsprechender Modelle - werden in den
+n&#228;chsten f&#252;nf Jahren im Zentrum der Softwaredebatte
+stehen.<br />
+<br />
+ <b>Die Lingua franca der Softwaredesigner</b><br />
+ Unternehmensweite Kernapplikationen m&#252;ssen so strukturiert
+sein, dass sie den Forderungen nach Skalierbarkeit, Sicherheit und
+Zuverl&#228;ssigkeit auch unter harten Bedingungen gerecht werden.
+Bei umfangreichen Softwareprojekten ist deshalb die Modellierung
+(das Modeling) ein zentraler Bestandteil. Im Wesentlichen versteht
+man darunter das Design von Applikationen vor deren Codierung,
+analog etwa zu Blaupausen f&#252;r Bauprojekte aller Art. Zwecks
+Vereinheitlichung der verschiedenen Modelliermethoden entwickelten
+die drei P&#228;pste des objektorientierten (OO) Programmierens,
+Grady Booch, Ivar Jacobson und Jim Rumbaugh, die Designsprache UML
+(Unified Modeling Language), die sie Ende 1996 dem
+Standardisierungsgremium Object Management Group (OMG)
+vorlegten.<br />
+<br />
+ UML 1.x hat sich seitdem aufgrund der Vielzahl von Tools zur
+Lingua franca f&#252;r die Spezifizierung, Visualisierung und
+Dokumentation von Softwaremodellen gemausert - nicht zuletzt, weil
+sich mit ihr auch Gesch&#228;ftsabl&#228;ufe und andere nicht
+Software-basierte Systeme abbilden lassen. Da sie auf dem
+Repository-Standard MOF (Meta Object Facility) aufbaut, der Klassen
+und Operationen als fundamentale Begriffe definiert, eignet sie
+sich besonders f&#252;r das Design von verteilten OO-Umgebungen und
+f&#252;r die Objektsprachen C++, Java und C-Sharp. Allerdings
+k&#246;nnen mit UML auch Nicht-OO-Anwendungen, die etwa in Fortran,
+Visual Basic oder Cobol geschrieben sind, modelliert werden.
+Ausserdem lassen sich mit den massgeschneiderten UML Profiles
+Transaktions-, Echtzeit- und fehlertolerante Systeme
+designen.&#160; <a href="../../impressum/"
+class="txt-m-red"><i>(Beat Hochuli)</i></a></span><br />
+<br />
+</td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

@@ -1,0 +1,263 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span class="txt-xl-black">J2EE und
+Dotnet im Clinch</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>Mit Dotnet ist
+Microsoft ausgezogen, die Unternehmensinformatik und das Web zu
+erobern. Die Java-Fraktion anwortet mit Werkzeugen, mit denen die
+Arbeitsweise der Visual-Basic-Entwickler in Java nachkonstruiert
+wird.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 08.03.2002<br />
+ <b>Rubrik:</b> Fokus Cebit<br />
+ <b>Autor:</b> Wolfgang B&#246;hler<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">An der
+Entwicklerkonferenz E-World hat Bea Systems die
+Entwicklungsumgebung Weblogic Workshop angek&#252;ndigt. Damit
+lassen sich Web Services schreiben, ohne die darunterliegenden
+Java-Technologie und das Komponentenmodell J2EE (Java 2 Enterprise
+Edition) kennen zu m&#252;ssen. &#220;ber die strategische
+Bedeutung des Workshop und die Konkurrenz zwischen Java und
+Microsofts Dotnet sprach die Computerworld Schweiz mit Scott
+Dietzen, dem Chief Technology Officer von Bea Systems.<br />
+<br />
+ <b>Computerworld:</b> <i>Bea ist eine dedizierte K&#228;mpferin
+f&#252;r die J2EE-Plattform. Die Java-Erfinderin Sun macht das
+grosse Gesch&#228;ft mit Unix-Hardware. Die beiden erg&#228;nzen
+sich gut. Wann kommt es zur Fusion?</i><br />
+<br />
+ <b>Scott Dietzen:</b> Das wird sicher nicht geschehen. Bea ist in
+erster Linie Java- und nicht Unix-fokussiert. Dies zeigt auch die
+Ank&#252;ndigung einer Zusammenarbeit mit Intel an der E-World.
+Auch der Mainframe ist f&#252;r uns eine wichtige Plattform.
+Weblogic l&#228;uft &#252;berdies auf Windows. Die Kombination
+Windows/Weblogic funktioniert hervorragend, wie die letzten
+Benchmarks zeigen.<br />
+<br />
+ <i>Bill Gates sieht Bea durchaus als strategischen
+Gegner.</i><br />
+<br />
+ Das ist verst&#228;ndlich, J2EE ist ein harter Konkurrent von
+Dotnet. Bloss die Akzente sind ein wenig anders. Bea ist in den
+grossen Unternehmen zuhause. Von dort arbeiten wir uns mehr und
+mehr auf die Arbeitsgruppen-Ebene hinab. Microsoft ist mit Dotnet
+typischerweise in den Arbeitsgruppen zuhause und ist erst daran,
+sich zur grossen Unternehmens-IT hinaufzuarbeiten. Microsoft wird
+in dem Markt ein wichtiger und dauerhafter Mitspieler werden und
+bleiben, das heisst wir werden uns auf Jahre des "koexistenten
+Wettbewerbs" einrichten.<br />
+<br />
+ <i>Aber sowohl f&#252;r Microsoft wie auch f&#252;r Bea ist das
+Eigeninteresse nat&#252;rlich im Vordergrund. Es gibt trotz allen
+Beteuerungen, man habe das Wohl des Kunden im Auge, einen Konflikt:
+Die Kunden haben ein Problem und m&#246;chten die beste Plattform
+dazu. Die Softwareh&#228;user haben eine Plattform und versuchen
+ihren Kunden zuerst diese schmackhaft zu machen.</i><br />
+<br />
+ Das stimmt, die Kunden denken heute zuerst an ihr Projekt und
+w&#228;hlen dann die dazu passende Plattform. Allerdings sind die
+M&#228;rkte f&#252;r Dotnet und J2EE wie bereits angedeutet doch
+recht verschieden. Kleine und mittlere Unternehmen w&#228;hlen
+lieber Dotnet, weil es eine Gesamtl&#246;sung auf einer Plattform
+bietet. Java ist ein Instrument der komplexen Unternehmens-IT. SAP
+ist ein typisches Beispiel f&#252;r ein Softwarehaus, das
+urspr&#252;nglich eng mit Microsoft zusammengearbeitet hat, aber
+mehr und mehr in Richtung Java gedriftet ist. Die Kunden grosser
+betriebswirtschaftlicher Gesamtl&#246;sungen wollen ihre
+Applikationen sowohl auf Windows- wie auch auf Unix-Systemen und
+auf Mainframes aufsetzen. Java ist die Technologie, die auf allen
+diesen Plattformen zuhause ist. Dotnet ist auf Windows
+beschr&#228;nkt. Ich glaube der entscheidende Unterschied zwischen
+der Java-Technologie und Dotnet ist, dass die Java-Gemeinschaft
+beginnt, die Programmiermodelle zu standardisieren. Rund hundert
+Unternehmen pflegen einen regen Innovations-Austausch, formulieren
+gemeinsam einen Standard und entwickeln diesen weiter. Der
+entsprechende Prozess innerhalb Microsofts bleibt den Augen der
+&#214;ffentlichkeit verborgen.<br />
+<br />
+ <i>Deswegen muss Dotnet technologisch nicht schlechter
+sein.</i><br />
+<br />
+ Beide Modelle sind innovativ. Die gute Nachricht ist, dass Web
+Services auf Basis von XML und die Techniken, mit deren Hilfe diese
+kommunizieren - Soap und WSDL - von BEA, Microsoft und IBM
+gemeinsam ausgearbeitet wurden. Das bedeutet, dass Dotnet und J2EE
+koexistieren und zusammenarbeiten k&#246;nnen. Jede Firma, die mehr
+als 50 bis 100 Server hat, hat zwangsl&#228;ufig einen
+Plattform-Mix. Einiges ist in Java geschrieben, anderes l&#228;uft
+auf Dotnet. Weblogic l&#228;sst sich wie gesagt sehr gut auf
+Windows betreiben. Es ist sogar eine der am schnellsten wachsenden
+Weblogic-Plattformen. Der Gegensatz heisst nicht Windows versus
+Unix, sondern J2EE und Java contra C-Sharp und COM+, respektive
+Dotnet. Das ist ein sehr gesunder Wettbewerb und der Endanwender
+wird davon nur profitieren k&#246;nnen.<br />
+<br />
+ <i>Trotzdem: Microsoft wird sagen, mit Dotnet sei man frei in der
+Wahl der Programmiersprache. In einem grossen Unternehmen sind
+viele verschiedene Kompetenzen vorhanden, es gibt Cobol-, C++-,
+Visual-Basic- und C-Sharp-Programmierer und die lassen sich dank
+Dotnet alle auf einer Plattform zusammenbringen.</i><br />
+<br />
+ Der Kompetenzenmix existiert selbstverst&#228;ndlich. Bea hat
+jedoch eine sehr enge Integration des Tuxedo-Containers auf Basis
+von Corba und dem Java-Container. Das heisst, wir sind auch in
+Multilanguage-Umgebungen absolut zuhause. Man muss die Vielfalt
+&#252;berdies hinterfragen. In Tat und Wahrheit bedeutet sie
+n&#228;mlich, dass verschiedene Probleme mit verschiedenen
+Werkzeugen gel&#246;st werden m&#252;ssen. Man muss sich entweder
+f&#252;r Benutzerfreundlichkeit oder Skalierbarkeit und Perfomance
+entscheiden. Unsere Java-L&#246;sung hat diesen Pferdefuss nicht:
+Egal auf welchem Niveau eine zu schreibende Applikation angesiedelt
+ist: die Werkzeuge sind immer die gleichen.<br />
+<br />
+ <i>Aber die Festlegung auf Java im Applikationsserver
+bleibt.</i><br />
+<br />
+ Fragt sich, ob dies wirklich ein Nachteil ist und was die
+Sprachenvielfalt in Sachen Microsoft-Produkte tats&#228;chlich
+bedeutet. Eine der grossen historischen Herausforderungen f&#252;r
+Microsoft ist die Tatsache, dass viele ihrer Kunden Projekte mit
+Visual-Basic beginnen, dann aber einen Punkt erreichen, an dem sie
+mehr Performance und eine bessere Skalierbarkeit suchen. In der
+Regel machen sie dann einen Neuanfang mit C++ oder jetzt C-Sharp.
+Visual Basic wurde nicht geschaffen, um eine vergleichbare
+Performance zu erreichen. Das heisst, man beginnt mit einem Projekt
+in Visual Basic und merkt dann, dass man an eine prinzipielle
+Grenze st&#246;sst. Dann versucht man, das ganze Projekt in eine
+leistungsf&#228;higere Sprache zu &#252;bersetzen. Allerdings geht
+dabei praktisch alles verloren, was man bis dahin entwickelt hat.
+Im Endeffekt bedeutet die Portierung einen kompletten Neubeginn:
+Aus Access wird SQL-Server, aus Visual Basic C-Sharp oder C++, aus
+Web Services wird zuerst Dotnet und dann Biztalk. Ich glaube,
+Microsoft hat eine Menge solcher Bruchstellen in ihrer Umgebung.
+Man muss schon sehr fr&#252;h wichtige Entscheidungen treffen: Soll
+ich Dotnet w&#228;hlen, oder doch besser Biztalk? Soll ich in
+Visual Basic schreiben oder in C-Sharp? Die Bea-Plattform hat den
+Vorteil, dass man mit einem J2EE-Layer oder mit einem
+Workshop-Layer starten kann und immer in derselben Umgebung bleibt
+- mit der gleichen Performance und Skalierbarkeit.<br />
+<br />
+ <i>Die Probleme in der Java-Welt beginnen, wenn man Komponenten
+von einem Java-Applikationsserver auf einen andern portieren
+will.</i><br />
+<br />
+ Die Java-Schnittstellen machen das im Prinzip einfach. Wenn man
+statt der standardisierten Java-Schnittstellen zum Beispiel die
+dedizierten Weblogic-Schnittstellen benutzt, dann wird es
+komplizierter, das ist richtig.<br />
+<br />
+ <i>Wo genau sehen Sie den Weblogic Workshop im Vergleich zu den
+Microsoft-Produkten angesiedelt?</i><br />
+<br />
+ In Sachen Anwenderfreundlichkeit sehe ich Microsoft und Bea an der
+Front, wobei ich &#252;berzeugt bin, dass es zu der Eleganz von
+Weblogic Workshop in der Dotnet-Welt bis jetzt kein Gegenst&#252;ck
+gibt. Visual Basic macht es m&#246;glich, auf COM- und RPC-Basis
+Komponenten zu schreiben, ohne dass man sich mit den Details der
+Architektur herumschlagen muss. Weblogik Workshop liefert die
+Benutzerfreundlichkeit von Visual Basic auf der Ebene von Biztalk.
+Es geht dabei im Gegensatz zu den synchronen RPC-Prozessen um
+asynchrone Aufrufe. Dies ist der eigentliche Punkt: Es geht darum,
+die asynchrone Verarbeitung einfach zu machen. Dotnet leistet dies
+zur Zeit noch nicht. Microsoft wird dies mit Sicherheit auch
+anbieten, aber dies d&#252;rfte noch sch&#228;tzungsweise
+eineinhalb Jahre dauern.<br />
+<br />
+ <i>Microsoft bietet mit Dotnet schon ein kompaktes Produkt
+an.</i><br />
+<br />
+ Ich anerkenne die hohe Innovationskraft von Dotnet. Allerdings bin
+ich &#252;berzeugt, dass es f&#252;r den durchschnittlichen
+Visual-Basic-6-Anwender Jahre brauchen wird, um seine Infrastruktur
+auf Dotnet zu migrieren. Es wird viel mehr Kopfzerbrechen machen,
+Visual Basic auf Visual Basic Dotnet zu migrieren als alles, was
+bisher an Vergleichbarem zu tun war. Es geht um einen wirklich
+grossen Schritt, weil Microsoft mit den bisherigen Techniken ins
+Hintertreffen geraten ist. Die DCOM- und
+Transaction-Server-Infrastruktur ist nicht f&#252;rs Web
+ger&#252;stet.<br />
+<br />
+ <i>Die Entwicklergemeinden scheinen aber kulturell untereinander
+relativ wenig durchl&#228;ssig zu sein. Wer Visual Basic einsetzt,
+ist vermutlich nur schwer von Java zu &#252;berzeugen.</i><br />
+<br />
+ Unser Ziel ist es erkl&#228;rtermassen, m&#246;glichst viele
+Visual-Basic-Programmierer f&#252;r J2EE zu gewinnen und ihnen zu
+zeigen, dass der Umgang damit sehr einfach ist. Es gibt
+mittlerweile mehr als zwei Millionen Java-Programmierer und sehr
+viele davon sind ehemalige C++-Anwender. Wir haben etwa eine
+Million Visual-C++-Programmierer zu Java-Anwendern gemacht.<br />
+<br />
+ <i>Auf welcher Ebene und mit welchen Techniken werden Dotnet- und
+J2EE-Applikationen miteinander kommunizieren?</i><br />
+<br />
+ Sowohl Bea als auch Microsoft setzen auf XML und Soap, und nicht
+auf RPC. RPC macht bloss innerhalb von Applikationen Sinn. Den
+Austausch zwischen den Applikationen sollen Soap und WSDL
+erledigen.<br />
+<br />
+ <i>Soap hatte eine Zeitlang den Ruf, eine taktische
+Microsoft-Technik zu sein.</i><br />
+<br />
+ Soap wird schon seit eineinhalb Jahren mit Weblogic ausgeliefert.
+Es wird vom W3C standardisiert und man muss keine Bedenken haben,
+dass es irgendeine Partei f&#252;r eigene Zwecke umdeutet. IBM, Bea
+und Microsoft arbeiten heute in den entsprechenden Gremien sehr gut
+zusammen und sind sich dar&#252;ber einig, dass offene Standards
+auf dieser Ebene allen zugute kommen. Microsoft bekennt sich heute
+sehr klar zur Interoperabilit&#228;t.<br />
+<br />
+</span> </td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

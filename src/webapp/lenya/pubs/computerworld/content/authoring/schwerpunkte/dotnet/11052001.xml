@@ -1,0 +1,207 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span class="txt-xl-black">Die Zukunft
+beginnt jetzt</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>Ob Microsoft mit
+ihrer neuen Applikations-Architektur die Welt der Unternehmen
+erobern wird, h&#228;ngt stark davon ab, ob es Dot-Net mit Suns
+Java aufnehmen kann.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 11.05.2001<br />
+ <b>Rubrik:</b> Technologie &amp; Service<br />
+ <b>Autor:</b> Fredy Haag<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">Nicht ganz zu Unrecht
+nannte die Times Bill Gates den Herrn der Welt, &#252;ber dessen
+Zahlenreich die Sonne nie untergeht. Wahrscheinlich um seine
+"Genialit&#228;t" zu unterstreichen, ersteigerte der
+ungekr&#246;nte Softwarek&#246;nig vor sieben Jahren f&#252;r rund
+30 Millionen Dollar 18 handgeschriebene Dokumente, den "Codex
+Leicester", aus dem Nachlass des "uomo universale" Leonardo da
+Vinci. Ob f&#252;r den Sourcecode seines neuesten Geniestreichs
+"Windows XP" in f&#252;nf Jahunderten auch jemand zig Millionen
+Dollar hinbl&#228;ttern wird, ist allerdings zu bezweifeln.
+Trotzdem lohnt es sich, einen Blick darauf zu werfen, zumal bereits
+der Auslieferungstermin Gegenstand heftigster Kontroversen
+ist.<br />
+<br />
+ <b>Schwacher Beginn</b><br />
+ Als Windows 2000 im letzten Jahr vom Stapel lief, wurden die
+Verkaufsstellen nicht &#252;berrannt, ein Ansturm der
+NT-4.0-Anwender blieb aus. Die Migration verl&#228;uft nur
+z&#246;gerlich, obwohl es Microsofts Produktmanager gerne anders
+sehen und darstellen. Gr&#252;nde, die ein Zuwarten rechtfertigen,
+gibt es viele: Die einen wollen warten, bis Dot-Net Gestalt annimmt
+und dann eine Entscheidung f&#228;llen. Andere wiederum warten auf
+positve wirtschaftliche Signale, fallende Speicherpreise oder auf
+den 64-Bit-Chip. Selbst die Auguren winden sich und &#228;ussern
+sich nur vage &#252;ber die Zukunft.<br />
+<br />
+ Am klarsten &#228;usserte sich die Linux-Gemeinde: Mit dem
+Erscheinen des Kernels 2.4 prophezeite sie den Untergang von
+Windows, nachdem schon Sun und Oracle vergeblich den Zusammenbruch
+von Windows und den Untergang des PC heraufbeschworen hatten. Das
+amerikanische Justizdepartement versuchte den Computerriesen mit
+einer Spaltung in die Knie zu zwingen - bisher alles ohne
+Erfolg.<br />
+<br />
+ Keine dieser Prophezeihungen und Kunstgriffe vermochte die
+Verbreitung der Redmonder Produkte nachhaltig zu beeinflussen,
+weder kurz- noch langfristig. Windows Zukunft h&#228;ngt vielmehr
+davon ab, ob es der Softwareriese schafft, mit ihrer
+Dot-Net-Strategie, Microsofts Applikations- und
+Integrationstrategie, die Bed&#252;rfnisse der Unternehmen besser
+zu befriedigen als Sun mit Java.<br />
+<br />
+ <b>Alle haben M&#228;ngel</b><br />
+ Im Zuge des Antitrust-Prozesses gestand der Softwaregigant
+kleinm&#252;tig ein, ernsthafte Probleme mit der
+Zuverl&#228;ssigkeit von Windows NT 4.0 zu haben. Die Zeit heilt
+alle Wunden: Mit neuem Selbstbewusstsein behaupten die
+Marketing-Sherpas frech, dass Windows 2000 &#252;ber eine "five
+nines"-Verl&#228;sslichgkeit (99,999 Prozent) verf&#252;ge.
+Microsoft ist allerdings nicht das erste Unternehmen, dass die
+M&#228;ngel ihrer Produkte herunterspielt. So schienen
+beispielsweise alle ausser Sun zu wissen, dass Solaris 2.4 das
+unzuverl&#228;ssigste Unix war, das es je gab. Aber auch die
+Linux-Familie versprach mit dem Kernel 2.2, den Unternehmen alles
+zu geben, was sie brauchten. Auch wenn der Softwareriese die
+&#252;berlegene Zuverl&#228;ssigkeit von Windows 2000 r&#252;hmt,
+es wird kaum jemand wechseln, nur weil es angeblich stabiler
+sei.<br />
+<br />
+ <b>Eine neue Architektur</b><br />
+ Microsoft sollte bei der Kommunikation den gleichen
+Zuverl&#228;ssigkeits-Standard anwenden, wie man es vom
+Server-Betriebssystem her gewohnt ist. Denn als Microsoft den
+Schleier &#252;ber Dot-Net l&#252;ftete, schreckten selbst die
+treuesten Microsoft-Anh&#228;nger auf. Was passiert mit den
+Investitionen, die in Windows Distributed Internet Architecture
+(DNA), Microsofts momentane Architektur f&#252;r die Integration
+der Unternehmensanwendungen, get&#228;tigt werden, wenn Dot-Net
+kommt? Macht es Sinn, Geld und Ressourcen in Projekte zu stecken,
+die noch auf Windows DNA basieren? Eines steht fest: Dot-Net ist
+eine neue Architektur, es ist die Nachfolgeplattform von Windows
+DNA. Aber es kann die Vorteile nur ausspielen, wenn die
+Anwendungsprogramme umgeschrieben werden.<br />
+<br />
+ Die COM-Architektur (Common Object Model) ist das Fleisch am
+Knochen von Windows DNA und wird von der Dot-Net-Architektur nicht
+ersetzt. Beide Modelle werden die n&#228;chsten Jahre nebeneinander
+laufen. Aber die Verbreitung der Dot-Net-Architektur, verbunden mit
+den Schl&#252;sselanwendungen, wird COM als Technologie
+allm&#228;hlich abl&#246;sen.<br />
+<br />
+ <b>Dot-Net gegen J2EE</b><br />
+ Im Gegensatz zu den DNA-Programmen ist es unter Dot-Net viel
+einfacher, Informationen und Funktionalit&#228;ten mit anderen
+Anwendungen auszutauschen. Windows DNA ist ein
+Technologie-Flickwerk, das zusammengewebt wurde, w&#228;hrend
+Microsoft nach und nach eine Unternehmens-Applikation
+ausgestaltete. Sun war in der komfortablen Situation, ihr Java 2
+Enterprise Edition (J2EE) zu definieren, nachdem diese Arbeit
+gemacht war. Mit Dot-Net hatte Microsoft die M&#246;glichkeit, die
+Architektur von Grund auf neu zu erschaffen und tritt in direkte
+Konkurrenz zu J2EE.<br />
+<br />
+ W&#228;hrend Sun seinen Erfolg auf Grund der
+Plattformunabh&#228;ngigkeit erzielt, bleibt Microsofts Dot-Net an
+eine propriet&#228;re Plattform gebunden. Auf der anderen Seite
+erm&#246;glicht Dot-Net die Integration beliebiger
+Programmiersprachen, wobei C# als optimale Systemsprache f&#252;r
+Dot-Net-Anwendungen ausgelegt scheint und sich dort als
+Implementierungssprache durchsetzen d&#252;rfte. Dahingegen
+beschr&#228;nkt sich J2EE ausschliesslich auf Java, bietet aber
+eine Interoperabilit&#228;t mit anderen Programmiersprachen
+&#252;ber Cobra.<br />
+<br />
+ <b>Windows XP</b><br />
+ Eigentlich bietet bereits Windows 2000 die technischen Grundlagen
+f&#252;r Microsofts zuk&#252;nftige Dot-Net-Strategie. Zumindest,
+was wichtige Funktionen wie die Verteilung von Prozessen angeht
+oder die Integration des Active Directory als zentrales Verzeichnis
+f&#252;r Benutzer und Dienste. Auch XML-F&#228;higkeit ist schon in
+Windows 2000 vorhanden. Dot-Net basiert jedoch auf einer
+universellen Laufzeit-Bibliothek, die die Schnittstelle zwischen
+Dot-Net-Anwendungen und dem Betriebssystem darstellt.<br />
+<br />
+ Diese Bibliothek l&#228;sst sich mit der Java Virtual Machine
+vergleichen, ist aber spezieller auf Windows-Bed&#252;rfnisse
+angepasst. Bei Windows 2000 ist das sogenannte Dot-Net-Framework
+noch ein Aufsatz auf das Betriebssystem. Bei Windows XP ist es
+bereits komplett integriert. Der Active Desktop beispielsweise hat
+sich von der optionalen Komponente zum integralen Bestandteil
+entwickelt. Somit kann Windows XP selbst als Dot-Net-Dienstanbieter
+gegen&#252;ber seinem Benutzer auftreten.<br />
+<br />
+ <b>Zugriff aus der Ferne</b><br />
+ Wer mit der XP-Bedienung nicht zurecht kommt, f&#252;r den hat
+Microsoft eine echte Neuheit parat: Fernsteuerung via Internet.
+Dabei bietet Windows XP zwei verschiedene Alternativen an. Den
+Remote Desktop und den Remote Helpdesk. Ersterer erlaubt einem auf
+dem System eingetragenen Benutzer, seinen Rechner fernzuwarten wie
+mit einem Remote-Control-Programm. Das hat Microsoft
+anl&#228;sslich der Beta-2-Pr&#228;sentation eindrucksvoll
+demonstriert, indem ein Mitarbeiter seinen PC mit einem Handheld
+fernsteuerte. Der Remote Helpdesk soll Support-Mitarbeitern die
+Arbeit erleichtern, wenn ein Benutzer nicht weiter weiss. Er
+funktioniert so &#228;hnlich wie der Remote Desktop, nur dass
+f&#252;r eine Helpdesk-Sitzung zun&#228;chst eine Einladung - etwa
+per E-Mail oder MSN-Messenger - erfolgen muss. Dann kann der
+Hilfeleistende zun&#228;chst den Inhalt des Desktops sehen, selbst
+aber nicht eingreifen. Erst wenn der Benutzer diese Funktion frei
+schaltet, kann der Helfer auch Aktionen am System vornehmen.<br />
+<br />
+</span> </td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

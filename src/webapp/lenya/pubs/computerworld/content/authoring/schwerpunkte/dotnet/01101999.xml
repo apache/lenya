@@ -1,0 +1,393 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span class="txt-xl-black">Eine
+Java-Architektur f&#252;r den Server</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>&#220;ber
+Komponentenmodelle und die Rolle der "Unternehmens-Javabohnen"
+EJB.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 01.10.99<br />
+ <b>Rubrik:</b> Hintergrund<br />
+ <b>Autor:</b> Walter Jenny (Senior Enterprise Architect, Sun
+Microsystems Europa)<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">Die objektorientierten
+Ans&#228;tze bestimmten die letzte Dekade der
+Informatikentwicklung. Kaum ein Werkzeug konnte es sich leisten,
+nicht in irgendeiner Form auf diese Technik zur&#252;ckzugreifen.
+Vor allem in grossen Projekten wurden im Lauf der Zeit allerdings
+auch die Schattenseiten sichtbar: Objekte sind oft zu
+feink&#246;rnig. Durch das Erstellen von sehr tiefen
+Ableitungshierarchien ergeben sich aufgrund der engen Kopplung
+stark verflochtene Strukturen. Es ist nur schwer m&#246;glich,
+Superklassen zu &#228;ndern, ohne ungewollte und unabsehbare
+Nebeneffekte in den Subklassen auszul&#246;sen.<br />
+<br />
+ Die Idee der komponentenbasierten Anwendungsentwicklung geistert
+seit knapp 30 Jahren durch die einschl&#228;gige Fachpresse. Analog
+zur Halbleiter- oder Automobilindustrie werden vorgefertigte
+Baugruppen eingekauft und mit den im eigenen Hause entwickelten
+Kernteilen assembliert. Obwohl die zugekauften Bauteile eine hohe
+Fertigungstiefe erreichen k&#246;nnen, ist ihr Innenleben
+weitgehend gekapselt und sie werden lediglich mit einer profanen
+Beschreibung bestellt und ausgeliefert. Gescheitert sind die hehren
+Ans&#228;tze der Softwareindustrie bisher an fehlenden Standards,
+der mangelnden Marktakzeptanz und nicht zuletzt an einer nicht
+vorhandenen Sprache, mit der sich die Ideen einfach umsetzen
+lassen.<br />
+<br />
+</span>
+<table border="0" cellpadding="2" cellspacing="0">
+<tr bgcolor="#ABAAA5">
+<td colspan="2"><span class="txt-m-black"><b>Eine
+Softwarekomponente verfeinert und erweitert das Objektmodell. Sie
+verf&#252;gt &#252;ber:</b></span></td>
+</tr>
+
+<tr>
+<td><img src="../../img/layout/arrow-black.gif" width="9"
+height="7" alt="&gt;" /></td>
+<td><span class="txt-m-black">Stark entkoppelte Schnittstellen. Der
+Zugriff erfolgt &#252;ber genau definierte
+Design-Patterns.</span></td>
+</tr>
+
+<tr bgcolor="#EFEFE7">
+<td><img src="../../img/layout/arrow-black.gif" width="9"
+height="7" alt="&gt;" /></td>
+<td><span class="txt-m-black">nicht direkt zug&#228;ngliche Daten,
+die extern &#252;ber Properties gesteuert werden;</span></td>
+</tr>
+
+<tr>
+<td><img src="../../img/layout/arrow-black.gif" width="9"
+height="7" alt="&gt;" /></td>
+<td><span class="txt-m-black">einen definierten Standard f&#252;r
+die Speicherung (Persistenz/Packaging).</span></td>
+</tr>
+</table>
+
+<br />
+ Sie erm&#246;glicht es Werkzeugen, dynamisch Schnittstellen und
+Metadaten abzufragen. Der heilige Gral der Objektprogrammierung,
+die Ableitung, verliert an Bedeutung. Das Zusammenstecken von
+Bauteilen durch Aggregation und Komposition tritt in den
+Vordergrund - unterst&#252;tzt durch "Pluggable Interfaces", die
+die Implementation verbergen.<br />
+<br />
+ <b>Vom Desktop zum Server</b> <br />
+ Auf der Client-Seite sind Komponenten wie OLE (Object Linking and
+Embedding), Active-X oder Java Beans schon lange in Verwendung.
+Fertige Bausteine, die entweder zugekauft oder bei Bedarf selbst
+erstellt werden, haben die GUI-Entwicklung (Graphical User
+Interface) seit geraumer Zeit bereichert. Naheliegend ist, diese
+Vorteile vom Client zum Zentrum der Applikation zu bringen - dem
+Middletier.<br />
+<br />
+ Enterprise Java Beans: Eine der wichtigsten Innovationen in diesem
+Bereich stellt die Enterprise-Java-Beans-Spezifikation (EJB) von
+Sun Microsystems f&#252;r ein umfassendes Java-Komponentenmodell
+auf der Serverseite dar. Entwickelt wurde sie zusammen mit
+wichtigen Anbietern von Middleware-, TP-(Transaction-Processing-)
+und Datenbank-Produkten, wie IBM, Oracle, Bea Systems, Inprise,
+Sybase, Netscape und anderen.<br />
+<br />
+ Ziel war ein einfaches, standardisiertes Komponentenmodell
+f&#252;r die serverseitige Entwicklung, das sich in das
+Multitier-Konzept der Entwickler einf&#252;gt. Die Urmutter der
+verteilten Objektarchitekturen, die Object Management Group (OMG),
+hat zwar eine Vielzahl robuster Teile f&#252;r eine sinnvolle
+Infrastruktur definiert, verlangt aber vom Entwickler tiefe
+Kenntnisse der zugrunde liegenden
+Applikations-Programmierschnittstellen (API).<br />
+<br />
+ EJB sind relativ grobk&#246;rnige Businesskomponenten, die in
+genau differenzierten Entwicklungszyklen erarbeitet werden:<br />
+<br />
+ - Systemspezialisten stellen eine effiziente Infrastruktur
+bereit.<br />
+ - Anwendungsprogrammierer bauen auf Basis dieser Services
+eigenst&#228;ndige Komponenten.<br />
+ - Spezialisten, die den Ablauf einer Firma kennen, implementieren
+mit den Komponenten neue Anwendungen.<br />
+<br />
+ Die Arbeitsteilung &#246;ffnet neue M&#228;rkte f&#252;r
+Middleware-Anbieter wie Bea, Gemstone, Iona oder Persistence und
+die Hersteller von fertigen Bestandteilen, etwa ASE und
+Jcoins.<br />
+<br />
+ <b>Das Komponentenmodell</b> <br />
+ Die EJB-Spezifikation umfasst zwei Bereiche:<br />
+<br />
+ - Die Bean-Typen, Packaging, Deployment und die Ausf&#252;hrung
+der Komponenten;<br />
+<br />
+ - Die erforderlichen Schnittstellen f&#252;r den Betrieb in einer
+verteilten, skalierbaren Multiuser-Umgebung.<br />
+<br />
+ Die EJB lassen sich in zwei Kategorien einordnen, die entweder
+eine Service- oder Daten-orientierte Semantik implementieren:<br />
+<br />
+ - Entity Beans sind eher feink&#246;rnige persistente Objekte. Die
+Art der Persistenz kann vom simplen File &#252;ber eine relationale
+oder Objektdatenbank hin zur Applikation reichen. Typischerweise
+repr&#228;sentieren Entity Beans einen Satz einer Tabelle oder der
+Views einer Datenbank und f&#252;gen die passende Zugriffslogik an.
+Eine Kunden-Bean beispielsweise liest Kundeninfos, setzt die Werte
+der Instanzvariablen und implementiert die Zugriffsmethoden.
+Mehrere Clients teilen sich eine Entity Bean und k&#246;nnen
+&#252;ber einen eindeutigen Schl&#252;ssel bestehende Instanzen
+finden.<br />
+<br />
+ - Session Beans implementieren grobk&#246;rnige "High-level
+Services" wie den Auftragseingang oder die Lagerbuchung und greifen
+dabei auf eine Reihe von Entity Beans zu. Unterst&#252;tzt der
+Container keine Entity Beans, implementiert die Session Bean die
+Zugriffslogik. Session Beans k&#246;nnen nicht die
+M&#246;glichkeiten der Container-verwalteten Persistenz nutzen.
+"Stateful" Beans behalten den Status zwischen den Aufrufen und
+einem Client, "Stateless" Beans hingegen verlieren den Wert der
+Instanzvariablen. Beispielsweise ist eine Flugreservierung
+"stateful" um eine Reihe von weiteren Aktionen einzuleiten, ein
+Suchmechanismus kann dagegen "stateless" sein.<br />
+<br />
+ Es ist wichtig, die Applikations-Elemente in einem genau
+definierten Format bereitzustellen, das sich ohne Probleme mit
+anderen Komponenten zu einer Anwendung zusammenbauen l&#228;sst.
+Das Standardformat umfasst neben den eigentlichen Klassen<br />
+<br />
+ - einen Katalog, der Aufschluss &#252;ber die enthaltenen Beans
+gibt (Manifest);<br />
+<br />
+ - Schnittstellen f&#252;r den clientseitigen Zugriff, die
+garantieren, dass jeder Aufruf &#252;ber den Container
+abl&#228;uft, damit er seine Kontrollaufgaben wahrnehmen
+kann;<br />
+<br />
+ - Den Deployment Descriptor, der die Metadaten &#252;ber das
+Laufzeitverhalten enth&#228;lt. Wichtig ist, diese Einstellungen
+nicht im Programmcode unterzubringen, sondern extern mit geeigneten
+Tools einzustellen.<br />
+<br />
+ Urspr&#252;nglich waren diese Metadaten in einer Java-Klasse
+hinterlegt, was sich jedoch mit der Zeit als zu wenig flexibel
+erwiesen hat. Die &#252;berarbeitete Version 1.1 der EJB, die
+derzeit als Public Draft vorliegt, speichert sie deshalb in einem
+XML-Dokument.<br />
+<br />
+ <b>Laufzeitumgebung</b> <br />
+ Beans ben&#246;tigen zur Ausf&#252;hrung ein Laufzeitsystem. Ein
+EJB-Server stellt die notwendigen Ressourcen, wie Prozesse,
+Threads, Sicherheits- und Transaktionsmanagement bereit (vgl.
+Abb.). Er nimmt Anfragen von Clients entgegen, verteilt sie an den
+entsprechenden Container und leitet die Antwort an den Aufrufer
+zur&#252;ck.<br />
+<br />
+ Innerhalb eines Servers verrichten die Container ihre Arbeit. Sie
+sind das eigentliche Herzst&#252;ck der EJB-Technik, isolieren die
+Anwendungslogik von der Infrastruktur und erm&#246;glichen es damit
+dem Applikationsprogrammierer, sich auf seine wesentlichen Aufgabe
+zu konzentrieren.<br />
+<br />
+ Auf Basis der Metadaten stellt der Container den Komponenten eine
+F&#252;lle von Infrastrukturen und Diensten bereit:<br />
+<br />
+ - Transaktions-Service - der Container &#252;bernimmt die
+Kontrolle &#252;ber wichtige Abl&#228;ufe wie die
+Transaktionskontrolle. Mit geeigneten Tools werden die Attribute
+vorkonfiguriert, die dem Container Aufschluss &#252;ber das
+gew&#252;nschte Laufzeitverhalten geben. Damit lassen sich je nach
+Anforderung unterschiedliche Transaktions-Topologien modellieren
+ohne den Programmcode abzu&#228;ndern.<br />
+<br />
+ - Activation/Passivation - um eine (theoretisch) beliebige Anzahl
+von aktiven Instanzen zu unterst&#252;tzen, kann der Container
+Beans, die tempor&#228;r nicht ben&#246;tigt werden, auf ein
+Sekund&#228;rmedium auslagern (passivieren oder deaktivieren), um
+sie bei Bedarf transparent wieder bereitzustellen
+(aktivieren).<br />
+<br />
+ - Lifecycle - um eine hohe Skalierbarkeit zu erreichen,
+&#252;bernimmt der Container auch das Erzeugen, Suchen und
+L&#246;schen von Komponenten. Eine effiziente Implementierung kann
+beispielsweise einen Pool von vorbereiteten Instanzen bereithalten,
+auf die bei Bedarf zur&#252;ckgegriffen wird. Zudem registriert der
+Container neue Beans im Naming Service.<br />
+<br />
+ - Sicherheit - der Deployment Descriptor enth&#228;lt Hinweise
+&#252;ber den Zugriffsschutz der Methoden und die Rollen der
+jeweiligen Clients. Beim Aufruf einer Methode pr&#252;ft der
+Container &#252;ber eine Access Control List (ACL) die
+Autorisierung.<br />
+<br />
+ - Persistenz - datenorientierte Beans speichern ihre Daten
+&#252;ber entsprechende Verbindungen zu einer Datenbank,
+k&#246;nnen den Persistenz-Mechanismus selber implementieren oder
+an den Container delegieren.<br />
+<br />
+ Die Schnittstelle zwischen dem Container und den Beans ist
+absichtlich sehr klein und lose gehalten. Sie folgt dem sogenannten
+Hollywood-Prinzip: "Don't call us - we will call you." Der
+Container beh&#228;lt stets die Kontrolle und unterrichtet die
+Komponenten &#252;ber wichtige Status&#228;nderungen.<br />
+<br />
+ <b>Schnittstellen</b> <br />
+ Obwohl die EJB-Spezifikation ein neues Komponentenmodell entwirft,
+st&#252;tzt sie sich auf eine ganze Reihe von bereits existierenden
+Programmierschnittstellen, die in der Java 2 Plattform Enterprise
+Edition (J2EE) zusammengefasst sind.<br />
+<br />
+ Die meisten API implementieren keine eigene Funktionalit&#228;t,
+sondern bieten auf Basis von existierenden Services standardisierte
+Java-Schnittstellen. Durch die Entkopplung von der eigentlichen
+Infrastruktur ist es wesentlich einfacher, zwischen verschiedenen
+Produkten zu w&#228;hlen und die Abh&#228;ngigkeit von einem
+Anbieter zu lockern.<br />
+<br />
+ Komplexe Anwendungen, die auf mehrere unabh&#228;ngige Datenbanken
+zugreifen oder eine sehr genaue Kontrolle &#252;ber das
+Transaktionsmanagement ben&#246;tigen, finden im Java Transaction
+API (JTA) eine Java-Schnittstelle zu den bestehenden
+Corba-basierten Object Transaction Services (OTS). OTS wiederum
+definiert den objektorientierten Zugriff auf Transaktionsmonitore
+und Datenbanken die das vom Open-X-Gremium entwickelte Protokoll XA
+f&#252;r verteilte Transaktionen unterst&#252;tzen. Alle wichtigen
+kommerziellen Datenbanksysteme stellen einen XA-konformen Zugriff
+bereit, auf dem TP-Monitor-Markt haben sich Tuxedo, Transarc oder
+Cics etabliert.<br />
+<br />
+ Der Java Transaction Service (JTS) ist das Java-Interface f&#252;r
+die tieferen Schichten des OTS und ist f&#252;r
+Anwendungsentwickler kaum von Interesse.<br />
+<br />
+ Ein Hauptproblem bei allen verteilten Systemen ist: Wie finden
+sich die Objekte, ohne deren Adresse fest zu verdrahten? Naming
+Services stellen genau diese Funktion bereit, allerdings entsteht
+hier wiederum unter einer Vielzahl von Standards die Qual der Wahl.
+Das Java Naming and Directory Interface (JNDI) stellt deshalb eine
+gemeinsame Schnittstelle f&#252;r alle wichtigen Namens- und
+Directory-Dienste zur Verf&#252;gung und schirmt als "Unified Field
+Theory" die Details der zugrundeliegenden Implementationen
+ab.<br />
+<br />
+ Den Zugriff zu relationalen Datenbanken gew&#228;hrleistet das
+Paket Java Database Connectivity (JDBC). Um schnell die notwendige
+Akzeptanz bei den Entwicklern zu gewinnen, lehnt sich JDBC eng an
+den bestehenden ODBC-Standard (Open database Connectivity) an,
+vereinfacht dabei aber die Vielzahl von ODBC-Aufrufen und lagert
+sie in weniger oft ben&#246;tigte Klassen aus. Mit der Version 2.0
+ist JDBC um eine Klasse f&#252;r den XA-Zugriff erweitert
+worden.<br />
+<br />
+ Innerhalb einer "reinen Java-Welt" lassen sich mit der Remote
+Method Invocation (RMI) mehrere verteilte virtuelle Maschinen
+verbinden und Daten und Objekte austauschen. Obwohl - oder gerade
+weil - RMI einige sehr elegante M&#246;glichkeiten bietet, ist
+diese Technik Java-zentrisch. Um die Kommunikation &#252;ber
+andere, bereits bestehende Protokolle zu erm&#246;glichen, wurde
+gemeinsam mit IBM die RMI-IIOP (Internet Inter-ORB Protokoll)
+Bridge entwickelt. Sie erm&#246;glicht ein sogenanntes
+Piggy-backing von RMI-Aufrufen &#252;ber eine Corba-Verbindung,
+basierend auf den OMG-Spezifikationen f&#252;r das "Java-to-IDL
+reverse mapping" und dem "Object-by-Value"-Standard. Zusammen mit
+den bereits erh&#228;ltlichen
+IIOP/DCOM-(Distributed-Component-Object-Model-)Br&#252;cken sind
+damit alle wichtigen Protokolle zwischen dem Client und der
+Anwendung m&#246;glich.<br />
+<br />
+ <b>Ausblick</b> <br />
+ Obwohl die Unternehmens-Javabohnen gerade einmal ihren ersten
+Geburtstag feiern, gibt es schon eine erstaunlich hohe Zahl von
+Unternehmen die EJB-basierte Applikationen erstellt haben und
+produktiv betreiben. Ein idealer Einsatzort ist die &#214;ffnung
+von bestehenden Inhouse-Applikationen ins Web. So lassen sich
+altgediente Mainframe-Anwendungen, kombiniert mit einem ERP-System
+wie R/3 von SAP und angereichert aufgrund der speziellen
+Anforderungen des Unternehmens, als Service f&#252;r das Intranet
+oder Internet bereitstellen. Die EJB-Spezifikation dient hier als
+Integrationsplattform f&#252;r bereits bestehende L&#246;sungen und
+ist leicht an sich stetig &#228;ndernde Anforderungen
+anpassbar.<br />
+<br />
+ EJB sollen eine von den Anbieterinteressen unabh&#228;ngige,
+umfassende Komponentenarchitektur etablieren. Anwendungsentwickler
+k&#246;nnen sich, isoliert von der Objektinfrastruktur, auf ihre
+Hauptaufgabe konzentrieren: Die Gesch&#228;ftslogik ohne den
+Ballast von technischen Details wie Transaktions-, Persistenz- oder
+Sicherheitsmanagement zu erarbeiten.<br />
+<br />
+ Den Anbietern von kompatiblen Containern f&#228;llt die Aufgabe
+zu, die Infrastruktur m&#246;glichst effizient zu implementieren.
+Dieser Markt hat ein unglaubliches Wachstum verzeichnet - derzeit
+gibt es etwa 20 EJB-kompatible Applikationsserver, bis Ende Jahr
+werden es laut Gartner Group 40 sein. F&#252;r die Anwender bietet
+diese Rollenteilung ideale M&#246;glichkeiten, die besten
+Infrastrukturanbieter auszusuchen, fertige Standardkomponenten
+einzubauen und die Kernlogik selbst zu implementieren.<br />
+<br />
+ Version 1.1 (Moscone) der Spezifikation, derzeit im Public Beta
+Draft, bietet einige Verbesserungen: Entity Beans sind
+vorgeschrieben, die Finder-Methoden wurden optimiert, die Metadaten
+sind in einem XML-Dokument flexibel gespeichert und die
+Sicherheitsaspekte genauer beleuchtet.<br />
+<br />
+ Im ersten Quartal 2000 ist mit der Version 2.0 (Javitis) eine
+standardisierte Anbindung externer Applikationen von Herstellern
+wie SAP, Peoplesoft oder Oracle mit Hilfe von Konnektoren geplant.
+Die n&#228;chste Phase (Milano) wird den Fokus auf den
+Persistenz-Mechanismus legen. Daneben wird Ende Jahr eine
+Referenzimplementation vorgelegt.<br />
+<br />
+ </td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

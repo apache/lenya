@@ -1,0 +1,314 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="50"><span
+class="txt-xl-black">Sicherheitsmassnahmen sind gar nicht
+kompliziert</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>Computer haben ein
+schwaches Immunsystem. Sie sind anf&#228;llig f&#252;r Viren,
+Hacker, W&#252;rmer und alle m&#246;glichen Katastrophen. Mit etwas
+Konsequenz angewandt, bek&#228;mpfen zahlreiche Remedien diese
+unerfreulichen Parasiten mit Erfolg.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 27.07.2001<br />
+ <b>Rubrik:</b> Report<br />
+ <b>Autor:</b>&#160;P.J. Connolly<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">Computersicherheit hat
+f&#252;r unterschiedliche Leute eine unterschiedliche Bedeutung.
+F&#252;r den in physischen Sicherheitskonzepten Geschulten ist der
+Computer solange sicher, wie er sich hinter verschlossener T&#252;r
+aufh&#228;lt. F&#252;r den Systemadministratoren h&#228;ngt die
+Sicherheit von der p&#252;nktlichen Installation der Flicken
+f&#252;r Sicherheitsl&#252;cken in den Programmen und dem
+Betriebssystem ab. F&#252;r den Kunden bedeutet Sicherheit, dass
+pers&#246;nliche und heikle Daten nicht jedem 15j&#228;hrigen mit
+einem Linux-Rechner und ein paar Hack-Tools zug&#228;nglich sind.
+Doch eines ist sicher: Sicherheit wird solange ein heisses Eisen in
+der Informationstechnik (IT) bleiben, wie Computer vernetzt
+werden.<br />
+<br />
+ Die Kosten eines Sicherheitssystems scheinen in der heutigen Zeit
+beim oberen Firmenkader schwer durchsetzbar. Aber Firmen, die kein
+System einf&#252;hren, k&#246;nnten sehr schnell an dieser
+Einsparung zugrunde gehen. Denn die wirklichen Kosten einer
+Sicherheitsverletzung sind nicht die &#220;berstunden, die die
+Sicherheits-Taskforce der Firma aufschreibt, oder die
+m&#246;glichen Bussen und Gerichtskosten; der Verlust von Vertrauen
+und Kundschaft wird ewig schmerzen.<br />
+<br />
+ Es ist nicht einfach, die Kosten von Sicherheitsmassnahmen im Zaum
+zu halten, aber sie m&#252;ssen eine Firma auch nicht auffressen.
+Anstatt alles aufs Mal einf&#252;hren zu wollen, sollten die
+gr&#246;ssten Schwachstellen identifiziert und als Erstes behoben
+werden.<br />
+<br />
+ <b>Am Anfang beginnen</b><br />
+ Im IT-Gesch&#228;ft gibt es ein Sprichwort, dass ein
+vollst&#228;ndig sicheres System an kein Netzwerk angeschlossen, in
+Beton eingegossen ist und auf dem Meeresboden liegt. Weil dies
+f&#252;r die meisten von uns kein erstrebenswertes Ziel ist, greife
+man zum n&#228;chst besseren Mittel um sicherzugehen, dass die
+Systeme so gesch&#252;tzt sind, wie es ihre Daten wert sind.
+Sicherheit f&#228;ngt auf der physischen Ebene an. Wenn Ihre
+Ger&#228;te auch im sichersten Bunker seit Hitlers letztem Obdach
+untergebracht sein m&#246;gen, besteht Sicherheit aus mehr als nur
+Tor, Wache und Schiesspr&#252;gel. Das Wissen, wer ein und ausgeht
+im Serverraum - und wann - macht den Unterschied aus zwischen der
+Kontrolle des Zugriffs und dem Verteilen von Eintrittskarten.<br />
+<br />
+ Entfernte B&#252;ros und Telearbeiter sind manchmal die
+Schwachstellen, nach denen ein Hacker sucht. Es macht wenig Sinn,
+die Unternehmensdaten einbruchsicher einzusperren, wenn man einen
+Server in einer winzigen Filiale unbeobachtet l&#228;sst. Der
+ungesicherte Heimrechner eines Angestellten, der sich seine Arbeit
+nach Hause holt, ist eine noch gr&#246;ssere Gefahrenquelle.
+Nat&#252;rlich, das sind Ihre Mitarbeiter und die kann man nicht
+zuerst aufh&#228;ngen und danach ins Verh&#246;r nehmen. Aber
+Telearbeiter sollten wissen, dass sie punkto Sicherheit mehr
+aufpassen m&#252;ssen als der gew&#246;hnliche
+B&#252;rogummi.<br />
+<br />
+ Wenn Ihre IT-Abteilung so ist wie die meisten anderen, dann
+k&#252;mmern sich die Angestellten um Aufgaben wie Datenbackup und
+Wiederherstellung. Das enthebt den Sicherheitsverantwortlichen aber
+nicht von Aufgaben in diesen Bereichen. Pl&#228;ne f&#252;r die
+Datenwiederherstellung und den Notfalleinsatz sind sch&#246;n und
+gut, aber sie n&#252;tzen nur, wenn man sie regelm&#228;ssig
+&#252;bt.<br />
+<br />
+ Man hat viel gr&#246;ssere Chancen, sich von einer Katastrophe zu
+erholen - nat&#252;rlicher oder menschlicher Art - wenn die
+Abteilung gut gedrillt ist in ihren Notfallaufgaben. Das bedeutet
+extreme Massnahmen wie das Hinfliegen von Mitarbeitern und
+Backup-B&#228;ndern an den Katastrophenort - vorausgesetzt, man
+hatte den Weitblick, entsprechende Vorkehrungen zu treffen - und
+der Neuaufbau der befallenen Systeme. Der Sicherheitsmanager muss
+dabei gew&#228;hrleisten, dass in der Hektik, in der ein System
+wieder aufgeschaltet werden muss, keine grundlegenden Prozeduren
+vernachl&#228;ssigt werden und dass Abk&#252;rzungen nicht die
+Integrit&#228;t der Sicherheitspolitik verletzen.<br />
+<br />
+ <b>Der Anschluss</b><br />
+ Die Netzwerkverbindung enth&#228;lt unz&#228;hlige Schwachstellen.
+Das Verwandeln dieser Verbindung von einem Geldschlucker in ein
+sicheres Gut ist aufwendig, lohnt sich aber, wenn es korrekt
+durchgef&#252;hrt wird. Und wenn es nicht richtig durchgef&#252;hrt
+wird, hat man praktisch &#252;berhaupt keinen Schutz.
+Beispielsweise setzen die meisten Firmen eine Brandmauer zwischen
+sich und das Internet, aber zu viele Firmen kaufen entweder ein
+System, das dieser Aufgabe nicht gewachsen ist oder schw&#228;chen
+die Brandmauer, indem sie so viele spezifische Verkehrsarten
+durchlassen, dass sie gar nichts mehr n&#252;tzt.<br />
+<br />
+ Das VPN (virtuelles privates Netzwerk) ist eine weitere
+Fehlerquelle. VPNs erm&#246;glichen zwar sicheres Netzwerken, indem
+sie den gesamten Verkehr zwischen zwei Hosts verschl&#252;sseln,
+aber sie senken auch die Daten&#252;bermittlungsraten, weil sie die
+Verschl&#252;sselung und Dechiffrierung selber betreiben. (Im
+allgemeinen gilt, dass eine VPN-Verbindung Daten etwa 40 Prozent
+langsamer als eine unverschl&#252;sselte Verbindung transportiert.)
+Diese Latenz kann Applikationen zur Verzweiflung treiben,
+insbesondere jene auf Mainframeniveau, die voraussetzen, dass sie
+sofortigen Zugriff zum Server haben.<br />
+<br />
+ Wenn auch Router und &#228;hnliche programmierbare
+Netzwerkger&#228;te zum Verantwortungsbereich der Netzwerkgruppe
+z&#228;hlen, wird sich der gewitzte Sicherheitsmanager mit diesen
+Leuten unterhalten, damit Ger&#228;te angemessen konfiguriert und
+regelm&#228;ssig gewartet werden - insbesondere im Hinblick auf
+Betriebssystem-Flicken. Das Cisco Internetwork Operating System
+beispielsweise gilt als ziemlich stabil, ist aber l&#228;ngst nicht
+perfekt und Sicherheitsl&#252;cken tauchen so h&#228;ufig auf, dass
+eine gewisse Paranoia unter den Cisco-Kunden entsteht.<br />
+<br />
+ Hiermit soll nicht auf Cisco herumgehackt werden. Vielmehr soll
+die Tatsache hervorgehoben werden, dass intelligente
+Netzwerkger&#228;te wie Router nicht Plug-und-Play-f&#228;hig sind.
+Wie das Betriebssystem eines Desktop-Rechners braucht auch die
+Software eines Netzwerkger&#228;tes den einen oder anderen
+Software-Flicken.<br />
+<br />
+ Einbruchschutz ist eine relativ junge Technik auf dem
+Netzwerkniveau, erfreut sich aber einer wachsenden Gefolgschaft.
+Weil viele Angriffe sich als normaler Internet-Verkehr zu tarnen
+suchen, verlangt der Einbruchschutz einiges Wissen dar&#252;ber,
+was im Netzwerk normalerweise vor sich geht. Es ist peinlich, einen
+Angriff zu melden, um dann herauszufinden, dass die
+gef&#228;hrlichen Daten von einem Gesch&#228;ftspartner kommen, der
+jeden Freitagabend um acht mehrere MByte an die FTP-Site der Firma
+sendet.<br />
+<br />
+ Eine gute M&#246;glichkeit f&#252;r den Einbruchschutz ist der
+Honigtopf; ein Pseudosystem, das interessante Files zu enthalten
+scheint, jedoch so installiert ist, dass es jede Bewegung des
+Hackers verfolgt.<br />
+<br />
+ <b>In die Traufe</b><br />
+ Einerseits ist es viel einfacher, Computer zu sichern, die Tools
+f&#252;r die Installation von Flicken und Updates enthalten, als
+einen Router widerstandsf&#228;higer zu machen. Aber weil es so
+viele Desktoprechner und Server gibt, &#252;bersieht man leicht
+einen davon. Leider, und speziell wenn es sich um Windows-Systeme
+handelt, muss ein Angreifer nur eine nichtaktualisierte Maschine
+finden, um einen Br&#252;ckenkopf im Netzwerk zu mauern. Dann hilft
+nur noch eines: Alles l&#246;schen und alles neu
+installieren.<br />
+<br />
+ F&#252;r Benutzer werden Sicherheitsmanager aufgefordert, eine
+Reihe neuer - oder unbekannter - Techniken zu implementieren.
+Beispielsweise ist die biometrische Pr&#252;fung ein heisses Thema
+f&#252;r viele Firmen, zum Teil wegen ihres James-Bond-Aspektes
+(das Einscannen eines Handabdrucks oder eines Gesichts ist einfach
+Spitze, nicht wahr?) und teils, weil die Technik zu einer Zeit
+reift, da sich Vorschriften &#252;ber den Schutz von Patientendaten
+mit einem Mal schlagartig versch&#228;rfen. Wenn auch das
+entsprechende amerikanische Gesetz, die Health Insurance
+Portability and Accountability Act (HIPAA) von 1996, nicht den
+Einsatz biometrischer Pr&#252;fmethoden vorschreibt, empfiehlt es
+doch deren Einsatz. Viele Firmen f&#252;hren die Technik ein.<br />
+<br />
+ Was die Verschl&#252;sselung anbelangt, ist sie keineswegs auf den
+VPN-Dunstkreis beschr&#228;nkt. Trotz fehlender bequemer Werkzeuge,
+die sich leicht in E-Mail- und andere Zusammenarbeitssoftware
+einf&#252;gen lassen, bedeutet die Kombination steigender
+Unternehmensinteressen und nachlassender Strenge bei der Regierung,
+dass die besten Tage der Verschl&#252;sselungstechnik noch
+bevorstehen.<br />
+<br />
+ Leider l&#228;sst sich das auch f&#252;r die IT-Sicherheit im
+allgemeinen sagen. Jeder, der f&#252;r Sicherheit von
+Unternehmenssystemen und -netzwerken zust&#228;ndig ist, sollte
+immer daran denken.<br />
+<br />
+ <b>Viren und W&#252;rmer</b><br />
+ Es vergeht kein Tag mehr, an dem man nicht &#252;ber den Befall,
+eines Unternehmensnetzwerks mit einem Virus oder Wurm liest, man
+denke nur an den Anna Kournikova-Wurm oder das I- Love-you-Virus.
+Widerstandsf&#228;hige neue Organismen tauchen jeden Tag auf. Dank
+der verschiedenen Verbindungen, die st&#228;ndig offen bleiben, wie
+DSL, ISDN oder Kabelmodem dringen sie nun bis in private Haushalte
+vor. 80 Prozent aller &#220;berf&#228;lle allerdings passieren,
+weil Web-Techniker es vers&#228;umen, f&#252;r bekannte und
+ver&#246;ffentlichte Bugs Flicken zu installieren.<br />
+<br />
+ Die L&#246;cher des DNS<br />
+<br />
+ Wer jemals eine URL f&#252;r die Wiedergabe einer IP-Adresse
+verwendete, benutzte das Domain Name System DNS - eine verteilte
+Datenbank, die die &#220;bersetzung zwischen Domainnamen und
+IP-Adresse besorgt. Sie enth&#228;lt auch einen genormten
+Internetmechanismus f&#252;r das Speichern von und den Zugriff auf
+andere Datenarten wie MX (Mail Exchange)-Dateien.<br />
+<br />
+ Das Internet w&#228;re nichts ohne DNS, doch der Dienst ist voller
+L&#246;cher, insbesondere bei Unix-Implementationen, die die
+Variante "Bind" (Berkeley Internet Name Domain) von DNS verwenden.
+Als robustes, stabiles System entwickelt, auf dem eine solide
+Unternehmensnamensarchitektur aufgebaut werden kann, ist Bind -
+insbesondere in den ersten Versionen - leider bekannt f&#252;r
+seine Anf&#228;lligkeit. Versionen vor 8.2.3 seien alle mit
+gef&#228;hrlichen Sicherheitsl&#252;cken behaftet, warnt das
+Computer Emergency Response Team der Carnegie Mellon
+Universit&#228;t.<br />
+<br />
+ Netzwerkschn&#252;ffler, die automatisch das Netz nach
+Eindringlingen absuchen und auf der Suche nach L&#246;chern
+Firmen-DNS-Server abfragen, werden auch f&#252;r Hacker leichter
+erh&#228;ltlich, die damit Sperren eines Systems so testen wie ein
+Einbrecher in einem Schloss herumstochert. Die Programme finden
+sich auf den meisten Hacker-Websites.<br />
+<br />
+ Einmal befallen, kann der DNS-Server als Ausgangspunkt f&#252;r
+St&#246;rungen wie Dienstbehinderung (Denial of Service, DoS)
+verwendet werden. Dagegen l&#228;sst sich aber etwas unternehmen.
+Wenn ein Unternehmen veraltete DNS-Software einsetzt, empfiehlt
+sich ein Upgrade. Der Zugriff zum DNS-Port Nummer 53 sollte
+eingeschr&#228;nkt werden. Die TCP-Transportschicht des Netzwerks
+sollte so dicht wie m&#246;glich gemacht werden.<br />
+<br />
+ <b>Dienste und File Sharing</b><br />
+ Sowohl Windows wie Unix erm&#246;glichen gemeinsamen Zugriff auf
+Dienste und Files, doch Windows-Rechner werden am h&#228;ufigsten
+von trojanischen Pferden &#252;berfallen. Hacker installieren
+Hintert&#252;ren, die sich beim Aufstarten des Rechners als
+gemeinsame Dienste tarnen. Um dies zu verhindern, sollten alle
+Dienste identifiziert und die unn&#246;tigen eliminiert werden. Das
+steigert auch gleich die Netzwerkleistung. Dasselbe empfiehlt sich
+f&#252;r neue Dienste, speziell jene, die beim Starten automatisch
+losgehen.<br />
+<br />
+ Gemeinsamer Filezugriff exponiert bei unsauberer Konfiguration
+wichtige Systemfiles oder gibt jedem, der sich ins Netzwerk
+einschleusen kann, vollst&#228;ndigen Zugriff auf das System.<br />
+<br />
+ Auch hier ist Wachsamkeit die beste Abwehr. Files sollten nicht
+wahllos preisgegeben werden. Wenn es nicht anders geht, sollten
+wirklich nur die notwendigsten Dateien ge&#246;ffnet werden.
+Nat&#252;rlich ist es viel einfacher, ein ganzes Verzeichnis zu
+&#246;ffnen oder ein ganzes Laufwerk zu sperren, aber die
+zus&#228;tzliche Arbeit, die eine verfeinerte Zugriffskontrolle mit
+sich bringt, lohnt sich.<br />
+<br />
+ Aber wie sorgf&#228;ltig man sein Netzwerk auch sichert,
+entschlossene Hacker werden immer einen Einstieg finden. Selbst
+Sicherheitsexperten geben bereitwillig zu, dass Brandmauern und
+Virenschutz nur einen allgemeinen Schutz bieten. Ganz &#252;ble
+Hacker gehen soweit, Insider zu bestechen, um Unternehmensdaten
+stehlen zu k&#246;nnen. Gegen diese Art Angriff gibt es keinen
+Schutz. Doch Versuche ins Blaue hinaus stellen die gr&#246;sste
+Gefahr dar, weil sie viel h&#228;ufiger erfolgen. Also ist
+irgendein Schutz besser als gar nichts.<br />
+<br />
+</span> </td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

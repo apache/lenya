@@ -1,0 +1,330 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span class="txt-xl-black">Die
+Sicherheit als Abschreckgespenst</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>Das Thema Sicherheit
+schreckt noch die meisten Anwender davor ab, Web-Services (WS) zu
+implementieren. Doch die ersten L&#246;sungsans&#228;tze sind im
+Entstehen. Marktforscher raten zu einem pragmatischen
+Vorgehen.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 18.10.2002<br />
+ <b>Rubrik:</b> Fokus IT-Security<br />
+ <b>Autor:</b>&#160;Sabine Ranft (Computerwoche Deutschland)<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">Webservices stehen
+zurzeit im Mittelpunkt des Interesses, weil sie einen einfachen und
+preiswerten Zugang zu verteiltem Computing erm&#246;glichen. Die
+Verwendung verbreiteter Standards wie XML und HTTP wird als grosser
+Fortschritt gefeiert. Doch lassen Webservices punkto Sicherheit
+noch viele W&#252;nsche offen.<br />
+<br />
+ Nach Meinung von Laura Koetzle, Analystin bei Forrester Research,
+gehen viele L&#246;sungsans&#228;tze an den wirklichen Problemen
+vorbei. Auf der einen Seite werde es erst in ferner Zukunft
+m&#246;glich sein, &#252;ber Webservices mit beliebigen Firmen
+zusammenzuarbeiten, und nur Techniker mit dem Kopf in den Wolken
+spekulierten heute schon dar&#252;ber. Auf der anderen Seite habe
+der Zug definitiv den Bahnhof verlassen: Einzelne Entwickler
+basteln nach Einsch&#228;tzung der Analystin intensiv an
+Webservices, ohne den Sicherheitsaspekt zu ber&#252;cksichtigen.
+Tools wie Microsofts "Visual Studio .NET", das bereits
+Anf&#228;nger in die Lage versetzt, Webservice-Interfaces f&#252;r
+kritische Daten zu schreiben, vergr&#246;ssern das Risiko f&#252;r
+Unternehmen.<br />
+<br />
+ Daher f&#252;hrt mangelnde Sicherheit die Liste der von Anwendern
+ge&#228;usserten Bedenken gegen&#252;ber der neuen Technik an. Eine
+Umfrage unserer US-Schwesterpublikation "Infoworld" ergab, dass die
+&#252;berwiegende Mehrheit der Teilnehmer Webservices aus diesem
+Grund zun&#228;chst nur intern einsetzen m&#246;chte. "Webservices
+sind heute noch relativ unsicher", urteilt auch Matthias Wilhelmi,
+Senior Berater bei Secunet. Mit Hilfe von zus&#228;tzlichen
+Massnahmen l&#228;sst sich seiner Meinung nach jedoch ein hoher
+Sicherheitsstandard erreichen.<br />
+<br />
+ Da sich Webservices &#252;ber drei oder vier Schichten verteilen,
+die es zu sch&#252;tzen gilt, ist das Problem &#252;beraus komplex.
+Wegen der Mehrschichtigkeit hat etwa ein Hacker mehr
+Wahlm&#246;glichkeiten f&#252;r Angriffe, und der Anwender muss
+mehr Verteidigungsaufwand betreiben als bei anderen
+Anwendungen.<br />
+<br />
+ Im Vergleich mit herk&#246;mmlichen verteilten Architekturen gibt
+es klare Unterschiede. So konzentrieren sich die
+Sicherheitsinfrastrukturen grosser Firmen heute meist auf die
+Interaktion zwischen Mensch und Maschine. Im Gegensatz dazu geht es
+bei Webservices in der Regel um eine Interaktion zwischen
+Applikationen, so dass sich der Nachweis der Identit&#228;t
+(Authentisierung) anders gestalten muss - besonders wenn
+Webservices zwischen zwei Systemen mit unterschiedlichem
+Authentisierungsverfahren verwendet werden.<br />
+<br />
+ Ausserdem sitzen bisherige verteilte Systeme meist hinter einer
+Firewall. F&#252;r Webservices gewinnt Verschl&#252;sselung an
+Bedeutung, wenn sie diese Grenze &#252;berschreiten. Weiterhin
+verschlimmert sich das Problem von Schuldzuweisungen im Fehlerfall:
+Wenn verschiedene Teilnehmer einen Webservice nutzen, wer kann dann
+sagen, warum genau eine Transaktion misslungen ist und wer die
+Verantwortung daf&#252;r &#252;bernimmt, den Schaden zu
+beheben?<br />
+<br />
+ Die gr&#246;ssten Sicherheitsbedenken gibt es dort, wo Webservices
+eine Firewall durchdringen. Der HTTP-Verkehr, also auch die
+&#252;ber HTTP transportierten Webservices, werden normalerweise
+&#252;ber den Port 80 einer Firewall &#252;bertragen. Dieser Zugang
+entpuppt sich als problematisch: Er ist zwar sehr einfach, doch
+ohne Verschl&#252;sselung kann jeder mitlesen, mit
+Verschl&#252;sselung dagegen gehen die Daten ungefiltert durch die
+Firewall.<br />
+<br />
+ <b>Die Grenzen von HTTPS</b><br />
+ Als Ausweg empfiehlt Lars Weimer, Senior Advisor bei Ernst &amp;
+Young IT-Security, die Daten innerhalb einer "demilitarisierten
+Zone", aber noch vor der Bearbeitung der Webservices-Anfrage auf
+sch&#228;dlichen Code zu pr&#252;fen (deep packet inspection). Aus
+Sicherheits- und Performance-Gr&#252;nden ist eine Inspektion auf
+oder vor der Firewall nicht zu empfehlen. Die rechenintensive
+&#220;berpr&#252;fung wird von den &#252;blichen Systemen heute
+noch nicht im n&#246;tigen Umfang unterst&#252;tzt.<br />
+<br />
+ H&#228;ufig verwenden Firmen f&#252;r die Verschl&#252;sselung das
+Secure Hypertext Transfer Protocol. Es sorgt f&#252;r eine Art
+sicheren (sogar authentisierten) Tunnel zwischen HTTP-Client und
+HTTP-Server. Das reicht jedoch nicht immer aus. Oft sind
+HTTP-Client und -Server eben nicht die Endpunkte der Applikation.
+Eine Ende-zu-Ende-Verschl&#252;sselung w&#228;re dann nicht
+gegeben. Zudem codiert das Protokoll ausnahmslos alles und erlaubt
+keine elementweise Verschl&#252;sselung. "Viele Anwendungen tunneln
+HTTP &#252;ber SSL. Zusammen mit Server- und Client-Zertifikaten
+bei SSL l&#228;sst sich damit eine rudiment&#228;re Sicherheit
+erreichen, aber keine Sicherung einzelner Transaktionen", urteilt
+Secunet-Berater Wilhelmi.<br />
+<br />
+ <b>Jede Transaktion sichern</b><br />
+ Bankfachliche Anwendungen etwa erfordern zus&#228;tzlich zu einem
+HTTPS-Tunnel eine eigene digitale Signatur f&#252;r jede
+Transaktion. Sonst k&#246;nnte sich am Client ein Trojaner zwischen
+eigentlicher Anwendung und der &#220;bertragung per HTTPS
+einklinken sowie von dort Parameter auslesen und manipulieren. Die
+Sicherung jeder einzelnen Transaktion hat den Vorteil, dass man
+dann wenigstens einen Protokolleintrag als Beweismittel in der Hand
+hat. Allerdings belastet dieses Vorgehen den Server mit einem
+gro&#223;en Rechenaufwand. Eine entsprechend hohe Performance muss
+gew&#228;hrleistet werden. Manche Sicherheitsimplementierungen
+verl&#228;ngern auch die Antwortzeit, die aber f&#252;r Webservices
+besonders wichtig ist.<br />
+<br />
+ Eine weitere Gefahr geht von der inneren Struktur der Webservices
+selbst aus. Sie enthalten n&#228;mlich Beschreibungen ihrer eigenen
+Funktionen. Wenn diese Beschreibungen falsch sind - und das wird
+nicht &#252;berpr&#252;ft -, f&#252;hrt der Webservice ganz andere
+Operationen aus, als der Anwender glaubt. Er mutiert quasi zu einem
+Trojanischen Pferd.<br />
+<br />
+ Oft wird &#252;bersehen, dass auch die Programmierung eine neue
+Qualit&#228;t bekommt. "Es geht da nicht nur um den Zugriff auf
+einen Webserver, sondern es wird eine Klassenmethode angestossen",
+erl&#228;utert Wilhelmi. Das Problem dabei ist: Parameter in
+Funktionsaufrufen erzeugen in vorhandenen, nachtr&#228;glich
+webifizierten Anwendungen leicht Buffer Overflows, wenn das
+&#220;berpr&#252;fen der Geltungsbereiche schlampig oder gar nicht
+gemacht wurde. Das heisst: Will man Anwendungen, die nicht f&#252;r
+eine Nutzung im Internet entwickelt wurden, als Webservice
+anbinden, ist eine saubere Pr&#252;fung der Parameter
+n&#246;tig.<br />
+<br />
+ <b>Mehrstufige Webservices</b><br />
+ Schwierigkeiten bereiten dar&#252;ber hinaus mehrstufige
+Webservices. Um etwa eine Kreditkartenbuchung zu revidieren,
+d&#252;rfen dazwischenliegende Webservices nur gewisse
+Informationen sehen, die beispielsweise f&#252;r das Routing
+wichtig sind. Andere Daten wie Kreditkartennummer und Betrag darf
+nur die allerletzte Instanz erfahren. So ist nach Angaben von
+Ernst&amp;Young-Mitarbeiter Weimer auch ein mehrstufiges
+Authentisierungs- oder Verschl&#252;sselungsverfahren
+vonn&#246;ten.<br />
+<br />
+ Die Vielfalt der Probleme und die hohe Zahl von Webservices, die
+Unternehmen wom&#246;glich bald betreiben werden, lassen nur einen
+Schluss zu: In Zukunft werden ganzheitliche Sicherheitsans&#228;tze
+gefragt sein. In jeden einzelnen Webservice spezielle
+Security-Features zu integrieren wird wohl nicht m&#246;glich
+sein.<br />
+<br />
+ <b>Abstrakte Sicherheitsschicht</b><br />
+ Die Marktforscher von Forrester empfehlen deshalb, eine abstrakte
+Sicherheitsschicht f&#252;r Webservices zu entwickeln: Dazu
+geh&#246;ren Sicherheitsregeln f&#252;r die Firma sowie
+Sicherheitsdienste, auf die die Webservices ihrerseits zugreifen
+k&#246;nnen. Da verschiedene Webservices unter Umst&#228;nden
+unterschiedliche Sicherheitsanforderungen haben, sollten die
+Dienste verschiedene Abstufungen von Authentisierung, Autorisierung
+und Verschl&#252;sselung erlauben. Auf diese Weise liessen sich
+Granularit&#228;t und Einheitlichkeit unter einen Hut bringen.
+F&#252;r die Einf&#252;hrung der neuen Technologie empfiehlt sich
+ein gesunder Pragmatismus. Es gilt, einen Mittelweg zu finden
+zwischen der Naivit&#228;t eines v&#246;llig ungesicherten
+Einsatzes und einem rigiden Verbot nach dem Motto "Ohne Sicherheit
+keine Applikationen".<br />
+<br />
+ Genauso wie Webservices unabh&#228;ngig sind von der darunter
+liegenden Technologie, sollte das auch f&#252;r die Sicherheit von
+Webservices gelten. Darum ist es sehr wichtig, dass die
+Sicherheitsprodukte Standards wie WS-Security oder die Security
+Assertion Markup Language (SAML) unterst&#252;tzen. Grob gesagt
+bietet WS Security einen Rahmen f&#252;r starke Authentisierung und
+Verschl&#252;sselung, w&#228;hrend SAML und XML for Access Control
+Lists (XACL) starke Autorisierung erg&#228;nzen. Noch sind die
+meisten Spezifikationen nicht fertig - mit Ausnahme von XML
+Signature.<br />
+<br />
+ Im Grunde genommen muss die Standardentwicklung erst weiter
+fortschreiten, bevor Systeme f&#252;r die Sicherung von Webservices
+entwickelt werden k&#246;nnen. Einige propriet&#228;re
+L&#246;sungen gibt es jedoch bereits am Markt, zum Beispiel den
+"Traffic Manager" von Array Networks. Gegen&#252;ber den Clients
+ausserhalb der Haus-DV agiert dieser Proxy wie ein Webserver,
+gegen&#252;ber den Servern drinnen verh&#228;lt er sich wie ein
+externer Client. Der Traffic Manager empf&#228;ngt alle Anfragen
+und versendet alle Antworten nach draussen. An
+sicherheitsrelevanten Funktionen bietet das Produkt ein
+beschleunigtes Verschl&#252;sseln sowie Authentisierung,
+Autorisierung und die M&#246;glichkeit, Aktionen
+zur&#252;ckzuverfolgen (Auditing).<br />
+<br />
+ Auch Baltimore Technologies sieht mit dem auf einer Public Key
+Infrastructure (PKI) basierenden "Unicert" samt Zertifikaten
+f&#252;r die Authentisierung und dem Produkt "Select Access"
+f&#252;r die Autorisierung dem Zeitalter von Webservices
+optimistisch entgegen. Nach Angaben von Jan Vekemans, Direktor
+Benelux Central &amp; Eastern Europe bei Baltimore in Br&#252;ssel,
+sollen die Produkte den Standard XKMS unterst&#252;tzen. Microsofts
+"Passport" dagegen tauge wenig f&#252;r die Authentisierung von
+Webservices, da es keine grundlegenden Sicherheitsfunktionen
+beinhalte und mehr Wert auf Bequemlichkeit lege. Auch Microsoft
+selbst sch&#228;tzt das offenbar &#228;hnlich ein: Passport
+konzentriere sich mehr auf die Authentisierung von Endnutzern als
+von Applikationen oder Computern. Zudem existiere kein sicherer
+Weg, User ID und Passwort einzugeben.<br />
+<br />
+ W&#228;hrend sich die Produkte von Array und Baltimore dem
+Problemfeld Authentisierung und Autorisierung widmen, sollen die
+Security Appliances "SG800" von Blue Coat Systems den Port 80
+absichern. Sie bieten die M&#246;glichkeit, auch Inhalte zu
+analysieren. Nach Angaben von Clive Lutley, Area Manager f&#252;r
+Deutschland, &#214;sterreich und die Schweiz bei Blue Coat Systems,
+k&#246;nnen die Ger&#228;te Port-80-Datenverkehr von bestimmten
+Websites f&#252;r ausgew&#228;hlte Nutzer zulassen. Die
+durchgelassenen Daten werden auf Viren &#252;berpr&#252;ft, der
+Rest gelangt erst gar nicht ins Netz.<br />
+<br />
+ &#220;ber die Qualit&#228;t der Standards gehen die Meinungen
+auseinander. W&#228;hrend Bef&#252;rworter WS Security attestieren,
+es decke die wichtigsten Bereiche ab, bem&#228;ngeln Kritiker das
+Fehlen einiger an sich bekannter Sicherheitsaspekte. Die
+Vorschl&#228;ge bez&#246;gen sich auf Einzelprobleme, liessen aber
+offen, wie sich das nachher alles zusammenf&#252;gen lassen solle,
+heisst es. Zum Beispiel gebe es &#220;berlappungen zwischen dem
+Verschl&#252;sselungsstandard XML Encryption und der XML Key
+Management Specification (XKMS). Solange an den Spezifikationen
+noch gearbeitet wird, besteht immerhin die Hoffnung, dass
+berechtigte Kritik in das Ergebnis einfliesst.<br />
+<br />
+ Hinter den Kulissen geht das Tauziehen jedoch weiter. Eigentlich
+geniessen die geplanten Standards eine hohe Akzeptanz. So wollen
+nach Angaben von Baltimore-Manager Vekemans 80 bis 90 Prozent der
+Hersteller den Interoperabilit&#228;tsstandard SAML verwenden, den
+er als "Esperanto f&#252;r Webservices" bezeichnet. Allerdings
+k&#246;nnte Microsoft, ein nicht unbedeutender Abweichler, den
+Erfolg des Standards behindern. Die Redmonder wollen nur Teile von
+SAML 1.0 unterst&#252;tzen. Mit diesem halbherzigen Bekenntnis ist
+derzeit noch unklar, wie (und ob) Microsofts Implementierung von
+SAML mit den Produkten anderer Hersteller zusammenarbeitet. Bleibt
+zu hoffen, dass sich der Softwarehersteller bald eines Besseren
+besinnt und die Durchsetzung offener Standards nicht weiter
+blockiert.<br />
+<br />
+ <b>Die wichtigsten Standards</b><br />
+ <i>Security Assertion Markup Language (SAML):</i> XML-Framework
+f&#252;r den Austausch von Authentisierungs- und
+Autorisierungsinformationen zwischen verschiedenen Systemen und
+Services. Single-Sign-on f&#252;r Webservices.<br />
+<br />
+ <i>XML Encryption</i>: Legt eine Syntax f&#252;r die
+Verschl&#252;sselung von XML-Dokumenten fest. Voraussetzung
+f&#252;r WS-Security.<br />
+<br />
+ <i>XML Signature:</i> Spezifiziert Regeln f&#252;r digitale
+Unterschriften unter XML-Dokumente und die Verarbeitung von
+Signaturen. Flie&#223;t ebenfalls in WS-Security ein. Wurde schon
+verabschiedet.<br />
+<br />
+ <i>XML Key Management Specification (XKMS):</i> XML Encryption,
+XML Signature und ihre kombinierte Anwendung in WS-Security
+erfordern kryptografische Schl&#252;ssel.<br />
+<br />
+ <i>WS-Security:</i> Die Webservices-Security-Spezifikation wurde
+von IBM, Microsoft und Verisign ins Leben gerufen. Sun hat sich
+inzwischen dazugesellt. WS-Security ist ein Framework f&#252;r die
+Sicherung von Soap-Nachrichten: Es beschreibt den Austausch
+signierter und verschl&#252;sselter Nachrichten in einer
+Soap-Umgebung. Bei Oasis eingereicht.<br />
+<br />
+ <i>XML for Access Control Lists (XACL):</i> Versteckt gewisse
+Teile eines XML-Dokuments vor einem Benutzer oder legt sie
+offen.<br />
+<br />
+</span> </td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

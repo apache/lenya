@@ -1,0 +1,265 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span class="txt-xl-black">Integration
+ohne Schnittstellenchaos</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>EAI-Produkte stellen
+die vollst&#228;ndige Daten-, Anwendungs- und Prozessintegration
+verschiedener Systeme in Aussicht. Anwender sind aber noch
+misstrauisch und setzen zumindest im deutschsprachigen Raum lieber
+auf altbew&#228;hrte Middleware.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 05.04.2002<br />
+ <b>Rubrik:</b> Hintergrund<br />
+ <b>Autor:</b> D&#233;sir&#233;e Sterchi<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">Schon in den guten alten
+Mainframe-Zeiten bem&#252;hten sich die Firmeninformatiker um eine
+gemeinsame Basis f&#252;r unterschiedliche Anwendungen. Wurde die
+Systemintegration in der Vergangenheit noch mittels klassischer
+Middleware realisiert, setzen heute zahlreiche Unternehmen auf das
+Konzept der Enterprise Application Integration (EAI). Analysten,
+Experten und Hersteller schw&#228;rmen dabei vom paradiesischen
+Zustand einer vollst&#228;ndig integrierten Softwarelandschaft.
+Medienbr&#252;che, manuelle Pflegedienste und der n&#228;chtliche
+Batch-Betrieb sind von gestern, morgen dominiert die Echtzeit-IT,
+so die Prognose.<br />
+<br />
+ Doch der Teufel liegt wie immer im Detail. Ohne genaue
+Vorabkl&#228;rungen sieht sich ein Unternehmen innert kurzer Zeit
+mit Problemen konfrontiert, deren L&#246;sungen immense Summen
+verschlingen k&#246;nnen. Nicht selten vermitteln Hersteller den
+Eindruck, dass ein EAI-Projekt einfach mit dem Kauf und der
+Installation einer Software erledigt ist, und verschweigen, dass
+ihr Angebot lediglich einen Teilbereich des gesamten
+Integrationsprozesses abdecken kann. Hinzu kommt: Was f&#252;r das
+Unternehmen A eine ausgezeichnete L&#246;sung sein mag, verurteilt
+Unternehmen B zum Scheitern. Doch &#252;ber Schwierigkeiten
+schweigt man sich getrost aus, und die Tatsache, dass 60 bis 90
+Prozent aller EAI-Projekte in den USA mit schweren Problemen zu
+k&#228;mpfen haben, wenn sie nicht gar ganz in den Sand gesetzt
+werden, wird einfach &#252;bergangen.<br />
+<br />
+ <b>Schnittstellenchaos...</b><br />
+ Doch fr&#252;her war es auch nicht viel besser. Dem Leidensdruck,
+inkompatible Systeme zusammenzuf&#252;hren, wurde mit klassicher
+Middleware wie zum Beispiel RPC (Remote Procedure Call) und der
+ORB-Technik (Object Request Broker) begegnet. IT-Verantwortliche
+haben dabei ein gutes Drittel der Programmiert&#228;tigkeit auf die
+Entwicklung von Schnittstellen und Punkt-zu-Punkt-Verbindungen
+verwendet. Bei firmenintern entwickelter Software war zudem die
+Kommunikation mit anderen Anwendungen kaum vorgesehen. Diese im
+nachhinein zu implementieren war mit grossen Kosten und hohem
+Aufwand verbunden. Die Praxis, zwei urspr&#252;nglich
+unabh&#228;ngig entwickelte Applikationen - so genannte Stovepipe
+Applications - &#252;ber ein eigenes Interface zu verbinden,
+f&#252;hrte gerade bei einer gr&#246;sseren Anzahl zu verbindender
+Anwendungen zu einem regelrechten Schnittstellenchaos. Zudem lag
+das Augenmerk vornehmlich auf der Datenintegration, die Semantik
+der Daten wurde aber nahezu ignoriert.<br />
+<br />
+ <b>...versus Datendrehscheibe</b><br />
+ Anders als fr&#252;here Verkn&#252;pfungsversuche strebt EAI die
+umfassende Integration auf Daten-, Anwendungs- und Prozessebene an
+- sowohl was die Systeme innerhalb des Unternehmens als auch
+diejenigen von Kunden- und Partnerfirmen angeht. EAI wird dabei oft
+als "neue Art von Middleware" bezeichnet. Doch EAI ist deutlich
+mehr. Sie bedient sich der klassischen Middleware und stellt dabei
+die Kommunikationsschnittstelle zwischen unterschiedlichen
+Technologien, Standards, Datenformaten und Protokollen dar. Die
+Verbindung heterogener und inkompatibler Systemwelten erfolgt aber
+nicht nur auf technischer, sondern auch auf
+betriebswirtschaftlicher Ebene, indem verschiedene
+Gesch&#228;ftsprozesse miteinander verkn&#252;pft werden - eine
+wesentliche Erweiterung gegen&#252;ber klassischer Middleware.
+W&#228;hrend letztere mit den Attributen applikations- und
+technologiegebunden, systemzentriert und statisch umschrieben
+werden kann, gelten EAI-Techniken als anwendungszentriert und sind
+somit prozess- und nicht systemgegekoppelt. Des weiteren
+gl&#228;nzen sie durch eine dynamische Rekonfigurierbarkeit und
+sind flexibel einsetz- und wiederverwendbar. Ein EAI-Produkt
+fungiert dabei als Dreischeibe zwischen allen Anwendungen. Die
+Anzahl Schnittstellen kann drastisch reduziert werden.<br />
+<br />
+ Die Integrations-Interfaces, die Herzst&#252;cke der jeweiligen
+EAI-Plattformen, sind aber nur schwer miteinander vergleichbar.
+Dies ist mit ein Grund, weshalb bei EAI Vorsicht geboten ist. Die
+zugeh&#246;rigen Adapter oder Connectoren unterscheiden sich stark
+und m&#252;ssen f&#252;r den Anwendungsfall in einem Unternehmen
+vorab genaustens unter die Lupe genommen werden, damit die
+gew&#252;nschten Verbindungen auch tats&#228;chlich zu Stande
+kommen. Dies ist darauf zur&#252;ckzuf&#252;hren, dass
+EAI-Softwareanbieter ihre Schwerpunkte unterschiedlich setzen.
+W&#228;hrend einige Firmen ihre St&#228;rke in der
+Gesch&#228;ftsprozessmodellierung haben, spezialisieren sich andere
+auf die Datenextraktion und -transformation. Zudem ist es wichtig,
+sich vor Augen zu f&#252;hren, dass es derzeit noch kein EAI-Tool
+gibt, dass allen Anforderungen mehrerer Firmen gerecht werden kann.
+Infolgedessen sind besonders Grossunternehmen beim Aufbau einer
+EAI-Plattform gezwungen, mehrere EAI-Tools gleichzeitig
+einzusetzen.<br />
+<br />
+ <b>Ohne Marktf&#252;hrer</b><br />
+ Doch obwohl EAI kein Wundermittel ist, f&#252;hrt &#252;ber kurz
+oder lang kein Weg daran vorbei. Angesichts der verzettelten
+IT-Landschaften - etwa nach Fusionen - , die &#252;ber viele Jahre
+hinweg entlang der Prozesskette aufgesetzt worden sind, ist die
+unternehmensweite Verzahnung von Daten, Applikationen und Prozessen
+unabdingbar, um schnell und flexibel auf Marktver&#228;nderungen
+reagieren zu k&#246;nnen. Die versch&#228;rfte
+Wettbewerbssituation, der die Unternehmen zunehmend ausgesetzt
+sind, sei der zentrale Grund f&#252;r das enorme Wachstum von
+Integrationsprojekten, so das Marktforschungsunternehmen Meta
+Group. Insbesondere E-Business-Projekte seien nicht selten aufgrund
+mangelnder Integration gescheitert. Meta Group geht davon aus, dass
+sich die EAI-Kompetenz zunehmend als wesentlicher Massstab f&#252;r
+die Effizienz einer IT-Abteilung durchsetzen wird. Vor allem die
+Webservices sollen dem Segment zu weiterem Durchbruch
+verhelfen.<br />
+<br />
+ So wird dem EAI-Markt ein Wachstum von j&#228;hrlich bis zu 90
+Prozent prognostiziert. Laut Gartner Group soll der weltweite
+Umsatz mit EAI-Software 2001 mit rund zwei Milliarden Dollar fast
+auf dem zehnfachen Niveau von 1998 liegen (240 Millionen Dollar).
+Und dieser Trend soll anhalten. Andererseits hinkt die Nachfrage
+nach EAI-L&#246;sungen im deutschsprachigen Raum den Prognosen
+hinterher. Nach Ansicht von Analysten ist der Markt hier noch nicht
+ausgereift. Daf&#252;r spricht auch die Tatsache, dass die sechs
+gr&#246;ssten Anbieter laut Meta Group weniger als 40 Prozent des
+Marktvolumens umsetzen. Zudem findet sich kaum eine zweite
+Softwaresparte mit &#228;hnlich kurzen Lebenszyklen. Die abwartende
+Haltung vieler IT-Verantwortlicher, so Meta, spiegle sich in dieser
+"Verunsicherung" wider.<br />
+<br />
+ F&#252;r die Zukunft erwarten die Auguren tiefgreifende
+Ver&#228;nderungen in der Verteilung des EAI-Kuchens. Dies ist
+plausibel, haben sich doch alle grossen Softwarelieferanten
+aufgemacht, ihr Revier in der derzeit buchst&#228;blich
+zersplitterten EAI-Arena abzustecken. Der Angriff auf die
+etablierteren Anbieter wie Tibco, Vitria, Webmethods, Mercator und
+Seebeyond wird dabei von den Herstellern von Applikationsservern
+angef&#252;hrt. Dies deshalb, weil sich Applikationsserver zu einem
+Commodity-Produkt entwickeln und grosse Margen mittelfristig nicht
+mehr zu erwarten sind. Deshalb liegt es nahe, sich als
+Komplettanbieter f&#252;r Applikationsintegration zu
+positionieren.<br />
+<br />
+ IBM beispielsweise hat sich mit der &#220;bernahme des
+EAI-Spezialisten Crossworlds Anfang des Jahres f&#252;r knapp 130
+Millionen Dollar bereits in dieses Terrain vorgearbeitet. Damit hat
+sich Big Blue in den &#220;bernahmereigen der letzten Jahre
+eingeklinkt, der vielen Softwareherstellern das Tor ins
+EAI-Gesch&#228;ft &#246;ffnete. So schluckte Sun 1999 das
+Unternehmen Fort&#233;, Novera wechselte zu Mercator, sp&#228;ter
+folgten Active Software zu Webmethods, und Talarian kam unter die
+Fitiche von Tibco. Als Folge muss laut Meta im EAI-Segment mit
+einem erh&#246;hten Preisdruck gerechnet werden. Wer diese Phase
+unbeschadet &#252;berstehe, habe gute Chancen auf die
+EAI-Marktf&#252;hrerschaft. Die traditionellen Anbieter werden
+vorerst sicher noch mitmischen. Vor allem Tibco, die seit 15 Jahren
+zu den Pionieren auf dem Gebiet der Integration geh&#246;rt,
+verf&#252;gt international &#252;ber eine starkte Postition. Fred
+Meyer, Strategie-Chef bei Tibco, sieht deshalb der Zukunft
+optimistisch entgegen und glaubt, aufgrund der tiefen Verwurzelung
+in diesem Feld und des Umsatzvorsprungs gegen&#252;ber der
+Konkurrenz gewappnet zu sein. So erwartet er von den direkten
+Wettbewerbern Vitria, Webmethods und Seebeyond nur wenig Gefahr und
+bezeichnet diese Tibco-intern als "die drei Zwerge". IBM hingegen
+nimmt er sehr ernst: "Wenn sie sich ganz auf das EAI-Gesch&#228;ft
+konzentrieren w&#252;rden, w&#228;re ich schon besorgt." Manche
+Analysten sind sich allerdings sicher: Am Ende werden die Giganten
+Microsoft und IBM die meisten kleineren Anbieter - eingeschlossen
+Tibco - aus den EAI-Gefilden dr&#228;ngen.<br />
+<br />
+ <b>Kein Allrounder-Werkzeug</b><br />
+ Die gegenw&#228;rtig verf&#252;gbaren EAI-Software-Tools sind bei
+weitem nicht die eleganten Wundermittel, als die sie von den
+Herstellern angepriesen werden. Derzeit gibt es noch keine
+EAI-Architektur, die alle Integrationsanforderungen abdeckt, noch
+existieren Allrounder-L&#246;sungen, die f&#252;r jedes Unternehmen
+geeignet w&#228;ren. So unterschiedlich wie die
+Gesch&#228;ftsprozesse der Firmen, so unterschiedlich sind auch die
+Anforderungen an eine EAI-Suite. Vor der Wahl eines Produkts sollte
+der Anwender daher genau &#252;berlegen, nach welcher Strategie er
+verfahren m&#246;chte. Dies ist umso wichtiger, als sich die
+EAI-Plattformen rasch weiterentwickeln und neben hohen Lizenzkosten
+auch eine langfristige strategische Beziehung zum Anbieter
+entsteht. Eine erfolgreiche Implementierung ist nur dann
+m&#246;glich, wenn s&#228;mtliche internen und
+unternehmens&#252;bergreifenden Gesch&#228;ftsprozesse verstanden
+sind und technisches wie Business-kritisches Know-how bereitsteht.
+Nach Ansicht von Giga-Group-Analysten sollten folgende Kriterien
+die Einordnung und Auswahl eines EAI-Systems erleichtern:<br />
+<br />
+ - Neben Standardadaptern muss eine leistungsf&#228;hige
+Entwicklungsumgebung vorhanden sein, da Legacy-Adapter meist neu
+erstellt werden m&#252;ssen.<br />
+ - Integrierte Entwicklungswerkzeuge f&#252;r kundenspezifische
+Anpassungen sollten zum Angebot geh&#246;ren.<br />
+ - Die Konformit&#228;t mit "offenen" Standards wie XML, EDI, J2EE,
+Soap, Swift und FIX sollte gew&#228;hrleistet sein.<br />
+ - Jeder EAI-Anbieter sollte f&#252;r ein Projekt qualifizierte
+Berater und Integratoren zur Verf&#252;gung stellen.<br />
+ - Die Skalierbarkeit des Servers (Lastverteilung, Fehlertoleranz,
+Datenbankmultiplexing und Caching) muss gepr&#252;ft werden.<br />
+ - Sicherheitsfunktionen wie Privacy, Authentifizierung,
+Zugriffsverwaltung und Datenintegrit&#228;t sind zentrale
+EAI-Elemente.<br />
+ - Die Qualit&#228;t der Management-Konsole sollte gepr&#252;ft
+werden. Unabdingbar sind: Die Definition von internen und
+&#252;bergreifenden Prozessen, Cache-, Transaktions-, Event-,
+Protokoll- und Datenbankmanagement sowie Funktionen zur
+Leistungsmessung.<br />
+<br />
+</span> </td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

@@ -11,6 +11,7 @@
 </xsl:template>
 
 <xsl:template match="sitetree">
+<!-- LEFT NAVIGATION TABLE BEGINS HERE -->
 <table border="0" cellpadding="0" cellspacing="0" width="140">
 	<tr>
 		<td colspan="2"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="10" /></td>
@@ -93,6 +94,7 @@
 		</td>
 	</tr>
 </table>
+<!-- LEFT NAVIGATION TABLE ENDS HERE -->
 </xsl:template>
 </xsl:stylesheet>
 

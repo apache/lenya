@@ -6,9 +6,9 @@
 				<line>Home</line>
 			</name>
 		</node>
-		<node id="/dossier/index.html" link="/dossier/index.html" name="dossier" target="">
+		<node id="/schwerpunkte/index.html" link="/schwerpunkte/index.html" name="schwerpunkte" target="">
 			<name>
-				<line>Dossier</line>
+				<line>Schwerpunkte</line>
 			</name>
 		</node>
 		<node id="/archiv/index.html" link="/archiv/index.html" name="archiv" target="">

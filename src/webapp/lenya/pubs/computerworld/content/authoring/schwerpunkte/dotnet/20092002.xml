@@ -1,0 +1,244 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span class="txt-xl-black">Offener
+Ausgang bei Dotnet vs. J2EE</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>F&#252;r die
+verteilten Applikationen der n&#228;chsten Generation stehen sich
+zwei Architekturen als harte Konkurrenten gegen&#252;ber: J2EE auf
+Java-Basis von Sun, BEA Systems, IBM und Co., sowie Dotnet, ein
+Monolith aus der Redmonder Softwareschmiede
+Microsoft.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 20.09.2002<br />
+ <b>Rubrik:</b> Fokus Orbit/Comdex 2002<br />
+ <b>Autor:</b> Wolfgang B&#246;hler<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">Die Zukunft
+kommerzieller und betrieblicher Software liegt in verteilten
+Applikationen, das heisst, in Applikationen, die auf
+unterschiedlichster Hardware und verschiedenen Plattformen
+&#252;ber mehrere Unternehmen hinweg verstreut ist. Damit ihre
+Komponenten untereinander und ganze Applikationen miteinander
+interagieren k&#246;nnen, braucht es eine umfassende Architektur.
+Davon gibt es heute auf Basis von Mehrebenen-Programmiermodellen
+mit Trennung von Datenbankzugriff, Gesch&#228;ftslogik und
+Ausgabeschnittstellen vor allem zwei: J2EE von Sun Microsystems und
+Microsofts Dotnet. Ihr Verh&#228;ltnis ist nur sehr schwer zu
+durchschauen, weil hinter beiden v&#246;llig andere
+Gesch&#228;ftsmodelle stehen.<br />
+<br />
+ Die Schwierigkeiten beim Verst&#228;ndnis liegen aber auch darin,
+dass die wenigsten Entwickler sowohl in Unix/Corba/Java- als auch
+Windows/DCOM/Biztalk-Umgebungen zu Hause sind. Wer heute Middleware
+evaluiert, sieht sich vor die Aufgabe gestellt, zwei zum Teil
+v&#246;llig unterschiedliche Terminologien (mit Unterdialekten und
+schnell wechselnden Bedeutungsverschiebungen bei einzelnen Termini)
+zu durchschauen. Den Aufwand scheuen viele nicht ganz zu
+Unrecht.<br />
+<br />
+ Um die Pointe gleich vorweg zu nehmen: Der Vergleich von J2EE und
+Dotnet ist sehr komplex und liefert in den wenigsten Aspekten
+eindeutige Hinweise auf Vor- und Nachteile der einen oder andern
+Technik. Evaluiert werden muss jeweils pro Projekt und die
+entscheidenden Faktoren sind in der Regel nicht technologische Vor-
+oder Nachteile, sondern die Frage nach bereits vorhandenen
+Umgebungen, Kompetenzen der involvierten Entwickler und emotionale
+(gibts auch...) oder gesch&#228;ftliche Bindungen zu einer der
+Plattformen.<br />
+<br />
+ Die Probleme beginnen schon bei der Frage, welche der beiden
+Techniken denn nun fortgeschrittener ist. Beide Lager nehmen einen
+Vorsprung f&#252;r sich in Anspruch. Und beide haben recht -
+relativ zu ihrer Vergleichsbasis. J2EE ist im Markt bereits besser
+eingef&#252;hrt und die Schnittstellen in Multivendor-Umgebungen
+sind weiter vorangetrieben. Das liegt daran, dass J2EE von der Idee
+her eine plattform&#252;bergreifende Technik darstellt. J2EE wurde
+zwar von einer einzigen Firma - Sun Microsystems - entwickelt,
+welche sonst mit Software relativ wenig am Hut hat. Die Entwicklung
+wiederum wird aber von mehreren Middlewarenbietern genutzt, allen
+voran IBM und BEA Systems, und auf unterschiedlichsten
+Softwareplattformen aufgesetzt. Dotnet hingegen ist das
+monolithische Werk eines Softwareanbieters - Microsoft. Es wirkt
+deshalb abgerundeter, vollst&#228;ndiger und kompakter, - solange
+man sich bloss innerhalb des Microsoft-Universums bewegt.<br />
+<br />
+ <b>Vergleichbare Komponenten</b><br />
+ Bevor die Verwirrung aber richtig um sich greifen kann, soll ein
+Blick auf die Komponenten der beiden Techniken, die mehr oder
+weniger vergleichbar sind, etwas Kl&#228;rung schaffen. Die
+Programmiersprache von J2EE ist Java, die von Dotnet soll C#
+werden, nachdem sich Sun und Microsoft &#252;ber die Verwendung von
+Java gewaltig in die Haare geraten sind. Dabei finden sich Fallen:
+Microsoft gibt an, Java in Dotnet ebenfalls zu unterst&#252;tzen.
+In Tat und Wahrheit wird aber nur ein kleiner Teil davon
+&#252;bernommen. Gerade die J2EE-Komponenten der Sprache bleiben
+aussen vor. Das heisst aber nicht, dass man J2EE auf Windows nicht
+nutzen k&#246;nnte. Microsoft-fremde virtuelle Maschinen f&#252;r
+Java lassen sich auch auf Windows installieren. C# l&#228;uft bloss
+auf Microsoft-Laufzeitumgebungen und produziert Bytecode, der JIT
+(Just in Time) kompiliert wird. Java kann entweder JIT-kompiliert
+oder auch als Bytecode w&#228;hrend der Laufzeit interpretiert
+werden. F&#252;r die Generierung dynamischer Webseiten stellt
+Microsoft ASP (Active Server Pages) zur Verf&#252;gung, die
+Java-Gemeinde JSP (Java Server Pages). ASP laufen bloss in
+Microsoft-Umgebungen, JSP laufen im Prinzip auf mehreren
+Plattformen, sind aber still und heimlich immer mehr von der
+Bildfl&#228;che verschwunden. Stattdessen wird mehr und mehr die
+Open-Source-Variante PHP verwendet, die als Modul des
+Open-Source-Webservers Apache sowohl auf Unix- als auch auf
+Windows-Plattformen implementiert werden kann.<br />
+<br />
+ <b>Laufzeitumgebungen</b><br />
+ In Sachen Laufzeitumgebungen stehen sich die Java Virtual Machine
+(JVM) und Microsofts Common Language Runtime (CLR) gegen&#252;ber.
+Microsoft wird nicht m&#252;de zu betonen, dass die Common Language
+Runtime im Gegensatz zu einer JVM mehrere Sprachen unterst&#252;tzt
+und einige Kommentatoren sehen darin eine der grossen St&#228;rken
+des Dotnet-Ansatzes. Dies ist jedoch wie so oft nur die halbe
+Wahrheit. Der Einsatz einer Sprache - vor allem Visual Basic, C#
+oder C - ist bei einem Microsoft-orientierten Projekt recht klar
+vorgegeben und der Gebrauch mehrer Sprachen reduziert sich unter
+Umst&#228;nden auf den Nachteil, beim Skalieren eines Projektes
+einen m&#252;hsamen Wechsel der Sprache vornehmen zu m&#252;ssen.
+Dies trifft vor allem auf die verbreitete Vorgehensweise zu, bei
+der bescheiden mit Visual Basic und der Desktop-Datenbank Access
+begonnen wird und dann auf Visual Studio Dotnet und C# gewechselt
+werden soll. Die Java-Welt ist auch nicht derart auf Java fixiert,
+wie dies den Anschein macht. Historisch gesehen wachsen
+Java-Projekte aus der &#228;lteren Middlewaretechnik Corba (Common
+Object Request Broker Architecture). Corba macht es aber eben
+gerade m&#246;glich, mit mehreren Sprachen auf gemeinsame Objekte
+zuzugreifen - auch wenn dies zugegebenermassen nicht gerade eine
+sehr komfortable Art des Codeschreibens darstellt.<br />
+<br />
+ <b>Irritierende Unterschiede</b><br />
+ Knatsch zwischen den Java-Applikationsserver-Anbietern BEA Systems
+und IBM hat daf&#252;r gesorgt, dass der Applikationsserver heute
+als Herzst&#252;ck der Java-Umgebungen wahrgenommen wird. Die Frage
+nach dem Pendant in Dotnet ist hingegen nicht einfach zu
+beantworten, weil in einer Microsoft-Umgebung Middleware und
+Betriebssystem ungleich enger verwoben sind als in der Java-Welt.
+In der Java-Welt gibt's klar definierbare Applikationsserver -
+Websphere von IBM, Weblogic von BEA Systems oder I-Planet von Sun -
+die vom Betriebssystem weitgehend unabh&#228;ngig sind und
+teilweise auch auf Windows-Plattformen laufen. Auf dem
+Windows-Dotnet-Server sind die Aufgaben st&#228;rker ineinander
+verwoben. Entgegen landl&#228;ufiger Meinung bietet jedoch nicht
+bloss J2EE die M&#246;glichkeit, sogenannte "Legacy", das heisst
+&#228;ltere Systeme in eine neu zu schaffende verteilte Architektur
+einzubinden, auch Microsoft kennt Techniken f&#252;r solche
+Probleme, wenn sie nach allgemeiner Einsch&#228;tzung von
+Fachleuten auch nicht an die M&#228;chtigkeit der Java-Werkzeuge
+heranreichen. J2EE kennt dazu die sogenannte J2EE Connector
+Architecture (JCA), eine Spezifikation, aufgrund derer Konnektoren
+f&#252;r betriebswirtschaftliche Gesamtl&#246;sungen wie R/3 von
+SAP oder Siebel, aber auch &#228;ltere Cics/Cobol-Programme
+geschrieben werden k&#246;nnen.<br />
+<br />
+ Es gibt mittlerweile eine ganze Reihe kommerzieller Anbieter
+solcher Konnektoren, sie k&#246;nnen aber auch bloss f&#252;r ein
+bestimmtes Projekt kreiert werden. Weitere M&#246;glichkeiten der
+Integration sind der Java Message Service (JMS) zur Integration
+bestehender Messaging-Systeme. Das &#228;ltere Corba kann seinen
+Dienst auch immer noch tun, und selbst native Bibliotheken lassen
+sich via JNI lokal einbinden. Dotnet macht Integration vor allem
+via den Host Integration Server 2000 m&#246;glich. F&#252;r
+Transaktionen &#252;ber Mainframes steht zudem ein COM Transaction
+Integrator zur Verf&#252;gung und Legacy-Systeme wie die wichtigen
+MQ Series von IBM lassen sich via Microsoft Message Queue
+einbinden.<br />
+<br />
+ <b>Wer nutzt was?</b><br />
+ Einer Gulp-Umfrage vom Sommer dieses Jahres zufolge werden beide
+Techniken noch sehr wenig genutzt, wobei J2EE die Nase vorn hat. Im
+April 2002 wurde in 0,8 Prozent aller Projekte Dotnet eingesetzt,
+in 1,2 Prozent J2EE. Krass ist der Unterschied in Sachen
+Programmiersprachen: 13 Prozent aller Projekte nutzten Java, blss
+0,7 C#, was selbstverst&#228;ndlich damit zu tun hat, dass C# noch
+sehr jung ist. Das Verh&#228;ltnis schl&#228;gt sich auch auf die
+Kosten nieder. Dotnet-Entwickler sind aufgrund mangelnder Nachfrage
+vorl&#228;ufig, wenn auch nicht dramatisch, billiger; das
+Verh&#228;ltnis Dotnet-zu-J2EE-Kosten betr&#228;gt 71 zu 76. Im
+grossen und ganzen l&#228;sst sich sagen, dass mit J2EE bereits
+mehr Erfahrungen gesammelt wurden und die Schwierigkeiten oder
+Vorteile etwas besser absch&#228;tzbar sind als mit Dotnet.<br />
+<br />
+ Der "Dialog" zwischen den Microsoft- und Java-Welten ist
+m&#246;glich, das Zauberwort dazu heisst Web Services. Darunter
+versteht man den Austausch von Daten und Funktionen &#252;ber die
+Protokolle XML (Extensible Markup Language) und Soap (Simple Object
+Access Protocol). Ersteres dient als Tr&#228;ger f&#252;r die Daten
+selber, letzteres als &#220;bermittlungstechnik. Je nach Standpunkt
+werden Webservices leicht unterschiedlich definiert. Alte
+Corba-K&#228;mpfer sehen darin in erster Linie eine standardisierte
+asynchrone Kommunikation in verteilten Umgebungen, also nichts
+Neues, abgesehen von der Einigung auf einheitliche Datenbehandlung
+und Standard-&#220;bertragungsprotokolle, andere schlagen auch
+konkrete Dienste dazu, die in einem zentralen Verzeichnis (UDDI,
+Universal Description, Disvovery and Integration) verzeichnet
+werden. Wenn man von IT-Projekten und mit Entwicklern spricht,
+beschr&#228;nkt man sich sinnvollerweise auf ersteres.<br />
+<br />
+ Microsoft scheint die strategische Entscheidung getroffen zu
+haben, ihre Welten auf Basis von XML und Soap bloss auf der Ebene
+asynchroner Transaktionen mit der Aussenwelt zu verbinden. Wie weit
+man in einem Projekt den Dialog zwischen Diensten auf der Basis von
+Web Services erledigen will und wie weit tieferliegende Kan&#228;le
+- etwa synchrone via Java-RMI (Remote Method Invocation) oder
+Microsoft-DCOM (Distributed Component Object Model) lohnt sich,
+fr&#252;h genug zu &#252;berlegen. Die Plattformwahl wird
+n&#228;mlich vor allem auf dieser Ebene entschieden.<br />
+<br />
+</span></td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

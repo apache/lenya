@@ -1,0 +1,279 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span
+class="txt-xl-black">Softwaresicherheit bleibt
+Erfahrungssache</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>Mit der "Trustworthy
+Computing Initiative" nutzt Microsoft-Gr&#252;nder Bill Gates die
+Sicherheitsfrage geschickt als Marketinginstrument. Die Ziele der
+Redmonder sind unzweifelhaft ehrbar; in der Java-Gemeinde ist man
+Microsofts Sicherheitsstreben jedoch bereits um Jahre
+voraus.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 01.11.2002<br />
+ <b>Rubrik:</b> Magazin Banken 2002<br />
+ <b>Autor:</b>&#160;<a href="../../impressum"
+class="txt-link-red">Wolfgang B&#246;hler</a><br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">Sobald online Geld
+verschoben werden soll, &#228;ndert der Ton in der
+Sicherheitsdiskussion. Mag sein, dass Mailw&#252;rmer und
+Denial-of-Service-Attacken eine ernste Sache sind, beim
+Onlinebanking geht es schnell einmal um die eigene Existenz.
+Vertrauen in die entsprechenden Systeme ist da Voraussetzung
+f&#252;r alles Weitere. Dies mit Recht, denn die Szenarien, die
+sich entwerfen lassen, wenn es darum geht, einen Internetbenutzer
+auszutricksen, sind so vielf&#228;ltig, dass man den Glauben an
+niet- und nagelfeste Geldtransfers verlieren kann - und im eigenen
+Interesse sogar verlieren sollte. Transparenz tut also Not.<br />
+<br />
+ Die Sicherheitsdiskussion wird gegenw&#228;rtig gepr&#228;gt von
+den Bem&#252;hungen Microsofts, sich als sicherheitsbewusstes
+Unternehmen zu positionieren, das sich auch im vernetzten,
+hochsensiblen Internetverkehr der Gefahren bewusst ist. Von der
+Seite der Java-Fraktion - so k&#246;nnte man meinen - herrscht
+hingegen eher Funkstille, als ob Sicherheit f&#252;r die
+Java-Adepten kein Thema sei. Ausgerechnet, bildet doch Java die
+Grundlage f&#252;r den Zugang zu so mancher Finanzapplikation via
+Internet, man denke etwa an die Java-Clients von Postfinanz und den
+Gegenst&#252;cken bei den Banken.<br />
+<br />
+ Bill Gates nutzte seinen "Security Turn" f&#252;r einen
+wirkungsvollen Marketingauftritt, der den Eindruck erwecken
+k&#246;nnte, Microsoft habe die Sicherheitsdiskussion erst
+erfunden. Dabei ist nichts gegen die Trustworthy Computing
+Initiative zu sagen, die ein ernsthaftes und vermutlich auch
+wirkungsvolles Unterfangen ist - immerhin steht f&#252;r Microsoft
+und ihre Kunden viel auf dem Spiel. In der Java-Gemeinde hat das
+Nachdenken &#252;ber Sicherheitsstrukturen jedoch schon wesentlich
+fr&#252;her eingesetzt und ist auch weiter fortgeschritten.<br />
+<br />
+ <b>Eine "absolut sichere" Technik</b><br />
+ Zu meinen, Sicherheit werde in der Java-Gemeinde bloss
+stiefm&#252;tterlich behandelt, w&#228;re allerdings ein
+gravierender Trugschluss. Das Gegenteil ist der Fall. Da Java von
+Beginn weg als eine Programmiersprache f&#252;r vernetzte
+Applikationen angelegt worden ist, sind die relevanten
+Sicherheitsthemen bereits vor mehreren Jahren eingehend
+er&#246;rtert worden.<br />
+<br />
+ Ein Klassiker unter den dazu publizierten B&#252;chern ist "Java
+Security" von Gary McGraw und Edward Felten aus dem Umfeld der
+Princeton University. In dem Buch wurde Sun Microsystems, die
+Sch&#246;pferin von Java, bereits 1997 zur Kasse gebeten: Die
+&#220;berzeugung der Sonnenk&#246;nige, eine "absolut sichere"
+Technik entwickelt zu haben, wurde arg zerpfl&#252;ckt. Es wurde
+gezeigt, dass die "sichere" Technik Hackern prinzipiell die
+M&#246;glichkeit bietet, Daten auf Festplatten zu manipulieren,
+geheime Informationen weiterzugeben und auf Drittcomputern Viren zu
+platzieren.<br />
+<br />
+ <b>Die alten Klagen neu geh&#246;rt</b><br />
+ Die Palette an Problemen, die angeschnitten wird, kommt einem
+verd&#228;chtig bekannt vor: Es sind all die L&#246;cher,
+L&#252;cken und Lappalien, die gegenw&#228;rtig als neueste
+Entdeckungen abgefeiert werden. Der Informatikanwender lebt eben in
+einer schnelllebigen Welt und hat sich angew&#246;hnt, ebenso
+schnell wieder zu vergessen, wie er sein Wissen erworben hat.<br />
+<br />
+ Und so sah die McGraw/ Felten-Liste 1997 aus:<br />
+<br />
+ Umgehen der Firewall: Java-Progr&#228;mmchen konnten dazu genutzt
+werden, die Firewall zu umgehen, wenn man es schaffte, solche via
+einen ahnungslosen Benutzer ins Innere des gesch&#252;tzten
+Bereiches zu schmuggeln. Dazu k&#246;nnen etwa so genannte
+Trojanische Pferde dienen. F&#252;r Java-Applets galt zwar die
+Regel, dass sie keine Netzwerkverbindungen &#246;ffnen durften,
+ausser zu dem Server, von dem sie stammten. Die Version 2 des
+Netscape-Browsers missachtete dieses Prinzip. Eine wichtige
+Einsicht dabei: Sicherheit ist Teamarbeit, denn es nutzt gar
+nichts, wenn der eine (Sun) Regeln aufstellt und der andere
+(Netscape) sie nicht beachtet. Eine Variante dieser ersten
+Attackenart war das DNS-Loch (Domain Name System), das es
+m&#246;glich machte, eine Firewall zu &#252;berspringen. Der
+texanische Sicherheitsspezialist Steve Gibbons hatte Sun
+dar&#252;ber informiert - nichts geschah. Etwa sp&#228;ter griff
+das Massenblatt "USA Today" das Thema auf - und das Loch wurde
+sofort gestopft.<br />
+<br />
+ Das f&#252;hrt zu einer weiteren wichtigen Einsicht: L&#246;cher
+werden nur gestopft, wenn sonst massiver Imageschaden entsteht.
+Dass sich Microsoft f&#252;r Trustworthy Computing so viel Zeit
+genommen hat, geht in dieses Kapitel.<br />
+<br />
+ - Ein zweites von McGraw und Felten entdecktes Leck war die
+Tatsache, dass Java dem Browser vorspiegeln konnte, selber
+Browsercode zu sein. Da der Browser dem eigenen Code vertraute, bot
+das prinzipiell die M&#246;glichkeit, unerlaubterweise auf die
+Ressourcen des entsprechenden Computers zuzugreifen.<br />
+<br />
+ - Zum Dritten konnten Konfusionen dar&#252;ber, welchem Datentyp
+eine Variable angeh&#246;rt, zum Knacken eines Systems f&#252;hren.
+Verschiedene Pointer konnten auf die gleiche Adresse verweisen -
+mit verschiedenen Typedefinitionen. Dem Princeton-Team gelang es,
+auf dieser Basis Softwarewerkzeuge zu schreiben, die in
+Hackerh&#228;nden unvorstellbaren Schaden h&#228;tten anrichten
+k&#246;nnen. Details wurden bewusst nie ver&#246;ffentlicht.<br />
+<br />
+ - Viertens entdeckten die Princeton-Forscher, dass das dynamische
+Verlinken von Softwarekomponenten - die Aufgabe des so genannten
+"Class Loaders" - dazu genutzt werden konnte, gef&#228;hrlichen
+Code in andere Programme zu hieven.<br />
+<br />
+ - Tom Cargill, ein weiterer Sicherheitsspezialist, entdeckte
+f&#252;nftens die M&#246;glichkeit, die Sprache auszutricksen,
+indem man sie in Sachen privater und &#246;ffentlicher Methoden -
+spezieller Befehle - durcheinander brachte. Angreifbar war der
+Netscape-Browser.<br />
+<br />
+ - Die sechste und siebte Weise, Java auszuhebeln, betrafen
+kombinierte Verfahren, auf die sowohl der Netscape-Browser als auch
+der Internet Explorer anf&#228;llig waren.<br />
+<br />
+ Mark Twain wird ein Bonmot in den Mund gelegt: Nachdem ein
+Witzbold einer Zeitung die Todesanzeige des amerikanischen
+Satirikers unterschoben hatte, soll er gesagt haben, die
+Nachrichten von seinem Tod seien masslos &#252;bertrieben. Dasselbe
+k&#246;nnte man von den Beteuerungen der Java-Konstrukteure Anfang
+Neunzigerjahre sagen: "Das felsenfeste Vertrauen in die Sicherheit
+der Programmiersprache ist masslos &#252;bertrieben." Das ist die
+wichtigste Lehre aus den in ihrer Zeit vernichtenden Resultaten von
+McGraw und Felten.<br />
+<br />
+ <b>Gef&#228;hrliche Sandkastenspiele</b><br />
+ Eines der Resultate dieses Denkprozesses ist die Java Security
+Architecture des Sun-Sicherheitsarchitekten Li Gong aus dem Jahr
+1998. Das entscheidende Element ist dabei das so genannte
+Sandbox-Modell. Sandboxen dienen dazu, via Netzwerk erhaltenen Code
+vorg&#228;ngig in einer Art virtuel-lem Hochsicherheitstrakt
+durchzutesten, um zu beobachten, was er mit einem System alles
+"anstellen" will, bevor er in die Innenquartiere eines Rechners
+gelassen wird. Um sicheren Code zu schreiben, verf&#252;gt die
+Java- Sprache mittlerweile &#252;ber eine rigide Typendefinition,
+die weit &#252;ber das hinausgeht, was etwa C oder C++ bieten,
+&#252;ber Speicherbereinigungsmechanismen, &#252;ber Bereichstests
+von Zeichenketten und eine automatische Speicherverwaltung.
+Bytecode wird nun auch vorg&#228;ngig gepr&#252;ft, bevor er in
+einer Virtual Machine ausgef&#252;hrt wird, und die Class Loader,
+welche f&#252;r das dynamische Verlinken von Komponenten
+zust&#228;ndig sind, bedienen sich lokaler Namensr&#228;ume, um
+Attacken wie die oben beschriebenen zu verunm&#246;glichen.<br />
+<br />
+ Zudem existiert nun auch eine "Security Manager"-Klasse. Sie ist
+darum besorgt, dass weit reichende Tests durchgef&#252;hrt werden,
+bevor eine Java Virtual Machine auf Systemressourcen zugreifen
+kann. Um die aufw&#228;ndigen Verfahren zu umgehen, die eine
+Sandbox mit sich bringt, wurde im Weiteren das Konzept der
+signierten Applets eingef&#252;hrt. &#220;ber ein Netzwerk
+erhaltene signierte Applets behandelt ein System wie lokalen Code,
+die Sandbox-Quarant&#228;ne f&#228;llt f&#252;r sie weg. Im Java
+Development Kit 1.2 wurde das ganze Sandbox- und Sicherheitskonzept
+noch erheblich ausdifferenziert.<br />
+<br />
+ Seit l&#228;ngerem denken aber auch die Teams &#252;ber Sicherheit
+nach, die Java mit Produkten der Open-Source-Gemeinde verlinken. So
+gibt es f&#252;r die Servlet- und JSP-Engine Tomcat
+ausgekl&#252;gelte Sicherheitsmechanismen, die sich unter anderem
+einer hierarchischen Regionenarchitektur bedienen. Es handelt sich
+dabei um Bereiche, die bloss bestimmten Applikationen Zugang
+gew&#228;hren.<br />
+<br />
+ <b>St&#228;ndige Neu&#252;berpr&#252;fung</b><br />
+ Es ist also schon einiges geschehen in der Java-Welt, um die
+offerierte Infrastruktur so gut wie m&#246;glich abzusichern. In
+Sachen Sicherheit gelten Beteuerungen aufgrund theoretischer
+&#220;berlegungen oder des Enthusiasmus eines Entwicklers jedoch
+rein gar nichts. Auch wenn jemand felsenfest der &#220;berzeugung
+ist, ein hieb- und stichfestes Verfahren zur Absicherung einer
+Infrastruktur gefunden zu haben, kann es immer noch Angriffspunkte
+geben, an die nicht gedacht worden ist - dies haben die
+vollmundigen Verk&#252;ndigungen der Java-Propheten Anfang der
+Neunzigerjahre gelehrt. Noch schlimmer: Es kann nicht nur, es gibt
+Angriffspunkte mit an Sicherheit grenzender Wahrscheinlichkeit,
+solche, an die niemand gedacht h&#228;tte, oder die vor ihrer
+Entdeckung als v&#246;llig absurd gegolten h&#228;tten.<br />
+<br />
+ Erst die st&#228;ndige &#220;berpr&#252;fung, erst die Tatsache,
+dass ein System l&#228;ngeren und ernsthaften Attacken
+standgehalten hat, gibt ein gewisses Mass an Gewissheit, dass ein
+System tats&#228;chlich Vertrauen verdient.<br />
+<br />
+ Der gegenw&#228;rtige Hype rund um das Thema Sicherheit f&#252;hrt
+paradoxerweise aber auch zu ganz neuen Bedrohungen. So tummeln sich
+neuerdings selbst ernannte "Sicherheitsspezialisten" auf dem Markt,
+und Marketingabteilungen erstellen unabh&#228;ngig scheinende
+Brosch&#252;ren, deren erster Zweck es ist, bestimmte Produkte
+anzupreisen. Dabei n&#252;tzt dem Thema Sicherheit in der sonst so
+vorw&#228;rts gerichteten Branche durchaus eine gesunde Portion
+Konservativismus.<br />
+<br />
+ Das wichtigste Kriterium f&#252;r die Sicherheit eines Systems
+oder einer Technik ist n&#228;mlich zuallererst und fast
+ausschliesslich das Mass an Erfahrung und Routine, welche die
+Informatiker damit haben gewinnen k&#246;nnen. Wenn die
+Gates-Company im Moment un&#252;berh&#246;rbar das Mantra der
+Sicherheit herunterbetet und sich zahlreiche IT-Spezialisten
+mangels anderer Berufsaussichten neurdings ins Thema Sicherheit
+einarbeiten: Den Java-Entwicklern hinkt man in Redmond ein paar
+Jahre hinterher, den traditionellen Cobol- und C-Entwicklern sogar
+fast um Jahrzehnte.<br />
+<br />
+ In der Java-Fraktion ist deswegen jedoch keineswegs Schadenfreude
+angesagt, denn nichts ist in der IT-Sicherheit fataler, als zu
+glauben, der Job sei erledigt, auch wenn er solide gemacht wird.
+Sicherheit ist keine ein f&#252;r alle Mal zu erledigende Arbeit,
+sie bleibt ein kontinuierlicher Prozess.<br />
+<br />
+</span> </td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+

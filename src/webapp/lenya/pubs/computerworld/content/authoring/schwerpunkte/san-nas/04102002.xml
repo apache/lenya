@@ -1,0 +1,298 @@
+<html>
+<head>
+<title>Computerworld.ch: Dossier</title>
+<meta name="keywords" lang="de"
+content="computerworld, computerworld.ch, computer, world, zeitung, it, magazin, special, " />
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css"
+href="../../css/default.css" />
+<meta name="rights" content="copyright by computerworld.ch" />
+<meta http-equiv="Content-Language" content="de-ch" />
+<meta name="description"
+content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
+<meta name="robots" content="index,follow" />
+<meta name="copyright" content="computerworld.ch" />
+<meta name="language" content="de-ch" />
+</head>
+<body bgcolor="#FFFFFF">
+<a id="" name=""></a> 
+
+<table>
+<tr><!-- OBENSTEHENDES NICHT MITKOPIEREN -->
+<!-- DOSSIER TABLE BEGINS HERE -->
+<td width="440" valign="top">
+<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+<tr>
+<td width="440" height="5" colspan="2"><img
+src="../../img/layout/trans1x1.gif" width="1" height="5" /></td>
+</tr>
+
+<tr>
+<td valign="top" height="30"><span class="txt-xl-black">Pharma
+l&#228;utet das Petabyte-Zeitalter ein</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black"><i>Marktbeobachter
+prognostizieren, dass einzelne Life-Science-Unternehmen schon bald
+an die Petabyte-Grenze stossen werden. Dementsprechend soll der
+Speichermarkt in dieser Branche explosionsartig wachsen. Die
+Hersteller werden allerdings einen Zahn zulegen
+m&#252;ssen.</i></span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-s-black"><br />
+<b>Erscheinungsdatum:</b> 04.10.2002<br />
+ <b>Rubrik:</b> Fokus Bioinformatik<br />
+ <b>Autor:</b> Claudia Bardola<br />
+<br />
+</span></td>
+</tr>
+
+<tr>
+<td valign="top"><span class="txt-m-black">Keine andere Branche
+generiert derzeit solch enorme Mengen an Daten wie das
+Life-Science-Segment. Marktbeobachter gehen davon aus, dass dieses
+Datenvolumen derzeit alle neun Monate eine Verdopplung
+erf&#228;hrt. L&#228;ngst geht es nicht mehr darum, GBytes zu
+verwalten, vielmehr lautet das erkl&#228;rte Ziel, mit Datenmassen
+in der Gr&#246;ssenordnung von hunderten TBytes klar zu kommen. Die
+Sequenzierung des menschlichen Genoms vor etwas mehr als zwei
+Jahren und die daraus resultierenden und noch wesentlich
+datenintensiveren Protein-Analysen setzten eine gigantische
+Datenlawine in Gang. Inzwischen haben einzelne Unternehmen bis zu
+350 TByte an Daten angesammelt. Die Marktforscherin Frost &amp;
+Sullivan wagt einen Blick in die Kristallkugel und prognostiziert,
+dass sp&#228;testens in ein bis eineinhalb Jahren die
+Petabyte-&#196;ra eingel&#228;utet sein wird. Doch die Hersteller
+von Speicherl&#246;sungen m&#252;ssen sich ranhalten. Schliesslich
+beinhaltet das Speichern dieser Datenfluten auch einen nicht zu
+vernachl&#228;ssigenden Kostenfaktor. So belegen Studien, dass die
+Speicherung von einem Petabyte - inklusive Hardware, Software und
+administrativem Aufwand - mit herk&#246;mmlichen Techniken derzeit
+mit rund 500 000 Dollar zu Buche schlagen w&#252;rde.<br />
+<br />
+ Bislang stellte der Storage-Markt nur das drittgr&#246;sste
+Marktsegment im Life-Science-Bereich dar. Wurden im Jahr 2001
+lediglich 2,92 Milliarden Dollar ausgegeben, so soll dieser
+spezifische Speichermarkt bis 2006 mit einem Volumen von mehr als
+11,8 Milliarden Dollar aber den L&#246;wenanteil ausmachen. Zu
+diesem Schluss kommt Mark Hall, Direktor der Abteilung Life-Science
+bei der amerikanischen Marktforscherin IDC. Er prognostiziert auch,
+dass der allergr&#246;sste Anteil der Ausgaben in Hard- und
+Softwarekomponenten f&#252;r SAN (Storage Area Network) und NAS
+(Network Attached Storage) fliessen wird.<br />
+<br />
+ <b>US-Gesetz l&#246;st Datenfluten aus</b><br />
+ Zu einem weiteren Wachstum des Speicherbedarfs soll k&#252;nftig
+auch ein Gesetzeswerk der amerikanischen Regierung f&#252;hren: Mit
+dem HIPAA (Health Insurance Portability and Accountability Act),
+der bereits 1996 verabschiedet wurde, zielt sie darauf ab, einen
+Standard f&#252;r den Schutz und die Sicherheit von jedwelchen
+Krankenakten in elektronischer Form zu schaffen. Dies bedeutet
+unter anderem, dass bei der &#220;berarbeitung von Patientendaten
+s&#228;mtliche Informationen &#252;ber die &#196;nderungen,
+inklusive Identifikationsnummer der Person, die diese &#196;nderung
+durchf&#252;hrt, gespeichert und aufbewahrt werden m&#252;ssen. Die
+American Hospital Association sch&#228;tzt, dass alleine die
+amerikanischen Spit&#228;ler bis 2003 mindestens 22 Milliarden
+Dollar daf&#252;r ausgeben werden, ihre IT-Infrastruktur den
+Hipaa-Bestimmungen anzupassen. Die Regelung, die teilweise bereits
+am 14. April 2003 in Kraft tritt, betrifft s&#228;mtliche
+Institutionen, die Zugang zu jedwelchen Patientenakten haben und
+wird dann k&#252;nftig auch europ&#228;ische Pharma- und
+Biotech-Unternehmen beeinflussen, sobald diese in irgendeiner Form
+mit amerikanischen Patienteninformationen in Ber&#252;hrung
+kommen.<br />
+<br />
+ <b>Ein Berg von statischen Daten</b><br />
+ Gem&#228;ss einer Studie der Universit&#228;t Kalifornien stellen
+rund 75 Prozent aller im Life-Science-Umfeld erstellten Daten
+"Fixed Content", also statischen Inhalt, dar. Unternehmen, die in
+der Pharmaindustrie oder im Forschungsbereich t&#228;tig sind,
+horten Massen von unver&#228;nderbaren Daten, wie etwa
+Experimentenverl&#228;ufe, Laborberichte und Patientendaten, die
+teilweise mehr als zehn Jahre archiviert werden m&#252;ssen. Aber
+auch Spit&#228;ler haben sich - durch einen unaufhaltsamen Trend in
+Richtung Digitialisierung - zunehmend mit einem Berg von statischen
+Daten auseinanderzusetzen. Kankengeschichten, R&#246;ntgenbilder,
+MRI und CTI werden immer weniger in Papierform archiviert, sondern
+mit Hilfe von medizinischen Bildverarbeitungssystemen verwaltet.
+Mit diesen speicherintensiven PACS (Picture archiving and
+communication system), die sich innerhalb der Radiologie bereits
+zum Standard entwickelt haben, sollen wichtige
+Patienteninformationen sofort und institutions&#252;bergreifend zur
+Verf&#252;gung stehen.<br />
+<br />
+ <b>Medizin gegen Speicherwut</b><br />
+ Das Kopfzerbrechen, das die steigende Flut an statischen Daten den
+speicherw&#252;tigen Life-Science-Unternehmen bereitet, will
+Speicherspezialistin EMC mit einer simplen Medizin in Form ihrer
+Archivierungsplattform Centera, heilen. Ausserdem hat sie ein wenig
+Hochrechnung betrieben und kommt zum Schluss, dass der Markt
+f&#252;r Fixed Content im n&#228;chsten Jahr ein Volumen von
+&#252;ber 3 Milliarden Dollar erreicht haben wird. Mit Centera
+hofft sie, einen gr&#246;sseren Teil davon abzwacken zu
+k&#246;nnen. Centera basiert auf einem Speicherkonzept namens CAS
+(Content Adressed Storage), mit dem die gespeicherten Daten mit
+einem unverwechselbaren und unver&#228;nderlichen Fingerabdruck
+versehen werden. Dieser besteht jeweils aus 27 Zeichen, die
+aufgrund des Inhalts des Dokuments mit einem 128- Bit-Algorithmus
+generiert werden. Er wird zusammen mit etwaigen Metadaten - wie
+etwa im Fall von R&#246;ntgenbildern Angaben zum behandelnden Arzt
+und dem Patienten - zu einem Objektnamen umgewandelt. Allerdings
+unterst&#252;tzt Centera derzeit die direkte Abfrage von Metadaten
+nicht. Gut informierte Branchenkenner wollen aber wissen, dass sich
+dies mit der zweiten Centera-Generation &#228;ndern soll, die Ende
+Jahr das Licht des Markts erblicken soll.<br />
+<br />
+ Centera verstrickt die Daten eng mit jenen Applikationen, mit
+denen sie generiert werden. So sollen die einzelnen Files - im
+Gegensatz zu SAN oder NAS - nicht mehr nach ihrem Speicherplatz
+adressiert werden m&#252;ssen. Mit dieser Content-Adresse, die von
+den entsprechenden Applikationen quasi als Abholquittung erkannt
+wird, sollen sich die Dateien &#252;ber ein IP-Netz (Internet
+Protocol) von jedem beliebigen Ort aufrufen lassen. Ausserdem haben
+die EMC-Ingenieure dem System Hilfsprogramme zum selbst&#228;ndigen
+Konfigurieren, &#220;berwachen, Diagnostizieren und automatischen
+Verlagern der Daten bei drohenden Fehlern implantiert.
+Hardwarem&#228;ssig basiert das System auf der eigens geschaffenen
+RAIN-Architektur (Redundant Array of Independent Nodes), das den
+"Blade"-Rechnern im Server-Markt nachempfunden ist. Der Speicher
+enth&#228;lt jeweils doppelt ausgelegte Ethernet-Switches sowie
+Zugriffs- und Speicherknoten. Im Clusterbetrieb soll das System bis
+1,12 Petabyte skalierbar sein.<br />
+<br />
+ EMC ist aber nicht die einzige Herstellerin, die sich der
+Speicherung von grossvolumigen statischen Daten verschrieben hat.
+Auch Network Appliance will sich mit einer entsprechenden
+Speicherl&#246;sungen einen Teil des Life-Science-Kuchens
+abschneiden. Mit ihrer Nearstore-Produktefamilie, bringt sie
+Festplattenspeicher auf den Markt, die sich f&#252;r
+Rapid-Data-Backup und -Recovery, f&#252;r die Archivierung wenig
+genutzter Dateien und f&#252;r die vereinfachte Datenmigration auf
+Enterprise-Niveau eignen sollen. Der Sekund&#228;rspeicher wird an
+einen oder mehrere NAS-Filer - auch von anderen Herstellern -
+angeschlossen und nimmt online deren Daten auf. Diese werden
+anschliessend zur Archivierung an eine Bandbibliothek
+weitergeleitet, die ebenfalls mit dem Festplattenspeicher verbunden
+ist. Damit soll eine durchg&#228;ngige Backup-L&#246;sung in
+Echtzeit zur Verf&#252;gung stehen, ohne dass die NAS-Server ihre
+eigentliche Arbeit unterbrechen m&#252;ssen. Das erste Produkt
+dieser Familie, der R100, ist bis auf knapp 100 TByte
+skalierbar.<br />
+<br />
+ <b>B&#252;ndler im Vorteil</b><br />
+ Steve Kenniston, Analyst bei der Enterprise Storage Group, ist der
+Meinung, dass vor allem Speicherspezialisten, die bereits heute
+Storage-Bundles in ihr Produkteportfolio aufgenommen haben, die
+Nase vorne haben werden: "In Zeiten, in denen IT-Budgets
+schrumpfen, suchen Unternehmen nach Speicherl&#246;sungen, die zwar
+g&#252;nstig, aber skalierbar sind. So werden sich Speicherpakete
+zunehmender Beliebtheit erfreuen. Mit ihnen k&#246;nnen die Kosten
+im Griff gehalten werden, da bereits s&#228;mtliche n&#246;tigen
+Bestandteile bereits integriert sind."<br />
+<br />
+ Auf diesen Zug ist nun auch IBM aufgesprungen, die erst vor
+wenigen Wochen drei SAN-Speicher-Bundles f&#252;r das
+Life-Science-Umfeld vorgestellt hat. Aus bereits bestehenden
+Komponenten hat sie integrierte, skalierbare L&#246;sungen in drei
+verschiedenen Grundkonfigurationen mit modularem Aufbau
+zusammengebastelt. Das Einsteigermodell f&#252;r kleine
+Life-Science-Unternehmen beinhaltet einen IBM Totalstorage
+Fast-t500, die Bandspeicherl&#246;sung LTO (Linear Tape Open)
+f&#252;r Backup und Archivierung sowie einen IBM E-Server p630 und
+ist samt Softwarekomponenten ab 100 000 Franken zu haben. Dem
+Midrange-Paket wurde zus&#228;tzlich die Doppelprozessorl&#246;sung
+Totalstorage NAS 300G f&#252;r den Datenaustausch &#252;ber ein SAN
+eingepflanzt. Das Highend-Bundle f&#252;gt dem mittleren Bundle
+zus&#228;tzlich einen Totalstorage NAS 300, eine E-Server X-Series
+sowie das j&#252;ngste Shark-Modell, den Enterprise Storage Server
+800 (ESS) hinzu.<br />
+<br />
+ <b>Keine intelligenten Speicher</b><br />
+ Arun Taneja, von der Storageanalystin Enterprise Storage Group ist
+indes &#252;berzeugt, dass derzeit noch keine intelligenten
+Speicherl&#246;sungen auf dem Markt sind, mit denen sich die
+bevorstehende Datenflut bew&#228;ltigen liesse: "Um einem Petabyte
+gerecht zu werden, muss eine Architektur her, die sich in zwei
+Dimensionen skalieren l&#228;sst: In Richtung In- und
+Output-Durchsatz sowie sequenzielle Leistung". Taneja glaubt, dass
+"Virtualisierung eine Schl&#252;sselrolle in der neu zu
+erstellenden Architektur", &#252;bernehmen wird. Die
+Virtualisierung des Speichers bedeutet das Zusammenfassen von
+verschiedenen physischen Speicherkapazit&#228;ten, wie Server,
+Tapes oder RAID-Ger&#228;te zu einer logischen Einheit. Auf diese
+Weise sollen sich die Hardwarekosten reduzieren lassen, da kein
+Speicherplatz nutzlos reserviert bleibt. Ausserdem l&#228;sst sich
+die Kapazit&#228;t erweitern, ohne dass ein Eingriff in den Server
+n&#246;tig wird, und das Ausfallrisiko kann minimiert werden. Im
+Idealfall, von dem derzeitige Bestrebungen verschiedener Hersteller
+noch meilenweit entfernt sind, stammen die einzelnen Speichermedien
+sogar aus verschiedenen Produktionen.<br />
+<br />
+ <b>Drei Spit&#228;ler auf dem Weg zur Digitalisierung</b><br />
+ Die direkte Filmbelichtung in der Radiologie hat ausgedient. Die
+allermeisten R&#246;ntgenbilder werden inzwischen digital
+aufgenommen. &#220;blicherweise werden diese heute zwar auf dem
+Computer zwischengespeichert, anschliessend allerdings auf
+R&#246;ntgenfilm ausgedruckt, in R&#246;ntgenmappen verschickt und
+danach physisch archiviert. Diesem mehr als ineffizienten Prozess
+sollen PACS (Picture Archiving and Communication System) Abhilfe
+schaffen, die der Speicherung, Verwaltung, &#220;bermittlung und
+Darstellung digitaler medizinischer Bilddaten dienen.<br />
+<br />
+ Das Universit&#228;tsspital Z&#252;rich, das Kantonsspital
+Winterthur und das Stadtspital Triemli haben sich bereits Ende 1999
+f&#252;r ein gemeinsames Projekt namens "TriPACS" zusammengetan,
+und sich auf die Fahne geschrieben, gemeinsam ein digitales
+Bildbewirtschaftungssystem zu beschaffen. Erkl&#228;rtes Ziel ist
+es, dereinst digitale Radiologiebilder speichern, verwalten und
+austauschen zu k&#246;nnen. Ausserdem soll das System offen
+konzipiert werden, so dass zu einem sp&#228;teren Zeitpunkt auch
+andere Kliniken in das PACS eingebunden werden k&#246;nnen. Allein
+das Unispital rechnet damit, dass ihre Radiologieabteilung pro Jahr
+etwa 7 TByte an digitalen Bilddaten anh&#228;ufen wird.
+Verschiedene andere interne Bildproduzenten, wie Pathologie und
+Kardiologie, sollen j&#228;hrlich weitere drei TByte an Daten dazu
+schaufeln. Nun steht das Vorprojekt, im Rahmen dessen die drei
+Spit&#228;ler jeweils ein eigenes PAC-System in
+Minimalkonfiguration in Betrieb genommen haben, kurz vor seinem
+Abschluss. Ein Wermutstropfen bleibt allerdings: "Die drei
+installierten Pilotstationen basieren zwar auf
+Everything-online-L&#246;sungen, doch leider sieht es derzeit ganz
+so aus, als ob wir bei der Realisierung des definitiven Projektes
+auf eine hierarchische Archivierung zur&#252;ckgreifen
+m&#252;ssten, und zwar aus Kostengr&#252;nden. Der Preiszerfall im
+Bereich professionelle Speicherl&#246;sungen war weniger
+ausgepr&#228;gt, als wir erwartet hatten", erkl&#228;rt Daniel
+Voellmy, Leiter des Bereichs Medizinische Spezialapplikationen und
+Vertreter des Unispitals im Tripacs-Koordinationsteam. Eine
+Hierarchische Archivl&#246;sung w&#252;rde bedeuten, dass
+s&#228;mtliche, sich nicht in Gebrauch befindlichen Bilddaten, die
+im Rahmen der gesetzlichen Aufbewahrungsfrist zehn Jahre lang
+archiviert werden m&#252;ssen, in einem Langzeitspeicher abgelegt
+werden. Die Akten der aktuellen Patienten sollen hingegen in einem
+teureren Kurzzeitspeicher untergebracht werden, der wesentlich
+schnellere Suchvorg&#228;nge erlaubt. Bevor das eigentliche
+Projekt, f&#252;r das gem&#228;ss der Gesundheitsdirektion
+Z&#252;rich 17 Millionen Franken aufgeworfen werden sollen,
+definitiv realisiert werden kann, muss es allerdings noch dem
+Regierungsrat vorgelegt werden.<br />
+<br />
+</span> </td>
+</tr>
+</table>
+
+<!-- DOSSIER TABLE ENDS HERE -->
+</td>
+<!-- CONTENT TABLE ENDS HERE -->
+<!-- UNTENSTEHENDES NICHT MITKOPIEREN -->
+</tr>
+</table>
+</body>
+</html>
+
