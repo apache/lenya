@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: navigation.xmap,v 1.21 2004/03/13 14:28:33 gregor Exp $ -->
+
+<!--
+  This sitemaps provides fallback messages catalogues and catalogue merging.
+  The reason for the existence of this sitemap is mainly to avoid endless loops when
+  the pipelines located here are in sitemap.map or global-sitemap.xmap.
+-->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <!-- =========================== Components ================================ -->
+
+  <map:components>
+    <map:generators default="file"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+    <map:selectors/>
+  </map:components>
+  <!-- =========================== Pipelines ================================ -->
+  
+  <map:resources/>
+  
+  <map:pipelines>
+  
+    <map:pipeline type="noncaching">
+      <map:match pattern="i18n-catalogue/**">
+        <map:select type="resource-exists">
+          <map:when test="pubs/{page-envelope:publication-id}/lenya/resources/i18n/{1}">
+            <map:generate type="serverpages" src="resources/i18n/catalogue.xsp">
+              <map:parameter name="pub-catalogue-location" value="context:/lenya/pubs/{page-envelope:publication-id}/lenya/resources/i18n/"/>
+        	  <map:parameter name="catalogue-file" value="{1}"/>
+            </map:generate>
+            <map:transform type="xinclude"/>
+            <map:serialize/>
+          </map:when>
+          <map:when test="resources/i18n/{1}">
+            <map:generate src="resources/i18n/{1}"/>
+            <map:serialize/>
+          </map:when>
+        </map:select>
+      </map:match>
+    </map:pipeline>  
+  </map:pipelines>
+
+</map:sitemap>
