@@ -150,7 +150,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
             clearErrorMessages();
             clearInfoMessages();
             doCheckPreconditions();
-            
+
             List _errorMessages = getErrorMessages();
             for (int i = 0; i < _errorMessages.size(); i++) {
                 getLogger().info((String) _errorMessages.get(i));
@@ -279,6 +279,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         return valueString;
     }
 
+    /**
+     * Returns a parameter as string. If the parameter does not exist, a default value is returned.
+     * @param name The parameter name.
+     * @param defaultValue The default value.
+     * @return A string.
+     */
     public String getParameterAsString(String name, String defaultValue) {
         String valueString = defaultValue;
         Object value = getParameter(name);
@@ -288,6 +294,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         return valueString;
     }
 
+    /**
+     * Returns a parameter as integer. If the parameter does not exist, a default value is returned.
+     * @param name The parameter name.
+     * @param defaultValue The default value.
+     * @return An integer.
+     */
     public int getParameterAsInteger(String name, int defaultValue) {
         int valueInt = defaultValue;
         Object value = getParameter(name);
@@ -297,6 +309,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         return valueInt;
     }
 
+    /**
+     * Returns a parameter as boolean. If the parameter does not exist, a default value is returned.
+     * @param name The parameter name.
+     * @param defaultValue The default value.
+     * @return A boolean value..
+     */
     public boolean getParameterAsBoolean(String name, boolean defaultValue) {
         boolean valueBoolean = defaultValue;
         Object value = getParameter(name);
