@@ -1,5 +1,5 @@
 /*
-$Id: DublinCoreHelper.java,v 1.1 2003/08/20 16:49:12 edith Exp $
+$Id: DublinCoreHelper.java,v 1.2 2003/08/25 16:44:08 egli Exp $
 <License>
 
  ============================================================================
@@ -73,7 +73,8 @@ public final class DublinCoreHelper {
 	private static Category log = Category.getInstance(DublinCoreHelper.class);
 
 	/**
-	 * get the value of the DCIdentifier corresponding to a document id.
+	 * Get the value of the DCIdentifier corresponding to a document id.
+     * 
 	 * @param publication The publication the document(s) belongs to.
 	 * @param area The area the document(s) belongs to.
 	 * @param documentId The document id.
