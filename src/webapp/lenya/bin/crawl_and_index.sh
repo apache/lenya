@@ -3,7 +3,7 @@
 DIRNAME=`dirname $0`
 echo "INFO: dirname = $DIRNAME"
 
-WEBAPP_DIR=/home/michi/src/cocoon-lenya/build/lenya/webapp
+WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 JAVA=/usr/lib/j2sdk1.4/bin/java
 PDFBOX=/home/username/src/PDFBox-0.5.5
