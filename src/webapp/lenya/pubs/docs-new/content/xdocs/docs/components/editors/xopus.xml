@@ -22,5 +22,26 @@ http://www.xopus.com/demo/index.html
 ]]>
 </source>
 </section>
+
+<section>
+<title>Configuration</title>
+<p>Lenya needs to know the prefix of Xopus:</p>
+<source>
+<![CDATA[
+src/webapp/lenya/usecase.xmap
+src/webapp/lenya/resources/misc/xopus/index.html
+]]>
+</source>
+</section>
+
+<section>
+<title>Saving via POST</title>
+<p>To enable saving via POST, one needs to modify</p>
+<source>
+<![CDATA[
+$XOPUS/xopusPlugins/datadriver.js
+]]>
+</source>
+</section>
 </body>
 </document>
