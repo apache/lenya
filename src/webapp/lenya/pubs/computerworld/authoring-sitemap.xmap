@@ -56,7 +56,7 @@
 			<map:action logger="sitemap.action.upload" name="file-upload" src="org.wyona.cms.cocoon.acting.ArticleImageUploadCreatorAction">
 				<resources-root href="resources/publication/images/live"/>
 				<docs-root href="docs/publication/authoring"/>
-				<meta-root href="docs/publication/authoring"/>
+				<meta-root href="docs/publication/authoring/images_meta"/>
 				<insert-image-before value="false"/>
 			</map:action>
 		</map:actions>

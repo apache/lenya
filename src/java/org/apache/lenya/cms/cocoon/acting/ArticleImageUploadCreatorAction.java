@@ -314,6 +314,11 @@ public class ArticleImageUploadCreatorAction
 	    root.addElement(tagName).addText(tagValue);
 	}
 
+        File parentDir=new File(new File(metaDataFilePathName).getParent());
+        if(!parentDir.exists()){
+          parentDir.mkdirs();
+          }
+
 	OutputStream out =
 	    new BufferedOutputStream(new FileOutputStream(metaDataFilePathName));
 
