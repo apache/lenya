@@ -184,6 +184,12 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         getLogger().debug("\n-------------------------------------------------" +
             "\n- Executing task '" + getTaskId() + "'" +
             "\n-------------------------------------------------");
+            
+        // check for workflow instance first (task can initialize the workflow history)
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        Document document = envelope.getDocument();
+        boolean hasWorkflow = factory.hasWorkflow(document);
 
         TaskManager manager = new TaskManager(publication.getDirectory().getCanonicalPath());
         Task task = manager.getTask(getTaskId());
@@ -191,12 +197,7 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         task.parameterize(taskParameters);
         task.execute(publication.getServletContext().getCanonicalPath());
 
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-
-        PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-        Document document = envelope.getDocument();
-
-        if (factory.hasWorkflow(document)) {
+        if (hasWorkflow) {
             String eventName = request.getParameter("lenya.event");
             WorkflowInstance instance = factory.buildInstance(document);
             Situation situation = factory.buildSituation(objectModel);
