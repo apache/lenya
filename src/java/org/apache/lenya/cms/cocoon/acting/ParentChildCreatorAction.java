@@ -38,7 +38,6 @@ import org.wyona.cms.authoring.AbstractParentChildCreator;
  *
  * @author Michael Wechner
  * @version 2002.02.27
- * @created 2002.01.30
  */
 public class ParentChildCreatorAction extends AbstractComplementaryConfigurableAction implements Configurable{
   private String treeAuthoringPath=null;
