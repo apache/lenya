@@ -21,11 +21,9 @@
   <cmsinfosite name="CMSInfo">
     <xi:include href="rss-rdf/cmsinfo.rdf"/>
   </cmsinfosite>
-<!--
   <site name="CMSWatch">
     <xi:include href="rss-rdf/cmswatch.xml"/>
   </site>
--->
 </news>
 
 </oscom>
