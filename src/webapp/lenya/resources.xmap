@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: resources.xmap,v 1.12 2004/04/28 07:43:27 andreas Exp $ -->
+<!-- $Id: resources.xmap,v 1.13 2004/04/29 09:21:00 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:components/>
@@ -31,7 +31,7 @@
 
           <!-- matches pub-id/area/javascript/**.js -->
           <map:match pattern="*/*/javascript/**.js">
-            <map:read src="pubs/{1}/resources/javascript/{3}.js" mime-type="application/javascript" />
+            <map:read src="pubs/{1}/resources/javascript/{3}.js" mime-type="application/x-javascript" />
           </map:match>
 
           <!-- matches pub-id/area/**.jpg -->

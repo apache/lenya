@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lenya.xmap,v 1.13 2004/04/28 07:43:27 andreas Exp $ -->
+<!-- $Id: lenya.xmap,v 1.14 2004/04/29 09:21:00 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -63,7 +63,7 @@
 
       <!-- matches lenya/**.js -->
       <map:match pattern="**.js">
-        <map:read src="resources/{1}.js" mime-type="application/javascript" />
+        <map:read src="resources/{1}.js" mime-type="application/x-javascript" />
       </map:match>
 
       <!-- matches lenya/**.jpg -->
