@@ -13,13 +13,13 @@
     xsi:schemaLocation="http://apache.org/cocoon/lenya/workflow/1.0
         ../../../resources/entities/workflow/workflow.xsd">
 
-  <state id="redaktion" initial="true"/>
+  <state id="authoring" initial="true"/>
   <state id="review"/>
   <state id="live"/>
   
   <variable name="is_live" value="false"/>
   
-  <transition source="redaktion" destination="review">
+  <transition source="authoring" destination="review">
     <event id="submit"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">editor</condition>
   </transition>
@@ -31,24 +31,24 @@
     <action id="publish"/>
   </transition>
         
-  <transition source="review" destination="redaktion">
+  <transition source="review" destination="authoring">
     <event id="reject"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">reviewer</condition>
   </transition>
         
-  <transition source="live" destination="redaktion">
+  <transition source="live" destination="authoring">
     <event id="edit"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">editor</condition>
     <action id="save"/>
   </transition>
         
-  <transition source="redaktion" destination="redaktion">
+  <transition source="authoring" destination="authoring">
     <event id="edit"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">editor</condition>
     <action id="save"/>
   </transition>
         
-  <transition source="live" destination="redaktion">
+  <transition source="live" destination="authoring">
     <event id="deactivate"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">reviewer</condition>
     <assign variable="is_live" value="false"/>

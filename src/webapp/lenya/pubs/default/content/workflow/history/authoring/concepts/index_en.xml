@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wf:history xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0" workflow="workflow.xml">
-<wf:version date="23.10.2003 15:04:49" state="redaktion">
+<wf:version date="23.10.2003 15:04:49" state="authoring">
 <wf:identity>
 <wf:user id="lenya"/>
 <wf:machine ip-address="127.0.0.1"/>
