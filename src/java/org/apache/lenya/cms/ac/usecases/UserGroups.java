@@ -51,6 +51,7 @@ public class UserGroups extends AccessControlUsecase {
             Group group = (Group) i.next();
             group.add(this.user);
         }
+        user.save();
     }
 
     /**
