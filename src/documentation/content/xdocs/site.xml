@@ -30,6 +30,7 @@
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
       <docu1.4 href="1_4/" label="Version 1.4" target="1.4">
+        <index_1_4 href="index.html" label="Lenya 1.4 (dev)"/>
 <!--          <whole_docu href="../documentation-1-4.pdf" label="1.4 PDF docs (all in one)" />
           <whole_docu href="../documentation-1-4.html" label="1.4 HTML docs (all in one)" />
 -->          <installation href="installation/" label="Installation">
@@ -42,6 +43,7 @@
   <!--    <documentation href="docs/" label="Documentation" tab="docs">
         <index_doc href="index.html" label="Documentation" wholesite="true"/>
 -->        <docu1.2.x href="1_2_x/" label="Version 1.2" target="1.2">
+             <index_1_2 href="index.html" label="Lenya 1.2.x"/>
 <!--          <whole_docu href="../documentation-1-2.pdf" label="1.2 PDF docs (all in one)" />
           <whole_docu href="../documentation-1-2.html" label="1.2 HTML docs (all in one)" />
 -->          <installation12 href="installation/" label="Installation">
