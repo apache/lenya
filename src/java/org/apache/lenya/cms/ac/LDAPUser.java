@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.16 2003/10/27 17:14:16 andreas Exp $ <License>
+ * $Id: LDAPUser.java,v 1.17 2003/10/27 17:39:57 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -154,7 +154,9 @@ public class LDAPUser extends FileUser {
 		}
 		finally {
 			try {
-				close(context);
+				if (context != null) {
+					close(context);
+				}
 			}
 			catch (NamingException e) {
 				throw new AccessControlException("Closing context failed: ", e);
@@ -200,7 +202,9 @@ public class LDAPUser extends FileUser {
 		}
 		finally {
 			try {
-				close(context);
+				if (context != null) {
+					close(context);
+				}
 			}
 			catch (NamingException e) {
 				throw new ConfigurationException("Closing context failed: ", e);
