@@ -148,6 +148,7 @@
               src="{fallback:resources/kupu/apache-lenya/lenya/content2edit.xsl}">
               <map:parameter name="css" 
                 value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
+              <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
             </map:transform>
             <map:transform src="{global:basedir}/xslt/util/strip_namespaces.xsl"/>
               <map:serialize type="html"/>
