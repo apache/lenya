@@ -11,7 +11,7 @@
   <property file="build.properties"/>
 
   <!-- Project version and name -->
-  <property name="version" value="0.8-dev"/>
+  <property name="version" value="1.0-dev"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
 
   
@@ -93,6 +93,10 @@
   (See http://www-106.ibm.com/developerworks/java/library/j-ant/)
   -->
   <property name="src.test.dir" value="src/test"/>
+
+  <!-- Publication-specific entities are here -->
+  <property name="src.entities.dir" value="resources/entities"/>
+  <property name="build.entities.dir" value="WEB-INF/entities"/>
 
   <!--
   Our own webapp resources to be merged with the

@@ -67,7 +67,7 @@
     <copy todir="${build.webapp}/WEB-INF/lib">
       <fileset dir="${lib.dir}">
         <include name="**/*"/>
-        <!-- servlet.jar is used to build Wyona, but for deployment the servlet.jar from the servlet engine will be taken -->
+        <!-- servlet.jar is used to build Lenya, but for deployment the servlet.jar from the servlet engine will be taken -->
         <exclude name="servlet.jar"/>
       </fileset>
     </copy>
