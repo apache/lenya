@@ -161,7 +161,7 @@ function check(fileinput) {
 	    <tr><td>&#160;</td></tr>
 	    <xsl:if test="$insertimage = 'true'">
               <tr>
-                <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
+                <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value=""/></td>
               </tr>
 	      <tr>
 		<td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
