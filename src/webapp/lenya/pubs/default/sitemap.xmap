@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.16 2003/09/09 14:37:43 andreas Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.17 2003/10/01 09:31:17 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -15,16 +15,26 @@
 
   <map:pipelines>
 
+    <!-- Redirects -->
+    <map:pipeline>
+      <map:match pattern="">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+    </map:pipeline>
+
     <map:pipeline>
 
-			<!-- Xopus Interface -->
-			<map:match pattern="xopus/**">
-				<map:mount uri-prefix="xopus" src="xopus.xmap"/>
-			</map:match>
+      <!-- Xopus Interface -->
+      <map:match pattern="xopus/**">
+        <map:mount uri-prefix="xopus" src="xopus.xmap"/>
+      </map:match>
 
       <!-- Bitflux Interface -->
       <map:match pattern="bitflux/**">
-				<map:mount uri-prefix="bitflux" src="bitflux.xmap"/>
+        <map:mount uri-prefix="bitflux" src="bitflux.xmap"/>
       </map:match>
 
       <map:match pattern="**">

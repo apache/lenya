@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.29 2003/08/07 15:47:16 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.30 2003/10/01 09:31:34 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -51,6 +51,16 @@
 
 
   <map:pipelines>
+
+    <!-- Redirects -->
+    <map:pipeline>
+      <map:match pattern="">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+    </map:pipeline>
 
 
     <map:pipeline>
@@ -107,12 +117,6 @@
 
 
     <map:pipeline>
-      <map:match pattern="introduction.html">
-        <map:read src="resources/html/documentation/index.html" mime-type="text/html"/>
-      </map:match>
-    </map:pipeline>    
-
-    <map:pipeline>
       <map:match pattern="live/**">
         <map:mount uri-prefix="live" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
@@ -132,12 +136,6 @@
             <map:serialize type="xml"/>
           </map:match>
 
-<!--
-          <map:match pattern="policies/**">
-            <map:mount uri-prefix="policies" src="policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-          </map:match>
--->
-          
       <map:match pattern="**">
 
           <!-- The authoring area -->
