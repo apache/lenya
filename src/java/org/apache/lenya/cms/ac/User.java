@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.3 2003/05/28 14:45:18 egli Exp $
+ * $Id: User.java,v 1.4 2003/05/30 10:45:00 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -60,42 +60,41 @@ import org.apache.avalon.framework.configuration.Configuration;
  * @author  nobby
  */
 public abstract class User {
-	
-    protected String id;
-    protected String fullName;
-    protected String email;
-    protected String password;
-    protected Set groups = new HashSet();
 
-    
+	protected String id;
+	protected String fullName;
+	protected String email;
+	protected String password;
+	protected Set groups = new HashSet();
+
 	private Group group;
 
-    public User() {
+	public User() {
 		this(null, null, null, null);
-    }
-    
-    /**
-     * Create a User instance
+	}
+
+	/**
+	 * Create a User instance
 	 * @param id
 	 */
 	public User(String id) {
-    	this(id, null, null, null);
-    }
-   
-   	/**
-   	 * Create a User instance
-	 * @param id
-	 * @param fullName
-	 * @param email
-	 * @param password
-	 */
+		this(id, null, null, null);
+	}
+
+	/**
+	 * Create a User instance
+	* @param id
+	* @param fullName
+	* @param email
+	* @param password
+	*/
 	public User(String id, String fullName, String email, String password) {
-   		this.id = id;
-   		this.fullName = fullName;
-   		this.email = email;
-   		this.password = password;
-   	}
-   	
+		this.id = id;
+		this.fullName = fullName;
+		this.email = email;
+		this.password = password;
+	}
+
 	/**
 	 * @return
 	 */
@@ -160,23 +159,26 @@ public abstract class User {
 	public void setPassword(String string) {
 		password = string;
 	}
-	
-	public abstract void save() throws AccessControlException; 
-	
+
+	public abstract void save() throws AccessControlException;
+
 	public abstract void configure(Configuration config);
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof User) {
+			return id.equals(((User) obj).getId());
+		}
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return id.hashCode();
+	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
