@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthenticatorAction.java,v 1.11 2003/04/24 13:52:38 gregor Exp $
+ * $Id: AbstractAuthenticatorAction.java,v 1.12 2003/06/12 15:51:33 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,6 +57,8 @@ import org.apache.cocoon.environment.SourceResolver;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 
 /**
@@ -108,6 +110,9 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
             return null;
         }
 
+		// Get the current publication
+		Publication publication = PublicationFactory.getPublication(objectModel);
+		
         // Get session
         Session session = req.getSession(true);
 
@@ -117,7 +122,7 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
             return null;
         }
 
-        if (authenticate(req, new HashMap())) {
+        if (authenticate(req, publication)) {
             getLogger().info(".act(): Authentication succeeded");
 
             session.setAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id", authenticatorId);
@@ -135,15 +140,12 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param request DOCUMENT ME!
-     * @param map DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public abstract boolean authenticate(Request request, Map map)
+	 * @param request
+	 * @param publication
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+    public abstract boolean authenticate(Request request, Publication publication)
         throws Exception;
 }
