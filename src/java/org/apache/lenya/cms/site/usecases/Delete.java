@@ -21,6 +21,7 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.cms.publication.util.UniqueDocumentId;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
@@ -44,7 +45,7 @@ public class Delete extends DocumentUsecase {
         if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         }
-        
+
         Document document = getSourceDocument();
         DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
         SiteManager manager = document.getPublication().getSiteManager(identityMap);
@@ -52,7 +53,8 @@ public class Delete extends DocumentUsecase {
         set.add(document);
         Document[] documents = set.getDocuments();
         for (int i = 0; i < documents.length; i++) {
-            Document liveVersion = identityMap.getFactory().getAreaVersion(documents[i], Publication.LIVE_AREA);
+            Document liveVersion = identityMap.getFactory().getAreaVersion(documents[i],
+                    Publication.LIVE_AREA);
             if (liveVersion.exists()) {
                 addErrorMessage("Cannot delete because document [" + liveVersion + "] is live!");
             }
@@ -68,11 +70,15 @@ public class Delete extends DocumentUsecase {
         Document source = getSourceDocument();
         DocumentIdentityMap identityMap = source.getIdentityMap();
 
-        Document target = identityMap.getFactory().getAreaVersion(source, Publication.TRASH_AREA);
+        String desiredId = "/" + source.getName();
+        UniqueDocumentId helper = new UniqueDocumentId();
+        String availableId = helper.computeUniqueDocumentId(source.getPublication(),
+                Publication.TRASH_AREA,
+                desiredId);
+        Document target = identityMap.getFactory().get(Publication.TRASH_AREA, availableId);
         getDocumentManager().moveAll(source, target);
 
-        Document parent = source.getIdentityMap().getFactory().getParent(source, "/index");
-        setTargetDocument(DocumentHelper.getExistingLanguageVersion(parent));
+        setTargetDocument(target);
     }
 
 }
