@@ -76,7 +76,7 @@ import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.21 2003/10/21 15:26:09 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.22 2003/10/27 10:16:52 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -107,7 +107,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     }
 
     /**
-     * Save blog entry to file
+     * Save data to temporary file
      *
      * @param redirector a <code>Redirector</code> value
      * @param resolver a <code>SourceResolver</code> value
@@ -150,8 +150,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     Enumeration params = request.getParameterNames();
                     while (params.hasMoreElements()) {
                         String pname = (String) params.nextElement();
-      
-                        getLogger().error(".act(): Parameter: " + pname + " (" + request.getParameter(pname)  + ")");
+                        getLogger().debug(".act(): Parameter: " + pname + " (" + request.getParameter(pname)  + ")");
 
                         if (pname.indexOf("<xupdate:") == 0) {
                             String select = pname.substring(pname.indexOf("select") + 8);
@@ -165,58 +164,42 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             if (selectionNodeList.getLength() == 0) {
                                 log.warn(".act(): Node does not exist (might have been deleted during update): " + select);
                             } else {
+                                String xupdateModifications = null;
+                                if (pname.indexOf("xupdate:update") > 0) {
+                                    log.error(".act(): UPDATE Node: " + pname);
+                                    if (pname.indexOf("<![CDATA[") > 0) {
+                                        xupdateModifications = updateCDATA(request, pname);
+                                    } else {
+                                        xupdateModifications = update(request, pname, select, selectionNodeList);
+                                    }
+                                } else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">")) {
+                                    // no .x and .y from input type="image"
+                                    xupdateModifications = append(pname);
+                                } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">")) {
+                                    // no .x and .y from input type="image"
+                                    xupdateModifications = insertBefore(pname);
+                                } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">")) {
+                                    // no .x and .y from input type="image"
+                                    xupdateModifications = insertAfter(pname);
+                                } else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>")) {
+                                    // no .x and .y from input type="image"
+                                    xupdateModifications = remove(pname);
+                                }
 
-                        if (pname.indexOf("xupdate:update") > 0) {
-                            String xupdateUpdate = pname + request.getParameter(pname) + "</xupdate:update>";
-                            if (pname.indexOf("<![CDATA[") > 0) {
-                                xupdateUpdate = pname + request.getParameter(pname) + "]]></xupdate:update>";
-                            }
-                            log.error(".act(): Update Node (update): " + xupdateUpdate);
-
-                            if (pname.indexOf("<![CDATA[") > 0) {
-                              xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>");
-                            } else {
-                              // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new and remove original
-                              Node nodeToCopy = selectionNodeList.item(0);
-                              String namespace = nodeToCopy.getNamespaceURI();
-                              log.error(".act(): Update Node (namespace): " + namespace);
-                              String namespaceAttribute = "";
-                              if (namespace != null) {
-                                namespaceAttribute = " namespace=\"" + namespace + "\"";
-                              }
-                              // WARNING: getAttributes adds the attribute tagID with value "temp"
-                              XUpdateAttributes xa = getAttributes(nodeToCopy);
-                              String xupdateInsertAfter = "<xupdate:insert-after select=\"" + select  + " \"><xupdate:element name=\"" + new XPath(select).getNameWithoutPredicates()  + "\"" + namespaceAttribute  + ">" + xa.xupdateAttrExpr + request.getParameter(pname)  + "</xupdate:element></xupdate:insert-after>";
-                              log.error(".act(): Update Node (insert-after): " + xupdateInsertAfter);
-                              String xupdateRemove = "<xupdate:remove select=\"" + select  + " \"/>";
-                              log.error(".act(): Update Node (remove): " + xupdateRemove);
-                              String xupdateUpdateAttribute = "<xupdate:update select=\"" + new XPath(select).removePredicates(select) + "[@tagID='temp']/@tagID"  + " \">" + xa.tagID  + "</xupdate:update>";
-                              log.error(".act(): Update Node (update tagID attribute): " + xupdateUpdateAttribute);
-                              xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateInsertAfter + xupdateRemove + xupdateUpdateAttribute  + "</xupdate:modifications>");
-
-                              //xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>");
-                            }
-                            xq.execute(document);
-                        } else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">")) { // no .x and .y from input type="image"
-                            log.error(".act() Append Node: " + pname);
-                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>");
-                            xq.execute(document);
-                        } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">")) { // no .x and .y from input type="image"
-                            log.error(".act() Insert-Before Node: " + pname);
-                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>");
-                            xq.execute(document);
-                        } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">")) { // no .x and .y from input type="image"
-                            log.error(".act() Insert-After Node: " + pname);
-                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>");
-                            xq.execute(document);
-                        } else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>")) { // no .x and .y from input type="image"
-                            log.error(".act() Remove Node: " + pname);
-                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>");
-                            xq.execute(document);
-                        }
+                                if (xupdateModifications != null) {
+                                    log.error(".act(): MODIFICATIONS: " + xupdateModifications);
+                                    xq.setQString(xupdateModifications);
+                                    xq.execute(document);
+                                } else {
+                                    log.debug(".act(): Parameter did not match any xupdate command: " + pname);
+                                }
                             } // Check select
                     } // Check <xupdate:
                     } // while
+
+
+
+
 /*
                     java.io.StringWriter writer = new java.io.StringWriter();
                     org.apache.xml.serialize.OutputFormat OutFormat = new org.apache.xml.serialize.OutputFormat("xml", "UTF-8", true);
@@ -285,5 +268,73 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         log.error(".getAttributes(): " + xupdateString);
 
         return new XUpdateAttributes(xupdateString, tagID);
+    }
+ 
+    /**
+     * xupdate:update
+     */
+    private String update(Request request, String pname, String select, NodeList selectionNodeList) {
+        // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new and remove original
+        Node nodeToCopy = selectionNodeList.item(0);
+        String namespace = nodeToCopy.getNamespaceURI();
+        log.error(".update(): Update Node (namespace): " + namespace);
+        String namespaceAttribute = "";
+        if (namespace != null) {
+            namespaceAttribute = " namespace=\"" + namespace + "\"";
+        }
+        // WARNING: getAttributes adds the attribute tagID with value "temp"
+        XUpdateAttributes xa = getAttributes(nodeToCopy);
+        String xupdateInsertAfter = "<xupdate:insert-after select=\"" + select  + " \"><xupdate:element name=\"" + new XPath(select).getNameWithoutPredicates()  + "\"" + namespaceAttribute  + ">" + xa.xupdateAttrExpr + request.getParameter(pname)  + "</xupdate:element></xupdate:insert-after>";
+        log.error(".update(): Update Node (insert-after): " + xupdateInsertAfter);
+        String xupdateRemove = "<xupdate:remove select=\"" + select  + " \"/>";
+        log.error(".update(): Update Node (remove): " + xupdateRemove);
+        String xupdateUpdateAttribute = "<xupdate:update select=\"" + new XPath(select).removePredicates(select) + "[@tagID='temp']/@tagID"  + " \">" + xa.tagID  + "</xupdate:update>";
+        log.error(".update(): Update Node (update tagID attribute): " + xupdateUpdateAttribute);
+        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateInsertAfter + xupdateRemove + xupdateUpdateAttribute  + "</xupdate:modifications>";
+
+/*
+        String xupdateUpdate = pname + request.getParameter(pname) + "</xupdate:update>";
+        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>";
+*/
+    }
+ 
+    /**
+     * xupdate:update CDATA
+     */
+    private String updateCDATA(Request request, String pname) {
+        String xupdateUpdate = pname + request.getParameter(pname) + "]]></xupdate:update>";
+        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>";
+    }
+ 
+    /**
+     * xupdate:append
+     */
+    private String append(String pname) {
+        log.error(".append() APPEND Node: " + pname);
+        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
+    }
+ 
+    /**
+     * xupdate:insert-before
+     */
+    private String insertBefore(String pname) {
+        log.error(".insertBefore() INSERT-BEFORE Node: " + pname);
+        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
+    }
+ 
+    /**
+     * xupdate:insert-after
+     */
+    private String insertAfter(String pname) {
+        log.error(".insertAfter() INSERT-AFTER Node: " + pname);
+        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
+    }
+ 
+    /**
+     * xupdate:remove
+     */
+    private String remove(String pname) {
+        log.error(".remove() REMOVE Node: " + pname);
+        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
     }
 }
