@@ -50,7 +50,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td id="publication-title">Welcome to the Default Publication!</td>
-          <td id="project-logo"><img src="{$root}/images/project-logo.png"/></td>
+          <td id="project-logo"><img src="{$root}/images/project-logo.png" alt="project logo"/></td>
         </tr>
       </table>
       <xsl:apply-templates select="xhtml:div[@id = 'tabs']"/>

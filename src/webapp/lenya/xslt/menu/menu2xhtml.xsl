@@ -44,21 +44,22 @@
 	  
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="lenya-menubar-menu">
       <tr>
-        <td background="{$image-prefix}/frame-bg_oben.gif" width="13" height="4">
-          <img src="{$image-prefix}/frame-bg_oben.gif" width="13" height="4" /></td>
-        <td background="{$image-prefix}/frame-bg_oben.gif" height="4">
-          <img src="{$image-prefix}/frame-bg_oben.gif" height="4" /></td>
-        <td background="{$image-prefix}/frame-bg_oben.gif" width="70%" height="4">
-          <img src="{$image-prefix}/frame-bg_oben.gif" height="4" /></td>
-        <td background="{$image-prefix}/frame-bg_oben.gif" width="101" height="4">
-          <img src="{$image-prefix}/frame-bg_oben.gif" width="101" height="4" /></td>
+        <td style="background-image: url('{$image-prefix}/frame-bg_oben.gif')" width="13" height="4">
+          <img src="{$image-prefix}/frame-bg_oben.gif" width="13" height="4" alt=""/></td>
+        <td style="background-image: url('{$image-prefix}/frame-bg_oben.gif')" height="4">
+          <img src="{$image-prefix}/frame-bg_oben.gif" height="4" alt=""/></td>
+        <td style="background-image: url('{$image-prefix}/frame-bg_oben.gif')" width="70%" height="4">
+          <img src="{$image-prefix}/frame-bg_oben.gif" height="4" alt=""/></td>
+        <td style="background-image: url('{$image-prefix}/frame-bg_oben.gif')" width="101" height="4">
+          <img src="{$image-prefix}/frame-bg_oben.gif" width="101" height="4" alt=""/></td>
       </tr>
       
       <tr>
-        <td class="lenya-menubar-td-left" rowspan="2" valign="bottom" align="right" background="{$contextprefix}/lenya/menu/images/grau-bg.gif">
-          <img src="{$image-prefix}/blau_anfang_oben.gif" />
+        <td class="lenya-menubar-td-left" rowspan="2" valign="bottom" align="right"
+            style="background-image: url('{$contextprefix}/lenya/menu/images/grau-bg.gif')">
+          <img src="{$image-prefix}/blau_anfang_oben.gif" alt=""/>
         </td>
-        <td background="{$image-prefix}/grau-bg2.gif" nowrap="nowrap">
+        <td style="background-image: url('{$image-prefix}/grau-bg2.gif')" nowrap="nowrap">
 
         <!-- ADMIN TAB -->
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'admin']/@show = 'false')">
@@ -106,7 +107,8 @@
           
         </td>
         
-        <td class="lenya-menubar-td-infoline" valign="bottom" align="right" colspan="2" background="{$image-prefix}/grau-bg2.gif">
+        <td class="lenya-menubar-td-infoline" valign="bottom" align="right" colspan="2"
+            style="background-image: url('{$image-prefix}/grau-bg2.gif')">
         	<div class="lenya-menubar-infoline">
         	  
         	  <xsl:if test="$workflowstate != ''">
@@ -115,16 +117,16 @@
             &#160;<i18n:text>User</i18n:text>: <strong><xsl:value-of select="$userid"/></strong>&#160;&#160;|&#160;&#160;<i18n:text>Server Time</i18n:text>: <strong><xsl:value-of select="$servertime"/></strong>
           </div>
           
-        <div style="margin-top: 5px;"><img border="0" src="{$image-prefix}/lenya_oben_2.gif" /></div>
+        <div style="margin-top: 5px;"><img border="0" src="{$image-prefix}/lenya_oben_2.gif" alt=""/></div>
        </td>
       </tr>
       
       <tr>
-        <td colspan="2" background="{$image-prefix}/unten.gif"><img border="0"
-            src="{$image-prefix}/unten.gif" /></td>
+        <td colspan="2" style="background-image: url('{$image-prefix}/unten.gif')"><img border="0"
+            src="{$image-prefix}/unten.gif" alt=""/></td>
         <td valign="top" rowspan="2"
-          background="{$image-prefix}/grau-bg.gif"><img border="0"
-            src="{$image-prefix}/lenya_unten.gif" /></td>
+          style="background-image: url('{$image-prefix}/grau-bg.gif')"><img border="0"
+            src="{$image-prefix}/lenya_unten.gif" alt=""/></td>
       </tr>
       
       <tr valign="top">
@@ -166,10 +168,10 @@
        target="{$target}">
       <xsl:choose>
         <xsl:when test="starts-with($completearea, $tab-area-prefix)">
-          <img border="0" src="{$image-prefix}/{$tab-area-prefix}_active.gif" />
+          <img border="0" src="{$image-prefix}/{$tab-area-prefix}_active.gif" alt="active {$tab-area-prefix} tab"/>
         </xsl:when>
         <xsl:otherwise>
-           <img border="0" src="{$image-prefix}/{$tab-area-prefix}_inactive.gif" />
+           <img border="0" src="{$image-prefix}/{$tab-area-prefix}_inactive.gif" alt="inactive {$tab-area-prefix} tab"/>
         </xsl:otherwise>
       </xsl:choose>
     </a>
