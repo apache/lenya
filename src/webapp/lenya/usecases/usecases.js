@@ -38,19 +38,31 @@ function passRequestParameters(flowHelper, usecase) {
 	}
 }
 
+
 /* Helper method to choose the appropriate view pipeline. The usecases displayed in a tab in the site
    area need a more complex view, so they have their own pipeline. */
 function selectView(usecaseName) { 
 	var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
 	var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
+	var view = "";
 	if (isTabUsecase) {
-		var view = "view-tab/" + usecaseView;
+		view = "view-tab/" + usecaseView;
 	} else {
-		var view = "view/" + usecaseView;
+		view = "view/" + usecaseView;
 	}
-
 	return view;
 }
+
+
+/* Returns the query string to attach to the target URL. This is used in the site area. */
+function getTargetQueryString(usecaseName) {
+	var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
+	if (isTabUsecase) {
+		var queryString = "?lenya.usecase=" + usecaseName;
+	}
+	return queryString;
+}
+
 
 function executeUsecase() {
 	var usecaseName = cocoon.request.getParameter("lenya.usecase");
@@ -105,7 +117,7 @@ function executeUsecase() {
 		}
 	}
 	
-	var url = envelope.getContext() + usecase.getTargetURL(success);
+	var url = envelope.getContext() + usecase.getTargetURL(success) + getTargetQueryString(usecaseName);
 	cocoon.redirectTo(url);
 	
 }
