@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   $Id: confirm-delete.xsl,v 1.3 2004/02/16 19:57:56 roku Exp $
+-->
+
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
@@ -36,8 +41,8 @@
       </div>
       <div class="lenya-box-body">
           <form method="GET" action="{/page/continuation}.continuation">
-            <input type="submit" name="submit" value="Delete"/>
-            <input type="submit" name="cancel" value="Cancel"/>
+            <input i18n:attr="value" type="submit" name="submit" value="Yes"/>
+            <input i18n:attr="value" type="submit" name="cancel" value="No"/>
           </form>
       </div>
     </div>
