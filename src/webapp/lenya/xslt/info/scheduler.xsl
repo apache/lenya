@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    $Id: scheduler.xsl,v 1.2 2004/02/23 13:04:54 roku Exp $
+    $Id: scheduler.xsl,v 1.3 2004/02/25 20:46:28 roku Exp $
 
     Document   : scheduler-page.xsl
     Created on : 12. Mai 2003, 17:26
@@ -82,14 +82,14 @@
         <input type="hidden" name="lenya.step" value="showscreen"/>
         <input type="hidden" name="scheduler.publication-id" value="{$publication-id}"/>
         <input type="hidden" name="scheduler.job.id" value="{@id}"/>
-        
+
 				<xsl:variable name="current-task-id" select="task:task/task:parameter[@name='wrapper.task-id']/@value"/>
-				<xsl:value-of select="/sch:scheduler/sch:tasks/sch:task[@id = $current-task-id]/sch:label"/>
+				<i18n:text><xsl:value-of select="/sch:scheduler/sch:tasks/sch:task[@id = $current-task-id]/sch:label"/></i18n:text>
 			</td>
       <xsl:choose>
         <xsl:when test="sch:trigger">
           <xsl:apply-templates select="sch:trigger"/>
-          <td>
+          <td>        <!-- FIXME: We need to use javascript to set the usecase -->
             <input type="submit" name="scheduler.action" value="modify"/>
           </td>
         </xsl:when>
