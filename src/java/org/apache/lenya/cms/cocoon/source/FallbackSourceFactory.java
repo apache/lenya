@@ -39,6 +39,7 @@ import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.usecase.AbstractOperation;
@@ -103,12 +104,18 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
             String webappUrl = request.getRequestURI().substring(request.getContextPath().length());
 
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(webappUrl, SourceUtil.getFile(contextSource));
-            templateManager.setup(pub);
-
-            ExistingSourceResolver resolver = new ExistingSourceResolver();
-            templateManager.visit(path, resolver);
-            resolvedUri = resolver.getURI();
+            
+            String contextPath = SourceUtil.getFile(contextSource).getAbsolutePath();
+            URLInformation info = new URLInformation(webappUrl);
+            String publicationId = info.getPublicationId();
+            
+            if (publicationId != null && PublicationFactory.existsPublication(publicationId, contextPath)) {
+                Publication pub = factory.getPublication(publicationId, contextPath);
+                templateManager.setup(pub);
+                ExistingSourceResolver resolver = new ExistingSourceResolver();
+                templateManager.visit(path, resolver);
+                resolvedUri = resolver.getURI();
+            }
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Resolved URI:  [" + resolvedUri + "]");
