@@ -1,5 +1,5 @@
 /*
-$Id: URIParameterizerImpl.java,v 1.1 2003/09/12 16:47:53 andreas Exp $
+$Id: URIParameterizerImpl.java,v 1.2 2004/02/20 08:51:00 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,8 +70,10 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.util.CacheMap;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 /**
+ * Default mplementation of the {@link URIParameterizer}.
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class URIParameterizerImpl
@@ -79,17 +81,17 @@ public class URIParameterizerImpl
     implements URIParameterizer, Serviceable {
 
     /**
-     * DOCUMENT ME!
+     * Consumer to handle URIParameterizer events.
      *
      * @author $Author: andreas $
-     * @version $Revision: 1.1 $
+     * @version $Revision: 1.2 $
      */
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
         private boolean inParamElement = false;
         private String parameterValue = null;
-        
+
         private Logger logger;
-        
+
         /**
          * Ctor.
          * @param logger The logger to use.
@@ -99,52 +101,35 @@ public class URIParameterizerImpl
         }
 
         /**
-         * DOCUMENT ME!
-         *
-         * @param uri DOCUMENT ME!
-         * @param loc DOCUMENT ME!
-         * @param raw DOCUMENT ME!
-         * @param a DOCUMENT ME!
+         * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
          */
         public void startElement(String uri, String loc, String raw, Attributes a) {
             if (loc.equals("parameter")) {
                 if (logger.isDebugEnabled()) {
-                    logger.debug(
-                        "start Element " + uri + ":" + loc + ":" + raw);
+                    logger.debug("start Element " + uri + ":" + loc + ":" + raw);
                 }
                 inParamElement = true;
             }
         }
 
         /**
-         * DOCUMENT ME!
-         *
-         * @param uri DOCUMENT ME!
-         * @param loc DOCUMENT ME!
-         * @param raw DOCUMENT ME!
-         * @param a DOCUMENT ME!
+         * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
          */
         public void endElement(String uri, String loc, String raw, Attributes a) {
             if (loc.equals("parameter")) {
                 if (logger.isDebugEnabled()) {
-                    logger.debug(
-                        "stop Element " + uri + ":" + loc + ":" + raw);
+                    logger.debug("stop Element " + uri + ":" + loc + ":" + raw);
                 }
                 inParamElement = false;
             }
 
             if (logger.isDebugEnabled()) {
-                logger.debug(
-                    "processing Element " + uri + ":" + loc + ":" + raw);
+                logger.debug("processing Element " + uri + ":" + loc + ":" + raw);
             }
         }
 
         /**
-         * DOCUMENT ME!
-         *
-         * @param ch DOCUMENT ME!
-         * @param start DOCUMENT ME!
-         * @param len DOCUMENT ME!
+         * @see org.xml.sax.ContentHandler#characters(char[], int, int)
          */
         public void characters(char[] ch, int start, int len) {
             if (inParamElement) {
@@ -156,13 +141,13 @@ public class URIParameterizerImpl
         }
 
         /**
-         * DOCUMENT ME!
-         *
-         * @return DOCUMENT ME!
+         * Returns the parameter value that was obtained.
+         * @return A string.
          */
         public String getParameter() {
             return parameterValue;
         }
+
     }
 
     /**
