@@ -74,17 +74,17 @@
               <map:generate src="{global:basedir}/pubs/{1}/content/authoring/{page-envelope:document-path}"/>
               <map:transform src="{global:basedir}/xslt/authoring/edit/numberTags.xsl"/>
               <map:transform src="{global:basedir}/xslt/authoring/edit/addSourceTags.xsl">
-                <map:parameter name="source" value="{global:basedir}/pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
+                <map:parameter name="source" value="context://lenya/pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
               </map:transform>
               <map:transform type="write-source">
-                <map:parameter name="serializer" value="xml-utf-8"/>
+                <map:parameter name="serializer" value="xml"/>
               </map:transform>
               <map:transform src="{global:basedir}/xslt/authoring/edit/removeSourceTags.xsl"/>
               <map:transform src="{global:basedir}/pubs/{1}/lenya/xslt/formeditor/{request-param:form}.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="form" value="{request-param:form}"/>
               </map:transform>
-              <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
+              <map:transform src="fallback://lenya/xslt/authoring/edit/form-layout.xsl">
                 <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
                 <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
               </map:transform>
@@ -109,7 +109,7 @@
                   <map:parameter name="form" value="{request-param:form}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:transform>
-                <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
+                <map:transform src="fallback://lenya/xslt/authoring/edit/form-layout.xsl">
                   <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
                   <map:parameter name="edit" value="{editSelect}"/>
                   <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
