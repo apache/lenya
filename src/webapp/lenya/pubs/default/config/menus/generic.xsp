@@ -30,40 +30,38 @@
 
     <menus>
       <menu name="File" label="File">
-<block>
+	<block>
+	  <item><xsp:attribute name="href">?lenya.usecase=create&amp;lenya.step=showscreen&amp;doctype=simple</xsp:attribute>New Document (simple)</item>
+	  <item><xsp:attribute name="href">?lenya.usecase=create&amp;lenya.step=showscreen&amp;doctype=xhtml</xsp:attribute>New Document (xhtml)</item>
 	  <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
-	  <item><xsp:attribute name="href">?lenya.usecase=create&amp;lenya.step=showscreen&amp;doctype=simple</xsp:attribute>New Document</item>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
-</block>
+	</block>
       </menu>
       
       <menu name="Edit" label="Search">
-<block>
+	<block>
 	  <item><xsp:attribute name="href">?lenya.usecase=midas&amp;lenya.step=open</xsp:attribute>Edit&#160;with&#160;Midas</item>
 	  <item><xsp:attribute name="href">xopus2<xsp:expr>xsp_lenya_pub_url</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
 	  <item><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+xsp_lenya_context_prefix+"/authoring"+xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit with Bitflux</item>	  
-</block>
+	</block>
       </menu>
       
       <menu name="Tools" label="Help">
-<block>
+	<block>
 <item><xsp:attribute name="href">../xopus<xsp:expr>xsp_lenya_pub_url.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
 	  <item href="../xopus/simple.xsd">View&#160;Xopus&#160;XSD</item>
 	  <item href="../xopus/simple.xsl">View&#160;Xopus&#160;XSLT</item>
           <item href="?lenya.usecase=view-logs&amp;lenya.step=overview">View Task Logs</item>
           <item href="?lenya.usecase=schedule&amp;lenya.step=showscreen">Scheduler</item>
 	  <item><xsp:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Rollback</item>
-</block>
-</menu>
+	</block>
+      </menu>
 
       <menu name="Help" label="Debug">
-<block>
-	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs-new/docs/index.html</xsp:attribute>New&#160;Documentation</item>
-	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
-	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
-	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+	<block>
+	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
 	  <item href="http://www.lenya.org">About&#160;Lenya</item>
-</block>
+	</block>
       </menu>
     </menus>
     
