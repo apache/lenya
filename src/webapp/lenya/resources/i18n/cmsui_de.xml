@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.42 2004/02/25 13:49:23 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.43 2004/02/25 20:25:18 roku Exp $ 
    
 -->
 
@@ -63,7 +63,9 @@
   <message key="Modify">&#196;ndern</message>
   <message key="Document">Dokument</message>
   <message key="Date">Datum</message>
-  
+  <message key="Back">Zur&#252;ck</message>
+  <message key="Add">Hinzuf&#252;gen</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -193,7 +195,7 @@
 
       <!-- Scheduler -->
   <message key="No active jobs">Keine aktiven Aufgaben.</message>
-  <message key="The job date has expired">Das Datum der Aufgabe ist angelaufen.</message>
+  <message key="The job date has expired">Das Datum der Aufgabe ist abgelaufen.</message>
   <message key="check the log files">Bitte &#252;berpr&#252;fen Sie die Log-Dateien.</message>
   <message key="Task">Aufgabe</message>
   <message key="Day">Tag</message>
@@ -233,6 +235,12 @@
    <message key="History">Verlauf</message>
   <message key="State">Status</message>
   <message key="IP Address">IP Adresse</message>   
-  
+
+  <!-- Scheduler --> 
+  <message key="New job">Neuer&#160;Job</message>
+  <message key="Active jobs">Aktive Aufgaben</message>
+  <message key="Publish and Export">Ver&#246;ffentlichen und&#160;exportieren</message>
+  <message key="doc-has-links-to-unpublished">Dieses Dokument hat Referenzen auf folgende unver&#246;ffentlichte Dokumente:</message>
+
 </catalogue>
 

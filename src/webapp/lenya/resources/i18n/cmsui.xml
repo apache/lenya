@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.37 2004/02/25 13:49:23 roku Exp $
+   $Id: cmsui.xml,v 1.38 2004/02/25 20:25:18 roku Exp $
    
 -->
 
@@ -63,6 +63,8 @@
   <message key="Modify">Modify</message>
   <message key="Document">Document</message>
   <message key="Date">Date</message>
+  <message key="Back">Back</message>
+  <message key="Add">Add</message>
   
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
@@ -233,4 +235,10 @@ c
   <message key="State">State</message>   
   <message key="IP Address">IP Address</message>   
   
+  <!-- Scheduler --> 
+  <message key="New job">New&#160;job</message>
+  <message key="Active jobs">Active&#160;jobs</message>
+  <message key="Publish and Export">Publish and&#160;Export</message>
+  <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
+
 </catalogue>

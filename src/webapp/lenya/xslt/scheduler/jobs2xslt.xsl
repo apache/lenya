@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    Document   : scheduler-page.xsl
-    Created on : 12. Mai 2003, 17:26
-    Author     : andreas
-    Description:
-       
+  $Id: jobs2xslt.xsl,v 1.4 2004/02/25 20:25:18 roku Exp $
+  Created on : 12. Mai 2003, 17:26
+  
+  Description:       
+  
     Creates a job list for a document with no modification functionality.
 -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:xso="http://apache.org/cocoon/lenya/xslt/1.0"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns="http://www.w3.org/1999/xhtml"
@@ -39,8 +40,8 @@
     <xso:template match="sch:scheduler-form">
       
 			<div class="lenya-box">
-				<div class="lenya-box-title">Scheduler&#160;
-					<a href="{$scheduler-url}?lenya.usecase=info-scheduler&amp;lenya.step=showscreen">[Scheduler Admin]</a>
+				<div class="lenya-box-title"><i18n:text>Scheduler</i18n:text>&#160;
+					<a href="{$scheduler-url}?lenya.usecase=info-scheduler&amp;lenya.step=showscreen">[<i18n:text>Administration</i18n:text>]</a>
 				</div>
 				<div class="lenya-box-body">
           <table border="0" cellpadding="2" cellspacing="0">
@@ -102,7 +103,7 @@
         <xsl:apply-templates select="sch:job"/>
       </xsl:when>
       <xsl:otherwise>
-        <tr><td colspan="6">No&#160;active&#160;jobs.</td></tr>
+        <tr><td colspan="6"><i18n:text>No active jobs</i18n:text></td></tr>
       </xsl:otherwise>
     </xsl:choose>
     
@@ -112,18 +113,18 @@
 <xsl:template match="sch:job">
   <tr class="lenya-scheduler-existing-job">
   	<td>
-  		<xsl:if test="position() = 1"><strong>Active&#160;jobs:</strong>&#160;&#160;&#160;</xsl:if>
+  		<xsl:if test="position() = 1"><strong><i18n:text>Active jobs</i18n:text>:</strong>&#160;&#160;&#160;</xsl:if>
   	</td>
 		<td>
 			<xsl:variable name="current-task-id" select="task:task/task:parameter[@name='wrapper.task-id']/@value"/>
-			<xsl:value-of select="/sch:scheduler/sch:tasks/sch:task[@id = $current-task-id]/sch:label"/>&#160;&#160;&#160;
+			<i18n:text><xsl:value-of select="/sch:scheduler/sch:tasks/sch:task[@id = $current-task-id]/sch:label"/></i18n:text>&#160;&#160;&#160;
 		</td>
 		<xsl:choose>
 			<xsl:when test="sch:trigger">
 				<xsl:apply-templates select="sch:trigger"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<td colspan="4" style="white-space: nowrap">The job date has expired.</td>
+				<td colspan="4" style="white-space: nowrap"><i18n:text>The job date has expired</i18n:text></td>
 			</xsl:otherwise>
 		</xsl:choose>
 		<td>&#160;<!-- schedule button in "new job" row --></td>

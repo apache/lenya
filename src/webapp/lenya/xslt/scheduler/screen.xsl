@@ -2,6 +2,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -11,7 +12,7 @@
   
   <xsl:import href="../../../../../xslt/util/page-util.xsl"/>
 
-  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
 
   <xsl:variable name="separator" select="','"/>
 
@@ -21,7 +22,7 @@
   <xsl:template match="/usecase:schedule">
 
     <page:page>
-      <page:title>Schedule</page:title>
+      <page:title><i18n:text>Schedule</i18n:text></page:title>
       <page:body>
         
         <table class="lenya-table-noborder">
@@ -53,7 +54,9 @@
         </sch:scheduler-form>
         
         <div style="text-align: right">
-        <form action="{$referer}"><input type="submit" value="Back to Page"/></form>
+        <form action="{$referer}">
+          <input i18n:attr="value" type="submit" value="Back"/>
+        </form>
         </div>
         </td>
         </tr>
@@ -75,7 +78,7 @@
 
   <xsl:template match="referenced-documents">
     <td class="lenya-entry-caption" valign="top">
-      <span class="lenya-form-message-error">This document has links to the <br/>following unpublished documents:</span>
+      <span class="lenya-form-message-error"><i18n:text key="doc-has-links-to-unpublished"/></span>
     </td>
     <td valign="top">
       <xsl:for-each select="referenced-document">
