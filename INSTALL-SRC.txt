@@ -31,12 +31,24 @@
 
 5) Copy endorsed libraries
 
-6) Start up your servlet engine, e.g.
+6) Start up your servlet engine, e.g. Tomcat or Jetty
 
    [unix]
    /usr/local/jakarta-tomcat-4.1.24-LE-jdk14/bin/startup.sh
    
    or
-   lenya.sh to start Jetty
+
+   sh lenya.sh servlet
 
 7) Open http://localhost:8080/lenya/ or http://127.0.0.1:8888 (Jetty)
+
+
+
+NOTES
+-----
+
+1) In order to reload modified Java classes one might add
+
+   <Context path="/lenya" docBase="lenya" debug="0" reloadable="true" crossContext="true"/>
+
+   to the Tomcat configuration file conf/server.xml
