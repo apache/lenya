@@ -141,8 +141,6 @@ public class ArticleImageUploadCreatorAction
 	sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
 	getLogger().debug("sitemapPath: " + sitemapPath);
 
-	String absoluteMetaDirName = sitemapPath + File.separator + metaRoot;
-	
 	Properties properties = new Properties(default_properties);
 	byte[] buf = new byte[4096];
 
@@ -270,9 +268,12 @@ public class ArticleImageUploadCreatorAction
 	    }
 	    
 	    // create an extra file containing the meta description for
-	    // the image. 
-	    createMetaData(absoluteMetaDirName + File.separator + fileName +
-			   ".meta", dublinCoreParams);
+	    // the image.
+	    String metaDataFilePath = getMetaDataPath(sitemapPath,
+						      metaRoot,
+						      documentId,
+						      fileName + ".meta");
+	    createMetaData(metaDataFilePath, dublinCoreParams);
 	    
 	    // insert <media> tags at the location sepecified by the
 	    // cpath in the original document (the referer)
@@ -420,7 +421,29 @@ public class ArticleImageUploadCreatorAction
 	    (new File(documentId)).getParent();
 	return sitemapPath + File.separator + recourcesRoot + File.separator +
 	    requestingDocumentPath + File.separator + fileName;
-	
+    }
+
+    /**
+     * Figure out where the meta data file is to be stored. The default
+     * implementation simply concatenates the sitemapPath and
+     * metaRoot (which is defined in the sitemap) with the parent
+     * of documentId and the filename.
+     *
+     * @param sitemapPath a <code>String</code> value
+     * @param metaRoot a <code>String</code> value
+     * @param documentId a <code>String</code> value
+     * @param fileName a <code>String</code> value
+     * @return a <code>String</code> value
+     */
+    protected String getMetaDataPath(String sitemapPath,
+				     String metaRoot,
+				     String documentId,
+				     String fileName) {
+
+	String requestingDocumentPath =
+	    (new File(documentId)).getParent();
+	return sitemapPath + File.separator + metaRoot + File.separator +
+	    requestingDocumentPath + File.separator + fileName;
     }
 }
 
