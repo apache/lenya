@@ -75,7 +75,8 @@
   <message key="select-object">{0}&#160;auswählen</message>
   <message key="Insert">Einfügen</message>
   <message key="Insert File">Datei einfügen</message>
-  <message key="upload-with-invalid-extension">Es dürfen nur Dateien mit folgenden Endungen hochgeladen werden{0}</message>
+  <message key="upload-with-invalid-extension">Es dürfen nur Dateien mit folgenden Endungen hochgeladen werden{0}. Die Endung muss zudem klein geschrieben sein.</message>
+  <message key="upload-with-missing-title">Dateien müssen einen Titel haben.</message>
   <message key="filename-format-exception">Der Name der gewählten Datei enthält Umlaute, Leerzeichen, unerlaubte Zeichen oder besitzt keine gültige Endung.</message>
   <message key="Creation Date">Erstelldatum</message>
   <message key="File Size">Dateigrösse</message>
