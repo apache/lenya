@@ -66,12 +66,14 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
  * 
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: FileIPRange.java,v 1.2 2003/07/24 16:29:50 michi Exp $
+ * @version $Id: FileIPRange.java,v 1.3 2003/08/12 15:14:15 andreas Exp $
  */
 public class FileIPRange extends IPRange {
 
     /**
-     *
+     * Main method.
+     * @param args The command-line arguments.
+     * @deprecated This should bemoved to a JUnit test.
      */
     public static void main(String[] args) {
         if (args.length == 0) {

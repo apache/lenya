@@ -1,5 +1,5 @@
 /*
-$Id: Machine.java,v 1.5 2003/07/29 14:25:10 andreas Exp $
+$Id: Machine.java,v 1.6 2003/08/12 15:14:39 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,6 +73,7 @@ public class Machine implements Identifiable {
     /**
      * Creates a new machine object.
      * @param ip The IP address.
+     * @throws AccessControlException when something went wrong.
      */
     public Machine(String ip) throws AccessControlException {
         setAddress(getAddress(ip));
@@ -124,9 +125,9 @@ public class Machine implements Identifiable {
 
     /**
      * Converts a string to an IP addres.
-     * @param string
-     * @return
-     * @throws UnknownHostException
+     * @param string The IP address, represented by a string.
+     * @return An InetAddress object.
+     * @throws AccessControlException when something went wrong.
      */
     protected static InetAddress getAddress(String string)
         throws AccessControlException {
@@ -177,12 +178,20 @@ public class Machine implements Identifiable {
 
     private List ipRanges = new ArrayList();
     
+    /**
+     * Adds an IP range to this machine.
+     * @param range An IP range this machine belongs to.
+     */
     public void addIPRange(IPRange range) {
         assert range != null;
         assert !ipRanges.contains(range);
         ipRanges.add(range);
     }
     
+    /**
+     * Returns the IP ranges this machine belongs to.
+     * @return An array of IP ranges.
+     */
     public IPRange[] getIPRanges() {
         return (IPRange[]) ipRanges.toArray(new IPRange[ipRanges.size()]);
     }
