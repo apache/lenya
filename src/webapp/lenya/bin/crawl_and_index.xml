@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: crawl_and_index.xml,v 1.35 2004/04/22 14:19:04 michi Exp $ -->
+<!-- $Id: crawl_and_index.xml,v 1.36 2004/04/22 15:05:08 michi Exp $ -->
 
 <project default="main" basedir=".">
 
@@ -66,23 +66,26 @@
 <target name="crawl" description="Crawl and dump hypertext documents. Usage: -Dcrawler.xconf=/foo/bar/crawler.xconf" depends="init">
   <echo>INFO: Crawl and dump hypertext documents (${crawler.xconf})</echo>
 
+<!--
   <exec executable="${webapp.dir}/lenya/bin/crawl_and_index.sh">
     <arg value="crawl"/>
     <arg value="${crawler.xconf}"/>
   </exec>
+-->
 
-<!-- TODO: Linkage problem
+<!-- TODO: Linkage problem -->
+  <echo>INFO: Show configuration</echo>
   <java classname="org.apache.lenya.search.crawler.CrawlerConfiguration">
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
 
-
+  <echo>INFO: Start crawling ...</echo>
   <java classname="org.apache.lenya.search.crawler.IterativeHTMLCrawler">
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
--->
+  <echo>INFO: Crawling finished</echo>
 </target>
 
 
