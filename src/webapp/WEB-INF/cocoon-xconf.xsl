@@ -156,9 +156,21 @@
     <authorizer type="workflow"/>
   </component>
   
-  <component logger="lenya.ac.accesscontrollerresolver"
-      class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
-      role="org.apache.lenya.cms.ac2.AccessControllerResolver"/>
+  <access-controller-resolvers>
+    <component-instance logger="lenya.ac.accesscontrollerresolver"
+        class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
+        name="publication">
+    </component-instance>
+    <component-instance logger="lenya.ac.accesscontrollerresolver"
+        class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+        name="composable">
+      <resolver type="publication"/>
+    </component-instance>
+  </access-controller-resolvers>
+  
+  <component logger="lenya.ac.authenticator"
+      class="org.apache.lenya.cms.ac2.UserAuthenticator"
+      role="org.apache.lenya.cms.ac2.Authenticator"/>
 
   </xsl:copy>
 </xsl:template>

@@ -73,10 +73,9 @@ import org.apache.lenya.cms.ac2.file.FilePolicyManager;
  */
 public class AccessControlTest extends ExcaliburTest {
 
+    private ComponentSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
-    private AccreditableManager accreditableManager;
-    private ComponentSelector selector;
 
     /**
      * @param test The test.
@@ -95,6 +94,8 @@ public class AccessControlTest extends ExcaliburTest {
 
     protected static final String URL = "/test/authoring/index.html";
 
+    protected static final String DEFAULT_RESOLVER = "publication";
+
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {
 
@@ -105,8 +106,11 @@ public class AccessControlTest extends ExcaliburTest {
 
         super.setUp();
 
-        accessControllerResolver =
-            (AccessControllerResolver) manager.lookup(AccessControllerResolver.ROLE);
+        accessControllerResolverSelector =
+            (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+        assertNotNull(accessControllerResolverSelector);
+            
+        accessControllerResolver = (AccessControllerResolver) accessControllerResolverSelector.select(DEFAULT_RESOLVER);
 
         assertNotNull(accessControllerResolver);
         getLogger().info(
@@ -138,7 +142,6 @@ public class AccessControlTest extends ExcaliburTest {
             .setConfigurationDirectory(accreditablesDirectory);
 
         String role = AccreditableManager.ROLE + "Selector";
-        selector = (ComponentSelector) manager.lookup(role);
 
     }
 
@@ -151,20 +154,14 @@ public class AccessControlTest extends ExcaliburTest {
     public void tearDown() throws Exception {
         super.tearDown();
 
-        if (accessControllerResolver != null) {
-            if (accessController != null) {
-                accessControllerResolver.release(accessController);
+        if (accessControllerResolverSelector != null) {
+            if (accessControllerResolver != null) {
+                if (accessController != null) {
+                    accessControllerResolver.release(accessController);
+                }
+                accessControllerResolverSelector.release(accessControllerResolver);
             }
             manager.release(accessControllerResolver);
-        }
-
-        if (selector != null) {
-            if (accreditableManager != null) {
-                selector.release(accreditableManager);
-                accreditableManager = null;
-            }
-            manager.release(selector);
-            selector = null;
         }
     }
 
@@ -186,10 +183,18 @@ public class AccessControlTest extends ExcaliburTest {
         return identity;
     }
     
+    /**
+     * Returns the policy manager.
+     * @return A policy manager.
+     */
     protected FilePolicyManager getPolicyManager() {
         return (FilePolicyManager) getAccessController().getPolicyManager();
     }
     
+    /**
+     * Returns the accreditable manager.
+     * @return An accreditable manager.
+     */
     protected AccreditableManager getAccreditableManager() {
         return getAccessController().getAccreditableManager();
     }
