@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.27 2004/02/02 02:50:40 stefano Exp $
+$Id: WorkflowFactory.java,v 1.28 2004/02/11 13:51:28 andreas Exp $
 <License>
 
  ============================================================================
@@ -107,8 +107,7 @@ public class WorkflowFactory {
      */
     public WorkflowInstance buildInstance(Document document) throws WorkflowException {
         assert document != null;
-
-        return new CMSHistory(document).getInstance();
+        return getHistory(document).getInstance();
     }
 
     /**
@@ -140,13 +139,23 @@ public class WorkflowFactory {
     }
 
     /**
+     * Deletes the history of a document.
+     * @param document The document to delete the instance for.
+     * @throws WorkflowException when something went wrong.
+     */
+    public static void deleteHistory(Document document) throws WorkflowException {
+        assert document != null;
+        getHistory(document).delete();
+    }
+
+    /**
      * Checks if a workflow is assigned to the document.
      * This is done by looking for the workflow history file.
      * @param document The document to check.
      * @return <code>true</code> if the document has a workflow, <code>false</code> otherwise.
      */
     public boolean hasWorkflow(Document document) {
-        return new CMSHistory(document).isInitialized();
+        return getHistory(document).isInitialized();
     }
 
     /**

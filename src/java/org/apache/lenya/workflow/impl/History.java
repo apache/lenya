@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.16 2004/02/02 02:50:38 stefano Exp $
+$Id: History.java,v 1.17 2004/02/11 13:51:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -479,6 +479,24 @@ public abstract class History implements WorkflowListener {
             versions.add(version);
         }
         return (Version[]) versions.toArray(new Version[versions.size()]);
+    }
+    
+    /**
+     * Deletes the history.
+     * @throws WorkflowException when something went wrong.
+     */
+    public void delete() throws WorkflowException {
+        System.out.println("Deleting file [" + getHistoryFile() + "]");
+        if (!isInitialized()) {
+            throw new WorkflowException("The workflow history is not initialized!");
+        }
+        
+        boolean deleted = getHistoryFile().delete();
+        
+        if (!deleted) {
+            throw new WorkflowException("The workflow history could not be deleted!");
+        }
+        
     }
 
 }
