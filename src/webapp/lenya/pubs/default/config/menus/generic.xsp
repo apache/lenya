@@ -16,7 +16,7 @@
   
   <menu>
     <xsp:logic>
-      String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst(".html", "/index.xml");
+      String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-path"/>;
       String sourcesParameter = "sources=" + xmlSource;
       String urisParameter = "uris=" + <input:get-attribute as="string" module="page-envelope" name="document-url"/>;
       String docType = "";
