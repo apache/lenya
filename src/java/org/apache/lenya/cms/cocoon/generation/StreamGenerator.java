@@ -87,7 +87,9 @@ import java.io.StringReader;
  * number of bytes read is equal to the getContentLength() value.
  *
  * @author <a href="mailto:Kinga_Dziembowski@hp.com">Kinga Dziembowski</a>
- * @version CVS $Id: StreamGenerator.java,v 1.1 2003/12/14 22:07:10 michi Exp $
+ * @version CVS $Id: StreamGenerator.java,v 1.2 2003/12/14 22:15:39 michi Exp $
+ *
+ * FIXME: Epoz sends text/html as mime-type. Please see the discussion in the mailing list.
  */
 public class StreamGenerator extends org.apache.cocoon.generation.ServiceableGenerator
 {
