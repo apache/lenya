@@ -60,6 +60,7 @@
     <misc href="misc/" label="Miscellaneous">
       <namespaces href="webdav.html" label="WebDAV Servers"/>
     </misc>
+    <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
   </documentation>
   
   <community href="community/" label="Community">
