@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.18 2003/09/09 11:33:10 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.19 2003/10/02 15:28:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -72,6 +72,7 @@ import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 
 /**
  * If the client requested invoking a workflow event, this authorizer checks if
@@ -120,7 +121,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                     WorkflowFactory factory = WorkflowFactory.newInstance();
 
                     if (factory.hasWorkflow(document)) {
-                        WorkflowInstance instance = factory.buildInstance(document);
+                        SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
 
                         authorized = false;
 

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInvokerAction.java,v 1.1 2003/09/19 19:20:25 andreas Exp $
+$Id: WorkflowInvokerAction.java,v 1.2 2003/10/02 15:28:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -71,6 +71,7 @@ import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 
 /**
  * Action to invoke a workflow transition independently from the request document URL.
@@ -128,7 +129,7 @@ public class WorkflowInvokerAction extends AbstractAction {
                 getLogger().debug("    Invoking workflow event");
             }
             
-            WorkflowInstance instance = factory.buildInstance(document);
+            SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
             Situation situation = factory.buildSituation(objectModel);
             Event[] events = instance.getExecutableEvents(situation);
             Event event = null;

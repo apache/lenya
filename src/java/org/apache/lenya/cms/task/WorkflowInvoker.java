@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInvoker.java,v 1.2 2003/09/19 19:21:48 andreas Exp $
+$Id: WorkflowInvoker.java,v 1.3 2003/10/02 15:28:33 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,6 +70,7 @@ import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 import org.apache.log4j.Category;
 
 /**
@@ -226,7 +227,7 @@ public class WorkflowInvoker extends ParameterWrapper {
 
             try {
                 WorkflowFactory factory = WorkflowFactory.newInstance();
-                WorkflowInstance instance = factory.buildInstance(document);
+                SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
                 Situation situation =
                     factory.buildSituation(getRoleIDs(), getUserId(), getMachineIp());
 

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.22 2003/09/08 19:26:25 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.23 2003/10/02 15:28:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,6 +70,7 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -152,7 +153,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             Situation situation = null;
 
             try {
-                setInstance(factory.buildInstance(document));
+                setInstance(factory.buildSynchronizedInstance(document));
                 situation = factory.buildSituation(objectModel);
             } catch (Exception e) {
                 throw new ProcessingException(e);
@@ -175,14 +176,14 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     }
 
     private boolean hasWorkflow;
-    private WorkflowInstance instance;
+    private SynchronizedWorkflowInstances instance;
 
     /**
      * Get the workflow instance.
      * 
      * @return a <code>WorkflowInstance</code>
      */
-    protected WorkflowInstance getInstance() {
+    protected SynchronizedWorkflowInstances getInstance() {
         return instance;
     }
 
@@ -225,7 +226,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
      * Sets the workflow instance for the current request.
      * @param instance A workflow instance.
      */
-    public void setInstance(WorkflowInstance instance) {
+    public void setInstance(SynchronizedWorkflowInstances instance) {
         this.instance = instance;
     }
 }
