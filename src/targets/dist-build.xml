@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.11 2004/05/24 10:10:35 roku Exp $ -->
+<!-- $Id: dist-build.xml,v 1.12 2004/05/24 12:46:52 roku Exp $ -->
 
 <project name="dist">
 
@@ -66,7 +66,10 @@
 
     <gzip zipfile="${dist.bin.dir}.tar.gz" src="${dist.bin.dir}.tar"/>
     <delete file="${dist.bin.dir}.tar"/>
-
+    <checksum file="${dist.bin.dir}.tar.gz"/>
+    
+    <zip zipfile="${dist.bin.dir}.zip" basedir="${dist.bin.dir}"/>
+    <checksum file="${dist.bin.dir}.zip"/>
   </target>
 
   <!--
@@ -117,7 +120,10 @@
 
     <gzip zipfile="${dist.src.dir}.tar.gz" src="${dist.src.dir}.tar"/>
     <delete file="${dist.src.dir}.tar"/>
+    <checksum file="${dist.src.dir}.tar.gz"/>
 
+    <zip zipfile="${dist.src.dir}.zip" basedir="${dist.src.dir}"/>
+    <checksum file="${dist.src.dir}.zip"/>
   </target>
 
 
@@ -146,6 +152,6 @@
 
     <tar tarfile="./${build.dir}/${snapshot.bin.name}.tar" basedir="${build.webapp}"/>
     <gzip zipfile="./${build.dir}/${snapshot.bin.name}.tar.gz" src="./${build.dir}/${snapshot.bin.name}.tar"/>
-    <delete file="./${build.dir}/${snapshot.bin.name}.tar"/>
+    <delete file="./${build.dir}/${snapshot.bin.name}.tar"/>    
   </target>
 </project>
