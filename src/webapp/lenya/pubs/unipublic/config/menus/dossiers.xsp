@@ -5,9 +5,7 @@
 		<xsp:logic>
     String year=parameters.getParameter("year","null");
   </xsp:logic>
-		<live_uri>
-			<xsp:expr>"/dossiers/"+year+"/index.html"</xsp:expr>
-		</live_uri>
+		<live_uri><xsp:expr>"/dossiers/"+year+"/index.html"</xsp:expr></live_uri>
 		<menus>
 			<menu name="File" label="File">
 				<block>
