@@ -52,7 +52,7 @@
 
     <map:pipeline>
       <map:match pattern="**">
-        <map:mount uri-prefix="" src="fallback://publication-sitemap.xmap"/>
+        <map:mount uri-prefix="" src="{fallback:publication-sitemap.xmap}"/>
       </map:match>
 
       <map:handle-errors>
