@@ -49,7 +49,7 @@
   <!-- Transformers -->
   <!-- ========================================================================== -->
 
-  <map:transformers default="xslt">
+  <map:transformers default="xalan">
 
     <map:transformer name="access-control-sitetree" logger="lenya.sitemap.transformer.accesscontrolsitetree" src="org.apache.lenya.cms.cocoon.transformation.AccessControlSitetreeTransformer"/>
     <map:transformer name="cinclude" logger="sitemap.transformer.cinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.CIncludeTransformer"/>
@@ -446,7 +446,7 @@
         
       <!-- Lenya GUI screen -->
       <map:match pattern="lenya-screen.xsl">
-        <map:generate src="{fallback:lenya/xslt/util/page2xhtml.xsl}"/>
+        <map:generate src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
         <map:transform src="lenya/xslt/util/page2xslt.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
@@ -456,8 +456,8 @@
       <map:match type="usecase" pattern="login">
         
         <map:match type="step" pattern="showscreen">
-          <map:generate type="serverpages" src="{fallback:lenya/content/ac/login.xsp}"/>
-          <map:transform src="{fallback:lenya/xslt/ac/login.xsl}">
+          <map:generate type="serverpages" src="fallback://lenya/content/ac/login.xsp"/>
+          <map:transform src="fallback://lenya/xslt/ac/login.xsl">
             <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
           </map:transform>
           <map:call resource="style-cms-page"/>
@@ -473,8 +473,8 @@
       </map:match>
       
       <map:match type="usecase" pattern="logout">
-        <map:generate type="serverpages" src="{fallback:lenya/content/ac/logout.xsp}"/>
-        <map:transform src="{fallback:lenya/xslt/ac/logout.xsl}">
+        <map:generate type="serverpages" src="fallback://lenya/content/ac/logout.xsp"/>
+        <map:transform src="fallback://lenya/xslt/ac/logout.xsl">
           <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
