@@ -38,6 +38,9 @@
             
     <!-- Patch publication tests -->
     <echo>INFO: Patch publication tests</echo>
+    <copy file="./src/targets/publication-test-build-template.xml"
+          tofile="./src/targets/publication-test-build.xml"
+          overwrite="true"/>
     <xpatch file="./src/targets/publication-test-build.xml"
             srcdir="${build.webapp}/lenya/pubs" 
             includes="*/targets/test-build.xconf"

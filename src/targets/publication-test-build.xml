@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <target depends="init, tests.prepare" name="test.publications">
+<!--..... Start configuration from 'test-build' -->&#13;
+
+
+  <property name="newzz.pub.id" value="newzz"/>
+
+  <!-- Article Test -->
+  <java classname="ch.nzz.newzz.lenya.cms.publication.ArticleTest" fork="yes">
+    <jvmarg value="-enableassertions"/>
+    <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
+    <arg value="${newzz.pub.id}"/>
+    <classpath refid="classpath.default"/>
+  </java>
+
+<!--..... End configuration from 'test-build' -->&#13;
 </target>
