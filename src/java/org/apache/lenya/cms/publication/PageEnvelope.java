@@ -33,6 +33,7 @@ public class PageEnvelope {
     public static final String CONTEXT = "context-prefix";
     public static final String AREA = "area";
     public static final String DOCUMENT_ID = "document-id";
+    public static final String DOCUMENT_URL = "document-url";
 
     public static final int AREA_POS = 3;
     public static final int DOCUMENT_ID_POS = 4;
@@ -42,6 +43,34 @@ public class PageEnvelope {
     private String context;
     private String area;
     private String documentId;
+    private String documentUrl;
+
+    /**
+     * Creates a new instance of PageEnvelope from a sitemap inside a publication.
+     * @param publication The publication the page belongs to.
+     * @param request The request that calls the page.
+     * @exception PageEnvelopeException if an error occurs
+     * @exception ProcessingException if an error occurs
+     * @exception SAXException if an error occurs
+     * @exception IOException if an error occurs
+     */
+    public PageEnvelope(Publication publication, Request request)
+            throws PageEnvelopeException, ProcessingException, SAXException, IOException {
+                
+	// compute area
+	String requestURI = request.getRequestURI();
+	log.debug("requestURI: " + requestURI);
+	String[] directories = requestURI.split("/");
+        area = directories[AREA_POS];
+        
+        String urlPrefix = request.getContextPath() + "/" + publication.getId() + "/" + area;
+        documentUrl = requestURI.substring(urlPrefix.length());
+
+	documentId = computeDocumentId(requestURI);
+        this.publication = publication;
+        rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
+        context = request.getContextPath();
+    }
 
     /**
      * Creates a new instance of PageEnvelope
@@ -165,4 +194,24 @@ public class PageEnvelope {
     public String getDocumentId() {
         return documentId;
     }
+    
+    /**
+     * Returns the document URL (without prefix and area).
+     * @return a <code>String</code> value
+     */
+    public String getDocumentURL() {
+        return documentUrl;
+    }
+
+    /**
+     * The names of the page envelope parameters.
+     */
+    public static String[] PARAMETER_NAMES = {
+        PageEnvelope.AREA,
+        PageEnvelope.CONTEXT,
+        PageEnvelope.PUBLICATION_ID,
+        PageEnvelope.DOCUMENT_ID,
+        PageEnvelope.DOCUMENT_URL
+    };
+    
 }
