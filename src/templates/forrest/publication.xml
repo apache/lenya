@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: publication.xml,v 1.1 2003/09/26 11:16:06 andreas Exp $ -->
+
+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
+  <lenya:name>Forrest Template</lenya:name>
+  <lenya:version>1.0</lenya:version>
+  <lenya:description>This publication implements a documentation site
+  based around Apache Forrest.</lenya:description>
+  <lenya:credits>Special thanks to </lenya:credits>
+  <lenya:help></lenya:help>
+  <lenya:changelog>changes.xml</lenya:changelog>
+  <lenya:license></lenya:license>
+  <lenya:readme>
+    <p>
+      The "Editor's View (Authoring)" is still in an experimental version. Please use the
+      "Reader's View (Live)".
+    </p>
+    
+    <ol>
+      <li><a href="live/index.html">Reader's View</a> (Live)</li>
+      <li><a href="authoring/index.html">Editor's View</a> (Authoring)</li>
+    </ol>
+
+    <p>The original Forrest sources can be found in <a
+    href="http://cvs.apache.org/viewcvs/xml-forrest/">Forrest
+    CVS</a>. From the shell this translates to cvs -d
+    :pserver:anoncvs@cvs.apache.org:/home/cvspublic co xml-forrest.</p>
+
+  </lenya:readme>
+</lenya:publication>

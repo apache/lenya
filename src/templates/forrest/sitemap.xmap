@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CVS: $Id: sitemap.xmap,v 1.17 2003/07/23 10:28:52 gregor Exp $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <map:components>
+    <map:generators default="file"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+  </map:components>
+  
+  <map:pipelines>
+    
+    <map:pipeline>
+      
+      <!-- Forrest pages -->
+      <map:match pattern="lenyabody/**">
+        <map:mount src="forrest-sitemap.xmap" uri-prefix="lenyabody/"/>
+      </map:match>
+      
+      <!-- HTML pages -->
+      <!-- {area}/{uri}.html -->
+      <map:match pattern="*/**.html">
+        <map:generate src="cocoon:/lenyabody/{2}.html"/>
+        <map:transform src="xslt/html2xhtml.xsl"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
+        <map:serialize/>
+      </map:match>
+      
+      <!-- resources -->
+      <!-- {area}/{uri} -->
+      <map:match pattern="*/**">
+        <map:mount src="forrest-sitemap.xmap" uri-prefix="{1}/"/>
+      </map:match>
+      
+      <map:handle-errors type="500">
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+      
+    </map:pipeline>
+    
+  </map:pipelines>
+  
+</map:sitemap>

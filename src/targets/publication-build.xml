@@ -1,0 +1,61 @@
+  <!-- ============================================================ -->
+  <!-- Produce the webapp                                           -->
+  <!-- ============================================================ -->
+
+  <!-- 
+  This target creates Forrest-based publication.
+  -->
+  <target name="forrest" depends="webapp" description="Creates a Forrest-based publication.">
+  
+    <property name="lenya.templates" value="src/templates"/>
+    <property name="lenya.templates.forrest" value="${lenya.templates}/forrest"/>
+    <property name="forrest.publication" value="forrest"/>
+    <property name="forrest.publication.dir" value="${build.webapp}/lenya/pubs/${forrest.publication}"/>
+    <property environment="env" />
+    <property name="forrest.home" value="${env.FORREST_HOME}" />  
+    <property name="forrest.context" value="${forrest.home}/context" />  
+    
+    <mkdir dir="${forrest.publication.dir}"/>
+    
+    <copy todir="${forrest.publication.dir}">
+      <fileset dir="${forrest.home}/WEB-INF">
+        <include name="lib/**"/>
+        <include name="classes/**"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${forrest.publication.dir}">
+      <fileset dir="${forrest.context}">
+        <include name="**"/>
+        <exclude name="lib/**"/>
+      </fileset>
+    </copy>
+    
+    <xslt
+      in="${forrest.context}/sitemap.xmap"
+      out="${forrest.publication.dir}/forrest-sitemap.xmap"
+      style="${lenya.templates.forrest}/patch-sitemap.xsl"/>
+    
+    <unzip
+      src="${forrest.home}/fresh-site.zip"
+      dest="${forrest.publication.dir}"/>
+      
+    <move todir="${forrest.publication.dir}">
+      <fileset dir="${forrest.publication.dir}/src/documentation">
+        <include name="content/**"/>
+      </fileset>
+    </move>
+    
+    <delete dir="${forrest.publication.dir}/src"/>
+    
+    <echo>Copying template files</echo>
+    <echo>    from ${lenya.templates.forrest}</echo>
+    <echo>    to ${forrest.publication.dir}</echo>
+    <copy todir="${forrest.publication.dir}" overwrite="yes">
+      <fileset dir="${lenya.templates.forrest}">
+        <include name="**"/>
+      </fileset>
+    </copy>
+    
+  </target>
+  
