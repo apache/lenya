@@ -223,10 +223,13 @@
       </map:match>
       <map:match pattern="*/*/*/*/index.html">
 <!--
-        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
--->
         <map:generate src="cocoon:/{1}/{2}/{3}/{4}/article.xml"/>
-        <map:transform src="stylesheets/publication/Page/Article/Live/main.xsl"/>
+-->
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/front.xml"/>
+          <map:part src="cocoon:/{1}/{2}/{3}/{4}/article.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
