@@ -56,7 +56,8 @@
 
     <menu name="Debug" label="Debug">
       <block>
-        <item href="index.xml">XML</item>
+        <item href="index.xml">Feed</item>
+        <item href="lenya-page-body.xml">Body</item>
       </block>
     </menu>
   </menus>
