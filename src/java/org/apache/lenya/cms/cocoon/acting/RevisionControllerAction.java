@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionControllerAction.java,v 1.12 2003/03/06 20:45:41 gregor Exp $
+ * $Id: RevisionControllerAction.java,v 1.13 2003/04/23 17:53:22 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,12 +43,9 @@
  */
 package org.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
+import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -67,32 +64,12 @@ import java.util.Map;
  * @author Michael Wechner
  * @version 2003.1.5
  */
-public class RevisionControllerAction extends AbstractComplementaryConfigurableAction
-    implements Configurable {
+public class RevisionControllerAction extends AbstractAction {
     String rcmlDirectory = null;
     String backupDirectory = null;
     RevisionController rc = null;
     String username = null;
     String filename = null;
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param conf DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-
-        rcmlDirectory = conf.getChild("rcmlDirectory").getAttribute("href");
-        backupDirectory = conf.getChild("backupDirectory").getAttribute("href");
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("CONFIGURATION:\nRCML Directory=" + rcmlDirectory);
-            getLogger().debug("CONFIGURATION:\nRCBAK Directory=" + backupDirectory);
-        }
-    }
 
     /**
      * DOCUMENT ME!
@@ -109,19 +86,21 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
-        // Get Absolute Path of sitemap
-        org.apache.cocoon.environment.Source inputSource = resolver.resolve("");
-        String sitemapParentPath = inputSource.getSystemId();
-        sitemapParentPath = sitemapParentPath.substring(5); // Remove "file:" protocoll
-        getLogger().debug(".act(): RESOLVED SOURCE: " + sitemapParentPath);
 
-        // /Get Absolute Path of sitemap
+
+        String publicationPath = parameters.getParameter("publicationPath");
+        getLogger().debug(".act(): publicationPath: " + publicationPath);
+
         // Initialize Revision Controller
-        rc = new RevisionController(sitemapParentPath + rcmlDirectory,
-                sitemapParentPath + backupDirectory);
+        rcmlDirectory = publicationPath + parameters.getParameter("rcmlDirectory");
+        getLogger().debug("rcmlDirectory : " + rcmlDirectory);
+        backupDirectory = publicationPath + parameters.getParameter("backupDirectory");
+        getLogger().debug("backupDirectory : " +backupDirectory );
+        rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
         getLogger().debug("revision controller" + rc);
 
         // /Initialize Revision Controller
+
         // Get request object
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -143,7 +122,7 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
         Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
         getLogger().debug(".act(): Identity: " + identity);
 
-        filename = sitemapParentPath + parameters.getParameter("filename");
+        filename = parameters.getParameter("filename");
         username = null;
 
         if (identity != null) {

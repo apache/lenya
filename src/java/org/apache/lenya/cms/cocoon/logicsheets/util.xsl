@@ -80,6 +80,7 @@
     
         Publication xspUtilPublication = null;
         String xspUtilServletContextPath = null;
+        String xspUtilPublicationPath = null;
         {
             Source inputSource = resolver.resolve("");
             String publicationPath = inputSource.getSystemId();
@@ -90,10 +91,11 @@
             path = path.replaceAll("file:", "");
             //path = path.replaceAll("file:/", "");
             path = path.replace('/', File.separatorChar);
+            publicationPath = publicationPath.replaceAll("file:", "");
+            publicationPath = publicationPath.replace('/', File.separatorChar);
             
             xspUtilServletContextPath = path;
-            <xsp:content><publication-path><xsp:expr>publicationPath</xsp:expr></publication-path></xsp:content>
-            <xsp:content><servlet-context-path><xsp:expr>path</xsp:expr></servlet-context-path></xsp:content>
+            xspUtilPublicationPath = publicationPath;
             xspUtilPublication = new Publication(publicationId, path);
         }
     

@@ -1,5 +1,5 @@
 /*
- * $Id: BitfluxAction.java,v 1.10 2003/03/17 17:40:53 michi Exp $
+ * $Id: BitfluxAction.java,v 1.11 2003/04/23 17:53:22 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -247,7 +247,7 @@ public class BitfluxAction extends ConfigurableComposerAction {
             getLogger().debug(".act(): Save to permanent file: " + permFile);
 
             RevisionController rc = new RevisionController(sitemapPath + rcmlDirectory,
-                    sitemapPath + backupDirectory);
+                    sitemapPath + backupDirectory, sitemapPath);
 
             try {
                 Session session = httpReq.getSession(false);
@@ -257,7 +257,7 @@ public class BitfluxAction extends ConfigurableComposerAction {
                 }
 
                 Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
-                rc.reservedCheckIn(permFile.getAbsolutePath(), identity.getUsername(), true);
+                rc.reservedCheckIn(relativeFilename, identity.getUsername(), true);
 
                 FileUtil.copyFile(tempFile, permFile);
             } catch (Exception e) {

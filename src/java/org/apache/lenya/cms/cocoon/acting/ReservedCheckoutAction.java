@@ -1,5 +1,5 @@
 /*
- * $Id: ReservedCheckoutAction.java,v 1.7 2003/03/06 20:45:41 gregor Exp $
+ * $Id: ReservedCheckoutAction.java,v 1.8 2003/04/23 17:53:22 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,8 +43,6 @@
  */
 package org.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.environment.Redirector;
@@ -63,16 +61,6 @@ import java.util.Map;
  * @version 2002.6.25
  */
 public class ReservedCheckoutAction extends RevisionControllerAction {
-    /**
-     * DOCUMENT ME!
-     *
-     * @param conf DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-    }
 
     /**
      * DOCUMENT ME!

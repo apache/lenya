@@ -7,7 +7,7 @@
   <cmsbody>
     <Page>
       <Content>
-        <xsl:apply-templates/> 
+        <xsl:apply-templates select="NewsML"/> 
       </Content>
     </Page>
   </cmsbody> 

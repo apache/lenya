@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionController.java,v 1.12 2003/03/06 20:45:41 gregor Exp $
+ * $Id: RevisionController.java,v 1.13 2003/04/23 17:56:15 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,6 +46,7 @@ package org.lenya.cms.rc;
 import org.apache.log4j.Category;
 
 import org.lenya.util.XPSFileOutputStream;
+import org.lenya.cms.publishing.PublishingEnvironment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -74,7 +75,7 @@ public class RevisionController {
     //   username as identity parameter to reservedCheckIn()
     //
     public static final String systemUsername = "System";
-    String rcmlDirectory = null;
+    String rcmlDir = null;
     String rootDir = null;
     String backupDir = null;
 
@@ -83,21 +84,21 @@ public class RevisionController {
      */
     public RevisionController() {
         Configuration conf = new Configuration();
-        rcmlDirectory = conf.rcmlDirectory;
+        rcmlDir = conf.rcmlDirectory;
         backupDir = conf.backupDirectory;
-        rootDir = "";
+        rootDir = "conf.rootDirectory";
     }
 
     /**
      * Creates a new RevisionController object.
      *
-     * @param rcmlDirectory DOCUMENT ME!
+     * @param rcmlDir DOCUMENT ME!
      * @param backupDirectory DOCUMENT ME!
      */
-    public RevisionController(String rcmlDirectory, String backupDirectory) {
-        this.rcmlDirectory = rcmlDirectory;
+    public RevisionController(String rcmlDirectory, String backupDirectory, String rootDirectory) {
+        this.rcmlDir = rcmlDirectory;
         this.backupDir = backupDirectory;
-        rootDir = "";
+        this.rootDir = rootDirectory;
     }
 
     /**
@@ -115,10 +116,11 @@ public class RevisionController {
      *
      * @param args DOCUMENT ME!
      */
+/* FIXME
     public static void main(String[] args) {
         if (args.length != 4) {
             log.info("Usage: " + new RevisionController().getClass().getName() +
-                " username(user who checkout) source(document to checkout) username(user who checkin) destination(document to checkin)");
+                " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
 
             return;
         }
@@ -159,14 +161,14 @@ public class RevisionController {
             log.error(e);
         }
     }
-
+*/
     /**
      * Shows Configuration
      *
      * @return DOCUMENT ME!
      */
     public String toString() {
-        return "rcmlDir=" + rcmlDirectory + " , rcbakDir=" + backupDir;
+        return "rcmlDir=" + rcmlDir + " , rcbakDir=" + backupDir + " , rootDir=" + rootDir;
     }
 
     /**
@@ -187,7 +189,7 @@ public class RevisionController {
             throw new FileNotFoundException(file.getAbsolutePath());
         }
 
-        return new RCML(rcmlDirectory, rootDir + source);
+        return new RCML(rcmlDir, source, rootDir);
     }
 
     /**
@@ -212,7 +214,7 @@ public class RevisionController {
             throw new FileNotFoundException(file.getAbsolutePath());
         }
 
-        RCML rcml = new RCML(rcmlDirectory, rootDir + source);
+        RCML rcml = new RCML(rcmlDir, source, rootDir);
 
         RCMLEntry entry = rcml.getLatestEntry();
 
@@ -224,7 +226,7 @@ public class RevisionController {
         log.debug("entry.identity" + entry.identity);
 
         if ((entry != null) && (entry.type != RCML.ci) && !entry.identity.equals(identity)) {
-            throw new FileReservedCheckOutException(source, rcml);
+            throw new FileReservedCheckOutException(rootDir+source, rcml);
         }
 
         rcml.checkOutIn(RCML.co, identity, new Date().getTime());
@@ -248,7 +250,7 @@ public class RevisionController {
      */
     public long reservedCheckIn(String destination, String identity, boolean backup)
         throws FileReservedCheckInException, Exception {
-        RCML rcml = new RCML(rcmlDirectory, rootDir + "/" + destination);
+        RCML rcml = new RCML(rcmlDir, destination, rootDir);
 
         CheckOutEntry coe = rcml.getLatestCheckOutEntry();
         CheckInEntry cie = rcml.getLatestCheckInEntry();
@@ -286,14 +288,14 @@ public class RevisionController {
                 if (!cie.identity.equals(identity)) {
                     // Case 1.2., abort...
                     //
-                    throw new FileReservedCheckInException(destination, rcml);
+                    throw new FileReservedCheckInException(rootDir+destination, rcml);
                 }
             } else {
                 // Case 2
                 if (!coe.identity.equals(identity)) {
                     // Case 2.2., abort...
                     //
-                    throw new FileReservedCheckInException(destination, rcml);
+                    throw new FileReservedCheckInException(rootDir+destination, rcml);
                 }
             }
         }
@@ -415,7 +417,7 @@ public class RevisionController {
         File backup = new File(backupDir + "/" + destination + ".bak." + time);
         File current = new File(rootDir + destination);
 
-        RCML rcml = new RCML(rcmlDirectory, current.getAbsolutePath());
+        RCML rcml = new RCML(rcmlDir, destination, rootDir);
 
         if (!backup.isFile()) {
             throw new FileNotFoundException(backup.getAbsolutePath());

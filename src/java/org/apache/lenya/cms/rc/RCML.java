@@ -1,5 +1,5 @@
 /*
- * $Id: RCML.java,v 1.9 2003/03/06 20:45:41 gregor Exp $
+ * $Id: RCML.java,v 1.10 2003/04/23 17:56:15 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -95,15 +95,15 @@ public class RCML {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public RCML(String rcmlDirectory, String filename)
+    public RCML(String rcmlDirectory, String filename, String rootDirectory)
         throws Exception {
         this();
-        rcmlFile = new File(rcmlDirectory + filename + ".rcml");
+        rcmlFile = new File(rcmlDirectory + "/" +filename + ".rcml");
 
         if (!rcmlFile.isFile()) {
             // The rcml file does not yet exist, so we create it now...
             //
-            File dataFile = new File(filename);
+            File dataFile = new File(rootDirectory + filename);
             long lastModified = 0;
 
             if (dataFile.isFile()) {
@@ -135,13 +135,13 @@ public class RCML {
      */
     public static void main(String[] args) {
         if (args.length != 1) {
-            log.info("Usage: java RCML rcmlDirectory datafilename");
+            log.info("Usage: java RCML rcmlDirectory datafilename rootDirectory");
 
             return;
         }
 
         try {
-            RCML rcml = new RCML(args[0], args[1]);
+            RCML rcml = new RCML(args[0], args[1], args[2]);
             rcml.checkOutIn(RCML.co, "michi", new Date().getTime());
 
             new DOMWriter(new PrintWriter(System.out)).print(rcml.document);

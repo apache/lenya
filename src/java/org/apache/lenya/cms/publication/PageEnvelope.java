@@ -16,6 +16,7 @@ import org.xml.sax.SAXException;
 
 import org.apache.log4j.Category;
 
+import org.lenya.cms.rc.RCEnvironment;
 /**
  *
  * @author  nobby
@@ -29,17 +30,25 @@ public class PageEnvelope {
     public static final int AREA_POS = 3;
     
     private Publication publication;
+    private RCEnvironment rcEnvironment;
     private String context;
     private String area;
 
     /** Creates a new instance of PageEnvelope */
     public PageEnvelope(SourceResolver resolver, Request request)
-            throws ProcessingException, SAXException, IOException {
+            throws PageEnvelopeException, ProcessingException, SAXException, IOException {
         Source inputSource = resolver.resolveURI("");
         String publicationUri = inputSource.getURI();
         String directories[] = publicationUri.split("/");
+//FIXME if no publicationId specified?
         String publicationId = directories[directories.length - 1];
-        String path = publicationUri.substring(0, publicationUri.indexOf("/lenya/pubs/" + publicationId));
+        String path = null; 
+        int l = publicationUri.length();
+        if(publicationUri.indexOf("/lenya/pubs/" + publicationId)>=0 & publicationUri.indexOf("/lenya/pubs/" + publicationId)<l)  {
+          path = publicationUri.substring(0, publicationUri.indexOf("/lenya/pubs/" + publicationId));
+        } else {
+          throw new PageEnvelopeException("Cannot found the publication because no publicationId specified in URI : "+publicationUri);       
+        }
 	// apparently on windows the path will be something like
 	// "file://foo/bar/baz" where as on *nix it will be
 	// "file:/foo/bar/baz". The following hack will transparently
@@ -55,6 +64,7 @@ public class PageEnvelope {
         area = directories[AREA_POS];;
 
         publication = new Publication(publicationId, path);
+        rcEnvironment = new RCEnvironment(path);
         context = request.getContextPath();
     }
     
@@ -66,6 +76,13 @@ public class PageEnvelope {
         return publication;
     }
     
+    /**
+     * Returns the rcEnvironment.
+     */
+    public RCEnvironment getRCEnvironment() {
+        return rcEnvironment;
+    }
+
     public String getContext() {
         return context;
     }

@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.25 2003/04/11 11:06:44 michi Exp $
+ * $Id: XopusHandlerAction.java,v 1.26 2003/04/23 17:53:22 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -285,7 +285,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
             getLogger().debug(".act(): Save to permanent file: " + permFile);
 
             RevisionController rc = new RevisionController(sitemapPath + rcmlDirectory,
-                    sitemapPath + backupDirectory);
+                    sitemapPath + backupDirectory, sitemapPath);
 
             try {
                 Session session = httpReq.getSession(false);
@@ -295,8 +295,8 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
                 }
 
                 Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
-                rc.reservedCheckIn(permFile.getAbsolutePath(), identity.getUsername(), true);
-
+//                rc.reservedCheckIn(permFile.getAbsolutePath(), identity.getUsername(), true);
+                rc.reservedCheckIn(reqFile, identity.getUsername(), true);
                 FileUtil.copyFile(tempFile, permFile);
             } catch (Exception e) {
                 getLogger().error(".act(): Exception during checkin: " + permFile);

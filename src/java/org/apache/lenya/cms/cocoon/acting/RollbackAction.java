@@ -1,5 +1,5 @@
 /*
- * $Id: RollbackAction.java,v 1.9 2003/03/06 20:45:41 gregor Exp $
+ * $Id: RollbackAction.java,v 1.10 2003/04/23 17:53:22 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,9 +43,6 @@
  */
 package org.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.environment.Redirector;
@@ -66,17 +63,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
  * @author Edith Chevrier
  * @version 2002.8.02
  */
-public class RollbackAction extends RevisionControllerAction implements Configurable {
-    /**
-     * DOCUMENT ME!
-     *
-     * @param conf DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-    }
+public class RollbackAction extends RevisionControllerAction {
 
     /**
      * DOCUMENT ME!
