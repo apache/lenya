@@ -15,11 +15,12 @@
  *
  */
 
-/* $Id: MailTask.java,v 1.34 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.mail;
 
 
+import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -101,8 +102,8 @@ public class MailTask extends AbstractTask {
                         absoluteUri += (":" + Integer.parseInt(serverPort));
                     }
 
-                    absoluteUri += (getParameters().getParameter(PARAMETER_CONTEXT_PREFIX) +
-                    getParameters().getParameter(PARAMETER_PUBLICATION_ID) + uri);
+                    absoluteUri += (getParameters().getParameter(PARAMETER_CONTEXT_PREFIX) + File.separator +
+                            getParameters().getParameter(PARAMETER_PUBLICATION_ID) + uri);
                     uri = absoluteUri;
                 }
 
