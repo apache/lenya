@@ -631,30 +631,8 @@
 
     <!-- Search with Lucene -->
     <map:pipeline>
-      <map:match pattern="lucene/**">
-        <map:mount uri-prefix="lucene" src="lenya/lucene.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
       <map:match pattern="*/search-*/lucene">
-        <map:generate type="serverpages" src="lenya/content/search/search-and-results.xsp">
-          <map:parameter name="max-hits-per-page" value="3"/>
-          <map:parameter name="max-pages" value="7"/>
-          <map:parameter name="number-of-pubs" value="1"/>
-          <map:parameter name="pub0-id" value="{1}"/>
-          <map:parameter name="pub0-name" value="{1}"/>
-          <map:parameter name="pub0-index-dir" value="lenya/pubs/{1}/work/search/lucene/index/{2}/index"/>
-          <map:parameter name="pub0-excerpt-dir" value="lenya/pubs/{1}/work/search/lucene/htdocs_dump/{2}"/>
-          <map:parameter name="pub0-prefix" value=""/>
-        </map:generate>
-        <map:transform src="lenya/xslt/search/sort.xsl"/>
-        
-        <map:act type="resource-exists" src="lenya/pubs/{1}/lenya/xslt/search/search-and-results.xsl">
-          <map:transform src="lenya/pubs/{../1}/lenya/xslt/search/search-and-results.xsl"/>
-          <map:serialize type="html"/>
-        </map:act>
-        <map:transform src="lenya/xslt/search/search-and-results.xsl">
-          <map:parameter name="area" value="{2}"/>
-        </map:transform>
-        <map:serialize type="html"/>
+        <map:mount uri-prefix="" src="lenya/{fallback:lucene.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
       <map:handle-errors type="500">
         <map:serialize type="xml"/>

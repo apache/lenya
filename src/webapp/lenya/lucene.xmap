@@ -1,57 +1,48 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components>
-    <map:generators default="file"/>
-    <map:transformers default="xslt"/>
-    <map:readers default="resource"/>
-    <map:serializers default="html"/>
-    <map:matchers default="wildcard"/>
-    <map:actions/>
-    <map:selectors/>
-  </map:components>
+ <map:components/>
 
-  <map:views>
-    <map:view name="xml" from-label="xml">
-      <map:serialize type="xml"/>
-    </map:view>
-  </map:views>
+ <map:pipelines>
 
-  <map:pipelines>
-    <!-- Create Search Index -->
     <map:pipeline>
-      <map:match pattern="create">
-        <map:generate type="serverpages" src="content/search/create-index.xsp"/>
-        <map:transform src="xslt/search/dynamic-page2html.xsl">
-          <map:parameter name="view-source" value="lucene/create-index.xsp"/>
+      <map:match pattern="*/search-*/lucene">
+        <map:generate type="serverpages" src="content/search/search-and-results.xsp">
+          <map:parameter name="max-hits-per-page" value="3"/>
+          <map:parameter name="max-pages" value="7"/>
+          <map:parameter name="number-of-pubs" value="1"/>
+          <map:parameter name="pub0-id" value="{1}"/>
+          <map:parameter name="pub0-name" value="{1}"/>
+          <map:parameter name="pub0-index-dir" value="pubs/{1}/work/search/lucene/index/{2}/index"/>
+          <map:parameter name="pub0-excerpt-dir" value="pubs/{1}/work/search/lucene/htdocs_dump/{2}"/>
+          <map:parameter name="pub0-prefix" value=""/>
+        </map:generate>
+        <map:transform src="xslt/search/sort.xsl"/>
+        
+        <map:act type="resource-exists" src="pubs/{1}/lenya/xslt/search/search-and-results.xsl">
+          <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results.xsl"/>
+          <map:serialize type="html"/>
+        </map:act>
+        <map:transform src="xslt/search/search-and-results.xsl">
+          <map:parameter name="area" value="{2}"/>
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
-      <map:handle-errors>
+      <map:handle-errors type="500">
         <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>
-    <!-- /Create Search Index -->
 
 
-
-    <!-- Search and Result Screen -->
-    <map:pipeline>
-      <map:match pattern="search">
-        <map:generate type="serverpages" src="content/search/search-and-results.xsp" label="xml"/>
+    <!-- Lucene web based administration -->
 <!--
-        <map:transform src="xslt/search/dynamic-page2html.xsl">
-          <map:parameter name="view-source" value="lucene/search-index.xsp"/>
-        </map:transform>
--->
-        <map:transform src="xslt/search/search-and-results.xsl"/>
-        <map:serialize type="html"/>
+    <map:pipeline>
+      <map:match pattern="lucene/**">
+        <map:mount uri-prefix="lucene" src="lucene.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
     </map:pipeline>
-    <!-- /Search and Result Screen -->
-  </map:pipelines>
+-->
+ </map:pipelines>
+
 </map:sitemap>
