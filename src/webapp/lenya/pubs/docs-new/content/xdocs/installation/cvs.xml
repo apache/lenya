@@ -28,7 +28,7 @@ cvs -d :pserver:anonymous@cvs.wyona.org:/usr/local/repositories checkout lenya
 <section>
 <title>CVS at Apache</title>
 <p>
-The CVS command line for the Apache CVS server:
+The CVS command line for the Apache CVS server (<strong>Note:</strong> This module has not been populated yet):
 </p>
 <source>
 cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login

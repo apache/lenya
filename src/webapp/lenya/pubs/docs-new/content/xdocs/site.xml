@@ -14,11 +14,11 @@
   <installation href="installation/" label="Installation">
     <install-overview href="index.html" label="Overview"/>
     <prerequisites href="prerequisites.html" label="Prerequisites"/>
-    <install-get label="Get Lenya">
+    <install-get label="Download Lenya">
       <cvs href="cvs.html" label="CVS"/>
-      <cvs href="download.html" label="Download"/>
+      <cvs href="download.html" label="Nightly Snapshots"/>
     </install-get>
-    <install label="Setup Lenya">
+    <install label="Install Lenya">
       <node-5 href="source_version.html" label="Source Version"/>
     </install>
   </installation>

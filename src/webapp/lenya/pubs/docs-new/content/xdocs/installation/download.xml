@@ -14,11 +14,10 @@
 <body> 
 
 <section>
-<title>CVS Snapshots</title>
+<title>CVS Nightly Snapshots (Source and Binary)</title>
 
 <ul>
-  <li><link href="http://wyona.org/lenya/lenya-0.8-dev-src-20030325022718.tar.gz">2003-03-25</link></li>
-  <li><link href="http://wyona.org/lenya/lenya-0.8-dev-src-20030328125056.tar.gz">2003-03-28</link></li>
+  <li><link href="http://cvs.wyona.org/nightly-builds/">http://cvs.wyona.org/nightly-builds/</link></li>
 </ul>
 
 </section>

@@ -4,7 +4,7 @@
 <document> 
 
 <header> 
-    <title>Installing Lenya</title>
+    <title>Downloading and Installing Lenya</title>
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
@@ -18,9 +18,10 @@
     <link href="prerequisites.html">Prerequisites</link>
   </li>
   <li>
-    Get Lenya
+    Download Lenya
     <ul>
-      <li><link href="cvs.html">From CVS</link></li>
+      <li><link href="cvs.html">CVS</link></li>
+      <li><link href="download.html">Nightly Snapshots</link></li>
     </ul>
   </li>
   <li>
