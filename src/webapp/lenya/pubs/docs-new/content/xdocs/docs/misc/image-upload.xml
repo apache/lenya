@@ -29,6 +29,9 @@ In order to enable multipart requests (e.g. image upload), one needs to enable t
 <p>
 Please restart your servlet engine after editing <code>web.xml</code>.
 </p>
+<p>
+If one builds Lenya from source then multipart requests can be enabled by editing the file <code>build.properties</code> (enable.uploads=true).
+</p>
 </section>
 </body>
 </document>

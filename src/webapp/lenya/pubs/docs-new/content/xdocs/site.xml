@@ -75,6 +75,7 @@
     <misc href="misc/" label="Miscellaneous">
       <namespaces href="webdav.html" label="WebDAV Servers"/>
       <namespaces href="image-upload.html" label="Image Upload"/>
+      <namespaces href="mod_proxy.html" label="mod_proxy"/>
     </misc>
     <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
     <javadoc-error href="javadoc-error.html"/>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>mod_proxy</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>conf/httpd.conf</title>
+<source>
+<![CDATA[
+<VirtualHost 192.168.1.13>
+    ServerName 192.168.1.13
+    ServerAdmin lenya@cocoon.apache.org
+    DocumentRoot /home/lenya/build/apache_1.3.24/htdocs
+    ProxyPass          / http://192.168.1.13:8080/lenya/blog/live/
+    ProxyPassReverse   / http://192.168.1.13:8080/lenya/blog/live/
+    ErrorLog logs/blog-error_log
+    CustomLog logs/blog-access_log common
+</VirtualHost>
+]]>
+</source>
+</section>
+</body>
+</document>
