@@ -8,10 +8,16 @@ import java.io.File;
  * @created 2002.2.26
  */
 public abstract class AbstractParentChildCreator{
+public static short LEAF_NODE=0;
+public static short BRANCH_NODE=1;
 /**
  *
  */
-  //public abstract void generateTreeId(String childId) throws Exception;
+  public abstract short getChildType(short childType) throws Exception;
+/**
+ *
+ */
+  public abstract String generateTreeId(String childId) throws Exception;
 /**
  *
  */

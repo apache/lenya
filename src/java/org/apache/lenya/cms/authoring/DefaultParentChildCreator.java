@@ -11,6 +11,18 @@ public class DefaultParentChildCreator extends AbstractParentChildCreator{
 /**
  *
  */
+  public short getChildType(short childType) throws Exception{
+    return childType;
+    }
+/**
+ *
+ */
+  public String generateTreeId(String childId) throws Exception{
+    return childId;
+    }
+/**
+ *
+ */
   public void create(File samplesDir,File parentDir,String childId) throws Exception{
     }
   }

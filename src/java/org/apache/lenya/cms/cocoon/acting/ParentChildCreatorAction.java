@@ -37,7 +37,7 @@ import org.wyona.cms.authoring.AbstractParentChildCreator;
  * Describe class <code>ParentChildCreatorAction</code> here.
  *
  * @author Michael Wechner
- * @version 2002.02.26
+ * @version 2002.02.27
  * @created 2002.01.30
  */
 public class ParentChildCreatorAction extends AbstractComplementaryConfigurableAction implements Configurable{
@@ -75,7 +75,18 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     String parentid=request.getParameter("parentid");
     String childid=request.getParameter("childid");
     String childname=request.getParameter("childname");
-    String childtype=request.getParameter("childtype"); // branch or leaf
+    String childtype=request.getParameter("childtype");
+    short childType;
+    if(childtype.equals("branch")){
+      childType=AbstractParentChildCreator.BRANCH_NODE;
+      }
+    else if(childtype.equals("leaf")){
+      childType=AbstractParentChildCreator.LEAF_NODE;
+      }
+    else{
+      getLogger().error("No such child type: "+childtype);
+      return null;
+      }
     String doctype=request.getParameter("doctype");
     if(!validate(parentid,childid,childname,childtype,doctype)){
       return null;
@@ -87,6 +98,20 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
       getLogger().error("No session object");
       return null;
     }
+
+    // Get creator
+    AbstractParentChildCreator creator=null;
+    String absoluteDoctypesPath=sitemapParentPath+doctypesPath;
+    Document doctypesDoc=new SAXReader().read("file:"+absoluteDoctypesPath+"doctypes.xconf");
+    Attribute creator_src=(Attribute)doctypesDoc.selectSingleNode("/doctypes/doc[@type='"+doctype+"']/creator/@src");
+    if(creator_src != null){
+      getLogger().error("CREATOR: "+creator_src.getName()+" "+creator_src.getPath()+" "+creator_src.getValue());
+      creator=(AbstractParentChildCreator)Class.forName(creator_src.getValue()).newInstance();
+      }
+    else{
+      getLogger().error("CREATOR: DefaultCreator");
+      creator=(AbstractParentChildCreator)Class.forName("org.wyona.cms.authoring.DefaultParentChildCreator").newInstance();
+      }
 
     // Transaction should actually be started here!
 
@@ -116,7 +141,14 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     getLogger().debug("PARENT ELEMENT: "+parent_element.getPath());
 
     // Add node: branch or leaf
-    parent_element.addElement(childtype).addAttribute("relURI",childid).addAttribute("doctype",doctype).addAttribute("menuName",childname);
+    childType=creator.getChildType(childType);
+    if(childType==AbstractParentChildCreator.BRANCH_NODE){
+      childtype="branch";
+      }
+    else{
+      childtype="leaf";
+      }
+    parent_element.addElement(childtype).addAttribute("relURI",creator.generateTreeId(childid)).addAttribute("doctype",doctype).addAttribute("menuName",childname);
     getLogger().debug("Tree has been modified: "+doc.asXML());
 
     // Write new tree
@@ -126,33 +158,8 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
     // Transaction should actually be finished here!
 
-    // Get creator
-    AbstractParentChildCreator creator=null;
-    String absoluteDoctypesPath=sitemapParentPath+doctypesPath;
-    Document doctypesDoc=new SAXReader().read("file:"+absoluteDoctypesPath+"doctypes.xconf");
-    Attribute creator_src=(Attribute)doctypesDoc.selectSingleNode("/doctypes/doc[@type='"+doctype+"']/creator/@src");
-    if(creator_src != null){
-      getLogger().error("CREATOR: "+creator_src.getName()+" "+creator_src.getPath()+" "+creator_src.getValue());
-      creator=(AbstractParentChildCreator)Class.forName(creator_src.getValue()).newInstance();
-      }
-    else{
-      getLogger().error("CREATOR: DefaultCreator");
-      creator=(AbstractParentChildCreator)Class.forName("org.wyona.cms.authoring.DefaultParentChildCreator").newInstance();
-      }
-
     // Create actual document
     creator.create(new File(absoluteDoctypesPath+"samples"),new File(sitemapParentPath+docsPath+parentid),childid);
-
-/*
-    String filename=sitemapParentPath+docsPath+parentid+"/"+childid+"/index.xml"; // Filename Generator
-    String filenameMeta=sitemapParentPath+docsPath+parentid+"/"+childid+"/index-meta.xml"; // Filename Generator
-    String doctypeSample=absoluteDoctypesPath+"samples/"+doctype+".xml";
-    String doctypeMeta=absoluteDoctypesPath+"samples/Meta.xml";
-    getLogger().error("Filename: "+filename);
-    getLogger().error("Doctypes: "+absoluteDoctypesPath);
-    copyFile(new File(doctypeSample),new File(filename));
-    copyFile(new File(doctypeMeta),new File(filenameMeta));
-*/
 
     // Redirect to referer
     if(7 > 1){
@@ -205,23 +212,5 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
  */
   private OutputStream intercept(OutputStream out) throws Exception{
     return null;
-    }
-/**
- *
- */
-  private boolean copyFile(File source,File destination) throws Exception{
-    if(source.exists()){
-      File parentDestination=new File(destination.getParent());
-      if(!parentDestination.exists()){
-       getLogger().warn("Directory will be created: "+parentDestination);
-        parentDestination.mkdirs();
-        }
-      org.apache.avalon.excalibur.io.FileUtil.copyFile(source,destination);
-      return true;
-      }
-    else{
-      getLogger().error("File does not exist: "+source);
-      return false;
-      }
     }
   }
