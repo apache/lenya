@@ -1,5 +1,5 @@
 /*
-$Id: RemoveLabelTask.java,v 1.1 2003/08/12 10:09:00 egli Exp $
+$Id: RemoveLabelTask.java,v 1.2 2003/08/12 13:19:51 egli Exp $
 <License>
 
  ============================================================================
@@ -86,6 +86,15 @@ public class RemoveLabelTask extends PublicationTask {
      */
     protected String getArea() {
         return area;
+    }
+
+    /**
+     * Set the area.
+     * 
+     * @param area the area.
+     */
+    public void setArea(String area) {
+        this.area = area;
     }
 
     /**
