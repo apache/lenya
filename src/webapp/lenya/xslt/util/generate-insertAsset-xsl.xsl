@@ -24,6 +24,7 @@
   
   <xsl:param name="assetXPath"/>
   <xsl:param name="insertWhere"/>
+  <xsl:param name="insertReplace"/>
 
   <xsl:template match="/">
     <xso:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:unizh="http://unizh.ch/doctypes/common/1.0" exclude-result-prefixes="unizh">
@@ -47,15 +48,21 @@
       <xsl:choose>
 	<xsl:when test="$insertWhere = 'before'">
 	  <xsl:copy-of select="*"/>
-	  <xso:copy-of select="."/>
+	  <xsl:if test="$insertReplace != 'true'">
+	    <xso:copy-of select="."/>
+	  </xsl:if>
 	</xsl:when>
 	<xsl:when test="$insertWhere = 'after'">
-	  <xso:copy-of select="."/>
+	  <xsl:if test="$insertReplace != 'true'">
+	    <xso:copy-of select="."/>
+	  </xsl:if>
 	  <xsl:copy-of select="*"/>
 	</xsl:when>
 	<xsl:when test="$insertWhere = 'inside'">
 	  <xso:copy>
-	    <xso:copy-of select="@*|node()"/>
+	    <xsl:if test="$insertReplace != 'true'">
+	      <xso:copy-of select="@*|node()"/>
+	    </xsl:if>
 	    <xsl:copy-of select="*"/>
 	  </xso:copy>
 	</xsl:when>
