@@ -115,13 +115,11 @@
   
   <xsl:template match="member">
     <xsl:if test="position() &gt; 1"><br/></xsl:if>
-    <span style="white-space: nobreak">
-    <a href="../../{local-name(..)}/{@id}/index.html"><xsl:value-of select="@id"/>
+    <a href="../../{local-name(..)}/{@id}/index.html"><xsl:value-of select="@id"/></a>
     <xsl:if test="normalize-space(.) != ''">
-    	(<xsl:value-of select="."/>)
+    	<xsl:text>&#160;</xsl:text>(<xsl:value-of select="translate(., ' ', '&#160;')"/>)
     </xsl:if>
-    </a>
-    </span>
+    <xsl:text/>
   </xsl:template>
   
   
