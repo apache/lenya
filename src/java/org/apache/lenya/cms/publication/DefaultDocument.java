@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.25 2003/08/13 15:05:59 egli Exp $
+$Id: DefaultDocument.java,v 1.26 2003/08/28 09:51:53 egli Exp $
 <License>
 
  ============================================================================
@@ -56,8 +56,6 @@ $Id: DefaultDocument.java,v 1.25 2003/08/13 15:05:59 egli Exp $
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import org.w3c.dom.NodeList;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -70,11 +68,8 @@ public class DefaultDocument implements Document {
 	private String id;
 	private Publication publication;
 	private DublinCore dublincore;
-	private NodeList nodelist;
-	
-	private static final String PAGEENVELOPE_NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
 
-    /**
+	/**
      * Creates a new instance of DefaultDocument.
      * @param publication The publication the document belongs to.
      * @param id The document ID (starting with a slash).
@@ -87,7 +82,7 @@ public class DefaultDocument implements Document {
 
         assert (publication != null) && !"".equals(publication);
         this.publication = publication;
-        this.dublincore =  new DublinCore(this);
+        this.dublincore =  new DublinCoreProxy(this);
     }
 
     /**
@@ -106,7 +101,7 @@ public class DefaultDocument implements Document {
 
 		setArea(area);
 
-		this.dublincore =  new DublinCore(this);
+		this.dublincore =  new DublinCoreProxy(this);
 
     }
 
@@ -128,7 +123,7 @@ public class DefaultDocument implements Document {
 		this.language = language;
 		setArea(area);
 
-		this.dublincore =  new DublinCore(this);
+		this.dublincore =  new DublinCoreProxy(this);
 
 	}
 
