@@ -116,7 +116,7 @@
                   <map:parameter name="date" value="{date}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:generate>
-                <map:transform src="xslt/rc/rco-exception.xsl"/>
+                <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
                 <map:call resource="style-cms-page"/>
               </map:act>
               <map:generate 
