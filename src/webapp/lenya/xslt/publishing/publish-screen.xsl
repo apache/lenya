@@ -83,7 +83,7 @@
   <xsl:template match="/usecase:publish[not(usecase:message)]">
 
     <page:page>
-      <page:title>Publish</page:title>
+      <page:title>Publish HUGO</page:title>
       <page:body>
         
         <table class="lenya-table-noborder">
@@ -101,9 +101,15 @@
           <input type="hidden" name="ip-address" value="{/usecase:publish/usecase:ip-address}"/>
           <input type="hidden" name="role-ids" value="{/usecase:publish/usecase:role-ids}"/>
           <input type="hidden" name="workflow-event" value="publish"/>
+
+          <!-- FIXME: The ant taks and the regular task don't use the same parameter names. Another difference is that the regular task requires a leading slash (also compare blog and oscom publication) -->
+          <input type="hidden" name="properties.publish.sources" value="{$sources}"/> <!-- Ant Task -->
+          <input type="hidden" name="sources" value="{$sources}"/> <!-- Regular Task -->
+          <input type="hidden" name="properties.export.uris" value="{$uris}"/> <!-- Ant Task -->
+          <input type="hidden" name="uris" value="{$uris}"/> <!-- Regular Task -->
           
           <div class="lenya-box">
-            <div class="lenya-box-title">Publish</div>
+            <div class="lenya-box-title">Publish LEVI</div>
             <div class="lenya-box-body">
               <table class="lenya-table-noborder">
                 <tr>
@@ -146,6 +152,8 @@
           </not:notification>
           
         </form>
+
+
         <!--
         <sch:scheduler-form>
           
