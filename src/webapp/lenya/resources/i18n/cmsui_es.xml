@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+$Id: cmsui_es.xml,v 1.1 2004/02/16 12:58:51 gregor Exp $
+-->
+
+<catalogue xml:lang="es">
+
+  <!-- common used words -->
+  <message key="Submit">Aceptar</message>
+  <message key="Cancel">Cancelar</message>
+  <message key="NOTE">NOTA</message>
+  <message key="No referer">No hay referer</message>  
+  <message key="Referer">Referer</message>
+  <message key="EXCEPTION">EXCEPCI&#211;N</message>  
+  <message key="User">Usuario</message>
+  <message key="live">producci&#243;n</message>
+  <message key="not">No</message>
+  <message key="authoring">Edici&#243;n</message>
+  <message key="review">Revisi&#243;n</message>
+
+  <!-- submit screen -->
+  <message key="submit-for-approval">Enviar {0} para su aprobaci&#243;n</message>
+  <message key="submit-for-approval?">&#191;Desea enviar {0} para su aprobaci&#243;n?</message>  
+  
+  <!-- publish screen --> 
+  <message key="Publish">Publicar</message>    
+  <message key="Source File(s)">Archivo(s) Fuente</message>
+   
+  <!-- logn screen -->        
+  <message key="login-to-pub">Entrar a la publicaci&#243;n {0}</message>    
+  <message key="Login">Login</message>
+  <message key="Password">Contrase&#241;a</message>    
+  <message key="Username">Nombre de Usuario</message>                
+  <message key="Authentication failed">Error en la autentificaci&#243;n</message>  
+  <message key="try-user-lenya">Prueba con el Login {0} y Contrase&#241;a {1}.</message>
+
+  <!-- logout screen -->
+  <message key="logout-from-pub">Salir de la publicaci&#243;n {0}</message>
+  <message key="Your History">Tu historial</message>
+  <message key="Login to Authoring Area">Entrar en la zona de edici&#243;n</message>
+
+  <!-- reject screen -->
+  <message key="Reject">Rechazar</message>
+  <message key="reject-doc?">&#191;Rechazar el documento {0}?</message>
+
+  <!-- cms menu -->
+  <message key="New Document">Documento nuevo</message>
+  <message key="New Language Version">Nueva versi&#243;n en otro idioma</message>
+  <message key="Remove Language Version">Eliminar versi&#243;n en otro idioma</message>
+  <message key="File">Archivo</message>  
+  <message key="Edit">Editar</message>
+  <message key="Workflow">Workflow</message>
+  <message key="Deactivate">Desactivar</message>
+  <message key="Schedule">Horario</message>  
+  <message key="Copy">Copiar</message>  
+  <message key="Paste">Pegar</message>
+  <message key="Cut">Cortar</message>
+  <message key="Help">Ayuda</message>
+  <message key="Debug">Debug</message>
+  <message key="Delete">Borrar</message>
+  <message key="Archive">Arhivar</message>
+  <message key="Restore">Recuperar</message>
+  <message key="Move Up">Subir</message>
+  <message key="Move Down">Bajar</message>
+  <message key="Logout">Salir</message>
+  <message key="View Task Logs">Ver registro de tareas</message>
+  <message key="Support">Soporte</message>
+  <message key="System Documentation">Documentaci&#243;n de sistema</message>
+  <message key="User Documentation">Documentaci&#243;n de usuario</message>
+  <message key="About Apache Lenya">Acerca de Apache Lenya</message>
+  <message key="Apache Lenya Homepage">Sitio web de Apache Lenya</message>
+  <message key="Edit with Epoz">Editar con Epoz</message>
+  <message key="Edit with BXE">Editar con BXE</message>
+  <message key="Edit with one Form">Editar con Formulario &#218;nico</message>
+  <message key="Edit with Forms">Editar con Formularios</message>
+  <message key="Edit Metadata">Editar Metadatos</message>
+  <message key="Edit Navigation Title">Editar T&#237;tulo de Navegaci&#243;n</message>
+
+  <!-- cms tabs -->
+  <message key="Server Time">Hora del Servidor</message>  
+  <message key="Workflow State">Estado de Workflow</message>
+
+  <!-- administration tab -->
+  <message key="Administration">Administraci&#243;n</message>
+  <message key="really-delete?">&#191;Borrar {0}?</message>
+  <message key="Delete Trash">Vaciar Papelera</message>
+  <message key="Delete the Trash">Vaciar Papelera</message>
+  <message key="Do you really want to delete the trash ?">&#191;Seguro que quiere vaciar la papelera?</message>
+
+</catalogue>
+
