@@ -43,6 +43,7 @@
       <map:match type="usecase" pattern="bxe">
         
       <map:match type="step" pattern="open">
+       <map:act type="resource-exists" src="../../../../ROOT/bxeng/bxe/js/bitfluxeditor.js"> <!-- Check for BXENG -->
         <map:act type="reserved-checkout">
           <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
@@ -62,6 +63,9 @@
           <map:parameter name="configfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=config"/>
         </map:transform>
         <map:serialize type="xhtml-iso-8859-1"/>
+        </map:act>
+        <map:generate src="../../resources/misc/bxeng/download.xhtml"/>
+        <map:serialize type="html"/>
       </map:match>
       
       <map:match pattern="**/*.html">
