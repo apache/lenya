@@ -34,6 +34,7 @@
       <page-envelope href="pageEnvelope.html" label="Page envelope"/>
       <navigation href="navigation.html" label="Navigation"/>
       <standard-uri href="standardURI.html" label="URI Scheme"/>
+      <usecases href="usecases.html" label="Usecases"/>
       <xhtml-templating href="xhtml-templating.html" label="XHTML templating"/>
       <static-resources href="static-resources.html" label="Serving static resources"/>
       <node-40 href="tasks/" label="Tasks">
