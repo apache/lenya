@@ -454,10 +454,21 @@ public class LDAPUser extends FileUser {
 	    if (results != null && results.hasMore()) {
 		result = (SearchResult)results.next();
 
-		// sanity check
-		if (results.hasMore()) {
-		    log.warn("Found more than one entry in the directory for user " + userId + ". You probably should deactivate recursive searches. The first entry was used as a work-around.");
-		}
+		// sanity check: if more than one entry is returned
+		// for a user-id, then the directory is probably flawed,
+		// so it would be nice to warn the administrator.
+		//
+		// This block is commented out for now, because of possible
+		// side-effects, such as unexpected exceptions.
+// 		try {
+// 		    if (results.hasMore()) {
+// 			log.warn("Found more than one entry in the directory for user " + userId + ". You probably should deactivate recursive searches. The first entry was used as a work-around.");
+// 		    }
+// 		}
+// 		catch (javax.naming.PartialResultException e) {
+// 		    if (log.isDebugEnabled())
+// 			log.debug("Catching and ignoring PartialResultException, as this means LDAP server does not support our sanity check");
+// 		}
 		
 	    }
 	}
