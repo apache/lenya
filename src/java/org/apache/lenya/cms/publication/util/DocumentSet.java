@@ -47,6 +47,14 @@ public class DocumentSet {
     }
 
     private List documents = new ArrayList();
+    
+    /**
+     * Returns the list object that stores the documents.
+     * @return A list.
+     */
+    protected List getList() {
+        return this.documents;
+    }
 
     /**
 	 * Returns the documents contained in this set.
@@ -74,7 +82,7 @@ public class DocumentSet {
 	 * @return A boolean value.
 	 */
     public boolean isEmpty() {
-        return documents.isEmpty();
+        return getList().isEmpty();
     }
     
     /**
@@ -88,4 +96,16 @@ public class DocumentSet {
             resources[i].accept(visitor);
         }
     }
+
+    /**
+     * Removes a document.
+     * @param resource The document.
+     * @throws PublicationException if an error occurs.
+     */
+    public void remove(Document resource) throws PublicationException {
+        assert resource != null;
+        assert getList().contains(resource);
+        getList().remove(resource);
+    }
+
 }

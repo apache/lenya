@@ -32,6 +32,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.BooleanVariable;
 import org.apache.lenya.workflow.BooleanVariableInstance;
+import org.apache.lenya.workflow.History;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.Transition;
@@ -52,6 +53,30 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
     protected WorkflowInstanceImpl(WorkflowImpl workflow) {
         this.workflow = workflow;
         initVariableInstances();
+    }
+    
+    private History history;
+    
+    /**
+     * @see org.apache.lenya.workflow.WorkflowInstance#getHistory()
+     */
+    public History getHistory() {
+        initializeHistory();
+        return this.history;
+    }
+    
+    /**
+     * @return The history of this instance.
+     */
+    protected abstract History createHistory();
+    
+    /**
+     * Initializes the history.
+     */
+    protected void initializeHistory() {
+        if (this.history == null) {
+            this.history = createHistory();
+        }
     }
 
     private WorkflowImpl workflow;
@@ -77,6 +102,8 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      */
     public String[] getExecutableEvents(Situation situation) {
 
+        initializeHistory();
+        
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Resolving executable events");
         }
@@ -114,6 +141,8 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      */
     public void invoke(Situation situation, String event) throws WorkflowException {
 
+        initializeHistory();
+        
         if (!Arrays.asList(getExecutableEvents(situation)).contains(event)) {
             throw new WorkflowException("The event '" + event
                     + "' cannot be invoked in the situation '" + situation + "'.");
@@ -135,6 +164,7 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      * @throws WorkflowException if no single transition would fire.
      */
     protected TransitionImpl getNextTransition(String event) throws WorkflowException {
+        
         TransitionImpl nextTransition = null;
         Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
 
@@ -163,6 +193,7 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      * @throws WorkflowException if something goes wrong.
      */
     protected void fire(TransitionImpl transition) throws WorkflowException {
+        
         Action[] actions = transition.getActions();
 
         for (int i = 0; i < actions.length; i++) {
@@ -176,6 +207,8 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      */
     public State getCurrentState() {
 
+        initializeHistory();
+        
         State state = null;
         try {
             if (getHistory().isInitialized()) {
@@ -235,6 +268,9 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      * @see org.apache.lenya.workflow.WorkflowInstance#getValue(java.lang.String)
      */
     public boolean getValue(String variableName) {
+        
+        initializeHistory();
+        
         boolean value = false;
         try {
             BooleanVariable variable = getWorkflowImpl().getVariable(variableName);
@@ -281,6 +317,9 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      * @see org.apache.lenya.workflow.WorkflowInstance#isSynchronized(String)
      */
     public boolean isSynchronized(String event) throws WorkflowException {
+        
+        initializeHistory();
+        
         Transition nextTransition = getNextTransition(event);
         return nextTransition.isSynchronized();
     }
@@ -290,6 +329,7 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      *      java.lang.String)
      */
     public boolean canInvoke(Situation situation, String event) {
+        initializeHistory();
         return Arrays.asList(getExecutableEvents(situation)).contains(event);
     }
 }

@@ -29,6 +29,8 @@ import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * Publish usecase handler.
@@ -49,7 +51,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
 
-        String event = getParameterAsString(InvokeWorkflow.EVENT);
+        String event = getEvent();
         Document document = getSourceDocument();
 
         if (!getWorkflowInstance(getSourceDocument()).canInvoke(getSituation(), event)) {
@@ -87,8 +89,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         super.doExecute();
         if (isSubtreeEnabled()) {
             publishAll(getSourceDocument());
-        }
-        else {
+        } else {
             publish(getSourceDocument());
         }
     }
@@ -100,6 +101,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected void publish(Document authoringDocument) {
 
         Publication publication = authoringDocument.getPublication();
+        boolean success = false;
 
         try {
             publication.copyDocumentToArea(authoringDocument, Publication.LIVE_AREA);
@@ -109,16 +111,30 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
             ResourcesManager resourcesManager = authoringDocument.getResourcesManager();
             resourcesManager.copyResourcesTo(liveDocument);
+
+            triggerWorkflow(getEvent(), authoringDocument);
+            success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Publish document [" + authoringDocument + "]. Success: ["
+                        + success + "]");
+            }
         }
 
-        String event = getParameterAsString(InvokeWorkflow.EVENT);
-        triggerWorkflow(event);
     }
 
     /**
-     * Publishes a document or the subtree below a document, based on the parameter SUBTREE.
+     * @return The event to invoke.
+     */
+    private String getEvent() {
+        return getParameterAsString(InvokeWorkflow.EVENT);
+    }
+
+    /**
+     * Publishes a document or the subtree below a document, based on the
+     * parameter SUBTREE.
      * @param document The document.
      */
     protected void publishAll(Document document) {
@@ -129,13 +145,13 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         }
 
         try {
-            
-            OrderedDocumentSet set = new OrderedDocumentSet();
-                SiteManager manager = document.getPublication().getSiteManager(document
-                        .getIdentityMap());
-                Document[] ancestors = manager.getRequiringResources(document);
 
-                set = new OrderedDocumentSet(ancestors);
+            OrderedDocumentSet set = new OrderedDocumentSet();
+            SiteManager manager = document.getPublication().getSiteManager(document
+                    .getIdentityMap());
+            Document[] ancestors = manager.getRequiringResources(document);
+
+            set = new OrderedDocumentSet(ancestors);
             set.add(document);
             set.visitAscending(this);
         } catch (Exception e) {
@@ -146,7 +162,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             getLogger().debug("Publishing completed.");
         }
     }
-    
+
     /**
      * Returns whether subtree publishing is enabled.
      * @return A boolean value.
@@ -166,21 +182,30 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             getLogger().debug("Visiting resource [" + document + "]");
         }
 
-        publishAllLanguageVersions(document);
+        try {
+            publishAllLanguageVersions(document);
+        } catch (WorkflowException e) {
+            throw new PublicationException(e);
+        }
     }
 
     /**
      * Publishes all existing language versions of a document.
      * @param document The document.
      * @throws PublicationException if an error occurs.
+     * @throws WorkflowException
      */
-    protected void publishAllLanguageVersions(Document document) throws PublicationException {
+    protected void publishAllLanguageVersions(Document document) throws PublicationException,
+            WorkflowException {
         String[] languages = document.getPublication().getLanguages();
         DocumentFactory factory = document.getIdentityMap().getFactory();
         for (int i = 0; i < languages.length; i++) {
             Document version = factory.getLanguageVersion(document, languages[i]);
             if (version.exists()) {
-                publish(version);
+                WorkflowInstance instance = getWorkflowInstance(version);
+                if (instance.canInvoke(getSituation(), getEvent())) {
+                    publish(version);
+                }
             }
         }
 

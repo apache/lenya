@@ -67,6 +67,13 @@
             <tr>
               <td/>
               <td>
+                <input name="subtree" type="checkbox"/>
+                <i18n:text>publish complete subtree</i18n:text>
+              </td>
+            </tr>
+            <tr>
+              <td/>
+              <td>
                 <input i18n:attr="value" type="submit" name="submit" value="Publish"/>
                 &#160;
                 <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>

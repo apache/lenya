@@ -55,7 +55,6 @@
  */
 package org.apache.lenya.cms.publication.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -88,8 +87,6 @@ import org.apache.lenya.cms.site.SiteManager;
  */
 public class OrderedDocumentSet extends DocumentSet {
 
-    private List resources;
-
     /**
      * Ctor.
      */
@@ -114,10 +111,6 @@ public class OrderedDocumentSet extends DocumentSet {
      */
     public void add(Document document) {
 
-        if (resources == null) {
-            resources = new ArrayList();
-        }
-
         Publication publication = document.getPublication();
         try {
             SiteManager manager = publication.getSiteManager(document.getIdentityMap());
@@ -128,14 +121,14 @@ public class OrderedDocumentSet extends DocumentSet {
 
             int i = 0;
 
-            while (i < resources.size() && manager.requires(document, (Document) resources.get(i))) {
+            while (i < getList().size() && manager.requires(document, (Document) getList().get(i))) {
                 i++;
             }
 
-            resources.add(i, document);
+            getList().add(i, document);
 
             if (!check()) {
-                resources.remove(i);
+                getList().remove(i);
                 throw new PublicationException(
                         "The dependence relation is not a strict partial order!");
             }
@@ -220,24 +213,6 @@ public class OrderedDocumentSet extends DocumentSet {
     }
 
     /**
-     * Checks if this set is empty.
-     * 
-     * @return A boolean value.
-     */
-    public boolean isEmpty() {
-        return resources.isEmpty();
-    }
-
-    /**
-     * Returns the resources contained in this set in ascending order.
-     * 
-     * @return An array of resources.
-     */
-    public Document[] getResources() {
-        return (Document[]) resources.toArray(new Document[resources.size()]);
-    }
-
-    /**
      * Visits the resource set in ascending order (required resource before
      * requiring resource).
      * @param visitor The visitor.
@@ -261,20 +236,6 @@ public class OrderedDocumentSet extends DocumentSet {
         for (int i = 0; i < resources.length; i++) {
             resources[i].accept(visitor);
         }
-    }
-
-    /**
-     * Removes a document.
-     * @param resource The document.
-     * @throws PublicationException if an error occurs.
-     */
-    public void remove(Document resource) throws PublicationException {
-        if (resources == null) {
-            resources = new ArrayList();
-        }
-        assert resource != null;
-        assert resources.contains(resource);
-        resources.remove(resource);
     }
 
 }
