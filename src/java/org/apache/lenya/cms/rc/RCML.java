@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RCML.java,v 1.26 2004/07/16 15:43:59 edith Exp $  */
+/* $Id: RCML.java,v 1.27 2004/08/15 04:23:03 gregor Exp $  */
 
 package org.apache.lenya.cms.rc;
 
@@ -127,7 +127,7 @@ public class RCML {
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
-    public void finalize() throws IOException, Exception {
+    protected void finalize() throws IOException, Exception {
         if (this.isDirty()) {
             log.debug("RCML.finalize(): calling write()");
             write();
