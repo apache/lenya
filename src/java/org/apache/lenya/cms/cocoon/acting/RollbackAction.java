@@ -76,6 +76,7 @@ public class RollbackAction extends RevisionControllerAction implements Configur
         actionMap.put("location",location);
         return actionMap; 
 
+/*
       } else if (action.equals("view")){
         // Show the contents of an old revision
         String backupFilename = rc.getBackupFilename(new Long(rollbackTime).longValue(), filename);
@@ -95,7 +96,7 @@ public class RollbackAction extends RevisionControllerAction implements Configur
 
         actionMap.put("version", outBuffer.toString());
         return actionMap;
-
+*/
       } else {  
         getLogger().error("The action is no defined");
         return null;
