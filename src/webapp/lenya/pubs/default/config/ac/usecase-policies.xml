@@ -3,4 +3,10 @@
 	<usecase id="create">
 		<role id="editor"/>
 	</usecase>
+    <usecase id="archive">
+        <role id="editor"/>
+    </usecase>
+    <usecase id="delete">
+        <role id="editor"/>
+    </usecase>
 </usecases>

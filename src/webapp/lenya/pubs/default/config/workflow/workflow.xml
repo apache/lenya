@@ -16,6 +16,8 @@
   <state id="authoring" initial="true"/>
   <state id="review"/>
   <state id="live"/>
+  <state id="trash"/>
+  <state id="archive"/>
   
   <variable name="is_live" value="false"/>
   
@@ -53,5 +55,18 @@
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">reviewer</condition>
     <assign variable="is_live" value="false"/>
   </transition>
-        
+
+  <transition source="authoring" destination="trash">
+    <event id="delete"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">editor</condition>
+    <assign variable="is_live" value="false"/>
+    <action id="delete"/>
+  </transition>
+
+  <transition source="authoring" destination="archive">
+    <event id="archive"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">editor</condition>
+    <assign variable="is_live" value="false"/>
+    <action id="archive"/>
+  </transition>        
 </workflow>
