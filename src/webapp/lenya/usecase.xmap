@@ -36,7 +36,8 @@
   
     <map:resource name="scheduler-page">
         
-      <map:aggregate element="scheduler" prefix="sch" ns="http://www.lenya.org/2002/sch" label="aggregation">
+      <map:aggregate element="scheduler" prefix="sch"
+	ns="http://www.lenya.org/2002/sch" label="aggregation">
         <map:part src="cocoon:/document-types/{publication-id}"/>
         <map:part src="cocoon:/tasks/{publication-id}"/>
         <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
@@ -126,13 +127,23 @@
             reload-method="synchron"/>
       </map:act>
       
-      <!--
-      Scheduler
-      -->
+      <!-- Scheduler -->
       
       <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
       <map:match type="usecase" pattern="schedule">
       
+	  <!-- add job: redirect to page -->
+	  <map:match type="step" pattern="add">
+	    <map:call resource="scheduler-page">
+	      <map:parameter name="publication-id" value="{../../1}"/>
+	      <map:parameter name="uri" value="{../../2}/{../../3}"/>
+	    </map:call>
+	    <map:transform src="xslt/util/redirect.xsl">
+	      <map:parameter name="url" value="{request:requestURI}"/>
+	    </map:transform>
+	    <map:serialize/>
+	  </map:match>
+
           <map:call resource="scheduler-page">
             <map:parameter name="publication-id" value="{../1}"/>
             <map:parameter name="uri" value="{../2}/{../3}"/>
@@ -162,9 +173,7 @@
         </map:match> <!-- step -->
       </map:match> <!-- usecase -->
       
-      <!--
-      View Logs
-      -->
+      <!-- View Logs -->
       <map:match type="usecase" pattern="view-logs">
       
         <map:match type="step" pattern="overview">
@@ -200,13 +209,12 @@
     <!-- {publication-id}/{area}/{uri}-->
     <map:match pattern="*/*/**">
       
-      <!--
-      Publish
-      -->
+      <!-- Publish -->
       <map:match type="usecase" pattern="publish">
       
         <map:match type="step" pattern="showscreen">
-          <map:act type="resource-exists" src="pubs/{../../1}/lenya/content/publishing/publish-screen.xsp">
+          <map:act type="resource-exists"
+	      src="pubs/{../../1}/lenya/content/publishing/publish-screen.xsp">
             <map:generate type="serverpages" label="xsp"
                 src="pubs/{../../../1}/lenya/content/publishing/publish-screen.xsp"/>
             <map:call resource="style-publish"/>
@@ -271,31 +279,31 @@
 
     <!--Rollback-->
     <map:pipeline>
-    <!-- {publication-id}/{area}/{uri}-->
-    <map:match pattern="*/*/**">
-      <map:match type="usecase" pattern="rollback">
-
-        <map:match type="step" pattern="showscreen">
-          <map:generate type="serverpages" src="content/rc/versions-screen.xsp"/>
-          <map:transform src="xslt/rc/rollback.xsl"/>
-          <map:serialize type="html"/>
-        </map:match>
-
-        <map:match type="step" pattern="view">
-          <map:mount uri-prefix="{../../1}" src="pubs/{../../1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-
-        <map:match type="step" pattern="rollback">
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+	<map:match type="usecase" pattern="rollback">
+	  
+	  <map:match type="step" pattern="showscreen">
+	    <map:generate type="serverpages" src="content/rc/versions-screen.xsp"/>
+	    <map:transform src="xslt/rc/rollback.xsl"/>
+	    <map:serialize type="html"/>
+	  </map:match>
+	  
+	  <map:match type="step" pattern="view">
+	    <map:mount uri-prefix="{../../1}" src="pubs/{../../1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+	  </map:match>
+	  
+	  <map:match type="step" pattern="rollback">
             <map:act type="rollback">
               <map:redirect-to uri="{location}" session="true"/>
             </map:act>
             <map:redirect-to uri="{}" session="true"/>
-        </map:match>
-      </map:match>
+	  </map:match>
+	</map:match>
       
-      <!-- CheckOut -->
-      <map:match type="usecase" pattern="checkout">
-        <map:match type="step" pattern="checkout">
+	<!-- CheckOut -->
+	<map:match type="usecase" pattern="checkout">
+	  <map:match type="step" pattern="checkout">
             <map:act type="reserved-checkout">
               <map:generate type="serverpages" src="content/rc/{exception}.xsp">
                 <map:parameter name="user" value="{user}"/>
@@ -305,12 +313,12 @@
               <map:serialize type="xml"/>
             </map:act>
             <map:redirect-to uri="{}" session="true"/>
-        </map:match>
-      </map:match>
+	  </map:match>
+	</map:match>
 
-      <!-- CheckIn -->
-      <map:match type="usecase" pattern="checkin">
-        <map:match type="step" pattern="checkin">
+	<!-- CheckIn -->
+	<map:match type="usecase" pattern="checkin">
+	  <map:match type="step" pattern="checkin">
             <map:act type="reserved-checkin">
               <map:generate type="serverpages" src="content/rc/{exception}.xsp">
                 <map:parameter name="user" value="{user}"/>
@@ -321,12 +329,12 @@
               <map:serialize type="xml"/>
             </map:act>
             <map:redirect-to uri="{}" session="true"/>
-        </map:match>
+	  </map:match>
+	</map:match>
       </map:match>
-    </map:match>
 
     </map:pipeline>
 
   </map:pipelines>
-  
+
 </map:sitemap>
