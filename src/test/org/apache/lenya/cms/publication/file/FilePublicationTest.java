@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePublicationTest.java,v 1.4 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.file;
 
@@ -28,12 +28,12 @@ import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 /**
  * To change the template for this generated type comment go to
@@ -50,9 +50,8 @@ public class FilePublicationTest extends TestCase {
     }
 
     /**
-     * The main program.
-     * The parameters are set from the command line arguments.
-     *
+     * The main program. The parameters are set from the command line arguments.
+     * 
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
@@ -74,24 +73,14 @@ public class FilePublicationTest extends TestCase {
     public static final String destinationLanguage = "en";
 
     /**
-     * Tests copying a document. 
+     * Tests copying a document.
      * @throws PublicationException when something went wrong.
      */
-    public void testCopyDocument() throws PublicationException, DocumentException, SiteTreeException {
-        testCopyDocument(
-            Publication.AUTHORING_AREA,
-            sourceDocumentId,
-            sourceLanguage,
-            Publication.AUTHORING_AREA,
-            destinationDocumentId,
-            destinationLanguage);
-        testCopyDocument(
-            Publication.AUTHORING_AREA,
-            sourceDocumentId,
-            sourceLanguage,
-            Publication.LIVE_AREA,
-            sourceDocumentId,
-            sourceLanguage);
+    public void testCopyDocument() throws PublicationException, DocumentException, SiteException {
+        testCopyDocument(Publication.AUTHORING_AREA, sourceDocumentId, sourceLanguage,
+                Publication.AUTHORING_AREA, destinationDocumentId, destinationLanguage);
+        testCopyDocument(Publication.AUTHORING_AREA, sourceDocumentId, sourceLanguage,
+                Publication.LIVE_AREA, sourceDocumentId, sourceLanguage);
     }
 
     /**
@@ -104,15 +93,10 @@ public class FilePublicationTest extends TestCase {
      * @param destinationLanguage The destination language.
      * @throws PublicationException when something went wrong.
      */
-    public void testCopyDocument(
-        String sourceArea,
-        String sourceDocumentId,
-        String sourceLanguage,
-        String destinationArea,
-        String destinationDocumentId,
-        String destinationLanguage)
-        throws PublicationException, DocumentException, SiteTreeException {
-            
+    public void testCopyDocument(String sourceArea, String sourceDocumentId, String sourceLanguage,
+            String destinationArea, String destinationDocumentId, String destinationLanguage)
+            throws PublicationException, DocumentException, SiteException {
+
         System.out.println("Copy document");
         System.out.println("    Source area:             [" + sourceArea + "]");
         System.out.println("    Source document ID:      [" + sourceDocumentId + "]");
@@ -120,35 +104,31 @@ public class FilePublicationTest extends TestCase {
         System.out.println("    Destination area:        [" + destinationArea + "]");
         System.out.println("    Destination document ID: [" + destinationDocumentId + "]");
         System.out.println("    Destination language:    [" + destinationLanguage + "]");
-            
+
         Publication publication = PublicationHelper.getPublication();
         DocumentBuilder builder = publication.getDocumentBuilder();
-        
-        String sourceUrl =
-            builder.buildCanonicalUrl(publication, sourceArea, sourceDocumentId, sourceLanguage);
+
+        String sourceUrl = builder.buildCanonicalUrl(publication, sourceArea, sourceDocumentId,
+                sourceLanguage);
         Document sourceDocument = builder.buildDocument(publication, sourceUrl);
-        String destinationUrl =
-            builder.buildCanonicalUrl(
-                publication,
-                destinationArea,
-                destinationDocumentId,
-                destinationLanguage);
+        String destinationUrl = builder.buildCanonicalUrl(publication, destinationArea,
+                destinationDocumentId, destinationLanguage);
         Document destinationDocument = builder.buildDocument(publication, destinationUrl);
-        
+
         publication.copyDocument(sourceDocument, destinationDocument);
-        
+
         assertTrue(destinationDocument.exists());
-        
+
         SiteTree destinationTree = publication.getSiteTree(destinationArea);
         SiteTreeNode destinationNode = destinationTree.getNode(destinationDocumentId);
         assertNotNull(destinationNode);
         Label destinationLabel = destinationNode.getLabel(destinationLanguage);
         assertNotNull(destinationLabel);
-        
+
         SiteTreeNode sourceNode = destinationTree.getNode(sourceDocumentId);
         Label sourceLabel = sourceNode.getLabel(sourceLanguage);
-        
+
         assertTrue(destinationLabel.getLabel().equals(sourceLabel.getLabel()));
-        
+
     }
 }

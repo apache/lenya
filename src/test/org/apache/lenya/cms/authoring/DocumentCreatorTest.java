@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentCreatorTest.java,v 1.8 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -28,9 +28,9 @@ import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
-import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 
 /**
@@ -69,10 +69,10 @@ public class DocumentCreatorTest extends TestCase {
     /**
      * Tests whatever you want.
      * @throws CreatorException when something went wrong.
-     * @throws SiteTreeException when something went wrong.
+     * @throws SiteException when something went wrong.
      */
     public void testCreator()
-        throws CreatorException, SiteTreeException {
+        throws CreatorException, SiteException {
         Publication publication = PublicationHelper.getPublication();
         DocumentCreator creator = new DocumentCreator();
         File authoringDirectory = new File(publication.getDirectory(), AUTHORING_DIR);

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultSiteTreeTest.java,v 1.11 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -26,6 +26,10 @@ import javax.xml.transform.TransformerException;
 
 import junit.framework.TestCase;
 
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.xml.sax.SAXException;
 
 public class DefaultSiteTreeTest extends TestCase {
@@ -95,9 +99,9 @@ public class DefaultSiteTreeTest extends TestCase {
     /**
      * Test for void addNode(String, String, Label[])
      * 
-     * @throws SiteTreeException if an error occurs
+     * @throws SiteException if an error occurs
      */
-    final public void testAddNodeStringStringLabelArray() throws SiteTreeException {
+    final public void testAddNodeStringStringLabelArray() throws SiteException {
 		Label label = new Label("Tutorial", null);
 		Label[] labels = { label };
 
@@ -117,9 +121,9 @@ public class DefaultSiteTreeTest extends TestCase {
     /**
      * Test for void addNode(String, Label[], String, String, boolean)
      * 
-     * @throws SiteTreeException if an error occurs
+     * @throws SiteException if an error occurs
      */
-    final public void testAddNodeStringLabelArrayStringStringboolean() throws SiteTreeException {
+    final public void testAddNodeStringLabelArrayStringStringboolean() throws SiteException {
 		Label label1 = new Label("Doh", "en");
 		Label label2 = new Label("Ding", "en");
 		Label[] labels = { label1, label2};
@@ -133,9 +137,9 @@ public class DefaultSiteTreeTest extends TestCase {
     /**
      * Test for void addNode(String, String, Label[], String, String, boolean)
      * 
-     * @throws SiteTreeException if an error occurs
+     * @throws SiteException if an error occurs
      */
-    final public void testAddNodeStringStringLabelArrayStringStringboolean() throws SiteTreeException {
+    final public void testAddNodeStringStringLabelArrayStringStringboolean() throws SiteException {
 		Label label1 = new Label("Doh", "en");
 		Label label2 = new Label("Ding", "en");
 		Label[] labels = { label1, label2};
@@ -149,9 +153,9 @@ public class DefaultSiteTreeTest extends TestCase {
 	/**
 	 * Test addLabel
 	 * 
-	 * @throws SiteTreeException if an error occurs
+	 * @throws SiteException if an error occurs
 	 */
-    final public void testAddLabel() throws SiteTreeException {
+    final public void testAddLabel() throws SiteException {
 		Label label = new Label("Tutorial", null);
 		Label[] labels = null;
 
@@ -183,9 +187,9 @@ public class DefaultSiteTreeTest extends TestCase {
 	/**
 	 * Test removeNode
 	 * 
-	 * @throws SiteTreeException if an error occurs
+	 * @throws SiteException if an error occurs
 	 */
-    final public void testRemoveNode() throws SiteTreeException {
+    final public void testRemoveNode() throws SiteException {
     	Label label1 = new Label("Hi", "en");
     	Label label2 = new Label("Ho", "en");
     	Label[] labels1 = { label1, label2};
@@ -225,11 +229,11 @@ public class DefaultSiteTreeTest extends TestCase {
 	/**
 	 * Test moving a node up
 	 * 
-	 * @throws SiteTreeException if an error occurs
+	 * @throws SiteException if an error occurs
 	 * @throws IOException if an error occurs
 	 * @throws TransformerException if an error occurs
 	 */
-	final public void testMoveUp() throws SiteTreeException, IOException, TransformerException {
+	final public void testMoveUp() throws SiteException, IOException, TransformerException {
 		siteTree.moveUp("/foo/lala");
 		siteTree.save();
 		assertNotNull(siteTree.getNode("/foo/lala"));
@@ -238,11 +242,11 @@ public class DefaultSiteTreeTest extends TestCase {
 	/**
 	 * Test moving a node down
 	 * 
-	 * @throws SiteTreeException if an error occurs
+	 * @throws SiteException if an error occurs
 	 * @throws IOException if an error occurs
 	 * @throws TransformerException if an error occurs
 	 */
-	final public void testMoveDown() throws SiteTreeException, IOException, TransformerException {
+	final public void testMoveDown() throws SiteException, IOException, TransformerException {
 		siteTree.moveDown("/foo");
 		siteTree.save();
 		assertNotNull(siteTree.getNode("/foo"));
@@ -253,11 +257,12 @@ public class DefaultSiteTreeTest extends TestCase {
      * 
      * @throws ParserConfigurationException if an error occurs.
      * @throws SAXException if an error occurs.
-     * @throws SiteTreeException if an error occurs.
+     * @throws SiteException if an error occurs.
      * @throws IOException if an error occurs.
      * @throws TransformerException if an error occurs.
      */
-	final public void testImportSubtree() throws ParserConfigurationException, SAXException, SiteTreeException, IOException, TransformerException {
+	final public void testImportSubtree() throws ParserConfigurationException, SAXException,
+            SiteException, IOException, TransformerException {
 		DefaultSiteTree newSiteTree = new DefaultSiteTree("importedTree.xml");
 		Label label = new Label("root", "en");
 		Label[] rootLabels = { label };

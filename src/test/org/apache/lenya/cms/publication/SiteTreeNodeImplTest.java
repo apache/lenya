@@ -15,9 +15,13 @@
  *
  */
 
-/* $Id: SiteTreeNodeImplTest.java,v 1.4 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
+
+import org.apache.lenya.cms.site.tree.DefaultSiteTree;
+import org.apache.lenya.cms.site.tree.Label;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 import junit.framework.TestCase;
 

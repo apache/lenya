@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentMoveTaskTest.java,v 1.4 2004/03/20 11:46:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -29,9 +29,9 @@ import junit.textui.TestRunner;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 
 /**
