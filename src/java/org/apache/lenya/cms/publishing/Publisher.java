@@ -1,5 +1,5 @@
 /*
- * $Id: Publisher.java,v 1.7 2003/03/06 20:45:41 gregor Exp $
+ * $Id: Publisher.java,v 1.8 2003/03/19 14:26:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,7 +49,22 @@ package org.lenya.cms.publishing;
  * @author <a href="mailto:andreas.hartmann@lenya.com">Andreas Hartmann</a>
  */
 public interface Publisher {
-    void publish(String publicationPath, String authoringPath, String treeAuthoringPath,
-        String livePath, String treeLivePath, String replicationPath, String[] sources)
-            throws PublishingException;
+
+    /**
+     * Publish a document.
+     *
+     * @param publicationPath path to the publication
+     * @param authoringPath path to the authoring directory
+     * @param treeAuthoringPath path to the authoring tree
+     * @param livePath path to the live directory
+     * @param treeLivePath path to the live tree
+     * @param replicationPath path to the replication directory
+     * @param sources array of xml sources to be published
+     * @exception PublishingException if an error occurs
+     */
+    void publish(String publicationPath,
+		 String authoringPath, String treeAuthoringPath, String resourcesAuthoringPath,
+		 String livePath, String treeLivePath, String resourcesLivePath,
+		 String replicationPath, String[] sources)
+	throws PublishingException;
 }

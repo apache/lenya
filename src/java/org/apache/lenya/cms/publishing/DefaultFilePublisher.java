@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultFilePublisher.java,v 1.9 2003/03/06 20:45:41 gregor Exp $
+ * $Id: DefaultFilePublisher.java,v 1.10 2003/03/19 14:26:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,6 +44,8 @@
 package org.lenya.cms.publishing;
 
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.excalibur.io.FileUtil;
+
 import org.apache.log4j.Category;
 import org.lenya.cms.task.ExecutionException;
 
@@ -54,7 +56,11 @@ import java.util.StringTokenizer;
 
 
 /**
- * Describe class <code>DefaultFilePublisher</code> here. The following task parameters must be provided:<br/
+ * The <code>DefaultFilePublisher</code> is a task that copies XML
+ * source files from the authoring directory to another location,
+ * usually the live directory.
+ * 
+ * The following task parameters must be provided:<br/
  * ><code><strong>publication-id</strong></code>: the absolute path of this publication<br/
  * ><code><strong>authoring-path</strong></code>: the authoring path<br/
  * ><code><strong>tree-authoring-path</strong></code>: the location of the <code>tree.xml</code> file<br/
@@ -72,22 +78,30 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
     public static final String PARAMETER_SOURCES = "sources";
 
     /**
-     * Default implementation of <code>publish</code> which simply copies the files from the
-     * absoluteAuthoringPath to the absoluteLivePath.
+     * Default implementation of <code>publish</code> which simply
+     * copies the files from the absoluteAuthoringPath to the
+     * absoluteLivePath.
      *
      * @param publicationPath DOCUMENT ME!
      * @param authoringPath DOCUMENT ME!
      * @param treeAuthoringPath DOCUMENT ME!
+     * @param resourcesAuthoringPath path to authoring resources base directory
      * @param livePath DOCUMENT ME!
      * @param treeLivePath DOCUMENT ME!
+     * @param resourcesLivePath path to live resources base directory
      * @param replicationPath DOCUMENT ME!
      * @param sources DOCUMENT ME!
+     * @exception PublishingException if an error occurs
      */
-    public void publish(String publicationPath, String authoringPath, String treeAuthoringPath,
-        String livePath, String treeLivePath, String replicationPath, String[] sources)
-            throws PublishingException {
+    public void publish(String publicationPath,
+			String authoringPath, String treeAuthoringPath, String resourcesAuthoringPath,
+			String livePath, String treeLivePath, String resourcesLivePath,
+			String replicationPath,	String[] sources)
+	throws PublishingException {
+
         log.debug("PUBLICATION: " + publicationPath);
-        log.debug("CONFIGURATION:\nauthoring path=" + authoringPath + "\nlive path=" + livePath);
+        log.debug("CONFIGURATION:\nauthoring path=" + authoringPath
+		  + "\nlive path=" + livePath);
 
         // Set absolute paths
         String absoluteAuthoringPath = publicationPath + authoringPath;
@@ -110,35 +124,48 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
                 log.debug("Document ready for replication: " + sourceFile + " " +
                     destinationReplicationFile);
             } catch (FileNotFoundException fnfe) {
-                throw new PublishingException("Document not published: Source file (" + sourceFile + ") not found!", fnfe);
+                throw new PublishingException("Document not published: Source file ("
+					      + sourceFile + ") not found!", fnfe);
             } catch (IOException ioe) {
-                throw new PublishingException("Document not published: " + sourceFile + " " + destinationFile, ioe);
+                throw new PublishingException("Document not published: "
+					      + sourceFile + " "
+					      + destinationFile, ioe);
             }
         }
 
+	// Update resources
+	publishResources(publicationPath, resourcesAuthoringPath, resourcesLivePath, sources);
+
         // Update (copy) tree
         try {
-            copyFile(new File(absoluteTreeAuthoringPath), new File(absoluteTreeLivePath));
-            log.debug("COPY\ntree source=" + absoluteTreeAuthoringPath + "\ntree destination=" +
-                absoluteTreeLivePath);
+            copyFile(new File(absoluteTreeAuthoringPath),
+		     new File(absoluteTreeLivePath));
+            log.debug("COPY\ntree source=" + absoluteTreeAuthoringPath
+		      + "\ntree destination=" + absoluteTreeLivePath);
             log.debug("Tree published");
         } catch (IOException ioe) {
-            throw new PublishingException("Tree not published: " + absoluteTreeAuthoringPath + " " +
-                absoluteTreeLivePath, ioe);
+            throw new PublishingException("Tree not published: "
+					  + absoluteTreeAuthoringPath + " " +
+					  absoluteTreeLivePath, ioe);
         }
     }
 
     /**
-     *
+     * Default implementation of <code>execute</code> (to implement
+     * the Task interface) which basically parses the parameters and
+     * invokes the publish method.
+     * @param contextPath a <code>String</code> value
+     * @exception ExecutionException if an error occurs
      */
     public void execute(String contextPath)
-            throws ExecutionException {
+	throws ExecutionException {
         try {
             String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
 
             Parameters taskParameters = new Parameters();
 
-            PublishingEnvironment environment = new PublishingEnvironment(contextPath, publicationId);
+            PublishingEnvironment environment =
+		new PublishingEnvironment(contextPath, publicationId);
 
             // read default parameters from PublishingEnvironment
             taskParameters.setParameter(PublishingEnvironment.PARAMETER_AUTHORING_PATH,
@@ -168,12 +195,32 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
             publish(PublishingEnvironment.getPublicationPath(contextPath, publicationId),
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_AUTHORING_PATH),
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_TREE_AUTHORING_PATH),
+                null,
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_LIVE_PATH),
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_TREE_LIVE_PATH),
+                null,
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_REPLICATION_PATH),
                 sources);
         } catch (Exception e) {
             throw new ExecutionException(e);
         }
+    }
+
+    /**
+     * A template method to publish the resources. The default
+     * implementation doesn't deal with resources. It simply ignores
+     * them and assumes that they end up in the live directory be some
+     * other means.
+     *
+     * @param publicationPath path to the publication
+     * @param resourcesAuthoringPath authoring path for the resources
+     * @param resourcesLivePath live path for the resources
+     * @param sources array of docIds
+     */
+    protected void publishResources(String publicationPath,
+				    String resourcesAuthoringPath,
+				    String resourcesLivePath,
+				    String[] sources)
+	throws PublishingException {
     }
 }
