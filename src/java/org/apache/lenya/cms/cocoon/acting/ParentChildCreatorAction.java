@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.22 2003/02/27 15:59:34 egli Exp $
+ * $Id: ParentChildCreatorAction.java,v 1.23 2003/02/27 16:53:46 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -369,39 +369,4 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         return true;
     }
 
-    /**
-     * Write input stream to Logger (for debugging)
-     *
-     * @param in an <code>InputStream</code> value
-     *
-     * @return an <code>InputStream</code> value
-     *
-     * @exception Exception if an error occurs
-     */
-    private InputStream intercept(InputStream in) throws Exception {
-        byte[] buffer = new byte[1024];
-        int bytes_read;
-        ByteArrayOutputStream bufferOut = new ByteArrayOutputStream();
-
-        while ((bytes_read = in.read(buffer)) != -1) {
-            bufferOut.write(buffer, 0, bytes_read);
-        }
-
-        getLogger().debug("Intercepted Input Stream:\n\n" + bufferOut.toString());
-
-        return new ByteArrayInputStream(bufferOut.toByteArray());
-    }
-
-    /**
-     * Write output stream to Logger (for debugging)
-     *
-     * @param out an <code>OutputStream</code> value
-     *
-     * @return an <code>OutputStream</code> value
-     *
-     * @exception Exception if an error occurs
-     */
-    private OutputStream intercept(OutputStream out) throws Exception {
-        return null;
-    }
 }
