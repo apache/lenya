@@ -29,7 +29,6 @@
     <usecase:area><input:get-attribute module="page-envelope" name="area" as="string"/></usecase:area>
     <usecase:language><input:get-attribute module="page-envelope" name="document-language" as="string"/></usecase:language>
     
-    <!-- FIXME: this should be defined in the workflow schema -->
     <usecase:task-id>publish</usecase:task-id>
     
 	<not:users>
