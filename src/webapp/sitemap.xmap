@@ -117,11 +117,10 @@
 	  <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
 	  <map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction"/>
 
-      <map:action name="file-upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+      <map:action name="upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.UploadAction">
         <resources-root href="resources/images/live"/>
         <docs-root href="content/authoring"/>
         <meta-root href="content/authoring/"/>
-        <insert-image-before value="false"/>
       </map:action>
       
       <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>

@@ -397,7 +397,7 @@
 	  <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
 	  <map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction"/>
 
-      <map:action name="file-upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+      <map:action name="upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.UploadAction">
         <resources-root href="resources/images/live"/>
         <docs-root href="content/authoring"/>
         <meta-root href="content/authoring/"/>
@@ -656,21 +656,12 @@
     </map:pipeline>
     <!-- /Search with Lucene -->
 
-
-
     <map:pipeline>
       <!-- Editor Xopus -->
       <map:match pattern="xopus/**">
         <map:mount uri-prefix="xopus" src="lenya/xopus.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
-
-      <!-- Editor Bitflux -->
-      <!--
-      <map:match pattern="bitflux/**">
-        <map:mount uri-prefix="bitflux" src="lenya/bitflux.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-      -->
     </map:pipeline>
 
     <map:pipeline>
