@@ -15,13 +15,17 @@
   limitations under the License.
 -->
 
-<!-- $Id: menus.xmap,v 1.5 2004/08/17 21:57:39 michi Exp $ -->
+<!-- $Id: menus.xmap,v 1.6 2004/09/01 17:25:07 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
     <map:generators default="file" />
-    <map:matchers default="wildcard"/>
+    <map:matchers default="wildcard">
+      <map:matcher name="doctype" logger="sitemap.matcher.doctype" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>doctype</parameter-name>
+      </map:matcher>
+    </map:matchers>
     <map:actions/>
   </map:components>
 
@@ -35,7 +39,7 @@
       </map:match>
       
       <!-- document type: links -->
-      <map:match pattern="authoring/links**">
+      <map:match type="doctype" pattern="links">
         <map:generate type="serverpages" src="config/menus/links.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
