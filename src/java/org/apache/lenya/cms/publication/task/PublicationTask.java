@@ -1,5 +1,5 @@
 /*
-$Id: PublicationTask.java,v 1.4 2003/12/02 14:34:46 andreas Exp $
+$Id: PublicationTask.java,v 1.5 2004/01/23 08:44:35 andreas Exp $
 <License>
 
  ============================================================================
@@ -273,6 +273,10 @@ public abstract class PublicationTask extends AbstractTask {
 
         if (log.isDebugEnabled()) {
             log.debug("Executable event found: [" + event + "]");
+        }
+        
+        if (event == null) {
+            log.error("Event [" + workflowEvent + "] cannot be invoked!");
         }
 
         return event;
