@@ -56,7 +56,7 @@ function editDocument() {
             cocoon.redirectTo(_getParameter("redirectUrl", "FIXME"));
         
     } catch (exception) {
-        cocoon.log.error("Can not edit doucment.", exception.toString());
+        cocoon.log.error("Can not edit document.", exception.toString());
     } finally {
         if(resolver != null)
             cocoon.releaseComponent(resolver);
