@@ -90,6 +90,8 @@ The URI steps are:
     attributes of the sitetree nodes that lead to the current node,
     e.g. <code>demo/oscom.html</code> for the sitetree
     fragment
+  </dd>
+</dl>
 <source><![CDATA[
 <site xmlns="http://www.lenya.org/2003/sitetree">
   <node href="demo/" label="Demo">
@@ -99,8 +101,6 @@ The URI steps are:
   ...
 </site>
 ]]></source>
-  </dd>
-</dl>
   
   </section>
   

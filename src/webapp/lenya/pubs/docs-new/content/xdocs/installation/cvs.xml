@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
 <document> 
 
@@ -68,12 +68,16 @@ from the parent directory. This is already in place.
 To solve the problem log into the cvs repository, cd to the
 repository and do
 </p>
-<source>
+<p>
+<code>
 find . -type d -exec chmod g+s {} \;
-</source>
+</code>
+</p>
 <p>
 As a reminder here's a excerpt from the CVS info pages:
 </p>
+    </li>
+  </ul>
 <source>
 >    CVS tries to set up reasonable file permissions for new directories
 > that are added inside the tree, but you must fix the permissions
@@ -95,8 +99,6 @@ As a reminder here's a excerpt from the CVS info pages:
 > versions of CVS; do not rely on the setting of `CVSUMASK' on the client
 > having no effect.
 </source>
-    </li>
-  </ul>
   
 </section>
 
