@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.12 2004/02/14 10:26:58 roku Exp $
+$Id: cmsui_de.xml,v 1.13 2004/02/14 11:06:43 roku Exp $
+@author <a href="mailto:roku@apache.org">Rolf Kulemann</a>
 <License>
 
  ============================================================================
@@ -81,17 +82,17 @@ $Id: cmsui_de.xml,v 1.12 2004/02/14 10:26:58 roku Exp $
 
   <!-- logout screen -->
   <message key="logout-from-pub">Abmelden von der {0} Publikation</message>
-  <message key="Your history">Ihr Verlauf</message>
-  <message key="Login to authoring area">An Autorenbereich anmelden</message>
+  <message key="Your History">Ihr Verlauf</message>
+  <message key="Login to Authoring Area">An Autorenbereich anmelden</message>
 
   <!-- reject screen -->
   <message key="Reject">Ablehnen</message>
   <message key="reject-doc?">Dokument {0} ablehnen?</message>
 
   <!-- cms menu -->
-  <message key="New document">Neues Dokument</message>
-  <message key="New language version">Neue Sprachversion</message>
-  <message key="Remove language version">Sprachversion l&#246;schen</message>
+  <message key="New Document">Neues Dokument</message>
+  <message key="New Language Version">Neue Sprachversion</message>
+  <message key="Remove Language Version">Sprachversion l&#246;schen</message>
   <message key="File">Datei</message>  
   <message key="Edit">Bearbeiten</message>
   <message key="Workflow">Arbeitsablauf</message>
@@ -105,15 +106,21 @@ $Id: cmsui_de.xml,v 1.12 2004/02/14 10:26:58 roku Exp $
   <message key="Delete">L&#246;schen</message>
   <message key="Archive">Archivieren</message>
   <message key="Restore">Wiederherstellen</message>
-  <message key="Move up">Nach oben</message>
-  <message key="Move down">Nach unten</message>
+  <message key="Move Up">Nach oben</message>
+  <message key="Move Down">Nach unten</message>
   <message key="Logout">Abmelden</message>
-  <message key="View task logs">Aufgabenberichte ansehen</message>
+  <message key="View Task Logs">Aufgabenberichte ansehen</message>
   <message key="Support">Support</message>
-  <message key="System documentation">Systemdokumentation</message>
-  <message key="User documentation">Benutzerdokumentation</message>
+  <message key="System Documentation">Systemdokumentation</message>
+  <message key="User Documentation">Benutzerdokumentation</message>
   <message key="About Apache Lenya">&#220;ber Apache Lenya</message>
-  <message key="Apache Lenya homepage">Apache Lenya Startseite</message>
-    
+  <message key="Apache Lenya Homepage">Apache Lenya Startseite</message>
+  <message key="Edit with Epoz">Bearbeiten mit Epoz</message>
+  <message key="Edit with BXE">Bearbeiten mit BXE</message>
+  <message key="Edit with one Form">Bearbeiten mit einem Formular</message>
+  <message key="Edit with Forms">Bearbeiten mit Formularen</message>
+  <message key="Edit Metadata">Metadata bearbeiten</message>
+  <message key="Edit Navigation Title">Navigationstitel bearbeiten</message>
+
 </catalogue>
 

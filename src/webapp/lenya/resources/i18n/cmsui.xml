@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 
 <!--
-$Id: cmsui.xml,v 1.9 2004/02/14 10:16:22 roku Exp $
+$Id: cmsui.xml,v 1.10 2004/02/14 11:06:43 roku Exp $
+@author <a href="mailto:roku@apache.org">Rolf Kulemann</a>
 <License>
 
  ============================================================================
@@ -56,6 +57,7 @@ $Id: cmsui.xml,v 1.9 2004/02/14 10:16:22 roku Exp $
 
 <catalogue xml:lang="en">
 
+  <!-- common used words-->
   <message key="Submit">Submit</message>
   <message key="Cancel">Cancel</message>
   <message key="Back to Page">Back to page</message>
@@ -65,7 +67,7 @@ $Id: cmsui.xml,v 1.9 2004/02/14 10:16:22 roku Exp $
   <message key="EXCEPTION">EXCEPTION</message>  
  
   <!-- submit screen -->
-  <message key="submit-for-approval">Submit {0} for Approval</message>  
+  <message key="submit-for-approval">Submit {0} for approval</message>  
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
 
   <!-- publish screen -->     
@@ -82,8 +84,8 @@ $Id: cmsui.xml,v 1.9 2004/02/14 10:16:22 roku Exp $
 
   <!-- logout screen -->
   <message key="logout-from-pub">LOGOUT from the {0} Publication</message>
-  <message key="Your history">Your history</message>
-  <message key="Login to authoring area">Login to authoring area</message>
+  <message key="Your History">Your History</message>
+  <message key="Login to Authoring Area">Login to Authoring Area</message>
 
   <!-- reject screen -->
   <message key="Reject">Reject</message>
@@ -91,8 +93,8 @@ $Id: cmsui.xml,v 1.9 2004/02/14 10:16:22 roku Exp $
   
   <!-- cms menu -->
   <message key="New document">New Document</message>
-  <message key="New language version">New language version</message>
-  <message key="Remove language version">Remove language version</message>
+  <message key="New Language Version">New Language Version</message>
+  <message key="Remove Language Version">Remove Language Version</message>
   <message key="File">File</message>  
   <message key="Edit">Edit</message>
   <message key="Workflow">Workflow</message>
@@ -106,14 +108,19 @@ $Id: cmsui.xml,v 1.9 2004/02/14 10:16:22 roku Exp $
   <message key="Delete">Delete</message>
   <message key="Archive">Archive</message>
   <message key="Restore">Restore</message>
-  <message key="Move up">Move up</message>
-  <message key="Move down">Move down</message>
+  <message key="Move Up">Move Up</message>
+  <message key="Move Down">Move Down</message>
   <message key="Logout">Logout</message>
-  <message key="View task logs">View task logs</message>
+  <message key="View Task Logs">View Task Logs</message>
   <message key="Support">Support</message>
-  <message key="System documentation">System documentation</message>
-  <message key="User documentation">User documentation</message>
+  <message key="System Documentation">System Documentation</message>
+  <message key="User Documentation">User Documentation</message>
   <message key="About Apache Lenya">About Apache Lenya</message>
-  <message key="Apache Lenya homepage">Apache Lenya homepage</message>
-
+  <message key="Apache Lenya Homepage">Apache Lenya Homepage</message>
+  <message key="Edit with Epoz">Edit with Epoz</message>
+  <message key="Edit with BXE">Edit with BXE</message>
+  <message key="Edit with one Form">Edit with one Form</message>
+  <message key="Edit with Forms">Edit with Forms</message>
+  <message key="Edit Metadata">Edit Metadata</message>
+  <message key="Edit Navigation Title">Edit Navigation Title</message>
 </catalogue>

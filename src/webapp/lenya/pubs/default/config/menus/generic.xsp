@@ -58,10 +58,10 @@
 	  <xsp:logic>
 	    {
         if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
-          <item><i18n:text>New document</i18n:text></item>
+          <item><i18n:text>New Document</i18n:text></item>
         }
         else {
-          <item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml"><i18n:text>New document</i18n:text></item>
+          <item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml"><i18n:text>New Document</i18n:text></item>
         }
 	    }
 	  </xsp:logic>
@@ -73,12 +73,12 @@
             &amp;&amp; Publication.AUTHORING_AREA.equals(area)
 	          ) {
           <xsp:content>
-            <item uc:usecase="create-language" uc:step="showscreen" href="?"><i18n:text>New language version</i18n:text></item>
+            <item uc:usecase="create-language" uc:step="showscreen" href="?"><i18n:text>New Language Version</i18n:text></item>
           </xsp:content>
 	      }
 	      else {
           <xsp:content>
-            <item><i18n:text>New language version</i18n:text></item>
+            <item><i18n:text>New Language Version</i18n:text></item>
           </xsp:content>
 	      }
 	    
@@ -88,11 +88,11 @@
 	          &amp;&amp; availableLanguages.length &gt; 1
 	          ) {
 	        <xsp:content>
-	          <item uc:usecase="removelabel" uc:step="showscreen" href="?"><i18n:text>Remove language version</i18n:text></item>
+	          <item uc:usecase="removelabel" uc:step="showscreen" href="?"><i18n:text>Remove Language Version</i18n:text></item>
 	        </xsp:content>
 	      } else {
 	        <xsp:content>
-	          <item><i18n:text>Remove language version</i18n:text></item>
+	          <item><i18n:text>Remove Language Version</i18n:text></item>
 	        </xsp:content>
 	      } 
 	    }
@@ -106,14 +106,14 @@
       <menu i18n:attr="name" name="Edit" label="Search">
         
         <block info="false">
-          <item wf:event="edit" uc:usecase="epoz" uc:step="open" href="?">Edit&#160;with&#160;Epoz</item>
-          <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?">Edit&#160;with&#160;BXE</item>
-          <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute>Edit&#160;with&#160;Forms</item>
-          <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?">Edit&#160;with&#160;one&#160;Form</item>
+          <item wf:event="edit" uc:usecase="epoz" uc:step="open" href="?"><i18n:text>Edit with Epoz</i18n:text></item>
+          <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?"><i18n:text>Edit with BXE</i18n:text></item>
+          <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>Edit with Forms</i18n:text></item>
+          <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>Edit with one Form</i18n:text></item>
         </block>
         <block info="false">
-          <item wf:event="edit" uc:usecase="info-meta" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/info-<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute>Edit Metadata</item>
-          <item wf:event="edit" uc:usecase="rename-label" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-uri/>?</xsp:attribute>Edit Navigation Title</item>
+          <item wf:event="edit" uc:usecase="info-meta" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/info-<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute><i18n:text>Edit Metadata</i18n:text></item>
+          <item wf:event="edit" uc:usecase="rename-label" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-uri/>?</xsp:attribute><i18n:text>Edit Navigation Title</i18n:text></item>
   <!--    <item wf:event="edit" uc:usecase="asset" uc:step="showdots"><xsp:attribute name="href"><xsp-request:get-uri/>?</xsp:attribute>Enable Image Upload</item> -->
         </block>
 
@@ -188,8 +188,8 @@
             <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=down</xsp:attribute><i18n:text>Move down</i18n:text></item>
           }
           else {
-            <item><i18n:text>Move up</i18n:text></item>
-            <item><i18n:text>Move down</i18n:text></item>
+            <item><i18n:text>Move Up</i18n:text></item>
+            <item><i18n:text>Move Down</i18n:text></item>
           }
         </xsp:logic>
       </block>
@@ -246,12 +246,12 @@
 
       <menu i18n:attr="name" name="Help" label="Debug">
 	<block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute><i18n:text>User documentation</i18n:text></item>
-	  <item><i18n:text>System documentation</i18n:text></item>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute><i18n:text>User Documentation</i18n:text></item>
+	  <item><i18n:text>System Documentation</i18n:text></item>
 	  <item><i18n:text>Support</i18n:text></item>
 	</block>
   <block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya homepage</i18n:text></item>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
 	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
 	</block>
 

@@ -53,12 +53,12 @@
 
   <div class="lenya-box">
     <div class="lenya-box-body">
-      <a href="{$contextprefix}/{$publication_name}/authoring/index.html"><i18n:text>Login to authoring area</i18n:text></a>
+      <a href="{$contextprefix}/{$publication_name}/authoring/index.html"><i18n:text>Login to Authoring Area</i18n:text></a>
     </div>
   </div>
 
   <div class="lenya-box">
-    <div class="lenya-box-title"><i18n:text>Your history</i18n:text></div>
+    <div class="lenya-box-title"><i18n:text>Your History</i18n:text></div>
     <div class="lenya-box-body">
       <ul>
         <xsl:apply-templates select="uri"/>
