@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.12 2003/11/03 17:49:39 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.13 2003/11/03 18:19:07 egli Exp $
 <License>
 
  ============================================================================
@@ -82,7 +82,7 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class DocumentReferencesHelper {
 
@@ -260,12 +260,21 @@ public class DocumentReferencesHelper {
                 if (documentNode == null
                     || documentNode.getLabel(language) == null) {
                     // the docId has not been published for the given language
-                    String url =
-                        builder.buildCanonicalUrl(
-                            publication,
-                            Publication.AUTHORING_AREA,
-                            docId,
-                            language);
+                    String url = null;
+                    if (language != null) {
+                        url =
+                            builder.buildCanonicalUrl(
+                                publication,
+                                Publication.AUTHORING_AREA,
+                                docId,
+                                language);
+                    } else {
+			url =
+			    builder.buildCanonicalUrl(
+                            	publication,
+                            	Publication.AUTHORING_AREA,
+                            	docId);
+		    }
                     unpublishedReferences.add(
                         builder.buildDocument(publication, url));
                 }
