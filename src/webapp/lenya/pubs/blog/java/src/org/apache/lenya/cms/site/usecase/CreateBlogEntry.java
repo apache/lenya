@@ -17,7 +17,19 @@
 package org.apache.lenya.cms.site.usecases;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
+
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
+
+import org.apache.lenya.ac.Identity;
 
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
@@ -25,16 +37,18 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
  * Usecase to create a document.
  *
- * @version $Id:$
+ * @version $Id$
  */
-public class CreateBlogEntry extends Create {
+public class CreateBlogEntry extends DocumentUsecase {
 
     protected static final String PARENT_ID = "parentId";
     protected static final String DOCUMENT_TYPE = "doctype";
+    protected static final String DOCUMENT_ID = "documentId";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -44,9 +58,6 @@ public class CreateBlogEntry extends Create {
 
         Document parent = getSourceDocument();
         setParameter(PARENT_ID, parent.getId());
-
-        String[] languages = parent.getPublication().getLanguages();
-        setParameter(LANGUAGES, languages);
     }
     
     /**
@@ -67,16 +78,21 @@ public class CreateBlogEntry extends Create {
         super.doCheckExecutionConditions();
     }
     
-    /**
-     * @see org.apache.lenya.cms.site.usecases.Create#createDocument()
-     */
-    protected Document createDocument() throws Exception {
+    protected void doExecute() throws Exception {
+        super.doExecute();
+
         Document parent = getSourceDocument();
 
-        String documentId = parent.getId() + "/" + getParameterAsString(DOCUMENT_ID);
-        String navigationTitle = getParameterAsString(DublinCore.ELEMENT_TITLE);
+        Map objectModel = ContextHelper.getObjectModel(getContext());
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Session session = request.getSession(false);
+
+        String documentId = "/" + getParameterAsString(DOCUMENT_ID);
+        String title = getParameterAsString(DublinCore.ELEMENT_TITLE);
         String documentTypeName = getDocumentTypeName();
-        String language = getParameterAsString(LANGUAGE);
+
+        Publication publication = parent.getPublication();
+        String language = publication.getDefaultLanguage();
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating document");
@@ -84,31 +100,32 @@ public class CreateBlogEntry extends Create {
             getLogger().debug("    Child document:    [" + documentId + "]");
             getLogger().debug("    Language:          [" + language + "]");
             getLogger().debug("    Document Type:     [" + documentTypeName + "]");
-            getLogger().debug("    Navigation Title:  [" + navigationTitle + "]");
+            getLogger().debug("    Title:             [" + title + "]");
         }
 
-        Publication publication = parent.getPublication();
         String area = parent.getArea();
         Document document = parent.getIdentityMap().getFactory().get(area, documentId, language);
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);
 
-        String parentId = parent.getId().substring(1);
         String childId = document.getName();
 
         File doctypesDirectory = new File(publication.getDirectory(),
                 DocumentTypeBuilder.DOCTYPE_DIRECTORY);
 
-        documentType.getCreator().create(new File(doctypesDirectory, "samples"),
-                new File(publication.getContentDirectory(area), parentId),
-                childId,
-                ParentChildCreatorInterface.BRANCH_NODE,
-                navigationTitle,
-                language,
-                Collections.EMPTY_MAP);
+        HashMap allParameters = new HashMap();
+        allParameters.put(Identity.class.getName(), session.getAttribute(Identity.class.getName()));
+        allParameters.put("title", title);
         
-        return document;
+        documentType.getCreator().create(new File(doctypesDirectory, "samples"),
+                new File(publication.getContentDirectory(area), ""),
+                childId,
+                ParentChildCreatorInterface.LEAF_NODE,
+                title,
+                language,
+                allParameters);
+        
     }
 
     /**

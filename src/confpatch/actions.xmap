@@ -20,11 +20,6 @@
    <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
    <map:action name="language-exists" logger="lenya.sitemap.action.language-exists" src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
    <map:action name="oneformeditorsave" logger="sitemap.action.oneformeditormsave" src="org.apache.lenya.cms.cocoon.acting.OneFormEditorSaveAction" />
-   <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
-     <tree-authoring href="content/authoring/tree.xml"/>
-     <docs href="content/authoring"/>
-     <doctypes href="config/doctypes/"/>
-   </map:action>
    <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" src="org.apache.cocoon.acting.RequestParameterExistsAction" />
    <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
    <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout"/>

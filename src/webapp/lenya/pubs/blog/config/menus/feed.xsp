@@ -44,7 +44,7 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item uc:usecase="create" uc:step="showscreen" href="?doctype=entry">Add&#160;new&#160;Entry</item>
+        <item uc:usecase="site.create" href="">Add&#160;new&#160;Entry</item>
       </block>
       <block>
         <item uc:usecase="edit" href="../../sidebar.html?lenya.step=open&amp;form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
