@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -24,7 +25,7 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 /**
  * Delete a language version.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DeleteLanguage extends DocumentUsecase {
 
@@ -33,12 +34,14 @@ public class DeleteLanguage extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
-        if (getSourceDocument().getLanguages().length == 1) {
+
+        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This usecase can only be invoked in the authoring area!");
+        } else if (getSourceDocument().getLanguages().length == 1) {
             addErrorMessage("The last language version cannot be removed.");
         }
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -48,13 +51,13 @@ public class DeleteLanguage extends DocumentUsecase {
         Document document = getSourceDocument();
         SiteManager _manager = document.getPublication().getSiteManager(document.getIdentityMap());
         _manager.delete(document);
-        
+
         document.getFile().delete();
-        
+
         if (hasWorkflow(document)) {
             getWorkflowInstance(document).getHistory().delete();
         }
-        
+
         setTargetDocument(DocumentHelper.getExistingLanguageVersion(document));
     }
 

@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -24,12 +25,23 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 /**
  * Change the label of a document.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class ChangeLabel extends DocumentUsecase {
 
     protected static final String LABEL = "label";
     protected static final String DOCUMENT_ID = "documentId";
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        
+        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This usecase can only be invoked in the authoring area!");
+        }
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()

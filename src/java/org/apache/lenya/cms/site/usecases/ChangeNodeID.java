@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -40,6 +41,24 @@ public class ChangeNodeID extends DocumentUsecase {
         super.initParameters();
         Document document = getSourceDocument();
         setParameter(NODE_ID, document.getName());
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+
+        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This usecase can only be invoked in the authoring area!");
+        } else {
+            DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
+            Document liveVersion = factory.getAreaVersion(getSourceDocument(),
+                    Publication.LIVE_AREA);
+            if (liveVersion.exists()) {
+                addErrorMessage("This usecase cannot be invoked when the live version exists!");
+            }
+        }
     }
 
     /**
