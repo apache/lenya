@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"  
+       xmlns:sch="http://www.lenya.org/2002/sch"
+       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+       >
+  
+<sch:scheduler>
+
+  <sch:parameters>
+  
+    <xsp:logic>
+
+      String contextPrefix = request.getParameter("context-prefix");
+      if (contextPrefix == null || "".equals(contextPrefix)) {
+          contextPrefix = request.getContextPath();
+          <xsp:content>  
+            <sch:parameter name="context-prefix">
+              <xsp:attribute name="value"><xsp:expr>contextPrefix</xsp:expr></xsp:attribute>
+            </sch:parameter>
+          </xsp:content>
+      }
+
+      <!--
+      for (java.util.Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) {
+          String name = (String) e.nextElement();
+          <xsp:content>
+            <sch:parameter>
+              <xsp:attribute name="name"><xsp:expr>name</xsp:expr></xsp:attribute>
+              <xsp:attribute name="value"><xsp:expr>request.getParameter(name)</xsp:expr></xsp:attribute>
+            </sch:parameter>
+          </xsp:content>
+      }
+      -->
+
+    </xsp:logic>
+    
+  </sch:parameters>
+
+  <xsp:logic>
+    java.util.GregorianCalendar calendar = new java.util.GregorianCalendar();
+  </xsp:logic>
+
+  <sch:current-date>
+    <sch:year><xsp:expr>calendar.get(java.util.Calendar.YEAR)</xsp:expr></sch:year>
+    <sch:month><xsp:expr>calendar.get(java.util.Calendar.MONTH) + 1</xsp:expr></sch:month>
+    <sch:day><xsp:expr>calendar.get(java.util.Calendar.DAY_OF_MONTH)</xsp:expr></sch:day>
+    <sch:hour><xsp:expr>calendar.get(java.util.Calendar.HOUR_OF_DAY)</xsp:expr></sch:hour>
+    <sch:minute><xsp:expr>calendar.get(java.util.Calendar.MINUTE)</xsp:expr></sch:minute>
+    <sch:second><xsp:expr>calendar.get(java.util.Calendar.SECOND)</xsp:expr></sch:second>
+  </sch:current-date>
+
+</sch:scheduler>
+  
+</xsp:page>
