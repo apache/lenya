@@ -276,6 +276,7 @@
     <component-instance name="tab.overview" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Overview"/>
     <component-instance name="tab.revisions" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Revisions"/>
     <component-instance name="tab.workflow" logger="lenya.site" class="org.apache.lenya.cms.workflow.usecases.History"/>
+    <component-instance name="tab.scheduler" logger="lenya.site" class="org.apache.lenya.cms.usecase.scheduling.ManageJobs"/>
     
     <component-instance name="publication.createPublicationFromTemplate" logger="lenya.site"
                         class="org.apache.lenya.cms.publication.usecases.CreatePublicationFromTemplate"/>

@@ -24,7 +24,24 @@
   <div>
     <jx:import uri="tab/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
-      <!-- TODO xinclude schedule output for this document here -->
+      
+      <table class="lenya-table">
+        <tr>
+          <th><i18n:text>Job</i18n:text></th>
+          <th><i18n:text>Time</i18n:text></th>
+        </tr>
+        <jx:forEach var="job" items="${usecase.getParameter('jobs')}">
+          <tr>
+            <td>
+              <jx:out value="${job.getJobName()}"/>
+            </td>
+            <td>
+              <jx:out value="${job.getNextTime()}"/>
+            </td>
+          </tr>
+        </jx:forEach>
+      </table>
+      
     </div>
   </div>
 </page:page>

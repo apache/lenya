@@ -31,6 +31,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.cron.CronJob;
 import org.apache.cocoon.components.cron.JobScheduler;
+import org.apache.cocoon.components.cron.JobSchedulerEntry;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
@@ -110,6 +111,34 @@ public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseS
      */
     public void contextualize(Context context) throws ContextException {
         this.context = context;
+    }
+    
+    /**
+     * @see org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler#getJobs()
+     */
+    public JobSchedulerEntry[] getJobs() {
+        JobScheduler scheduler = null;
+        JobSchedulerEntry[] entries = null;
+        try {
+            scheduler = (JobScheduler) this.manager.lookup(JobScheduler.ROLE);
+            
+            String[] jobNames = scheduler.getJobNames();
+            entries = new JobSchedulerEntry[jobNames.length];
+            
+            for (int i = 0; i < jobNames.length; i++) {
+                JobSchedulerEntry entry = scheduler.getJobSchedulerEntry(jobNames[i]);
+                entries[i] = entry;
+            }
+
+        } catch (Exception e) {
+            getLogger().error("Could not obtain job list: ", e);
+            throw new RuntimeException(e);
+        } finally {
+            if (scheduler != null) {
+                this.manager.release(scheduler);
+            }
+        }
+        return entries;
     }
 
 }

@@ -18,6 +18,7 @@ package org.apache.lenya.cms.usecase.scheduling;
 
 import java.util.Date;
 
+import org.apache.cocoon.components.cron.JobSchedulerEntry;
 import org.apache.lenya.cms.usecase.Usecase;
 
 /**
@@ -39,4 +40,8 @@ public interface UsecaseScheduler {
      */
     void schedule(Usecase usecase, Date date);
     
+    /**
+     * @return All scheduled jobs.
+     */
+    JobSchedulerEntry[] getJobs();
 }
