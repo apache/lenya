@@ -1,5 +1,5 @@
 /*
- * $Id: FlowHelper.java,v 1.3 2004/01/16 17:42:16 andreas Exp $ <License>
+ * $Id: FlowHelper.java,v 1.4 2004/01/19 17:53:29 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -40,6 +40,8 @@
  */
 package org.apache.lenya.cms.cocoon.flow;
 
+import java.util.Enumeration;
+
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -55,6 +57,7 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
+import org.apache.log4j.Category;
 
 /**
  * Flowscript utility class.
@@ -65,6 +68,8 @@ import org.apache.lenya.workflow.Situation;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class FlowHelper {
+    
+    private static final Category log = Category.getInstance(FlowHelper.class);
 
     /**
      * Ctor.
@@ -125,6 +130,37 @@ public class FlowHelper {
      */
     public String getRequestURI(FOM_Cocoon cocoon) {
         return cocoon.getRequest().getRequestURI();
+    }
+    
+    public static final String SEPARATOR = ":";
+    
+    /**
+     * Resolves the request parameter value for a specific name.
+     * The parameter names are encoded as <code>{name}:{value}.{axis}</code>.
+     * This is a workaround for the &lt;input type="image"/&gt;
+     * bug in Internet Explorer.
+     * @param cocoon The FOM_Cocoon object.
+     * @param parameterName The request parameter name.
+     * @return A string.
+     */
+    public String getImageParameterValue(FOM_Cocoon cocoon, String parameterName) {
+        
+        log.debug("Resolving parameter value for name [" + parameterName + "]");
+        
+        Request request = cocoon.getRequest();
+        String value = null;
+        String prefix = parameterName + SEPARATOR;
+        Enumeration e = request.getParameterNames();
+        while (e.hasMoreElements() && value == null) {
+            String name = (String) e.nextElement();
+            if (name.startsWith(prefix)) {
+                log.debug("Complete parameter name: [" + name + "]");
+                value = name.substring(prefix.length(), name.length() - 2);
+                log.debug("Resolved value: [" + value + "]");
+            }
+        }
+        
+        return value;
     }
 
 }
