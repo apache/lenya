@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ReservedCheckinAction.java,v 1.11 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -98,9 +98,9 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         } catch (FileReservedCheckInException e) {
             actionMap.put("exception", "fileReservedCheckInException");
             actionMap.put("filename", filename);
-            actionMap.put("checkType", e.typeString);
-            actionMap.put("user", e.username);
-            actionMap.put("date", e.date);
+            actionMap.put("checkType", e.getTypeString());
+            actionMap.put("user", e.getUsername());
+            actionMap.put("date", e.getDate());
             getLogger().warn(e.getMessage());
 
             return actionMap;

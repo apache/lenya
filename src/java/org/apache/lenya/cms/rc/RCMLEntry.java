@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: RCMLEntry.java,v 1.8 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -63,9 +63,10 @@ package org.apache.lenya.cms.rc;
  * @version 1.0
  */
 public class RCMLEntry {
-    String identity = null;
-    long time = 0;
-    short type = 0;
+	
+    private String identity = null;
+    private long time = 0;
+    private short type = 0;
 
     /**
      * Creates a new RCMLEntry object.
@@ -77,4 +78,41 @@ public class RCMLEntry {
         this.identity = identity;
         this.time = time;
     }
+    
+    /**
+     * Get the identity.
+     *  
+     * @return the identity
+     */
+    public String getIdentity() {
+        return identity;
+    }
+
+    /**
+     * Get the time.
+     * 
+     * @return the time
+     */
+    public long getTime() {
+        return time;
+    }
+
+    /**
+     * Get the type.
+     * 
+     * @return the type
+     */
+    public short getType() {
+        return type;
+    }
+
+    /**
+     * Set the type.
+     * 
+     * @param s the type
+     */
+    protected void setType(short s) {
+        type = s;
+    }
+
 }

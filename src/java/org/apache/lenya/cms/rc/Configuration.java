@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Configuration.java,v 1.12 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -67,9 +67,10 @@ import java.util.Properties;
  * @version 0.10.5
  */
 public class Configuration {
-    static Category log = Category.getInstance(Configuration.class);
-    public String rcmlDirectory = null;
-    public String backupDirectory = null;
+    private static Category log = Category.getInstance(Configuration.class);
+    
+    private String rcmlDirectory = null;
+    private String backupDirectory = null;
 
     /**
      * Creates a new Configuration object.
@@ -89,13 +90,21 @@ public class Configuration {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
+     * Get the backup directory
+     * 
+     * @return the backup directory
      */
-    public static void main(String[] args) {
-        Configuration conf = new Configuration();
-        log.debug("rcmlDirectory: " + conf.rcmlDirectory);
-        log.debug("backupDirectory: " + conf.backupDirectory);
+    public String getBackupDirectory() {
+        return backupDirectory;
     }
+
+    /**
+     * Get the rcml directory
+     * 
+     * @return the rcml directory
+     */
+    public String getRcmlDirectory() {
+        return rcmlDirectory;
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: RCML.java,v 1.14 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -83,12 +83,14 @@ import java.util.Vector;
  */
 public class RCML {
     private static Category log = Category.getInstance(RCML.class);
-    static short co = 0;
-    static short ci = 1;
+    
+    public static final short co = 0;
+    public static final short ci = 1;
+    
     private File rcmlFile;
     private Document document = null;
     private boolean dirty = false;
-    int maximalNumberOfEntries = 5;
+    private int maximalNumberOfEntries = 5;
 
     /**
      * Creates a new RCML object.
@@ -103,6 +105,7 @@ public class RCML {
      *
      * @param rcmlDirectory DOCUMENT ME!
      * @param filename DOCUMENT ME!
+     * @param rootDirectory DOCUMENT ME!
      *
      * @throws Exception DOCUMENT ME!
      */
@@ -163,7 +166,7 @@ public class RCML {
             if (coe == null) {
                 log.info("Not checked out");
             } else {
-                log.info("Checked out: " + coe.identity + " " + coe.time);
+                log.info("Checked out: " + coe.getIdentity() + " " + coe.getTime());
             }
         } catch (Exception e) {
             log.error(e);
@@ -337,7 +340,7 @@ public class RCML {
         CheckOutEntry coe = getLatestCheckOutEntry();
 
         if ((cie != null) && (coe != null)) {
-            if (cie.time > coe.time) {
+            if (cie.getTime() > coe.getTime()) {
                 return cie;
             } else {
                 return coe;
@@ -395,7 +398,7 @@ public class RCML {
                 "xpointer(/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn)");
 
         Configuration conf = new Configuration();
-        String backupDir = conf.backupDirectory;
+        String backupDir = conf.getBackupDirectory();
 
         for (int i = entriesToKeep; i < entries.size(); i++) {
             Element current = (Element) entries.get(i);
@@ -433,10 +436,16 @@ public class RCML {
         return dirty;
     }
 
+	/**
+	 * DOCUMENT ME!
+	 */
     protected void setDirty() {
         dirty = true;
     }
 
+	/**
+	 * DOCUMENT ME!
+	 */
     protected void clearDirty() {
         dirty = false;
     }

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: CheckOutEntry.java,v 1.8 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -71,6 +71,6 @@ public class CheckOutEntry extends RCMLEntry {
      */
     public CheckOutEntry(String identity, long time) {
         super(identity, time);
-        type = RCML.co;
+        setType(RCML.co);
     }
 }

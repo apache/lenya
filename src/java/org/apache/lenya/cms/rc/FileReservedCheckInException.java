@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: FileReservedCheckInException.java,v 1.9 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -65,11 +65,11 @@ import java.util.Date;
  * @version 0.7.5
  */
 public class FileReservedCheckInException extends Exception {
-    public String source = null;
-    public Date date = null;
-    public String username = null;
-    public String typeString = null;
-    public short type;
+    private String source = null;
+    private Date date = null;
+    private String username = null;
+    private String typeString = null;
+    private short type;
 
     /**
      * Creates a new FileReservedCheckInException object.
@@ -86,9 +86,9 @@ public class FileReservedCheckInException extends Exception {
         try {
             RCMLEntry rcmlEntry = rcml.getLatestEntry();
 
-            username = rcmlEntry.identity;
-            date = new Date(rcmlEntry.time);
-            type = rcmlEntry.type;
+            username = rcmlEntry.getIdentity();
+            date = new Date(rcmlEntry.getTime());
+            type = rcmlEntry.getType();
 
             if (type == RCML.co) {
                 typeString = "Checkout";
@@ -109,4 +109,31 @@ public class FileReservedCheckInException extends Exception {
         return "Unable to check in the file " + this.source + " because of a " + this.typeString +
         " by user " + this.username + " at " + this.date;
     }
+    /**
+     * Get the date
+     * 
+     * @return the date
+     */
+    public Date getDate() {
+        return date;
+    }
+
+    /**
+     * Get the typeString
+     * 
+     * @return the type string
+     */
+    public String getTypeString() {
+        return typeString;
+    }
+
+    /**
+     * Get the user name.
+     * 
+     * @return the user name
+     */
+    public String getUsername() {
+        return username;
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: RevisionController.java,v 1.18 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -76,7 +76,7 @@ import java.util.Date;
  * @version 1.5.1
  */
 public class RevisionController {
-    static Category log = Category.getInstance(RevisionController.class);
+    private static Category log = Category.getInstance(RevisionController.class);
 
     // System username. This is used for 
     // - creating dummy checkin events in a new RCML file
@@ -86,24 +86,25 @@ public class RevisionController {
     //   username as identity parameter to reservedCheckIn()
     //
     public static final String systemUsername = "System";
-    String rcmlDir = null;
-    String rootDir = null;
-    String backupDir = null;
+    
+    private String rcmlDir = null;
+    private String rootDir = null;
+    private String backupDir = null;
 
     /**
      * Creates a new RevisionController object.
      */
     public RevisionController() {
         Configuration conf = new Configuration();
-        rcmlDir = conf.rcmlDirectory;
-        backupDir = conf.backupDirectory;
+        rcmlDir = conf.getRcmlDirectory();
+        backupDir = conf.getBackupDirectory();
         rootDir = "conf.rootDirectory";
     }
 
     /**
      * Creates a new RevisionController object.
      *
-     * @param rcmlDir DOCUMENT ME!
+     * @param rcmlDirectory DOCUMENT ME!
      * @param backupDirectory DOCUMENT ME!
      * @param rootDirectory DOCUMENT ME!
      */
@@ -236,10 +237,10 @@ public class RevisionController {
         // having to check back in first.
         //
         log.debug("entry: " + entry);
-        log.debug("entry.type:" + entry.type);
-        log.debug("entry.identity" + entry.identity);
+        log.debug("entry.type:" + entry.getType());
+        log.debug("entry.identity" + entry.getIdentity());
 
-        if ((entry != null) && (entry.type != RCML.ci) && !entry.identity.equals(identity)) {
+        if ((entry != null) && (entry.getType() != RCML.ci) && !entry.getIdentity().equals(identity)) {
             throw new FileReservedCheckOutException(rootDir + source, rcml);
         }
 
@@ -297,16 +298,16 @@ public class RevisionController {
              *              user is working on this document
              *
              */
-            if ((cie != null) && (cie.time > coe.time)) {
+            if ((cie != null) && (cie.getTime() > coe.getTime())) {
                 // We have case 1
-                if (!cie.identity.equals(identity)) {
+                if (!cie.getIdentity().equals(identity)) {
                     // Case 1.2., abort...
                     //
                     throw new FileReservedCheckInException(rootDir + destination, rcml);
                 }
             } else {
                 // Case 2
-                if (!coe.identity.equals(identity)) {
+                if (!coe.getIdentity().equals(identity)) {
                     // Case 2.2., abort...
                     //
                     throw new FileReservedCheckInException(rootDir + destination, rcml);
@@ -432,7 +433,6 @@ public class RevisionController {
      *
      * @exception Exception FileNotFoundException if the back  version or the current version
      *            couldn't be found
-     * @throws FileNotFoundException DOCUMENT ME!
      */
     public void undoCheckIn(long time, String destination)
         throws Exception {

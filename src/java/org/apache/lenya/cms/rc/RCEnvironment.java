@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: RCEnvironment.java,v 1.5 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -72,7 +72,7 @@ import java.util.Map;
  * @author Edith Chevrier
  */
 public class RCEnvironment implements Configurable {
-    static Category log = Category.getInstance(RCEnvironment.class);
+    private static Category log = Category.getInstance(RCEnvironment.class);
     public static final String CONFIGURATION_FILE = "lenya" + File.separator + "config" +
         File.separator + "rc" + File.separator + "revision-controller.xconf";
     public static final String RCML_DIRECTORY = "rcml-directory";
@@ -144,6 +144,11 @@ public class RCEnvironment implements Configurable {
         return rcmlDirectory;
     }
 
+	/**
+	 * Set the rcml directory
+	 * 
+	 * @param rcmlDir the path to the rcml directory
+	 */
     protected void setRCMLDirectory(String rcmlDir) {
         rcmlDirectory = rcmlDir;
     }
@@ -157,6 +162,11 @@ public class RCEnvironment implements Configurable {
         return backupDirectory;
     }
 
+	/**
+	 * Set the backup directory
+	 * 
+	 * @param backupDir path to the backup directory
+	 */
     protected void setBackupDirectory(String backupDir) {
         backupDirectory = backupDir;
     }

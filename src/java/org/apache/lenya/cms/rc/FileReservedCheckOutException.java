@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: FileReservedCheckOutException.java,v 1.8 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -65,9 +65,9 @@ import java.util.Date;
  * @version 0.7.5
  */
 public class FileReservedCheckOutException extends Exception {
-    public String source = null;
-    public Date checkOutDate = null;
-    public String checkOutUsername = null;
+    private String source = null;
+    private Date checkOutDate = null;
+    private String checkOutUsername = null;
 
     /**
      * Creates a new FileReservedCheckOutException object.
@@ -84,10 +84,29 @@ public class FileReservedCheckOutException extends Exception {
         try {
             CheckOutEntry coe = rcml.getLatestCheckOutEntry();
 
-            checkOutUsername = coe.identity;
-            checkOutDate = new Date(coe.time);
+            checkOutUsername = coe.getIdentity();
+            checkOutDate = new Date(coe.getTime());
         } catch (Exception exception) {
             throw new Exception("Unable to create FileReservedCheckOutException object!");
         }
     }
+    
+    /**
+     * Get the date of the checkout.
+     * 
+     * @return the date of the checkout
+     */
+    public Date getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    /**
+     * Get the user name who did this checkout.
+     * 
+     * @return the user name of this checkout
+     */
+    public String getCheckOutUsername() {
+        return checkOutUsername;
+    }
+
 }

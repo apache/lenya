@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ReservedCheckoutAction.java,v 1.12 2003/07/14 14:24:20 egli Exp $
 <License>
 
  ============================================================================
@@ -109,9 +109,9 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
         } catch (FileReservedCheckOutException e) {
             actionMap.put("exception", "fileReservedCheckOutException");
             actionMap.put("filename", filename);
-            actionMap.put("user", e.checkOutUsername);
-            actionMap.put("date", e.checkOutDate);
-            getLogger().warn("Document " + filename + " already checked-out by " + e.checkOutUsername + " since " + e.checkOutDate);
+            actionMap.put("user", e.getCheckOutUsername());
+            actionMap.put("date", e.getCheckOutDate());
+            getLogger().warn("Document " + filename + " already checked-out by " + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
 
             return actionMap;
         } catch (Exception e) {
