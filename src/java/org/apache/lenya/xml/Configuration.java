@@ -116,7 +116,7 @@ public class Configuration{
   URL url=org.apache.log4j.helpers.Loader.getResource("hallo");
   //URL url=cl.getResource(resourcePathRelativeToClasspath);
   if(url == null){
-   log.fatal("Could not find resource on classpath: "+resourcePathRelativeToClasspath);
+   //log.fatal("Could not find resource on classpath: "+resourcePathRelativeToClasspath);
    //return null;
    }
   log.debug(url);
