@@ -101,7 +101,8 @@ public class Credential {
      * @param role The role to add.
      */
     public void addRole(Role role) {
-        assert (role != null) && !roles.contains(role);
+        assert role != null;
+        assert !roles.contains(role);
         roles.add(role);
     }
 

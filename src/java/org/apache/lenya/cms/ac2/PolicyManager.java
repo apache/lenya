@@ -1,5 +1,5 @@
 /*
-$Id: PolicyManager.java,v 1.7 2003/07/14 18:07:01 andreas Exp $
+$Id: PolicyManager.java,v 1.8 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -69,42 +69,6 @@ public interface PolicyManager extends Component {
     
    	String ROLE = PolicyManager.class.getName();
     
-    /**
-     * Builds the URL policy for a URL in a certain publication.
-     * @param controller The access controller to use.
-     * @param url The URL inside the web application.
-     * @return A policy.
-     * @throws AccessControlException when something went wrong.
-     */
-    DefaultPolicy buildURLPolicy(AccreditableManager controller, String url) throws AccessControlException;
-
-    /**
-     * Builds the subtree policy for a URL.
-     * @param controller The access controller to use.
-     * @param url The URL inside the web application.
-     * @return A policy.
-     * @throws AccessControlException when something went wrong.
-     */
-    DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url) throws AccessControlException;
-
-    /**
-     * Saves a URL policy.
-     * @param url The URL to save the policy for.
-     * @param policy The policy to save.
-     * @throws AccessControlException when something went wrong.
-     */
-    void saveURLPolicy(String url, DefaultPolicy policy)
-        throws AccessControlException;
-
-    /**
-     * Saves a Subtree policy.
-     * @param url The url to save the policy for.
-     * @param policy The policy to save.
-     * @throws AccessControlException when something went wrong.
-     */
-    void saveSubtreePolicy(String url, DefaultPolicy policy)
-        throws AccessControlException;
-        
 	/**
 	 * Returns the policy for a given page.
 	 * @param controller The access controller.

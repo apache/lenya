@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.9 2003/07/15 13:50:15 andreas Exp $
+$Id: DelegatingAuthorizerAction.java,v 1.10 2003/07/17 16:24:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -122,7 +122,6 @@ public class DelegatingAuthorizerAction extends AccessControlAction {
         
         initializeIdentity(request);
         setHistory(request);
-        setProtectedDestination(request);
 
         boolean authorized = authorize(request);
 
@@ -162,36 +161,36 @@ public class DelegatingAuthorizerAction extends AccessControlAction {
 
     }
     
-    public static final String PROTECTED_DESTINATION = "protected_destination";
-    
     /**
-     * Adds the "protected_destination" attribute to the session.
-     * @param request The request.
+     * Checks if the session contains an identity that is not null and belongs
+     * to the used access controller. 
+     * @param session The current session.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
      */
-    protected void setProtectedDestination(Request request) {
-        String queryString = request.getQueryString();
-        Session session = request.getSession(true);
-        String url = request.getRequestURI();
-        if (queryString != null) {
-            url += "?" + queryString;
+    protected boolean hasValidIdentity(Session session) throws AccessControlException {
+        boolean valid = true;
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        if (identity == null || !getAccessController().ownsIdenity(identity)) {
+            valid = false;
         }
-
-        session.setAttribute("protected_destination", url);
+        return valid;
     }
     
     /**
      * Initializes the identity, adding the current machine.
      * @param request The request.
+     * @throws AccessControlException when something went wrong.
      */
-    protected void initializeIdentity(Request request) {
-        Identity identity = new Identity();
-        
-        String remoteAddress = request.getRemoteAddr();
-        Machine machine = new Machine(remoteAddress);
-        identity.addIdentifiable(machine);
-        
+    protected void initializeIdentity(Request request) throws AccessControlException {
         Session session = request.getSession(true);
-        session.setAttribute(Identity.class.getName(), identity);
+        if (!hasValidIdentity(session)) {
+            Identity identity = new Identity();
+            String remoteAddress = request.getRemoteAddr();
+            Machine machine = new Machine(remoteAddress);
+            identity.addIdentifiable(machine);
+            session.setAttribute(Identity.class.getName(), identity);
+        }
     }
 
 }

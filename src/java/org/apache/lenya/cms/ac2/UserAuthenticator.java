@@ -1,5 +1,5 @@
 /*
-$Id: UserAuthenticator.java,v 1.1 2003/07/15 13:50:15 andreas Exp $
+$Id: UserAuthenticator.java,v 1.2 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,6 +73,8 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
         throws AccessControlException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        
+        getLogger().debug("Authenticating username [" + username + "] with password [" + password + "]");
 
         if (username == null || password == null) {
             throw new AccessControlException("Username or password is null!");
@@ -108,8 +110,12 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
 
         boolean authenticated = false;
         if (user.authenticate(password)) {
+            getLogger().debug("User [" + user + "] authenticated.");
             identity.addIdentifiable(user);
             authenticated = true;
+        }
+        else {
+            getLogger().debug("User [" + user + "] not authenticated.");
         }
 
         return authenticated;

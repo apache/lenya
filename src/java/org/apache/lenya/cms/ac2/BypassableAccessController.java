@@ -1,5 +1,5 @@
 /*
-$Id: BypassableAccessController.java,v 1.2 2003/07/15 13:50:15 andreas Exp $
+$Id: BypassableAccessController.java,v 1.3 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,9 @@ $Id: BypassableAccessController.java,v 1.2 2003/07/15 13:50:15 andreas Exp $
 */
 package org.apache.lenya.cms.ac2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.Request;
@@ -78,7 +81,7 @@ public class BypassableAccessController extends DefaultAccessController {
     public BypassableAccessController() {
     }
 
-    private REProgram[] publicMatchers;
+    private List publicMatchers = new ArrayList();
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -86,20 +89,21 @@ public class BypassableAccessController extends DefaultAccessController {
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
         
+        getLogger().debug("Configuring bypass patterns");
+        
         Configuration[] publics = conf.getChildren("public");
-        publicMatchers = new REProgram[publics.length];
 
         for (int i = 0; i < publics.length; i++) {
-            String public_href = publics[i].getValue(null);
+            String publicHref = publics[i].getValue(null);
 
             try {
-                publicMatchers[i] = preparePattern(public_href);
+                publicMatchers.add(preparePattern(publicHref));
             } catch (PatternException pe) {
                 throw new ConfigurationException("invalid pattern for public hrefs", pe);
             }
 
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("CONFIGURATION: public: " + public_href);
+                getLogger().debug("CONFIGURATION: public: " + publicHref);
             }
         }
 
@@ -173,8 +177,9 @@ public class BypassableAccessController extends DefaultAccessController {
         
         // Check public uris from configuration above. Should only be used during development before the implementation of a concrete authorizer.
         int i = 0;
-        while (!authorized && i < publicMatchers.length) {
-            if (preparedMatch(publicMatchers[i], uri)) {
+        while (!authorized && i < publicMatchers.size()) {
+            getLogger().debug("Trying pattern: [" + publicMatchers.get(i) + "] with URL [" + uri + "]");
+            if (preparedMatch((REProgram) publicMatchers.get(i), uri)) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Permission granted for free: [" + uri + "]");
                 }
@@ -183,7 +188,11 @@ public class BypassableAccessController extends DefaultAccessController {
             i++;
         }
         
-        return super.authorize(request);
+        if (!authorized) {
+            authorized = super.authorize(request);
+        }
+        
+        return authorized;
     }
 
 }

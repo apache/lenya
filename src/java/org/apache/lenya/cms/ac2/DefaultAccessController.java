@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.5 2003/07/15 13:57:37 andreas Exp $
+$Id: DefaultAccessController.java,v 1.6 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -337,6 +337,13 @@ public class DefaultAccessController
      */
     public Authenticator getAuthenticator() {
         return authenticator;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.AccessController#ownsIdenity(org.apache.lenya.cms.ac2.Identity)
+     */
+    public boolean ownsIdenity(Identity identity) throws AccessControlException {
+        return identity.belongsTo(getAccreditableManager());
     }
 
 }

@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlAction.java,v 1.1 2003/07/15 13:50:16 andreas Exp $
+$Id: AccessControlAction.java,v 1.2 2003/07/17 16:24:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,7 @@ $Id: AccessControlAction.java,v 1.1 2003/07/15 13:50:16 andreas Exp $
 
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.apache.avalon.framework.component.ComponentSelector;
@@ -78,6 +79,13 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
     private AccessController accessController;
 
     /**
+     * <p>
+     * Invokes the access control functionality.
+     * If no access controller was found for the requested URL, an empty map is returned.
+     * </p>
+     * <p>
+     * This is a template method. Implement doAct() to add your functionality.
+     * </p>
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(
@@ -90,11 +98,12 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
 
         ComponentSelector selector = null;
         AccessControllerResolver resolver = null;
-        AccessController accessController = null;
+        accessController = null;
 
         Request request = ObjectModelHelper.getRequest(objectModel);
+        
+        Map result = null;
 
-        boolean authorized;
         try {
             selector =
                 (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
@@ -108,7 +117,12 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
             String url = requestURI.substring(context.length());
             accessController = resolver.resolveAccessController(url);
             
-            return doAct(redirector, sourceResolver, objectModel, source, parameters);
+            if (accessController == null) {
+                result = Collections.EMPTY_MAP;
+            }
+            else {
+                result = doAct(redirector, sourceResolver, objectModel, source, parameters);
+            }
 
         } finally {
             if (selector != null) {
@@ -121,6 +135,7 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
                 manager.release(selector);
             }
         }
+        return result;
     }
 
     /**

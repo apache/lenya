@@ -1,5 +1,5 @@
 /*
-$Id: SitemapPolicyManager.java,v 1.5 2003/07/17 16:24:20 andreas Exp $
+$Id: InheritingPolicyManager.java,v 1.1 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,82 +53,51 @@ $Id: SitemapPolicyManager.java,v 1.5 2003/07/17 16:24:20 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.ac2.sitemap;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
+package org.apache.lenya.cms.ac2;
+
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac2.AccreditableManager;
-import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.PolicyBuilder;
-import org.apache.lenya.cms.ac2.PolicyManager;
-import org.apache.lenya.xml.DocumentHelper;
-import org.w3c.dom.Document;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class SitemapPolicyManager
-    extends AbstractLogEnabled
-    implements PolicyManager, Serviceable {
+public interface InheritingPolicyManager extends PolicyManager {
 
     /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
+     * Builds the URL policy for a URL from a file.
+     * When the file is not present, an empty policy is returned.
+     * @param controller The access controller to use.
+     * @param url The URL inside the web application.
+     * @return A policy.
+     * @throws AccessControlException when something went wrong.
      */
-    public Policy getPolicy(AccreditableManager accreditableManager, String url)
-        throws AccessControlException {
-
-        url = url.substring(1);
-
-        int slashIndex = url.indexOf("/");
-        if (slashIndex == -1) {
-            slashIndex = url.length();
-        }
-
-        String publicationId = url.substring(0, slashIndex);
-        url = url.substring(publicationId.length());
-
-        SourceResolver resolver = null;
-        Policy policy = null;
-        try {
-            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
-
-            String policyUrl = publicationId + "/policies" + url + ".acml";
-            getLogger().debug("Policy URL: " + policyUrl);
-            Source source = resolver.resolveURI("cocoon://" + policyUrl);
-            Document document = DocumentHelper.readDocument(source.getInputStream());
-            policy = PolicyBuilder.getInstance().buildPolicy(accreditableManager, document);
-
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        } finally {
-            getManager().release(resolver);
-        }
-        return policy;
-    }
-
-    private ServiceManager manager;
+    DefaultPolicy buildURLPolicy(AccreditableManager controller, String url)
+        throws AccessControlException;
 
     /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
+    * Builds a subtree policy from a file. When the file is not present, an empty policy is returned.
+    * @param controller The access controller to use.
+    * @param url The URL inside the web application.
+    * @return A policy.
+    * @throws AccessControlException when something went wrong.
+    */
+    DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url)
+        throws AccessControlException;
 
     /**
-     * Returns the service manager.
-     * @return A service manager.
+     * Saves a URL policy.
+     * @param url The URL to save the policy for.
+     * @param policy The policy to save.
+     * @throws AccessControlException when something went wrong.
      */
-    public ServiceManager getManager() {
-        return manager;
-    }
+    void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException;
+
+    /**
+     * Saves a Subtree policy.
+     * @param url The url to save the policy for.
+     * @param policy The policy to save.
+     * @throws AccessControlException when something went wrong.
+     */
+    void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException;
 
 }

@@ -78,7 +78,7 @@ public class URLPolicy implements Policy {
 	public URLPolicy(
 		AccreditableManager controller,
 		String url,
-		PolicyManager manager) {
+		InheritingPolicyManager manager) {
 		assert url != null;
 		this.url = url;
 
@@ -90,7 +90,7 @@ public class URLPolicy implements Policy {
 	}
 
 	private String url;
-	private PolicyManager policyManager;
+	private InheritingPolicyManager policyManager;
 	private AccreditableManager controller;
 
 	/**
@@ -104,14 +104,12 @@ public class URLPolicy implements Policy {
 				getUrl());
 		addRoles(urlPolicy, identity, roles);
 
-		String url = "/";
+		String url = "";
 		String[] directories = getUrl().split("/");
-
-        if (directories.length > 1) {
-            for (int i = 1; i < directories.length; i++) {
-                url += (directories[i] + "/");
-                addRoles(identity, url, roles);
-            }
+        
+        for (int i = 0; i < directories.length; i++) {
+            url += directories[i] + "/";
+            addRoles(identity, url, roles);
         }
 
 		return (Role[]) roles.toArray(new Role[roles.size()]);
@@ -158,7 +156,7 @@ public class URLPolicy implements Policy {
 	 * Returns the policy builder.
 	 * @return A policy builder.
 	 */
-	public PolicyManager getPolicyManager() {
+	public InheritingPolicyManager getPolicyManager() {
 		return policyManager;
 	}
 

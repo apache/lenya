@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthenticatorAction.java,v 1.1 2003/07/15 13:50:16 andreas Exp $
+$Id: DelegatingAuthenticatorAction.java,v 1.2 2003/07/17 16:24:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -74,12 +74,24 @@ public class DelegatingAuthenticatorAction extends AccessControlAction {
     /**
      * @see org.apache.lenya.cms.cocoon.acting.AccessControlAction#doAct(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    protected Map doAct(Redirector redirector, SourceResolver resolver, Map objectModel, String source, Parameters parameters) throws Exception {
-        
+    protected Map doAct(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String source,
+        Parameters parameters)
+        throws Exception {
+
+        getLogger().debug("Authenticating request");
+
         Request request = ObjectModelHelper.getRequest(objectModel);
         Map result = null;
         if (getAccessController().authenticate(request)) {
+            getLogger().debug("Authentication successful.");
             result = Collections.EMPTY_MAP;
+        }
+        else {
+            getLogger().debug("Authentication failed.");
         }
         return result;
     }

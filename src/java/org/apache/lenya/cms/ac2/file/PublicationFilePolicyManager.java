@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFilePolicyManager.java,v 1.1 2003/07/14 18:05:34 andreas Exp $
+$Id: PublicationFilePolicyManager.java,v 1.2 2003/07/17 16:24:20 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,8 +77,11 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
      */
     protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
 
-        assert url.startsWith("/");
-        url = url.substring(1);
+        getLogger().debug("Resolving policy file for URL [" + url + "]");
+
+        if (url.startsWith("/")) {
+            url = url.substring(1);
+        }
 
         int slashIndex = url.indexOf("/");
         if (slashIndex == -1) {
@@ -88,8 +91,10 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
         String publicationId = url.substring(0, slashIndex);
         url = url.substring(publicationId.length());
 
-        String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
+        getLogger().debug("URL without publication ID: [" + url + "]");
 
+        String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
+        
         File publicationDirectory =
             new File(
                 getPoliciesDirectory(),

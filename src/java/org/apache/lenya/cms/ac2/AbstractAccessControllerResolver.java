@@ -1,5 +1,5 @@
 /*
-$Id: SitemapPolicyManager.java,v 1.5 2003/07/17 16:24:20 andreas Exp $
+$Id: AbstractAccessControllerResolver.java,v 1.1 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,65 +53,28 @@ $Id: SitemapPolicyManager.java,v 1.5 2003/07/17 16:24:20 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.ac2.sitemap;
+
+package org.apache.lenya.cms.ac2;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac2.AccreditableManager;
-import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.PolicyBuilder;
-import org.apache.lenya.cms.ac2.PolicyManager;
-import org.apache.lenya.xml.DocumentHelper;
-import org.w3c.dom.Document;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class SitemapPolicyManager
+public abstract class AbstractAccessControllerResolver
     extends AbstractLogEnabled
-    implements PolicyManager, Serviceable {
+    implements AccessControllerResolver, Serviceable {
 
     /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
+     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#release(org.apache.lenya.cms.ac2.AccessController)
      */
-    public Policy getPolicy(AccreditableManager accreditableManager, String url)
-        throws AccessControlException {
-
-        url = url.substring(1);
-
-        int slashIndex = url.indexOf("/");
-        if (slashIndex == -1) {
-            slashIndex = url.length();
+    public void release(AccessController controller) {
+        if (controller != null) {
+            getManager().release(controller);
         }
-
-        String publicationId = url.substring(0, slashIndex);
-        url = url.substring(publicationId.length());
-
-        SourceResolver resolver = null;
-        Policy policy = null;
-        try {
-            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
-
-            String policyUrl = publicationId + "/policies" + url + ".acml";
-            getLogger().debug("Policy URL: " + policyUrl);
-            Source source = resolver.resolveURI("cocoon://" + policyUrl);
-            Document document = DocumentHelper.readDocument(source.getInputStream());
-            policy = PolicyBuilder.getInstance().buildPolicy(accreditableManager, document);
-
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        } finally {
-            getManager().release(resolver);
-        }
-        return policy;
     }
 
     private ServiceManager manager;
@@ -124,7 +87,7 @@ public class SitemapPolicyManager
     }
 
     /**
-     * Returns the service manager.
+     * Returns the service manager of this Serviceable.
      * @return A service manager.
      */
     public ServiceManager getManager() {

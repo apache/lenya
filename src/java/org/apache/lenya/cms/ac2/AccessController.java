@@ -1,5 +1,5 @@
 /*
-$Id: AccessController.java,v 1.8 2003/07/14 18:07:01 andreas Exp $
+$Id: AccessController.java,v 1.9 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,6 +66,9 @@ import org.apache.lenya.cms.ac.AccessControlException;
  */
 public interface AccessController extends Component {
 
+    String NAMESPACE = "http://apache.org/cocoon/lenya/ac/1.0";
+    String DEFAULT_PREFIX = "ac";
+    
     String ROLE = AccessController.class.getName();
 
     /**
@@ -83,5 +86,13 @@ public interface AccessController extends Component {
      * @throws AccessControlException when something went wrong.
      */
     boolean authorize(Request request) throws AccessControlException;
+    
+    /**
+     * Checks if this identity was initialized by this access controller.
+     * @param identity An identity.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
+    boolean ownsIdenity(Identity identity) throws AccessControlException;
 
 }

@@ -1,5 +1,5 @@
 /*
-$Id: PublicationAccessControllerResolver.java,v 1.3 2003/07/15 14:46:09 egli Exp $
+$Id: PublicationAccessControllerResolver.java,v 1.4 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,10 +61,6 @@ import java.net.URI;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.ac.AccessControlException;
@@ -78,8 +74,7 @@ import org.apache.lenya.cms.publication.PublicationFactory;
  * @author andreas
  */
 public class PublicationAccessControllerResolver
-    extends AbstractLogEnabled
-    implements AccessControllerResolver, Serviceable {
+    extends AbstractAccessControllerResolver {
 
     protected static final String CONFIGURATION_FILE =
         "config/ac/ac.xconf".replace('/', File.separatorChar);
@@ -114,7 +109,7 @@ public class PublicationAccessControllerResolver
             Source contextSource = null;
             File contextDir;
             try {
-                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+                resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
                 contextSource = resolver.resolveURI(contextUri);
                 contextDir = new File(new URI(contextSource.getURI()));
                 assert contextDir.isDirectory();
@@ -125,7 +120,7 @@ public class PublicationAccessControllerResolver
                     if (contextSource != null) {
                         resolver.release(contextSource);
                     }
-                    manager.release(resolver);
+                    getManager().release(resolver);
                 }
             }
 
@@ -191,32 +186,6 @@ public class PublicationAccessControllerResolver
         }
 
         return accessController;
-    }
-
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#release(org.apache.lenya.cms.ac2.AccessController)
-     */
-    public void release(AccessController controller) {
-        if (controller != null) {
-            getManager().release(controller);
-        }
-    }
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-
-    /**
-     * Returns the service manager of this Serviceable.
-     * @return A service manager.
-     */
-    public ServiceManager getManager() {
-        return manager;
     }
 
 }

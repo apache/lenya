@@ -1,5 +1,5 @@
 /*
-$Id: SitemapPolicyManager.java,v 1.5 2003/07/17 16:24:20 andreas Exp $
+$Id: ConfigurableAccessControllerResolver.java,v 1.1 2003/07/17 16:24:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,82 +53,57 @@ $Id: SitemapPolicyManager.java,v 1.5 2003/07/17 16:24:20 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.ac2.sitemap;
 
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
+package org.apache.lenya.cms.ac2;
+
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac2.AccreditableManager;
-import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.PolicyBuilder;
-import org.apache.lenya.cms.ac2.PolicyManager;
-import org.apache.lenya.xml.DocumentHelper;
-import org.w3c.dom.Document;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class SitemapPolicyManager
-    extends AbstractLogEnabled
-    implements PolicyManager, Serviceable {
+public class ConfigurableAccessControllerResolver
+    extends AbstractAccessControllerResolver
+    implements Configurable {
 
     /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
+     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.lang.String)
      */
-    public Policy getPolicy(AccreditableManager accreditableManager, String url)
+    public AccessController resolveAccessController(String webappUrl)
         throws AccessControlException {
+        AccessController accessController = null;
 
-        url = url.substring(1);
-
-        int slashIndex = url.indexOf("/");
-        if (slashIndex == -1) {
-            slashIndex = url.length();
-        }
-
-        String publicationId = url.substring(0, slashIndex);
-        url = url.substring(publicationId.length());
-
-        SourceResolver resolver = null;
-        Policy policy = null;
         try {
-            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
+            boolean authorized;
+            accessController =
+                (AccessController) getManager().lookup(
+                    AccessController.ROLE + "/" + accessControllerType);
 
-            String policyUrl = publicationId + "/policies" + url + ".acml";
-            getLogger().debug("Policy URL: " + policyUrl);
-            Source source = resolver.resolveURI("cocoon://" + policyUrl);
-            Document document = DocumentHelper.readDocument(source.getInputStream());
-            policy = PolicyBuilder.getInstance().buildPolicy(accreditableManager, document);
+            if (accessController instanceof Configurable) {
+                ((Configurable) accessController).configure(accessControllerConfiguration);
+            }
 
         } catch (Exception e) {
             throw new AccessControlException(e);
-        } finally {
-            getManager().release(resolver);
         }
-        return policy;
+
+        return accessController;
     }
 
-    private ServiceManager manager;
+    protected static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
+    protected static final String TYPE_ATTRIBUTE = "type";
+    private String accessControllerType;
+
+    private Configuration accessControllerConfiguration;
 
     /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-
-    /**
-     * Returns the service manager.
-     * @return A service manager.
-     */
-    public ServiceManager getManager() {
-        return manager;
+    public void configure(Configuration configuration) throws ConfigurationException {
+        accessControllerConfiguration = configuration.getChild(ACCESS_CONTROLLER_ELEMENT);
+        accessControllerType = accessControllerConfiguration.getAttribute(TYPE_ATTRIBUTE);
     }
 
 }
