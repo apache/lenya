@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.7 2003/08/12 15:17:52 andreas Exp $
+$Id: AccessControlModule.java,v 1.8 2003/09/01 17:02:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -71,6 +71,8 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.cms.ac.ItemManager;
+import org.apache.lenya.cms.ac.Machine;
+import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.ac2.AccessControllerResolver;
 import org.apache.lenya.cms.ac2.AccreditableManager;
@@ -87,6 +89,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     public static final String USER_ID = "user-id";
     public static final String USER_NAME = "user-name";
     public static final String USER_EMAIL = "user-email";
+    public static final String IP_ADDRESS = "ip-address";
 
     public static final String USER_MANAGER = "user-manager";
     public static final String GROUP_MANAGER = "group-manager";
@@ -98,6 +101,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
       */
     public static final String[] PARAMETER_NAMES =
         {
+            IP_ADDRESS,
             USER_ID,
             USER_NAME,
             USER_EMAIL,
@@ -120,13 +124,26 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         if (session != null) {
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if (identity != null) {
-
                 if (name.equals(USER_ID)) {
-                    value = identity.getUser().getId();
+                    User user = identity.getUser();
+                    if (user != null) {
+                        value = user.getId();
+                    }
                 } else if (name.equals(USER_NAME)) {
-                    value = identity.getUser().getName();
+                    User user = identity.getUser();
+                    if (user != null) {
+                        value = user.getName();
+                    }
                 } else if (name.equals(USER_EMAIL)) {
-                    value = identity.getUser().getEmail();
+                    User user = identity.getUser();
+                    if (user != null) {
+                        value = user.getEmail();
+                    }
+                } else if (name.equals(IP_ADDRESS)) {
+                    Machine machine = identity.getMachine();
+                    if (machine != null) {
+                        value = machine.getIp();
+                    }
                 }
             }
         }
