@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
 <document> 
 
@@ -12,6 +12,8 @@
     </authors> 
 </header> 
 <body> 
+  
+<section><title>The Classic Approach</title>
 
 <section>
 <title>XSLT</title>
@@ -20,6 +22,149 @@ By editing <code>src/webapp/lenya/xslt/menu/menu.xsl</code> one can change the l
 This XSLT template is being included by <code>src/webapp/lenya/xslt/menu/root.xsl</code>.
 </p> 
 </section>
+
+</section>
+
+<section><title>The Meta Stylesheet Approach</title>
+
+<p>
+In this approach, the publication simply builds its XHTML
+page without any additional XML. The Lenya menubar is added using
+a meta stylesheet in the last transformation step.
+You find more information on meta stylesheets on the page
+<link href="http://wiki.cocoondev.org/Wiki.jsp?page=MetaStylesheets">MetaStylesheets</link>
+in the cocoondev wiki.
+</p>
+
+<section><title>The Big Picture (literally)</title>
+
+<p>
+<img src="images/live/lenya-page-processing.png" alt="Lenya page processing"/>
+</p>
+<p>
+In the left column you see the XML flow within the publication sitemaps,
+  the right column shows the flow within the core sitemaps.
+</p>
+
+<section><title>Creating the Menu XHTML</title>
+<ul>
+  <li>The actual menu XML is fetched from the sitemap <code>menus.xmap</code>
+  within the publication directory.</li>
+  <li>The XML is processed using the UsecaseMenuTransformer and the
+  WorkflowMenuTransformer.</li>
+  <li>The stylesheet <code>lenya/xslt/menu/menu2xhtml.xsl</code> transforms
+  the menu XML into XHTML.</li>
+  <li>Finally, this XHTML is transformed into a meta stylesheet by
+  <code>lenya/xslt/menu/menu2xslt.xsl</code>.</li>
+</ul>
+</section>
+
+<section><title>Requesting and Applying the Menubar</title>
+<ul>
+  <li>The XHTML page is generated without any additional XML.</li>
+  <li>Afterwards, the menubar meta stylesheet is requested using
+  a <code>cocoon://lenya-page/...</code> internal request.</li>
+  <li>This request is matched in <code>global-sitemap.xmap</code>.</li>
+  <li>The menubar meta stylesheet is applied to the XHTML page.
+  It inserts the menubar at the top of the HTML body, adds some
+  additional CSS file entries and modifies the HTML title.</li>
+</ul>
+</section>
+
+</section>
+
+<section><title>Configuring the Publication</title>
+
+<section><title>Requesting the lenya-page Meta Stylesheet</title>
+<p>The lenya-page meta stylesheet request looks as follows:</p>
+
+<source><![CDATA[
+<map:generate src="cocoon:/page/..."/>
+<map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/[menu-url]"/>
+<map:serialize type="html"/>
+]]></source>
+
+<ul>
+  <li>The <code>lenya-page</code> part is used to match the request in <code>global-sitemap.xmap</code>.</li>
+  <li>The <code>{page-envelope:publication-id}</code> part is used to evaluate which
+  publication the request came from.</li>
+  <li>The <code>[menu-url]</code> part is used to get the menu from <code>menus.xmap</code>.
+  Here you have to add all information you need to select the appropriate menubar.</li>
+</ul>
+</section>
+
+<section><title>Creating the Menu XML</title>
+<p>Usually, this is done using an XSP page.</p>
+<p>The Lenya menubar namespace is</p>
+<source>http://apache.org/cocoon/lenya/menubar/1.0</source>
+</section>
+
+<section><title>Supplying Menus in menus.xmap</title>
+<p>When the lenya-page meta stylesheet is generated in the core,
+the actual menu XML is fetched using a request to the sitemap
+<code>menus.xmap</code> in the publication directory.
+The <code>[menu-url]</code> part from the lenya-page request is
+matched in this sitemap.</p>
+
+<p>
+This simple <code>menus.xmap</code> pipeline uses different
+menus for authoring and live:
+</p>
+
+<source><![CDATA[
+<map:pipeline>
+  
+  <map:match pattern="live/**">
+    <map:generate type="serverpages"
+        src="../../content/menus/live.xsp"/>
+    <map:serialize type="xml"/>
+  </map:match>
+  
+  <map:match pattern="*/**">
+    <map:generate type="serverpages"
+        src="config/menus/generic.xsp"/>
+    <map:serialize type="xml"/>
+  </map:match>
+  
+</map:pipeline>
+]]></source>
+
+<p>You can as well use the document type or the current URL to
+select a menu.</p>
+
+<p>Examples for lenya-page requests:</p>
+
+<p>Using the area:</p>
+<source>cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:area}</source>
+
+<p>Using the document type:</p>
+<source>cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:document-type}</source>
+
+<p>Using the document URL:</p>
+<source>cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:document-url}</source>
+
+</section>
+
+</section>
+
+<section><title>Creating a Customized Menu</title>
+
+<p>
+  It is also possible to get the menu XML before it is transformed
+  to XHTML using a request to the core. For this purpose, the prefix
+  <code>menu-xml</code> is used instead of <code>lenya-page</code>.
+  This way, you can aggregate the menu XML together with other page parts
+  and include it somewhere inside the XML page.
+</p>
+
+<source><![CDATA[<map:aggregate element="lenya" label="aggregation">
+  <map:part src="cocoon:/lenyabody/{1}/{2}.xml"/>
+  <map:part src="cocoon://menu-xml/{page-envelope:publication-id}/{1}.xml"/>
+</map:aggregate>]]></source>
+</section>
+
+</section>
+
 
 </body>
 </document>
