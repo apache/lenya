@@ -66,13 +66,14 @@
 <xsl:template match="p">
   <xsl:param name="block-position"/>
   <p>
-    <xsl:if test="$authoring and not(preceding-sibling::media)">
-      <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{position()}]"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
-    </xsl:if>
     <xsl:if test="not(preceding-sibling::p)">
       <xsl:apply-templates select="../hl2" mode="block"/>
     </xsl:if>
     <xsl:apply-templates/>
+    <xsl:if test="$authoring">
+	<br/>
+	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+    </xsl:if>
   </p>
 </xsl:template>
 
