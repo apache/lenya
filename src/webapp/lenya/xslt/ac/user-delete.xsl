@@ -26,8 +26,10 @@
   </xsl:template>
   
   <xsl:template match="user">
-    <form method="post">
-      <xsl:attribute name="action"></xsl:attribute>
+    <form method="GET">
+      <input type="hidden" name="lenya.usecase" value="user-delete"/>
+      <input type="hidden" name="lenya.step" value="delete"/>
+
       <p>
 	Really delete user <xsl:value-of select="id"/> (<xsl:value-of select="fullName"/>)?
       </p>
