@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: deactivate.xsl,v 1.6 2003/07/22 14:01:10 edith Exp $
+ $Id: deactivate.xsl,v 1.7 2003/08/28 10:19:33 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -9,6 +9,7 @@
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    xmlns:session="http://www.apache.org/xsp/session/2.0"
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
    >
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
@@ -32,25 +33,34 @@
   </xsl:template>
   
   <xsl:template match="info">
-    <div class="lenya-box">
-      <div class="lenya-box-title">Deactivate Document</div>
-      <div class="lenya-box-body">
         <form method="get">
-          <xsl:attribute name="action"></xsl:attribute>
-          <input type="hidden" name="lenya.usecase" value="deactivate"/>
-          <input type="hidden" name="lenya.step" value="deactivate"/>
-          <input type="hidden" name="task-id" value="{$task-id}"/>
-          <xsl:call-template name="task-parameters">
-            <xsl:with-param name="prefix" select="''"/>
-          </xsl:call-template>
-          <p>
-  	        Do you really want to deactivate <xsl:value-of select="document-id"/>?
-          </p>
-          <input type="submit" class="lenya-form-element" value="Deactivate"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+        	
+	<div class="lenya-box">
+		<div class="lenya-box-title">Deactivate Document</div>
+		<div class="lenya-box-body">
+			<input type="hidden" name="lenya.usecase" value="deactivate"/>
+			<input type="hidden" name="lenya.step" value="deactivate"/>
+			<input type="hidden" name="task-id" value="{$task-id}"/>
+			<xsl:call-template name="task-parameters">
+				<xsl:with-param name="prefix" select="''"/>
+			</xsl:call-template>
+			<p>
+				Do you really want to deactivate this document?
+				<ul>
+					<li><xsl:value-of select="$document-id"/></li>
+				</ul>
+			</p>
+		</div>
+	</div>
+          
+					<not:notification>
+						<not:textarea/>
+					</not:notification>
+
+          <input type="submit" value="Deactivate"/>
+          &#160;
+          <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
         </form>
-      </div>
-    </div>
   </xsl:template>
 
 <xsl:template name="task-parameters">
