@@ -11,17 +11,31 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:request="http://apache.org/xsp/request/2.0"
->
-
+  >
+  
   <xsp:structure>
-    <xsp:include>java.io.IOException</xsp:include>
-    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.ResourcesManager</xsp:include>
   </xsp:structure>
-    
-<lenya-info:info>
-  <lenya-info:assets>
-		<lenya-info:asset/>
-  </lenya-info:assets>     
-</lenya-info:info>
-
+  
+  <lenya-info:info>
+    <xsp:logic>
+      Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+      ResourcesManager resourceMgr = new ResourcesManager(doc);
+      File[] resources = resourceMgr.getResources();
+    </xsp:logic>
+    <lenya-info:assets>
+      <xsp:logic>
+	if (resources != null) {
+	  for(int i = 0; i &lt; resources.length; i++) {
+	  <xsp:content>
+	    <lenya-info:asset><xsp:expr>resources[i].getName()</xsp:expr></lenya-info:asset>
+	  </xsp:content>
+	  } 
+	}
+      </xsp:logic>
+      <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
+    </lenya-info:assets>     
+  </lenya-info:info>
+  
 </xsp:page>
