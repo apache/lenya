@@ -1,3 +1,5 @@
+/*cocoon.load("context:/flow/lenya.js");*/
+
 importClass(Packages.java.util.ArrayList);
 
 importClass(Packages.org.apache.cocoon.components.ContextHelper);
@@ -5,6 +7,8 @@ importClass(Packages.org.apache.cocoon.components.ContextHelper);
 importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
 importClass(Packages.org.apache.lenya.cms.publication.Publication);
 importClass(Packages.org.apache.lenya.cms.publication.DocumentHelper);
+importClass(Packages.org.apache.lenya.cms.publication.PublicationHelper);
+importClass(Packages.org.apache.lenya.cms.publication.ResourcesManager);
 
 /**
  * Collects all link/url information from a publication's siteree.
@@ -31,3 +35,35 @@ function sitetree_link_library() {
     
     cocoon.sendPage("sitetree_link_library_template", {"resources" : resources});
 }
+
+/**
+ * Collects infos about all image resources in a publication.
+ */
+function publication_image_library() {        
+    var pageEnvelope = new FlowHelper().getPageEnvelope(cocoon);
+    var pubHelper = new PublicationHelper(pageEnvelope.getPublication());
+    var allDocs = pubHelper.getAllDocuments(pageEnvelope.getDocument().getArea(), pageEnvelope.getDocument().getLanguage());
+    var imageInfos = new ArrayList();
+    
+    for(var i=0; i<allDocs.length; i++) {
+        
+        var resourcesMgr = new ResourcesManager(allDocs[i]);
+        var imageResources = resourcesMgr.getImageResources();
+        
+        for(var j=0; j<imageResources.length; j++) {
+            var metaDoc = org.apache.lenya.xml.DocumentHelper.readDocument(resourcesMgr.getMetaFile(imageResources[j]));
+            title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
+            
+            imageInfos.add({
+                    "url" : pageEnvelope.getContext() + "/" + resourcesMgr.getResourceUrl(imageResources[j]),
+                    "name" : imageResources[j].getName(),
+                    "title" : title,
+                    "length" : imageResources[j].length(),
+                    "iconUrl" : cocoon.parameters["iconUrl"]
+                });
+        }
+    }
+    cocoon.sendPage(cocoon.parameters["template"], {"imageInfos" : imageInfos});
+}
+
+
