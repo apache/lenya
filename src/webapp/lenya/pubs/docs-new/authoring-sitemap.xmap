@@ -21,6 +21,12 @@
   </map:views>
 
   <map:pipelines>
+    
+    <map:pipeline>
+      <map:match pattern="">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+    </map:pipeline>
 
     <!-- Edit Article with Xopus2 -->
     <map:pipeline>
