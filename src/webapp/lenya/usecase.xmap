@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.205 2004/04/26 14:57:24 michi Exp $ -->
+<!-- $Id: usecase.xmap,v 1.206 2004/05/04 15:44:15 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -495,9 +495,6 @@
         <!-- ********  /Kupu Editor *************************************** -->
         <!-- ************************************************************** -->
 
-
-
-        
         <!-- ************************************************************** -->
         <!-- ** HTML One Form Editor                                     ** -->
         <!-- **                                                          ** -->
@@ -505,77 +502,79 @@
         <!-- **       publication specific DocumentIdToPathMapper which  ** -->
         <!-- **       is configured within config/publication.xconf      ** -->
         <!-- ************************************************************** -->
+	<map:match pattern="1formedit" type="usecase">
 
-      <map:match pattern="1formedit" type="usecase">
-        <map:match pattern="open" type="step">
-          <map:match pattern="*/authoring/**.html">
+	  <map:match pattern="open" type="step">
+	    <map:match pattern="*/authoring/**.html">
               <map:act type="reserved-checkout">
                 <map:generate type="serverpages" src="content/rc/{exception}.xsp">
                   <map:parameter name="user" value="{user}"/>
                   <map:parameter name="filename" value="{filename}"/>
                   <map:parameter name="date" value="{date}"/>
                 </map:generate>
-              <map:transform src="xslt/rc/rco-exception.xsl"/>
-              <map:call resource="style-cms-page"/>
-            </map:act>
-            <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-            <map:transform src="xslt/authoring/edit/oneform.xsl">
-              <map:parameter name="docid" value="{page-envelope:document-id}"/>
-              <map:parameter name="language" value="{page-envelope:document-language}"/>
-            </map:transform>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-        </map:match>
+		<map:transform src="xslt/rc/rco-exception.xsl"/>
+		<map:call resource="style-cms-page"/>
+	      </map:act>
+	      <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+	      <map:transform src="xslt/authoring/edit/oneform.xsl">
+		<map:parameter name="docid" value="{page-envelope:document-id}"/>
+		<map:parameter name="language" value="{page-envelope:document-language}"/>
+	      </map:transform>
+	      <map:call resource="style-cms-page"/>
+	    </map:match>
+	  </map:match>
 	
-        <map:match pattern="close" type="step">
-          <map:match pattern="*/authoring/**.html">
-            <map:act type="oneformeditorsave">
-              <map:parameter name="file" value="pubs/{1}/work/oneformeditor/authoring/{2}.xml"/>
-              <map:parameter name="encoding" value="ISO-8859-1"/>
-              <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
+	  <map:match pattern="close" type="step">
+	    <map:match pattern="*/authoring/**.html">
+	      <map:act type="request-parameter-exists">
+		<map:parameter name="parameters" value="save"/>
+		
+		<map:act type="oneformeditorsave">
+		  <map:parameter name="file" value="pubs/{../1}/work/oneformeditor/authoring/{../2}.xml"/>
+		  <map:parameter name="encoding" value="ISO-8859-1"/>
+		  <map:parameter name="schema" value="pubs/{../1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
+		  
+		  <map:generate src="pubs/{../../1}/content/authoring/{page-envelope:document-path}"/>
+		  <map:transform src="xslt/authoring/edit/oneform.xsl">
+		    <map:parameter name="docid" value="{page-envelope:document-id}"/>
+		    <map:parameter name="language" value="{page-envelope:document-language}"/>
+		    <map:parameter name="message" value="{message}"/>
+		  </map:transform>
+		  <map:call resource="style-cms-page"/>
+		</map:act>
 
-              <map:generate src="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
-              <map:transform src="xslt/authoring/edit/oneform.xsl">
-                <map:parameter name="docid" value="{page-envelope:document-id}"/>
-                <map:parameter name="language" value="{page-envelope:document-language}"/>
-                <map:parameter name="message" value="{message}"/>
-              </map:transform>
-              <map:call resource="style-cms-page"/>
-            </map:act>
-            <map:generate src="pubs/{1}/work/oneformeditor/authoring/{2}.xml"/>
+		<!-- Validation succeeded -->
+		<!-- Save: Overwrite original file  -->
+		<!--<map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>-->
+		<map:generate src="pubs/{../1}/work/oneformeditor/authoring/{../2}.xml"/>
+		<map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+		  <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
+		</map:transform>
+		<map:transform type="write-source"/>
+		<map:transform src="xslt/authoring/edit/redirect-to.xsl">
+		  <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
+		</map:transform>
+		<map:act type="workflow">
+		  <map:parameter name="area" value="{page-envelope:area}"/>
+		  <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+		  <map:parameter name="language" value="{page-envelope:document-language}"/>
+		  <map:parameter name="event" value="edit"/>
+		</map:act>
+		<map:serialize type="htmlnoi" />
+	      </map:act>
+	      
+              <map:generate src="pubs/{1}/publication.xml"/> <!-- used as dummy file -->
+	      <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+		<map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false"/>
+	      </map:transform>
+	      <map:serialize type="html" />
+	    </map:match>
+	  </map:match>
 
-
-            <!-- Validation succeeded -->
-            <!-- Save: Overwrite original file  -->
-            <map:act type="request-parameter-exists">
-              <map:parameter name="parameters" value="save"/>
-
-              <!--<map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>-->
-              <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-                <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
-              </map:transform>
-              <map:transform type="write-source"/>
-              <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-                <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
-              </map:transform>
-            <map:act type="workflow">
-              <map:parameter name="area" value="{page-envelope:area}"/>
-              <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-              <map:parameter name="language" value="{page-envelope:document-language}"/>
-              <map:parameter name="event" value="edit"/>
-            </map:act>
-            <map:serialize type="htmlnoi" />
-          </map:act>
-          <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-            <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false"/>
-          </map:transform>
-          <map:serialize type="html" />
-          </map:match>
-        </map:match>
-      </map:match>
-      <!-- ************************************************************** -->
-      <!-- ********  /HTML One Form Editor ****************************** -->
-      <!-- ************************************************************** -->
+	</map:match>
+	<!-- ************************************************************** -->
+	<!-- ********  /HTML One Form Editor ****************************** -->
+	<!-- ************************************************************** -->
     
         <!-- ************************************************************** -->
         <!-- ** HTML Form Editor                                         ** -->
