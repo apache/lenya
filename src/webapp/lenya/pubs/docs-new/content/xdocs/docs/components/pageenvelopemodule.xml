@@ -41,6 +41,8 @@ of the Cocoon documentation.
   file system.</dd>
   <dt>document-language</dt>
   <dd>The language of this document.</dd>
+  <dt>document-type</dt>
+  <dd>The document type.</dd>
 </dl>
 </section>
 
