@@ -20,9 +20,10 @@
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" >
     <project-information href="" label="Project" tab="project">
         <index_pm href="index.html" label="About"/>
-        <changes href="changes.html" label="Changes"/>
+        <!--<changes href="changes.html" label="Changes"/>-->
         <charter href="charter.html" label="Charter"/>
         <history href="history.html" label="History"/>
+        <screenshots href="screenshots.html" label="Screenshots"/>
         <node-d href="roadmap.html" label="Roadmap"/>
         <node-i href="license.html" label="License"/>
         <resolution href="resolution.html" label="Resolution"/>
@@ -37,6 +38,11 @@
               <cvs href="subversion.html" label="Subversion Access"/>
               <install href="source_version.html" label="Installation Instructions"/>
           </installation>
+          <concepts href="concepts/" label="Concepts"> 	 
+             <usecase-framework href="usecase-framework/" label="Usecase Framework"> 	 
+               <usecase-framework-index href="index.html" label="Usecase Framework"/> 	 
+             </usecase-framework> 	 
+           </concepts>
           <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
       </docu1.4>
   <!--    <documentation href="docs/" label="Documentation" tab="docs">
@@ -178,6 +184,7 @@
     <images href="images/">
         <live href="live/">
             <navigation.img href="navigation.png"/>
+            <usecase-framework-architecture.img href="usecase-framework-architecture.png"/>
         </live>
     </images>
     <external-refs>
@@ -195,6 +202,7 @@
         <lenya href="http://lenya.apache.org"/>
         <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
         <cvs.asf href="http://svn.apache.org/"/>
+        <bxe href="http://bxe.oscom.org"/>
         <forrest.apache.org href="http://forrest.apache.org/">
             <forrest.build href="build.html"/>
             <forrest.install href="docs/your-project.html#installing"/>
