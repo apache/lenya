@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: parameter-path.xmap,v 1.2 2003/04/11 17:03:05 andreas Exp $ -->
+<!-- CVS: $Id: parameter-path.xmap,v 1.3 2003/04/16 09:59:38 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -16,9 +16,10 @@
   <map:pipelines>
 
     <map:pipeline>
-      <map:match pattern="**">
+      <!-- lenya/{pub-id}/{stage}/{path} -->
+      <map:match pattern="*/*/*/**">
 	<map:generate type="serverpages" src="content/parameters/default.xsp">
-          <map:parameter name="value" value="{1}"/>
+          <map:parameter name="value" value="{4}"/>
         </map:generate>
 	<map:serialize type="xml"/>
       </map:match>
