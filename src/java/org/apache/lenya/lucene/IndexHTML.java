@@ -1,5 +1,5 @@
 /*
- * $Id: IndexHTML.java,v 1.12 2003/03/06 20:45:52 gregor Exp $
+ * $Id: IndexHTML.java,v 1.13 2003/03/18 14:23:38 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -53,12 +53,19 @@ import java.io.File;
 import java.util.Date;
 
 
-class IndexHTML {
+public class IndexHTML {
+    private boolean deleting = false; // true during deletion pass
+    private IndexReader reader; // existing index
+    private IndexWriter writer; // new index being built
+    private TermEnum uidIter; // document id iterator
+    private int numberOfAddedDocs = 0;
+/*
     private static boolean deleting = false; // true during deletion pass
     private static IndexReader reader; // existing index
     private static IndexWriter writer; // new index being built
     private static TermEnum uidIter; // document id iterator
     private static int numberOfAddedDocs = 0;
+*/
 
     /**
      * DOCUMENT ME!
@@ -66,6 +73,15 @@ class IndexHTML {
      * @param argv DOCUMENT ME!
      */
     public static void main(String[] argv) {
+        new IndexHTML().startIndexing(argv);
+        //System.out.println(argv[0]);
+    }
+
+
+    /**
+     *
+     */
+    public void startIndexing(String[] argv) {
         try {
             String index = "index";
             boolean create = false;
@@ -79,7 +95,8 @@ class IndexHTML {
                 return;
             }
 
-            IndexEnvironment ie = new IndexEnvironment(argv[0]);
+            IndexConfiguration ie = new IndexConfiguration(argv[0]);
+            //IndexEnvironment ie = new IndexEnvironment(argv[0]);
             index = ie.resolvePath(ie.getIndexDir());
             root = new File(ie.resolvePath(ie.getHTDocsDumpDir()));
 
@@ -125,7 +142,8 @@ class IndexHTML {
     /* be deleted; (b) unchanged documents, to be left alone; or (c) new
     /* documents, to be indexed.
      */
-    private static void indexDocs(File file, String index, boolean create)
+    private void indexDocs(File file, String index, boolean create)
+    //private static void indexDocs(File file, String index, boolean create)
         throws Exception {
         if (!create) { // incrementally update
             reader = IndexReader.open(index); // open existing index
@@ -155,7 +173,8 @@ class IndexHTML {
     /**
      *
      */
-    private static void indexDocs(File file, File root)
+    private void indexDocs(File file, File root)
+    //private static void indexDocs(File file, File root)
         throws Exception {
         if (file.isDirectory()) { // if a directory
 

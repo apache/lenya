@@ -2,60 +2,119 @@
 
 <project default="main" basedir=".">
 
+
+
 <target name="main" description="Says Hi" depends="crawl, index">
   <echo>Hi</echo>
 </target>
 
+
+
+
 <target name="init">
   <echo message="INFO: Init"/>
+
+<!--
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/content/crawler.xconf"/>
-  <property name="lenya.src.dir" value="/home/michiii/src/lenyacms"/>
+-->
+  <property name="crawler.xconf" value="/home/michiii/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/oscom/content/crawler.xconf"/>
+<!--
+  <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
+-->
+  <property name="lucene.xconf" value="/home/michiii/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/oscom/content/lucene.xconf"/>
+
+
+  <property name="lenya.src.dir" value="/home/michiii/src/lenya"/>
 
   <path id="class.path">
-    <pathelement path="${lenya.src.dir}/build/lenya/classes"/>
-    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar"/>
-    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/avalon-excalibur-20020402.jar"/>
-
-    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/xml-apis.jar"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/classes"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/xercesImpl-2.1.0.jar"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/xml-apis.jar"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/xalan-2.4.1.jar"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/log4j-1.2.3.jar"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/excalibur-io-1.1.jar"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/lucene-1.3-dev1.jar"/>
 <!--
-    <pathelement path="/home/michiii/build/jakarta-ant-1.4.1/lib/crimson.jar"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/avalon-framework-4.1.3.jar"/>
 -->
-<!--
-    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/xercesImpl-2.0.0.jar"/>
--->
-<!--
-    <pathelement path="/home/michiii/build/jakarta-ant-1.5.1/lib/xml-apis.jar"/>
-    <pathelement path="/home/michiii/build/jakarta-ant-1.5.1/lib/xercesImpl.jar"/>
--->
-
-    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/jtidy-04aug2000r7-dev.jar"/>
-    <pathelement path="${lenya.src.dir}/lib/log4j-1.2.3.jar"/>
-    <pathelement path="${lenya.src.dir}/src/java"/>
-    <pathelement path="${lenya.src.dir}/lib/websphinx.jar"/>
   </path>
 </target>
 
-<target name="crawl" description="Crawl" depends="init">
-  <echo>INFO: Crawl (${crawler.xconf})</echo>
+<target name="crawl" description="Crawl and dump hypertext documents" depends="init">
+  <echo>INFO: Crawl and dump hypertext documents(${crawler.xconf})</echo>
 
+  <java classname="org.lenya.lucene.Main">
+    <arg value="http://www.wyona.org/index.html"/>
+    <classpath refid="class.path"/>
+  </java>
+
+<!--
+  <java classname="org.lenya.search.crawler.CrawlerEnvironment">
+    <arg value="${crawler.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+-->
+
+
+<!--
   <java classname="org.lenya.search.crawler.IterativeHTMLCrawler">
-    <arg value="src/webapp/lenya/pubs/oscom/content/crawler.xconf"/>
+    <arg value="${crawler.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+-->
+</target>
+
+
+
+
+
+
+<target name="index" description="Index hypertext documents" depends="init">
+  <echo>INFO: Index hypertext documents</echo>
+
+  <java classname="org.lenya.lucene.IndexConfiguration">
+    <arg value="${lucene.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+
+  <java classname="org.lenya.lucene.IndexHTML">
+    <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>
 </target>
 
-<target name="index" description="Index">
-  <echo>INFO: Index</echo>
-<!--
-  <index/>
--->
+
+
+<target name="test-index" description="Regression Test of Index" depends="init">
+  <echo>INFO: Regression Test of Index</echo>
 </target>
 
-<!--
-<taskdef name="index" classname="org.lenya.search.crawler.IterativeHTMLCrawler">
-  <classpath>
-    <fileset dir="./" includes="build/lenya/classes"/>
-  </classpath>
-</taskdef>
--->
+<target name="search" description="Search within Index" depends="init">
+  <echo>INFO: Search within Index</echo>
+</target>
+
+<target name="publish-index" description="Publish Index" depends="init">
+  <echo>INFO: Publish Index</echo>
+</target>
+
+<target name="pdf" description="Extract text from PDF" depends="init">
+  <echo>INFO: Extract text from PDF</echo>
+</target>
+
+<target name="show-config" description="Show configuration" depends="init">
+  <echo>INFO: Show configuration</echo>
+
+  <echo>INFO: crawler.xconf</echo>
+  <java classname="org.lenya.search.crawler.CrawlerConfiguration">
+    <arg value="${crawler.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+
+  <echo>INFO: lucene.xconf</echo>
+  <java classname="org.lenya.lucene.IndexConfiguration">
+    <arg value="${lucene.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+</target>
+
 </project>
