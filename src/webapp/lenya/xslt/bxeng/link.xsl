@@ -16,7 +16,7 @@
 -->
 
 <!--
- $Id: link.xsl,v 1.9 2004/04/29 09:10:55 gregor Exp $
+ $Id: link.xsl,v 1.10 2004/04/29 09:39:59 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -207,7 +207,7 @@
 
   <xsl:template name="languagetab">
     <xsl:param name="tablanguage"/>
-    <td><a id="$tablanguage">
+    <td><a id="{$tablanguage}">
         <xsl:call-template name="activate">
           <xsl:with-param name="tablanguage"><xsl:value-of select="$tablanguage"/></xsl:with-param>
         </xsl:call-template>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: root.xsl,v 1.33 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id: root.xsl,v 1.34 2004/04/29 09:38:22 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -178,7 +178,7 @@ function findIDbyLink(srclink)
 
   <xsl:template name="languagetab">
     <xsl:param name="tablanguage"/>
-    <td><a id="$tablanguage">
+    <td><a id="{$tablanguage}">
         <xsl:call-template name="activate">
           <xsl:with-param name="tablanguage"><xsl:value-of select="$tablanguage"/></xsl:with-param>
         </xsl:call-template>
