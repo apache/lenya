@@ -1,5 +1,5 @@
 /*
-$Id: RenameLabelTask.java,v 1.1 2003/09/12 17:42:05 egli Exp $
+$Id: RenameLabelTask.java,v 1.2 2003/09/12 18:45:08 egli Exp $
 <License>
 
  ============================================================================
@@ -190,6 +190,10 @@ public class RenameLabelTask extends PublicationTask {
             throw new DocumentException(
                 "Label for language " + language + " not found.");
         }
+	// FIXME: This is somewhat of a hack. The change of the label
+	// name should not be done by removing the label and readding
+	// it. Instead the node should probably have a setLabel method
+	// which could be invoked by the Label.setLabel() method.
         tree.removeLabel(documentid, label);
         label.setLabel(labelName);
         tree.addLabel(documentid, label);
