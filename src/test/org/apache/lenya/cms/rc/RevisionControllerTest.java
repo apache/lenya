@@ -53,7 +53,7 @@ public class RevisionControllerTest extends TestCase {
         String source = args[1];
         String identityD = args[2];
         String destination = args[3];
-        RevisionController rc = new RevisionController("", "", "");
+        RevisionController rc = new RevisionController(null, null, null);
         try {
             rc.reservedCheckOut(source, identityS);
         } catch (FileNotFoundException e) // No such source file
