@@ -1,5 +1,5 @@
 /*
-$Id: TreePublisher.java,v 1.9 2003/08/28 09:44:50 egli Exp $
+$Id: TreePublisher.java,v 1.10 2003/09/17 19:00:15 edith Exp $
 <License>
 
  ============================================================================
@@ -134,13 +134,25 @@ public class TreePublisher extends PublicationTask {
             liveTree = getPublication().getSiteTree(Publication.LIVE_AREA);
 
             SiteTreeNode authoringNode = authoringTree.getNode(documentId);
+			SiteTreeNode[] siblings = authoringNode.getNextSiblings();
+            String parentId = authoringNode.getAbsoluteParentId();
+			SiteTreeNode sibling = null;
+			String siblingDocId = null;
+			for (int i = 0; i < siblings.length; i++){
+				String docId=parentId+"/"+siblings[i].getId();
+				sibling =liveTree.getNode(docId);
+				if (sibling != null) {
+					siblingDocId = docId;
+                	break;  
+				}
+			}
 
             if (authoringNode != null) {
                 if (language == null) {
                     // no language was specified. Simply publish the
                     // node including all languages.
                     try {
-                        liveTree.addNode(authoringNode);
+                        liveTree.addNode(authoringNode,siblingDocId);
                     } catch (SiteTreeException e1) {
                         throw new ParentNodeNotFoundException(
                             "Couldn't add document: "
@@ -172,7 +184,8 @@ public class TreePublisher extends PublicationTask {
                                     labels,
                                     authoringNode.getHref(),
                                     authoringNode.getSuffix(),
-                                    authoringNode.hasLink());
+                                    authoringNode.hasLink(),
+								    siblingDocId);
                             } catch (SiteTreeException e1) {
                                 throw new ParentNodeNotFoundException(
                                     "Couldn't add document: "
