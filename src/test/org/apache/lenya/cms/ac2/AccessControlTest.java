@@ -141,8 +141,6 @@ public class AccessControlTest extends ExcaliburTest {
                 .setConfigurationDirectory(
             accreditablesDirectory);
 
-        String role = AccreditableManager.ROLE + "Selector";
-
     }
 
     /**
@@ -173,7 +171,7 @@ public class AccessControlTest extends ExcaliburTest {
      * @throws AccessControlException when something went wrong.
      */
     protected Identity getIdentity() throws AccessControlException {
-        DefaultAccessController controller = (DefaultAccessController) getAccessController();
+        DefaultAccessController controller = getAccessController();
         User user = controller.getAccreditableManager().getUserManager().getUser(USERNAME);
         assertNotNull(user);
 

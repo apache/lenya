@@ -74,7 +74,7 @@ public class TestPageEnvelope extends PageEnvelope {
         setContext("");
 
         try {
-            setDocument(DefaultDocumentBuilder.getInstance().buildDocument(publication, url));
+            setDocument(publication.getDocumentBuilder().buildDocument(publication, url));
         } catch (DocumentBuildException e) {
             throw new PageEnvelopeException(e);
         }

@@ -68,7 +68,6 @@ import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.AccessControlTest;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentType;
@@ -137,7 +136,7 @@ public class WorkflowTest extends AccessControlTest {
             DocumentBuildException {
         Publication publication = PublicationHelper.getPublication();
         String url = "/" + publication.getId() + URL;
-        Document document = DefaultDocumentBuilder.getInstance().buildDocument(publication, url);
+        Document document = publication.getDocumentBuilder().buildDocument(publication, url);
 
         File configDir = new File(publication.getDirectory(), ItemManager.PATH);
         assertTrue(configDir.exists());
