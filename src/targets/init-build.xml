@@ -88,6 +88,7 @@
     <echo>INFO: exclude: WEB-INF/web.xml</echo>
     <echo>INFO: exclude: WEB-INF/lib/lucene**.jar</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
+    <echo>INFO: exclude: **/pizza*.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${cocoon.webapp.dir}">
         <exclude name="sitemap.xmap"/>
@@ -96,6 +97,7 @@
         <exclude name="WEB-INF/web.xml"/>
         <exclude name="WEB-INF/lib/lucene**.jar"/>
         <exclude name="**/javac.jar"/>
+        <exclude name="**/pizza*.jar"/>
       </fileset>
     </copy>
 
