@@ -64,23 +64,24 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
         try {
             PageEnvelope envelope = getEnvelope(objectModel);
             Document document = envelope.getDocument();
-
-            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            if (resolver.hasWorkflow(document)) {
-                WorkflowInstance instance = resolver.getWorkflowInstance(document);
-                if (name.equals(STATE)) {
-                    value = instance.getCurrentState().toString();
-                } else if (name.startsWith(VARIABLE_PREFIX)) {
-                    String variableName = name.substring(VARIABLE_PREFIX.length());
-                    String[] variableNames = instance.getWorkflow().getVariableNames();
-                    if (Arrays.asList(variableNames).contains(variableName)) {
-                        value = Boolean.valueOf(instance.getValue(variableName));
+            if (document != null) {
+                resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+                if (resolver.hasWorkflow(document)) {
+                    WorkflowInstance instance = resolver.getWorkflowInstance(document);
+                    if (name.equals(STATE)) {
+                        value = instance.getCurrentState().toString();
+                    } else if (name.startsWith(VARIABLE_PREFIX)) {
+                        String variableName = name.substring(VARIABLE_PREFIX.length());
+                        String[] variableNames = instance.getWorkflow().getVariableNames();
+                        if (Arrays.asList(variableNames).contains(variableName)) {
+                            value = Boolean.valueOf(instance.getValue(variableName));
+                        }
+                    } else if (name.equals(HISTORY_PATH)) {
+                        value = ((CMSHistory) instance.getHistory()).getHistoryPath();
+                    } else {
+                        throw new ConfigurationException("The attribute [" + name
+                                + "] is not supported!");
                     }
-                } else if (name.equals(HISTORY_PATH)) {
-                    value = ((CMSHistory) instance.getHistory()).getHistoryPath();
-                } else {
-                    throw new ConfigurationException("The attribute [" + name
-                            + "] is not supported!");
                 }
             }
         } catch (ConfigurationException e) {
