@@ -16,12 +16,12 @@
 </head>
 <body text="#000000" bgcolor="#FFFFFF">
 <!--+
-    |start Banner
+    |start topstrip
     +-->
 <table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <!--+
-    start Group Logo
+    |start Group Logo
     +-->
 <td valign="bottom" bgcolor="#FFFFFF">
 <div class="headerlogo">
@@ -32,7 +32,7 @@
     |end Group Logo
     +-->
 <!--+
-    start Tabs
+    |start Tabs
     +-->
 <table>
 <tr>
@@ -43,7 +43,7 @@
     |end Tabs
     +-->
 <!--+
-    start Tabs-div
+    |start Tabs-div
     +-->
 <div class="tab">
 <table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
@@ -95,7 +95,7 @@
 </div>
 </td>
 <!--+
-    |end not-selected->@dir = $longest-dir or @href = $longest-dir or $path='index' and @dir = /tabs/tab[1]/@dir
+    |end not-selected
     +-->
 <!--+
     |start not-selected
@@ -124,7 +124,7 @@
 </div>
 </td>
 <!--+
-    |end not-selected->@dir = $longest-dir or @href = $longest-dir or $path='index' and @dir = /tabs/tab[1]/@dir
+    |end not-selected
     +-->
 <!--+
     |start not-selected
@@ -153,7 +153,7 @@
 </div>
 </td>
 <!--+
-    |end not-selected->@dir = $longest-dir or @href = $longest-dir or $path='index' and @dir = /tabs/tab[1]/@dir
+    |end not-selected
     +-->
 </tr>
 </table>
@@ -162,355 +162,121 @@
     |end Tabs-div
     +-->
 </td>
-<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<!--+
+    |start Project Logo
+    +--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
 <div style="padding: 10px" class="headerlogo">
 <a href="http://cocoon.apache.org/lenya"><img class="logoImage" alt="Lenya" src="../images/apache-lenya-light.png"></a>
 </div>
 <div class="tab-separator"></div>
 </td>
-<!--================= end Project Logo ==================-->
+<!--+
+    |end Project Logo
+    +-->
 </tr>
 </table>
-<!--================= end Banner ==================-->
+<!--+
+    |end topstrip
+    +-->
 <div class="tab-bar">
 <img alt="" height="5" src="../skin/images/spacer.gif"></div>
-<!--================= start Menu, NavBar, Content ==================-->
+<!--+
+    |start Menu, mainarea
+    +-->
 <table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td valign="top">
 <table summary="menu" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<!--================= start left top NavBar ==================-->
-<!--================= end left top NavBar ==================-->
 <td valign="top">
 <div class="tab-subbar">
 <img width="10" height="5" alt="" src="../skin/images/spacer.gif"></div>
 </td><td valign="top">
-<!--================= start Menu items ==================-->
+<!--+
+    |start Menu
+    +-->
 <div class="menu">
+<!--+
+    |start innermenuli call
+    +-->
 <div class="menutitle"></div>
 <div class="menuitemgroup">
+<!--+
+    |start when test=a
+    +-->
+<div class="menuitem">
+<a href="../project/index.html">Project</a>
+</div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../project/roadmap.html">Roadmap</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../project/../community/mailing-lists.html">Mailing Lists</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../project/acknowledgements.html">Credits</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=span/@class='sel'
+    +-->
 <div class="menupage">
 <div class="menupagetitle">License</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#The+Apache+Software+License%2C+Version+2.0">The Apache Software License, Version 2.0</a>
 </div>
+</div>
+</div>
+<!--+
+    |end when test=span/@class='sel'
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../project/../community/live-sites.html">Live Sites</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../project/related-projects.html">Related Projects</a>
 </div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../installation/index.html">Overview</a>
-</div>
-<div class="menuitem">
-<a href="../installation/prerequisites.html">Prerequisites</a>
-</div>
-<div class="menuitem">
-<a href="../installation/download.html">Download</a>
-</div>
-<div class="menuitem">
-<a href="../installation/cvs.html">CVS Access</a>
-</div>
-<div class="menuitem">
-<a href="../installation/source_version.html">Installation Instructions</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/resource-types/">Resource&nbsp;Types</a>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/terms.html">Basic Terms</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/authenticators.html">Authenticators</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/authorizers.html">Authorizers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/ssl.html">SSL Encryption</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/faq.html">FAQ</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/deployment/mod_proxy.html">mod_proxy</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/editors/htmlform.html">HTML Form Editor</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/editors/1form.html">HTML One Form Editor</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/editors/bxeng.html">Bitflux Editor</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/editors/kupu.html">Kupu</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/editors/xopus.html">Xopus</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/layout/navigation.html">Navigation</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/layout/xhtml-templating.html">XHTML templating</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/layout/static-resources.html">Serving static resources</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/layout/lenya-menubar.html">Lenya Menubar</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/publication/siteTree.html">Site tree</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/rcml.html">RCML</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/checkin.html">Check In</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/checkout.html">Check Out</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/version.html">Revisions</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/rollback.html">Rollback</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/repository/webdav.html">WebDAV Servers</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/search/lucene.html">Searching with Lucene</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/uri-handling/standardURI.html">URI Scheme</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/uri-handling/usecases.html">Usecases</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/asset-management/management.html">Asset Management</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/link-management/link-management.html">Link Management</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/metadata/metadata.html">Meta Data Handling</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/multilingual/multilingual.html">Multilingual Document Handling</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/tasks/concept.html">The Task Concept</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/defining.html">Defining Tasks</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/taskaction.html">The TaskAction</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/scheduling.html">Scheduling a Task</a>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/tasks/anttask.html">AntTask</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/publisher.html">DefaultFilePublisher</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/exporter.html">StaticHTMLExporter</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/mailtask.html">MailTask</a>
-</div>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/development.html">Developing Tasks</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/workflow/terms.html">Terms</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/workflow/state-machine.html">The State Machine</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/workflow/configuration.html">Configuration</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/workflow/implementation.html">Implementation</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/archive.html">Archive</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/copy.html">Copy</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/deactivate.html">Deactivate</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/delete.html">Delete</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/deletetrash.html">Delete the trash</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/move.html">Move</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/moveupdown.html">Move Up/Down</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/rename.html">Rename</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/restore.html">Restore</a>
-</div>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/specs/namespaces.html">Namespaces</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/misc/coding-guidelines.html">Coding Guidelines</a>
-</div>
-<div class="menuitem">
-<a href="../docs/misc/unittests.html">Unit Tests</a>
-</div>
-<div class="menuitem">
-<a href="../docs/misc/xinclude-processor.html">XInclude Processor</a>
-</div>
-</div>
-<div class="menuitem">
-<a href="../docs/../apidocs/index.html">API (Javadoc)</a>
-</div>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">CVS Web</a>
-</div>
-<div class="menuitem">
-<a href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Lenya&short_desc=&short_desc_type=allwordssubstr&long_desc=&long_desc_type=allwordssubstr&bug_file_loc=&bug_file_loc_type=allwordssubstr&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&order=%27Importance%27">Bug Tracker</a>
-</div>
-<div class="menuitem">
-<a href="../community/mailing-lists.html">Mailing Lists</a>
-</div>
-<div class="menuitem">
-<a href="../community/irc.html">IRC</a>
-</div>
-<div class="menuitem">
-<a href="../community/meetings.html">Meetings and Sprints</a>
-</div>
-<div class="menuitem">
-<a href="../community/live-sites.html">Live Sites</a>
-</div>
-<div class="menuitem">
-<a href="../community/website-update.html">Website Update</a>
-</div>
-</div>
-</div>
-<!--================= end Menu items ==================-->
+<!--+
+    |end when test=a
+    +-->
+</div>
+<!--+
+    |end innermenuli call
+    +-->
+</div>
+<!--+
+    |end Menu
+    +-->
 </td><td valign="top">
 <div class="tab-subbar">&nbsp;&nbsp;</div>
 </td>
@@ -530,7 +296,7 @@
 <tr>
 <td align="left" width="10"><img width="10" height="1" alt="" src="../skin/images/spacer.gif"></td><td align="left" width="100%">
 <div class="content">
-<table class="title">
+<table cellspacing="0" cellpadding="0" class="title">
 <tr>
 <td valign="middle">
 <h1>Apache Lenya: License</h1>
@@ -538,27 +304,17 @@
 <div id="skinconf-pdflink"></div>
 </tr>
 </table>
-<div id="skinconf-toc-page"></div>
 
 <a name="N10019"></a><a name="The+Apache+Software+License%2C+Version+2.0"></a>
-<div class="skinconf-heading-1">
-<h1>The Apache Software License, Version 2.0</h1>
-</div>
-<div class="section">
-
+<h3>The Apache Software License, Version 2.0</h3>
+<div style="margin-left: 0 ; border: 2px">
 <p>Apache License</p>
-
 <p>Version 2.0, January 2004</p>
-
 <p>http://www.apache.org/licenses/</p>
-
-
 <p>TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION</p>
-
 <a name="N1002A"></a><a name="1.+Definitions."></a>
-<div class="skinconf-heading-2">
-<h1>1. Definitions.</h1>
-</div>
+<h4>1. Definitions.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>
       "License" shall mean the terms and conditions for use, reproduction,
       and distribution as defined by Sections 1 through 9 of this document.
@@ -626,11 +382,10 @@
       on behalf of whom a Contribution has been received by Licensor and
       subsequently incorporated within the Work.
 </p>
-
-<a name="N10044"></a><a name="2.+Grant+of+Copyright+License."></a>
-<div class="skinconf-heading-2">
-<h1>2. Grant of Copyright License.</h1>
 </div>
+<a name="N10044"></a><a name="2.+Grant+of+Copyright+License."></a>
+<h4>2. Grant of Copyright License.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>Subject to the terms and conditions of
       this License, each Contributor hereby grants to You a perpetual,
       worldwide, non-exclusive, no-charge, royalty-free, irrevocable
@@ -638,11 +393,10 @@
       publicly display, publicly perform, sublicense, and distribute the
       Work and such Derivative Works in Source or Object form.
 </p>
-
-<a name="N1004C"></a><a name="3.+Grant+of+Patent+License."></a>
-<div class="skinconf-heading-2">
-<h1>3. Grant of Patent License.</h1>
 </div>
+<a name="N1004C"></a><a name="3.+Grant+of+Patent+License."></a>
+<h4>3. Grant of Patent License.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>Subject to the terms and conditions of
       this License, each Contributor hereby grants to You a perpetual,
       worldwide, non-exclusive, no-charge, royalty-free, irrevocable
@@ -658,12 +412,10 @@
       or contributory patent infringement, then any patent licenses
       granted to You under this License for that Work shall terminate
       as of the date such litigation is filed.</p>
-
-
-<a name="N10054"></a><a name="4.+Redistribution."></a>
-<div class="skinconf-heading-2">
-<h1>4. Redistribution.</h1>
 </div>
+<a name="N10054"></a><a name="4.+Redistribution."></a>
+<h4>4. Redistribution.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>You may reproduce and distribute copies of the
       Work or Derivative Works thereof in any medium, with or without
       modifications, and in Source or Object form, provided that You
@@ -708,11 +460,10 @@
       reproduction, and distribution of the Work otherwise complies with
       the conditions stated in this License.
 </p>
-
-<a name="N10067"></a><a name="5.+Submission+of+Contributions."></a>
-<div class="skinconf-heading-2">
-<h1>5. Submission of Contributions.</h1>
 </div>
+<a name="N10067"></a><a name="5.+Submission+of+Contributions."></a>
+<h4>5. Submission of Contributions.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>Unless You explicitly state otherwise,
       any Contribution intentionally submitted for inclusion in the Work
       by You to the Licensor shall be under the terms and conditions of
@@ -720,22 +471,18 @@
       Notwithstanding the above, nothing herein shall supersede or modify
       the terms of any separate license agreement you may have executed
       with Licensor regarding such Contributions.</p>
-
-
-<a name="N1006F"></a><a name="6.+Trademarks."></a>
-<div class="skinconf-heading-2">
-<h1>6. Trademarks.</h1>
 </div>
+<a name="N1006F"></a><a name="6.+Trademarks."></a>
+<h4>6. Trademarks.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>This License does not grant permission to use the trade
       names, trademarks, service marks, or product names of the Licensor,
       except as required for reasonable and customary use in describing the
       origin of the Work and reproducing the content of the NOTICE file.</p>
-
-
-<a name="N10077"></a><a name="7.+Disclaimer+of+Warranty."></a>
-<div class="skinconf-heading-2">
-<h1>7. Disclaimer of Warranty.</h1>
 </div>
+<a name="N10077"></a><a name="7.+Disclaimer+of+Warranty."></a>
+<h4>7. Disclaimer of Warranty.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>Unless required by applicable law or
       agreed to in writing, Licensor provides the Work (and each
       Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -745,12 +492,10 @@
       PARTICULAR PURPOSE. You are solely responsible for determining the
       appropriateness of using or redistributing the Work and assume any
       risks associated with Your exercise of permissions under this License.</p>
-
-
-<a name="N1007F"></a><a name="8.+Limitation+of+Liability."></a>
-<div class="skinconf-heading-2">
-<h1>8. Limitation of Liability.</h1>
 </div>
+<a name="N1007F"></a><a name="8.+Limitation+of+Liability."></a>
+<h4>8. Limitation of Liability.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>In no event and under no legal theory,
       whether in tort (including negligence), contract, or otherwise,
       unless required by applicable law (such as deliberate and grossly
@@ -762,12 +507,10 @@
       work stoppage, computer failure or malfunction, or any and all
       other commercial damages or losses), even if such Contributor
       has been advised of the possibility of such damages.</p>
-
-
-<a name="N10087"></a><a name="9.+Accepting+Warranty+or+Additional+Liability."></a>
-<div class="skinconf-heading-2">
-<h1>9. Accepting Warranty or Additional Liability.</h1>
 </div>
+<a name="N10087"></a><a name="9.+Accepting+Warranty+or+Additional+Liability."></a>
+<h4>9. Accepting Warranty or Additional Liability.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>While redistributing
       the Work or Derivative Works thereof, You may choose to offer,
       and charge a fee for, acceptance of support, warranty, indemnity,
@@ -779,14 +522,11 @@
       incurred by, or claims asserted against, such Contributor by reason
       of your accepting any such warranty or additional liability.
 </p>
-   
-<p>END OF TERMS AND CONDITIONS</p>
-
-   
-<a name="N10092"></a><a name="APPENDIX%3A+How+to+apply+the+Apache+License+to+your+work."></a>
-<div class="skinconf-heading-2">
-<h1>APPENDIX: How to apply the Apache License to your work.</h1>
 </div>
+<p>END OF TERMS AND CONDITIONS</p>
+<a name="N10092"></a><a name="APPENDIX%3A+How+to+apply+the+Apache+License+to+your+work."></a>
+<h4>APPENDIX: How to apply the Apache License to your work.</h4>
+<div style="margin-left: 0 ; border: 2px">
 <p>To apply the Apache License to your work, attach the following
       boilerplate notice, with the fields enclosed by brackets "[]"
       replaced with your own identifying information. (Don't include
@@ -807,10 +547,8 @@
    limitations under the License.    
 </p>
 </div>
+</div>
   
-<p align="right">
-<font size="-2">by&nbsp;Michael Wechner</font>
-</p>
 </div>
 </td><td width="10"><img width="10" height="1" alt="" src="../skin/images/spacer.gif"></td>
 </tr>
@@ -826,7 +564,9 @@
 </tr>
 </table>
 <!--================= end Menu, NavBar, Content ==================-->
-<!--================= start Footer ==================-->
+<!--+
+    |start bottomstrip
+    +-->
 <div class="footer">
 <table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
 <tr>
@@ -842,6 +582,8 @@
 </tr>
 </table>
 </div>
-<!--================= end Footer ==================-->
+<!--+
+    |end bottomstrip
+    +-->
 </body>
 </html>

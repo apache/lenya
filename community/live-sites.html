@@ -16,12 +16,12 @@
 </head>
 <body text="#000000" bgcolor="#FFFFFF">
 <!--+
-    |start Banner
+    |start topstrip
     +-->
 <table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <!--+
-    start Group Logo
+    |start Group Logo
     +-->
 <td valign="bottom" bgcolor="#FFFFFF">
 <div class="headerlogo">
@@ -32,7 +32,7 @@
     |end Group Logo
     +-->
 <!--+
-    start Tabs
+    |start Tabs
     +-->
 <table>
 <tr>
@@ -43,7 +43,7 @@
     |end Tabs
     +-->
 <!--+
-    start Tabs-div
+    |start Tabs-div
     +-->
 <div class="tab">
 <table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
@@ -85,7 +85,7 @@
 </div>
 </td>
 <!--+
-    |end not-selected->@dir = $longest-dir or @href = $longest-dir or $path='index' and @dir = /tabs/tab[1]/@dir
+    |end not-selected
     +-->
 <!--+
     |start not-selected
@@ -114,7 +114,7 @@
 </div>
 </td>
 <!--+
-    |end not-selected->@dir = $longest-dir or @href = $longest-dir or $path='index' and @dir = /tabs/tab[1]/@dir
+    |end not-selected
     +-->
 <!--+
     |start not-selected
@@ -143,7 +143,7 @@
 </div>
 </td>
 <!--+
-    |end not-selected->@dir = $longest-dir or @href = $longest-dir or $path='index' and @dir = /tabs/tab[1]/@dir
+    |end not-selected
     +-->
 <!--+
     |start selected
@@ -162,355 +162,130 @@
     |end Tabs-div
     +-->
 </td>
-<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<!--+
+    |start Project Logo
+    +--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
 <div style="padding: 10px" class="headerlogo">
 <a href="http://cocoon.apache.org/lenya"><img class="logoImage" alt="Lenya" src="../images/apache-lenya-light.png"></a>
 </div>
 <div class="tab-separator"></div>
 </td>
-<!--================= end Project Logo ==================-->
+<!--+
+    |end Project Logo
+    +-->
 </tr>
 </table>
-<!--================= end Banner ==================-->
+<!--+
+    |end topstrip
+    +-->
 <div class="tab-bar">
 <img alt="" height="5" src="../skin/images/spacer.gif"></div>
-<!--================= start Menu, NavBar, Content ==================-->
+<!--+
+    |start Menu, mainarea
+    +-->
 <table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td valign="top">
 <table summary="menu" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<!--================= start left top NavBar ==================-->
-<!--================= end left top NavBar ==================-->
 <td valign="top">
 <div class="tab-subbar">
 <img width="10" height="5" alt="" src="../skin/images/spacer.gif"></div>
 </td><td valign="top">
-<!--================= start Menu items ==================-->
+<!--+
+    |start Menu
+    +-->
 <div class="menu">
+<!--+
+    |start innermenuli call
+    +-->
 <div class="menutitle"></div>
 <div class="menuitemgroup">
-<div class="menuitem">
-<a href="../project/roadmap.html">Roadmap</a>
-</div>
-<div class="menuitem">
-<a href="../project/../community/mailing-lists.html">Mailing Lists</a>
-</div>
-<div class="menuitem">
-<a href="../project/acknowledgements.html">Credits</a>
-</div>
-<div class="menuitem">
-<a href="../project/license.html">License</a>
-</div>
-<div class="menupage">
-<div class="menupagetitle">Live Sites</div>
-</div>
-<div class="menuitem">
-<a href="../project/related-projects.html">Related Projects</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../installation/index.html">Overview</a>
-</div>
-<div class="menuitem">
-<a href="../installation/prerequisites.html">Prerequisites</a>
-</div>
-<div class="menuitem">
-<a href="../installation/download.html">Download</a>
-</div>
-<div class="menuitem">
-<a href="../installation/cvs.html">CVS Access</a>
-</div>
-<div class="menuitem">
-<a href="../installation/source_version.html">Installation Instructions</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/resource-types/">Resource&nbsp;Types</a>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/terms.html">Basic Terms</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/authenticators.html">Authenticators</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/authorizers.html">Authorizers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/ssl.html">SSL Encryption</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/accesscontrol/faq.html">FAQ</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/deployment/mod_proxy.html">mod_proxy</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/editors/htmlform.html">HTML Form Editor</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/editors/1form.html">HTML One Form Editor</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/editors/bxeng.html">Bitflux Editor</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/editors/kupu.html">Kupu</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/editors/xopus.html">Xopus</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/layout/navigation.html">Navigation</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/layout/xhtml-templating.html">XHTML templating</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/layout/static-resources.html">Serving static resources</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/layout/lenya-menubar.html">Lenya Menubar</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/publication/siteTree.html">Site tree</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/rcml.html">RCML</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/checkin.html">Check In</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/checkout.html">Check Out</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/version.html">Revisions</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/revisioncontrol/rollback.html">Rollback</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/repository/webdav.html">WebDAV Servers</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/search/lucene.html">Searching with Lucene</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/uri-handling/standardURI.html">URI Scheme</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/uri-handling/usecases.html">Usecases</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/asset-management/management.html">Asset Management</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/link-management/link-management.html">Link Management</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/metadata/metadata.html">Meta Data Handling</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/multilingual/multilingual.html">Multilingual Document Handling</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/tasks/concept.html">The Task Concept</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/defining.html">Defining Tasks</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/taskaction.html">The TaskAction</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/scheduling.html">Scheduling a Task</a>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/tasks/anttask.html">AntTask</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/publisher.html">DefaultFilePublisher</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/exporter.html">StaticHTMLExporter</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/mailtask.html">MailTask</a>
-</div>
-</div>
-<div class="menuitem">
-<a href="../docs/components/tasks/development.html">Developing Tasks</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/workflow/terms.html">Terms</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/workflow/state-machine.html">The State Machine</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/workflow/configuration.html">Configuration</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/workflow/implementation.html">Implementation</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/archive.html">Archive</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/copy.html">Copy</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/deactivate.html">Deactivate</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/delete.html">Delete</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/deletetrash.html">Delete the trash</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/move.html">Move</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/moveupdown.html">Move Up/Down</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/rename.html">Rename</a>
-</div>
-<div class="menuitem">
-<a href="../docs/components/sitemanagement/restore.html">Restore</a>
-</div>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/specs/namespaces.html">Namespaces</a>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menuitem">
-<a href="../docs/misc/coding-guidelines.html">Coding Guidelines</a>
-</div>
-<div class="menuitem">
-<a href="../docs/misc/unittests.html">Unit Tests</a>
-</div>
-<div class="menuitem">
-<a href="../docs/misc/xinclude-processor.html">XInclude Processor</a>
-</div>
-</div>
-<div class="menuitem">
-<a href="../docs/../apidocs/index.html">API (Javadoc)</a>
-</div>
-</div>
-</div>
-<div class="menutitle"></div>
-<div class="menuitemgroup">
+<!--+
+    |start when test=a
+    +-->
+<div class="menuitem">
+<a href="../community/index.html">Community</a>
+</div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">CVS Web</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Lenya&short_desc=&short_desc_type=allwordssubstr&long_desc=&long_desc_type=allwordssubstr&bug_file_loc=&bug_file_loc_type=allwordssubstr&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&order=%27Importance%27">Bug Tracker</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../community/mailing-lists.html">Mailing Lists</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../community/irc.html">IRC</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../community/meetings.html">Meetings and Sprints</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=span/@class='sel'
+    +-->
 <div class="menupage">
 <div class="menupagetitle">Live Sites</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#List+of+Apache+Lenya+Live+Sites">List of Apache Lenya Live Sites</a>
 </div>
+</div>
+</div>
+<!--+
+    |end when test=span/@class='sel'
+    +-->
+<!--+
+    |start when test=a
+    +-->
 <div class="menuitem">
 <a href="../community/website-update.html">Website Update</a>
 </div>
+<!--+
+    |end when test=a
+    +-->
 </div>
+<!--+
+    |end innermenuli call
+    +-->
 </div>
-<!--================= end Menu items ==================-->
+<!--+
+    |end Menu
+    +-->
 </td><td valign="top">
 <div class="tab-subbar">&nbsp;&nbsp;</div>
 </td>
@@ -530,7 +305,7 @@
 <tr>
 <td align="left" width="10"><img width="10" height="1" alt="" src="../skin/images/spacer.gif"></td><td align="left" width="100%">
 <div class="content">
-<table class="title">
+<table cellspacing="0" cellpadding="0" class="title">
 <tr>
 <td valign="middle">
 <h1>Apache Lenya Live Sites</h1>
@@ -538,21 +313,16 @@
 <div id="skinconf-pdflink"></div>
 </tr>
 </table>
-<div id="skinconf-toc-page"></div>
  
 
 <a name="N10019"></a><a name="List+of+Apache+Lenya+Live+Sites"></a>
-<div class="skinconf-heading-1">
-<h1>List of Apache Lenya Live Sites</h1>
-</div>
-<div class="section">
-
+<h3>List of Apache Lenya Live Sites</h3>
+<div style="margin-left: 0 ; border: 2px">
 <p>
 The Lenya community is aware of the following sites that are running on Apache Lenya. 
 If you want to suggest additional sites for inclusion, please send an email to the 
 <a href="mailto:lenya-user@cocoon.apache.org?Subject=New Lenya Live Site">Lenya User mailing list</a>.
 </p>
-
 <ul>
   
 <li>
@@ -604,13 +374,9 @@ If you want to suggest additional sites for inclusion, please send an email to t
 </li>
 
 </ul>
-
 </div>
 
   
-<p align="right">
-<font size="-2">by&nbsp;Gregor J. Rothfuss</font>
-</p>
 </div>
 </td><td width="10"><img width="10" height="1" alt="" src="../skin/images/spacer.gif"></td>
 </tr>
@@ -626,7 +392,9 @@ If you want to suggest additional sites for inclusion, please send an email to t
 </tr>
 </table>
 <!--================= end Menu, NavBar, Content ==================-->
-<!--================= start Footer ==================-->
+<!--+
+    |start bottomstrip
+    +-->
 <div class="footer">
 <table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
 <tr>
@@ -642,6 +410,8 @@ If you want to suggest additional sites for inclusion, please send an email to t
 </tr>
 </table>
 </div>
-<!--================= end Footer ==================-->
+<!--+
+    |end bottomstrip
+    +-->
 </body>
 </html>

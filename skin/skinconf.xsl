@@ -18,88 +18,6 @@
         
     <xsl:template match="skinconfig">
 
-     <xsl:if test="not(disable-lucene)">     
-       <disable-lucene>true</disable-lucene>
-     </xsl:if>
-     <xsl:if test="not(disable-search)">     
-       <disable-search>true</disable-search>
-     </xsl:if>
-     <xsl:if test="not(disable-print-link)">     
-       <disable-print-link>true</disable-print-link>
-     </xsl:if>
-     <xsl:if test="not(disable-pdf-link)">     
-       <disable-pdf-link>true</disable-pdf-link>
-     </xsl:if>
-     <xsl:if test="not(disable-xml-link)">     
-       <disable-xml-link>true</disable-xml-link>
-     </xsl:if>
-     <xsl:if test="not(disable-external-link-image)">     
-       <disable-external-link-image>false</disable-external-link-image>
-     </xsl:if>
-     <xsl:if test="not(disable-compliance-links)">     
-       <disable-compliance-links>false</disable-compliance-links>
-     </xsl:if>
-     <xsl:if test="not(obfuscate-mail-links)">     
-       <obfuscate-mail-links>true</obfuscate-mail-links>
-     </xsl:if>
-
-     
-     <xsl:if test="not(searchsite-domain)">     
-       <searchsite-domain>mydomain</searchsite-domain>
-     </xsl:if>
-     <xsl:if test="not(searchsite-name)">     
-       <searchsite-name>MyProject</searchsite-name>
-     </xsl:if>
-     <xsl:if test="not(project-name)">     
-       <project-name>MyProject</project-name>
-     </xsl:if>
-     <xsl:if test="not(project-description)">     
-       <project-description>MyProject Description</project-description>
-     </xsl:if>
-     <xsl:if test="not(project-url)">     
-       <project-url>http://myproj.mygroup.org/</project-url>
-     </xsl:if>
-     <xsl:if test="not(project-logo)">     
-       <project-logo>images/project.png</project-logo>
-     </xsl:if>
-     <xsl:if test="not(group-name)">     
-       <group-name>MyGroup</group-name>
-     </xsl:if>
-     <xsl:if test="not(group-description)">     
-       <group-description>MyGroup Description</group-description>
-     </xsl:if>
-     <xsl:if test="not(group-url)">     
-       <group-url>http://mygroup.org</group-url>
-     </xsl:if>
-     <xsl:if test="not(group-logo)">     
-       <group-logo>images/group.png</group-logo>
-     </xsl:if>
-     <xsl:if test="not(host-url)">     
-       <host-url/>
-     </xsl:if>
-     <xsl:if test="not(host-logo)">     
-       <host-logo/>
-     </xsl:if>
-     <xsl:if test="not(year)">     
-       <year>2004</year>
-     </xsl:if>
-     <xsl:if test="not(vendor)">     
-       <vendor>The Acme Software Foundation.</vendor>
-     </xsl:if>
-     
-     <xsl:if test="not(trail)">
-       <trail>
-         <link1 name="" href=""/>
-         <link2 name="" href=""/>
-         <link3 name="" href=""/>
-       </trail>
-       
-     </xsl:if>
-     <xsl:if test="not(trail)">
-        <toc level="2" location="page"/>
-     </xsl:if>
-
-
   <xsl:if test="not(colors)">
   <colors>
     <color name="header" value="#294563"/>
@@ -123,11 +41,10 @@
     <color name="table" value="#7099C5"/>    
     <color name="table-cell" value="#f0f0ff"/>    
     <color name="highlight" value="#ffff00"/>
-    <color name="fixme" value="#c60"/>
-    <color name="note" value="#069"/>
-
-    <color name="warning" value="#900"/>
-    <color name="code" value="#CFDCED"/>
+    <color name="fixme" value="#cc6600"/>
+    <color name="note" value="#006699"/>
+    <color name="warning" value="#990000"/>
+    <color name="code" value="#a5b6c6"/>
         
     <color name="footer" value="#cedfef"/>
   </colors>
@@ -154,9 +71,8 @@
 
      <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:copy-of select="node()"/>     
-      <!--
-      <xsl:copy-of select="node()[not(name(.)='colors')]"/>     
+      <xsl:copy-of select="node()"/> 
+<!--      <xsl:copy-of select="node()[not(name(.)='colors')]"/>     
       <xsl:apply-templates select="colors"/>-->
      </xsl:copy> 
 
@@ -164,6 +80,10 @@
 
     <xsl:template match="colors">
     <colors>
+     <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:copy-of select="node()[name(.)='color']"/> 
+      
      <xsl:if test="not(color[@name='header'])">
        <color name="header" value="#294563"/>
      </xsl:if>  
@@ -191,6 +111,9 @@
      <xsl:if test="not(color[@name='toolbox'])">
        <color name="toolbox" value="#294563"/>
      </xsl:if>  
+     <xsl:if test="not(color[@name='border'])">
+       <color name="border" value="#a5b6c6"/>
+     </xsl:if>       
      <xsl:if test="not(color[@name='menu'])">
        <color name="menu" value="#4a6d8c"/>    
      </xsl:if>  
@@ -207,7 +130,7 @@
       <color name="table-cell" value="#f0f0ff"/>    
      </xsl:if>  
      <xsl:if test="not(color[@name='highlight'])">
-       <color name="highlight" value="#yellow"/>
+       <color name="highlight" value="#ffcc00"/>
      </xsl:if>  
      <xsl:if test="not(color[@name='fixme'])">
        <color name="fixme" value="#c60"/>
@@ -224,13 +147,9 @@
      <xsl:if test="not(color[@name='footer'])">
        <color name="footer" value="#cedfef"/>
      </xsl:if>  
-
-     <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:copy-of select="node()[name(.)='color']"/>     
+    
      </xsl:copy> 
-
-      </colors> 
+</colors>
     </xsl:template>
-  
+    
 </xsl:stylesheet>
