@@ -7,8 +7,8 @@ echo "INFO: HOME = $HOME"
 WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 JAVA=/usr/lib/j2sdk1.4/bin/java
-
-XPDF=$HOME/bin/xpdf-2.02pl1-linux/pdftotext
+#symlink the xpdf directory to the version you have
+XPDF=$HOME/bin/xpdf/pdftotext
 
 CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.5.0.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar
 
