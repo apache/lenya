@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: History.java,v 1.23 2004/04/29 15:24:15 andreas Exp $  */
+/* $Id: History.java,v 1.24 2004/05/21 12:27:40 andreas Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -100,7 +100,6 @@ public abstract class History implements WorkflowListener {
     }
 
     private WorkflowInstanceImpl instance = null;
-    private String workflowId = null;
 
     /**
      * Returns the namespace helper for the history file.
@@ -134,8 +133,12 @@ public abstract class History implements WorkflowListener {
      * @throws WorkflowException when something went wrong.
      */
     protected String getWorkflowId(NamespaceHelper helper) throws WorkflowException {
+        String workflowId = helper.getDocument().getDocumentElement().getAttribute(WORKFLOW_ATTRIBUTE);
         if (workflowId == null) {
-            workflowId = helper.getDocument().getDocumentElement().getAttribute(WORKFLOW_ATTRIBUTE);
+            throw new WorkflowException("The attribute '" + WORKFLOW_ATTRIBUTE + "' is missing!");
+        }
+        if ("".equals(workflowId)) {
+            throw new WorkflowException("The workflow ID must not be empty!");
         }
         return workflowId;
     }
