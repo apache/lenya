@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 
 <!--
-$Id: cmsui.xml,v 1.2 2004/02/13 15:27:16 roku Exp $
+$Id: cmsui.xml,v 1.3 2004/02/13 18:43:05 roku Exp $
+$Author: roku $
 <License>
 
  ============================================================================
@@ -58,8 +59,13 @@ $Id: cmsui.xml,v 1.2 2004/02/13 15:27:16 roku Exp $
 
   <message key="Submit">Submit</message>
   <message key="Cancel">Cancel</message>
-  
+  <message key="Publish">Publish</message>
+  <message key="Back to Page">Back to page</message>
+      
+  <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for Approval</message>  
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
-   
+
+  <!-- publish screen -->     
+   <message key="Source File(s)">Source File(s)</message>
 </catalogue>
