@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.22 2003/08/08 09:10:34 egli Exp $
+$Id: DefaultDocument.java,v 1.23 2003/08/12 13:26:58 egli Exp $
 <License>
 
  ============================================================================
@@ -218,11 +218,17 @@ public class DefaultDocument implements Document {
      * @see Document#getCompleteURL(String)
      */
     public String getCompleteURL() {
-        String languageSuffix = "".equals(getLanguage()) ? "" : ("_" + getLanguage());
+        return "/" + getPublication().getId() + "/" + getArea() + getDocumentURL();
+    }
 
+    /**
+     * @see Document#getCompleteURL(String)
+     */
+    public String getCompleteURLWithoutLanguage() {
         String extensionSuffix = "".equals(getExtension()) ? "" : ("." + getExtension());
 
-        return "/" + getPublication().getId() + "/" + getArea() + getDocumentURL();
+
+        return "/" + getPublication().getId() + "/" + getArea() + getId() + extensionSuffix;
     }
 
     /**
@@ -269,6 +275,4 @@ public class DefaultDocument implements Document {
     public String getDocumentURL() {
         return documentURL;
     }
-    
-    
 }

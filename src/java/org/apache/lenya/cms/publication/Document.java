@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.12 2003/07/30 15:03:24 gregor Exp $
+$Id: Document.java,v 1.13 2003/08/12 13:26:58 egli Exp $
 <License>
 
  ============================================================================
@@ -82,6 +82,15 @@ public interface Document {
      * @return A string.
      */
     String getCompleteURL();
+
+    /**
+     * Returns the complete URL of this document without 
+     * the language-suffix: 
+     * /{publication-id}/{area}{document-id}.{extension}
+     * The URL always starts with a slash (/).
+     * @return A string.
+     */
+    String getCompleteURLWithoutLanguage();
 
     /**
      * Returns the URL of this document:
