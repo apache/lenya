@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SimpleLinkRewritingTransformer.java,v 1.5 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id: SimpleLinkRewritingTransformer.java,v 1.6 2004/03/12 10:56:54 egli Exp $  */
 
 package org.apache.lenya.cms.cocoon.transformation;
 
@@ -27,10 +27,12 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractTransformer;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -40,6 +42,9 @@ import org.xml.sax.helpers.AttributesImpl;
  * href="/lenya/unicom/authoring/doctypes/2columns.html"&gt;
  * to &lt;a
  * href="/lenya/unicom/$AREA/doctypes/2columns.html"&gt;.
+ * 
+ * It also checks if the target of the link really exists if the area is 
+ * "live". If the link target doesn't exist the link will be inactive.
  * 
  * Ideally this transformer could be replaced by the
  * LinkRewrittingTransformer that Forrest uses if we employ the same
@@ -51,6 +56,7 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
     private PageEnvelope envelope = null;
 
     public static final String INTERNAL_LINK_PREFIX = "site:";
+    private boolean ignoreAElement = false;
 
     public void setup(
         SourceResolver resolver,
@@ -89,14 +95,14 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
         // same problems. See DocumentReferencesHelper#getInternalLinkPattern().
         Pattern pattern =
             Pattern.compile(
-                    envelope.getContext()
+                envelope.getContext()
                     + "/"
                     + envelope.getPublication().getId()
                     + "/"
                     + Publication.AUTHORING_AREA
                     + "(/[-a-zA-Z0-9_/]+?)(_[a-z][a-z])?\\.html");
 
-        if (name.equals("a")) {
+        if (lookingAtAElement(name)) {
             for (int i = 0, size = attrs.getLength(); i < size; i++) {
                 String attrName = attrs.getLocalName(i);
                 if (attrName.equals("href")) {
@@ -113,27 +119,98 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
                             languageExtension = matcher.group(2);
                         }
 
-                        String newValue =
-                            baseURI
-                                + "/"
-                                + envelope.getDocument().getArea()
-                                + matcher.group(1)
-                                + languageExtension 
-                                + ".html";
-                        newAttrs.setValue(i, newValue);
+                        String documentId = matcher.group(1);
+                        if (areaIsLive()
+                            && !documentIsLive(documentId, languageExtension)) {
+                            ignoreAElement = true;
+                        } else {
+                            newAttrs.setValue(
+                                i,
+                                getNewHrefValue(languageExtension, documentId));
+                        }
                     }
                 }
             }
         }
 
-        if (newAttrs == null)
-            super.startElement(uri, name, qname, attrs);
-        else
-            super.startElement(uri, name, qname, newAttrs);
+        if (!ignoreAElement) {
+            if (newAttrs == null) {
+                super.startElement(uri, name, qname, attrs);
+            } else {
+                super.startElement(uri, name, qname, newAttrs);
+            }
+        }
+    }
+
+    /** (non-Javadoc)
+     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+     */
+    public void endElement(String uri, String name, String qname)
+        throws SAXException {
+        if (lookingAtAElement(name) && ignoreAElement) {
+            ignoreAElement = false;
+        } else {
+            super.endElement(uri, name, qname);
+        }
+    }
+
+    private boolean lookingAtAElement(String name) {
+        return name.equals("a");
+    }
+
+    private boolean areaIsLive() {
+        return envelope.getDocument().getArea().equals(Publication.LIVE_AREA);
+    }
+
+    /**
+     * @param documentId
+     * @return true if the specified document id is live
+     */
+    private boolean documentIsLive(String documentId, String languageExtension)
+        throws SAXException {
+        boolean result = false;
+        DocumentBuilder builder =
+            envelope.getPublication().getDocumentBuilder();
+
+        // trim the '_'
+        String language =
+            (languageExtension == "") ? null : languageExtension.substring(1);
+        String url =
+            (language == null)
+                ? builder.buildCanonicalUrl(
+                    envelope.getPublication(),
+                    Publication.LIVE_AREA,
+                    documentId)
+                : builder.buildCanonicalUrl(
+                    envelope.getPublication(),
+                    Publication.LIVE_AREA,
+                    documentId,
+                    language);
+        try {
+            result =
+                builder.buildDocument(envelope.getPublication(), url).exists();
+        } catch (PublicationException e) {
+            throw new SAXException(e);
+        }
+        return result;
+    }
+
+    private String getNewHrefValue(
+        String languageExtension,
+        String documentId) {
+        // FIXME: this should really use the documentBuilder to
+        // build the url 
+        return baseURI
+            + "/"
+            + envelope.getDocument().getArea()
+            + documentId
+            + languageExtension
+            + ".html";
     }
 
     public void recycle() {
         this.envelope = null;
         this.baseURI = null;
+        this.ignoreAElement = false;
     }
 }
