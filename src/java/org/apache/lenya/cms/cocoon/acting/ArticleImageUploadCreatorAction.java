@@ -320,8 +320,15 @@ public class ArticleImageUploadCreatorAction
 	    .addAttribute("alternate-text",
 			  (String)dublinCoreParams.get("title"))
 	    .addAttribute("copyright", (String)dublinCoreParams.get("rights"));
-
-	mediaTag.addElement("media-caption").addText(""); // FIXME:
+	if (((String)dublinCoreParams.get("description")).equals("")) {
+	    // FIXME: shouldn't there be some meaningful text in
+	    // here? How about another parameter to the action that
+	    // contains the caption text?
+	    mediaTag.addElement("media-caption").addText("No Caption");
+	} else {
+	    mediaTag.addElement("media-caption").
+		addText((String)dublinCoreParams.get("description"));
+	}
 	mediaTag.addElement("authorline")
 	    .addText((String)dublinCoreParams.get("creator"));
 	     
