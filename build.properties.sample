@@ -25,19 +25,21 @@ tomcat.home.dir=/usr/local/tomcat
 
 #------------------------------------------------------------------------------------
 # Where the 'install' build target should put the webapp context
+# NOTE: This path is relative to tomcat.home.dir
 
 tomcat.webapps.dir=webapps/lenya
 
 
 #------------------------------------------------------------------------------------
 # The server cache directory to be cleaned by the 'reset' target
+# NOTE: This path is relative to tomcat.home.dir
 
 tomcat.cache.dir=work/Standalone/localhost/lenya
 
 
 #------------------------------------------------------------------------------------
-# Where the 'install' build target should copy the endorsed libraries relative to the
-# tomcat install dir.
+# Where the 'install' build target should copy the endorsed libraries
+# NOTE: This path is relative to tomcat.home.dir
 
 tomcat.endorsed.dir=common/endorsed
 
@@ -58,7 +60,7 @@ tomcat.endorsed.dir=common/endorsed
 #hsqldb-server.port=19002
 
 
-h#------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------
 # Enable multipart requests (for security reasons turned off resp. set to false)
 
 #enable.uploads=true
