@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication-sitemap.xmap,v 1.70 2004/03/19 10:21:36 gregor Exp $ -->
+<!-- $Id: publication-sitemap.xmap,v 1.71 2004/04/24 21:20:50 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -40,9 +40,13 @@
   
   <map:resources>
     <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
       <map:transform src="../../xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
+      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
       <map:select type="parameter">
         <map:parameter name="statusCode" value="{statusCode}"/>
         <map:when test="">
@@ -151,7 +155,8 @@
         <map:act type="language-exists">
 	  <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
 	  <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}.xml"/>
-	  <map:serialize type="html"/>
+      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+  	  <map:serialize type="html"/>
         </map:act>
 
         <!-- There is no version of the requested document-id for the

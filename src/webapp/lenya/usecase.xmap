@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.203 2004/04/04 16:58:27 gregor Exp $ -->
+<!-- $Id: usecase.xmap,v 1.204 2004/04/24 21:20:50 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -85,10 +85,11 @@
     <map:resource name="style-cms-page">
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>          
+      </map:transform>    
       <map:transform src="xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
+      <map:transform src="xslt/util/strip_namespaces.xsl"/>
       <!-- NOTE: iso-8859-1 is necessary for the form editors, else special characters won't be handled correctly -->
       <map:serialize type="xhtml-iso-8859-1"/>
     </map:resource>
@@ -399,7 +400,6 @@
                   </map:generate>
                   <map:transform src="xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
-                  <map:serialize type="html"/>
                 </map:act>
 
                 <map:generate src="resources/kupu/apache-lenya/kupumacros.html"/>
@@ -417,7 +417,6 @@
               </map:act>
               <map:generate src="resources/misc/kupu/download.xhtml"/>
               <map:call resource="style-cms-page"/>
-              <map:serialize type="html"/>
             </map:match>
           </map:match>
 
@@ -427,7 +426,8 @@
               <map:transform src="resources/kupu/apache-lenya/kupucontent-xhtml.xsl">
                 <map:parameter name="css" value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
               </map:transform>
-              <map:serialize type="xhtml"/>
+              <map:transform src="xslt/util/strip_namespaces.xsl"/>
+                <map:serialize type="xhtml"/>
             </map:match>
           </map:match>
 
@@ -449,7 +449,6 @@
                   </map:generate>
                   <map:transform src="../../xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
-                  <map:serialize type="html"/>
                 </map:act>
 
                 <map:aggregate element="edit-envelope">
@@ -732,7 +731,7 @@
                 <map:serialize type="html-no-dtd"/>
               </map:act>
               <map:generate src="resources/misc/xopus/download.xhtml"/>
-              <map:serialize type="html"/>
+              <map:call resource="style-cms-page"/>
             </map:match>
           </map:match>
           

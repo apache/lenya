@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.126 2004/03/24 09:15:23 roku Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.127 2004/04/24 21:20:50 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -226,6 +226,7 @@
       <map:transform src="lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
+      <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
       <map:serialize/>
     </map:resource>
   
@@ -242,7 +243,17 @@
       </map:match>
     </map:pipeline>
 
-    <map:pipeline>      
+    <map:pipeline>  
+        
+      <!-- Lenya GUI screen -->
+      <map:match pattern="lenya-screen.xsl">
+        <map:generate src="lenya/xslt/util/page2xhtml.xsl"/>
+        <map:transform src="lenya/xslt/util/page2xslt.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+          
       <map:match type="usecase" pattern="login">
         
         <map:match type="step" pattern="showscreen">
@@ -250,7 +261,7 @@
           <map:transform src="lenya/xslt/ac/login.xsl">
             <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
           </map:transform>
-          <map:call resource="style-cms-page"/>
+         <map:call resource="style-cms-page"/>
         </map:match>
         
         <map:match type="step" pattern="login">
@@ -270,6 +281,7 @@
         </map:transform>
           <map:call resource="style-cms-page"/>
       </map:match>
+      
 
     <!-- images -->
     <map:match pattern="images/*.gif">

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webdav.xmap,v 1.8 2004/03/26 14:24:57 gregor Exp $ -->
+<!-- $Id: webdav.xmap,v 1.9 2004/04/24 21:20:50 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -30,8 +30,13 @@
   <map:resources>
           <map:resource name="style-cms-page">
       <map:transform src="../../xslt/util/page2xhtml.xsl">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="../../xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
+      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
       <map:serialize/>
     </map:resource>
  </map:resources>
