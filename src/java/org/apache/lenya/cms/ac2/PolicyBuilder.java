@@ -1,5 +1,5 @@
 /*
-$Id: PolicyBuilder.java,v 1.4 2003/07/30 15:10:08 andreas Exp $
+$Id: PolicyBuilder.java,v 1.5 2003/08/07 10:23:27 andreas Exp $
 <License>
 
  ============================================================================
@@ -101,6 +101,7 @@ public class PolicyBuilder {
     protected static final String WORLD_ELEMENT = "world";
     protected static final String IP_RANGE_ELEMENT = "ip-range";
     protected static final String ID_ATTRIBUTE = "id";
+    protected static final String SSL_ATTRIBUTE = "ssl";
 
     /**
      * Builds a policy from a file. When the file is not present, an empty policy is returned.
@@ -164,6 +165,13 @@ public class PolicyBuilder {
 
             policy.addCredential(credential);
         }
+        
+        boolean ssl = false;
+        String sslString = policyElement.getAttribute(SSL_ATTRIBUTE);
+        if (sslString != null) {
+            ssl = Boolean.valueOf(sslString).booleanValue();
+        }
+        policy.setSSL(ssl);
 
         return policy;
     }
@@ -221,6 +229,7 @@ public class PolicyBuilder {
         }
 
         Credential[] credentials = policy.getCredentials();
+        Element policyElement = helper.getDocument().getDocumentElement();
 
         for (int i = 0; i < credentials.length; i++) {
             Accreditable accreditable = credentials[i].getAccreditable();
@@ -233,8 +242,10 @@ public class PolicyBuilder {
                 accreditableElement.appendChild(roleElement);
             }
             
-            helper.getDocument().getDocumentElement().appendChild(accreditableElement);
+            policyElement.appendChild(accreditableElement);
         }
+        
+        policyElement.setAttribute(SSL_ATTRIBUTE, Boolean.toString(policy.isSSLProtected()));
 
         return helper.getDocument();
     }

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultPolicy.java,v 1.4 2003/07/24 18:36:37 andreas Exp $
+$Id: DefaultPolicy.java,v 1.5 2003/08/07 10:23:27 andreas Exp $
 <License>
 
  ============================================================================
@@ -170,4 +170,22 @@ public class DefaultPolicy implements Policy {
     protected Credential getCredential(Accreditable accreditable) {
         return (Credential) accreditableToCredential.get(accreditable);
     }
+    
+    private boolean isSSL;
+
+    /**
+     * @see org.apache.lenya.cms.ac2.Policy#isSSLProtected()
+     */
+    public boolean isSSLProtected() throws AccessControlException {
+        return isSSL;
+    }
+    
+    /**
+     * Sets if this policy requires SSL protection.
+     * @param ssl A boolean value.
+     */
+    public void setSSL(boolean ssl) {
+        this.isSSL = ssl;
+    }
+    
 }

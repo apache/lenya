@@ -151,7 +151,10 @@
 							RoleManager roleManager = (RoleManager)
 									<input:get-attribute module="access-control" name="role-manager" as="object"/>;
 							Role role = roleManager.getRole(roleId);
-							PolicyHelper.manipulateCredential(objectModel, item, role, area, operations[j], this.manager);
+							PolicyHelper helper = new PolicyHelper();
+							helper.setup(objectModel, this.manager, area);
+							helper.manipulateCredential(item, role, operations[j]);
+							helper.tearDown();
 					}
       }
       
@@ -161,12 +164,30 @@
       
       String[] areas = { "authoring", "live" };
       for (int i = 0; i &lt; areas.length; i++) {
+      
+				PolicyHelper helper = new PolicyHelper();
+				helper.setup(objectModel, this.manager, areas[i]);
+				
+				if (request.getParameter("change_ssl") != null &amp;&amp;
+				    request.getParameter("area").equals(areas[i])) {
+				    
+						if (request.getParameter("ssl") != null) {
+								helper.setUrlSSLProtected(true);
+						}
+						else {
+								helper.setUrlSSLProtected(false);
+						}
+				}
+					
         <li:permissions>
           <xsp:attribute name="area"><xsp:expr>areas[i]</xsp:expr></xsp:attribute>
           
+          <xsp:attribute name="ssl"><xsp:expr>helper.isUrlSSLProtected()</xsp:expr></xsp:attribute>
+          <xsp:attribute name="ancestor-ssl"><xsp:expr>helper.isAncestorSSLProtected()</xsp:expr></xsp:attribute>
+          
           <xsp:logic>
           	
-          CredentialWrapper[] credentials = PolicyHelper.getURICredentials(objectModel, areas[i], manager);
+          CredentialWrapper[] credentials = helper.getURICredentials();
           for (int j = 0; j &lt; credentials.length; j++) {
               <li:credential type="uri">
 								<xsp:attribute name="accreditable-type"><xsp:expr>credentials[j].getType()</xsp:expr></xsp:attribute>
@@ -177,7 +198,7 @@
               </li:credential>
           }
           	
-          credentials = PolicyHelper.getParentCredentials(objectModel, areas[i], manager);
+          credentials = helper.getParentCredentials();
           for (int j = 0; j &lt; credentials.length; j++) {
               <li:credential type="parent">
 								<xsp:attribute name="accreditable-type"><xsp:expr>credentials[j].getType()</xsp:expr></xsp:attribute>
@@ -187,10 +208,12 @@
 								<xsp:attribute name="role-name"><xsp:expr>credentials[j].getRoleName()</xsp:expr></xsp:attribute>
               </li:credential>
           }
-          	
+          
           </xsp:logic>	
           
         </li:permissions>
+        
+        helper.tearDown();
       }
     </xsp:logic>
    

@@ -1,5 +1,5 @@
 /*
-$Id: Policy.java,v 1.3 2003/07/23 13:21:23 gregor Exp $
+$Id: Policy.java,v 1.4 2003/08/07 10:23:27 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,4 +73,11 @@ public interface Policy {
      * @throws AccessControlException when something went wrong.
      */
     Role[] getRoles(Identity identity) throws AccessControlException;
+    
+    /**
+     * Returns if this policy requires SSL protection.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
+    boolean isSSLProtected() throws AccessControlException;
 }

@@ -1,5 +1,5 @@
 /*
-$Id: URLPolicy.java,v 1.10 2003/07/24 18:36:36 andreas Exp $
+$Id: URLPolicy.java,v 1.11 2003/08/07 10:23:27 andreas Exp $
 <License>
 
  ============================================================================
@@ -86,20 +86,31 @@ public class URLPolicy implements Policy {
 		policyManager = manager;
 
 		assert controller != null;
-		this.controller = controller;
+		this.accreditableManager = controller;
 	}
 
 	private String url;
 	private InheritingPolicyManager policyManager;
-	private AccreditableManager controller;
+	private AccreditableManager accreditableManager;
+    private Policy[] policies = null;
+    
+    /**
+     * Obtains the policies from the policy manager.
+     * This method is expensive and therefore only called when needed.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected void obtainPolicies() throws AccessControlException  {
+        if (policies == null) {
+            policies = getPolicyManager().getPolicies(getAccreditableManager(), getUrl());
+        }
+    }
 
 	/**
 	 * @see org.apache.lenya.cms.ac2.Policy#getRoles(org.apache.lenya.cms.ac2.Identity)
 	 */
 	public Role[] getRoles(Identity identity) throws AccessControlException {
-        
+        obtainPolicies();
         Set roles = new HashSet();
-        Policy[] policies = getPolicyManager().getPolicies(getAccessController(), getUrl());
         for (int i = 0; i < policies.length; i++) {
             addRoles(policies[i], identity, roles);
         }
@@ -138,8 +149,27 @@ public class URLPolicy implements Policy {
 	 * Returns the access controller.
 	 * @return An access controller.
 	 */
-	public AccreditableManager getAccessController() {
-		return controller;
+	public AccreditableManager getAccreditableManager() {
+		return accreditableManager;
 	}
+
+    /**
+     * The URL policy requires SSL protection iff one of its
+     * member policies requires SSL protection.
+     * @see org.apache.lenya.cms.ac2.Policy#isSSLProtected()
+     */
+    public boolean isSSLProtected() throws AccessControlException {
+        obtainPolicies();
+        
+        boolean ssl = false;
+        
+        int i = 0;
+        while (!ssl && i < policies.length) {
+            ssl = ssl || policies[i].isSSLProtected();
+            i++;
+        }
+        
+        return ssl;
+    }
     
 }

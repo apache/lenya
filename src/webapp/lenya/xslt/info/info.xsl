@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.12 2003/08/04 14:52:55 gregor Exp $
+ $Id: info.xsl,v 1.13 2003/08/07 10:23:54 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -175,7 +175,21 @@
 <xsl:template match="lenya-info:permissions">
 
   <tr>
-    <td><input type="checkbox" name="ssl"/> SSL Encryption</td>
+    <td>
+    	<form method="get" name="form_ssl_{@area}">
+				<input type="hidden" name="lenya.usecase" value="info"/>
+				<input type="hidden" name="lenya.step" value="showscreen"/>
+				<input type="hidden" name="area" value="{@area}"/>
+				<input type="hidden" name="change_ssl" value="true"/>
+        <input type="checkbox" name="ssl"
+        	onclick="document.forms.form_ssl_{@area}.submit()" value="true">
+       		<xsl:if test="@ssl = 'true'">
+	        	<xsl:attribute name="checked">checked</xsl:attribute>
+       		</xsl:if>
+        	SSL Encryption
+        </input>
+    	</form>
+    </td>
 	</tr>
 	<tr>
 	<td>
