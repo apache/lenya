@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.4 2003/01/20 15:07:16 gregorcms Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.5 2003/01/20 19:02:28 gregorcms Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -18,6 +18,12 @@
 		</map:transformers>
 		<map:serializers default="html">
 			<map:serializer name="html" src="org.apache.cocoon.serialization.HTMLSerializer"/>
+<map:serializer name="xhtml" mime-type="text/html"
+  logger="sitemap.serializer.xhtml"
+  src="org.apache.cocoon.serialization.XMLSerializer"
+  pool-max="64" pool-min="2" pool-grow="2">
+</map:serializer>  
+
 		</map:serializers>
 		<map:matchers default="wildcard">
 			<map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>

@@ -55,11 +55,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/article.xsl">
-				<!--
-				<map:generate src="cocoon://index.html"/>
--->
-				<map:generate src="docs/publication/authoring/index.html"/>
-				<map:transform src="stylesheets/publication/Page/Authoring/article-bitflux.xsl"/>
+				<map:generate src="stylesheets/publication/Page/Authoring/article-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/article.xsd">

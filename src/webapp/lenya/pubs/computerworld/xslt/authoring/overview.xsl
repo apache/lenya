@@ -22,12 +22,12 @@
 			<body>
 			<table>
 				<tbody>
-				<xsl:for-each select="article">
+<tr bgcolor="#EFEFE7">
+					<td>Article</td><td>Status</td></tr>				<xsl:for-each select="article">
 					<xsl:variable name="href">
 						<xsl:value-of select="@href"/>
 					</xsl:variable>
-					<tr bgcolor="#EFEFE7">
-					<td>Article</td><td>Status</td></tr><tr>
+<tr bgcolor="#EFEFE7">
 						<td height="30" width="320" valign="middle">
 							<!-- NEWS TITEL -->
 							<a href="{$href}" class="txt-l-black">

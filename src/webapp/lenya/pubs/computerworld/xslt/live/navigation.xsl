@@ -22,10 +22,10 @@
 		<td width="124">
 		<xsl:choose>
 		<xsl:when test="@id = $id">
-			<a href="{$url}" class="txt-s-red"><xsl:apply-templates select="name/line" /></a>
+			<a href="{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
-			<a href="{$url}" class="txt-s-black"><xsl:apply-templates select="name/line" /></a>
+			<a href="{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
 		</xsl:otherwise>
 		</xsl:choose>
 		</td>
@@ -44,10 +44,10 @@
 		<td width="124">
 		<xsl:choose>
 		<xsl:when test="@id = $id">
-			<a href="{$url}" class="txt-s-red"><xsl:apply-templates select="name/line" /></a>
+			<a href="{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
-			<a href="{$url}" class="txt-s-black"><xsl:apply-templates select="name/line" /></a>
+			<a href="{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
 		</xsl:otherwise>
 		</xsl:choose>
 		</td>
@@ -66,10 +66,10 @@
 		<td width="124">
 		<xsl:choose>
 		<xsl:when test="@id = $id">
-			<a href="{$url}" class="txt-s-red"><xsl:apply-templates select="name/line" /></a>
+			<a href="{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
-			<a href="{$url}" class="txt-s-black"><xsl:apply-templates select="name/line" /></a>
+			<a href="{$url}" class="txt-s-black"><xsl:value-of select="name/line" /></a>
 		</xsl:otherwise>
 		</xsl:choose>
 		</td>

@@ -14,7 +14,14 @@
 			<map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer" pool-min="20" pool-max="30" pool-grow="5"/>
 		</map:transformers>
 		<map:readers default="resource"/>
-		<map:serializers default="html"/>
+		<map:serializers default="html">
+			<map:serializer name="html" src="org.apache.cocoon.serialization.HTMLSerializer"/>
+			<map:serializer name="xhtml" mime-type="text/html" logger="sitemap.serializer.xhtml" src="org.apache.cocoon.serialization.XMLSerializer" pool-max="64" pool-min="2" pool-grow="2">
+				<doctype-public>-//W3C//DTD XHTML 1.0 Transitional//EN</doctype-public>
+				<doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</doctype-system>
+				<encoding>UTF-8</encoding>
+			</map:serializer>
+		</map:serializers>
 		<map:matchers default="wildcard">
 			<map:matcher name="usecase" logger="sitemap.matcher.usecase" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
 				<parameter-name>usecase</parameter-name>
@@ -260,7 +267,7 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
-			<!-- ALL articles overview -->			
+			<!-- ALL articles overview -->
 			<map:match pattern="overview.html">
 				<map:aggregate element="wyona" label="gregor">
 					<map:part src="cocoon:/menus/front.xml"/>
@@ -269,8 +276,6 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/overview.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
-
-
 			<!-- Include ALL articles -->
 			<map:match pattern="all-headlines">
 				<map:generate type="directory" src="docs/publication/authoring/news/"/>
@@ -280,19 +285,16 @@
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
-
-                        <!-- Include only articles specified in headlines.xml -->
-                        <map:match pattern="selected-headlines">
-                                <map:generate src="docs/publication/authoring/headlines.xml"/>
-                                <map:transform src="stylesheets/publication/Page/Authoring/selected-xinclude.xsl" label="gregor"/>
-                                <map:transform type="xlink">
-                                        <map:parameter name="href" value="docs/publication/authoring/headlines.xml"/>
-                                </map:transform>
-                                <map:serialize type="xml"/>
-                        </map:match>
+			<!-- Include only articles specified in headlines.xml -->
+			<map:match pattern="selected-headlines">
+				<map:generate src="docs/publication/authoring/headlines.xml"/>
+				<map:transform src="stylesheets/publication/Page/Authoring/selected-xinclude.xsl" label="gregor"/>
+				<map:transform type="xlink">
+					<map:parameter name="href" value="docs/publication/authoring/headlines.xml"/>
+				</map:transform>
+				<map:serialize type="xml"/>
+			</map:match>
 		</map:pipeline>
-
-
 		<!-- Used to build the bitflux stylesheets for headlines dynamically  -->
 		<map:pipeline>
 			<map:match pattern="headlines.xml">
@@ -303,16 +305,6 @@
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
-			<!-- did not work for some reason	
-		<map:match pattern="xinclude-index">
-				<map:generate src="docs/publication/live/index.html"/>
-				<map:transform src="stylesheets/publication/Page/Live/xinclude-index.xsl"/>
-				<map:transform type="xlink">
-					<map:parameter name="href" value="docs/publication/live/index.html"/>
-				</map:transform>
-				<map:serialize type="xml"/>
-		</map:match> 
-		-->
 		</map:pipeline>
 		<!-- Article -->
 		<!-- Checkout -->
@@ -362,18 +354,6 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<!--  Not needed    -->
-			<!--
-      <map:match pattern="*/*/*/*/article.xml">
-        <map:generate type="serverpages" src="docs/publication/authoring/article.xsp">
-          <map:parameter name="channel" value="{1}"/>
-          <map:parameter name="section" value="{2}"/>
-          <map:parameter name="year" value="{3}"/>
-          <map:parameter name="id" value="{4}"/>
-        </map:generate>
-        <map:transform type="xlink"/>
-        <map:serialize type="xml"/>
-      </map:match>
--->
 			<map:match pattern="*/*/*/*/">
 				<map:redirect-to uri="index.html" session="true"/>
 			</map:match>
