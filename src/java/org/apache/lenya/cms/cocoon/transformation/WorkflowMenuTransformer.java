@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.20 2003/08/28 10:11:09 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.21 2003/09/02 13:16:13 andreas Exp $
 <License>
 
  ============================================================================
@@ -128,43 +128,9 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             super.startElement(uri, localName, raw, attr);
         }
 
-        if (hasWorkflow() && localName.equals(MENU_ELEMENT)) {
-            String prefix = "";
-
-            if (raw.indexOf(":") != -1) {
-                prefix = raw.substring(0, raw.indexOf(":")) + ":";
-            }
-
-            super.startElement(
-                uri,
-                "workflow-state",
-                prefix + "workflow-state",
-                new AttributesImpl());
-
-            char[] characters = instance.getCurrentState().toString().toCharArray();
-            super.characters(characters, 0, characters.length);
-            super.endElement(uri, "workflow-state", prefix + "workflow-state");
-            
-            if (Arrays.asList(instance.getWorkflow().getVariableNames()).contains("is-live")) {
-                super.startElement(
-                    uri,
-                    "is-live",
-                    prefix + "is-live",
-                    new AttributesImpl());
-
-                try {
-                    characters = Boolean.toString(instance.getValue("is_live")).toCharArray();
-                } catch (WorkflowException e) {
-                    throw new SAXException(e);
-                }
-                super.characters(characters, 0, characters.length);
-                super.endElement(uri, "is-live", prefix + "is-live");
-            }
-            
-        }
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
@@ -192,8 +158,12 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             } catch (Exception e) {
                 throw new ProcessingException(e);
             }
-
-            this.events = getInstance().getExecutableEvents(situation);
+            
+            try {
+                this.events = getInstance().getExecutableEvents(situation);
+            } catch (WorkflowException e) {
+                throw new ProcessingException(e);
+            }
         }
     }
 
