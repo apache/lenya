@@ -1,5 +1,5 @@
 /*
- * $Id: UserManagerTest.java,v 1.4 2003/06/06 17:24:47 egli Exp $
+ * $Id: UserManagerTest.java,v 1.5 2003/06/11 14:59:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
- 
+
 package org.apache.lenya.cms.ac;
 
 import org.apache.lenya.cms.publication.Publication;
@@ -89,17 +89,21 @@ public class UserManagerTest extends TestCase {
 
 	final public Publication getPublication() {
 		String publicationId = "default";
-		String servletContextPath = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		return PublicationFactory.getPublication(publicationId, servletContextPath);
+		String servletContextPath =
+			"/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
+		return PublicationFactory.getPublication(
+			publicationId,
+			servletContextPath);
 	}
-	
+
 	final public void testInstance() {
-		
+
 		Publication publication = getPublication();
 		UserManager manager = null;
 		try {
-			manager = (UserManager)UserManager.instance(publication);
-		} catch (AccessControlException e) {}
+			manager = (UserManager) UserManager.instance(publication);
+		} catch (AccessControlException e) {
+		}
 		assertNotNull(manager);
 	}
 
@@ -113,9 +117,15 @@ public class UserManagerTest extends TestCase {
 
 		FileRole editorRole = new FileRole(publication, editorRoleName);
 		FileRole adminRole = new FileRole(publication, adminRoleName);
-				
-		User user = new FileUser(publication, userName);
-		
+
+		User user =
+			new FileUser(
+				publication,
+				userName,
+				"Alice in Wonderland",
+				"alice@test.com",
+				"secret");
+
 		try {
 			editorRole.save();
 			adminRole.save();
@@ -145,35 +155,43 @@ public class UserManagerTest extends TestCase {
 		GroupManager groupManager = null;
 		try {
 			userManager = UserManager.instance(publication);
-		} catch (AccessControlException e) {}
+		} catch (AccessControlException e) {
+		}
 		assertNotNull(userManager);
-		
+
 		try {
 			groupManager = GroupManager.instance(publication);
 		} catch (AccessControlException e4) {
 			e4.printStackTrace();
 		}
 		assertNotNull(groupManager);
-		
+
 		Group fetchedGroup = groupManager.getGroup(editorGroupName);
-		assertTrue(editorGroup.equals(fetchedGroup));				
+		assertTrue(editorGroup.equals(fetchedGroup));
 
 		fetchedGroup = groupManager.getGroup(adminGroupName);
-		assertTrue(adminGroup.equals(fetchedGroup));			
+		assertTrue(adminGroup.equals(fetchedGroup));
 	}
 
 	final public void testGetUser() {
 		Publication publication = getPublication();
 		UserManager manager = null;
 		String userName = "test-user";
-		FileUser user = new FileUser(publication, userName);
+		FileUser user =
+			new FileUser(
+				publication,
+				userName,
+				"Alice in Wonderland",
+				"alice@wonderland.com",
+				"secret");
 		try {
-			manager = (UserManager)UserManager.instance(publication);
-		} catch (AccessControlException e) {}
-		assertNotNull(manager);		
+			manager = (UserManager) UserManager.instance(publication);
+		} catch (AccessControlException e) {
+		}
+		assertNotNull(manager);
 		manager.add(user);
-		
-		User otherUser =  manager.getUser(userName);
+
+		User otherUser = manager.getUser(userName);
 		assertEquals(user, otherUser);
 	}
 

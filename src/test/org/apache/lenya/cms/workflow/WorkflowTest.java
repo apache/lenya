@@ -134,7 +134,7 @@ public class WorkflowTest extends TestCase {
             
             System.out.println("Current state: " + getInstance().getCurrentState());
             
-            User user = new FileUser(getPublication(), "test-user");
+            User user = new FileUser(getPublication(), "test-user", "Test Fullname", "test@email", "testPassword");
             Role role = new Role(situations[situationIndex].getRole());
             System.out.println("Role: " + role);
         
