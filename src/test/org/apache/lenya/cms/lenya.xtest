@@ -117,8 +117,8 @@
   </logkit>
   
   <context>
-    <entry name="container.rootDir" value="/d:/development/build/tomcat-4.1.27/webapps/lenya/"/>
-    <entry name="context-root" value="/d:/development/build/tomcat-4.1.27/webapps/lenya/"/>
+    <entry name="container.rootDir" value="build/lenya/webapp/"/>
+    <entry name="context-root" value="build/lenya/webapp/"/>
   </context>
 
   <roles>
@@ -176,6 +176,8 @@
     <component-instance class="org.apache.excalibur.source.impl.ResourceSourceFactory" name="resource"/>
     <component-instance class="org.apache.excalibur.source.impl.URLSourceFactory" name="*"/>
   </source-factories>
+
+  <source-resolver class="org.apache.excalibur.source.impl.SourceResolverImpl"/>
   
     <accreditable-managers>
       <component-instance logger="lenya.ac.accreditablemanager"
