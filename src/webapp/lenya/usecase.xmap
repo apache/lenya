@@ -621,14 +621,12 @@
       </map:match>
       
       <map:handle-errors type="500">
-        <!--
-        <map:select type="exception">  
-          <map:when test="publishing">
-            <map:generate src= "sitetreeException.xml"/> 
-          </map:when>  
-        </map:select>  
+<!--         <map:select type="exception">   -->
+<!--           <map:when test="publishing"> -->
+<!--             <map:generate src= "sitetreeException.xml"/>  -->
+<!--           </map:when>   -->
+<!--         </map:select>   -->
         <map:serialize/>
--->
       </map:handle-errors>
       
     </map:pipeline>
