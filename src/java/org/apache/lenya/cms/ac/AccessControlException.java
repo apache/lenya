@@ -19,7 +19,7 @@ public class AccessControlException extends Exception {
 	/**
 	 * Create an AccessControlException
 	 * 
-	 * @param message
+	 * @param message The message.
 	 */
 	public AccessControlException(String message) {
 		super(message);
@@ -28,17 +28,17 @@ public class AccessControlException extends Exception {
 	/**
 	 * Create an AccessControlException
 	 * 
-	 * @param message
-	 * @param cause
+	 * @param message The message.
+	 * @param cause The cause.
 	 */
 	public AccessControlException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	/**
-	 * Create an AccessControlException
+	 * Create an AccessControlException.
 	 * 
-	 * @param cause
+	 * @param cause The cause.
 	 */
 	public AccessControlException(Throwable cause) {
 		super(cause);
