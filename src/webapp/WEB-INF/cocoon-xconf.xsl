@@ -234,6 +234,12 @@
   <component logger="lenya.usecase.unitofwork"
       class="org.apache.lenya.cms.usecase.UnitOfWork"
       role="org.apache.lenya.cms.usecase.UnitOfWorkImpl"/>
+      
+  <usecases>
+    <component-instance name="addUser" logger="lenya.admin" class="org.apache.lenya.cms.admin.AddUser"/>
+    <component-instance name="userProfile" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserProfile"/>
+  </usecases>
+      
 
   </xsl:copy>
 
