@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuilder.java,v 1.9 2003/12/04 14:17:21 andreas Exp $
+$Id: Collection.java,v 1.1 2003/12/04 14:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,83 +55,57 @@ $Id: DocumentBuilder.java,v 1.9 2003/12/04 14:17:21 andreas Exp $
 */
 package org.apache.lenya.cms.publication;
 
-
 /**
- * A document builder builds a document from a URL.
- *
- * @author andreas
- *
+ * A document representing a collection of documents.
+ * This class is in prototyping stage.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public interface DocumentBuilder {
+public interface Collection extends Document {
+
+    String NAMESPACE = "http://apache.org/cocoon/lenya/collection/1.0";
+    String DEFAULT_PREFIX = "col";
+    
+    String ELEMENT_COLLECTION = "collection";
+    String ELEMENT_DOCUMENT = "document";
+    String ATTRIBUTE_ID = "id";
 
     /**
-     * Builds a document.
-     * 
-     * @param publication The publication the document belongs to.
-     * @param url The URL of the form /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
-     * @return A document.
-     * @throws DocumentBuildException when something went wrong.
+     * Returns the documents in this collection.
+     * @return An array of documents.
+     * @throws DocumentException when something went wrong.
      */
-    Document buildDocument(Publication publication, String url)
-        throws DocumentBuildException;
+    Document[] getDocuments() throws DocumentException;
+
+    /**
+     * Adds a document to the collection.
+     * @param document A document.
+     * @throws DocumentException when an error occurs.
+     */
+    void add(Document document) throws DocumentException;
+
+    /**
+     * Inserts a document into the collection at a specific position.
+     * @param document A document.
+     * @param position The position of the document after insertion,
+     * starting with 0.
+     * @throws DocumentException when something went wrong.
+     */
+    void add(int position, Document document) throws DocumentException;
+
+    /**
+     * Removes a document from the collection.
+     * @param document A document.
+     * @throws DocumentException when the document is not contained
+     * or another error occurs.
+     */
+    void remove(Document document) throws DocumentException;
     
     /**
-     * Builds a collection document.
-     * 
-     * @param publication The publication the document belongs to.
-     * @param url The URL of the form /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
-     * @return A collection.
-     * @throws DocumentBuildException when something went wrong.
-     */
-    Collection buildCollection(Publication publication, String url)
-        throws DocumentBuildException;
-    
-    /**
-     * Checks if an URL corresponds to a CMS document.
-     * 
-     * @param publication The publication the document belongs to.
-     * @param url The URL of the form /{publication-id}/...
+     * Checks if this collection contains a specific document.
+     * @param document The document to check.
      * @return A boolean value.
-     * @throws DocumentBuildException when something went wrong.
-     */    
-    boolean isDocument(Publication publication, String url)
-        throws DocumentBuildException;
-        
-    /**
-     * Builds an URL corresponding to a cms document from the publication, 
-     * the area, the document id and the language
-     * 
-     * @param publication The publication the document belongs to.
-     * @param area The area the document belongs to.
-     * @param documentid The document id of the document.
-     * @param language The language of the document.
-     * @return a String The builded url
+     * @throws DocumentException when something went wrong.
      */
-    String buildCanonicalUrl(
-        Publication publication,
-        String area,
-        String documentid,
-        String language);
-
-    /**
-     * Builds an URL corresponding to a cms document from the publication, 
-     * the area and the document id
-     * 
-     * @param publication The publication the document belongs to.
-     * @param area The area the document belongs to.
-     * @param documentid The document id of the document.
-     * @return a String The builded url
-     */
-    String buildCanonicalUrl(
-        Publication publication,
-        String area,
-        String documentid);
-    
-    /**
-     * Builds a clone of a document for another language. 
-     * @param document The document to clone.
-     * @param language The language of the target document.
-     * @return A document.
-     */
-    Document buildLanguageVersion(Document document, String language);
+    boolean contains(Document document) throws DocumentException;
 }
