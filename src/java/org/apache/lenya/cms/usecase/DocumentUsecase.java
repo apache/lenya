@@ -131,7 +131,7 @@ public class DocumentUsecase extends AbstractUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getSourceURL()
      */
-    protected String getSourceURL() {
+    public String getSourceURL() {
         if (this.sourceDocument == null) {
             return super.getSourceURL();
         }

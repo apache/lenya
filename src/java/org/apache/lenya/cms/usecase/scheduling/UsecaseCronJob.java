@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.cms.usecase.scheduling;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -48,6 +48,8 @@ import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.impl.DefaultAccessController;
+import org.apache.lenya.cms.usecase.Usecase;
+import org.apache.lenya.cms.usecase.UsecaseResolver;
 
 /**
  * Job to schedule usecase execution.

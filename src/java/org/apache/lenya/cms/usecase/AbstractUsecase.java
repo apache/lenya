@@ -27,16 +27,7 @@ import java.util.Set;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.components.cron.CronJob;
-import org.apache.cocoon.components.cron.JobScheduler;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.Machine;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.DocumentManager;
 
 /**
@@ -63,10 +54,9 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     private String sourceUrl = null;
 
     /**
-     * Returns the source URL.
-     * @return A string.
+     * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL()
      */
-    protected String getSourceURL() {
+    public String getSourceURL() {
         return this.sourceUrl;
     }
 
@@ -410,51 +400,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      */
     public boolean isInteractive() {
         return true;
-    }
-
-    protected void schedule(Date date) {
-
-        JobScheduler scheduler = null;
-        try {
-            scheduler = (JobScheduler) this.manager.lookup(JobScheduler.ROLE);
-
-            Parameters parameters = new Parameters();
-            String[] names = getParameterNames();
-            for (int i = 0; i < names.length; i++) {
-                parameters.setParameter(names[i], getParameterAsString(names[i]));
-            }
-
-            Map objects = new HashMap();
-            objects.put(UsecaseCronJob.USECASE_NAME, getName());
-            objects.put(UsecaseCronJob.SOURCE_URL, getSourceURL());
-
-            Request request = ContextHelper.getRequest(this.context);
-            Session session = request.getSession(false);
-            if (session != null) {
-                Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-                if (identity != null) {
-                    User user = identity.getUser();
-                    if (user != null) {
-                        objects.put(UsecaseCronJob.USER_ID, user.getId());
-                    }
-                    Machine machine = identity.getMachine();
-                    if (machine != null) {
-                        objects.put(UsecaseCronJob.MACHINE_IP, machine.getIp());
-                    }
-                }
-            }
-
-            String role = CronJob.class.getName() + "/usecase";
-            scheduler.fireJobAt(date, "foo", role, parameters, objects);
-
-        } catch (Exception e) {
-            getLogger().error("Could not create job: ", e);
-            throw new RuntimeException(e);
-        } finally {
-            if (scheduler != null) {
-                this.manager.release(scheduler);
-            }
-        }
     }
 
     private String name;

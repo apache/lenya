@@ -127,6 +127,11 @@ public interface Usecase {
      *             system.
      */
     void execute() throws UsecaseException;
+    
+    /**
+     * @return The web application URL the usecase was invoked on.
+     */
+    String getSourceURL();
 
     /**
      * Returns the webapp URL which should be redirected to after the usecase is
