@@ -50,8 +50,8 @@
 
     <property name="today"         value="${TODAY}"/>
 
-    <property name="snapshot.bin.name" value="incubating-${fullname}-${SNAPSHOT_STAMP}-bin"/>
-    <property name="snapshot.src.name" value="incubating-${fullname}-${SNAPSHOT_STAMP}-src"/>
+    <property name="snapshot.bin.name" value="${fullname}-${SNAPSHOT_STAMP}-bin"/>
+    <property name="snapshot.src.name" value="${fullname}-${SNAPSHOT_STAMP}-src"/>
     <property name="snapshot.bin.dir" value="${dist.root}/${snapshot.bin.name}"/>
     <property name="snapshot.src.dir" value="${dist.root}/${snapshot.src.name}"/>
 
