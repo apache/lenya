@@ -27,6 +27,7 @@
 <xsl:output method="text"/>
 
 <xsl:param name="log4j-rollingFileAppender"/>
+<xsl:param name="log4j-rollingFileAppender-File" select="'/no/log4j/file/specified/log4j.log'"/>
 <xsl:param name="webapp-directory"/>
 
 <!-- remove single quotes -->
@@ -46,13 +47,13 @@ log4j.rootCategory=WARN, A1
 #log4j.appender.A1=org.apache.log4j.ConsoleAppender
 
 log4j.appender.A1=org.apache.log4j.RollingFileAppender
-log4j.appender.A1.File=<xsl:value-of select="$directory"/>/WEB-INF/logs/log4j.log
+log4j.appender.A1.File=<xsl:value-of select="$log4j-rollingFileAppender-File"/>
 </xsl:when>
 <xsl:otherwise>
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
 
 #log4j.appender.A1=org.apache.log4j.RollingFileAppender
-#log4j.appender.A1.File=<xsl:value-of select="$directory"/>/WEB-INF/logs/log4j.log
+#log4j.appender.A1.File=<xsl:value-of select="$log4j-rollingFileAppender-File"/>
 </xsl:otherwise>
 </xsl:choose>
 

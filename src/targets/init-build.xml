@@ -197,6 +197,7 @@
         force="false"
         >
       <param name="log4j-rollingFileAppender" expression="${enable.log4j}"/>
+      <param name="log4j-rollingFileAppender-File" expression="${log4j.log.file}"/>
       <param name="webapp-directory" expression="${tomcat.webapps.dir}"/>
       <outputproperty name="indent" value="yes"/>
     </xslt>
