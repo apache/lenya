@@ -15,6 +15,34 @@
       <id><jpath:value-of select="iprange-id"/></id>
       <name><jpath:value-of select="name"/></name>
       <description><jpath:value-of select="description"/></description>
+      
+      <xsp:logic>
+      	java.util.List net = (java.util.List) <jpath:value-of select="net"/>;
+      	java.util.List netErrors = (java.util.List) <jpath:value-of select="net-errors"/>;
+      	java.util.List mask = (java.util.List) <jpath:value-of select="mask"/>;
+      	java.util.List maskErrors = (java.util.List) <jpath:value-of select="mask-errors"/>;
+      </xsp:logic>
+      
+      <net>
+      	<xsp:logic>
+      		for (int i = 0; i &lt; 4; i++) {
+              <number>
+              	<xsp:attribute name="error"><xsp:expr>netErrors.get(i)</xsp:expr></xsp:attribute>
+              	<xsp:expr>net.get(i)</xsp:expr>
+              </number>
+      		}
+      	</xsp:logic>
+      </net>
+      <mask>
+      	<xsp:logic>
+      		for (int i = 0; i &lt; 4; i++) {
+              <number>
+              	<xsp:attribute name="error"><xsp:expr>maskErrors.get(i)</xsp:expr></xsp:attribute>
+              	<xsp:expr>mask.get(i)</xsp:expr>
+              </number>
+      		}
+      	</xsp:logic>
+      </mask>
     </iprange>
   </page>
   

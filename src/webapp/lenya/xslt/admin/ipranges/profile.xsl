@@ -66,6 +66,33 @@
                 <input class="lenya-form-element" name="description" type="text" value="{description}"/>
               </td>
             </tr>
+<!--            
+            <SCRIPT>
+            	<xsl:comment>
+            	function check_num(obj) {
+            	  var value = parseInt(obj.value);
+            	  if (value &amp;&amp; 0 &lt;= value &amp;&amp; value &lt;= 255) {
+                  obj.value = "" + parseInt(obj.value);
+            	  }
+            	  else {
+            	    obj.value = "0";
+            	  }
+            	}
+            	</xsl:comment>
+            </SCRIPT>
+-->            
+            <tr>
+            	<td class="lenya-entry-caption">Network&#160;Address</td>
+            	<td>
+            		<xsl:apply-templates select="net/number"/>
+              </td>
+            </tr>
+            <tr>
+            	<td class="lenya-entry-caption">Subnet&#160;Mask</td>
+            	<td>
+            		<xsl:apply-templates select="mask/number"/>
+              </td>
+            </tr>
             <tr>
               <td/>
               <td>
@@ -83,6 +110,18 @@
     </tr>
     </table>
     
+  </xsl:template>
+  
+  
+  <xsl:template match="number">
+  	<xsl:if test="position() &gt; 1">.</xsl:if>
+  	<input type="text" name="{local-name(..)}-{position()}" size="3" value="{normalize-space(.)}"
+  		maxlength="3">
+  		<xsl:if test="@error = 'true'">
+  			<xsl:attribute name="style">background-color: #FF9999;</xsl:attribute>
+  		</xsl:if>
+    </input>
+<!--  		 onchange="check_num(this)" -->
   </xsl:template>
   
   

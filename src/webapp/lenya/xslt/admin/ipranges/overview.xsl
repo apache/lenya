@@ -52,6 +52,14 @@
               <td><xsl:value-of select="description"/></td>
             </tr>
             <tr>
+              <td valign="top" class="lenya-entry-caption">Network&#160;address:</td>
+              <td><xsl:value-of select="network-address"/></td>
+            </tr>
+            <tr>
+              <td valign="top" class="lenya-entry-caption">Subnet&#160;mask:</td>
+              <td><xsl:value-of select="subnet-mask"/></td>
+            </tr>
+            <tr>
               <td/>
               <td>
 				        <form method="GET" action="lenya.usecase.change_profile">

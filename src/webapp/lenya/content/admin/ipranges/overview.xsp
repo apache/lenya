@@ -39,6 +39,8 @@
       <id><xsp:expr>range.getId()</xsp:expr></id>
       <name><xsp:expr>range.getName()</xsp:expr></name>
       <description><xsp:expr>range.getDescription()</xsp:expr></description>
+      <network-address><xsp:expr>range.getNetworkAddress().getHostAddress()</xsp:expr></network-address>
+      <subnet-mask><xsp:expr>range.getSubnetMask().getHostAddress()</xsp:expr></subnet-mask>
       <groups>
         <xsp:logic>
             Group groups[] = range.getGroups();
