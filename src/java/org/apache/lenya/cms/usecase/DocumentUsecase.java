@@ -19,7 +19,11 @@ package org.apache.lenya.cms.usecase;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * 
@@ -69,7 +73,8 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * Returns the document to be redirected to after the usecase has been completed.
+     * Returns the document to be redirected to after the usecase has been
+     * completed.
      * @param success If the usecase was successfully completed.
      * @return A document.
      */
@@ -84,8 +89,8 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * If {@link #setTargetDocument(Document)}was not called, the URL of the source document (
-     * {@link #getSourceDocument()}) is returned.
+     * If {@link #setTargetDocument(Document)}was not called, the URL of the
+     * source document ({@link #getSourceDocument()}) is returned.
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {
@@ -109,4 +114,41 @@ public class DocumentUsecase extends AbstractUsecase {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Triggers a workflow event on the source document by calling
+     * {@link #triggerWorkflow(String, Document)}.
+     * @param event the event.
+     */
+    protected void triggerWorkflow(String event) {
+        triggerWorkflow(event, getSourceDocument());
+    }
+
+    /**
+     * Triggers a workflow event on a document.
+     * @param event The event.
+     * @param document The document.
+     */
+    protected void triggerWorkflow(String event, Document document) {
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        try {
+            WorkflowInstance instance = factory.buildInstance(document);
+            Event[] events = instance.getExecutableEvents(getSituation());
+            Event executableEvent = null;
+            for (int i = 0; i < events.length; i++) {
+                if (events[i].getName().equals(event)) {
+                    executableEvent = events[i];
+                }
+            }
+
+            if (executableEvent == null) {
+                throw new RuntimeException("The event [" + event
+                        + "] is not executable on document [" + document + "]");
+            }
+            instance.invoke(getSituation(), executableEvent);
+        } catch (WorkflowException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
