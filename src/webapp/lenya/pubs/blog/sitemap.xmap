@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.15 2003/08/25 20:55:17 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.16 2003/08/25 21:10:05 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -128,6 +128,7 @@
         <map:generate type="directory" src="content/{1}/entries/{2}/"/>
         <map:transform src="../../xslt/util/propfind.xsl">
           <map:parameter name="depth" value="{3}"/>
+          <map:parameter name="href" value="/lenya/blog/{1}/entries/{2}/"/>
         </map:transform>
         <map:serialize type="xml" status-code="207"/>
       </map:match>
@@ -137,6 +138,7 @@
             <map:generate type="directory" src="content/{1}/entries/{2}/"/>
             <map:transform src="../../xslt/util/propfind.xsl">
               <map:parameter name="depth" value="{request-header:Depth}"/>
+              <map:parameter name="href" value="/lenya/blog/{1}/entries/{2}/"/>
             </map:transform>
             <map:serialize type="xml" status-code="207"/>
           </map:when>

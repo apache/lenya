@@ -6,6 +6,7 @@
     >
 
 <xsl:param name="depth"/>
+<xsl:param name="href"/>
 
 <xsl:template match="/">
 <D:multistatus xmlns:D="DAV:">
@@ -29,10 +30,10 @@
 <xsl:template match="dir:directory">
 <D:response xmlns:D="DAV:" xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/">
 <xsl:if test="$depth='0'">
-<D:href>/lenya/blog/authoring/entries/<xsl:value-of select="@name"/>/</D:href>
+<D:href><xsl:value-of select="$href"/></D:href>
 </xsl:if>
 <xsl:if test="$depth='1'">
-<D:href>/lenya/blog/authoring/entries/<xsl:value-of select="../@name"/>/<xsl:value-of select="@name"/>/</D:href>
+<D:href><xsl:value-of select="$href"/><xsl:value-of select="@name"/>/</D:href>
 </xsl:if>
 <D:propstat>
 <D:prop>
