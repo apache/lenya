@@ -19,7 +19,7 @@ documents to rather clean (X)HTML which will still be manually editable.
 Written by Philipp "philiKON" von Weitershausen (philikon@philikon.de),
 published under the terms of the Mozilla Public License (MPL)
 
-$Id: ooo2html.xsl,v 1.2 2003/04/11 14:26:30 gregor Exp $
+$Id: oo2html.xsl,v 1.1 2004/01/28 14:57:06 gregor Exp $
 -->
 
 <xsl:output encoding="UTF-8"/>
