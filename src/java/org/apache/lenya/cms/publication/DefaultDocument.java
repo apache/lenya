@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.30 2003/09/04 17:04:01 andreas Exp $
+$Id: DefaultDocument.java,v 1.31 2003/09/12 10:00:42 egli Exp $
 <License>
 
  ============================================================================
@@ -217,6 +217,21 @@ public class DefaultDocument implements Document {
         this.language = language;
     }
 
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getLabel()
+	 */
+    public String getLabel() throws DocumentException {
+        try {
+            return getPublication()
+                .getSiteTree(getArea())
+                .getNode(getId())
+                .getLabel(getLanguage())
+                .getLabel();
+        } catch (SiteTreeException e) {
+			throw new DocumentException(e);
+        }
+    }
+	
     private String area;
 
     /**
