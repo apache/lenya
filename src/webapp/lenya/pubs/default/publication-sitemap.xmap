@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.25 2003/05/12 16:44:22 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.26 2003/05/13 14:33:18 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -100,6 +100,26 @@
 	  <map:serialize />
 	</map:match>
 
+      </map:match>
+    </map:pipeline>
+
+    <!-- Edit Article with Xopus2 -->
+    <map:pipeline>
+      <map:match pattern="authoring/xopus2/**.html">
+      <map:act type="page-envelope">
+	<map:act type="uriparametrizer" src="authoring/{../1}.html">
+          <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
+          <map:parameter name="document-id" value="cocoon://uri-parameter/{publication-id}/document-id"/>
+          <map:aggregate element="lenya" label="aggregation">
+             <map:part src="cocoon:/lenyamenubar/authoring/article.xml"/>
+             <map:part src="content/authoring/{../../1}.xml" element="cmsbody"/>
+          </map:aggregate>         
+       <map:transform src="xslt/authoring/xopus2-{doctype}.xsl">
+        <map:parameter name="articleid" value="{../../1}"/>
+        </map:transform> 
+<map:serialize type="html" />
+	</map:act>
+      </map:act>
       </map:match>
     </map:pipeline>
 
