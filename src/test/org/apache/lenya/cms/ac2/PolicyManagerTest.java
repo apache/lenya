@@ -1,5 +1,5 @@
 /*
-$Id: PolicyManagerTest.java,v 1.1 2003/07/14 18:08:01 andreas Exp $
+$Id: PolicyManagerTest.java,v 1.2 2003/08/13 17:10:35 egli Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,9 @@ import org.apache.lenya.cms.ac.AccessControlException;
 public class PolicyManagerTest extends AccessControlTest {
 
     /**
-     * @param test
+     * Create an instance of PolicyManagerTest
+     * 
+     * @param test a test
      */
     public PolicyManagerTest(String test) {
         super(test);
