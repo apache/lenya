@@ -211,7 +211,6 @@
       </branch>
       <leaf relURI="proxy-generator.html" doctype="XDoc" menuName="Proxy Generator"/>
       <leaf relURI="release-manager.html" doctype="XDoc" menuName="Release Manager Info"/>
-      <leaf absURI="/lenya/scratchpad/index.html" doctype="HTML" menuName="Scratchpad"/>
       <branch relURI="" doctype="Empty" menuName="Strange Effects">
 	<leaf relURI="" doctype="Empty" menuName="XSLT (Xalan) Problems with IBMJava2-13: Use another JDK (jdk1.3.1)"/>
       </branch>
