@@ -83,6 +83,7 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
             log.warn("Parameter name:"+paramName);
             log.warn("Parameter value:"+httpRequest.getParameter(paramName));
             }
+
           if(httpMethod.equals("POST")){
             java.io.InputStream is=intercept(httpRequest.getInputStream());
             log.warn("HTTP method:"+httpMethod);
@@ -95,16 +96,25 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
             }
 
           // Forward InputStream to Servlet
-          URL url=new URL("http://127.0.0.1:8080/wyona-cms/servlet/HelloWorld");
-          PostMethod postMethod=new PostMethod();
-          postMethod.setRequestBody("LeviVanya");
+          URL url=new URL("http://127.0.0.1:8080/wyona-cms/servlet/HelloWorld?param1=levi&param2=vanya");
+          org.apache.commons.httpclient.HttpMethod postMethod=null;
+          if(httpMethod.equals("POST")){
+            postMethod=new PostMethod();
+            }
+          else if(httpMethod.equals("GET")){
+            postMethod=new org.apache.commons.httpclient.methods.GetMethod();
+            }
+          //postMethod.setQueryString("param1=levi&param2=vanya");
+          //PostMethod postMethod=new PostMethod();
+          //postMethod.setRequestBody("LeviVanya");
           postMethod.setRequestHeader("Content-type","text/plain");
           postMethod.setPath(url.getPath());
+
           HttpClient httpClient=new HttpClient();
           httpClient.startSession(url);
           httpClient.executeMethod(postMethod);
           byte[] sresponse=postMethod.getResponseBody();
-          log.warn(new String(sresponse));
+          log.warn("Response: "+new String(sresponse));
           httpClient.endSession();
 
 
