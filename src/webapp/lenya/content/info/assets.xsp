@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: assets.xsp,v 1.10 2004/08/25 10:15:34 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -42,11 +42,17 @@
       Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
       ResourcesManager resourceMgr = new ResourcesManager(doc);
       File[] resources = resourceMgr.getResources();
+      
+      String documentId = (String) <request:get-parameter name="document-id"/>;
+      if (documentId == null) {
+          documentId = <input:get-attribute module="page-envelope" name="document-id" as="string"/>;
+      }
+      
     </xsp:logic>
     <lenya-info:assets>
       <lenya-info:request-uri><request:get-uri/></lenya-info:request-uri>
       <lenya-info:area><input:get-attribute module="page-envelope" name="area"/></lenya-info:area>
-      <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
+      <lenya-info:documentid><xsp:expr>documentId</xsp:expr></lenya-info:documentid>
       <lenya-info:documentnodeid><input:get-attribute module="page-envelope" name="document-node-id"/></lenya-info:documentnodeid>
       <lenya-info:date><input:get-attribute module="date" name="currentDate"/></lenya-info:date>
       <lenya-info:creator><input:get-attribute module="access-control" name="user-name"/></lenya-info:creator>
