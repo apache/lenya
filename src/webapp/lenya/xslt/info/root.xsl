@@ -20,6 +20,8 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   >
   
   <xsl:param name="contextprefix"/>
@@ -99,7 +101,15 @@
               </td>     
               <td valign="top" width="80%">
                 <div id="lenya-info-content">
-                  <xsl:copy-of select="*"/>
+                  <!-- support both old-style tabs and new-style JX tabs -->
+                  <xsl:choose>
+                    <xsl:when test="/page:page">
+                      <xsl:copy-of select="page:page/node()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:copy-of select="*"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </div>
               </td>
             </tr>

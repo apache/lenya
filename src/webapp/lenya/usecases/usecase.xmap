@@ -30,7 +30,6 @@
       </map:match>
       
      <!-- view for usecases that are displayed in a tab in the site area --> 
-     <!--TODO root.xsl does not expect the page:page element currently -->
      <map:match pattern="view-tab/**">
         <map:generate type="jx" src="{1}.jx"/>
         <map:transform type="i18n">
@@ -50,7 +49,7 @@
             <map:parameter name="languages" value="{page-envelope:publication-languages-csv}"/>
           </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/info/default.xml"/>
-        <map:serialize type="xml"/>
+        <map:serialize type="xhtml"/>
       </map:match>
     </map:pipeline>
 
