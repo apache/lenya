@@ -66,11 +66,12 @@ public class ArticleImageUploadCreatorAction
     protected String docsRoot = null;
 
     /**
-     * The variable <code>insertImageBefore</code> is configured trough
-     * parameters to the action in the sitemap. It defines whether the
-     * media tag is to be inserted before or after the xpath. The values
-     * for the variables <code>insertBefore</code> and <code>insertAfter</code> 
-     * come from an optional request parameter which overwrites the configured behaviour.
+     * The variable <code>insertImageBefore</code> is configured
+     * trough parameters to the action in the sitemap. It defines
+     * whether the media tag is to be inserted before or after the
+     * xpath. The values for the variables <code>insertBefore</code>
+     * and <code>insertAfter</code> come from an optional request
+     * parameter which overwrites the configured behaviour.
      *
      */
     protected boolean insertImageBefore = true;
@@ -197,7 +198,8 @@ public class ArticleImageUploadCreatorAction
 	Iterator iter = dublinCoreParams.keySet().iterator();
 	while(iter.hasNext()) {
 	    String paramName = (String)iter.next();
-	    getLogger().debug(paramName + ": "+ dublinCoreParams.get(paramName));
+	    getLogger().debug(paramName + ": "+
+			      dublinCoreParams.get(paramName));
 	}
 
 	// if we can't find the uploadFile simply return, i.e. don't
@@ -277,11 +279,12 @@ public class ArticleImageUploadCreatorAction
 	    
 	    // insert <media> tags at the location sepecified by the
 	    // cpath in the original document (the referer)
-	    insertMediaTag(sitemapPath + docsRoot + File.separator + documentId,
-			   imageXPath, fileName, dublinCoreParams);
+	    insertMediaTag(sitemapPath + docsRoot + File.separator +
+			   documentId, imageXPath, fileName, dublinCoreParams);
 	    
 	} else {
-	    getLogger().debug("parameter " + UPLOADFILE_PARAM_NAME + " is not of type FilePart");
+	    getLogger().debug("parameter " + UPLOADFILE_PARAM_NAME +
+			      " is not of type FilePart");
 	    return null;
 	}			
 
@@ -395,7 +398,8 @@ public class ArticleImageUploadCreatorAction
 	}
 	List list = parent.content();
 	
-	// The request parameters insertBefore and insertAfter overwrite the configuration (insertImageBefore)
+	// The request parameters insertBefore and insertAfter
+	// overwrite the configuration (insertImageBefore) 
 	if (insertBefore || (insertImageBefore && !insertAfter)) {
 	    // insert the tag before the imageXPath
 	    list.add(parent.indexOf(node), mediaTag);
@@ -435,10 +439,8 @@ public class ArticleImageUploadCreatorAction
 				  String documentId,
 				  String fileName) {
 
-	String requestingDocumentPath =
-	    (new File(documentId)).getParent();
-	return sitemapPath + File.separator + recourcesRoot + File.separator +
-	    requestingDocumentPath + File.separator + fileName;
+	return getResourcePath(sitemapPath, recourcesRoot,
+			       documentId, fileName);
     }
 
     /**
@@ -457,11 +459,43 @@ public class ArticleImageUploadCreatorAction
 				     String metaRoot,
 				     String documentId,
 				     String fileName) {
+	
+	return getResourcePath(sitemapPath, metaRoot,
+			       documentId, fileName);
+    }
+    
+
+    /**
+     * A simple helper method for the getFooPath methods, which simply
+     * concatenates the given filenames. If a filename is null it is
+     * ignored.
+     *
+     * @param sitemapPath a <code>String</code> value
+     * @param recourcesRoot a <code>String</code> value
+     * @param documentId a <code>String</code> value
+     * @param fileName a <code>String</code> value
+     * @return a <code>String</code> value
+     */
+    protected String getResourcePath(String sitemapPath,
+				   String recourcesRoot,
+				   String documentId,
+				   String fileName) {
+	
+	String path = sitemapPath + File.separator;
+	path = recourcesRoot + File.separator ;
 
 	String requestingDocumentPath =
 	    (new File(documentId)).getParent();
-	return sitemapPath + File.separator + metaRoot + File.separator +
-	    requestingDocumentPath + File.separator + fileName;
+
+	// only add the path to the requesting document to the
+	// imagePath if it is non-null, otherwise we get paths like
+	// foo/null/bar.
+	if (requestingDocumentPath != null) {
+	    path += requestingDocumentPath + File.separator;
+	}
+
+	path += fileName;
+	return path;
     }
 }
 
