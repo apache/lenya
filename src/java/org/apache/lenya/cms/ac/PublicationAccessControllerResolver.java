@@ -1,5 +1,5 @@
 /*
-$Id: PublicationAccessControllerResolver.java,v 1.2 2004/02/02 02:50:38 stefano Exp $
+$Id: PublicationAccessControllerResolver.java,v 1.3 2004/02/08 17:01:30 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,6 +70,7 @@ import org.apache.lenya.ac.impl.AbstractAccessControllerResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.URLInformation;
 
 /**
  * Resolves the access controller according to the <code>ac.xconf</code> file of a publication.
@@ -91,18 +92,14 @@ public class PublicationAccessControllerResolver
      */
     protected Object generateCacheKey(String webappUrl, SourceResolver resolver)
         throws AccessControlException {
+        	
+        URLInformation info = new URLInformation(webappUrl);
 
-        // do it by hand (performance)
-        assert webappUrl.startsWith("/");
-        webappUrl = webappUrl.substring(1);
-
-        int slashIndex = webappUrl.indexOf("/");
-        if (slashIndex == -1) {
-            slashIndex = webappUrl.length();
+        String publicationId = info.getPublicationId();
+        if (getLogger().isDebugEnabled()) {
+			getLogger().debug(
+				"Using first URL step (might be publication ID) as cache key: [" + publicationId + "]");
         }
-        String publicationId = webappUrl.substring(0, slashIndex);
-        getLogger().debug(
-            "Using first URL step (might be publication ID) as cache key: [" + publicationId + "]");
 
         return super.generateCacheKey(publicationId, resolver);
     }
@@ -140,11 +137,8 @@ public class PublicationAccessControllerResolver
 
         if (url.length() > 0) {
 
-            int slashIndex = url.indexOf("/");
-            if (slashIndex == -1) {
-                slashIndex = url.length();
-            }
-            String publicationId = url.substring(0, slashIndex);
+			URLInformation info = new URLInformation(webappUrl);
+            String publicationId = info.getPublicationId();
 
             File contextDir = getContext();
             if (PublicationFactory
