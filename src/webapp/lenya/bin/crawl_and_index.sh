@@ -3,6 +3,7 @@
 DIRNAME=`dirname $0`
 echo "INFO: dirname = $DIRNAME"
 
+HOME=/home/username
 WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 JAVA=/usr/lib/j2sdk1.4/bin/java
@@ -23,10 +24,14 @@ case "$1" in
         echo ""
         CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.3-dev1.jar
         echo "INFO: classpath = $CLASSPATH"
-        LUCENE_CONF=src/webapp/lenya/pubs/oscom/config/search/lucene-cmfsMatrix.xconf
+
+        LUCENE_CONF=$2
+
+        DEBUG=true
+
         echo "INFO: lucene.xconf = $LUCENE_CONF"
         $JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexConfiguration $LUCENE_CONF
-        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF true
+        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF $DEBUG
 
         ###$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
 	;;
