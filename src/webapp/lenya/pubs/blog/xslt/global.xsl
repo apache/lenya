@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global.xsl,v 1.18 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -81,7 +81,7 @@
 
 <tr>
 <td colspan="2" id="footer">
-Copyright &#169; 2003 The Apache Software Foundation. All rights reserved.
+Copyright &#169; 2003-2005 The Apache Software Foundation. All rights reserved.
 </td>
 </tr>
 </table>
