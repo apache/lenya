@@ -14,10 +14,10 @@
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/frontpage/headlines.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Headlines</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=/frontpage/webperls.html&amp;sources=/frontpage/webperls.xml</xsp:attribute>Publish&#160;Webperls</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/frontpage/webperls.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Webperlen</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=/frontpage/dossier.html&amp;sources=/frontpage/dossier.xml</xsp:attribute>Publish&#160;Dossiers</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/frontpage/dossier.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Dossierkasten</item>
 				</block>
 				<separator>
 					<item>--------------------</item>
@@ -62,7 +62,6 @@
 							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/webperls.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/webperls.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/webperls.xsd&amp;url-css="+bitflux_prefix+"/css/webperls.css&amp;url-post="+bitflux_prefix+"/save/webperls.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>Edit&#160;Webperlen
 					</item>
-
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/dossierkasten.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/dossierkasten.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/dossierkasten.xsd&amp;url-css="+bitflux_prefix+"/css/dossierkasten.css&amp;url-post="+bitflux_prefix+"/save/dossier.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
