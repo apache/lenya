@@ -20,7 +20,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 
 /**
- * Abstract base class for operations on documents.
+ * Default implementation of a unit of work.
  * 
  * @version $Id$
  */

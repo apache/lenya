@@ -19,12 +19,15 @@ package org.apache.lenya.cms.usecase;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 
 /**
- * This is a "Unit of Work" object (see "Unit of Work" pattern by Martin Fowler).
+ * This is a "Unit of Work" object (see "Unit of Work" pattern by Martin Fowler). See also
+ * <a href="http://www.martinfowler.com/eaaCatalog/unitOfWork.html">
+ *   http://www.martinfowler.com/eaaCatalog/unitOfWork.html
+ * </a>
  * 
  * @version $Id$
  */
 public interface UnitOfWork {
-    
+
     /**
      * The Avalon role.
      */
@@ -35,5 +38,5 @@ public interface UnitOfWork {
      * @return An identity map.
      */
     DocumentIdentityMap getIdentityMap();
-    
+
 }
