@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Collection.java,v 1.6 2004/03/04 14:59:03 edith Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -25,11 +25,19 @@ package org.apache.lenya.cms.publication;
  */
 public interface Collection extends Document {
 
+    /** collection namespace */
     String NAMESPACE = "http://apache.org/cocoon/lenya/collection/1.0";
+    
+    /** default namespace prefix */
     String DEFAULT_PREFIX = "col";
     
+    /** document element */
     String ELEMENT_COLLECTION = "collection";
+    
+    /** element for single document references */
     String ELEMENT_DOCUMENT = "document";
+    
+    /** attribute for document IDs */
     String ATTRIBUTE_ID = "id";
 
     /**

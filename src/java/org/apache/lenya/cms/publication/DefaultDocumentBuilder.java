@@ -15,10 +15,13 @@
  *
  */
 
-/* $Id: DefaultDocumentBuilder.java,v 1.29 2004/05/13 15:57:33 andreas Exp $  */
-
 package org.apache.lenya.cms.publication;
 
+/**
+ * Default document builder implementation.
+ * 
+ * @version $Id:$
+ */
 public class DefaultDocumentBuilder implements DocumentBuilder {
     /**
      * Non-public constructor.
@@ -88,7 +91,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      * @param documentId The document ID.
      * @param language The language.
      * @return A document.
-     * @throws DocumentException when something went wrong.
+     * @throws DocumentBuildException when something went wrong.
      */
     protected DefaultDocument createDocument(
         Publication publication,

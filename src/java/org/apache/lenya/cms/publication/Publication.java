@@ -61,13 +61,6 @@ public interface Publication {
     String getId();
 
     /**
-     * Returns the publishing environment of this publication.
-     * @return A {@link PublishingEnvironment} object.
-     * @deprecated It is planned to decouple the environments from the publication.
-     */
-    PublishingEnvironment getEnvironment();
-
-    /**
      * Returns the servlet context this publication belongs to
      * (usually, the <code>webapps/lenya</code> directory).
      * @return A <code>File</code> object.

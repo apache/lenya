@@ -15,16 +15,26 @@
  *
  */
 
-/* $Id: DefaultDocumentIdToPathMapper.java,v 1.22 2004/03/01 16:18:17 gregor Exp $  */
-
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+/**
+ * Default DocumentIdToPathMapper implementation.
+ * 
+ * @version $Id:$
+ */
 public class DefaultDocumentIdToPathMapper
     implements DocumentIdToPathMapper, PathToDocumentIdMapper {
     	
+    /**
+     * The file name.
+     */
     public static final String BASE_FILENAME_PREFIX = "index";
+    
+    /**
+     * The file extension.
+     */
     public static final String BASE_FILENAME_SUFFIX = ".xml";
 
     /**
@@ -87,6 +97,7 @@ public class DefaultDocumentIdToPathMapper
      * @param publication The publication.
      * @param area The area.
      * @param file The file representing the document.
+     * @return A string.
      * @throws DocumentDoesNotExistException when the document
      * referenced by the file does not exist.
      */

@@ -15,8 +15,6 @@
  *
  */
 
-/* @version $Id: DefaultSiteTree.java,v 1.46 2004/08/16 12:23:52 andreas Exp $ */
-
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
@@ -40,12 +38,21 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * DOCUMENT ME!
+ * Default sitetree implementation.
+ * 
+ * @version $Id:$
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
 
+    /**
+     * The sitetree namespace.
+     */
     public static final String NAMESPACE_URI = "http://apache.org/cocoon/lenya/sitetree/1.0";
+    
+    /**
+     * The name of the sitetree file.
+     */
     public static final String SITE_TREE_FILENAME = "sitetree.xml";
 
     private Document document = null;
@@ -121,7 +128,6 @@ public class DefaultSiteTree implements SiteTree {
 
     /**
      * Checks if the tree file has been modified externally and reloads the site tree.
-     * @throws SiteTreeException when something went wrong.
      */
     protected void checkModified() {
         if (area.equals(Publication.LIVE_AREA)
@@ -274,8 +280,8 @@ public class DefaultSiteTree implements SiteTree {
         this.addNode(parentid, id, labels, href, suffix, link, null);
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean, java.lang.String)
      */
     public void addNode(
         String parentid,
@@ -507,8 +513,8 @@ public class DefaultSiteTree implements SiteTree {
         }
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#importSubtree(org.apache.lenya.cms.publication.SiteTreeNode, org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String)
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTree#importSubtree(org.apache.lenya.cms.publication.SiteTreeNode, org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String, java.lang.String)
      */
     public void importSubtree(
         SiteTreeNode newParent,

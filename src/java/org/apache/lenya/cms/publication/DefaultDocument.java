@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultDocument.java,v 1.43 2004/08/16 12:21:37 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -174,7 +174,7 @@ public class DefaultDocument implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#getLanguage()
+     * @see org.apache.lenya.cms.publication.Document#getLanguages()
      */
     public String[] getLanguages() throws DocumentException {
         ArrayList languages = new ArrayList();
@@ -234,14 +234,14 @@ public class DefaultDocument implements Document {
     }
 
     /**
-     * @see Document#getCompleteURL(String)
+     * @see org.apache.lenya.cms.publication.Document#getCompleteURL()
      */
     public String getCompleteURL() {
         return "/" + getPublication().getId() + "/" + getArea() + getDocumentURL();
     }
 
     /**
-     * @see Document#getCompleteInfoURL(String)
+     * @see Document#getCompleteInfoURL()
      */
     public String getCompleteInfoURL() {
         return "/"
@@ -253,7 +253,7 @@ public class DefaultDocument implements Document {
     }
 
     /**
-     * @see Document#getCompleteURL(String)
+     * @see Document#getCompleteURLWithoutLanguage()
      */
     public String getCompleteURLWithoutLanguage() {
         String extensionSuffix = "".equals(getExtension()) ? "" : ("." + getExtension());
