@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:template match="td[@id = 'b468']">
-		<td width="468" height="60" align="left" bgcolor="#FFFFFF">
+		<td width="468" height="60" align="left">
 			<table cellspacing="0" cellpadding="0" border="0" width="468" height="60">
 				<tr>
 					<td valign="top" border="0" width="468" height="60">
@@ -20,7 +20,7 @@
 		</td>
 	</xsl:template>
 	<xsl:template match="td[@id = 'b120']">
-		<td width="234" height="60" align="right" bgcolor="#FFFFFF">
+		<td width="234" height="60" align="right">
 			<table cellspacing="0" cellpadding="0" border="0" width="120" height="60">
 				<tr>
 					<td valign="top" border="0" width="120" height="60">
