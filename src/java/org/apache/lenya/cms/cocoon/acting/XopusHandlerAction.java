@@ -2,7 +2,6 @@ package org.wyona.cms.cocoon.acting;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -173,6 +172,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
       
     // save to permanent file, if needed
     if ("checkin".equals(reqType)) {
+        getLogger().debug(".act(): Save to permanent file: "+permFile);
         FileUtil.copyFile(tempFile, permFile);
     }
       

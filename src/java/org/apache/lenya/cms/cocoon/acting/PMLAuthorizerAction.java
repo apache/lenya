@@ -146,7 +146,7 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
             }
         }
 
-        getLogger().error("Permission denied");
+        getLogger().warn(".authorize(): Permission denied");
         return false;
     }
     /**
