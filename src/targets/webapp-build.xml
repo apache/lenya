@@ -154,6 +154,17 @@
       </fileset>
     </copy>
 
+    <condition property="servlet.engine.tomcat">
+      <equals arg1="${web.app.server}" arg2="Tomcat"/>
+    </condition>
+    <antcall target="install-tomcat"/>
+    <antcall target="successfully-built-message-tomcat"/>
+
+    <condition property="servlet.engine.jetty">
+      <equals arg1="${web.app.server}" arg2="Jetty"/>
+    </condition>
+    <antcall target="successfully-built-message-jetty"/>
+
   </target>
 
   <!--
@@ -185,7 +196,7 @@
   <!-- ============================================================ -->
   <!-- Install webapp                                               -->
   <!-- ============================================================ -->
-  <target name="install" depends="webapp" description="Install the webapp into servlet engine context">
+  <target name="install-tomcat" description="Install the webapp into Tomcat servlet engine context" if="servlet.engine.tomcat">
     <echo>INFO: Copy webapp to Tomcat</echo>
     <echo>INFO: Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.webapps.dir}</echo>
     <copy todir="${tomcat.webapps.dir}" filtering="off">
@@ -204,8 +215,11 @@
     <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
   </target>
 
+
+
+
   <!-- ============================================================ -->
-  <!-- Install publication                                              -->
+  <!-- Install publication                                          -->
   <!-- ============================================================ -->
   <target name="install-pub" depends="webapp" description="Install a publication into servlet engine context. Usage: -Dpub.prefix=blog">
     <echo>INFO: Copy publication ${pub.prefix} to Tomcat</echo>

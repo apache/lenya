@@ -67,6 +67,8 @@
   <import file="src/targets/export-build.xml" />
   <!-- Publication tests       -->
   <import file="src/targets/publication-test-build.xml" />
+  <!-- Successfully Built Message       -->
+  <import file="src/targets/message-build.xml" />
   <!-- =================================================================== -->
 
 </project>
