@@ -11,7 +11,7 @@ src.cocoon.dir=../cocoon-2.1/build/webapp
 # Root directories where publications are located
 
 pubs.root.dirs=src/webapp/lenya/pubs
-#pubs.root.dirs=src/webapp/lenya/pubs:/home/foobar/src/other-pubs
+#pubs.root.dirs=src/webapp/lenya/pubs:../anotherproject/pubs
 
 
 #------------------------------------------------------------------------------------
@@ -19,6 +19,7 @@ pubs.root.dirs=src/webapp/lenya/pubs
 # Warning: This has to be an absolute path! FIXME: cocoon.xconf needs absolute path (scr/targets/init-build.xml)
 
 install.dir=/usr/local/tomcat/webapps/lenya
+#install.dir=C:/build/tomcat/webapps/lenya
 
 
 #------------------------------------------------------------------------------------
@@ -26,15 +27,15 @@ install.dir=/usr/local/tomcat/webapps/lenya
 # Either use an absolute path or a relative one based on the current directory
 
 cache.dir=/usr/local/tomcat/work/Standalone/localhost/lenya
-
+#cache.dir=C:/build/tomcat/work/Standalone/localhost/lenya
 
 #------------------------------------------------------------------------------------
 # Files and directories which should be excluded during 'install' and 'reset'
 # Comma- or space-separated list of patterns
 # All files are included when commented
 
-#target.install.excludes=**/oscom/**/authoring/**,**/oscom/**/live/**
-#target.reset.excludes=**/oscom/**/authoring/**,**/oscom/**/live/**
+#target.install.excludes=**/default/**/authoring/**,**/default/**/live/**
+#target.reset.excludes=**/default/**/authoring/**,**/default/**/live/**
 
 
 #------------------------------------------------------------------------------------
