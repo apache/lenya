@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publish.java,v 1.2 2004/03/20 11:46:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.defaultpub.cms.task;
 
@@ -30,10 +30,10 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
-import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publication.task.PublicationTask;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.log4j.Category;
@@ -91,7 +91,7 @@ public class Publish extends PublicationTask {
             PublicationException,
             DocumentException,
             ProcessingException,
-            SiteTreeException,
+            SiteException,
             ExecutionException {
         boolean OK = true;
 
