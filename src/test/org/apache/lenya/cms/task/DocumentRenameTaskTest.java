@@ -67,9 +67,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.xml.DocumentHelper;
-
-import org.w3c.dom.Document;
 
 import java.io.File;
 
@@ -110,7 +107,9 @@ public class DocumentRenameTaskTest extends AntTaskTest {
 	}
 
 	public static final String FIRST_DOCUMENT_ID = "/doctypes/simple-document";
-	public static final String SEC_DOCUMENT_ID = "/newname";
+	public static final String SEC_DOCUMENT_ID = "newname";
+	public static final String FIRST_AREA = "authoring";
+	public static final String SEC_AREA = "authoring";
 	public static final String AUTHORING_PATH = "content/authoring".replace('/', File.separatorChar);
 	public static final String AUTHORING_RESOURCE = "resources/authoring";
 	public static final String RCML_DIR = "content/rcml";
@@ -123,6 +122,8 @@ public class DocumentRenameTaskTest extends AntTaskTest {
 		Parameters parameters = super.getTaskParameters();
 		parameters.setParameter("properties.node.firstdocumentid", FIRST_DOCUMENT_ID);
 		parameters.setParameter("properties.node.secdocumentid", SEC_DOCUMENT_ID);
+		parameters.setParameter("properties.firstarea", FIRST_AREA);
+		parameters.setParameter("properties.secarea", SEC_AREA);
 		return parameters;
 	}
     
@@ -144,14 +145,10 @@ public class DocumentRenameTaskTest extends AntTaskTest {
         String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
 		File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
 
-		String filename = AUTHORING_PATH +FIRST_DOCUMENT_ID + File.separator + "index.xml";
-		String filepath = authoringDirectory + FIRST_DOCUMENT_ID + File.separator + "index.xml";  
+		String filename = AUTHORING_PATH +FIRST_DOCUMENT_ID + File.separator + "index_de.xml";
+		String filepath = authoringDirectory + FIRST_DOCUMENT_ID + File.separator + "index_de.xml";  
 		String en_filepath = authoringDirectory + FIRST_DOCUMENT_ID + File.separator + "index_en.xml";  
 
-        // genarate a file with another language
-		Document doc = DocumentHelper.readDocument(new File(filepath));
-		DocumentHelper.writeDocument(doc, new File(en_filepath));
-		           
 		// TODO generate the resources  
 
 		// generate the rcml and rcbak files
@@ -174,17 +171,18 @@ public class DocumentRenameTaskTest extends AntTaskTest {
 		String publicationPath = publicationDirectory.getAbsolutePath(); 
         File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
         
-		StringTokenizer st = new StringTokenizer(FIRST_DOCUMENT_ID , "/", true);
+		StringTokenizer st = new StringTokenizer(FIRST_DOCUMENT_ID , "/");
 		int l = st.countTokens();
         String secdocumentid = "";
 		for (int i=1; i<l; i++) {
-		  secdocumentid= secdocumentid + File.separator + st.nextToken();
+		  secdocumentid= secdocumentid + "/" + st.nextToken();
 		}
-		secdocumentid = secdocumentid + SEC_DOCUMENT_ID;      
+		secdocumentid = secdocumentid + "/" + SEC_DOCUMENT_ID;      
+		System.out.println("the second document id" + secdocumentid);
 
-		String filepath = secdocumentid + File.separator + "index.xml";  
+		String filepath = secdocumentid + File.separator + "index_de.xml";  
 		String en_filepath = secdocumentid + File.separator + "index_en.xml";  
-		String firstfilepath = FIRST_DOCUMENT_ID + File.separator + "index.xml";  
+		String firstfilepath = FIRST_DOCUMENT_ID + File.separator + "index_de.xml";  
 		String firsten_filepath = FIRST_DOCUMENT_ID + File.separator + "index_en.xml";  
 
         //evaluate the file
