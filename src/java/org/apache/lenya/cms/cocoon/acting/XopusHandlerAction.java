@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.28 2003/04/28 09:34:02 michi Exp $
+ * $Id: XopusHandlerAction.java,v 1.29 2003/05/02 15:00:15 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -259,6 +259,19 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
 
         // save to temporary file, if needed
         if ("save".equals(reqType) || "checkin".equals(reqType)) {
+            getLogger().error(".act(): Write to temp file: " + tempFile);
+            try {
+                Element contentNode = (Element) data.getFirstChild();
+                org.apache.lenya.xml.DOMParserFactory dpf = new org.apache.lenya.xml.DOMParserFactory();
+                Document contentDocument = dpf.getDocument();
+                contentDocument.appendChild((Element) dpf.cloneNode(contentDocument, contentNode, true));
+                new org.apache.lenya.xml.DOMWriter(new java.io.FileOutputStream(tempFile)).printWithoutFormatting(contentDocument);
+                //new org.apache.lenya.xml.DOMWriter(new java.io.FileOutputStream(tempFile)).printWithoutFormatting(requestDoc);
+            } catch (Exception e) {
+                getLogger().error(".act(): Exception during writing to temp file: " + e);
+            }
+
+/*
             //FIXME(): remove hard coding
             final OutputStream os = new FileOutputStream(tempFile);
             ComponentSelector selector = (ComponentSelector) super.manager.lookup(Serializer.ROLE +
@@ -278,6 +291,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
             super.manager.release(selector);
             os.flush();
             os.close();
+*/
         }
 
         // save to permanent file, if needed
