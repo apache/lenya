@@ -94,7 +94,11 @@ public class CMSHistory extends History {
     }
     
     protected File getHistoryFile() {
-        String documentPath = getDocument().getId().replace('/', File.separatorChar) + ".xml";
+        
+        String language = getDocument().getLanguage();
+        String languageSuffix = "".equals(language) ? "" : "_" + language;
+        
+        String documentPath = getDocument().getId().replace('/', File.separatorChar) + languageSuffix + ".xml";
 
         File workflowDirectory =
             new File(document.getPublication().getDirectory(), WorkflowFactory.WORKFLOW_DIRECTORY);
