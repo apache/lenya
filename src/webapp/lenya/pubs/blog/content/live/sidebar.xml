@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<sidebar>
+<block>
+<title>Feeds</title>
+<content>
+<a href="index.xml">Echo Feed</a>
+<br />RSS Feed
+</content>
+</block>
+
+<block>
+<title>Archives&#160;by&#160;Date</title>
+<content>
+August 2003
+<br />July 2003
+<br />June 2003
+<br />May 2003
+<br />April 2003
+<br />March 2003
+<br />February 2003
+<br />January 2003
+<br />December 2002
+</content>
+</block>
+
+<block>
+<title>Links</title>
+<content>
+<a href="http://cocoon.apache.org/lenya/">Lenya</a>
+<a href="http://cocoon.apache.org">Cocoon</a>
+</content>
+</block>
+</sidebar>

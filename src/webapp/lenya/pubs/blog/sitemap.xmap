@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.20 2003/08/28 10:19:48 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.21 2003/08/29 07:22:46 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -52,14 +52,22 @@
         <map:aggregate element="feed">
           <map:part src="content/{1}/feeds/all/index.xml"/>
           <map:part src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+          <map:part src="content/{1}/sidebar.xml"/>
         </map:aggregate>
         <map:transform src="xslt/entry/aggregate.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/entries/*/*/*/*/lenya-page-body.xml">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+          <map:part src="content/{1}/sidebar.xml"/>
+        </map:aggregate>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/entries/*/*/*/*/index.html">
         <map:aggregate element="lenya">
           <map:part src="cocoon:/{1}/menubar/entry.xml"/>
-          <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/index.xml" element="cmsbody"/>
+          <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
         </map:aggregate>
         <map:transform src="xslt/entry/main-{1}.xsl"/>
         <map:serialize type="html"/>

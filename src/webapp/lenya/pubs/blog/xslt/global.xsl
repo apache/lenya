@@ -18,7 +18,6 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 <td colspan="2" id="title">
-  <!-- FIXME: namespace -->
   <a>
     <xsl:attribute name="href">
       <xsl:choose>
@@ -26,6 +25,7 @@
         <xsl:otherwise>../../index.html</xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
+    <!-- FIXME: namespace -->
     <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/>
   </a>
 </td>
@@ -45,6 +45,8 @@
 </td>
 
 <td valign="top" id="sidebar" width="30%">
+
+<!--
 <div class="sidebar-title">Feeds</div>
 <div class="sidebar-content">
 <a href="index.xml">Echo Feed</a>
@@ -63,10 +65,9 @@ August 2003
 <br />January 2003
 <br />December 2002
 </div>
-
-<!--
-<div class="sidebar-title">Archives&#160;by&#160;Category</div>
 -->
+
+<xsl:apply-templates select="sidebar/block"/>
 </td>
 </tr>
 
@@ -80,6 +81,19 @@ Copyright &#169; Apache Software Foundation
 </table>
 </body>
 </html>
+</xsl:template>
+
+<xsl:template match="block">
+<div class="sidebar-title"><xsl:value-of select="title"/></div>
+<xsl:apply-templates select="content"/>
+</xsl:template>
+
+<xsl:template match="content">
+<div class="sidebar-content">
+<!-- FIXME: Don't copy "content" tag, only children -->
+<xsl:copy-of select="."/>
+<xsl:copy/>
+</div>
 </xsl:template>
  
 </xsl:stylesheet>
