@@ -29,6 +29,8 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
 
     private String email;
     private String encryptedPassword;
+    private	String defaultMenuLocale;
+    private String defaultDocumentLocale;
 
     /**
      * Creates a new User.
@@ -93,6 +95,30 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
         return this.encryptedPassword;
     }
 
+	/**
+	 * @return Returns the defaultDocumentLocale.
+	 */
+	public String getDefaultDocumentLocale() {
+		return defaultDocumentLocale;
+	}
+	/**
+	 * @param defaultDocumentLocale The defaultDocumentLocale to set.
+	 */
+	public void setDefaultDocumentLocale(String defaultDocumentLocale) {
+		this.defaultDocumentLocale = defaultDocumentLocale;
+	}
+	/**
+	 * @return Returns the defaultMenuLocale.
+	 */
+	public String getDefaultMenuLocale() {
+		return defaultMenuLocale;
+	}
+	/**
+	 * @param defaultMenuLocale The defaultMenuLocale to set.
+	 */
+	public void setDefaultMenuLocale(String defaultMenuLocale) {
+		this.defaultMenuLocale = defaultMenuLocale;
+	}
     /**
      * Save the user
      * @throws AccessControlException if the save failed

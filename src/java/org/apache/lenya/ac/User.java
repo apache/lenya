@@ -39,9 +39,49 @@ public interface User extends Identifiable, Item, Groupable {
     
     /**
      * Sets the password.
-     * @param plainTextPassword The plain text passwrod.
+     * @param plainTextPassword The plain text password.
      */
     void setPassword(String plainTextPassword);
+    
+    /**
+     * Returns the user's preferred locale for the Lenya
+     * CMS menus and CMS screens.
+     * 
+     * The locale can either be a 2 letter country code 
+     * (de, en) or a locale code according to RFC 1766 /
+     * ISO 639 / ISO 3166 (de_DE, de_CH, de_AT, en_US, ...)  
+     */
+    String getDefaultMenuLocale();
+    
+    /**
+     * Sets the user's preferred locale for the Lenya
+     * menu and CMS screens.
+     * 
+     * The locale can either be a 2 letter country code 
+     * (de, en) or a locale code according to RFC 1766 /
+     * ISO 639 / ISO 3166 (de_DE, de_CH, de_AT, en_US, ...)
+     */
+    void setDefaultMenuLocale(String menuLocale);
+    
+    /**
+     * Returns the user's default locale of documents
+     * to be created or edited.
+     * 
+     * The locale can either be a 2 letter country code 
+     * (de, en) or a locale code according to RFC 1766 /
+     * ISO 639 / ISO 3166 (de_DE, de_CH, de_AT, en_US, ...)
+     */
+    String getDefaultDocumentLocale();
+    
+    /**
+     * Sets the user's default locale of documents
+     * to be created or edited.
+     * 
+     * The locale can either be a 2 letter country code 
+     * (de, en) or a locale code according to RFC 1766 /
+     * ISO 639 / ISO 3166 (de_DE, de_CH, de_AT, en_US, ...)
+     */
+    void setDefaultDocumentLocale(String documentLocale); 
     
     /**
      * Save the user
