@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.14 2004/01/16 14:51:04 gregor Exp $
+ $Id: rename.xsl,v 1.15 2004/01/16 17:19:03 gregor Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -40,12 +40,14 @@ function validRequired(formField,fieldLabel)
 {
 	var result = true;
 	
-	if (formField.value.match(".*[\\s\\/]+.*"))
+	if (formField.value.match("[^a-zA-Z0-9_\\-]+"))
 	{
 		alert('Please enter a valid value for the "' + fieldLabel +'" field.');
 		formField.focus();
 		result = false;
 	}
+
+	return result;
 	
 }
 
