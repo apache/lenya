@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.8 2003/08/05 12:01:15 andreas Exp $
+$Id: History.java,v 1.9 2003/08/05 16:29:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,9 +73,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 import javax.xml.transform.TransformerException;
-
 
 /**
  * @author andreas
@@ -105,8 +108,8 @@ public abstract class History implements WorkflowListener {
             file.getParentFile().mkdirs();
             file.createNewFile();
 
-            NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE,
-                    Workflow.DEFAULT_PREFIX, HISTORY_ELEMENT);
+            NamespaceHelper helper =
+                new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX, HISTORY_ELEMENT);
 
             Element historyElement = helper.getDocument().getDocumentElement();
             historyElement.setAttribute(WORKFLOW_ATTRIBUTE, workflowId);
@@ -129,7 +132,7 @@ public abstract class History implements WorkflowListener {
 
     private WorkflowInstanceImpl instance = null;
     private String workflowId = null;
-    
+
     /**
      * Returns the namespace helper for the history file.
      * @return A namespace helper.
@@ -145,7 +148,7 @@ public abstract class History implements WorkflowListener {
         }
         return helper;
     }
-    
+
     /**
      * Returns the workflow ID for this history.
      * @return A string.
@@ -218,8 +221,7 @@ public abstract class History implements WorkflowListener {
      * @return A workflow instance object.
      * @throws WorkflowException if something goes wrong.
      */
-    protected abstract WorkflowInstanceImpl createInstance()
-        throws WorkflowException;
+    protected abstract WorkflowInstanceImpl createInstance() throws WorkflowException;
 
     /**
      * Creates a new version element. This method is called after a tansition invocation.
@@ -229,8 +231,11 @@ public abstract class History implements WorkflowListener {
      * @param event The event that was invoked.
      * @return An XML element.
      */
-    protected Element createVersionElement(NamespaceHelper helper, StateImpl state,
-        Situation situation, Event event) {
+    protected Element createVersionElement(
+        NamespaceHelper helper,
+        StateImpl state,
+        Situation situation,
+        Event event) {
         Element versionElement = helper.createElement(VERSION_ELEMENT);
         versionElement.setAttribute(STATE_ATTRIBUTE, state.getId());
         versionElement.setAttribute(EVENT_ATTRIBUTE, event.getName());
@@ -253,12 +258,16 @@ public abstract class History implements WorkflowListener {
             org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(getHistoryFile());
             Element root = xmlDocument.getDocumentElement();
 
-            NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE,
-                    Workflow.DEFAULT_PREFIX, xmlDocument);
+            NamespaceHelper helper =
+                new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX, xmlDocument);
 
             CMSSituation cmsSituation = (CMSSituation) situation;
-            Element versionElement = createVersionElement(helper,
-                    (StateImpl) instance.getCurrentState(), situation, event);
+            Element versionElement =
+                createVersionElement(
+                    helper,
+                    (StateImpl) instance.getCurrentState(),
+                    situation,
+                    event);
 
             root.appendChild(versionElement);
 
@@ -281,8 +290,7 @@ public abstract class History implements WorkflowListener {
      * Saves the state variables as children of the document element.
      * @param helper The helper that holds the document.
      */
-    protected void saveVariables(NamespaceHelper helper)
-        throws WorkflowException {
+    protected void saveVariables(NamespaceHelper helper) throws WorkflowException {
         Element parent = helper.getDocument().getDocumentElement();
         BooleanVariable[] variables = getInstance().getWorkflowImpl().getVariables();
 
@@ -291,9 +299,17 @@ public abstract class History implements WorkflowListener {
             boolean value = getInstance().getValue(name);
 
             try {
-                Element element = (Element) XPathAPI.selectSingleNode(parent,
-                        "*[local-name() = '" + VARIABLE_ELEMENT + "']" + "[@" + NAME_ATTRIBUTE +
-                        " = '" + name + "']");
+                Element element =
+                    (Element) XPathAPI.selectSingleNode(
+                        parent,
+                        "*[local-name() = '"
+                            + VARIABLE_ELEMENT
+                            + "']"
+                            + "[@"
+                            + NAME_ATTRIBUTE
+                            + " = '"
+                            + name
+                            + "']");
 
                 if (element == null) {
                     element = helper.createElement(VARIABLE_ELEMENT);
@@ -336,8 +352,8 @@ public abstract class History implements WorkflowListener {
     protected void restoreState(WorkflowInstanceImpl instance, NamespaceHelper helper)
         throws WorkflowException {
         State state;
-        Element[] versionElements = helper.getChildren(helper.getDocument().getDocumentElement(),
-                VERSION_ELEMENT);
+        Element[] versionElements =
+            helper.getChildren(helper.getDocument().getDocumentElement(), VERSION_ELEMENT);
 
         if (versionElements.length > 0) {
             Element lastElement = versionElements[versionElements.length - 1];
@@ -349,4 +365,25 @@ public abstract class History implements WorkflowListener {
 
         instance.setCurrentState(state);
     }
+
+    /**
+     * Moves this history to a new file.
+     * @param newFile The new file.
+     * @throws WorkflowException when something went wrong.
+     */
+    protected void move(File newFile) throws WorkflowException {
+
+        try {
+            newFile.getParentFile().mkdirs();
+            newFile.createNewFile();
+            FileChannel sourceChannel = new FileInputStream(getHistoryFile()).getChannel();
+            FileChannel destinationChannel = new FileOutputStream(newFile).getChannel();
+            destinationChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+            sourceChannel.close();
+            destinationChannel.close();
+        } catch (IOException e) {
+            throw new WorkflowException(e);
+        }
+    }
+
 }

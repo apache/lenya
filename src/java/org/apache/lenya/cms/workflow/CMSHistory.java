@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.8 2003/08/05 12:00:16 andreas Exp $
+$Id: CMSHistory.java,v 1.9 2003/08/05 16:29:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -111,11 +111,18 @@ public class CMSHistory extends History {
 	 * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
 	 */
     protected File getHistoryFile() {
-        File historyDirectory = new File(document.getPublication().getDirectory(), HISTORY_PATH);
-		DocumentIdToPathMapper pathMapper=document.getPublication().getPathMapper();
-		String documentPath = pathMapper.getPath(getDocument().getId(), ""); 
-        File historyFile = new File(historyDirectory, documentPath);
+        return getHistoryFile(getDocument());
+    }
 
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
+     */
+    protected File getHistoryFile(Document document) {
+        File historyDirectory = new File(document.getPublication().getDirectory(), HISTORY_PATH);
+        DocumentIdToPathMapper pathMapper = document.getPublication().getPathMapper();
+        String documentPath = pathMapper.getPath(document.getId(), document.getLanguage()); 
+        File historyFile = new File(historyDirectory, documentPath);
         return historyFile;
     }
 
@@ -154,5 +161,16 @@ public class CMSHistory extends History {
         String workflowId = getWorkflowId();
         CMSHistory newHistory = new CMSHistory(newDocument);
         newHistory.initialize(workflowId);
+    }
+    
+    /**
+     * Moves this history to a new document.
+     * @param newDocument The new document.
+     * @throws WorkflowException when something went wrong.
+     */
+    protected void move(Document newDocument) throws WorkflowException {
+        assert newDocument != null;
+        move(getHistoryFile(newDocument));
+        setDocument(newDocument);
     }
 }

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.16 2003/08/05 12:00:16 andreas Exp $
+$Id: WorkflowFactory.java,v 1.17 2003/08/05 16:29:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,16 +58,18 @@ package org.apache.lenya.cms.workflow;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 
+import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.impl.History;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
 
 import java.io.File;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -100,6 +102,17 @@ public class WorkflowFactory {
         assert document != null;
 
         return new CMSHistory(document).getInstance();
+    }
+
+    /**
+     * Moves the history of a document.
+     * @param oldDocument The document to move the instance for.
+     * @param newDocument The new document.
+     * @throws WorkflowException when something went wrong.
+     */
+    public void moveHistory(Document oldDocument, Document newDocument) throws WorkflowException {
+        assert oldDocument != null;
+        new CMSHistory(oldDocument).move(newDocument);
     }
 
     /**
@@ -149,15 +162,12 @@ public class WorkflowFactory {
      */
     public Situation buildSituation(Map objectModel) throws WorkflowException {
         Request request = ObjectModelHelper.getRequest(objectModel);
-
-        List roleList = (List) request.getAttribute(Role.class.getName());
-
-        if (roleList == null) {
-            throw new WorkflowException("Request does not contain roles!");
+        Role[] roles;
+        try {
+            roles = PolicyAuthorizer.getRoles(request);
+        } catch (AccessControlException e) {
+            throw new WorkflowException(e);
         }
-
-        Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
-
         return buildSituation(roles);
     }
 
