@@ -155,10 +155,10 @@
 		<map:pipeline>
 			<map:match pattern="wyona/ParentChildScreenNewArticle*">
 				<map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
-<!--
+				<!--
 				<map:transform src="../../stylesheets/cms/Page/new-document.xsl"/>
 -->
-<!--
+				<!--
 				<map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
 -->
 				<map:transform src="stylesheets/cms/Page/article-creator.xsl"/>
@@ -173,8 +173,6 @@
 		</map:pipeline>
 		<!-- /ParentChild Content Creator: New Document -->
 		<!-- Authoring -->
-
-
 		<!-- Menus -->
 		<map:pipeline>
 			<map:match pattern="menus/front.xml">
@@ -187,12 +185,10 @@
 				</map:generate>
 				<map:serialize type="xml"/>
 			</map:match>
-     <map:handle-errors>
-       <map:serialize type="xml"/>
-     </map:handle-errors>
+			<map:handle-errors>
+				<map:serialize type="xml"/>
+			</map:handle-errors>
 		</map:pipeline>
-
-
 		<!-- graphics -->
 		<map:pipeline>
 			<!-- General Wyona -->
@@ -269,7 +265,7 @@
 				<map:generate type="directory" src="docs/publication/authoring/news/"/>
 				<map:transform src="stylesheets/publication/Page/Authoring/xinclude.xsl"/>
 				<map:transform type="xlink">
-					<map:parameter name="href" value="docs/publication/live/news/dummy.xml"/>
+					<map:parameter name="href" value="docs/publication/authoring/news/dummy.xml"/>
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>

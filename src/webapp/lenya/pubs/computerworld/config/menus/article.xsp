@@ -5,7 +5,9 @@
 		<xsp:logic>
     String articleId=parameters.getParameter("articleId","null");
   </xsp:logic>
-		<live_uri><xsp:expr>"/news/"+articleId+".html"</xsp:expr></live_uri>
+		<live_uri>
+			<xsp:expr>"/news/"+articleId+".html"</xsp:expr>
+		</live_uri>
 		<xsp:logic>
     String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
@@ -22,23 +24,21 @@
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-article</xsp:attribute>Publish</item>
-</block>
+				</block>
 				<block>
-					<item>Passwd</item>
-					<item>Switch&#160;User</item>
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
 				</block>
 			</menu>
 			<menu name="Edit" label="Search">
-                                <block>
-                                        <item>
-                                                <xsp:attribute name="href">
-                                                        <xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/news/"+articleId+".xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/article.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/article.xsd&amp;url-css="+bitflux_prefix+"/css/article.css&amp;url-post="+bitflux_prefix+"/save/article.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
-                                                </xsp:attribute>Edit&#160;Article
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/news/"+articleId+".xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/article.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/article.xsd&amp;url-css="+bitflux_prefix+"/css/article.css&amp;url-post="+bitflux_prefix+"/save/"+articleId+".xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+						</xsp:attribute>Edit&#160;Article
                                         </item>
-</block>
+				</block>
 			</menu>
 			<menu name="Tools" label="Help">
 				<block>
