@@ -1,5 +1,5 @@
 /*
-$Id: CopyPoliciesTask.java,v 1.1 2003/09/19 11:31:54 edith Exp $
+$Id: CopyPoliciesTask.java,v 1.2 2003/11/10 16:42:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -125,11 +125,8 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 			String srcPath;
 			try {
 				srcPath = authoringPolicies[i].getCanonicalPath();
-				String destPath =
-					srcPath.replaceFirst(
-						srcDir.getCanonicalPath(),
-						destDir.getCanonicalPath());
-				File destFile = new File(destPath);
+                String policyPath = srcPath.substring(srcDir.getCanonicalPath().length());
+				File destFile = new File(destDir, policyPath);
 				FileUtil.copyFile(authoringPolicies[i], destFile);
 			} catch (IOException e) {
 				throw new BuildException(e);
