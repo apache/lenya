@@ -2,17 +2,17 @@
 
 <system type="cms">
   <id>lenya</id>
-  <editor email="michael.wechner@lenya.org">Michael Wechner</editor>
-  <system_name>Lenya</system_name>
+  <editor email="michi@apache.org">Michael Wechner</editor>
+  <system_name>Apache Lenya</system_name>
   <description>
 Lenya is a CMS based on the XML publishing/application framework Cocoon from the Apache Software Foundation.
 Hence it is totally based on XML, XSLT and other related open standards.
 Lenya supports inline WYSIWYG editing within a Web browser, where Xopus and Bitflux are both
 shipped together with Lenya.
   </description>
-  <main_url>http://www.lenya.org</main_url>
+  <main_url>http://www.wyona.org</main_url>
   <license>
     <license_name>Apache Software License</license_name>
-    <license_url>http://www.lenya.org/license.html</license_url>
+    <license_url>http://www.wyona.org/license.html</license_url>
   </license>
 </system>

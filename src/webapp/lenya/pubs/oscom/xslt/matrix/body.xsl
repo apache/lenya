@@ -56,7 +56,7 @@ No such type: <xsl:value-of select="@type"/>
 <xsl:template match="editor">
 <p>
 <font size="-1">
-Data maintained by <i><a href="mailto:{@email}"><xsl:apply-templates/></a></i>
+Data maintained by <i><a href="mailto:{@email}?subject=OSCOM CMS Matrix"><xsl:apply-templates/></a></i>
 </font>
 </p>
 </xsl:template>
