@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: change-object-path-back.xsl,v 1.2 2004/03/13 13:09:51 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -23,7 +23,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     >
 
-  <xsl:template match="xhtml:object/@data">
+  <xsl:template match="xhtml:object/@data[not(starts-with(., '/'))]">
     <xsl:variable name="url">
       <xsl:value-of select="." />
     </xsl:variable>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: change-object-path.xsl,v 1.2 2004/03/13 13:09:52 gregor Exp $ -->
+<!-- $Id$ -->
     
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -32,7 +32,7 @@
   </xsl:variable>
   
   
-  <xsl:template match="xhtml:object/@data">
+  <xsl:template match="xhtml:object/@data[not(starts-with(., '/'))]">
     <xsl:attribute name="data">
       <xsl:value-of select="concat($nodeid, '/', .)" />
     </xsl:attribute>
