@@ -1,5 +1,5 @@
 /*
-$Id: CollectionImpl.java,v 1.3 2003/12/05 15:27:18 andreas Exp $
+$Id: CollectionImpl.java,v 1.4 2003/12/10 09:41:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -151,7 +151,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 helper = getNamespaceHelper();
 
                 Element collectionElement = helper.getDocument().getDocumentElement();
-                Element[] documentElements = helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
+                Element[] documentElements =
+                    helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
 
                 DocumentBuilder builder = getPublication().getDocumentBuilder();
                 for (int i = 0; i < documentElements.length; i++) {
@@ -243,6 +244,17 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     public void clear() throws DocumentException {
         documents.clear();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Collection#getFirstPosition(org.apache.lenya.cms.publication.Document)
+     */
+    public int getFirstPosition(Document document) throws DocumentException {
+        if (!contains(document)) {
+            throw new DocumentException(
+                "The collection [" + this +"] does not contain the document [" + document + "]");
+        }
+        return documents.indexOf(document);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
-$Id: Collection.java,v 1.2 2003/12/05 15:27:18 andreas Exp $
+$Id: Collection.java,v 1.3 2003/12/10 09:41:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -114,5 +114,13 @@ public interface Collection extends Document {
      * @throws DocumentException when something went wrong.
      */
     boolean contains(Document document) throws DocumentException;
+    
+    /**
+     * Returns the first position of this document in the collection.
+     * @param document The document.
+     * @return An integer.
+     * @throws DocumentException when the document is not contained.
+     */
+    int getFirstPosition(Document document) throws DocumentException;
     
 }
