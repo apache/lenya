@@ -2,13 +2,13 @@
 
 <dossier>
 
-<teaser>
-  <text>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</text>
+<head>
+  <title>Kommunizierendes Gehirn</title>
+  <teasertext>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</teasertext>
   <image href="teaser.jpg"/>
   <color>#dddddd</color>
-</teaser>
+</head>
 
-<title>Kommunizierendes Gehirn</title>
 
 <lead>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</lead>
 
