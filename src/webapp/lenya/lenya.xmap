@@ -21,7 +21,7 @@
       </map:match>
     </map:pipeline>
     <map:pipeline>
-      <map:match pattern="**.css">
+      <map:match pattern="css/**.css">
         <map:read src="resources/css/{1}.css" mime-type="text/css"/>
       </map:match>
       <map:handle-errors>

@@ -6,7 +6,7 @@
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:include href="../../../../../../../xslt/menu/root.xsl"/>
+<xsl:include href="../../../../../xslt/menu/root.xsl"/>
 
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../foot.xsl"/>

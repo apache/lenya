@@ -22,7 +22,7 @@
 <xsl:template match="rc:revisions/XPSRevisionControl">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/lenya/lenya/default.css" />
+<link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
 </head>	
 <body>
 	

@@ -16,7 +16,7 @@
 <html>	
 <body>
 <head>
-<link rel="stylesheet" type="text/css" href="/lenya/lenya/default.css" />
+<link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
 </head>
   <xsl:apply-templates/>
 </body>
