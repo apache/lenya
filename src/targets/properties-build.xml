@@ -111,6 +111,9 @@
   
   <!-- Enable Uploads -->
   <property name="enable.uploads" value="false"/>
+  
+  <!-- Enable RollingFileAppender, else ConsoleAppender will be used -->
+  <property name="enable.log4j" value="false"/>
 
   <!--
   these are here only for those who use jikes compiler. For other

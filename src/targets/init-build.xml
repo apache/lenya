@@ -166,7 +166,9 @@
         in="${java.dir}/log4j-properties.xsl"
         out="${build.src}/log4j.properties"
         style="${java.dir}/log4j-properties.xsl"
+        force="false"
         >
+      <param name="log4j-rollingFileAppender" expression="${enable.log4j}"/>
       <param name="webapp-directory" expression="${install.dir}"/>
       <outputproperty name="indent" value="yes"/>
     </xslt>

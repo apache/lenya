@@ -40,10 +40,16 @@ cache.dir=/usr/local/tomcat/work/Standalone/localhost/lenya
 #------------------------------------------------------------------------------------
 # HSQL-DB server port (default is 9002)
 
-#hsqldb-server.port=9002
+#hsqldb-server.port=19002
 
 
 #------------------------------------------------------------------------------------
 # Enable multipart requests (default is false)
 
-#enable.uploads=false
+#enable.uploads=true
+
+
+#------------------------------------------------------------------------------------
+# Enable RollingFileAppender of log4j (default is false)
+
+#enable.log4j=true
