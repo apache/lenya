@@ -112,8 +112,10 @@
   <xsl:template match="workflow">
     Workflow State: <b><xsl:value-of select="normalize-space(@state)"/></b>
     <xsl:text>&#160;&#160;|&#160;&#160;</xsl:text>
-    <xsl:if test="normalize-space(@is-live) = 'false'">not&#160;</xsl:if>
-    <xsl:text>live&#160;&#160;|</xsl:text>
+    <xsl:if test="@is_live">
+      <xsl:if test="normalize-space(@is-live) = 'false'">not&#160;</xsl:if>
+      <xsl:text>live&#160;&#160;|</xsl:text>
+    </xsl:if>
   </xsl:template>
   
     
