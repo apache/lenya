@@ -1,5 +1,4 @@
 /*
-$Id: DocumentHelper.java,v 1.18 2003/08/06 08:28:26 egli Exp $
 <License>
 
  ============================================================================
@@ -91,7 +90,8 @@ import javax.xml.transform.stream.StreamResult;
 /**
  * Various utility methods to work with JAXP.
  *
- * @author andreas
+ * @author Andreas Hartmann
+ * @version $Id: DocumentHelper.java,v 1.19 2003/08/13 09:46:24 michi Exp $
  */
 public class DocumentHelper {
     /**
