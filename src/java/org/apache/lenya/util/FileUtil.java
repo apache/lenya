@@ -29,7 +29,7 @@ import java.util.StringTokenizer;
 import org.apache.log4j.Category;
 
 /**
- * @version $Id: FileUtil.java,v 1.19 2004/07/30 14:43:46 roku Exp $
+ * @version $Id: FileUtil.java,v 1.20 2004/07/30 14:48:29 roku Exp $
  */
 public final class FileUtil {
     private static Category log = Category.getInstance(FileUtil.class);
@@ -232,7 +232,7 @@ public final class FileUtil {
      */
     public static void deleteParentDirs(File start, File stop) throws IllegalArgumentException {
         if (!stop.isDirectory())
-            throw new IllegalArgumentException("Stop dir '" + start.getAbsolutePath()
+            throw new IllegalArgumentException("Stop dir '" + stop.getAbsolutePath()
                     + "' is not a directory");
         if (!start.getAbsolutePath().startsWith(stop.getAbsolutePath()))
             throw new IllegalArgumentException("Start dir '" + start.getAbsolutePath()
