@@ -6,6 +6,10 @@
 
 package org.apache.lenya.cms.workflow.impl;
 
+import java.util.Iterator;
+import java.util.Set;
+
+import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.workflow.Condition;
@@ -27,15 +31,24 @@ public class RoleCondition
      */
         public boolean isComplied(Situation situation) {
         User user = situation.getUser();
-        Role userRoles[] = user.getRoles();
+        Iterator userGroups = user.getGroups();
+        Set userRoles = null;
+        
+        while (userGroups.hasNext()) {
+        	Iterator groupRoles = ((Group)userGroups.next()).getRoles();
+        	while (groupRoles.hasNext()) {
+        		userRoles.add(groupRoles.next());
+        	}
+        }
         
         Role conditionRole = new Role(getExpression().trim());
         
         boolean complied = false;
-        for (int i = 0; i < userRoles.length; i++) {
-            if (conditionRole.equals(userRoles[i])) {
-                complied = true;
-            }
+        Iterator roles = userRoles.iterator();
+        while (!complied && roles.hasNext()) {
+        	if (conditionRole.equals(roles.next())) {
+        		complied = true;
+        	}
         }
         return complied;
     }

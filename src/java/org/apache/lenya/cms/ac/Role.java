@@ -6,6 +6,10 @@
 
 package org.apache.lenya.cms.ac;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 /**
  *
  * @author  nobby
@@ -20,8 +24,22 @@ public class Role {
     
     private String name;
     
+	private Set groups = new HashSet();
+
     public String getName() {
         return name;
+    }
+    
+    public void addGroup(Group group) {
+    	groups.add(group);
+    }
+    
+    public void removeGroup(Group group) {
+    	groups.remove(group);
+    }
+    
+    public Iterator getGroups() {
+    	return groups.iterator();
     }
     
     public boolean equals(Object otherObject) {

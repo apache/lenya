@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.3 2003/05/28 14:45:18 egli Exp $
+ * $Id: Group.java,v 1.1 2003/05/28 14:45:18 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,137 +46,81 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-
+ 
 package org.apache.lenya.cms.ac;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.avalon.framework.configuration.Configuration;
-
 /**
- *
- * @author  nobby
+ * @author egli
+ * 
+ * 
  */
-public abstract class User {
+public class Group {
 	
-    protected String id;
-    protected String fullName;
-    protected String email;
-    protected String password;
-    protected Set groups = new HashSet();
+	protected String name;
+	protected Set roles = new HashSet();
+	protected Set users = new HashSet();
 
-    
-	private Group group;
-
-    public User() {
-		this(null, null, null, null);
-    }
-    
-    /**
-     * Create a User instance
-	 * @param id
-	 */
-	public User(String id) {
-    	this(id, null, null, null);
-    }
-   
-   	/**
-   	 * Create a User instance
-	 * @param id
-	 * @param fullName
-	 * @param email
-	 * @param password
-	 */
-	public User(String id, String fullName, String email, String password) {
-   		this.id = id;
-   		this.fullName = fullName;
-   		this.email = email;
-   		this.password = password;
-   	}
-   	
 	/**
+	 * Get the name of this group
+	 * 
 	 * @return
 	 */
-	public String getEmail() {
-		return email;
+	public String getName() {
+		return name;
 	}
 
 	/**
-	 * @return
+	 * Get all roles of this group
+	 * 
+	 * @return 
 	 */
-	public String getFullName() {
-		return fullName;
+	public Iterator getRoles() {
+		return roles.iterator();
 	}
 
-	/**
-	 * @return
-	 */
-	public Iterator getGroups() {
-		return groups.iterator();
-	}
-
-	/**
-	 * @return
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setEmail(String string) {
-		email = string;
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setFullName(String string) {
-		fullName = string;
-	}
-
-	/**
-	 * @param set
-	 */
-	public void addGroup(Group group) {
-		groups.add(group);
-		group.addUser(this);
-	}
-
-	/**
-	 * @param set
-	 */
-	public void removeGroup(Group group) {
-		groups.remove(group);
-		group.removeUser(this);
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setPassword(String string) {
-		password = string;
+	public Iterator getUsers() {
+		return users.iterator();
 	}
 	
-	public abstract void save() throws AccessControlException; 
+	/**
+	 * Set the name of this group
+	 * 
+	 * @param string
+	 */
+	public void setName(String string) {
+		name = string;
+	}
 	
-	public abstract void configure(Configuration config);
+	/**
+	 * Add a role to this group
+	 * 
+	 * @param role
+	 */
+	public void addRole(Role role) {
+		roles.add(role);
+		role.addGroup(this);
+	}
+	
+	/**
+	 * Remove a role from this group
+	 * 
+	 * @param role
+	 */
+	public void removeRole(Role role) {
+		roles.remove(role);
+		role.removeGroup(this);
+	}
+	
+	public void addUser(User user) {
+		users.add(user);
+	}
+	
+	public void removeUser(User user) {
+		users.remove(user);
+	}
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
