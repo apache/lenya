@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.50 2003/09/12 16:47:53 andreas Exp $
+$Id: PageEnvelope.java,v 1.51 2003/10/17 08:09:25 egli Exp $
 <License>
 
  ============================================================================
@@ -237,7 +237,7 @@ public class PageEnvelope {
     }
 
     /**
-     * Returns the context.
+     * Returns the context, e.g. "/lenya".
      * @return a <code>String</code> value
      */
     public String getContext() {
