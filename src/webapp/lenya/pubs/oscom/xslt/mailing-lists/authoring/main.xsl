@@ -6,7 +6,8 @@
 
 <xsl:variable name="context_prefix">/wyona-cms/nwt</xsl:variable>
 
-<xsl:include href="../../../../../../../stylesheets/root.xsl"/>
+<xsl:include href="../../../../../../../stylesheets/cms/Page/root.xsl"/>
+<!--<xsl:include href="../../../../../../../stylesheets/root.xsl"/>-->
 <!--
 <xsl:include href="../../root.xsl"/>
 -->
