@@ -86,10 +86,19 @@
 
   <publishtree 
       documentid= "${publish.documentid}"
+      absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${sitetree}"
+      absolutetreelivepath = "${pub.dir}/${live.dir}/${sitetree}" 
+      />
+
+<!-- FIXME: language seems not to be implemented yet -->
+<!--
+  <publishtree 
+      documentid= "${publish.documentid}"
       language= "${publish.language}"
       absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${sitetree}"
       absolutetreelivepath = "${pub.dir}/${live.dir}/${sitetree}" 
       />
+-->
 
   <taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter"/>
   
