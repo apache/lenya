@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
+$Id: site2xhtml.xsl,v 1.2 2003/04/30 15:08:07 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -45,6 +45,7 @@ $Id: site2xhtml.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
         <table cellspacing="0" cellpadding="0" border="0" width="100%" summary="header with logos">
           <tr>
 
+          <!--
             <xsl:comment>================= start Group Logo ==================</xsl:comment>
             <td bgcolor="{$header-color}">
               <h1>&#160;&#160;&#160;<xsl:value-of select="$config/project-name"/> Documentation</h1>
@@ -61,9 +62,10 @@ $Id: site2xhtml.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
               </xsl:if>
             </td>
             <xsl:comment>================= end Group Logo ==================</xsl:comment>
+          -->
             <xsl:comment>================= start Project Logo ==================</xsl:comment>
-            <td bgcolor="{$header-color}" align="right" >
-             <div class="headerlogo">
+            <td colspan="3" bgcolor="{$header-color}" align="left" >
+             <div class="headerlogo" style="padding: 10px">
               <xsl:call-template name="renderlogo">
                 <xsl:with-param name="name" select="$config/project-name"/>
                 <xsl:with-param name="url" select="$config/project-url"/>
@@ -119,11 +121,11 @@ $Id: site2xhtml.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
               </xsl:if>
             </td>
             <xsl:comment>================= end Search ==================</xsl:comment>
-            -->
 
             <td align="right" bgcolor="{$header-color}"><img src="{$spacer}" alt="" width="10" height="10" />
               <span class="textheader"><xsl:value-of select="$config/project-name"/></span>
             </td>
+            -->
           </tr>
           <tr>
             <td colspan="2" bgcolor="{$header-color}" valign="bottom">
@@ -134,7 +136,7 @@ $Id: site2xhtml.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
             <td bgcolor="{$header-color}"><img src="{$spacer}" height="1" width="1" alt="" /></td>
           </tr>
           <tr>
-            <td colspan="4" bgcolor="{$header-color2}" align="right">
+            <td colspan="3" bgcolor="{$header-color2}" align="right">
                <img src="{$spacer}" alt="" height="10" width="1" />
                <span class="datenote"><script language="JavaScript" type="text/javascript"><![CDATA[<!--
                   document.write("Published: " + document.lastModified);

@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC
+    "-//APACHE//DTD Documentation V1.1//EN"
+    "document-v11.dtd"
+    >
+    
 <document> 
   <header> 
     <title>The Navigation Framework</title>
@@ -101,6 +105,12 @@ The URI steps are:
   </section>
   
   <section><title>Aggregating the Navigation Components</title>
+  
+  <p>
+    The basic principle is shown in the following figure:
+  </p>
+  
+  <img src="../../images/live/navigation.png"/>
   
   <p>
     In the publication sitemap (<code>lenya/pubs/&lt;pub-id&gt;/sitemap.xmap</code>)
