@@ -17,10 +17,6 @@
 package org.apache.lenya.cms.site.usecases;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -41,7 +37,7 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
  * Usecase to create a document.
- *
+ * 
  * @version $Id$
  */
 public class CreateBlogEntry extends DocumentUsecase {
@@ -59,12 +55,12 @@ public class CreateBlogEntry extends DocumentUsecase {
         Document parent = getSourceDocument();
         setParameter(PARENT_ID, parent.getId());
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
-        
+
         String documentId = getParameterAsString(DOCUMENT_ID);
 
         if (documentId.equals("")) {
@@ -77,7 +73,7 @@ public class CreateBlogEntry extends DocumentUsecase {
 
         super.doCheckExecutionConditions();
     }
-    
+
     protected void doExecute() throws Exception {
         super.doExecute();
 
@@ -104,7 +100,10 @@ public class CreateBlogEntry extends DocumentUsecase {
         }
 
         String area = parent.getArea();
-        Document document = parent.getIdentityMap().getFactory().get(area, documentId, language);
+        Document document = parent.getIdentityMap().getFactory().get(parent.getPublication(),
+                area,
+                documentId,
+                language);
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);
@@ -117,7 +116,7 @@ public class CreateBlogEntry extends DocumentUsecase {
         HashMap allParameters = new HashMap();
         allParameters.put(Identity.class.getName(), session.getAttribute(Identity.class.getName()));
         allParameters.put("title", title);
-        
+
         documentType.getCreator().create(new File(doctypesDirectory, "samples"),
                 new File(publication.getContentDirectory(area), ""),
                 childId,
@@ -125,7 +124,7 @@ public class CreateBlogEntry extends DocumentUsecase {
                 title,
                 language,
                 allParameters);
-        
+
     }
 
     /**
