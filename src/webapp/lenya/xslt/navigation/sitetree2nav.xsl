@@ -92,7 +92,7 @@ Apply nodes recursively
     </xsl:variable>
     
     <xsl:attribute name="suffix"><xsl:value-of select="$suffix"/></xsl:attribute>
-    <xsl:attribute name="basic-url"><xsl:value-of select="$basic-url"/></xsl:attribute>
+    <xsl:attribute name="basic-url"><xsl:value-of select="$previous-url"/><xsl:value-of select="@id"/></xsl:attribute>
     <xsl:attribute name="href">
       <xsl:text/>
       <xsl:value-of select="$path-to-context"/><xsl:text/>
