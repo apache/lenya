@@ -1948,12 +1948,7 @@ of the Cocoon documentation.
 </pre>
 <a name="N10A4E"></a><a name="docs/1_2_x/components/publication/siteTree.html"></a>
 <h5>Site Tree</h5>
-<a name="N10A56"></a><a name="Motivation"></a>
-<h5>Motivation</h5>
-<p>Currently there is no standard way to manage the navigation
-in Lenya. Previous attempts have shown their own merits and
-drawbacks. A general and standard approach is needed.</p>
-<a name="N10A60"></a><a name="Rationale"></a>
+<a name="N10A56"></a><a name="Rationale"></a>
 <h5>Rationale</h5>
 <p>The basic problems we're trying to solve are as follows:</p>
 <ol>
@@ -1966,42 +1961,25 @@ drawbacks. A general and standard approach is needed.</p>
 <li>Enable querying of doctype independent of request URI.</li>
       
 </ol>
-<a name="N10A75"></a><a name="Navigation"></a>
-<h5>Navigation</h5>
-<p>There are a couple of known implementations to choose from:</p>
-<ul>
-	  
-<li>The existing Lenya tree.xml</li> 
-	  
-<li>The Forrest site.xml.</li>
-	  
-<li>The hashmap way: A sitetree.xml and purlspace.xml combination
-   where the purlspace.xml contains all existing documents and
-   sitetree.xml contains the navigation hierarchy.</li>
-	
-</ul>
-<a name="N10A8B"></a><a name="Moving+Of+Documents"></a>
+<a name="N10A6B"></a><a name="Moving+Of+Documents"></a>
 <h5>Moving Of Documents</h5>
-<p>The Forrest site.xml solves this quite elegantly: Due to the use of
-XPath and some ambiguity the documents can be found almost
-independent of their actual location</p>
 <p>With the existing Lenya or the hashmap solution changing of document
 location requires editing of the tree.xml or the purlspace.xml
 respectively.</p>
-<a name="N10A98"></a><a name="Doctype+Querying"></a>
+<a name="N10A75"></a><a name="Doctype+Querying"></a>
 <h5>Doctype Querying</h5>
 <p>For question 3 there are a couple of known approaches:</p>
-<a name="N10AA1"></a><a name="Hashmap"></a>
+<a name="N10A7E"></a><a name="Hashmap"></a>
 <h5>Hashmap</h5>
 <p>This method uses an action which contains for each
    request URI a mapping to attributes such as doctype, srcfile, xslt,
    etc.</p>
-<a name="N10AAB"></a><a name="Forrest+SourceTypeAction"></a>
+<a name="N10A88"></a><a name="Forrest+SourceTypeAction"></a>
 <h5>Forrest SourceTypeAction</h5>
 <p>Forrest contains an action which for a given request
    opens the source file and determines its doctype based on the dtd
    declaration.</p>
-<a name="N10AB5"></a><a name="URIParametrizer"></a>
+<a name="N10A92"></a><a name="URIParametrizer"></a>
 <h5>URIParametrizer</h5>
 <p>The URIParametrizer is a black box (probably an action)
    which internally issues cocoon requests to different sitemaps which
@@ -2019,7 +1997,7 @@ respectively.</p>
    parameters.</p>
 <div style="text-align: center;">
 <img class="figure" alt="" src="docs/1_2_x/components/publication/URIParametrizer.png"></div>
-<a name="N10ACA"></a><a name="The+Sitetree+Schema"></a>
+<a name="N10AA7"></a><a name="The+Sitetree+Schema"></a>
 <h5>The Sitetree Schema</h5>
 <p>The proposed sitetree schema looks as follows:</p>
 <pre class="code">
@@ -2081,29 +2059,29 @@ respectively.</p>
 
 &lt;/site&gt;
 </pre>
-<a name="N10AE2"></a><a name="Backwards+Compatibility"></a>
+<a name="N10ABF"></a><a name="Backwards+Compatibility"></a>
 <h5>Backwards Compatibility</h5>
 <p>There has not been a previous implementation, so this is a non-issue.</p>
-<a name="N10AEC"></a><a name="Roadmap"></a>
+<a name="N10AC9"></a><a name="Roadmap"></a>
 <h5>Roadmap</h5>
 <ul>
 	
 <li>Decide which solution to choose</li>
       
 </ul>
-<a name="N10AF9"></a><a name="Reference+Implementation"></a>
+<a name="N10AD6"></a><a name="Reference+Implementation"></a>
 <h5>Reference Implementation</h5>
 <p>None</p>
-<a name="N10B05"></a><a name="Revision+Control"></a>
+<a name="N10AE2"></a><a name="Revision+Control"></a>
 <h5>Revision Control</h5>
-<a name="N10B0A"></a><a name="docs/1_2_x/components/revisioncontrol/revisioncontroller.html"></a>
+<a name="N10AE7"></a><a name="docs/1_2_x/components/revisioncontrol/revisioncontroller.html"></a>
 <h5>Revision Controller</h5>
-<a name="N10B12"></a><a name="Introduction-N10B12"></a>
+<a name="N10AEF"></a><a name="Introduction-N10AEF"></a>
 <h5>Introduction</h5>
 <p>The Revision Controller controls the different reserved
       check-in and check-out of documents, the backup versions and the
       rollback. It is filesystem oriented</p>
-<a name="N10B1C"></a><a name="Check-in+%2F+Check-out"></a>
+<a name="N10AF9"></a><a name="Check-in+%2F+Check-out"></a>
 <h5>Check-in / Check-out</h5>
 <p>The 
       <a href="#checkin.html">check-in</a>
@@ -2117,24 +2095,24 @@ respectively.</p>
       xml file with a own markup language: the 
       <a href="#rcml.html">RCML-file.</a>
 </p>
-<a name="N10B37"></a><a name="Versions"></a>
+<a name="N10B14"></a><a name="Versions"></a>
 <h5>Versions</h5>
 <p>When a document is checked in, the old version of the
       document is copied ( 
       <a href="#version.html">backup</a>
       )</p>
-<a name="N10B45"></a><a name="Rollback"></a>
+<a name="N10B22"></a><a name="Rollback"></a>
 <h5>Rollback</h5>
 <p>It is also possible to retrieve an old version with the 
       <a href="#rollback.html">rollback</a>
       
 </p>
-<a name="N10B53"></a><a name="Package"></a>
+<a name="N10B30"></a><a name="Package"></a>
 <h5>Package</h5>
 <pre class="code">org.apache.lenya.cms.rc</pre>
-<a name="N10B5F"></a><a name="docs/1_2_x/components/revisioncontrol/rcml.html"></a>
+<a name="N10B3C"></a><a name="docs/1_2_x/components/revisioncontrol/rcml.html"></a>
 <h5>Revision Controller Markup Language (RCML)</h5>
-<a name="N10B67"></a><a name="Location"></a>
+<a name="N10B44"></a><a name="Location"></a>
 <h5>Location</h5>
 <p>The RCML-file are located in a rcml directory</p>
 <pre class="code">
@@ -2148,7 +2126,7 @@ respectively.</p>
 <pre class="code">
         {publication}/{rcml-directory}/content/authoring/{filename}.rcml
       </pre>
-<a name="N10B83"></a><a name="Markup+Language"></a>
+<a name="N10B60"></a><a name="Markup+Language"></a>
 <h5>Markup Language</h5>
 <p>A rcml-file is typically</p>
 <pre class="code">
@@ -2166,13 +2144,13 @@ respectively.</p>
             &lt;CheckIn&gt;&lt;Identity&gt;System&lt;/Identity&gt;&lt;Time&gt;1022569908000&lt;/Time&gt;&lt;/CheckIn&gt;
           &lt;/XPSRevisionControl&gt; 
       </pre>
-<a name="N10B91"></a><a name="Size"></a>
+<a name="N10B6E"></a><a name="Size"></a>
 <h5>Size</h5>
 <p>The size of the rcml file is limited to the value (2 * maximalNumberOfEntries) + 1,
        where maximalNumberOfEntries is in org.apache.lenya.cms.rc.RCML hard coded (value 10)</p>
-<a name="N10B9C"></a><a name="docs/1_2_x/components/revisioncontrol/checkin.html"></a>
+<a name="N10B79"></a><a name="docs/1_2_x/components/revisioncontrol/checkin.html"></a>
 <h5>Reserved Checkin</h5>
-<a name="N10BA4"></a><a name="Revision+Controller"></a>
+<a name="N10B81"></a><a name="Revision+Controller"></a>
 <h5>Revision Controller</h5>
 <p>To check in a file call:</p>
 <pre class="code">org.apache.lenya.cms.rc.RevisionController.reservedCheckIn(
@@ -2182,7 +2160,7 @@ respectively.</p>
 	     and backup is a boolean.</p>
 <p>This method is called from the ReservedCheckinAction.</p>
 <p>Rem: if no backup (and no rollback is needed) set in the ReservedCheckinAction the backup boolean to false.</p>
-<a name="N10BBB"></a><a name="The+ReservedCheckinAction"></a>
+<a name="N10B98"></a><a name="The+ReservedCheckinAction"></a>
 <h5>The ReservedCheckinAction</h5>
 <p>To invoke a reserved check-in from a sitemap pipeline, you use The ReservedCheckinAction.</p>
 <pre class="code">
@@ -2209,12 +2187,12 @@ respectively.</p>
               &lt;map:serialize/&gt;
             &lt;/map:act&gt;
       </pre>
-<a name="N10BCD"></a><a name="URL"></a>
+<a name="N10BAA"></a><a name="URL"></a>
 <h5>URL</h5>
 <p>The call</p>
 <pre class="code">{document-URL}?lenya.usecase=checkin&amp;lenya.step=checkin</pre>
 <p>invokes a check-in of the document</p>
-<a name="N10BDE"></a><a name="fileReservedCheckInException"></a>
+<a name="N10BBB"></a><a name="fileReservedCheckInException"></a>
 <h5>fileReservedCheckInException</h5>
 <p>When the file cannot be checked in because another user has already checked it out,
 	  a fileReservedCheckInException is thrown:</p>
@@ -2231,7 +2209,7 @@ respectively.</p>
 <pre class="code">cocoon-lenya/src/webapp/lenya/content/rc/fileReservedCheckInException.xsp</pre>
 <p>generates the xml which will be transformed with </p>
 <pre class="code">cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</pre>
-<a name="N10BFA"></a><a name="Exception"></a>
+<a name="N10BD7"></a><a name="Exception"></a>
 <h5>Exception</h5>
 <p>The errors are catched as generic Exception</p>
 <pre class="code">
@@ -2243,15 +2221,15 @@ respectively.</p>
 <pre class="code"> cocoon-lenya/src/webapp/lenya/content/rc/exception.xsp</pre>
 <p>generates the xml which will be transformed with </p>
 <pre class="code"> cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</pre>
-<a name="N10C17"></a><a name="docs/1_2_x/components/revisioncontrol/checkout.html"></a>
+<a name="N10BF4"></a><a name="docs/1_2_x/components/revisioncontrol/checkout.html"></a>
 <h5>Reserved Checkout</h5>
-<a name="N10C1F"></a><a name="Revision+Controller-N10C1F"></a>
+<a name="N10BFC"></a><a name="Revision+Controller-N10BFC"></a>
 <h5>Revision Controller</h5>
 <p>To check out a file call the method :</p>
 <pre class="code">org.apache.lenya.cms.rc.RevisionController.reservedCheckOut(String source, String identity)</pre>
 <p>where the source is the path of the file from the publication and the identity is the identity of the user.</p>
 <p>This method is called from the ReservedCheckoutAction.</p>
-<a name="N10C33"></a><a name="The+ReservedCheckoutAction"></a>
+<a name="N10C10"></a><a name="The+ReservedCheckoutAction"></a>
 <h5>The ReservedCheckoutAction</h5>
 <p>To invoke a reserved check out from a sitemap pipeline, you use The ReservedCheckoutAction.</p>
 <pre class="code">
@@ -2276,12 +2254,12 @@ respectively.</p>
               &lt;map:serialize/&gt;
             &lt;/map:act&gt;
       </pre>
-<a name="N10C45"></a><a name="URL-N10C45"></a>
+<a name="N10C22"></a><a name="URL-N10C22"></a>
 <h5>URL</h5>
 <p>The call</p>
 <pre class="code">{document-URL}?lenya.usecase=checkout&amp;lenya usecase.step=checkout</pre>
 <p>invokes a check-out of the document</p>
-<a name="N10C56"></a><a name="The+ReservedCheckoutTestAction"></a>
+<a name="N10C33"></a><a name="The+ReservedCheckoutTestAction"></a>
 <h5>The ReservedCheckoutTestAction</h5>
 <p>The ReservedCheckoutTestAction checks out a document only if this isn't already checked out</p>
 <pre class="code">
@@ -2306,7 +2284,7 @@ respectively.</p>
     	      &lt;map:serialize/&gt;
         	&lt;/map:act&gt;
       </pre>
-<a name="N10C68"></a><a name="FileReservedCheckOutException"></a>
+<a name="N10C45"></a><a name="FileReservedCheckOutException"></a>
 <h5>FileReservedCheckOutException</h5>
 <p>When the file cannot be checked out because another user has already checked it out,
 	  a fileReservedCheckOutException is thrown:</p>
@@ -2324,7 +2302,7 @@ respectively.</p>
 <pre class="code"> cocoon-lenya/src/webapp/lenya/content/rc/fileReservedCheckOutException.xsp</pre>
 <p>generates the xml which will be transformed with </p>
 <pre class="code"> cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</pre>
-<a name="N10C84"></a><a name="Exception-N10C84"></a>
+<a name="N10C61"></a><a name="Exception-N10C61"></a>
 <h5>Exception</h5>
 <p>The errors are catched as generic Exception</p>
 <pre class="code">
@@ -2336,9 +2314,9 @@ respectively.</p>
 <pre class="code"> cocoon-lenya/src/webapp/lenya/content/rc/exception.xsp</pre>
 <p>generates the xml which will be transformed with </p>
 <pre class="code"> cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</pre>
-<a name="N10CA1"></a><a name="docs/1_2_x/components/revisioncontrol/version.html"></a>
+<a name="N10C7E"></a><a name="docs/1_2_x/components/revisioncontrol/version.html"></a>
 <h5>Revision</h5>
-<a name="N10CA9"></a><a name="Location-N10CA9"></a>
+<a name="N10C86"></a><a name="Location-N10C86"></a>
 <h5>Location</h5>
 <p>The backup files are located in a rcback directory</p>
 <pre class="code">
@@ -2352,7 +2330,7 @@ respectively.</p>
 <pre class="code">
         {publication}/{rcback-directory}/content/authoring/{filename}.timestamp
       </pre>
-<a name="N10CC5"></a><a name="Revision+Screen"></a>
+<a name="N10CA2"></a><a name="Revision+Screen"></a>
 <h5>Revision Screen</h5>
 <p>To get the revision screen, use the serverpage</p>
 <pre class="code">cocoon-lenya/src/webapp/lenya/content/rc/versions-screen.xsp</pre>
@@ -2362,7 +2340,7 @@ respectively.</p>
             &lt;map:transform src="xslt/rc/rollback.xsl"/&gt;
             &lt;map:serialize/&gt;
       </pre>
-<a name="N10CDA"></a><a name="View+of+an+old+version"></a>
+<a name="N10CB7"></a><a name="View+of+an+old+version"></a>
 <h5>View of an old version</h5>
 <p>To get the view of a backup version, use the serverpage</p>
 <pre class="code">cocoon-lenya/src/webapp/lenya/content/rc/view.xsp</pre>
@@ -2375,17 +2353,17 @@ respectively.</p>
           &lt;map:transform src="xslt/{../2}2xhtml.xsl"/&gt;
           &lt;map:serialize type="xml"/&gt;
       </pre>
-<a name="N10CF2"></a><a name="URL-N10CF2"></a>
+<a name="N10CCF"></a><a name="URL-N10CCF"></a>
 <h5>URL</h5>
 <p>The call of the URL </p>
 <pre class="code">{document-URL}?lenya.usecase=rollback&amp;lenya usecase.step=view&amp;rollbackTime={time-point}</pre>
 <p>shows the version corresponding to the time {time-point}</p>
-<a name="N10D03"></a><a name="Disable+the+backup+"></a>
+<a name="N10CE0"></a><a name="Disable+the+backup+"></a>
 <h5>Disable the backup </h5>
 <p>To disable the backup set in the ReservedCheckinAction the backup boolean of getRC().reservedCheckIn(String destination, String identity, boolean backup) to false.</p>
-<a name="N10D0E"></a><a name="docs/1_2_x/components/revisioncontrol/rollback.html"></a>
+<a name="N10CEB"></a><a name="docs/1_2_x/components/revisioncontrol/rollback.html"></a>
 <h5>Rollback</h5>
-<a name="N10D16"></a><a name="Revision+Controller-N10D16"></a>
+<a name="N10CF3"></a><a name="Revision+Controller-N10CF3"></a>
 <h5>Revision Controller</h5>
 <p>To rollback a file call</p>
 <pre class="code">org.apache.lenya.cms.rc.RevisionController.rollback(String destination, String identity, boolean backupFlag, long time)</pre>
@@ -2393,7 +2371,7 @@ respectively.</p>
 	   backupFlag is a boolean to choose if you want a backup of the current version, and time is the time of
 	    the version to roll back to.
       </p>
-<a name="N10D27"></a><a name="The+RollbackAction"></a>
+<a name="N10D04"></a><a name="The+RollbackAction"></a>
 <h5>The RollbackAction</h5>
 <p>To invoke a rollback from a sitemap pipeline, you use The RollbackAction.</p>
 <p>The check-in time is needed as request parameter</p>
@@ -2413,16 +2391,16 @@ respectively.</p>
               &lt;map:redirect-to session="true" uri="{location}"/&gt;
             &lt;/map:act&gt;
       </pre>
-<a name="N10D3C"></a><a name="URL-N10D3C"></a>
+<a name="N10D19"></a><a name="URL-N10D19"></a>
 <h5>URL</h5>
 <p>The call of the URL </p>
 <pre class="code">{document-URL}?lenya.usecase=rollback&amp;lenya usecase.step=rollback&amp;rollbackTime={time-point}</pre>
 <p>invokes the rollbak to the version corresponding to the time {time-point}</p>
-<a name="N10D4F"></a><a name="Repository"></a>
+<a name="N10D2C"></a><a name="Repository"></a>
 <h5>Repository</h5>
-<a name="N10D54"></a><a name="docs/1_2_x/components/repository/webdav.html"></a>
+<a name="N10D31"></a><a name="docs/1_2_x/components/repository/webdav.html"></a>
 <h5>WebDAV Servers</h5>
-<a name="N10D5C"></a><a name="Apache+1"></a>
+<a name="N10D39"></a><a name="Apache+1"></a>
 <h5>Apache 1</h5>
 <p>
 Download the Apache Web Server and WebDAV module source code from the Apache website, e.g. <span class="codefrag">apache_1.3.24.tar.gz</span> and <span class="codefrag">mod_dav-1.0.3-1.3.6.tar.gz</span>.
@@ -2472,7 +2450,7 @@ More info on <span class="codefrag">mod_dav</span> can be found at
 </li>
 
 </ul>
-<a name="N10D93"></a><a name="Apache+2"></a>
+<a name="N10D70"></a><a name="Apache+2"></a>
 <h5>Apache 2</h5>
 <p>
 Download the Apache Web Server source code from the Apache website, e.g. <span class="codefrag">httpd-2.0.46.tar.gz</span>.
@@ -2516,7 +2494,7 @@ More info on <span class="codefrag">mod_dav</span> can be found at
 </li>
 
 </ul>
-<a name="N10DC3"></a><a name="Tomcat"></a>
+<a name="N10DA0"></a><a name="Tomcat"></a>
 <h5>Tomcat</h5>
 <p>
 Point your WebDAV client to <span class="codefrag">http://127.0.0.1:8080/webdav/</span>.
@@ -2532,7 +2510,7 @@ It can be put in read-write mode by editing the web application descriptor file 
 &lt;/init-param&gt;
 
 </pre>
-<a name="N10DD7"></a><a name="Apache+Jakarta+Slide"></a>
+<a name="N10DB4"></a><a name="Apache+Jakarta+Slide"></a>
 <h5>Apache Jakarta Slide</h5>
 <p>
 Point your WebDAV client to <span class="codefrag">http://127.0.0.1:8080/slide/</span>.
@@ -2546,7 +2524,7 @@ One needs to configure <span class="codefrag">Domain.xml</span>
   ...
 
 </pre>
-<a name="N10DED"></a><a name="Monitoring+the+WebDAV+exchange"></a>
+<a name="N10DCA"></a><a name="Monitoring+the+WebDAV+exchange"></a>
 <h5>Monitoring the WebDAV exchange</h5>
 <pre class="code">
 
@@ -2567,7 +2545,7 @@ Click on this new tab to view the requests and responses
 Enter within your browser "http://127.0.0.1:3333/lenya/index.html"
 
 </pre>
-<a name="N10DF8"></a><a name="PROPFIND"></a>
+<a name="N10DD5"></a><a name="PROPFIND"></a>
 <h5>PROPFIND</h5>
 <p>
 The WebDAV client will first send a PROPFIND with Depth = 0. Depending on the response (collection or resource)
@@ -2680,7 +2658,7 @@ Server: Apache Coyote/1.0
 &lt;/D:multistatus&gt;
 
 </pre>
-<a name="N10E09"></a><a name="PUT"></a>
+<a name="N10DE6"></a><a name="PUT"></a>
 <h5>PUT</h5>
 <p>
 The WebDAV client will send a PUT in order to copy a document onto the server.
@@ -2733,11 +2711,11 @@ Connection: Keep-Alive
 Content-Type: text/xml
 
 </pre>
-<a name="N10E19"></a><a name="Search"></a>
+<a name="N10DF6"></a><a name="Search"></a>
 <h5>Search</h5>
-<a name="N10E1E"></a><a name="docs/1_2_x/components/search/lucene.html"></a>
+<a name="N10DFB"></a><a name="docs/1_2_x/components/search/lucene.html"></a>
 <h5>Lucene</h5>
-<a name="N10E26"></a><a name="Generic+Search"></a>
+<a name="N10E03"></a><a name="Generic+Search"></a>
 <h5>Generic Search</h5>
 <p>URL:</p>
 <pre class="code">
@@ -2759,7 +2737,7 @@ src/webapp/global-sitemap.xmap
 src/webapp/lenya/lucene.xmap
 
 </pre>
-<a name="N10E42"></a><a name="Customizing%2FOverwriting+Generic+Search+Interface"></a>
+<a name="N10E1F"></a><a name="Customizing%2FOverwriting+Generic+Search+Interface"></a>
 <h5>Customizing/Overwriting Generic Search Interface</h5>
 <p>XSLT:</p>
 <pre class="code">
@@ -2773,7 +2751,7 @@ src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
 /lenya/$PUB_ID/search-$AREA/lucene
 
 </pre>
-<a name="N10E57"></a><a name="Crawling+a+website"></a>
+<a name="N10E34"></a><a name="Crawling+a+website"></a>
 <h5>Crawling a website</h5>
 <p>
 Crawl a website by running
@@ -2820,7 +2798,7 @@ User-agent: lenya
 Disallow: /do/not/crawl/this/page.html
 
 </pre>
-<a name="N10E76"></a><a name="Creating+an+index+from+the+command+line"></a>
+<a name="N10E53"></a><a name="Creating+an+index+from+the+command+line"></a>
 <h5>Creating an index from the command line</h5>
 <pre class="code">
 
@@ -2857,7 +2835,7 @@ whereas the lucene.xconf has the following elements
 &lt;/lucene&gt;
 
 </pre>
-<a name="N10E88"></a><a name="Indexing+XML+documents"></a>
+<a name="N10E65"></a><a name="Indexing+XML+documents"></a>
 <h5>Indexing XML documents</h5>
 <p>
 In order to index XML documents one needs to configure the <span class="codefrag">org.apache.lenya.lucene.index.ConfigurableIndexer</span> (see above).
@@ -2900,7 +2878,7 @@ Concatenating element values and setting default values in case element value do
 &lt;/luc:document&gt;
 
 </pre>
-<a name="N10EA3"></a><a name="Extract+text+from+a+PDF+document"></a>
+<a name="N10E80"></a><a name="Extract+text+from+a+PDF+document"></a>
 <h5>Extract text from a PDF document</h5>
 <pre class="code">
 
@@ -2910,17 +2888,17 @@ ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dhtdocs.dump.dir=/home/username
 <p>
 Also see the targets <span class="codefrag">pdfbox</span> and <span class="codefrag">pdfadobe</span>.
 </p>
-<a name="N10EB9"></a><a name="URI+Handling"></a>
+<a name="N10E96"></a><a name="URI+Handling"></a>
 <h5>URI Handling</h5>
-<a name="N10EBE"></a><a name="docs/1_2_x/components/uri-handling/URIParametrizer.html"></a>
+<a name="N10E9B"></a><a name="docs/1_2_x/components/uri-handling/URIParametrizer.html"></a>
 <h5>URI Parametrizer</h5>
-<a name="N10EC6"></a><a name="Motivation-N10EC6"></a>
+<a name="N10EA3"></a><a name="Motivation"></a>
 <h5>Motivation</h5>
 <p>The problem of <a href="#../publication/siteTree.html">determining the doctype</a>
       independent of request URI needs a flexible and yet simple
       solution. This is where the URI Parametrizer comes to the
       rescue.</p>
-<a name="N10ED4"></a><a name="Rationale-N10ED4"></a>
+<a name="N10EB1"></a><a name="Rationale-N10EB1"></a>
 <h5>Rationale</h5>
 <p>The URI Parametrizer is an action which given an arbitrary
       URI return a configurable number of parameters which it infers
@@ -2929,13 +2907,13 @@ Also see the targets <span class="codefrag">pdfbox</span> and <span class="codef
       determining the parameters to the Cocoon sitemap, i.e. the
       parameters are determinined using the normal sitemap pipeline
       matching mechanism.</p>
-<a name="N10EDD"></a><a name="Overview-N10EDD"></a>
+<a name="N10EBA"></a><a name="Overview-N10EBA"></a>
 <h5>Overview</h5>
 <p>The flow of information is outlined in the following
 	diagram:</p>
 <div style="text-align: center;">
 <img class="figure" alt="" src="docs/1_2_x/components/uri-handling/images/live/URIParametrizer.png"></div>
-<a name="N10EEA"></a><a name="Interfaces"></a>
+<a name="N10EC7"></a><a name="Interfaces"></a>
 <h5>Interfaces</h5>
 <p>The URIParametrizerAction expects an arbitrary number of
 	parameters. Each parameter contains a key value pair which
@@ -3020,9 +2998,9 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
       the sitemap allows for a combination of the <a href="#../publication/siteTree.html">original proposals</a> where
       solutions such as Hashmap and SourceTypeAction were
       outlined.</p>
-<a name="N10F35"></a><a name="docs/1_2_x/components/uri-handling/standardURI.html"></a>
+<a name="N10F12"></a><a name="docs/1_2_x/components/uri-handling/standardURI.html"></a>
 <h5>URI Scheme</h5>
-<a name="N10F3D"></a><a name="Introduction-N10F3D"></a>
+<a name="N10F1A"></a><a name="Introduction-N10F1A"></a>
 <h5>Introduction</h5>
 <p>We want to standardize CMS functionality across different
       publications so that we can consolidate them in a standard root
@@ -3032,7 +3010,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 <p>There are different ways to achieve this. We either reserve
       part of the URI space (e.g. /lenya/foo) or we reserve part of
       the request parameter space (e.g. /foo?lenya=bar)</p>
-<a name="N10F4C"></a><a name="Dynamic+URIs"></a>
+<a name="N10F29"></a><a name="Dynamic+URIs"></a>
 <h5>Dynamic URIs</h5>
 <p>We decided to go mostly for the second solution so that we
 	  can leave the URI space as required by the publication and use
@@ -3058,7 +3036,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 <p>
         For further information about usecases, see section <a href="#usecases.html">Usecases</a>.
         </p>
-<a name="N10F71"></a><a name="Static+URIs"></a>
+<a name="N10F4E"></a><a name="Static+URIs"></a>
 <h5>Static URIs</h5>
 <p>There are also some static URIs that are needed for the Lenya
 	  CMS. They are mostly internal pipelines for resources such as
@@ -3069,7 +3047,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	  residing in <span class="codefrag">/xopus/**</span> or
 	  <span class="codefrag">/bitflux/**</span> and others are in
 	  <span class="codefrag">/lenya/**</span>.</p>
-<a name="N10F88"></a><a name="docs/1_2_x/components/uri-handling/standardURI.html#uri_definition"></a>
+<a name="N10F65"></a><a name="docs/1_2_x/components/uri-handling/standardURI.html#uri_definition"></a>
 <h5>URI definition</h5>
 <p>Given the URI
       <span class="codefrag">/lenya/computerworld/authoring/news/foo.html</span> we
@@ -3112,7 +3090,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 </tr>
       
 </table>
-<a name="N10FDD"></a><a name="Static+URIs-N10FDD"></a>
+<a name="N10FBA"></a><a name="Static+URIs-N10FBA"></a>
 <h5>Static URIs</h5>
 <p>Currently different fragments of the URI space are reserved
 	(e.g. <span class="codefrag">/xopus/**</span>, <span class="codefrag">/bitflux/**</span> and
@@ -3123,14 +3101,14 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 <div class="content">The reserved URI space needs to be
       consolidated and standardized.</div>
 </div>
-<a name="N10FF4"></a><a name="Dynamic+URIs-N10FF4"></a>
+<a name="N10FD1"></a><a name="Dynamic+URIs-N10FD1"></a>
 <h5>Dynamic URIs</h5>
 <p>The dynamic URIs that are used for usecases are explained in the
         section <a href="#usecases.html">Usecases</a>.
         </p>
-<a name="N11003"></a><a name="docs/1_2_x/components/uri-handling/usecases.html"></a>
+<a name="N10FE0"></a><a name="docs/1_2_x/components/uri-handling/usecases.html"></a>
 <h5>Usecases</h5>
-<a name="N1100B"></a><a name="Introduction-N1100B"></a>
+<a name="N10FE8"></a><a name="Introduction-N10FE8"></a>
 <h5>Introduction</h5>
 <p>
       Usecases are sequences of pages that are orthogonal to the website,
@@ -3149,7 +3127,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
       A usecase is executed using the request parameters <span class="codefrag">lenya.usecase</span> and
       <span class="codefrag">lenya.step</span>.
       </p>
-<a name="N1102D"></a><a name="Matching+Usecases"></a>
+<a name="N1100A"></a><a name="Matching+Usecases"></a>
 <h5>Matching Usecases</h5>
 <p>
     To match a usecase in a sitemap, the <span class="codefrag">WildcardRequestParameterMatcher</span>
@@ -3179,7 +3157,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
         
 &lt;/map:match&gt;
 </pre>
-<a name="N11049"></a><a name="The+Usecase+Sitemap"></a>
+<a name="N11026"></a><a name="The+Usecase+Sitemap"></a>
 <h5>The Usecase Sitemap</h5>
 <p>
   The main usecase sitemap supports a set of generic usecases.
@@ -3189,7 +3167,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
   sitemap to your publication directory. The Lenya usecase sitemap looks for it
   and mounts it before the generic usecases are matched.
   </p>
-<a name="N11058"></a><a name="Overview+of+use+cases"></a>
+<a name="N11035"></a><a name="Overview+of+use+cases"></a>
 <h5>Overview of use cases</h5>
 <p>The following use cases are known:</p>
 <table class="ForrestTable" cellspacing="1" cellpadding="4">
@@ -3715,9 +3693,9 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 <div class="content">Can the authenticate process done in a
       similar way?</div>
 </div>
-<a name="N11535"></a><a name="Use+cases"></a>
+<a name="N11512"></a><a name="Use+cases"></a>
 <h5>Use cases</h5>
-<a name="N1153B"></a><a name="Resource+upload"></a>
+<a name="N11518"></a><a name="Resource+upload"></a>
 <h5>Resource upload</h5>
 <p>
 <span class="codefrag">lenya.usecase=upload</span>
@@ -3797,7 +3775,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 </tr>
       
 </table>
-<a name="N115DC"></a><a name="Create"></a>
+<a name="N115B9"></a><a name="Create"></a>
 <h5>Create</h5>
 <p>
 <span class="codefrag">lenya.usecase=create</span>
@@ -3853,7 +3831,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 </tr>
       
 </table>
-<a name="N11651"></a><a name="Rollback-N11651"></a>
+<a name="N1162E"></a><a name="Rollback-N1162E"></a>
 <h5>Rollback</h5>
 <p>
 <span class="codefrag">lenya.usecase=rollback</span>
@@ -3885,7 +3863,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 </tr>
       
 </table>
-<a name="N11693"></a><a name="View+Logs"></a>
+<a name="N11670"></a><a name="View+Logs"></a>
 <h5>View Logs</h5>
 <p>
 <span class="codefrag">lenya.usecase=view-logs</span>
@@ -3921,11 +3899,11 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 <div class="label">Fixme (ce)</div>
 <div class="content">Add remaining use cases</div>
 </div>
-<a name="N116DD"></a><a name="Asset+Management"></a>
+<a name="N116BA"></a><a name="Asset+Management"></a>
 <h5>Asset Management</h5>
-<a name="N116E2"></a><a name="docs/1_2_x/components/asset-management/management.html"></a>
+<a name="N116BF"></a><a name="docs/1_2_x/components/asset-management/management.html"></a>
 <h5>Asset Management</h5>
-<a name="N116EA"></a><a name="Introduction-N116EA"></a>
+<a name="N116C7"></a><a name="Introduction-N116C7"></a>
 <h5>Introduction</h5>
 <p>Asset management is the process by which assets, such as pdf
       files or images are uploaded to the server and inserted into a
@@ -3934,7 +3912,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
       be uploaded for later insertion. Direct insertion happens when
       editing the document, upload and removal can be done in the
       asset tab in the site area.</p>
-<a name="N116F7"></a><a name="Asset+upload"></a>
+<a name="N116D4"></a><a name="Asset+upload"></a>
 <h5>Asset upload</h5>
 <p>The upload of assets is done quite simply with a multipart
       request. The Upload screen is generated by an xsp
@@ -3947,7 +3925,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
       with data that was extracted from the request (mime type,
       size). Where the asset is stored is determined by the
       <span class="codefrag">ResourcesManager</span>.</p>
-<a name="N1170A"></a><a name="Asset+insertion+%28via+%22enable+asset+upload%22+screen%29"></a>
+<a name="N116E7"></a><a name="Asset+insertion+%28via+%22enable+asset+upload%22+screen%29"></a>
 <h5>Asset insertion (via "enable asset upload" screen)</h5>
 <p>Once the asset is uploaded, a reference to it has to be
       inserted in the original document. Images and "plain" assets are
@@ -3963,21 +3941,21 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
       <span class="codefrag">config/asset</span>. The generated temporary stylesheet is
       then applied to the document where the reference to the asset is
       to be inserted. It will insert the appropriate XML snippet.</p>
-<a name="N11720"></a><a name="Asset+insertion+%28via+Bitflux+editor%29"></a>
+<a name="N116FD"></a><a name="Asset+insertion+%28via+Bitflux+editor%29"></a>
 <h5>Asset insertion (via Bitflux editor)</h5>
 <p>Images and assets can also be inserted from within the Bitflux editor.</p>
 <p>The insertion is done via a XSLT stylesheet 
       (<span class="codefrag">image.xsl</span> or <span class="codefrag">asset.xsl</span> in <span class="codefrag">xslt/bxe</span>). 
       These stylesheets create a popup window that let the user select an asset or image
       and insert it into the currently opened document via javascript.</p>
-<a name="N11736"></a><a name="Asset+removal"></a>
+<a name="N11713"></a><a name="Asset+removal"></a>
 <h5>Asset removal</h5>
 <p>Assets can be removed in the asset tab in the site area. This
       removes the asset from the resources directory. It does not
       however remove any references to it.</p>
 <p>Removal is done with an ant task (<span class="codefrag">remove-asset</span>)
       which simply deletes the asset from the resources directory.</p>
-<a name="N11746"></a><a name="Involved+classes%2C+XSPs+and+XSLTs"></a>
+<a name="N11723"></a><a name="Involved+classes%2C+XSPs+and+XSLTs"></a>
 <h5>Involved classes, XSPs and XSLTs</h5>
 <p>The following classes, XSPs and XSLTs are involved in the
       asset upload:</p>
@@ -4019,11 +3997,11 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	details where resources and their meta data is stored.</dd>
       
 </dl>
-<a name="N11782"></a><a name="Link+Management"></a>
+<a name="N1175F"></a><a name="Link+Management"></a>
 <h5>Link Management</h5>
-<a name="N11787"></a><a name="docs/1_2_x/components/link-management/link-management.html"></a>
+<a name="N11764"></a><a name="docs/1_2_x/components/link-management/link-management.html"></a>
 <h5>Link Management</h5>
-<a name="N1178F"></a><a name="Introduction-N1178F"></a>
+<a name="N1176C"></a><a name="Introduction-N1176C"></a>
 <h5>Introduction</h5>
 <p>Link Managements deals with internal links, i.e. documents
       that refer to other documents within the same publication. These
@@ -4044,34 +4022,34 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
       
 </ol>
 <p>These four cases have to be dealt with seperately.</p>
-<a name="N117AF"></a><a name="A+document+is+not+yet+live"></a>
+<a name="N1178C"></a><a name="A+document+is+not+yet+live"></a>
 <h5>A document is not yet live</h5>
 <p>This case can happen if the user tries to publish a
 	document which has a reference to another document which has
 	not been published yet. The reference will be stale as the
 	refered document is not in the live area yet. A warning will
 	be issued during the publishing process.</p>
-<a name="N117B9"></a><a name="A+document+is+withdrawn+from+live"></a>
+<a name="N11796"></a><a name="A+document+is+withdrawn+from+live"></a>
 <h5>A document is withdrawn from live</h5>
 <p>If a document which is has references to it is withdrawn
 	from the live area the references will be stale, as the
 	refered document is no longer available in the live area. A
 	warning will be issued during the deactivation process.</p>
-<a name="N117C3"></a><a name="A+document-id+changes"></a>
+<a name="N117A0"></a><a name="A+document-id+changes"></a>
 <h5>A document-id changes</h5>
 <p>If a document is moved within the site tree such that it
 	changes its document-id (e.g. cut a document and paste it
 	somewhere else in the hierarchy in the site area) then all
 	references to this document have to be changed. This is done
 	transparently in the course of the paste.</p>
-<a name="N117CD"></a><a name="Rewrite+internal+links+in+live"></a>
+<a name="N117AA"></a><a name="Rewrite+internal+links+in+live"></a>
 <h5>Rewrite internal links in live</h5>
 <p>Internal links refer to documents in authoring as long as
 	they are not published. However as soon as they are published,
 	i.e. reside in the live area their references have to go to
 	documents in the live area. A transformer takes care of
 	rewriting the internal links.</p>
-<a name="N117D8"></a><a name="Implementation"></a>
+<a name="N117B5"></a><a name="Implementation"></a>
 <h5>Implementation</h5>
 <p>The implementation is pretty
       straight-forward and is mostly handled in XSPs and associated
@@ -4081,9 +4059,9 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
       class can traverse the repository and find references to the
       current document or can also find references from the current
       document to other documents. A transformer
-      (SimpleLinkRewritingTransformer) is used to rewrite the internal
+      (LinkRewritingTransformer) is used to rewrite the internal
       links in the live area.</p>
-<a name="N117EA"></a><a name="A+document+is+not+yet+live-N117EA"></a>
+<a name="N117C7"></a><a name="A+document+is+not+yet+live-N117C7"></a>
 <h5>A document is not yet live</h5>
 <p>This is implemented as an extension to the publish xsp. It
 	  queries the <span class="codefrag">DocumentReferencesHelper</span> (using the
@@ -4094,7 +4072,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	  <span class="codefrag">Grep#findPattern</span> method to search the current
 	  document for patterns of a reference. The pattern is defined
 	  in <span class="codefrag">DocumentReferencesHelper#getInternalLinkPattern</span>.</p>
-<a name="N11803"></a><a name="A+document+is+withdrawn+from+live-N11803"></a>
+<a name="N117E0"></a><a name="A+document+is+withdrawn+from+live-N117E0"></a>
 <h5>A document is withdrawn from live</h5>
 <p>This is implemented as an extension to the deactivate
 	  xsp. It queries the <span class="codefrag">DocumentReferencesHelper</span>
@@ -4105,7 +4083,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	  documents which contain a patterns of a reference. The
 	  pattern is defined in
 	  <span class="codefrag">DocumentReferencesHelper#getReferencesSearchString()</span>.</p>
-<a name="N1181C"></a><a name="A+document-id+changes-N1181C"></a>
+<a name="N117F9"></a><a name="A+document-id+changes-N117F9"></a>
 <h5>A document-id changes</h5>
 <p>This is implemented with an ant task
 	  (<span class="codefrag">org.apache.lenya.cms.ant.LinkRewriteTask</span>)
@@ -4115,14 +4093,14 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	  modify all references to the document that changed its
 	  document-id.
 	</p>
-<a name="N1182C"></a><a name="Rewrite+internal+links+in+live-N1182C"></a>
+<a name="N11809"></a><a name="Rewrite+internal+links+in+live-N11809"></a>
 <h5>Rewrite internal links in live</h5>
 <p>The
-	  <span class="codefrag">org.apache.lenya.cms.cocoon.transformation.SimpleLinkRewritingTransformer</span>
+	  <span class="codefrag">org.apache.lenya.cms.cocoon.transformation.LinkRewritingTransformer</span>
 	  transformer takes care of rewriting internal links to ensure
 	  they refer to the appropriate area.
 	</p>
-<a name="N1183A"></a><a name="Involved+classes%2C+XSPs+and+XSLTs-N1183A"></a>
+<a name="N11817"></a><a name="Involved+classes%2C+XSPs+and+XSLTs-N11817"></a>
 <h5>Involved classes, XSPs and XSLTs</h5>
 <p>The following classes, XSPs and XSLTs are involved in link
       management:</p>
@@ -4149,7 +4127,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	rewrites internal links that were refering to the old
 	document-id to refere to the new one.</dd> 
 	
-<dt>org.apache.lenya.cms.cocoon.transformation.SimpleLinkRewritingTransformer</dt>
+<dt>org.apache.lenya.cms.cocoon.transformation.LinkRewritingTransformer</dt>
 	
 <dd>A transformer that rewrites internal links for the
 	appropriate area.</dd>
@@ -4178,11 +4156,11 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	which is about to be deactivated.</dd>
       
 </dl>
-<a name="N1188E"></a><a name="Meta+Data"></a>
+<a name="N1186B"></a><a name="Meta+Data"></a>
 <h5>Meta Data</h5>
-<a name="N11893"></a><a name="docs/1_2_x/components/metadata/metadata.html"></a>
+<a name="N11870"></a><a name="docs/1_2_x/components/metadata/metadata.html"></a>
 <h5>Meta Data</h5>
-<a name="N1189B"></a><a name="Introduction-N1189B"></a>
+<a name="N11878"></a><a name="Introduction-N11878"></a>
 <h5>Introduction</h5>
 <p>Meta data is kept directly inside the xml document. It is
       based on the <a href="http://dublincore.org">Dublin Core</a>
@@ -4197,10 +4175,10 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 <li>Modify Meta Data</li>
       
 </ol>
-<a name="N118B8"></a><a name="Implementation-N118B8"></a>
+<a name="N11895"></a><a name="Implementation-N11895"></a>
 <h5>Implementation</h5>
 <p></p>
-<a name="N118C0"></a><a name="Create+Meta+Data"></a>
+<a name="N1189D"></a><a name="Create+Meta+Data"></a>
 <h5>Create Meta Data</h5>
 <p>Upon creation of a document a sample is copied from the
 	sample doctype directory. This sample already contains some
@@ -4213,10 +4191,10 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	invokes an xslt task which applies the
 	<span class="codefrag">addMetaData.xsl</span> stylesheet which adapts the meta
 	data according to the request values.</p>
-<a name="N118D0"></a><a name="Display+Meta+Data"></a>
+<a name="N118AD"></a><a name="Display+Meta+Data"></a>
 <h5>Display Meta Data</h5>
 <p>The display of meta data is handled by the <span class="codefrag">meta.xsp</span> xsp.</p>
-<a name="N118DD"></a><a name="Modify+Meta+data"></a>
+<a name="N118BA"></a><a name="Modify+Meta+data"></a>
 <h5>Modify Meta data</h5>
 <p>The modification of meta data is handled in the
 	<span class="codefrag">info.xmap</span> sitemap. The matcher makes sure to
@@ -4232,7 +4210,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	<span class="codefrag">save-meta-data</span> which simply invokes the ant task
 	<span class="codefrag">WriteDCParametersTask</span>.  This task saves the meta
 	data using the <span class="codefrag">DublinCore</span> interface.</p>
-<a name="N118FD"></a><a name="Involved+classes%2C+XSPs+and+XSLTs-N118FD"></a>
+<a name="N118DA"></a><a name="Involved+classes%2C+XSPs+and+XSLTs-N118DA"></a>
 <h5>Involved classes, XSPs and XSLTs</h5>
 <p>The following classes, XSPs and XSLTs are involved in meta
       data handling:</p>
@@ -4279,11 +4257,11 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	according to the input parameters.</dd>
       
 </dl>
-<a name="N1194A"></a><a name="Multilingual+Documents"></a>
+<a name="N11927"></a><a name="Multilingual+Documents"></a>
 <h5>Multilingual Documents</h5>
-<a name="N1194F"></a><a name="docs/1_2_x/components/multilingual/multilingual.html"></a>
+<a name="N1192C"></a><a name="docs/1_2_x/components/multilingual/multilingual.html"></a>
 <h5>Mulitilingual Document handling</h5>
-<a name="N11957"></a><a name="Introduction-N11957"></a>
+<a name="N11934"></a><a name="Introduction-N11934"></a>
 <h5>Introduction</h5>
 <p>Mulitilingual Document handling deals with documents of
       different languages. This affects virtually every part of Lenya,
@@ -4353,10 +4331,10 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	</dd>
       
 </dl>
-<a name="N119A4"></a><a name="Implementation-N119A4"></a>
+<a name="N11981"></a><a name="Implementation-N11981"></a>
 <h5>Implementation</h5>
 <p></p>
-<a name="N119AC"></a><a name="Site+tree"></a>
+<a name="N11989"></a><a name="Site+tree"></a>
 <h5>Site tree</h5>
 <p>The site tree contains nodes for each document. Each node
 	can contain multiple <span class="codefrag">label</span> nodes for each
@@ -4373,7 +4351,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 <p>The classe <span class="codefrag">SiteTree</span> and
 	<span class="codefrag">SiteTreeNode</span> provide interfaces to the nodes and
 	the corresponding label nodes.</p>
-<a name="N119C6"></a><a name="publication.xconf"></a>
+<a name="N119A3"></a><a name="publication.xconf"></a>
 <h5>publication.xconf</h5>
 <p>The <span class="codefrag">languages</span> node in
 	<span class="codefrag">publication.xconf</span> defines the languages that are
@@ -4388,7 +4366,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	<span class="codefrag">Publication</span> class
 	(<span class="codefrag">getDefaultLanguage()</span> and
 	<span class="codefrag">getLanguages()</span> methods).</p>
-<a name="N119E6"></a><a name="page-envelope"></a>
+<a name="N119C3"></a><a name="page-envelope"></a>
 <h5>page-envelope</h5>
 <p>The <a href="#../publication/pageenvelopemodule.html">page-envelope
 	input module</a> exports language related information,
@@ -4396,7 +4374,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	<span class="codefrag">document-label</span>, <span class="codefrag">document-language</span>,
 	<span class="codefrag">document-languages</span> and
 	<span class="codefrag">document-languages-csv</span>.</p>
-<a name="N11A03"></a><a name="Redirection"></a>
+<a name="N119E0"></a><a name="Redirection"></a>
 <h5>Redirection</h5>
 <p>The <span class="codefrag">DefaultDocumentBuilder</span> which implements the
 	<span class="codefrag">DocumentBuilder</span> interface, takes care of
@@ -4404,7 +4382,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	<span class="codefrag">foo.html</span>) to language aware links
 	(<span class="codefrag">foo_en.html</span>), i.e. language agnostic links are
 	redirected to the language aware link with the default language.</p>
-<a name="N11A19"></a><a name="Addition+and+removal"></a>
+<a name="N119F6"></a><a name="Addition+and+removal"></a>
 <h5>Addition and removal</h5>
 <p>More language versions are added with the "Create new
 	language version" screen. Existing language versions can be
@@ -4420,7 +4398,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	<span class="codefrag">remove-language</span> target, which uses the
 	<span class="codefrag">RemoveLabelTask</span> ant task (which removes the label
 	from the site tree).</p>
-<a name="N11A42"></a><a name="Involved+classes%2C+XSPs+and+XSLTs-N11A42"></a>
+<a name="N11A1F"></a><a name="Involved+classes%2C+XSPs+and+XSLTs-N11A1F"></a>
 <h5>Involved classes, XSPs and XSLTs</h5>
 <p>The following classes, XSPs and XSLTs are involved in
       multilingual document handling:</p>
@@ -4474,9 +4452,9 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</pre>
 	handle the addition and removal of language versions of a document.</dd>  
       
 </dl>
-<a name="N11A9B"></a><a name="Tasks"></a>
+<a name="N11A78"></a><a name="Tasks"></a>
 <h5>Tasks</h5>
-<a name="N11AA0"></a><a name="docs/1_2_x/components/tasks/concept.html"></a>
+<a name="N11A7D"></a><a name="docs/1_2_x/components/tasks/concept.html"></a>
 <h5>The Task Concept</h5>
 <p>
 In Lenya CMS, a <strong>task</strong> is used to implement a process
@@ -4500,7 +4478,7 @@ Typical tasks are
 <li>creating a backup of your site.</li>
 
 </ul>
-<a name="N11AD0"></a><a name="docs/1_2_x/components/tasks/defining.html"></a>
+<a name="N11AAD"></a><a name="docs/1_2_x/components/tasks/defining.html"></a>
 <h5>Defining Tasks</h5>
 <p>
 All tasks to be used in a publication must be declared in the file
@@ -4535,7 +4513,7 @@ content of this element is used, e. g., by the scheduler to let the user choose
 a task from a list. The actual implementation of a task is identified using the
 <span class="codefrag">class</span> attribute.
 </p>
-<a name="N11AEE"></a><a name="Parameters"></a>
+<a name="N11ACB"></a><a name="Parameters"></a>
 <h5>Parameters</h5>
 <p>
 Usually, a task needs some parameters to be executed properly.
@@ -4600,7 +4578,7 @@ the request and session objects:</p>
 </li>
 
 </ul>
-<a name="N11B4F"></a><a name="Task+Sequences"></a>
+<a name="N11B2C"></a><a name="Task+Sequences"></a>
 <h5>Task Sequences</h5>
 <p>
 Tasks can be nested using so-called <em>task sequences</em>. Sub-tasks of other
@@ -4620,7 +4598,7 @@ All parameters that are passed to a TaskSequence are forwarded to all tasks
 in the sequence. By creating a subclass of <span class="codefrag">TaskSequence</span> you could implement
 a parameter selection mechanism, e. g. using namespace prefixes.
 </p>
-<a name="N11B73"></a><a name="Assigning+Tasks+to+Document+Types"></a>
+<a name="N11B50"></a><a name="Assigning+Tasks+to+Document+Types"></a>
 <h5>Assigning Tasks to Document Types</h5>
 <p>
 Every document type can support a set of tasks. The labels of these tasks
@@ -4645,9 +4623,9 @@ To assign a task to a document type, you have to edit the file
 <p>
 You can associate every task with an arbitrary number of document types.
 </p>
-<a name="N11B87"></a><a name="docs/1_2_x/components/tasks/taskaction.html"></a>
+<a name="N11B64"></a><a name="docs/1_2_x/components/tasks/taskaction.html"></a>
 <h5>The TaskAction: Triggering a Task from the Sitemap</h5>
-<a name="N11B8F"></a><a name="Declaring+the+Action"></a>
+<a name="N11B6C"></a><a name="Declaring+the+Action"></a>
 <h5>Declaring the Action</h5>
 <p>
 To invoke a task from a sitemap pipeline, you use a <span class="codefrag">TaskAction</span>. The
@@ -4702,12 +4680,12 @@ You can also pass the task ID as a <span class="codefrag">task-id</span> paramet
 &lt;/map:match&gt;
 
 </pre>
-<a name="N11BB7"></a><a name="Scheduling+a+Task"></a>
+<a name="N11B94"></a><a name="Scheduling+a+Task"></a>
 <h5>Scheduling a Task</h5>
 <p>
 See section <strong>Scheduler</strong>.
 </p>
-<a name="N11BC3"></a><a name="Developing+Your+Own+Tasks"></a>
+<a name="N11BA0"></a><a name="Developing+Your+Own+Tasks"></a>
 <h5>Developing Your Own Tasks</h5>
 <p>
 Every task must implement the <span class="codefrag">org.lenya.cms.task.Task</span> interface.
@@ -4731,22 +4709,22 @@ file manually, you won't have to provide a hard-coded <span class="codefrag">ser
 the task implementation, just contact me (Andreas Hartmann) at</strong>
 <a href="#mailto:ah@wyona.org">ah@wyona.org</a>.
 </p>
-<a name="N11BF8"></a><a name="docs/1_2_x/components/tasks/scheduling.html"></a>
+<a name="N11BD5"></a><a name="docs/1_2_x/components/tasks/scheduling.html"></a>
 <h5>Scheduling a Task</h5>
-<a name="N11C00"></a><a name="Scheduling+a+Task-N11C00"></a>
+<a name="N11BDD"></a><a name="Scheduling+a+Task-N11BDD"></a>
 <h5>Scheduling a Task</h5>
 <p>
 See section <strong>Scheduler</strong>.
 </p>
-<a name="N11C0D"></a><a name="Included+tasks"></a>
+<a name="N11BEA"></a><a name="Included+tasks"></a>
 <h5>Included tasks</h5>
-<a name="N11C12"></a><a name="docs/1_2_x/components/tasks/anttask.html"></a>
+<a name="N11BEF"></a><a name="docs/1_2_x/components/tasks/anttask.html"></a>
 <h5>The AntTask</h5>
 <p>
 The <span class="codefrag">org.apache.lenya.cms.task.AntTask</span> class can be used to invoke targets
 of an Ant project.
 </p>
-<a name="N11C20"></a><a name="Task+Parameters"></a>
+<a name="N11BFD"></a><a name="Task+Parameters"></a>
 <h5>Task Parameters</h5>
 <p>
 The task parameters are:
@@ -4773,7 +4751,7 @@ The task parameters are:
 </li>
 
 </ul>
-<a name="N11C51"></a><a name="Logging"></a>
+<a name="N11C2E"></a><a name="Logging"></a>
 <h5>Logging</h5>
 <p>
 Every time an <span class="codefrag">AntTask</span> is invoked, a log file is created unsing
@@ -4786,7 +4764,7 @@ The log history can be viewed at the URI
 <pre class="code">
 http://.../&lt;publication&gt;/logs/tasks/index.html
 </pre>
-<a name="N11C71"></a><a name="Writing+AntTask+Buildfiles"></a>
+<a name="N11C4E"></a><a name="Writing+AntTask+Buildfiles"></a>
 <h5>Writing AntTask Buildfiles</h5>
 <p>
 Any Ant project file can be used as a buildfile for the <span class="codefrag">AntTask</span>.
@@ -4804,7 +4782,7 @@ The runtime properties of the target can be set using task parameters
 with the prefix <span class="codefrag">properties</span>, e.&nbsp;g. <span class="codefrag">properties.filename</span>
 for a buildfile property named <span class="codefrag">filename</span>.
 </p>
-<a name="N11C96"></a><a name="Using+custom+Ant+Tasks"></a>
+<a name="N11C73"></a><a name="Using+custom+Ant+Tasks"></a>
 <h5>Using custom Ant Tasks</h5>
 <p>
 The implementation of custom Ant tasks is described in the
@@ -4814,7 +4792,7 @@ If you want to write a general Lenya task, put it into the package
 that is only suited for your publication, put it in the
 <span class="codefrag">&lt;publication&gt;/java/src/</span> directory.
 </p>
-<a name="N11CAA"></a><a name="File+Locations"></a>
+<a name="N11C87"></a><a name="File+Locations"></a>
 <h5>File Locations</h5>
 <p>Default buildfile location:</p>
 <pre class="code">&lt;publication&gt;/config/tasks/targets.xml</pre>
@@ -4822,7 +4800,7 @@ that is only suited for your publication, put it in the
 <pre class="code">&lt;publication&gt;/logs/tasks/*.xml</pre>
 <p>Log file presentation stylesheets:</p>
 <pre class="code">&lt;webapp&gt;/lenya/xslt/logs/*.xsl</pre>
-<a name="N11CC6"></a><a name="Example"></a>
+<a name="N11CA3"></a><a name="Example"></a>
 <h5>Example</h5>
 <p>
 The following buildfile contains the target <span class="codefrag">publish</span>
@@ -4879,7 +4857,7 @@ You call the action in a pipeline:
 <p>And finally, go to your browser and call the URI with the appropriate
 parameter(s):</p>
 <pre class="code">http://.../publish.html?properties.publish.sources=test.xml</pre>
-<a name="N11CFD"></a><a name="docs/1_2_x/components/tasks/publisher.html"></a>
+<a name="N11CDA"></a><a name="docs/1_2_x/components/tasks/publisher.html"></a>
 <h5>The DefaultFilePublisher Task</h5>
 <p>
 The DefaultFilePublisher is a task that copies XML source files from
@@ -4953,7 +4931,7 @@ e. g. to use several publishers to publish into different directories:
 The remaining parameters, <span class="codefrag">publication-id</span> and <span class="codefrag">sources</span>, are
 passed to the task as request parameters.
 </p>
-<a name="N11D4D"></a><a name="docs/1_2_x/components/tasks/exporter.html"></a>
+<a name="N11D2A"></a><a name="docs/1_2_x/components/tasks/exporter.html"></a>
 <h5>The StaticHTMLExporter Task</h5>
 <p>
 The StaticHTMLExporter is a task that downloads HTML pages from a server and
@@ -5018,14 +4996,14 @@ e. g. to use several publishers to publish into different directories:
 &lt;/tasks&gt;
 
 </pre>
-<a name="N11D90"></a><a name="docs/1_2_x/components/tasks/mailtask.html"></a>
+<a name="N11D6D"></a><a name="docs/1_2_x/components/tasks/mailtask.html"></a>
 <h5>The MailTask</h5>
 <p>
 A <span class="codefrag">MailTask</span> sends an e-mail. The parameters, such as recipient
 address, subject, and body, can either be provided as a task parameter or
 extracted from an XML document.
 </p>
-<a name="N11D9E"></a><a name="Task+Parameters-N11D9E"></a>
+<a name="N11D7B"></a><a name="Task+Parameters-N11D7B"></a>
 <h5>Task Parameters</h5>
 <p>
 The following parameters must be provided:</p>
@@ -5050,7 +5028,7 @@ The following parameters must be provided:</p>
 <strong>body</strong>: How are you?</li>
 
 </ul>
-<a name="N11DC8"></a><a name="Getting+the+mail+data+from+an+XML+source"></a>
+<a name="N11DA5"></a><a name="Getting+the+mail+data+from+an+XML+source"></a>
 <h5>Getting the mail data from an XML source</h5>
 <p>
 Additionally, you can pass a <span class="codefrag">uri</span> parameter to the <span class="codefrag">MailTask</span>:</p>
@@ -5089,7 +5067,7 @@ Task parameters have a higher priority than elements of the document. This makes
 possible to access one complete XML file from different <span class="codefrag">MailTask</span>s and override
 the recepient address or other values.
 </p>
-<a name="N11E02"></a><a name="Declaring+and+Using+the+MailTask"></a>
+<a name="N11DDF"></a><a name="Declaring+and+Using+the+MailTask"></a>
 <h5>Declaring and Using the MailTask</h5>
 <p>
 In <span class="codefrag">tasks.xconf</span>, a typical mail task looks like follows:
@@ -5124,7 +5102,7 @@ relativly to the publication URI. The task can be invoked in a sitemap pipeline:
   &lt;/map:match&gt;
 
 </pre>
-<a name="N11E1B"></a><a name="docs/1_2_x/components/tasks/development.html"></a>
+<a name="N11DF8"></a><a name="docs/1_2_x/components/tasks/development.html"></a>
 <h5>Developing Your Own Tasks</h5>
 <p>
 Every task must implement the <span class="codefrag">org.lenya.cms.task.Task</span> interface.
@@ -5148,11 +5126,11 @@ file manually, you won't have to provide a hard-coded <span class="codefrag">ser
 the task implementation, just contact me (Andreas Hartmann) at</strong>
 <a href="#mailto:andreas@apache.org">andreas@apache.org</a>.
 </p>
-<a name="N11E53"></a><a name="Workflow"></a>
+<a name="N11E30"></a><a name="Workflow"></a>
 <h5>Workflow</h5>
-<a name="N11E58"></a><a name="docs/1_2_x/components/workflow/terms.html"></a>
+<a name="N11E35"></a><a name="docs/1_2_x/components/workflow/terms.html"></a>
 <h5>Workflow Terms</h5>
-<a name="N11E60"></a><a name="Terms"></a>
+<a name="N11E3D"></a><a name="Terms"></a>
 <h5>Terms</h5>
 <dl>
 
@@ -5306,9 +5284,9 @@ a section, ...).</p>
 
 
 </dl>
-<a name="N11EFD"></a><a name="docs/1_2_x/components/workflow/state-machine.html"></a>
+<a name="N11EDA"></a><a name="docs/1_2_x/components/workflow/state-machine.html"></a>
 <h5>The Workflow State Machine</h5>
-<a name="N11F05"></a><a name="Invoking+a+Transition"></a>
+<a name="N11EE2"></a><a name="Invoking+a+Transition"></a>
 <h5>Invoking a Transition</h5>
 <p>
 When an event <em>e</em> is invoked on a workflow instance <em>I</em>, the following
@@ -5337,9 +5315,9 @@ algorithm is executed:
 </li>
 
 </ul>
-<a name="N11F59"></a><a name="docs/1_2_x/components/workflow/configuration.html"></a>
+<a name="N11F36"></a><a name="docs/1_2_x/components/workflow/configuration.html"></a>
 <h5>Workflow Configuration</h5>
-<a name="N11F61"></a><a name="Workflow+Schemas"></a>
+<a name="N11F3E"></a><a name="Workflow+Schemas"></a>
 <h5>Workflow Schemas</h5>
 <p>The workflow schema definition files of a publication are located at</p>
 <pre class="code">
@@ -5385,21 +5363,21 @@ algorithm is executed:
 </pre>
 <p>The workflow namespace URI is</p>
 <pre class="code">http://apache.org/cocoon/lenya/workflow/1.0</pre>
-<a name="N11F7C"></a><a name="States"></a>
+<a name="N11F59"></a><a name="States"></a>
 <h5>States</h5>
 <p>
   All states that are used in the workflow schema have to be declared
   using <span class="codefrag">&lt;state&gt;</span> elements. The initial state is
   marked with the <span class="codefrag">initial="true"</span> attribute.
 </p>
-<a name="N11F8B"></a><a name="Variables"></a>
+<a name="N11F68"></a><a name="Variables"></a>
 <h5>Variables</h5>
 <p>
   All used variables have to be declared using <span class="codefrag">&lt;variable&gt;</span>
   elements. The initial value of the variable is assigned using the
   <span class="codefrag">value</span> attribute.
 </p>
-<a name="N11F9A"></a><a name="Transitions"></a>
+<a name="N11F77"></a><a name="Transitions"></a>
 <h5>Transitions</h5>
 <p>
   A transition is declared using the <span class="codefrag">&lt;transition&gt;</span> element.
@@ -5417,7 +5395,7 @@ algorithm is executed:
   In this case, if the transition is triggered using a
   <em>SynchronizedWorkflowInstance</em>, it is invoked on all instances.
 </p>
-<a name="N11FC4"></a><a name="Variable+Assignments"></a>
+<a name="N11FA1"></a><a name="Variable+Assignments"></a>
 <h5>Variable Assignments</h5>
 <p>A variable assignment has the form</p>
 <pre class="code">&lt;assign variable="..." value="..."/&gt;</pre>
@@ -5426,7 +5404,7 @@ algorithm is executed:
   Because only boolean variables are supported, <span class="codefrag">value</span> must
   be either <span class="codefrag">true</span> or <span class="codefrag">false</span>.
 </p>
-<a name="N11FDD"></a><a name="Conditions"></a>
+<a name="N11FBA"></a><a name="Conditions"></a>
 <h5>Conditions</h5>
 <p>A condition has the form</p>
 <pre class="code">&lt;condition class="..."&gt;...&lt;/condition&gt;</pre>
@@ -5439,7 +5417,7 @@ The text inside the element is the expression that should
 be evaluated. It is passed as an argument to the <span class="codefrag">setExpression()</span>
 method.
 </p>
-<a name="N11FF5"></a><a name="BooleanVariableCondition"></a>
+<a name="N11FD2"></a><a name="BooleanVariableCondition"></a>
 <h5>BooleanVariableCondition</h5>
 <p>The <em>org.apache.lenya.workflow.impl.BooleanVariableCondition</em> requires
 an expression of the form</p>
@@ -5448,7 +5426,7 @@ an expression of the form</p>
 <span class="codefrag">{variable-name}</span> is the name of a variable that
 was declared in the workflow schema. <span class="codefrag">{value}</span> is either
 <span class="codefrag">true</span> or <span class="codefrag">false</span>.</p>
-<a name="N12013"></a><a name="RoleCondition"></a>
+<a name="N11FF0"></a><a name="RoleCondition"></a>
 <h5>RoleCondition</h5>
 <p>The <em>org.apache.lenya.cms.workflow.RoleCondition</em> requires a
 comma-separated list of role IDs:
@@ -5458,7 +5436,7 @@ comma-separated list of role IDs:
   The condition is complied when the current identity has one
   of these roles on the requested URL.
 </p>
-<a name="N12027"></a><a name="Assigning+Workflow+Schemas+to+Document+Types"></a>
+<a name="N12004"></a><a name="Assigning+Workflow+Schemas+to+Document+Types"></a>
 <h5>Assigning Workflow Schemas to Document Types</h5>
 <p>A workflow schema can be assigned to a document type in</p>
 <pre class="code">
@@ -5471,9 +5449,9 @@ comma-separated list of role IDs:
   &lt;/doc&gt;
   ...
 &lt;/doctypes&gt;</pre>
-<a name="N12039"></a><a name="docs/1_2_x/components/workflow/implementation.html"></a>
+<a name="N12016"></a><a name="docs/1_2_x/components/workflow/implementation.html"></a>
 <h5>Workflow Implementation</h5>
-<a name="N12041"></a><a name="Using+Workflow"></a>
+<a name="N1201E"></a><a name="Using+Workflow"></a>
 <h5>Using Workflow</h5>
 <p>The general workflow interfaces are declared in the package</p>
 <pre class="code">org.apache.lenya.workflow</pre>
@@ -5487,18 +5465,18 @@ interfaces.</p>
 (this is an enhancement in Bugzilla).</div>
 </div>
 <p>For further information, consult the Lenya API documentation.</p>
-<a name="N12060"></a><a name="Site+Management"></a>
+<a name="N1203D"></a><a name="Site+Management"></a>
 <h5>Site Management</h5>
-<a name="N12065"></a><a name="docs/1_2_x/components/sitemanagement/archive.html"></a>
+<a name="N12042"></a><a name="docs/1_2_x/components/sitemanagement/archive.html"></a>
 <h5>Archive</h5>
-<a name="N1206D"></a><a name="Introduction-N1206D"></a>
+<a name="N1204A"></a><a name="Introduction-N1204A"></a>
 <h5>Introduction</h5>
 <p>The archive operation corresponds to a move operation from the authoring area to the archive</p>
-<a name="N12077"></a><a name="Implementation-N12077"></a>
+<a name="N12054"></a><a name="Implementation-N12054"></a>
 <h5>Implementation</h5>
 <p>Similar to the operation <a href="#move.html">move</a>
 </p>
-<a name="N12084"></a><a name="Parameters-N12084"></a>
+<a name="N12061"></a><a name="Parameters-N12061"></a>
 <h5>Parameters</h5>
 <p>Required parameters:</p>
 <ul>
@@ -5510,9 +5488,9 @@ interfaces.</p>
 <li>the task id</li>
       
 </ul>
-<a name="N1209A"></a><a name="usecase"></a>
+<a name="N12077"></a><a name="usecase"></a>
 <h5>usecase</h5>
-<a name="N120A0"></a><a name="Archive+screen"></a>
+<a name="N1207D"></a><a name="Archive+screen"></a>
 <h5>Archive screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=archive&amp;lenya.step=showscreen</pre>
@@ -5531,7 +5509,7 @@ interfaces.</p>
 <p>The parameters for the source are get with the serverpage through the page envelope input module. 
 	    The area for the destination is set to archive in the stylesheet.
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N120B8"></a><a name="Archive+confirmation"></a>
+<a name="N12095"></a><a name="Archive+confirmation"></a>
 <h5>Archive confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=archive&amp;lenya.step=step&amp;...{source parameters}</pre>
@@ -5546,7 +5524,7 @@ interfaces.</p>
           &lt;/map:match&gt;
         </pre>
 <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
-<a name="N120D1"></a><a name="Ant+Task+"></a>
+<a name="N120AE"></a><a name="Ant+Task+"></a>
 <h5>Ant Task </h5>
 <p>The ant target <span class="codefrag">archiveDocument</span> is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
@@ -5577,9 +5555,9 @@ interfaces.</p>
 </ul>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N12116"></a><a name="docs/1_2_x/components/sitemanagement/copy.html"></a>
+<a name="N120F3"></a><a name="docs/1_2_x/components/sitemanagement/copy.html"></a>
 <h5>Copy</h5>
-<a name="N1211E"></a><a name="Introduction-N1211E"></a>
+<a name="N120FB"></a><a name="Introduction-N120FB"></a>
 <h5>Introduction</h5>
 <p>The copy operation is performed on the subtree corresponding to a given document id and a given area.</p>
 <p>We have to :</p>
@@ -5596,11 +5574,11 @@ interfaces.</p>
 <li>insert a node (with the subtree) in the site tree</li>
 	  
 </ul>
-<a name="N1213D"></a><a name="Implementation-N1213D"></a>
+<a name="N1211A"></a><a name="Implementation-N1211A"></a>
 <h5>Implementation</h5>
 <p>It is implemented in a sequence of usecases to get all needed parameters, and use the task concept to execute some ant task</p>
 <p>To perform the different operations on the desired subtree, we used the visitor pattern</p>
-<a name="N1214A"></a><a name="Parameters-N1214A"></a>
+<a name="N12127"></a><a name="Parameters-N12127"></a>
 <h5>Parameters</h5>
 <p>The parameters are string-value parameters</p>
 <p>Required parameters:</p>
@@ -5621,10 +5599,10 @@ interfaces.</p>
 <li>the task id</li>
       
 </ul>
-<a name="N1216F"></a><a name="usecase-N1216F"></a>
+<a name="N1214C"></a><a name="usecase-N1214C"></a>
 <h5>usecase</h5>
 <p>They are implemented in the usecase sitmap (core)</p>
-<a name="N12178"></a><a name="Copy+screen"></a>
+<a name="N12155"></a><a name="Copy+screen"></a>
 <h5>Copy screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=copy&amp;lenya.step=showscreen</pre>
@@ -5640,7 +5618,7 @@ interfaces.</p>
         </pre>
 <p>The parameters for the source are get with the serverpage through the page envelope input module. 
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N12190"></a><a name="Copy+confirmation"></a>
+<a name="N1216D"></a><a name="Copy+confirmation"></a>
 <h5>Copy confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=copy&amp;lenya.step=step&amp;...{source parameters}</pre>
@@ -5664,7 +5642,7 @@ interfaces.</p>
 <div class="content">Rem</div>
 </div>
 <p>The session parameter org.apache.lenya.cms.info.cutdocumentid is needed by the move function. It must be reset to "" else</p>
-<a name="N121AD"></a><a name="Paste+screen"></a>
+<a name="N1218A"></a><a name="Paste+screen"></a>
 <h5>Paste screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=paste&amp;lenya.step=showscreen</pre>
@@ -5682,7 +5660,7 @@ interfaces.</p>
 	    Parameters needed by the access controller are also get with this serverpage through the access control input module.
 	    The parameters for the source are get from the session with the serverpage .
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N121C5"></a><a name="Paste+confirmation"></a>
+<a name="N121A2"></a><a name="Paste+confirmation"></a>
 <h5>Paste confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=paste&amp;lenya.step=paste&amp;...{parameters}</pre>
@@ -5713,16 +5691,16 @@ interfaces.</p>
 <p>The paste step is also used by the move operation. In this case the parameter org.apache.lenya.cms.info.cutdocumentid must be set to the value of the document id (see <a href="#move.html">Move</a>).
         In case of the copy function the value of org.apache.lenya.cms.info.cutdocumentid in the session must be "".
         The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
-<a name="N121E2"></a><a name="Ant+Task+-N121E2"></a>
+<a name="N121BF"></a><a name="Ant+Task+-N121BF"></a>
 <h5>Ant Task </h5>
 <p>The ant target is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
 <p>The target for copying a document depends on the target newdocumentid, to be sure, that the document id for the destination is unique</p>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N121FE"></a><a name="docs/1_2_x/components/sitemanagement/deactivate.html"></a>
+<a name="N121DB"></a><a name="docs/1_2_x/components/sitemanagement/deactivate.html"></a>
 <h5>Deactivate a document</h5>
-<a name="N12206"></a><a name="Introduction-N12206"></a>
+<a name="N121E3"></a><a name="Introduction-N121E3"></a>
 <h5>Introduction</h5>
 <p>We have to :</p>
 <ul>
@@ -5737,10 +5715,10 @@ interfaces.</p>
 	    all the node, if no other language version is live.</li>
 	  
 </ul>
-<a name="N1221F"></a><a name="Implementation-N1221F"></a>
+<a name="N121FC"></a><a name="Implementation-N121FC"></a>
 <h5>Implementation</h5>
 <p>It is implemented in a sequence of usecases to get all needed parameters, and uses the task concept to execute some ant task</p>
-<a name="N12229"></a><a name="Parameters-N12229"></a>
+<a name="N12206"></a><a name="Parameters-N12206"></a>
 <h5>Parameters</h5>
 <p>The parameters are string-value parameters</p>
 <p>Required parameters:</p>
@@ -5753,10 +5731,10 @@ interfaces.</p>
 <li>the task id</li>
       
 </ul>
-<a name="N12242"></a><a name="usecase-N12242"></a>
+<a name="N1221F"></a><a name="usecase-N1221F"></a>
 <h5>usecase</h5>
 <p>They are implemented in the usecase sitmap (core)</p>
-<a name="N1224B"></a><a name="Deactivate+screen"></a>
+<a name="N12228"></a><a name="Deactivate+screen"></a>
 <h5>Deactivate screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=deactivate&amp;lenya.step=showscreen</pre>
@@ -5777,7 +5755,7 @@ interfaces.</p>
 <p>
         In the serverpage, we get the required parameters and if no other language version is live, we look for the live children.
 	    The stylesheet <span class="codefrag">xslt/info/deactivate.xsl</span> builds a form, if the requirement are achieved, else shows a message.</p>
-<a name="N12266"></a><a name="Deactivate+confirmation"></a>
+<a name="N12243"></a><a name="Deactivate+confirmation"></a>
 <h5>Deactivate confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=deactivate&amp;lenya.step=deactivate&amp;...{source parameters}</pre>
@@ -5792,23 +5770,23 @@ interfaces.</p>
           &lt;/map:match&gt;
         </pre>
 <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
-<a name="N1227F"></a><a name="Ant+Task+-N1227F"></a>
+<a name="N1225C"></a><a name="Ant+Task+-N1225C"></a>
 <h5>Ant Task </h5>
 <p>The ant target <span class="codefrag">deactivateDocument</span>is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
 <p>and depends on the target <span class="codefrag">livedocumentpath</span>, to compute the live directory of the contents</p>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N122A1"></a><a name="docs/1_2_x/components/sitemanagement/delete.html"></a>
+<a name="N1227E"></a><a name="docs/1_2_x/components/sitemanagement/delete.html"></a>
 <h5>Delete</h5>
-<a name="N122A9"></a><a name="Introduction-N122A9"></a>
+<a name="N12286"></a><a name="Introduction-N12286"></a>
 <h5>Introduction</h5>
 <p>The delete operation corresponds to a move operation from the authoring area to the trash</p>
-<a name="N122B3"></a><a name="Implementation-N122B3"></a>
+<a name="N12290"></a><a name="Implementation-N12290"></a>
 <h5>Implementation</h5>
 <p>Similar to the operation <a href="#move.html">move</a>
 </p>
-<a name="N122C0"></a><a name="Parameters-N122C0"></a>
+<a name="N1229D"></a><a name="Parameters-N1229D"></a>
 <h5>Parameters</h5>
 <p>Required parameters:</p>
 <ul>
@@ -5820,9 +5798,9 @@ interfaces.</p>
 <li>the task id</li>
       
 </ul>
-<a name="N122D6"></a><a name="usecase-N122D6"></a>
+<a name="N122B3"></a><a name="usecase-N122B3"></a>
 <h5>usecase</h5>
-<a name="N122DC"></a><a name="Delete+screen"></a>
+<a name="N122B9"></a><a name="Delete+screen"></a>
 <h5>Delete screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=delete&amp;lenya.step=showscreen</pre>
@@ -5841,7 +5819,7 @@ interfaces.</p>
 <p>The parameters for the source are get with the serverpage through the page envelope input module. 
 	    The destination area is set to trash in the stylesheet.
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N122F4"></a><a name="Delete+confirmation"></a>
+<a name="N122D1"></a><a name="Delete+confirmation"></a>
 <h5>Delete confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=delete&amp;lenya.step=delete&amp;...{source parameters}</pre>
@@ -5856,7 +5834,7 @@ interfaces.</p>
           &lt;/map:match&gt;
         </pre>
 <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
-<a name="N1230D"></a><a name="Ant+Task+-N1230D"></a>
+<a name="N122EA"></a><a name="Ant+Task+-N122EA"></a>
 <h5>Ant Task </h5>
 <p>The ant target <span class="codefrag">deleteDocument</span> is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
@@ -5887,9 +5865,9 @@ interfaces.</p>
 </ul>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N12352"></a><a name="docs/1_2_x/components/sitemanagement/deletetrash.html"></a>
+<a name="N1232F"></a><a name="docs/1_2_x/components/sitemanagement/deletetrash.html"></a>
 <h5>Delete Trash</h5>
-<a name="N1235A"></a><a name="Introduction-N1235A"></a>
+<a name="N12337"></a><a name="Introduction-N12337"></a>
 <h5>Introduction</h5>
 <p>We have to :</p>
 <ul>
@@ -5899,7 +5877,7 @@ interfaces.</p>
 <li>to reset the trash sitetree</li>
 	  
 </ul>
-<a name="N1236D"></a><a name="Parameters-N1236D"></a>
+<a name="N1234A"></a><a name="Parameters-N1234A"></a>
 <h5>Parameters</h5>
 <p>Required parameters:</p>
 <ul>
@@ -5907,12 +5885,12 @@ interfaces.</p>
 <li>the task id </li>
       
 </ul>
-<a name="N1237D"></a><a name="Implementation-N1237D"></a>
+<a name="N1235A"></a><a name="Implementation-N1235A"></a>
 <h5>Implementation</h5>
 <p>It is implemented in a sequence of usecases to get all needed parameters, and uses the task concept to execute some ant task</p>
-<a name="N12387"></a><a name="usecase-N12387"></a>
+<a name="N12364"></a><a name="usecase-N12364"></a>
 <h5>usecase</h5>
-<a name="N1238D"></a><a name="Delete+Trash+screen"></a>
+<a name="N1236A"></a><a name="Delete+Trash+screen"></a>
 <h5>Delete Trash screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=deleteTrash&amp;lenya.step=showscreen</pre>
@@ -5928,7 +5906,7 @@ interfaces.</p>
           </pre>
 <p>The required parameters are get in the serverpage. 
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N123A5"></a><a name="Delete+Trash+confirmation"></a>
+<a name="N12382"></a><a name="Delete+Trash+confirmation"></a>
 <h5>Delete Trash confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=deleteTrash&amp;lenya.step=deleteTrash&amp;...{source parameters}</pre>
@@ -5943,15 +5921,15 @@ interfaces.</p>
           &lt;/map:match&gt;
         </pre>
 <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
-<a name="N123BE"></a><a name="Ant+Task+-N123BE"></a>
+<a name="N1239B"></a><a name="Ant+Task+-N1239B"></a>
 <h5>Ant Task </h5>
 <p>The ant target <span class="codefrag">deleteTrash</span> is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N123DA"></a><a name="docs/1_2_x/components/sitemanagement/move.html"></a>
+<a name="N123B7"></a><a name="docs/1_2_x/components/sitemanagement/move.html"></a>
 <h5>Move a document</h5>
-<a name="N123E2"></a><a name="Introduction-N123E2"></a>
+<a name="N123BF"></a><a name="Introduction-N123BF"></a>
 <h5>Introduction</h5>
 <p>The move operation is performed on the subtree corresponding to a given document id and a given area.</p>
 <p>We have to :</p>
@@ -5974,11 +5952,11 @@ interfaces.</p>
 <li>move the node (with the subtree) in the site tree</li>
 	  
 </ul>
-<a name="N1240A"></a><a name="Implementation-N1240A"></a>
+<a name="N123E7"></a><a name="Implementation-N123E7"></a>
 <h5>Implementation</h5>
 <p>It is implemented in a sequence of usecases to get all needed parameters, and uses the task concept to execute some ant task</p>
 <p>To perform the different operations on the desired subtree, we used the visitor pattern</p>
-<a name="N12417"></a><a name="Parameters-N12417"></a>
+<a name="N123F4"></a><a name="Parameters-N123F4"></a>
 <h5>Parameters</h5>
 <p>Required parameters:</p>
 <ul>
@@ -5994,10 +5972,10 @@ interfaces.</p>
 <li>the task id</li>
       
 </ul>
-<a name="N12433"></a><a name="usecase-N12433"></a>
+<a name="N12410"></a><a name="usecase-N12410"></a>
 <h5>usecase</h5>
 <p>They are implemented in the usecase sitmap (core)</p>
-<a name="N1243C"></a><a name="Cut+screen"></a>
+<a name="N12419"></a><a name="Cut+screen"></a>
 <h5>Cut screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=cut&amp;lenya.step=showscreen</pre>
@@ -6013,7 +5991,7 @@ interfaces.</p>
         </pre>
 <p>The parameters for the source are get with the serverpage through the page envelope input module. 
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N12454"></a><a name="Cut+confirmation"></a>
+<a name="N12431"></a><a name="Cut+confirmation"></a>
 <h5>Cut confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=cut&amp;lenya.step=cut&amp;...{source parameters}</pre>
@@ -6033,7 +6011,7 @@ interfaces.</p>
         </pre>
 <p>The source parameters are saved in the session with the org.apache.cocoon.acting.SessionPropagatorAction</p>
 <p>The parameter <strong>org.apache.lenya.cms.info.cutdocumentid</strong> is used to change the representation of the cutted node in the info sitetree.</p>
-<a name="N12472"></a><a name="Paste+screen-N12472"></a>
+<a name="N1244F"></a><a name="Paste+screen-N1244F"></a>
 <h5>Paste screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=paste&amp;lenya.step=showscreen</pre>
@@ -6051,7 +6029,7 @@ interfaces.</p>
 	    Parameters needed by the access controller are also get with this serverpage through the access control input module.
 	    The parameters for the source are get from the session with the serverpage .
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N1248A"></a><a name="Paste+confirmation-N1248A"></a>
+<a name="N12467"></a><a name="Paste+confirmation-N12467"></a>
 <h5>Paste confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=paste&amp;lenya.step=paste&amp;...{parameters}</pre>
@@ -6081,7 +6059,7 @@ interfaces.</p>
         </pre>
 <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
 <p>The parameter <strong>org.apache.lenya.cms.info.cutdocumentid</strong> is set to "", because the cutted node is no more present.</p>
-<a name="N124A9"></a><a name="Ant+Task+-N124A9"></a>
+<a name="N12486"></a><a name="Ant+Task+-N12486"></a>
 <h5>Ant Task </h5>
 <p>The ant target <span class="codefrag">moveDocument</span> is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
@@ -6109,15 +6087,15 @@ interfaces.</p>
 </ul>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N124E9"></a><a name="docs/1_2_x/components/sitemanagement/moveupdown.html"></a>
+<a name="N124C6"></a><a name="docs/1_2_x/components/sitemanagement/moveupdown.html"></a>
 <h5>Move up/down</h5>
-<a name="N124F1"></a><a name="Introduction-N124F1"></a>
+<a name="N124CE"></a><a name="Introduction-N124CE"></a>
 <h5>Introduction</h5>
 <p>To move up or down a node in the sitetree</p>
-<a name="N124FB"></a><a name="Implementation-N124FB"></a>
+<a name="N124D8"></a><a name="Implementation-N124D8"></a>
 <h5>Implementation</h5>
 <p>It uses the task concept to execute some ant task</p>
-<a name="N12505"></a><a name="Parameters-N12505"></a>
+<a name="N124E2"></a><a name="Parameters-N124E2"></a>
 <h5>Parameters</h5>
 <p>The parameters are string-value parameters</p>
 <p>Required parameters:</p>
@@ -6130,7 +6108,7 @@ interfaces.</p>
 <li>the task id</li>
       
 </ul>
-<a name="N1251E"></a><a name="usecase-N1251E"></a>
+<a name="N124FB"></a><a name="usecase-N124FB"></a>
 <h5>usecase</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?properties.movenode.direction=up&amp;lenya.usecase=move-node&amp;lenya.step=move-node</pre>
@@ -6149,22 +6127,22 @@ interfaces.</p>
 <p>The parameter for the direction is a request parameter in the URL (fom the menu). The task id is set in the sitemap and
 	     the document id is get through the page envelope. </p>
 <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
-<a name="N12539"></a><a name="Ant+Task+-N12539"></a>
+<a name="N12516"></a><a name="Ant+Task+-N12516"></a>
 <h5>Ant Task </h5>
 <p>The ant target <span class="codefrag">movenode</span> is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N12555"></a><a name="docs/1_2_x/components/sitemanagement/rename.html"></a>
+<a name="N12532"></a><a name="docs/1_2_x/components/sitemanagement/rename.html"></a>
 <h5>Rename</h5>
-<a name="N1255D"></a><a name="Introduction-N1255D"></a>
+<a name="N1253A"></a><a name="Introduction-N1253A"></a>
 <h5>Introduction</h5>
 <p>The rename operation corresponds to a move operation</p>
-<a name="N12567"></a><a name="Implementation-N12567"></a>
+<a name="N12544"></a><a name="Implementation-N12544"></a>
 <h5>Implementation</h5>
 <p>Similar to the operation <a href="#move.html">move</a>
 </p>
-<a name="N12574"></a><a name="Parameters-N12574"></a>
+<a name="N12551"></a><a name="Parameters-N12551"></a>
 <h5>Parameters</h5>
 <p>The parameters are string-value parameters</p>
 <p>Required parameters:</p>
@@ -6181,10 +6159,10 @@ interfaces.</p>
 <li>the task id</li>
       
 </ul>
-<a name="N12593"></a><a name="usecase-N12593"></a>
+<a name="N12570"></a><a name="usecase-N12570"></a>
 <h5>usecase</h5>
 <p>They are implemented in the usecase sitmap (core)</p>
-<a name="N1259C"></a><a name="Rename+screen"></a>
+<a name="N12579"></a><a name="Rename+screen"></a>
 <h5>Rename screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=rename&amp;lenya.step=showscreen</pre>
@@ -6200,7 +6178,7 @@ interfaces.</p>
           </pre>
 <p>The parameters for the source are get with the serverpage through the page envelope input module. 
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N125B4"></a><a name="Rename+confirmation"></a>
+<a name="N12591"></a><a name="Rename+confirmation"></a>
 <h5>Rename confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=rename&amp;lenya.step=rename&amp;...{source parameters}</pre>
@@ -6215,7 +6193,7 @@ interfaces.</p>
           &lt;/map:match&gt;
         </pre>
 <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
-<a name="N125CD"></a><a name="Ant+Task+-N125CD"></a>
+<a name="N125AA"></a><a name="Ant+Task+-N125AA"></a>
 <h5>Ant Task </h5>
 <p>The ant target <span class="codefrag">renameDocument</span> is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
@@ -6243,16 +6221,16 @@ interfaces.</p>
 </ul>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N1260D"></a><a name="docs/1_2_x/components/sitemanagement/restore.html"></a>
+<a name="N125EA"></a><a name="docs/1_2_x/components/sitemanagement/restore.html"></a>
 <h5>Restore</h5>
-<a name="N12615"></a><a name="Introduction-N12615"></a>
+<a name="N125F2"></a><a name="Introduction-N125F2"></a>
 <h5>Introduction</h5>
 <p>The restore operation corresponds to a move operation from an area, trash or archive, to the authoring</p>
-<a name="N1261F"></a><a name="Implementation-N1261F"></a>
+<a name="N125FC"></a><a name="Implementation-N125FC"></a>
 <h5>Implementation</h5>
 <p>Similar to the operation <a href="#move.html">move</a>
 </p>
-<a name="N1262C"></a><a name="Parameters-N1262C"></a>
+<a name="N12609"></a><a name="Parameters-N12609"></a>
 <h5>Parameters</h5>
 <p>Required parameters:</p>
 <ul>
@@ -6264,9 +6242,9 @@ interfaces.</p>
 <li>the task id</li>
       
 </ul>
-<a name="N12642"></a><a name="usecase-N12642"></a>
+<a name="N1261F"></a><a name="usecase-N1261F"></a>
 <h5>usecase</h5>
-<a name="N12648"></a><a name="Delete+screen-N12648"></a>
+<a name="N12625"></a><a name="Delete+screen-N12625"></a>
 <h5>Delete screen</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=restore&amp;lenya.step=showscreen</pre>
@@ -6285,7 +6263,7 @@ interfaces.</p>
 <p>The parameters for the source are get with the serverpage through the page envelope input module. 
         The destination document id is computed in the serverpage from the identifier. The destination source is set to area in the stylesheet.
 	    A form (build with the xslt transformation) sends then the parameters as request parameters with the new URL.</p>
-<a name="N12660"></a><a name="Restore+confirmation"></a>
+<a name="N1263D"></a><a name="Restore+confirmation"></a>
 <h5>Restore confirmation</h5>
 <p>URL :</p>
 <pre class="code">{document-URL}?lenya.usecase=restore&amp;lenya.step=restore&amp;...{source parameters}</pre>
@@ -6300,7 +6278,7 @@ interfaces.</p>
           &lt;/map:match&gt;
         </pre>
 <p>The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p>
-<a name="N12679"></a><a name="Ant+Task+-N12679"></a>
+<a name="N12656"></a><a name="Ant+Task+-N12656"></a>
 <h5>Ant Task </h5>
 <p>The ant target <span class="codefrag">restoreDocument</span> is in the publication :</p>
 <pre class="code">{publication}/config/tasks/targets.xml</pre>
@@ -6328,11 +6306,11 @@ interfaces.</p>
 </ul>
 <p>More about ant task, see the documentation <a href="#../tasks/anttask.html">Ant Task</a> and the <a href="#../../apidocs/index.html">Javadoc</a>
 </p>
-<a name="N126BA"></a><a name="Specifications"></a>
+<a name="N12697"></a><a name="Specifications"></a>
 <h4>Specifications</h4>
-<a name="N126BF"></a><a name="docs/1_2_x/specs/namespaces.html"></a>
+<a name="N1269C"></a><a name="docs/1_2_x/specs/namespaces.html"></a>
 <h5>Namespaces</h5>
-<a name="N126C7"></a><a name="Namespaces+Used+in+Lenya"></a>
+<a name="N126A4"></a><a name="Namespaces+Used+in+Lenya"></a>
 <h5>Namespaces Used in Lenya</h5>
 <p>
 All namespace declarations should follow the scheme
@@ -6359,11 +6337,11 @@ http://apache.org/cocoon/lenya/{name}/{version}
 
 
 </dl>
-<a name="N126EA"></a><a name="Miscellaneous"></a>
+<a name="N126C7"></a><a name="Miscellaneous"></a>
 <h4>Miscellaneous</h4>
-<a name="N126EF"></a><a name="docs/1_2_x/misc/coding-guidelines.html"></a>
+<a name="N126CC"></a><a name="docs/1_2_x/misc/coding-guidelines.html"></a>
 <h5>Apache Lenya Coding Guidelines</h5>
-<a name="N126F7"></a><a name="Introduction-N126F7"></a>
+<a name="N126D4"></a><a name="Introduction-N126D4"></a>
 <h5>Introduction</h5>
 <p>
 	We use coding standards to be able to write code easy to
@@ -6374,7 +6352,7 @@ http://apache.org/cocoon/lenya/{name}/{version}
         Still <strong>nothing</strong> that not have been tested should be
         committed. First test then commit!!!
       </p>
-<a name="N12707"></a><a name="Java+Code"></a>
+<a name="N126E4"></a><a name="Java+Code"></a>
 <h5>Java Code</h5>
 <p>
 	Generally we stick with standards. In the case of coding
@@ -6398,15 +6376,15 @@ http://apache.org/cocoon/lenya/{name}/{version}
 </li>
       
 </ul>
-<a name="N12725"></a><a name="XML+and+XSP"></a>
+<a name="N12702"></a><a name="XML+and+XSP"></a>
 <h5>XML and XSP</h5>
 <p>
 	The only restriction we impose on XML, XSLT and XSP code is
 	that the indenting is 2 spaces. Again please no tab stops.
       </p>
-<a name="N12730"></a><a name="docs/1_2_x/misc/unittests.html"></a>
+<a name="N1270D"></a><a name="docs/1_2_x/misc/unittests.html"></a>
 <h5>Writing Unit Tests</h5>
-<a name="N12738"></a><a name="Introduction-N12738"></a>
+<a name="N12715"></a><a name="Introduction-N12715"></a>
 <h5>Introduction</h5>
 <p>Recommended resources</p>
 <ul>
@@ -6426,7 +6404,7 @@ http://apache.org/cocoon/lenya/{name}/{version}
 </li>
       
 </ul>
-<a name="N1275B"></a><a name="Organization"></a>
+<a name="N12738"></a><a name="Organization"></a>
 <h5>Organization</h5>
 <ol>
   
@@ -6436,11 +6414,11 @@ http://apache.org/cocoon/lenya/{name}/{version}
 </li>
 
 </ol>
-<a name="N1276F"></a>
+<a name="N1274C"></a>
 <h5></h5>
-<a name="N12775"></a><a name="docs/1_2_x/misc/xinclude-processor.html"></a>
+<a name="N12752"></a><a name="docs/1_2_x/misc/xinclude-processor.html"></a>
 <h5>XInclude Processor</h5>
-<a name="N1277D"></a><a name="Hello+World"></a>
+<a name="N1275A"></a><a name="Hello+World"></a>
 <h5>Hello World</h5>
 <pre class="code">
 
@@ -6449,7 +6427,7 @@ http://apache.org/cocoon/lenya/{name}/{version}
 &lt;/hello&gt;
 
 </pre>
-<a name="N12788"></a><a name="Hello+World+with+XPointer"></a>
+<a name="N12765"></a><a name="Hello+World+with+XPointer"></a>
 <h5>Hello World with XPointer</h5>
 <pre class="code">
 
@@ -6458,7 +6436,7 @@ http://apache.org/cocoon/lenya/{name}/{version}
 &lt;/hello&gt;
 
 </pre>
-<a name="N12793"></a><a name="Hello+World+with+XPointer+and+Namespace"></a>
+<a name="N12770"></a><a name="Hello+World+with+XPointer+and+Namespace"></a>
 <h5>Hello World with XPointer and Namespace</h5>
 <pre class="code">
 
