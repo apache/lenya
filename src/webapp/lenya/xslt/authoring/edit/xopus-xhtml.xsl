@@ -15,13 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: xopus-xhtml.xsl,v 1.6 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id: xopus-xhtml.xsl,v 1.7 2004/07/20 13:51:13 edith Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
 
 <xsl:param name="documentType"/>
+<xsl:param name="documentId"/>
 <xsl:param name="documentUrl"/>
 <xsl:param name="publicationId"/>
 <xsl:param name="completeArea"/>
@@ -53,6 +54,7 @@
               <param name="contextprefix"><xsl:value-of select="$contextPrefix"/></param>
               <param name="publicationid"><xsl:value-of select="$publicationId"/></param>
               <param name="completearea"><xsl:value-of select="$completeArea"/></param>
+	      <param name="documentid"><xsl:value-of select="$documentId"/></param>
             </transform>
           </view>
           

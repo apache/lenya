@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.216 2004/06/29 16:12:45 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.217 2004/07/20 13:51:13 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -716,6 +716,7 @@
                   <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
                   <map:parameter name="completeArea" value="authoring"/>
                   <map:parameter name="documentUrl" value="{page-envelope:document-url}"/>
+                  <map:parameter name="documentId" value="{page-envelope:document-id}"/>
                   <map:parameter name="documentType" value="{request-param:doctype}"/>
                   <map:parameter name="xopusContext" value="{xopus:context}"/>
                 </map:transform>
