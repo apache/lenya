@@ -16,7 +16,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
-import org.apache.lenya.workflow.impl.WorkflowImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
@@ -97,14 +96,6 @@ public class WorkflowFactory {
     public Situation buildSituation(User user) throws WorkflowException {
         assert user != null;
         return new CMSSituation(user);
-    }
-    
-    /**
-     * Creates an event object for a given command.
-     */
-    public Event buildEvent(WorkflowInstance instance, String command) throws WorkflowException {
-        WorkflowImpl workflow = (WorkflowImpl) instance.getWorkflow();
-        return workflow.getEvent(command);
     }
     
 }
