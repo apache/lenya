@@ -47,7 +47,8 @@
       
       <!-- create the current job snapshot -->
       <map:match pattern="scheduler-servlet">
-        <map:generate type="servletproxy" src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
+        <map:generate type="servlet" src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
+<!--        <map:generate type="servletproxy" src="/wyona-cms/servlet/QuartzSchedulerServlet"/>-->
         <map:transform src="../../stylesheets/cms/Page/Scheduler/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
