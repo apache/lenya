@@ -17,6 +17,7 @@ import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  *
@@ -60,7 +61,7 @@ public class AntTaskTest
             String publicationId = "default";
             String taskId = "ant-test";
             
-            Publication publication = new Publication(publicationId, getServletContextPath());
+            Publication publication = PublicationFactory.getPublication(publicationId, getServletContextPath());
             TaskManager manager = new TaskManager(publication.getDirectory().getCanonicalPath());
             AntTask task = (AntTask) manager.getTask(taskId);
             

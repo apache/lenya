@@ -1,5 +1,5 @@
 /*
- * $Id: UserManagerTest.java,v 1.1 2003/06/02 09:30:42 egli Exp $
+ * $Id: UserManagerTest.java,v 1.2 2003/06/02 17:35:45 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,6 +50,7 @@
 package org.apache.lenya.cms.ac;
 
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 import junit.framework.TestCase;
 
@@ -87,7 +88,7 @@ public class UserManagerTest extends TestCase {
 	}
 
 	final public void testInstance() {
-		Publication publication = new Publication("default", "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/");
+		Publication publication = PublicationFactory.getPublication("default", "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/");
 		UserManager manager = null;
 		try {
 			manager = (UserManager)UserManager.instance(publication);
