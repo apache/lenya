@@ -58,40 +58,41 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 import java.util.StringTokenizer;
 
-
 /**
  * Sets the property "newdocumentid" in the project to the value of the computed 
- * unique document id (document id of the parent + last token of the id of 
- * the source)
- * Used by Copy and Move
+ * unique document id (document id of the source with the latest token 
+ * replaced by the new name 
+ * Used by Rename
  * @author edith
  */
-public class ComputeCopyDocumentId extends ComputeNewDocumentId {
+public class ComputeRenameDocumentId extends ComputeNewDocumentId {
 
-    /**
-     * Creates a new instance of ComputeCopyDocumentId
-     */
-    public ComputeCopyDocumentId() {
-        super();
-    }
+	/**
+	 * Creates a new instance of ComputeRenameDocumentId
+	 */
+	public ComputeRenameDocumentId() {
+		super();
+	}
 
-    /**
-     * Computes the document id for the destination:
-     * new documentid = document id of the parent + last token of the id
-     * of the source
-     * @param firstdocumentid  The document id of the source.
-     * @param secdocumentid  The document id of the parent of the destination.
-     * @return String The document id of the destination.
-     */
+	/**
+	 * Computes the document id for the destination (renamed file):
+	 * new documentid = document id of the source, with the latest token 
+	 * replaced by the new name
+	 * @param firstdocumentid  The document id of the source.
+	 * @param secdocumentid  The new name.
+	 * @return String The document id of the destination.
+	 */
 	protected String compute(String firstdocumentid, String secdocumentid) {
+		String documentid= "";
 		StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
 		int l = st.countTokens();
-
-		for (int i = 1; i < l; i++) {
-			st.nextToken();
+		for (int i = 0; i < l-1; i++) {
+			documentid = documentid + File.separator + st.nextToken();
 		}
-
-		secdocumentid = secdocumentid + File.separator  + st.nextToken();
+		secdocumentid = documentid + File.separator + secdocumentid;
+		if (secdocumentid.startsWith(File.separator)) {
+			secdocumentid.substring(1); 
+		}
 		return secdocumentid;
 	}
 
