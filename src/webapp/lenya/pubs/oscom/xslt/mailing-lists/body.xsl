@@ -12,12 +12,15 @@
  <font face="verdana">
  <h3>Mailing Lists</h3>
 <p>
-There are several OSCOM mailing lists available.
+<!--There are several OSCOM mailing lists available.-->
+There is currently one OSCOM mailing list available.
 </p>
- <h4>Public Lists</h4>
+ <!--<h4>Public Lists</h4>-->
  <xsl:apply-templates select="public/list"/>
+<!--
  <h4>Private Lists</h4>
  <xsl:apply-templates select="private/list"/>
+-->
  </font>
 </xsl:template>
 
