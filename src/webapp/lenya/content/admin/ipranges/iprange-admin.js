@@ -271,7 +271,7 @@ function iprangeChangeGroups() {
     }
     
     while (true) {
-	    cocoon.sendPageAndWait("ipranges/" + iprangeId + "/groups.xml", {
+	    cocoon.sendPageAndWait("ipranges/groups.xml", {
 	    	"iprange-id" : iprangeId,
 	    	"groups" : groups,
 	    	"iprange-groups" : rangeGroups
