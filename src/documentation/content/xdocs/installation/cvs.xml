@@ -41,7 +41,7 @@ Start the shell of your choice and enter:
 svn co http://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
 </source>
 
-<p>Comiters must access SVN with <code>https</code>
+<p>Comitters must access SVN with <code>https</code>
   to have write access.
 </p>
 
@@ -55,7 +55,7 @@ svn co http://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
   where X is the major version number and Y and Z are the minor version numbers.</p>
   
 <ul>
-  <li></li><a href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/?root=Apache-SVN">Browse the Lenya 
+  <li><a href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/?root=Apache-SVN">Browse the Lenya 
     code repository</a></li>
   <li>
     <a href="http://www.apache.de/dev/version-control.html">ASF documention on source code 
