@@ -1,5 +1,5 @@
 /*
- * $Id: UserManagerTest.java,v 1.2 2003/06/02 17:35:45 andreas Exp $
+ * $Id: UserManagerTest.java,v 1.3 2003/06/03 16:41:04 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -87,8 +87,15 @@ public class UserManagerTest extends TestCase {
 		super.tearDown();
 	}
 
+	final public Publication getPublication() {
+		String publicationId = "default";
+		String servletContextPath = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
+		return PublicationFactory.getPublication(publicationId, servletContextPath);
+	}
+	
 	final public void testInstance() {
-		Publication publication = PublicationFactory.getPublication("default", "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/");
+		
+		Publication publication = getPublication();
 		UserManager manager = null;
 		try {
 			manager = (UserManager)UserManager.instance(publication);
@@ -96,8 +103,63 @@ public class UserManagerTest extends TestCase {
 		assertNotNull(manager);
 	}
 
-	final public void testGetUsers() {
-		//TODO Implement getUsers().
+	final public void testLoadConfig() {
+		Publication publication = getPublication();
+		String userName = "alice";
+		String editorGroupName = "editorGroup";
+		String adminGroupName = "adminGroup";
+		String editorRoleName = "editorRole";
+		String adminRoleName = "adminRole";
+
+		FileRole editorRole = new FileRole(publication, editorRoleName);
+		FileRole adminRole = new FileRole(publication, adminRoleName);
+				
+		User user = new FileUser(publication, userName);
+		
+		try {
+			editorRole.save();
+			adminRole.save();
+		} catch (AccessControlException e5) {
+			e5.printStackTrace();
+		}
+		FileGroup editorGroup = new FileGroup(publication, editorGroupName);
+		editorGroup.addRole(editorRole);
+		user.addGroup(editorGroup);
+		FileGroup adminGroup = new FileGroup(publication, adminGroupName);
+		adminGroup.addRole(editorRole);
+		adminGroup.addRole(adminRole);
+		try {
+			editorGroup.save();
+			adminGroup.save();
+		} catch (AccessControlException e2) {
+			e2.printStackTrace();
+		}
+		user.addGroup(adminGroup);
+		try {
+			user.save();
+		} catch (AccessControlException e3) {
+			e3.printStackTrace();
+		}
+
+		UserManager userManager = null;
+		GroupManager groupManager = null;
+		try {
+			userManager = UserManager.instance(publication);
+		} catch (AccessControlException e) {}
+		assertNotNull(userManager);
+		
+		try {
+			groupManager = GroupManager.instance(publication);
+		} catch (AccessControlException e4) {
+			e4.printStackTrace();
+		}
+		assertNotNull(groupManager);
+		
+		Group fetchedGroup = groupManager.getGroup(editorGroupName);
+		assertTrue(editorGroup.equals(fetchedGroup));				
+
+		fetchedGroup = groupManager.getGroup(adminGroupName);
+		assertTrue(adminGroup.equals(fetchedGroup));			
 	}
 
 	final public void testAdd() {
@@ -109,7 +171,18 @@ public class UserManagerTest extends TestCase {
 	}
 
 	final public void testGetUser() {
-		//TODO Implement getUser().
+		Publication publication = getPublication();
+		UserManager manager = null;
+		String userName = "test-user";
+		FileUser user = new FileUser(publication, userName);
+		try {
+			manager = (UserManager)UserManager.instance(publication);
+		} catch (AccessControlException e) {}
+		assertNotNull(manager);		
+		manager.add(user);
+		
+		User otherUser =  manager.getUser(userName);
+		assertEquals(user, otherUser);
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: GroupManagerTest.java,v 1.1 2003/06/03 13:52:12 egli Exp $
+ * $Id: GroupManagerTest.java,v 1.2 2003/06/03 16:41:04 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -73,10 +73,15 @@ public class GroupManagerTest extends TestCase {
 		junit.textui.TestRunner.run(GroupManagerTest.class);
 	}
 
-	final public void testInstance() {
+	public final Publication getPublication() {
 		String publicationId = "default";
 		String servletContext = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
 		Publication pub = PublicationFactory.getPublication(publicationId, servletContext);
+		return pub;		
+	}
+	
+	public final void testInstance() {
+		Publication pub = getPublication();
 		GroupManager manager = null;
 		try {
 			manager = GroupManager.instance(pub);
