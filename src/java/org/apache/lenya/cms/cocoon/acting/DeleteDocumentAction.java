@@ -1,5 +1,5 @@
 /*
- * $Id: DeleteDocumentAction.java,v 1.10 2003/04/24 13:52:38 gregor Exp $
+ * $Id: DeleteDocumentAction.java,v 1.11 2003/05/27 14:59:54 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -60,6 +60,7 @@ import java.io.OutputStream;
 
 import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.excalibur.source.Source;
 
 
 /**
@@ -103,8 +104,8 @@ public class DeleteDocumentAction extends AbstractComplementaryConfigurableActio
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
-        org.apache.cocoon.environment.Source input_source = resolver.resolve("");
-        String sitemapParentPath = input_source.getSystemId();
+        Source input_source = resolver.resolveURI("");
+        String sitemapParentPath = input_source.getURI();
         sitemapParentPath = sitemapParentPath.substring(5); // Remove "file:" protocoll
         getLogger().debug("PARENT PATH OF SITEMAP: " + sitemapParentPath);
 
