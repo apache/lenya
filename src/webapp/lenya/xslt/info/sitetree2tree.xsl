@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.34 2003/10/13 18:24:31 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.35 2003/11/07 11:25:28 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -31,6 +31,7 @@ PERSERVESTATE = 1
 HIGHLIGHT = 1
 HIGHLIGHT_BG = "#DDDCCF"
 HIGHLIGHT_COLOR = "#666666"
+CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
 
 foldersTree = gFld("&lt;strong&gt;<xsl:value-of select="$publicationid"/>&lt;/strong&gt;")
 		<xsl:apply-templates select="s:site"/>

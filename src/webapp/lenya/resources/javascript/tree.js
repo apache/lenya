@@ -1,4 +1,4 @@
-// $Id: tree.js,v 1.12 2003/10/13 18:24:31 andreas Exp $
+// $Id: tree.js,v 1.13 2003/11/07 11:25:11 andreas Exp $
 //**************************************************************** 
 // TreeView by Marcelino Martins http://www.treeview.net
 //**************************************************************** 
@@ -8,7 +8,7 @@
 function Folder(folderDescription, hreference) //constructor 
 { 
   //constant data 
-  ICONPATH = '/lenya/lenya/images/tree/';
+  ICONPATH = CONTEXT_PREFIX + '/lenya/images/tree/';
   this.desc = folderDescription; 
   this.hreference = hreference;
   this.id = -1;
