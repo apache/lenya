@@ -19,6 +19,11 @@
         <read/>
       </actions>
     </machine>
+    <machine ip="127.0.0.1">
+      <actions>
+        <read/>
+      </actions>
+    </machine>
     <group id="editor">
       <actions>
         <read/>

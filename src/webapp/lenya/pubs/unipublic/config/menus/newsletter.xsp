@@ -29,7 +29,7 @@
       </block>
 
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/send</xsp:attribute>Dispatch&#160;Newsletter</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/send-screen.html</xsp:attribute>Dispatch&#160;Newsletter</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid/newsletter/index.html?task.<xsp:expr>sourcesParameter</xsp:expr>&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;documentType=Newsletter</xsp:attribute>Schedule</item>
       </block>
       <separator>

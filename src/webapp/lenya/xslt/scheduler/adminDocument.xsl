@@ -7,15 +7,29 @@
 
   <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-  <xsl:param name="task.sources"/>
-  <xsl:param name="task.uris"/>
   <xsl:param name="documentUri"/>
   <xsl:param name="documentType"/>
 
   <xsl:variable name="separator" select="','"/>
 
-  <!-- FIXME -->
-  <xsl:variable name="context_prefix">/wyona-cms/<xsl:value-of select="/sch:scheduler/sch:current-date/sch:publication-id"/></xsl:variable>
+  <xsl:variable name="context-prefix">
+    <xsl:text/>
+    <xsl:value-of select="/sch:scheduler/sch:parameters/sch:parameter[@name='context-prefix']/@value"/>
+    <xsl:text/>
+  </xsl:variable>
+  
+  <xsl:variable name="publication-id">
+    <xsl:text/>
+    <xsl:value-of select="/sch:scheduler/sch:parameters/sch:parameter[@name='publication-id']/@value"/>
+    <xsl:text/>
+  </xsl:variable>
+  
+  <xsl:variable name="uri-prefix">
+    <xsl:text/>
+    <xsl:value-of select="concat($context-prefix, '/', $publication-id)"/>
+    <xsl:text/>
+  </xsl:variable>
+  
   
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -23,8 +37,10 @@
   
   <!--   Locale templates -->
 
+  <!-- ============================================================= -->
   <!--   Generate numbers from 1 to maxValue for a <select> and select a -->
   <!--   given value -->
+  <!-- ============================================================= -->
   <xsl:template name="generateSelectionNames">
     <xsl:param name="currentValue"/>
     <xsl:param name="selectedValue"/>
@@ -49,6 +65,9 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- ============================================================= -->
+  <!-- Create ComboBox entries for all available tasks -->
+  <!-- ============================================================= -->
   <xsl:template name="tasks">
     <xsl:param name="current-task-id"/>
       <select name="task.id">
@@ -68,20 +87,57 @@
       </select>
   </xsl:template>
 
+  <!-- ============================================================= -->
+  <!-- create hidden inputs for all request parameters -->
+  <!-- ============================================================= -->
+  <xsl:template name="parameters-as-inputs">
+    <input type="hidden" name="context-prefix" value="{$context-prefix}"/>
+    <input type="hidden" name="publication-id" value="{$publication-id}"/>
+    <input type="hidden" name="documentType" value="{$documentType}"/>
+    <input type="hidden" name="documentUri" value="{$documentUri}"/>
+    <xsl:for-each select="/sch:scheduler/sch:parameters/sch:parameter">
+      <xsl:if test="starts-with(@name, 'task.')">
+        <input type="hidden" name="{@name}" value="{@value}"/>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <!-- ============================================================= -->
+  <!-- create new request parameters for all request parameters -->
+  <!-- ============================================================= -->
+  <xsl:template name="parameters-as-request-parameters">
+    <xsl:text>?</xsl:text>
+      <xsl:text>context-prefix=</xsl:text><xsl:value-of select="$context-prefix"/>
+      <xsl:text>&amp;publication-id=</xsl:text><xsl:value-of select="$publication-id"/>
+      <xsl:text>&amp;documentType=</xsl:text><xsl:value-of select="$documentType"/>
+      <xsl:text>&amp;documentUri=</xsl:text><xsl:value-of select="$documentUri"/>
+      <xsl:text/>
+    <xsl:for-each select="/sch:scheduler/sch:parameters/sch:parameter">
+      <xsl:if test="starts-with(@name, 'task.')">
+        <xsl:text>&amp;</xsl:text>
+        <xsl:value-of select="concat(@name, '=', @value)"/>
+        <xsl:text/>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <!-- ============================================================= -->
   <!--   Generate the necessary form to scheduler new jobs -->
+  <!-- ============================================================= -->
   <xsl:template name="schedulerForm">
     <tr>
       <form method="POST">
         <td />
 	<xsl:attribute name="action">
-	  <xsl:value-of select="$context_prefix"/><xsl:text>/scheduler/docid/</xsl:text><xsl:value-of select="$documentUri"/>
+          <xsl:text/>
+	  <xsl:value-of select="$uri-prefix"/>
+          <xsl:text>/scheduler/docid/</xsl:text>
+          <xsl:value-of select="$documentUri"/>
+          <xsl:text/>
 	</xsl:attribute>
         
         <!-- hidden input fields for parameters -->
-	<input type="hidden" name="documentUri" value="{$documentUri}"/>
-	<input type="hidden" name="documentType" value="{$documentType}"/>
-	<input type="hidden" name="task.sources" value="{$task.sources}"/>
-	<input type="hidden" name="task.uris" value="{$task.uris}"/>
+        <xsl:call-template name="parameters-as-inputs"/>
         
         <!-- task selection combobox -->
 	<td><xsl:call-template name="tasks"/></td>
@@ -140,11 +196,22 @@
   <xsl:template name="navigation-menu">
     <div class="menu">
         <xsl:variable name="menu-separator" select="'&#160;&#160;|&#160;&#160;'"/>
-        <a href="{$context_prefix}/authoring/{$documentUri}">
+        <a href="{$uri-prefix}/authoring/{$documentUri}">
           <strong>Back to page</strong>
         </a>
         <xsl:value-of select="$menu-separator"/>
-        <a href="{$context_prefix}/scheduler/docid/{$documentUri}?task.sources={$task.sources}&amp;task.uris={$task.uris}&amp;documentType={$documentType}&amp;documentUri={$documentUri}">
+        <a>
+          <xsl:attribute name="href">
+            <xsl:text/>
+            <xsl:value-of select="$uri-prefix"/>
+            <xsl:text>/scheduler/docid/</xsl:text>
+            <xsl:value-of select="$documentUri"/>
+            <xsl:text/>
+            <xsl:call-template name="parameters-as-request-parameters"/>
+            <xsl:text/>
+          </xsl:attribute>
+        
+<!--         href="{$uri-prefix}/scheduler/docid/{$documentUri}?task.sources={$task.sources}&amp;task.uris={$task.uris}&amp;documentType={$documentType}&amp;documentUri={$documentUri}">-->
           <strong>Refresh</strong>
         </a>
     </div>
@@ -156,7 +223,7 @@
 	<title>Scheduler</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
         <xsl:call-template name="include-css">
-          <xsl:with-param name="context-prefix" select="$context_prefix"/>
+          <xsl:with-param name="context-prefix" select="$uri-prefix"/>
         </xsl:call-template>
       </head>
       
@@ -179,6 +246,12 @@
         <xsl:apply-templates select="sch:exception"/>
         <h1>Scheduler</h1>
         <xsl:call-template name="navigation-menu"/>
+
+        <p>
+        <strong>Document:</strong>&#160;&#160;<xsl:value-of select="$documentUri"/>
+        </p>
+        
+<!--                
         <table border="0" cellpadding="5" cellspacing="0">
           <tr>
             <td>
@@ -216,6 +289,7 @@
              </td>
            </tr>
          </table>
+-->         
          <br />
 	  <table width="100%" height="3" border="0" cellpadding="0" cellspacing="0">
 	    <tr> 
@@ -252,13 +326,10 @@
 		  <tr>
 		    <form method="POST">
 		      <xsl:attribute name="action">
-			<xsl:value-of select="$context_prefix"/><xsl:text>/scheduler/docid/</xsl:text><xsl:value-of select="$documentUri"/>
+			<xsl:value-of select="$uri-prefix"/><xsl:text>/scheduler/docid/</xsl:text><xsl:value-of select="$documentUri"/>
 		      </xsl:attribute>
                       <!-- hidden input fields for parameters -->
-                      <input type="hidden" name="documentUri" value="{$documentUri}"/>
-                      <input type="hidden" name="documentType" value="{$documentType}"/>
-                      <input type="hidden" name="task.sources" value="{$task.sources}"/>
-                      <input type="hidden" name="task.uris" value="{$task.uris}"/>
+                      <xsl:call-template name="parameters-as-inputs"/>
 		      <td>
 			<xsl:apply-templates select="sch:parameter"/>
                       </td>
@@ -300,7 +371,7 @@
     <xsl:param name="background" select="'White'"/>
     <tr>
       <td colspan="6" bgcolor="{$background}">
-        <img src="{$context_prefix}/images/util/pixel.gif" width="1" height="5"/>
+        <img src="{$uri-prefix}/images/util/pixel.gif" width="1" height="5"/>
       </td>
     </tr>
   </xsl:template>
@@ -310,7 +381,7 @@
     <tr height="1">
       <td />
       <td class="table-separator" colspan="5">
-        <img src="{$context_prefix}/images/util/pixel.gif"/>
+        <img src="{$uri-prefix}/images/util/pixel.gif"/>
       </td>
     </tr>
     <xsl:call-template name="table-separator-space"/>

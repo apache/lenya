@@ -43,8 +43,14 @@
   -->
 
   <!-- send newsletter -->
-  <task id="send-newsletter" class="">
-    <label>Send Newsletter</label>
+  <task id="send-newsletter">
+    <label>Dispatch Newsletter</label>
+    <task id="send" class="org.wyona.cms.mail.MailTask">
+      <parameter name="server" value="mail.wyona.net"/>
+      <parameter name="from" value="andreas.hartmann@wyona.org"/>
+      <parameter name="uri" value="http://127.0.0.1:38080/wyona-cms/unipublic/authoring/newsletter/mail.xml"/>
+    </task>
+    <task id="clear" class="ch.unizh.unipublic.wyona.cms.ClearNewsletterTask"/>
   </task>
   
   <!-- hello world task -->

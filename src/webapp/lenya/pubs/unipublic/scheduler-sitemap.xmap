@@ -59,7 +59,7 @@
         <map:aggregate element="scheduler" prefix="sch" ns="http://www.wyona.org/2002/sch">
           <map:part src="cocoon:/document-types"/>
           <map:part src="cocoon:/tasks"/>
-          <map:part src="cocoon:/scheduler-xsp"/>
+          <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
           <map:part src="cocoon:/scheduler-servlet/{1}" strip-root="true"/>
         </map:aggregate>
         <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl">

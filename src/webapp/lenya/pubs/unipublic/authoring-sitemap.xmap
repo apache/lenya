@@ -16,10 +16,6 @@
         <publication type="unipublic"/>
       </map:transformer>
       <map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
-      <map:transformer name="sendmail" src="cxa.transformation.SendMailTransformer">
-        <parameter name="mailhost" value="mail.wyona.net"/>
-        <parameter name="from" value="andreas.hartmann@wyona.org"/>
-      </map:transformer>
     </map:transformers>
 
     <map:readers default="resource"/>
@@ -151,17 +147,13 @@
       <!-- ===================================================================== -->      
       <!-- Publish
            The task ID of the publishing task is forwarded as request parameter 
-           from the menu.
+           from the menu. This simplifies publishing of different document types.
       -->
       <!-- ===================================================================== -->      
       <map:match pattern="wyona/publishScreen*">
         <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
         <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl">
           <map:parameter name="use-request-parameters" value="true"/>
-<!--          
-          <map:parameter name="title" value="Publish Article"/>
-          <map:parameter name="action" value="publishArticle"/>
--->          
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
@@ -177,28 +169,8 @@
         </map:act>
       </map:match>
 
-      <!-- ===================================================================== -->      
-      <!-- Publish: Frontpage, etc. -->
-      <!-- ===================================================================== -->      
-<!--      
-      <map:match pattern="wyona/publishScreen*">
-        <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
-        <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <map:match pattern="wyona/publish*">
-        <map:act type="task">
-          <map:parameter name="task-id" value="publish"/>
-          <map:redirect-to uri="{parent_uri}" session="true"/>
-        </map:act>
-        <map:redirect-to uri="publishScreen?status=failed" session="true"/>
-      </map:match>
--->
     </map:pipeline>
     <!-- /Publisher  -->
-
-
 
 
 
@@ -376,7 +348,6 @@
 
       <!-- Newsletter -->
       <map:match pattern="newsletter/">
-<!--        <map:mount uri-prefix="newsletter/" src="newsletter-sitemap.xmap" check-reload="true" reload-method="synchron"/>-->
         <map:redirect-to uri="newsletter/index.html"/>
       </map:match>
 
@@ -394,21 +365,55 @@
           <map:part src="cocoon:/menus/newsletter.xml"/>
           <map:part src="cocoon:/newsletter/index.xml" element="cmsbody"/>
         </map:aggregate>
-<!--        <map:serialize type="xml"/>-->
         <map:transform src="stylesheets/publication/Page/Newsletter/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
+      <map:match pattern="newsletter/send-screen.html">
+        <map:generate type="serverpages" src="../../docs/cms/util/session-attributes.xsp"/>
+        <map:transform src="../../stylesheets/cms/Page/util/task-page.xsl">
+          <map:parameter name="title" value="Dispatch Newsletter"/>
+          <map:parameter name="action" value="authoring/newsletter/send"/>
+          <map:parameter name="message" value="Do you really want to dispatch the newsletter?"/>
+        </map:transform>
+        <map:transform src="../../stylesheets/cms/Page/util/page2html.xsl"/>
+        <map:serialize/>
+      </map:match>
+      
+      <map:match pattern="newsletter/send">
+        <map:act type="task">
+          <map:parameter name="task-id" value="send-newsletter"/>
+          <map:redirect-to uri="report-success.html" session="true"/>
+        </map:act>
+        <map:redirect-to uri="report-failure.html" session="true"/>
+      </map:match>
+      
+      <map:match pattern="newsletter/mail.xml">
+        <map:generate src="cocoon:/newsletter/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Newsletter/newsletter-mail.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match pattern="newsletter/report-*.html">
+        <map:generate type="serverpages" src="../../docs/cms/util/session-attributes.xsp"/>
+        <map:transform src="stylesheets/publication/Page/Newsletter/report.xsl">
+          <map:parameter name="result" value="{1}"/>
+        </map:transform>
+        <map:transform src="../../stylesheets/cms/Page/util/page2html.xsl"/>
+        <map:serialize/>
+      </map:match>
+      
+<!--      
       <map:match pattern="newsletter/send">
         <map:generate src="cocoon:/newsletter/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Newsletter/newsletter-mail.xsl"/>
-<!--        <map:serialize type="xml"/> -->
         <map:transform type="sendmail"/>
         <map:transform src="stylesheets/publication/Page/Newsletter/mail-result.xsl">
           <map:parameter name="context-prefix" value="/wyona-cms/unipublic"/>
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
+-->
 
 <!-- Dossiers -->
       <map:match pattern="dossiers/">

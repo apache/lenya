@@ -24,7 +24,7 @@
            <tr>
              <td colspan="3" valign="top" bgcolor="white" class="tsr-text">
               <div style="margin: 30px; font-size:medium">
-                <h1>Newsletter</h1>
+                <h1>Newsletter Preview</h1>
               
                 <table border="0" cellpadding="0" cellspacing="0">
                   <xsl:apply-templates select="email/*"/>

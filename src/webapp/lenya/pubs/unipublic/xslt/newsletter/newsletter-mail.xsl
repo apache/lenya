@@ -10,21 +10,19 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format"
-    xmlns:mail="http://cxa/cocoon/sendmail">
+    xmlns:mail="http://www.wyona.org/2002/mail">
 
 <xsl:output method="text"/>
     
-<xsl:strip-space elements="body"/>
+<xsl:strip-space elements="footer"/>
     
 <xsl:include href="articles.xsl"/>
     
 <!-- template rule matching source root element -->
 <xsl:template match="/">
-  <document>
-  <mail:sendmail>
+  <mail:mail>
     <xsl:apply-templates select="newsletter/email/*"/>
-    <mail:mailbody>
+    <mail:body>
       <xsl:value-of select="newsletter/title"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:call-template name="underline">
@@ -37,25 +35,28 @@
       <xsl:text>&#10;</xsl:text>
       <xsl:apply-templates select="newsletter/articles"/>
       <xsl:apply-templates select="newsletter/footer"/>
-    </mail:mailbody>
-  </mail:sendmail>
-  </document>
+    </mail:body>
+  </mail:mail>
+</xsl:template>
+
+<xsl:template match="text()">
+  <xsl:value-of select="normalize-space(.)"/>
 </xsl:template>
 
 <xsl:template match="br">
-<!--<xsl:text>&#10;</xsl:text>-->
+   <xsl:text>&#10;</xsl:text>
 </xsl:template>
 
 <xsl:template match="email/to">
-  <mail:mailto><xsl:apply-templates/></mail:mailto>
+  <mail:to><xsl:apply-templates/></mail:to>
 </xsl:template>
 
 <xsl:template match="email/cc">
-  <mail:mailcc><xsl:apply-templates/></mail:mailcc>
+  <mail:cc><xsl:apply-templates/></mail:cc>
 </xsl:template>
 
 <xsl:template match="email/subject">
-  <mail:mailsubject><xsl:apply-templates/></mail:mailsubject>
+  <mail:subject><xsl:apply-templates/></mail:subject>
 </xsl:template>
 
 <xsl:template match="articles">

@@ -38,4 +38,10 @@
   </tasks>
 </doc>
 
+<doc type="Newsletter">
+  <tasks>
+    <task id="send-newsletter"/>
+  </tasks>
+</doc>
+
 </doctypes>
