@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Adding a new Document Creator</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>Adding a new Menu Item: "New MyDocument"</title>
+
+<p>
+The Menubars can be found within the directory <code>config/menus</code>.
+Add the "New MyDocument" menu item to the appropriate menubar:
+
+<source>
+<![CDATA[
+<menus>
+  <menu name="File" label="File">
+    <block>
+      <item><xsp:attribute name="href">?lenya.usecase=create&amp;lenya.step=showscreen</xsp:attribute>New&#160;MyDocument</item>
+    </block>
+]]>
+</source>
+</p>
+
+</section>
+
+<section>
+<title>Adding usecase "create" to the sitemap</title>
+
+<p>
+The pipelines of the usecases are located within <code>usecase.xmap</code>:
+
+<source>
+<![CDATA[
+<map:pipeline>
+  <map:match pattern="*/*/*/*/*/index.html">
+    <map:match type="lenya-usecase" pattern="create">
+      <map:match type="lenya-step" pattern="showscreen">
+        <map:generate type="serverpages" src="../../content/authoring/parent-child.xsp"/>
+        <map:transform src="../../xslt/authoring/parent-child.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <map:match type="lenya-step" pattern="execute">
+        ...
+      </map:match>
+    </map:match>
+  </map:match>
+</map:pipeline>
+]]>
+</source>
+</p>
+
+</section>
+
+
+</body>
+</document>
