@@ -57,12 +57,10 @@
 
     <copy todir="${dist.src.dir}">
       <fileset dir=".">
-        <include name="README.txt"/>
-        <include name="INSTALL*"/>
-        <include name="build.properties.sample"/>
-        <include name="src/**"/>
-        <include name="${lib.dir}/**"/>
-        <include name="build.xml"/>
+        <exclude name="build.properties"/>
+        <exclude name=".classpath"/>
+        <exclude name=".cvsignore"/>
+        <exclude name=".project"/>
       </fileset>
     </copy>
 
