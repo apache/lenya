@@ -1,5 +1,5 @@
 /*
- * $Id: WGet.java,v 1.16 2003/02/07 12:14:22 ah Exp $
+ * $Id: WGet.java,v 1.17 2003/02/18 18:03:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,12 +59,6 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-
-/*
-import org.apache.regexp.RE;
-import org.apache.regexp.RESyntaxException;
-*/
-
 /**
  * DOCUMENT ME!
  *
@@ -97,11 +91,6 @@ public class WGet {
         try {
             WGet wget = new WGet();
 
-            /*
-                  //System.out.println(wget.grep("src=\"(.*)\"","<img src=\"wyonacmsunipublicimagegif\" alt=\"Image\"> <br> <img src=\"/wyona-cms/unipublic/another_image.gif\" alt=\"Another Image\">"));
-                  System.out.println(wget.grep("src=S(.*)E","<img src=SwyonacmsunipublicimagegifE alt=SImageE> <br> <img src=S/wyona-cms/unipublic/another_image.gifE alt=SAnother ImageE>"));
-                  if(true){return;}
-            */
             for (int i = 0; i < args.length; i++) {
                 if (args[i].indexOf("-P") == 0) {
                     wget.setDirectoryPrefix(args[i].substring(2)); // -P/home/wyona/download, 2: remove "-P"
@@ -110,7 +99,6 @@ public class WGet {
 
             byte[] response = wget.download(new URL(args[0]), "s/\\/wyona-cms\\/oscom//g");
 
-            //System.out.println(".main(): Response from remote server:\n\n"+new String(response));
         } catch (MalformedURLException e) {
             System.err.println(e);
         } catch (Exception e) {
@@ -160,10 +148,8 @@ public class WGet {
         try {
             sresponse = getResource(url);
 
-            //log.debug(".downloadUsingHttpClient(): Response from remote server: "+new String(sresponse));
             File file = new File(createFileName(url));
 
-            //File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
             saveToFile(file.getAbsolutePath(), sresponse);
 
             substitutePrefix(file.getAbsolutePath(), prefixSubstitute);
@@ -192,11 +178,9 @@ public class WGet {
                 try {
                     URL child_url = new URL(org.wyona.util.URLUtil.complete(url.toString(), link));
 
-                    //log.debug(".downloadUsingHttpClient(): Child URL: "+child_url);
                     byte[] child_sresponse = getResource(child_url);
                     saveToFile(createFileName(child_url), child_sresponse);
 
-                    //saveToFile(directory_prefix+File.separator+child_url.getHost()+":"+child_url.getPort()+child_url.getFile(),child_sresponse);
                 } catch (Exception e) {
                     log.error(".downloadUsingHttpClient(): " + e);
                 }
@@ -225,34 +209,36 @@ public class WGet {
         byte[] sresponse = bufferOut.toByteArray();
         httpConnection.disconnect();
 
-        //log.debug(".getResource(): Response from remote server: "+new String(sresponse));
         return sresponse;
     }
 
+
     /*
-      public URL[] getLinksViaCocoon(URL url) throws IOException, HttpException{
+    //FIXME: This is an unfinished attempt at getting the links via cocoon.
+    public URL[] getLinksViaCocoon(URL url) throws IOException, HttpException {
         log.debug(".getLinksViaCocoon(): "+url);
-
-        java.io.BufferedReader br=null;
-        try{
-          String linkViewQuery="cocoon-view=links";
-          String sURL = url.getFile();
-          URL links = new URL(url, sURL + ((sURL.indexOf("?") == -1) ? "?" : "&") + linkViewQuery);
-          java.net.URLConnection links_url_connection = links.openConnection();
-          java.io.InputStream is = links_url_connection.getInputStream();
-          br = new java.io.BufferedReader(new java.io.InputStreamReader(is));
-          String line;
-          while((line = br.readLine()) != null){
-            log.debug(".getLinksViaCocoon(): Link: "+line);
+	
+        java.io.BufferedReader br = null;
+        try {
+	    String linkViewQuery = "cocoon-view=links";
+	    String sURL = url.getFile();
+	    URL links = new URL(url, sURL + ((sURL.indexOf("?") == -1) ? "?" : "&") + linkViewQuery);
+	    java.net.URLConnection links_url_connection = links.openConnection();
+	    java.io.InputStream is = links_url_connection.getInputStream();
+	    br = new java.io.BufferedReader(new java.io.InputStreamReader(is));
+	    String line;
+	    while ((line = br.readLine()) != null) {
+		log.debug(".getLinksViaCocoon(): Link: "+line);
             }
-          }
+	}
         catch(Exception e){
-          log.error(".getLinksViaCocoon(): "+e);
-          }
-
+	    log.error(".getLinksViaCocoon(): "+e);
+	}
+	
         return null;
-        }
+    }
     */
+
     public List getLinks(URL url) throws IOException {
         log.debug(".getLinks(): Get links from " + url);
 
@@ -268,12 +254,6 @@ public class WGet {
         if (links != null) {
             log.debug(".getLinks(): Number of links found: " + links.size());
 
-            /*
-                  Iterator iterator=links.iterator();
-                  while(iterator.hasNext()){
-                    log.debug(".getLinks(): Another Link: "+(String)iterator.next());
-                    }
-            */
         }
 
         return links;
@@ -294,8 +274,6 @@ public class WGet {
         log.debug(".substitutePrefix(): " + filename + " " + prefixSubstitute);
 
         try {
-            //File file=new File(directory_prefix+"/127.0.0.1"+url.getFile());
-            //File file=new File(directory_prefix+"/127.0.0.1:48080"+url.getFile());
             File file = new File(filename);
             String command = "/usr/bin/sed --expression=" + prefixSubstitute + " " +
                 file.getAbsolutePath();
@@ -338,7 +316,6 @@ public class WGet {
             parent.mkdirs();
         }
 
-        //log.debug(".saveToFile(): Filename: "+file.getAbsolutePath());
         FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
         out.write(bytes);
         out.close();
@@ -354,31 +331,33 @@ public class WGet {
     public String createFileName(URL url) {
         File file = new File(directory_prefix + File.separator + url.getFile());
 
-        //File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
         return file.getAbsolutePath();
     }
 
     /*
-      public String grep(String pattern,String string){
-        try{
-          RE regexp=new RE(pattern);
-          if(regexp.match(string)){
-            log.debug("Pattern matched");
-            for(int i=0;i<regexp.getParenCount();i++){
-              log.debug("Parenthesis: "+regexp.getParen(i));
-              }
+    //FIXME: This is an unfinished attempt at using an internal grep
+    //like method to rewrite the URI when statically exporting the
+    //publication. At the moment we simply use sed (which of course
+    //doesn't work on some platforms)
+    public String grep(String pattern, String string) {
+        try {
+	    RE regexp = new RE(pattern);
+	    if (regexp.match(string)) {
+		log.debug("Pattern matched");
+		for (int i=0; i<regexp.getParenCount(); i++) {
+		    log.debug("Parenthesis: " + regexp.getParen(i));
+		}
+            } else{
+		log.debug("Pattern did not match");
             }
-          else{
-            log.debug("Pattern did not match");
-            }
-          return "Hello Levi";
-          }
-        catch(RESyntaxException e){
-          log.error(e);
-          return null;
-          }
-        }
+	    return "";
+	} catch (RESyntaxException e) {
+	    log.error(e);
+	    return null;
+	}
+    }
     */
+
     public byte[] runProcess(String command) throws Exception {
         Process process = Runtime.getRuntime().exec(command);
 
