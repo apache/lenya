@@ -27,9 +27,11 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 /**
+ * Describe class <code>ParentChildCreatorAction</code> here.
+ *
  * @author Michael Wechner
- * @created 2002.01.30
  * @version 2002.01.30
+ * @created 2002.01.30
  */
 public class ParentChildCreatorAction extends AbstractComplementaryConfigurableAction implements Configurable{
 /**
@@ -47,7 +49,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     if(src == null){
       getLogger().error ("No source: e.g. src=\"docs/wyona/cms/tree.xml\"");
       return null;
-      }
+    }
     org.apache.cocoon.environment.Source inputSource=resolver.resolve(src);
     getLogger().error("RESOLVED SOURCE: "+inputSource.getSystemId());
 
@@ -56,7 +58,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     if(request == null){
       getLogger().error ("No request object");
       return null;
-      }
+    }
     
     // Get parameters
     String parentid=request.getParameter("parentid");
@@ -66,21 +68,21 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     String doctype=request.getParameter("doctype");
     if(!validate(parentid,childid,childname,childtype,doctype)){
       return null;
-      }
+    }
 
     // Get session
     Session session=request.getSession(true);
     if(session == null){
       getLogger().error("No session object");
       return null;
-      }
+    }
 
     // Read tree
     String treefilename=inputSource.getSystemId().substring(5); // 5: remove protocol "file:"
     getLogger().error("Tree filename: "+treefilename);
     if(!new File(treefilename).exists()){
       return null;
-      }
+    }
     //InputStream in=intercept(new FileInputStream(treefilename));
     Document doc=new SAXReader().read("file:"+treefilename);
     Element trunk=(Element)doc.selectSingleNode("/tree/branch");
@@ -102,7 +104,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
       }
     getLogger().error("No child added");
     return null;
-    }
+  }
 /**
  *
  */
@@ -110,29 +112,37 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     getLogger().error(".validate(): parentid="+parentid+" ; childid="+childid+" ; childname="+childname+" ; childtype="+childtype+" ; doctype="+doctype);
     if((childid.indexOf(" ") >= 0) || (childid.length() == 0)){
       return false;
-      }
+    }
     if(childname.length() == 0){
       return false;
-      }
-    return true;
     }
-/**
- *
- */
+    return true;
+  }
+  /**
+   * Write input stream to Logger (for debugging)
+   *
+   * @param in an <code>InputStream</code> value
+   * @return an <code>InputStream</code> value
+   * @exception Exception if an error occurs
+   */
   private InputStream intercept(InputStream in) throws Exception{
     byte[] buffer=new byte[1024];
     int bytes_read;
     ByteArrayOutputStream bufferOut=new ByteArrayOutputStream();
     while((bytes_read=in.read(buffer)) != -1){
       bufferOut.write(buffer,0,bytes_read);
-      }
+    }
     getLogger().error("Intercepted Input Stream:\n\n"+bufferOut.toString());
     return new ByteArrayInputStream(bufferOut.toByteArray());
-    }
-/**
- *
- */
+  }
+  /**
+   * Write output stream to Logger (for debugging)
+   *
+   * @param out an <code>OutputStream</code> value
+   * @return an <code>OutputStream</code> value
+   * @exception Exception if an error occurs
+   */
   private OutputStream intercept(OutputStream out) throws Exception{
     return null;
-    }
+  }
   }
