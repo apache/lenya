@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: authoring-sitemap.xmap,v 1.32 2003/03/19 10:28:52 edith Exp $ -->
+<!-- $Id: authoring-sitemap.xmap,v 1.33 2003/03/24 11:29:21 edith Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
   <map:components>
@@ -242,7 +242,7 @@
 	  <map:part src="cocoon:/today"/>
 	</map:aggregate>
 	<map:transform src="xslt/authoring/main.xsl" label="content">
-	  <map:parameter name="id" value="/index.html"/>
+	  <map:parameter name="Id" value="/index.html"/>
 	  <map:parameter name="authoring" value="true"/>
 	</map:transform>
 	<map:transform src="xslt/authoring/images.xsl"/>

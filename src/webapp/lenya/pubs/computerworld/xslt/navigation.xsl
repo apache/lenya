@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:param name="id"/>
+<xsl:param name="Id"/>
 <xsl:param name="authoring"/>
 
 <xsl:variable name="prefix">/lenya/computerworld<xsl:if test="$authoring">/authoring</xsl:if></xsl:variable>
-
 <xsl:template match="span[@id = 'navigation']">
         <xsl:apply-templates select="/lenya/sitetree"/>
 </xsl:template>
@@ -25,7 +24,7 @@
 		<td width="16" height="16" valign="middle" align="right"><a href=""><img border="0" src="/img/layout/arrow-black.gif" width="9" height="7" alt="»" /></a></td>
 		<td width="124">
 		<xsl:choose>
-		<xsl:when test="@id = $id">
+		<xsl:when test="@id = $Id">
 			<a href="{$prefix}{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
@@ -47,7 +46,7 @@
 		<td width="16" height="16" valign="middle" align="right"><a href=""><img border="0" src="/img/layout/arrow-black.gif" width="9" height="7" alt="»" /></a></td>
 		<td width="124">
 		<xsl:choose>
-		<xsl:when test="@id = $id">
+		<xsl:when test="@id = $Id">
 			<a href="{$prefix}{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
@@ -69,7 +68,7 @@
 		<td width="16" height="16" valign="middle" align="right"><a href=""><img border="0" src="/img/layout/arrow-black.gif" width="9" height="7" alt="»" /></a></td>
 		<td width="124">
 		<xsl:choose>
-		<xsl:when test="@id = $id">
+		<xsl:when test="@id = $Id">
 			<a href="{$prefix}{$url}" class="txt-s-red"><xsl:value-of select="name/line" /></a>
 		</xsl:when>
 		<xsl:otherwise>
@@ -87,7 +86,6 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-
 	<!-- call small preview xslt here. -->
         <xsl:apply-templates select="/lenya/small-preview"/>
 
