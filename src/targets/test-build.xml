@@ -48,17 +48,17 @@
 
   <!-- Runs JUnit tests -->
   <target name="tests.junit"	depends="init, tests.prepare,
+  			test.identity,
   			test.workflow,
   			test.anttask"
   />
-  			
-<!-- test.identity -->
 
   
   <!-- Identity Test -->
   <target name="test.identity">
-    <java fork="yes" classname="junit.textui.TestRunner">
-      <arg value="org.apache.lenya.cms.ac.IdentityTestCase"/>
+    <java fork="yes" classname="org.apache.lenya.cms.ac.IdentityTestCase">
+      <arg value="${install.dir}"/>
+      <arg value="oscom"/>
       <classpath refid="classpath"/>
       <classpath>
         <pathelement location="${build.test}" />
@@ -75,8 +75,8 @@
     	classname="org.apache.lenya.cms.task.AntTaskTest"
     	>
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/> <!-- servlet context path -->
-      <arg value="${test.pub.id}"/> <!-- servlet context path -->
+      <arg value="${install.dir}"/>
+      <arg value="${test.pub.id}"/>
       <classpath refid="classpath"/>
       <classpath>
         <pathelement location="${build.test}" />
@@ -93,8 +93,8 @@
   <target name="test.workflow" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.workflow.WorkflowTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${install.dir}"/> <!-- servlet context path -->
-      <arg value="${test.pub.id}"/> <!-- publication id -->
+      <arg value="${install.dir}"/>
+      <arg value="${test.pub.id}"/>
       <arg value="simple"/> <!-- document type -->
       <classpath refid="classpath"/>
       <classpath>
