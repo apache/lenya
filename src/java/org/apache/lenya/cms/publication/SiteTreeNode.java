@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.10 2003/09/12 17:35:02 egli Exp $
+$Id: SiteTreeNode.java,v 1.11 2003/09/17 18:54:33 edith Exp $
 <License>
 
  ============================================================================
@@ -60,8 +60,8 @@ package org.apache.lenya.cms.publication;
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  *
- * @author $Author: egli $
- * @version $Revision: 1.10 $
+ * @author $Author: edith $
+ * @version $Revision: 1.11 $
  */
 public interface SiteTreeNode {
 
@@ -152,6 +152,12 @@ public interface SiteTreeNode {
      */
     SiteTreeNode[] removeChildren();
 
+	/**
+	 * Get the sitetreenodes, which are the siblings following this node
+	 * 
+	 * @return the children.
+	 */
+	SiteTreeNode[] getNextSiblings();
     /**
      * Call the visit method of the visitor, that mean
      * the operation that shall be perfoemed on this node

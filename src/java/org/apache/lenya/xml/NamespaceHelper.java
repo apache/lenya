@@ -1,5 +1,5 @@
 /*
-$Id: NamespaceHelper.java,v 1.14 2003/08/06 08:29:07 egli Exp $
+$Id: NamespaceHelper.java,v 1.15 2003/09/17 18:58:23 edith Exp $
 <License>
 
  ============================================================================
@@ -242,4 +242,17 @@ public class NamespaceHelper {
     public Element getFirstChild(Element element, String localName) {
         return DocumentHelper.getFirstChild(element, getNamespaceURI(), localName);
     }
+
+	/**
+	 * Returns the next siblings of an element with a local name in the namespace
+	 * of this NamespaceHelper or <code>null</code> if none exists.
+	 *
+	 * @param element The parent element.
+	 * @param localName The local name of the children to return.
+	 * 
+	 * @return the next siblings.
+	 */
+	public Element[] getNextSiblings(Element element, String localName) {
+		return DocumentHelper.getNextSiblings(element, getNamespaceURI(), localName);
+	}
 }

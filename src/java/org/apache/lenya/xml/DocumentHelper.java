@@ -91,7 +91,7 @@ import javax.xml.transform.stream.StreamResult;
  * Various utility methods to work with JAXP.
  *
  * @author Andreas Hartmann
- * @version $Id: DocumentHelper.java,v 1.20 2003/08/31 13:04:31 andreas Exp $
+ * @version $Id: DocumentHelper.java,v 1.21 2003/09/17 18:58:23 edith Exp $
  */
 public class DocumentHelper {
     /**
@@ -367,4 +367,45 @@ public class DocumentHelper {
 
         return buffer.toString();
     }
+
+
+	/**
+	 * Returns all following sibling elements of an element that belong to a certain namespace.
+	 * 
+	 * @param element The parent element.
+	 * @param namespaceUri The namespace that the childen must belong to.
+	 * 
+	 * @return The following sibling elements.
+	 */
+	public static Element[] getNextSiblings(Element element, String namespaceUri) {
+		return getNextSiblings(element, namespaceUri, "*");
+	}
+
+	/**
+	 * Returns all following sibling elements of an element that belong to a certain namespace.
+	 * and have a certain local name.
+	 * 
+	 * @param element The parent element.
+	 * @param namespaceUri The namespace that the childen must belong to.
+	 * @param localName The local name of the children.
+	 * 
+	 * @return The following sibling elements.
+	 */
+	public static Element[] getNextSiblings(Element element, String namespaceUri, String localName) {
+		List childElements = new ArrayList();
+        Element parent = (Element) element.getParentNode();
+		Element[] children=getChildren(parent, namespaceUri, localName);
+         
+		int l = children.length;
+		for (int i = 0; i < children.length; i++) {
+			if (children[i] == element) {
+            	l = i;
+			}
+			if (i>l){	   
+				childElements.add(children[i]);
+			}
+		}
+
+		return (Element[]) childElements.toArray(new Element[childElements.size()]);
+	}
 }
