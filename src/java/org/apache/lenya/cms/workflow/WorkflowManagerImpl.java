@@ -20,13 +20,18 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowEngine;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 
 /**
  * Workflow manager implementation.
@@ -44,14 +49,17 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             if (resolver.hasWorkflow(document)) {
-                WorkflowInstance instance = resolver.getWorkflowInstance(document);
+                WorkflowEngine engine = new WorkflowEngineImpl();
                 Situation situation = resolver.getSituation();
-                if (force && !instance.canInvoke(situation, event)) {
+                Workflow workflow = resolver.getWorkflowSchema(document);
+                if (force && !engine.canInvoke(document, workflow, situation, event)) {
                     throw new WorkflowException("The event [" + event
                             + "] cannot be invoked on the document [" + document
                             + "] in the situation [" + situation + "]");
                 }
-                instance.invoke(situation, event);
+                engine.invoke(document, workflow, situation, event);
+                
+                ((DefaultDocument) document).getHistory().save();
             }
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -102,9 +110,10 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             if (resolver.hasWorkflow(document)) {
-                WorkflowInstance instance = resolver.getWorkflowInstance(document);
+                Workflow workflow = resolver.getWorkflowSchema(document);
+                WorkflowEngine engine = new WorkflowEngineImpl();
                 Situation situation = resolver.getSituation();
-                canInvoke = instance.canInvoke(situation, event);
+                canInvoke = engine.canInvoke(document, workflow, situation, event);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -156,18 +165,31 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
     public void copyHistory(Document source, Document target) throws WorkflowException {
 
         WorkflowResolver resolver = null;
+        SourceResolver sourceResolver = null;
+        Source sourceHistory = null;
+        Source targetHistory = null;
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             if (resolver.hasWorkflow(source)) {
-                WorkflowInstance sourceInstance = resolver.getWorkflowInstance(source);
-                WorkflowInstance destinationInstance = resolver.getWorkflowInstance(target);
-                destinationInstance.getHistory().replaceWith(sourceInstance.getHistory());
+                
+                sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                
+                String sourceUri = ((DefaultDocument) source).getHistorySourceURI();
+                sourceHistory = sourceResolver.resolveURI(sourceUri);
+
+                String targetUri = ((DefaultDocument) target).getHistorySourceURI();
+                targetHistory = sourceResolver.resolveURI(targetUri);
+                
+                SourceUtil.copy(sourceHistory, (ModifiableSource) targetHistory, true);
             }
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
+            }
+            if (sourceResolver != null) {
+                this.manager.release(sourceResolver);
             }
         }
     }
@@ -187,43 +209,27 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
      */
     public void deleteHistory(Document sourceDocument) throws WorkflowException {
         WorkflowResolver resolver = null;
+        SourceResolver sourceResolver = null;
+        Source historySource = null;
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             if (resolver.hasWorkflow(sourceDocument)) {
-                WorkflowInstance sourceInstance = resolver.getWorkflowInstance(sourceDocument);
-                sourceInstance.getHistory().delete();
+                sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                String uri = ((DefaultDocument) sourceDocument).getHistorySourceURI();
+                historySource = sourceResolver.resolveURI(uri);
+                ((ModifiableSource) historySource).delete();
             }
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             throw new WorkflowException(e);
         } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
             }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.workflow.WorkflowManager#initializeHistory(org.apache.lenya.cms.publication.Document)
-     */
-    public void initializeHistory(Document document) throws WorkflowException {
-        DocumentTypeResolver doctypeResolver = null;
-        WorkflowResolver workflowResolver = null;
-        try {
-            doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-            workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-
-            DocumentType doctype = doctypeResolver.resolve(document);
-
-            if (doctype.hasWorkflow()) {
-                Situation situation = workflowResolver.getSituation();
-                workflowResolver.getWorkflowInstance(document).getHistory().initialize(situation);
-            }
-
-        } catch (ServiceException e) {
-            throw new WorkflowException(e);
-        } finally {
-            if (doctypeResolver != null) {
-                this.manager.release(doctypeResolver);
+            if (sourceResolver != null) {
+                if (historySource != null) {
+                    sourceResolver.release(historySource);
+                }
+                this.manager.release(sourceResolver);
             }
         }
     }

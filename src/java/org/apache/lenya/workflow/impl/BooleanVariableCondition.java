@@ -20,14 +20,16 @@
 package org.apache.lenya.workflow.impl;
 
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Version;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Implementation of a boolean variable condition.
  */
 public class BooleanVariableCondition extends AbstractCondition {
-    
+
     private String variableName;
     private boolean value;
 
@@ -54,13 +56,13 @@ public class BooleanVariableCondition extends AbstractCondition {
         super.setExpression(expression);
         String[] sides = expression.split("=");
         if (sides.length != 2) {
-            throw new WorkflowException(
-                "The expression '" + expression + "' must be of the form 'name = [true|false]'");
+            throw new WorkflowException("The expression '" + expression
+                    + "' must be of the form 'name = [true|false]'");
         }
-        
+
         this.variableName = sides[0].trim();
         this.value = Boolean.valueOf(sides[1].trim()).booleanValue();
-        
+
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Expression:    [" + sides[1].trim() + "]");
             getLogger().debug("Setting value: [" + this.value + "]");
@@ -68,15 +70,25 @@ public class BooleanVariableCondition extends AbstractCondition {
     }
 
     /**
-     * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.WorkflowInstance)
+     * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Workflow,
+     *      org.apache.lenya.workflow.Situation,
+     *      org.apache.lenya.workflow.Workflowable)
      */
-    public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
+public boolean isComplied(Workflow workflow, Situation situation, Workflowable workflowable) throws WorkflowException {
+        Version latestVersion = workflowable.getLatestVersion();
+        boolean value = false;
+        if (latestVersion == null) {
+            value = workflow.getInitialValue(getVariableName());
+        }
+        else {
+            value = latestVersion.getValue(getVariableName());
+        }
+        
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Checking boolean variable condition");
             getLogger().debug("    Condition value: [" + getValue() + "]");
-            getLogger().debug("    Variable value:  [" + instance.getValue(getVariableName()) + "]");
+            getLogger().debug("    Variable value:  [" + value + "]");
         }
-        return instance.getValue(getVariableName()) == getValue();
+        return value == getValue();
     }
-
 }

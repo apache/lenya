@@ -21,14 +21,12 @@ package org.apache.lenya.cms.workflow;
 
 import java.util.Date;
 
-import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.State;
-import org.apache.lenya.workflow.impl.Version;
+import org.apache.lenya.workflow.impl.VersionImpl;
 
 /**
  * A CMS version
  */
-public class CMSVersion extends Version {
+public class CMSVersion extends VersionImpl {
     
     private Date date;
 
@@ -69,7 +67,7 @@ public class CMSVersion extends Version {
      * @param event The event.
      * @param state The state.
      */
-    public CMSVersion(Event event, State state) {
+    public CMSVersion(String event, String state) {
         super(event, state);
     }
     

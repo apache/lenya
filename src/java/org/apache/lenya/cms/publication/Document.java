@@ -24,11 +24,12 @@ import java.util.Date;
 
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * A CMS document.
  */
-public interface Document {
+public interface Document extends Workflowable {
     
     /**
      * The document namespace URI.

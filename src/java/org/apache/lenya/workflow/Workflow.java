@@ -44,15 +44,16 @@ public interface Workflow {
      * Returns the initial state of this workflow.
      * @return The initial state
      */
-    State getInitialState();
+    String getInitialState();
 
     /**
      * Returns the transitions that leave a state.
      * This method is used, e.g., to disable menu items.
      * @param state A state.
      * @return The transitions that leave the state.
+     * @throws WorkflowException if the state is not contained.
      */
-    Transition[] getLeavingTransitions(State state);
+    Transition[] getLeavingTransitions(String state) throws WorkflowException;
     
     /**
      * Returns the variable names.
@@ -64,4 +65,16 @@ public interface Workflow {
      * @return The name of this workflow.
      */
     String getName();
+    
+    /**
+     * @param variableName The variable name.
+     * @return The initial value of the variable.
+     * @throws WorkflowException if the variable does not exist.
+     */
+    boolean getInitialValue(String variableName) throws WorkflowException;
+    
+    /**
+     * @return The events.
+     */
+    String[] getEvents();
 }

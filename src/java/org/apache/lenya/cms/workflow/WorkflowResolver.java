@@ -18,9 +18,8 @@ package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * Class to resolve workflow-related objects.
@@ -42,12 +41,12 @@ public interface WorkflowResolver {
     boolean hasWorkflow(Document document);
 
     /**
-     * Resolves the workflow instance of a document.
+     * Resolves the workflow schema of a document.
      * @param document The document.
-     * @return A workflow instance.
+     * @return A workflow schema.
      * @throws WorkflowException if the document has no workflow.
      */
-    WorkflowInstance getWorkflowInstance(Document document) throws WorkflowException;
+    Workflow getWorkflowSchema(Document document) throws WorkflowException;
 
     /**
      * Resolves the current workflow situation.
@@ -55,12 +54,4 @@ public interface WorkflowResolver {
      */
     Situation getSituation();
 
-    /**
-     * Creates a new synchronized workflow instances object..
-     * @param document The document to create the instances for.
-     * @return A synchronized workflow instances object.
-     * @throws WorkflowException when something went wrong.
-     */
-    SynchronizedWorkflowInstances getSynchronizedInstance(Document document)
-            throws WorkflowException;
 }

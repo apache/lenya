@@ -30,7 +30,9 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowEngine;
+import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 import org.apache.log4j.Logger;
 
 /**
@@ -210,13 +212,13 @@ public class WorkflowInvoker extends ParameterWrapper {
 
             try {
                 WorkflowFactory factory = WorkflowFactory.newInstance();
-                SynchronizedWorkflowInstances instance = factory
-                        .buildSynchronizedInstance(this.document);
+                WorkflowEngine engine = new WorkflowEngineImpl();
                 Situation situation = factory.buildSituation(getRoleIDs(), getUserId(),
                         getMachineIp());
+                Workflow workflow = factory.getWorkflow(this.document);
 
                 log.debug("Invoking transition.");
-                instance.invoke(situation, getEventName());
+                engine.invoke(this.document, workflow, situation, getEventName());
                 log.debug("Invoking transition completed.");
 
             } catch (Exception e) {

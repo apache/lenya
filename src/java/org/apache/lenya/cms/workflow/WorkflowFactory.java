@@ -21,27 +21,20 @@ package org.apache.lenya.cms.workflow;
 
 import java.io.File;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.util.LanguageVersions;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.lenya.workflow.impl.HistoryImpl;
-import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstancesImpl;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
-import org.apache.lenya.workflow.impl.WorkflowImpl;
 import org.apache.lenya.xml.DocumentHelper;
-import org.w3c.dom.Element;
 
 /**
  * Workflow factory.
@@ -63,81 +56,29 @@ public class WorkflowFactory {
     }
 
     /**
-     * Creates a new workflow instance.
-     * @param document The document to create the instance for.
-     * @return A workflow instance.
-     * @throws WorkflowException when something went wrong.
+     * @param document The document.
+     * @return The workflow of the document.
+     * @throws WorkflowException if the history is not initialized.
      */
-    public WorkflowInstance buildExistingInstance(Document document) throws WorkflowException {
-
-        File file = getHistoryFile(document);
-        WorkflowDocument workflowDocument = null;
-
-        if (file.exists()) {
-            org.w3c.dom.Document xml;
-            try {
-                xml = DocumentHelper.readDocument(file);
-            } catch (Exception e) {
-                throw new WorkflowException(e);
-            }
-
-            Element documentElement = xml.getDocumentElement();
-            String workflowName = documentElement.getAttribute(HistoryImpl.WORKFLOW_ATTRIBUTE);
-
-            workflowDocument = (WorkflowDocument) buildNewInstance(document, workflowName);
+    public Workflow getWorkflow(Document document) throws WorkflowException {
+        File historyFile = ((DefaultDocument) document).getHistoryFile();
+        
+        if (!historyFile.exists()) {
+            throw new WorkflowException("The history of [" + document + "] does not exist!");
         }
-
-        return workflowDocument;
-    }
-
-    /**
-     * Creates a new workflow instance.
-     * @param document The document to create the instance for.
-     * @param workflowName The name of the workflow.
-     * @return A workflow instance.
-     * @throws WorkflowException when something went wrong.
-     */
-    public WorkflowInstance buildNewInstance(Document document, String workflowName)
-            throws WorkflowException {
-
-        File workflowDirectory = new File(document.getPublication().getDirectory(),
-                WorkflowResolverImpl.WORKFLOW_DIRECTORY);
-        File workflowFile = new File(workflowDirectory, workflowName);
-
-        WorkflowBuilder builder = new WorkflowBuilder(new ConsoleLogger());
-        WorkflowImpl workflow = builder.buildWorkflow(workflowName, workflowFile);
-
-        WorkflowDocument workflowDocument = new WorkflowDocument(workflow, document);
-        ContainerUtil.enableLogging(workflowDocument, new ConsoleLogger());
-        return workflowDocument;
-    }
-
-    /**
-     * Creates a new synchronized workflow instances object..
-     * @param document The document to create the instances for.
-     * @return A synchronized workflow instances object.
-     * @throws WorkflowException when something went wrong.
-     */
-    public SynchronizedWorkflowInstances buildSynchronizedInstance(Document document)
-            throws WorkflowException {
-        assert document != null;
-        LanguageVersions versions;
+        
         try {
-            versions = new LanguageVersions(document);
-        } catch (DocumentException e) {
-            throw new WorkflowException(e);
+            org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(historyFile);
+            String workflowName = xmlDoc.getDocumentElement()
+                    .getAttribute(History.WORKFLOW_ATTRIBUTE);
+            WorkflowBuilder builder = new WorkflowBuilder(new ConsoleLogger());
+            File workflowDirectory = new File(document.getPublication().getDirectory(),
+                    WorkflowResolverImpl.WORKFLOW_DIRECTORY);
+            File workflowFile = new File(workflowDirectory, workflowName);
+            return builder.buildWorkflow(workflowName, workflowFile);
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
         }
-
-        Document[] documents = versions.getDocuments();
-        WorkflowInstance[] instances = new WorkflowInstance[documents.length];
-        for (int i = 0; i < documents.length; i++) {
-            instances[i] = buildExistingInstance(documents[i]);
-        }
-
-        SynchronizedWorkflowInstances set = new SynchronizedWorkflowInstancesImpl(instances,
-                buildExistingInstance(document));
-        ContainerUtil.enableLogging(set, new ConsoleLogger());
-        return set;
     }
 
     /**
@@ -147,8 +88,7 @@ public class WorkflowFactory {
      */
     public static void deleteHistory(Document document) throws WorkflowException {
         assert document != null;
-        WorkflowInstance instance = WorkflowFactory.newInstance().buildExistingInstance(document);
-        instance.getHistory().delete();
+        ((DefaultDocument) document).getHistoryFile().delete();
     }
 
     /**

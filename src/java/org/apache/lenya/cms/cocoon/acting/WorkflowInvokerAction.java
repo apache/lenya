@@ -32,7 +32,9 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowEngine;
+import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 
 /**
  * Action to invoke a workflow transition independently from the request document URL. Parameters:
@@ -97,10 +99,11 @@ public class WorkflowInvokerAction extends ServiceableAction {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("    Invoking workflow event");
                 }
-
-                SynchronizedWorkflowInstances instance = workflowResolver.getSynchronizedInstance(document);
+                
+                Workflow workflow = workflowResolver.getWorkflowSchema(document);
                 Situation situation = workflowResolver.getSituation();
-                instance.invoke(situation, eventName);
+                WorkflowEngine engine = new WorkflowEngineImpl();
+                engine.invoke(document, workflow, situation, eventName);
             } else {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("    Document has no workflow.");

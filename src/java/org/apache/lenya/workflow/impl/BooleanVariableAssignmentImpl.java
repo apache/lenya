@@ -20,9 +20,8 @@
 package org.apache.lenya.workflow.impl;
 
 import org.apache.lenya.workflow.BooleanVariableAssignment;
+import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
-
 
 /**
  * Implementation of a boolean variable assignment.
@@ -31,23 +30,22 @@ public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment 
     
     /**
      * Ctor.
-     * @param _variable The variable.
-     * @param _value The value.
+     * @param name The variable name.
+     * @param value The value.
      */
-    protected BooleanVariableAssignmentImpl(BooleanVariableImpl _variable, boolean _value) {
-        this.variable = _variable;
-        this.value = _value;
+    protected BooleanVariableAssignmentImpl(String name, boolean value) {
+        this.variable = name;
+        this.value = value;
     }
 
-    private BooleanVariableImpl variable;
+    private String variable;
     private boolean value;
 
     /**
-     * @see org.apache.lenya.workflow.BooleanVariableAssignment#execute(org.apache.lenya.workflow.WorkflowInstance instance)
+     * @see org.apache.lenya.workflow.Action#execute(org.apache.lenya.workflow.Version)
      */
-    public void execute(WorkflowInstance instance) throws WorkflowException {
-        WorkflowInstanceImpl impl = (WorkflowInstanceImpl) instance;
-        impl.getVariableInstance(getVariable()).setValue(getValue());
+    public void execute(Version resultingVersion) throws WorkflowException {
+        resultingVersion.setValue(getVariable(), getValue());
     }
 
     /**
@@ -62,7 +60,7 @@ public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment 
      * Returns the variable of this assignment.
      * @return A variable.
      */
-    public BooleanVariableImpl getVariable() {
+    public String getVariable() {
         return this.variable;
     }
 }

@@ -20,14 +20,11 @@
 package org.apache.lenya.workflow.impl;
 
 import org.apache.lenya.workflow.Action;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
-
 
 /**
  * Basic action implementation.
  */
-public class ActionImpl implements Action {
+public abstract class ActionImpl implements Action {
     
     /**
      * Creates a new instance of ActionImpl.
@@ -54,10 +51,4 @@ public class ActionImpl implements Action {
         return getId();
     }
 
-    /**
-     * @see org.apache.lenya.workflow.Action#execute(org.apache.lenya.workflow.WorkflowInstance)
-     */
-    public void execute(WorkflowInstance instance) throws WorkflowException {
-        // do nothing
-    }
 }

@@ -22,28 +22,22 @@ package org.apache.lenya.workflow.impl;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
-import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Transition;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Implementation of a transition.
  */
 public class TransitionImpl extends AbstractLogEnabled implements Transition {
-    
-    
+
     /**
      * Ctor.
      * @param sourceState The source state.
      * @param destinationState The destination state.
      */
-    protected TransitionImpl(StateImpl sourceState, StateImpl destinationState) {
+    protected TransitionImpl(String sourceState, String destinationState) {
         this.source = sourceState;
         this.destination = destinationState;
     }
@@ -70,8 +64,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
     private List conditions = new ArrayList();
 
     /**
-     * Returns the conditions which are assigned to this transition.
-     * @return An array of conditions.
+     * @see org.apache.lenya.workflow.Transition#getConditions()
      */
     public Condition[] getConditions() {
         return (Condition[]) this.conditions.toArray(new Condition[this.conditions.size()]);
@@ -85,13 +78,13 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
         this.conditions.add(condition);
     }
 
-    private Event event;
+    private String event;
 
     /**
      * Returns the event which invokes this transition.
      * @return An event.
      */
-    public Event getEvent() {
+    public String getEvent() {
         return this.event;
     }
 
@@ -99,51 +92,26 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * Sets the event to invoke this transition.
      * @param anEvent An event.
      */
-    public void setEvent(Event anEvent) {
+    public void setEvent(String anEvent) {
         this.event = anEvent;
     }
 
-    private StateImpl source;
+    private String source;
 
     /**
-     * Returns the source state of this transition.
-     * @return A state.
+     * @see org.apache.lenya.workflow.Transition#getSource()
      */
-    public StateImpl getSource() {
+    public String getSource() {
         return this.source;
     }
 
-    private StateImpl destination;
+    private String destination;
 
     /**
-     * Returns the destination state of this transition.
-     * @return A state.
+     * @see org.apache.lenya.workflow.Transition#getDestination()
      */
-    public StateImpl getDestination() {
+    public String getDestination() {
         return this.destination;
-    }
-
-    /** 
-     * Returns if the transition can fire in a certain situation.
-     * @param situation The situation.
-     * @param instance The workflow instance.
-     * @throws WorkflowException when an error occurs.
-     * @return A boolean value.
-     */
-    public boolean canFire(Situation situation, WorkflowInstance instance) throws WorkflowException {
-        Condition[] _conditions = getConditions();
-        boolean canFire = true;
-
-        int i = 0;
-        while (canFire && i < _conditions.length) {
-            canFire = canFire && _conditions[i].isComplied(situation, instance);
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Condition [" + _conditions[i] + "] returns [" + canFire + "]");
-            }
-            i++;
-        }
-
-        return canFire;
     }
 
     /**
@@ -151,7 +119,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      */
     public String toString() {
         StringBuffer buf = new StringBuffer();
-        buf.append(getEvent().getName() + " [");
+        buf.append(getEvent() + " [");
         Condition[] _conditions = getConditions();
 
         for (int i = 0; i < _conditions.length; i++) {

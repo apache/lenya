@@ -14,14 +14,39 @@
  *  limitations under the License.
  *
  */
-
-/* $Id$  */
-
 package org.apache.lenya.workflow;
 
 /**
- * Workflow state.
+ * A version of the workflow history.
+ * 
+ * @version $Id:$
  */
-public interface State {
-    // do nothing
+public interface Version {
+    
+    /**
+     * Returns the event.
+     * @return An event.
+     */
+    String getEvent();
+
+    /**
+     * Returns the state.
+     * @return A state.
+     */
+    String getState();
+    
+    /**
+     * Returns the value of a variable.
+     * @param variableName The variable name.
+     * @return A boolean value.
+     */
+    boolean getValue(String variableName);
+
+    /**
+     * Sets a variable value.
+     * @param variableName The variable name.
+     * @param value The value.
+     */
+    void setValue(String variableName, boolean value);
+    
 }

@@ -20,7 +20,8 @@ import java.util.Arrays;
 
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.Version;
+import org.apache.lenya.workflow.Workflow;
 
 /**
  * Super class for site related usecases.
@@ -41,12 +42,22 @@ public class SiteUsecase extends DocumentUsecase {
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             if (resolver.hasWorkflow(getSourceDocument())) {
-                WorkflowInstance instance = resolver.getWorkflowInstance(getSourceDocument());
-                setParameter(STATE, instance.getCurrentState().toString());
-                String[] variableNames = instance.getWorkflow().getVariableNames();
-                if (Arrays.asList(variableNames).contains(ISLIVE)) {
-                    setParameter("islive", Boolean.valueOf(instance.getValue(ISLIVE)));
+                Workflow workflow = resolver.getWorkflowSchema(getSourceDocument());
+                String[] variableNames = workflow.getVariableNames();
+                Version latestVersion = getSourceDocument().getLatestVersion();
+                Boolean isLive = null;
+                if (latestVersion != null) {
+                    setParameter(STATE, latestVersion.getState().toString());
+                    if (Arrays.asList(variableNames).contains(ISLIVE)) {
+                        isLive = Boolean.valueOf(latestVersion.getValue(ISLIVE));
+                    }
+                } else {
+                    setParameter(STATE, workflow.getInitialState());
+                    if (Arrays.asList(variableNames).contains(ISLIVE)) {
+                        isLive = Boolean.valueOf(workflow.getInitialValue(ISLIVE));
+                    }
                 }
+                setParameter("islive", isLive);
             } else {
                 setParameter("state", "");
             }

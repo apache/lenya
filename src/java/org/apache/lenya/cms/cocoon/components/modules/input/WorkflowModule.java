@@ -23,11 +23,12 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.Version;
+import org.apache.lenya.workflow.Workflow;
 
 /**
  * Module for workflow access.
@@ -67,17 +68,31 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             if (document != null) {
                 resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
                 if (resolver.hasWorkflow(document)) {
-                    WorkflowInstance instance = resolver.getWorkflowInstance(document);
+                    
+                    Version latestVersion = document.getLatestVersion();
+                    
                     if (name.equals(STATE)) {
-                        value = instance.getCurrentState().toString();
+                        if (latestVersion == null) {
+                            Workflow workflow = resolver.getWorkflowSchema(document);
+                            value = workflow.getInitialState();
+                        }
+                        else {
+                            value = latestVersion.getState();
+                        }
                     } else if (name.startsWith(VARIABLE_PREFIX)) {
                         String variableName = name.substring(VARIABLE_PREFIX.length());
-                        String[] variableNames = instance.getWorkflow().getVariableNames();
+                        Workflow workflow = resolver.getWorkflowSchema(document);
+                        String[] variableNames = workflow.getVariableNames();
                         if (Arrays.asList(variableNames).contains(variableName)) {
-                            value = Boolean.valueOf(instance.getValue(variableName));
+                            if (latestVersion == null) {
+                                value = Boolean.valueOf(workflow.getInitialValue(variableName));
+                            }
+                            else {
+                                value = Boolean.valueOf(latestVersion.getValue(variableName));
+                            }
                         }
                     } else if (name.equals(HISTORY_PATH)) {
-                        value = ((CMSHistory) instance.getHistory()).getHistoryPath();
+                        value = ((DefaultDocument) document).getHistoryFile().getAbsolutePath();
                     } else {
                         throw new ConfigurationException("The attribute [" + name
                                 + "] is not supported!");

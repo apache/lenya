@@ -14,26 +14,31 @@
  *  limitations under the License.
  *
  */
-
-/* $Id$  */
-
 package org.apache.lenya.workflow;
 
-
 /**
- * An instance of a boolean variable.
+ * Interface for objects which can be workflowed.
+ *
+ * @version $Id:$
  */
-public interface BooleanVariableInstance {
+public interface Workflowable {
+
+    /**
+     * @return The versions in chronological order.
+     */
+    Version[] getVersions();
     
     /**
-     * Sets the value of this variable.
-     * @param value A boolean value.
+     * @return The latest version.
      */
-    void setValue(boolean value);
-
+    Version getLatestVersion();
+    
     /**
-     * Returns the value of this variable.
-     * @return A boolean value.
+     * Adds a new version.
+     * @param workflow The workflow.
+     * @param version The version.
+     * @param situation The situation in which the version was added.
      */
-    boolean getValue();
+    void newVersion(Workflow workflow, Version version, Situation situation);
+    
 }

@@ -110,10 +110,4 @@ public interface WorkflowManager {
      */
     void deleteHistory(Document document) throws WorkflowException;
 
-    /**
-     * Initializes the workflow history of a document.
-     * @param document The document.
-     * @throws WorkflowException if an error occurs.
-     */
-    void initializeHistory(Document document) throws WorkflowException;
 }

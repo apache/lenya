@@ -35,8 +35,10 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowEngine;
 import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 
 /**
  * If the client requested invoking a workflow event, this authorizer checks if the current document
@@ -83,24 +85,10 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                     workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
 
                     if (workflowResolver.hasWorkflow(document)) {
-                        SynchronizedWorkflowInstances instance = workflowResolver.getSynchronizedInstance(document);
-
-                        authorized = false;
-
+                        Workflow workflow = workflowResolver.getWorkflowSchema(document);
                         Situation situation = workflowResolver.getSituation();
-                        String[] events = instance.getExecutableEvents(situation);
-                        int i = 0;
-
-                        while (!authorized && (i < events.length)) {
-                            if (events[i].equals(event)) {
-                                authorized = true;
-                            }
-                            if (getLogger().isDebugEnabled()) {
-                                getLogger().debug("    Event [" + events[i] + "] is executable.");
-                            }
-
-                            i++;
-                        }
+                        WorkflowEngine engine = new WorkflowEngineImpl();
+                        authorized = engine.canInvoke(document, workflow, situation, event);
                     }
                 }
             } catch (final ServiceException e) {

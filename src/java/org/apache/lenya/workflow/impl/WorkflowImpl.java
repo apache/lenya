@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.Transition;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
@@ -39,13 +38,13 @@ public class WorkflowImpl implements Workflow {
      * @param _name The name.
      * @param _initialState the initial state of the workflow.
      */
-    protected WorkflowImpl(String _name, StateImpl _initialState) {
+    protected WorkflowImpl(String _name, String _initialState) {
         this.initialState = _initialState;
         this.name = _name;
         addState(_initialState);
     }
 
-    private State initialState;
+    private String initialState;
     private String name;
 
     /**
@@ -53,19 +52,19 @@ public class WorkflowImpl implements Workflow {
      * @return The initial state.
      *  
      */
-    public State getInitialState() {
+    public String getInitialState() {
         return this.initialState;
     }
 
     private Set transitions = new HashSet();
-    private Map states = new HashMap();
+    private Set states = new HashSet();
 
     /**
      * Adds a state.
      * @param state A state.
      */
-    private void addState(StateImpl state) {
-        this.states.put(state.getId(), state);
+    private void addState(String state) {
+        this.states.add(state);
     }
 
     /**
@@ -87,27 +86,13 @@ public class WorkflowImpl implements Workflow {
     }
 
     /**
-     * Returns the destination state of a transition.
-     * @param transition A transition.
-     * @return The destination state.
-     *  
+     * @see org.apache.lenya.workflow.Workflow#getLeavingTransitions(java.lang.String)
      */
-    protected State getDestination(Transition transition) {
-        return ((TransitionImpl) transition).getDestination();
-    }
-
-    /**
-     * Returns the transitions that leave a state.
-     * @param state A state.
-     * @return The transitions that leave the state.
-     *  
-     */
-    public Transition[] getLeavingTransitions(State state) {
+    public Transition[] getLeavingTransitions(String state) throws WorkflowException {
         Set leavingTransitions = new HashSet();
         TransitionImpl[] _transitions = getTransitions();
-
         for (int i = 0; i < _transitions.length; i++) {
-            if (_transitions[i].getSource() == state) {
+            if (_transitions[i].getSource().equals(state)) {
                 leavingTransitions.add(_transitions[i]);
             }
         }
@@ -121,54 +106,26 @@ public class WorkflowImpl implements Workflow {
      * @return <code>true</code> if the state is contained, <code>false</code>
      *         otherwise.
      */
-    protected boolean containsState(State state) {
-        return this.states.containsValue(state);
+    protected boolean containsState(String state) {
+        return this.states.contains(state);
     }
 
     /**
      * Returns the states.
      * @return An array of states.
      */
-    protected StateImpl[] getStates() {
-        return (StateImpl[]) this.states.values().toArray(new StateImpl[this.states.size()]);
+    protected String[] getStates() {
+        return (String[]) this.states.toArray(new String[this.states.size()]);
     }
 
-    /**
-     * Returns the state with a certain name.
-     * @param _name The state name.
-     * @return A state.
-     * @throws WorkflowException when the state does not exist.
-     */
-    protected StateImpl getState(String _name) throws WorkflowException {
-        if (!this.states.containsKey(_name)) {
-            throw new WorkflowException("Workflow does not contain the state '" + _name + "'!");
-        }
-
-        return (StateImpl) this.states.get(_name);
-    }
-
-    private Map events = new HashMap();
+    private Set events = new HashSet();
 
     /**
      * Adds an event.
      * @param event An event.
      */
-    protected void addEvent(EventImpl event) {
-        this.events.put(event.getName(), event);
-    }
-
-    /**
-     * Returns the event for a certain event name.
-     * @param _name A string.
-     * @return The event with this name.
-     * @throws WorkflowException when no event with the given name exists.
-     */
-    public EventImpl getEvent(String _name) throws WorkflowException {
-        if (!this.events.containsKey(_name)) {
-            throw new WorkflowException("Workflow does not contain the event '" + _name + "'!");
-        }
-
-        return (EventImpl) this.events.get(_name);
+    protected void addEvent(String event) {
+        this.events.add(event);
     }
 
     private Map variables = new HashMap();
@@ -221,5 +178,25 @@ public class WorkflowImpl implements Workflow {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflow#getInitialValue(java.lang.String)
+     */
+    public boolean getInitialValue(String variableName) throws WorkflowException {
+        BooleanVariableImpl[] variables = getVariables();
+        for (int i = 0; i < variables.length; i++) {
+            if (variables[i].getName().equals(variableName)) {
+                return variables[i].getInitialValue();
+            }
+        }
+        throw new WorkflowException("The variable [" + variableName + "] does not exist.");
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflow#getEvents()
+     */
+    public String[] getEvents() {
+        return (String[]) this.events.toArray(new String[this.events.size()]);
     }
 }

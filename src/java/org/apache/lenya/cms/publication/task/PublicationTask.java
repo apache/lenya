@@ -41,8 +41,10 @@ import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowEngine;
 import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 import org.apache.log4j.Logger;
 
 /**
@@ -158,21 +160,10 @@ public abstract class PublicationTask extends AbstractTask {
         if (factory.hasWorkflow(document)) {
             try {
                 Situation situation = getSituation();
-
-                SynchronizedWorkflowInstances instance;
-                try {
-                    instance = factory.buildSynchronizedInstance(document);
-                } catch (WorkflowException e) {
-                    throw new ExecutionException(e);
-                }
-                String event = getExecutableEvent(instance, situation);
-
-                if (event == null) {
-                    canFire = false;
-                }
+                Workflow workflow = factory.getWorkflow(document);
+                WorkflowEngine engine = new WorkflowEngineImpl();
+                canFire = engine.canInvoke(document, workflow, situation, getEventName());
             } catch (final ParameterException e) {
-                throw new ExecutionException(e);
-            } catch (final ExecutionException e) {
                 throw new ExecutionException(e);
             } catch (final WorkflowException e) {
                 throw new ExecutionException(e);
@@ -212,29 +203,12 @@ public abstract class PublicationTask extends AbstractTask {
             try {
                 String userId = getParameters().getParameter(PARAMETER_USER_ID);
                 String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
-
-                SynchronizedWorkflowInstances instance;
-                try {
-                    instance = factory.buildSynchronizedInstance(document);
-                } catch (WorkflowException e) {
-                    throw new ExecutionException(e);
-                }
+                
+                Workflow workflow = factory.getWorkflow(document);
                 Situation situation = factory.buildSituation(getRoleIDs(), userId, machineIp);
-
-                String event = getExecutableEvent(instance, situation);
-
-                assert event != null;
-
-                if (log.isDebugEnabled()) {
-                    log.debug("Invoking event [" + event + "]");
-                }
-                instance.invoke(situation, event);
-                if (log.isDebugEnabled()) {
-                    log.debug("Invoking transition completed.");
-                }
+                WorkflowEngine engine = new WorkflowEngineImpl();
+                engine.invoke(document, workflow, situation, getEventName());
             } catch (final ParameterException e) {
-                throw new ExecutionException(e);
-            } catch (final ExecutionException e) {
                 throw new ExecutionException(e);
             } catch (final WorkflowException e) {
                 throw new ExecutionException(e);
@@ -249,53 +223,12 @@ public abstract class PublicationTask extends AbstractTask {
     }
 
     /**
-     * Returns the executable event for the provided
-     * {@link #PARAMETER_WORKFLOW_EVENT}parameter.
-     * @param instance The workflow instance.
-     * @param situation The situation.
-     * @return An event.
-     * @throws WorkflowException when something went wrong.
-     * @throws ParameterException when the {@link #PARAMETER_WORKFLOW_EVENT}
-     *             parameter could not be resolved.
-     */
-    protected String getExecutableEvent(SynchronizedWorkflowInstances instance, Situation situation)
-            throws WorkflowException, ParameterException {
-
-        String workflowEvent = getEventName();
-
-        String event = null;
-        String[] events = instance.getExecutableEvents(situation);
-
-        if (log.isDebugEnabled()) {
-            log.debug("Workflow event name: [" + workflowEvent + "]");
-            log.debug("Resolved executable events.");
-        }
-
-        for (int i = 0; i < events.length; i++) {
-            if (events[i].equals(workflowEvent)) {
-                event = events[i];
-            }
-        }
-
-        if (log.isDebugEnabled()) {
-            log.debug("Executable event found: [" + event + "]");
-        }
-
-        if (event == null) {
-            log.error("Event [" + workflowEvent + "] cannot be invoked!");
-        }
-
-        return event;
-    }
-
-    /**
      * Returns the workflow event name.
      * @return A string.
      * @throws ParameterException when the parameter does not exist.
      */
     protected String getEventName() throws ParameterException {
-        String workflowEvent = getParameters().getParameter(PARAMETER_WORKFLOW_EVENT);
-        return workflowEvent;
+        return getParameters().getParameter(PARAMETER_WORKFLOW_EVENT);
     }
 
     /**

@@ -20,15 +20,11 @@
 package org.apache.lenya.workflow.impl;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
-import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
-import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
@@ -80,20 +76,14 @@ public class WorkflowBuilder extends AbstractLogEnabled {
     protected WorkflowImpl buildWorkflow(String name, Document document) throws WorkflowException {
 
         Element root = document.getDocumentElement();
-        StateImpl initialState = null;
-
-        Map states = new HashMap();
-        Map events = new HashMap();
-        Map variables = new HashMap();
+        String initialState = null;
 
         // load states
         NodeList stateElements = root.getElementsByTagNameNS(Workflow.NAMESPACE, STATE_ELEMENT);
 
         for (int i = 0; i < stateElements.getLength(); i++) {
             Element element = (Element) stateElements.item(i);
-            StateImpl state = buildState(element);
-            String id = state.getId();
-            states.put(id, state);
+            String state = buildState(element);
 
             if (isInitialStateElement(element)) {
                 initialState = state;
@@ -109,7 +99,6 @@ public class WorkflowBuilder extends AbstractLogEnabled {
         for (int i = 0; i < variableElements.getLength(); i++) {
             Element element = (Element) variableElements.item(i);
             BooleanVariableImpl variable = buildVariable(element);
-            variables.put(variable.getName(), variable);
             workflow.addVariable(variable);
         }
 
@@ -117,9 +106,7 @@ public class WorkflowBuilder extends AbstractLogEnabled {
         NodeList eventElements = root.getElementsByTagNameNS(Workflow.NAMESPACE, EVENT_ELEMENT);
 
         for (int i = 0; i < eventElements.getLength(); i++) {
-            EventImpl event = buildEvent((Element) eventElements.item(i));
-            String id = event.getName();
-            events.put(id, event);
+            String event = buildEvent((Element) eventElements.item(i));
             workflow.addEvent(event);
         }
 
@@ -128,10 +115,7 @@ public class WorkflowBuilder extends AbstractLogEnabled {
                 TRANSITION_ELEMENT);
 
         for (int i = 0; i < transitionElements.getLength(); i++) {
-            TransitionImpl transition = buildTransition((Element) transitionElements.item(i),
-                    states,
-                    events,
-                    variables);
+            TransitionImpl transition = buildTransition((Element) transitionElements.item(i));
             workflow.addTransition(transition);
         }
 
@@ -172,34 +156,24 @@ public class WorkflowBuilder extends AbstractLogEnabled {
      * @param element An XML element.
      * @return A state.
      */
-    protected StateImpl buildState(Element element) {
-        String id = element.getAttribute(ID_ATTRIBUTE);
-        StateImpl state = new StateImpl(id);
-
-        return state;
+    protected String buildState(Element element) {
+        return element.getAttribute(ID_ATTRIBUTE);
     }
 
     /**
      * Builds a transition from an XML element.
      * @param element An XML element.
-     * @param states A map from state IDs to states.
-     * @param events A map from event IDs to events.
-     * @param variables A map from variable names to variables.
      * @return A transition.
      * @throws WorkflowException when something went wrong.
      */
-    protected TransitionImpl buildTransition(Element element, Map states, Map events, Map variables)
-            throws WorkflowException {
+    protected TransitionImpl buildTransition(Element element) throws WorkflowException {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Building transition");
         }
 
-        String sourceId = element.getAttribute(SOURCE_ATTRIBUTE);
-        String destinationId = element.getAttribute(DESTINATION_ATTRIBUTE);
-
-        StateImpl source = (StateImpl) states.get(sourceId);
-        StateImpl destination = (StateImpl) states.get(destinationId);
+        String source = element.getAttribute(SOURCE_ATTRIBUTE);
+        String destination = element.getAttribute(DESTINATION_ATTRIBUTE);
 
         TransitionImpl transition = new TransitionImpl(source, destination);
         ContainerUtil.enableLogging(transition, getLogger());
@@ -207,8 +181,7 @@ public class WorkflowBuilder extends AbstractLogEnabled {
         // set event
         Element eventElement = (Element) element.getElementsByTagNameNS(Workflow.NAMESPACE,
                 EVENT_ELEMENT).item(0);
-        String id = eventElement.getAttribute(ID_ATTRIBUTE);
-        Event event = (Event) events.get(id);
+        String event = eventElement.getAttribute(ID_ATTRIBUTE);
         transition.setEvent(event);
 
         if (getLogger().isDebugEnabled()) {
@@ -229,19 +202,20 @@ public class WorkflowBuilder extends AbstractLogEnabled {
                 ASSIGNMENT_ELEMENT);
 
         for (int i = 0; i < assignmentElements.getLength(); i++) {
-            BooleanVariableAssignmentImpl action = buildAssignment(variables,
-                    (Element) assignmentElements.item(i));
+            BooleanVariableAssignmentImpl action = buildAssignment((Element) assignmentElements
+                    .item(i));
             transition.addAction(action);
         }
 
         // load actions
-        NodeList actionElements = element
-                .getElementsByTagNameNS(Workflow.NAMESPACE, ACTION_ELEMENT);
-
-        for (int i = 0; i < actionElements.getLength(); i++) {
-            Action action = buildAction((Element) actionElements.item(i));
-            transition.addAction(action);
-        }
+        /*
+         * NodeList actionElements = element
+         * .getElementsByTagNameNS(Workflow.NAMESPACE, ACTION_ELEMENT);
+         * 
+         * for (int i = 0; i < actionElements.getLength(); i++) { Action action =
+         * buildAction((Element) actionElements.item(i));
+         * transition.addAction(action); }
+         */
 
         // set synchronization
         if (element.hasAttribute(SYNCHRONIZED_ATTRIBUTE)) {
@@ -257,11 +231,8 @@ public class WorkflowBuilder extends AbstractLogEnabled {
      * @param element An XML element.
      * @return An event.
      */
-    protected EventImpl buildEvent(Element element) {
-        String id = element.getAttribute(ID_ATTRIBUTE);
-        EventImpl event = new EventImpl(id);
-
-        return event;
+    protected String buildEvent(Element element) {
+        return element.getAttribute(ID_ATTRIBUTE);
     }
 
     private ConditionFactory conditionFactory = null;
@@ -284,18 +255,6 @@ public class WorkflowBuilder extends AbstractLogEnabled {
     }
 
     /**
-     * Builds an action from an XML element.
-     * @param element An XML element.
-     * @return An action.
-     */
-    protected Action buildAction(Element element) {
-        String id = element.getAttribute(ID_ATTRIBUTE);
-        Action action = new ActionImpl(id);
-
-        return action;
-    }
-
-    /**
      * Builds a boolean variable from an XML element.
      * @param element An XML element.
      * @return A boolean variable.
@@ -309,20 +268,17 @@ public class WorkflowBuilder extends AbstractLogEnabled {
 
     /**
      * Builds an assignment object from an XML element.
-     * @param variables A map from variable names to variables.
      * @param element An XML element.
      * @return An assignment object.
      * @throws WorkflowException when something went wrong.
      */
-    protected BooleanVariableAssignmentImpl buildAssignment(Map variables, Element element)
+    protected BooleanVariableAssignmentImpl buildAssignment(Element element)
             throws WorkflowException {
         String variableName = element.getAttribute(VARIABLE_ATTRIBUTE);
 
         String valueString = element.getAttribute(VALUE_ATTRIBUTE);
         boolean value = Boolean.valueOf(valueString).booleanValue();
 
-        BooleanVariableImpl variable = (BooleanVariableImpl) variables.get(variableName);
-
-        return new BooleanVariableAssignmentImpl(variable, value);
+        return new BooleanVariableAssignmentImpl(variableName, value);
     }
 }

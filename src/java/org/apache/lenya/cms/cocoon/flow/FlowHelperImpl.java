@@ -35,6 +35,7 @@ import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
@@ -46,10 +47,12 @@ import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.workflow.WorkflowDocument;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowEngine;
 import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 
 /**
  * Flowscript utility class. The FOM_Cocoon object is not passed in the
@@ -180,9 +183,12 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
      */
     public void triggerWorkflow(FOM_Cocoon cocoon, String event) throws WorkflowException,
             PageEnvelopeException, AccessControlException {
-        final WorkflowDocument wf = (WorkflowDocument) WorkflowFactory.newInstance()
-                .buildExistingInstance(getPageEnvelope(cocoon).getDocument());
-        wf.invoke(getSituation(cocoon), event);
+        
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        Document document = getPageEnvelope(cocoon).getDocument();
+        Workflow workflow = factory.getWorkflow(document);
+        WorkflowEngine engine = new WorkflowEngineImpl();
+        engine.invoke(document, workflow, getSituation(cocoon), event);
     }
 
     /**

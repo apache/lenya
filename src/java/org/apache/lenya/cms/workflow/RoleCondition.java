@@ -23,8 +23,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.Workflowable;
 import org.apache.lenya.workflow.impl.AbstractCondition;
 
 /**
@@ -52,9 +53,9 @@ public class RoleCondition extends AbstractCondition {
      * Returns if the condition is complied in a certain situation.
      * The condition is complied when the current user has the
      * role that is required by the RoleCondition.
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Situation, WorkflowInstance)
+     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Situation, Workflowable)
      */
-    public boolean isComplied(Situation situation, WorkflowInstance instance) {
+    public boolean isComplied(Workflow workflow, Situation situation, Workflowable instance) {
         CMSSituation situationImpl = (CMSSituation) situation;
         String[] roles = situationImpl.getRoleIds();
 

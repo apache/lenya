@@ -32,6 +32,12 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.workflow.CMSHistory;
+import org.apache.lenya.cms.workflow.History;
+import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Version;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * A typical CMS document.
@@ -371,6 +377,79 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public void accept(DocumentVisitor visitor) throws PublicationException {
         visitor.visitDocument(this);
+    }
+    
+    private History history;
+    
+    /**
+     * @return The workflow history.
+     */
+    public History getHistory() {
+        if (this.history == null) {
+            try {
+                this.history = new CMSHistory(this, getHistoryFile());
+            } catch (WorkflowException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.history;
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflowable#getVersions()
+     */
+    public Version[] getVersions() {
+        return getHistory().getVersions();
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflowable#getLatestVersion()
+     */
+    public Version getLatestVersion() {
+        Version[] versions = getVersions();
+        Version lastVersion = null;
+        if (versions.length > 0) {
+            lastVersion = versions[versions.length - 1];
+        }
+        return lastVersion;
+    }
+
+    /**
+     * Returns the history file inside the publication directory.
+     * @return A string.
+     */
+    public File getHistoryFile() {
+
+        DocumentIdToPathMapper pathMapper = getPublication().getPathMapper();
+        String documentPath = pathMapper.getPath(getId(), getLanguage());
+
+        String area = getArea();
+        if (!area.equals(Publication.ARCHIVE_AREA) && !area.equals(Publication.TRASH_AREA)) {
+            area = Publication.AUTHORING_AREA;
+        }
+
+        String path = CMSHistory.HISTORY_PATH + "/" + area + "/" + documentPath;
+        path = path.replace('/', File.separatorChar);
+        return new File(getPublication().getDirectory(), path);
+    }
+    
+    /**
+     * @return The source URI of the history file.
+     */
+    public String getHistorySourceURI() {
+        return getHistoryFile().toURI().toString();
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow, org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
+     */
+    public void newVersion(Workflow workflow, Version version, Situation situation) {
+        getHistory().newVersion(workflow, version, situation);
+    }
+
+    protected void save() throws DocumentException {
+        getDublinCore().save();
+        getHistory().save();
     }
 
 }

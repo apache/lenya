@@ -25,7 +25,6 @@ import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -71,6 +70,7 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
             try {
                 if (factory.hasWorkflow(srcDoc)) {
                     log("has workflow");
+                    /*
                     WorkflowInstance sourceInstance = factory.buildExistingInstance(srcDoc);
                     String workflowName = sourceInstance.getWorkflow().getName();
                     
@@ -79,8 +79,9 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
                     
                     sourceInstance.getHistory().delete();
                     log("workflow moved");
+                    */
                 }
-            } catch (WorkflowException e) {
+            } catch (Exception e) {
                 throw new BuildException(e);
             }
         }

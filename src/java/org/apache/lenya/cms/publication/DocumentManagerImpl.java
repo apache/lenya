@@ -58,18 +58,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
 
         siteManager.add(document);
-
-        WorkflowManager wfManager = null;
-        try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            wfManager.initializeHistory(document);
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
-        }
     }
 
     /**
@@ -115,7 +103,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         ResourcesManager resourcesManager = document.getResourcesManager();
         resourcesManager.deleteResources();
-
+        
         WorkflowManager workflowManager = null;
         try {
             workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);

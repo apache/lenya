@@ -20,200 +20,45 @@
 package org.apache.lenya.cms.workflow;
 
 import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.workflow.History;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Version;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.impl.HistoryImpl;
-import org.apache.lenya.workflow.impl.Version;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
 /**
  * The CMS history
  */
-public class CMSHistory extends HistoryImpl {
+public class CMSHistory extends History {
+    private Document document;
+
     /**
      * <code>HISTORY_PATH</code> The path to the workflow history
      */
     public static final String HISTORY_PATH = "content/workflow/history";
+    
     /**
-     * <code>IDENTITY_ELEMENT</code> The identity element
-     */
-    public static final String IDENTITY_ELEMENT = "identity";
-    /**
-     * <code>USER_ELEMENT</code> The user element
-     */
-    public static final String USER_ELEMENT = "user";
-    /**
-     * <code>MACHINE_ELEMENT</code> The machine element
-     */
-    public static final String MACHINE_ELEMENT = "machine";
-    /**
-     * <code>ID_ATTRIBUTE</code> The id attribute
-     */
-    public static final String ID_ATTRIBUTE = "id";
-    /**
-     * <code>IP_ATTRIBUTE</code> The IP attribute
-     */
-    public static final String IP_ATTRIBUTE = "ip-address";
-
-
-    /**
-     * Creates a new CMSHistory object.
-     * 
-     * @param workflowDocument the document to which the CMSHistory is attached
+     * Ctor.
+     * @param document The document.
+     * @param file The history file.
      * @throws WorkflowException if an error occurs.
      */
-    protected CMSHistory(WorkflowDocument workflowDocument) throws WorkflowException {
-        super(workflowDocument);
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.impl.HistoryImpl#createVersionElement(org.apache.lenya.xml.NamespaceHelper,
-     *      org.apache.lenya.workflow.Situation)
-     */
-    protected Element createVersionElement(NamespaceHelper helper, Situation situation) {
-        Element element = super.createVersionElement(helper, situation);
-
-        CMSSituation cmsSituation = (CMSSituation) situation;
-
-        Element identityElement = helper.createElement(IDENTITY_ELEMENT);
-        element.appendChild(identityElement);
-
-        String userId = cmsSituation.getUserId();
-        if (userId != null) {
-            identityElement.appendChild(generateUserElement(helper, userId));
-        }
-
-        String machineIp = cmsSituation.getMachineIp();
-        if (machineIp != null) {
-            identityElement.appendChild(generateMachineElement(helper, machineIp));
-        }
-
-        return element;
-    }
-
-    /**
-     * Creates an XML element describing the user.
-     * @param helper The namespace helper of the document.
-     * @param userId The user ID.
-     * @return An XML element.
-     */
-    protected Element generateUserElement(NamespaceHelper helper, String userId) {
-        Element userElement = null;
-        userElement = helper.createElement(USER_ELEMENT);
-        userElement.setAttribute(ID_ATTRIBUTE, userId);
-        return userElement;
-    }
-
-    /**
-     * Creates an XML element describing the machine.
-     * @param helper The namespace helper of the document.
-     * @param machineIp The machine IP address.
-     * @return An XML element.
-     */
-    protected Element generateMachineElement(NamespaceHelper helper, String machineIp) {
-        Element machineElement = null;
-        machineElement = helper.createElement(MACHINE_ELEMENT);
-        machineElement.setAttribute(IP_ATTRIBUTE, machineIp);
-        return machineElement;
-    }
-
-    /**
-     * Returns the path of the history file inside the publication directory.
-     * @return A string.
-     */
-    public String getHistoryPath() {
-        
-        Document document = ((WorkflowDocument) getInstance()).getDocument();
-        
-        DocumentIdToPathMapper pathMapper = document.getPublication().getPathMapper();
-        String documentPath = pathMapper.getPath(document.getId(), document.getLanguage());
-
-        String area = document.getArea();
-        if (!area.equals(Publication.ARCHIVE_AREA) && !area.equals(Publication.TRASH_AREA)) {
-            area = Publication.AUTHORING_AREA;
-        }
-
-        String path = HISTORY_PATH + "/" + area + "/" + documentPath;
-        path = path.replace('/', File.separatorChar);
-        return path;
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.impl.HistoryImpl#getHistoryFile()
-     */
-    protected File getHistoryFile() {
-        WorkflowDocument document = (WorkflowDocument) getInstance();
-        File historyFile = new File(document.getDocument().getPublication().getDirectory(),
-                getHistoryPath());
-        return historyFile;
-    }
-
-    /**
-     * Initializes the workflow history of another document using the same
-     * workflow schema like this history.
-     * @param newDocument The document to initialize the history for.
-     * @param situation The current situation.
-     * @throws WorkflowException when something went wrong.
-     */
-    protected void initialize(WorkflowDocument newDocument, Situation situation)
-            throws WorkflowException {
-        CMSHistory newHistory = new CMSHistory(newDocument);
-        newHistory.initialize(situation);
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.History#replaceWith(org.apache.lenya.workflow.History)
-     */
-    public void replaceWith(History otherHistory) throws WorkflowException {
-        CMSHistory history = (CMSHistory) otherHistory;
-        history.copy(getHistoryFile());
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.impl.HistoryImpl#restoreVersion(NamespaceHelper,
-     *      org.w3c.dom.Element)
-     */
-    protected Version restoreVersion(NamespaceHelper helper, Element element)
-            throws WorkflowException {
-        Version version = super.restoreVersion(helper, element);
-        CMSVersion cmsVersion = new CMSVersion(version.getEvent(), version.getState());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date;
-        try {
-            date = df.parse(element.getAttribute(DATE_ATTRIBUTE));
-        } catch (final ParseException e) {
-            throw new WorkflowException("Could not parse workflow date: ", e);
-        }
-        cmsVersion.setDate(date);
-
-        Element identityElement = helper.getFirstChild(element, IDENTITY_ELEMENT);
-        Element userElement = helper.getFirstChild(identityElement, USER_ELEMENT);
-        if (userElement != null) {
-            String userId = userElement.getAttribute(ID_ATTRIBUTE);
-            cmsVersion.setUserId(userId);
-        }
-
-        return cmsVersion;
+    public CMSHistory(Document document, File file) throws WorkflowException {
+        super(file);
+        this.document = document;
     }
 
     /**
      * Additionally to deleting the workflow history, the parent directories are
      * deleted up to the workflow history directory.
-     * @see org.apache.lenya.workflow.impl.HistoryImpl#delete()
+     * @see org.apache.lenya.cms.workflow.History#delete()
      */
     public void delete() throws WorkflowException {
         super.delete();
 
-        Document document = ((WorkflowDocument) getInstance()).getDocument();
         File stopDirectory = new File(document.getPublication().getDirectory(), HISTORY_PATH);
         if (!stopDirectory.isDirectory())
             throw new WorkflowException("Stop dir '" + stopDirectory.getAbsolutePath()
@@ -228,4 +73,89 @@ public class CMSHistory extends HistoryImpl {
         while (!parent.equals(stopDirectory) && parent.delete())
             parent = parent.getParentFile();
     }
+
+    /**
+     * CMS-specific version wrapper.
+     */
+    public class CMSVersionWrapper extends VersionWrapper {
+
+        private String userId;
+        private String machineIp;
+
+        /**
+         * @see org.apache.lenya.cms.workflow.History.VersionWrapper#getVersionElement(org.apache.lenya.xml.NamespaceHelper)
+         */
+        public Element getVersionElement(NamespaceHelper helper) {
+            Element element = super.getVersionElement(helper);
+
+            Element identityElement = helper.createElement(IDENTITY_ELEMENT);
+            if (this.userId != null) {
+                identityElement.appendChild(generateUserElement(helper, this.userId));
+            }
+
+            if (this.machineIp != null) {
+                identityElement.appendChild(generateMachineElement(helper, this.machineIp));
+            }
+            element.appendChild(identityElement);
+            return element;
+        }
+
+        /**
+         * @see org.apache.lenya.cms.workflow.History.VersionWrapper#initialize(org.apache.lenya.xml.NamespaceHelper,
+         *      org.w3c.dom.Element)
+         */
+        public void initialize(NamespaceHelper helper, Element element) {
+            super.initialize(helper, element);
+
+            Element identityElement = helper.getFirstChild(element, IDENTITY_ELEMENT);
+            Element userElement = helper.getFirstChild(identityElement, USER_ELEMENT);
+            if (userElement != null) {
+                this.userId = userElement.getAttribute(ID_ATTRIBUTE);
+            }
+            Element machineElement = helper.getFirstChild(identityElement, MACHINE_ELEMENT);
+            if (machineElement != null) {
+                this.machineIp = machineElement.getAttribute(IP_ATTRIBUTE);
+            }
+        }
+
+        /**
+         * @see org.apache.lenya.cms.workflow.History.VersionWrapper#initialize(org.apache.lenya.workflow.Workflow,
+         *      org.apache.lenya.workflow.Version,
+         *      org.apache.lenya.workflow.Situation)
+         */
+        public void initialize(Workflow workflow, Version version, Situation situation) {
+            super.initialize(workflow, version, situation);
+            CMSSituation cmsSituation = (CMSSituation) situation;
+            this.userId = cmsSituation.getUserId();
+            this.machineIp = cmsSituation.getMachineIp();
+        }
+
+        /**
+         * Creates an XML element describing the user.
+         * @param helper The namespace helper of the document.
+         * @param userId The user ID.
+         * @return An XML element.
+         */
+        protected Element generateUserElement(NamespaceHelper helper, String userId) {
+            Element userElement = null;
+            userElement = helper.createElement(USER_ELEMENT);
+            userElement.setAttribute(ID_ATTRIBUTE, userId);
+            return userElement;
+        }
+
+        /**
+         * Creates an XML element describing the machine.
+         * @param helper The namespace helper of the document.
+         * @param machineIp The machine IP address.
+         * @return An XML element.
+         */
+        protected Element generateMachineElement(NamespaceHelper helper, String machineIp) {
+            Element machineElement = null;
+            machineElement = helper.createElement(MACHINE_ELEMENT);
+            machineElement.setAttribute(IP_ATTRIBUTE, machineIp);
+            return machineElement;
+        }
+
+    }
+
 }

@@ -20,26 +20,25 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowEngine;
+import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -86,7 +85,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
                 int hrefIndex = attributes.getIndex("href");
                 if (hrefIndex > -1) {
 
-                    if (!containsEvent(event)) {
+                    if (!this.executableEvents.contains(event)) {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Removing href attribute");
                         }
@@ -139,36 +138,18 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             }
 
             if (hasWorkflow()) {
-                Situation situation = null;
-
-                try {
-                    setInstance(workflowResolver.getSynchronizedInstance(document));
-                    situation = workflowResolver.getSituation();
-                } catch (Exception e) {
-                    throw new ProcessingException(e);
-                }
-
-                try {
-                    this.events = getInstance().getExecutableEvents(situation);
-
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug("Executable events: ");
-                        for (int i = 0; i < this.events.length; i++) {
-                            getLogger().debug("    [" + this.events[i] + "]");
-                        }
+                WorkflowEngine engine = new WorkflowEngineImpl();
+                Situation situation = workflowResolver.getSituation();
+                Workflow workflow = workflowResolver.getWorkflowSchema(document);
+                String[] events = workflow.getEvents();
+                for (int i = 0; i < events.length; i++) {
+                    if (engine.canInvoke(document, workflow, situation, events[i])) {
+                        this.executableEvents.add(events[i]);
                     }
-
-                } catch (final WorkflowException e) {
-                    throw new ProcessingException(e);
                 }
+
             }
-        } catch (final ServiceException e) {
-            throw new ProcessingException(e);
-        } catch (final ProcessingException e) {
-            throw new ProcessingException(e);
-        } catch (final PublicationException e) {
-            throw new ProcessingException(e);
-        } catch (final PageEnvelopeException e) {
+        } catch (final Exception e) {
             throw new ProcessingException(e);
         }
         finally {
@@ -180,34 +161,8 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     }
 
     private boolean hasWorkflow;
-    private SynchronizedWorkflowInstances instance;
 
-    /**
-     * Get the workflow instance.
-     * @return a <code>WorkflowInstance</code>
-     */
-    protected SynchronizedWorkflowInstances getInstance() {
-        return this.instance;
-    }
-
-    private String[] events;
-
-    /**
-     * Returns if the events contain a specific event.
-     * @param eventName The name of the event to check for.
-     * @return A boolean value.
-     */
-    protected boolean containsEvent(String eventName) {
-        boolean result = false;
-
-        for (int i = 0; i < this.events.length; i++) {
-            if (this.events[i].equals(eventName)) {
-                result = true;
-            }
-        }
-
-        return result;
-    }
+    private Set executableEvents = new HashSet();
 
     /**
      * Returns if the current document has a workflow.
@@ -225,11 +180,4 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         this.hasWorkflow = _hasWorkflow;
     }
 
-    /**
-     * Sets the workflow instance for the current request.
-     * @param _instance A workflow instance.
-     */
-    public void setInstance(SynchronizedWorkflowInstances _instance) {
-        this.instance = _instance;
-    }
 }

@@ -27,8 +27,8 @@ public interface Action {
 	
     /**
      * Executes this action for a given workflow instance.
-     * @param instance the workflow instance
+     * @param resultingVersion The resulting version.
      * @throws WorkflowException if the execution failed
      */
-    void execute(WorkflowInstance instance) throws WorkflowException;
+    void execute(Version resultingVersion) throws WorkflowException;
 }
