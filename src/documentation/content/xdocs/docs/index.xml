@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index.xml,v 1.1 2004/07/01 23:59:25 thorsten Exp $ -->
+<!-- $Id: index.xml,v 1.2 2004/08/06 08:19:50 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -33,7 +33,7 @@
 details as well. The Components section will explain the building blocks that make up Lenya, such as the sitemap, publications, and tasks.</p>
 
 <p>
-More documentation (work in progress) can be found at the <link href="http://wiki.cocoondev.org/Wiki.jsp?page=Lenya">Cocoon Wiki</link>.
+More documentation (work in progress) can be found at the <link href="http://wiki.apache.org/cocoon-lenya/">Apache Lenya Wiki</link>.
 </p>
   </body>
 </document>
