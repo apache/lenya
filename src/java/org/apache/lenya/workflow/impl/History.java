@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.12 2003/09/01 17:02:32 andreas Exp $
+$Id: History.java,v 1.13 2003/09/02 17:46:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -439,8 +439,11 @@ public abstract class History implements WorkflowListener {
     protected Version restoreVersion(NamespaceHelper helper, Element element) throws WorkflowException {
         assert element.getLocalName().equals(VERSION_ELEMENT);
         
+        Event event = null;
         String eventId = element.getAttribute(EVENT_ATTRIBUTE);
-        Event event = getInstance().getWorkflowImpl().getEvent(eventId);
+        if (eventId != null) {
+            event = getInstance().getWorkflowImpl().getEvent(eventId);
+        }
 
         String stateId = element.getAttribute(STATE_ATTRIBUTE);
         State state = getInstance().getWorkflowImpl().getState(stateId);
