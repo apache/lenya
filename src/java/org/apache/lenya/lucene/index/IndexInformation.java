@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexInformation.java,v 1.13 2004/07/10 23:17:24 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 
@@ -31,13 +31,15 @@ import org.apache.log4j.Category;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 
+/**
+ * Helper class to hold indexing information
+ */
 public class IndexInformation {
     
     private static Category log = Category.getInstance(IndexInformation.class);
     
     /**
      * Creates a new IndexInformation object.
-     *
      * @param index DOCUMENT ME!
      * @param dumpDirectory DOCUMENT ME!
      * @param filter DOCUMENT ME!
@@ -46,24 +48,25 @@ public class IndexInformation {
     public IndexInformation(String index, File dumpDirectory, FileFilter filter, boolean create) {
         log.info("Collecting index information for index '" + index + "'...");
 
-        creating = create;
+        this.creating = create;
+        this.index = index;
         collectFiles(dumpDirectory, filter, index);
         this.startTime = new GregorianCalendar();
 
-        log.info(length + " files to index");
+        log.info(this.length + " files to index");
         //log.info(getFileNumber() + " files to index");
     }
 
     private String index;
 
     protected String getIndex() {
-        return index;
+        return this.index;
     }
 
     private boolean creating;
 
     protected boolean isCreating() {
-        return creating;
+        return this.creating;
     }
 
     //private List files = new ArrayList();
@@ -74,7 +77,7 @@ public class IndexInformation {
      */
     protected void addFile(File file) {
         //files.add(file);
-	length++;
+	this.length++;
     }
 
     /**
@@ -96,7 +99,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      */
     public void increase() {
-        currentFile++;
+        this.currentFile++;
     }
 
     /**
@@ -127,7 +130,7 @@ public class IndexInformation {
      * @return DOCUMENT ME!
      */
     public Calendar getStartTime() {
-        return startTime;
+        return this.startTime;
     }
 
     /**
@@ -136,12 +139,12 @@ public class IndexInformation {
      * @return indexing progress
      */
     public String printProgress() {
-        double percent = (double) currentFile / (double) length;
+        double percent = (double) this.currentFile / (double) this.length;
         //double percent = (double) currentFile / (double) getFileNumber();
         DateFormat format = new SimpleDateFormat("HH:mm:ss");
 
         //return "added document " + getCurrentFile() + " of " + getFileNumber() + " (" +
-        return "added document " + getCurrentFile() + " of " + length + " (" +
+        return "added document " + getCurrentFile() + " of " + this.length + " (" +
         (int) (percent * 100) + "%" + ", remaining time: " +
         format.format(getEstimatedTime().getTime()) + ")";
     }
@@ -152,8 +155,8 @@ public class IndexInformation {
     protected Calendar getEstimatedTime() {
         long elapsedMillis = new Date().getTime() - getStartTime().getTime().getTime();
 
-        double millisPerFile = (double) elapsedMillis / (double) currentFile;
-        long estimatedMillis = (long) (millisPerFile * length) - elapsedMillis;
+        double millisPerFile = (double) elapsedMillis / (double) this.currentFile;
+        long estimatedMillis = (long) (millisPerFile * this.length) - elapsedMillis;
         //long estimatedMillis = (long) (millisPerFile * getFileNumber()) - elapsedMillis;
 
         GregorianCalendar estimatedCalendar = new GregorianCalendar();
@@ -166,8 +169,8 @@ public class IndexInformation {
     /**
      * Collect files
      */
-    protected void collectFiles(File dumpDirectory, FileFilter filter, String index) {
-        IndexIterator iterator = new IndexIterator(index, filter);
+    protected void collectFiles(File dumpDirectory, FileFilter filter, String _index) {
+        IndexIterator iterator = new IndexIterator(_index, filter);
         IndexIteratorHandler handler;
 
         if (isCreating()) {
