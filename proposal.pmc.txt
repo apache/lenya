@@ -27,22 +27,25 @@ hereby are appointed to serve as the initial members of the
 Lenya PMC:
 
 (ADD YOUR NAME AND EMAIL HERE)
-   * Michael Wechner (michi@apache.org)
-   * Andreas Hartmann (andreas@apache.org)
-   * Gregor J. Rothfuss (gregor@apache.org)
-   * Rolf Kulemann (roku@apache.org)
-   * Thorsten Scherler (thorsten@apache.org)
+
+   * Edith Chevier (edith@apache.org)
    * Dale Christ (bigdog@apache.org)
+   * Christian Egli (egli@apache.org)
+   * Andreas Hartmann (andreas@apache.org)
+   * Rolf Kulemann (roku@apache.org)
+   * Gregor J. Rothfuss (gregor@apache.org)
+   * Thorsten Scherler (thorsten@apache.org)
+   * Michael Wechner (michi@apache.org)
 
 
 NOW, THEREFORE, BE IT FURTHER RESOLVED, that
 
 (PROPOSED NAMES, add more nominations if needed and add your vote)
 
-Andreas H. (accepted/declined)
-Gregor J. R. (accepted/declined)
-Thorsten S. (accepted/declined)
-Rolf K. (accepted/declined)
+Andreas Hartmann (accepted/declined)
+Rolf Kulemann (accepted/declined)
+Gregor J. Rothfuss (accepted/declined)
+Thorsten Scherler (accepted/declined)
 
   be and hereby is appointed to the office of Vice President, Lenya,
 to serve in accordance with and subject to the direction of the
