@@ -19,10 +19,10 @@ public interface Condition {
      */
     boolean isComplied(Situation situation);
 
-    /**
-     * Sets the expression for this condition.
-     * @param expression The expression.
-     */
-    void setExpression(String expression);
+	/** Sets the expression for this condition.
+	 * @param expression The expression.
+	 *
+	 */
+	void setExpression(String expression);
 
 }
