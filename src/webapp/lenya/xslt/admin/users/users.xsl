@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: users.xsl,v 1.9 2004/04/28 15:00:05 andreas Exp $ -->
+<!-- $Id: users.xsl,v 1.10 2004/04/30 16:34:23 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -75,7 +75,11 @@
         <form method="GET">
           <input type="hidden" name="lenya.usecase" value="userDeleteUser"/>
           <input name="user-id" type="hidden" value="{id}"/>
-          <input i18n:attr="value" type="submit" value="Delete"/>
+          <input i18n:attr="value" type="submit" value="Delete">
+            <xsl:if test="@deletable = 'false'">
+              <xsl:attribute name="disabled">disabled</xsl:attribute>
+            </xsl:if>
+          </input>
         </form>
       </td>
     </tr>

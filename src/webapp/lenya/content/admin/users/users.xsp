@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: users.xsp,v 1.6 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id: users.xsp,v 1.7 2004/04/30 16:34:23 andreas Exp $ -->
 
 <xsp:page
   language="java"
@@ -35,14 +35,27 @@
   <page>
     <users>
       <xsp:logic>
+        String currentUserId = <input:get-attribute module="access-control" name="user-id" as="string"/>;
+            
         UserManager userManager = (UserManager)
             <input:get-attribute module="access-control" name="user-manager" as="object"/>;
+            
+        User currentUser = userManager.getUser(currentUserId);
+            
         User[] users = userManager.getUsers();
         for (int userIndex = 0; userIndex &lt; users.length; userIndex++) {
             User user = users[userIndex];
+            
+            boolean deletable = true;
+            
+            if (user == currentUser) {
+                deletable = false;
+            }
+            
       </xsp:logic>
         
       <user>
+        <xsp:attribute name="deletable"><xsp:expr>deletable</xsp:expr></xsp:attribute>
         <id><xsp:expr>user.getId()</xsp:expr></id>
         <name><xsp:expr>user.getName()</xsp:expr></name>
         <email><xsp:expr>user.getEmail()</xsp:expr></email>
