@@ -41,7 +41,6 @@
     <!--
     Copy CMS files and overwrite some parts of the previously unpacked cocoon webapp package with our customized files
     -->
-    <echo>INFO: Copy files from ${src.webapp.dir} to ${build.webapp}</echo>
     <copy todir="${build.webapp}">
       <fileset dir="${src.webapp.dir}">
         <exclude name="lenya/pubs/**"/>
@@ -52,12 +51,10 @@
     </copy>
 
     <!-- Copy publications -->
-    <echo>INFO: Copy publications from ${src.webapp.dir}/lenya/pubs to ${build.webapp}/lenya/pubs</echo>
     <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn">
     </copyPubs>
 
     <!-- Patch cocoon.xconf -->
-    <echo>INFO: Patch cocoon.xconf with publication-specific changes</echo>
     <copy file="${build.webapp}/WEB-INF/cocoon.xconf"
           toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
@@ -80,7 +77,6 @@
 
     <!-- Patch web.xml -->
     <!--
-    <echo>INFO: Patch web.xml</echo>
     <xpatch file="${build.webapp}/WEB-INF/web.xml"
             srcdir="${build.webapp}/lenya/pubs" 
             includes="*/config/web.xml"
@@ -88,7 +84,6 @@
     -->
             
     <!-- Patch publication tests -->
-    <echo>INFO: Patch publication tests</echo>
     <copy file="./src/targets/publication-test-build-template.xml"
           tofile="./src/targets/publication-test-build.xml"
           overwrite="true"/>
@@ -101,7 +96,6 @@
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
 
     <!-- now copy our compiled classes -->
-    <echo>INFO: Copy classes from ${build.dest} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.dest}">
         <include name="**/*.class"/>
@@ -109,7 +103,6 @@
     </copy>
 
     <!-- now copy our logicsheets -->
-    <echo>INFO: Copy logicsheets from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.xsl"/>
@@ -117,7 +110,6 @@
     </copy>
 
     <!-- now copy our properties -->
-    <echo>INFO: Copy properties from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.properties"/>
@@ -125,7 +117,6 @@
     </copy>
 
     <!-- now copy our xml configuration files -->
-    <echo>INFO: Copy xml configuration files from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.xml"/>
@@ -133,7 +124,6 @@
     </copy>
 
     <!-- now copy our roles -->
-    <echo>INFO: Copy properties from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.roles"/>
@@ -141,13 +131,12 @@
     </copy>
 
     <!-- now create logs directory, where log4j can write to -->
-    <echo>INFO: Create logs directory ${build.webapp}/WEB-INF/logs</echo>
     <mkdir dir="${build.webapp}/WEB-INF/logs"/>
     
     <!-- now copy any additional libraries in ./lib -->
     <mkdir dir="${build.webapp}/WEB-INF/lib"/>
 
-    <echo>INFO: Copy libraries from ${lib.dir} and ${tools.lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
+    <!-- Copy libraries from ${lib.dir} and ${tools.lib.dir} to ${build.webapp}/WEB-INF/lib -->
     <copy todir="${build.webapp}/WEB-INF/lib">
       <fileset dir="${lib.dir}">
         <include name="**/*"/>
@@ -171,7 +160,6 @@
 
   <!-- Copy cocoon.xconf -->
   <target name="copy-cocoon.xconf" if="cocoon.xconf.copy">
-    <echo>INFO: Apply new cocoon.xconf.</echo>
     <copy
        file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
        toFile="${build.webapp}/WEB-INF/cocoon.xconf"/>
@@ -181,7 +169,7 @@
   The war target just packs up what was created in the webapp target
   (and triggers the javadoc target with the dependency)
   -->
-  <target name="war" depends="webapp, javadocs" description="Builds the deployable war file">
+  <target name="war" depends="webapp" description="Builds the deployable war file">
     <mkdir dir="${dist.bin.dir}"/>
     <jar jarfile="${dist.bin.warfile}" basedir="${build.webapp}" excludes="META-INF/MANIFEST.MF"/>
   </target>
@@ -192,28 +180,23 @@
 
   <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
     <!-- Empty server cache - this directory is set in the "local.build.properties" file -->
-    <echo>INFO: Delete Tomcat Cache Dir: ${tomcat.cache.dir}</echo>
     <delete dir="${tomcat.cache.dir}"/>
     <mkdir dir="${tomcat.webapps.dir}" />
-    <echo>INFO: Delete Tomcat Lenya Webapp Dir: ${tomcat.webapps.dir}</echo>
     <delete includeEmptyDirs="true">
       <fileset dir="${tomcat.webapps.dir}" excludes="${target.reset.excludes}" />
     </delete>
   </target>
 
-
-
   <!-- ============================================================ -->
   <!-- Install webapp                                               -->
   <!-- ============================================================ -->
   <target name="install" depends="webapp" description="Install the webapp into servlet engine context">
-    <echo>INFO: Copy webapp to Tomcat</echo>
-    <echo>INFO: Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.webapps.dir}</echo>
+    <!-- Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.webapps.dir} -->
     <copy todir="${tomcat.webapps.dir}" filtering="off">
       <fileset dir="${build.webapp}" excludes="${target.install.excludes}"/>
     </copy>
 
-    <echo>INFO: Copy endorsed libraries</echo>
+    <!-- Copy endorsed libraries -->
     <copy todir="${tomcat.endorsed.dir}">
       <fileset dir="${build.webapp}/WEB-INF/lib/">
         <include name="xercesImpl-*.jar"/>
@@ -229,14 +212,11 @@
   <!-- Install publication                                              -->
   <!-- ============================================================ -->
   <target name="install-pub" depends="webapp" description="Install a publication into servlet engine context. Usage: -Dpub.prefix=blog">
-    <echo>INFO: Copy publication ${pub.prefix} to Tomcat</echo>
-    <echo>INFO: Copy From build.webapp=${build.webapp}/lenya/pubs/${pub.prefix} To tomcat.webapps.dir=${tomcat.webapps.dir}/lenya/pubs/${pub.prefix}</echo>
+    <!-- Copy From build.webapp=${build.webapp}/lenya/pubs/${pub.prefix} To tomcat.webapps.dir=${tomcat.webapps.dir}/lenya/pubs/${pub.prefix} -->
     <copy todir="${tomcat.webapps.dir}/lenya/pubs/${pub.prefix}" filtering="off">
       <fileset dir="${build.webapp}/lenya/pubs/${pub.prefix}" excludes="${target.install.excludes}"/>
     </copy>
   </target>
-
-
 
   <!-- ============================================================ -->
   <!-- Reload Tomcat                                                -->

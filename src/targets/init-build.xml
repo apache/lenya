@@ -57,8 +57,6 @@
   </target>
 
   <target name="build-custom-tasks" depends="init">
-    <echo>INFO: Building Custom Tasks</echo>
-
     <mkdir dir="${build.dir}/tools/anttasks"/>
     <javac srcdir="src/java"
            destdir="${build.dir}/tools/anttasks"
@@ -88,7 +86,7 @@
   </target>
 
   <target name="build-cocoon" depends="init" unless="cocoon.build.webapp.dir.exists">
-    <echo>Building Cocoon with our properties</echo>
+    <!-- Building Cocoon with our properties -->
     <copy todir="${cocoon.src.dir}" filtering="off">
       <fileset dir="${src.cocoon.properties.dir}"/>
     </copy>
@@ -98,10 +96,6 @@
   <!-- Prepare cocoon unless this is a gump build -->
   <target name="prepare-cocoon" depends="check-cocoon" unless="gump.skipcocoonbuild">
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
-    <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
-    <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
-    <echo>INFO: exclude: WEB-INF/web.xml</echo>
-    <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${cocoon.webapp.dir}">
         <exclude name="*.xml"/>
@@ -119,7 +113,6 @@
             includes="src/confpatch/*.xmap"/> 
 
     <!-- patch cocoon.xconf -->
-    <echo>INFO: patching cocoon.xconf with XSLT stylesheet</echo>
     <xslt
         in="${cocoon.webapp.dir}/WEB-INF/cocoon.xconf"
         out="${build.webapp}/WEB-INF/cocoon.xconf"
@@ -130,7 +123,6 @@
     </xslt>
     
     <!-- patch logkit.xconf -->
-    <echo>INFO: patching logkit.xconf with XSLT stylesheet</echo>
     <xslt
         in="${cocoon.webapp.dir}/WEB-INF/logkit.xconf"
         out="${build.webapp}/WEB-INF/logkit.xconf"
@@ -140,7 +132,6 @@
     </xslt>
     
     <!-- patch web.xml -->
-    <echo>INFO: patching web.xml with XSLT stylesheet</echo>
     <xslt
         in="${cocoon.webapp.dir}/WEB-INF/web.xml"
         out="${build.webapp}/WEB-INF/web.xml"
@@ -159,7 +150,6 @@
     <!-- patch sitemap.xmap -->
 
     <!-- Copy Entities 
-    <echo>INFO: Copy publication-specific entities to Cocoon catalog</echo>
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="${src.entities.dir}" builddir="${build.webapp}/${build.entities.dir}" />    
     -->
   </target>
@@ -176,8 +166,7 @@
   <!-- Prepares the source code                                     -->
   <!-- ============================================================ -->
   <target name="prepare-src" depends="prepare, build-custom-tasks">
-  
-    <echo>INFO: Copy java source files from ${java.dir} to ${build.src}</echo>
+    <!-- Copy java source files from ${java.dir} to ${build.src} -->
     <copy todir="${build.src}" filtering="on">
       <fileset dir="${java.dir}">
         <exclude name="log4j-properties.xsl"/>
@@ -185,10 +174,10 @@
     </copy>
     
     <!-- FIXME: Use bulkCopy task in the future; needs regexp mapper which is part of ant optional package. -->
-    <echo>INFO: Copy java source files from ${pubs.root.dirs} to ${build.src}</echo>
+    <!-- Copy java source files from ${pubs.root.dirs} to ${build.src} -->
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/src" builddir="${build.src}" />
     
-    <echo>INFO: Copy publication specific libraries from ${pubs.root.dirs} (java/lib) to ${build.webapp}/WEB-INF/lib</echo>
+    <!-- Copy publication specific libraries from ${pubs.root.dirs} (java/lib) to ${build.webapp}/WEB-INF/lib -->
     <bulkCopy 
       sourcedirs="${pubs.root.dirs}" 
       todir="${build.webapp}/WEB-INF/lib" 

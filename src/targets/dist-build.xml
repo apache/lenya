@@ -75,7 +75,6 @@
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
   <target name="snapshot-bin" depends="prepare-dist-bin" description="Build a snapshot binary distribution tar ball (the same as 'dist' except for the filename)">
-
     <copy todir="${snapshot.bin.dir}">
       <fileset dir="${dist.root}/${distname}-bin"/>
     </copy>
@@ -84,19 +83,14 @@
 
     <gzip zipfile="${snapshot.bin.dir}.tar.gz" src="${snapshot.bin.dir}.tar"/>
     <delete file="${snapshot.bin.dir}.tar"/>
-
     <zip zipfile="${snapshot.bin.dir}.zip" basedir="${dist.root}/${snapshot.bin.name}"/>
-
   </target>
-
-
 
   <!--
   The dist-src target prepares the source distribution tarball for
   developers. It also depends on the clean target to remove all build stuff.
   -->
   <target name="prepare-dist-src" depends="clean">
-
     <mkdir dir="${dist.src.dir}"/>
 
     <copy todir="${dist.src.dir}">
@@ -107,11 +101,9 @@
         <exclude name="dist/**"/>
       </fileset>
     </copy>
-
   </target>
 
   <target name="dist-src" depends="prepare-dist-src" description="Builds a regular tar ball containing the sources for developers">
-
     <tar tarfile="${dist.src.dir}.tar" basedir="${dist.root}" includes="${distname}-src/**"/>
 
     <gzip zipfile="${dist.src.dir}.tar.gz" src="${dist.src.dir}.tar"/>
@@ -122,7 +114,6 @@
     <checksum file="${dist.src.dir}.zip" fileext=".md5"/>
   </target>
 
-
   <!--
   This target prepares the source distribution tarball for
   end users. It forces a complete rebuild of everything through its
@@ -130,22 +121,16 @@
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
   <target name="snapshot-src" depends="prepare-dist-src" description="Builds a snapshot tar ball containing the sources for developers (the same as 'dist-src' except for the filename)">
-
     <copy todir="${snapshot.src.dir}">
       <fileset dir="${dist.src.dir}"/>
     </copy>
 
     <tar tarfile="${snapshot.src.dir}.tar" basedir="${dist.root}" includes="${snapshot.src.name}/**"/>
-
     <gzip zipfile="${snapshot.src.dir}.tar.gz" src="${snapshot.src.dir}.tar"/>
     <delete file="${snapshot.src.dir}.tar"/>
-
   </target>
 
-
   <target name="zip-webapp" depends="init" description="Zips the webapp in order to deploy within another servlet container">
-    <echo>Create ./${build.dir}/${snapshot.bin.name}.tar.gz</echo>
-
     <tar tarfile="./${build.dir}/${snapshot.bin.name}.tar" basedir="${build.webapp}"/>
     <gzip zipfile="./${build.dir}/${snapshot.bin.name}.tar.gz" src="./${build.dir}/${snapshot.bin.name}.tar"/>
     <delete file="./${build.dir}/${snapshot.bin.name}.tar"/>    
