@@ -23,30 +23,31 @@ This sitemap creates default navigation components.
     <map:pipeline>
     
     <!-- load sitetree -->
-    <map:match pattern="*/sitetree.xml">
-      <map:generate src="pubs/{1}/content/authoring/sitetree.xml"/>
+    <map:match pattern="*/*/sitetree.xml">
+      <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
       <map:serialize type="xml"/>
     </map:match>
   
-    <!-- pattern: <pub-id>/<nav-element>/<path>.xml -->
-    <map:match pattern="*/*/**.xml">
+    <!-- pattern: <pub-id>/<stage>/<nav-element>/<path>.xml -->
+    <map:match pattern="*/*/*/**.xml">
     
       <!-- load sitetree -->
-      <!--<map:generate src="cocoon:/{1}/sitetree.xml"/>-->
-      <map:generate src="pubs/{1}/content/authoring/sitetree.xml"/>
+      <!--<map:generate src="cocoon:/{1}/{2}/sitetree.xml"/>-->
+      <!--                     pub-id      stage -->
+      <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
       
       <!-- use publication-specific presentation if available -->
       <map:act type="resource-exists">
-        <map:parameter name="url" value="pubs/{1}/xslt/lenya/navigation/{2}.xsl"/>
-        <map:transform src="pubs/{1}/xslt/lenya/navigation/{../2}.xsl">
-          <map:parameter name="path" value="{../3}"/>
+        <map:parameter name="url" value="pubs/{1}/xslt/lenya/navigation/{3}.xsl"/>
+        <map:transform src="pubs/{../1}/xslt/lenya/navigation/{../3}.xsl">
+          <map:parameter name="path" value="{../4}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:act>
       
       <!-- use default presentation -->
-      <map:transform src="xslt/navigation/{2}.xsl">
-        <map:parameter name="path" value="{3}"/>
+      <map:transform src="xslt/navigation/{3}.xsl">
+        <map:parameter name="path" value="{4}"/>
       </map:transform>
       <map:serialize type="xml"/>
     </map:match>
