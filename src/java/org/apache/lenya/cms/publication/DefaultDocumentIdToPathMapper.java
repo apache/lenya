@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentIdToPathMapper.java,v 1.5 2003/07/04 12:55:59 egli Exp $
+$Id
 <License>
 
  ============================================================================
@@ -81,4 +81,16 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
 
         return file;
     }
+
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFiles(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+	 */
+	public File getDirectory(Publication publication, String area, String documentId) {
+
+		File file = new File(publication.getDirectory(),
+			"content" + File.separator + area + File.separator + documentId + 
+			File.separator);
+
+		return file;
+	}
 }

@@ -1,5 +1,5 @@
 /*
-$Id: DocumentIdToPathMapper.java,v 1.4 2003/07/04 12:55:59 egli Exp $
+$Id
 <License>
 
  ============================================================================
@@ -78,4 +78,13 @@ public interface DocumentIdToPathMapper {
     File getFile(Publication publication, String area, String documentId,
         String language);
 
+	/**
+	 * 
+	 * @param publication The publication.
+	 * @param area The area.
+	 * @param documentId The document id.
+	 * @return File The directory in which are all the files with the same
+	 * document id
+	 */
+	public abstract File getDirectory(Publication publication, String area, String documentId);
 }
