@@ -1,5 +1,5 @@
 /*
-$Id: ResourcePublisher.java,v 1.2 2003/10/21 09:51:54 andreas Exp $
+$Id: ResourcePublisher.java,v 1.3 2003/10/27 16:57:33 egli Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,9 @@ $Id: ResourcePublisher.java,v 1.2 2003/10/21 09:51:54 andreas Exp $
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
@@ -92,7 +95,13 @@ public class ResourcePublisher extends PublicationTask {
             Document liveDocument = builder.buildDocument(getPublication(), liveUrl);
             ResourcesManager liveManager = new ResourcesManager(liveDocument);
             
-            File[] resources = authoringManager.getResources();
+            // find all resource files and their associated meta files
+            List resourcesList =
+                new ArrayList(Arrays.asList(authoringManager.getResources()));
+            resourcesList.addAll(
+                Arrays.asList(authoringManager.getMetaFiles()));
+            File[] resources =
+                (File[])resourcesList.toArray(new File[resourcesList.size()]);
             File liveDirectory = liveManager.getPath();
             
             for (int i = 0; i < resources.length; i++) {
