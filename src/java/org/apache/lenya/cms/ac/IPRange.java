@@ -1,5 +1,4 @@
 /*
-$Id: IPRange.java,v 1.3 2003/07/24 08:28:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,11 +58,15 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import org.apache.lenya.net.InetAddressUtil;
+
 /**
  * A range of IP addresses, expressed by a network address and a
  * subnet mask.
  * 
- * @author andreas
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: IPRange.java,v 1.4 2003/07/24 16:23:53 michi Exp $
  */
 public abstract class IPRange extends AbstractGroupable {
 
@@ -72,7 +75,7 @@ public abstract class IPRange extends AbstractGroupable {
      */    
     public IPRange() {
         try {
-            byte[] address = { 127, 0, 0, 1 };
+            byte[] address = { 127, 0, 0, 0 };
             networkAddress = InetAddress.getByAddress(address);
             byte[] mask = { -1, -1, -1, 0 };
             subnetMask = InetAddress.getByAddress(mask);
@@ -208,7 +211,6 @@ public abstract class IPRange extends AbstractGroupable {
      * @return A boolean value.
      */
     public boolean contains(Machine machine) {
-        return false;
+        return InetAddressUtil.contains(networkAddress, subnetMask, machine.getAddress());
     }
-
 }
