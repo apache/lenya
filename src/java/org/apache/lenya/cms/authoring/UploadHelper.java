@@ -1,21 +1,13 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Copyright 1999-2004 The Apache Software Foundation Licensed under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with the License. You may obtain
+ * a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable
+ * law or agreed to in writing, software distributed under the License is distributed on an "AS IS"
+ * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
+ * for the specific language governing permissions and limitations under the License.
  */
 
-/* $Id: UploadHelper.java,v 1.2 2004/03/15 14:58:28 michi Exp $  */
+/* $Id: UploadHelper.java,v 1.3 2004/04/14 14:14:14 andreas Exp $ */
 
 package org.apache.lenya.cms.authoring;
 
@@ -44,7 +36,6 @@ public class UploadHelper {
 
     /**
      * Save uploaded file
-     * 
      * @param part
      */
     public boolean save(Part part) {
@@ -56,10 +47,10 @@ public class UploadHelper {
             parent.mkdirs();
             log.info("Directory has been created: " + parent);
         }
-	
-	try {
+
+        try {
             FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
-	    InputStream in = part.getInputStream();
+            InputStream in = part.getInputStream();
             byte[] buf = new byte[4096];
             int read = in.read(buf);
 
