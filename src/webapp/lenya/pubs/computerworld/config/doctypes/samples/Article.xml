@@ -3,6 +3,7 @@
 	<head>
 		<title/>
 		<abstract>abstract</abstract>
+		<byline>gis</byline>
 	</head>
 	<body>
 		<p>hier kommt der lauftext.</p>

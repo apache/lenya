@@ -401,9 +401,7 @@ height="30"><span class="txt-l-black"><b><xsl:apply-templates select="/article/h
 <span
 class="txt-m-black-bold"><xsl:apply-templates select="/article/head/abstract"/></span> <br />
  <span class="txt-m-black"><xsl:apply-templates select="/article/body"/></span>
-&#160;<a class="txt-m-red"
-href="http://demo.wyona.org:7080/wyona-cms/computerworld/impressum/">
-(gis)</a></td>
+&#160;<xsl:apply-templates select="/article/head/byline"/></td>
 </tr>
 
 <tr>
@@ -618,6 +616,14 @@ border="0" /> </td>
         <xsl:apply-templates/>
       </xsl:for-each>
     </abstract>
+  </xsl:template>
+  
+   <xsl:template match="byline">
+    <byline contentEditable="true">
+      <xsl:for-each select=".">
+        <xsl:apply-templates/>
+      </xsl:for-each>
+    </byline>
   </xsl:template>
 
  <xsl:template match="media-caption">

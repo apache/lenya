@@ -56,7 +56,7 @@
 <xsl:apply-templates select="body/media"/>
 	<span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
         	<span class="txt-m-black"><xsl:apply-templates select="body"/>
-          &#160;<a href="../impressum/" class="txt-m-red">(gis)</a></span></td>
+          &#160;<a href="../impressum/" class="txt-m-red">(<xsl:value-of select="head/byline" />)</a></span></td>
 			</tr>
 
 			<tr><td width="440" height="10" valign="bottom" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>

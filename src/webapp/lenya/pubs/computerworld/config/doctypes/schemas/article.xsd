@@ -12,6 +12,16 @@
 			</xs:appinfo>
 		</xs:annotation>
 	</xs:element>
+		<xs:element name="byline">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Byline</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Byline</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+				<bxe:noaddparas>1</bxe:noaddparas>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="body">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Body</xs:documentation>
@@ -60,6 +70,7 @@
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="title"/>
 					<xs:element ref="abstract"/>
+					<xs:element ref="byline"/>
 				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
