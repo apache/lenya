@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.43 2003/07/23 13:21:28 gregor Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.44 2003/07/29 14:32:12 andreas Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -28,9 +28,9 @@
     </map:pipeline>
     
     <map:pipeline>
-      <!-- pattern="{area}/simple/{document-id}.html" -->
-      <map:match pattern="*/*/**.html.xml">
-        <map:mount uri-prefix="" src="doctypes.xmap" check-reload="true" reload-method="synchron"/>
+      <!-- pattern="{area}/simple/{document-path}" -->
+      <map:match pattern="lenya-document/*/*/**.xml">
+        <map:mount uri-prefix="lenya-document/" src="doctypes.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
     
@@ -88,7 +88,7 @@
             <map:part src="cocoon://navigation/{1}/{2}/breadcrumb/{4}.xml"/>
             <map:part src="cocoon://navigation/{1}/{2}/tabs/{4}.xml"/>
             <map:part src="cocoon://navigation/{1}/{2}/menu/{4}.xml"/>
-            <map:part src="cocoon://{1}/{2}/{3}/{4}.xml"/>
+            <map:part src="cocoon://{1}/lenya-document/{2}/{3}/{page-envelope:document-path}"/>
           </map:aggregate>
 	  <map:transform src="xslt/page2xhtml.xsl">
 	    <map:parameter name="root" value="{page-envelope:context-prefix}/{1}/{2}"/>
