@@ -62,7 +62,7 @@ import org.apache.log4j.Category;
  * Action to validate an xml document with relax ng schema.
  * 
  * @author Edith Chevrier
- * @version $Id: ValidateAction.java,v 1.6 2004/02/24 13:46:43 michi Exp $
+ * @version $Id: ValidateAction.java,v 1.7 2004/03/01 09:51:11 egli Exp $
  */
 public class ValidateAction extends AbstractConfigurableAction {
         Category log = Category.getInstance(ValidateAction.class);
@@ -130,13 +130,15 @@ public class ValidateAction extends AbstractConfigurableAction {
 	 * @return The validation error message or null.
 	 */
 	private String validateDocument(File schema, File file) {
-
+		// FIXME: what is this method for? It seems to be a lot of hot air and
+		// some logging around a call to RelaxNG.validate
 		try {
 			File parentFile = file.getParentFile();
 			if (!(parentFile.exists())) {
 				parentFile.mkdir();
 			}
 			String filename = file.getName();
+			// FIXME: why do we create a file and never use it later?
 			File valFile =
 				IOUtils.createFile(parentFile, filename + ".validate");
 			getLogger().debug("validation file: " + valFile.getAbsolutePath());
