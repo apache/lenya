@@ -29,8 +29,10 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.AbstractGenerator;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.site.Label;
@@ -50,7 +52,6 @@ import org.xml.sax.helpers.AttributesImpl;
  * parameters area/documentid will be unfolded.
  * If initialTree is false, only the children of the selected node
  * will be generated.
- * 
  */
 public class SitetreeFragmentGenerator extends AbstractGenerator {
 
@@ -104,52 +105,56 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    public void setup(SourceResolver resolver, Map objectModel, String src,
+    public void setup(SourceResolver _resolver, Map _objectModel, String src,
             Parameters par) throws ProcessingException, SAXException,
             IOException {
-        super.setup(resolver, objectModel, src, par);
+        super.setup(_resolver, _objectModel, src, par);
 
         PageEnvelope envelope = null;
 
         if (getLogger().isDebugEnabled()) {
-            Request request = ObjectModelHelper.getRequest(objectModel);
+            Request request = ObjectModelHelper.getRequest(_objectModel);
             getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
         }
 
-        area = par.getParameter(PARAM_AREA, null);
-        documentid = par.getParameter(PARAM_DOCUMENTID, null);
+        this.area = par.getParameter(PARAM_AREA, null);
+        this.documentid = par.getParameter(PARAM_DOCUMENTID, null);
         
         if (par.isParameter(PARAM_INITIAL)) {
-            initialTree = Boolean.valueOf(par.getParameter(PARAM_INITIAL, null)).booleanValue();
+            this.initialTree = Boolean.valueOf(par.getParameter(PARAM_INITIAL, null)).booleanValue();
         } else {
-            initialTree = false;
+            this.initialTree = false;
         }
         
         if (par.isParameter(PARAM_AREAS)) {
             String parAreas = par.getParameter(PARAM_AREAS, null);
-            areas = parAreas.split(",");
+            this.areas = parAreas.split(",");
         } else {
             String temp[] = {"authoring", "archive", "trash"}; 
-            areas = temp;
+            this.areas = temp;
         }
         
         if (this.getLogger().isDebugEnabled()) {
-            this.getLogger().debug("Parameter area: " + area);
-            this.getLogger().debug("Parameter documentid: " + documentid);
-            this.getLogger().debug("Parameter initialTree: " + initialTree);
+            this.getLogger().debug("Parameter area: " + this.area);
+            this.getLogger().debug("Parameter documentid: " + this.documentid);
+            this.getLogger().debug("Parameter initialTree: " + this.initialTree);
             String areasStr = "";
-            for (int i=0; i<areas.length; i++) areasStr += areas[i]+" ";
+            for (int i=0; i<this.areas.length; i++) {
+                areasStr += this.areas[i]+" ";
+            }
             this.getLogger().debug("Parameter areas: " + areasStr);
         }
         
         try {
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(objectModel);
+            Publication pub = factory.getPublication(_objectModel);
             this.identityMap = new DocumentIdentityMap(pub);
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap, objectModel);            
-        } catch (Exception e) {
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap, _objectModel);
+        } catch (final PublicationException e) {
             throw new ProcessingException("Resolving page envelope failed: ", e);
-        }
+        } catch (final PageEnvelopeException e) {
+            throw new ProcessingException("Resolving page envelope failed: ", e);
+        }            
         
         this.publication = envelope.getPublication();
         this.attributes = new AttributesImpl();
@@ -166,17 +171,17 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
             this.contentHandler.startDocument();
             this.contentHandler.startPrefixMapping(PREFIX, URI);
 
-            attributes.clear();
-            if (!initialTree) {
-                attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", area);
-                attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", documentid);
+            this.attributes.clear();
+            if (!this.initialTree) {
+                this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", this.area);
+                this.attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", this.documentid);
             }
             
-            this.contentHandler.startElement(URI, NODE_FRAGMENT, PREFIX + ':' + NODE_FRAGMENT, attributes);
+            this.contentHandler.startElement(URI, NODE_FRAGMENT, PREFIX + ':' + NODE_FRAGMENT, this.attributes);
             
-            if (initialTree) {
-                for (int i=0; i<areas.length; i++) {
-                    generateFragmentInitial(areas[i]);
+            if (this.initialTree) {
+                for (int i=0; i<this.areas.length; i++) {
+                    generateFragmentInitial(this.areas[i]);
                 }
             } else {
                 generateFragment();
@@ -187,9 +192,9 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
             this.contentHandler.endPrefixMapping(PREFIX);
             this.contentHandler.endDocument();
             
-        } catch (SAXException e) {
+        } catch (final SAXException e) {
             throw new ProcessingException(e);
-        } catch (SiteException e) {
+        } catch (final SiteException e) {
             throw new ProcessingException(e);
         }
         
@@ -206,20 +211,20 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
         throws SiteException, SAXException, ProcessingException {
         
         SiteTree siteTree = null;
-        if (!area.equals(Publication.AUTHORING_AREA) && 
-            !area.equals(Publication.ARCHIVE_AREA) &&
-            !area.equals(Publication.TRASH_AREA) &&
-            !area.equals(Publication.LIVE_AREA) &&
-            !area.equals(Publication.STAGING_AREA)) {
-            throw new ProcessingException("Invalid area: "+area);
+        if (!this.area.equals(Publication.AUTHORING_AREA) && 
+            !this.area.equals(Publication.ARCHIVE_AREA) &&
+            !this.area.equals(Publication.TRASH_AREA) &&
+            !this.area.equals(Publication.LIVE_AREA) &&
+            !this.area.equals(Publication.STAGING_AREA)) {
+            throw new ProcessingException("Invalid area: "+this.area);
         }
-        siteTree = ((TreeSiteManager)publication.getSiteManager(identityMap)).getTree(area);
+        siteTree = ((TreeSiteManager)this.publication.getSiteManager(this.identityMap)).getTree(this.area);
         
-        SiteTreeNode node = siteTree.getNode(documentid);
+        SiteTreeNode node = siteTree.getNode(this.documentid);
         if (this.getLogger().isDebugEnabled()) {
-            this.getLogger().debug("Node with documentid "+documentid+" found.");
+            this.getLogger().debug("Node with documentid "+this.documentid+" found.");
         }
-        if (node==null) throw new SiteException("Node with documentid "+documentid+" not found.");
+        if (node==null) throw new SiteException("Node with documentid "+this.documentid+" not found.");
         
         SiteTreeNode[] children = node.getChildren();
         
@@ -237,12 +242,11 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
      * @param siteArea
      * @throws SiteException
      * @throws SAXException
-     * @throws ProcessingException
      */
     protected void generateFragmentInitial(String siteArea) 
-        throws SiteException, SAXException, ProcessingException {
+        throws SiteException, SAXException {
 
-        SiteTree siteTree = ((TreeSiteManager)publication.getSiteManager(identityMap)).getTree(siteArea);
+        SiteTree siteTree = ((TreeSiteManager)this.publication.getSiteManager(this.identityMap)).getTree(siteArea);
         
         String label = "";
         String isFolder = "";
@@ -257,15 +261,15 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
         if (siteTree.getTopNodes().length>0) isFolder = "true";
         else isFolder = "false";
         
-        attributes.clear();
-        attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", siteArea);
-        attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
-        attributes.addAttribute("", ATTR_LABEL, ATTR_LABEL, "CDATA", label);
+        this.attributes.clear();
+        this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", siteArea);
+        this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
+        this.attributes.addAttribute("", ATTR_LABEL, ATTR_LABEL, "CDATA", label);
         
         startNode(NODE_SITE);
         
-        if (area.equals(siteArea)) {
-            generateFragmentRecursive(siteTree.getTopNodes(), documentid);
+        if (this.area.equals(siteArea)) {
+            generateFragmentRecursive(siteTree.getTopNodes(), this.documentid);
         }
         
         endNode(NODE_SITE);
@@ -305,35 +309,32 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
         
     /**
      * Begins a named node and calls setNodeAttributes to set its attributes.
-     * 
      * @param nodeName  the name of the new node
      * @throws SAXException  if an error occurs while creating the node
      */
     protected void startNode(String nodeName) throws SAXException {
-        this.contentHandler.startElement(URI, nodeName, PREFIX + ':' + nodeName, attributes);
+        this.contentHandler.startElement(URI, nodeName, PREFIX + ':' + nodeName, this.attributes);
     }
 
     /**
      * Begins a named node and calls setNodeAttributes to set its attributes.
-     * 
      * @param nodeName  the name of the new node
      * @param node The attributes are taken from this node
      * @throws SAXException  if an error occurs while creating the node
      */
     protected void startNode(String nodeName, SiteTreeNode node) throws SAXException {
         setNodeAttributes(node);
-        this.contentHandler.startElement(URI, nodeName, PREFIX + ':' + nodeName, attributes);
+        this.contentHandler.startElement(URI, nodeName, PREFIX + ':' + nodeName, this.attributes);
     }
 
     /**
      * Sets the attributes for a given node. Sets attributes id, href, folder,
      * suffix, basic-url, language-suffix.
-     * 
      * @param node
      * @throws SAXException  if an error occurs while setting the attributes
      */
     protected void setNodeAttributes(SiteTreeNode node) throws SAXException {
-        attributes.clear();
+        this.attributes.clear();
 
         String id = node.getId();
         //String isVisible = Boolean.toString(node.visibleInNav());
@@ -350,12 +351,12 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
             if (suffix!=null) this.getLogger().debug("adding attribute suffix: " + suffix);
             this.getLogger().debug("adding attribute folder: " + isFolder);
         }
-        attributes.addAttribute("", ATTR_ID, ATTR_ID, "CDATA", id);
+        this.attributes.addAttribute("", ATTR_ID, ATTR_ID, "CDATA", id);
         //attributes.addAttribute("", ATTR_VISIBLEINNAV, ATTR_VISIBLEINNAV, "CDATA", isVisible);
-        attributes.addAttribute("", ATTR_LINK, ATTR_LINK, "CDATA", hasLink);
-        if (href!=null) attributes.addAttribute("", ATTR_HREF, ATTR_HREF, "CDATA", href);
-        if (suffix!=null) attributes.addAttribute("", ATTR_SUFFIX, ATTR_SUFFIX, "CDATA", suffix);
-        attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
+        this.attributes.addAttribute("", ATTR_LINK, ATTR_LINK, "CDATA", hasLink);
+        if (href!=null) this.attributes.addAttribute("", ATTR_HREF, ATTR_HREF, "CDATA", href);
+        if (suffix!=null) this.attributes.addAttribute("", ATTR_SUFFIX, ATTR_SUFFIX, "CDATA", suffix);
+        this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
     } 
             
     /**
@@ -368,13 +369,12 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
      */
     protected String isFolder(SiteTreeNode node) {
         if (node.getChildren().length>0) return "true";
-        else return "false";
+        return "false";
     }
     
        
     /**
      * Ends the named node.
-     * 
      * @param nodeName  the name of the new node
      * @throws SAXException  if an error occurs while closing the node
      */
@@ -404,10 +404,10 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
      * @throws SAXException
      */
     protected void addLabel(String label, String language) throws SAXException {
-        attributes.clear();
-        attributes.addAttribute(XML_URI, ATTR_LANG, XML_PREFIX+":"+ATTR_LANG, "CDATA", language);
+        this.attributes.clear();
+        this.attributes.addAttribute(XML_URI, ATTR_LANG, XML_PREFIX+":"+ATTR_LANG, "CDATA", language);
         
-        this.contentHandler.startElement(URI, NODE_LABEL, PREFIX + ':' + NODE_LABEL, attributes);
+        this.contentHandler.startElement(URI, NODE_LABEL, PREFIX + ':' + NODE_LABEL, this.attributes);
         char[] labelArray = label.toCharArray();
         this.contentHandler.characters(labelArray, 0, labelArray.length);
         this.contentHandler.endElement(URI, NODE_LABEL, PREFIX + ':' + NODE_LABEL);        
