@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.18 2003/10/21 14:55:35 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.19 2003/12/18 15:02:04 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -43,7 +43,7 @@
             <map:act type="resource-exists" src="resources/html/apidocs/{1}.html">
               <map:read src="resources/html/apidocs/{../1}.html" mime-type="text/html"/>
             </map:act>
-            <map:redirect-to uri="../docs/javadoc-error.html"/>
+            <map:redirect-to uri="../docs/misc/javadoc-error.html"/>
           </map:match>
 
           <map:match pattern="**">
