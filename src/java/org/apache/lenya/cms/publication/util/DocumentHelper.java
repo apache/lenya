@@ -17,7 +17,7 @@
 
 /* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +26,16 @@ import java.util.Map;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -87,7 +97,8 @@ public class DocumentHelper {
                 language = envelope.getDocument().getLanguage();
             }
 
-            Document document = this.identityMap.getFactory().get(documentArea, documentId, language);
+            Document document = this.identityMap.getFactory().get(documentArea, documentId,
+                    language);
             url = document.getCanonicalWebappURL();
 
             String contextPath = request.getContextPath();
@@ -118,16 +129,14 @@ public class DocumentHelper {
         String parentUrl;
         String contextPath;
         try {
-            Publication publication = PublicationFactory.getPublication(objectModel);
-            DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
-                    objectModel);
+            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
+                    this.identityMap, objectModel);
             Document document = envelope.getDocument();
 
             Request request = ObjectModelHelper.getRequest(objectModel);
             contextPath = request.getContextPath();
 
-            Document parent = map.getFactory().getParent(document, "/index");
+            Document parent = this.identityMap.getFactory().getParent(document, "/index");
             parentUrl = parent.getCanonicalWebappURL();
         } catch (Exception e) {
             throw new ProcessingException(e);

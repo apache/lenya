@@ -15,12 +15,15 @@
  *
  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.util;
 
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XLink;
 import org.apache.log4j.Category;
@@ -64,7 +67,7 @@ public class XlinkCollection extends CollectionImpl {
 
     /**
      * (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.CollectionImpl#createDocumentElement(org.apache.lenya.cms.publication.Document,
+     * @see org.apache.lenya.cms.publication.util.CollectionImpl#createDocumentElement(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.xml.NamespaceHelper)
      */
     protected Element createDocumentElement(Document document, NamespaceHelper helper)
@@ -96,7 +99,7 @@ public class XlinkCollection extends CollectionImpl {
 
     /**
      * Adds the XLink namespace declaration to the document element.
-     * @see org.apache.lenya.cms.publication.CollectionImpl#getNamespaceHelper()
+     * @see org.apache.lenya.cms.publication.util.CollectionImpl#getNamespaceHelper()
      */
     protected NamespaceHelper getNamespaceHelper() throws DocumentException,
             ParserConfigurationException, SAXException, IOException {

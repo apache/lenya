@@ -20,7 +20,7 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.UniqueDocumentId;
+import org.apache.lenya.cms.publication.util.UniqueDocumentId;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowFactory.java,v 1.30 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.workflow;
 
@@ -27,8 +27,8 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.LanguageVersions;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.util.LanguageVersions;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.Workflow;

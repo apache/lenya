@@ -17,8 +17,10 @@
 
 /* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.util;
 
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;

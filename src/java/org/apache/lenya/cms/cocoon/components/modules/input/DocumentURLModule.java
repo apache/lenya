@@ -26,7 +26,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.lenya.cms.publication.DocumentHelper;
+import org.apache.lenya.cms.publication.util.DocumentHelper;
 
 /**
  * <p>
@@ -38,7 +38,7 @@ import org.apache.lenya.cms.publication.DocumentHelper;
  * <code>{document-url:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}}</code>
  * </p>
  * 
- * @version: $Id: DocumentURLModule.java,v 1.2 2004/07/26 17:33:10 andreas Exp $
+ * @version: $Id$
  */
 public class DocumentURLModule extends AbstractPageEnvelopeModule implements Serviceable {
 

@@ -15,12 +15,12 @@
  *
  */
 
-/* $Id: WorkflowDocumentSet.java,v 1.3 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentSet;
+import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstancesImpl;

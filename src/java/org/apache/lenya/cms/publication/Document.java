@@ -162,8 +162,8 @@ public interface Document {
     /**
      * Returns the file for this document.
      * @return A file object.
-     */
     File getFile();
+     */
 
     /**
      * Returns the extension in the URL.

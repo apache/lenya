@@ -15,11 +15,16 @@
  *
  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
 
 /**
@@ -53,13 +58,14 @@ public final class PublicationHelper {
             Document[] allDocuments = getPublication().getSiteManager(map).getDocuments(area);
 
             List documents = new ArrayList();
-            
+
             for (int i = 0; i < allDocuments.length; i++) {
                 Document doc = allDocuments[i];
-                Document languageDoc = doc.getIdentityMap().get(doc.getArea(), doc.getId(), language);
+                Document languageDoc = doc.getIdentityMap().getFactory().get(doc.getArea(),
+                        doc.getId(), language);
                 documents.add(languageDoc);
             }
-            
+
             return (Document[]) documents.toArray(new Document[documents.size()]);
         } catch (SiteException e) {
             throw new DocumentException("Can not access sitetree to get document ids.", e);

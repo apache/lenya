@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePublication.java,v 1.8 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.file;
 
@@ -25,8 +25,8 @@ import java.io.IOException;
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.AbstractPublication;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentSet;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
  * A file-based publication.

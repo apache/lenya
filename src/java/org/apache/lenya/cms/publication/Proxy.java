@@ -30,12 +30,11 @@ package org.apache.lenya.cms.publication;
  * &lt;proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/&gt;
  * </pre>
  * 
- * @version $Id: Proxy.java,v 1.1 2004/07/22 13:44:16 andreas Exp $
+ * @version $Id$
  */
 public class Proxy {
 
     private String url;
-    private boolean isSSL;
 
     /**
      * Returns the absolute URL of a particular document.
@@ -44,7 +43,7 @@ public class Proxy {
      * @return A string.
      */
     public String getURL(Document document) {
-        return getUrl() + document.getDocumentURL();
+        return getUrl() + document.getCanonicalDocumentURL();
     }
 
     /**

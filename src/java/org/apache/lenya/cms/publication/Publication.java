@@ -21,6 +21,7 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 

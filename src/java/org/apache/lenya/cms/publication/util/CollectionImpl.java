@@ -17,7 +17,7 @@
 
 /* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +26,11 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.lenya.cms.publication.DefaultDocument;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Category;
@@ -79,14 +84,14 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#getDocuments()
+     * @see org.apache.lenya.cms.publication.util.Collection#getDocuments()
      */
     public Document[] getDocuments() throws DocumentException {
         return (Document[]) documents().toArray(new Document[documents().size()]);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#add(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.util.Collection#add(org.apache.lenya.cms.publication.Document)
      */
     public void add(Document document) throws DocumentException {
         documents().add(document);
@@ -94,7 +99,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#add(int,
+     * @see org.apache.lenya.cms.publication.util.Collection#add(int,
      *      org.apache.lenya.cms.publication.Document)
      */
     public void add(int position, Document document) throws DocumentException {
@@ -103,7 +108,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#remove(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.util.Collection#remove(org.apache.lenya.cms.publication.Document)
      */
     public void remove(Document document) throws DocumentException {
         if (!documents().contains(document)) {
@@ -153,7 +158,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
-        Document document = getIdentityMap().get(getArea(), documentId, getLanguage());
+        Document document = getIdentityMap().getFactory().get(getArea(), documentId, getLanguage());
         return document;
     }
 
@@ -237,21 +242,21 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#contains(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.util.Collection#contains(org.apache.lenya.cms.publication.Document)
      */
     public boolean contains(Document document) throws DocumentException {
         return documents().contains(document);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#clear()
+     * @see org.apache.lenya.cms.publication.util.Collection#clear()
      */
     public void clear() throws DocumentException {
         documents().clear();
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#getFirstPosition(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.util.Collection#getFirstPosition(org.apache.lenya.cms.publication.Document)
      */
     public int getFirstPosition(Document document) throws DocumentException {
         load();
@@ -263,7 +268,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#size()
+     * @see org.apache.lenya.cms.publication.util.Collection#size()
      */
     public int size() throws DocumentException {
         return documents().size();

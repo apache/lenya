@@ -17,7 +17,7 @@
 
 /* $Id$  */
 
-package org.apache.lenya.cms.publication.xsp;
+package org.apache.lenya.cms.publication.util;
 
 import java.util.Map;
 

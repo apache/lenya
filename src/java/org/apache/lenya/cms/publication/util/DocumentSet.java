@@ -15,12 +15,14 @@
  *
  */
 
-/* $Id: DocumentSet.java,v 1.5 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.util;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.lenya.cms.publication.Document;
 
 /**
  * A set of documents.
