@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: document2txt.xsl 55482 2004-10-25 04:28:32Z gregor $ -->
+<!-- $Id$ -->
     
 <!--
 This stylesheet contains the majority of templates for converting documentv11

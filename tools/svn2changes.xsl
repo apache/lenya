@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!-- $Id: generate-insertAsset-xsl.xsl 42703 2004-03-13 12:57:53Z gregor $ -->
+<!-- $Id$ -->
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <!-- Let the processor do the formatting via indent = yes -->
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
