@@ -26,7 +26,7 @@
   <xsl:param name="insertBefore"/>
 
   <xsl:template match="/">
-    <xso:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:unizh="http://unizh.ch/doctypes/common/1.0">
+    <xso:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:unizh="http://unizh.ch/doctypes/common/1.0" exclude-result-prefixes="unizh">
 
       <xsl:apply-templates select="//param"/>
       <xsl:apply-templates select="//template"/>
