@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AccessControlTest.java,v 1.3 2004/03/04 15:40:19 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
@@ -34,15 +34,15 @@ import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
 
 /**
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * To change the template for this generated type comment go to Window>Preferences>Java>Code
+ * Generation>Code and Comments
  */
 public class AccessControlTest extends ExcaliburTest {
 
     private ComponentSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
-    
+
     private File accreditablesDirectory;
 
     /**
@@ -72,49 +72,38 @@ public class AccessControlTest extends ExcaliburTest {
 
         super.setUp();
 
-        accessControllerResolverSelector =
-            (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+        accessControllerResolverSelector = (ComponentSelector) manager
+                .lookup(AccessControllerResolver.ROLE + "Selector");
         assertNotNull(accessControllerResolverSelector);
 
-        accessControllerResolver =
-            (AccessControllerResolver) accessControllerResolverSelector.select(
-                AccessControllerResolver.DEFAULT_RESOLVER);
+        accessControllerResolver = (AccessControllerResolver) accessControllerResolverSelector
+                .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
         assertNotNull(accessControllerResolver);
         getLogger().info(
-            "Using access controller resolver: [" + accessControllerResolver.getClass() + "]");
+                "Using access controller resolver: [" + accessControllerResolver.getClass() + "]");
 
-        accessController =
-            (DefaultAccessController)
-                (
-                    (
-                        PublicationAccessControllerResolver) accessControllerResolver)
-                            .resolveAccessController(
-                URL);
+        accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) accessControllerResolver)
+                .resolveAccessController(URL);
 
         assertNotNull(accessController);
         getLogger().info("Resolved access controller: [" + accessController.getClass() + "]");
 
         File servletContext = PublicationHelper.getPublication().getServletContext();
-        ((FilePolicyManager) accessController.getPolicyManager()).setPoliciesDirectory(
-            servletContext);
+        ((FilePolicyManager) accessController.getPolicyManager())
+                .setPoliciesDirectory(servletContext);
 
-        accreditablesDirectory =
-            new File(
-                PublicationHelper.getPublication().getDirectory(),
+        accreditablesDirectory = new File(PublicationHelper.getPublication().getDirectory(),
                 "config/ac/passwd".replace('/', File.separatorChar));
-        (
-            (FileAccreditableManager) accessController
-                .getAccreditableManager())
-                .setConfigurationDirectory(
-            accreditablesDirectory);
+        ((FileAccreditableManager) accessController.getAccreditableManager())
+                .setConfigurationDirectory(accreditablesDirectory);
 
     }
 
     /**
      * The teardown method for JUnit
-     *
-     * @exception  Exception  Description of Exception
+     * 
+     * @exception Exception Description of Exception
      * @since
      */
     public void tearDown() throws Exception {
@@ -144,6 +133,7 @@ public class AccessControlTest extends ExcaliburTest {
         assertNotNull(user);
 
         Identity identity = new Identity();
+        identity.enableLogging(getLogEnabledLogger());
         identity.addIdentifiable(user);
 
         return identity;

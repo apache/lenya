@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileGroupTest.java,v 1.4 2004/03/20 11:46:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 

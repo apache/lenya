@@ -48,7 +48,7 @@ public class UserManagerTest extends AccessControlTest {
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @param args DOCUMENT ME!
      */
     public static void main(String[] args) {
@@ -57,7 +57,7 @@ public class UserManagerTest extends AccessControlTest {
     }
 
     /**
-     *  (non-Javadoc)
+     * (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
@@ -66,19 +66,20 @@ public class UserManagerTest extends AccessControlTest {
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @throws AccessControlException DOCUMENT ME!
      */
     final public void testInstance() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
+        FileUserManager manager = FileUserManager.instance(configDir, userTypes,
+                getLogEnabledLogger());
         assertNotNull(manager);
     }
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @throws AccessControlException DOCUMENT ME!
      */
     final public void testLoadConfig() throws AccessControlException {
@@ -93,8 +94,8 @@ public class UserManagerTest extends AccessControlTest {
         FileRole editorRole = new FileRole(configDir, editorRoleId);
         FileRole adminRole = new FileRole(configDir, adminRoleId);
 
-        User user =
-            new FileUser(configDir, userName, "Alice in Wonderland", "alice@test.com", "secret");
+        User user = new FileUser(configDir, userName, "Alice in Wonderland", "alice@test.com",
+                "secret");
 
         editorRole.save();
         adminRole.save();
@@ -115,10 +116,11 @@ public class UserManagerTest extends AccessControlTest {
 
         FileGroupManager groupManager = null;
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager userManager = FileUserManager.instance(configDir, userTypes);
+        FileUserManager userManager = FileUserManager.instance(configDir, userTypes,
+                getLogEnabledLogger());
         assertNotNull(userManager);
 
-        groupManager = FileGroupManager.instance(configDir);
+        groupManager = FileGroupManager.instance(configDir, getLogEnabledLogger());
         assertNotNull(groupManager);
 
         Group fetchedGroup = groupManager.getGroup(editorGroupId);
@@ -130,21 +132,17 @@ public class UserManagerTest extends AccessControlTest {
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @throws AccessControlException DOCUMENT ME!
      */
     final public void testGetUser() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
         String userName = "testuser";
-        FileUser user =
-            new FileUser(
-                configDir,
-                userName,
-                "Alice in Wonderland",
-                "alice@wonderland.com",
-                "secret");
+        FileUser user = new FileUser(configDir, userName, "Alice in Wonderland",
+                "alice@wonderland.com", "secret");
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
+        FileUserManager manager = FileUserManager.instance(configDir, userTypes,
+                getLogEnabledLogger());
         assertNotNull(manager);
         manager.add(user);
 

@@ -48,7 +48,7 @@ public class LDAPUserTest extends AccessControlTest {
     }
 
     /**
-     *
+     * 
      * @param args an array of <code>String</code>
      */
     public static void main(String[] args) {
@@ -72,35 +72,29 @@ public class LDAPUserTest extends AccessControlTest {
 
     /**
      * get a publication
-     *
+     * 
      * @return a <code>Publication</code>
      * 
      * @throws PublicationException if an error occurs
      */
     final public Publication getPublication() throws PublicationException {
         String publicationId = "default";
-        String servletContextPath =
-            "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
+        String servletContextPath = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
 
-        return PublicationFactory.getPublication(
-            publicationId,
-            servletContextPath);
+        return PublicationFactory.getPublication(publicationId, servletContextPath);
     }
 
     /**
      * Create and save an ldap user
-     *
+     * 
      * @param userName name of the user
      * @param email of the user
      * @param ldapId ldap id of the user
      * @throws AccessControlException if the creating or the saving fails
-    * @throws ConfigurationException if the creating or the saving fails
+     * @throws ConfigurationException if the creating or the saving fails
      */
-    final public void createAndSaveUser(
-        String userName,
-        String email,
-        String ldapId)
-        throws AccessControlException, ConfigurationException {
+    final public void createAndSaveUser(String userName, String email, String ldapId)
+            throws AccessControlException, ConfigurationException {
         String editorGroupName = "editorGroup";
         String adminGroupName = "adminGroup";
         String editorRoleName = "editorRole";
@@ -124,11 +118,9 @@ public class LDAPUserTest extends AccessControlTest {
         adminRole.save();
 
         /*
-                editorGroup.addRole(editorRole);
-                user.addGroup(editorGroup);
-                adminGroup.addRole(editorRole);
-                adminGroup.addRole(adminRole);
-        */
+         * editorGroup.addRole(editorRole); user.addGroup(editorGroup);
+         * adminGroup.addRole(editorRole); adminGroup.addRole(adminRole);
+         */
         editorGroup.save();
         adminGroup.save();
 
@@ -138,17 +130,17 @@ public class LDAPUserTest extends AccessControlTest {
 
     /**
      * Test loading an LDAPUser
-     *
+     * 
      * @param userName the name of the user
      * @return an <code>LDAPUser</code>
      * @throws AccessControlException of the loading fails
      */
-    final public LDAPUser loadUser(String userName)
-        throws AccessControlException {
+    final public LDAPUser loadUser(String userName) throws AccessControlException {
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes);
+        FileUserManager manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
+                getLogEnabledLogger());
 
-        return (LDAPUser)manager.getUser(userName);
+        return (LDAPUser) manager.getUser(userName);
     }
 
     //    final public void testGetFullName() throws AccessControlException {
@@ -179,12 +171,11 @@ public class LDAPUserTest extends AccessControlTest {
 
     /**
      * Test the ldap id getter
-     *
+     * 
      * @throws AccessControlException if the test fails
-    * @throws ConfigurationException if the creating or the saving fails
+     * @throws ConfigurationException if the creating or the saving fails
      */
-    final public void testGetLdapId()
-        throws ConfigurationException, AccessControlException {
+    final public void testGetLdapId() throws ConfigurationException, AccessControlException {
         String userName = "felix";
         String ldapId = "m400032";
         createAndSaveUser(userName, "felix@wyona.com", ldapId);
@@ -197,12 +188,11 @@ public class LDAPUserTest extends AccessControlTest {
 
     /**
      * Test settinf the ldap id
-     *
+     * 
      * @throws AccessControlException if the test fails
-    * @throws ConfigurationException if the creating or the saving fails
+     * @throws ConfigurationException if the creating or the saving fails
      */
-    final public void testSetLdapId()
-        throws ConfigurationException, AccessControlException {
+    final public void testSetLdapId() throws ConfigurationException, AccessControlException {
         String userName = "felix";
         String newLdapId = "foo";
         createAndSaveUser(userName, "felix@wyona.com", "bar");
@@ -220,12 +210,11 @@ public class LDAPUserTest extends AccessControlTest {
 
     /**
      * Test save
-     *
+     * 
      * @throws AccessControlException if the test fails
-    * @throws ConfigurationException if the creating or the saving fails
+     * @throws ConfigurationException if the creating or the saving fails
      */
-    final public void testSave()
-        throws ConfigurationException, AccessControlException {
+    final public void testSave() throws ConfigurationException, AccessControlException {
         String userName = "felix";
         createAndSaveUser(userName, "felix@wyona.com", "m400032");
 
@@ -236,7 +225,7 @@ public class LDAPUserTest extends AccessControlTest {
 
     /**
      * Test the deletion of a ldap user
-     *
+     *  
      */
     final public void testDelete() {
         //TODO Implement delete().

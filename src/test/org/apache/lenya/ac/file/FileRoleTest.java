@@ -1,21 +1,17 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Copyright 1999-2004 The Apache Software Foundation
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ *  
  */
-
-/* $Id: FileRoleTest.java,v 1.3 2004/03/04 15:37:59 egli Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -25,6 +21,11 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
 
+/**
+ * File role test.
+ *
+ * @version $Id:$
+ */
 public class FileRoleTest extends AccessControlTest {
     /**
      * Constructor for FileRoleTest.
@@ -36,7 +37,7 @@ public class FileRoleTest extends AccessControlTest {
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @param args DOCUMENT ME!
      */
     public static void main(String[] args) {
@@ -46,7 +47,7 @@ public class FileRoleTest extends AccessControlTest {
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @throws AccessControlException DOCUMENT ME!
      */
     final public void testFileRole() throws AccessControlException {
@@ -56,7 +57,8 @@ public class FileRoleTest extends AccessControlTest {
         role.save();
 
         File path = null;
-        path = FileRoleManager.instance(configDir).getConfigurationDirectory();
+        path = FileRoleManager.instance(configDir, getLogEnabledLogger())
+                .getConfigurationDirectory();
 
         File roleFile = new File(path, name + FileRoleManager.SUFFIX);
         assertNotNull(roleFile);
@@ -65,7 +67,7 @@ public class FileRoleTest extends AccessControlTest {
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @throws AccessControlException DOCUMENT ME!
      */
     final public void testSave() throws AccessControlException {
@@ -75,7 +77,8 @@ public class FileRoleTest extends AccessControlTest {
         role.save();
 
         File path = null;
-        path = FileRoleManager.instance(configDir).getConfigurationDirectory();
+        path = FileRoleManager.instance(configDir, getLogEnabledLogger())
+                .getConfigurationDirectory();
 
         File roleFile = new File(path, name + FileRoleManager.SUFFIX);
         assertNotNull(roleFile);

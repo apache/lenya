@@ -49,7 +49,7 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @param args DOCUMENT ME!
      */
     public static void main(String[] args) {
@@ -57,17 +57,17 @@ public class FileUserTest extends AccessControlTest {
         junit.textui.TestRunner.run(FileUserTest.class);
     }
 
-	/**
-	 *  (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
+    /**
+     * (non-Javadoc)
+     * @see junit.framework.TestCase#setUp()
+     */
     protected void setUp() throws Exception {
         super.setUp();
     }
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @return DOCUMENT ME!
      */
     final public Map getGroups() {
@@ -76,18 +76,18 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * Create and save a user
-     *
+     * 
      * @param userName DOCUMENT ME!
      * @param fullName DOCUMENT ME!
      * @param email DOCUMENT ME!
      * @param password DOCUMENT ME!
-     *
+     * 
      * @return a <code>FileUser</code>
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public FileUser createAndSaveUser(String userName, String fullName, String email,
-        String password) throws AccessControlException {
+            String password) throws AccessControlException {
         File configDir = getAccreditablesDirectory();
 
         String editorGroupName = "editorGroup";
@@ -106,34 +106,42 @@ public class FileUserTest extends AccessControlTest {
         editorGroup.save();
         adminGroup.save();
         user.save();
-        
-        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
+
+        FileUserManager manager = getUserManager();
         manager.add(user);
 
         return user;
     }
 
     /**
+     * Returns the file user manager.
+     * @return A file user manager.
+     * @throws AccessControlException if an error occurs. 
+     */
+    protected FileUserManager getUserManager() throws AccessControlException {
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
+                getLogEnabledLogger());
+        return manager;
+    }
+
+    /**
      * Load a user.
-     *
+     * 
      * @param userName the name of the user
-     *
+     * 
      * @return a <code>FileUser</code>
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public FileUser loadUser(String userName) throws AccessControlException {
-        File configDir = getAccreditablesDirectory();
-        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
-
+        FileUserManager manager = getUserManager();
         return (FileUser) manager.getUser(userName);
     }
 
     /**
      * Test save
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public void testSave() throws AccessControlException {
@@ -147,7 +155,7 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * Test getEmail
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public void testGetEmail() throws AccessControlException {
@@ -161,7 +169,7 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * Test getFullName
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public void testGetFullName() throws AccessControlException {
@@ -175,14 +183,14 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * Test getGroups
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public void testGetGroups() throws AccessControlException {
         FileUser user = createAndSaveUser("alice", "Alice Wonderland", "alice@wonderland.org",
                 "secret");
-                
-        for (Iterator i = getGroups().values().iterator(); i.hasNext(); ) {
+
+        for (Iterator i = getGroups().values().iterator(); i.hasNext();) {
             Group group = (Group) i.next();
             assertTrue(group.contains(user));
         }
@@ -190,7 +198,7 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * Test getId
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public void testGetId() throws AccessControlException {
@@ -201,15 +209,13 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * Test delete
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public void testDelete() throws AccessControlException {
         String id = "albert";
         FileUser user = createAndSaveUser(id, "Albert Einstein", "albert@physics.org", "secret");
-        File configDir = getAccreditablesDirectory();
-        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
+        FileUserManager manager = getUserManager();
         assertNotNull(manager);
 
         assertNotNull(manager.getUser(id));
@@ -220,7 +226,7 @@ public class FileUserTest extends AccessControlTest {
 
     /**
      * Test authenticate
-     *
+     * 
      * @throws AccessControlException if an error occurs
      */
     final public void testAuthenticate() throws AccessControlException {
@@ -228,9 +234,7 @@ public class FileUserTest extends AccessControlTest {
         FileUser user = createAndSaveUser("mickey", "Mickey Mouse", "mickey@mouse.com", password);
         assertTrue(user.authenticate(password));
 
-        File configDir = getAccreditablesDirectory();
-        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(configDir, userTypes);
+        FileUserManager manager = getUserManager();
         assertNotNull(manager);
 
         User lenya = manager.getUser("lenya");

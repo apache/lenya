@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: GroupManagerTest.java,v 1.3 2004/03/04 15:40:19 egli Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import java.io.File;
@@ -25,6 +23,11 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.file.FileGroupManager;
 import org.apache.lenya.cms.PublicationHelper;
 
+/**
+ * Group manager test.
+ *
+ * @version $Id:$
+ */
 public class GroupManagerTest extends AccessControlTest {
 
     /**
@@ -53,11 +56,11 @@ public class GroupManagerTest extends AccessControlTest {
     public final void testInstance() throws AccessControlException {
         FileGroupManager manager = null;
         File configDir = getAccreditablesDirectory();
-        manager = FileGroupManager.instance(configDir);
+        manager = FileGroupManager.instance(configDir, getLogEnabledLogger());
         assertNotNull(manager);
 
         FileGroupManager anotherManager = null;
-        anotherManager = FileGroupManager.instance(configDir);
+        anotherManager = FileGroupManager.instance(configDir, getLogEnabledLogger());
         assertNotNull(anotherManager);
         assertEquals(manager, anotherManager);
     }
