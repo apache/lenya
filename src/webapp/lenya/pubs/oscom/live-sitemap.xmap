@@ -136,6 +136,7 @@
         <map:serialize type="html"/>
       </map:match>
       <!-- /Homepage -->
+   </map:pipeline>
 
    <!-- CMS/F Overview -->
    <map:pipeline>
