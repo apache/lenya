@@ -3,7 +3,10 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
-  xmlns="http://www.w3.org/1999/xhtml">
+  xmlns="http://www.w3.org/1999/xhtml"
+  disable-output-escaping="yes"
+  exclude-result-prefixes="lenya-info wf rc dc usecase"
+  >
   
   <xsl:param name="lenya.usecase" select="'asset'"/>
   <xsl:param name="lenya.step"/>
@@ -58,9 +61,47 @@
 	  <div class="lenya-box-title">Upload an Asset</div>
 	</xsl:otherwise>
       </xsl:choose>
-      <div class="lenya-box-body">  
-	<form action="{/usecase:asset/usecase:request-uri}" method="post" enctype="multipart/form-data">
+      <div class="lenya-box-body">
+<script type="javascript">
+function insertAsset(src, size) {
+  window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'">'+src+' ('+size+' KB)</asset>',window.opener.bxe_ContextNode);
+  window.close();
+}
+
+function check() {
+   if(ListFind('gif,jpg,jpeg,bmp,psd,png,tif,pdf', ListLast(form.fileinput.value, '.') == -1))
+   {
+     // file doesn't have one of the accepted extensions.
+     alert("wrong");
+   }
+   else
+   {
+      // file has one of the accepted extensions.
+      alert("right");
+   }
+}
+           
+function ListFind(list, value) {
+  var i = 0;
+  var delimiter = ',';
+  var returnValue = -1;
+  var _tempArray = new Array();
+  if(ListFind.arguments.length == 3) delimiter = ListFind.arguments[2];
+  _tempArray = list.split(delimiter);
+  for(i = 0; i = _tempArray.length -1; i++)
+  {
+    if(_tempArray[i] == value)
+    {
+      returnValue = i;
+      break;
+    }
+  }
+  return returnValue;
+}
+</script>  
+	<form name="fileinput" action="{/usecase:asset/usecase:request-uri}" method="post" enctype="multipart/form-data">
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
+	  <input type="hidden" name="lenya.event" value="edit"/>
 	  <xsl:choose>
 	    <xsl:when test="$insert = 'true'">
 	      <input type="hidden" name="lenya.step" value="upload-and-insert"/>
@@ -129,7 +170,7 @@
 	    <tr>
 	      <td/>
 	      <td>
-		<input type="submit" value="Submit"/>&#160;
+		<input type="submit" value="Submit" onClick="javascript:check();"/>&#160;
 		<input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}';" value="Cancel"/>
 	      </td>
 	    </tr>
