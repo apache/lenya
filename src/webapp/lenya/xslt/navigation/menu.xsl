@@ -17,6 +17,7 @@
     
 <xsl:param name="url"/>
 <xsl:param name="chosenlanguage"/>
+<xsl:param name="defaultlanguage"/>
 
 <xsl:template match="nav:site">
   <div id="menu">
@@ -57,20 +58,27 @@
 
 <xsl:template name="item-default">
   <div class="menuitem-{count(ancestor-or-self::nav:node)}">
-    <a href="{@href}"><xsl:apply-templates select="nav:label[lang($chosenlanguage)]"/></a>
+    <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
   </div>
 </xsl:template>
     
     
 <xsl:template name="item-selected">
   <div class="menuitem-selected-{count(ancestor-or-self::nav:node)}">
-    <xsl:apply-templates select="nav:label[lang($chosenlanguage)]"/>
+    <xsl:apply-templates select="nav:label"/>
   </div>
 </xsl:template>
 
 
-<xsl:template match="nav:label[lang($chosenlanguage)]">
-  <xsl:apply-templates select="node()"/>
+<xsl:template match="nav:label">
+   <xsl:choose>
+      <xsl:when test="self::*[lang($chosenlanguage)]">
+      	<xsl:value-of select="self::*[lang($chosenlanguage)]"/>
+      </xsl:when>
+      <xsl:otherwise>
+      	<xsl:value-of select="self::*[lang($defaultlanguage)]"/>
+      </xsl:otherwise>
+   </xsl:choose>	
 </xsl:template>
     
     

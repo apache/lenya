@@ -17,6 +17,7 @@
     
 <xsl:param name="url"/>
 <xsl:param name="chosenlanguage"/>
+<xsl:param name="defaultlanguage"/>
 <xsl:param name="breadcrumbprefix"/>
 
 <xsl:template match="nav:site">
@@ -40,17 +41,24 @@
 <xsl:template name="step">
   <xsl:choose>
     <xsl:when test="substring(@href, (string-length(@href) - string-length($url)) + 1) = $url">
-      <xsl:apply-templates select="nav:label[lang($chosenlanguage)]"/>
+      <xsl:apply-templates select="nav:label"/>
     </xsl:when>
     <xsl:otherwise>
-      <a href="{@href}"><xsl:apply-templates select="nav:label[lang($chosenlanguage)]"/></a>
+      <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
     
-<xsl:template match="nav:label[lang($chosenlanguage)]">
-  <xsl:apply-templates select="node()"/>
+<xsl:template match="nav:label">
+   <xsl:choose>
+      <xsl:when test="self::*[lang($chosenlanguage)]">
+      	<xsl:value-of select="self::*[lang($chosenlanguage)]"/>
+      </xsl:when>
+      <xsl:otherwise>
+      	<xsl:value-of select="self::*[lang($defaultlanguage)]"/>
+      </xsl:otherwise>
+   </xsl:choose>	
 </xsl:template>
 
 
