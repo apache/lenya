@@ -35,7 +35,7 @@ public class WorkflowBuilder {
     public WorkflowBuilder() {
     }
 
-    public static final String NAMESPACE = "http://www.lenya.org/2003/workflow";
+    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/workflow/1.0";
     public static final String DEFAULT_PREFIX = "wf";
 
     public Workflow buildWorkflow(File file) throws WorkflowBuildException {
