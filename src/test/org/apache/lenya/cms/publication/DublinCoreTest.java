@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DublinCoreTest.java,v 1.3 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -23,6 +23,7 @@ import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 
 public class DublinCoreTest extends TestCase {
 
