@@ -30,7 +30,7 @@
         <dc:rights/>
   </lenya-info:meta>  
   <lenya-info:assets>
-		<lenya-info:asset></lenya-info:asset>
+		<lenya-info:asset/>
   </lenya-info:assets>  
   <lenya-info:workflow>
     	<wf:version date="(?)" state="redaktion" user="michael"/>
