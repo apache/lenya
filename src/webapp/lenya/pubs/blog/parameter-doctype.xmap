@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<!-- CVS: $Id: parameter-doctype.xmap,v 1.1 2004/01/14 13:38:34 michi Exp $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:actions>
+      <map:action logger="sitemap.action.sourcetype" name="sourcetype" src="org.apache.forrest.components.sourcetype.SourceTypeAction">
+        <sourcetype name="entry">
+          <document-element local-name="entry"/>
+        </sourcetype>
+        <sourcetype name="sidebar">
+          <document-element local-name="sidebar"/>
+        </sourcetype>
+      </map:action>
+    </map:actions>
+  </map:components>
+
+  <map:pipelines>
+
+    <map:pipeline>
+      <map:match pattern="*/**.html">
+	<map:act type="sourcetype" src="content/{1}/{page-envelope:document-path}">
+	  <map:generate type="serverpages" src="../../config/parameters/default.xsp">
+	    <map:parameter name="value" value="{sourcetype}"/>
+	  </map:generate>
+	  <map:serialize type="xml"/>
+	</map:act>
+
+	<map:generate type="serverpages" src="../../config/parameters/default.xsp">
+	  <map:parameter name="value" value="unknown"/>
+	</map:generate>
+	<map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
+  </map:pipelines>
+</map:sitemap>
