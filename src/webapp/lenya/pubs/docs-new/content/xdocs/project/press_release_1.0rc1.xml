@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<document>
+	<header>
+		<title>Apache Lenya 1.0 RC 1 Released</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Felix Maeder" email="felix@apache.org"/>
+		</authors>
+	</header>
+	<body>
+
+			<source>
+The Apache Lenya development community is very proud to announce the
+long-awaited first stable release of Apache Lenya.
+
+http://www.apache.org/dist/cocoon/lenya/
+
+Apache Lenya is the new CMS project under the Apache umbrella. The
+codebase (formerly known as Wyona CMS) was donated to the Apache
+Software Foundation by Wyona Ltd in May 2003.
+
+Apache Lenya is a Java Open-Source Content Management System based on
+open standards such as XML and XSLT and the Apache Software Stack. Its
+XML-centric architecture allows for content delivery targeted to the
+capabilities of the devices of today and tomorrow, and avoids data
+lock-in as with proprietary solutions. Apache Lenya is built around Off
+the Shelf components from the Apache Software Foundation, which are
+familiar to thousands of technologists, and are documented extensively
+in dozens of books.
+
+The Apache Software Stack is quickly becoming the preeminent platform
+for building Internet applications. By leveraging the Apache Software
+Stack, Apache Lenya offers a robust, future-proof solution that reserves
+technology investments.
+
+Apache Lenya comes with the features you would expect of a modern
+Content Management System, such as Revision Control, Scheduling, a
+built-in Search Engine, seperate Staging Areas, and Workflow. Because
+Apache Lenya uses XML throughout, it can offer much more than other CMS
+that marginally use XML.
+
+Some notable features include:
+
+* Browser-based WYSIWYG Editors that validate input against a W3C XML
+Schema. This prevents invalid markup as produced by other editors,
+and allows to enforce web site style guidelines.
+
+* A publication concept that allows reuse of the information
+architecture of a site and brings modularity to the content level.
+
+
+"As an IT Trade Magazine, we care about independence" says Wolfgang
+Boehler from Computerworld Switzerland, "it increases our credibility.
+That is why we chose Apache Lenya for our site, and why we intend to
+build on that first step."
+
+"Having been personally obsessed for years for the quest for the
+perfect Content Management Framework, I am very happy to see Lenya
+seeding this on top of Cocoon technology." says Stefano Mazzocchi,
+founder of the Apache Cocoon project, and adds: "The Apache Lenya
+effort has to be seen as a powerful software seed for the creation
+of a solid, healthy and diverse development community around the
+problems of Content Management, but following the Cocoon philosophy
+that we provide frameworks and toolkits and you build the stuff
+you need."
+
+
+This release of Apache Lenya is a refactored version of the codebase
+that has been in production at major sites such as Neue Zuercher Zeitung
+(www.nzz.ch) and the University of Zurich (www.unipublic.unizh.ch) for
+nearly three years. Wyona Ltd donated the Apache Lenya codebase
+(formerly known as Wyona CMS) to the Apache Software Foundation in
+May 2003.
+
+For more information about Apache Lenya, please go to:
+
+           http://cocoon.apache.org/lenya/
+
+or contact gregor@apache.org
+
+Thank for your interest and thanks to all who made this possible.
+
+The Apache Lenya Worldwide Community
+</source>
+	</body>
+</document>
