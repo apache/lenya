@@ -1,5 +1,5 @@
 /*
-$Id: UserManagerTest.java,v 1.11 2003/07/08 12:13:40 egli Exp $
+$Id: UserManagerTest.java,v 1.12 2003/08/27 14:33:05 egli Exp $
 <License>
 
  ============================================================================
@@ -174,7 +174,7 @@ public class UserManagerTest extends AccessControlTest {
         String userName = "testuser";
         FileUser user = new FileUser(configDir, userName, "Alice in Wonderland",
                 "alice@wonderland.com", "secret");
-        manager = (UserManager) UserManager.instance(configDir);
+        manager = UserManager.instance(configDir);
         assertNotNull(manager);
         manager.add(user);
 
