@@ -12,6 +12,8 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
 
+import org.apache.cocoon.components.source.SourceUtil;
+
 import org.apache.excalibur.source.Source;
 import org.apache.cocoon.xml.AbstractXMLConsumer;
 
@@ -102,7 +104,7 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 	    if (this.getLogger().isDebugEnabled()) {
 		this.getLogger().debug("file resolved to " + inputSource.getURI());
 	    }
-	    resolver.toSAX(inputSource, xmlConsumer);
+	    SourceUtil.toSAX(inputSource, xmlConsumer);
 	    map.put(parameterNames[i], xmlConsumer.getParameter());
         }
 
