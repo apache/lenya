@@ -31,7 +31,11 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 
 /**
- * Class to resolve the document type for a document.
+ * Service to resolve the document type for a document.
+ *
+ * <p>Note that in the current architecture, this requires access to the
+ * request, that is, the document type is determined upon each request.
+ * This service is currently not poolable.</p>
  * 
  * @version $Id: DocumentTypeResolverImpl.java 152682 2005-02-08 18:13:39Z
  *          gregor $
@@ -60,6 +64,8 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
     }
 
     /**
+     * Determine the document type for a document.
+     *
      * @see org.apache.lenya.cms.publication.DocumentTypeResolver#resolve(org.apache.lenya.cms.publication.Document)
      */
     public DocumentType resolve(Document document) {
@@ -79,8 +85,15 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
             String context = request.getContextPath();
             String webappUrl = document.getCanonicalWebappURL();
             String url = context + webappUrl;
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("DocumentTypeResolverImpl.resolve() url = [" + url + "]");
+
             map = parameterizer.parameterize(filterURI(url), filterURI(source), parameters);
             String name = (String) map.get(URI_PARAMETER_DOCTYPE);
+
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("DocumentTypeResolverImpl.resolve() name = [" + name + "], now calling DocumentTypeBuilder");
+
             documentType = DocumentTypeBuilder.buildDocumentType(name, document.getPublication());
 
         } catch (Exception e) {
@@ -90,8 +103,11 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
                 this.manager.release(parameterizer);
             }
         }
-        return documentType;
 
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentTypeResolverImpl.resolve() returning documentType = [" + documentType + "]");
+
+        return documentType;
     }
 
     /**
