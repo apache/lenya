@@ -42,31 +42,28 @@
  */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
-
 import org.apache.cocoon.acting.AbstractConfigurableAction;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.cocoon.xml.dom.DOMUtil;
-
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
-import java.io.*;
-import java.util.*;
-import java.util.Enumeration;
-import java.net.URL;
 
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.16 2003/09/23 21:56:02 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.17 2003/10/09 22:34:25 stefano Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *

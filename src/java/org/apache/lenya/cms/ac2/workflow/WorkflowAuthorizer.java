@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.19 2003/10/02 15:28:25 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.20 2003/10/09 22:34:25 stefano Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,6 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.SourceResolver;
-
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac2.Authorizer;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
@@ -71,7 +70,6 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 
 /**

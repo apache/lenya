@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInvokerAction.java,v 1.2 2003/10/02 15:28:25 andreas Exp $
+$Id: WorkflowInvokerAction.java,v 1.3 2003/10/09 22:34:25 stefano Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 
 /**

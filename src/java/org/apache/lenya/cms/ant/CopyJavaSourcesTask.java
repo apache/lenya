@@ -1,5 +1,5 @@
 /*
-$Id: CopyJavaSourcesTask.java,v 1.16 2003/08/06 14:02:26 michi Exp $
+$Id: CopyJavaSourcesTask.java,v 1.17 2003/10/09 22:34:25 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,6 @@ $Id: CopyJavaSourcesTask.java,v 1.16 2003/08/06 14:02:26 michi Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.types.Path;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -68,7 +63,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.StringTokenizer;
 
-import org.apache.lenya.util.RegexFilter;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.Path;
 
 
 /**

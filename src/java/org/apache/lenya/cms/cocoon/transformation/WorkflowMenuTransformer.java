@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.24 2003/10/08 12:15:37 egli Exp $
+$Id: WorkflowMenuTransformer.java,v 1.25 2003/10/09 22:34:25 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,13 @@ $Id: WorkflowMenuTransformer.java,v 1.24 2003/10/08 12:15:37 egli Exp $
 */
 package org.apache.lenya.cms.cocoon.transformation;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import java.io.IOException;
+import java.util.Map;
 
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
-
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -70,14 +71,9 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
-
-import java.io.IOException;
-
-import java.util.Map;
 
 /**
  * This transformer disables menu items (by removing the href attribute)
