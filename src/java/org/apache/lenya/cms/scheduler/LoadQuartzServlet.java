@@ -28,7 +28,7 @@ import org.quartz.utils.*;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.4 2002/10/07 23:30:36 michicms Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.5 2002/10/09 09:57:39 michicms Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -44,7 +44,7 @@ public class LoadQuartzServlet extends HttpServlet {
 
         this.servletContext=config.getServletContext();
         this.servletContextPath = this.servletContext.getRealPath("/");
-	log.fatal(".init(): Servlet Context Path: "+this.servletContextPath);
+	log.debug(".init(): Servlet Context Path: "+this.servletContextPath);
 	
 	try {
  	    log.info("Working?...");
@@ -64,6 +64,7 @@ public class LoadQuartzServlet extends HttpServlet {
         // FIXME: Read from file. This is just an example yet
         Date startTime = null;
         try{
+          org.dom4j.Document doc_conf=new org.dom4j.io.SAXReader().read("file:"+this.servletContextPath+"/wyona/cms/docs/cms/scheduler.xconf");
 /*
           // Add Simple Job
 	  startTime = new GregorianCalendar(Integer.parseInt("2002"),
@@ -82,6 +83,9 @@ public class LoadQuartzServlet extends HttpServlet {
           log.error(".process(): "+e);
           }
         catch(ClassNotFoundException e){
+          log.error(".process(): "+e);
+          }
+        catch(org.dom4j.DocumentException e){
           log.error(".process(): "+e);
           }
         // </Add persistent jobs>
