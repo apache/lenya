@@ -2,7 +2,7 @@
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya">
   <node-1 label="Table of Contents">
     <node-a href="http://demo.wyona.org" label="Demo" />
-    <node-b href="download/downloading_and_installing.html" label="Download" />
+    <node-b href="docs/installation/index.html" label="Download" />
     <node-d href="roadmap.html" label="Roadmap" />
     <node-e href="mailing-lists.html" label="Mailing Lists" />
     <node-f href="http://cvs.wyona.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
