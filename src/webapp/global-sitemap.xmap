@@ -90,7 +90,7 @@
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
-      <map:serialize/>
+      <map:serialize type="xhtml"/>
     </map:resource>
    
     <map:resource name="i18n">
