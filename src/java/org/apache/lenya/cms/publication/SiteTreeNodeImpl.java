@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.10 2003/07/09 12:57:36 egli Exp $
+$Id: SiteTreeNodeImpl.java,v 1.11 2003/07/25 16:43:45 edith Exp $
 <License>
 
  ============================================================================
@@ -66,14 +66,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Concrete implementation of the <code>SiteTreeNode</code> interface.
  * 
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
- * @author $Author: egli $
- * @version $Revision: 1.10 $
+ * @author $Author: edith $
+ * @version $Revision: 1.11 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -158,6 +159,9 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getId()
      */
     public String getId() {
+		if (node==node.getOwnerDocument().getDocumentElement()){
+        	return "";  
+		}
         return node
             .getAttributes()
             .getNamedItem(ID_ATTRIBUTE_NAME)
@@ -321,4 +325,18 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
             return false;
         }
     }
+	public SiteTreeNode[] getChildren() {
+		List childElements = new ArrayList();
+        
+		NamespaceHelper helper = new NamespaceHelper(DefaultSiteTree.NAMESPACE_URI, "", node.getOwnerDocument());
+        Element[] elements = helper.getChildren((Element)node, SiteTreeNodeImpl.NODE_NAME);
+ 		
+		for (int i = 0; i < elements.length; i++) {
+			SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]); 
+				childElements.add(newNode);
+		}
+
+		return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
+	}
+	
 }

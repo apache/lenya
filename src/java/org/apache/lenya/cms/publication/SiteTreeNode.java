@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.5 2003/07/08 09:24:32 egli Exp $
+$Id: SiteTreeNode.java,v 1.6 2003/07/25 16:43:45 edith Exp $
 <License>
 
  ============================================================================
@@ -60,8 +60,8 @@ package org.apache.lenya.cms.publication;
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  *
- * @author $Author: egli $
- * @version $Revision: 1.5 $
+ * @author $Author: edith $
+ * @version $Revision: 1.6 $
  */
 public interface SiteTreeNode {
 	
@@ -136,4 +136,7 @@ public interface SiteTreeNode {
 	 * @return true if this node has a link.
 	 */
     boolean hasLink();
+
+	SiteTreeNode[] getChildren();
+	
 }
