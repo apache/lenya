@@ -1,22 +1,15 @@
-
-
 function initialize()
         //runs at onload of window
         {
-        //obj = document.getElementById("navTop")
-        //obj.style.top = 75; //fixes a bug in the clipping animation
-       // ihtScreen = new screenObject();
         if (document.getElementById("articleBody") != null) initArticle(); //lays out the article in columns(if one exists)
         userEventsInit(); //set up all user events
         document.onmousemove = mousePosition; //moz
-
-       // windowTimer = setInterval("placeNavBar()",20);
-
-       
-// window.onresize = windowResize;
         }
 
 var mouseX = mouseY =0;
+menus = new Array("File","Search","Help","Debug")
+var allEvents = new Array()
+var activeMenu = null; //defines which menu is currently open
 
 function screenObject()
         {
@@ -48,10 +41,6 @@ function mousePosition(e)
         mouseX = event.clientX;
         mouseY = event.clientY;
         }
-
-var allEvents = new Array()
-
-var activeMenu = null; //defines which menu is currently open
 
 function menuOver()
         {
@@ -112,8 +101,6 @@ function eventHideMenu()
                 obj.style.visibility = "hidden"
                 }
         }
-
-menus = new Array("File","Search","Help","Debug")
 
 function userEventsInit()
         {

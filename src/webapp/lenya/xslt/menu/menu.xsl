@@ -28,7 +28,7 @@
 
 
 
-<table width="600" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4">
 <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4" /></td>
@@ -66,18 +66,18 @@ src="/lenya/lenya/menu/images/grau-bg.gif" width="2" height="4" /></td>
 </tr>
 
 <tr>
-<td colspan="2" background="/lenya/lenya/menu/images/unten.gif"><img border="0"
+<td colspan="3" background="/lenya/lenya/menu/images/unten.gif"><img border="0"
 src="/lenya/lenya/menu/images/unten.gif" /></td>
-<td valign="top" rowspan="2" colspan="2" width="101"
+<td valign="top" rowspan="2" colspan="2" 
 background="/lenya/lenya/menu/images/grau-bg.gif"><img border="0"
-src="/lenya/lenya/menu/images/lenya_unten.gif" width="101" /></td>
+src="/lenya/lenya/menu/images/lenya_unten.gif" /></td>
 </tr>
 
 <tr valign="top">
-  <td background="/lenya/lenya/menu/images/menu-bg.gif">
+  <td width="13" background="/lenya/lenya/menu/images/menu-bg.gif">
     <img border="0" src="/lenya/lenya/menu/images/menu_bg_anfang2.gif" />
   </td>
-  <td colspan="2" width="482" valign="top" background="/lenya/lenya/menu/images/menu-bg.gif">
+  <td colspan="3" valign="top" background="/lenya/lenya/menu/images/menu-bg.gif">
   <div id="navTop">
   <div id="navTopBG">
     <xsl:apply-templates select="menus/menu" mode="nav"/>
@@ -114,6 +114,7 @@ src="/lenya/lenya/menu/images/lenya_unten.gif" width="101" /></td>
 </div>
 
   <div style="float:left; width:46px">&#160;</div>
+<div style="float:left; width:1px"><img src="/lenya/lenya/menu/images/grau.gif" width="1" height="21" /></div>
 </xsl:template>
 
 
