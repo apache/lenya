@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CopyJavaSourcesTask.java,v 1.20 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -45,7 +45,14 @@ public class CopyJavaSourcesTask extends Task {
         int numberOfFilesCopied = 0;
         TwoTuple twoTuple = new TwoTuple(numberOfDirectoriesCreated, numberOfFilesCopied);
 
-        File absoluteBuildDir = new File(getProject().getBaseDir(), Project.translatePath(buildDir));
+        String translatedBuildDir = Project.translatePath(buildDir);
+        File absoluteBuildDir = null;
+        if (translatedBuildDir != null && translatedBuildDir.startsWith(File.separator)) {
+            absoluteBuildDir = new File(translatedBuildDir);
+        } else {
+	    absoluteBuildDir = new File(getProject().getBaseDir(), 
+                    translatedBuildDir);
+        }
 
         StringTokenizer st = new StringTokenizer(pubsRootDirs.toString(), File.pathSeparator);
 
