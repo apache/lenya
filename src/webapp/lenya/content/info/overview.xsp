@@ -45,11 +45,16 @@
     <xsp:logic>
       Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
 
-      SiteTreeNode node = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="authoring-node"/>;
+      final Object nodeObject = <input:get-attribute module="sitetree" as="object" name="authoring-node"/>;
+      SiteTreeNode node = null;
       String visibility = "visible";
+      if(nodeObject instanceof SiteTreeNode) { 
+          node = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="authoring-node"/>;
+      }
+      else
+          node = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="trash-node"/>;
       if (!node.visibleInNav()) visibility = "hidden";
 
-      
       boolean exists = false;
       boolean existsLanguage = false;
       try {
@@ -93,8 +98,7 @@
 						<lenya-info:area></lenya-info:area>
 						<lenya-info:workflow-state><input:get-attribute module="workflow" as="string" name="state"/></lenya-info:workflow-state>
 						<lenya-info:is-live><input:get-attribute module="workflow" as="string" name="variable.is_live"/></lenya-info:is-live>
-                        <lenya-info:visibleinnav><xsp:expr>visibility</xsp:expr></lenya-info:visibleinnav>
-      
+                                                <lenya-info:visibleinnav><xsp:expr>visibility</xsp:expr></lenya-info:visibleinnav>
       }
       
     </xsp:logic>

@@ -36,9 +36,10 @@ public class SitetreeModule extends AbstractInputModule {
 
     public static final String AUTHORING_NODE = "authoring-node";
     public static final String LIVE_NODE = "live-node";
+    public static final String TRASH_NODE = "trash-node";
     public static final String FIRST_CHILD_ID = "first-child-id";
 
-    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, FIRST_CHILD_ID };
+    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, TRASH_NODE, FIRST_CHILD_ID };
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
@@ -62,6 +63,11 @@ public class SitetreeModule extends AbstractInputModule {
                 value = liveTree.getNode(envelope.getDocument().getId());
             }
 
+            if (name.equals(TRASH_NODE)) {
+                SiteTree authoringTree = publication.getSiteTree(Publication.TRASH_AREA);
+                value = authoringTree.getNode(envelope.getDocument().getId());
+            }
+            
             if (name.equals(FIRST_CHILD_ID)) {
                 SiteTree siteTree = publication.getSiteTree(envelope.getDocument().getArea());
                 SiteTreeNode node = siteTree.getNode(envelope.getDocument().getId()); 
