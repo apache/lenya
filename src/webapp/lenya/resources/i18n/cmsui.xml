@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-$Id: cmsui.xml,v 1.5 2004/02/13 23:13:28 roku Exp $
+$Id: cmsui.xml,v 1.6 2004/02/13 23:21:08 roku Exp $
 $Author: roku $
 <License>
 
@@ -63,6 +63,7 @@ $Author: roku $
   <message key="NOTE">NOTE</message>
   <message key="No referer">No referer</message>
   <message key="Referer">Referer</message>
+  <message key="EXCEPTION">EXCEPTION</message>  
  
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for Approval</message>  

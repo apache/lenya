@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.7 2004/02/13 23:13:28 roku Exp $
+$Id: cmsui_de.xml,v 1.8 2004/02/13 23:21:08 roku Exp $
 $Author: roku $
 <License>
 
@@ -62,7 +62,8 @@ $Author: roku $
   <message key="NOTE">HINWEIS</message>
   <message key="No referer">Keine R&#252;ckverweiseite</message>  
   <message key="Referer">R&#252;ckverweis</message>
-  
+  <message key="EXCEPTION">AUSNAHME</message>  
+    
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
