@@ -1,5 +1,5 @@
 /*
-$Id: ParentChildCreatorAction.java,v 1.33 2003/07/30 15:30:06 egli Exp $
+$Id: ParentChildCreatorAction.java,v 1.34 2003/07/31 01:15:18 michi Exp $
 <License>
 
  ============================================================================
@@ -226,76 +226,17 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         creator.init(doctypeConf);
 
         // Transaction should actually be started here!
-        // Read tree
         String treefilename = sitemapParentPath + treeAuthoringPath;
-        getLogger().debug("FILENAME OF TREE: " + treefilename);
+        getLogger().debug(".act(): Filename of tree: " + treefilename);
 
         if (!new File(treefilename).exists()) {
-            getLogger().error("No such file (453): " + treefilename);
-
-            return null;
-        }
-
-        Document doc = new SAXReader().read("file:" + treefilename);
-
-        // Get parent element
-        StringTokenizer st = new StringTokenizer(parentid, "/");
-        String xpath_string = "/tree/branch"; // Trunk of tree
-
-        while (st.hasMoreTokens()) {
-            xpath_string = xpath_string + "/branch[@relURI='" + st.nextToken() + "']";
-        }
-
-        getLogger().debug("XPATH: " + xpath_string);
-
-        XPath xpathSelector = DocumentHelper.createXPath(xpath_string);
-        List nodes = xpathSelector.selectNodes(doc);
-
-        if (nodes.isEmpty()) {
-            getLogger().error(".act(): No nodes: " + xpath_string);
-            getLogger().error(".act(): No child added!");
-
-            return null;
-        }
-
-        Element parent_element = (Element) nodes.get(0);
-        getLogger().debug("PARENT ELEMENT: " + parent_element.getPath());
-
-        // Set child type: branch or leaf
-        childType = creator.getChildType(childType);
-
-        if (childType == ParentChildCreatorInterface.BRANCH_NODE) {
-            childtype = "branch";
+            getLogger().error(".act(): No tree: " + treefilename);
         } else {
-            childtype = "leaf";
+            if (!updateTree(childtype, childType, childid, childname, parentid, doctype, creator, treefilename)) return null;
         }
-
-        // Check if child already exists
-        String newChildXPath = xpath_string + "/" + childtype;
-        getLogger().debug("CHECK: " + newChildXPath);
-
-        if (doc.selectSingleNode(newChildXPath + "[@relURI='" +
-                    creator.generateTreeId(childid, childType) + "']") != null) {
-            getLogger().error("Exception: XPath exists: " + newChildXPath + "[@relURI='" +
-                creator.generateTreeId(childid, childType) + "']");
-            getLogger().error("No child added");
-
-            return null;
-        }
-
-        // Add node: branch or leaf
-        parent_element.addElement(childtype)
-                      .addAttribute("relURI", creator.generateTreeId(childid, childType))
-                      .addAttribute("doctype", doctype).addAttribute("menuName",
-            creator.getChildName(childname));
-        getLogger().debug("Tree has been modified: " + doc.asXML());
-
-        // Write new tree
-        java.io.FileWriter fileWriter = new java.io.FileWriter(treefilename);
-        doc.write(fileWriter);
-        fileWriter.close();
-
         // Transaction should actually be finished here!
+
+
         // Create actual document
         // grab all the parameters from session, request params and
         // sitemap params
@@ -387,6 +328,72 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         if (childname.length() == 0) {
             return false;
         }
+
+        return true;
+    }
+
+    /**
+     *
+     */
+    private boolean updateTree(String childtype, short childType, String childid, String childname, String parentid, String doctype, ParentChildCreatorInterface creator, String treefilename) throws Exception {
+        Document doc = new SAXReader().read("file:" + treefilename);
+
+        // Get parent element
+        StringTokenizer st = new StringTokenizer(parentid, "/");
+        String xpath_string = "/tree/branch"; // Trunk of tree
+
+        while (st.hasMoreTokens()) {
+            xpath_string = xpath_string + "/branch[@relURI='" + st.nextToken() + "']";
+        }
+
+        getLogger().debug("XPATH: " + xpath_string);
+
+        XPath xpathSelector = DocumentHelper.createXPath(xpath_string);
+        List nodes = xpathSelector.selectNodes(doc);
+
+        if (nodes.isEmpty()) {
+            getLogger().error(".act(): No nodes: " + xpath_string);
+            getLogger().error(".act(): No child added!");
+
+            return false;
+        }
+
+        Element parent_element = (Element) nodes.get(0);
+        getLogger().debug("PARENT ELEMENT: " + parent_element.getPath());
+
+        // Set child type: branch or leaf
+        childType = creator.getChildType(childType);
+
+        if (childType == ParentChildCreatorInterface.BRANCH_NODE) {
+            childtype = "branch";
+        } else {
+            childtype = "leaf";
+        }
+
+        // Check if child already exists
+        String newChildXPath = xpath_string + "/" + childtype;
+        getLogger().debug("CHECK: " + newChildXPath);
+
+        if (doc.selectSingleNode(newChildXPath + "[@relURI='" +
+                    creator.generateTreeId(childid, childType) + "']") != null) {
+            getLogger().error("Exception: XPath exists: " + newChildXPath + "[@relURI='" +
+                creator.generateTreeId(childid, childType) + "']");
+            getLogger().error("No child added");
+
+            return false;
+        }
+
+        // Add node: branch or leaf
+        parent_element.addElement(childtype)
+                      .addAttribute("relURI", creator.generateTreeId(childid, childType))
+                      .addAttribute("doctype", doctype).addAttribute("menuName",
+            creator.getChildName(childname));
+        getLogger().debug("Tree has been modified: " + doc.asXML());
+
+        // Write new tree
+        java.io.FileWriter fileWriter = new java.io.FileWriter(treefilename);
+        doc.write(fileWriter);
+        fileWriter.close();
 
         return true;
     }
