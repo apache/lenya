@@ -58,7 +58,7 @@ import java.io.File;
 import java.util.Properties;
 import java.util.Vector;
 
-import org.apache.lenya.xml.DOMParserFactory;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPointerFactory;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
@@ -71,7 +71,7 @@ import org.w3c.dom.Element;
  *
  * @author Philipp Klaus
  * @author Michael Wechner
- * @version $Id: ProxyManager.java,v 1.14 2004/02/02 02:50:40 stefano Exp $
+ * @version $Id: ProxyManager.java,v 1.15 2004/02/08 17:21:29 andreas Exp $
  */
 public class ProxyManager {
     static Category log = Category.getInstance(ProxyManager.class);
@@ -163,14 +163,13 @@ public class ProxyManager {
      * @return proxies
      */
     public Vector readConfig(String fname) {
-        DOMParserFactory dpf = new DOMParserFactory();
         Document document = null;
         File configFile = null;
 
         try {
 	    configFile = new File(new java.net.URI(ProxyManager.class.getClassLoader().getResource(fname).toString()));
             if (configFile.exists()) {
-                document = dpf.getDocument(configFile.getAbsolutePath());
+                document = DocumentHelper.readDocument(configFile);
             } else {
                 log.warn("No such file or directory: " + configFile.getAbsolutePath());
                 return null;

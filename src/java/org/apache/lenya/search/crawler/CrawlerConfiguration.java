@@ -1,5 +1,5 @@
 /*
-$Id: CrawlerConfiguration.java,v 1.6 2004/02/02 02:50:38 stefano Exp $
+$Id: CrawlerConfiguration.java,v 1.7 2004/02/08 17:22:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,8 +58,8 @@ package org.apache.lenya.search.crawler;
 import java.io.File;
 
 import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMUtil;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPath;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
@@ -91,7 +91,7 @@ public class CrawlerConfiguration {
         File configurationFile = new File(configurationFilePath);
 
         try {
-            Document document = new DOMParserFactory().getDocument(configurationFilePath);
+            Document document = DocumentHelper.readDocument(configurationFile);
             configure(document.getDocumentElement());
         } catch (Exception e) {
             log.error("Cannot load publishing configuration! ", e);

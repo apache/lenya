@@ -1,5 +1,5 @@
 /*
-$Id: IndexConfiguration.java,v 1.7 2004/02/02 02:50:36 stefano Exp $
+$Id: IndexConfiguration.java,v 1.8 2004/02/08 17:18:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,8 +58,8 @@ package org.apache.lenya.lucene;
 import java.io.File;
 
 import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMUtil;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPath;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
@@ -90,7 +90,8 @@ public class IndexConfiguration {
         File configurationFile = new File(configurationFilePath);
 
         try {
-            Document document = new DOMParserFactory().getDocument(configurationFilePath);
+            File configFile = new File(configurationFilePath);
+            Document document = DocumentHelper.readDocument(configFile);
             configure(document.getDocumentElement());
         } catch (Exception e) {
             log.error("Cannot load publishing configuration! ", e);

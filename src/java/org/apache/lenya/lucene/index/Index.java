@@ -1,5 +1,5 @@
 /*
-$Id: Index.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
+$Id: Index.java,v 1.11 2004/02/08 17:20:38 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,8 +60,8 @@ import java.util.Date;
 
 import org.apache.lenya.lucene.IndexConfiguration;
 import org.apache.lenya.util.DebugConfiguration;
-import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMUtil;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPath;
 import org.w3c.dom.Document;
 
@@ -132,7 +132,9 @@ public class Index {
             Indexer indexer = (Indexer) ie.getIndexerClass().newInstance();
 
             DOMUtil du = new DOMUtil();
-            Document config = new DOMParserFactory().getDocument(argv[0]);
+            String path = argv[0];
+            
+            Document config = DocumentHelper.readDocument(new File(path));
             indexer.configure(du.getElement(config.getDocumentElement(), new XPath("indexer")), argv[0]);
 
             if (create) {
