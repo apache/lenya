@@ -1,5 +1,5 @@
 /*
-$Id: CocoonTaskWrapper.java,v 1.7 2003/11/13 16:09:53 andreas Exp $
+$Id: CocoonTaskWrapper.java,v 1.8 2004/02/25 13:26:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -79,10 +79,9 @@ import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Category;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * Task wrapper to be used from Cocoon components.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class CocoonTaskWrapper extends DefaultTaskWrapper {
 
@@ -106,43 +105,61 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
 		}
 		Request request = ObjectModelHelper.getRequest(objectModel);
 
-		setNotifying(request);
-
-		Parameters taskParameters = extractTaskParameters(parameters, publication, request);
-		getTaskParameters().parameterize(taskParameters);
-
-		String taskId = request.getParameter(TaskWrapperParameters.TASK_ID);
-		taskId = parameters.getParameter(TaskWrapperParameters.TASK_ID, taskId);
-
-		String webappUrl = ServletHelper.getWebappURI(request);
-		initialize(taskId, publication, webappUrl, taskParameters);
-
-		String eventName = request.getParameter(WorkflowInvoker.EVENT_REQUEST_PARAMETER);
-		if (eventName == null) {
-			eventName = request.getParameter(WorkflowInvoker.LENYA_EVENT_REQUEST_PARAMETER);
-		}
-		if (eventName != null) {
-			Session session = request.getSession(false);
-			if (session == null) {
-				log.debug("No session found - not enabling workflow handling.");
-			} else {
-				Identity identity = Identity.getIdentity(session);
-				if (identity == null) {
-					log.debug("No identity found - not enabling workflow handling.");
-				} else {
-					log.debug("Identity found - enabling workflow handling.");
-					Role[] roles;
-					try {
-						roles = PolicyAuthorizer.getRoles(request);
-					} catch (AccessControlException e) {
-						throw new ExecutionException(e);
-					}
-					setWorkflowAware(eventName, identity, roles);
-				}
-			}
-		}
-
+        initialize(parameters, publication, request);
 	}
+    
+    /**
+     * Ctor.
+     */
+    protected CocoonTaskWrapper() {
+    }
+
+    /**
+     * Initializes this wrapper.
+     * @param parameters The task parameters.
+     * @param publication The publication.
+     * @param request The request.
+     * @throws ExecutionException when something went wrong.
+     */
+    protected void initialize(Parameters parameters, Publication publication, Request request)
+        throws ExecutionException {
+        setNotifying(request);
+        
+        Parameters taskParameters = extractTaskParameters(parameters, publication, request);
+        getTaskParameters().parameterize(taskParameters);
+        
+        String taskId = request.getParameter(TaskWrapperParameters.TASK_ID);
+        taskId = parameters.getParameter(TaskWrapperParameters.TASK_ID, taskId);
+        
+        String webappUrl = ServletHelper.getWebappURI(request);
+        initialize(taskId, publication, webappUrl, taskParameters);
+        
+        String eventName = request.getParameter(WorkflowInvoker.EVENT_REQUEST_PARAMETER);
+        if (eventName == null) {
+        	eventName = request.getParameter(WorkflowInvoker.LENYA_EVENT_REQUEST_PARAMETER);
+        }
+        if (eventName != null) {
+        	Session session = request.getSession(false);
+        	if (session == null) {
+        		log.debug("No session found - not enabling workflow handling.");
+        	} else {
+        		Identity identity = Identity.getIdentity(session);
+        		if (identity == null) {
+        			log.debug("No identity found - not enabling workflow handling.");
+        		} else {
+        			log.debug("Identity found - enabling workflow handling.");
+        			Role[] roles;
+        			try {
+        				roles = PolicyAuthorizer.getRoles(request);
+        			} catch (AccessControlException e) {
+        				throw new ExecutionException(e);
+        			}
+        			setWorkflowAware(eventName, identity, roles);
+        		}
+        	}
+        }
+        
+    }
 
 	/**
 	 * Enables notification if the corresponding request parameters exist.
