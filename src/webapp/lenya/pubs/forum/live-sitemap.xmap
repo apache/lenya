@@ -52,6 +52,12 @@
         <map:serialize type="html"/>
       </map:match>
 
+      <map:match pattern="index.rdf">
+        <map:generate src="cocoon:/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Front/rdf.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
       <map:match pattern="**.xml">
         <map:generate src="docs/publication/live/{1}.xml"/>
         <map:serialize type="xml"/>

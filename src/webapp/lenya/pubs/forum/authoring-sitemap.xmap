@@ -131,6 +131,10 @@
         <map:serialize type="html"/>
       </map:match>
 
+      <map:match pattern="index.rdf">
+        <map:redirect-to uri="../index.rdf"/>
+      </map:match>
+
       <map:match pattern="articles/*/article.xml">
         <map:aggregate element="wyona">
           <map:part src="cocoon:/menus/article{1}.xml"/>
