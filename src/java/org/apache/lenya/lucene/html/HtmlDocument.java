@@ -1,5 +1,5 @@
 /*
-$Id: HtmlDocument.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
+$Id: HtmlDocument.java,v 1.11 2004/02/21 16:54:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -198,22 +198,6 @@ public class HtmlDocument {
     //-------------------------------------------------------------
     // Private methods
     //-------------------------------------------------------------
-
-    /**
-     * Runs <code>HtmlDocument</code> on the files specified on the command line.
-     *
-     * @param args Command line arguments
-     *
-     * @exception Exception Description of Exception
-     */
-    private static void main(String[] args) throws Exception {
-        //         HtmlDocument doc = new HtmlDocument(new File(args[0]));
-        //         System.out.println("Title = " + doc.getTitle());
-        //         System.out.println("Body  = " + doc.getBody());
-        HtmlDocument doc = new HtmlDocument(new FileInputStream(new File(args[0])));
-        System.out.println("Title = " + doc.getTitle());
-        System.out.println("Body  = " + doc.getBody());
-    }
 
     /**
      * Gets the title attribute of the <code>HtmlDocument</code> object.
