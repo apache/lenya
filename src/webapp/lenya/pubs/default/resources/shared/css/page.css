@@ -142,9 +142,9 @@ td.tab-post-separator {
     font-family: Verdana, Arial, Sans-serif;
     font-size: 80%;
     margin-right: 10px;
-    text-align: right;
+    float: right;
     position:relative;
-    top:-19px
+    top:-20px
 }
 
 input.searchfield {
