@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Policy Managers</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Andreas Hartmann" email="andreas@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+<section>
+	<title>Introduction</title>
+	<p>A PolicyManager is used to resolve the policy for a certain URL. Lenya ships with the following PolicyManagers:</p>
+</section>
+	
+	<section>
+		<title>InheritingPolicyManager</title>
+		<p>This PolicyManager merges the policies of all steps in the URL. For each
+			URL, a <em>url policy</em> and a <em>subtree policy</em> can be defined.
+			The InheritingPolicyManager adds the credentials of</p>
+		<ul>
+			<li>the subtree policies for all parent directories of the requested page,</li>
+			<li>the subtree policy of the requested page, and</li>
+			<li>the url policy of the requested page.</li>
+		</ul>
+		<p>For instance, if the URL is <code>/lenya/news/index.html</code>, the
+			following policies are merged:</p>
+		<ul>
+			<li>subtree policy of <code>/</code></li>
+			<li>subtree policy of <code>/lenya</code></li>
+			<li>subtree policy of <code>/lenya/news</code></li>
+			<li>subtree policy of <code>/lenya/news/index</code></li>
+			<li>url policy of <code>/lenya/news/index</code></li>
+		</ul>
+	</section>
+	
+	<section>
+		<title>FilePolicyManager</title>
+		<p>The FilePolicyManager is an InheritingPolicyManager. The policies are defined by policy files that are arranged as a directory tree that reflects the URI space, e.g.:
+			</p>
+<source>/subtree-policy.acml
+/lenya/subtree-policy.acml
+/lenya/news/index.html/subtree-policy.acml
+/lenya/news/index.html/url-policy.acml</source>
+			<p>If a certain policy file does not exist (like /lenya/news in the above example), an empty policy is used instead.</p>
+	</section>
+	
+	<section>
+		<title>PublicationFilePolicyManager</title>
+		<p>This PolicyManager does the same as the FilePolicyManager, except that
+			the current publication is determined and the policy files are resolved
+			relatively to the <code>publication/config/ac/policies</code> directory.</p>
+	</section>
+	
+	<section>
+		<title>SitemapPolicyManager</title>
+		<p>The SitemapPolicyManager uses the policy sitemap to resolve the policy
+			for a certain URL.</p>
+	</section>
+		
+  </body>
+</document>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Scheduling a Task</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section><title>Scheduling a Task</title>
+<p>
+See section <strong>Scheduler</strong>.
+</p>
+</section>
+
+</body>
+</document>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Developing Your Own Tasks</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<p>
+Every task must implement the <code>org.lenya.cms.task.Task</code> interface.
+</p>
+<p>
+The easiest way to develop your own task is to extend the <code>AbstractTask</code> class.
+Its <code>parameterize()</code> method simply replaces old parameter values with new
+ones. All you have to do is implementing the <code>execute(String contextPath)</code>
+method.
+</p>
+<p>
+You may wonder why we pass the <code>contextPath</code> as a method parameter
+since we already pass it as a task parameter. This ensures that the task is always
+able to access the Lenya CMS directory, even if it is not created by a <code>TaskAction</code>
+or a <code>TaskJob</code>. Furthermore, if you enter a task in the <code>jobs.xml</code>
+file manually, you won't have to provide a hard-coded <code>servlet-context</code> parameter.
+</p>
+<p>
+<strong>This feature may be subject to changes. If you have any suggestions to improve
+the task implementation, just contact me (Andreas Hartmann) at</strong>
+<link href="mailto:andreas@apache.org">andreas@apache.org</link>.
+</p>
+
+</body>
+</document>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Authorizers</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Andreas Hartmann" email="andreas@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+<section>
+	<title>Introduction</title>
+	<p>An authorizer checks if an identity is authorized to invoke a certain request. The DelegatingAuthorizerAction tries to resolve an AccessController for the URL. If an AccessController could be resolved, its Authorizer is used to authorize the request. If no AccessController could be found, the access to the request is granted for free.</p>
+</section>
+	
+	<section>
+		<title>PolicyAuthorizer</title>
+		<p>A PolicyAuthorizer uses policies for authorizing.</p>
+	</section>
+	
+	<section>
+		<title>UsecaseAuthorizer</title>
+		<p>This authorizer looks for the <code>lenya.usecase</code> request
+			parameter and checks the usecase policy file for the roles that are
+			allowed to execute this usecase. The location of this file is defined
+			using the <code><![CDATA[<config-file>]]></code> tag:</p>
+		<source><![CDATA[<authorizer type="usecase">
+  <config-file src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/>
+</authorizer>]]></source>
+
+		<p>The usecase policy file might look as follows:</p>
+		
+		<source><![CDATA[<?xml version="1.0"?>
+<usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+  <usecase id="create">
+    <role id="editor"/>
+  </usecase>
+</usecases>]]></source>
+	</section>
+	
+	<section>
+		<title>WorkflowAuthorizer</title>
+		<p>The WorkflowAuthorizer is responsible for protecting workflow
+			transitions. Therefore it</p>
+		<ul>
+			<li>looks for the <code>lenya.event</code> request parameter,</li>
+			<li>determines the current state of the workflow instance, and</li>
+			<li>checks if the event may be invoked by one of the current roles in this
+				state.</li>
+		</ul>
+	</section>
+	
+  </body>
+</document>
