@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.251 2004/08/25 12:33:29 andreas Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -368,7 +368,7 @@
                   <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
                 </map:transform>
                 <map:transform type="write-source">
-                  <map:parameter name="serializer" value="xml"/>
+                  <map:parameter name="serializer" value="xml-utf-8"/>
                 </map:transform>
                 <map:transform src="xslt/authoring/edit/redirect-to.xsl">
               	   <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
