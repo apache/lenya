@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:generators default="file">
+      <map:generator  name="request" src="org.apache.cocoon.generation.RequestGenerator"/>
+      <map:generator  name="servletproxy" src="org.wyona.cms.cocoon.generation.ProxyGenerator"/>
+    </map:generators>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+  </map:components>
+
+  <map:resources/>
+
+  <map:pipelines>
+    <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
+    <map:pipeline>
+      <map:match pattern="docid/**">
+        <map:generate type="servletproxy" src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl">
+	  <map:parameter name="documentID" value="{1}"/>
+	</map:transform>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/sort.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/adminDocument.xsl">
+	  <map:parameter name="documentID" value="{1}"/>
+	</map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>    
+    
+    <!-- Admin interface -->
+    <map:pipeline>
+      <map:match pattern="admin/pubid/**">
+        <map:generate type="servletproxy"
+	  src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/sort.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/adminPublication.xsl">
+	  <map:parameter name="documentID" value="{1}"/>
+	</map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>    
+
+  </map:pipelines>
+</map:sitemap>

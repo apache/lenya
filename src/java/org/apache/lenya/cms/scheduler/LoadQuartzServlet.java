@@ -28,7 +28,7 @@ import org.quartz.utils.*;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.1 2002/08/23 06:45:20 michicms Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.2 2002/08/30 13:43:18 michicms Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -111,6 +111,10 @@ public class LoadQuartzServlet extends HttpServlet {
 	// * scheduleJobName: which class will be invoked when the job
 	//   is triggered.
 
+	response.setContentType("text/xml");
+	PrintWriter writer = response.getWriter();
+	writer.println("<sch:scheduler xmlns:sch=\"http://www.wyona.org/2002/sch\">");
+
 	String action = request.getParameter("Action");
 	String scheduleJobName = request.getParameter("scheduleJobName");
 
@@ -174,7 +178,11 @@ public class LoadQuartzServlet extends HttpServlet {
 		sched.addJob(publicationID, documentID,
 			     scheduleJobName, startTime);
 	    } catch (SchedulerException e) {
+	        writer.println("<sch:exception type=\"SchedulerException\"/>");
 		log.error("sched.addJob failed");
+	    } catch (ClassNotFoundException e) {
+	        writer.println("<sch:exception type=\"ClassNotFoundException\"/>");
+		log.error(".handleRequest(): sched.addJob failed");
 	    }
 	} else if (action.equals("Modify")) {
 	    try {
@@ -183,6 +191,8 @@ public class LoadQuartzServlet extends HttpServlet {
 				startTime);
 	    } catch (SchedulerException e) {
 		log.error("sched.modifyJob failed");
+	    } catch (ClassNotFoundException e) {
+		log.error(".handleRequest(): sched.modifyJob failed");
 	    }
 	} else if (action.equals("Delete")) {
 	    try {
@@ -192,11 +202,7 @@ public class LoadQuartzServlet extends HttpServlet {
 	    }
 	}
 	
-
-	response.setContentType("text/xml");
-	PrintWriter writer = response.getWriter();
 	
-	writer.println("<sch:scheduler xmlns:sch=\"http://www.wyona.org/2002/sch\">");
 
 	// handle the remainder of the request by simply returning all
 	// scheduled jobs (for the gived documentID).

@@ -42,7 +42,14 @@
       </block>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?docid=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.html&amp;docids=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Publish</item>            
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/servlet/QuartzSchedulerServlet</xsp:attribute>Schedule</item>            
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            
+      </block>
+      <block>
+        <item>-----------------</item>
+      </block>
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin/pubid/unipublic</xsp:attribute>Admin Scheduler</item>            
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/servlet/QuartzSchedulerServlet</xsp:attribute>Scheduler XML</item>            
         <item href="index.xml">View&#160;XML</item>
       </block>
       <block>

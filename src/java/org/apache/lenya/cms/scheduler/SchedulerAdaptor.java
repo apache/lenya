@@ -9,7 +9,7 @@ import org.quartz.*;
  * A simple wrapper around a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: SchedulerAdaptor.java,v 1.1 2002/08/23 06:45:20 michicms Exp $
+ * @version CVS $Id: SchedulerAdaptor.java,v 1.2 2002/08/30 13:43:18 michicms Exp $
  */
 public class SchedulerAdaptor {
 
@@ -73,7 +73,7 @@ public class SchedulerAdaptor {
     public void addJob(String context, String uri,
 			String jobClassName,
 			Date startTime)
-	throws SchedulerException {
+	throws SchedulerException, ClassNotFoundException {
 
 	this.addJob(context, uri, jobClassName, startTime, null, 0, 0);
     }
@@ -98,7 +98,7 @@ public class SchedulerAdaptor {
 			String jobClassName,
 			Date startTime, Date endTime,
 			int repeatCount, long repeatInterval)
-	throws SchedulerException {
+	throws SchedulerException, ClassNotFoundException {
 
 	log.info("------- addJob -----------------");
 	log.debug("addJob: Context:" + context + " uri:" + uri +
@@ -114,10 +114,13 @@ public class SchedulerAdaptor {
 	try {
 	    job = new JobDetail(uniqueJobID, context,
 				Class.forName(jobClassName));
-	} catch (ClassNotFoundException e) {
+	} 
+        catch (ClassNotFoundException e) {
 	    log.error("Class: " + jobClassName + " not found." + e.getMessage());
-	    return;
-	} catch (ExceptionInInitializerError e) {
+            throw e;
+	    //return;
+	} 
+        catch (ExceptionInInitializerError e) {
 	    log.error("InitializerError for class: " + jobClassName +
 		      e.getMessage());
 	    return;
@@ -168,7 +171,7 @@ public class SchedulerAdaptor {
 			   String context, String uri,
 			   String jobClassName,
 			   Date startTime)
-	throws SchedulerException {
+	throws SchedulerException, ClassNotFoundException {
 	
 	log.info("------- modifyJob -----------------");
 
