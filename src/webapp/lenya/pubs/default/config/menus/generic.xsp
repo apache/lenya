@@ -44,13 +44,14 @@
             <xsp:attribute name="href">?doctype=xhtml</xsp:attribute>New Document (xhtml)</item>
         </block>
         <block>
-          <item href="?lenya.usecase=transition" wf:event="submit">Submit</item>
-          <item href="?lenya.usecase=transition" wf:event="approve">Approve</item>
-          <item wf:event="publish">
-            <xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
+          <item uc:usecase="initworkflow" uc:step="initworkflow" href="?">Initialize Workflow</item>
+          <item uc:usecase="submit" uc:step="showscreen" wf:event="submit" href="?">Submit</item>
+          <item uc:usecase="reject" uc:step="showscreen" wf:event="reject" href="?">Reject</item>
+          <item uc:usecase="publish" uc:step="showscreen" wf:event="publish">
+            <xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
         </block>
         <block>
-          <item href="?lenya.usecase=logout">Logout</item>
+          <item uc:usecase="logout" uc:step="showscreen" href="?">Logout</item>
         </block>
       </menu>
       
@@ -58,7 +59,7 @@
 <xsp:logic>
 if (docType.equals("simple")) {
         <block>
-          <item href="?lenya.step=open&amp;doctype=simple" uc:usecase="edit" wf:event="edit">Edit&#160;with&#160;Forms</item>
+          <item uc:usecase="edit" uc:step="open" wf:event="edit" href="?doctype=simple">Edit&#160;with&#160;Forms</item>
           <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;BXE</item>
         </block>
 }
