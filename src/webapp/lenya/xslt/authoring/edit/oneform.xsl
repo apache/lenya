@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: oneform.xsl,v 1.11 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id: oneform.xsl,v 1.12 2004/03/20 12:21:15 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -93,7 +93,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <textarea name="content" cols="80" rows="80">
+                    <textarea name="content" cols="120" rows="80">
                       <xsl:apply-templates mode="mixedcontent" />
                     </textarea>
                   </td>
