@@ -23,15 +23,15 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   limitations under the License.
 -->
 
-<!-- $Id: index_en.xml,v 1.10 2004/04/26 10:09:18 gregor Exp $ -->
+<!-- $Id$ -->
     <lenya:meta>
-        <dc:title>DC Title</dc:title>
-        <dc:creator>Christian Egli</dc:creator>
-        <dc:subject>DC Subject</dc:subject>
-        <dc:description>Abstract that can be used on an overview page</dc:description>
-        <dc:publisher/>
+        <dc:title>Some Doctype Samples</dc:title>
+        <dc:creator>Lenya Development Team</dc:creator>
+        <dc:subject>Doctype Samples</dc:subject>
+        <dc:description>Contains some samples of Lenya doctypes</dc:description>
+        <dc:publisher>Apache Software Foundation</dc:publisher>
         <dc:contributor/>
-        <dc:date>2003-5-21</dc:date>
+        <dc:date>2005-01-31</dc:date>
         <dc:type/>
         <dc:format/>
         <dc:identifier/>
@@ -39,7 +39,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
         <dc:language>en</dc:language>
         <dc:relation/>
         <dc:coverage/>
-        <dc:rights>DC Rights</dc:rights>
+        <dc:rights>All rights reserved</dc:rights>
     </lenya:meta>
   <head>
     <title>Document Type Examples</title>

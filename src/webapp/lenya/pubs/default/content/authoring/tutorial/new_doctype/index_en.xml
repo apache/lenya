@@ -23,15 +23,15 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   limitations under the License.
 -->
 
-<!-- $Id: index_en.xml,v 1.4 2004/04/24 21:04:38 gregor Exp $ -->
+<!-- $Id$ -->
     <lenya:meta>
         <dc:title>How to create a new doctype</dc:title>
-        <dc:creator>Michael Wechner</dc:creator>
-        <dc:subject>doctype</dc:subject>
-        <dc:description>Abstract that can be used on an overview page</dc:description>
-        <dc:publisher/>
+        <dc:creator>Lenya Development Team</dc:creator>
+        <dc:subject>New doctype</dc:subject>
+        <dc:description>Tutorial for new doctype creation</dc:description>
+        <dc:publisher>Apache Software Foundation</dc:publisher>
         <dc:contributor/>
-        <dc:date>2003-5-21</dc:date>
+        <dc:date>2005-01-31</dc:date>
         <dc:type/>
         <dc:format/>
         <dc:identifier/>
@@ -39,7 +39,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
         <dc:language>en</dc:language>
         <dc:relation/>
         <dc:coverage/>
-        <dc:rights>DC Rights</dc:rights>
+        <dc:rights>All rights reserved</dc:rights>
     </lenya:meta>
   <head>
     <title>Lenya Tutorial - How to create a new doctype</title>
@@ -81,7 +81,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
     </p>
     
     <p>
-    OPTIONAL: Create workflow: <em>config/workflow/my_doctype.xml</em>, <em>config/doctypes/doctypes.xconf</em>
+    Create workflow: <em>config/workflow/my_doctype.xml</em>, <em>config/doctypes/doctypes.xconf</em>
     </p>
 
   </body>
