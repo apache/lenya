@@ -167,7 +167,7 @@ public class ConfigurableDocumentCreator
     
     public static String getBodyText(File file) throws Exception {
         
-        HTMLParser parser = HTMLParserFactory.newInstance();
+        HTMLParser parser = HTMLParserFactory.newInstance(file);
         parser.parse(file);
         Reader reader = parser.getReader();
         Writer writer = new StringWriter();

@@ -16,6 +16,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
+import org.lenya.util.CommandLineLogger;
 
 /**
  *
@@ -23,13 +26,28 @@ import java.util.List;
  */
 public class IndexInformation {
     
-    public IndexInformation(File dumpDirectory, FileFilter filter) {
-        System.out.println(getClass().getName() + ": collecting index information ...");
+    public IndexInformation(String index, File dumpDirectory, FileFilter filter, boolean create) {
+        
+        CommandLineLogger logger = new CommandLineLogger(getClass());
+        logger.log("collecting index information for index '" + index + "'...");
 
-        this.fileNumber = countFiles(dumpDirectory, filter);
+        creating = create;
+        collectFiles(dumpDirectory, filter, index);
         this.startTime = new GregorianCalendar();
 
-        System.out.println(getClass().getName() + ": " + fileNumber + " files to index");
+        logger.log(getFileNumber() + " files to index");
+    }
+    
+    private String index;
+    
+    protected String getIndex() {
+        return index;
+    }
+    
+    private boolean creating;
+    
+    protected boolean isCreating() {
+        return creating;
     }
     
     private List files = new ArrayList();
@@ -53,10 +71,8 @@ public class IndexInformation {
         return currentFile;
     }
 
-    private int fileNumber;
-
     public int getFileNumber() {
-        return fileNumber;
+        return files.size();
     }
 
     private Calendar startTime;
@@ -67,7 +83,7 @@ public class IndexInformation {
 
     public String printProgress() {
         
-        double percent = (double) currentFile / (double) fileNumber;
+        double percent = (double) currentFile / (double) getFileNumber();
         DateFormat format = new SimpleDateFormat("HH:mm:ss");
         
         return "added document " + getCurrentFile() + " of " + getFileNumber()
@@ -81,9 +97,7 @@ public class IndexInformation {
         long elapsedMillis = new Date().getTime() - getStartTime().getTime().getTime();
         
         double millisPerFile = (double) elapsedMillis / (double) currentFile;
-        long estimatedMillis = (long) (millisPerFile * fileNumber) - elapsedMillis;
-        
-        //System.out.println("elapsed: " + DateFormat.getTimeInstance().format(new Date(elapsedMillis)));
+        long estimatedMillis = (long) (millisPerFile * getFileNumber()) - elapsedMillis;
         
         GregorianCalendar estimatedCalendar = new GregorianCalendar();
         estimatedCalendar.setTimeInMillis(estimatedMillis);
@@ -91,19 +105,41 @@ public class IndexInformation {
         return estimatedCalendar;
     }
 
-    protected int countFiles(File file, FileFilter filter) {
-        if (file.isDirectory()) {
-            File files[] = file.listFiles(filter);
-            int count = 0;
-            for (int i = 0; i < files.length; i++) {
-                count += countFiles(files[i], filter);
-            }
-            return count;
+    protected void collectFiles(File dumpDirectory, FileFilter filter, String index) {
+        IndexIterator iterator = new IndexIterator(index, filter);
+        IndexIteratorHandler handler;
+        if (isCreating()) {
+            handler = new CreateHandler();
         }
         else {
-            addFile(file);
-            return 1;
+            handler = new UpdateHandler();
         }
+        iterator.addHandler(handler);
+        iterator.iterate(dumpDirectory);
+    }
+    
+    public class CreateHandler
+        extends AbstractIndexIteratorHandler {
+        
+        /** Handles a file.
+         *
+         */
+        public void handleFile(IndexReader reader, File file) {
+            IndexInformation.this.addFile(file);
+        }
+
+    }
+
+    public class UpdateHandler
+        extends AbstractIndexIteratorHandler {
+        
+        /** Handles a new document.
+         *
+         */
+        public void handleNewDocument(IndexReader reader, Term term, File file) {
+            IndexInformation.this.addFile(file);
+        }
+
     }
 
 }

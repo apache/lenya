@@ -103,8 +103,6 @@ public class SwingHTMLHandler
         if (isTagInitialized() && tag.equals(getLuceneTag())) {
             handleLuceneStartTag(tag, attributes);
         }
-        
-        super.handleStartTag(tag, attributes, pos);
     }
 
     /**
@@ -130,8 +128,6 @@ public class SwingHTMLHandler
         catch (TagStack.UnderflowException e) {
             log(e);
         }
-        
-        super.handleEndTag(tag, pos);
     }
     
     //-------------------------------------------------------------------------
@@ -304,9 +300,11 @@ public class SwingHTMLHandler
         if (isDebug)
             System.out.println(".handleText(): data: " + new String(data));
 
+/*
         if (data[0] == '>') {
            throw new IllegalStateException();
            }
+*/
         
         if (isIndexing() || isTitleParsing()) {
             appendToContents(data);
@@ -315,15 +313,13 @@ public class SwingHTMLHandler
         if (isTitleParsing()) {
             appendToTitle(data);
         }
-        
-        super.handleText(data, pos);
     }
 
     //-------------------------------------------------------------------------
     // Logging
     //-------------------------------------------------------------------------
     
-    private boolean isDebug = true;
+    private boolean isDebug = false;
     
     /**
      * Logs a message.
@@ -393,7 +389,7 @@ public class SwingHTMLHandler
             public UnderflowException() {
                 super("Stack underflow");
             }
-                
+        
         }
         
     }

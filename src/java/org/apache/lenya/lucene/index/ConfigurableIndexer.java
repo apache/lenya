@@ -78,7 +78,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.lenya.lucene.HTMLDocument;
 import org.lenya.lucene.index.ConfigurableDocumentCreator;
 import org.lenya.xml.DocumentHelper;
 

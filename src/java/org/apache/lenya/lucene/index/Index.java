@@ -13,6 +13,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexWriter;
 
 import org.lenya.lucene.IndexConfiguration;
+import org.lenya.util.DebugConfiguration;
 import org.lenya.xml.DOMParserFactory;
 import org.lenya.xml.DOMUtil;
 import org.lenya.xml.XPath;
@@ -32,10 +33,9 @@ public class Index {
             boolean create = false;
             File root = null;
             
-            String usage = "IndexHTML <lucene.xconf>";
-            //String usage = "IndexHTML [-create] [-index <index>] <root_directory>";
+            String usage = "Index <lucene.xconf> <debug(true/false)>";
             
-            if(argv.length == 0){
+            if(argv.length != 2){
                 System.err.println("Usage: " + usage);
                 return;
             }
@@ -54,6 +54,16 @@ public class Index {
                 return;
             }
             
+            String debug = argv[1];
+            if (debug.equalsIgnoreCase("false") || debug.equalsIgnoreCase("no")) {
+                DebugConfiguration.setDebug(false);
+            }
+            else if (debug.equalsIgnoreCase("false") || debug.equalsIgnoreCase("no")) {
+                DebugConfiguration.setDebug(false);
+            }
+            else {
+                System.err.println("ERROR: <debug> must be one of 'yes', 'true', 'no', or 'false'");
+            }
             
 /*
       for (int i = 0; i < argv.length; i++) {
@@ -71,9 +81,6 @@ public class Index {
             
             Date start = new Date();
             
-            IndexWriter writer = new IndexWriter(index, new StandardAnalyzer(), create);
-            writer.maxFieldLength = 1000000;
-
             Indexer indexer = (Indexer) ie.getIndexerClass().newInstance();
             
             DOMUtil du = new DOMUtil();
@@ -81,13 +88,9 @@ public class Index {
             indexer.configure(du.getElement(config.getDocumentElement(), new XPath("indexer")));
             
             if (create)
-                indexer.createIndex(root, index, writer);
+                indexer.createIndex(root, index);
             else
-                indexer.updateIndex(root, index, writer);
-            
-            System.out.println("Optimizing index...");
-            writer.optimize();
-            writer.close();
+                indexer.updateIndex(root, index);
             
             Date end = new Date();
             

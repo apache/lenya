@@ -32,7 +32,7 @@ public class DefaultDocumentCreator
             
         Document document = super.getDocument(file, htdocsDumpDir);
         
-        HTMLParser parser = HTMLParserFactory.newInstance();
+        HTMLParser parser = HTMLParserFactory.newInstance(file);
         parser.parse(file);
         
         document.add(Field.Text("title", parser.getTitle()));

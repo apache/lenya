@@ -60,27 +60,9 @@ public class AbstractDocumentCreator
         // Add the uid as a field, so that index can be incrementally maintained.
         // This field is not stored with document, it is indexed, but it is not
         // tokenized prior to indexing.
-        doc.add(new Field("uid", uid(file, htdocsDumpDir), false, true, false));
+        doc.add(new Field("uid", IndexIterator.createUID(file, htdocsDumpDir), false, true, false));
 
         return doc;
-    }
-
-    /**
-     * Append path and date into a string in such a way that lexicographic sorting gives the same
-     * results as a walk of the file hierarchy.  Thus null (\u0000) is used both to separate
-     * directory components and to separate the path from the date.
-     *
-     * @param f DOCUMENT ME!
-     * @param htdocsDumpDir DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    public String uid(File f, File htdocsDumpDir) {
-        String requestURI = f.getPath().substring(htdocsDumpDir.getPath().length());
-        String uid = requestURI.replace(File.separatorChar, '\u0000') + "\u0000" +
-            DateField.timeToString(f.lastModified());
-
-        return uid;
     }
 
 }

@@ -8,18 +8,21 @@ package org.lenya.lucene.index;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.xml.transform.Source;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.document.DateField;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermEnum;
-import org.lenya.lucene.HTMLDocument;
+import org.lenya.util.CommandLineLogger;
 
 import org.w3c.dom.Element;
 
@@ -33,10 +36,16 @@ import org.w3c.dom.Element;
 public abstract class AbstractIndexer
     implements Indexer {
 
+    private CommandLineLogger logger = new CommandLineLogger(getClass());
+        
     private DocumentCreator documentCreator;
     
     /** Creates a new instance of AbstractIndexer */
     public AbstractIndexer() {
+    }
+    
+    protected CommandLineLogger getLogger() {
+        return logger;
     }
     
     /**
@@ -60,169 +69,80 @@ public abstract class AbstractIndexer
     /**
      * Updates the index incrementally.
      * Walk directory hierarchy in uid order, while keeping uid iterator from
-     * existing index in sync.  Mismatches indicate one of: (a) old documents to
-     * be deleted; (b) unchanged documents, to be left alone; or (c) new
-     * documents, to be indexed.
+     * existing index in sync.  Mismatches indicate one of:
+     * <ol>
+     *   <li>old documents to be deleted</li>
+     *   <li>unchanged documents, to be left alone, or</li>
+     *   <li>new documents, to be indexed.</li>
+     * </ol>
      */
-    public void updateIndex(File dumpDirectory, String index, IndexWriter writer)
+    public void updateIndex(File dumpDirectory, String index)
             throws Exception {
         
-        IndexReader reader = IndexReader.open(index);
-        TermEnum uidIter = reader.terms(new Term("uid", ""));
-        
-        IndexInformation info = new IndexInformation(dumpDirectory, getFilter());
-
-        deleteStaleDocuments(dumpDirectory, info, index);
-        indexDocs(dumpDirectory, info, writer, uidIter);
-        
-        uidIter.close();
-        reader.close();
+        deleteStaleDocuments(dumpDirectory, index);
+        doIndex(dumpDirectory, index, false);
     }
     
-    /**
-     * Delete the rest of stale documents.
-     */
-    protected void deleteStaleDocuments(File dumpDirectory, IndexInformation info, String index)
-            throws Exception {
-        
-        IndexReader reader = IndexReader.open(index);
-        TermEnum uidIter = reader.terms(new Term("uid", ""));
-
-        deleteDocs(dumpDirectory, info, reader, uidIter);
-        
-        // delete the rest of stale documents
-        while (uidIter.term() != null && uidIter.term().field() == "uid") {
-            System.out.println("IndexHTML.indexDocs(): deleting " + HTMLDocument.uid2url(uidIter.term().text()));
-            reader.delete(uidIter.term());
-            uidIter.next();
-        }
-
-        uidIter.close();
-        reader.close();
-    }
-
     /**
      * Creates a new index.
      */
-    public void createIndex(File dumpDirectory, String index, IndexWriter writer)
+    public void createIndex(File dumpDirectory, String index)
             throws Exception {
                 
-        IndexReader reader = IndexReader.open(index);
-        TermEnum uidIter = reader.terms(new Term("uid", ""));
-
-        IndexInformation info = new IndexInformation(dumpDirectory, getFilter());
-        indexDocs(dumpDirectory, info, writer, uidIter);
-        
-        uidIter.close();
-        reader.close();
+        doIndex(dumpDirectory, index, true);
     }
     
-    /**
-     * Recursive deleting.
-     */
-    protected void deleteDocs(File root, IndexInformation info, IndexReader reader, TermEnum uidIter)
-            throws Exception {
-        //System.out.println("IndexHTML.indexDocs(File,File): "+file+" "+root);
-        
-        File[] files = info.getFiles();
-        for (int i = 0; i < files.length; i++) {
-            deleteDocument(files[i], root, reader, uidIter);
-        }
-    }
-
-    /**
-     * Deletes a stale document.
-     */
-    protected void deleteDocument(File file, File root, IndexReader reader, TermEnum uidIter)
-            throws Exception {
-                
-        String uid = HTMLDocument.uid(file, root);
-
-        while (uidIter.term() != null
-                && uidIter.term().field() == "uid"
-                && uidIter.term().text().compareTo(uid) < 0) {
-
-            System.out.println("IndexHTML.indexDocs(File,File): deleting " + HTMLDocument.uid2url(uidIter.term().text()));
-            reader.delete(uidIter.term());
-            uidIter.next();
-        }
-
-        if (uidIter.term() != null
-                && uidIter.term().field() == "uid"
-                && uidIter.term().text().compareTo(uid) == 0) {
-
-            // keep matching docs
-            uidIter.next();
-        }
-    }
+    public void doIndex(File dumpDirectory, String index, boolean create) {
     
-    /**
-     * Recursive indexing.
-     */
-    protected void indexDocs(File root, IndexInformation info, IndexWriter writer, TermEnum uidIter)
-            throws Exception {
-        //System.out.println("IndexHTML.indexDocs(File,File): "+file+" "+root);
-        
-        File[] files = info.getFiles();
-        for (int i = 0; i < files.length; i++) {
-            indexDocument(files[i], root, writer, uidIter, info);
-        }
-    }
-    
-    /**
-     * Indexes a document.
-     */
-    protected void indexDocument(File file, File root, IndexWriter writer, TermEnum uidIter, IndexInformation info)
-            throws Exception {
-                
-        boolean add = false;
-                
-        if (uidIter != null) {
-            String uid = HTMLDocument.uid(file, root);
+        try {
+            IndexWriter writer = new IndexWriter(index, new StandardAnalyzer(), create);
+            writer.maxFieldLength = 1000000;
 
-            while (uidIter.term() != null
-                    && uidIter.term().field() == "uid"
-                    && uidIter.term().text().compareTo(uid) < 0) {
-
-                uidIter.next();
-            }
-
-            if (uidIter.term() != null
-                    && uidIter.term().field() == "uid"
-                    && uidIter.term().text().compareTo(uid) == 0) {
-
-                // keep matching docs
-                uidIter.next();
-            }
-
-            // add new docs
-            else {
-                add = true;
-            }
-        }
-
-        // creating a new index
-        else {
-            add = true;
-        }
-        
-        if (add) {
-            System.out.println(getClass().getName() + " adding document: " + file.getAbsolutePath());
-            Document doc = documentCreator.getDocument(file, root);
-            writer.addDocument(doc);
+            IndexInformation info = new IndexInformation(index, dumpDirectory, getFilter(), create);
             
-            info.increase();
-            System.out.println(getClass().getName() + " " + info.printProgress());
+            IndexHandler handler;
+            if (create) {
+                handler = new CreateIndexHandler(dumpDirectory, info, writer);
+            }
+            else {
+                handler = new UpdateIndexHandler(dumpDirectory, info, writer);
+            }
+            
+            IndexIterator iterator = new IndexIterator(index, getFilter());
+            iterator.addHandler(handler);
+            iterator.iterate(dumpDirectory);
+            
+            writer.optimize();
+            writer.close();
+        }
+        catch (IOException e) {
+            getLogger().log(e);
         }
     }
-    
+
+    /**
+     * Delete the stale documents.
+     */
+    protected void deleteStaleDocuments(File dumpDirectory, String index)
+            throws Exception {
+                
+        getLogger().debug("Deleting stale documents");
+        IndexIterator iterator = new IndexIterator(index, getFilter());
+        iterator.addHandler(new DeleteHandler());
+        iterator.iterate(dumpDirectory);
+        getLogger().debug("Deleting stale documents finished");
+    }
+
     /**
      * Returns the filter used to receive the indexable files.
      */
     public FileFilter getFilter() {
         return new AbstractIndexer.DefaultIndexFilter();
     }
-    
+
+    /**
+     * FileFilter used to obtain the files to index.
+     */
     public class DefaultIndexFilter
         implements FileFilter {
             
@@ -249,6 +169,107 @@ public abstract class AbstractIndexer
             }
             return accept;
         }            
+        
+    }
+    
+    /**
+     * Deletes all stale documents up to the document representing the next file.
+     * The following documents are deleted:
+     * <ul>
+     *   <li>representing files that where removed</li>
+     *   <li>representing the same file but are older than the current file</li>
+     * </ul>
+     */
+    public class DeleteHandler
+        extends AbstractIndexIteratorHandler {
+            
+        /** Handles a stale document.
+         *
+         */
+        public void handleStaleDocument(IndexReader reader, Term term) {
+            AbstractIndexer.this.getLogger().debug("deleting " + IndexIterator.uid2url(term.text()));
+            try {
+                int deletedDocuments = reader.delete(term);
+                AbstractIndexer.this.getLogger().debug("deleted " + deletedDocuments + " documents.");
+            }
+            catch (IOException e) {
+                getLogger().log(e);
+            }
+        }            
+
+    }
+    
+    public class IndexHandler
+        extends AbstractIndexIteratorHandler {
+            
+        public IndexHandler(File dumpDirectory, IndexInformation info, IndexWriter writer) {
+            this.info = info;
+            this.dumpDirectory = dumpDirectory;
+            this.writer = writer;
+        }
+        
+        private IndexInformation info;
+        
+        protected IndexInformation getInformation() {
+            return info;
+        }
+        
+        private File dumpDirectory;
+        
+        protected File getDumpDirectory() {
+            return dumpDirectory;
+        }
+        
+        private IndexWriter writer;
+        
+        protected IndexWriter getWriter() {
+            return writer;
+        }
+            
+        protected void addFile(File file) {
+            getLogger().debug("adding document: " + file.getAbsolutePath());
+            try {
+                Document doc = getDocumentCreator().getDocument(file, dumpDirectory);
+                writer.addDocument(doc);
+            }
+            catch (Exception e) {
+                getLogger().log(e);
+            }
+            
+            info.increase();
+            getLogger().log(info.printProgress());
+        }
+    }
+    
+    public class CreateIndexHandler
+        extends IndexHandler {
+            
+        public CreateIndexHandler(File dumpDirectory, IndexInformation info, IndexWriter writer) {
+            super(dumpDirectory, info, writer);
+        }
+        
+        /**
+         * Handles a file. Used when creating a new index.
+         */
+        public void handleFile(IndexReader reader, File file) {
+            addFile(file);
+        }
+        
+    }
+    
+    public class UpdateIndexHandler
+        extends IndexHandler {
+            
+        public UpdateIndexHandler(File dumpDirectory, IndexInformation info, IndexWriter writer) {
+            super(dumpDirectory, info, writer);
+        }
+        
+        /**
+         * Handles a new document. Used when updating the index.
+         */
+        public void handleNewDocument(IndexReader reader, Term term, File file) {
+            addFile(file);
+        }
         
     }
     

@@ -8,8 +8,6 @@ package org.lenya.lucene.index;
 
 import java.io.File;
 
-import org.apache.lucene.index.IndexWriter;
-
 import org.w3c.dom.Element;
 
 /**
@@ -27,12 +25,12 @@ public interface Indexer {
     /**
      * Indexes the contents of a directory.
      */
-    void createIndex(File dumpDirectory, String index, IndexWriter writer)
+    void createIndex(File dumpDirectory, String index)
             throws Exception;
 
     /**
      * Indexes the contents of a directory.
      */
-    void updateIndex(File dumpDirectory, String index, IndexWriter writer)
+    void updateIndex(File dumpDirectory, String index)
             throws Exception;
 }
