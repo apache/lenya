@@ -5,51 +5,66 @@
 
   <map:pipelines>
     <map:pipeline>
-          <!-- matches pub-id/css/**.css -->
-          <map:match pattern="*/css/**.css">
-            <map:read src="pubs/{1}/resources/css/{2}.css" mime-type="text/css" />
+      
+      <!-- CMS -->
+
+          <!-- matches lenya/css/**.css -->
+          <map:match pattern="lenya/css/**.css">
+            <map:read src="lenya/resources/css/{3}.css" mime-type="text/css" />
           </map:match>
 
-          <!-- matches pub-id/javascript/**.js -->
-          <map:match pattern="*/javascript/**.js">
-            <map:read src="pubs/{1}/resources/javascript/{2}.js" mime-type="application/javascript" />
+          <!-- matches lenya/javascript/**.js -->
+          <map:match pattern="lenya/javascript/**.js">
+            <map:read src="lenya/resources/javascript/{3}.js" mime-type="application/javascript" />
           </map:match>
 
-          <!-- matches pub-id/images/**.gif -->
-          <map:match pattern="*/images/**.gif">
-            <map:read src="pubs/{1}/resources/images/{2}.gif" mime-type="image/gif" />
+          <!-- matches lenya/images/**.jpg -->
+          <map:match pattern="lenya/images/**.jpg">
+            <map:read src="lenya/resources/images/{3}.jpg" mime-type="image/jpeg" />
           </map:match>
 
-          <!-- matches pub-id/images/**.png -->
-          <map:match pattern="*/images/**.png">
-            <map:read src="pubs/{1}/resources/images/{2}.png" mime-type="image/png" />
+          <!-- matches lenya/**.ext -->
+          <map:match pattern="lenya/images/**.*">
+            <map:read src="lenya/resources/images/{3}.{4}" mime-type="image/{4}" />
           </map:match>
 
-          <!-- matches pub-id/images/**.jpg -->
-          <map:match pattern="*/images/**.jpg">
-            <map:read src="pubs/{1}/resources/images/{2}.jpg" mime-type="image/jpeg" />
+      <!-- publications -->
+      
+          <!-- matches pub-id/area/css/**.css -->
+          <map:match pattern="*/*/css/**.css">
+            <map:read src="pubs/{1}/resources/css/{3}.css" mime-type="text/css" />
           </map:match>
 
-          <!-- matches pub-id/images/**.jpeg -->
-          <map:match pattern="*/images/**.jpeg">
-            <map:read src="pubs/{1}/resources/images/{2}.jpeg" mime-type="image/jpeg" />
+          <!-- matches pub-id/area/javascript/**.js -->
+          <map:match pattern="*/*/javascript/**.js">
+            <map:read src="pubs/{1}/resources/javascript/{3}.js" mime-type="application/javascript" />
           </map:match>
 
-          <!-- matches pub-id/**.tar.gz -->
-          <map:match pattern="*/**.tar.gz">
-            <map:read src="pubs/{1}/resources/{2}.tar.gz" mime-type="application/x-gtar" />
+          <!-- matches pub-id/area/images/**.jpg -->
+          <map:match pattern="*/*/images/**.jpg">
+            <map:read src="pubs/{1}/resources/images/{3}.jpg" mime-type="image/jpeg" />
           </map:match>
 
-          <!-- matches pub-id/pdf/**.pdf -->
-          <map:match pattern="*/pdf/**.pdf">
-            <map:read src="pubs/{1}/resources/pdf/{2}.pdf" mime-type="application/pdf" />
+          <!-- matches pub-id/images/**.ext -->
+          <map:match pattern="*/*/images/**.*">
+            <map:read src="pubs/{1}/resources/images/{3}.{4}" mime-type="image/{4}" />
           </map:match>
 
-          <!-- matches pub-id/flash/**.swf -->
-          <map:match pattern="*/flash/**.swf">
-            <map:read src="pubs/{1}/resources/flash/{2}.swf" mime-type="application/x-shockwave-flash" />
+          <!-- matches pub-id/area/**.tar.gz -->
+          <map:match pattern="*/*/**.tar.gz">
+            <map:read src="pubs/{1}/resources/{3}.tar.gz" mime-type="application/x-gtar" />
           </map:match>
 
+          <!-- matches pub-id/area/pdf/**.pdf -->
+          <map:match pattern="*/*/pdf/**.pdf">
+            <map:read src="pubs/{1}/resources/pdf/{3}.pdf" mime-type="application/pdf" />
+          </map:match>
+
+          <!-- matches pub-id/area/flash/**.swf -->
+          <map:match pattern="*/*/flash/**.swf">
+            <map:read src="pubs/{1}/resources/flash/{3}.swf" mime-type="application/x-shockwave-flash" />
+          </map:match>
+          
     </map:pipeline>
   </map:pipelines>
 </map:sitemap>
