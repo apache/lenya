@@ -67,7 +67,6 @@ public class UsecaseProxy {
      * @return An object.
      */
     public Object getParameter(String name) {
-        System.out.println("Return [" + name + "] = [" + this.parameters.get(name) + "]");
         return this.parameters.get(name);
     }
 
