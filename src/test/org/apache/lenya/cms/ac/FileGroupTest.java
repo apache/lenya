@@ -73,6 +73,7 @@ import java.io.IOException;
  *
  */
 public class FileGroupTest extends AccessControlTest {
+    
     /**
      * Constructor for FileGroupTest.
      * @param arg0 command line args
@@ -101,23 +102,11 @@ public class FileGroupTest extends AccessControlTest {
      */
     final public void testFileGroup()
         throws AccessControlException, ConfigurationException, SAXException, IOException {
-        String groupId = "testGroup";
-        String roleId = "testRole";
-        File configurationDirectory = getConfigurationDirectory();
 
-        System.out.println("Configuration directory: " + configurationDirectory);
-
-        FileGroup group = new FileGroup(configurationDirectory, groupId);
-        FileRole role = new FileRole(configurationDirectory, roleId);
-
-        //		group.addRole(role);
-        role.save();
+        FileGroup group = getGroup();
         group.save();
 
-        File path = null;
-        path = RoleManager.instance(configurationDirectory).getConfigurationDirectory();
-
-        File groupFile = new File(path, groupId + GroupManager.SUFFIX);
+        File groupFile = new File(getConfigurationDirectory(), GROUP_ID + GroupManager.SUFFIX);
         assertNotNull(groupFile);
         assertTrue(groupFile.exists());
 
@@ -127,20 +116,33 @@ public class FileGroupTest extends AccessControlTest {
 
         FileGroup newGroup = null;
         newGroup = new FileGroup();
-        newGroup.setConfigurationDirectory(configurationDirectory);
+        newGroup.setConfigurationDirectory(getConfigurationDirectory());
         newGroup.configure(config);
         assertNotNull(newGroup);
 
-        assertTrue(newGroup.getId().equals(groupId));
+        assertTrue(newGroup.getId().equals(GROUP_ID));
 
-        /*
-                int roleCount = 0;
-                for (Iterator roles = newGroup.getRoles(); roles.hasNext();) {
-                        Role newRole = (Role) roles.next();
-                        roleCount = roleCount + 1;
-                        assertTrue(newRole.getName().equals(roleName));
-                }
-                assertEquals(1, roleCount);
-        */
     }
+    
+    public static final String GROUP_ID = "testGroup";
+    
+    protected FileGroup getGroup() {
+        File configurationDirectory = getConfigurationDirectory();
+        System.out.println("Configuration directory: " + configurationDirectory);
+        FileGroup group = new FileGroup(configurationDirectory, GROUP_ID);
+        return group;
+    }
+    
+    /**
+     * Tests the removeAllMembers() method.
+     */
+    public void testRemoveAllMembers() {
+        Group group = getGroup();
+        Groupable members[] = group.getMembers();
+        group.removeAllMembers();
+        for (int i = 0; i < members.length; i++) {
+            assertFalse(group.contains(members[i]));
+        }
+    }
+    
 }
