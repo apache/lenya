@@ -167,7 +167,7 @@
         </sch:scheduler-form>
         
         <div style="text-align: right">
-        <a href="{$referer}"><input type="button" value="Back to Page"/></a>
+        <form action="{$referer}"><input type="submit" value="Back to Page"/></form>
         </div>
         </td>
         </tr>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: deactivate.xsl,v 1.14 2003/10/27 19:21:10 andreas Exp $
+ $Id: deactivate.xsl,v 1.15 2003/11/11 15:10:57 andreas Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -92,7 +92,7 @@
       </sch:job>
     </sch:scheduler-form>
     
-    <a href="{$request-uri}"><input type="button" value="Back to Page"/></a>
+    <form action="{$request-uri}"><input type="submit" value="Back to Page"/></form>
       
   </xsl:template>
   
