@@ -1,5 +1,5 @@
 /*
- * $Id: XPSSourceInformation.java,v 1.4 2003/02/07 12:25:03 ah Exp $
+ * $Id: XPSSourceInformation.java,v 1.5 2003/02/07 16:54:32 michicms Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,6 +48,7 @@ import org.apache.log4j.Category;
 import java.io.File;
 
 import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
 
 import java.util.Vector;
@@ -129,13 +130,37 @@ public class XPSSourceInformation {
             log.warn("1079: " + e + " -- Let's hope it's a relative path!");
 
             File parent = new File(parentInfo.url.getFile());
-            File file = org.wyona.util.FileUtil.file(parent.getParent(), urlString);
 
-            try {
-                url = new URL("file", null, -1, file.getAbsolutePath());
-            } catch (MalformedURLException exception) {
-                log.error(exception);
-            }
+            // transform URI to system-independent path and create absolute path
+            try{
+              //File file = org.wyona.util.FileUtil.file(parent.getParent(), urlString);
+             
+              //File file = new File(org.apache.avalon.excalibur.io.FileUtil.catPath(parent.getAbsolutePath(), urlString));
+
+              int index = urlString.indexOf("#");
+              String xpointer="";
+              String relativePath = urlString;
+              if (index != -1) {
+                 relativePath = urlString.substring(0,index);
+                 xpointer = urlString.substring(index);
+              }
+              relativePath=relativePath.replace('/', File.separatorChar);
+             
+              File file = new File(parent.getParentFile(), relativePath);
+
+              url = new URL("file",null,-1,file.getCanonicalPath() + xpointer);
+              //url = file.toURL();
+
+              log.info("Concatenated URL: "+url);
+              }
+            catch(MalformedURLException exception){
+              log.error(exception);
+              }
+            catch(IOException exception){
+              log.error(exception);
+              }
+
+
         }
 
         if (url.getProtocol().equals("http")) {
