@@ -19,9 +19,16 @@
     License
     =======
     
-    Copyright (c) 2002 wyona.org
+    Copyright (c) 2003 wyona.org
 
-   @version CVS $Id: build.xml,v 1.33 2003/02/21 18:48:49 gregor Exp $
+   
+    Docu
+    ====
+
+    http://ant.apache.org/manual/dirtasks.html
+    http://ant.apache.org/manual/CoreTypes/mapper.html
+
+   @version CVS $Id: build.xml,v 1.34 2003/02/24 15:00:39 michi Exp $
 
 -->
 
@@ -238,15 +245,32 @@
     <mkdir dir="${build.webapp}"/>
   </target>
 
+
+
+
   <!-- ============================================================ -->
   <!-- Prepares the source code                                     -->
   <!-- ============================================================ -->
   <target name="prepare-src" depends="prepare">
+    <echo>INFO: Copy java source files from ${java.dir} to ${build.src}</echo>
     <copy todir="${build.src}" filtering="on">
       <fileset dir="${java.dir}">
       </fileset>
     </copy>
+    <echo>INFO: Copy java source files from ${pubs.dir} to ${build.src}</echo>
+    <copy todir="${build.src}" filtering="on">
+      <fileset dir="${pubs.dir}" includes="*/java/src/**" excludes="CVS/**" />
+      <mapper type="regexp" from="(.*)/java/src/(.*)" to="\2">
+<!--
+        <classpath refid="/home/michiii/build/jakarta-ant-1.5.1/lib/optional.jar:/home/michiii/src/wyonacms/src/cocoon/WEB-INF/lib/jakarta-regexp-1.2.jar" />
+-->
+      </mapper>
+    </copy>
   </target>
+
+
+
+
 
   <!-- ============================================================ -->
   <!-- The main compilation target                                  -->
@@ -264,6 +288,9 @@
       <classpath refid="classpath"/>
     </javac>
   </target>
+
+
+
 
   <!-- ============================================================ -->
   <!-- The compilation target with deprecation on -->
@@ -538,16 +565,9 @@
   <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
     <!-- Empty server cache - this directory is set in the "build.properties" file -->
     <delete dir="${cache.dir}"/>
+    <mkdir dir="${install.dir}" />
     <delete includeEmptyDirs="true">
-      <fileset dir="${install.dir}" excludes="${target.reset.excludes}">
-<!--
-      <fileset dir="${install.dir}" excludes="**/authoring/**,**/live/**">
--->
-<!--
-        <exclude name="**/authoring/**"/>
-        <exclude name="**/live/**"/>
--->
-      </fileset>
+      <fileset dir="${install.dir}" excludes="${target.reset.excludes}" />
     </delete>
   </target>
 
