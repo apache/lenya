@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.10 2003/05/27 15:35:00 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.11 2003/05/28 09:34:54 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -84,7 +84,7 @@ public class DefaultSiteTree
 	throws ParserConfigurationException, SAXException, IOException {
 	this.treefile = treefile;
         if (!treefile.isFile()) {
-          //the treefile does'nt exists, so create it
+          //the treefile doesn't exist, so create it
           document = createDocument();
         } else {
           // Read tree
