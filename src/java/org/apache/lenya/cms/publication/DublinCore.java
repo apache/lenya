@@ -58,7 +58,7 @@ package org.apache.lenya.cms.publication;
 /**
  * @author Christian Egli
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCore.java,v 1.23 2004/02/17 14:03:52 egli Exp $
+ * @version $Id: DublinCore.java,v 1.24 2004/02/20 10:41:06 andreas Exp $
  */
 public interface DublinCore {
 
@@ -125,6 +125,7 @@ public interface DublinCore {
      * @return the creator
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getCreator() throws DocumentException;
 
@@ -134,6 +135,7 @@ public interface DublinCore {
      * @param creator the Creator
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setCreator(String creator) throws DocumentException;
 
@@ -143,6 +145,7 @@ public interface DublinCore {
      * @return the title
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getTitle() throws DocumentException;
 
@@ -152,6 +155,7 @@ public interface DublinCore {
      * @param title the title
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setTitle(String title) throws DocumentException;
 
@@ -161,6 +165,7 @@ public interface DublinCore {
      * @return the description
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getDescription() throws DocumentException;
 
@@ -170,6 +175,7 @@ public interface DublinCore {
      * @param description the description
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setDescription(String description) throws DocumentException;
 
@@ -179,6 +185,7 @@ public interface DublinCore {
      * @return the identifier
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getIdentifier() throws DocumentException;
 
@@ -188,6 +195,7 @@ public interface DublinCore {
      * @param identifier the identifier
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setIdentifier(String identifier) throws DocumentException;
 
@@ -197,6 +205,7 @@ public interface DublinCore {
      * @return the subject
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getSubject() throws DocumentException;
 
@@ -206,6 +215,7 @@ public interface DublinCore {
      * @param subject the subject
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setSubject(String subject) throws DocumentException;
 
@@ -215,6 +225,7 @@ public interface DublinCore {
      * @return the publisher
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getPublisher() throws DocumentException;
 
@@ -224,6 +235,7 @@ public interface DublinCore {
      * @param publisher the publisher
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setPublisher(String publisher) throws DocumentException;
 
@@ -233,6 +245,7 @@ public interface DublinCore {
      * @return the date of issue
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getDateIssued() throws DocumentException;
 
@@ -242,6 +255,7 @@ public interface DublinCore {
      * @param dateIssued the date of issue
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setDateIssued(String dateIssued) throws DocumentException;
 
@@ -251,6 +265,7 @@ public interface DublinCore {
      * @return the date of creation
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getDateCreated() throws DocumentException;
 
@@ -260,6 +275,7 @@ public interface DublinCore {
      * @param dateCreated the date of creation
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setDateCreated(String dateCreated) throws DocumentException;
 
@@ -269,6 +285,7 @@ public interface DublinCore {
      * @return the rights
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getRights() throws DocumentException;
 
@@ -278,6 +295,7 @@ public interface DublinCore {
      * @param rights the rights
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setRights(String rights) throws DocumentException;
 
@@ -287,6 +305,7 @@ public interface DublinCore {
      * @return isReferencedBy
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #getValues(java.lang.String)} or {@link #getFirstValue(java.lang.String)} instead.
      */
     String getIsReferencedBy() throws DocumentException;
 
@@ -296,6 +315,7 @@ public interface DublinCore {
      * @param isReferencedBy isReferencedBy
      * 
      * @throws DocumentException if an error occurs
+     * @deprecated Use {@link #addValue(java.lang.String, java.lang.String)} or {@link #setValue(java.lang.String, java.lang.String)} instead.
      */
     void setIsReferencedBy(String isReferencedBy) throws DocumentException;
 
@@ -313,6 +333,14 @@ public interface DublinCore {
      * @return A string.
      */
     String getFirstValue(String key) throws DocumentException;
+
+    /**
+     * Sets the value for a certain key. All existing values will be removed.
+     * @param key The key.
+     * @param value The value to set.
+     * @throws DocumentException when something went wrong.
+     */
+    void setValue(String key, String value) throws DocumentException;
 
     /**
      * Adds a value for a certain key.

@@ -59,11 +59,11 @@ package org.apache.lenya.cms.publication;
  * only read from file when it is actually requested.
  *
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
- * @version $Id: DublinCoreProxy.java,v 1.7 2004/02/17 14:03:52 egli Exp $
+ * @version $Id: DublinCoreProxy.java,v 1.8 2004/02/20 10:41:06 andreas Exp $
  */
 public class DublinCoreProxy implements DublinCore {
 
-    private DublinCore dcCore;
+    private DublinCoreImpl dcCore;
     private Document cmsDocument;
 
 
@@ -82,7 +82,7 @@ public class DublinCoreProxy implements DublinCore {
      * @return a real dublin core object
      * @throws DocumentException when an error occurs.
      */
-    protected DublinCore instance() throws DocumentException {
+    protected DublinCoreImpl instance() throws DocumentException {
         if (dcCore == null) {
             dcCore = new DublinCoreImpl(this.cmsDocument);
         }
@@ -90,167 +90,146 @@ public class DublinCoreProxy implements DublinCore {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getCreator()
      */
     public String getCreator() throws DocumentException {
-        return instance().getCreator();
+        return instance().getFirstValue(DublinCore.ELEMENT_CREATOR);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getDateCreated()
      */
     public String getDateCreated() throws DocumentException {
-        return instance().getDateCreated();
+        return instance().getFirstValue(DublinCore.TERM_CREATED);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getDateIssued()
      */
     public String getDateIssued() throws DocumentException {
-        return instance().getDateIssued();
+        return instance().getFirstValue(DublinCore.TERM_ISSUED);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getDescription()
      */
     public String getDescription() throws DocumentException {
-        return instance().getDescription();
+        return instance().getFirstValue(DublinCore.ELEMENT_DESCRIPTION);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getIdentifier()
      */
     public String getIdentifier() throws DocumentException {
-        return instance().getIdentifier();
+        return instance().getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getPublisher()
      */
     public String getPublisher() throws DocumentException {
-        return instance().getPublisher();
+        return instance().getFirstValue(DublinCore.ELEMENT_PUBLISHER);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getRights()
      */
     public String getRights() throws DocumentException {
-        return instance().getRights();
+        return instance().getFirstValue(DublinCore.ELEMENT_RIGHTS);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getIsReferencedBy()
      */
     public String getIsReferencedBy() throws DocumentException {
-        return instance().getIsReferencedBy();
+        return instance().getFirstValue(DublinCore.TERM_ISREFERENCEDBY);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getSubject()
      */
     public String getSubject() throws DocumentException {
-        return instance().getSubject();
+        return instance().getFirstValue(DublinCore.ELEMENT_SUBJECT);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getTitle()
      */
     public String getTitle() throws DocumentException {
-        return instance().getTitle();
+        return instance().getFirstValue(DublinCore.ELEMENT_TITLE);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setCreator(java.lang.String)
      */
     public void setCreator(String creator) throws DocumentException {
-        instance().setCreator(creator);
+        instance().setValue(DublinCore.ELEMENT_CREATOR, creator);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setDateCreated(java.lang.String)
      */
     public void setDateCreated(String dateCreated) throws DocumentException {
-        instance().setDateCreated(dateCreated);
+        instance().setValue(DublinCore.TERM_CREATED, dateCreated);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setDateIssued(java.lang.String)
      */
     public void setDateIssued(String dateIssued) throws DocumentException {
-        instance().setDateIssued(dateIssued);
+        instance().setValue(DublinCore.TERM_ISSUED, dateIssued);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setDescription(java.lang.String)
      */
     public void setDescription(String description) throws DocumentException {
-        instance().setDescription(description);
+        instance().setValue(DublinCore.ELEMENT_DESCRIPTION, description);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setIdentifier(java.lang.String)
      */
     public void setIdentifier(String identifier) throws DocumentException {
-        instance().setIdentifier(identifier);
+        instance().setValue(DublinCore.ELEMENT_IDENTIFIER, identifier);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setPublisher(java.lang.String)
      */
     public void setPublisher(String publisher) throws DocumentException {
-        instance().setPublisher(publisher);
+        instance().setValue(DublinCore.ELEMENT_PUBLISHER, publisher);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setRights(java.lang.String)
      */
     public void setRights(String rights) throws DocumentException {
-        instance().setRights(rights);
+        instance().setValue(DublinCore.ELEMENT_RIGHTS, rights);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setIsReferencedBy(java.lang.String)
      */
     public void setIsReferencedBy(String isReferencedBy) throws DocumentException {
-        instance().setIsReferencedBy(isReferencedBy);
+        instance().setValue(DublinCore.TERM_ISREFERENCEDBY, isReferencedBy);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setSubject(java.lang.String)
      */
     public void setSubject(String subject) throws DocumentException {
-        instance().setSubject(subject);
+        instance().setValue(DublinCore.ELEMENT_SUBJECT, subject);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#setTitle(java.lang.String)
      */
     public void setTitle(String title) throws DocumentException {
-        instance().setTitle(title);
+        instance().setValue(DublinCore.ELEMENT_TITLE, title);
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#save()
      */
     public void save() throws DocumentException {
@@ -307,6 +286,13 @@ public class DublinCoreProxy implements DublinCore {
     public void addValues(String key, String[] values) throws DocumentException {
         instance().addValues(key, values);
         
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#setValue(java.lang.String, java.lang.String)
+     */
+    public void setValue(String key, String value) throws DocumentException {
+        instance().setValue(key, value);
     }
 
 }

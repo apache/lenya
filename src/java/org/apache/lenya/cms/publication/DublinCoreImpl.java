@@ -77,9 +77,9 @@ import org.xml.sax.SAXException;
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCoreImpl.java,v 1.9 2004/02/17 14:03:52 egli Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.10 2004/02/20 10:41:06 andreas Exp $
  */
-public class DublinCoreImpl implements DublinCore {
+public class DublinCoreImpl {
     private Document cmsdocument;
     private File infofile;
 
@@ -88,28 +88,26 @@ public class DublinCoreImpl implements DublinCore {
 
     private static final String META = "meta";
 
-    // Dublin Core Elements
-
     private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
     private static final String DC_PREFIX = "dc";
 
     private static final String[] ELEMENTS =
         {
-            ELEMENT_TITLE,
-            ELEMENT_CREATOR,
-            ELEMENT_SUBJECT,
-            ELEMENT_DESCRIPTION,
-            ELEMENT_PUBLISHER,
-            ELEMENT_CONTRIBUTOR,
-            ELEMENT_DATE,
-            ELEMENT_TYPE,
-            ELEMENT_FORMAT,
-            ELEMENT_IDENTIFIER,
-            ELEMENT_SOURCE,
-            ELEMENT_LANGUAGE,
-            ELEMENT_RELATION,
-            ELEMENT_COVERAGE,
-            ELEMENT_RIGHTS };
+            DublinCore.ELEMENT_TITLE,
+            DublinCore.ELEMENT_CREATOR,
+            DublinCore.ELEMENT_SUBJECT,
+            DublinCore.ELEMENT_DESCRIPTION,
+            DublinCore.ELEMENT_PUBLISHER,
+            DublinCore.ELEMENT_CONTRIBUTOR,
+            DublinCore.ELEMENT_DATE,
+            DublinCore.ELEMENT_TYPE,
+            DublinCore.ELEMENT_FORMAT,
+            DublinCore.ELEMENT_IDENTIFIER,
+            DublinCore.ELEMENT_SOURCE,
+            DublinCore.ELEMENT_LANGUAGE,
+            DublinCore.ELEMENT_RELATION,
+            DublinCore.ELEMENT_COVERAGE,
+            DublinCore.ELEMENT_RIGHTS };
 
     // Dublin Core Terms
 
@@ -118,40 +116,40 @@ public class DublinCoreImpl implements DublinCore {
 
     private static final String[] TERMS =
         {
-            TERM_AUDIENCE,
-            TERM_ALTERNATIVE,
-            TERM_TABLEOFCONTENTS,
-            TERM_ABSTRACT,
-            TERM_CREATED,
-            TERM_VALID,
-            TERM_EXTENT,
-            TERM_AVAILABLE,
-            TERM_ISSUED,
-            TERM_MODIFIED,
-            TERM_EXTENT,
-            TERM_MEDIUM,
-            TERM_ISVERSIONOF,
-            TERM_HASVERSION,
-            TERM_ISREPLACEDBY,
-            TERM_REPLACES,
-            TERM_ISREQUIREDBY,
-            TERM_REQUIRES,
-            TERM_ISPARTOF,
-            TERM_HASPART,
-            TERM_ISREFERENCEDBY,
-            TERM_REFERENCES,
-            TERM_ISFORMATOF,
-            TERM_HASFORMAT,
-            TERM_CONFORMSTO,
-            TERM_SPATIAL,
-            TERM_TEMPORAL,
-            TERM_MEDIATOR,
-            TERM_DATEACCEPTED,
-            TERM_DATECOPYRIGHTED,
-            TERM_DATESUBMITTED,
-            TERM_EDUCATIONLEVEL,
-            TERM_ACCESSRIGHTS,
-            TERM_BIBLIOGRAPHICCITATION };
+            DublinCore.TERM_AUDIENCE,
+            DublinCore.TERM_ALTERNATIVE,
+            DublinCore.TERM_TABLEOFCONTENTS,
+            DublinCore.TERM_ABSTRACT,
+            DublinCore.TERM_CREATED,
+            DublinCore.TERM_VALID,
+            DublinCore.TERM_EXTENT,
+            DublinCore.TERM_AVAILABLE,
+            DublinCore.TERM_ISSUED,
+            DublinCore.TERM_MODIFIED,
+            DublinCore.TERM_EXTENT,
+            DublinCore.TERM_MEDIUM,
+            DublinCore.TERM_ISVERSIONOF,
+            DublinCore.TERM_HASVERSION,
+            DublinCore.TERM_ISREPLACEDBY,
+            DublinCore.TERM_REPLACES,
+            DublinCore.TERM_ISREQUIREDBY,
+            DublinCore.TERM_REQUIRES,
+            DublinCore.TERM_ISPARTOF,
+            DublinCore.TERM_HASPART,
+            DublinCore.TERM_ISREFERENCEDBY,
+            DublinCore.TERM_REFERENCES,
+            DublinCore.TERM_ISFORMATOF,
+            DublinCore.TERM_HASFORMAT,
+            DublinCore.TERM_CONFORMSTO,
+            DublinCore.TERM_SPATIAL,
+            DublinCore.TERM_TEMPORAL,
+            DublinCore.TERM_MEDIATOR,
+            DublinCore.TERM_DATEACCEPTED,
+            DublinCore.TERM_DATECOPYRIGHTED,
+            DublinCore.TERM_DATESUBMITTED,
+            DublinCore.TERM_EDUCATIONLEVEL,
+            DublinCore.TERM_ACCESSRIGHTS,
+            DublinCore.TERM_BIBLIOGRAPHICCITATION };
 
     /** 
      * Creates a new instance of Dublin Core
@@ -307,246 +305,6 @@ public class DublinCoreImpl implements DublinCore {
     }
 
     /**
-     * Get the creator
-     * 
-     * @return the creator
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getCreator() throws DocumentException {
-        return getFirstValue(ELEMENT_CREATOR);
-    }
-
-    /**
-     * Set the DC creator
-     * 
-     * @param creator the Creator
-     */
-    public void setCreator(String creator) {
-        try {
-            addValue(ELEMENT_CREATOR, creator);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get the title
-     * 
-     * @return the title
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getTitle() throws DocumentException {
-        return getFirstValue(ELEMENT_TITLE);
-    }
-
-    /**
-     * Set the DC title
-     * 
-     * @param title the title
-     */
-    public void setTitle(String title) {
-        try {
-            addValue(ELEMENT_TITLE, title);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get the description
-     * 
-     * @return the description
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getDescription() throws DocumentException {
-        return getFirstValue(ELEMENT_DESCRIPTION);
-    }
-
-    /**
-     * Set the DC Description
-     * 
-     * @param description the description
-     */
-    public void setDescription(String description) {
-        try {
-            addValue(ELEMENT_DESCRIPTION, description);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get the identifier
-     * 
-     * @return the identifier
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getIdentifier() throws DocumentException {
-        return getFirstValue(ELEMENT_IDENTIFIER);
-    }
-
-    /**
-     * Set the DC Identifier
-     * 
-     * @param identifier the identifier
-     */
-    public void setIdentifier(String identifier) {
-        try {
-            addValue(ELEMENT_IDENTIFIER, identifier);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get the subject.
-     * 
-     * @return the subject
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getSubject() throws DocumentException {
-        return getFirstValue(ELEMENT_SUBJECT);
-    }
-
-    /**
-     * Set the DC Subject
-     * 
-     * @param subject the subject
-     */
-    public void setSubject(String subject) {
-        try {
-            addValue(ELEMENT_SUBJECT, subject);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get the publisher
-     * 
-     * @return the publisher
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getPublisher() throws DocumentException {
-        return getFirstValue(ELEMENT_PUBLISHER);
-    }
-
-    /**
-     * Set the publisher
-     * 
-     * @param publisher the publisher
-     */
-    public void setPublisher(String publisher) {
-        try {
-            addValue(ELEMENT_PUBLISHER, publisher);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get the date of issue
-     * 
-     * @return the date of issue
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getDateIssued() throws DocumentException {
-        return getFirstValue(TERM_ISSUED);
-    }
-
-    /**
-     * Set the date of issue
-     * 
-     * @param dateIssued the date of issue
-     */
-    public void setDateIssued(String dateIssued) {
-        try {
-            addValue(TERM_ISSUED, dateIssued);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get the date of creation
-     * 
-     * @return the date of creation
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getDateCreated() throws DocumentException {
-        return getFirstValue(TERM_CREATED);
-    }
-
-    /**
-     * Set the date of creation
-     * 
-     * @param dateCreated the date of creation
-     */
-    public void setDateCreated(String dateCreated) {
-        try {
-            addValue(TERM_CREATED, dateCreated);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get the rights
-     * 
-     * @return the rights
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getRights() throws DocumentException {
-        return getFirstValue(ELEMENT_RIGHTS);
-    }
-
-    /**
-     * Set the DC Rights
-     * 
-     * @param rights the rights
-     */
-    public void setRights(String rights) {
-        try {
-            addValue(ELEMENT_RIGHTS, rights);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Get isReferencedBy
-     * 
-     * @return isReferencedBy
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    public String getIsReferencedBy() throws DocumentException {
-        return getFirstValue(TERM_ISREFERENCEDBY);
-    }
-
-    /**
-     * Set isReferencedBy
-     * 
-     * @param isReferencedBy isReferencedBy
-     */
-    public void setIsReferencedBy(String isReferencedBy) {
-        try {
-            addValue(TERM_ISREFERENCEDBY, isReferencedBy);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
      * Returns the element or term values, resp.,  for a certain key.
      * @param key The key.
      * @return An array of strings.
@@ -598,6 +356,24 @@ public class DublinCoreImpl implements DublinCore {
         }
     }
 	
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#setValue(java.lang.String, java.lang.String)
+     */
+    public void setValue(String key, String value) throws DocumentException {
+        String[] newValues = { value };
+        
+        List elementList = Arrays.asList(ELEMENTS);
+        List termList = Arrays.asList(TERMS);
+        if (elementList.contains(key)) {
+            elements.put(key, newValues);
+        } else if (termList.contains(key)) {
+            terms.put(key, newValues);
+        } else {
+            throw new DocumentException(
+                "The key [" + key + "] does not refer to a dublin core element or term!");
+        }
+    }
+    
 	/**
 	 * @see org.apache.lenya.cms.publication.DublinCore#addValues(java.lang.String, java.lang.String[])
 	 */
