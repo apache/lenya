@@ -120,12 +120,12 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      */
     protected String getLanguage(String urlWithoutSuffix) {
 
-        String suffix = "";
+        String language = "";
         String url = urlWithoutSuffix;
-        if (url.length() >= 3 && url.charAt(url.length() - 3) == '_') {
-            suffix = url.substring(url.length() - 2);
+        if (url.length() >= 3 && url.substring(url.length() -6).indexOf("_") != -1) {
+            language = url.substring(url.lastIndexOf("_") +1);
         }
-        return suffix;
+        return language;
     }
 
     /**
