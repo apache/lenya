@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.41 2003/08/14 16:34:16 egli Exp $
+$Id: PageEnvelope.java,v 1.42 2003/08/19 12:27:56 egli Exp $
 <License>
 
  ============================================================================
@@ -77,7 +77,8 @@ public class PageEnvelope {
     public static final String CONTEXT = "context-prefix";
     public static final String AREA = "area";
 	public static final String DEFAULT_LANGUAGE = "default-language";
-    public static final String DOCUMENT_ID = "document-id";
+    public static final String DOCUMENT = "document";
+    public static final String DOCUMENT_ID = "document-id";    
     public static final String DOCUMENT_URL = "document-url";
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     public static final String DOCUMENT_FILE = "document-file";
@@ -266,6 +267,7 @@ public class PageEnvelope {
                 PageEnvelope.CONTEXT,
                 PageEnvelope.PUBLICATION_ID,
                 PageEnvelope.PUBLICATION,
+                PageEnvelope.DOCUMENT,
                 PageEnvelope.DOCUMENT_ID,
                 PageEnvelope.DOCUMENT_URL,
                 PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
