@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.25 2003/08/30 12:46:56 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.26 2003/08/30 23:10:46 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -160,6 +160,20 @@
         <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
         <map:transform src="../../xslt/util/page2xhtml.xsl"/>
         <map:serialize type="html"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <!-- Archives -->
+    <map:pipeline>
+      <map:match pattern="*/archives/*/*/">
+        <map:generate type="directory" src="content/{1}/entries/{2}/{3}/">
+          <map:parameter name="depth" value="2"/>
+          <map:parameter name="reverse" value="true"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:handle-errors type="500">
+        <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>
 
