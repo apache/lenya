@@ -61,8 +61,8 @@
     <!-- Menus -->
     <map:pipeline>
       <map:match pattern="menus/admin.xml">
-	    <map:generate type="serverpages" src="content/menus/admin.xsp"/>
-	    <map:serialize type="xml"/>
+        <map:generate type="serverpages" src="content/menus/admin.xsp"/>
+        <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
 
@@ -125,16 +125,16 @@
       <!-- ============================================================ -->
       <!-- Admin Homepage -->
       <!-- ============================================================ -->
-	    
+      
       <map:match pattern="internal/index.html">
         <map:generate src="content/admin/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
-	    <!-- ============================================================ -->
-	    <!-- Status Page -->
-	    <!-- ============================================================ -->
-	    
+      <!-- ============================================================ -->
+      <!-- Status Page -->
+      <!-- ============================================================ -->
+      
       <map:match pattern="internal/status.html">
         <map:generate src="status" type="status"/>
         <map:transform src="xslt/admin/status2html.xslt">
@@ -143,18 +143,18 @@
         <map:serialize type="html"/>
       </map:match>
       
-	    <!-- ============================================================ -->
-	    <!-- Common Admin Pages -->
-	    <!-- ============================================================ -->
-	    
-	    <!-- list page (type = users|groups) -->
-	    <!-- pattern: internal/{type}.html -->
-	    <map:match pattern="internal/*.html">
+      <!-- ============================================================ -->
+      <!-- Common Admin Pages -->
+      <!-- ============================================================ -->
+      
+      <!-- list page (type = users|groups) -->
+      <!-- pattern: internal/{type}.html -->
+      <map:match pattern="internal/*.html">
         <map:call resource="fallback-page">
           <map:parameter name="serverpage" value="{1}/{1}"/>
           <map:parameter name="stylesheet" value="{1}/{1}"/>
         </map:call>
-	    </map:match>
+      </map:match>
 
       <!-- overview page (type = user|group) -->
       <!-- pattern: internal/{type}s/{id}/index.html -->
@@ -167,25 +167,25 @@
         </map:call>
         <map:serialize type="xml"/>
       </map:match>
-          
+      
       <!-- usecase page (type = user|group) -->
       <!-- pattern: {type}s/lenya.usecase.{usecase} -->
-	    <map:match pattern="*s/lenya.usecase.*">
-	      <map:call function="{1}_{2}"/>
-	    </map:match>
-          
+      <map:match pattern="*s/lenya.usecase.*">
+        <map:call function="{1}_{2}"/>
+      </map:match>
+      
       <!-- usecase page (type = user|group) -->
       <!-- pattern: {type}s/{id}/lenya.usecase.{usecase} -->
-	    <map:match pattern="*s/*/lenya.usecase.*">
-	      <map:call function="{1}_{3}">
-	        <map:parameter name="{1}Id" value="{2}"/>
-	      </map:call>
-	    </map:match>
-          
-	    <!-- ============================================================ -->
-	    <!-- Passwd -->
-	    <!-- ============================================================ -->
-	    
+      <map:match pattern="*s/*/lenya.usecase.*">
+        <map:call function="{1}_{3}">
+          <map:parameter name="{1}Id" value="{2}"/>
+        </map:call>
+      </map:match>
+      
+      <!-- ============================================================ -->
+      <!-- Passwd -->
+      <!-- ============================================================ -->
+      
       <map:match pattern="passwd/continuation-*">
         <map:call continuation="{1}"/>
       </map:match>
@@ -198,7 +198,7 @@
         <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
-      
+    
     <!-- =================================================================== -->
     <!-- Aggregated Pages -->
     <!-- =================================================================== -->
@@ -209,7 +209,7 @@
         <map:aggregate element="cmsbody">
           <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml"/>
           <map:part src="cocoon:/internal/{1}"/>
-				</map:aggregate>
+        </map:aggregate>
         <map:transform src="xslt/admin/page2xhtml.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
@@ -217,16 +217,16 @@
       </map:match>
 
       <map:match pattern="">
-      	<map:redirect-to uri="index.html"/>
+        <map:redirect-to uri="index.html"/>
       </map:match>
 
       <map:match pattern="**">
         <map:aggregate element="lenya" label="aggregate">
           <map:part src="cocoon:/menus/admin.xml"/>
           <map:part src="cocoon:/cmsbody/{1}"/>
-				</map:aggregate>
-				<map:transform src="xslt/admin/root.xsl" label="content" />
-				<map:serialize type="html"/>
+        </map:aggregate>
+        <map:transform src="xslt/admin/root.xsl" label="content" />
+        <map:serialize type="html-iso-8859-1"/>
       </map:match>
       
     </map:pipeline>
