@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: create.xsl,v 1.11 2004/03/13 10:00:24 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns="http://www.w3.org/1999/xhtml">
   
@@ -12,7 +14,7 @@
   
   <xsl:template match="/">
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
-      <page:title>Create Document</page:title>
+      <page:title><i18n:text>New Document</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates/>
       </page:body>
@@ -25,7 +27,7 @@
     
     <xsl:if test="not(exception)">
       <div class="lenya-box">
-        <div class="lenya-box-title">New Document</div>
+        <div class="lenya-box-title"><i18n:text>New Document</i18n:text></div>
       <div class="lenya-box-body">  
         <script Language="JavaScript">
 function validRequired(formField,fieldLabel)
@@ -84,44 +86,42 @@ function validateForm(theForm)
           <table class="lenya-table-noborder">
             <xsl:if test="$status != ''">
               <tr>
-                <td class="lenya-form-message-error" colspan="2">The ID
-                you've entered is already taken. Please choose
-                another one.</td>
+                <td class="lenya-form-message-error" colspan="2"><i18n:text key="default.doc.create.idtaken"/></td>
               </tr>
             </xsl:if>
             <tr>
-              <td class="lenya-entry-caption">Parent ID:</td><td><xsl:value-of select="/parent-child/parentid"/></td>
+              <td class="lenya-entry-caption"><i18n:text>Parent ID</i18n:text>:</td><td><xsl:value-of select="/parent-child/parentid"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Document ID*: </td><td><input class="lenya-form-element" type="text" name="properties.create.child-id"/><br/> (No whitespace, no special characters)</td>
+              <td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>*: </td><td><input class="lenya-form-element" type="text" name="properties.create.child-id"/><br/> (<i18n:text>No whitespace, no special characters</i18n:text>)</td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Navigation Title*: </td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
+              <td class="lenya-entry-caption"><i18n:text>Navigation Title</i18n:text>*: </td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
             </tr>
 	    <xsl:apply-templates select="allowedLanguages"/>
             <tr>
-              <td class="lenya-entry-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.create.creator" value="{/parent-child/dc:creator}"/></td>
+              <td class="lenya-entry-caption"><i18n:text>Creator</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.creator" value="{/parent-child/dc:creator}"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Subject:</td><td><input class="lenya-form-element" type="text" name="properties.create.subject"/></td>
+              <td class="lenya-entry-caption"><i18n:text>Subject</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.subject"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Publisher:</td><td><input class="lenya-form-element" type="text" name="properties.create.publisher" value="{/parent-child/dc:publisher}"/></td>
+              <td class="lenya-entry-caption"><i18n:text>Publisher</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.publisher" value="{/parent-child/dc:publisher}"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Date:</td><td><input class="lenya-form-element" type="text" name="properties.create.date" value="{/parent-child/dc:date}"/></td>
+              <td class="lenya-entry-caption"><i18n:text>Date</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.date" value="{/parent-child/dc:date}"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.create.rights"/></td>
+              <td class="lenya-entry-caption"><i18n:text>Rights</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.rights"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">* required fields</td>
+              <td class="lenya-entry-caption">* <i18n:text>required fields</i18n:text></td>
             </tr>
             <tr>
               <td/>
               <td>
-            <input type="submit" value="Create"/>&#160;
-            <input type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel"/>
+            <input i18n:attr="value" type="submit" value="Create"/>&#160;
+            <input i18n:attr="value" type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel"/>
               </td>
             </tr>
           </table>
@@ -133,7 +133,7 @@ function validateForm(theForm)
   
   <xsl:template match="allowedLanguages">
     <tr>
-      <td class="lenya-entry-caption">Language*:</td>
+      <td class="lenya-entry-caption"><i18n:text>Language</i18n:text>*:</td>
       <td>
         <select class="lenya-form-element" name="properties.create.language">
 	  <xsl:apply-templates select="allowedLanguage"/>
@@ -149,7 +149,7 @@ function validateForm(theForm)
   </xsl:template>
   
   <xsl:template match="exception">
-    <font color="red">EXCEPTION</font><br />
+    <font color="red"><i18n:text>EXCEPTION</i18n:text></font><br />
     Go <a href="{../referer}">back</a> to page.<br />
     <p>
       Exception handling isn't very good at the moment. 
