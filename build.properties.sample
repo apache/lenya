@@ -1,13 +1,6 @@
+# Properties controlling the build process
+
 # Where the 'install' build target should put the webapp context
 # Either use an absolute path or a relative one based on the current directory
-#
-# Alternatively you can define a Servlet Engine Context to point into your
-# wyona-cms development webapp context. For Catalina/Tomcat 4.x it looks like:
-#
-#    <Context path="wyonacms" 
-#             docBase="${WYONA_CMS_HOME}/build/wyona-cms/webapp" 
-#             debug="0"/>
-#
-# and should put under the <Host> element in the server.xml config file
 
 install.dir=/usr/local/tomcat/webapps/wyona-cms
