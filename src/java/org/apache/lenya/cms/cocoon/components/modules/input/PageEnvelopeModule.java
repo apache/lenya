@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.31 2003/10/10 15:41:07 andreas Exp $
+$Id: PageEnvelopeModule.java,v 1.32 2003/10/16 21:40:58 andreas Exp $
 <License>
 
  ============================================================================
@@ -188,6 +188,11 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
             } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
                 value = getDocumentType(objectModel, envelope);
             }
+            else {
+            	throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+            }
+        } catch (ConfigurationException e) {
+        	throw e;
         } catch (Exception e) {
             throw new ConfigurationException(
                 "Getting attribute for name [" + name + "] failed: ",
