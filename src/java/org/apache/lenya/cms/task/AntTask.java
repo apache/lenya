@@ -75,7 +75,7 @@ import org.lenya.util.NamespaceMap;
  *       not provided, the file is loaded from {@link #DEFAULT_BUILDFILE}.</li>
  *   <li><code><strong>target</strong> (optional)</code>: the build target. If this parameter
          is not provided, the default target is executed.</li>
- *   <li><code><strong>ant.*</strong></code>: the command-line parameters for Ant</li>
+ *   <li><code><strong>ant.*</strong></code>: the command-line parameters for Ant <strong>(not implemented yet!)</strong></li>
  *   <li><code><strong>properties.*</strong></code>: the project properties</li>
  * </ul>
  *

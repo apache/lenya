@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultFilePublisher.java,v 1.11 2003/03/27 13:25:39 gregor Exp $
+ * $Id: DefaultFilePublisher.java,v 1.12 2003/04/03 19:23:13 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -60,7 +60,7 @@ import java.util.StringTokenizer;
  * usually the live directory.
  * 
  * The following task parameters must be provided:<br/
- * ><code><strong>publication-id</strong></code>: the absolute path of this publication<br/
+ * ><code><strong>publication-id</strong></code>: the publication ID<br/
  * ><code><strong>authoring-path</strong></code>: the authoring path<br/
  * ><code><strong>tree-authoring-path</strong></code>: the location of the <code>tree.xml</code> file<br/
  * ><code><strong>live-path</strong></code>: the live path<br/
