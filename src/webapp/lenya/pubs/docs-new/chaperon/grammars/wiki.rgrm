@@ -1,0 +1,136 @@
+%uri "http://chaperon.sourceforge.net/grammar/wiki/1.0";
+
+%token LINE \-\-\-(\-)+;
+
+%token QUOTE  :;
+%token BULLETED (\*)+;
+
+%token NUMBERED3 \#\#\#;
+%token NUMBERED2 \#\#;
+%token NUMBERED1 \#;
+
+%token HEAD (\!)+;
+
+%left ITALIC \";
+%left BOLD __;
+%left UNDERLINE _;
+
+%token LINK (http|ftp|mailto|news):(/){1,3}[A-Za-z0-9\.\_\-]*;
+
+%token BOPEN \[;
+%token BCLOSE \];
+
+%token TEXT [A-Za-z0-9\,\'\.\?\:]+[A-Za-z0-9\ \t\,\'\.\?\!\:]*;
+
+%left EMPTY \r\n [\ \t]* \r\n |
+            \r   [\ \t]* \r   |
+            \n   [\ \t]* \n   ;
+
+%token EOL (\r(\n)?|\n);
+
+
+%start wiki;
+
+%ignore whitespace [\ \r\n]+;
+
+%%
+
+wiki : wiki paragraphs %append
+     | paragraphs      %append
+     ;
+
+paragraphs : paragraphs paragraph %append
+           | paragraph            %append
+           ;
+
+paragraph : bulletedlist
+          | numberedlist1
+          | textitem 
+          | headitem 
+          | footnote
+          | LINE
+          | EMPTY
+          ;
+
+bulletedlist : bulletedlist bulletedlistitem %append
+             | bulletedlistitem              %append
+             ;
+
+bulletedlistitem : BULLETED textblock textsequence
+                 | BULLETED textblock
+                 ;
+
+numberedlist1 : numberedlist1 numberedlistitem1 %append
+              | numberedlistitem1               %append
+              | numberedlist1 numberedlist2     %append
+              | numberedlist2                   %append
+              ;
+
+numberedlistitem1 : NUMBERED1 textblock textsequence
+                  | NUMBERED1 textblock
+                  ;
+
+numberedlist2 : numberedlist2 numberedlistitem2 %append
+              | numberedlistitem2               %append
+              | numberedlist2 numberedlist3     %append
+              | numberedlist3                   %append
+              ; 
+
+numberedlistitem2 : NUMBERED2 textblock textsequence
+                  | NUMBERED2 textblock 
+                  ;
+
+numberedlist3 : numberedlist3 numberedlistitem3 %append
+              | numberedlistitem3               %append
+              ; 
+
+numberedlistitem3 : NUMBERED3 textblock textsequence
+                  | NUMBERED3 textblock 
+                  ;
+
+textitem : firstblock textblock textsequence
+         | firstblock textblock
+         | firstblock
+         ;
+
+headitem : HEAD textblock textsequence
+         | HEAD textblock
+         ;
+
+footnote : note textblock textsequence
+         | note textblock
+         ;
+
+textsequence : textsequence EOL       %resolve
+             | EOL                    %resolve
+             | textsequence textblock %resolve
+             | textblock              %resolve
+             ; 
+
+textblock : LINK                           
+          | boldblock                      
+          | italicblock            
+          | underlineblock                
+          | TEXT                         
+          | note                         
+          ;
+
+firstblock : LINK                 
+           | boldblock                
+           | italicblock                
+           | underlineblock          
+           | TEXT               
+           ;
+
+italicblock : ITALIC TEXT ITALIC
+            ;
+
+boldblock : BOLD TEXT BOLD
+          ;
+
+underlineblock : UNDERLINE TEXT UNDERLINE 
+               ;
+
+note : BOPEN TEXT BCLOSE
+     | BOPEN LINK BCLOSE
+     ;

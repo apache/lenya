@@ -1,0 +1,495 @@
+<?xml version="1.0" standalone="no"?>
+<!--<!DOCTYPE grammar PUBLIC "-//Chaperon//DTD grammar 1.0//EN" "grammar.dtd">-->
+
+<grammar uri="http://chaperon.sourceforge.net/grammar/rgrm/1.0">
+ <tokens>
+
+  <token tsymbol="token_decl">
+   <alt>
+    <string content="%token"/>
+    <string content="%left"/>
+    <string content="%right"/>
+   </alt>
+  </token>
+
+  <token tsymbol="ab_decl">
+   <string content="%ab"/>
+  </token>
+
+  <token tsymbol="start_decl">
+   <string content="%start"/>
+  </token>
+
+  <token tsymbol="ignorabletoken_decl">
+   <string content="%ignore"/>
+  </token>
+
+  <token tsymbol="reducetype_decl">
+   <alt>
+    <string content="%normal"/>
+    <string content="%append"/>
+    <string content="%resolve"/>
+    <string content="%neglect"/>
+   </alt>
+  </token>
+
+  <token tsymbol="prec_decl">
+   <string content="%prec"/>
+  </token>
+
+  <token tsymbol="uri_decl">
+   <string content="%uri"/>
+  </token>
+
+  <token tsymbol="delimiter">
+   <string content="%%"/>
+  </token>
+
+  <token tsymbol="colon">
+   <string content=":"/>
+  </token>
+
+  <token tsymbol="alt">
+   <string content="|"/>
+  </token>
+
+  <token tsymbol="semicolon">
+   <string content=";"/>
+  </token>
+
+  <token tsymbol="comma">
+   <string content=","/>
+  </token>
+
+  <token tsymbol="number">
+   <cc minOccurs="1" maxOccurs="*"><ci min="0" max="9"/></cc>
+  </token>
+
+  <token tsymbol="copen">
+   <string content="{"/>
+  </token>
+
+  <token tsymbol="cclose">
+   <string content="}"/>
+  </token>
+
+  <token tsymbol="abopen">
+   <string content="&lt;"/>
+  </token>
+
+  <token tsymbol="abclose">
+   <string content=">"/>
+  </token>
+
+  <token tsymbol="string">
+   <concat>
+    <string content="&#34;"/>
+    <alt minOccurs="1" maxOccurs="*">
+     <ncc><cs content="&#92;&#34;"/></ncc>
+     <concat><string content="&#92;"/><ncc><cs content="u"/></ncc></concat>
+     <concat>
+      <string content="&#92;u"/>
+      <cc><ci min="0" max="9"/><ci min="a" max="f"/><ci min="A" max="F"/></cc>
+      <cc><ci min="0" max="9"/><ci min="a" max="f"/><ci min="A" max="F"/></cc>
+      <cc><ci min="0" max="9"/><ci min="a" max="f"/><ci min="A" max="F"/></cc>
+      <cc><ci min="0" max="9"/><ci min="a" max="f"/><ci min="A" max="F"/></cc>
+     </concat>
+    </alt>
+    <string content="&#34;"/>
+   </concat>
+  </token>
+
+  <token tsymbol="id">
+   <concat>
+    <cc><ci min="A" max="Z"/><ci min="a" max="z"/></cc>
+    <cc minOccurs="0" maxOccurs="*">
+     <ci min="A" max="Z"/><ci min="a" max="z"/><ci min="0" max="9"/><cs content="_"/>
+    </cc>
+   </concat>
+  </token>
+
+	<token tsymbol="character">
+   <!--<alt>-->
+    <ncc><cs content="&#92;[]-&#10;&#13;&#32;();%[]|+?*^$&lt;>&#34;"/></ncc>
+    <!--<concat><string content="&#92;"/><dot/></concat>
+    <concat><string content="&#92;"/><ncc><cs content="u"/></ncc></concat>
+		<concat>
+     <string content="&#92;u"/>
+     <cc><ci min="0" max="9"/><ci min="a" max="f"/><ci min="A" max="F"/></cc>
+     <cc><ci min="0" max="9"/><ci min="a" max="f"/><ci min="A" max="F"/></cc>
+     <cc><ci min="0" max="9"/><ci min="a" max="f"/><ci min="A" max="F"/></cc>
+     <cc><ci min="0" max="9"/><ci min="a" max="f"/><ci min="A" max="F"/></cc>
+    </concat>
+	 </alt>-->
+	</token>
+
+  <token tsymbol="maskedcharacter">
+    <concat><string content="&#92;"/><dot/></concat>
+  </token>
+
+  <token tsymbol="minus">
+   <string content="-"/>
+  </token>
+
+  <token tsymbol="hat">
+   <string content="^"/>
+  </token>
+
+  <token tsymbol="dollar">
+   <string content="$"/>
+  </token>
+
+  <token tsymbol="ccbegin">
+   <string content="["/>
+  </token>
+
+  <token tsymbol="ccend">
+   <string content="]"/>
+  </token>
+
+  <token tsymbol="regexdot">
+   <string content="."/>
+  </token>
+
+  <token tsymbol="dopen">
+   <string content="("/>
+  </token>
+
+  <token tsymbol="dclose">
+   <string content=")"/>
+  </token>
+
+  <token tsymbol="questionmark">
+   <string content="?"/>
+  </token>
+
+  <token tsymbol="mult">
+   <string content="*"/>
+  </token>
+
+  <token tsymbol="plus">
+   <string content="+"/>
+  </token>
+
+ </tokens>
+
+ <ignorabletokens>
+  <token tsymbol="comment">
+   <alt>
+    <concat><string content="//"/><ncc minOccurs="0" maxOccurs="*"><cs content="&#10;"/></ncc></concat>
+    <concat>
+     <string content="/*"/>
+     <alt minOccurs="0" maxOccurs="*">
+      <ncc><cs content="*"/></ncc>
+      <concat><string content="*"/><ncc><cs content="/"/></ncc></concat>
+     </alt>
+     <string content="*/"/>
+    </concat>
+   </alt>
+  </token>
+ 
+  <token tsymbol="whitespace"> 
+   <cc maxOccurs="*"><cs content="&#10;&#13;&#9;&#32;"/></cc>
+  </token>
+ </ignorabletokens>
+
+ <productions>
+
+  <production ntsymbol="intervall">
+   <tsymbol name="character"/><tsymbol name="minus"/><tsymbol name="character"/>
+	</production>
+
+  <production ntsymbol="intervall">
+   <tsymbol name="maskedcharacter"/><tsymbol name="minus"/><tsymbol name="character"/>
+  </production>
+
+  <production ntsymbol="intervall">
+   <tsymbol name="character"/><tsymbol name="minus"/><tsymbol name="maskedcharacter"/>
+  </production>
+
+  <production ntsymbol="intervall">
+   <tsymbol name="maskedcharacter"/><tsymbol name="minus"/><tsymbol name="maskedcharacter"/>
+  </production>
+
+  <production ntsymbol="sequence" reducetype="resolve">
+	 <ntsymbol name="sequence"/><ntsymbol name="intervall"/>
+	</production>
+
+  <production ntsymbol="sequence" reducetype="resolve">
+   <ntsymbol name="sequence"/><tsymbol name="character"/>
+  </production>
+
+  <production ntsymbol="sequence" reducetype="resolve">
+   <ntsymbol name="sequence"/><tsymbol name="maskedcharacter"/>
+  </production>
+
+  <production ntsymbol="sequence" reducetype="resolve">
+   <ntsymbol name="intervall"/>
+  </production>
+
+  <production ntsymbol="sequence" reducetype="resolve">
+   <tsymbol name="character"/>
+  </production>
+
+  <production ntsymbol="sequence" reducetype="resolve">
+   <tsymbol name="maskedcharacter"/>
+  </production>
+
+  <production ntsymbol="string" reducetype="append">
+   <ntsymbol name="string"/><tsymbol name="character"/>
+  </production>
+
+  <production ntsymbol="string" reducetype="append">
+   <ntsymbol name="string"/><tsymbol name="maskedcharacter"/>
+  </production>
+
+  <production ntsymbol="string" reducetype="append">
+   <tsymbol name="character"/>
+  </production>
+
+  <production ntsymbol="string" reducetype="append">
+   <tsymbol name="maskedcharacter"/>
+  </production>
+
+  <production ntsymbol="characterclass">
+	 <tsymbol name="ccbegin"/><ntsymbol name="sequence"/><tsymbol name="ccend"/>
+  </production>
+
+  <production ntsymbol="negatedcharacterclass">
+   <tsymbol name="ccbegin"/><tsymbol name="hat"/><ntsymbol name="sequence"/><tsymbol name="ccend"/>
+  </production>
+
+	<production ntsymbol="regexdot">
+	 <tsymbol name="regexdot"/>
+	</production>
+
+  <production ntsymbol="regexbol">
+   <tsymbol name="hat"/>
+  </production>
+
+  <production ntsymbol="regexeol">
+   <tsymbol name="dollar"/>
+  </production>
+
+  <production ntsymbol="regexklammer">
+	 <tsymbol name="dopen"/><ntsymbol name="regexalternation"/><tsymbol name="dclose"/>
+	</production>
+
+  <production ntsymbol="regexabref">
+   <tsymbol name="abopen"/><tsymbol name="id"/><tsymbol name="abclose"/>
+  </production>
+
+  <production ntsymbol="regexterm" reducetype="resolve">
+	 <ntsymbol name="characterclass"/>
+	</production>
+
+  <production ntsymbol="regexterm" reducetype="resolve">
+   <ntsymbol name="negatedcharacterclass"/>
+  </production>
+
+  <production ntsymbol="regexterm" reducetype="resolve">
+   <ntsymbol name="regexklammer"/>
+  </production>
+
+  <production ntsymbol="regexterm" reducetype="resolve">
+   <ntsymbol name="string"/>
+  </production>
+
+  <production ntsymbol="regexterm" reducetype="resolve">
+   <ntsymbol name="regexdot"/>
+  </production>
+
+  <production ntsymbol="regexterm" reducetype="resolve">
+   <ntsymbol name="regexbol"/>
+  </production>
+
+  <production ntsymbol="regexterm" reducetype="resolve">
+   <ntsymbol name="regexeol"/>
+  </production>
+
+  <production ntsymbol="regexterm" reducetype="resolve">
+   <ntsymbol name="regexabref"/>
+  </production>
+
+  <production ntsymbol="regexoptional">
+	 <ntsymbol name="regexterm"/><tsymbol name="questionmark"/>
+	</production>
+
+  <production ntsymbol="regexstar">
+	 <ntsymbol name="regexterm"/><tsymbol name="mult"/>
+	</production>
+
+  <production ntsymbol="regexplus">
+   <ntsymbol name="regexterm"/><tsymbol name="plus"/>
+  </production>
+
+  <production ntsymbol="regexmultiplicator">
+   <tsymbol name="copen"/><tsymbol name="number"/><tsymbol name="cclose"/>
+  </production>
+
+  <production ntsymbol="regexmultiplicator">
+   <tsymbol name="copen"/><tsymbol name="number"/>
+   <tsymbol name="comma"/><tsymbol name="number"/><tsymbol name="cclose"/>
+  </production>
+
+  <production ntsymbol="regexvar">
+   <ntsymbol name="regexterm"/><ntsymbol name="regexmultiplicator"/>
+  </production>
+
+	<production ntsymbol="regexquantifier" reducetype="resolve">
+	 <ntsymbol name="regexoptional"/>
+	</production>
+
+  <production ntsymbol="regexquantifier" reducetype="resolve">
+   <ntsymbol name="regexstar"/>
+  </production>
+
+  <production ntsymbol="regexquantifier" reducetype="resolve">
+   <ntsymbol name="regexplus"/>
+  </production>
+
+  <production ntsymbol="regexquantifier" reducetype="resolve">
+   <ntsymbol name="regexterm"/>
+  </production>
+
+  <production ntsymbol="regexquantifier" reducetype="resolve">
+   <ntsymbol name="regexvar"/>
+  </production>
+
+	<production ntsymbol="regexconcatenation" reducetype="append">
+	 <ntsymbol name="regexconcatenation"/><ntsymbol name="regexquantifier"/>
+	</production>
+
+  <production ntsymbol="regexconcatenation" reducetype="resolve">
+   <ntsymbol name="regexquantifier"/>
+  </production>
+
+  <production ntsymbol="regexalternation" reducetype="append">
+	 <ntsymbol name="regexalternation"/><tsymbol name="alt"/><ntsymbol name="regexconcatenation"/>
+	</production>
+
+  <production ntsymbol="regexalternation" reducetype="resolve">
+   <ntsymbol name="regexconcatenation"/>
+  </production>
+
+  <production ntsymbol="regexexpression">
+	 <ntsymbol name="regexalternation"/>
+  </production>
+
+  <production ntsymbol="grammar">
+   <ntsymbol name="token_decls"/><tsymbol name="delimiter"/>
+   <ntsymbol name="production_decls"/>
+	</production>
+
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="token_decls"/> <ntsymbol name="token_decl"/>
+  </production>
+
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="token_decl"/>
+  </production>
+
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="token_decls"/><ntsymbol name="start_decl"/>
+  </production>
+
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="start_decl"/>
+  </production>
+
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="token_decls"/><ntsymbol name="ignorabletoken_decl"/>
+  </production>
+
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="ignorabletoken_decl"/>
+  </production>
+
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="token_decls"/><ntsymbol name="uri_decl"/>
+  </production>
+  
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="uri_decl"/>
+  </production>
+
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="token_decls"/><ntsymbol name="ab_decl"/>
+  </production>
+  
+  <production ntsymbol="token_decls" reducetype="append">
+   <ntsymbol name="ab_decl"/>
+  </production>
+
+  <production ntsymbol="token_decl">
+   <tsymbol name="token_decl"/><tsymbol name="id"/><ntsymbol name="regexexpression"/><tsymbol name="semicolon"/>
+  </production>
+
+  <production ntsymbol="start_decl">
+   <tsymbol name="start_decl"/><tsymbol name="id"/><tsymbol name="semicolon"/>
+  </production>
+
+  <production ntsymbol="ignorabletoken_decl">
+   <tsymbol name="ignorabletoken_decl"/><tsymbol name="id"/><ntsymbol name="regexexpression"/>
+   <tsymbol name="semicolon"/>
+  </production>
+
+  <production ntsymbol="uri_decl">
+   <tsymbol name="uri_decl"/><tsymbol name="string"/><tsymbol name="semicolon"/>
+  </production>
+
+  <production ntsymbol="ab_decl">
+   <tsymbol name="ab_decl"/><tsymbol name="id"/><ntsymbol name="regexexpression"/><tsymbol name="semicolon"/>
+  </production>
+
+  <production ntsymbol="production_decls" reducetype="append">
+   <ntsymbol name="production_decls"/><ntsymbol name="production_decl"/>
+  </production>
+
+  <production ntsymbol="production_decls" reducetype="append">
+   <ntsymbol name="production_decl"/>
+  </production>
+
+  <production ntsymbol="production_decl">
+   <tsymbol name="id"/><tsymbol name="colon"/><ntsymbol name="production_defs"/><tsymbol name="semicolon"/>
+  </production>
+
+  <production ntsymbol="production_defs" reducetype="append">
+   <ntsymbol name="production_defs"/><tsymbol name="alt"/><ntsymbol name="production_def"/>
+  </production>
+ 
+  <production ntsymbol="production_defs" reducetype="append">
+   <ntsymbol name="production_def"/>
+  </production>
+
+  <production ntsymbol="prec_decl" reducetype="append">
+   <tsymbol name="prec_decl"/><tsymbol name="id"/>
+  </production>
+
+  <production ntsymbol="production_def" reducetype="append">
+   <ntsymbol name="ids"/>
+  </production>
+
+  <production ntsymbol="production_def" reducetype="append">
+   <ntsymbol name="ids"/><ntsymbol name="prec_decl"/>
+  </production>
+
+  <production ntsymbol="production_def" reducetype="append">
+   <ntsymbol name="ids"/><tsymbol name="reducetype_decl"/>
+  </production>
+
+  <production ntsymbol="production_def" reducetype="append">
+   <ntsymbol name="ids"/><ntsymbol name="prec_decl"/><tsymbol name="reducetype_decl"/>
+  </production>
+
+  <production ntsymbol="ids" reducetype="append">
+   <ntsymbol name="ids"/><tsymbol name="id"/>
+  </production>
+
+  <production ntsymbol="ids" reducetype="append">
+   <tsymbol name="id"/>
+  </production>
+ </productions>
+
+ <ssymbol ntsymbol="grammar"/>
+</grammar>

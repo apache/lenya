@@ -1,0 +1,66 @@
+
+body { background-color: #FFFFFF; }
+
+body {  color: #000000}
+
+#Header  { color: #ffffff;  background-color:#8697a5 }
+
+#CharacerLiteral	{ color: #FF00FF; }
+#StringLiteral		{ color: #FF00FF; }
+#SingleLineComment	{ color: #008000; }
+#FormalComment		{ color: #008000; }
+#MultiLineComment	{ color: #008000; }
+#ABSTRACT		{ color: #0000FF ; font-weight: bold }
+#BOOLEAN		{ color: #0000FF ; font-weight: bold }
+#BREAK			{ color: #0000FF ; font-weight: bold }
+#BYTE			{ color: #0000FF ; font-weight: bold }
+#CASE			{ color: #0000FF ; font-weight: bold }
+#CATCH			{ color: #0000FF ; font-weight: bold }
+#CHAR			{ color: #0000FF ; font-weight: bold }
+#CLASS			{ color: #0000FF ; font-weight: bold }
+#CONST			{ color: #0000FF ; font-weight: bold }
+#CONTINUE		{ color: #0000FF ; font-weight: bold }
+#DEFAULT		{ color: #0000FF ; font-weight: bold }
+#DO			{ color: #0000FF ; font-weight: bold }
+#DOUBLE		{ color: #0000FF ; font-weight: bold }
+#ELSE			{ color: #0000FF ; font-weight: bold }
+#EXTENDS		{ color: #0000FF ; font-weight: bold }
+#FALSE			{ color: #0000FF ; font-weight: bold }
+#FINAL			{ color: #0000FF ; font-weight: bold }
+#FINALLY		{ color: #0000FF ; font-weight: bold }
+#FLOAT			{ color: #0000FF ; font-weight: bold }
+#FOR			{ color: #0000FF ; font-weight: bold }
+#GOTO			{ color: #0000FF ; font-weight: bold }
+#IF			{ color: #0000FF ; font-weight: bold }
+#IMPLEMENTS		{ color: #0000FF ; font-weight: bold }
+#IMPORT		{ color: #0000FF ; font-weight: bold }
+#INSTANCEOF		{ color: #0000FF ; font-weight: bold }
+#INT			{ color: #0000FF ; font-weight: bold }
+#INTERFACE		{ color: #0000FF ; font-weight: bold }
+#LONG			{ color: #0000FF ; font-weight: bold }
+#NATIVE		{ color: #0000FF ; font-weight: bold }
+#NEW			{ color: #0000FF ; font-weight: bold }
+#PACKAGE		{ color: #0000FF ; font-weight: bold }
+#PRIVATE		{ color: #0000FF ; font-weight: bold }
+#PROTECTED		{ color: #0000FF ; font-weight: bold }
+#PUBLIC		{ color: #0000FF ; font-weight: bold }
+#RETURN		{ color: #0000FF ; font-weight: bold }
+#SHORT			{ color: #0000FF ; font-weight: bold }
+#STATIC		{ color: #0000FF ; font-weight: bold }
+#SUPER			{ color: #0000FF ; font-weight: bold }
+#SWITCH		{ color: #0000FF ; font-weight: bold }
+#SYCHRONIZED		{ color: #0000FF ; font-weight: bold }
+#THIS			{ color: #0000FF ; font-weight: bold }
+#THROW			{ color: #0000FF ; font-weight: bold }
+#THROWS		{ color: #0000FF ; font-weight: bold }
+#TRANSIENT		{ color: #0000FF ; font-weight: bold }
+#TRUE			{ color: #0000FF ; font-weight: bold }
+#TRY			{ color: #0000FF ; font-weight: bold }
+#VOID			{ color: #0000FF ; font-weight: bold }
+#VOLATILE		{ color: #0000FF ; font-weight: bold }
+#WHILE			{ color: #0000FF ; font-weight: bold }
+#StrictFP			{ color: #0000FF ; font-weight: bold }
+#LITERAL	{ color: #b27b8c }
+#IDENTIFIER { color: #000000 }
+
+
