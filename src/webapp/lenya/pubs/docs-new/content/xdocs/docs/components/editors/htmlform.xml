@@ -15,7 +15,7 @@
 
 <section>
 <title>XUpdate</title>
-<p>The Forms Editor is using the <link href="http://xmldb.org/xupdate/xupdate-wd.html">XUpdate specification<link> from the xmldb group to update elements and attributes. 
+<p>The Forms Editor is using the <link href="http://xmldb.org/xupdate/xupdate-wd.html">XUpdate specification</link> from the xmldb group to update elements and attributes. 
 You can test-drive the XUpdate engine in Lenya by doing the following:</p>
 <source>
 <![CDATA[
