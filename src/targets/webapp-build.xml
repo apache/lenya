@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml,v 1.27 2004/06/03 08:18:53 andreas Exp $ -->
+<!-- $Id: webapp-build.xml,v 1.28 2004/07/27 03:07:25 michi Exp $ -->
 
 <project name="webapp">
 
@@ -67,6 +67,12 @@
     <echo>INFO: Copy publications from ${src.webapp.dir}/lenya/pubs to ${build.webapp}/lenya/pubs</echo>
     <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn">
     </copyPubs>
+
+    <echo>INFO: Patch documentation ${src.documentation.dir}/content to ${build.webapp}/lenya/pubs/docs-new/content</echo>
+    <copy todir="${build.webapp}/lenya/pubs/docs-new/content">
+      <fileset dir="${src.documentation.dir}/content">
+      </fileset>
+    </copy>
 
     <!-- Patch cocoon.xconf -->
     <echo>INFO: Patch cocoon.xconf</echo>

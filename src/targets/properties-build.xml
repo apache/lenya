@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: properties-build.xml,v 1.22 2004/06/28 16:24:36 roku Exp $ -->
+<!-- $Id: properties-build.xml,v 1.23 2004/07/27 03:07:25 michi Exp $ -->
 
 <project name="properties">
 
@@ -135,6 +135,9 @@
   contents of the cocoon webapp are here
   -->
   <property name="src.webapp.dir" value="src/webapp"/>
+
+  <!-- documentation directory -->
+  <property name="src.documentation.dir" value="src/documentation"/>
 
   <property name="tools.tasks.dest" value="tools/anttasks"/>
   
