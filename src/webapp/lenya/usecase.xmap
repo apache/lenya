@@ -380,6 +380,12 @@
                   <map:transform type="write-source">
                     <map:parameter name="serializer" value="xml"/>
                   </map:transform>
+		  <map:act type="workflow">
+		    <map:parameter name="area" value="{page-envelope:area}"/>
+		    <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+		    <map:parameter name="language" value="{page-envelope:document-language}"/>
+		    <map:parameter name="event" value="edit"/>
+		  </map:act>
                   <map:serialize type="xml"/>
                 </map:when>
                 <map:otherwise> <!-- GET: Open -->
