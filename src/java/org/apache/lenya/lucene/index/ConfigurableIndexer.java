@@ -78,7 +78,7 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: ConfigurableIndexer.java,v 1.9 2003/11/13 22:55:17 michi Exp $
+ * @version $Id: ConfigurableIndexer.java,v 1.10 2003/11/14 00:01:22 michi Exp $
  */
 public class ConfigurableIndexer extends AbstractIndexer {
     Category log = Category.getInstance(ConfigurableIndexer.class);
@@ -93,16 +93,13 @@ public class ConfigurableIndexer extends AbstractIndexer {
      * @throws Exception DOCUMENT ME!
      */
     public DocumentCreator createDocumentCreator(Element indexer, String configFileName) throws Exception {
-        log.error(".createDocumentCreatort(): Element name: " + indexer.getNodeName());
+        log.debug(".createDocumentCreatort(): Element name: " + indexer.getNodeName());
 
-        String luceneDocConfigFileName = "cmfs-luceneDoc.xconf"; // indexer/configuration/@src
-
-        String configurationFileName = new File(configFileName).getParent() + File.separator + luceneDocConfigFileName; // configuration.getChild("configuration").getAttribute("src");
+        // FIXME: concat these files ...
+        String configurationFileName = new File(configFileName).getParent() + File.separator + getLuceneDocConfigFileName(indexer);
         File configurationFile = new File(configurationFileName);
         String stylesheet = getStylesheet(configurationFile);
         return new ConfigurableDocumentCreator(stylesheet);
-
-        //return null;
     }
 
     public static final String CONFIGURATION_CREATOR_STYLESHEET = "org/apache/lenya/lucene/index/configuration2xslt.xsl";
@@ -111,7 +108,7 @@ public class ConfigurableIndexer extends AbstractIndexer {
      * Converts the configuration file to an XSLT stylesheet and returns a reader that reads this stylesheet.
      */
     protected String getStylesheet(File configurationFile) throws Exception {
-        log.error(".getStylesheet(): Configuration file: " + configurationFile.getAbsolutePath());
+        log.debug(".getStylesheet(): Configuration file: " + configurationFile.getAbsolutePath());
 
         URL configurationCreatorURL = ConfigurableIndexer.class.getClassLoader().getResource(CONFIGURATION_CREATOR_STYLESHEET);
         File configurationStylesheetFile = new File(new URI(configurationCreatorURL.toString()));
@@ -136,4 +133,25 @@ public class ConfigurableIndexer extends AbstractIndexer {
         String[] indexableExtensions = { "xml" };
         return new AbstractIndexer.DefaultIndexFilter(indexableExtensions);
     }
+
+    /**
+     *
+     */
+   private String getLuceneDocConfigFileName(Element indexer) {
+       String luceneDocConfigFileName = null;
+
+       org.w3c.dom.NodeList nl = indexer.getChildNodes();
+       for (int i = 0; i < nl.getLength(); i++) {
+           org.w3c.dom.Node node = nl.item(i);
+           if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("configuration")) {
+               log.debug(".getLuceneDocConfigFileName(): Node configuration exists!");
+               luceneDocConfigFileName = ((Element)node).getAttribute("src");
+           }
+       }
+       if (luceneDocConfigFileName == null) {
+           log.error(".getLuceneDocConfigFileName(): ERROR: Lucene Document Configuration is not specified (indexer/configuration/@src)");
+       }
+       log.debug(".getLuceneDocConfigFileName(): Lucene Document Configuration: " + luceneDocConfigFileName);
+       return luceneDocConfigFileName;
+   }
 }
