@@ -54,6 +54,9 @@ public class AccessControlUsecase extends AbstractUsecase {
     protected void initializeAccessController() {
         super.doInitialize();
         
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("initializeAccessController() called");
+
         this.accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
@@ -123,6 +126,8 @@ public class AccessControlUsecase extends AbstractUsecase {
      */
     protected UserManager getUserManager() {
         if (this.userManager == null) {
+            if (getLogger().isDebugEnabled())
+               getLogger().debug("getUserManager() accessed, is null, so calling initializeAccessController");
             initializeAccessController();
         }
         return this.userManager;

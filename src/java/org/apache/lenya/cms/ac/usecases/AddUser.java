@@ -91,6 +91,9 @@ public class AddUser extends AccessControlUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("AddUser.doCheckExecutionConditions() called");
+
         validate();
     }
 

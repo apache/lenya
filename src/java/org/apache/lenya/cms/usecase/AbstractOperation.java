@@ -60,6 +60,9 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public void initialize() throws Exception {
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("AbstractOperation.initialize() called, looking up role [" + UnitOfWork.ROLE + "]");
+
         this.unitOfWork = (UnitOfWork) this.manager.lookup(UnitOfWork.ROLE);
     }
 

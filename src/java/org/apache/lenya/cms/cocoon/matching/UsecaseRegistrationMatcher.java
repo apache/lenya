@@ -47,6 +47,10 @@ public class UsecaseRegistrationMatcher extends AbstractLogEnabled implements Ma
         Request request = ObjectModelHelper.getRequest(objectModel);
         String usecaseName = request.getParameter("lenya.usecase");
 
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("match() called for request parameter lenya.usecase = [" + usecaseName + "]; note that pattern is not relevant for this matcher");
+        }
+
         Map result = null;
 
         UsecaseResolver resolver = null;
