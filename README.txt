@@ -1,31 +1,6 @@
-
-  +-------------------------------------------------------------------------+
-  |                            W A R N I N G                                |
-  +-------------------------------------------------------------------------+
-  |                                                                         |
-  |  Apache Lenya is an effort undergoing incubation at the Apache          | 
-  |  Software Foundation, sponsored by the ASF's Cocoon project.            |
-  |                                                                         |
-  |  Incubation is required of all newly accepted projects until            |
-  |  a further review indicates that the infrastructure, communications,    |
-  |  and decision making process have stabilized in a manner consistent     |
-  |  with other successful ASF projects. While incubation status is not     |
-  |  necessarily a reflection of the completeness or stability of the       |
-  |  code, it does indicate that the project has yet to be fully endorsed   |
-  |  by the ASF.                                                            |
-  |                                                                         |
-  |  For more information on the ASF incubation process, please refer to:   |
-  |                                                                         |
-  |                      http://incubator.apache.org/                       | 
-  |                                                                         |
-  +-------------------------------------------------------------------------+
-                  
-                  
-
+       
                     A  P  A  C  H  E        L  E  N  Y  A
-                  
-                  
-                  
+                                    
   About Apache Lenya
   ------------------
 
@@ -33,7 +8,7 @@
   It is based on open standards such as XML and XSLT. One of its core 
   components is Cocoon from the Apache Software Foundation.
 
-  Lenya supports inline WYSIWYG editors. Your site editors do not 
+  Apache Lenya supports inline WYSIWYG editors. Your site editors do not 
   have to learn XML. This is possible thanks to the support of XML, 
   XSLT and XML Schema on the client side. An administration interface 
   allows advanced users to monitor the CMS, and perform configuration 
@@ -61,7 +36,7 @@
   Licensing and legal issues
   --------------------------
 
-  Lenya is licensed under the Apache Software License, a license of the BSD
+  Apache Lenya is licensed under the Apache Software License, a license of the BSD
   family, and contains software which is compatible with the BSD licensing 
   style.
 
@@ -104,7 +79,7 @@
   
   
     
-  Thanks for your interest in Apache Lenya
+  Thanks for your interest in Apache Lenya.
 
 
 
