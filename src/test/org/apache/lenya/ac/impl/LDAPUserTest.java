@@ -81,7 +81,8 @@ public class LDAPUserTest extends AccessControlTest {
         String publicationId = "default";
         String servletContextPath = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
 
-        return PublicationFactory.getPublication(publicationId, servletContextPath);
+        PublicationFactory factory = PublicationFactory.getInstance(getLogEnabledLogger());
+        return factory.getPublication(publicationId, servletContextPath);
     }
 
     /**
