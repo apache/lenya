@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.14 2003/07/30 15:06:04 egli Exp $
+$Id: WorkflowAuthorizer.java,v 1.15 2003/08/05 11:56:57 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,7 +60,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
-import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
@@ -79,8 +78,6 @@ import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowInstance;
 
-import java.io.File;
-import java.net.URI;
 import java.util.Arrays;
 
 /**
@@ -126,9 +123,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
         if (event != null) {
             try {
                 resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-                Source servletContextSource = resolver.resolveURI("context:///");
-                File servletContext = new File(new URI(servletContextSource.getURI()));
-                Publication publication = PublicationFactory.getPublication(url, servletContext);
+                Publication publication = PublicationFactory.getPublication(resolver, request);
 
                 if (DefaultDocumentBuilder.getInstance().isDocument(publication, url)) {
 

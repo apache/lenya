@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.11 2003/07/18 18:02:02 andreas Exp $
+$Id: PublicationFactory.java,v 1.12 2003/08/05 11:56:57 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,11 +58,15 @@ package org.apache.lenya.cms.publication;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 
+import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Category;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,10 +80,10 @@ public final class PublicationFactory {
      * Create a new <code>PublicationFactory</code>.
      * 
      */
-    private PublicationFactory() {}
+    private PublicationFactory() {
+    }
 
-    private static Category log =
-        Category.getInstance(PublicationFactory.class);
+    private static Category log = Category.getInstance(PublicationFactory.class);
     private static Map idToPublication = new HashMap();
 
     /**
@@ -93,9 +97,8 @@ public final class PublicationFactory {
      * 
      * @throws PublicationException if there was a problem creating the publication.
      */
-    public static Publication getPublication(Map objectModel)
-        throws PublicationException {
-        	
+    public static Publication getPublication(Map objectModel) throws PublicationException {
+
         assert objectModel != null;
         Request request = ObjectModelHelper.getRequest(objectModel);
         Context context = ObjectModelHelper.getContext(objectModel);
@@ -113,9 +116,7 @@ public final class PublicationFactory {
      * 
      * @throws PublicationException if there was a problem creating the publication.
      */
-    public static Publication getPublication(
-        String id,
-        String servletContextPath)
+    public static Publication getPublication(String id, String servletContextPath)
         throws PublicationException {
 
         assert id != null;
@@ -124,7 +125,7 @@ public final class PublicationFactory {
         Publication publication;
 
         if (idToPublication.containsKey(id)) {
-            publication = (Publication)idToPublication.get(id);
+            publication = (Publication) idToPublication.get(id);
         } else {
             publication = new Publication(id, servletContextPath);
             idToPublication.put(id, publication);
@@ -154,8 +155,7 @@ public final class PublicationFactory {
             contextPath = "";
         }
 
-        String webappUri =
-            request.getRequestURI().substring(contextPath.length());
+        String webappUri = request.getRequestURI().substring(contextPath.length());
 
         String publicationId = webappUri.split("/")[1];
         assert !"".equals(publicationId);
@@ -163,10 +163,17 @@ public final class PublicationFactory {
         String servletContextPath = context.getRealPath("");
         return getPublication(publicationId, servletContextPath);
     }
-    
+
+    /**
+     * Creates a publication from a webapp URL and a servlet context directory.
+     * @param webappUrl The URL within the web application (without context prefix)
+     * @param servletContext The Lenya servlet context directory
+     * @return A publication
+     * @throws PublicationException when something went wrong
+     */
     public static Publication getPublication(String webappUrl, File servletContext)
         throws PublicationException {
-        
+
         String url = webappUrl;
         if (url.startsWith("/")) {
             url = url.substring(1);
@@ -178,7 +185,7 @@ public final class PublicationFactory {
         }
 
         String publicationId = url.substring(0, slashIndex);
-        
+
         Publication publication;
         try {
             publication = getPublication(publicationId, servletContext.getCanonicalPath());
@@ -203,9 +210,35 @@ public final class PublicationFactory {
                 new File(servletContext, Publication.PUBLICATION_PREFIX + File.separator + id);
             if (publicationDirectory.isDirectory()) {
                 exists = true;
-}
+            }
         }
         return exists;
+    }
+
+    /**
+     * Creates a publication using a source resolver and a request.
+     * @param resolver The source resolver.
+     * @param request The request.
+     * @return A publication.
+     * @throws PublicationException when something went wrong.
+     */
+    public static Publication getPublication(SourceResolver resolver, Request request)
+        throws PublicationException {
+        Publication publication;
+        String webappUri = ServletHelper.getWebappURI(request);
+        Source source = null;
+        try {
+            source = resolver.resolveURI("context:///");
+            File servletContext = new File(new URI(source.getURI()));
+            publication = PublicationFactory.getPublication(webappUri, servletContext);
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        } finally {
+            if (source != null) {
+                resolver.release(source);
+            }
+        }
+        return publication;
     }
 
 }
