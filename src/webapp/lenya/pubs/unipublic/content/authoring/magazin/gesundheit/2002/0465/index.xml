@@ -73,7 +73,7 @@
             <body>
               <body.head>
                 <dateline>
-                  <story.date norm="28.02.2002"/>
+                  <story.date millis="1014850800000" norm="28.02.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>Leben mit t&#246;dlichem &#171;PIP3&#187;</hl1>

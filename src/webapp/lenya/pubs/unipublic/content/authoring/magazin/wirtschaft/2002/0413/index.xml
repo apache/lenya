@@ -83,7 +83,7 @@
             <body>
               <body.head>
                 <dateline>
-		  <story.date norm="15.06.2002"/>
+		  <story.date millis="1024092000000" norm="15.06.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>Der Homo oeconomicus - neu definiert</hl1>

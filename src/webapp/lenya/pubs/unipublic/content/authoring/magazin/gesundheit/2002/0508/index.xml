@@ -71,7 +71,7 @@
             <body>
               <body.head>
                 <dateline>
-                  <story.date norm="5.4.2002"/>
+                  <story.date millis="1017957600000" norm="5.4.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>&#171;Im Traum spricht er am meisten mit mir&#187;</hl1>

@@ -84,7 +84,7 @@
             <body>
               <body.head>
                 <dateline>
-		  <story.date norm="30.07.2002"/>
+		  <story.date millis="1027980000000" norm="30.07.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>Spaziergang in die Vergangenheit</hl1>
