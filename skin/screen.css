@@ -28,7 +28,9 @@ h5     { font-size : 100%; margin: 14px 0px 0px 0px; padding: 0px; font-weight :
 * table
 */
 table .title { background-color: #000000; }
-.ForrestTable         {
+.ForrestTable {
+    position:static !important;
+    position:absolute;
     color: #ffffff;
     background-color: #7099C5;
     width: 100%;
@@ -332,10 +334,10 @@ img.cornersmall {
 }
 
 #content {
-    padding: 20px 20px 20px 180px;
-    margin: 0;
-    font : small Verdana, Helvetica, sans-serif;
-    font-size : 80%;
+padding: 20px 20px 20px 180px;
+margin: 0;
+font : small Verdana, Helvetica, sans-serif;
+font-size : 80%;
 }
 
 #content ul {
