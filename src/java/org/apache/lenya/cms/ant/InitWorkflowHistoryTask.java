@@ -44,9 +44,12 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.DefaultDocument;
+import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.tools.ant.BuildException;
 
@@ -56,16 +59,31 @@ import org.apache.tools.ant.BuildException;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class InitWorkflowHistoryTask
-    extends PublicationTask {
+public class InitWorkflowHistoryTask extends PublicationTask {
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
-        Document document = new DefaultDocument(getPublication(), getDocumentId());
+
+        // FIXME: URL as parameter
+
+        String url =
+            "/"
+                + getPublication().getId()
+                + "/"
+                + Publication.AUTHORING_AREA
+                + getDocumentId()
+                + ".html";
+        Document document;
         try {
-            DocumentType type = DocumentTypeBuilder.buildDocumentType(getDocumentType(), getPublication());
+            document = DefaultDocumentBuilder.getInstance().buildDocument(getPublication(), url);
+        } catch (DocumentBuildException e) {
+            throw new BuildException(e);
+        }
+        try {
+            DocumentType type =
+                DocumentTypeBuilder.buildDocumentType(getDocumentType(), getPublication());
             WorkflowFactory.initHistory(document, type.getWorkflowFileName());
         } catch (Exception e) {
             throw new BuildException(e);
