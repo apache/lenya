@@ -17,7 +17,7 @@
   <state id="review"/>
   <state id="live"/>
   
-  <variable name="is-live" value="false"/>
+  <variable name="is_live" value="false"/>
   
   <transition source="redaktion" destination="review">
     <event id="submit"/>
@@ -27,7 +27,7 @@
   <transition source="review" destination="live">
     <event id="publish"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">reviewer</condition>
-    <assign variable="is-live" value="true"/>
+    <assign variable="is_live" value="true"/>
     <action id="publish"/>
   </transition>
         
@@ -51,7 +51,7 @@
   <transition source="live" destination="redaktion">
     <event id="deactivate"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">reviewer</condition>
-    <assign variable="is-live" value="false"/>
+    <assign variable="is_live" value="false"/>
   </transition>
         
 </workflow>
