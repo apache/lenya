@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+ <map:components>
+   <map:generators default="file"/>
+   <map:serializers default="xml"/>
+   <map:matchers default="wildcard"/>
+ </map:components>
+
+ <map:pipelines>
+   <map:pipeline>
+
+<!-- Authoring -->
+     <map:match pattern="authoring/**">
+       <map:generate src="content/ac/policies/root.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+<!-- /Authoring -->
+
+<!-- Everything else -->
+     <map:match pattern="**">
+       <map:generate src="content/ac/policies/public.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+<!-- /Everything else -->
+
+   </map:pipeline>
+ </map:pipelines>
+</map:sitemap>
