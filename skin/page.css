@@ -1,5 +1,5 @@
 /*
-* Copyright 1999-2004 The Apache Software Foundation
+* Copyright 2002-2004 The Apache Software Foundation
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,159 +14,190 @@
 * limitations under the License.
 */
 
-body {  background-color: #FFFFFF; margin: 0px 0px 0px 0px; font-family: Verdana, Helvetica, sans-serif; }
+/* ==================== html tags ============================ */
 
-p {  background-color: #FFFFFF; margin: 10px 0px 0px 0px; font-family: Verdana, Helvetica, sans-serif; }
+body {  margin: 0px 0px 0px 0px; font-family: Verdana, Helvetica, sans-serif; }
 
-ol.wide ul li { margin-bottom: 0px; }
-ol.wide li { margin-bottom: 1.5em; }
+h1     { font-size : 160%; margin: 0px 0px 0px 0px;  padding: 0px; }
+h2     { font-size : 140%; margin: 10px 0px 0px 0px; padding: 18px; font-weight : bold;}
+h3     { font-size : 130%; margin: 0px 0px 0px 0px; padding: 0px; font-weight : bold; }
+.h3 { margin: 22px 0px 3px 0px; }
+h4     { font-size : 120%; margin: 0px 0px 0px 0px; padding: 0px; font-weight : normal; text-align: left; }
+.h4 { margin: 18px 0px 0px 0px; }
+h4.faq { font-size : 120%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold;   text-align: left; }
+h5     { font-size : 100%; margin: 14px 0px 0px 0px; padding: 0px; font-weight : normal; text-align: left; }
 
-dt { font-weight: bold; }
-dd { margin-bottom: 1em; }
+input { font-size : 100% }
+submit { font-size : 100%  }
+button { font-size : 100%  }
+textarea { font-size : 100% }
 
+p   { margin: 10px 0px 0px 0px; }
+img { border: 0; margin-top: 5px; margin-bottom: 5px; }
+table .title {  width:100%; border: 0px; }
+
+/* ==================== general class modifiers ============================ */
+
+.content { padding: 5px 5px 5px 10px; font : small Verdana, Helvetica, sans-serif;  font-size : 80%;  }
+.content .ForrestTable { width: 100%; font-size : 100%; empty-cells: show;}
+.content .ForrestTable caption { text-align: left; font-weight: bold; }
+.content .ForrestTable th { text-align: center; }
+
+.dida       { font-size: 80%; }
+.pre        { white-space: pre;}
 .textheader { display: none;  }
-.headerlogo { padding: 0px 0px 20px 20px; }
+.headerlogo { padding: 0px 2px 2px 0px;  }
+.skin       { border: 0;  margin: 0px;}
+.figure     { border: 0; vertical-align: top ; margin-top: 10px; margin-bottom: 10px; }
+.codefrag   { font-family: "Courier New", Courier, monospace; font-size : 100%;}
+.minitoc    { list-style-image: url ('images/current.gif'); font-weight : normal;}
+.search     { font-size : 70%;  }
+.datenote   { font-size : 60%; text-align: right;  height: 10px; white-space:nowrap;}
+.dtdTag     { text-transform : uppercase;  font-style : normal;  font-size : 120%;  font-weight : bold; }
+.code       { border-style: solid;  border-width: 1px;  font-size : 90%; padding: 1em 1.33em 1em 1.33em;}
+.label      { font-weight: bold; }
 
-a:link { color: #0F3660; }
-a:visited { color: #000044; }
-a:active { color: #800000; }
-a:hover { border: 0px solid #a5b6c6; }
+/* ==================== menu ============================ */
 
-img { border: 0; }
+.menu a {  font-weight: normal;}
+.menu a:visited {  font-weight: normal; }
+.menu a:active {  font-weight: normal; }
+.menu a:hover {  font-weight: normal; }
 
-.menu a:link { color: #000000; }
-.menu a:visited { color: #000000; }
-.menu a:active { color: #000000; }
-.menu a:hover { color: #000000; }
+.menuarea { width:10em;}
 
-.menu {
-        background-color: #E5E4D9; 
-        padding: 3px 8px 4px 8px;
+.menu { 
+        padding: 8px 8px 8px 8px;  
         margin: 0px; 
-        font-size: 80%;
-        border: solid 1px #B1B1B1;
-        border-top: none; 
+        font-size : 70%;      
+        border-right: 1px solid;
+		border-left: 1px solid;
 }
 
 .menutitle { 
-/*
-        padding: 0px 3px 5px 10px;  
-        background-image: url('images/chapter_open.gif');
+        cursor:pointer;
+        padding: 5px 3px 5px 10px;  
+        background-image: url('images/chapter.gif');
         background-repeat: no-repeat;
-        background-position: .0em .5em;
-*/
-        padding: 0px 0px 2px 10px;  
-        background-image: url('images/page.gif');
-        background-repeat: no-repeat;
-        background-position: .0em .3em;
-}
+        background-position: center left;
+        font-weight : bold;}
 
 .menu .menuitemgroup { 
         margin: 0px 0px 6px 8px; 
         padding: 0px;  
-}
+        font-weight : bold; }
         
+.menu .selectedmenuitemgroup{ 
+        margin: 0px 0px 6px 8px; 
+        padding: 0px;  
+        font-weight : bold; }
         
 .menu .menuitem { 
-        padding: 0px 0px 2px 10px;  
+        padding: 0px 0px 2px 12px;  
         background-image: url('images/page.gif');
         background-repeat: no-repeat;
-        /* background-position: top left; */
-        background-position: .0em .3em;
-}
-
-.menu .menuitemgroup .menuitemgroup .menuitem { 
-        font-size: 80%;
-}
+        background-position: center left;
+        font-weight : normal; }
 
 .menu .menupage {         
-        padding: 4px 3px 5px 10px;  
+        margin: 5px 0px 5px 0px; 
+        padding: 0px 3px 0px 12px;  
         background-image: url('images/current.gif');
         background-repeat: no-repeat;
-        background-position: .0em .3em;
-        font-style: normal;
-}
+        background-position: top left;
+        font-style : normal;}
 
 .menu .menupagetitle { 
         padding: 0px 0px 0px 6px;     
-        font-style: normal;
-        background-color: #CFDCED; 
-        border-color: #a5b6c6; 
+        font-style : normal;
         border-style: solid; 
-        border-width: 1px;
-}
+        border-width: 1px;}
 
 .menu .menupageitemgroup { 
         padding: 3px 0px 4px 6px;    
-        font-style: normal;
-        background-color: #ffffff; 
-        border-color: #a5b6c6; 
-        border-style: solid; 
-        border-width: 1px;
-}
+        font-style : normal;
+        border-bottom: 1px solid ;
+        border-left: 1px solid ;
+        border-right: 1px solid ;        
+        }
 
 .menu .menupageitem {             
-        font-style: normal;
-        font-weight: normal; 
-        border-width: 0px;
-        font-size: 90%;
-}
-
-
-.smallerfont {             
-        font-size: 100%;
-        padding: 0px 0px 0px 0px;   
-}
-
-
-.biggerfont {             
-        font-size : 100%;
-        font-weight : bold;      
-        padding: 0px 0px 0px 0px;   
-}
-
-.resetfont {             
-        font-size : 100%;
+        font-style : normal;
         font-weight : normal; 
-          padding: 0px 0px 0px 0px;  
+        border-width: 0px;
+        font-size : 90%;}
+
+.tab { font-size : 85%;
+       border: 0 ;
+       margin: 0 0 0 0;
+       padding: 0 0 0 0;
+       border-spacing: 0 0;
+       vertical-align: middle;
+       height:20px;	
 }
 
-table .title { background-color: #FFFFFF; width:100%; border: 0px; }
-.dida { font-size: 80%; }
-
-.pre { white-space: pre;}
-
-h1 { font-family: Verdana; color: Navy; font-size: 160%; margin: 0px 0px 0px 0px; padding: 0px; }
-h2 { font-size : 140%; margin: 10px 0px 0px 0px; padding: 0px; font-weight : bold; border-bottom: solid 1px #B1B1B1; }
-
-/*
-h3 {    
-        font-size: 130%;
-        margin: 18px 0px 0px 0px;
-        padding: 3px 3px 3px 5px;
-        font-weight : bold;
-        background-color: #E5E4D9;
+.level2tab { 
+       font-size : 85%;
+       border: 0 ;
+       margin: 0 0 0 0;
+       padding: 0 0 0 0;
+       border-spacing: 0 0;
+       vertical-align: middle;
+       height:25px;	
 }
-*/
-/*
-h3 { font-size : 130%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; border-bottom: dotted 1px #B1B1B1; }
-*/
-h3 { font-size : 130%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; border-bottom: solid 3px #E5E4D9; }
 
-h4 { font-size : 120%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; text-align: left; }
-h5 { font-size : 110%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; text-align: left; }
+.tabstrip { 
+       vertical-align: bottom;
+}
 
-.content { padding: 15px 5px 5px 10px; font : small Verdana, Helvetica, sans-serif;  font-size : 80%;  }
-.content .ForrestTable { width: 100%; background-color: #7099C5; color: #ffffff; font-size : 100%;}
-.content .ForrestTable caption { text-align: left; color: black; font-weight: bold; }
-.content .ForrestTable th { text-align: center; }
-.content .ForrestTable td { background-color: #f0f0ff; color: black; }
+.tabstripSeparator { 
+       vertical-align: bottom;
+       height:4px;	
+       background-color: #a5b6c6;
+}
 
+.bottomborder { height:10px; }
+
+.published { color: #000000;}
+   
+/* ==================== tabs ============================ */
+
+.tab.separator { width:6px; }
+.level2tab.separator { padding-left: 4px; padding-right: 4px;}
+.tab.pre-separator { width:9px;}
+
+.tab.selected   { font-weight: bold;}
+.tab.unselected { background-color: #F7F7F7;}
+
+.level2tab.selected         {}
+.level2tab.unselected       {}   
+.level2tab.separator        {}
+
+.level2tab { font-size : 80%; font-weight: normal; height: 10px;}
+
+.tab a:link {  font-weight: normal; }
+.tab a:visited { font-weight: normal; }
+.tab a:active { font-weight: normal; }
+.tab a:hover {  font-weight: normal; }
+
+.tab.selected  a:link {  font-weight: bold; }
+.tab.selected  a:visited { font-weight: bold; }
+.tab.selected  a:active { font-weight: bold; }
+.tab.selected  a:hover {  font-weight: bold; }
+
+/* ==================== snail trail ============================ */
+
+.trail { font-size: 70%; }
+.trail a:link {  font-weight: normal; }
+.trail a:visited {  font-weight: normal; }
+.trail a:active {  font-weight: normal; }
+.trail a:hover {  font-weight: normal; }
+
+/* ==================== special forrest items ============================ */
 
 .note, .warning, .fixme {
 	border-top: 3px solid #900;
 	border-bottom: 3px solid #900;
-	background-image: url(images/icon_error_lrg.gif);
 	background-repeat: no-repeat;
 	background-position: 0 1.33em;
 	margin: 1.33em 0;
@@ -174,77 +205,67 @@ h5 { font-size : 110%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bol
 	min-height: 32px;
 }
 
+.fixme   { background-image: url(images/warning.png);}
+.note    { background-image: url(images/info.png);   }
+.warning { background-image: url(images/error.png);  }
 
-.fixme {
-	background-image: url(images/icon_warning_lrg.gif);
-	border-color: #c60;
+/* ==================== visual class modifiers ============================ */
+
+.leftpagemargin { width: 8px ; }
+.spacer         { height:1px;  }  
+.smallerfont {             
+          font-size : 100%;
+        padding: 0px 0px 0px 0px;  }
+
+.biggerfont {             
+        font-size : 100%;
+        font-weight : bold;      
+        padding: 0px 0px 0px 0px; }
+
+.resetfont {             
+        font-size : 100%;
+        font-weight : normal; 
+          padding: 0px 0px 0px 0px;  }
+ 
+.footer  { border:0;
+           width: 100%;
+           font-size : 70%;  }
+	   
+/* ==================== corners ============================ */
+.top-left {
+	background-image: url(images/rc-t-l-5-1body-2tab-selected-3tab-selected.png);
+	background-repeat: no-repeat;
+	background-position: top left;
+	width : 5px;
+	height : 5px;
 }
 
-.note {
-	background-image: url(images/icon_info_lrg.gif);
-	border-color: #069;
+.top-right {
+	background-image: url(images/rc-t-r-5-1body-2tab-selected-3tab-selected.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+	width : 5px;
+	height : 5px;
 }
 
-.label{
-	font-weight: bold;
+.TSTL {
+	background-image: url(images/rc-t-l-5-1header-2tab-selected-3tab-selected.png);
 }
 
-
-.code { background-color: #F7F7F7;
-        border-color: #CFDCED;
-        border-style: solid; 
-        border-width: 1px; 
-        font-size : 120%;
-        padding: 1em 1.33em 1em 1.33em;
+.TSTR {
+	background-image: url(images/rc-t-r-5-1header-2tab-selected-3tab-selected.png);
 }
 
-.codefrag {	font-family: "Courier New", Courier, monospace; font-size : 120%;}
+.TUTL {
+	background-image: url(images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png);
+}
 
-.highlight { background-color: yellow; }
-
-.minitoc { list-style-image: url('images/current.gif'); font-weight : normal;}
-
-.search { font-size : 70%;  }
-.footnote { font-size : 70%;  }
-.datenote { font-size : 60%;  color: #F7F7F7;}
-
-input { font-size : 100% }
-submit { font-size : 100%  }
-button { font-size : 100%  }
-textarea { font-size : 100% }
-
-.tab { font-family: Arial, Helvetica, Sans-serif; white-space: nowrap; }
-.tab-selected { font-size: 100%; font-weight: bold; background-color: #E5E4D9; border-top: solid 1px #B1B1B1; padding: 3px 5px; }
-.tab-not-selected { font-size: 85%; background-color: #F5F4E9; border-top: solid 1px #B1B1B1; padding: 3px 5px 0px 5px; }
-.tab-not-selected-shadow { border-bottom: solid 2px #E5E4D9; }
-.tab-not-selected-shadow-left { border-bottom: solid 2px #E5E4D9; margin-left: 1px; }
-.tab-not-selected-shadow-right { border-bottom: solid 2px #E5E4D9; margin-right: 1px; }
-/*.tab-not-selected { font-size: 85%; background-color: #F5F4E9; border: solid 1px #B1B1B1; border-bottom: solid 1px #D1D1D1; padding: 3px 5px 0px 5px; }*/
-.tab-separator { border-bottom: solid 1px #B1B1B1; }
-.tab-bar { background-color: #E5E4D9; }
-.tab-subbar { background-color: #E5F5F8; height: 20px; border-top: solid 1px #B1B1B1; border-bottom: solid 1px #B1B1B1; }
-
-.tab a { text-decoration: none; }
-.tab a:link {  font-weight: normal; }
-.tab a:visited { font-weight: normal; }
-.tab a:active { font-weight: normal; }
-.tab a:hover {  font-weight: normal; }
-
-.footer { background-color: #E5E4D9; padding: 5px; border-top: solid 1px #B1B1B1; border-bottom: solid 1px #B1B1B1; }
-
-.trail { font-size: 70%; }
-
-.trail a:link {  font-weight: normal;}
-.trail a:visited {  font-weight: normal; }
-.trail a:active {  font-weight: normal; }
-.trail a:hover {  font-weight: normal; }
-
-
-.dtdTag {    color: #990000; text-transform : uppercase;  font-style : normal;  font-size : 120%;  font-weight : bold; }
+.TUTR {   
+	background-image: url(images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png);
+}
 
 .bottom-left {
-	background-color: #a5b6c6;
-	background-image: url(images/bottom-left.png);
+	background-image: url(images/rc-b-l-5-1body-2tab-selected-3border.png);
 	background-repeat: no-repeat;
 	background-position: bottom left;
 	width : 5px;
@@ -252,34 +273,126 @@ textarea { font-size : 100% }
 }
 
 .bottom-right {
-	background-color: #a5b6c6;
-	background-image: url(images/bottom-right.png);
+	background-image: url(images/rc-b-r-5-1body-2tab-selected-3border.png);
 	background-repeat: no-repeat;
 	background-position: bottom right;
 	width : 5px;
 	height : 5px;
 }
 
-.bottom-left-thick {
-	background-color: #a5b6c6;
-	background-image: url(images/bottom-left.png);
-	background-repeat: no-repeat;
-	background-position: bottom left;
-	width : 5px;
-	height : 9px;
+.SBBL{
+	background-image: url(images/rc-b-l-5-1header-2tab-selected-3tab-selected.png);
 }
 
-.bottom-right-thick {
-	background-color: #a5b6c6;
-	background-image: url(images/bottom-right.png);
-	background-repeat: no-repeat;
-	background-position: bottom right;
-	width : 5px;
-	height : 9px;
+.SBBR {
+	background-image: url(images/rc-b-r-5-1header-2tab-selected-3tab-selected.png);
 }
 
+.heading .bottom-left {
+	background-image: url(images/rc-b-l-4-1body-2heading-3heading.png);
+}
+
+.heading .bottom-right {
+	background-image: url(images/rc-b-r-4-1body-2heading-3heading.png);
+}
+
+.heading .top-left {
+	background-image: url(images/rc-t-l-4-1body-2heading-3heading.png);
+}
+
+.heading .top-right {
+	background-image: url(images/rc-t-r-4-1body-2heading-3heading.png);
+}
+
+.subheading .bottom-left {
+	background-image: url(images/rc-b-l-3-1body-2subheading-3subheading.png);
+}
+
+.subheading  .bottom-right {
+	background-image: url(images/rc-b-r-3-1body-2subheading-3subheading.png);
+}
+
+.subheading  .top-left {
+	background-image: url(images/rc-t-l-3-1body-2subheading-3subheading.png);
+}
+
+.subheading  .top-right {
+	background-image: url(images/rc-t-r-3-1body-2subheading-3subheading.png);
+}
+
+/* ==================== main block colors ============================ */
+
+ body           { background-color: #FFFFFF;  color:#000000;}   
+.header         { background-color: #FFFFFF;}   
+.heading         { background-color: #a5b6c6;}   
+.subheading      { background-color: #a5b6c6;}   
+.border         { background-color: #a5b6c6;}   
+.subborder      { background-color: #CFDCED;}
+.dialog         { background-color: #F7F7F7;}    
+.footer         { background-color: #a5b6c6;}   
+.tab.selected   { background-color: #a5b6c6;}
+.tab.unselected { background-color: #F7F7F7;}
+.level2tabstrip { background-color: #a5b6c6;}  
+.level2tab.selected         {}
+.level2tab.unselected       {}   
+.level2tab.separator        {}
+
+/* ==================== main text colors ============================ */
+
+a:link    { color: #0F3660; }
+a:visited { color: #000044; }
+a:active  { color: #800000; }
+.menu .menupagetitle     { background-color:#CFDCED; border-color: #a5b6c6;}
+.menu .menupageitemgroup { background-color:#FFFFFF; border-color: #a5b6c6;}
+.menu                    { border-color: #a5b6c6;}
+.menu a         { color: #000000; }
+.menu a:visited { color: #000000; }
+.menu a:active  { color: #000000;  }
+.menu a:hover   { color: #000000;  }
+
+/* ==================== original Forrest colors ============================ */
+/*
+ body           { background-color: #FFFFFF;  color:#000000;}   
+.header         { background-color: #294563;}   
+.border         { background-color: #4a6d8c;}   
+.subborder      { background-color: #cedfef;}
+.dialog         { background-color: #4a6d8c;}    
+.footer         { background-color: #cedfef;}   
+.tab.selected   { background-color: #4a6d8c;}
+.tab.unselected { background-color: #b5c7e7;}
+a:link    { color: #0F3660; }
+a:visited { color: #000044; }
+a:active  { color: #800000; }
+a:hover   { border: 0px solid #a5b6c6; background: #CFDCED; }
+.menu .menupagetitle     { background-color:#CFDCED; border-color: #4a6d8c;}
+.menu .menupageitemgroup { background-color:#FFFFFF; border-color: #4a6d8c;}
+.menu                    { border-color: #4a6d8c;}
+.menu a         { color: #ffffff; }
+.menu a:visited { color: #ffffff; }
+.menu a:active  { color: #ffffff;  }
+.menu a:hover   { color: #000000;  }
+*/
+/* ==================== other colors ============================ */
+
+.highlight { background-color: yellow;  } 
+.datenote  { color: #F7F7F7;}
+table .title { background-color: #FFFFFF; }
+.content .ForrestTable         { color: #ffffff; background-color: #7099C5;}
+.content .ForrestTable caption { color: black; }
+.content .ForrestTable td      { color: black;   background-color: #f0f0ff; }
+.fixme { border-color: #c60;}
+.note  { border-color: #069;}
+.code  { border-color: #CFDCED;}
+.dtdTag { color: #990000; }
+
+
+/* ==================== print ============================ */
 
 @media print {
+  h1, h2, h3, h4, h5, h6 { page-break-after: avoid; page-break-inside: avoid }
+  blockquote, pre { page-break-inside: avoid }
+  ul, ol, dl { page-break-before: avoid }
+
   .headerlogo { display: none;  }
   .textheader { display: block;  font-size : 70%; }
   .menu { display: none;  }
@@ -287,11 +400,8 @@ textarea { font-size : 100% }
   .minitoc { display: none;  }
   .search { display: none;  }
   .datenote { display: none;  }
-  /*.footnote { display: none;  }*/
   .tab  { display: none;  }
   .trail  { display: none;  }
-  .logos  { display: none;  }
-
   .top-left { display: none;  }
   .top-right { display: none;  }
   .top-left-tab  { display: none;  }
@@ -300,10 +410,30 @@ textarea { font-size : 100% }
   .bottom-right  { display: none;  }
   .bottom-left-thick { display: none;  }
   .bottom-right-thick  { display: none;  }
-    
 }
 
+/* ==================== aural ============================ */
 
-
-
-
+@media aural {
+  h1, h2, h3, h4, h5, h6 { voice-family: paul, male; stress: 20; richness: 90 }
+  h1 { pitch: x-low; pitch-range: 90 }
+  h2 { pitch: x-low; pitch-range: 80 }
+  h3 { pitch: low; pitch-range: 70 }
+  h4 { pitch: medium; pitch-range: 60 }
+  h5 { pitch: medium; pitch-range: 50 }
+  h6 { pitch: medium; pitch-range: 40 }
+  li, dt, dd { pitch: medium; richness: 60 }
+  dt { stress: 80 }
+  pre, code, tt { pitch: medium; pitch-range: 0; stress: 0; richness: 80 }
+  em { pitch: medium; pitch-range: 60; stress: 60; richness: 50 }
+  strong { pitch: medium; pitch-range: 60; stress: 90; richness: 90 }
+  dfn { pitch: high; pitch-range: 60; stress: 60 }
+  s, strike { richness: 0 }
+  i { pitch: medium; pitch-range: 60; stress: 60; richness: 50 }
+  b { pitch: medium; pitch-range: 60; stress: 90; richness: 90 }
+  u { richness: 0 }
+  
+  :link { voice-family: harry, male }
+  :visited { voice-family: betty, female }
+  :active { voice-family: betty, female; pitch-range: 80; pitch: x-high }
+}
