@@ -15,16 +15,24 @@
  *
  */
 
-/* $Id: ReTokenizeFile.java,v 1.17 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id: ReTokenizeFile.java,v 1.18 2004/05/12 16:36:06 michi Exp $  */
 
 package org.apache.lenya.lucene;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.StringTokenizer;
 
 import org.apache.lenya.lucene.html.HTMLParser;
+import org.apache.log4j.Category;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -34,6 +42,9 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
  * DOCUMENT ME!
  */
 public class ReTokenizeFile {
+    
+    private static final Category log = Category.getInstance(ReTokenizeFile.class);
+    
     /**
      * DOCUMENT ME!
      *
@@ -92,18 +103,23 @@ public class ReTokenizeFile {
         if (file.getName().substring(file.getName().length() - 4).equals(".pdf")) {
             file = new File(file.getAbsolutePath() + ".txt");
         }
-
-        java.io.Reader reader = new HTMLParser(file).getReader();
+        
+        String html = readFileWithEncoding(file);
+        
+        
+        /*java.io.Reader reader = new HTMLParser(file).getReader();
         char[] chars = new char[1024];
         int chars_read;
         java.io.Writer writer = new java.io.StringWriter();
 
         while ((chars_read = reader.read(chars)) > 0) {
             writer.write(chars, 0, chars_read);
-        }
+        }*/
 
-        String html = writer.toString();
+        //String html = writer.toString();
+        //html = writer.toString();
 
+        
         int index = -1;
 
         for (int i = 0; i < words.length; i++) {
@@ -199,5 +215,89 @@ public class ReTokenizeFile {
      */
     protected String includeInCDATA(String string) {
         return "<![CDATA[" + string + "]]>";
+    }
+    
+    /**
+     * reads a file and if the file is an xml file, determine its encoding
+     * @param file the file to read. 
+     * (if the file is an xml file with an specified encoding, this will be overwritten) 
+     * @return the contents of the file.
+     */
+    protected String readFileWithEncoding(File file) throws FileNotFoundException, IOException {
+        String content = readHtmlFile(file);
+        // test if the file contains xml data and extract the encoding
+        int endOfFirstTag = content.indexOf(">");
+        if(endOfFirstTag > 0 && content.charAt(endOfFirstTag-1) == '?') {
+            String upperLine = content.substring(0, endOfFirstTag).toUpperCase();
+            int encStart = upperLine.indexOf("ENCODING=")+10;
+            int encEnd = -1;
+
+            if (encStart > 0) {
+                encEnd = upperLine.indexOf("\"", encStart);
+                if (encEnd == -1) {
+                    encEnd = upperLine.indexOf("\'", encStart);
+                }
+            }
+            if(encStart > 0 && encEnd > 0) {
+                String xmlCharset = upperLine.substring(encStart, encEnd);
+                try {
+                    if (Charset.isSupported(xmlCharset)) {
+                        content = readFile(file, Charset.forName(xmlCharset));
+                    }
+                } catch (IllegalCharsetNameException e) {
+                    // do nothing - thrown by Charset.isSupported
+                }
+            }
+        }
+        return content;
+    }
+    
+    
+    /**
+     * read a html file.
+     * @param file the file to read
+     * @return the content of the file.
+     * @throws FileNotFoundException if the file does not exists.
+     * @throws IOException if something else went wrong.
+     */
+    protected String readHtmlFile(File file) throws FileNotFoundException, IOException {
+        java.io.Reader reader = new HTMLParser(file).getReader();
+        char[] chars = new char[1024];
+        int chars_read;
+        java.io.Writer writer = new java.io.StringWriter();
+
+        while ((chars_read = reader.read(chars)) > 0) {
+            writer.write(chars, 0, chars_read);
+        }
+        return writer.toString();
+    }
+    
+    /**
+     * reads a file in the specified encoding.
+     * @param file the file to read.
+     * @param encoding the file encoding
+     * @return the content of the file.
+     * @throws FileNotFoundException if the file does not exists.
+     * @throws IOException if something else went wrong.
+     */
+    protected String readFile(File file, Charset charset) throws FileNotFoundException, IOException {
+        FileInputStream inputFile = new FileInputStream(file);
+        InputStreamReader inputStream;
+        if(charset != null) {
+            inputStream = new InputStreamReader(inputFile, charset);
+        } else {
+            inputStream = new InputStreamReader(inputFile);
+        }
+        BufferedReader bufferReader = new BufferedReader(inputStream);
+        StringBuffer buffer = new StringBuffer();
+        String line = "";
+        while (bufferReader.ready()) {
+            line = bufferReader.readLine();
+            buffer.append(line);
+        }
+        bufferReader.close();
+        inputStream.close();
+        inputFile.close();
+        return buffer.toString();
     }
 }
