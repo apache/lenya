@@ -16,8 +16,10 @@
       <messages>
         <xsp:logic>
           java.util.List messages = (java.util.List) <jpath:value-of select="messages"/>;
-          for (java.util.Iterator i = messages.iterator(); i.hasNext(); ) {
-            <message type="error"><xsp:expr>i.next()</xsp:expr></message>
+          if (messages != null) {
+              for (java.util.Iterator i = messages.iterator(); i.hasNext(); ) {
+                <message type="error"><xsp:expr>i.next()</xsp:expr></message>
+              }
           }
         </xsp:logic>	  
       </messages>
