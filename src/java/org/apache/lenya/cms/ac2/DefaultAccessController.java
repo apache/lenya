@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.11 2003/08/07 13:19:01 andreas Exp $
+$Id: DefaultAccessController.java,v 1.12 2003/08/13 13:13:36 andreas Exp $
 <License>
 
  ============================================================================
@@ -283,7 +283,7 @@ public class DefaultAccessController
      * Returns the authorizers of this action.
      * @return An array of authorizers.
      */
-    protected Authorizer[] getAuthorizers() {
+    public Authorizer[] getAuthorizers() {
         return (Authorizer[]) authorizers.values().toArray(new Authorizer[authorizers.size()]);
     }
 
