@@ -3,10 +3,12 @@
 DIRNAME=`dirname $0`
 echo "INFO: dirname = $DIRNAME"
 
+HOME=`grep home.dir $DIRNAME/search.properties | grep -v "#" | sed -e 's/home.dir=//'`
 echo "INFO: HOME = $HOME"
+JAVA=`grep java.run $DIRNAME/search.properties | grep -v "#" | sed -e 's/java.run=//'`
+echo "INFO: JAVA = $JAVA"
 WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
-JAVA=/usr/lib/j2sdk1.4/bin/java
 #symlink the xpdf directory to the version you have
 XPDF=$HOME/build/xpdf-2.03-linux/pdftotext
 
