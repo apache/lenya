@@ -108,6 +108,9 @@
   
   <!-- HSQLDB server port -->
   <property name="hsqldb-server.port" value="9002"/>
+  
+  <!-- Enable Uploads -->
+  <property name="enable.uploads" value="false"/>
 
   <!--
   these are here only for those who use jikes compiler. For other

@@ -121,7 +121,9 @@
         in="${src.cocoon.dir}/WEB-INF/web.xml"
         out="${build.webapp}/WEB-INF/web.xml"
         style="${src.webapp.dir}/WEB-INF/web-xml.xsl"
+        force="false"
         >
+      <param name="enableUploads" expression="${enable.uploads}"/>
       <xmlcatalog>
         <dtd 
           publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"

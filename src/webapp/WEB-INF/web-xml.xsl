@@ -2,14 +2,15 @@
 
 <!--
     Document   : web-xml.xsl
-    Created on : 6. März 2003, 11:39
-    Author     : andreas
-    Description:
-        Purpose of transformation follows.
+    Created on : 2003.3.6, 11:39
+    Author     : Andreas Hartmann
+    Author     : Michael Wechner
+    Description: Add Scheduler to web.xml
 -->
 
-<xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:param name="enableUploads"/>
 
 <xsl:template match="/">
   <xsl:text disable-output-escaping="yes">
@@ -24,7 +25,12 @@
 </xsl:template>    
 
 <xsl:template match="/web-app/servlet[position() = count(/web-app/servlet)]">
+<!--
     <xsl:copy-of select="."/>
+-->
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
     
     <xsl:comment>Scheduler</xsl:comment>
     <servlet>
@@ -48,6 +54,13 @@
       <url-pattern>/servlet/QuartzSchedulerServlet</url-pattern>
     </servlet-mapping>
     <xsl:comment>/Scheduler</xsl:comment>
+</xsl:template>
+
+<xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'enable-uploads']">
+<init-param>
+  <param-name>enable-uploads</param-name>
+  <param-value><xsl:value-of select="$enableUploads"/></param-value>
+</init-param>
 </xsl:template>
     
     
