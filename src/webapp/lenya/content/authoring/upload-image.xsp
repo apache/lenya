@@ -11,10 +11,7 @@
   <upload-image>
     
     <xpath><xsp-request:get-parameter name="xpath"/></xpath>
-    <documentid>
-      <input:get-attribute
-	module="page-envelope" as="string" name="document-id"/>
-    </documentid>
+    <documentid><input:get-attribute module="page-envelope" as="string" name="document-id"/></documentid>
     <usecase><xsp-request:get-parameter name="lenya.usecase"/></usecase>
     <insertBefore><xsp-request:get-parameter name="insertBefore"/></insertBefore>
   </upload-image>
