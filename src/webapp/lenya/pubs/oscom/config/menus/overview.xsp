@@ -63,7 +63,7 @@
     <menu name="Debug" label="Debug">
       <block>
         <item>View&#160;Page&#160;XML</item>
-        <item>View&#160;Body&#160;XML</item>
+        <item href="matrix/index.xml">View&#160;Body&#160;XML</item>
       </block>
 <!--
       <block>

@@ -158,13 +158,16 @@
 
 <!-- Matrix -->
   <map:pipeline>
+    <!-- Overview (sorted by frameworks and cms) -->
     <map:match pattern="authoring/matrix/index.xml">
       <map:generate type="directory" src="docs/publication/authoring/matrix/"/>
       <map:transform src="stylesheets/publication/Page/Matrix/xinclude.xsl"/>
       <map:transform type="xinclude"/>
       <map:serialize type="xml"/>
     </map:match>
+    <!-- /Overview -->
 
+    <!-- Project -->
     <map:match pattern="authoring/matrix/body-*.xml">
       <map:generate src="docs/publication/authoring/matrix/{1}.xml"/>
       <map:serialize type="xml"/>
@@ -185,6 +188,7 @@
       </map:generate>
       <map:serialize type="xml"/>
     </map:match>
+    <!-- /Project -->
   </map:pipeline>
 <!-- /Matrix -->
 

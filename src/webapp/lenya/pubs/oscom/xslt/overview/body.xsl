@@ -17,7 +17,9 @@
     <td bgcolor="#000000">&#160;</td>
     <td bgcolor="#000000"><font size="-2" color="#ffffff"><b>license</b></font></td>
   </tr>
-  <xsl:apply-templates select="system[@type='framework']"/>
+  <xsl:apply-templates select="system[@type='framework']">
+    <xsl:sort select="system_name" data-type="text" order="ascending"/>
+  </xsl:apply-templates>
   </table>
 
 
@@ -31,7 +33,9 @@
     <td bgcolor="#000000">&#160;</td>
     <td bgcolor="#000000"><font size="-2" color="#ffffff"><b>license</b></font></td>
   </tr>
-  <xsl:apply-templates select="system[@type='cms']"/>
+  <xsl:apply-templates select="system[@type='cms']">
+    <xsl:sort select="system_name" data-type="text" order="ascending"/>
+  </xsl:apply-templates>
   </table>
  </font>
 </xsl:template>

@@ -8,7 +8,6 @@
   <leaf name="Tokyo"/>
 </branch>
 <leaf name="CMF/S&#160;Overview" href="overview.html"/>
-<leaf name="Overview (XML)" href="matrix/index.xml"/>
 <leaf name="Editor&#160;Overview"/>
 <leaf name="Glossary" href="glossary.html"/>
 <branch name="Interop" href="interop.html">
@@ -21,6 +20,9 @@
 <leaf name="Mailing&#160;Lists" href="mailing-lists.html"/>
 <leaf name="CVS" href="http://cvs.oscom.org"/>
 <leaf name="Board" href="board.html"/>
+<leaf name="News"/>
+<!--
 <leaf name="News" href="news.html"/>
+-->
 <leaf name="Tom's&#160;Weekly&#160;Column" href="weekly-column.html"/>
 </oscom:navigation>
