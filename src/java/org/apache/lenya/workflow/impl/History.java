@@ -80,6 +80,7 @@ public abstract class History implements WorkflowListener {
     public void initialize(String workflowId) throws WorkflowException {
         try {
             File file = getHistoryFile();
+            file.getParentFile().mkdirs();
             file.createNewFile();
             
             NamespaceHelper helper =
