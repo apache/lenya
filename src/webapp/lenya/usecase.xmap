@@ -516,24 +516,6 @@
         </map:match>
         
 
-        <map:match pattern="removelabel" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/authoring/removelabel.xsp" type="serverpages"/>
-            <map:transform src="fallback://lenya/xslt/authoring/removelabel.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-
-          <map:match pattern="removelabel" type="step">
-            <map:act type="task">
-              <map:parameter name="task-id" value="{request-param:task-id}"/>
-              <map:redirect-to uri="{document-url:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:default-language}}"/>
-            </map:act>
-          </map:match>
-
-        </map:match>
-        
-        
         <!-- Info area use cases start here -->
         
         <map:match pattern="archive" type="usecase">
@@ -568,48 +550,6 @@
           <map:match pattern="restore" type="step">
             <map:act type="task">
               <map:redirect-to session="true" uri="{request:contextPath}/{../../../1}/{../../../2}/"/>
-            </map:act>
-          </map:match>
-          
-        </map:match>
-        
-
-        <map:match pattern="copy" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/copy.xsp" type="serverpages"/>
-            <map:transform src="fallback://lenya/xslt/info/copy.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="copy" type="step">
-            <map:act type="session-propagator">
-              <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
-              <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
-              <map:parameter name="org.apache.lenya.cms.info.firstarea" value="{request-param:area}"/>
-              <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
-            </map:act>
-            <map:redirect-to session="true" uri="{request:requestURI}"/>
-          </map:match>
-          
-        </map:match>
-        
-        
-        <map:match pattern="cut" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/cut.xsp" type="serverpages"/>
-            <map:transform src="fallback://lenya/xslt/info/cut.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="cut" type="step">
-            <map:act type="session-propagator">
-              <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
-              <map:parameter name="org.apache.lenya.cms.info.firstarea" value="{request-param:area}"/>
-              <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value="{request-param:documentid}"/>
-              <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
-              <map:redirect-to uri="{request:requestURI}"/>
             </map:act>
           </map:match>
           
@@ -665,79 +605,6 @@
           </map:match>
         </map:match>
         
-        
-        <map:match pattern="paste" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/paste.xsp" type="serverpages"/>
-            <map:transform src="fallback://lenya/xslt/info/paste.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="paste" type="step">
-            <map:select type="request-parameter">
-              <map:parameter name="parameter-name" value="task-id"/>  
-              <map:when test="moveDocument">
-                <map:act type="session-propagator">
-                  <map:parameter name="org.apache.lenya.cms.info.firstdocid" value=""/>
-                  <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
-                </map:act>
-              </map:when>
-              <map:otherwise>
-                <map:act type="session-propagator">
-                  <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
-                </map:act>
-              </map:otherwise>
-            </map:select>
-            <map:act type="task">
-              <map:redirect-to session="true" uri="{request:requestURI}"/>
-            </map:act>
-
-          </map:match>
-          
-        </map:match>
-        
-        
-        <map:match pattern="rename" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/rename.xsp" type="serverpages"/>
-            <map:transform src="fallback://lenya/xslt/info/rename.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="rename" type="step">
-            <map:act type="task">
-              <map:redirect-to session="true" uri="{request-param:parenturl}"/>
-            </map:act>
-          </map:match>
-          
-        </map:match>
-
-        <!-- Rename a Label -->
-        <map:match pattern="rename-label" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/util/empty.xml"/>
-            <map:transform src="fallback://lenya/xslt/info/rename-label.xsl">
-              <map:parameter name="use-request-parameters" value="true"/>
-              <map:parameter name="requesturi" value="{request:requestURI}"/>
-              <map:parameter name="area" value="{page-envelope:area}"/>
-              <map:parameter name="language" value="{page-envelope:document-language}"/>
-              <map:parameter name="label" value="{page-envelope:document-label}"/>
-              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
-              <map:parameter name="taskid" value="rename-label"/>
-            </map:transform>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="rename-label" type="step">
-            <map:act type="task">
-              <map:redirect-to session="true" uri="{request:requestURI}"/>
-            </map:act>
-          </map:match>
-          
-        </map:match>
         
         <!-- initialize the workflow -->
         <map:match type="usecase" pattern="initworkflow">
