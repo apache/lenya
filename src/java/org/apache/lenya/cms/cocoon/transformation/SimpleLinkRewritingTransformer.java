@@ -91,6 +91,8 @@ implements Disposable {
     private String urlPrefix;
     private String sslPrefix;
     private String liveMountPoint;
+    private String host;
+    private int port;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -125,6 +127,11 @@ implements Disposable {
         uribuf.append(mountPoint);
 
         baseURI = uribuf.toString();
+        
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        
+        host = request.getServerName();
+        port = request.getServerPort();
 
         serviceSelector = null;
         acResolver = null;
@@ -142,8 +149,6 @@ implements Disposable {
                 getLogger().debug("    Area:           [" + area + "]");
 
             urlPrefix = "/" + publicationId + "/" + area;
-
-            Request request = ObjectModelHelper.getRequest(objectModel);
 
             serviceSelector =
                 (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
@@ -252,9 +257,8 @@ implements Disposable {
 
                             }
                         } else {
-                            // authoring area
-                            // if ssl, add prefix to newhrefvalue, if not, take
-                            // just newhrefvalue
+                            /* authoring area
+                             */ 
                             try {
                                 String url = urlPrefix + documentId;
                                 String finalurl;
@@ -352,6 +356,7 @@ implements Disposable {
     private String getNewHrefValue(
         String languageExtension,
         String documentId) {
+        String preURL;
         /*
          * FIXME: this should really use the documentBuilder to build the url
          */
@@ -370,8 +375,14 @@ implements Disposable {
             + ".html";
         }
         
-        // no mount point is defined
-        return baseURI
+       /* no mount point is defined. check if SSL prefix is defined and if yes, prepend
+        * all links with host to make it possible to distinguish between SSL and
+        * non SSL pages.
+        */
+        preURL = "";
+        if (!sslPrefix.equals("")) preURL = "http://" + host + ":" + port;
+
+        return preURL + baseURI
             + "/"
             + envelope.getDocument().getArea()
             + documentId

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree2nav.xsl,v 1.21 2004/04/20 12:58:50 roku Exp $ -->
+<!-- $Id: sitetree2nav.xsl,v 1.22 2004/05/17 09:43:46 gregor Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -26,6 +26,7 @@
     >
 
 <xsl:param name="url"/>
+<xsl:param name="root"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
     
@@ -43,7 +44,7 @@
 
 <xsl:template match="tree:site">
 
-  <nav:site url="{$url}">
+  <nav:site url="{$root}{$url}">
     <xsl:copy-of select="@*"/> 
     <xsl:apply-templates/>
   </nav:site>
@@ -155,7 +156,7 @@ Apply nodes recursively
           <xsl:value-of select="@href"/>
         </xsl:when>
         <xsl:otherwise>
-	  <xsl:value-of select="concat($path-to-context, $canonical-url)"/>
+	  <xsl:value-of select="concat($root, $canonical-url)"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
