@@ -111,6 +111,22 @@
       </sch:job>
 -->
 
+<!-- Replicate -->
+<!--
+      <sch:job>
+        <sch:task>
+          <sch:parameter name="id" value="replicate"/>
+          <sch:parameter name="publication-id" value="oscom"/>
+        </sch:task>
+        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="group" value="oscom"/>
+        <sch:parameter name="id" value="job_01037570742553"/>
+        <sch:trigger type="repeated">
+          <sch:parameter name="expression" value="0 16,46 * * * ?"/>
+        </sch:trigger>
+      </sch:job>
+-->
+
     </sch:jobs>
   </sch:publication>
 
