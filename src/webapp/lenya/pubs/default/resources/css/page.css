@@ -8,16 +8,45 @@
 
 root { }
 
-.tabs { font-family: Verdana, Arial, Sans-serif; font-size: 80%; border-bottom: solid 5px #AAAAFF;}
+/* tabs */
+
+#tabs { font-family: Verdana, Arial, Sans-serif; font-size: 80%; border-bottom: solid 5px #AAAAFF;}
+
+#tabs a {
+    text-decoration: none;
+}
 
 .tab { padding-left: .5em; padding-right: .5em; background-color: #CCCCFF; }
 .tab-selected { padding-left: .5em; padding-right: .5em; background-color: #AAAAFF; font-weight: bold; }
 
-.menu { padding: 1em; font-family: Verdana, Arial, Sans-serif; background-color: #EEEEFF; }
-.menuitem-1 { font-weight: bold; margin-top: 1em; }
-.menuitem-2 { padding-left: 10px; font-size: 80%; }
-.menuitem-3 { padding-left: 20px; font-size: 60%; }
-.menuitem-selected-1 { color: Navy; font-weight: bold; margin-top: 1em; }
-.menuitem-selected-2 { color: Navy; font-weight: bold; padding-left: 10px; font-weight: bold; font-size: 80%; }
-.menuitem-selected-3 { color: Navy; font-weight: bold; padding-left: 20px; font-size: 60%; }
+/* menu */
 
+#menu {
+    float: left;
+    width: 20%;
+    border: none;
+    font-family: Verdana, Arial, Sans-serif;
+    background-color: #EEEEEE;
+    margin-top: 10px;
+}
+
+#menu a {
+    text-decoration: none;
+}
+
+.menuitem-1 { font-weight: bold; padding: .5em; font-size: 80%; }
+.menuitem-2 { padding-left: 1em; padding-right: .5em; font-size: 70%; }
+.menuitem-3 { padding-left: 1.5em; padding-right: .5em; font-size: 60%; }
+.menuitem-selected-1 { background-color: #E0E0E0; color: Navy; font-weight: bold; padding: .5em; font-size: 80%; }
+.menuitem-selected-2 { background-color: #E0E0E0; color: Navy; font-weight: bold; padding-left: 1em; font-weight: bold; font-size: 70%; padding-right: .5em; }
+.menuitem-selected-3 { background-color: #E0E0E0; color: Navy; font-weight: bold; padding-left: 1.5em; font-size: 60%; padding-right: .5em; }
+
+/* breadcrumb */
+
+#breadcrumb { background-color: #E0E0E0; padding: .3em; font-family: Verdana, Arial, Sans-serif; font-size: 80%; }
+
+/* body */
+
+#body { float: left; border: none; padding: 1em; }
+
+#main { float: left; width: 70%; margin: 10px; border: none; }

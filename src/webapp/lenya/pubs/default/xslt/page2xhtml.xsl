@@ -11,6 +11,7 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:page="http://www.lenya.org/2003/page"
     >
     
@@ -22,7 +23,12 @@
       <link rel="stylesheet" href="{$root}/css/page.css" mime-type="text/css"/>
     </head>
     <body>
-      <xsl:apply-templates select="node()"/>
+      <xsl:apply-templates select="xhtml:div[@id = 'tabs']"/>
+      <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
+      <div id="main">
+        <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
+        <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
+      </div>
     </body>
   </html>
 </xsl:template>

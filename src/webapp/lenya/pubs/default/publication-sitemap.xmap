@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.16 2003/04/29 15:45:58 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.17 2003/04/29 17:06:30 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -27,14 +27,6 @@
 
   <map:pipelines>
 
-    <!-- CSS -->
-    <!-- FIXME: Factor out to root sitemap -->
-    <map:pipeline>
-      <map:match pattern="css/**.css">
-        <map:read src="resources/css/{1}.css" mime-type="text/css"/>
-      </map:match>
-    </map:pipeline>
-
     <map:pipeline>
       <map:match pattern="**/">
         <map:redirect-to uri="index.html"/>
@@ -43,7 +35,7 @@
     
     <map:pipeline>
       <!-- pattern="{area}/simple/{document-id}.html" -->
-      <map:match pattern="*/simple/**.html">
+      <map:match pattern="*/*/**.html.xml">
         <map:mount uri-prefix="" src="doctypes.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
@@ -56,16 +48,17 @@
           <map:parameter name="document-id" value="cocoon://uri-parameter/{publication-id}/document-id"/>
           <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page">
 	    <!-- /navigation/{publication-id}/{area}/tabs/{document-id}.html.xml -->
+            <map:part src="cocoon://navigation/{../publication-id}/{../area}/breadcrumb/{document-id}.xml"/>
             <map:part src="cocoon://navigation/{../publication-id}/{../area}/tabs/{document-id}.xml"/>
             <map:part src="cocoon://navigation/{../publication-id}/{../area}/menu/{document-id}.xml"/>
-            <map:part src="cocoon://{../publication-id}/{../area}/{doctype}/{document-id}"/>
+            <map:part src="cocoon://{../publication-id}/{../area}/{doctype}/{document-id}.xml"/>
           </map:aggregate>
-          <map:transform src="xslt/{doctype}2xhtml.xsl">
-            <map:parameter name="root" value="{../context-prefix}/{../publication-id}/"/>
+          <map:transform src="xslt/page2xhtml.xsl">
+            <map:parameter name="root" value="{../context-prefix}/{../publication-id}"/>
           </map:transform>
 	</map:act>
       </map:act>
-      <map:serialize type="html"/>
+      <map:serialize type="xhtml"/>
     </map:match>
 
     </map:pipeline>

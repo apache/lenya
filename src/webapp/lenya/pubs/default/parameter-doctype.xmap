@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: parameter-doctype.xmap,v 1.5 2003/04/29 15:03:34 andreas Exp $ -->
+<!-- CVS: $Id: parameter-doctype.xmap,v 1.6 2003/04/29 17:06:30 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -19,7 +19,7 @@
           <document-element local-name="document"/>
         </sourcetype>
         <sourcetype name="xhtml">
-          <document-declaration public-id="-//APACHE//DTD FAQ V1.1//EN" />
+          <document-declaration public-id="-//W3C//DTD XHTML 1.0 Strict//EN" />
         </sourcetype>
       </map:action>
     </map:actions>
