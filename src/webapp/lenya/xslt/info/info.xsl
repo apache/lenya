@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.25 2003/08/21 16:33:44 gregor Exp $
+ $Id: info.xsl,v 1.26 2003/08/22 12:42:47 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -26,6 +26,51 @@
     </xsl:call-template>
 </head>
 <body>
+	<style>
+	.lenya-tab {
+	width: auto;
+	font-family: verdana, sans-serif;
+	font-size:  x-small;
+	background-color: #F5F4E9; 
+	padding: 20px;
+	color: black;
+	border: solid 1px #CCCCCC;
+	position: relative;
+	top: 1px;
+}
+
+.lenya-tablink {
+	color: #666666;
+	font-size: x-small;
+	display: inline; /*mandatory*/
+	margin-right: .5em;
+	padding: 0px 1em;
+	position: relative;
+	top: 1px;
+	
+	text-decoration: none;
+	
+	background-color: #DDDCCF; 
+	border: solid 1px #CCCCCC;
+}
+
+.lenya-tablink-active {
+	color: black;
+	font-size:  x-small;
+	display: inline; /*mandatory*/
+	margin-right: .5em;
+	padding: 0px 1em;
+	position: relative;
+	top: 1px;
+	
+	text-decoration: none;
+	
+	background-color: #F5F4E9; 
+	border: solid 1px #CCCCCC;
+	border-bottom: solid 1px #F5F4E9;
+	z-index: 1;
+}	
+	</style>
 	<!-- 
 		These are the tabs. Make sure that each of them has the correct id,
 		target and corresponding number in the Tab() call.
