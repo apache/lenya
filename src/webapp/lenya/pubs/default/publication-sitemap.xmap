@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.41 2003/06/11 09:57:38 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.42 2003/07/10 17:30:15 edith Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -43,7 +43,7 @@
 	    <map:parameter name="filename" value="{filename}"/>
 	    <map:parameter name="date" value="{date}"/>
 	  </map:generate>
-          <map:transform src="xslt/rc/rco-exception.xsl"/>
+          <map:transform src="../../xslt/rc/rco-exception.xsl"/>
 	  <map:serialize type="html"/>
 	</map:act>
 	
