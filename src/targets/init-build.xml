@@ -108,7 +108,6 @@
         out="${build.webapp}/WEB-INF/cocoon.xconf"
         style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
         >
-      <param name="hsqldb-server-port" expression="${hsqldb-server.port}"/>
       <param name="xopus-context" expression="${xopus.context}"/>
       <param name="xopus-path" expression="${xopus.path}"/>
       <outputproperty name="indent" value="yes"/>

@@ -154,13 +154,6 @@
       </fileset>
     </copy>
 
-    <!-- now copy legal dir (licenses) -->
-    <echo>INFO: Copy Licenses</echo>
-    <mkdir dir="${build.webapp}/legal"/>
-    <copy todir="${build.webapp}/legal">
-      <fileset dir="legal"/>
-    </copy>
-    
   </target>
 
   <!--
