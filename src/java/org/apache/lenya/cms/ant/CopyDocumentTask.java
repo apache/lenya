@@ -1,5 +1,5 @@
 /*
-$Id: CopyDocumentTask.java,v 1.1 2003/08/08 08:15:14 edith Exp $
+$Id: CopyDocumentTask.java,v 1.2 2003/08/19 13:11:26 edith Exp $
 <License>
 
  ============================================================================
@@ -170,16 +170,18 @@ public class CopyDocumentTask
 			String destDocumentid = srcDocumentid.replaceFirst(firstdocumentid,secdocumentid);
 
 			File file = pathMapper.getFile(publication, getFirstarea(), srcDocumentid, language);
+            if (!file.exists()) {
+				log("There are no file "+file.getAbsolutePath());
+				return;
+            } 
 			File newfile = pathMapper.getFile(publication, getSecarea(), destDocumentid, language);
 			
 			log("copy file "+file.getAbsolutePath()+"to file "+newfile.getAbsolutePath());
 			try {
 				FileUtil.copy(file.getAbsolutePath(), newfile.getAbsolutePath());
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
 				throw new BuildException(e);
 			} catch (IOException e) {
-				e.printStackTrace();
 				throw new BuildException(e);
 			} 
 
@@ -221,7 +223,7 @@ public class CopyDocumentTask
 
 			Publication publication= getPublication();
 			SiteTree tree = publication.getSiteTree(getFirstarea());
-			SiteTreeNode node = tree.getNode(firstdocumentid);
+			SiteTreeNode node = tree.getNode(getFirstdocumentid());
 
 			node.acceptSubtree(this);
 		} catch (Exception e) {

@@ -1,5 +1,5 @@
 /*
-$Id: MoveNode.java,v 1.5 2003/08/07 15:52:26 egli Exp $
+$Id: MoveNode.java,v 1.6 2003/08/19 13:11:26 edith Exp $
 <License>
 
  ============================================================================
@@ -55,15 +55,13 @@ $Id: MoveNode.java,v 1.5 2003/08/07 15:52:26 egli Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import java.io.IOException;
 import java.util.StringTokenizer;
 
-import javax.xml.transform.TransformerException;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-
 
 /**
  * @author edith
@@ -71,66 +69,63 @@ import org.apache.lenya.cms.publication.SiteTreeNode;
  * Ant task that moves a node in a tree.
  */
 public class MoveNode extends TwoNodesTask {
-    /**
-     *
-     */
-    public MoveNode() {
-        super();
-    }
+	/**
+	 *
+	 */
+	public MoveNode() {
+		super();
+	}
 
 	/**
-	 * Move a node in a tree.
+	 * Move a node.
 	 * 
-     * @param firstdocumentid The document-id of the document correponding to the source node.
-     * @param secdocumentid  The ment-id of the document corresponding to the destination node.
-     * @param absolutefirsttreepath The absolute path of the tree of the src node.
-     * @param absolutesectreepath The absolute path of the tree of the destination node.
-     * @throws SiteTreeException if there are problems with creating or saving the site tree.  
+	 * @param firstdocumentid The document-id of the document corresponding to the source node.
+	 * @param secdocumentid  The document-id of the document corresponding to the destination node.
+	 * @param firstarea The area of the document corresponding to the source node.
+	 * @param secarea The area of the document corresponding to the destination node.
+	 * @throws SiteTreeException if there are problems with creating or saving the site tree.  
 	 */
-	public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutefirsttreepath, String absolutesectreepath)
+	public void manipulateTree(
+		String firstdocumentid,
+		String secdocumentid,
+		String firstarea,
+		String secarea)
 		throws SiteTreeException {
-		DefaultSiteTree firsttree = null;
-		DefaultSiteTree sectree = null;
 
-		try {
-			firsttree = new DefaultSiteTree(absolutefirsttreepath);
-			if (absolutefirsttreepath.equals(absolutesectreepath)) {
-				sectree = firsttree;
+		Publication publication = getPublication();
+		SiteTree firsttree = publication.getSiteTree(firstarea);
+		SiteTree sectree = publication.getSiteTree(secarea);
+
+		String parentid = "";
+		StringTokenizer st = new StringTokenizer(secdocumentid, "/");
+		int length = st.countTokens();
+
+		for (int i = 0; i < (length - 1); i++) {
+			parentid = parentid + "/" + st.nextToken();
+		}
+		String newid = st.nextToken();
+
+		SiteTreeNode node = firsttree.removeNode(firstdocumentid);
+		if (node != null) {
+			SiteTreeNode parentNode = sectree.getNode(parentid);
+			if (parentNode != null) {
+				sectree.importSubtree(parentNode, node, newid);
 			} else {
-				sectree = new DefaultSiteTree(absolutesectreepath);
+				throw new SiteTreeException(
+					"The parent node "
+						+ parentNode
+						+ " where the removed node shall be inserted not found");
 			}
+		} else {
+			throw new SiteTreeException(
+				"Node " + node + " couldn't be removed");
+		}
 
-			String parentid = "";
-			StringTokenizer st = new StringTokenizer(secdocumentid, "/");
-			int length = st.countTokens();
-
-			for (int i = 0; i < (length - 1); i++) {
-				parentid = parentid + "/" + st.nextToken();
-			}
-			String newid = st.nextToken();
-			
-			SiteTreeNode node = firsttree.removeNode(firstdocumentid);
-			if (node != null){
-				SiteTreeNode parentNode = sectree.getNode(parentid);
-				if (parentNode != null) {
-					sectree.importSubtree(parentNode, node, newid);
-				} else {
-					throw new SiteTreeException("The parent node " + parentNode + " where the removed node shall be inserted not found");
-				}
-			} else {
-				throw new SiteTreeException("Node " + node + " couldn't be removed");
-			}
-
-			if (absolutefirsttreepath.equals(absolutesectreepath)) {
-				firsttree.save();
-			} else {
-				firsttree.save();
-				sectree.save();
-			}
-		} catch (IOException e) {
-			throw new SiteTreeException("Exception when saving the tree file", e);
-		} catch (TransformerException e) {
-			throw new SiteTreeException("Exception when saving the tree file", e);
+		if (firstarea.equals(secarea)) {
+			firsttree.save();
+		} else {
+			firsttree.save();
+			sectree.save();
 		}
 	}
 }

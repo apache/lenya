@@ -1,5 +1,5 @@
 /*
-$Id: TwoNodesTask.java,v 1.4 2003/07/25 16:38:53 edith Exp $
+$Id: TwoNodesTask.java,v 1.5 2003/08/19 13:11:26 edith Exp $
 <License>
 
  ============================================================================
@@ -58,22 +58,21 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.publication.SiteTreeException;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 
 /**
  * Abstract base class for Ant tasks, which manipulates two nodes.
- * The first node corresponds to the document with id firstdocumentid and
- * is in the tree corresponding to the path absolutefirsttreepath.
- * The 2nd node corresponds to the document with id secdocumentid and
- * is in the tree corresponding to the path absolutesectreepath.
+ * The first node corresponds to the document with id firstdocumentid
+ * and the area firstarea.
+ * The 2nd node corresponds to the document with id secdocumentid 
+ * and the area secarea.
  * @author edith
  */
-public abstract class TwoNodesTask extends Task {
-    private String absolutefirsttreepath;
-	private String absolutesectreepath;
-    private String firstdocumentid;
-    private String secdocumentid;
+public abstract class TwoNodesTask extends PublicationTask {
+	private String firstarea;
+	private String firstdocumentid;
+	private String secarea;
+	private String secdocumentid;
 
     /**
      * Creates a new instance of TwoNodesTask
@@ -82,85 +81,74 @@ public abstract class TwoNodesTask extends Task {
         super();
     }
 
-    /**
-     * @return absolutefirsttreepath, the absolute path of the tree of the first node
-     */
-    protected String getAbsolutefirsttreepath() {
-        return absolutefirsttreepath;
-    }
-
-    /**
-     * Set the value of the absolute path of the tree of the first node
-     * 
-     * @param string The absolute path of the tree of the first node.
-     */
-    public void setAbsolutefirsttreepath(String string) {
-        absolutefirsttreepath = string;
-    }
-
 	/**
-     * @return absolutesectreepath, the absolute path of the tree of the 2nd node
+	 * @return String The area of the document of the first node.
 	 */
-	public String getAbsolutesectreepath() {
-		return absolutesectreepath;
+	public String getFirstarea() {
+		return firstarea;
 	}
 
 	/**
-     * Set the value of the absolute path of the tree of the 2nd node
-     * 
-     * @param string The absolute path of the tree of the 2nd node.
+	 * @return String The document-id corresponding to the first node.
 	 */
-	public void setAbsolutesectreepath(String string) {
-		absolutesectreepath = string;
+	public String getFirstdocumentid() {
+		return firstdocumentid;
 	}
 
-    /**
-     * return the document-id corresponding to the first node
-     * @return documentid,
-     */
-    protected String getFirstdocumentid() {
-        return firstdocumentid;
-    }
+	/**
+	 * @return String The area of the document of the second node.
+	 */
+	public String getSecarea() {
+		return secarea;
+	}
 
-    /**
-     * Set the value of the document-id corresponding to the first node
-     * 
-     * @param string the document-id
-     */
-    public void setFirstdocumentid(String string) {
-        firstdocumentid = string;
-    }
+	/**
+	 * @return String The document-id corresponding to the second node.
+	 */
+	public String getSecdocumentid() {
+		return secdocumentid;
+	}
 
-    /**
-     * Return the document-id corresponding to the 2nd node.
-     * 
-     * @return newdocumentid the document-id
-     */
-    protected String getSecdocumentid() {
-        return secdocumentid;
-    }
+	/**
+	 * @param string The area of the document of the first node.
+	 */
+	public void setFirstarea(String string) {
+		firstarea = string;
+	}
 
-    /**
-     * Set the value of the document-id corresponding to the 2nd node.
-     * 
-     * @param string the second document-id
-     */
-    public void setSecdocumentid(String string) {
-        secdocumentid = string;
-    }
+	/**
+	 * @param string The document-id corresponding to the first node.
+	 */
+	public void setFirstdocumentid(String string) {
+		firstdocumentid = string;
+	}
+
+	/**
+	 * @param string The area of the document of the second node.
+	 */
+	public void setSecarea(String string) {
+		secarea = string;
+	}
+
+	/**
+	 * @param string The document-id corresponding to the second node.
+	 */
+	public void setSecdocumentid(String string) {
+		secdocumentid = string;
+	}
 
     /**
      * To be overriden.
      * Manipulation of two nodes . 
-     * @param firstdocumentid : id of the copied document
-     * @param secdocumentid : id of the new document
-     * @param absolutefirsttreepath : absolute path of the tree of the first node
-     * @param absolutesectreepath : absolute path of the tree of the 2nd node
+     * @param firstdocumentid : id of the first document
+     * @param secdocumentid : id of the second document
+     * @param firstarea : area of the tree of the first node
+     * @param secarea : area of the tree of the 2nd node
      * 
      * @throws SiteTreeException if an error occurs
      */
     public abstract void manipulateTree(String firstdocumentid, String secdocumentid,
-        String absolutefirsttreepath, String absolutesectreepath)
+        String firstarea, String secarea)
         throws SiteTreeException;
 
     /** (non-Javadoc)
@@ -168,11 +156,11 @@ public abstract class TwoNodesTask extends Task {
      */
     public void execute() throws BuildException {
         try {
-            log("document-id corresponding to the first node: " + getFirstdocumentid());
-            log("document-id corresponding to the second node: " + getSecdocumentid());
-            log("Absolute Tree Path of the first node: " + getAbsolutefirsttreepath());
-			log("Absolute Tree Path of the second node: " + getAbsolutesectreepath());
-            manipulateTree(getFirstdocumentid(), getSecdocumentid(), getAbsolutefirsttreepath(), getAbsolutesectreepath());
+            log("document-id corresponding to the first node: " + this.getFirstdocumentid());
+            log("document-id corresponding to the second node: " + this.getSecdocumentid());
+            log("area corresponding to the first node: " + this.getFirstarea());
+			log("area corresponding to the second node: " + this.getSecarea());
+            manipulateTree(getFirstdocumentid(), getSecdocumentid(), getFirstarea(), getSecarea());
         } catch (Exception e) {
             throw new BuildException(e);
         }

@@ -1,5 +1,5 @@
 /*
-$Id: InsertCopyNode.java,v 1.6 2003/08/07 15:52:26 egli Exp $
+$Id: InsertCopyNode.java,v 1.7 2003/08/19 13:11:26 edith Exp $
 <License>
 
  ============================================================================
@@ -55,15 +55,12 @@ $Id: InsertCopyNode.java,v 1.6 2003/08/07 15:52:26 egli Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 
-import java.io.IOException;
 import java.util.StringTokenizer;
-
-import javax.xml.transform.TransformerException;
-
 
 /**
  * Ant task that copies a node of a tree and inserts it in  tree
@@ -71,101 +68,62 @@ import javax.xml.transform.TransformerException;
  *
  **/
 public class InsertCopyNode extends TwoNodesTask {
-    /**
-     * Creates a new instance of InsertCopyNode
-     */
-    public InsertCopyNode() {
-        super();
-    }
+	/**
+	 * Creates a new instance of InsertCopyNode
+	 */
+	public InsertCopyNode() {
+		super();
+	}
 
 	/**
-	 * copies a node corresponding to a document with id firstdocumentid
-	 * and inserts it in the same tree like a node corresponding to a document with id secdocumentid.
-	 * @param firstdocumentid The document-id of the document corresponding to the source node.
+	 * copies a node corresponding to a document with id firstdocumentid and area firstarea
+	 * and inserts it like a node corresponding to a document with id secdocumentid and area secarea.
+ 	 * @param firstdocumentid The document-id of the document corresponding to the source node.
 	 * @param secdocumentid  The document-id of the document corresponding to the destination node.
-	 * @param absolutetreepath The absolute path of the tree of the node.
+	 * @param firstarea The area of the document corresponding to the source node.
+	 * @param secarea The area of the document corresponding to the destination node.
 	 * @throws SiteTreeException if there are problems with creating or saving the site tree.  
 	 */
-	private void manipulateTree(String firstdocumentid, String secdocumentid, String absolutetreepath) throws SiteTreeException {
-		DefaultSiteTree tree = null;
+	public void manipulateTree(
+		String firstdocumentid,
+		String secdocumentid,
+		String firstarea,
+		String secarea)
+		throws SiteTreeException {
 
-		try {
-			tree = new DefaultSiteTree(absolutetreepath);
+		Publication publication = getPublication();
+		SiteTree firsttree = publication.getSiteTree(firstarea);
+		SiteTree sectree = publication.getSiteTree(secarea);
 
-			String parentid = "";
-			StringTokenizer st = new StringTokenizer(secdocumentid, "/");
-			int length = st.countTokens();
+		String parentid = "";
+		StringTokenizer st = new StringTokenizer(secdocumentid, "/");
+		int length = st.countTokens();
 
-			for (int i = 0; i < (length - 1); i++) {
-				parentid = parentid + "/" + st.nextToken();
-			}
-			String newid = st.nextToken();
-			
-			SiteTreeNode node = tree.getNode(firstdocumentid);
-			if (node != null){
-				SiteTreeNode parentNode = tree.getNode(parentid);
-				if (parentNode != null) {
-					tree.importSubtree(parentNode, node, newid);
-				} else {
-					throw new SiteTreeException("The parent node " + parentNode + " where the copied node shall be inserted not found");
-				}
+		for (int i = 0; i < (length - 1); i++) {
+			parentid = parentid + "/" + st.nextToken();
+		}
+		String newid = st.nextToken();
+
+		SiteTreeNode node = firsttree.getNode(firstdocumentid);
+
+		if (node != null) {
+			SiteTreeNode parentNode = sectree.getNode(parentid);
+			if (parentNode != null) {
+				sectree.importSubtree(parentNode, node, newid);
 			} else {
-				throw new SiteTreeException("Node " + node + " couldn't be found");
+				throw new SiteTreeException(
+					"The parent node "
+						+ parentNode
+						+ " where the copied node shall be inserted not found");
 			}
-				tree.save();
-			} catch (IOException e) {
-				throw new SiteTreeException("Exception when saving the tree file", e);
-			} catch (TransformerException e) {
-				throw new SiteTreeException("Exception when saving the tree file", e);
-			}
+		} else {
+			throw new SiteTreeException("Node " + node + " couldn't be found");
+		}
+		if (firstarea.equals(secarea)) {
+			firsttree.save();
+		} else {
+			firsttree.save();
+			sectree.save();
+		}
 	}
-    /**
-     * copies a node corresponding to a document with id firstdocumentid
-     * and inserts it like a node corresponding to a document with id secdocumentid.
-     * @param firstdocumentid The document-id of the document corresponding to the source node.
-     * @param secdocumentid  The document-id of the document corresponding to the destination node.
-     * @param absolutefirsttreepath The absolute path of the tree of the src node.
-     * @param absolutesectreepath The absolute path of the tree of the destination node.
-     * @throws SiteTreeException if there are problems with creating or saving the site tree.  
-     */
-    public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutefirsttreepath, String absolutesectreepath) throws SiteTreeException {
-        if (absolutefirsttreepath.equals(absolutesectreepath)) {
-			manipulateTree(firstdocumentid, secdocumentid, absolutefirsttreepath);
-            return;
-        }
-        DefaultSiteTree firsttree = null;
-		DefaultSiteTree sectree = null;
-
-        try {
-            firsttree = new DefaultSiteTree(absolutefirsttreepath);
-			sectree = new DefaultSiteTree(absolutesectreepath);
-
-			String parentid = "";
-			StringTokenizer st = new StringTokenizer(secdocumentid, "/");
-			int length = st.countTokens();
-
-			for (int i = 0; i < (length - 1); i++) {
-				parentid = parentid + "/" + st.nextToken();
-			}
-			String newid = st.nextToken();
-			
-			SiteTreeNode node = firsttree.getNode(firstdocumentid);
-
-			if (node != null){
-				SiteTreeNode parentNode = sectree.getNode(parentid);
-				if (parentNode != null) {
-					sectree.importSubtree(parentNode, node, newid);
-				} else {
-					throw new SiteTreeException("The parent node " + parentNode + " where the copied node shall be inserted not found");
-				}
-			} else {
-				throw new SiteTreeException("Node " + node + " couldn't be found");
-			}
-                sectree.save();
-			} catch (IOException e) {
-				throw new SiteTreeException("Exception when saving the tree file", e);
-            } catch (TransformerException e) {
-				throw new SiteTreeException("Exception when saving the tree file", e);
-            }
-    }
 }
