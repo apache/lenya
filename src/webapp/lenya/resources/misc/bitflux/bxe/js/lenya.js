@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: lenya.js,v 1.1 2002/09/13 20:26:50 michicms Exp $
+// $Id: lenya.js,v 1.2 2002/11/11 18:09:15 felixcms Exp $
 var p = new XMLHttpRequest();
 
 function BX_wyona_save()
@@ -25,16 +25,13 @@ function BX_wyona_save()
 	p.onload = BX_responseXML;
 	var WyonaRequest = BX_xml.createElement("request");
 	WyonaRequest.setAttribute("type","checkin");
-	BX_DocumentID = "magazin/gesundheit/articles/2002/0508/index.xml";
-	WyonaRequest.setAttribute("id",BX_DocumentID);
 	var dataEle = BX_xml.createElement("data");
-	dataEle.setAttribute("id",BX_DocumentID);
 	dataEle.setAttribute("type","xml");
 	dataEle.appendChild(BX_getResultXML().firstChild);
 
 	WyonaRequest.appendChild(dataEle);
 	p.open("POST",BX_posturl);
-//	BX_show_xml(WyonaRequest);
+	// BX_show_xml(WyonaRequest);
 	p.send(calculateMarkup(WyonaRequest,true));
 }
 

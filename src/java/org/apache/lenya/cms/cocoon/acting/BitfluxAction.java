@@ -118,8 +118,6 @@ public class BitfluxAction extends ConfigurableComposerAction {
     // get the root element (should be "request") and its attributes ---> FixMe: Add error handling
     Element root = requestDoc.getDocumentElement();
     getLogger().debug ("root element (should be 'request'): " + root.getTagName());
-    String reqId = root.getAttribute("id");
-    getLogger().debug ("Request ID: " + reqId);
     String reqType = root.getAttribute("type");
     getLogger().debug ("Request Type: " + reqType);
     
@@ -127,7 +125,6 @@ public class BitfluxAction extends ConfigurableComposerAction {
     Element data = (Element) root.getFirstChild();
     getLogger().debug ("first child element (should be 'data'): " + data.getTagName());
     String reqFile = data.getAttribute("id");
-    getLogger().debug ("Requested File: " + reqFile);
     String fileType = data.getAttribute("type");
     getLogger().debug ("Requested File's Type: " + fileType);
     
@@ -139,9 +136,7 @@ public class BitfluxAction extends ConfigurableComposerAction {
     if (!(tempFileDir.exists())) tempFileDir.mkdir();
 
     // Define Filenames
-    //File tempFile = IOUtils.createFile(tempFileDir, reqFile); 
     File tempFile = IOUtils.createFile(tempFileDir,relativeFilename); 
-    //File permFile = new File(sitemapPath + relRootDirs.get(fileType) + "/" + reqFile);
     File permFile = new File(sitemapPath + relRootDirs.get(fileType) + "/" +relativeFilename);
       getLogger().debug("PERMANENT FILE: " + permFile.getAbsolutePath());
       getLogger().debug("TEMPORARY FILE: " + tempFile.getAbsolutePath());
@@ -151,11 +146,11 @@ public class BitfluxAction extends ConfigurableComposerAction {
       FileUtil.copyFile(permFile, tempFile);
     }
     
-    // set sitemap params for response routing
     Map sitemapParams = new HashMap();
-    sitemapParams.put("reqId", reqId);
+
+    /* Not needed since Bitflux uses the url-back request parameter to do the redirection
+    // set sitemap params for response routing
     sitemapParams.put("reqType", reqType);
-    sitemapParams.put("reqFile", reqFile);
     if ("xml".equals(fileType) && ("open".equals(reqType) || "save".equals(reqType))) {
       sitemapParams.put("reqFilePath", (String)relRootDirs.get("temp") + "/" + (String)relRootDirs.get(fileType) + "/" + reqFile);
     } else {
@@ -163,7 +158,8 @@ public class BitfluxAction extends ConfigurableComposerAction {
     }
     sitemapParams.put("fileType", fileType);
     getLogger().debug ("File to be edited (in temp dir): " + sitemapParams.get("reqFilePath"));
-    
+    */
+
     // save to temporary file, if needed
     if ("save".equals(reqType) || "checkin".equals(reqType)) {    
       //FIXME(): remove hard coding

@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: lenya.js,v 1.2 2002/10/25 10:12:22 felixcms Exp $
+// $Id: lenya.js,v 1.3 2002/11/11 18:09:16 felixcms Exp $
 /**
  * @file
  * Implements the wyona TransportDriver (only save for now)
@@ -62,16 +62,13 @@ function BXE_TransportDriver_wyona(parent)
 	   this.p.options = options;
 	   var WyonaRequest = BX_xml.doc.createElement("request");
 	   WyonaRequest.setAttribute("type","checkin");
-	   BX_DocumentID = "magazin/gesundheit/articles/2002/0508/index.xml";
-	   WyonaRequest.setAttribute("id",BX_DocumentID);
 	   var dataEle = BX_xml.doc.createElement("data");
-	   dataEle.setAttribute("id",BX_DocumentID);
 	   dataEle.setAttribute("type","xml");
 	   dataEle.appendChild(BX_getResultXML().firstChild);
 
 	   WyonaRequest.appendChild(dataEle);
 	   this.p.open("POST",filename);
-   //	BX_show_xml(WyonaRequest);
+   	   // BX_show_xml(WyonaRequest);
 	   this.p.send(calculateMarkup(WyonaRequest,true));
 	}
 	BXE_TransportDriver_wyona.prototype.save = save;
