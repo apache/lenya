@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<catalogue xml:lang="ja" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- common used words -->
+  <message key="Save">ä¿å­˜</message>
+  <message key="Submit">é€ä¿¡</message>
+  <message key="Cancel">ã‚­ãƒ£ãƒ³ã‚»ãƒ«</message>
+  <message key="Delete">å‰Šé™¤</message>
+  <message key="NOTE">ï¼œæ³¨ï¼ž</message>
+  <message key="No referer">å‚ç…§ç„¡ã—</message>
+  <message key="Referer">å‚ç…§</message>
+  <message key="EXCEPTION">ä¾‹å¤–</message>
+  <message key="User">ãƒ¦ãƒ¼ã‚¶</message>
+  <message key="live">ãƒ©ã‚¤ãƒ–</message>
+  <message key="not">not</message>
+  <message key="authoring">ã‚ªãƒ¼ã‚µãƒªãƒ³ã‚°</message>
+  <message key="Authoring">ã‚ªãƒ¼ã‚µãƒªãƒ³ã‚°</message>
+  <message key="review">ãƒ¬ãƒ“ãƒ¥ãƒ¼</message>
+  <message key="user">ãƒ¦ãƒ¼ã‚¶</message>
+  <message key="Users">ãƒ¦ãƒ¼ã‚¶ç¾¤</message>
+  <message key="group">ã‚°ãƒ«ãƒ¼ãƒ—</message>
+  <message key="Group">ã‚°ãƒ«ãƒ¼ãƒ—</message>
+  <message key="Groups">ã‚°ãƒ«ãƒ¼ãƒ—ç¾¤</message>
+  <message key="Group ID">ã‚°ãƒ«ãƒ¼ãƒ— ID</message>
+  <message key="Yes">ã¯ã„</message>
+  <message key="No">ã„ã„ãˆ</message>
+  <message key="Description">èª¬æ˜Ž</message>
+  <message key="Name">åå‰</message>
+  <message key="Full Name">ãƒ•ãƒ«ãƒãƒ¼ãƒ </message>
+  <message key="required fields">å¿…é ˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</message>
+  <message key="Search">æ¤œç´¢</message>
+  <message key="Home">ãƒ›ãƒ¼ãƒ </message>
+  <message key="Title">ã‚¿ã‚¤ãƒˆãƒ«</message>
+  <message key="Last modified">æœ€çµ‚æ›´æ–°æ—¥</message>
+  <message key="Overview">æ¦‚è¦</message>
+  <message key="Role">ãƒ­ãƒ¼ãƒ«</message>
+  <message key="View">ãƒ“ãƒ¥ãƒ¼</message>
+  <message key="Assets">ã‚¢ã‚»ãƒƒãƒˆ</message>
+  <message key="true">ã¯ã„</message>
+  <message key="false">ã„ã„ãˆ</message>
+  <message key="Rename">åå‰å¤‰æ›´</message>
+  <message key="Modify">ä¿®æ­£</message>
+  <message key="Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</message>
+  <message key="Date">æ—¥ä»˜</message>
+  <message key="Back">æˆ»ã‚‹</message>
+  <message key="Add">è¿½åŠ </message>
+  <message key="Create">ä½œæˆ</message>
+  <message key="The Archive">ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–</message>
+  <message key="Trash">ã‚´ãƒŸç®±</message>
+  <message key="Publisher">ç™ºè¡Œè€…</message>
+  <message key="Navigation Title">ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒˆãƒ«</message>
+  <message key="Creator">ä½œæˆè€…</message>
+  <message key="Language">è¨€èªž</message>
+  <message key="Subject">é¡Œå</message>
+  <message key="Rights">æ¨©åˆ©</message>
+  <message key="Select File">ãƒ•ã‚¡ã‚¤ãƒ«é¸æŠž</message>
+  <message key="select-object">{0} ã®é¸æŠž</message>
+  <message key="Insert">æŒ¿å…¥</message>
+  <message key="Insert File">ãƒ•ã‚¡ã‚¤ãƒ«æŒ¿å…¥</message>
+  <message key="upload-with-invalid-extension">æ‹¡å¼µå­ã®æ­£ã—ããªã„ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚æ­£ã—ã„æ‹¡å¼µå­ã¯ {0} ã§ã™ã€‚æ‹¡å¼µå­åã¯å°æ–‡å­—(a,b,c,...ï¼‰ã«ã—ã¦ãã ã•ã„</message>
+  <message key="upload-with-missing-title">ã‚¿ã‚¤ãƒˆãƒ«ã®ç„¡ã„ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã‚ˆã†ã¨ã—ã¾ã—ãŸ</message>
+  <message key="filename-format-exception">ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã‚ˆã†ã¨ã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰ã«æ‹¡å¼µå­ãŒãªã„ã‹æˆ–ã„ã¯åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã‚„ã‚¦ãƒ ãƒ©ã‚¦ãƒˆã¨ã„ã£ãŸä½¿ç”¨ä¸å¯èƒ½ãªæ–‡å­—ãŒå«ã¾ã‚Œã¦ã„ã¾ã™</message>
+  <message key="Creation Date">ä½œæˆæ—¥</message>
+  <message key="File Size">ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º</message>
+  <message key="Image">ã‚¤ãƒ¡ãƒ¼ã‚¸</message>
+  <message key="Link">ãƒªãƒ³ã‚¯</message>
+  <message key="Caption">ã‚­ãƒ£ãƒ—ã‚·ãƒ§ãƒ³</message>
+  <message key="All rights reserved">All rights reserved.</message>
+
+  <!-- submit screen -->
+  <message key="submit-for-approval">æ‰¿èªç”¨ã« {0} ã‚’é€ä¿¡</message>
+  <message key="submit-for-approval?">æ‰¿èªç”¨ã« {0} ã‚’é€ä¿¡ã—ã¾ã™ã‹ï¼Ÿ</message>
+
+  <!-- publish screen -->
+  <message key="Publish">ãƒ‘ãƒ–ãƒªãƒƒã‚·ãƒ¥</message>
+  <message key="Source File(s)">ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«</message>
+
+  <!-- login screen -->
+  <message key="login-to-pub">{0} ãƒ‘ãƒ–ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¸ã®ãƒ­ã‚°ã‚¤ãƒ³</message>
+  <message key="Login">ãƒ­ã‚°ã‚¤ãƒ³</message>
+  <message key="Password">ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰</message>
+  <message key="Username">ãƒ¦ãƒ¼ã‚¶å</message>
+  <message key="Authentication failed">èªè¨¼å¤±æ•—</message>
+  <message key="try-user-lenya">ãƒ¦ãƒ¼ã‚¶ {0} ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ {1} ï¼ˆç·¨é›†è€…ï¼‰ã€ã‚ã‚‹ã„ã¯ã€ãƒ¦ãƒ¼ã‚¶ {2} ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ {3} ï¼ˆãƒ¬ãƒ“ãƒ¥ã‚¢ãƒ¼ï¼‰ã‚’ä½¿ã£ã¦ãã ã•ã„</message>
+
+  <!-- logout screen -->
+  <message key="logout-from-pub">{0} ãƒ‘ãƒ–ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‹ã‚‰ã®ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ</message>
+  <message key="Your History">å±¥æ­´</message>
+  <message key="Login to Authoring Area">ã‚ªãƒ¼ã‚µãƒªãƒ³ã‚°ã‚¨ãƒªã‚¢ã¸ã®ãƒ­ã‚°ã‚¤ãƒ³</message>
+
+  <!-- reject screen -->
+  <message key="Reject">æ‹’å¦</message>
+  <message key="reject-doc?">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã‚’æ‹’å¦ã—ã¾ã™ã‹ï¼Ÿ</message>
+
+  <!-- cms menu -->
+  <message key="New Document">æ–°è¦ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</message>
+  <message key="New Language Version">æ–°è¦è¨€èªžãƒãƒ¼ã‚¸ãƒ§ãƒ³</message>
+  <message key="Remove Language Version">è¨€èªžãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®å‰Šé™¤</message>
+  <message key="File">ãƒ•ã‚¡ã‚¤ãƒ«</message>
+  <message key="Edit">ç·¨é›†</message>
+  <message key="Workflow">ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼</message>
+  <message key="Deactivate">ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆè§£é™¤</message>
+  <message key="Schedule">ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«</message>
+  <message key="Copy">ã‚³ãƒ”ãƒ¼</message>
+  <message key="Paste">è²¼ã‚Šä»˜ã‘</message>
+  <message key="Cut">åˆ‡ã‚Šå–ã‚Š</message>
+  <message key="Help">ãƒ˜ãƒ«ãƒ—</message>
+  <message key="Debug">ãƒ‡ãƒãƒƒã‚°</message>
+  <message key="Delete">å‰Šé™¤</message>
+  <message key="Archive">ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–</message>
+  <message key="Restore">ãƒªã‚¹ãƒˆã‚¢</message>
+  <message key="Move Up">ä¸Šã¸</message>
+  <message key="Move Down">ä¸‹ã¸</message>
+  <message key="Logout">ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ</message>
+  <message key="View Task Logs">View Task Logs</message>
+  <message key="Support">ã‚µãƒãƒ¼ãƒˆ</message>
+  <message key="System Documentation">ã‚·ã‚¹ãƒ†ãƒ ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</message>
+  <message key="User Documentation">ãƒ¦ãƒ¼ã‚¶ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</message>
+  <message key="About Apache Lenya">Apache Lenya ã«ã¤ã„ã¦</message>
+  <message key="Apache Lenya Homepage">Apache Lenya ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸</message>
+  <message key="Edit with Kupu">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(Kupu)
+  </message>
+  <message key="Edit with BXE">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(BXE)
+  </message>
+  <message key="Edit with one Form">ã‚½ãƒ¼ã‚¹ã‚¨ãƒ‡ã‚£ã‚¿</message>
+  <message key="Edit with Forms">ãƒ•ã‚©ãƒ¼ãƒ ã‚¨ãƒ‡ã‚£ã‚¿</message>
+  <message key="Edit Metadata">ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã®ç·¨é›†</message>
+  <message key="Edit Navigation Title">ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒˆãƒ«ã®ç·¨é›†</message>
+  <message key="Rename URL">URLã®å¤‰æ›´</message>
+
+  <!-- cms tabs -->
+  <message key="Server Time">ã‚µãƒ¼ãƒæ™‚é–“</message>
+  <message key="Workflow State">ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹</message>
+
+  <!-- Administration tab -->
+  <message key="Administration">ç®¡ç†</message>
+  <message key="really-delete?">æœ¬å½“ã« {0} ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ</message>
+  <message key="Do you really want to delete the trash ?">æœ¬å½“ã«ã‚´ãƒŸç®±ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ</message>
+  <message key="delete-object">{0} ã®å‰Šé™¤</message>
+  <message key="delete-object?">æœ¬å½“ã« {0} ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ</message>
+  <message key="Passwd">ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰</message>
+  <message key="Switch User">ãƒ¦ãƒ¼ã‚¶åˆ‡æ›¿</message>
+  <message key="Delete Trash">ã‚´ãƒŸç®±ã®å‰Šé™¤</message>
+  <message key="Cocoon and Server Status">Cocoonï¼Serverã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</message>
+
+    <!-- Group Administration -->
+  <message key="Profile">ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«</message>
+  <message key="Members">ãƒ¡ãƒ³ãƒãƒ¼</message>
+  <message key="IP Ranges">IPç¯„å›²</message>
+  <message key="Edit Profile">ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«ç·¨é›†</message>
+  <message key="Edit Members">ãƒ¡ãƒ³ãƒãƒ¼ç·¨é›†</message>
+  <message key="Group Administration">ã‚°ãƒ«ãƒ¼ãƒ—ç®¡ç†</message>
+  <message key="Add Group">ã‚°ãƒ«ãƒ¼ãƒ—è¿½åŠ </message>
+  <message key="Group Data">ã‚°ãƒ«ãƒ¼ãƒ—ãƒ‡ãƒ¼ã‚¿</message>
+
+    <!-- User Administration -->
+  <message key="User Data">ãƒ¦ãƒ¼ã‚¶ãƒ‡ãƒ¼ã‚¿</message>
+  <message key="CMS User ID">CMSãƒ¦ãƒ¼ã‚¶ID</message>
+  <message key="LDAP ID">LDAP&#160;ID</message>
+  <message key="Confirm password">ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ç¢ºèª</message>
+  <message key="Add User">ãƒ¦ãƒ¼ã‚¶è¿½åŠ </message>
+  <message key="User Administration">ãƒ¦ãƒ¼ã‚¶ç®¡ç†</message>
+  <message key="User Details">ãƒ¦ãƒ¼ã‚¶è©³ç´°</message>
+  <message key="All Groups">ã™ã¹ã¦ã®ã‚°ãƒ«ãƒ¼ãƒ—</message>
+  <message key="User Groups">ãƒ¦ãƒ¼ã‚¶ã‚°ãƒ«ãƒ¼ãƒ—</message>
+  <message key="Group Affiliation">ã‚°ãƒ«ãƒ¼ãƒ—ã‚¢ãƒ•ã‚£ãƒªã‚¨ãƒ¼ãƒˆ</message>
+  <message key="Change Password">ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰å¤‰æ›´</message>
+  <message key="Edit Group Affiliation">ã‚°ãƒ«ãƒ¼ãƒ—ã‚¢ãƒ•ã‚£ãƒªã‚¨ãƒ¼ãƒˆã®ç·¨é›†</message>
+
+    <!-- User Types -->
+  <message key="LDAP User">LDAP ãƒ¦ãƒ¼ã‚¶</message>
+  <message key="Local User">CMS ãƒ¦ãƒ¼ã‚¶</message>
+
+    <!-- IP Range Administration -->
+  <message key="IP Range">IPç¯„å›²</message>
+  <message key="IP Range ID">IPç¯„å›²ID</message>
+  <message key="Network Address">ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‚¢ãƒ‰ãƒ¬ã‚¹</message>
+  <message key="Subnet Mask">ã‚µãƒ–ãƒãƒƒãƒˆãƒžã‚¹ã‚¯</message>
+  <message key="IP Range Administration">IPç¯„å›²ç®¡ç†</message>
+  <message key="Add IP Range">IPç¯„å›²ã®è¿½åŠ </message>
+  <message key="IP Range Profile">IPç¯„å›²ã®ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«</message>
+
+  <!-- Site tab (info screens) -->
+  <message key="Available Languages">åˆ©ç”¨å¯èƒ½è¨€èªž</message>
+  <message key="This document is not available in this language.">ã“ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã§æŒ‡å®šã®è¨€èªžã¯å¯¾å¿œã—ã¦ã„ã¾ã›ã‚“</message>
+  <message key="Document ID">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆID</message>
+  <message key="Versions">ãƒãƒ¼ã‚¸ãƒ§ãƒ³</message>
+  <message key="SSL Encryption">SSLæš—å·åŒ–</message>
+  <message key="Rollback to this version">ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã¸ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯</message>
+  <message key="AC Archive">ACã‚¢ãƒ¼ã‚«ã‚¤ãƒ–</message>
+  <message key="AC Trash">ACã‚´ãƒŸç®±</message>
+  <message key="AC Auth">AC&#160;Auth</message>
+  <message key="AC Live">AC&#160;Live</message>
+  <message key="Scheduler">ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©</message>
+
+    <!-- Info screen actions-->
+  <message key="New Navigation Title">æ–°è¦ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒˆãƒ«</message>
+  <message key="Rename Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®åå‰å¤‰æ›´</message>
+  <message key="New Document ID">æ–°è¦ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆID</message>
+  <message key="No whitespace, no special characters">ç©ºç™½ç„¡ã—ç‰¹æ®Šæ–‡å­—ç„¡ã—</message>
+      <!-- Scheduler -->
+  <message key="No active jobs">æœ‰åŠ¹ãªã‚¸ãƒ§ãƒ–ç„¡ã—</message>
+  <message key="The job date has expired">ã“ã®ã‚¸ãƒ§ãƒ–ã¯æœ‰åŠ¹æœŸé™åˆ‡ã‚Œã§ã™</message>
+  <message key="check the log files">ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã®ç¢ºèª</message>
+  <message key="Task">ã‚¿ã‚¹ã‚¯</message>
+  <message key="Day">Day</message>
+  <message key="Time">Time</message>
+      <!-- Deactivate and delete -->
+  <message key="docs-have-links-to-doc">ä»¥ä¸‹ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã«ã¯ã“ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã¸ã®ãƒªãƒ³ã‚¯ãŒã‚ã‚Šã¾ã™</message>
+  <message key="Deactivate Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆè§£é™¤</message>
+  <message key="deactivate-doc">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆè§£é™¤</message>
+  <message key="deactivate-doc?">æœ¬å½“ã«ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆã‚’è§£é™¤ã—ã¾ã™ã‹ï¼Ÿ</message>
+  <message key="Delete Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®å‰Šé™¤</message>
+  <message key="delete-doc">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®å‰Šé™¤</message>
+  <message key="cannot-deactivate-unless-children-deactivated">ä»¥ä¸‹ã®å­ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆãŒã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆè§£é™¤çŠ¶æ…‹ã§ãªã‘ã‚Œã°ã€ã“ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆã‚’è§£é™¤ã§ãã¾ã›ã‚“</message>
+  <message key="delete-language-versions?">æœ¬å½“ã«ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®ã™ã¹ã¦ã®è¨€èªžãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ</message>
+      <!-- Archive document -->
+  <message key="Archive Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–</message>
+  <message key="archive-doc">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–</message>
+  <message key="archive-doc?">æœ¬å½“ã«ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã‚’ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã—ã¾ã™ã‹ï¼Ÿ</message>
+      <!-- Rename document -->
+  <message key="Rename Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®åå‰å¤‰æ›´</message>
+  <message key="rename-doc">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®åå‰å¤‰æ›´</message>
+      <!-- Copy document -->
+  <message key="Copy Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚³ãƒ”ãƒ¼</message>
+  <message key="copy-doc">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®ã‚³ãƒ”ãƒ¼</message>
+  <message key="copy-doc-to-clip?">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã‚’ã‚³ãƒ”ãƒ¼ã—ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ç§»å‹•ã•ã›ã¾ã™ã‹ï¼Ÿ ãŠå¥½ã¿ã®å ´æ‰€ã«å¾Œã§è²¼ã‚Šä»˜ã‘ã‚’ã™ã‚‹ã“ã¨ãŒå‡ºæ¥ã¾ã™</message>
+      <!-- Paste document -->
+  <message key="Paste Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®è²¼ã‚Šä»˜ã‘</message>
+  <message key="paste-doc">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®è²¼ã‚Šä»˜ã‘</message>
+  <message key="paste-doc-from-clip?">ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‹ã‚‰ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã‚’è²¼ã‚Šä»˜ã‘ã—ã¾ã™ã‹ï¼Ÿ</message>
+      <!-- Cut document -->
+  <message key="Cut Document">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®åˆ‡ã‚Šå–ã‚Š</message>
+  <message key="cut-doc">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã®åˆ‡ã‚Šå–ã‚Š</message>
+  <message key="cut-doc-to-clip?">ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ {0} ã‚’åˆ‡ã‚Šå–ã‚Šã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ç§»å‹•ã•ã›ã¾ã™ã‹ï¼Ÿ ãŠå¥½ã¿ã®å ´æ‰€ã«å¾Œã§è²¼ã‚Šä»˜ã‘ã‚’ã™ã‚‹ã“ã¨ãŒå‡ºæ¥ã¾ã™</message>
+    <!--Change visibility in navigation -->
+  <message key="Change">å¤‰æ›´</message>
+  <message key="Change Document visiblity in navigation">ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ã§ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®å¯è¦–æ€§ã®å¤‰æ›´</message>
+  <message key="Visibility in navigation">ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ã§ã®å¯è¦–æ€§</message>
+  <message key="visible">å¯è¦–</message>
+  <message key="hidden">ä¸å¯è¦–</message>
+
+  <!-- Info Asset -->
+  <message key="Insert Image">ã‚¤ãƒ¡ãƒ¼ã‚¸ã®æŒ¿å…¥</message>
+  <message key="Insert Asset">ã‚¢ã‚»ãƒƒãƒˆã®æŒ¿å…¥</message>
+  <message key="Asset Upload">ã‚¢ã‚»ãƒƒãƒˆã®ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰</message>
+  <message key="Insert a new Image">æ–°è¦ã‚¤ãƒ¡ãƒ¼ã‚¸ã®æŒ¿å…¥</message>
+  <message key="Upload an Asset">ã‚¢ã‚»ãƒƒãƒˆã®ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰</message>
+
+  <!-- Info workflow  -->
+  <message key="Value">å€¤</message>
+  <message key="Event">ã‚¤ãƒ™ãƒ³ãƒˆ</message>
+  <message key="Variables">å¤‰æ•°</message>
+  <message key="History">å±¥æ­´</message>
+  <message key="State">çŠ¶æ³</message>
+  <message key="IP Address">IPã‚¢ãƒ‰ãƒ¬ã‚¹</message>
+  <message key="edit">ç·¨é›†</message>
+  <message key="submit">é€ä¿¡</message>
+  <message key="reject">æ‹’å¦</message>
+  <message key="publish">ãƒ‘ãƒ–ãƒªãƒƒã‚·ãƒ¥</message>
+
+  <!-- Info asset  -->
+  <message key="New Asset">æ–°è¦ã‚¢ã‚»ãƒƒãƒˆ</message>
+
+  <!-- Info RC  -->
+  <message key="Current Version">ç¾åœ¨ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³</message>
+  <message key="Rollback to this revision">ã“ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã«ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯</message>
+
+  <!-- Info AC  -->
+  <message key="SSL Encryption">SSL æš—å·åŒ–</message>
+  <message key="Access Object">Access&#160;Object</message>
+  <message key="visit">è¨ªå•</message>
+  <message key="reviewer">reviewer</message>
+  <message key="editor">ç·¨é›†è€…</message>
+  <message key="admin">ç®¡ç†è€…</message>
+  <message key="world">ä¸–ç•Œ</message>
+  <message key="the world">ä¸–ç•Œ</message>
+
+  <!-- Scheduler -->
+  <message key="New job">æ–°è¦ã‚¸ãƒ§ãƒ–</message>
+  <message key="Active jobs">æœ‰åŠ¹ãªã‚¸ãƒ§ãƒ–</message>
+  <message key="Publish and Export">ãƒ‘ãƒ–ãƒªãƒƒã‚·ãƒ¥ï¼ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ</message>
+  <message key="doc-has-links-to-unpublished">ã“ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã«ã¯ä»¥ä¸‹ã®ãƒ‘ãƒ–ãƒªãƒƒã‚·ãƒ¥ã•ã‚Œã¦ã„ãªã„ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã¸ã®ãƒªãƒ³ã‚¯ãŒå«ã¾ã‚Œã¦ã„ã¾ã™ï¼š</message>
+
+  <!-- New Document -->
+  <message key="Please check the following possible causes of the exception">ä¾‹å¤–ãŒç™ºç”Ÿã—ã¾ã—ãŸï¼šä»¥ä¸‹ã®å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã®ã§ç¢ºèªã—ã¦ãã ã•ã„</message>
+  <message key="exception.cause.createdoc.whitespace-in-id">ID ã«ç©ºç™½æ–‡å­—ã‚’å«ã‚ã‚‹ã“ã¨ã¯å‡ºæ¥ã¾ã›ã‚“</message>
+  <message key="exception.cause.createdoc.id-in-use">ã“ã® ID ã¯æ—¢ã«ä½¿ã‚ã‚Œã¦ã„ã¾ã™</message>
+  <message key="failmessage.createdoc.invalidformat">ID ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ã¯ æ­£ã—ã„æ–‡å­—ã‚’å…¥ã‚Œã¦ãã ã•ã„ï¼š A-Z, a-z, 0-9 ã‚ã‚‹ã„ã¯ - ã®ã¿ãŒåˆ©ç”¨å¯èƒ½ã§ã™</message>
+  <message key="failmessage.createdoc.required">å¿…é ˆé …ç›® (*) ã®å€¤ã‚’ã™ã¹ã¦æº€ãŸã—ã¦ãã ã•ã„</message>
+
+  <!-- Asset Upload/Insert Dialog -->
+  <message key="lenya.assetupload.subtitle">ã‚¢ã‚»ãƒƒãƒˆãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¸ã®è¿½åŠ </message>
+  <message key="Asset Library">ã‚¢ã‚»ãƒƒãƒˆãƒ©ã‚¤ãƒ–ãƒ©ãƒª</message>
+  <message key="No assets available">ã‚¢ã‚»ãƒƒãƒˆã¯åˆ©ç”¨ä¸å¯èƒ½ã§ã™</message>
+  <message key="Insert Asset">ã‚¢ã‚»ãƒƒãƒˆã®æŒ¿å…¥</message>
+
+  <!-- Image Upload/Insert Dialog -->
+  <message key="lenya.imageupload.title">ã‚¤ãƒ¡ãƒ¼ã‚¸ã®æŒ¿å…¥</message>
+  <message key="lenya.imageupload.selectimage.label">ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é¸æŠž</message>
+  <message key="lenya.imageupload.info.noimages">ã‚¤ãƒ¡ãƒ¼ã‚¸ã¯åˆ©ç”¨ä¸å¯èƒ½ã§ã™</message>
+  <message key="lenya.imageupload.links.hint">å¤–éƒ¨ãƒªã‚½ãƒ¼ã‚¹ã¸ã®ãƒªãƒ³ã‚¯ã¯ 'http://' ã‹ã‚‰å§‹ã‚ã€å†…éƒ¨ãƒªã‚½ãƒ¼ã‚¹ã¸ã¯ '/' ã‹ã‚‰å§‹ã‚ã‚‹ã‚ˆã†ã«ã—ã¦ãã ã•ã„</message>
+
+  <!-- Revision Controller -->
+  <message key="Reason">ç†ç”±</message>
+  <message key="Filename">ãƒ•ã‚¡ã‚¤ãƒ«å</message>
+  <message key="lenya.rc.nocheckout">ãƒªã‚½ãƒ¼ã‚¹ãŒãƒã‚§ãƒƒã‚¯ã‚¢ã‚¦ãƒˆï¼ˆcheck outï¼‰ã§ãã¾ã›ã‚“ã§ã—ãŸ</message>
+  <message key="lenya.rc.checkedoutalready">ã“ã®ãƒªã‚½ãƒ¼ã‚¹ã¯æ—¢ã«ä»–ã®ãƒ¦ãƒ¼ã‚¶ãŒãƒã‚§ãƒƒã‚¯ã‚¢ã‚¦ãƒˆã—ã¦ã„ã¾ã™</message>
+  <message key="lenya.rc.nocheckin">ãƒªã‚½ãƒ¼ã‚¹ã‚’ãƒã‚§ãƒƒã‚¯ã‚¤ãƒ³ã§ãã¾ã›ã‚“ã§ã—ãŸ</message>
+  <message key="Generic Exception">ä¸€èˆ¬çš„ä¾‹å¤–</message>
+  <message key="Check the log files.">ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç¢ºèªã—ã¦ãã ã•ã„</message>
+</catalogue>
