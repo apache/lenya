@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.43 2003/09/19 09:07:43 andreas Exp $
+ $Id: info.xsl,v 1.44 2003/09/25 09:31:33 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -144,6 +144,7 @@
       <input type="hidden" name="properties.save.meta.language" value="{dc:language}"/>
       <input type="hidden" name="lenya.usecase" value="info-meta"/>
       <input type="hidden" name="lenya.step" value="update"/>
+      <input type="hidden" name="lenya.event" value="edit"/>
       <input type="hidden" name="task-id" value="save-meta-data"/>
     </form>
   </xsl:template>
