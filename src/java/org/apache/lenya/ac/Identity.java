@@ -29,7 +29,7 @@ import org.apache.cocoon.environment.Session;
 /**
  * Identity object. Used to store the authenticated accreditables in the session.
  */
-public class Identity extends AbstractLogEnabled implements Identifiable {
+public class Identity extends AbstractLogEnabled implements Identifiable, java.io.Serializable {
     private Set identifiables = new HashSet();
 
     /**
@@ -43,6 +43,22 @@ public class Identity extends AbstractLogEnabled implements Identifiable {
      */
     public void initialize() {
         addIdentifiable(World.getInstance());
+    }
+
+    /**
+     * In the case of Tomcat the object will be serialized to TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     */
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+        out.defaultWriteObject();
+        out.writeObject(identifiables);
+    }
+
+    /**
+     * In case of Tomcat the object will be restored from TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     */
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        identifiables = (Set) in.readObject();
     }
 
     /**
