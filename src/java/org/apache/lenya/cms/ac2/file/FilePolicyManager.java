@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.13 2003/08/07 10:23:02 andreas Exp $
+$Id: FilePolicyManager.java,v 1.14 2003/08/12 15:15:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,7 @@ $Id: FilePolicyManager.java,v 1.13 2003/08/07 10:23:02 andreas Exp $
 */
 package org.apache.lenya.cms.ac2.file;
 
+import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
@@ -63,7 +64,9 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.SourceValidity;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.DefaultPolicy;
@@ -71,6 +74,7 @@ import org.apache.lenya.cms.ac2.InheritingPolicyManager;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyBuilder;
 import org.apache.lenya.cms.ac2.URLPolicy;
+import org.apache.lenya.cms.ac2.cache.CachedPolicy;
 import org.apache.lenya.util.CacheMap;
 import org.apache.lenya.xml.DocumentHelper;
 
@@ -78,10 +82,11 @@ import org.w3c.dom.Document;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A PolicyBuilder is used to build policies.
@@ -89,7 +94,23 @@ import java.util.Map;
  */
 public class FilePolicyManager
     extends AbstractLogEnabled
-    implements InheritingPolicyManager, Parameterizable, Serviceable {
+    implements InheritingPolicyManager, Parameterizable, Serviceable, Disposable {
+
+    /**
+     * Returns the source cache.
+     * @return A source cache.
+     */
+    protected CacheMap getCache() {
+        return cache;
+    }
+
+    /**
+     * Returns the source resolver.
+     * @return A source resolver.
+     */
+    protected SourceResolver getResolver() {
+        return resolver;
+    }
 
     /**
      * Creates a new PolicyBuilder.
@@ -98,6 +119,10 @@ public class FilePolicyManager
     }
 
     private File policyDirectory;
+    private SourceResolver resolver;
+    private CacheMap cache = new CacheMap(CAPACITY);
+    
+    protected static final int CAPACITY = 1000;
 
     protected static final String URL_FILENAME = "url-policy.acml";
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
@@ -140,19 +165,148 @@ public class FilePolicyManager
         String url,
         String policyFilename)
         throws AccessControlException {
-        DefaultPolicy policy;
-        getLogger().debug("Building policy for URL [" + url + "]");
-        File policyFile = getPolicyFile(url, policyFilename);
-        getLogger().debug("Policy file resolved to: " + policyFile.getAbsolutePath());
-        //        getLogger().debug("", new IllegalStateException());
 
-        if (policyFile.exists()) {
-            policy = PolicyBuilder.getInstance().buildPolicy(controller, policyFile);
-        } else {
-            policy = new DefaultPolicy();
+        getLogger().debug("Building policy for URL [" + url + "]");
+
+        DefaultPolicy policy = null;
+
+        String policyUri = getPolicyURI(url, policyFilename);
+        getLogger().debug("Policy source URI resolved to: " + policyUri);
+
+        try {
+            String key = policyUri;
+
+            CachedPolicy cachedPolicy = (CachedPolicy) getCache().get(key);
+            boolean usedCache = false;
+            SourceValidity sourceValidity = null;
+            InputStream stream = null;
+
+            if (cachedPolicy != null) {
+                getLogger().debug("Found cached policy.");
+                SourceValidity cachedValidity = cachedPolicy.getValidityObject();
+
+                int result = cachedValidity.isValid();
+                boolean valid = false;
+                if (result == 0) {
+
+                    // get source validity and compare
+
+                    sourceValidity = getSourceValidity(policyUri);
+
+                    if (sourceValidity != null) {
+                        result = cachedValidity.isValid(sourceValidity);
+                        if (result == 0) {
+                            sourceValidity = null;
+                        } else {
+                            valid = (result == 1);
+                        }
+                    }
+                } else {
+                    valid = (result > 0);
+                }
+
+                if (valid) {
+                    if (this.getLogger().isDebugEnabled()) {
+                        this.getLogger().debug(
+                            "Using valid cached source for '" + policyUri + "'.");
+                    }
+                    usedCache = true;
+                    policy = cachedPolicy.getPolicy();
+                } else {
+                    if (this.getLogger().isDebugEnabled()) {
+                        this.getLogger().debug(
+                            "Cached content is invalid for '" + policyUri + "'.");
+                    }
+                    // remove invalid cached object
+                    getCache().remove(key);
+                }
+
+            } else {
+                getLogger().debug("Did not find cached policy.");
+            }
+
+            if (!usedCache) {
+                getLogger().debug("Did not use cache.");
+                if (key != null) {
+                    if (sourceValidity == null) {
+                        sourceValidity = getSourceValidity(policyUri);
+                    }
+                    if (sourceValidity != null) {
+                        getLogger().debug("Source validity is not null.");
+                    } else {
+                        getLogger().debug("Source validity is null - not caching.");
+                        key = null;
+                    }
+                }
+
+                stream = getInputStream(policyUri);
+                if (stream != null) {
+                    policy = PolicyBuilder.getInstance().buildPolicy(controller, stream);
+                }
+
+                // store the response
+                if (key != null) {
+                    if (this.getLogger().isDebugEnabled()) {
+                        this.getLogger().debug(
+                            "Caching content for further requests of '" + policyUri + "'.");
+                    }
+                    getCache().put(key, new CachedPolicy(sourceValidity, policy));
+                }
+            }
+        } catch (Exception e) {
+            throw new AccessControlException(e);
         }
 
+        if (policy != null) {
+            getLogger().debug("Policy found.");
+        } else {
+            getLogger().debug("Using empty Policy.");
+            policy = new DefaultPolicy();
+        }
         return policy;
+    }
+
+    /**
+     * Returns the input stream to read a policy from.
+     * @param policyUri The URI of the policy source.
+     * @return An input stream.
+     * @throws MalformedURLException when an error occurs.
+     * @throws IOException when an error occurs.
+     * @throws SourceNotFoundException when an error occurs.
+     */
+    protected InputStream getInputStream(String policyUri)
+        throws MalformedURLException, IOException, SourceNotFoundException {
+        InputStream stream = null;
+        Source source = null;
+        try {
+            source = getResolver().resolveURI(policyUri);
+            if (source.exists()) {
+                stream = source.getInputStream();
+            }
+        } finally {
+            getResolver().release(source);
+        }
+        return stream;
+    }
+
+    /**
+     * Returns the validity of a policy source.
+     * @param policyUri The URI of the policy source.
+     * @return A source validity object.
+     * @throws MalformedURLException when an error occurs.
+     * @throws IOException when an error occurs.
+     */
+    protected SourceValidity getSourceValidity(String policyUri)
+        throws MalformedURLException, IOException {
+        SourceValidity sourceValidity;
+        Source source = null;
+        try {
+            source = getResolver().resolveURI(policyUri);
+            sourceValidity = source.getValidity();
+        } finally {
+            getResolver().release(source);
+        }
+        return sourceValidity;
     }
 
     /**
@@ -163,15 +317,33 @@ public class FilePolicyManager
      * 
      * @throws AccessControlException if an error occurs
      */
-    protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
+    protected String getPolicyURI(String url, String policyFilename)
+        throws AccessControlException {
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
 
         String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
         File policyFile = new File(getPoliciesDirectory(), path);
+        return policyFile.toURI().toString();
+    }
 
-        return policyFile;
+    /**
+     * Returns the policy file for a certain URL.
+     * @param url The URL to get the policy for.
+     * @param policyFilename The policy filename.
+     * @return A file.
+     * @throws AccessControlException when an error occurs.
+     */
+    protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
+        String fileUri = getPolicyURI(url, policyFilename);
+        File file;
+        try {
+            file = new File(new URI(fileUri));
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        }
+        return file;
     }
 
     /**
@@ -205,7 +377,7 @@ public class FilePolicyManager
      */
     protected void savePolicy(String url, DefaultPolicy policy, String filename)
         throws AccessControlException {
-            
+
         String key = getCacheKey(url);
         cache.remove(key);
 
@@ -221,23 +393,13 @@ public class FilePolicyManager
         }
     }
 
-    protected static final int CACHE_CAPACITY = 1000;
-    private static Map cache = new CacheMap(CACHE_CAPACITY);
-
     /**
      * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(AccreditableManager, Publication, java.lang.String)
      */
     public Policy getPolicy(AccreditableManager controller, String url)
         throws AccessControlException {
 
-        String key = getCacheKey(url);
-        Policy policy = (Policy) cache.get(key);
-        if (policy == null) {
-            policy = new URLPolicy(controller, url, this);
-            cache.put(key, policy);
-        }
-
-        return policy;
+        return new URLPolicy(controller, url, this);
     }
 
     /**
@@ -314,6 +476,7 @@ public class FilePolicyManager
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+        resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
     }
 
     /**
@@ -331,6 +494,7 @@ public class FilePolicyManager
      * @throws AccessControlException if the directory is not a directory
      */
     public void setPoliciesDirectory(File directory) throws AccessControlException {
+        getLogger().debug("Setting policies directory [" + directory.getAbsolutePath() + "]");
         if (!directory.isDirectory()) {
             throw new AccessControlException(
                 "Policies directory invalid: [" + directory.getAbsolutePath() + "]");
@@ -359,6 +523,18 @@ public class FilePolicyManager
         }
 
         return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies.size()]);
+    }
+
+    /**
+     * @see org.apache.avalon.framework.activity.Disposable#dispose()
+     */
+    public void dispose() {
+        if (getResolver() != null) {
+            getManager().release(getResolver());
+        }
+        if (getCache() != null) {
+            getManager().release(getCache());
+        }
     }
 
 }

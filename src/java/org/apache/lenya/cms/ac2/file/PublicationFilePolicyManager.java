@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFilePolicyManager.java,v 1.2 2003/07/17 16:24:20 andreas Exp $
+$Id: PublicationFilePolicyManager.java,v 1.3 2003/08/12 15:15:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,9 +56,19 @@ $Id: PublicationFilePolicyManager.java,v 1.2 2003/07/17 16:24:20 andreas Exp $
 package org.apache.lenya.cms.ac2.file;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac2.AccreditableManager;
+import org.apache.lenya.cms.ac2.DefaultPolicy;
+import org.apache.lenya.cms.ac2.Policy;
+import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * A FilePolicyManager that resolves policies relative to the {publication}/config/ac/policies directory.<br/>
@@ -73,35 +83,105 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
         "config/ac/policies".replace('/', File.separatorChar);
 
     /**
-     * @see org.apache.lenya.cms.ac2.file.FilePolicyManager#getPolicyFile(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.ac2.file.FilePolicyManager#getPolicyURI(java.lang.String, java.lang.String)
      */
-    protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
-
-        getLogger().debug("Resolving policy file for URL [" + url + "]");
-
-        if (url.startsWith("/")) {
-            url = url.substring(1);
-        }
-
-        int slashIndex = url.indexOf("/");
-        if (slashIndex == -1) {
-            slashIndex = url.length();
-        }
-
-        String publicationId = url.substring(0, slashIndex);
-        url = url.substring(publicationId.length());
-
-        getLogger().debug("URL without publication ID: [" + url + "]");
+    protected String getPolicyURI(String url, String policyFilename)
+        throws AccessControlException {
+            
+        getLogger().debug("Resolving policy URI for URL [" + url + "]");
+            
+        Publication publication = getPublication(url);
+        url = url.substring(("/" + publication.getId()).length());
 
         String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
+        File policyDirectory = new File(publication.getDirectory(), POLICIES_PATH);
+        File policyFile = new File(policyDirectory, path);
+        return policyFile.toURI().toString();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.InheritingPolicyManager#getPolicies(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
+     */
+    public DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
+        throws AccessControlException {
+
+        getLogger().debug("Resolving policies for URL [" + url + "]");
+            
+        Publication publication = getPublication(url);
+        String path = getPolicyPath(url, publication);
         
-        File publicationDirectory =
-            new File(
-                getPoliciesDirectory(),
-                Publication.PUBLICATION_PREFIX + File.separator + publicationId);
-        File policiesConfigDirectory = new File(publicationDirectory, POLICIES_PATH);
-        File policyFile = new File(policiesConfigDirectory, path);
-        return policyFile;
+        List policies = new ArrayList();
+
+        String[] directories = path.split("/");
+        path = "/" + publication.getId();
+        
+        getLogger().debug("Building URL policy for URL [" + path + "]");
+        Policy policy = buildURLPolicy(controller, path);
+        policies.add(policy);
+
+        for (int i = 0; i < directories.length; i++) {
+            path += directories[i] + "/";
+            getLogger().debug("Building subtree policy for URL [" + path + "]");
+            policy = buildSubtreePolicy(controller, path);
+            policies.add(policy);
+        }
+
+        return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies.size()]);
+    }
+
+    /**
+     * Returns the publication for a certain URL.
+     * @param url The url.
+     * @return A publication.
+     * @throws AccessControlException when the publication could not be created.
+     */
+    protected Publication getPublication(String url) throws AccessControlException {
+        getLogger().debug("Building publication");
+        
+        Publication publication;
+        try {
+            File servletContext = getPoliciesDirectory();
+            getLogger().debug("Webapp URL:      [" + url + "]");
+            getLogger().debug("Serlvet context: [" + servletContext.getAbsolutePath() + "]");
+            publication = PublicationFactory.getPublication(url, servletContext);
+        } catch (PublicationException e) {
+            throw new AccessControlException(e);
+        }
+        return publication;
+    }
+
+    /**
+     * Returns the policy path, containing the steps to look for policy files
+     * separated by slashes. If the webapp URL corresponds to an existing document,
+     * the document ID is used. Otherwise, the requested URL inside the publication
+     * is returned.
+     * @param webappUrl The webapp URL to obtain the policy for.
+     * @param publication The publication.
+     * @return A String.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected String getPolicyPath(String webappUrl, Publication publication)
+        throws AccessControlException {
+            
+        getLogger().debug("Resolving policy path for URL [" + webappUrl + "]");
+            
+        Document document = null;
+        String path;
+
+        try {
+            document = DefaultDocumentBuilder.getInstance().buildDocument(publication, webappUrl);
+        } catch (DocumentBuildException e) {
+            throw new AccessControlException(e);
+        }
+
+        if (document.getFile().exists()) {
+            path = "/" + document.getArea() + document.getId();
+            getLogger().debug("Document exists, using document ID [" + path + "]");
+        } else {
+            path = webappUrl.substring(("/" + publication.getId()).length());
+            getLogger().debug("Document does not exist, using URL [" + path + "]");
+        }
+        return path;
     }
 
 }
