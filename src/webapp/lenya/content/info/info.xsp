@@ -26,7 +26,7 @@
         <dc:title></dc:title>
   		<lenya-info:abstract></lenya-info:abstract>
   		<lenya-info:status></lenya-info:status>
-        <dc:language></dc:language>
+        <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
    		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
    		<lenya-info:lastmodified></lenya-info:lastmodified>
   		<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
