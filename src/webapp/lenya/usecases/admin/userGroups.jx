@@ -1,0 +1,80 @@
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <page:title><i18n:text>Group Affiliation</i18n:text></page:title>
+  <page:body>
+    
+    <form>
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+
+       <table class="lenya-table-noborder">
+        <tr>
+          <td colspan="2">
+            <ul>
+            <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+              <li>
+                <i18n:text><jx:out value="${message}"/></i18n:text>
+              </li>
+            </jx:forEach>
+            <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+              <li>
+                <i18n:text><jx:out value="${message}"/></i18n:text>
+              </li>
+            </jx:forEach>
+            </ul>
+          </td>
+        </tr>
+      </table>
+
+      <table class="lenya-table-noborder-nopadding">
+        <tr>
+          <td>
+            <strong>
+              <i18n:text>User Groups</i18n:text>
+            </strong>
+          </td>
+          <td/>
+          <td>
+            <strong>
+              <i18n:text>All Groups</i18n:text>
+            </strong>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle">
+            <select name="userGroup" size="15" class="lenya-form-element-narrow">
+              <jx:forEach var="group" items="${usecase.getParameter('userGroups')}">
+                <option value="${group}"><jx:out value="${group}"/></option>
+              </jx:forEach>
+            </select>
+          </td>
+          <td valign="middle">
+            <input name="add" type="submit" value="&lt;"/>
+            <br/>
+            <input name="remove" type="submit" value="&gt;"/>
+          </td>
+          <td valign="middle">
+            <select name="otherGroup" size="15" class="lenya-form-element-narrow">
+              <jx:forEach var="otherGroup" items="${usecase.getParameter('otherGroups')}">
+                <option value="${otherGroup}"><jx:out value="${otherGroup}"/></option>
+              </jx:forEach>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align: center">
+            <br/>
+            <input i18n:attr="value" type="submit" name="submit" value="Save"/>
+            <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
+          </td>
+        </tr>
+      </table>
+
+    </form>
+  </page:body>
+</page:page>
