@@ -212,11 +212,19 @@ public class DefaultSiteTree implements SiteTree {
             node.hasLink(),
             refDocumentId);
     }
+
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[])
      */
     public void addNode(String parentid, String id, Label[] labels, boolean visibleInNav ) throws SiteTreeException {
         addNode(parentid, id, labels, visibleInNav, null, null, false);
+    }
+
+    /** (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], boolean)
+     */
+    public void addNode(String parentid, String id, Label[] labels) throws SiteTreeException {
+        addNode(parentid, id, labels, true);
     }
 
     /** (non-Javadoc)
