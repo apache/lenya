@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  $Id: groups.xsl,v 1.4 2004/02/18 18:08:16 roku Exp $
+-->
+
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
     
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
+  <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
   
   
   <xsl:template match="/">
@@ -17,14 +23,14 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>User Overview: <xsl:value-of select="user/id"/></page:title>
+      <page:title><i18n:text>User Details</i18n:text>: <xsl:value-of select="user/id"/></page:title>
       <page:body>
     <table class="lenya-noborder">
     <tr>
     <td>
     
     <div class="lenya-box">
-      <div class="lenya-box-title">Group Affiliation</div>
+      <div class="lenya-box-title"><i18n:text>Group Affiliation</i18n:text></div>
       <div class="lenya-box-body">
         
         <form method="GET" action="{continuation}.continuation">
@@ -32,9 +38,9 @@
           
                 <table class="lenya-table-noborder-nopadding">
                   <tr>
-                    <td><strong>User groups</strong></td>
+                    <td><strong><i18n:text>User Groups</i18n:text></strong></td>
                     <td/>
-                    <td><strong>All groups</strong></td>
+                    <td><strong><i18n:text>All Groups</i18n:text></strong></td>
                   </tr>
                   <tr>
                     <td valign="middle">
@@ -56,9 +62,9 @@
                 </table>
                 
                 <div style="margin-top: 10px; text-align: center">
-                  <input type="submit" name="submit" value="Submit"/>
+                  <input i18n:attr="value" type="submit" name="submit" value="Save"/>
                   &#160;
-                  <input type="submit" name="cancel" value="Cancel"/>
+                  <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
                 </div>
                 </form>
               </div>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-  $Id: cmsui.xml,v 1.21 2004/02/17 21:51:32 roku Exp $
+  $Id: cmsui.xml,v 1.22 2004/02/18 18:08:16 roku Exp $
   
   @author Rolf Kulemann (roku at apache.org)
   
@@ -140,5 +140,11 @@ c
   <message key="Confirm password">Confirm&#160;password</message>
   <message key="Add User">Add User</message>
   <message key="User Administration">User Administration</message>
-
+  <message key="User Details">User Details</message>
+  <message key="All Groups">All Groups</message>
+  <message key="User Groups">User Groups</message>
+  <message key="Group Affiliation">Group Affiliation</message>
+  <message key="Change Password">Change Password</message>
+  <message key="Edit Group Affiliation">Edit Group Affiliation</message>
+  
 </catalogue>

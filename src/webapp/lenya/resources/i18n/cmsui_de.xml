@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.24 2004/02/17 21:51:32 roku Exp $
+   $Id: cmsui_de.xml,v 1.25 2004/02/18 18:08:16 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -126,7 +126,7 @@
   <message key="Profile">Profil</message>  
   <message key="Members">Mitglieder</message>
   <message key="IP Ranges">IP&#160;Regeln</message>
-  <message key="Edit Profile">Profil&#160;bearbeiten</message>
+  <message key="Edit Profile">Profil&#160;&#228;ndern</message>
   <message key="Edit Members">Mitglieder&#160;bearbeiten</message>
   <message key="Group Administration">Gruppenverwaltung</message>
   <message key="Add Group">Gruppe hinzuf&#252;gen</message>
@@ -140,6 +140,12 @@
   <message key="Confirm password">Passwort&#160;best&#228;tigen</message>
   <message key="Add User">Benutzer hinzuf&#252;gen</message>
   <message key="User Administration">Benutzerverwaltung</message>
-
+  <message key="User Details">Benutzerdetails</message>
+  <message key="All Groups">Alle Gruppen</message>
+  <message key="User Groups">Benutzergruppen</message>
+  <message key="Group Affiliation">Gruppenmitgliedschaften</message>
+  <message key="Change Password">Passwort &#228;ndern</message>
+  <message key="Edit Group Affiliation">Mitgliedschaften &#228;ndern</message>
+  
 </catalogue>
 

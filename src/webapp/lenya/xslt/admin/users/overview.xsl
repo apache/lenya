@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  $Id: overview.xsl,v 1.8 2004/02/18 18:08:16 roku Exp $
+-->
+
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
     
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
+  <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
   
   
   <xsl:template match="/">
@@ -17,7 +23,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>User Overview: <xsl:value-of select="user/id"/></page:title>
+      <page:title><i18n:text>User Details</i18n:text>: <xsl:value-of select="user/id"/></page:title>
       <page:body>
         <xsl:apply-templates select="message"/>
         <xsl:apply-templates select="user"/>
@@ -34,32 +40,32 @@
     <td>
     
     <div class="lenya-box">
-      <div class="lenya-box-title">Profile</div>
+      <div class="lenya-box-title"><i18n:text>Profile</i18n:text></div>
       <div class="lenya-box-body">
         
           <table class="lenya-table-noborder">
             
             <tr>
-              <td class="lenya-entry-caption">User&#160;ID:</td>
+              <td class="lenya-entry-caption"><i18n:text>User ID</i18n:text>:</td>
               <td><xsl:value-of select="id"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Full&#160;Name:</td>
+              <td class="lenya-entry-caption"><i18n:text>Full Name</i18n:text>:</td>
               <td><xsl:value-of select="name"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">E-Mail:</td>
+              <td class="lenya-entry-caption"><i18n:text>Email</i18n:text>:</td>
               <td><xsl:value-of select="email"/></td>
             </tr>
             <tr>
-              <td valign="top" class="lenya-entry-caption">Description:</td>
+              <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td>
               <td><xsl:value-of select="description"/></td>
             </tr>
             <tr>
               <td/>
               <td>
 				        <form method="GET" action="lenya.usecase.change_profile">
-				          <input type="submit" value="Edit Profile"/>
+				          <input i18n:attr="value" type="submit" value="Edit Profile"/>
 				        </form>
               </td>
             </tr>
@@ -72,13 +78,13 @@
     </xsl:if>
     
     <div class="lenya-box">
-      <div class="lenya-box-title">Group Affiliation</div>
+      <div class="lenya-box-title"><i18n:text>Group Affiliation</i18n:text></div>
       <div class="lenya-box-body">
         
           <table class="lenya-table-noborder">
             
             <tr>
-              <td class="lenya-entry-caption" valign="top">Groups:</td>
+              <td class="lenya-entry-caption" valign="top"><i18n:text>Groups</i18n:text>:</td>
               <td>
                 <xsl:apply-templates select="groups"/>
               </td>
@@ -87,7 +93,7 @@
               <td/>
               <td>
 				        <form method="GET" action="lenya.usecase.change_groups">
-				          <input type="submit" value="Edit Group Affiliation"/>
+				          <input i18n:attr="value" type="submit" value="Edit Group Affiliation"/>
 				        </form>
               </td>
             </tr>
@@ -122,24 +128,24 @@
   
   <xsl:template name="password">
     <div class="lenya-box">
-      <div class="lenya-box-title">Password</div>
+      <div class="lenya-box-title"><i18n:text>Password</i18n:text></div>
       <div class="lenya-box-body">
         
           <table class="lenya-table-noborder">
             
             <tr>
-              <td class="lenya-entry-caption">User:</td>
+              <td class="lenya-entry-caption"><i18n:text>User</i18n:text>:</td>
               <td>
 				        <form method="GET" action="lenya.usecase.change_password_user">
-				          <input type="submit" value="Change Password"/>
+				          <input i18n:attr="value" type="submit" value="Change Password"/>
 				        </form>
 				      </td>
 				    </tr>
             <tr>
-              <td class="lenya-entry-caption">Admin:</td>
+              <td class="lenya-entry-caption"><i18n:text>Admin</i18n:text>:</td>
               <td>
 				        <form method="GET" action="lenya.usecase.change_password_admin">
-				          <input type="submit" value="Change Password"/>
+				          <input i18n:attr="value" type="submit" value="Change Password"/>
 				        </form>
               </td>
             </tr>
