@@ -35,6 +35,10 @@
 	We use coding standards to be able to write code easy to
 	understand, to maintain, and to enhance.
       </p>
+      <p> 
+        We are using the commit and then review approach. 
+        Still <strong>nothing</strong> that have not been tested should not be
+        committed. First test then commit!!!
     </section>
     <section>
       <title>Java Code</title>
