@@ -3,6 +3,7 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:include href="../../head.xsl"/>
+<xsl:include href="../../foot.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables.xsl"/>
 
@@ -28,6 +29,7 @@
 
         <center>
           <table cellspacing="0" cellpadding="0" border="0" width="585">
+
             <tr height="16">
               <td height="16" width="187" align="center" valign="top">
                 <center><a href="../../../../"><img height="52" width="108" src="{$img-unipub}/t_unipublic_ALT.gif" alt="Unipublic" border="0"/></a></center>
@@ -47,7 +49,7 @@
               <xsl:apply-templates select="NewsItem/NewsComponent" mode="article"/>
            </tr>
 
-           <xsl:apply-templates select="NewsItem/NewsComponent/NewsLines" mode="copyright"/>
+           <xsl:apply-templates select="NewsItem/NewsComponent/NewsLines" mode="Article_copyright"/>
 
          </table>
        </center>
@@ -70,20 +72,6 @@
   </td>
 </xsl:template>
 
-<xsl:template match="NewsLines" mode="copyright">
-  <tr>
-    <td width="187"></td>
-    <td width="10" bgcolor="white">&#160;</td>
-    <td bgcolor="white" width="388"><br />
-     <div align="left"><a href="#topofpage"><font size="1">zum Anfang<br /> <br />
-      </font></a> <img height="1" width="390" src="{$img-unipub}/999999.gif" alt=" "/><br />
-      <font size="1"><xsl:apply-templates select="CopyrightLine" mode="copyright"/>
-      <xsl:apply-templates select="DateLine" mode="article"/>,
-      <a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum.html">Impressum</a></font></div>
-    </td>
-  </tr>
-</xsl:template>
-
 <xsl:template name="slider_image">
   <xsl:variable name="width">
     <xsl:if test="contains($section, 'geist')">138</xsl:if>
@@ -103,10 +91,6 @@
 
 <xsl:template match="DateLine" mode="article">
   <xsl:value-of select="@day"/>.<xsl:value-of select="@month"/>.<xsl:value-of select="@year"/>
-</xsl:template>
-
-<xsl:template match="CopyrightLine" mode="copyright">
-  <xsl:apply-templates/>,
 </xsl:template>
 
 <xsl:template match="NewsML/NewsItem" mode="RelatedContents">

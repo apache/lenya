@@ -4,6 +4,7 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:include href="../../head.xsl"/>
+<xsl:include href="../../foot.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables.xsl"/>
 <xsl:include href="../../navigation.xsl"/>
@@ -15,7 +16,7 @@
 </xsl:template>
 
 <xsl:template match="up:Page">
-  <xsl:apply-templates match="Content"/>
+  <xsl:apply-templates select="Content"/>
 </xsl:template>
 
 <xsl:template match="Content">
@@ -97,11 +98,10 @@
             <td width="315"></td>
             <td width="135"></td>
           </tr>
+          
+         <xsl:apply-templates select="MainColumn/Articles" mode="Front_copyright"/> 
 
-          <tr>
-            <td width="135"></td>
-            <td colspan="2">[ani error occurred while processing this directive]</td>
-          </tr>
+      
         </table>
       </center>
     </body>

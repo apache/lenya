@@ -4,6 +4,7 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:include href="../../head.xsl"/>
+<xsl:include href="../../foot.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../navigation.xsl"/>
 <xsl:include href="../../variables.xsl"/>
@@ -49,10 +50,9 @@
 
 <tr>
 <td width="135" align="right" valign="top" rowspan="3">
+
 <xsl:apply-templates select="FirstColumn/MainNavigation"/>
-<!--
-<xsl:apply-templates select="MainNavigation"/>
--->
+
 </td>
 <td width="315" height="21" valign="bottom"><img src="{$img-unipub}/r_{MainColumn/section/@type}.gif" border="0" alt="{$sectiontext}"/></td>
 <td width="135" valign="bottom" align="right"></td>
@@ -84,20 +84,8 @@
 </td>
 </tr>
 
-<tr>
-<td colspan="2" bgcolor="white"><br />
-  
+<xsl:apply-templates select="MainColumn/section/articles" mode="Section_copyright"/>
 
-<div align="left"><a href="#topofpage"><font size="1">zum
-Anfang<br />
-<br />
-</font></a> <img height="1" width="390" src="{$img-unipub}/999999.gif" alt=" "/><br />
- <font size="1">&#169; Universit&#228;t Z&#252;rich, 05.04.2002 ,
-<a href="/ssi_unipublic/impressum.html">Impressum</a></font></div>
-
-<br />
-</td>
-</tr>
 </table>
 </center>
 </body>
