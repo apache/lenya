@@ -85,6 +85,7 @@
     <echo>INFO: exclude: sitemap.xmap</echo>
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo>
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo>
+    <echo>INFO: exclude: WEB-INF/log4j.xconf</echo>
     <echo>INFO: exclude: WEB-INF/web.xml</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
     <echo>INFO: exclude: **/pizza*.jar</echo>
@@ -93,6 +94,7 @@
         <exclude name="sitemap.xmap"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
         <exclude name="WEB-INF/logkit.xconf"/>
+        <exclude name="WEB-INF/log4j.xconf"/>
         <exclude name="WEB-INF/web.xml"/>
         <exclude name="**/javac.jar"/>
         <exclude name="**/pizza*.jar"/>
@@ -120,6 +122,10 @@
         >
       <outputproperty name="indent" value="yes"/>
     </xslt>
+
+    <!-- patch log4j.xconf -->
+    <echo>INFO: patching log4j.xconf</echo>
+    <copy file="${src.webapp.dir}/WEB-INF/log4j.xconf" todir="${build.webapp}/WEB-INF"/>
 
     <!-- patch web.xml -->
     <echo>INFO: patching web.xml with XSLT stylesheet</echo>
