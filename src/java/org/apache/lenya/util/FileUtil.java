@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileUtil.java,v 1.16 2004/07/23 12:32:13 roku Exp $  */
+/* $Id: FileUtil.java,v 1.17 2004/07/23 12:32:57 roku Exp $  */
 
 package org.apache.lenya.util;
 
@@ -123,7 +123,7 @@ public class FileUtil {
         } else {
             File[] contents = src.listFiles();
             
-            if(contents == null || contents.length == 0)
+            if(contents == null)
                 return;
             
             dest.mkdirs();
