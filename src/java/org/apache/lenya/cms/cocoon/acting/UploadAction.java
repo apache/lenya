@@ -41,6 +41,7 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.cms.publication.DefaultResourcesManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -140,7 +141,7 @@ public class UploadAction extends AbstractConfigurableAction {
         dublinCoreParams.put("extent", Integer.toString(fileSize));
 
         if (uploadType.equals("asset")) {
-            ResourcesManager resourcesMgr = new ResourcesManager(document);
+            ResourcesManager resourcesMgr = new DefaultResourcesManager(document);
             assetFile = new File(resourcesMgr.getPath(), fileName);
 
             if (!resourcesMgr.getPath().exists()) {
