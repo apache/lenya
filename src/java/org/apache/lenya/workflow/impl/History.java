@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.13 2003/09/02 17:46:15 andreas Exp $
+$Id: History.java,v 1.14 2003/09/02 18:11:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -441,7 +441,7 @@ public abstract class History implements WorkflowListener {
         
         Event event = null;
         String eventId = element.getAttribute(EVENT_ATTRIBUTE);
-        if (eventId != null) {
+        if (eventId != null && !"".equals(eventId)) {
             event = getInstance().getWorkflowImpl().getEvent(eventId);
         }
 
