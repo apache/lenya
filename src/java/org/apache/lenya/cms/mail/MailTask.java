@@ -59,7 +59,7 @@ import org.wyona.cms.task.AbstractTask;
 public class MailTask
     extends AbstractTask {
 
-    static Category log = Category.getInstance(AbstractTask.class);
+    static Category log = Category.getInstance(MailTask.class);
     
     public static final String ELEMENT_TO = "to";
     public static final String ELEMENT_CC = "cc";
