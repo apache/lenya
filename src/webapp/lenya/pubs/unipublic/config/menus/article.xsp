@@ -55,7 +55,7 @@
         <item>-----------------</item>
       </separator>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin/pubid/unipublic</xsp:attribute>Admin&#160;Scheduler</item>            
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/pubid/unipublic</xsp:attribute>Admin&#160;Scheduler</item>            
       </block>
       <separator>
         <item>-----------------</item>
