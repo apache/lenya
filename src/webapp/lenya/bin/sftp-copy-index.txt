@@ -1,0 +1,6 @@
+cd public_html
+ls
+lcd /home/wcms/michi/htdocs
+lls -R
+put index.html
+quit

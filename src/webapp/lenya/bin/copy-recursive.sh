@@ -11,7 +11,8 @@ DESTINATION_DIRECTORY=/home/michiii/backup
 
 browseDirectory(){
   CURRENT_DIRECTORY=$1
-  DEST_DIR=$2
+  SOURCE_DIR=$2
+  DEST_DIR=$3
   ##echo "DEBUG: Browsing Directory: $CURRENT_DIRECTORY"
 
   FILES_AND_DIRS=`ls $CURRENT_DIRECTORY`
@@ -26,16 +27,17 @@ browseDirectory(){
   for FILE_OR_DIR in $FILES_AND_DIRS; do
     ##echo "DEBUG: File or Dir: $FILE_OR_DIR"
     if [ -d $CURRENT_DIRECTORY/$FILE_OR_DIR ]; then
-      echo "Directory: $CURRENT_DIRECTORY/$FILE_OR_DIR"
-      browseDirectory $CURRENT_DIRECTORY/$FILE_OR_DIR $DEST_DIR
+      echo "INFO: Directory: $CURRENT_DIRECTORY/$FILE_OR_DIR"
+
+      createDirectory $SOURCE_DIR $DEST_DIR $CURRENT_DIRECTORY/$FILE_OR_DIR
+
+      browseDirectory $CURRENT_DIRECTORY/$FILE_OR_DIR $SOURCE_DIR $DEST_DIR
       CURRENT_DIRECTORY=`dirname $CURRENT_DIRECTORY`
     else
       if [ -f $CURRENT_DIRECTORY/$FILE_OR_DIR ]; then
-        echo "File: $CURRENT_DIRECTORY/$FILE_OR_DIR"
+        echo "INFO: File: $CURRENT_DIRECTORY/$FILE_OR_DIR"
 
-        cp $CURRENT_DIRECTORY/$FILE_OR_DIR $DEST_DIR/.
-
-        echo $DEST_DIR
+        copyFile $SOURCE_DIR $DEST_DIR $CURRENT_DIRECTORY/$FILE_OR_DIR
       else
        echo "Exception: Neither File nor Directory: $CURRENT_DIRECTORY/$FILE_OR_DIR"
       fi
@@ -43,10 +45,40 @@ browseDirectory(){
   done
   }
 
+createDirectory(){
+  SOURCE_DIR=$1
+  DEST_DIR=$2
+  DIRECTORY=$3
+
+  echo "INFO: Create Directory: $DIRECTORY"
+
+  echo $SOURCE_DIR
+  echo $DEST_DIR
+  }
+
+copyFile(){
+  SOURCE_DIR=$1
+  DEST_DIR=$2
+  FILE=$3
+
+  echo "INFO: Copy file: $FILE"
+
+  echo $SOURCE_DIR
+  echo $DEST_DIR
+  }
+
 
 #########################################################
 # MAIN
 #########################################################
 
+
+#BATCH_FILE=$1
+#if ! [ $BATCH_FILE ];then
+#  echo "Usage: copy-recursive.sh \"SourceDirectory DestinationDirectory\""
+#  exit 0
+#fi
+
+
 CURRENT_DIRECTORY=$SOURCE_DIRECTORY
-browseDirectory $CURRENT_DIRECTORY $DESTINATION_DIRECTORY
+browseDirectory $CURRENT_DIRECTORY $SOURCE_DIRECTORY $DESTINATION_DIRECTORY
