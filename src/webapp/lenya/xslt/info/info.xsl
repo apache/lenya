@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.40 2003/09/09 11:34:40 andreas Exp $
+ $Id: info.xsl,v 1.41 2003/09/10 08:29:14 edith Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -215,7 +215,13 @@
           </xsl:when>
           
           <xsl:when test="position()>1">
-            <xsl:variable name="timeIndex" select="position()"/>
+				<!-- Note, important: The timestamp we're inserting into the anchor
+				     in each row is actually the one from the *previous* version, thus the
+					 position()-1 calculation. This is because in order to roll back
+					 to a given version, we need to reactivate the backup file which was
+					 written *before* that version was checked in.
+				 --> 
+            <xsl:variable name="timeIndex" select="position() -1 "/>
             <tr>
               <td>
                 <xsl:element name="a">
