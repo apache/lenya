@@ -1,5 +1,5 @@
 /*
-$Id: DefaultFilePublisher.java,v 1.19 2003/07/04 17:41:25 egli Exp $
+$Id: DefaultFilePublisher.java,v 1.20 2003/07/07 09:34:10 egli Exp $
 <License>
 
  ============================================================================
@@ -85,6 +85,8 @@ import java.util.StringTokenizer;
  *
  * @author <a href="mailto:andreas.hartmann@lenya.org">Andreas Hartmann</a>
  * @author <a href="mailto:michael.wechner@lenya.org">Michael Wechner</a>
+
+ *  * @deprecated use the publish ant task instead.
  */
 public class DefaultFilePublisher extends AbstractFilePublisher {
     private static Category log = Category.getInstance(DefaultFilePublisher.class);

@@ -1,5 +1,5 @@
 /*
-$Id: AbstractFilePublisher.java,v 1.8 2003/07/04 17:41:25 egli Exp $
+$Id: AbstractFilePublisher.java,v 1.9 2003/07/07 09:34:10 egli Exp $
 <License>
 
  ============================================================================
@@ -64,6 +64,9 @@ import java.io.IOException;
  * Describe class <code>AbstractFilePublisher</code> here.
  *
  * @author <a href="mailto:andreas.hartmann@lenya.com">Andreas Hartmann</a>
+ *
+ * @deprecated use the publish ant task instead.
+ *
  */
 public abstract class AbstractFilePublisher extends AbstractPublisher {
     /**

@@ -87,10 +87,16 @@ import java.util.StringTokenizer;
  * for resources<br/>
  *
  * @author <a href="mailto:christian.egli@lenya.org">Christian Egli</a>
+ * 
+ * @deprecated use the publish ant task instead.
  */
 public class ResourceFilePublisher extends DefaultFilePublisher {
     private static Category log = Category.getInstance(ResourceFilePublisher.class);
 
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.publishing.DefaultFilePublisher#publishResources(java.lang.String, java.lang.String, java.lang.String, java.lang.String[])
+	 */
     protected void publishResources(String publicationPath, String resourcesAuthoringPath,
         String resourcesLivePath, String[] sources) throws PublishingException {
         String absoluteResourceAuthoringPath = publicationPath + resourcesAuthoringPath;
@@ -129,7 +135,7 @@ public class ResourceFilePublisher extends DefaultFilePublisher {
                     } catch (IllegalArgumentException iae) {
                         throw new PublishingException(
                             "Resource not published: Live resources path (" + destinationDir +
-                            ")is not a directory ");
+                            ") is not a directory ");
                     } catch (IOException ioe) {
                         throw new PublishingException("Resource not published: " +
                             resourceSources[j] + " " + destinationDir, ioe);

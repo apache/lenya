@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublisher.java,v 1.10 2003/07/04 17:41:25 egli Exp $
+$Id: AbstractPublisher.java,v 1.11 2003/07/07 09:34:10 egli Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,8 @@ import org.apache.lenya.cms.task.AbstractTask;
  * DOCUMENT ME!
  *
  * @author <a href="mailto:andreas.hartmann@lenya.com">Andreas Hartmann</a>
+ * 
+ * @deprecated use the publish ant task instead.
  */
 public abstract class AbstractPublisher extends AbstractTask implements Publisher {
     /**
