@@ -1,5 +1,5 @@
 /*
-$Id: AssetUploadAction.java,v 1.4 2003/10/13 15:05:17 egli Exp $
+$Id: AssetUploadAction.java,v 1.5 2003/10/15 10:35:27 egli Exp $
 <License>
 
  ============================================================================
@@ -67,25 +67,24 @@ import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.w3c.dom.Element;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
-
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 
 /**
  * The class <code>AssetUploadAction</code> implements an action that allows for
@@ -252,26 +251,30 @@ public class AssetUploadAction extends AbstractConfigurableAction {
      * @exception IOException if an error occurs
      */
     protected void createMetaData(File metaDataFile, HashMap dublinCoreParams)
-        throws IOException {
+        throws
+            TransformerConfigurationException,
+            TransformerException,
+            IOException,
+            ParserConfigurationException {
 
         assert(metaDataFile.getParentFile().exists());
 
-        Document document = DocumentHelper.createDocument();
-        Element root = document.addElement("dc:metadata");
+        NamespaceHelper helper =
+            new NamespaceHelper(
+                "http://purl.org/dc/elements/1.1/",
+                "dc",
+                "metadata");
 
+		Element root = helper.getDocument().getDocumentElement();
+		
         Iterator iter = dublinCoreParams.keySet().iterator();
 
         while (iter.hasNext()) {
             String tagName = (String)iter.next();
             String tagValue = (String)dublinCoreParams.get(tagName);
-            root.addElement(tagName).addText(tagValue);
+            root.appendChild(helper.createElement(tagName, tagValue));
         }
 
-        OutputStream out =
-            new BufferedOutputStream(new FileOutputStream(metaDataFile));
-
-        XMLWriter writer = new XMLWriter(out, OutputFormat.createPrettyPrint());
-        writer.write(document);
-        writer.close();
+        DocumentHelper.writeDocument(helper.getDocument(), metaDataFile);
     }
 }
