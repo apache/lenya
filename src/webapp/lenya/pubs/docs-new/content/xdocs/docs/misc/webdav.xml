@@ -38,10 +38,9 @@ make install
 You need to reconfigure <code>httpd.conf</code>, e.g.:
 <source>
 <![CDATA[
-#
-DAVLockDB /home/michi/build/apache/logs/mod_dav_log
+DAVLockDB /home/michi/build/apache/logs/DavLock
 <Directory "/home/michiii/build/apache/htdocs">
-    DAV On
+Dav On
 ]]>
 </source>
 </p>
@@ -51,7 +50,11 @@ To see the files open "Konqueror" and type <code>webdav://127.0.0.1:8080</code>.
 </p>
 
 <p>
-More info on <code>mod_dav</code> can be found at <link href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</link>.
+More info on <code>mod_dav</code> can be found at
+<ul>
+<li><link href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</link></li>
+<li><link href="http://www.ibiblio.org/pub/Linux/docs/HOWTO/other-formats/html_single/Apache-WebDAV-LDAP-HOWTO.html">Apache and DAV with LDAP and SSL</link></li>
+</ul>
 </p>
 </section>
 
@@ -75,27 +78,22 @@ make install
 You need to reconfigure Apache:
 <source>
 <![CDATA[
-DAVLockDB /home/michi/build/apache2/logs/mod_dav_log
-DavLockDB /usr/local/apache2/var/DavLock
+DAVLockDB /home/michi/build/apache2/logs/DavLock
 <Directory "/home/michiii/build/apache2/htdocs">
 Dav On
-
-<!--
-AuthType Basic
-AuthName DAV
-AuthUserFile user.passwd
-
-<LimitExcept GET OPTIONS>
-require user admin
-</LimitExcept>
--->
 </Directory>
 ]]>
 </source>
 </p>
 
 <p>
-More info on <code>mod_dav</code> can be found at <link href="http://apacheworld.org/ty24/site.chapter13.html">http://apacheworld.org/ty24/site.chapter13.html</link> and <link href="http://httpd.apache.org/docs-2.0/mod/mod_dav.html">http://httpd.apache.org/docs-2.0/mod/mod_dav.html</link>.
+More info on <code>mod_dav</code> can be found at
+
+<ul>
+<li><link href="http://apacheworld.org/ty24/site.chapter13.html">http://apacheworld.org/ty24/site.chapter13.html</link></li>
+<li><link href="http://httpd.apache.org/docs-2.0/mod/mod_dav.html">http://httpd.apache.org/docs-2.0/mod/mod_dav.html</link></li>
+<li><link href="http://www.informit.com/isapi/product_id~%7BA27264B1-CE7A-47A4-8CC5-DA14003AD454%7D/element_id~%7B35D4A98B-60C6-45BE-853C-239742BA0FD9%7D/st~%7BEA04B5C6-6D59-4670-AC88-4982C49B746D%7D/content/articlex.asp">Apache and DAV</link></li>
+</ul>
 </p>
 </section>
 
@@ -121,6 +119,21 @@ It can be put in read-write mode by editing the web application descriptor file 
 <title>Apache Jakarta Slide</title>
 <p>
 Point your WebDAV client to <code>http://127.0.0.1:8080/slide/</code>.
+One needs to configure <code>Domain.xml</code>
+<source>
+<![CDATA[
+<contentstore classname="slidestore.reference.FileContentStore">
+  <parameter name="rootpath">/home/michiii/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/notimes/content/authoring/articles</parameter>
+  ...
+]]>
+</source>
+</p>
+</section>
+
+<!--
+<section>
+<title>Zope</title>
+<p>
 <source>
 <![CDATA[
 ...
@@ -128,6 +141,7 @@ Point your WebDAV client to <code>http://127.0.0.1:8080/slide/</code>.
 </source>
 </p>
 </section>
+-->
 
 </body>
 </document>
