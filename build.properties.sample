@@ -81,3 +81,8 @@ target.reset.excludes=lenya/resources/bxeng/**,lenya/resources/epoz/**
 
 #anteater.home=/usr/local/anteater
 #webtest.home = /usr/local/canoo-webtest
+
+#------------------------------------------------------------------------------------
+# Xopus context name
+
+xopus.context=xopus
