@@ -202,7 +202,7 @@ function user_add_user() {
 	add_user(false);
 }
 
-function validate(userManager, ldap, userId, email, password, confirmPassword, messages) {
+function validate(userManager, ldap, userId, email, password, confirmPassword, messages, ldapId) {
     
 	messages = new Packages.java.util.ArrayList();
 	
@@ -223,8 +223,14 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
         messages.add("Please enter an e-mail address.");
     }
     
-	if (!ldap) {
+	if (ldap) {
+	    var ldapUser = new LDAPUser();
+	    if (!ldapUser.existsUser(ldapId)) {
+	    	messages.add("This LDAP user ID does not exist.);
+	    }
+	}
 	
+	else {
     	password = new Packages.java.lang.String(password);
 	    confirmPassword = new Packages.java.lang.String(confirmPassword);
     
@@ -240,6 +246,7 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
     	    messages.add("The password must contain at least one number.");
 	    }
     }
+    
     
     return messages;
 }
@@ -294,7 +301,7 @@ function add_user(ldap) {
 			password = cocoon.request.get("new-password");
 			confirmPassword = cocoon.request.get("confirm-password");
 			
-			messages = validate(userManager, ldap, userId, email, password, confirmPassword);
+			messages = validate(userManager, ldap, userId, email, password, confirmPassword, ldapId);
 			
 			if (messages.isEmpty()) {
 				var configDir = userManager.getConfigurationDirectory();
