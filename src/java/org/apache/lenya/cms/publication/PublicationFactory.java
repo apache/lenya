@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.15 2003/08/13 17:03:01 andreas Exp $
+$Id: PublicationFactory.java,v 1.16 2003/08/13 18:40:38 andreas Exp $
 <License>
 
  ============================================================================
@@ -197,6 +197,18 @@ public final class PublicationFactory {
     public static Publication getPublication(String webappUrl, File servletContext)
         throws PublicationException {
 
+        String publicationId = getPublicationId(webappUrl);
+
+        Publication publication = getPublication(publicationId, servletContext.getAbsolutePath());
+        return publication;
+    }
+
+    /**
+     * Returns the publication ID of a webapp URL.
+     * @param webappUrl The webapp URL.
+     * @return A string.
+     */
+    public static String getPublicationId(String webappUrl) {
         String url = webappUrl;
         if (url.startsWith("/")) {
             url = url.substring(1);
@@ -208,14 +220,7 @@ public final class PublicationFactory {
         }
 
         String publicationId = url.substring(0, slashIndex);
-
-        Publication publication;
-        try {
-            publication = getPublication(publicationId, servletContext.getCanonicalPath());
-        } catch (IOException e) {
-            throw new PublicationException(e);
-        }
-        return publication;
+        return publicationId;
     }
 
     /**
