@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<NewsML>
+  <NewsItem>
+    <NewsComponent EquivalentsList="no">
+      <ContentItem>
+         <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf">
+           <nitf>
+            <body>
+              <body.head>
+                <dateline>
+                  <story.date millis="1017957600002" norm="15.7.2002"/>
+                </dateline>
+                <hedline>
+                  <hl1>Medizin im Aufbruch: Neues Berufsbild, neues Gesetz, neue Ausbildung</hl1>
+                </hedline>
+                <abstract>
+Das neue Medizinalberufegesetz befindet sich in der Vernehmlassung. Es soll ab 2004 die Rahmenbedingungen der universit&#228;ren Medizinalberufe neu regeln. Folgerichtig war die Aus-, Weiter- und Fortbildung von &#196;rztinnen und &#196;rzten eines der zentralen Themen der diesj&#228;hrigen Schweizerischen Universit&#228;tskonferenz.
+                </abstract>
+              </body.head>
+              </body>
+            </nitf>
+           </DataContent>
+          </ContentItem>
+       </NewsComponent>
+    </NewsItem>
+</NewsML>

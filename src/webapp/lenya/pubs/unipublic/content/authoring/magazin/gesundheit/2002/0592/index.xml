@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<NewsML>
+  <NewsItem>
+    <NewsComponent EquivalentsList="no">
+      <ContentItem>
+         <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf">
+           <nitf>
+            <body>
+              <body.head>
+                <dateline>
+                  <story.date millis="1017957600001" norm="24.6.2002"/>
+                </dateline>
+                <hedline>
+                  <hl1>EPO sch&#252;tzt die Sehzellen des Auges</hl1>
+                </hedline>
+                <abstract>
+Erythropoietin (EPO) ist nicht nur ein Dopingmittel, sondern auch ein ganz regul&#228;r im menschlichen K&#246;rper vorkommendes Bluthormon, das bei Sauerstoffmangel f&#252;r die vermehrte Bildung von roten Blutk&#246;rperchen sorgt. Nun haben Z&#252;rcher Forscher der Augenklinik und der Physiologie in Zusammenarbeit mit Forschern aus Deutschland und den USA eine weitere positive Wirkung des EPO nachgewiesen: Es kann im Auge den sch&#228;digenden Abbauprozess der Netzhaut nach Lichtreiz stoppen.
+                </abstract>
+              </body.head>
+              </body>
+            </nitf>
+           </DataContent>
+          </ContentItem>
+       </NewsComponent>
+    </NewsItem>
+</NewsML>
