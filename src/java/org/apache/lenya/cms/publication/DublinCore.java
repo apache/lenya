@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.16 2003/08/15 08:31:18 andreas Exp $
+$Id: DublinCore.java,v 1.17 2003/08/21 17:56:10 gregor Exp $
 <License>
 
  ============================================================================
@@ -212,8 +212,8 @@ public class DublinCore {
         this.infofile =
             cmsdocument.getPublication().getPathMapper().getFile(
                 cmsdocument.getPublication(),
-                Publication.AUTHORING_AREA,
-                cmsdocument.getId(),
+		        cmsdocument.getArea(),
+		        cmsdocument.getId(),
                 cmsdocument.getLanguage());
     }
 
