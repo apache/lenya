@@ -28,5 +28,19 @@ We used this example for the structure of the xml.
 <p>
 <a href="http://www.newsml.org/NewsMLweb/webpage.xml">NewsML</a>, UPML (Unipublic Markup Language)
 </p>
+<h3>Publish</h3>
+<p>When we publish an article, it is automatically inserted in the headlines of the frontpage in authoring. </br>
+ The article receives a FirstPublishDate when it is published for the firs time. If it is published many times, its RevisionDate will be updated.
+</p>
+<h4>Implementation</h4>
+<ul>
+<li>Java class
+ <ul>
+  <li>The action <code>org.wyona.cms.cocoon.acting.PublisherAction</code> must be overwritten for this special case: <code>ch.unizh.unipublic.wyona.cms.ArticlePublisherAction</code><br/>
+Rem: temporarily its only a copy, because we must go ahead !!!. We should defined a good API. Publish must be indepedent of cocoon. 
+  </li>
+ </ul>
+</li>
+</ul>
 </body>
 </html>
