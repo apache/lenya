@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: approval-reject.xsl,v 1.2 2003/07/23 14:34:59 gregor Exp $
+ $Id: approval-reject.xsl,v 1.3 2004/02/02 11:22:01 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -94,7 +94,7 @@
 </xsl:template>
 
 <xsl:template match="lenya-info:assets">
-   <xsl:foreach select="lenya-info:asset>
+   <xsl:foreach select="lenya-info:asset">
       <tr><td><xsl:valueof select="."/></td><td><a href="">delete</a></td></tr>
    </xsl:foreach>
 </xsl:template>
