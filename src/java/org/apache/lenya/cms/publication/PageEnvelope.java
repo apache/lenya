@@ -59,6 +59,9 @@ public class PageEnvelope {
      */
     public PageEnvelope(Publication publication, Request request)
         throws PageEnvelopeException, ProcessingException, SAXException, IOException {
+            
+        assert publication != null;
+        assert request != null;
 
         // compute area
         String requestURI = request.getRequestURI();
