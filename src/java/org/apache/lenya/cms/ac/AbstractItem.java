@@ -1,5 +1,5 @@
 /*
-$Id: AbstractItem.java,v 1.2 2003/07/07 10:05:09 andreas Exp $
+$Id: AbstractItem.java,v 1.3 2003/08/07 12:14:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -140,7 +140,7 @@ public abstract class AbstractItem implements Item {
      * @param id The string to test.
      * @return A boolean value.
      */
-    public boolean isValidId(String id) {
+    public static boolean isValidId(String id) {
         return id != null && id.matches("\\w+");
     }
     

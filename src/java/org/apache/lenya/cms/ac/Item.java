@@ -1,5 +1,5 @@
 /*
-$Id: Item.java,v 1.4 2003/07/23 13:21:16 gregor Exp $
+$Id: Item.java,v 1.5 2003/08/07 12:14:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -96,13 +96,6 @@ public interface Item {
      * @param description A string.
      */
     void setDescription(String description);
-    
-    /**
-     * Checks if a string is a valid ID.
-     * @param id The string to test.
-     * @return A boolean value.
-     */
-    boolean isValidId(String id);
     
     /**
      * Sets the configuration directory of this item.
