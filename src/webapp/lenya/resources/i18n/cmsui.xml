@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.39 2004/02/25 20:42:39 roku Exp $
+   $Id: cmsui.xml,v 1.40 2004/03/02 16:02:33 egli Exp $
    
 -->
 
@@ -134,7 +134,7 @@
   <message key="really-delete?">Really delete {0}?</message>
   <message key="Do you really want to delete the trash ?">Do you really want to delete the trash ?</message>
   <message key="delete-object">Delete {0}</message>
-  <message key="delete-object?">Do you really want to delete {0} ?</message>
+  <message key="delete-object?">Do you really want to delete {0}?</message>
   <message key="Passwd">Passwd</message>
   <message key="Switch User">Switch User</message>
   <message key="Delete Trash">Delete Trash</message>
@@ -226,7 +226,7 @@ c
       <!-- Cut document -->
   <message key="Cut Document">Cut Document</message>
   <message key="cut-doc">Cut document {0}</message>
-  <message key="cut-doc-to-clip?">Do you want to cut the document {0}and move it to the clipboard? You can paste the document later at the location of your choosing.</message>
+  <message key="cut-doc-to-clip?">Do you want to cut the document {0} and move it to the clipboard? You can paste the document later at the location of your choosing.</message>
   
   <!-- Info workflow  --> 
    <message key="Value">Value</message>
