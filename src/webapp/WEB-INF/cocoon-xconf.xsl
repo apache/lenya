@@ -15,12 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: cocoon-xconf.xsl,v 1.47 2004/08/09 10:28:38 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:param name="forrest-publication"/>
 <xsl:param name="hsqldb-server-port"/>
 <xsl:param name="xopus-context"/>
 
@@ -51,10 +50,6 @@
     <component-instance name="defaults" class="org.apache.cocoon.components.modules.input.DefaultsMetaModule">
       <values>
         <skin>lenya-site</skin>
-        <!--
-        <skin-docs>lenya-site</skin-docs>
-        <skin>forrest-site</skin>
-        -->
       </values>
     </component-instance>
 
@@ -150,12 +145,6 @@
       |
       |     <parameter name="verbosity" value="2"/>
       +-->
-  <entity-resolver class="org.apache.cocoon.components.resolver.ResolverImpl" logger="core.resolver">
-    <parameter name="catalog" value="{$forrest-publication}/resources/schema/catalog.xcat"/>
-    <parameter name="verbosity" value="1"/>
-  </entity-resolver>
-
-  <xsl:apply-templates select="*[local-name() != 'entity-resolver']"/>
 
   <accreditable-managers>
     <component-instance logger="lenya.ac.accreditablemanager"

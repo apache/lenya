@@ -67,12 +67,6 @@
     <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn">
     </copyPubs>
 
-    <echo>INFO: Patch documentation ${src.documentation.dir}/content to ${build.webapp}/lenya/pubs/docs-new/content</echo>
-    <copy todir="${build.webapp}/lenya/pubs/docs-new/content">
-      <fileset dir="${src.documentation.dir}/content">
-      </fileset>
-    </copy>
-
     <!-- Patch cocoon.xconf -->
     <echo>INFO: Patch cocoon.xconf</echo>
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"

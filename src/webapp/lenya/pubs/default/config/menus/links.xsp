@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: links.xsp,v 1.1 2004/08/17 21:56:15 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
     language="java" 
@@ -94,7 +94,7 @@
 
       <menu i18n:attr="name" name="Help" label="Debug">
 	<block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute><i18n:text>System&#160;Documentation</i18n:text></item>
+	  <item><xsp:attribute name="href">http://cocoon.apache.org/lenya/docs/index.html</xsp:attribute><i18n:text>System&#160;Documentation</i18n:text></item>
 	  <item href="http://wiki.apache.org/cocoon-lenya/"><i18n:text>Wiki</i18n:text></item>
 	</block>
   <block>
