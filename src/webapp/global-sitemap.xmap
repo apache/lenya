@@ -644,7 +644,9 @@
           <map:transform src="lenya/pubs/{../1}/lenya/xslt/search/search-and-results.xsl"/>
           <map:serialize type="html"/>
         </map:act>
-        <map:transform src="lenya/xslt/search/search-and-results.xsl"/>
+        <map:transform src="lenya/xslt/search/search-and-results.xsl">
+          <map:parameter name="area" value="{2}"/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">

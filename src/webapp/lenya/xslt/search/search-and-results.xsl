@@ -8,6 +8,8 @@
 <xsl:variable name="uriName">go</xsl:variable>
 -->
 
+<xsl:param name="area" value="live"/>
+
 <xsl:template match="search-and-results">
 <html>
 <head>
@@ -15,7 +17,7 @@
   <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
 </head>
 <body>
-<h1>Lenya CMS Search Interface -- powered by Lucene</h1>
+<h1>Search with Lucene (Area: <xsl:value-of select="$area"/>)</h1>
   <form>
 <table bgcolor="#dddddd">
 <!--

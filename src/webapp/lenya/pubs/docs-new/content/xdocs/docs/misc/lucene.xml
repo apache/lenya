@@ -18,15 +18,15 @@
 <p>URL:</p>
 <source>
 <![CDATA[
-/lenya/$PUB_ID/search/lucene
+/lenya/$PUB_ID/search-$AREA/lucene
 ]]>
 </source>
 
 <p>Indices and Excerpts:</p>
 <source>
 <![CDATA[
-src/webapp/lenya/pubs/$PUB_ID/work/search/index/index
-src/webapp/lenya/pubs/$PUB_ID/work/search/htdocs_dump
+src/webapp/lenya/pubs/$PUB_ID/work/search/index/$AREA/index
+src/webapp/lenya/pubs/$PUB_ID/work/search/htdocs_dump/$AREA
 ]]>
 </source>
 
@@ -44,6 +44,13 @@ src/webapp/global-sitemap.xmap
 <source>
 <![CDATA[
 src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
+]]>
+</source>
+
+<p>URL:</p>
+<source>
+<![CDATA[
+/lenya/$PUB_ID/osearch-$AREA/lucene
 ]]>
 </source>
 </section>
