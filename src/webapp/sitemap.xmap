@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.25 2002/11/20 21:46:49 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.26 2002/12/18 23:35:19 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -105,66 +105,20 @@
  </map:components>
 
  <map:pipelines>
-   <map:pipeline>
+
+
 <!-- Welcome to Wyona -->
+   <map:pipeline>
      <map:match pattern="">
-       <map:read src="resources/html/index.html" mime-type="text/html"/>
+       <map:redirect-to uri="index.html"/>
      </map:match>
      <map:match pattern="index.html">
        <map:read src="resources/html/index.html" mime-type="text/html"/>
      </map:match>
+   </map:pipeline>
 
-<!-- The Information Architect -->
-     <map:match pattern="tia/**">
-       <map:mount uri-prefix="tia" src="wyona/cms/pubs/tia/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
 
-<!-- New Wyona Times -->
-     <map:match pattern="nwt/**">
-       <map:mount uri-prefix="nwt" src="wyona/cms/pubs/nwt/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- Documentation -->
-     <map:match pattern="docs/introduction.html">
-       <map:read src="wyona/cms/pubs/wyona-cms-docs/resources/publication/html/introduction.html"/>
-     </map:match>
-     <map:match pattern="docs/authoring/**">
-       <map:mount uri-prefix="docs/authoring" src="wyona/cms/pubs/wyona-cms-docs/authoring-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-     <map:match pattern="docs/**">
-       <map:mount uri-prefix="docs" src="wyona/cms/pubs/wyona-cms-docs/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- Slides -->
-     <map:match pattern="slides/**">
-       <map:mount uri-prefix="slides" src="wyona/cms/pubs/slides/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- OSCOM -->
-     <map:match pattern="oscom/**">
-       <map:mount uri-prefix="oscom" src="wyona/cms/pubs/oscom/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- Discussion Forum -->
-     <map:match pattern="forum/**">
-       <map:mount uri-prefix="forum" src="wyona/cms/pubs/forum/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- Unipublic -->
-     <map:match pattern="unipublic/**">
-       <map:mount uri-prefix="unipublic" src="wyona/cms/pubs/unipublic/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- Materials Science -->
-     <map:match pattern="ethz-mat/**">
-       <map:mount uri-prefix="ethz-mat" src="wyona/cms/pubs/ethz-mat/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- wyona.org -->
-     <map:match pattern="wyona.org/**">
-       <map:mount uri-prefix="wyona.org" src="wyona/cms/pubs/wyona.org/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
+   <map:pipeline>
 <!-- Search with Lucene -->
      <map:match pattern="lucene/**">
        <map:mount uri-prefix="lucene" src="wyona/cms/lucene.xmap" check-reload="true" reload-method="synchron"/>
@@ -179,27 +133,28 @@
      <map:match pattern="bitfluxeditor/**">
        <map:mount uri-prefix="bitfluxeditor" src="wyona/cms/bitfluxeditor.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
+   </map:pipeline>
 
-<!-- xopus.org -->
-<!--
-     <map:match pattern="xopus.org/**">
-       <map:mount uri-prefix="xopus.org" src="wyona/cms/pubs/xopus.org/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
--->
 
-<!-- Scratchpad -->
-     <map:match pattern="scratchpad/**">
-       <map:mount uri-prefix="scratchpad" src="wyona/cms/pubs/scratchpad/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+   <map:pipeline>
+<!-- Documentation -->
+     <map:match pattern="docs/**">
+       <map:mount uri-prefix="docs" src="wyona/cms/pubs/wyona-cms-docs/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
 
-<!-- Journal of Pattern Formation -->
-<!--
-     <map:match pattern="jpf/**">
-       <map:mount uri-prefix="jpf" src="wyona/cms/pubs/jpf/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+<!-- Materials Science -->
+     <map:match pattern="ethz-mat/**">
+       <map:mount uri-prefix="ethz-mat" src="wyona/cms/pubs/ethz-mat/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
--->
 
-<!-- Original Cocoon Sitemap (without SVG and FOP) -->
+<!-- Publications -->
+     <map:match pattern="*/**">
+       <map:mount uri-prefix="{1}" src="wyona/cms/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+<!-- Original Cocoon Sitemap (without SVG and FOP!) -->
      <map:match pattern="**">
        <map:mount uri-prefix="" src="cocoon.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
