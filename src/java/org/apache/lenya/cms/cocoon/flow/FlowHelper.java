@@ -15,11 +15,10 @@
  *
  */
 
-/* $Id: FlowHelper.java,v 1.15 2004/08/27 22:32:32 roku Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.flow;
 
-import java.io.FileOutputStream;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -27,8 +26,6 @@ import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.cocoon.util.BufferedOutputStream;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
@@ -176,33 +173,6 @@ public class FlowHelper {
         }
 
         return value;
-    }
-
-    /**
-     * Saves the result of a pipeline call to the document associated with the current PageEnvelope.
-     * @param cocoon The Cocoon Object Flow Model
-     * @param pipeline The name of the pipeline to call. 
-     * Do not use any protocols in the name, since "cocoon:/" is prepended by default and
-     * there is no way around it.
-     * @throws Exception If an error occurs during save.
-     */
-    public void savePipelineToDocument(FOM_Cocoon cocoon, String pipeline) 
-    throws Exception {
-        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        BufferedOutputStream docOutputStream = null;
-        try {
-            cocoon.jsFunction_processPipelineTo(pipeline, null, bos);
-            docOutputStream = new BufferedOutputStream(new FileOutputStream(getPageEnvelope(cocoon).getDocument().getFile()));
-            docOutputStream.write(bos.toByteArray());
-        } finally {
-            if(docOutputStream != null) {
-                docOutputStream.flush();
-                docOutputStream.close();
-            }
-            if(bos != null) {
-              bos.close(); // Not needed for ByteArrayOutputStream, but it cleaner this way.    
-            }
-        }
     }
     
     /**
