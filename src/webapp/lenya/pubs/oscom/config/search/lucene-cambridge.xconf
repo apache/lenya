@@ -5,7 +5,6 @@
 <!--
   <update-index type="incremental"/>
 -->
-
   <index-dir src="../resources/search/lucene/index-cambridge"/>
-  <htdocs-dump-dir src="/home/michiii/oscom_htdocs_dump"/>
+  <htdocs-dump-dir src="/home/michiii/oscom_htdocs_dump/www.oscom.org/Conferences/Cambridge"/>
 </lucene>

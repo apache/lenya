@@ -177,6 +177,13 @@ content="text/html; charset=iso-latin-1" />
 
 <tr>
 <td valign="top" width="100%" bgcolor="{$navbarcolor}" class="topnavi">
+
+<xsl:apply-templates select="oscom_navigation" mode="top"/>
+<!--
+<xsl:apply-templates select="oscom_navigation"/>
+-->
+
+<!--
 <table border="0" cellpadding="0" cellspacing="0">
 <tbody>
 <tr>
@@ -241,6 +248,9 @@ content="text/html; charset=iso-latin-1" />
 </tr>
 </tbody>
 </table>
+-->
+
+
 </td>
 </tr>
 
@@ -324,6 +334,64 @@ width="24" height="16" border="0" /></td>
 </body>
 </html>
 </xsl:template>
+
+
+
+
+<xsl:template match="oscom_navigation" mode="top">
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<xsl:apply-templates mode="top"/>
+</tr>
+</tbody>
+</table>
+</xsl:template>
+
+
+
+<xsl:template match="leaf" mode="top">
+<td height="21" class="topnavigation" align="left">
+  <a href="{@href}" class="navigationwhite">
+    <xsl:choose>
+      <xsl:when test="@selected">
+        <span class="naviselected"><xsl:value-of select="@name"/></span>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="@name"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </a>
+</td>
+<td height="21" width="19" align="left">
+  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+</td>
+</xsl:template>
+
+
+
+<xsl:template match="branch" mode="top">
+<td height="21" class="topnavigation" align="left">
+  <a href="{@href}" class="navigationwhite">
+    <xsl:choose>
+      <xsl:when test="@selected">
+        <span class="naviselected"><xsl:value-of select="@name"/></span>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="@name"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </a>
+</td>
+<td height="21" width="19" align="left">
+  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+</td>
+</xsl:template>
+
+
+
+
+
 
 <!--
 <xsl:template name="html-title">

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.17 2003/03/18 17:31:35 edith Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.18 2003/03/20 00:07:29 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -40,6 +40,9 @@
     <map:view name="first" from-position="first">
       <map:serialize type="xml"/>
     </map:view>
+    <map:view name="xml" from-label="xml">
+      <map:serialize type="xml"/>
+    </map:view>
   </map:views>
 
   <map:resources>
@@ -63,7 +66,7 @@
           <map:parameter name="max-hits-per-page" value="5"/>
           <map:parameter name="max-pages" value="7"/>
 
-          <map:parameter name="number-of-pubs" value="4"/>
+          <map:parameter name="number-of-pubs" value="5"/>
 
           <map:parameter name="pub0-id" value="all"/>
           <map:parameter name="pub0-name" value="All OSCOM"/>
@@ -93,6 +96,12 @@
           <map:parameter name="pub3-excerpt-dir" value="resources/search/lucene/htdocs_dump/lists.oscom.org"/>
           <map:parameter name="pub3-prefix" value="http://lists.oscom.org"/>
 
+          <map:parameter name="pub4-id" value="cambridge"/>
+          <map:parameter name="pub4-name" value="Conference at Cambridge"/>
+          <map:parameter name="pub4-index-dir" value="resources/search/lucene/index-cambridge"/>
+          <map:parameter name="pub4-excerpt-dir" value="/home/michiii/oscom_htdocs_dump/www.oscom.org/Conferences/Cambridge"/>
+          <map:parameter name="pub4-prefix" value="http://www.oscom.org/Conferences/Cambridge"/>
+
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>
@@ -100,7 +109,7 @@
 
     <map:pipeline>
       <map:match pattern="search-oscom/lucene*">
-        <map:aggregate element="oscom">
+        <map:aggregate element="oscom" label="xml">
           <map:part src="content/live/navigation.xml"/>
           <map:part src="cocoon:/search-oscom/lucene.xml{1}"/>
         </map:aggregate>

@@ -14,7 +14,7 @@
   </xsl:for-each>
 -->
 
-  <navigation xlink:href="navigation.xml" xlink:show="embed"/>
+  <navigation xlink:href="navigation-cms-matrix.xml" xlink:show="embed"/>
   <xsl:for-each select="dir:file">
     <project xlink:href="matrix/{@name}" xlink:show="embed"/>
   </xsl:for-each>
