@@ -328,6 +328,12 @@
    <map:selector logger="sitemap.selector.host" name="host" src="org.apache.cocoon.selection.HostSelector"/>
    <map:selector logger="sitemap.selector.resource-exists" name="resource-exists" src="org.apache.cocoon.selection.ResourceExistsSelector"/>
   
+    <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
+      <exception  name="sax" class="org.xml.sax.SAXException" unroll="true"/>
+      <exception  class="org.apache.cocoon.ProcessingException" unroll="true"/>
+<!--      <exception name="resourcenotfound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>-->
+      <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/> 
+    </map:selector>
 
 <!-- FIXME: Cocoon M1 -->
 <!--
