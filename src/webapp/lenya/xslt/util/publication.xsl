@@ -72,7 +72,7 @@ This&#160;Publication
 </xsl:template>
 
 <xsl:template match="lenya:test">
-  <li><xsl:apply-templates/></li>
+  <li><xsl:copy-of select="."/></li>
 </xsl:template>
 
 </xsl:stylesheet>
