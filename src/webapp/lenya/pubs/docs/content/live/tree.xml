@@ -1,112 +1,115 @@
 <?xml version="1.0"?>
 <tree>
-	<branch relURI="" doctype="ToC" menuName="Table of Contents">
-		<!-- Basic Concepts -->
-		<!--
+  <branch relURI="" doctype="ToC" menuName="Table of Contents">
+    <!-- Basic Concepts -->
+    <!--
     <branch relURI="bas-guide" doctype="Guide" menuName="Lenya Basics">
-      <branch relURI="" doctype="XDoc" menuName="Lenya Concepts">
-        <leaf relURI="bas-roles.html" doctype="XDoc" menuName="Roles of the Lenya CMS"/>
-        <leaf relURI="bas-config.html" doctype="XDoc" menuName="Configuration and Customization"/>
-        <leaf relURI="bas-edit.html" doctype="XDoc" menuName="Making Content editable"/>
+    <branch relURI="" doctype="XDoc" menuName="Lenya Concepts">
+    <leaf relURI="bas-roles.html" doctype="XDoc" menuName="Roles of the Lenya CMS"/>
+    <leaf relURI="bas-config.html" doctype="XDoc" menuName="Configuration and Customization"/>
+    <leaf relURI="bas-edit.html" doctype="XDoc" menuName="Making Content editable"/>
+  </branch>
+    <branch relURI="" doctype="XDoc" menuName="Lenya Implementation">
+    <leaf relURI="bas-dir.html" doctype="XDoc" menuName="Directory Structure"/>
+  </branch>
+  </branch>
+    -->
+
+    <!-- User's Guide -->
+    <branch relURI="user-guide" doctype="Guide" menuName="User's Guide">
+      <branch relURI="usr-authorization.html" doctype="XDoc" menuName="Authorization and Authentication">
+	<leaf relURI="usr-authorization.html#login" doctype="XDoc" menuName="Logging in"/>
+	<leaf relURI="usr-authorization.html#switch" doctype="XDoc" menuName="Switching Users"/>
+	<leaf relURI="usr-authorization.html#logout" doctype="XDoc" menuName="Logging Out"/>
+	<leaf relURI="usr-authorization.html#chgpwd" doctype="XDoc" menuName="Changing Password"/>
       </branch>
-      <branch relURI="" doctype="XDoc" menuName="Lenya Implementation">
-        <leaf relURI="bas-dir.html" doctype="XDoc" menuName="Directory Structure"/>
+      <branch relURI="authoring" doctype="Empty" menuName="Authoring">
+	<branch relURI="usr-create.html" doctype="XDoc" menuName="Creating Content">
+	  <leaf relURI="usr-create.html#pc" doctype="XDoc" menuName="Parent Child"/>
+	  <leaf relURI="usr-create.html#dc" doctype="XDoc" menuName="Document Collection"/>
+	</branch>
+	<branch relURI="usr-import.html" doctype="XDoc" menuName="Importing Content">
+	  <leaf relURI="" doctype="Empty" menuName="HTTP Upload"/>
+	  <leaf relURI="" doctype="Empty" menuName="Text"/>
+	  <leaf relURI="" doctype="Empty" menuName="Multimedia (Image, Audio, Video)"/>
+	</branch>
+	<branch relURI="edit" doctype="Empty" menuName="Editing Content">
+	  <branch relURI="usr-edit-html.html" doctype="XDoc" menuName="Lenya's HTML Form Editor"/>
+	  <branch relURI="usr-edit-xopus.html" doctype="XDoc" menuName="Q42's Xopus (IE5.5 or later)"/>
+	  <!--
+          <branch relURI="usr-edit-bitflux.html" doctype="XDoc" menuName="Bitflux Editor"/>
+	  -->
+	  <branch relURI="bitflux.html" doctype="XDoc" menuName="Bitflux Editor"/>
+	  <branch relURI="bitflux-howto.html" doctype="XDoc" menuName="Bitflux Editor How-To"/>
+	  <branch relURI="usr-edit-eonpro.html" doctype="XDoc" menuName="RealObjects edit-on Pro"/>
+	</branch>
+	<branch relURI="usr-publish.html" doctype="Empty" menuName="Publishing Content">
+        </branch>
+      </branch>
+      <branch relURI="usr-glitches.html" doctype="XDoc" menuName="Strange Effects">
+	<leaf relURI="usr-glitches.html#redirect" doctype="XDoc" menuName="Redirect Problems with IE5 on Mac"/>
       </branch>
     </branch>
--->
-		<!-- User's Guide -->
-		<branch relURI="user-guide" doctype="Guide" menuName="User's Guide">
-			<branch relURI="usr-glitches.html" doctype="XDoc" menuName="Strange Effects">
-				<leaf relURI="usr-glitches.html#redirect" doctype="XDoc" menuName="Redirect Problems with IE5 on Mac"/>
-			</branch>
-			<branch relURI="usr-authorization.html" doctype="XDoc" menuName="Authorization and Authentication">
-				<leaf relURI="usr-authorization.html#login" doctype="XDoc" menuName="Logging in"/>
-				<leaf relURI="usr-authorization.html#switch" doctype="XDoc" menuName="Switching Users"/>
-				<leaf relURI="usr-authorization.html#logout" doctype="XDoc" menuName="Logging Out"/>
-				<leaf relURI="usr-authorization.html#chgpwd" doctype="XDoc" menuName="Changing Password"/>
-			</branch>
-			<branch relURI="authoring" doctype="Empty" menuName="Authoring">
-				<branch relURI="usr-create.html" doctype="XDoc" menuName="Creating Content">
-					<leaf relURI="usr-create.html#pc" doctype="XDoc" menuName="Parent Child"/>
-					<leaf relURI="usr-create.html#dc" doctype="XDoc" menuName="Document Collection"/>
-				</branch>
-				<branch relURI="usr-import.html" doctype="XDoc" menuName="Importing Content">
-					<leaf relURI="" doctype="Empty" menuName="HTTP Upload"/>
-					<leaf relURI="" doctype="Empty" menuName="Text"/>
-					<leaf relURI="" doctype="Empty" menuName="Multimedia (Image, Audio, Video)"/>
-				</branch>
-				<branch relURI="edit" doctype="Empty" menuName="Editing Content">
-					<branch relURI="usr-edit-html.html" doctype="XDoc" menuName="Lenya's HTML Form Editor"/>
-					<branch relURI="usr-edit-xopus.html" doctype="XDoc" menuName="Q42's Xopus (IE5.5 or later)"/>
-					<!--
-          <branch relURI="usr-edit-bitflux.html" doctype="XDoc" menuName="Bitflux Editor"/>
--->
-					<branch relURI="bitflux.html" doctype="XDoc" menuName="Bitflux Editor"/>
-					<branch relURI="bitflux-howto.html" doctype="XDoc" menuName="Bitflux Editor How-To"/>
-					<branch relURI="usr-edit-eonpro.html" doctype="XDoc" menuName="RealObjects edit-on Pro"/>
-				</branch>
-				<branch relURI="usr-publish.html" doctype="Empty" menuName="Publishing Content">
-        </branch>
-			</branch>
-		</branch>
-		<!-- Administrator's Guide -->
-		<branch relURI="administrator-guide" doctype="Guide" menuName="Administrator's Guide">
-			<branch relURI="adm-authorization.html" doctype="XDoc" menuName="Authorization and Authentication">
-				<leaf relURI="" doctype="Empty" menuName="Creating and Editing Users (Browser Interface)"/>
-				<leaf relURI="adm-authorization.html#create_edit_user" doctype="XDoc" menuName="Creating and Editing Users (Command Line)"/>
-				<leaf relURI="" doctype="Empty" menuName="Creating and Editing Authorization Policies (Browser Interface)"/>
-				<leaf relURI="adm-authorization.html#edit_policies" doctype="XDoc" menuName="Creating and Editing Authorization Policies (Command Line)"/>
-				<leaf relURI="" doctype="Empty" menuName="Creating and Editing Groups/Roles"/>
-			</branch>
-		</branch>
+    
+    <!-- Administrator's Guide -->
+    <branch relURI="administrator-guide" doctype="Guide" menuName="Administrator's Guide">
+      <branch relURI="adm-authorization.html" doctype="XDoc" menuName="Authorization and Authentication">
+	<leaf relURI="" doctype="Empty" menuName="Creating and Editing Users (Browser Interface)"/>
+	<leaf relURI="adm-authorization.html#create_edit_user" doctype="XDoc" menuName="Creating and Editing Users (Command Line)"/>
+	<leaf relURI="" doctype="Empty" menuName="Creating and Editing Authorization Policies (Browser Interface)"/>
+	<leaf relURI="adm-authorization.html#edit_policies" doctype="XDoc" menuName="Creating and Editing Authorization Policies (Command Line)"/>
+	<leaf relURI="" doctype="Empty" menuName="Creating and Editing Groups/Roles"/>
+      </branch>
+    </branch>
+    
+    
+    <!-- Integrator's Guide -->
+    <branch relURI="integrator-guide" doctype="Guide" menuName="Integrator's Guide">
+      <!-- leaf relURI="/lenya/docs/tutorial/index.html" doctype="Shared" menuName="Creating a new Publication" /-->
+      <leaf relURI="int-create-pub.html" doctype="XDoc" menuName="Creating a new Publication"/>
+      <branch relURI="document" doctype="Empty" menuName="Pages and Documents">
+	<leaf relURI="" doctype="Empty" menuName="The definition of a Page"/>
+	<leaf relURI="" doctype="Empty" menuName="The definition of a Document"/>
+	<leaf relURI="" doctype="Empty" menuName="The various parts of a Page"/>
+	<leaf relURI="parent-child-creator.html" doctype="XDoc" menuName="Creating a new Document"/>
+	<leaf relURI="int-filesystem-publisher.html" doctype="XDoc" menuName="Making a Document publishable"/>
+	<branch relURI="edit" doctype="Empty" menuName="Making a Document editable">
+	  <leaf relURI="int-html-form-editor.html" doctype="XDoc" menuName="With the HTML Form Editor"/>
+	  <leaf relURI="xopus.html#hookers" doctype="XDoc" menuName="With Q42's Xopus"/>
+	</branch>
+      </branch>
+      <branch relURI="" doctype="Empty" menuName="Authorization and Authentication">
+	<leaf relURI="" doctype="Empty" menuName="Customizing Login- and Logout-Screen"/>
+	<leaf relURI="" doctype="Empty" menuName="Replace Default by Alternative Authenticator"/>
+	<leaf relURI="" doctype="Empty" menuName="Replace Default by Alternative Authorizer"/>
+      </branch>
+      <branch relURI="" doctype="Empty" menuName="Menus">
+	<leaf relURI="" doctype="Empty" menuName="Non-Collaborative (Authoring, Live)"/>
+	<leaf relURI="" doctype="Empty" menuName="Collaborative (Authoring, Staging, Live)"/>
+      </branch>
+      <branch relURI="" doctype="Empty" menuName="Server Architecture">
+	<leaf relURI="" doctype="Empty" menuName="One Server System (Authoring and Live on one machine)"/>
+	<leaf relURI="" doctype="Empty" menuName="Two Server System (One Authoring and one Live)"/>
+	<leaf relURI="" doctype="Empty" menuName="Three Server System (One Authoring and two or more Live)"/>
+	<leaf relURI="" doctype="Empty" menuName="Four Server System (Two Authoring and two or more Live)"/>
+      </branch>
+      <branch relURI="int-virtual-server.html" doctype="Empty" menuName="Virtual Servers (mandantenfaehig)">
+	<leaf relURI="int-proxy-apache.html" doctype="XDoc" menuName="Apache as Proxy"/>
+      </branch>
+      <branch relURI="" doctype="Empty" menuName="Change Management"/>
+      <branch relURI="int-performance.html" doctype="XDoc" menuName="Performance"/>
+      <branch relURI="" doctype="Empty" menuName="Scalability"/>
+      <leaf URL="http://developer.netscape.com/docs/manuals/browser/sidebar/" doctype="HTML" menuName="My sidebar"/>
+      <leaf relURI="int-hsqldb.html" doctype="XDoc" menuName="HSQL Database"/>
+      <branch relURI="" doctype="Empty" menuName="Servlet Engines">
+	<leaf relURI="int-tomcat.html" doctype="XDoc" menuName="Tomcat"/>
+      </branch>
+      <branch relURI="" doctype="Empty" menuName="Java Virtual Machine">
+	<leaf relURI="encoding.html" doctype="XDoc" menuName="Encoding"/>
+      </branch>
+    </branch>
 
-
-		<!-- Integrator's Guide -->
-		<branch relURI="integrator-guide" doctype="Guide" menuName="Integrator's Guide">
-			<!-- leaf relURI="/lenya/docs/tutorial/index.html" doctype="Shared" menuName="Creating a new Publication" /-->
-			<leaf relURI="int-create-pub.html" doctype="XDoc" menuName="Creating a new Publication"/>
-			<branch relURI="document" doctype="Empty" menuName="Pages and Documents">
-				<leaf relURI="" doctype="Empty" menuName="The definition of a Page"/>
-				<leaf relURI="" doctype="Empty" menuName="The definition of a Document"/>
-				<leaf relURI="" doctype="Empty" menuName="The various parts of a Page"/>
-				<leaf relURI="parent-child-creator.html" doctype="XDoc" menuName="Creating a new Document"/>
-				<leaf relURI="int-filesystem-publisher.html" doctype="XDoc" menuName="Making a Document publishable"/>
-				<branch relURI="edit" doctype="Empty" menuName="Making a Document editable">
-					<leaf relURI="int-html-form-editor.html" doctype="XDoc" menuName="With the HTML Form Editor"/>
-					<leaf relURI="xopus.html#hookers" doctype="XDoc" menuName="With Q42's Xopus"/>
-				</branch>
-			</branch>
-			<branch relURI="" doctype="Empty" menuName="Authorization and Authentication">
-				<leaf relURI="" doctype="Empty" menuName="Customizing Login- and Logout-Screen"/>
-				<leaf relURI="" doctype="Empty" menuName="Replace Default by Alternative Authenticator"/>
-				<leaf relURI="" doctype="Empty" menuName="Replace Default by Alternative Authorizer"/>
-			</branch>
-			<branch relURI="" doctype="Empty" menuName="Menus">
-				<leaf relURI="" doctype="Empty" menuName="Non-Collaborative (Authoring, Live)"/>
-				<leaf relURI="" doctype="Empty" menuName="Collaborative (Authoring, Staging, Live)"/>
-			</branch>
-			<branch relURI="" doctype="Empty" menuName="Server Architecture">
-				<leaf relURI="" doctype="Empty" menuName="One Server System (Authoring and Live on one machine)"/>
-				<leaf relURI="" doctype="Empty" menuName="Two Server System (One Authoring and one Live)"/>
-				<leaf relURI="" doctype="Empty" menuName="Three Server System (One Authoring and two or more Live)"/>
-				<leaf relURI="" doctype="Empty" menuName="Four Server System (Two Authoring and two or more Live)"/>
-			</branch>
-			<branch relURI="int-virtual-server.html" doctype="Empty" menuName="Virtual Servers (mandantenfaehig)">
-				<leaf relURI="int-proxy-apache.html" doctype="XDoc" menuName="Apache as Proxy"/>
-			</branch>
-			<branch relURI="" doctype="Empty" menuName="Change Management"/>
-			<branch relURI="int-performance.html" doctype="XDoc" menuName="Performance"/>
-			<branch relURI="" doctype="Empty" menuName="Scalability"/>
-			<leaf URL="http://developer.netscape.com/docs/manuals/browser/sidebar/" doctype="HTML" menuName="My sidebar"/>
-			<leaf relURI="int-hsqldb.html" doctype="XDoc" menuName="HSQL Database"/>
-			<branch relURI="" doctype="Empty" menuName="Servlet Engines">
-				<leaf relURI="int-tomcat.html" doctype="XDoc" menuName="Tomcat"/>
-			</branch>
-			<branch relURI="" doctype="Empty" menuName="Java Virtual Machine">
-				<leaf relURI="encoding.html" doctype="XDoc" menuName="Encoding"/>
-			</branch>
-		</branch>
-		<!-- Developer's Guide -->
+    <!-- Developer's Guide -->
     <branch relURI="developer-guide" doctype="Guide" menuName="Developer's Guide">
       <leaf relURI="architecture.html" doctype="XDoc" menuName="Architecture"/>
       <leaf relURI="codingGuidelines.html" doctype="XDoc" menuName="Coding Guidelines"/>
@@ -221,6 +224,11 @@
       <leaf URL="http://xml.apache.org/xalan-j/apidocs/org/w3c/dom/package-summary.html" doctype="HTML" menuName="org.w3c.dom"/>
       <leaf URL="http://quartz.sourceforge.net/javadoc/index.html" doctype="HTML" menuName="Quartz Scheduler"/>
       <leaf URL="http://java.sun.com/j2se/javadoc/index.html" doctype="HTML" menuName="Javadoc Tool Home Page"/>
+    </branch>
+
+    <branch relURI="concepts" doctype="Guide" menuName="Concepts for Review">
+      <leaf relURI="standardURI.html" doctype="XDoc" menuName="URI Scheme"/>
+      <leaf relURI="pageEnvelope.html" doctype="XDoc" menuName="Page Envelope"/>
     </branch>
   </branch>
 </tree>
