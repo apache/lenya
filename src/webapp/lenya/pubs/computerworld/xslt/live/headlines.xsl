@@ -26,9 +26,9 @@
 			<tr bgcolor="#EFEFE7">
 				<td width="440" valign="middle" colspan="2">
 					<!-- EVTL. BILD  WIDTH="50" HEIGHT="50" ALIGN="LEFT" -->
-					<a href="">
-						<img border="0" src="/img/categories/{head/media/media-reference/@source}" width="50" height="50" align="left"/>
-					</a>
+<xsl:apply-templates select="head/media">
+  <xsl:with-param name="href"><xsl:value-of select="$href"/></xsl:with-param>
+</xsl:apply-templates>
 					<!-- NEWS LAUFTEXT -->
 					<span class="txt-s-black">
 						<xsl:value-of select="head/abstract"/><br />
@@ -44,4 +44,12 @@
 			</tr>
 		</xsl:for-each>
 	</xsl:template>
+	
+<xsl:template match="media">
+  <xsl:param name="href"/>
+  <a href="{$href}">
+  <img border="0" src="/img/{media-reference/@source}" width="50" height="50" align="left"/>
+  </a>
+</xsl:template>
+	
 </xsl:stylesheet>

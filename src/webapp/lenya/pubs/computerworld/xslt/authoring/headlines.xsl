@@ -51,7 +51,7 @@
 <xsl:template match="media">
   <xsl:param name="href"/>
   <a href="{$href}">
-  <img border="0" src="/img/categories/{media-reference/@source}" width="50" height="50" align="left"/>
+  <img border="0" src="/img/{media-reference/@source}" width="50" height="50" align="left"/>
   </a>
 </xsl:template>
 
