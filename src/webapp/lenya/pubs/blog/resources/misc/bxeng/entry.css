@@ -1,11 +1,20 @@
 .title {
   font-size: x-large;
   font-weight: bold;
+  display: block;
   /*border: 1pt solid red;*/
 }
 
 .subtitle {
   font-size: large;
   font-weight: bold;
+  display: block;
+  /*border: 1pt solid red;*/
+}
+
+.summary {
+  font-size: large;
+  font-style: italic;
+  display: block;
   /*border: 1pt solid red;*/
 }
