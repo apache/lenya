@@ -510,10 +510,3 @@ li p {
     height: 16px;
     width: 16px;
 }
-
-p.instruction {
-  display: list-item;
-  list-style-image: url('../images/instruction_arrow.png');
-  list-style-position: outside;
-  margin-left: 2em;
-} 

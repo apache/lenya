@@ -1,0 +1,765 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Bitflux Editor (BXE)</title>
+<link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../../skin/profile.css" rel="stylesheet">
+<script src="../../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://lenya.apache.org"><img class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png" title="
+  	Apache Lenya is a Java-based Open-Source Content Management System.
+  	It is based on open standards such as XML and XSLT.
+  	One of its core components is Cocoon from the Apache Software Foundation.
+  "></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with :');" value="Search the site with :" size="25" name="q" id="query" type="text">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="../../../index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript" language="JavaScript"><!--
+              document.write("Published: " + document.lastModified);
+              //  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', '../../../skin/')" id="menu_1.1Title" class="menutitle">Project</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../index.html">About</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../changes.html">Changes</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../charter.html">Charter</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../history.html">History</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../roadmap.html">Roadmap</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../license.html">License</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../resolution.html">Resolution</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../related-projects.html">Related Projects</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.2', '../../../skin/')" id="menu_1.2Title" class="menutitle">Version 1.4</div>
+<div id="menu_1.2" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.2.1', '../../../skin/')" id="menu_1.2.1Title" class="menutitle">Installation</div>
+<div id="menu_1.2.1" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_4/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_4/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_4/installation/source_version.html">Installation Instructions</a>
+</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../../../apidocs/1.4/index.html">1.4 API (Javadoc)</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.3', '../../../skin/')" id="menu_selected_1.3Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Version 1.2</div>
+<div id="menu_selected_1.3" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.3.1', '../../../skin/')" id="menu_1.3.1Title" class="menutitle">Installation</div>
+<div id="menu_1.3.1" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/installation/source_version.html">Installation Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.3.2', '../../../skin/')" id="menu_selected_1.3.2Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Components</div>
+<div id="menu_selected_1.3.2" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.3.2.1', '../../../skin/')" id="menu_1.3.2.1Title" class="menutitle">Access&nbsp;Control</div>
+<div id="menu_1.3.2.1" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/accesscontrol/terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/accesscontrol/authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/accesscontrol/authorizers.html">Authorizers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/accesscontrol/ssl.html">SSL Encryption</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.2', '../../../skin/')" id="menu_1.3.2.2Title" class="menutitle">Authoring</div>
+<div id="menu_1.3.2.2" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/authoring/adding-document-creator.html">Adding a new document creator</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/authoring/image-upload.html">Image Upload</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/authoring/openoffice.html">OpenOffice</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.3', '../../../skin/')" id="menu_1.3.2.3Title" class="menutitle">Deployment</div>
+<div id="menu_1.3.2.3" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/deployment/proxying.html">Proxying</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.3.2.4', '../../../skin/')" id="menu_selected_1.3.2.4Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Editors</div>
+<div id="menu_selected_1.3.2.4" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/editors/htmlform.html">HTML Form Editor</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/editors/1form.html">HTML One Form Editor</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Bitflux Editor</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/editors/kupu.html">Kupu</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/editors/xopus.html">Xopus</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.5', '../../../skin/')" id="menu_1.3.2.5Title" class="menutitle">Layout</div>
+<div id="menu_1.3.2.5" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/layout/navigation.html">Navigation</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/layout/xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/layout/static-resources.html">Serving static resources</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/layout/lenya-menubar.html">Lenya Menubar</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.6', '../../../skin/')" id="menu_1.3.2.6Title" class="menutitle">Publication</div>
+<div id="menu_1.3.2.6" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/publication/siteTree.html">Site tree</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.7', '../../../skin/')" id="menu_1.3.2.7Title" class="menutitle">Resource&nbsp;Types</div>
+<div id="menu_1.3.2.7" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/resource-types/resource-types.html">Resource&nbsp;Types</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.8', '../../../skin/')" id="menu_1.3.2.8Title" class="menutitle">Revision Control</div>
+<div id="menu_1.3.2.8" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/revisioncontrol/rcml.html">RCML</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/revisioncontrol/checkin.html">Check In</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/revisioncontrol/checkout.html">Check Out</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/revisioncontrol/version.html">Revisions</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/revisioncontrol/rollback.html">Rollback</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.9', '../../../skin/')" id="menu_1.3.2.9Title" class="menutitle">Repository</div>
+<div id="menu_1.3.2.9" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/repository/webdav.html">WebDAV Servers</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.10', '../../../skin/')" id="menu_1.3.2.10Title" class="menutitle">Search</div>
+<div id="menu_1.3.2.10" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/search/lucene.html">Searching with Lucene</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.11', '../../../skin/')" id="menu_1.3.2.11Title" class="menutitle">URI Handling</div>
+<div id="menu_1.3.2.11" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/uri-handling/standardURI.html">URI Scheme</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/uri-handling/usecases.html">Usecases</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.12', '../../../skin/')" id="menu_1.3.2.12Title" class="menutitle">Asset Management</div>
+<div id="menu_1.3.2.12" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/asset-management/management.html">Asset Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.13', '../../../skin/')" id="menu_1.3.2.13Title" class="menutitle">Link Management</div>
+<div id="menu_1.3.2.13" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/link-management/link-management.html">Link Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.14', '../../../skin/')" id="menu_1.3.2.14Title" class="menutitle">Meta Data</div>
+<div id="menu_1.3.2.14" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/metadata/metadata.html">Meta Data Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.15', '../../../skin/')" id="menu_1.3.2.15Title" class="menutitle">Multilingual Documents</div>
+<div id="menu_1.3.2.15" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.16', '../../../skin/')" id="menu_1.3.2.16Title" class="menutitle">Tasks</div>
+<div id="menu_1.3.2.16" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/taskaction.html">The TaskAction</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.16.5', '../../../skin/')" id="menu_1.3.2.16.5Title" class="menutitle">Included tasks</div>
+<div id="menu_1.3.2.16.5" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.17', '../../../skin/')" id="menu_1.3.2.17Title" class="menutitle">Workflow</div>
+<div id="menu_1.3.2.17" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/workflow/terms.html">Terms</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/workflow/state-machine.html">The State Machine</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/workflow/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/workflow/implementation.html">Implementation</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.2.18', '../../../skin/')" id="menu_1.3.2.18Title" class="menutitle">Site Management</div>
+<div id="menu_1.3.2.18" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/archive.html">Archive</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/copy.html">Copy</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/deactivate.html">Deactivate</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/delete.html">Delete</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/deletetrash.html">Delete the trash</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/move.html">Move</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/rename.html">Rename</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/components/sitemanagement/restore.html">Restore</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.3', '../../../skin/')" id="menu_1.3.3Title" class="menutitle">Specifications</div>
+<div id="menu_1.3.3" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/specs/namespaces.html">Namespaces</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.4', '../../../skin/')" id="menu_1.3.4Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.3.4" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../1_2_x/misc/coding-guidelines.html">Coding Guidelines</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/misc/unittests.html">Unit Tests</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_2_x/misc/xinclude-processor.html">XInclude Processor</a>
+</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../../../apidocs/1.2/index.html">1.2 API (Javadoc)</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div id="skinconf-txtlink"></div>
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="bxe.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Bitflux Editor (BXE)</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Overview">Overview</a>
+</li>
+<li>
+<a href="#The+open+step">The open step</a>
+</li>
+<li>
+<a href="#The+config+step">The config step</a>
+</li>
+<li>
+<a href="#The+xml+step">The xml step</a>
+</li>
+<li>
+<a href="#The+image-upload-show%2C+link-show+and+asset-upload-show+steps">The image-upload-show, link-show and asset-upload-show steps</a>
+</li>
+<li>
+<a href="#The+image-upload+and+asset-upload+steps">The image-upload and asset-upload steps</a>
+</li>
+<li>
+<a href="#Further+BXE+configuration">Further BXE configuration</a>
+</li>
+</ul>
+</div> 
+
+
+<a name="N1001B"></a><a name="Overview"></a>
+<h2 class="underlined_10">Overview</h2>
+<div class="section">
+<p>
+<a href="http://bxe.oscom.org">BXE</a> is a validating WYSIWYG XML editor for Mozilla-based browsers.
+    It uses <a href="http://www.relaxng.org/">RELAX NG</a> for validation and CSS for layout. 
+    Integration with Lenya is done with a series of use case steps that are defined
+    in a sitemap inside your publication: <span class="codefrag">usecase-bxeng.xmap</span>. If you understand the purpose
+    of the various use case steps, you will have a good grasp of how to integration is done, and will be
+    able to adjust it to your needs as necessary.</p>
+</div>
+
+<a name="N1002F"></a><a name="The+open+step"></a>
+<h2 class="underlined_10">The open step</h2>
+<div class="section">
+<p>The open step is called when you first open BXE from the Lenya menu. It first checks
+        if BXE is installed, and displays a warning page if it is not. It then attempts to check
+        out the page to be edited (to protect it from being edited by other users at the same time),
+        and displays an error page if this fails for some reason. It then loads the BXE start page
+        that contains references to the BXE configuration to be used for this page, such as the
+        location of the RELAX NG schema, CSS files, and more. The BXE start page is a dynamically
+        generated page that is being aggregated from a configuration pipeline (the config step), 
+        a file that contains all the namespaces that may occur in the document to be edited 
+        (<span class="codefrag">content-namespaces.xml</span>), and the skeleton BXE start page (<span class="codefrag">index.xhtml</span>).
+        The pipeline looks like this:
+     </p>
+<pre class="code">
+    
+          &lt;map:match type="step" pattern="open"&gt;
+           &lt;!-- Check for BXENG --&gt;
+           &lt;map:act type="resource-exists" src="../../resources/bxeng/bxeLoader.js"&gt;
+            &lt;map:act type="reserved-checkout"&gt;
+              &lt;map:generate type="serverpages" src="../../content/rc/{exception}.xsp"&gt;
+                &lt;map:parameter name="user" value="{user}"/&gt;
+                &lt;map:parameter name="filename" value="{filename}"/&gt;
+                &lt;map:parameter name="date" value="{date}"/&gt;
+                &lt;map:parameter name="message" value="{message}"/&gt;
+              &lt;/map:generate&gt;
+              &lt;map:transform src="../../xslt/rc/rco-exception.xsl"/&gt;
+              &lt;map:call resource="style-cms-page"/&gt;
+            &lt;/map:act&gt;
+            &lt;map:aggregate element="bxeng"&gt;
+              &lt;map:part src="../../resources/misc/bxeng/index.xhtml"/&gt;
+              &lt;map:part src="../../resources/misc/bxeng/content-namespaces.xml"/&gt;
+            &lt;/map:aggregate&gt;
+            &lt;map:transform src="../../xslt/bxeng/aggregate.xsl"/&gt;
+            &lt;map:transform src="../../xslt/bxeng/index-xhtml.xsl"&gt;
+              &lt;map:parameter name="configfile" value="{request:requestURI}?lenya.usecase=bxeng&amp;amp;lenya.step=config"/&gt;
+              &lt;map:parameter name="context" value="{request:contextPath}"/&gt;
+            &lt;/map:transform&gt;
+            &lt;map:serialize type="xhtml"/&gt;
+            &lt;/map:act&gt;
+            &lt;map:generate src="../../resources/misc/bxeng/download.xhtml"/&gt;
+            &lt;map:call resource="style-cms-page"/&gt;
+            &lt;map:serialize type="html"/&gt;
+          &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N10043"></a><a name="The+config+step"></a>
+<h2 class="underlined_10">The config step</h2>
+<div class="section">
+<p>The config step generates the BXE config file by transforming a template file (<span class="codefrag">config.xml</span>)
+        and passing in values for the following parameters:
+     </p>
+<ul>
+        
+<li>BX_exitdestination: URL of the location BXE should redirect to upon exit</li>
+        
+<li>BX_validationfile: URL of the RELAX NG schema for the XML to be edited</li>
+        
+<li>BX_xhtmlfile: URL of the XHTML page to load the XML content into for editing</li>
+        
+<li>BX_xmlfile: URL of the XML for the page to be edited</li>
+        
+<li>BX_xslfile: URL of the XSL stylesheet to use for formatting the XML in BXE (BXE 1.1 only)</li>
+        
+<li>contextmenufile: URL of the file that defines the BXE context menu</li>
+        
+<li>css: URL of the CSS file used for styling the XML to be edited in BXE</li>
+        
+<li>defaultlanguage: default language of the publication, used for insert popups</li>
+        
+</ul>
+<p>If you want to customize BXE, the config step is your starting point. Make sure to pass
+        in the right URL for these parameters. The default publication uses additional pipelines
+        for these URL to provide more flexibility (such as automatically loading the correct
+        RELAX NG schema based on the resource type of the current page). More information about
+        the format of <span class="codefrag">config.xml</span> is available at the <a href="http://wiki.bitfluxeditor.org/Config.xml">BXE wiki</a>. 
+        The config step pipeline looks as follows in the default publication:</p>
+<pre class="code">
+    
+        &lt;map:match type="step" pattern="config"&gt;
+          &lt;map:generate src="../../resources/misc/bxeng/inc/config.xml"/&gt;
+          &lt;map:transform src="../../xslt/bxeng/config-xml.xsl"&gt;
+            &lt;map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.usecase=bxeng&amp;amp;lenya.step=xml"/&gt;
+            &lt;map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/&gt;
+            
+  &lt;!--      Instead of an xsl we use the xhtml file to provide the basic layout
+            &lt;map:parameter name="BX_xslfile" value="{2}.xsl"/&gt;
+  --&gt;
+            &lt;map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html"/&gt;
+            &lt;map:parameter name="BX_validationfile" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}.rng"/&gt;
+            &lt;map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/{page-envelope:document-type}-bxeng.css"/&gt;
+  &lt;!--       The document is checked in when we exit from bx (in case of save&amp;exit and in case of exit), so we use the usecase
+             for the checkin while we redirect to the document
+  --&gt;
+            &lt;map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;amp;lenya.step=checkin&amp;amp;backup=true"/&gt;
+            &lt;map:parameter name="contextmenufile" value="../../resources/misc/bxeng/contextmenu.xml"/&gt;
+          &lt;/map:transform&gt;
+          &lt;map:transform type="cinclude"/&gt;
+          &lt;map:serialize type="xml"/&gt;
+        &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N10079"></a><a name="The+xml+step"></a>
+<h2 class="underlined_10">The xml step</h2>
+<div class="section">
+<p>The xml step is responsible for retrieving the XML of the page to be edited, and sending it back to the server
+        for saving (via HTTP PUT). It first checks if the request method is a GET or a PUT, and goes on to either deliver
+        the XML to BXE (for the GET case) or sending the XML to the server (for the PUT case). If the request method
+        is a PUT, it then checks if the page is properly checked out, and invokes a flow script function 
+        (<span class="codefrag">editDocument</span>) to save the page. The <span class="codefrag">editDocument</span> function takes care of checking
+        the page back in, triggering workflow transitions, and finally redirecting to the saved page. This is the
+        xml pipeline from the default publication:</p>
+<pre class="code">
+    
+      &lt;map:match type="step" pattern="xml"&gt;      
+        &lt;map:select type="request-method"&gt;
+          
+          &lt;map:when test="PUT"&gt;
+            &lt;!-- before we save, we must be sure that the document is well checked out
+            --&gt;           
+	        &lt;map:act type="reserved-checkout-test"&gt;
+    	      &lt;map:generate type="serverpages" src="../../content/rc/{exception}.xsp"&gt;
+        	    &lt;map:parameter name="user" value="{user}"/&gt;
+            	&lt;map:parameter name="filename" value="{filename}"/&gt;
+	            &lt;map:parameter name="date" value="{date}"/&gt;
+    	      &lt;/map:generate&gt;
+        	  &lt;map:transform src="../../xslt/rc/rco-exception.xsl"/&gt;
+	          &lt;map:call resource="style-cms-page"/&gt;
+        	&lt;/map:act&gt;
+          
+          &lt;map:call function="editDocument"&gt;
+            &lt;map:parameter name="sourceUri" value="cocoon:/request2document"/&gt;
+            &lt;map:parameter name="noCheckin" value="true"/&gt;
+          &lt;/map:call&gt;
+          &lt;/map:when&gt;
+
+          &lt;map:otherwise&gt; &lt;!-- GET --&gt;
+            &lt;map:generate src="content/authoring/{page-envelope:document-path}"/&gt;
+            &lt;map:transform src="../../xslt/bxeng/change-object-path.xsl"&gt;
+              &lt;map:parameter name="documentid" value="{page-envelope:document-id}"/&gt;
+            &lt;/map:transform&gt;
+            &lt;map:serialize type="xml"/&gt;
+          &lt;/map:otherwise&gt;
+          
+        &lt;/map:select&gt;
+      &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N1008D"></a><a name="The+image-upload-show%2C+link-show+and+asset-upload-show+steps"></a>
+<h2 class="underlined_10">The image-upload-show, link-show and asset-upload-show steps</h2>
+<div class="section">
+<p>BXE supports the notion of callbacks to allow Lenya to display a list of assets, images or links
+        to be inserted into a page. These three steps generate the content of these popup windows, respectively.
+        The <span class="codefrag">link-show</span> step is the most complex of these since it takes lots of parameters, such
+        as the currently selected language, the position in the sitetree and the list of available languages.
+        These parameters are necessary to recreate the sitetree visualization from the site area for the link
+        insert popup.</p>
+<pre class="code">
+    
+      &lt;map:match pattern="image-upload-show" type="step"&gt;
+        &lt;map:call resource="cms-screen"&gt;
+           &lt;map:parameter name="serverpage" value="info/assets.xsp"/&gt;
+           &lt;map:parameter name="stylesheet" value="bxeng/image.xsl"/&gt;
+        &lt;/map:call&gt;
+      &lt;/map:match&gt;
+
+      &lt;map:match pattern="asset-upload-show" type="step"&gt;
+        &lt;map:call resource="cms-screen"&gt;
+           &lt;map:parameter name="serverpage" value="info/assets.xsp"/&gt;
+           &lt;map:parameter name="stylesheet" value="bxeng/asset.xsl"/&gt;
+        &lt;/map:call&gt;
+      &lt;/map:match&gt; 
+
+      &lt;map:match pattern="link-show" type="step"&gt;
+            &lt;!-- just a dummy xsp since we call the info area directly --&gt;
+           &lt;map:generate type="serverpages" src="../../content/info/assets.xsp"/&gt;
+          &lt;map:transform src="../../xslt/bxeng/link.xsl" label="content"&gt;
+            &lt;map:parameter name="infoarea" value="true"/&gt;
+            &lt;map:parameter name="contextprefix" value="{request:contextPath}"/&gt;
+            &lt;map:parameter name="publicationid" value="{page-envelope:publication-id}"/&gt;
+            &lt;map:parameter name="area" value="authoring"/&gt;
+            &lt;map:parameter name="tab" value="en"/&gt;
+            &lt;map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/&gt;
+            &lt;map:parameter name="documentid" value="{page-envelope:document-id}"/&gt;
+            &lt;map:parameter name="documenturl" value="/{page-envelope:document-url}"/&gt;
+            &lt;map:parameter name="documentextension" value="{page-envelope:document-extension}"/&gt;
+            &lt;map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/&gt;
+            &lt;map:parameter name="languages" value="{page-envelope:publication-languages-csv}"/&gt;
+          &lt;/map:transform&gt;
+        &lt;map:call resource="style-cms-page"/&gt;
+      &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N1009E"></a><a name="The+image-upload+and+asset-upload+steps"></a>
+<h2 class="underlined_10">The image-upload and asset-upload steps</h2>
+<div class="section">
+<p>To enable the upload of new assets to Lenya directly from the BXE <span class="codefrag">insert Image</span> 
+        and <span class="codefrag">insert Asset</span> popup windows, there are two use case steps that use the
+        upload action to process the uploaded file, and then redirect to the respective popup window.</p>
+<pre class="code">
+    
+          &lt;map:match type="step" pattern="asset-upload"&gt;
+            &lt;map:act type="upload"&gt;
+              &lt;map:redirect-to uri="{request:requestURI}?lenya.usecase=bxeng&amp;amp;lenya.step=asset-upload-show"/&gt;
+            &lt;/map:act&gt;
+            &lt;map:call resource="cms-screen"&gt;
+              &lt;map:parameter name="serverpage" value="info/assets.xsp"/&gt;
+              &lt;map:parameter name="stylesheet" value="bxeng/asset.xsl"/&gt;
+            &lt;/map:call&gt;
+          &lt;/map:match&gt;
+
+          &lt;map:match type="step" pattern="image-upload"&gt;
+            &lt;map:act type="upload"&gt;
+              &lt;map:redirect-to uri="{request:requestURI}?lenya.usecase=bxeng&amp;amp;lenya.step=image-upload-show"/&gt;
+            &lt;/map:act&gt;
+	        &lt;map:call resource="cms-screen"&gt;
+	           &lt;map:parameter name="serverpage" value="info/assets.xsp"/&gt;
+	           &lt;map:parameter name="stylesheet" value="bxeng/image.xsl"/&gt;
+	        &lt;/map:call&gt;
+	       &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N100B2"></a><a name="Further+BXE+configuration"></a>
+<h2 class="underlined_10">Further BXE configuration</h2>
+<div class="section">
+<p>BXE offers a lot of customization options beyond those outlined above. If you plan to make the most
+        of BXE, you should familiarize yourself with the contents of the 
+            <a href="http://wiki.bitfluxeditor.org/Main_Page">BXE wiki</a>.</p>
+</div>    
+
+
+<p align="right">
+<font size="-2">by&nbsp;Lenya community</font>
+</p>
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+ Copyright &copy; 2002-2005 The Apache Software Foundation.</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_2_x/components/editors/bxe.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>
