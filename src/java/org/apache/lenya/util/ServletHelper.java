@@ -1,5 +1,5 @@
 /*
-$Id: ServletHelper.java,v 1.1 2003/07/23 19:18:17 andreas Exp $
+$Id: ServletHelper.java,v 1.2 2003/08/25 15:41:31 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,25 @@ $Id: ServletHelper.java,v 1.1 2003/07/23 19:18:17 andreas Exp $
 */
 package org.apache.lenya.util;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.cocoon.environment.Request;
 
 /**
+ * Servlet utility class.
+ * 
  * @author andreas
  */
-public class ServletHelper {
+public final class ServletHelper {
+
+    /**
+     * Ctor.
+     */
+    private ServletHelper() {
+
+    }
 
     /**
      * Returns the URL inside the web application (without the context prefix). 
@@ -74,5 +87,29 @@ public class ServletHelper {
         }
         String url = request.getRequestURI().substring(context.length());
         return url;
-    } 
+    }
+
+    /**
+     * Converts the request parameters to a map.
+     * If a key is mapped to multiple parameters, a string array is used as the value.
+     * @param request The request.
+     * @return A map.
+     */
+    public static Map getParameterMap(Request request) {
+        Map requestParameters = new HashMap();
+        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+            String key = (String) e.nextElement();
+            String[] values = request.getParameterValues(key);
+            Object value;
+            if (values.length == 1) {
+                value = values[0];
+            }
+            else {
+                value = values;
+            }
+            requestParameters.put(key, value);
+        }
+        return requestParameters;
+    }
+
 }
