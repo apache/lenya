@@ -48,7 +48,7 @@
         <link href="{$contextprefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
         <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
       </head>
-      <body style="background-color: white; margin: 0px; padding: 0px">
+      <body>
         <xsl:apply-templates select="xhtml:div[@id = 'lenya-menubar']"/>
         <div id="lenya-cmsbody">
           <xso:apply-templates select="xhtml:html/xhtml:body/node()"/>
