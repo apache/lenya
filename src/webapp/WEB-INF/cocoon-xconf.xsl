@@ -254,7 +254,7 @@
     <component-instance name="admin.deleteIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteIPRange"/>
     -->
     
-    <component-instance name="authoring.create" logger="lenya.authoring" class="org.apache.lenya.cms.site.usecases.Create"/>
+    <component-instance name="site.create" logger="lenya.authoring" class="org.apache.lenya.cms.site.usecases.Create"/>
     <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>
     <component-instance name="tab.acAuthoring" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>
     <component-instance name="tab.acLive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>
