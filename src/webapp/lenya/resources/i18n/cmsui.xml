@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml,v 1.62 2004/05/23 20:34:29 roku Exp $ -->
+<!-- $Id$ -->
 
 <catalogue xml:lang="en">
 
@@ -182,6 +182,10 @@
   <message key="Group Affiliation">Group Affiliation</message>
   <message key="Change Password">Change Password</message>
   <message key="Edit Group Affiliation">Edit Group Affiliation</message>
+
+    <!-- User Types -->
+  <message key="LDAP User">LDAP User</message>
+  <message key="Local User">CMS User</message>
   
     <!-- IP Range Administration -->
   <message key="IP Range">IP&#160;Range</message>

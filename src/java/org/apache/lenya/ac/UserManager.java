@@ -19,7 +19,7 @@ package org.apache.lenya.ac;
 
 /**
  * User manager.
- * @version $Id: UserManager.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ * @version $Id$
  */
 public interface UserManager extends ItemManager {
     
@@ -30,6 +30,13 @@ public interface UserManager extends ItemManager {
      */
     User[] getUsers();
     
+    /**
+     * Get all supported user types
+     *
+     * @return a collection of user types
+     */
+    Collection getUserTypes();
+
     /**
      * Add the given user
      *

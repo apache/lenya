@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: profile.xsl,v 1.16 2004/04/28 15:00:05 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -118,7 +118,7 @@
 		<tr>
 			<td class="lenya-entry-caption"><i18n:text>LDAP ID</i18n:text>&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
-				<input class="lenya-form-element" name="fullname" type="text" value="{normalize-space(.)}"/>
+				<input class="lenya-form-element" name="ldapid" type="text" value="{normalize-space(.)}"/>
 			</td>
 		</tr>
   </xsl:template>
