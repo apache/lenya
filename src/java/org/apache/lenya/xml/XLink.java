@@ -1,5 +1,5 @@
 /*
-$Id: XLink.java,v 1.8 2004/02/02 02:50:36 stefano Exp $
+$Id: XLink.java,v 1.9 2004/02/19 17:24:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,17 +60,22 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-
 /**
  * @author Michael Wechner, lenya
  * @version 0.4.27
  */
 public class XLink {
+
     public String type = null;
     public String href = null;
     public String show = null;
     public String name = null;
     public Element element = null;
+
+    public static final String XLINK_NAMESPACE = "http://www.w3.org/1999/xlink";
+    public static final String ATTRIBUTE_HREF = "href";
+    public static final String ATTRIBUTE_SHOW = "show";
+    public static final String ATTRIBUTE_TYPE = "type";
 
     /**
      *
@@ -94,13 +99,14 @@ public class XLink {
         for (int i = 0; i < attributes.getLength(); i++) {
             Node attribute = attributes.item(i);
 
-            if (attribute.getNodeName().equals("xlink:href")) {
-                href = attribute.getNodeValue();
-            } else if (attribute.getNodeName().equals("xlink:type")) {
-                type = attribute.getNodeValue();
-            } else if (attribute.getNodeName().equals("xlink:show")) {
-                show = attribute.getNodeValue();
-            } else {
+            if (attribute.getNamespaceURI().equals(XLINK_NAMESPACE)) {
+                if (attribute.getLocalName().equals(ATTRIBUTE_HREF)) {
+                    href = attribute.getNodeValue();
+                } else if (attribute.getLocalName().equals(ATTRIBUTE_TYPE)) {
+                    type = attribute.getNodeValue();
+                } else if (attribute.getLocalName().equals(ATTRIBUTE_SHOW)) {
+                    show = attribute.getNodeValue();
+                }
             }
         }
     }
@@ -116,7 +122,14 @@ public class XLink {
      *
      */
     public String toString() {
-        return "XLink: type=\"" + type + "\", href=\"" + href + "\", show=\"" + show +
-        "\", name=\"" + name + "\"";
+        return "XLink: type=\""
+            + type
+            + "\", href=\""
+            + href
+            + "\", show=\""
+            + show
+            + "\", name=\""
+            + name
+            + "\"";
     }
 }
