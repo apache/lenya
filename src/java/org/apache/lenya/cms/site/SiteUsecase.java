@@ -16,9 +16,13 @@
  */
 package org.apache.lenya.cms.site;
 
+import java.util.Arrays;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * Super class for site related usecases.
@@ -27,9 +31,13 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
  */
 public class SiteUsecase extends DocumentUsecase {
 
+    protected Document doc = null;
+    protected WorkflowInstance instance = null;
     protected static final String AREA = "area";
     protected static final String DOCUMENTID = "documentid";
     protected static final String LANGUAGEEXISTS = "languageexists";
+    protected static final String STATE = "state";
+    protected static final String ISLIVE = "is_live";
 
     /**
      * Ctor.
@@ -40,35 +48,37 @@ public class SiteUsecase extends DocumentUsecase {
     
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
-     */
+    /*TODO make common parameters available to site usecases: area, documentid, languageexists etc
+     * may need to take special areas into acccount, such as info-authoring */
     protected void doInitialize() throws Exception {
         super.doInitialize();
         doc = getSourceDocument();
+        try {
+            WorkflowFactory factory = WorkflowFactory.newInstance();
+            if (factory.hasWorkflow(getSourceDocument())) {
+                instance = factory.buildInstance(getSourceDocument());
+                setParameter(STATE, instance.getCurrentState().toString());
+                String[] variableNames = instance.getWorkflow().getVariableNames();
+                if (Arrays.asList(variableNames).contains(ISLIVE)) {
+                    setParameter("islive", Boolean.valueOf(instance.getValue(ISLIVE)));
+                }
+            } else {
+                setParameter("state", "");
+            }
+        } catch (Exception e) {
+        	getLogger().error("Could not get workflow state.");
+        	addErrorMessage("Could not get workflow state.");
+        }
+        setParameter(AREA, this.doc.getArea());
+        setParameter(DOCUMENTID, this.doc.getId());
+        setParameter(LANGUAGEEXISTS, "true");
     }
-       
-    private Document doc;
 
-    /**
-     * Returns the currently edited document.
-     * @return A document.
-     */
-    protected Document getDocument() {
-        return this.doc;
-    }
-    
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
-    /*TODO make common parameters available to site usecases: area, documentid, languageexists etc */
     public void setParameter(String name, Object value) {
         super.setParameter(name, value);
-        
-        if (true) {
-            
-            setParameter(AREA, this.doc.getArea());
-            setParameter(DOCUMENTID, this.doc.getId());
-            setParameter(LANGUAGEEXISTS, "");
-        }
     }
 
     

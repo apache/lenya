@@ -99,6 +99,22 @@
             <tr>
               <td colspan="2">
                 <ul>
+                <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+                  <li>
+                    <i18n:text><jx:out value="${message}"/></i18n:text>
+                  </li>
+                </jx:forEach>
+                <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+                  <li>
+                    <i18n:text><jx:out value="${message}"/></i18n:text>
+                  </li>
+                </jx:forEach>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <ul>
                   <jx:forEach var="message" items="${usecase.getErrorMessages()}">
                     <li>
                       <i18n:text>
@@ -132,7 +148,7 @@
               <td class="lenya-entry-caption"><i18n:text>Workflow State</i18n:text>:</td>
               <td>
                 <jx:choose>
-                  <jx:when test="${not(empty(usecase.getParameter('state')))}"><jx:out select="${usecase.getParameter('state')}"/></jx:when>
+                  <jx:when test="${not(empty(usecase.getParameter('state')))}"><jx:out value="${usecase.getParameter('state')}"/></jx:when>
                   <jx:otherwise><span style="color: #999999;"><i18n:text>[no workflow]</i18n:text></span></jx:otherwise>
                 </jx:choose>
               </td>
@@ -140,7 +156,7 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Live</i18n:text>:</td>
               <td>
-                <jx:out value="${usecase.getParameter('live')}"/>
+                <jx:out value="${usecase.getParameter('islive')}"/>
               </td>
             </tr>
             <tr>
