@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.7 2003/08/27 14:05:23 egli Exp $
+$Id: DefaultSiteTreeTest.java,v 1.8 2003/08/27 14:45:19 egli Exp $
 <License>
 
  ============================================================================
@@ -289,7 +289,16 @@ public class DefaultSiteTreeTest extends TestCase {
 		siteTree.save();
 		assertNotNull(siteTree.getNode("/foo"));
 	}
-
+    
+    /**
+     * Test the import of a subtree
+     * 
+     * @throws ParserConfigurationException if an error occurs.
+     * @throws SAXException if an error occurs.
+     * @throws SiteTreeException if an error occurs.
+     * @throws IOException if an error occurs.
+     * @throws TransformerException if an error occurs.
+     */
 	final public void testImportSubtree() throws ParserConfigurationException, SAXException, SiteTreeException, IOException, TransformerException {
 		DefaultSiteTree newSiteTree = new DefaultSiteTree("importedTree.xml");
 		Label label = new Label("root", "en");
