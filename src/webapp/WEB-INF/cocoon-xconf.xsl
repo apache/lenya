@@ -116,6 +116,10 @@
   <parameter name="port" value="{$hsqldb-server-port}"/>
 </xsl:template>
 
+<xsl:template match="dburl">
+<dburl>jdbc:hsqldb:hsql://localhost:<xsl:value-of select="$hsqldb-server-port"/></dburl>
+</xsl:template>
+
 
 <xsl:template match="@*|node()">
   <xsl:copy>
