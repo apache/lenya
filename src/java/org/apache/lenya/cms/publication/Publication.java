@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.20 2003/08/05 16:28:07 andreas Exp $
+$Id: Publication.java,v 1.21 2003/08/07 15:50:27 egli Exp $
 <License>
 
  ============================================================================
@@ -63,9 +63,10 @@ import org.apache.log4j.Category;
 import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.io.IOException; 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * A publication.
@@ -73,7 +74,7 @@ import java.util.Arrays;
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class Publication {
-	private static Category log = Category.getInstance(Publication.class);
+    private static Category log = Category.getInstance(Publication.class);
 
     public static final String AUTHORING_AREA = "authoring";
     public static final String LIVE_AREA = "live";
@@ -88,7 +89,7 @@ public class Publication {
     public static final String PUBLICATION_PREFIX =
         "lenya" + File.separator + "pubs";
     public static final String PUBLICATION_PREFIX_URI = "lenya/pubs";
-	public static final String CONFIGURATION_PATH = "config";
+    public static final String CONFIGURATION_PATH = "config";
 
     private static final String[] areas =
         { AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA };
@@ -101,6 +102,7 @@ public class Publication {
     private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
+    private HashMap siteTrees = null;
 
     /** 
      * Creates a new instance of Publication
@@ -138,25 +140,26 @@ public class Publication {
 
         Configuration config;
         String pathMapperClassName = "";
-        
+
         try {
             config = builder.buildFromFile(configFile);
             pathMapperClassName = config.getChild(PATH_MAPPER).getValue();
 
-			Class pathMapperClass = Class.forName(pathMapperClassName);
-			mapper = (DocumentIdToPathMapper) pathMapperClass.newInstance();
-			
+            Class pathMapperClass = Class.forName(pathMapperClassName);
+            mapper = (DocumentIdToPathMapper)pathMapperClass.newInstance();
 
-			Configuration[] languages = config.getChild(LANGUAGES).getChildren();
-			for (int i = 0; i < languages.length; i++) {
-				Configuration languageConfig = languages[i];
+            Configuration[] languages =
+                config.getChild(LANGUAGES).getChildren();
+            for (int i = 0; i < languages.length; i++) {
+                Configuration languageConfig = languages[i];
                 String language = languageConfig.getValue();
                 this.languages.add(language);
-                if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR, null) != null) {
+                if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR, null)
+                    != null) {
                     defaultLanguage = language;
                 }
             }
-			
+
         } catch (ConfigurationException e) {
             throw new PublicationException(
                 "Problem with config file: " + configFile.getAbsolutePath(),
@@ -170,17 +173,20 @@ public class Publication {
                 "Could not find config file: " + configFile.getAbsolutePath(),
                 e);
         } catch (ClassNotFoundException e) {
-			throw new PublicationException(
-				"Cannot instantiate documentToPathMapper: " + pathMapperClassName,
-				e);
+            throw new PublicationException(
+                "Cannot instantiate documentToPathMapper: "
+                    + pathMapperClassName,
+                e);
         } catch (InstantiationException e) {
-			throw new PublicationException(
-				"Cannot instantiate documentToPathMapper: " + pathMapperClassName,
-				e);
+            throw new PublicationException(
+                "Cannot instantiate documentToPathMapper: "
+                    + pathMapperClassName,
+                e);
         } catch (IllegalAccessException e) {
-			throw new PublicationException(
-				"Cannot instantiate documentToPathMapper: " + pathMapperClassName,
-				e);
+            throw new PublicationException(
+                "Cannot instantiate documentToPathMapper: "
+                    + pathMapperClassName,
+                e);
         }
     }
 
@@ -275,4 +281,25 @@ public class Publication {
         return (String[])languages.toArray(new String[languages.size()]);
     }
 
+    /**
+     * Get the sitetree for a specific area of this publication. 
+     * Sitetrees are created on demand and are cached.
+     * 
+     * @param area the area
+     * @return the sitetree for the specified area
+     * 
+     * @throws SiteTreeException if an error occurs 
+     */
+    public DefaultSiteTree getSiteTree(String area) throws SiteTreeException {
+
+        DefaultSiteTree sitetree = null;
+
+        if (siteTrees.containsKey(area)) {
+            sitetree = (DefaultSiteTree)siteTrees.get(area);
+        } else {
+            sitetree = new DefaultSiteTree(getDirectory(), area);
+            siteTrees.put(area, sitetree);
+        }
+        return sitetree;
+    }
 }
