@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileUtil.java,v 1.14 2004/04/30 13:18:42 andreas Exp $  */
+/* $Id: FileUtil.java,v 1.15 2004/07/21 15:55:10 roku Exp $  */
 
 package org.apache.lenya.util;
 
@@ -26,7 +26,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Category;
@@ -144,12 +143,8 @@ public class FileUtil {
         throws FileNotFoundException, IOException {
 
         dest.getParentFile().mkdirs();
-        dest.createNewFile();
-        FileChannel srcChannel = new FileInputStream(src).getChannel();
-        FileChannel destChannel = new FileOutputStream(dest).getChannel();
-        srcChannel.transferTo(0, srcChannel.size(), destChannel);
-        srcChannel.close();
-        destChannel.close();
+        dest.createNewFile();        
+        org.apache.avalon.excalibur.io.FileUtil.copyFile(src, dest);
     }    
     
 
