@@ -33,7 +33,7 @@ import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Checks if a certain resource exists and returns either the string "true" or "false".
- * @version $Id: ResourceExistsModule.java,v 1.2 2004/04/15 09:42:29 andreas Exp $
+ * @version $Id: ResourceExistsModule.java,v 1.3 2004/04/15 14:11:02 andreas Exp $
  */
 public class ResourceExistsModule extends AbstractInputModule implements Serviceable, Disposable {
 
@@ -91,6 +91,15 @@ public class ResourceExistsModule extends AbstractInputModule implements Service
         this.manager.release(this.resolver);
         this.resolver = null;
         this.manager = null;
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     */
+    public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
+        throws ConfigurationException {
+        Object result = this.getAttribute(name, modeConf, objectModel);
+        return (result == null ? null : new Object[] {result});
     }
 
 }
