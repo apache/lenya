@@ -200,9 +200,10 @@ public class ArticleImageUploadCreatorAction
 	    getLogger().debug("fileName: " + fileName);
 	    
 	    // grab the mime type and add it to the dublin core meta
-	    // data as "format" 
+	    // data as "format"
+	    // FIXME: put the proper mime type in here.
 // 	    String mimeType = ((FilePart)obj).getMimeType();
-	    String mimeType = "FIXME:";
+	    String mimeType = "";
 	    if (mimeType != null) {
 		dublinCoreParams.put("format", mimeType);
 	    }
