@@ -7,8 +7,9 @@
 >
 
 <xsl:template match="echo:entry">
-  <h1><xsl:value-of select="echo:title"/></h1>
-  <h2><xsl:value-of select="echo:subtitle"/></h2>
+  <div class="dateline"><xsl:value-of select="echo:issued"/></div>
+  <div class="title"><xsl:value-of select="echo:title"/></div>
+  <div class="subtitle"><xsl:value-of select="echo:subtitle"/></div>
   <i><xsl:value-of select="echo:summary"/></i>
   <xsl:apply-templates select="echo:content"/>
   <br />

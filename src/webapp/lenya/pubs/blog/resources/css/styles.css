@@ -73,3 +73,21 @@ p.issued {
   font-size: x-small;
   /*border: 1pt solid red;*/
 }
+
+div.dateline {
+  margin-top: 15pt;
+  color: #999999;
+  /*border: 1pt solid red;*/
+}
+
+div.title {
+  font-size: x-large;
+  font-weight: bold;
+  /*border: 1pt solid red;*/
+}
+
+div.subtitle {
+  font-size: large;
+  font-weight: bold;
+  /*border: 1pt solid red;*/
+}

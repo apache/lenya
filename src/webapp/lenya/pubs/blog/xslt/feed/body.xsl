@@ -12,8 +12,9 @@
 -->
 
 <xsl:template match="entry">
-  <h1><xsl:value-of select="title"/></h1>
-  <h2><xsl:value-of select="subtitle"/></h2>
+  <div class="dateline"><xsl:value-of select="issued"/></div>
+  <div class="title"><xsl:value-of select="title"/></div>
+  <div class="subtitle"><xsl:value-of select="subtitle"/></div>
   <i><xsl:value-of select="summary"/></i>
   <xsl:apply-templates select="content"/>
   <xsl:apply-templates select="echo:content"/>
