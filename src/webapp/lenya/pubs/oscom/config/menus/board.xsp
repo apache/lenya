@@ -10,6 +10,8 @@
 
   <xsp-wyona:util/>
 
+  <live_uri>/board.html</live_uri>
+
   <menus>
     <menu name="File">
       <block>

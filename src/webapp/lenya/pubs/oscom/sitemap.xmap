@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.1 2002/05/12 00:48:05 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.2 2002/05/12 11:08:39 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -35,7 +35,9 @@
   <map:resources>
     <map:resource name="login">
       <map:generate type="serverpages" src="../../docs/cms/access-control/identify.xsp"/>
-      <map:transform src="../../stylesheets/cms/Page/Login/main.xsl"/>
+      <map:transform src="../../stylesheets/cms/Page/Login/main.xsl">
+        <map:parameter name="publication_name" value="OSCOM"/>
+      </map:transform>
       <map:serialize type="html"/>
     </map:resource>
   </map:resources>
@@ -82,7 +84,9 @@
           
           <map:match pattern="logout">
             <map:generate type="serverpages" src="../../docs/cms/access-control/invalidate.xsp"/>
-            <map:transform src="../../stylesheets/cms/Page/Logout/main.xsl"/>
+            <map:transform src="../../stylesheets/cms/Page/Logout/main.xsl">
+              <map:parameter name="publication_name" value="OSCOM"/>
+            </map:transform>
             <map:serialize/>
           </map:match>
 
