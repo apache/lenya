@@ -16,6 +16,12 @@
 -->
 <css>
 
+body {
+    background-color: white;
+    margin: 0px; 
+    padding: 0px
+}
+
 #lenya-menubar {
 	position: absolute;
 	top: 0px;
