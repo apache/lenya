@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.8 2003/07/24 18:44:19 andreas Exp $
+ $Id: info.xsl,v 1.9 2003/07/28 20:07:07 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -31,11 +31,11 @@
 	 -->
 	<a href="#" onclick="Tab(1)" id="link1" class="lenya-tablink">Overview</a>
 	<a href="#" onclick="Tab(2)" id="link2" class="lenya-tablink">Meta</a>
-	<a href="#" onclick="Tab(3)" id="link3" class="lenya-tablink">Assets</a>
-	<a href="#" onclick="Tab(4)" id="link4" class="lenya-tablink">Workflow</a>
-	<a href="#" onclick="Tab(5)" id="link5" class="lenya-tablink">Revisions</a>
-	<a href="#" onclick="Tab(6)" id="link6" class="lenya-tablink">AC Auth.</a>
-	<a href="#" onclick="Tab(7)" id="link7" class="lenya-tablink">AC Live</a>
+<!--	<a href="#" onclick="Tab(3)" id="link3" class="lenya-tablink">Assets</a>
+	<a href="#" onclick="Tab(4)" id="link4" class="lenya-tablink">Workflow</a> -->
+	<a href="#" onclick="Tab(3)" id="link3" class="lenya-tablink">Revisions</a>
+	<a href="#" onclick="Tab(4)" id="link4" class="lenya-tablink">AC Auth.</a>
+	<a href="#" onclick="Tab(5)" id="link5" class="lenya-tablink">AC Live</a>
 
 	<!--  
 		These are the different content blocks of the tabs, each one needs to
@@ -55,7 +55,7 @@
              <input type="submit" value="Update Metadata"/>
           </form>
 		</div>
-	<div id="contentblock3" class="lenya-tab">
+<!--	<div id="contentblock3" class="lenya-tab">
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="lenya-info:assets"/>
           </table>
@@ -68,18 +68,18 @@
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="wf:version"/>
           </table>
-	</div>
-	<div id="contentblock5" class="lenya-tab">
+	</div> -->
+	<div id="contentblock3" class="lenya-tab">
           <table class="lenya-table-noborder">
-              <xsl:apply-templates select="rc:revisions"/>
+              <xsl:apply-templates select="rc:revisions/XPSRevisionControl"/>
           </table>
 	</div>
-	<div id="contentblock6" class="lenya-tab">
+	<div id="contentblock4" class="lenya-tab">
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="lenya-info:permissions[@area='authoring']"/>
           </table>
 	</div>
-	<div id="contentblock7" class="lenya-tab">
+	<div id="contentblock5" class="lenya-tab">
           <table class="lenya-table-noborder">
               <xsl:apply-templates select="lenya-info:permissions[@area='live']"/>
           </table>
@@ -116,10 +116,56 @@
 </xsl:template>
 
 
-<xsl:template match="rc:revisions">
-<tr><td>1.0</td><td>Felix Maeder</td><td>2003-04-01 18:01</td><td><a href="#">view</a></td><td><a href="#">restore</a></td></tr>
+<xsl:template match="rc:revisions/XPSRevisionControl">
+		<xsl:for-each select="CheckIn">
+			
+			<xsl:choose>
+				
+				<xsl:when test="position()=1">
+					<tr>
+						<td>Current version</td>
+						<td>&#160;</td>
+						<xsl:apply-templates select="Time"/>
+						<xsl:apply-templates select="Identity"/>
+					</tr>
+				</xsl:when>
+
+				<!-- Note, important: The timestamp we're inserting into the anchor
+				     in each row is actually the one from the *previous* version, thus the
+					 position()-1 calculation. This is because in order to roll back
+					 to a given version, we need to reactivate the backup file which was
+					 written *before* that version was checked in.
+				 --> 
+
+				<xsl:when test="position()>1">
+					<xsl:variable name="timeIndex" select="position() - 1"/>
+					<tr>
+						<td>
+							<xsl:element name="a">
+							<xsl:attribute name="href">?lenya.usecase=&amp;lenya.step=rollback&amp;documentid=&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
+
+						</td>
+						<td>
+							<xsl:element name="a">
+							<xsl:attribute name="href">?lenya.usecase=&amp;lenya.step=view&amp;documentid=&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
+
+						</td>
+						<xsl:apply-templates select="Time"/>
+						<xsl:apply-templates select="Identity"/>
+					</tr>
+				</xsl:when>
+			</xsl:choose>
+		
+		</xsl:for-each>
 </xsl:template>
 
+<xsl:template match="Time">
+	<td align="right"><xsl:value-of select="@humanreadable"/></td>
+</xsl:template>
+
+<xsl:template match="Identity">
+	<td><xsl:apply-templates/></td>
+</xsl:template>
 
 <xsl:template match="wf:version">
 <tr><td><xsl:value-of select="@state"/></td><td><xsl:value-of select="@user"/></td><td><xsl:value-of select="@date"/></td></tr>

@@ -17,6 +17,8 @@
     >
 
 <xsl:param name="url"/>
+<xsl:param name="chosenlanguage"/>
+<xsl:param name="defaultlanguage"/>
     
 <xsl:variable name="path-to-context"><xsl:call-template name="create-path-to-context"/></xsl:variable>
   
@@ -69,9 +71,14 @@ Apply nodes recursively
   
     <xsl:variable name="suffix">
       <xsl:if test="not(@href)">
-          <xsl:if test="@xml:lang">
-            <xsl:text/>_<xsl:value-of select="@xml:lang"/><xsl:text/>
-          </xsl:if>
+         <xsl:choose>
+            <xsl:when test="tree:label[lang($chosenlanguage)]">
+      	       <xsl:text/>_<xsl:value-of select="$chosenlanguage"/><xsl:text/>
+            </xsl:when>
+            <xsl:otherwise>
+      	       <xsl:text/>_<xsl:value-of select="$defaultlanguage"/><xsl:text/>
+            </xsl:otherwise>
+          </xsl:choose>	
           <xsl:text>.</xsl:text>
           <xsl:choose>
             <xsl:when test="@suffix">

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.16 2003/07/25 15:22:10 gregor Exp $
+$Id: DefaultDocument.java,v 1.17 2003/07/28 20:07:07 gregor Exp $
 <License>
 
  ============================================================================
@@ -108,6 +108,25 @@ public class DefaultDocument implements Document {
 
         setArea(area);
     }
+
+	/**
+	 * Creates a new instance of DefaultDocument.
+	 * @param publication The publication the document belongs to.
+	 * @param id The document ID (starting with a slash).
+	 * @param area The area.
+	 */
+	protected DefaultDocument(Publication publication, String id, String area, String language) {
+		assert id != null;
+		assert id.startsWith("/");
+		this.id = id;
+
+		assert (publication != null) && !"".equals(publication);
+		this.publication = publication;
+		this.language = language;
+		this.dublincore =  new DublinCore(this);
+
+		setArea(area);
+	}
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getFile()

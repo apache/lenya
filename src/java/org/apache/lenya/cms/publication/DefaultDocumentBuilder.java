@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.4 2003/07/23 13:21:11 gregor Exp $
+$Id: DefaultDocumentBuilder.java,v 1.5 2003/07/28 20:07:07 gregor Exp $
 <License>
 
  ============================================================================
@@ -109,8 +109,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
                 "] does not start with '/'!");
         }
 
-        DefaultDocument document = new DefaultDocument(publication, documentId, area);
-        document.setLanguage(language);
+        DefaultDocument document = new DefaultDocument(publication, documentId, area, language);
         document.setExtension(extension);
 
         return document;

@@ -27,6 +27,7 @@
     <xsp:include>org.apache.lenya.cms.ac2.xsp.CredentialWrapper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
+    <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
   </xsp:structure>                                                                                                                          
 
 <lenya-info:info>
@@ -64,13 +65,20 @@
     session.setAttribute("org.apache.lenya.cms.info.area", request.getParameter("lenya.area"));
     Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
 
-    String rootDir= "C:\\build\\jakarta-tomcat-4.1.24\\webapps\\lenya\\lenya\\pubs\\default\\"; // publication.getEnvironment().getPublicationPath();
-    String filename= "authoring" + docId + "/index.xml";
-    String servletContextPath = publication.getServletContext().getCanonicalPath();
+      String rootDir=publication.getEnvironment().getPublicationPath();
 
-//      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
+      String servletContextPath = publication.getServletContext().getCanonicalPath();
+      
+      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
+      String rcmlDirectory = rcEnvironment.getRCMLDirectory();
+      rcmlDirectory=rootDir+rcmlDirectory;
+      String backupDirectory = rcEnvironment.getBackupDirectory();
+      backupDirectory=rootDir+backupDirectory;
 
-      RevisionController rc = new RevisionController(rootDir);
+      RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
+
+      String filename=publication.getEnvironment().getAuthoringPath() +docId + "/index_" + (String)<input:get-attribute module="page-envelope" as="object" name="document-language"/> + ".xml";
+
 
       org.w3c.dom.Document rcmlDoc=null;
       try {
@@ -78,6 +86,7 @@
       } catch (Exception e) {
         <rc:exception>rollback: Unable to get DOM doc for rcml file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
       }                                                                                                                                    
+
       org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
       org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
 
@@ -87,9 +96,7 @@
       }
       
     </xsp:logic>
-    rootdir: <xsp:expr>rootDir</xsp:expr>
-    filename: <xsp:expr>filename</xsp:expr>
-    
+     <xsp:expr>rootE</xsp:expr>   
    </rc:revisions>
    
     <xsp:logic>
