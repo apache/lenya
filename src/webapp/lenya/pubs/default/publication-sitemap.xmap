@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.29 2003/05/14 14:00:04 edith Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.30 2003/05/14 17:01:37 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -8,8 +8,16 @@
     <map:generators default="file" />
     <map:matchers default="wildcard"/>
     <map:actions />
+<!--
+  <map:selectors>
+  <map:selector name="exception" logger="sitemap.selector.exception" src="org.apache.cocoon.selection.ExceptionSelector">
+    <exception name="execution" class="org.apache.lenya.cms.task.ExecutionException" />
+    <exception name="publishing" class="org.apache.lenya.cms.publishing.PublishingException"/>
+    <exception name="sitetree" class="org.apache.lenya.cms.publication.SiteTreeException"/>
+  </map:selector>
+  </map:selectors>
   </map:components>
-
+-->
   <map:views>
     <map:view name="aggregation" from-label="aggregation">
       <map:serialize type="xml"/>
@@ -39,6 +47,16 @@
           </map:act>
         </map:match>
       </map:match>
+<!--
+        <map:handle-errors>
+          <map:select type="exception">  
+            <map:when test="publishing">
+              <map:generate src= "sitetreeException.xml"/> 
+            </map:when>  
+          </map:select>  
+          <map:serialize/>
+        </map:handle-errors>
+-->
     </map:pipeline>
     <!-- /Publisher  -->
 
