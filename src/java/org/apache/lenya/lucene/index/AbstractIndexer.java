@@ -1,5 +1,4 @@
 /*
-$Id: AbstractIndexer.java,v 1.7 2003/07/23 13:21:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -77,7 +76,9 @@ import java.util.Arrays;
  * The factory method {@link #getDocumentCreator(String[])} is used to create a
  * DocumentCreator from the command-line arguments.
  *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: AbstractIndexer.java,v 1.8 2003/11/13 22:55:17 michi Exp $
  */
 public abstract class AbstractIndexer implements Indexer {
     private CommandLineLogger logger = new CommandLineLogger(getClass());
@@ -101,8 +102,8 @@ public abstract class AbstractIndexer implements Indexer {
     /**
      * Initializes this indexer with command-line parameters.
      */
-    public void configure(Element element) throws Exception {
-        documentCreator = createDocumentCreator(element);
+    public void configure(Element indexer, String configFileName) throws Exception {
+        documentCreator = createDocumentCreator(indexer, configFileName);
     }
 
     /**
@@ -114,8 +115,7 @@ public abstract class AbstractIndexer implements Indexer {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public abstract DocumentCreator createDocumentCreator(Element element)
-        throws Exception;
+    public abstract DocumentCreator createDocumentCreator(Element indexer, String configFileName) throws Exception;
 
     /**
      * Updates the index incrementally.
@@ -191,21 +191,36 @@ public abstract class AbstractIndexer implements Indexer {
      * Returns the filter used to receive the indexable files.
      */
     public FileFilter getFilter() {
-        return new AbstractIndexer.DefaultIndexFilter();
+        String[] indexableExtensions = { "html", "htm", "txt" };
+        return new AbstractIndexer.DefaultIndexFilter(indexableExtensions);
     }
 
     /**
      * FileFilter used to obtain the files to index.
      */
     public class DefaultIndexFilter implements FileFilter {
-        protected final String[] indexableExtensions = { "html", "htm", "txt" };
+        protected String[] indexableExtensions;
+
+        /**
+         * Default indexable extensions: html, htm, txt
+         */
+        public DefaultIndexFilter() {
+            String[] iE = { "html", "htm", "txt" };
+            indexableExtensions = iE;
+        }
+
+        /**
+         *
+         */
+        public DefaultIndexFilter(String[] indexableExtensions) {
+            this.indexableExtensions = indexableExtensions;
+        }
 
         /** Tests whether or not the specified abstract pathname should be
          * included in a pathname list.
          *
          * @param  pathname  The abstract pathname to be tested
-         * @return  <code>true</code> if and only if <code>pathname</code>
-         *          should be included
+         * @return  <code>true</code> if and only if <code>pathname</code> should be included
          *
          */
         public boolean accept(File file) {
@@ -253,7 +268,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.7 $
+     * @version $Revision: 1.8 $
      */
     public class IndexHandler extends AbstractIndexIteratorHandler {
         /**
@@ -306,7 +321,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.7 $
+     * @version $Revision: 1.8 $
      */
     public class CreateIndexHandler extends IndexHandler {
         /**
@@ -332,7 +347,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.7 $
+     * @version $Revision: 1.8 $
      */
     public class UpdateIndexHandler extends IndexHandler {
         /**

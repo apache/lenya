@@ -1,5 +1,4 @@
 /*
-$Id: ConfigurableDocumentCreator.java,v 1.6 2003/07/23 13:21:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -64,6 +63,8 @@ import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 
+import org.apache.log4j.Category;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -81,6 +82,7 @@ import java.io.Writer;
 import java.lang.reflect.Method;
 
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -90,10 +92,13 @@ import javax.xml.transform.stream.StreamSource;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: ConfigurableDocumentCreator.java,v 1.7 2003/11/13 22:55:17 michi Exp $
  */
 public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
+    Category log = Category.getInstance(ConfigurableDocumentCreator.class);
+  
     public static final String LUCENE_NAMESPACE = "http://www.wyona.org/2003/lucene";
     public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
 
@@ -118,7 +123,7 @@ public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
     }
 
     /**
-     * DOCUMENT ME!
+     * Transform source document into lucene document and generate a Lucene Document instance
      *
      * @param file DOCUMENT ME!
      * @param htdocsDumpDir DOCUMENT ME!
@@ -127,25 +132,39 @@ public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public Document getDocument(File file, File htdocsDumpDir)
-        throws Exception {
-        // System.out.println(getClass().getName() + ": indexing " + file.getAbsolutePath());
+    public Document getDocument(File file, File htdocsDumpDir) throws Exception {
+        log.debug(".getDocument() : indexing " + file.getAbsolutePath());
         try {
-            // transform source document into lucene document
+
+            org.w3c.dom.Document sourceDocument = null;
+            DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
+            parserFactory.setValidating(false);
+            parserFactory.setNamespaceAware(true);
+            parserFactory.setIgnoringElementContentWhitespace(true);
+            DocumentBuilder mybuilder = parserFactory.newDocumentBuilder();
+            sourceDocument = mybuilder.parse(file.getAbsolutePath());
+
+
+// FIXME: What is this good for: <?xml version="1.0"?><body>...</body>
+/*
             NamespaceHelper documentHelper = new NamespaceHelper(XHTML_NAMESPACE, "xhtml", "html");
             org.w3c.dom.Document sourceDocument = documentHelper.getDocument();
+
             Element rootNode = sourceDocument.getDocumentElement();
 
             String bodyText = getBodyText(file);
             Element bodyElement = documentHelper.createElement("body", bodyText);
             rootNode.appendChild(bodyElement);
+*/
+
+
+
 
             DOMSource documentSource = new DOMSource(sourceDocument);
             Writer documentWriter = new StringWriter();
 
             TransformerFactory tFactory = TransformerFactory.newInstance();
-            Transformer documentTransformer = tFactory.newTransformer(new StreamSource(
-                        new StringReader(getStylesheet())));
+            Transformer documentTransformer = tFactory.newTransformer(new StreamSource(new StringReader(getStylesheet())));
             documentTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
             documentTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
 
@@ -158,11 +177,11 @@ public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
             documentTransformer.setParameter("filename", fileName);
             documentTransformer.transform(documentSource, new StreamResult(documentWriter));
 
-            dumpLuceneDocument(file, documentWriter);
+            // DEBUG: debug lucene documents
+            //dumpLuceneDocument(file, documentWriter);
 
             DocumentBuilder builder = DocumentHelper.createBuilder();
-            org.w3c.dom.Document luceneDocument = builder.parse(new InputSource(
-                        new StringReader(documentWriter.toString())));
+            org.w3c.dom.Document luceneDocument = builder.parse(new InputSource(new StringReader(documentWriter.toString())));
 
             NamespaceHelper helper = new NamespaceHelper(LUCENE_NAMESPACE, "luc", luceneDocument);
             Element root = luceneDocument.getDocumentElement();
@@ -196,9 +215,10 @@ public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
     /**
      * Writes the lucene XML document to a file.
      */
-    protected static void dumpLuceneDocument(File file, Writer writer)
-        throws IOException {
-        File luceneDocumentFile = new File(file.getAbsolutePath() + ".xml");
+    protected void dumpLuceneDocument(File file, Writer writer) throws IOException {
+        log.debug(".dumpLuceneDocument(): Dump document: " + file.getAbsolutePath());
+
+        File luceneDocumentFile = new File(file.getAbsolutePath() + ".xluc");
         luceneDocumentFile.createNewFile();
 
         FileWriter fileWriter = new FileWriter(luceneDocumentFile);

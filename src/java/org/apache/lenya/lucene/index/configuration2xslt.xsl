@@ -2,10 +2,10 @@
 
 <!--
     Document   : configuration2xslt.xsl
-    Created on : 17. März 2003, 15:03
-    Author     : hrt
-    Description:
-        Purpose of transformation follows.
+    Created on : March 17, 2003, 15:03
+    Author     : Andreas Hartmann
+    Author     : Michael Wechner
+    Description: Generates meta stylesheet
 -->
 
 <xsl:stylesheet version="1.0"

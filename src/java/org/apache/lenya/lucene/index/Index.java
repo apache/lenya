@@ -1,5 +1,5 @@
 /*
-$Id: Index.java,v 1.8 2003/07/23 13:21:27 gregor Exp $
+$Id: Index.java,v 1.9 2003/11/13 22:55:17 michi Exp $
 <License>
 
  ============================================================================
@@ -110,8 +110,8 @@ public class Index {
 
             if (debug.equalsIgnoreCase("false") || debug.equalsIgnoreCase("no")) {
                 DebugConfiguration.setDebug(false);
-            } else if (debug.equalsIgnoreCase("false") || debug.equalsIgnoreCase("no")) {
-                DebugConfiguration.setDebug(false);
+            } else if (debug.equalsIgnoreCase("true") || debug.equalsIgnoreCase("yes")) {
+                DebugConfiguration.setDebug(true);
             } else {
                 System.err.println("ERROR: <debug> must be one of 'yes', 'true', 'no', or 'false'");
             }
@@ -135,7 +135,7 @@ public class Index {
 
             DOMUtil du = new DOMUtil();
             Document config = new DOMParserFactory().getDocument(argv[0]);
-            indexer.configure(du.getElement(config.getDocumentElement(), new XPath("indexer")));
+            indexer.configure(du.getElement(config.getDocumentElement(), new XPath("indexer")), argv[0]);
 
             if (create) {
                 indexer.createIndex(root, index);

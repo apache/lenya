@@ -1,5 +1,5 @@
 /*
-$Id: DefaultIndexer.java,v 1.5 2003/07/23 13:21:27 gregor Exp $
+$Id: DefaultIndexer.java,v 1.6 2003/11/13 22:55:17 michi Exp $
 <License>
 
  ============================================================================
@@ -76,8 +76,7 @@ public class DefaultIndexer extends AbstractIndexer {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public DocumentCreator createDocumentCreator(Element element)
-        throws Exception {
+    public DocumentCreator createDocumentCreator(Element indexer, String configFileName) throws Exception {
         return new DefaultDocumentCreator();
     }
 }

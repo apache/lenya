@@ -1,5 +1,4 @@
 /*
-$Id: Indexer.java,v 1.6 2003/07/23 13:21:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,14 +60,15 @@ import java.io.File;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: Indexer.java,v 1.7 2003/11/13 22:55:17 michi Exp $
  */
 public interface Indexer {
     /**
      * Configures this indexer.
      */
-    void configure(Element element) throws Exception;
+    void configure(Element indexer, String configFileName) throws Exception;
 
     /**
      * Indexes the contents of a directory.
