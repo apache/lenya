@@ -48,7 +48,7 @@ src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="4" height="4" /></td>
 </td>
 <td background="/lenya/lenya/menu/images/grau-bg2.gif">
   <a href="{$context_prefix}/admin/">
-    <img border="0" src="/lenya/lenya/menu/images/admin_active.png" />
+    <img border="0" src="/lenya/lenya/menu/images/admin_active.gif" />
   </a>
   <a href="{$context_prefix}/info/">
     <img border="0" src="/lenya/lenya/menu/images/info_active.gif" />
