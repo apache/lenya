@@ -2,15 +2,14 @@
 
 <oscom xmlns:xi="http://www.w3.org/2001/XInclude">
 
-<!--
-<xi:include href="navigation.xml"/>
--->
 <xi:include xml:base="cocoon:" href="/authoring/navigation.xml"/>
 
-<xi:include xml:base="cocoon:" href="/authoring/home.xml#xpointer(/home/html)"/>
+<body xlink:href="home.xml#xpointer(/home/html)" xlink:show="embed" xmlns:xlink="http://www.w3c.org/2002/xmlns/xlink"/>
 <!--
-<xi:include xml:base="cocoon:" href="/authoring/home.xml#xpointer(/home/about)"/>
-<xi:include xml:base="cocoon:" href="/authoring/home.xml#xpointer(/home/features)"/>
+<xi:include xml:base="cocoon:" href="/authoring/home.xml"/>
+-->
+<!--
+<xi:include xml:base="cocoon:" href="/authoring/home.xml#xpointer(/home/html)"/>
 -->
 
 <news xmlns:xi="http://www.w3.org/2001/XInclude">
