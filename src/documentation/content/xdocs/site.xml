@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: site.xml,v 1.5 2004/07/30 22:50:28 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" tab="project">
     <project-information href="" label="Project" tab="project">
@@ -30,7 +30,8 @@
         <!--install-overview href="index.html" label="Overview"/-->
         <prerequisites href="prerequisites.html" label="Prerequisites"/>
         <download href="index.html" label="Download"/>
-        <cvs href="cvs.html" label="CVS Access"/>
+        <cvs href="subversion.html" label="Subversion Access"/>
+        <!--<cvs href="cvs.html" label="CVS Access"/>-->
         <install href="source_version.html" label="Installation Instructions"/>
     </installation>
         <documentation href="docs/" label="Documentation" tab="docs">
