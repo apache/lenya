@@ -3,7 +3,6 @@
 <xsp:page 
     language="java" 
     xmlns:xsp="http://apache.org/xsp"
-    xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
     xmlns:xsp-request="http://apache.org/xsp/request/2.0"
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
 	xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
@@ -16,8 +15,6 @@
 
 <menu>
 
-  <xsp-lenya:util/>
-  
   <xsp:logic>
     Publication publication = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
   </xsp:logic>
@@ -39,8 +36,6 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item>Passwd</item>
-        <item>Switch&#160;User</item>
         <item><xsp:attribute name="href"><xsp-request:get-servlet-path/><xsp-request:get-context-path/>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
@@ -65,13 +60,6 @@
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=rename&amp;lenya.step=showscreen</xsp:attribute>Rename</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=move-node&amp;lenya.step=move-node&amp;properties.movenode.direction=up</xsp:attribute>Move Up</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=move-node&amp;lenya.step=move-node&amp;properties.movenode.direction=down</xsp:attribute>Move Down</item>
-<!--        
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=add-child&amp;lenya.step=showscreen</xsp:attribute>Add Child Element</item>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=add-sibling&amp;lenya.step=showscreen</xsp:attribute>Insert New Document</item>
-      </block>
-      <block>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=deleteTrash&amp;lenya.step=showscreen</xsp:attribute>Delete Trash</item>
--->        
       </block>
     </menu>
 
@@ -81,8 +69,8 @@
         <item wf:event="delete"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=delete&amp;lenya.step=showscreen</xsp:attribute>Delete</item>
         <item wf:event="archive"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=archive&amp;lenya.step=showscreen</xsp:attribute>Archive</item>
         <item wf:event="restore"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=restore&amp;lenya.step=showscreen</xsp:attribute>Restore</item>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=approval-submit&amp;lenya.step=showscreen</xsp:attribute>Submit for Approval</item>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=approval-reject&amp;lenya.step=showscreen</xsp:attribute>Reject</item>
+        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=submit&amp;lenya.step=showscreen</xsp:attribute>Submit for Approval</item>
+        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=reject&amp;lenya.step=showscreen</xsp:attribute>Reject</item>
         <item wf:event="deactivate"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=deactivate&amp;lenya.step=showscreen</xsp:attribute>Deactivate</item>
       </block>
     </menu>

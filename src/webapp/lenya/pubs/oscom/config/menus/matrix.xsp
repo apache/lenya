@@ -4,7 +4,6 @@
   language="java" 
   xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
@@ -12,18 +11,12 @@
 
 <menu>
 
-  <xsp-lenya:util/>
-
   <url-info>
     <context-prefix><xsp-request:get-context-path/></context-prefix>
     <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
     <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
     <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
-<!--
-    <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
-    <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
--->
   </url-info>
 
   <xsp:logic>
@@ -38,10 +31,6 @@
     <menu name="File" label="File">
       <block>
         <item uc:usecase="edit" href="?lenya.step=open&amp;form=cmfs">Edit&#160;with&#160;Forms</item>
-        <!--<item uc:usecase="xopus" href="?lenya.step=open&amp;doctype=cmfs">Edit&#160;with&#160;Xopus</item>-->
-<!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/matrix/"+projectid+".html"</xsp:expr>?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
--->
       </block>
       <block>
         <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=/matrix/<xsp:expr>projectid</xsp:expr>.xml&amp;uris=/lenya/oscom/matrix/<xsp:expr>projectid</xsp:expr>.html,/lenya/oscom/matrix/index.html</xsp:attribute>Publish</item>
@@ -59,7 +48,7 @@
 
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
+        <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
       </block>
       <block>
 	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
@@ -72,13 +61,6 @@
         <item><xsp:attribute name="href"><xsp:expr>projectid</xsp:expr>.xml</xsp:attribute>View&#160;Page&#160;XML</item>
         <item><xsp:attribute name="href">body-<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute>View&#160;Body&#160;XML</item>
       </block>
-<!--
-      <block>
-        <item href="?lenya.usecase=xopus&amp;lenya.step=xml">XML</item>
-        <item href="?lenya.usecase=xopus&amp;lenya.step=xsd&amp;doctype=cmfs">XSD</item>
-        <item href="?lenya.usecase=xopus&amp;lenya.step=xslt&amp;doctype=cmfs">XSLT</item>
-      </block>
--->
     </menu>
   </menus>
 

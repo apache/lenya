@@ -13,7 +13,7 @@ and was originally created by <a href="mailto:michi@apache.org">Michael Wechner<
 Apache Lenya includes software developed by the <a href="http://www.apache.org/">Apache Software Foundation</a>, 
 <a href="http://w3c.org">W3C</a>, <br /><a href="http://dom4j.org">DOM4J</a>, and <a href="http://sf.net/projects/websphinx">WebSHPINX</a>.
 <br /><br /> 
-Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+Copyright (C) 1999-2004 The Apache Software Foundation. All rights reserved.
 </p>
 <form>
 <input type="button" value="Back" onClick="history.go(-1)"/>

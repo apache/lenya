@@ -4,7 +4,6 @@
     language="java" 
     xmlns:xsp="http://apache.org/xsp"
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
-    xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
     xmlns:xsp-request="http://apache.org/xsp/request/2.0"
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
     xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
@@ -23,8 +22,6 @@
   <menus>
     <menu i18n:attr="name" name="File" label="File">
       <block>
-        <item><i18n:text>Passwd</i18n:text></item>
-        <item><i18n:text>Switch User</i18n:text></item>
         <item href="?lenya.usecase=logout&amp;lenya.step=showscreen"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>

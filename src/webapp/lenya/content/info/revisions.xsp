@@ -3,7 +3,6 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
   xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
   xmlns:li="http://apache.org/cocoon/lenya/info/1.0"
   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
