@@ -31,6 +31,7 @@ Lenya PMC:
    * Christian Egli (egli@apache.org)
    * Andreas Hartmann (andreas@apache.org)
    * Rolf Kulemann (roku@apache.org)
+   * Steven Noels (stevenn@outerthought.org)
    * Gregor J. Rothfuss (gregor@apache.org)
    * Thorsten Scherler (thorsten@apache.org)
    * Michael Wechner (michi@apache.org)
