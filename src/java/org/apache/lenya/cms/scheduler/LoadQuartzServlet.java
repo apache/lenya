@@ -1,5 +1,5 @@
 /*
- * $Id: LoadQuartzServlet.java,v 1.15 2003/02/11 19:51:09 andreas Exp $
+ * $Id: LoadQuartzServlet.java,v 1.16 2003/02/11 20:33:17 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -78,6 +78,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.w3c.dom.Document;
 import org.wyona.xml.DocumentHelper;
 
 
@@ -85,7 +86,7 @@ import org.wyona.xml.DocumentHelper;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.15 2003/02/11 19:51:09 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.16 2003/02/11 20:33:17 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -252,14 +253,12 @@ public class LoadQuartzServlet extends HttpServlet {
         log.debug("-------------------- End Session Attributes --------------------");
 
         // the publicationID is fetched from the session
-        String publicationId = (String) request.getSession().getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
+        // String publicationId = (String) request.getSession().getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
+        String publicationId = request.getParameter("publication");
 
         if ((publicationId == null) || publicationId.equals("")) {
-            publicationId = "No_session_was_passed_in";
-            log.error("No publication ID provided! ", new IllegalStateException());
-
-            // FIXME:
-            publicationId = "no_such_publication";
+            log.debug("No publication ID provided");
+            publicationId = null;
         }
 
         // we grab the document URI from from a hidden field if a job is
@@ -315,7 +314,14 @@ public class LoadQuartzServlet extends HttpServlet {
         response.setContentType("text/xml");
 
         try {
-            DocumentHelper.writeDocument(getScheduler().getSnapshot(publicationId), writer);
+            Document snapshot;
+            if (publicationId == null) {
+                snapshot = getScheduler().getSnapshot();
+            }
+            else {
+                snapshot = getScheduler().getSnapshot(publicationId);
+            }
+            DocumentHelper.writeDocument(snapshot, writer);
         } catch (Exception e) {
             log.error("Can't create job snapshot: ", e);
         }

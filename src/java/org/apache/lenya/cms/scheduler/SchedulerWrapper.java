@@ -1,5 +1,5 @@
 /*
- * $Id: SchedulerWrapper.java,v 1.6 2003/02/11 19:51:09 andreas Exp $
+ * $Id: SchedulerWrapper.java,v 1.7 2003/02/11 20:33:17 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -375,24 +375,13 @@ public class SchedulerWrapper {
     }
 
     /**
-     * Return an xml description of all scheduled jobs for the given documentID.
-     *
-     * @param jobGroup a<code>PrintWriter</code> value
-     *
+     * Return an xml description of all scheduled jobs.
      * @return DOCUMENT ME!
-     *
      * @exception SchedulerException if an error occurs
      */
-    public Document getSnapshot(String jobGroup) throws SchedulerException {
-        log.debug("Creating job snapshot for group '" + jobGroup + "'");
-
-        String[] triggerNames = null;
-
-        Trigger trigger;
-        JobDetail jobDetail;
-        GregorianCalendar nextFireTime;
-        JobDataMap jobDataMap;
-
+    public Document getSnapshot()
+            throws SchedulerException {
+        log.debug("Creating job snapshot for all groups");
         NamespaceHelper helper = getNamespaceHelper();
         Document document = helper.getDocument();
         Element root = document.getDocumentElement();
@@ -400,23 +389,45 @@ public class SchedulerWrapper {
         // print a list of all available trigger types
         root.appendChild(getTriggerTypes(helper));
 
-        // print a list of all available tasks
-        // root.add(TaskJob.getTasks(getServletContextPath(), jobGroup));
-        // and finally for all publications print all scheduled Jobs
         String[] jobGroupNames = getScheduler().getJobGroupNames();
-
         for (int groupIndex = 0; groupIndex < jobGroupNames.length; groupIndex++) {
-            Element publicationElement = helper.createElement("publication");
-            publicationElement.setAttribute("name", jobGroupNames[groupIndex]);
-            root.appendChild(publicationElement);
-
-            Element jobsElement = getJobsElement(helper, jobGroupNames[groupIndex]);
-            publicationElement.appendChild(jobsElement);
+            root.appendChild(createSnapshot(helper, jobGroupNames[groupIndex]));
         }
+        return document;
+    }
+
+    /**
+     * Return an xml description of all scheduled jobs for the given documentID.
+     *
+     * @param jobGroup a<code>PrintWriter</code> value
+     * @return DOCUMENT ME!
+     * @exception SchedulerException if an error occurs
+     */
+    public Document getSnapshot(String jobGroup)
+            throws SchedulerException {
+        log.debug("Creating job snapshot for group '" + jobGroup + "'");
+
+        NamespaceHelper helper = getNamespaceHelper();
+        Document document = helper.getDocument();
+        Element root = document.getDocumentElement();
+
+        // print a list of all available trigger types
+        root.appendChild(getTriggerTypes(helper));
+        root.appendChild(createSnapshot(helper, jobGroup));
 
         return document;
     }
 
+    protected Element createSnapshot(NamespaceHelper helper, String jobGroup)
+            throws SchedulerException {
+        Element publicationElement = helper.createElement("publication");
+        publicationElement.setAttribute("name", jobGroup);
+        Element jobsElement = getJobsElement(helper, jobGroup);
+        publicationElement.appendChild(jobsElement);
+        return publicationElement;
+    }
+    
+    
     /**
      * DOCUMENT ME!
      *
@@ -435,11 +446,21 @@ public class SchedulerWrapper {
                 NamespaceHelper helper = getNamespaceHelper(document);
 
                 Element publicationElement = helper.getFirstChild(schedulerElement, "publication");
-                Element jobsElement = helper.getFirstChild(publicationElement, "jobs");
-                Element[] jobElements = helper.getChildren(jobsElement, "job");
+                
+                String elementPublicationId = publicationElement.getAttribute("name");
+                if (!elementPublicationId.equals(publicationId)) {
+                    log.error(
+                        "\nRestoring jobs failed:"
+                        + "\nThe jobs.xml file contains a wrong publication: "
+                        + elementPublicationId);
+                }
+                else {
+                    Element jobsElement = helper.getFirstChild(publicationElement, "jobs");
+                    Element[] jobElements = helper.getChildren(jobsElement, "job");
 
-                for (int i = 0; i < jobElements.length; i++) {
-                    restoreJob(jobElements[i]);
+                    for (int i = 0; i < jobElements.length; i++) {
+                        restoreJob(jobElements[i]);
+                    }
                 }
             } catch (Exception e) {
                 log.error("Restoring jobs failed: ", e);
