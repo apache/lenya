@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -465,6 +466,9 @@ public class IterativeHTMLCrawler implements Configurable {
      * @param url The URL
      */
     public void dumpHTDoc(URL url) {
+        InputStream in = null;
+        FileOutputStream out = null;
+        
         String ext = getExtension(url);
 
         String filename = this.htdocsDumpDir + url.getFile();
@@ -485,32 +489,15 @@ public class IterativeHTMLCrawler implements Configurable {
                 }
 
                 HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
-                java.io.InputStream in = httpConnection.getInputStream();
+                in = httpConnection.getInputStream();
 
-                FileOutputStream out = new FileOutputStream(file);
+                out = new FileOutputStream(file);
                 byte[] buffer = new byte[1024];
                 int bytesRead = -1;
                 while ((bytesRead = in.read(buffer)) >= 0) {
                     out.write(buffer, 0, bytesRead);
                 }
-                out.close();
 
-/*
-                    BufferedInputStream bin = new BufferedInputStream(in);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(bin));
-
-                    java.io.FileWriter fw = new java.io.FileWriter(file);
-                    int i;
-
-                    while ((i = reader.read()) != -1) {
-                        fw.write(i);
-                    }
-
-                    fw.close();
-
-                    bin.close();
-*/
-                in.close();
                 httpConnection.disconnect();
 
                 log.info("URL dumped: " + url + " (" + file + ")");
@@ -520,6 +507,15 @@ public class IterativeHTMLCrawler implements Configurable {
             } catch (final IOException e) {
                 log.error("" + e);
                 log.error("URL not dumped: " + url);
+            } finally {
+                try {
+                    if (in !=null)
+                        in.close();
+                    if (out != null)
+                        out.close();
+                } catch (final IOException e1) {
+                    log.error("Failed to close stream: " +e1.toString());
+                }
             }
 
         } else {
