@@ -29,7 +29,6 @@
             <i18n:text>Overview</i18n:text>
           </a>
         </td>
-        <jx:if test="${usecase.getParameter('languageexists').equals('true')}">
           <jx:if test="${not(usecase.getParameter('documentid').equals('/'))}">
             <td>
               <a href="?lenya.usecase=tab.meta" class="lenya-tablink">
@@ -85,11 +84,52 @@
               <i18n:text>Scheduler</i18n:text>
             </a>
           </td>
-        </jx:if>
       </tr>
     </table>
     <div id="contentblock1" class="lenya-tab">
-      <!-- TODO xinclude the generated workflow history here -->
+      <h2><i18n:text>Variables</i18n:text></h2>
+      <table class="lenya-table">
+        <tr><th><i18n:text>Name</i18n:text></th><th><i18n:text>Value</i18n:text></th></tr>
+        <jx:forEach var="item" items="${usecase.getParameter('variables')}">
+          <!--wf:variable -->
+          <tr>
+            <td>
+              <jx:out value="${item.name}"/>
+            </td>
+            <td>
+              <jx:out value="${item.value}"/>
+            </td>
+          </tr>
+        </jx:forEach>
+      </table>
+      <h2><i18n:text>History</i18n:text></h2>
+      <table class="lenya-table">
+      <tr>
+          <th><i18n:text>Date</i18n:text></th>
+          <th><i18n:text>Event</i18n:text></th>
+          <th><i18n:text>State</i18n:text></th>
+          <th><i18n:text>User</i18n:text></th>
+          <th><i18n:text>IP Address</i18n:text></th>
+        </tr>
+        <jx:forEach var="item" items="${usecase.getParameter('versions')}">
+          <tr>
+            <td><jx:out value="${item.date}"/></td>
+            <td><i18n:text><jx:out value="${item.event}"/></i18n:text></td>
+            <td><i18n:text><jx:out value="${item.state}"/></i18n:text></td>
+            <td>
+              <span style="white-space: nobreak">
+              <jx:out value="${item.userid}"/>
+              <jx:if test="${item.username} != ''">
+                (<jx:out value="${item.username}"/>)
+              </jx:if>
+              </span>
+            </td>
+            <td>
+              <jx:out value="${item.ip-address}"/>
+            </td>
+          </tr>
+        </jx:forEach>
+      </table>
     </div>
   </div>
 </page:page>

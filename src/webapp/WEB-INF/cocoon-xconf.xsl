@@ -273,6 +273,7 @@
     <component-instance name="tab.assets" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Assets"/>
     <component-instance name="tab.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.usecases.Metadata"/>
     <component-instance name="tab.overview" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Overview"/>
+    <component-instance name="tab.workflow" logger="lenya.site" class="org.apache.lenya.cms.workflow.usecases.History"/>
   </usecases>
 
   </xsl:copy>
