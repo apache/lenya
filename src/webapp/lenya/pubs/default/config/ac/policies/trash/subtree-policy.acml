@@ -15,25 +15,16 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
-    
-<usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
-	<usecase id="create">
-		<role id="edit"/>
-	</usecase>
-    <usecase id="archive">
-        <role id="edit"/>
-    </usecase>
-    <usecase id="delete">
-        <role id="edit"/>
-    </usecase>
-    <usecase id="restore">
-        <role id="edit"/>
-    </usecase>
+<!-- $Id: subtree-policy.acml 42702 2004-03-13 12:34:18Z gregor $ -->
 
-	<usecase id="userChangeProfile"><role id="edit"/><role id="admin"/></usecase>
-	<usecase id="userChangePasswordUser"><role id="edit"/></usecase>
-	<usecase id="userChangePasswordAdmin"><role id="admin"/></usecase>
-	<usecase id="userChangeGroups"><role id="admin"/></usecase>
+<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 
-</usecases>
+  <group id="editor">
+    <role id="edit"/>
+  </group>
+
+  <group id="reviewer">
+    <role id="review"/>
+  </group>
+
+</policy> 

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: workflow.xml,v 1.10 2004/03/13 12:34:18 gregor Exp $ -->
+<!-- $Id$ -->
 
 <workflow xmlns="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -72,5 +72,15 @@
     <event id="archive"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
     <assign variable="is_live" value="false"/>
-  </transition>        
+  </transition>
+  
+  <transition source="archive" destination="authoring">
+    <event id="restore"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+  </transition>
+  
+  <transition source="trash" destination="authoring">
+    <event id="restore"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+  </transition>  
 </workflow>
