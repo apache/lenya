@@ -62,11 +62,21 @@
           </xsl:call-template>
         </ul>
 
-        <input type="submit" value="YES"/>
+        <input type="submit" value="YES, publish now"/>
         <!--<input type="submit" name="submit" value="cancel"/>-->
             &#160;&#160;&#160;<input type="button" onClick="location.href='{referer}';" value="Cancel"/>
       </form>
     </p>
+
+<p>
+&#160;<br />
+</p>
+
+<p>
+<div class="menu">
+Or publish later ...
+</div>
+</p>
     
     <p>
 
