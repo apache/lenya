@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.9 2002/01/15 22:34:55 giacomo Exp $
+   @version CVS $Id: build.xml,v 1.10 2002/01/17 15:02:37 giacomo Exp $
 
 -->
 
@@ -117,6 +117,7 @@
   -->
   <property name="src.webapp.dir" value="./src/webapp"/>
 
+  <property name="tools.jar" value="${java.home}/../lib/tools.jar"/>
 
   <!--
     these are here only for those who use jikes compiler. For other
@@ -173,16 +174,42 @@
 
     <property name="packages"      value="org.wyona.*"/>
     <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
+
+    <available file="${tools.jar}" property="tools.jar.present"/>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Check the tools.jar existance                                -->
+  <!-- =============================================================-->
+  <target name="check-tools-lib" unless="tools.jar.present" depends="init">
+    <!-- NOTE: java.home is normally set by the JVM to the /jre directory -->
+    <echo message="-------------------------------------------------------------"/>
+    <echo message="Couldn't find the tools.jar."/>
+    <echo message="  Make sure to copy the tools.jar from your"/>
+    <echo message="  $$JAVA_HOME/lib directory to the"/>
+    <echo message="  ${build.webapp}/WEB-INF/lib/javac.jar"/>
+    <echo message="  directory prior to build/install the webapp/war file(s)"/>
+    <echo message="-------------------------------------------------------------"/>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Copies the tools.jar to javac.jar in web-inf/lib             -->
+  <!-- =============================================================-->
+  <target name="prepare-tools-lib" if="tools.jar.present" depends="init">
+    <!-- NOTE: java.home is normally set by the JVM to the /jre directory -->
+    <copy file="${tools.jar}" tofile="${build.webapp}/WEB-INF/lib/javac.jar"/>
   </target>
 
   <!-- ============================================================ -->
   <!-- Prepares the build webapp directory                          -->
   <!-- ============================================================ -->
-  <target name="prepare-cocoon" depends="init">
+  <target name="prepare-cocoon" depends="init,check-tools-lib,prepare-tools-lib">
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${src.cocoon.dir}">
         <exclude name="sitemap.xmap"/>
         <exclude name="cocoon.xconf"/>
+        <exclude name="**/logkit.xconf"/>
+        <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
   </target>
