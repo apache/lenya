@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SSI.java,v 1.8 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 
@@ -26,11 +26,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.log4j.Category;
+
 
 /**
- *@deprecated
+ * SSI - Server Side Include, which can be used within a ResourceReader supporting SSI
+ * 
+ * @deprecated
  */
 public class SSI {
+    static Category log = Category.getInstance(SSI.class);
+
     static String fileinc = "<!--#include file=\"";
     static String virtinc = "<!--#include virtual=\"";
 
@@ -71,7 +77,7 @@ public class SSI {
             }
         }
 
-        System.err.println("Including file: " + fileName);
+        log.info("Including file: " + fileName);
 
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileName));
         parseStream(bis, out);
@@ -92,20 +98,22 @@ public class SSI {
             if ((count < 13) && (c == fileinc.charAt(count))) {
                 count++;
 
-                //System.err.println("Matched shared character("+count+"): "+(char) c);
+                log.debug("Matched shared character("+count+"): "+(char) c);
                 continue;
             } else if (count == 13) {
                 if (c == fileinc.charAt(count)) {
-                    type = 19;
+                    type = 19; // file include
                     count++;
 
-                    //System.err.println("Matched file character");
+                    log.debug("Matched file character(14): f");
+                    log.debug("Seems like a file include has been found");
                     continue;
                 } else if (c == virtinc.charAt(count)) {
-                    type = 22;
+                    type = 22; // virtual include
                     count++;
 
-                    //System.err.println("Matched virt character");
+                    log.debug("Matched virt character(14): v");
+                    log.debug("Seems like a virtual include has been found");
                     continue;
                 } else {
                     out.write(fileinc.substring(0, count).getBytes());
@@ -118,11 +126,11 @@ public class SSI {
                 if ((type == 19) && (c == fileinc.charAt(count))) {
                     count++;
 
-                    //System.err.println("Matched file character("+count+"): "+(char)c);
+                    log.debug("Matched file character("+count+"): "+(char)c);
                 } else if ((type == 22) && (c == virtinc.charAt(count))) {
                     count++;
 
-                    //System.err.println("Matched virt character("+count+"): "+(char)c);
+                    log.debug("Matched virt character("+count+"): "+(char)c);
                 } else {
                     String outs = (type == 19) ? fileinc : virtinc;
                     out.write(outs.substring(0, count).getBytes());
@@ -131,15 +139,17 @@ public class SSI {
                 }
 
                 if (count >= type) {
-                    StringBuffer fName = new StringBuffer();
 
+                    // Read the filename of the file to be included
+                    StringBuffer fName = new StringBuffer();
                     while (((c = in.read()) != -1) && (c != '"')) {
                         fName.append((char) c);
                     }
 
-                    while (((c = in.read()) != -1) && (c != '>'))
-                        ;
+                    // Read to the end of the include statement
+                    while (((c = in.read()) != -1) && (c != '>'));
 
+                    // Include the file
                     includeFile(fName.toString(), (type == 22), out);
                     count = 0;
                     type = 0;
