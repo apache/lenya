@@ -69,6 +69,7 @@
     <irc href="irc.html" label="IRC"/>
     <meetings href="meetings.html" label="Meetings and Sprints"/>
     <coding href="coding-guidelines.html" label="Coding Guidelines"/>
+    <website-update href="website-update.html" label="Website Update"/>
   </community>
 
 </site>
