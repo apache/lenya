@@ -35,6 +35,7 @@
     <xsp:include>org.apache.lenya.cms.publication.DefaultDocumentBuilder</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.SiteTreeException</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentLanguagesHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
   </xsp:structure>
@@ -43,17 +44,15 @@
 		<lenya-info:overview>
 
     <xsp:logic>
-      Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
-
-      final Object nodeObject = <input:get-attribute module="sitetree" as="object" name="authoring-node"/>;
-      SiteTreeNode node = null;
+      final Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
       String visibility = "visible";
-      if(nodeObject instanceof SiteTreeNode) { 
-          node = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="authoring-node"/>;
+      
+      try {
+          SiteTreeNode node = doc.getPublication().getSiteTree(doc.getArea()).getNode(doc.getId());
+          if (!node.visibleInNav()) visibility = "hidden";
+      } catch(SiteTreeException e) {
+          throw new ProcessingException(e);
       }
-      else
-          node = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="trash-node"/>;
-      if (!node.visibleInNav()) visibility = "hidden";
 
       boolean exists = false;
       boolean existsLanguage = false;
@@ -98,7 +97,7 @@
 						<lenya-info:area></lenya-info:area>
 						<lenya-info:workflow-state><input:get-attribute module="workflow" as="string" name="state"/></lenya-info:workflow-state>
 						<lenya-info:is-live><input:get-attribute module="workflow" as="string" name="variable.is_live"/></lenya-info:is-live>
-                                                <lenya-info:visibleinnav><xsp:expr>visibility</xsp:expr></lenya-info:visibleinnav>
+            <lenya-info:visibleinnav><xsp:expr>visibility</xsp:expr></lenya-info:visibleinnav>
       }
       
     </xsp:logic>
