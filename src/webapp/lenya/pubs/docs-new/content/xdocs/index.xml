@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+<section><title>Welcome to Apache Lenya</title>
+<p>
+Lenya CMS is an <link href="http://www.opensource.org">Open-Source</link>
+Content Management and Publishing System written in 100% pure Java. It
+is based on open standards such as <link href="http://www.w3c.org/XML/">XML</link> and <link
+href="http://www.w3c.org/TR/xslt">XSLT</link>. One of its core
+components is <link href="http://xml.apache.org/cocoon/">Cocoon</link> from the
+<link href="http://www.apache.org">Apache Software Foundation</link>.
+</p>
+
+<p>
+Lenya is an interpreter of various XMLs, not just
+user's data, such as for instance articles, press-releases or addresses,
+but also regarding functionalities, such as for instance
+access controlling (IML and PML resp. <link href="http://www.oasis-open.org/committees/xacml/">XACML</link>), 
+revision controlling (RCML)
+or workflow management (WFML). The concept is similar to the one of a
+"HTML Browser". You should be able to switch the Content Management System
+at any time. The network is the CMS.
+</p>
+
+<p>
+Lenya supports inline WYSIWYG editing, which means users (authors/editors) do
+not have to learn (or see) XML. This is possible thanks to the support
+of XML, XSLT and XML Schema on the client side, such is the case
+for certain browsers (Mozilla/Netscape or IE).
+But there also exists the "Lenya Administrator" for the more
+advanced user, where the CMS can be monitored, XML can be edited
+directly or authentication and authorization can be managed.
+</p>
+
+<p>
+You are very welcome to participate in the <link href="http://www.lenya.org">Lenya CMS project</link>.
+Thank you very much for your suggestions and contributions.
+</p></section>
+  </body>
+</document>

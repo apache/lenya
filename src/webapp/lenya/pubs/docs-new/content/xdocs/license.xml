@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya: License</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+<section><title>The Apache Software License</title>
+<p>Copyright (c) 2002 lenya. All rights reserved.</p>
+    <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided 
+     that the following conditions are met:</p>
+      <ul>
+       <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the 
+       following disclaimer. 
+       </li>
+       <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the 
+       following disclaimer in the documentation and/or other materials provided with the distribution. 
+       </li>
+      <li>All advertising materials mentioning features or use of this software must display the following acknowledgment:
+      "This product includes software developed by lenya (<link href="http://www.lenya.org">http://www.lenya.org</link>)" 
+      </li>
+      <li>The name "lenya" must not be used to endorse or promote products derived from this software without prior 
+      written permission. For written permission, please contact <link href="mailto:contact@lenya.org">contact@lenya.org</link>
+      </li>
+      <li>Products derived from this software may not be called "lenya" nor may "lenya" appear in their names without 
+      prior written permission of lenya. 
+      </li>
+      <li>Redistributions of any form whatsoever must retain the following acknowledgment: "This product includes 
+      software developed by lenya (<link href="http://www.lenya.org">http://www.lenya.org</link>)"
+      </li>
+     </ul>
+    <p>THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY
+    WARRANTY EXPRESS OR IMPLIED, INCLUDING THE WARRANTY
+    OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+    MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+    lenya WILL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY
+    YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL
+    lenya BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+    CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya
+    HAS BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE.
+    lenya WILL NOT BE LIABLE FOR ANY THIRD PARTY CLAIMS
+    AGAINST YOU.
+    </p>
+    <p>
+Lenya includes software developed by the <link href="http://www.apache.org">Apache Software Foundation</link>,
+ <link href="http://www.w3c.org">W3C</link>, <link href="http://www.dom4j.org">DOM4J Project</link>,
+ <link href="http://www.bitfluxeditor.org">BitfluxEditor</link> and <link href="http://www.xopus.org">Xopus</link>.
+    </p>
+</section>
+  </body>
+</document>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya: Roadmap</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Gregor J. Rothfuss" email="gregor@apache.org"/>
+    </authors>
+  </header>
+  <body>
+<section><title>Lenya Roadmap</title>
+
+<section><title>Contents</title>
+<ul>
+<li><link href="#positioning">Positioning Diagram</link></li>
+<li><link href="#releases">Releases</link></li>
+<li><link href="#goals">Long-Term Goals</link></li>
+<li><link href="#1.0">Release 1.0</link></li>
+<li><link href="#1.2">Release 1.2</link></li>
+<li><link href="#1.4">Release 1.4</link></li>
+</ul>
+</section>
+<anchor name="positioning" />
+<section><title>Positioning Diagram</title>
+<p>
+The Lenya roadmap is determined by the Lenya positioning diagram. It specifies the priorities
+and orientation, and shows areas for futher development. The 1.0 release marks the point
+where Lenya is donated to the Apache foundation. Subsequent releases are under the Apache
+umbrella.<br /><br />
+<img src="images/cms-positioning.png" /><br /><br />
+
+The positioning diagram defines 8 areas, with a relative weight of 1-7. The current Lenya code base is
+represented by the dark blue area, while the light blue area indicates focus areas for future versions.
+The positioning diagram is based on a hard look at where we currently stand. The various areas are defined below:
+<ol>
+<li><strong>Community</strong><br />How viable is the community supporting the product? Are there independent contributors?
+How active are mailing lists, web sites? Is the community healthy, friendly and welcoming to newcomers?<br /><br /></li>
+<li><strong>Low Entry Barrier</strong><br />How easy is it to get started? Is the prodcuct a turn-key solution with immediate
+value after download? How consistent is the documentation,
+how hard is it to familiarize oneself with the codebase?<br /><br /></li>
+<li><strong>Product Maturity</strong><br />How robust is the underlying code? Are sound software engineering practices in use? Is the
+architecture clean and consistent? Are changes to the code regression-tested?<br /><br /></li>
+<li><strong>Industrial Strength</strong><br />How much does the product scale? How flexible and stable is the product, how well
+does it perform? Is it secure?<br
+/><br /></li>
+<li><strong>Off The Shelf Components</strong><br />How much does the product make use of standard components? Is the architecture modular
+to accomodate external code?<br /><br /></li>
+<li><strong>Feature Set</strong><br />Does the product have a conservative feature set, or does it have many bells and whistles?<br /><br
+/></li>
+<li><strong>Standards Compliance</strong><br />How much does the product use and interoperate with standards?<br /><br /></li>
+<li><strong>Usability</strong><br />Is the user interface understandable for non-technical persons? Is it consistent? Does it follow
+usability best practice?</li>
+</ol>
+</p>
+</section>
+<anchor id="releases" />
+<section><title>Releases</title>
+<p>
+Three releases are planned: 1.0, 1.2 and 1.4, with the possibility of smaller maintenance releases
+in between. Even numbers are stable releases, odd numbers development releases. Minor releases are
+used for bug fixes, e.g. 1.0.2.
+<ul>
+<li>Release 1.0 Summer 2003</li>
+<li>Release 1.2 Fall 2003</li>
+<li>Release 1.4 Spring 2004</li>
+</ul>
+</p>
+</section>
+<anchor id="goals"/>
+<section><title>Long-term Goals</title><p>
+<ul>
+<li>Improve communication and collaboration with sister Apache projects</li>
+<li>Replace select org.wyona.* classes with Java 1.4 classes</li></ul>
+</p>
+</section>
+<anchor id="1.0" />
+<section><title>1.0</title>
+<section><title>Community</title>
+<p>
+<ul>
+<li><strong>Migrate mailing lists / CVS to Apache</strong></li>
+<li>Provide scratchpad for third party publications</li>
+</ul>
+</p>
+</section>
+<section><title>Low Entry Barrier</title>
+<p>
+<ul>
+<li>Provide Class Diagrams</li>
+<li><strong>Disentangle CMS and publications</strong></li>
+<li><strong>Create outline of new documentation</strong></li>
+<li>Provide default publication</li>
+</ul>
+</p>
+</section>
+<section><title>Product Maturity</title>
+<p>
+<ul>
+<li><strong>Refactor code base</strong></li>
+<li><strong>Remove dead code</strong></li>
+<li>Provide unit tests for core classes</li>
+<li><strong>Simplify directory structure</strong></li>
+<li>Provide default implementations in root sitemap, with overriding capability</li>
+</ul>
+</p>
+</section>
+<section><title>Industrial Strength</title>
+<p>
+<ul>
+<li><strong>Update to current Cocoon 2.1 snapshot</strong></li>
+<li>Load test and provide benchmarks</li>
+<li><strong>Add Unit test framework</strong></li>
+<li><strong>Disentangle CMS and Cocoon</strong></li>
+</ul>
+</p>
+</section>
+<section><title>Off The Shelf Components</title>
+<p>
+<ul>
+<li><strong>Update from JDK 1.3.1 to 1.4</strong></li>
+<li>Replace DOM4J</li>
+</ul>
+</p>
+</section>
+<section><title>Feature Set</title>
+<p>
+<ul>
+<li><strong>Make windows version usable again</strong></li>
+<li><strong>Finish Lucene integration</strong></li>
+<li><strong>Bugfree Revision Controller</strong></li>
+</ul>
+</p>
+</section>
+<section><title>Standards Compliance</title>
+<p>
+<ul>
+<li><strong>Enforce Avalon coding standards</strong></li>
+</ul>
+</p>
+</section>
+<section><title>Usability</title>
+<p>
+<ul>
+<li>Standardize CMS screens</li>
+<li>Standardize Lenya menus</li>
+</ul>
+</p>
+</section></section>
+<anchor id="1.2" />
+<section><title>1.2</title>
+<section><title>Community</title>
+<p>
+<ul>
+<li>Get additional commiters on board</li>
+<li>Define scope and collaboration with the Forrest project</li>
+</ul>
+</p>
+</section>
+<section><title>Low Entry Barrier</title>
+<p>
+<ul>
+<li>Improve and standardize templating (XHTML)</li>
+<li>Allow for documentation annotation (like php.net)</li>
+<li>Write a publication HOWTO</li>
+<li>Maintain a FAQ</li>
+<li>Elminate redundancies between authoring and live areas</li>
+<li>Write Lenya Tutorials</li>
+</ul>
+</p>
+</section>
+<section><title>Product Maturity</title>
+<p>
+<ul>
+<li>Complete JavaDoc</li>
+<li>Unify CMS URIs</li>
+<li>Standardize sitemaps</li>
+<li>Work out upgrade schedule for dependent components (Cocoon etc)</li>
+</ul>
+</p>
+</section>
+<section><title>Industrial Strength</title>
+<p>
+<ul>
+<li>Substantial Unit test coverage</li>
+<li>Add web tests</li>
+</ul>
+</p>
+</section>
+<section><title>Off The Shelf Components</title>
+<p>
+<ul>
+<li>Migrate Lenya xinclude processor to Cocoon (or vice versa)</li>
+</ul>
+</p>
+</section>
+<section><title>Feature Set</title>
+<p>
+<ul>
+<li>Integrate Slide</li>
+<li>Implement workflow engine</li>
+<li>Implement generic sitetree navigation framework</li>
+<li>Integrate HTML Form Editor (Slash Edit)</li>
+<li>Provide GUI for user administration</li>
+</ul>
+</p>
+</section>
+<section><title>Standards Compliance</title>
+<p>
+<ul>
+<li>Provide LDAP authentication</li>
+</ul>
+</p>
+</section>
+<section><title>Usability</title>
+<p>
+<ul>
+<li>Improve Lenya menu to float across the page</li>
+<li>Improve CMS screens with help tooltips</li>
+<li>Improve Bitflux / Xopus integration</li>
+</ul>
+</p>
+</section></section>
+<anchor id="1.4" />
+<section><title>1.4</title>
+<section><title>Community</title>
+<p>
+<ul>
+<li>Work with OSCOM.org on CMS standards</li>
+<li>Organize Lenya Sprints</li>
+<li>Leverage other Apache projects</li>
+</ul>
+</p>
+</section>
+<section><title>Low Entry Barrier</title>
+<p>
+<ul>
+<li>Improve documentation</li>
+</ul>
+</p>
+</section>
+<section><title>Product Maturity</title>
+<p>
+<ul>
+<li>Rewrite Resource Creation Framework</li>
+<li>Rewrite Publishing / Replication Framework</li>
+<li>Complete Unit test coverage</li>
+<li>Complete JavaDoc</li>
+</ul>
+</p>
+</section>
+<section><title>Industrial Strength</title>
+<p>
+<ul>
+<li>Improve reverse proxying</li>
+<li>Research advanced caching strategies</li>
+</ul>
+</p>
+</section>
+<section><title>Off The Shelf Components</title>
+<p>
+<ul>
+<li>Consolidate Authentication and Authorization components</li>
+</ul>
+</p>
+</section>
+<section><title>Feature Set</title>
+<p>
+<ul>
+<li>Provide (Open) Office integration</li>
+<li>Implement link management</li>
+<li>Implement multilingual capabilities</li>
+</ul>
+</p>
+</section>
+<section><title>Standards Compliance</title>
+<p>
+<ul>
+<li>Refine and review standards support</li>
+</ul>
+</p>
+</section>
+<section><title>Usability</title>
+<p>
+<ul>
+<li>Provide administration GUI</li>
+<li>Complete the move to an in-place UI paradigm</li>
+</ul>
+</p>
+</section></section>
+<p>$Id: roadmap.xml,v 1.1 2003/04/29 13:31:53 gregor Exp $</p>
+</section>
+  </body>
+</document>
+

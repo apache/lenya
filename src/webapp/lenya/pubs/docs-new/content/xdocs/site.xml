@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya">
   <node-1 label="Table of Contents">
+    <node-a href="http://demo.lenya.org" label="Demo" />
+    <node-b href="download/downloading_and_installing.html" label="Download" />
+    <node-d href="roadmap.html" label="Roadmap" />
+    <node-e href="mailing-lists.html" label="Mailing Lists" />
+    <node-f href="http://cvs.lenya.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
+    <node-g href="http://cvs.lenya.org/bugs/" label="Bug Tracker" />
+    <node-h href="acknowledgements.html" label="Credits" />
+    <node-i href="license.html" label="License" />
+    <node-i href="related-projects.html" label="Related Projects" />
+    <node-c href="docs/" label="Documentation">
     <node-2 href="installation/" label="Installation">
       <node-3 label="Requisites"/>
       <node-4 label="Binary Version"/>
@@ -130,5 +140,6 @@
       <node-102 label="Spell Checking"/>
       <node-103 label="..."/>
     </node-95>
+   </node-c>
   </node-1>
 </site>

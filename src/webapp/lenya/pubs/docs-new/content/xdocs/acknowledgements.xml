@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya: Acknowledgements</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Gregor J. Rothfuss" email="gregor@apache.org"/>
+    </authors>
+  </header>
+  <body>
+<section><title>Acknowledgements</title>
+<p>Committers</p>
+<ul>
+<li>Andreas Hartmann</li>
+<li>Christian Egli</li>
+<li>Edith Chevrier</li>
+<li>Felix M&#228;der</li>
+<li>Giacomo Pati</li>
+<li>Gregor J. Rothfuss</li>
+<li>J&#252;rgen Bigalke</li>
+<li>Marc Liyanage</li>
+<li>Marc von Wattenwyl</li>
+<li>Margrit John</li>
+<li>Martin L&#252;thi</li>
+<li>Memo Birgi</li>
+<li>Michael Wechner</li>
+<li>Rene Niedermowe</li>
+<li>Thomas Werschlein</li>
+<li>Thorsten Scherler</li>
+<li>Urs St&#246;ckli</li>
+</ul>
+<p>Contributors</p>
+<ul>
+<li>Kars Veiling</li>
+<li>Lon Boonen</li>
+<li>Markus Vaterlaus</li>
+<li>Stephen England</li>
+</ul>
+</section>
+  </body>
+</document>
