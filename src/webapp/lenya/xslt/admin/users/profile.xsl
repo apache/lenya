@@ -2,12 +2,13 @@
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
     
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
+  <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
   
   
   <xsl:template match="/">
@@ -17,7 +18,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title><xsl:value-of select="title"/></page:title>
+      <page:title><i18n:text><xsl:value-of select="title"/></i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="user"/>
       </page:body>
@@ -32,7 +33,7 @@
     <td valign="top">
     
     <div class="lenya-box">
-      <div class="lenya-box-title">User Data</div>
+      <div class="lenya-box-title"><i18n:text>User Data</i18n:text></div>
       <div class="lenya-box-body">
         
         <form method="GET" action="{/page/continuation}.continuation">
@@ -54,14 +55,14 @@
             <tr>
               <td/>
               <td>
-                <input name="submit" type="submit" value="Submit"/>
+                <input i18n:attr="value" name="submit" type="submit" value="Save"/>
                 &#160;
-                <input name="cancel" type="submit" value="Cancel"/>
+                <input i18n:attr="value" name="cancel" type="submit" value="Cancel"/>
               </td>
             </tr>
             <tr>
                 <td class="lenya-entry-caption">
-                    <span class="lenya-required">*</span> required fields
+                    <span class="lenya-required">*</span>&#160;<i18n:text>required fields</i18n:text>
                 </td>
             </tr>                
           </table>
@@ -79,7 +80,7 @@
   <xsl:template match="id">
 		<tr>
 			
-			<td class="lenya-entry-caption">CMS&#160;User&#160;ID&#160;<span class="lenya-admin-required">*</span></td>
+			<td class="lenya-entry-caption"><i18n:text>CMS User ID</i18n:text>&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				 <xsl:choose>
 					 <xsl:when test="../@new = 'true'">
@@ -96,7 +97,7 @@
   
   <xsl:template match="ldapid">
 		<tr>
-			<td class="lenya-entry-caption">LDAP&#160;ID&#160;<span class="lenya-admin-required">*</span></td>
+			<td class="lenya-entry-caption"><i18n:text>LDAP ID</i18n:text>&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input class="lenya-form-element" name="fullname" type="text" value="{normalize-space(.)}"/>
 			</td>
@@ -107,7 +108,7 @@
   <xsl:template match="fullname">
     <xsl:if test="not(../@ldap = 'true')">
       <tr>
-        <td class="lenya-entry-caption">Name</td>
+        <td class="lenya-entry-caption"><i18n:text>Name</i18n:text>&#160;&#160;</td>
         <td>
           <input class="lenya-form-element" name="fullname" type="text" value="{normalize-space(.)}"/>
         </td>
@@ -118,7 +119,7 @@
   
   <xsl:template match="email">
 		<tr>
-			<td class="lenya-entry-caption">Email&#160;<span class="lenya-admin-required">*</span></td>
+			<td class="lenya-entry-caption"><i18n:text>Email</i18n:text>&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input class="lenya-form-element" name="email" type="text" value="{normalize-space(.)}"/>
 			</td>
@@ -128,7 +129,7 @@
   
 	<xsl:template match="description">
 		<tr>
-			<td class="lenya-entry-caption">Description</td>
+			<td class="lenya-entry-caption"><i18n:text>Description</i18n:text>&#160;&#160;</td>
 			<td>
 				<textarea class="lenya-form-element" name="description"><xsl:value-of select="normalize-space(.)"/>&#160;</textarea>
 			</td>
@@ -138,7 +139,7 @@
 	
 	<xsl:template match="password">
 		<tr>
-			<td class="lenya-entry-caption">Password&#160;<span class="lenya-admin-required">*</span></td>
+			<td class="lenya-entry-caption"><i18n:text>Password</i18n:text>&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input type="password" class="lenya-form-element" name="new-password" value="{normalize-space(.)}"/>
 			</td>
@@ -148,7 +149,7 @@
 	
 	<xsl:template match="confirm-password">
 		<tr>
-			<td class="lenya-entry-caption">Confirm&#160;password&#160;<span class="lenya-admin-required">*</span></td>
+			<td class="lenya-entry-caption"><i18n:text>Confirm password</i18n:text>&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input type="password" class="lenya-form-element" name="confirm-password" value="{normalize-space(.)}"/>
 			</td>

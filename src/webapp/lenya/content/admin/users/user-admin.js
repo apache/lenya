@@ -275,7 +275,7 @@ function add_user(ldap) {
 		
 		while (true) {
 			cocoon.sendPageAndWait("users/profile.xml", {
-				"page-title" : "Add User: Profile",
+				"page-title" : "Add User",
 				"user-id" : userId,
 		    	"fullname" : fullName,
 		    	"email" : email,

@@ -70,7 +70,7 @@
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" name="submit" type="submit" value="Submit"/>
+                <input i18n:attr="value" name="submit" type="submit" value="Save"/>
                 &#160;
                 <input i18n:attr="value" name="cancel" type="submit" value="Cancel"/>
               </td>

@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.22 2004/02/17 20:01:09 roku Exp $
-
-   Copyright 2004 Rolf Kulemann (roku at apache.org)
+   $Id: cmsui_de.xml,v 1.23 2004/02/17 21:19:48 roku Exp $
+   
+   @author Rolf Kulemann (roku at apache.org)
+  
+   Copyright 2004 The Apache Software Foundation
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,6 +24,7 @@
 <catalogue xml:lang="de">
 
   <!-- common used words -->
+  <message key="Save">Speichern</message>
   <message key="Submit">Senden</message>
   <message key="Cancel">Abbrechen</message>
   <message key="Delete">L&#246;schen</message>
@@ -43,7 +46,8 @@
   <message key="No">Nein</message>
   <message key="Description">Beschreibung</message>
   <message key="Name">Name</message>
-    
+  <message key="required fields">Pflichfelder</message> 
+
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -116,14 +120,22 @@
   <message key="Switch User">Benutzer wechseln</message>
   <message key="Delete Trash">Papierkorb leeren</message>
 
+    <!-- Group Administration -->
   <message key="Profile">Profil</message>  
   <message key="Members">Mitglieder</message>
   <message key="IP Ranges">IP&#160;Regeln</message>
-  <message key="Edit Profile">Profil bearbeiten</message>
-  <message key="Edit Members">Mitglieder bearbeiten</message>
+  <message key="Edit Profile">Profil&#160;bearbeiten</message>
+  <message key="Edit Members">Mitglieder&#160;bearbeiten</message>
   <message key="Group Administration">Gruppenverwaltung</message>
   <message key="Add Group">Gruppe hinzuf&#252;gen</message>
   <message key="Group Data">Gruppendetails</message>
   
+    <!-- User Administration -->
+  <message key="User Data">Benutzerdetails</message>
+  <message key="CMS User ID">CMS&#160;Benutzer</message>
+  <message key="LDAP ID">LDAP&#160;ID</message>
+  <message key="Confirm password">Passwort&#160;best&#228;tigen</message>
+  <message key="Add User">Benutzer hinzuf&#252;gen</message>
+
 </catalogue>
 

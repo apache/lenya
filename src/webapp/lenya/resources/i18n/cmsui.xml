@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 
 <!--
-  $Id: cmsui.xml,v 1.19 2004/02/17 20:01:09 roku Exp $
-
-   Copyright 2004 Rolf Kulemann (roku at apache.org)
+  $Id: cmsui.xml,v 1.20 2004/02/17 21:19:48 roku Exp $
+  
+  @author Rolf Kulemann (roku at apache.org)
+  
+   Copyright 2004 The Apache Software Foundation
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,6 +24,7 @@
 <catalogue xml:lang="en">
 
   <!-- common used words -->
+  <message key="Save">Save</message>
   <message key="Submit">Submit</message>
   <message key="Cancel">Cancel</message>
   <message key="Delete">Delete</message>
@@ -42,7 +45,8 @@
   <message key="Yes">Yes</message>
   <message key="No">No</message>
   <message key="Description">Description</message>
-  <message key="Name">Name</message>  
+  <message key="Name">Name</message>
+  <message key="required fields">required fields</message>
      
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
@@ -116,6 +120,7 @@
   <message key="Switch User">Switch User</message>
   <message key="Delete Trash">Delete Trash</message>
   
+    <!-- Group Administration -->
   <message key="Profile">Profile</message>
   <message key="Members">Members</message>
   <message key="IP Ranges">IP&#160;Ranges</message>
@@ -124,5 +129,12 @@
   <message key="Group Administration">Group Administration</message>
   <message key="Add Group">Add Group</message>
   <message key="Group Data">Group Data</message>
+
+    <!-- User Administration -->
+  <message key="User Data">User&#160;Data</message>
+  <message key="User ID">CMS&#160;User&#160;ID</message>
+  <message key="LDAP ID">LDAP&#160;ID</message>
+  <message key="Confirm password">Confirm&#160;password</message>
+  <message key="Add User">Add User</message>
 
 </catalogue>
