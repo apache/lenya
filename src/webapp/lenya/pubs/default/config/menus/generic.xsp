@@ -118,7 +118,7 @@
 	          &amp;&amp; availableLanguages.length &gt; 1
 	          ) {
 	        <xsp:content>
-	          <item uc:usecase="removelabel" uc:step="showscreen" href="?"><i18n:text>Remove Language Version</i18n:text></item>
+	          <item uc:usecase="site.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
 	        </xsp:content>
 	      } else {
 	        <xsp:content>
