@@ -6,51 +6,61 @@
 				<line>Home</line>
 			</name>
 		</node>
-		<node id="" link="/dossier/" name="dossier" target="">
+		<node id="/dossier/" link="/dossier/" name="dossier" target="">
 			<name>
 				<line>Dossier</line>
 			</name>
 		</node>
-		<node id="3" link="/archiv/" name="archiv" target="">
+		<node id="/archiv/" link="/archiv/" name="archiv" target="">
 			<name>
 				<line>Archiv</line>
 			</name>
 		</node>
+		<node id="/it-stellen/" link="/it-stellen/" name="it-stellen" target="">
+			<name>
+				<line>IT-Stellen</line>
+			</name>
+		</node>
+		<node id="/it-kalender/" link="/it-kalender/" name="it-kalender" target="">
+			<name>
+				<line>IT-Kalender</line>
+			</name>
+		</node>
 	</block>
 	<block id="infos">
-		<node id="/feedback.html" link="/feedback.html" name="feedback" target="">
+		<node id="/feedback/" link="/feedback/" name="feedback" target="">
 			<name>
 				<line>Feedback</line>
 			</name>
 		</node>
-		<node id="/impressum.html" link="/impressum.html" name="impressum" target="">
+		<node id="/impressum/" link="/impressum/" name="impressum" target="">
 			<name>
 				<line>Impressum</line>
 			</name>
 		</node>
-		<node id="/datenschutz.html" link="/datenschutz.html" name="datenschutz" target="">
+		<node id="/datenschutz/" link="/datenschutz/" name="datenschutz" target="">
 			<name>
 				<line>Datenschutz</line>
 			</name>
 		</node>
 	</block>
 	<block id="verlag">
-		<node id="/kontakt.html" link="/kontakt.html" name="kontakt" target="">
+		<node id="/kontakt/" link="/kontakt/" name="kontakt" target="">
 			<name>
 				<line>Kontakt</line>
 			</name>
 		</node>
-		<node id="/aboservice.html" link="/aboservice.html" name="aboservice" target="">
+		<node id="/abo/" link="/abo/" name="aboservice" target="">
 			<name>
 				<line>Abo Service</line>
 			</name>
 		</node>
-		<node id="/mediadaten.html" link="/mediadaten.html" name="mediadaten" target="">
+		<node id="/mediadaten/" link="/mediadaten/" name="mediadaten" target="">
 			<name>
 				<line>Mediadaten</line>
 			</name>
 		</node>
-		<node id="/about.html" link="/about.html" name="about" target="">
+		<node id="/ueberuns/l" link="/ueberuns/" name="about" target="">
 			<name>
 				<line>Über uns</line>
 			</name>

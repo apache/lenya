@@ -196,6 +196,9 @@
 			<map:match pattern="css/**.css">
 				<map:read mime-type="text/css" src="resources/publication/styles/live/{1}.css"/>
 			</map:match>
+			<map:match pattern="img/**.*">
+				<map:read mime-type="image/{2}" src="resources/publication/images/live/{1}.{2}"/>
+			</map:match>
 			<map:match pattern="img/layout/**.*">
 				<map:read mime-type="image/{2}" src="resources/publication/images/live/layout/{1}.{2}"/>
 			</map:match>
