@@ -3,30 +3,9 @@
 <oscom xmlns:xi="http://www.w3.org/2001/XInclude">
 
 <navigation xlink:href="navigation.xml" xlink:show="embed" xmlns:xlink="http://www.w3c.org/2002/xmlns/xlink"/>
-<!--
-<xi:include xml:base="cocoon:" href="/authoring/navigation.xml"/>
--->
-
 <body xlink:href="home.xml#xpointer(/home/html)" xlink:show="embed" xmlns:xlink="http://www.w3c.org/2002/xmlns/xlink"/>
-<!--
-<xi:include xml:base="cocoon:" href="/authoring/home.xml"/>
--->
-<!--
-<xi:include xml:base="cocoon:" href="/authoring/home.xml#xpointer(/home/html)"/>
--->
 
 <news xmlns:xi="http://www.w3.org/2001/XInclude">
-<!--
-  <site name="Freshmeat">
-    <xi:include href="rss-rdf/fm.rdf"/>
-  </site>
-  <site name="Slashdot">
-    <xi:include href="rss-rdf/slashdot.rdf"/>
-  </site>
-  <site name="CMSWatch">
-    <xi:include href="rss-rdf/cmswatch.xml"/>
-  </site>
--->
 </news>
 
 </oscom>

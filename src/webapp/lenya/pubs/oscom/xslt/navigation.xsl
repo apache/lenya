@@ -7,10 +7,6 @@
       <xsl:apply-templates>
         <xsl:with-param name="offset">&#160;&#160;</xsl:with-param>
         <xsl:with-param name="index"></xsl:with-param>
-<!--
-        <xsl:with-param name="offset">..</xsl:with-param>
-        <xsl:with-param name="index">+</xsl:with-param>
--->
       </xsl:apply-templates>
     </font>
 </xsl:template>
@@ -28,7 +24,6 @@
         </xsl:when>
         <xsl:otherwise>
           <a href="{$CONTEXT_PREFIX}/{@href}"><xsl:value-of select="@name"/></a>
-          <!--<a href="{$CONTEXT_PREFIX}/live/{@href}"><xsl:value-of select="@name"/></a>-->
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>
@@ -57,7 +52,6 @@
         </xsl:when>
         <xsl:otherwise>
           <a href="{$CONTEXT_PREFIX}/{@href}"><xsl:value-of select="@name"/></a>
-          <!--<a href="{$CONTEXT_PREFIX}/live/{@href}"><xsl:value-of select="@name"/></a>-->
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>

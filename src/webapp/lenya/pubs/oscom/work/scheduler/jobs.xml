@@ -71,25 +71,6 @@
 -->
 
 
-<!-- Download the various RSS -->
-<!--
-      <sch:job>
-        <sch:task>
-          <sch:parameter name="id" value="downloadRSS"/>
-          <sch:parameter name="server-uri" value="http://cocoon.apache.org/lenya/"/>
-          <sch:parameter name="publication-id" value="oscom"/>
-          <sch:parameter name="server-port" value="1313"/>
-        </sch:task>
-        <sch:parameter name="class" value="org.apache.lenya.cms.scheduler.TaskJob"/>
-        <sch:parameter name="group" value="oscom"/>
-        <sch:parameter name="id" value="job_01037570742551"/>
-        <sch:parameter name="documentUri" value="index.html"/>
-        <sch:trigger type="repeated">
-          <sch:parameter name="expression" value="0 10,40 * * * ?"/>
-        </sch:trigger>
-      </sch:job>
--->
-
 
 <!-- Export the OSCOM Homepage -->
 <!--
@@ -110,23 +91,6 @@
         </sch:trigger>
       </sch:job>
 -->
-
-<!-- Replicate -->
-<!--
-      <sch:job>
-        <sch:task>
-          <sch:parameter name="id" value="replicate"/>
-          <sch:parameter name="publication-id" value="oscom"/>
-        </sch:task>
-        <sch:parameter name="class" value="org.apache.lenya.cms.scheduler.TaskJob"/>
-        <sch:parameter name="group" value="oscom"/>
-        <sch:parameter name="id" value="job_01037570742553"/>
-        <sch:trigger type="repeated">
-          <sch:parameter name="expression" value="0 16,46 * * * ?"/>
-        </sch:trigger>
-      </sch:job>
--->
-
     </sch:jobs>
   </sch:publication>
 

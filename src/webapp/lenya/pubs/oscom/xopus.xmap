@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.15 2003/12/04 16:24:43 gregor Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.16 2003/12/05 22:58:04 gregor Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -73,13 +73,6 @@
         </map:act>
         <map:generate src="../../content/xopus/error.xml"/>
         <map:serialize type="xml"/>
-      </map:match>
-
-      <!-- This snippet is just for development purposes -->
-      <map:match pattern="**">
-        <map:generate src="resources/html/scratchpad/xopus/{1}.xml"/>
-        <map:transform src="resources/html/scratchpad/xopus/stylesheets/{1}.xsl"/>
-        <map:serialize type="html"/>
       </map:match>
       
       <!-- Error handling -->

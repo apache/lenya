@@ -39,7 +39,6 @@
       <block>
 <!--
         <item>Edit&#160;with&#160;Xopus2</item>
-        <item>Edit&#160;with&#160;Bitflux</item>
 -->
         <item href="../lenya/publishAllCMSProjectsScreen">Publish&#160;all&#160;projects</item>
       </block>

@@ -42,7 +42,6 @@
 -->
 <!--
         <item href="xopus2/index.html">Edit&#160;with&#160;Xopus2</item>
-        <item href="/lenya/bitflux/index.html?url-xml=/lenya/oscom/bitflux/home.xml&amp;url-xslt=/lenya/oscom/bitflux/home.xsl&amp;url-xsd=/lenya/oscom/bitflux/home.xsd&amp;url-css=/lenya/oscom/bitflux/home.css&amp;url-post=/lenya/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
         <item href="lenya/publishScreen?uris=/lenya/oscom/index.html&amp;sources=/home.xml&amp;server-port=1969">Publish</item>
         <item href="lenya/publishScreen?uris=/lenya/oscom/index.html">Export&#160;Live</item>
 -->

@@ -46,11 +46,6 @@
 -->
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/matrix/"+projectid+".html,/lenya/oscom/matrix/index.html&amp;sources=/matrix/"+projectid+".xml&amp;task-id=publish"</xsp:expr></xsp:attribute>Publish</item>
       </block>
-<!--
-      <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/admin/passwd/index.html</xsp:attribute>Change&#160;Password</item>
-      </block>
--->
       <block>
         <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
       </block>

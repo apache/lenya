@@ -267,34 +267,6 @@
         <map:serialize type="html"/>
       </map:match>
 
-      <!-- Edit Home with Xopus2 -->
-      <map:match pattern="authoring/xopus2/index.html">
-        <map:generate src="cocoon:/authoring/index.xml"/>
-        <map:select>
-          <map:when test="explorer">
-            <map:transform src="xslt/home/authoring/main_xopus.xsl"/>
-          </map:when>
-          <map:otherwise>
-            <map:transform src="xslt/home/authoring/main_xopus.xsl"/>
-          </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <!-- Edit News with Xopus2 -->
-      <map:match pattern="authoring/xopus2/news.html">
-        <map:generate src="cocoon:/authoring/news.xml"/>
-        <map:transform src="xslt/News/authoring/main_xopus.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <!-- Edit Weekly Column with Xopus2 -->
-      <map:match pattern="authoring/xopus2/weekly-column.html">
-        <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
-        <map:transform src="xslt/WeeklyColumn/authoring/main_xopus.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
       <!-- Edit Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/matrix/*.html">
           <map:act type="reserved-checkout">
@@ -367,13 +339,6 @@
       <map:match pattern="authoring/editor-matrix/*.html">
         <map:generate src="cocoon:/authoring/editor-matrix/{1}.xml"/>
         <map:transform src="xslt/matrix/authoring/main_editor.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <!-- Speakers -->
-      <map:match pattern="authoring/**/speakers.html">
-        <map:generate src="cocoon:/authoring/{1}/speakers.xml"/>
-        <map:transform src="xslt/Speakers/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 

@@ -7,10 +7,6 @@
   <xsl:apply-templates/>
 </xsl:template>
 
-<!--
-<xsl:include href="navigation.xsl"/>
--->
-
 <xsl:include href="html.xsl"/>
  
 </xsl:stylesheet>  

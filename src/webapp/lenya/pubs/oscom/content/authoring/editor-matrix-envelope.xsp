@@ -15,13 +15,6 @@
 <navigation xlink:href="navigation.xml" xlink:show="embed"/>
 
 <system xlink:show="embed"><xsp:attribute name="href" prefix="xlink" uri="http://www.w3.org/2002/XLink">editor-matrix/<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute></system>
-
-<!--
-<xi:include xml:base="cocoon:" href="/authoring/navigation.xml"/>
-
-<xi:include xml:base="cocoon:"><xsp:attribute name="href">authoring/editor-matrix/body-<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute></xi:include>
--->
-
 </oscom>
 
 </xsp:page>

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:error="http://apache.org/cocoon/error/2.0" xmlns:n-rdf="http://my.netscape.com/rdf/simple/0.9/">
- 
-<!--
-<xsl:variable name="mbarcolor">#ffa500</xsl:variable>
-<xsl:variable name="mbarcolor">#3366cc</xsl:variable>
--->
 <xsl:variable name="mbarcolor">#000000</xsl:variable>
 
 <xsl:template name="html-title">
@@ -34,12 +29,6 @@ If you want your CMS/F project being added to the list below, please send an ema
 or subscribe to the <a href="http://lists.oscom.org/mailman/listinfo.cgi/softwareml">SoftwareML</a> mailing list.
 For all other inquiries please use OSCOM's <a href="/Mailing%20lists/">mailing lists</a>.
 </p>
-
-<!--
-<p>
-The schema of the CMS/F matrix is currently based on <a href="http://cvs.oscom.org/cgi-bin/viewcvs.cgi/softwareml/cms.xml">cms.xml</a>.
-</p>
--->
 </font>
 
  <h4>Content Management Frameworks</h4>
@@ -79,16 +68,10 @@ The schema of the CMS/F matrix is currently based on <a href="http://cvs.oscom.o
   <tr>
    <td>&#160;</td>
    <td height="20"><font size="-1"><a href="{id}.html"><xsl:value-of select="system_name"/></a></font></td>
-<!--
-   <td height="20"><font size="-1"><a href="{main_url}"><xsl:value-of select="system_name"/></a></font></td>
--->
    <td>&#160;</td>
    <td>&#160;</td>
    <td>&#160;</td>
    <td><font size="-1"><xsl:value-of select="license/license_name"/></font></td>
-<!--
-   <td><font size="-1"><a><xsl:apply-templates select="license/license_url"/><xsl:value-of select="license/license_name"/></a></font></td>
--->
   </tr>
 </xsl:template>
 
@@ -124,12 +107,6 @@ The schema of the CMS/F matrix is currently based on <a href="http://cvs.oscom.o
 <div class="nnbe" style="padding-left: 10px;">
 <a class="nnbr" target="_blank" href="http://www.content-wire.com">Content-Wire</a>
 </div>
-
-<!--
-<div class="nnbe" style="padding-left: 10px;">
-<a class="nnbr" target="_blank" href="http://www.clueful.com.au/cgi-bin/cmsdirectory/browse/Products%3aFree%20systems">Clueful Consulting</a>
-</div>
--->
 
 <div class="nnbe" style="padding-left: 10px;">
 <a class="nnbr" target="_blank" href="http://www.steptwo.com.au/cm/vendors/list/index.html">Step Two</a>
