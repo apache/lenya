@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.8 2003/04/08 16:19:32 egli Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.9 2003/04/09 16:30:16 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -92,7 +92,12 @@
         <!-- Xopus Interface -->
 
            <map:match pattern="xopus/**">
-           <map:mount uri-prefix="xopus" src="xopus.xmap"/>
+               <map:mount uri-prefix="xopus" src="xopus.xmap"/>
+           </map:match>
+           
+      <!-- Bitflux Interface -->
+      <map:match pattern="bitflux/**">
+	         <map:mount uri-prefix="bitflux" src="bitflux.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
     <!-- Authoring Interface -->
