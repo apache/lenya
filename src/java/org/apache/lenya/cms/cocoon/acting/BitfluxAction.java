@@ -1,5 +1,5 @@
 /*
- * $Id: BitfluxAction.java,v 1.12 2003/04/24 13:52:38 gregor Exp $
+ * $Id: BitfluxAction.java,v 1.13 2003/04/30 16:06:00 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -257,13 +257,11 @@ public class BitfluxAction extends ConfigurableComposerAction {
                 }
 
                 Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
-                rc.reservedCheckIn(relativeFilename, identity.getUsername(), true);
+                rc.reservedCheckIn(xmlRoot + "/" + relativeFilename, identity.getUsername(), true);
 
                 FileUtil.copyFile(tempFile, permFile);
             } catch (Exception e) {
-                getLogger().error(".act(): Exception during checkin: " +
-				  permFile);
-
+                getLogger().error(".act(): Exception during checkin of " + xmlRoot + "/" +relativeFilename + " (" + e +")");
                 return null;
             }
         }
