@@ -324,7 +324,7 @@
           <map:part src="cocoon:/index.xml" element="cmsbody"/>
         </map:aggregate>
         <map:transform src="stylesheets/publication/Page/Front/Authoring/main.xsl">
-          <map:parameter name="year" value="2002"/>
+          <map:parameter name="year" value="2003"/>
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
@@ -340,7 +340,7 @@
           <map:parameter name="href" value="docs/publication/authoring/frontpage/index.xml"/>
         </map:transform>
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl">
-          <map:parameter name="year" value="2002"/>
+          <map:parameter name="year" value="2003"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
@@ -454,11 +454,11 @@
 
 <!-- Dossiers -->
       <map:match pattern="dossiers/">
-        <map:redirect-to uri="2002/index.html"/>
+        <map:redirect-to uri="2003/index.html"/>
       </map:match>
 
       <map:match pattern="dossiers/index.html">
-        <map:redirect-to uri="2002/index.html"/>
+        <map:redirect-to uri="2003/index.html"/>
       </map:match>
 
       <map:match pattern="dossiers/*/">
@@ -569,10 +569,10 @@
       </map:match>
 
       <map:match pattern="*/*/">
-        <map:redirect-to uri="2002/index.html" session="true"/>
+        <map:redirect-to uri="2003/index.html" session="true"/>
       </map:match>
       <map:match pattern="*/*/index.html">
-        <map:redirect-to uri="2002/index.html" session="true"/>
+        <map:redirect-to uri="2003/index.html" session="true"/>
       </map:match>
       <map:match pattern="*/*/*/">
         <map:redirect-to uri="index.html" session="true"/>
