@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: init-build.xml,v 1.26 2004/04/01 18:23:20 roku Exp $ -->
+<!-- $Id: init-build.xml,v 1.27 2004/04/22 15:40:21 gregor Exp $ -->
 
 <project name="init">
 
@@ -60,9 +60,9 @@
   <target name="build-custom-tasks" depends="init">
     <echo>INFO: Building Custom Tasks</echo>
 
-    <mkdir dir="build/tools/anttasks"/>
+    <mkdir dir="${build.dir}/tools/anttasks"/>
     <javac srcdir="src/java"
-           destdir="build/tools/anttasks"
+           destdir="${build.dir}/tools/anttasks"
            debug="${debug}"
            optimize="{optimize}"
            deprecation="${deprecation}"
@@ -72,8 +72,8 @@
            classpathref="classpath"
            source="1.4"/>
 
-    <taskdef name="copyJavaSources" classpath="build/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
-    <taskdef name="copyPubs"        classpath="build/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyTask"/>
+    <taskdef name="copyJavaSources" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="copyPubs"        classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyTask"/>
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
   </target>
 
