@@ -1,5 +1,5 @@
 ;NSIS Lenya Installer script
-; $Id: lenya.nsi,v 1.6 2004/01/31 19:12:05 gregor Exp $
+; $Id: lenya.nsi,v 1.7 2004/04/03 18:14:13 gregor Exp $
 
 ;--------------------------------
 ;Include Modern UI
@@ -12,6 +12,10 @@
   ;General
   Name "Apache Lenya 1.2"
   OutFile "Lenya-1.2-install.exe"
+  
+  CRCCheck on
+  SetCompress force
+  SetDatablockOptimize on
 
   ;Folder selection page
   InstallDir "C:\Lenya"
@@ -24,7 +28,7 @@
 ;--------------------------------
 ;Pages
 
-  !insertmacro MUI_PAGE_LICENSE "build\lenya\webapp\legal\LICENSE.txt"
+  !insertmacro MUI_PAGE_LICENSE "LICENSE.txt"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
@@ -42,7 +46,9 @@
 
 Section "Apache Lenya" SecDummy
 
-  SetOutPath "$INSTDIR"
+  Call findJavaPath
+  
+  SetOutPath $INSTDIR
   
   SetOutPath $INSTDIR\build\lenya\webapp
   File build\lenya\webapp\global-sitemap.xmap
@@ -50,7 +56,6 @@ Section "Apache Lenya" SecDummy
   File build\lenya\webapp\sitemap.xmap
   File build\lenya\webapp\welcome.xml
   File build\lenya\webapp\welcome.xslt
-  File /r build\lenya\webapp\docs
   File /r build\lenya\webapp\legal
   File /r build\lenya\webapp\lenya
   File /r build\lenya\webapp\resources
@@ -59,10 +64,14 @@ Section "Apache Lenya" SecDummy
   
   SetOutPath $INSTDIR
   File lenya.bat
+  File build.xml
+  File NOTICE.txt
+  File LICENSE.txt
   File README.txt
   File CREDITS.txt
   File /r tools
 
+  CreateDirectory "$SMPROGRAMS\Apache Lenya 1.2"
   CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Lenya Home Page.lnk" \
                  "http://cocoon.apache.org/lenya/"
 
@@ -107,3 +116,40 @@ Section "Uninstall"
   RMDir /r "$INSTDIR"
 
 SectionEnd
+
+; =====================
+; FindJavaPath Function
+; =====================
+;
+; Find the JAVA_HOME used on the system, and put the result on the top of the
+; stack
+; Will exit if the path cannot be determined
+;
+Function findJavaPath
+
+  ClearErrors
+
+  ReadEnvStr $1 JAVA_HOME
+
+  IfErrors 0 FoundJDK
+
+  ClearErrors
+
+  ReadRegStr $2 HKLM "SOFTWARE\JavaSoft\Java Development Kit" "CurrentVersion"
+  ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Development Kit\$2" "JavaHome"
+  ReadRegStr $3 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
+  ReadRegStr $4 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$3" "RuntimeLib"
+
+  FoundJDK:
+
+  IfErrors 0 NoAbort
+    MessageBox MB_OK "Couldn't find a Java Development Kit installed on this \
+computer. Please download one from http://java.sun.com. If there is already \ a JDK installed on this computer, set an environment variable JAVA_HOME to the \ pathname of the directory where it is installed."
+    Abort
+
+  NoAbort:
+
+  ; Put the result in the stack
+  Push $1
+
+FunctionEnd
