@@ -12,7 +12,7 @@
           <parameter-name>lenya.language</parameter-name>
        </map:matcher>
        <map:matcher name="tab" logger="sitemap.matcher.wildcardrequestparameter" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
-          <parameter-name>lenya.tab</parameter-name>
+          <parameter-name>lenya.info-tab</parameter-name>
        </map:matcher>
     </map:matchers>
     <map:actions/>
