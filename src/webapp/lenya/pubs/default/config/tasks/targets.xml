@@ -94,61 +94,6 @@
 		/>
 </target>
 
-
-<target name="publish">
-	
-  <property name="publish.documentid" value=""/>
-  <property name="publish.language" value=""/>
-  <property name="publish.sources" value=""/>
-  
-  <echo>-${servlet.context}-</echo>
-  <echo>Publish document</echo>
-  <echo>Copying files ${publish.sources}</echo>
-  <echo>from ${authoring.dir}</echo>
-  <echo>to ${live.dir}</echo>
-  
-  <echo>pub dir : ${pub.dir}</echo>
-
-  <copy todir="${pub.dir}/${live.dir}">
-    <fileset dir="${pub.dir}/${authoring.dir}">
-      <include name="${publish.sources}"/>
-    </fileset>
-  </copy>
-
-  <echo>Publish resources</echo>
-  <echo>Copying files ${publish.resourcepath}/*</echo>
-  <echo>from ${pub.dir}/${authoring.resource.dir}</echo>
-  <echo>to ${pub.dir}/${live.resource.dir}</echo>
-
-  <taskdef name="publishresources" classname="org.apache.lenya.cms.ant.ResourcePublisher"/>
-  <publishresources
-    documentid="${publish.documentid}"
-  />
-
-  <taskdef name="publishtree" classname="org.apache.lenya.cms.ant.TreePublisher"/>
-
-  <echo>Publish tree</echo>
-  <echo>Copy node for ${publish.documentid}</echo>
-  <echo>for language ${publish.language}</echo>
-  <echo>from tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
-  <echo>and insert it in tree ${pub.dir}/${live.dir}/${sitetree}</echo>
-
-  <publishtree 
-      documentid="${publish.documentid}"
-      language="${publish.language}"
-      />
-  <taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter"/>
-  
-  <echo>Export page as static HTML: ${export.uris}</echo>
-  <export
-      server="http://127.0.0.1:${export.server-port}${export.context-path}/${pub.id}/live/"
-      uris="${export.uris}"
-      expression="${export.expression}"
-      replacement="${export.replacement}"
-      path="${export.dir}"
-  />
-</target>
-
   <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
   <target name="create">
     
@@ -379,6 +324,7 @@
     <property name="insert.asset.assetXPath" value=""/>
     <property name="insert.asset.insertWhere" value=""/>
     <property name="insert.asset.insertTemplate" value="insertAsset.xml"/>
+    <property name="insert.asset.insertReplace" value=""/>
     <property name="insert.asset.area" value=""/>
     <property name="insert.asset.document-id" value=""/>
     <property name="insert.asset.language" value=""/>
@@ -398,6 +344,7 @@
       style="${pub.dir}/../../xslt/util/generate-insertAsset-xsl.xsl">
       <param name="assetXPath" expression="${insert.asset.assetXPath}"/>
       <param name="insertWhere" expression="${insert.asset.insertWhere}"/>
+      <param name="insertReplace" expression="${insert.asset.insertReplace}"/>
     </xslt>
 
     <property name="document.file" value=""/>
@@ -487,6 +434,7 @@
 
 <taskdef name="copycontent" classname="org.apache.lenya.cms.ant.CopyContentTask"/>
 <taskdef name="copyworkflow" classname="org.apache.lenya.cms.ant.InitCopyWorkflowTask"/>
+<taskdef name="initrc" classname="org.apache.lenya.cms.ant.InitRCTask"/>
 
 <target name = "copyDocument" depends="newcopydocumentid">
   <echo>Copy Content</echo>
@@ -504,9 +452,16 @@
     secdocumentid="${node.newdocumentid}"
   />
 
-  <echo> Insert copied node</echo>
-
-  <taskdef name="insertcopynode" classname="org.apache.lenya.cms.ant.InsertCopyNode"/>
+  <echo>Init RC</echo>
+  <initrc
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+    rcmlDir = "${rcml.dir}"
+	rcbakDir = "${rcbak.dir}"
+	userId = "${copy.userid}"
+  />
 
   <copyworkflow
     firstdocumentid="${node.firstdocumentid}"
@@ -517,6 +472,9 @@
     machineip="${copy.ipaddress}"
   />
 
+  <echo> Insert copied node</echo>
+
+  <taskdef name="insertcopynode" classname="org.apache.lenya.cms.ant.InsertCopyNode"/>
   <insertcopynode
     firstdocumentid="${node.firstdocumentid}"
     secdocumentid="${node.newdocumentid}"
@@ -544,6 +502,8 @@
 <taskdef name="movenode" classname="org.apache.lenya.cms.ant.MoveNode"/>
 <taskdef name="moveworkflow" classname="org.apache.lenya.cms.ant.MoveWorkflowTask"/>
 <taskdef name="copypolicies" classname="org.apache.lenya.cms.ant.CopyPoliciesTask"/>
+<taskdef name="deleteschedulerentry" classname="org.apache.lenya.cms.ant.DeleteSchedulerEntryTask"/>
+
 <target name = "move">
   <echo>Copy Content</echo>
   <copycontent
@@ -587,6 +547,12 @@
     secdocumentid="${node.newdocumentid}"
     firstarea="${firstarea}"
     secarea="${secarea}"
+  />
+  
+  <deleteschedulerentry
+    documentid="${node.firstdocumentid}"
+    area="${firstarea}"
+    servletcontextpath="${servlet.context}"
   />
 
   <movenode
@@ -673,37 +639,6 @@
   secareaproperties, newcopydocumentid, firstdocumentpath,
   secdocumentpath, move"> 
   <echo>restore Document</echo> 
-</target>
-
-<target name = "deactivateDocument" depends="livedocumentpath">
-  <echo>deactivate Document</echo> 
-
-  <taskdef name="deletelanguagenode" classname="org.apache.lenya.cms.ant.DeleteLanguageNodeTask"/>
-
-  <deletelanguagenode
-    language ="${node.language}" 
-    documentid="${node.firstdocumentid}"
-    area="${live.area}"
-  />
-
-  <echo>Delete Content</echo>
-  <taskdef name="deletecontent" classname="org.apache.lenya.cms.ant.DeleteContentTask"/>
-
-  <deletecontent
-    language ="${node.language}" 
-    documentid="${node.firstdocumentid}"
-    area="${live.area}"
-  />
-
-  <echo>Delete Resources</echo>
-  <taskdef name="deactivateresources" classname="org.apache.lenya.cms.ant.DeactivateResourcesTask"/>
-
-  <deactivateresources
-    language ="${node.language}" 
-    documentid="${node.firstdocumentid}"
-    area="${live.area}"
-  />
-
 </target>
 
 <target name = "deleteTrash">
