@@ -182,7 +182,7 @@
   <xsl:template match="menu:menu" mode="menu">
     <div id="menu{@label}" class="menuOutline">
       <div class="menuBg" style="">
-      	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@authoring = 'false') and not(starts-with($completearea, 'info'))]"/>
+      	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
       </div>
     </div>
   </xsl:template>
@@ -190,7 +190,7 @@
   
   <!-- match blocks with not area='false' -->
   <xsl:template match="menu:block">
-		<xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@authoring = 'false') and not(starts-with($completearea, 'info'))]"/>
+		<xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
 		
 		<xsl:if test="position() != last()">
 			<div class="lenya-menubar-separator">
