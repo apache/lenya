@@ -57,7 +57,7 @@ goto end
 
 if not "%EXEC%" == "" goto gotExec
 if not "%OS%" == "Windows_NT" goto noExecNT
-set EXEC=start "Lenya" /D. /MAX
+set EXEC=start "Apache Lenya" /D. /MAX
 goto gotExec
 :noExecNT
 set EXEC=
