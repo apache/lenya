@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLDocument.java,v 1.13 2003/03/14 16:07:01 michi Exp $
+ * $Id: HTMLDocument.java,v 1.14 2003/03/18 07:43:42 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -143,13 +143,14 @@ public class HTMLDocument {
         // tokenized prior to indexing.
         doc.add(new Field("uid", uid(f, htdocsDumpDir), false, true, false));
 
+        //HtmlDocument htmlDoc = new HtmlDocument(f);
         HTMLParser parser = new HTMLParser(f);
-        HtmlDocument htmlDoc = new HtmlDocument(f);
 
         // Add the summary as an UnIndexed field, so that it is stored and returned
         // with hit documents for display.
 
         // Add the title as a separate Text field, so that it can be searched separately.
+/*
         String title = htmlDoc.getTitle();
 
         if (title != null) {
@@ -157,11 +158,14 @@ public class HTMLDocument {
         } else {
             doc.add(Field.Text("title", ""));
         }
+*/
+
+        doc.add(Field.Text("title", parser.getTitle()));
 
         //System.out.println("HTMLDocument.getLuceneDocument(): title field added: " + title);
 
-        // Add the tag-stripped contents as a Reader-valued Text field so it will
-        // get tokenized and indexed.
+        // Add the tag-stripped contents as a Reader-valued Text field so it will get tokenized and indexed.
+/*
         String body = htmlDoc.getBody();
         String contents = "";
 
@@ -171,6 +175,9 @@ public class HTMLDocument {
         }
 
         doc.add(Field.Text("contents", contents));
+*/
+
+        doc.add(Field.Text("contents", parser.getReader()));
 
         //System.out.println("HTMLDocument.getLuceneDocument(): contents field added: " + contents);
 
