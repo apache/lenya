@@ -38,7 +38,7 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
   private String treeAuthoringPath=null;
   private String treeLivePath=null;
 
-  private String replication_queue_href=null;
+  //private String replication_queue_href=null;
 /**
  *
  */
@@ -50,12 +50,13 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
     treeAuthoringPath=conf.getChild("tree-authoring").getAttribute("href");
     treeLivePath=conf.getChild("tree-live").getAttribute("href");
 
-    replication_queue_href=conf.getChild("replication-queue").getAttribute("href");
+    //replication_queue_href=conf.getChild("replication-queue").getAttribute("href");
 
     if(getLogger().isDebugEnabled()) {
       getLogger().debug("CONFIGURATION:\nauthoring path="+authoringPath+"\nlive path="+livePath);
       getLogger().debug("CONFIGURATION:\ntree authoring path="+treeAuthoringPath+"\ntree live path="+treeLivePath);
-      getLogger().debug("CONFIGURATION:\nReplication Queue: href="+replication_queue_href);
+
+      //getLogger().debug("CONFIGURATION:\nReplication Queue: href="+replication_queue_href);
       }
     }
 /**
