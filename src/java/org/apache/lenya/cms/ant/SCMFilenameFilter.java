@@ -15,25 +15,29 @@
  *
  */
 
-/* $Id: SCMFilenameFilter.java,v 1.3 2004/06/01 15:39:33 michi Exp $  */
+/* $Id: SCMFilenameFilter.java,v 1.4 2004/06/01 15:47:05 andreas Exp $  */
 
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.StringTokenizer;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * Filter to exclude SCM files, such as CVS and .svn
+ * Filter to exclude SCM files, such as CVS and .svn.
+ * A set of filenames (provided as comma-separated list) is excluded.
  */
 public class SCMFilenameFilter implements FilenameFilter {
-    String[] excludes;
+    
+    private List excludes;
 
     /**
-     * @param excludes e.g. CVS,.svn
+     * Ctor.
+     * @param excludes A comma-separated list of file names, e.g. CVS,.svn
      */
     public SCMFilenameFilter(String excludes) {
-        this.excludes = excludes.split(",");
+        this.excludes = Arrays.asList(excludes.split(","));
     }
 
     /**
@@ -41,11 +45,6 @@ public class SCMFilenameFilter implements FilenameFilter {
      * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
      */
     public boolean accept(File dir, String name) {
-        for (int i = 0; i < excludes.length; i++) {
-            if (name.equals(excludes[i])) {
-                return false;
-            }
-        }
-        return true;
+        return !this.excludes.contains(name);
     }
 }
