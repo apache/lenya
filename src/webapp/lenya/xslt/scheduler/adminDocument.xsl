@@ -91,8 +91,7 @@
 	    <select name="trigger.startDay">
 	      <xsl:call-template name="generateSelectionNames">
 		<xsl:with-param name="currentValue" select="1"/>
-		<xsl:with-param name="selectedValue"
-                    select="/sch:scheduler/sch:current-date/sch:day"/>
+		<xsl:with-param name="selectedValue" select="/sch:scheduler/sch:current-date/sch:day"/>
 		<xsl:with-param name="maxValue" select="31"/>
 	      </xsl:call-template>
 	    </select>
@@ -145,6 +144,14 @@
       </head>
       
       <body>
+
+
+<!--
+<p>
+      DEBUG: Current Time: <xsl:value-of select="/sch:scheduler/sch:current-date/sch:day"/><br />
+      DEBUG: Current Time: <xsl:value-of select="/sch:scheduler/sch:current-date/sch:second"/>
+</p>
+-->
 <!--      
         Parameters:
         <ul>
@@ -156,12 +163,11 @@
         <xsl:apply-templates select="sch:exception"/>
 	<font face="Verdana, Arial, Helvetica, sans-serif" size="2"> 
 	  <h1>Scheduler</h1>
-	  <h3>Schedule tasks for this page/document</h3>
-	  <p>
+	  <h3>Schedule tasks for this page/document:
             <a href="{$context_prefix}/authoring/{$documentUri}">
               <xsl:value-of select="$documentUri"/>
             </a>
-          </p>
+          </h3>
 	  <table width="100%" height="3" border="0" cellpadding="2" cellspacing="0">
 	    <tr> 
 	      <td bgcolor="#EEEEEE">
