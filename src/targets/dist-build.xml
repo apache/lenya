@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.13 2004/05/24 14:10:03 roku Exp $ -->
+<!-- $Id: dist-build.xml,v 1.14 2004/06/11 13:26:36 roku Exp $ -->
 
 <project name="dist">
 
@@ -33,20 +33,21 @@
   -->
   <target name="prepare-dist-bin" depends="clean,war">
 
-    <copy todir="${dist.root}/${distname}-bin">
+    <copy todir="${dist.bin.dir}">
       <fileset dir="${basedir}">
         <include name="INSTALL-BIN.txt"/>
         <include name="README.txt"/>
         <include name="lenya.sh"/>
         <include name="lenya.bat"/>
+        <include name="legal/**"/>
       </fileset>
     </copy>
 
     <!-- Copy endorsed libraries -->
-    <copy todir="${dist.root}/${distname}-bin/endorsed">
+    <copy todir="${dist.bin.dir}/endorsed">
       <fileset dir="${build.webapp}/WEB-INF/lib/endorsed"/>
     </copy>
-    <copy todir="${dist.root}/${distname}-bin/endorsed">
+    <copy todir="${dist.bin.dir}/endorsed">
       <fileset dir="${build.webapp}/WEB-INF/lib/">
         <include name="xercesImpl-*.jar"/>
       </fileset>
@@ -54,10 +55,10 @@
     <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${dist.root}/${distname}-bin/endorsed"/>
 
     <!-- Copy Jetty -->
-    <copy todir="${dist.root}/${distname}-bin/tools">
+    <copy todir="${dist.bin.dir}/tools">
       <fileset dir="tools"/>
     </copy>
-    <delete dir="${dist.root}/${distname}-bin/tools/anttasks"/>
+    <delete dir="${dist.bin.dir}/tools/anttasks"/>
   </target>
 
   <target name="dist-bin" depends="prepare-dist-bin" description="Build a regular binary distribution tar ball">
