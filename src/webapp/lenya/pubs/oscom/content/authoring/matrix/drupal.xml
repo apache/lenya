@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>drupal</id>
+  <system_name>Drupal</system_name>
+  <main_url>http://www.drupal.org</main_url>
+  <license>
+    <license_name>GNU General Public License</license_name>
+    <license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+  </license>
+</system>

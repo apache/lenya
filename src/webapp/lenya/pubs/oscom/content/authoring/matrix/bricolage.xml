@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>bricolage</id>
+  <system_name>Bricolage</system_name>
+  <main_url>http://bricolage.cc</main_url>
+  <license>
+    <license_name>BSD License</license_name>
+  </license>
+</system>
