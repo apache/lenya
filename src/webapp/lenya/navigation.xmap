@@ -37,7 +37,7 @@ This sitemap creates default navigation components.
       <!-- use default navigation schema -->
       <map:transform src="xslt/navigation/{stylesheet}.xsl">
         <map:parameter name="url" value="{url}"/>
-        <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
+          <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
         <map:parameter name="breadcrumbprefix" value="{page-envelope:breadcrumb-prefix}"/>
       </map:transform>
