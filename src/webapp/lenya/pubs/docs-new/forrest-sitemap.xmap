@@ -145,7 +145,7 @@
         <map:mount uri-prefix="" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
-      <map:handle-errors>
+      <map:handle-errors type="500">
         <map:transform src="context://stylesheets/system/error2html.xsl"/>
         <map:serialize status-code="500"/>
       </map:handle-errors>
