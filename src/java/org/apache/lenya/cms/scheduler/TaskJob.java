@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.33 2003/08/29 12:53:47 andreas Exp $
+$Id: TaskJob.java,v 1.34 2003/10/26 17:29:31 andreas Exp $
 <License>
 
  ============================================================================
@@ -155,13 +155,15 @@ public class TaskJob extends ServletJob {
      * @throws JobExecutionException if there is an exception while executing the job.
      */
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        log.debug("Executing job");
+        log.info("Executing job");
         JobDetail jobDetail = context.getJobDetail();
+        
         DefaultTaskWrapper wrapper = new DefaultTaskWrapper(jobDetail.getJobDataMap());
         try {
             wrapper.execute();
         } catch (ExecutionException e) {
-            throw new JobExecutionException(e, true);
+        	log.error("Task execution failed: ", e);
+//            throw new JobExecutionException(e, true);
         }
     }
 

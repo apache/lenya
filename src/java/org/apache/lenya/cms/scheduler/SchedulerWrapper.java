@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.23 2003/10/03 13:19:48 andreas Exp $
+$Id: SchedulerWrapper.java,v 1.24 2003/10/26 17:29:31 andreas Exp $
 <License>
 
  ============================================================================
@@ -129,6 +129,8 @@ public class SchedulerWrapper {
 
         try {
             scheduler = factory.getScheduler();
+            
+            scheduler.addSchedulerListener(new AbstractSchedulerListener());         
             scheduler.start();
         } catch (SchedulerException e) {
             log.error("Can't initialize SchedulerWrapper: ", e);
