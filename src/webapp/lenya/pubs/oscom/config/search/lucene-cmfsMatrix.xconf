@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<lucene>
+  <update-index type="new"/>
+<!--
+  <update-index type="incremental"/>
+-->
+
+  <index-dir src="../../work/search/lucene/index/index-cmfsMatrix"/>
+  <htdocs-dump-dir src="../../content/authoring/matrix"/>
+
+  <indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer">
+    <configuration src="mfs-luceneDoc.xconf"/>
+  </indexer>
+</lucene>

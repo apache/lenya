@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<luc:document xmlns:luc="http://www.wyona.org/2003/lucene">
+<!--
+  <luc:variable name="" value=""/>
+-->
+  <luc:field name="title" type="Text" xpath="/system/system_name"/>
+  <luc:field name="contents" type="Text" xpath="/system/description"/>
+<!--
+  <luc:field name="name" type="Text" xpath="/system/system_name"/>
+  <luc:field name="descr" type="UnStored" xpath="/system/description"/>
+  <luc:field name="fulltext" type="UnStored" xpath="/system"/>
+-->
+<!--
+  <luc:field name="plang" type="Text" xpath="/system/programming-language"/>
+-->
+</luc:document>
