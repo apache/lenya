@@ -4,3 +4,9 @@
 # Either use an absolute path or a relative one based on the current directory
 
 install.dir=/usr/local/tomcat/webapps/wyona-cms
+
+# The server cache directory to be cleaned by the 'reset' target
+# Either use an absolute path or a relative one based on the current directory
+
+cache.dir=/usr/local/tomcat/work/localhost/wyona-cms
+

@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.17 2002/02/04 19:45:23 michicms Exp $
+   @version CVS $Id: build.xml,v 1.18 2002/02/08 11:33:53 memo Exp $
 
 -->
 
@@ -479,6 +479,12 @@
   <target name="distclean" depends="clean" description="Cleans everything to the original state">
     <delete dir="${build.root}"/>
     <delete dir="${dist.root}"/>
+  </target>
+
+  <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
+    <!-- Empty server cache - this directory is set in the "build.properties" file -->
+    <delete dir="${cache.dir}"/>
+    <delete dir="${install.dir}"/>
   </target>
 
 </project>
