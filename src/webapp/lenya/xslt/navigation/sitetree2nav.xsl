@@ -33,6 +33,7 @@
 <xsl:template match="tree:site">
 
   <nav:site>
+    <xsl:copy-of select="@label"/> 
     <xsl:apply-templates/>
   </nav:site>
 

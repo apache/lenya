@@ -45,14 +45,23 @@
     <!-- Sitetree Javascript array -->
     <map:pipeline>
       <map:match pattern="**lenyasitetree/*">
+         <map:aggregate element="lenya" label="aggregate">
+          <map:part src="pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
+
+          <map:part src="pubs/{page-envelope:publication-id}/content/archive/sitetree.xml"/>
+          <map:part src="pubs/{page-envelope:publication-id}/content/trash/sitetree.xml"/>
+
+        </map:aggregate>
+<!--
 	    <map:generate src="pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
+      -->
 	    <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree"/>
 	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
         <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
         <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
         <map:parameter name="area" value="{page-envelope:area}"/>
         <map:parameter name="chosenlanguage" value="{2}"/>
-        <map:parameter name="defaultlanguage" value="en"/> <!-- needs to be publication parameter -->
+        <map:parameter name="defaultlanguage" value="en"/> 
       </map:transform>
 	    <map:serialize type="text"/>
       </map:match>

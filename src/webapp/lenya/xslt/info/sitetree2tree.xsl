@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.13 2003/07/28 10:32:04 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.14 2003/07/28 12:39:44 edith Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -16,8 +16,8 @@
 <xsl:param name="area"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
-
-<xsl:template match="/s:site">
+   
+<xsl:template match="lenya">
     <xsl:param name="parentPath"/>
 // You can find instructions for this file at http://www.treeview.net
 
@@ -29,23 +29,31 @@ USEICONS = 0
 WRAPTEXT = 1
 PERSERVESTATE = 1
 HIGHLIGHT = 1
-
 foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info&amp;lenya.step=showscreen")
-		<xsl:apply-templates select="s:node">
-            <xsl:with-param name="parentPath"><xsl:value-of select="@id"/></xsl:with-param>
-		</xsl:apply-templates>
+		<xsl:apply-templates select="s:site"/>
 
 //Set this string if Treeview and other configuration files may also be loaded in the same session
 foldersTree.treeID = "t2" 
 </xsl:template>    
 
+<xsl:template match="s:site">
+    <xsl:param name="parentPath"/>
+ <xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("<xsl:value-of select="@label"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:when>
+<xsl:otherwise>insDoc(foldersTree, gLnk("R", "<xsl:value-of select="@label"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:otherwise></xsl:choose>
+<xsl:apply-templates>
+            <xsl:with-param name="parentPath"><xsl:value-of select="@id"/></xsl:with-param>
+</xsl:apply-templates>   
+</xsl:template>
+
 <xsl:template match="s:node">
     <xsl:param name="parentPath"/>
-<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:choose><xsl:when test="parent::s:site">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gFld("<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:when>
-  <xsl:otherwise>insDoc(<xsl:choose><xsl:when test="parent::s:site">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gLnk("R", "<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:otherwise></xsl:choose>
+    
+
+<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:value-of select="generate-id(..)"/>, gFld("<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:when>
+  <xsl:otherwise>insDoc(<xsl:value-of select="generate-id(..)"/>, gLnk("R", "<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:otherwise></xsl:choose>
 <!--
-	<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:choose><xsl:when test="parent::s:site">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gFld("<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:when>
-  <xsl:otherwise>insDoc(<xsl:choose><xsl:when test="parent::s:site">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gLnk("R", "<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:otherwise></xsl:choose>
+	<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:value-of select="generate-id(..)"/>, gFld("<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:when>
+  <xsl:otherwise>insDoc(<xsl:value-of select="generate-id(..)"/>, gLnk("R", "<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:otherwise></xsl:choose>
 -->  
 <xsl:apply-templates>
             <xsl:with-param name="parentPath"><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/></xsl:with-param>
