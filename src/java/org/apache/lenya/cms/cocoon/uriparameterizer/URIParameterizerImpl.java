@@ -38,9 +38,8 @@ import org.xml.sax.Attributes;
 /**
  * Default mplementation of the {@link URIParameterizer}.
  */
-public class URIParameterizerImpl
-    extends AbstractLogEnabled
-    implements URIParameterizer, Serviceable {
+public class URIParameterizerImpl extends AbstractLogEnabled implements URIParameterizer,
+        Serviceable {
 
     /**
      * Consumer to handle URIParameterizer events.
@@ -60,7 +59,8 @@ public class URIParameterizerImpl
         }
 
         /**
-         * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+         * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
+         *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
          */
         public void startElement(String uri, String loc, String raw, Attributes a) {
             if (loc.equals("parameter")) {
@@ -72,7 +72,8 @@ public class URIParameterizerImpl
         }
 
         /**
-         * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+         * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
+         *      java.lang.String, java.lang.String)
          */
         public void endElement(String uri, String loc, String raw, Attributes a) {
             if (loc.equals("parameter")) {
@@ -124,10 +125,11 @@ public class URIParameterizerImpl
      * @throws URIParameterizerException when something went wrong.
      */
     public Map parameterize(String uri, String src, Parameters parameters)
-        throws URIParameterizerException {
+            throws URIParameterizerException {
 
         Map uriParameters = new HashMap();
         SourceResolver resolver = null;
+        Source inputSource = null;
 
         try {
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
@@ -138,26 +140,18 @@ public class URIParameterizerImpl
             for (int i = 0; i < parameterNames.length; i++) {
 
                 String key = uri + "_" + parameterNames[i];
-
                 String value = (String) cache.get(key);
 
                 if (value == null) {
                     String parameterSrc = parameters.getParameter(parameterNames[i]) + "/" + src;
 
-                    Source inputSource = null;
-                    try {
-                        inputSource = resolver.resolveURI(parameterSrc);
+                    inputSource = resolver.resolveURI(parameterSrc);
 
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug("File resolved to " + inputSource.getURI());
-                        }
-
-                        SourceUtil.toSAX(inputSource, xmlConsumer);
-                    } finally {
-                        if (inputSource != null) {
-                            resolver.release(inputSource);
-                        }
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("File resolved to " + inputSource.getURI());
                     }
+
+                    SourceUtil.toSAX(inputSource, xmlConsumer);
                     value = xmlConsumer.getParameter();
                     cache.put(key, value);
                 }
@@ -169,6 +163,9 @@ public class URIParameterizerImpl
             throw new URIParameterizerException(e);
         } finally {
             if (resolver != null) {
+                if (inputSource != null) {
+                    resolver.release(inputSource);
+                }
                 manager.release(resolver);
             }
         }
