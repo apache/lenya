@@ -240,7 +240,12 @@
         <map:part src="cocoon:/authoring/menus/editor-matrix/{1}.xml"/>
         <map:part src="cocoon:/authoring/editor-matrix/{1}-envelope.xsp" element="cmsbody"/>
       </map:aggregate>
+      <map:transform type="xlink">
+        <map:parameter name="href" value="docs/publication/authoring/dummy.xml"/>
+      </map:transform>
+<!--
       <map:transform type="xinclude"/>
+-->
       <map:serialize type="xml"/>
     </map:match>
 
