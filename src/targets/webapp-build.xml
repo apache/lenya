@@ -23,13 +23,6 @@
       </fileset>
     </copy>
 
-    <!-- Copy Documentation -->
-    <echo>INFO: Copy Documentation from ${src.webapp.dir}/lenya/pubs/docs to ${build.webapp}/lenya/pubs/docs</echo>
-    <copy todir="${build.webapp}/lenya/pubs/docs">
-      <fileset dir="${src.webapp.dir}/lenya/pubs/docs">
-      </fileset>
-    </copy>
-
     <!-- Copy publications -->
     <echo>INFO: Copy publications from ${src.webapp.dir}/lenya/pubs to ${build.webapp}/lenya/pubs</echo>
     <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}">
