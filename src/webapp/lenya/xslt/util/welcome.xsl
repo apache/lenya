@@ -39,6 +39,9 @@
 <xsl:template match="lenya:publications">
 <div class="lenya-sidebar">
 <div class="lenya-sidebar-heading">Publications</div>
+  <div class="lenya-publication-item">
+    <strong><a href="index.html?lenya.usecase=publication.createPublicationFromTemplate">New publication</a></strong>
+  </div>
 <xsl:for-each select="lenya:publication">
   <xsl:choose>
     <xsl:when test="lenya:publication/@lenya:show = 'false'">

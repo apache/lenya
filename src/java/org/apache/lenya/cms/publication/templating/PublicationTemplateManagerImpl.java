@@ -226,5 +226,5 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
         return (Publication[]) publications.toArray(new Publication[publications.size()]);
     }
-
+    
 }

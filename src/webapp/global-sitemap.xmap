@@ -132,6 +132,13 @@
 
 <!-- =========================== Pipelines ================================= -->
 
+    <!-- Usecases -->
+    <map:pipeline>
+      <map:match type="usecase" pattern="*">
+        <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+
     <map:pipeline>
       <map:match pattern="publications.xml">
         <map:generate type="directory" src="lenya/pubs"/>
@@ -157,7 +164,7 @@
         <map:generate src="lenya/content/about.xml"/>
         <map:call resource="style-cms-page"/>
       </map:match>
-      
+    
       <map:handle-errors>
         <map:select type="exception">
            <map:when test="resourcenotfound">
@@ -354,11 +361,6 @@
           </map:match>
         </map:match>
       </map:pipeline>
-
-      <!-- Usecases -->
-        <map:match type="usecase" pattern="*">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
 
       <!-- Info area -->
         <map:match pattern="*/*/info-sitetree/**">

@@ -69,5 +69,5 @@ public interface PublicationTemplateManager {
      * @param visitor The visitor.
      */
     void visit(PublicationVisitor visitor);
-
+    
 }
