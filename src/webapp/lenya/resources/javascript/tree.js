@@ -1,4 +1,4 @@
-// $Id: tree.js,v 1.9 2003/08/20 16:48:24 gregor Exp $
+// $Id: tree.js,v 1.10 2003/08/21 09:12:09 gregor Exp $
 //**************************************************************** 
 // TreeView by Marcelino Martins http://www.treeview.net
 //**************************************************************** 
@@ -596,6 +596,8 @@ function clickOnFolder(folderId)
 
     if (isLinked(clicked.hreference)) {
         highlightObjLink(clicked);
+        setLanguageTabs(clicked.hreference);
+        setAreaTabs(clicked.hreference);
     }
 } 
  
