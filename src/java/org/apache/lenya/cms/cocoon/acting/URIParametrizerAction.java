@@ -55,11 +55,15 @@ $Id
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 
+import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
 import org.apache.cocoon.components.source.SourceUtil;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.xml.AbstractXMLConsumer;
 
@@ -68,29 +72,32 @@ import org.apache.excalibur.source.Source;
 import org.apache.log4j.Category;
 
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class URIParametrizerAction extends ConfigurableComposerAction {
-    static Category log = Category.getInstance(URIParametrizerAction.class);
+    private static Category log = Category.getInstance(URIParametrizerAction.class);
 
     /**
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.11 $
+     * @version $Revision: 1.12 $
      */
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
-        boolean inParamElement = false;
-        String parameterValue = null;
+        private boolean inParamElement = false;
+        private String parameterValue = null;
 
         /**
          * DOCUMENT ME!
@@ -161,27 +168,78 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
+    public Map act(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String src,
+        Parameters parameters)
+        throws Exception {
+
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        String uri = request.getRequestURI();
+
+        Map map = (Map) srcToParameters.get(uri);
+
+        if (map == null) {
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Creating new map for URI [" + uri + "]");
+            }
+            map = new HashMap();
+            
+            if (srcToParameters.size() == MAX_ENTRIES) {
+                srcToParameters.remove(srcToParameters.firstKey());
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Cache map full - removing first element.");
+                }
+            }
+            
+            srcToParameters.put(uri, map);
+        }
+
+        parameterize(src, map, parameters, resolver);
+        return map;
+
+    }
+    
+    protected static final int MAX_ENTRIES = 1000;
+
+    private static SortedMap srcToParameters = new TreeMap();
+
+    /**
+     * Receives the URI parameters for a source.
+     * @param src The source.
+     * @param uriParameters The URI parameters.
+     * @param parameters The Action parameters.
+     * @param resolver The source resolver.
+     * @throws ParameterException when something went wrong.
+     * @throws ProcessingException when something went wrong.
+     * @throws SAXException when something went wrong.
+     * @throws IOException when something went wrong.
+     */
+    protected void parameterize(String src, Map uriParameters, Parameters parameters, SourceResolver resolver)
+        throws ParameterException, ProcessingException, SAXException, IOException {
         Source inputSource = null;
         URIParametrizerConsumer xmlConsumer = new URIParametrizerConsumer();
-
-        Map map = new HashMap();
 
         String[] parameterNames = parameters.getNames();
 
         for (int i = 0; i < parameterNames.length; i++) {
-            String parameterSrc = parameters.getParameter(parameterNames[i]) + "/" + src;
-            inputSource = resolver.resolveURI(parameterSrc);
+            
+            if (!uriParameters.containsKey(parameterNames[i])) {
+                String parameterSrc = parameters.getParameter(parameterNames[i]) + "/" + src;
+                inputSource = resolver.resolveURI(parameterSrc);
 
-            if (this.getLogger().isDebugEnabled()) {
-                this.getLogger().debug("file resolved to " + inputSource.getURI());
+                if (this.getLogger().isDebugEnabled()) {
+                    this.getLogger().debug("File resolved to " + inputSource.getURI());
+                }
+
+                SourceUtil.toSAX(inputSource, xmlConsumer);
+                uriParameters.put(parameterNames[i], xmlConsumer.getParameter());
             }
-
-            SourceUtil.toSAX(inputSource, xmlConsumer);
-            map.put(parameterNames[i], xmlConsumer.getParameter());
+            
         }
 
-        return map;
     }
+
 }
