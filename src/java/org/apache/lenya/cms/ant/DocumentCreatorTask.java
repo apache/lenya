@@ -237,7 +237,7 @@ public class DocumentCreatorTask extends PublicationTask {
      * @param boolean visibleinnav
      */   
     public boolean getVisibleInNav() {
-;        return visibleInNav;
+        return visibleInNav;
     }
 
 
