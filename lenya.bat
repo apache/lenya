@@ -16,7 +16,7 @@ rem limitations under the License.
 :: -----------------------------------------------------------------------------
 :: Lenya Win32 Shell Script
 ::
-:: $Id: lenya.bat,v 1.4 2004/03/26 18:47:04 egli Exp $
+:: $Id: lenya.bat,v 1.5 2004/05/26 22:37:40 roku Exp $
 :: -----------------------------------------------------------------------------
 
 :: Configuration variables
@@ -81,8 +81,21 @@ set JAVA_DEBUG_PORT=8000
 
 set CP=%LENYA_HOME%\tools\loader
 
-:: ----- Check action ----------------------------------------------------------
+:: ----- Unpack WAR file if needed --------------------------------------------------
 
+if exist build\lenya\webapp goto action
+
+echo        ###############################################
+echo        #   First start of Lenya. Unpacking now...    #
+echo        ###############################################
+
+mkdir build\lenya\webapp
+cd build\lenya\webapp
+"%JAVA_HOME%\bin\jar.exe" -xf ..\..\..\lenya.war
+cd ..\..\..
+
+:: ----- Check action ----------------------------------------------------------
+:action
 if ""%1"" == ""cli"" goto doCli
 if ""%1"" == ""servlet"" goto doServlet
 if ""%1"" == ""servlet-admin"" goto doAdmin
