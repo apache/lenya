@@ -77,8 +77,10 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction{
     String remoteAddress=request.getRemoteAddr();
 
     // Permit Identity and Policy requests for localhost
-    if(remoteAddress.equals("127.0.0.1")){
-    //if(remoteAddress.equals("127.0.0.1") && (.indexOf(policies)==0)){
+    String sitemap_uri=request.getRequestURI();
+    getLogger().error("POLICIES: "+sitemap_uri+" "+policies);
+    if(remoteAddress.equals("127.0.0.1") && (sitemap_uri.indexOf(policies) >= 0)){
+    //if(remoteAddress.equals("127.0.0.1")){
       return true;
       }
     
