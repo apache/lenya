@@ -9,7 +9,7 @@
 </xsl:template>                                                                                                                             
 
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
-<atom:feed xmlns:atom="http://purl.org/atom/ns#" xmlns:xlink="http://www.w3.org/2002/XLink">
+<atom:feed xmlns:atom="http://purl.org/atom/ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
   <description xlink:href="feeds/all/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)xpointer(/atom:feed/atom:link)xpointer(/atom:feed/atom:modified)" xlink:show="embed"/>
 
   <xsl:variable name="month"><xsl:value-of select="@name"/></xsl:variable>

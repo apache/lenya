@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<system type="cms" xmlns:xlink="http://www.w3.org/xlink">
+<system type="cms" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<id>ezpublish</id>
 			<editor email="tg@ez.no">Terje Kaste</editor>
 			<system_name>eZ publish</system_name>

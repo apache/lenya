@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
 <oscom>
-<navigation xlink:href="navigation.xml" xlink:show="embed" xmlns:xlink="http://www.w3c.org/2002/xmlns/xlink"/>
-<body xlink:href="index.xml" xlink:show="embed" xmlns:xlink="http://www.w3c.org/2002/xmlns/xlink"/>
+<navigation xlink:href="navigation.xml" xlink:show="embed" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+<body xlink:href="index.xml" xlink:show="embed" xmlns:xlink="http://www.w3.org/1999/xlink"/>
 </oscom>

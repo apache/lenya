@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<system type="cms" xmlns:xlink="http://www.w3.org/xlink">
+<system type="cms" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<id>komplete</id>
 			<editor email="acostin@interakt.ro">Alexandru Costin</editor>
 			<system_name>Komplete Lite</system_name>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<system type="cms" xmlns:xlink="http://www.w3.org/xlink">
+<system type="cms" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<id>nuxeo-cps</id>
 			<editor email="sf@nuxeo.com">Stefane Fermigier</editor>
 			<system_name>Nuxeo CPS</system_name>
