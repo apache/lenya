@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlAction.java,v 1.6 2003/08/13 13:14:00 andreas Exp $
+$Id: AccessControlAction.java,v 1.7 2003/11/13 16:08:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,8 +66,8 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.ac2.AccessControllerResolver;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.util.ServletHelper;
 
 /**

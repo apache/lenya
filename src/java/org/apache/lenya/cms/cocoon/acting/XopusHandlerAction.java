@@ -1,5 +1,5 @@
 /*
-$Id: XopusHandlerAction.java,v 1.34 2003/07/23 15:32:35 michi Exp $
+$Id: XopusHandlerAction.java,v 1.35 2003/11/13 16:08:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,8 @@ import org.apache.cocoon.util.PostInputStream;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.dom.DOMParser;
 
-import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMWriter;
@@ -91,7 +92,6 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Interfaces with Xopus: handles the requests and replies to them
@@ -122,9 +122,19 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         xslRoot = conf.getChild("xsl").getAttribute("href");
         xsdRoot = conf.getChild("xsd").getAttribute("href");
         tempRoot = conf.getChild("temp").getAttribute("href");
-        getLogger().debug(".configure(): \n" + "Relative XML Root Directory: " + xmlRoot + "\n" +
-            "Relative XSL Root Directory: " + xslRoot + "\n" + "Relative XSD Root Directory: " +
-            xsdRoot + "\n" + "Relative Temp Directory: " + tempRoot);
+        getLogger().debug(
+            ".configure(): \n"
+                + "Relative XML Root Directory: "
+                + xmlRoot
+                + "\n"
+                + "Relative XSL Root Directory: "
+                + xslRoot
+                + "\n"
+                + "Relative XSD Root Directory: "
+                + xsdRoot
+                + "\n"
+                + "Relative Temp Directory: "
+                + tempRoot);
 
         // Encode File types and their root directories, relative to the sitemap directory
         relRootDirs.put("xml", xmlRoot);
@@ -153,8 +163,12 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
      * @throws SAXException DOCUMENT ME!
      * @throws ProcessingException DOCUMENT ME!
      */
-    public java.util.Map act(Redirector redirector, SourceResolver resolver, Map objectModel,
-        String source, Parameters params)
+    public java.util.Map act(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String source,
+        Parameters params)
         throws IOException, ComponentException, SAXException, ProcessingException {
         // Get absolute path of sitemap directory
         Source input_source = resolver.resolveURI("");
@@ -207,8 +221,8 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         reqContent.close();
 
         // Define Files
-        File tempFileDir = new File(sitemapPath + relRootDirs.get("temp") + "/" +
-                relRootDirs.get(fileType));
+        File tempFileDir =
+            new File(sitemapPath + relRootDirs.get("temp") + "/" + relRootDirs.get(fileType));
 
         if (!(tempFileDir.exists())) {
             tempFileDir.mkdir();
@@ -219,8 +233,13 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
 
         if (!permFile.exists()) {
             getLogger().error(".act(): No such file: " + permFile.getAbsolutePath());
-            getLogger().error(".act(): No such file: " + sitemapPath + "::" +
-                relRootDirs.get(fileType) + "::" + reqFile);
+            getLogger().error(
+                ".act(): No such file: "
+                    + sitemapPath
+                    + "::"
+                    + relRootDirs.get(fileType)
+                    + "::"
+                    + reqFile);
 
             return null;
         }
@@ -240,11 +259,15 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         sitemapParams.put("fileType", fileType);
 
         if ("xml".equals(fileType) && ("open".equals(reqType) || "save".equals(reqType))) {
-            sitemapParams.put("reqFilePath",
-                (String) relRootDirs.get("temp") + "/" + (String) relRootDirs.get(fileType) + "/" +
-                reqFile);
-            getLogger().debug(".act(): File to be edited (in temp dir): " +
-                sitemapParams.get("reqFilePath"));
+            sitemapParams.put(
+                "reqFilePath",
+                (String) relRootDirs.get("temp")
+                    + "/"
+                    + (String) relRootDirs.get(fileType)
+                    + "/"
+                    + reqFile);
+            getLogger().debug(
+                ".act(): File to be edited (in temp dir): " + sitemapParams.get("reqFilePath"));
         } else {
             sitemapParams.put("reqFilePath", (String) relRootDirs.get(fileType) + "/" + reqFile);
         }
@@ -264,9 +287,10 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
 
                 // Create a new document, where the actual content starts at the root element, which is the inner part of requestDoc
                 Document contentDocument = dpf.getDocument();
-                contentDocument.appendChild((Element) dpf.cloneNode(contentDocument, contentNode,
-                        true));
-                new DOMWriter(new FileOutputStream(tempFile)).printWithoutFormatting(contentDocument);
+                contentDocument.appendChild(
+                    (Element) dpf.cloneNode(contentDocument, contentNode, true));
+                new DOMWriter(new FileOutputStream(tempFile)).printWithoutFormatting(
+                    contentDocument);
             } catch (Exception e) {
                 getLogger().error(".act(): Exception during writing to temp file", e);
             }
@@ -276,8 +300,11 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         if ("checkin".equals(reqType)) {
             getLogger().debug(".act(): Save to permanent file: " + permFile);
 
-            RevisionController rc = new RevisionController(sitemapPath + rcmlDirectory,
-                    sitemapPath + backupDirectory, sitemapPath);
+            RevisionController rc =
+                new RevisionController(
+                    sitemapPath + rcmlDirectory,
+                    sitemapPath + backupDirectory,
+                    sitemapPath);
 
             try {
                 Session session = httpReq.getSession(false);
@@ -286,11 +313,15 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
                     throw new Exception("No session");
                 }
 
-                Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
-                org.apache.lenya.cms.ac2.Identity identityTwo = (org.apache.lenya.cms.ac2.Identity) session.getAttribute("org.apache.lenya.cms.ac2.Identity");
+                Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+                org.apache.lenya.ac.Identity identityTwo =
+                    (org.apache.lenya.ac.Identity) session.getAttribute(Identity.class.getName());
                 String username = null;
                 if (identity != null) {
-                    username = identity.getUsername();
+                    User user = identity.getUser();
+                    if (user != null) {
+                        username = user.getId();
+                    }
                 } else if (identityTwo != null) {
                     username = identityTwo.getUser().getId();
                 } else {

@@ -1,5 +1,5 @@
 /*
-$Id: BitfluxAction.java,v 1.16 2003/07/23 13:21:31 gregor Exp $
+$Id: BitfluxAction.java,v 1.17 2003/11/13 16:08:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,7 +77,8 @@ import org.apache.cocoon.xml.dom.DOMStreamer;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.dom.DOMParser;
 
-import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.rc.RevisionController;
 
 import org.w3c.dom.Document;
@@ -93,7 +94,6 @@ import java.io.OutputStream;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Interfaces with Bitflux editor: handles the requests and replies to them
@@ -123,9 +123,19 @@ public class BitfluxAction extends ConfigurableComposerAction {
         xslRoot = conf.getChild("xsl").getAttribute("href");
         xsdRoot = conf.getChild("xsd").getAttribute("href");
         tempRoot = conf.getChild("temp").getAttribute("href");
-        getLogger().debug("CONFIGURATION:\n" + "Relative XML Root Directory: " + xmlRoot + "\n" +
-            "Relative XSL Root Directory: " + xslRoot + "\n" + "Relative XSD Root Directory: " +
-            xsdRoot + "\n" + "Relative Temp Directory: " + tempRoot);
+        getLogger().debug(
+            "CONFIGURATION:\n"
+                + "Relative XML Root Directory: "
+                + xmlRoot
+                + "\n"
+                + "Relative XSL Root Directory: "
+                + xslRoot
+                + "\n"
+                + "Relative XSD Root Directory: "
+                + xsdRoot
+                + "\n"
+                + "Relative Temp Directory: "
+                + tempRoot);
 
         // Encode File types and their root directories, relative to the sitemap directory
         relRootDirs.put("xml", xmlRoot);
@@ -154,8 +164,12 @@ public class BitfluxAction extends ConfigurableComposerAction {
      * @throws SAXException DOCUMENT ME!
      * @throws ProcessingException DOCUMENT ME!
      */
-    public java.util.Map act(Redirector redirector, SourceResolver resolver, Map objectModel,
-        String source, Parameters params)
+    public java.util.Map act(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String source,
+        Parameters params)
         throws IOException, ComponentException, SAXException, ProcessingException {
         // Get relative filename to save
         String relativeFilename = null;
@@ -203,7 +217,6 @@ public class BitfluxAction extends ConfigurableComposerAction {
         Element data = (Element) root.getFirstChild();
         getLogger().debug("first child element (should be 'data'): " + data.getTagName());
 
-        String reqFile = data.getAttribute("id");
         String fileType = data.getAttribute("type");
         getLogger().debug("Requested File's Type: " + fileType);
 
@@ -211,8 +224,8 @@ public class BitfluxAction extends ConfigurableComposerAction {
         reqContent.close();
 
         // Define temp dir
-        File tempFileDir = new File(sitemapPath + relRootDirs.get("temp") + "/" +
-                relRootDirs.get(fileType));
+        File tempFileDir =
+            new File(sitemapPath + relRootDirs.get("temp") + "/" + relRootDirs.get(fileType));
 
         if (!(tempFileDir.exists())) {
             tempFileDir.mkdir();
@@ -235,8 +248,8 @@ public class BitfluxAction extends ConfigurableComposerAction {
         if ("save".equals(reqType) || "checkin".equals(reqType)) {
             //FIXME(): remove hard coding
             final OutputStream os = new FileOutputStream(tempFile);
-            ComponentSelector selector = (ComponentSelector) super.manager.lookup(Serializer.ROLE +
-                    "Selector");
+            ComponentSelector selector =
+                (ComponentSelector) super.manager.lookup(Serializer.ROLE + "Selector");
 
             //FIXME: remove hardcoding stuff
             Serializer serializer = (Serializer) selector.select("xml");
@@ -258,8 +271,11 @@ public class BitfluxAction extends ConfigurableComposerAction {
         if ("checkin".equals(reqType)) {
             getLogger().debug(".act(): Save to permanent file: " + permFile);
 
-            RevisionController rc = new RevisionController(sitemapPath + rcmlDirectory,
-                    sitemapPath + backupDirectory, sitemapPath);
+            RevisionController rc =
+                new RevisionController(
+                    sitemapPath + rcmlDirectory,
+                    sitemapPath + backupDirectory,
+                    sitemapPath);
 
             try {
                 Session session = httpReq.getSession(false);
@@ -268,14 +284,24 @@ public class BitfluxAction extends ConfigurableComposerAction {
                     throw new Exception("No session");
                 }
 
-                Identity identity = (Identity) session.getAttribute(
-                        "org.apache.lenya.cms.ac.Identity");
-                rc.reservedCheckIn(xmlRoot + "/" + relativeFilename, identity.getUsername(), true);
+                Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+                User user = identity.getUser();
+                String userId = "";
+                if (user != null) {
+                    userId = user.getId();
+                }
+                rc.reservedCheckIn(xmlRoot + "/" + relativeFilename, userId, true);
 
                 FileUtil.copyFile(tempFile, permFile);
             } catch (Exception e) {
-                getLogger().error(".act(): Exception during checkin of " + xmlRoot + "/" +
-                    relativeFilename + " (" + e + ")");
+                getLogger().error(
+                    ".act(): Exception during checkin of "
+                        + xmlRoot
+                        + "/"
+                        + relativeFilename
+                        + " ("
+                        + e
+                        + ")");
 
                 return null;
             }
