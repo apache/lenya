@@ -42,10 +42,10 @@ public class WorkflowDocumentSet extends SynchronizedWorkflowInstancesImpl {
         WorkflowInstance[] instances = new WorkflowInstance[documents.length];
         WorkflowFactory factory = WorkflowFactory.newInstance();
         for (int i = 0; i < documents.length; i++) {
-            instances[i] = factory.buildInstance(documents[i]);
+            instances[i] = factory.buildExistingInstance(documents[i]);
         }
         setInstances(instances);
-        setMainInstance(factory.buildInstance(mainDocument));
+        setMainInstance(factory.buildExistingInstance(mainDocument));
     }
 
 }
