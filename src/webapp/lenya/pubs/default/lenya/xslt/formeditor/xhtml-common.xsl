@@ -5,7 +5,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:unizh="http://unizh.ch/doctypes/elements/1.0"
 >
 
 <xsl:template match="xhtml:body">
