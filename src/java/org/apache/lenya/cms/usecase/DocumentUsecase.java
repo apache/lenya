@@ -19,11 +19,7 @@ package org.apache.lenya.cms.usecase;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * 
@@ -122,33 +118,6 @@ public class DocumentUsecase extends AbstractUsecase {
      */
     protected void triggerWorkflow(String event) {
         triggerWorkflow(event, getSourceDocument());
-    }
-
-    /**
-     * Triggers a workflow event on a document.
-     * @param event The event.
-     * @param document The document.
-     */
-    protected void triggerWorkflow(String event, Document document) {
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        try {
-            WorkflowInstance instance = factory.buildInstance(document);
-            Event[] events = instance.getExecutableEvents(getSituation());
-            Event executableEvent = null;
-            for (int i = 0; i < events.length; i++) {
-                if (events[i].getName().equals(event)) {
-                    executableEvent = events[i];
-                }
-            }
-
-            if (executableEvent == null) {
-                throw new RuntimeException("The event [" + event
-                        + "] is not executable on document [" + document + "]");
-            }
-            instance.invoke(getSituation(), executableEvent);
-        } catch (WorkflowException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

@@ -30,9 +30,13 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * Abstract usecase implementation.
@@ -390,4 +394,32 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     protected void deleteParameter(String name) {
         this.parameters.remove(name);
     }
+
+    /**
+     * Triggers a workflow event on a document.
+     * @param event The event.
+     * @param document The document.
+     */
+    protected void triggerWorkflow(String event, Document document) {
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        try {
+            WorkflowInstance instance = factory.buildInstance(document);
+            Event[] events = instance.getExecutableEvents(getSituation());
+            Event executableEvent = null;
+            for (int i = 0; i < events.length; i++) {
+                if (events[i].getName().equals(event)) {
+                    executableEvent = events[i];
+                }
+            }
+
+            if (executableEvent == null) {
+                throw new RuntimeException("The event [" + event
+                        + "] is not executable on document [" + document + "]");
+            }
+            instance.invoke(getSituation(), executableEvent);
+        } catch (WorkflowException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
