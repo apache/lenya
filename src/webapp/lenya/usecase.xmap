@@ -549,8 +549,8 @@
         <map:match pattern="deleteTrash" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/deleteTrash.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/deleteTrash.xsl"/>
+            <map:generate src="content/admin/content/deleteTrash.xsp" type="serverpages"/>
+            <map:transform src="xslt/admin/content/deleteTrash.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           

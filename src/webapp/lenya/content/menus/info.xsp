@@ -57,6 +57,9 @@
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=add-child&amp;lenya.step=showscreen</xsp:attribute>Add Child Element</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=add-sibling&amp;lenya.step=showscreen</xsp:attribute>Insert New Document</item>
       </block>
+      <block>
+        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=deleteTrash&amp;lenya.step=showscreen</xsp:attribute>Delete Trash</item>
+      </block>
     </menu>
 
     <menu name="Workflow" label="Help">
