@@ -3,19 +3,19 @@
   <Channels>
     <Channel name="magazin">
       <Sections>
-        <Section id="gesundheit">Gesundheit</Section>
-        <Section id="geist">Geist &#38; Gesellschaft</Section>
-        <Section id="umwelt">Unwelt &#38; Technik</Section>
-        <Section id="recht">Recht &#38; Wirtschaft</Section>
+        <Section id="gesundheit" highlighted="false">Gesundheit</Section>
+        <Section id="geist" highlighted="false">Geist &#38; Gesellschaft</Section>
+        <Section id="umwelt" highlighted="false">Unwelt &#38; Technik</Section>
+        <Section id="recht" highlighted="false">Recht &#38; Wirtschaft</Section>
       </Sections>
     </Channel>
     <Channel name="campus">
       <Sections>
-        <Section id="uni-news">Uni-News</Section>
-        <Section id="portraits">Portraits</Section>
-        <Section id="lorbeeren">Lorbeeren</Section>
-        <Section id="berufungen">Berufungen</Section>
-        <Section id="publikationen">Publikationen</Section>
+        <Section id="uni-news" highlighted="false">Uni-News</Section>
+        <Section id="portraits" highlighted="false">Portraits</Section>
+        <Section id="lorbeeren" highlighted="false">Lorbeeren</Section>
+        <Section id="berufungen" highlighted="false">Berufungen</Section>
+        <Section id="publikationen" highlighted="false">Publikationen</Section>
       </Sections>
     </Channel>
   </Channels>
