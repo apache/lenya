@@ -21,7 +21,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xso="http://apache.org/cocoon/lenya/xslt/1.0"
-    xmlns:i18n="http://apache.org/cocoon/i18n/2.1" 
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     >
 
 <xsl:param name="contextprefix"/>
@@ -30,7 +30,7 @@
 
 
 <xsl:template match="xsl:stylesheet">
-  <xso:stylesheet xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
+  <xso:stylesheet version="1.0" xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
   </xso:stylesheet>
