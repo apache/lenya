@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.7 2004/01/08 14:15:40 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.8 2004/02/20 20:12:00 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false">
   <lenya:name>Apache Lenya Project (Overview and Documentation)</lenya:name>
@@ -10,15 +10,9 @@
   <lenya:help></lenya:help>
   <lenya:changelog>changes.xml</lenya:changelog>
   <lenya:license></lenya:license>
-  <lenya:readme>
-    <p>
-      The "Editor's View (Authoring)" is still in an experimental version. Please use the
-      "Reader's View (Live)".
-    </p>
-    
+  <lenya:readme>    
     <ol>
-      <li><a href="index.html">Reader's View</a> (Live)</li>
-      <li><a href="authoring/index.html">Editor's View</a> (Authoring)</li>
+      <li><a href="docs/index.html">Reader's View</a> (Live)</li>
     </ol>
 
     <p>The original Forrest sources can be found in <a

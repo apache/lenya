@@ -3,12 +3,6 @@
   <map:components>
     <map:generators default="file">
       <map:generator name="file" src="org.apache.cocoon.generation.FileGenerator" />
-      <!--
-      <map:generator name="html" src="org.apache.cocoon.generation.HTMLGenerator" />
-      <map:generator name="directory" src="org.apache.cocoon.generation.DirectoryGenerator" />
-      <map:generator name="libre" src="org.apache.forrest.yer.use.cocoon.HierarchyGenerator" />
-      <map:generator name="textparser" src="org.apache.cocoon.generation.TextParserGenerator" />
-      -->
     </map:generators>
 
     <map:transformers default="xslt">
@@ -124,31 +118,6 @@
 
   <!-- =========================== Pipelines ================================= -->
   <map:pipelines>
-
-<!-- Lenya pipelines -->
-
-    <!-- Authoring Interface -->
-    <map:pipeline>
-      <map:match pattern="authoring/**">
-        <map:mount uri-prefix="authoring" src="authoring-sitemap.xmap"/>
-      </map:match>
-    </map:pipeline>
-<!--
-
-      <map:match pattern="**">
-        <map:mount uri-prefix="" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-
-      <map:handle-errors type="500">
-        <map:transform src="context://stylesheets/system/error2html.xsl"/>
-        <map:serialize status-code="500"/>
-      </map:handle-errors>
-    </map:pipeline>
-    -->
-<!-- /Lenya pipelines -->
-
-
-
 
     <map:pipeline internal-only="false">
 
