@@ -109,6 +109,36 @@
         <map:serialize type="xml"/>
       </map:match>
 
+      <!-- Dossier -->
+      <map:match pattern="dossiers/*/*/content.xml">
+        <map:generate src="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Dossier/xinclude.xsl" />
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="dossiers/*/*/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+
+      <map:match pattern="dossiers/*/*/index.html">
+        <map:generate src="cocoon:/dossiers/{1}/{2}/content.xml" />
+        <map:transform src="stylesheets/publication/Page/Dossier/Live/main.xsl" />
+        <map:serialize type="html"/>
+      </map:match>
+
+      <map:match pattern="dossiers/*/*/index.xml">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/{1}/{2}/dossier.xml"/>
+          <map:part src="cocoon:/dossiers/{1}/{2}/content.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+
+
+
       <!-- Section -->
       <map:match pattern="*/*/*/navigation.xml">
         <map:generate src="docs/publication/live/navigation.xml"/>
@@ -155,12 +185,15 @@
       <map:match pattern="*/*/">
         <map:redirect-to uri="2002/index.html" session="true"/>
       </map:match>
+
       <map:match pattern="*/*/index.html">
         <map:redirect-to uri="2002/index.html" session="true"/>
       </map:match>
+
       <map:match pattern="*/*/*/">
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
+
       <map:match pattern="*/*/*/index.html">
         <map:generate src="cocoon:/{1}/{2}/{3}/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl">

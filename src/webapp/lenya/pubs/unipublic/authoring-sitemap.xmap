@@ -308,33 +308,37 @@
 
 
 <!-- Dossier -->
-      <map:match pattern="dossiers/*/*/index.xml">
+      <map:match pattern="dossiers/*/*/content.xml">
         <map:generate src="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Dossier/xinclude.xsl" />
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="dossiers/*/*/">
         <map:redirect-to uri="index.html"/>
       </map:match>
+
       <map:match pattern="dossiers/*/*/index.html">
         <map:aggregate element="wyona">
           <map:part src="cocoon:/menus/{1}/{2}/dossier.xml"/>
-          <map:part src="docs/publication/authoring/dossiers/{1}/{2}/index.xml" element="cmsbody"/>
+          <map:part src="cocoon:/dossiers/{1}/{2}/content.xml" element="cmsbody"/>
         </map:aggregate>
         <map:transform src="stylesheets/publication/Page/Dossier/Authoring/main.xsl">
-          <map:parameter name="section" value="gesundheit"/>
-          <map:parameter name="documentid" value="docs/publication/authoring/magazin/gesundheit/articles/2002/0789/index.xml"/>
           <map:parameter name="authoring" value="true"/>
         </map:transform>
         <map:serialize type="html"/>
-        <map:serialize type="xml"/>
       </map:match>
 
-
-
-
-
-
+      <map:match pattern="dossiers/*/*/index.xml">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/{1}/{2}/dossier.xml"/>
+          <map:part src="cocoon:/dossiers/{1}/{2}/content.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
 
 
 
