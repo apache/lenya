@@ -47,27 +47,6 @@ case "$1" in
         echo ""
         $JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
 	;;
-    index)
-        echo ""
-        echo "=========================================================="
-        echo "Target: $1"
-        echo "=========================================================="
-        echo ""
-        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.3.jar
-        echo "INFO: classpath = $CLASSPATH"
-        echo ""
-
-        LUCENE_CONF=$2
-
-        echo "INFO: lucene.xconf = $LUCENE_CONF"
-	echo "INFO: Show configuration:"
-        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexConfiguration $LUCENE_CONF
-        echo ""
-	echo "INFO: Create index:"
-        $JAVA -Xmx$JAVA_XMX -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF
-
-        ###$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
-	;;
     xpdf)
         echo ""
         echo "=========================================================="
@@ -101,7 +80,7 @@ case "$1" in
         $JAVA -cp $CLASSPATH org.apache.lenya.lucene.SearchFiles $INDEX_DIR $WORD
 	;;
     *)
-        echo "Usage: $0 {index|xpdf|search}"
+        echo "Usage: $0 {crawl|xpdf|search}"
         exit 1
         ;;
 esac
