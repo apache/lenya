@@ -102,6 +102,7 @@
         <map:generate type="serverpages" src="config/menus/matrix.xsp">
           <map:parameter name="projectid" value="{1}"/>
         </map:generate>
+        <map:transform type="usecasemenu"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/editor-matrix/*.xml">
