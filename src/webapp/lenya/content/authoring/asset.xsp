@@ -22,7 +22,9 @@
       File[] resources = resourceMgr.getResources();
     </xsp:logic>
   
+    <usecase:request-uri><input:get-attribute module="request" name="requestURI"/></usecase:request-uri>
     <usecase:date><input:get-attribute module="date" name="currentDate"/></usecase:date>
+    <usecase:creator><input:get-attribute module="access-control" name="user-id"/></usecase:creator>
     <usecase:assets>
       <xsp:logic>
 	if (resources != null) {
