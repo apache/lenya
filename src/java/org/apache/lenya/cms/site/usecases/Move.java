@@ -26,7 +26,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public class Move extends SiteUsecase {
 
-	/**
+    /**
      * Ctor.
      */
     public Move() {
@@ -34,18 +34,11 @@ public class Move extends SiteUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
-     */
-    protected void doInitialize() {
-        super.doInitialize();
-    }
-            
-     /**
      * Validates the request parameters.
      * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -63,7 +56,8 @@ public class Move extends SiteUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
+     *      java.lang.Object)
      */
     public void setParameter(String name, Object value) {
         super.setParameter(name, value);

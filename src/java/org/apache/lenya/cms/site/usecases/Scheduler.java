@@ -34,10 +34,10 @@ public class Scheduler extends SiteUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
-    protected void doInitialize() {
-        super.doInitialize();
+    protected void initParameters() {
+        super.initParameters();
         try {
 	        setParameter("live", "");
         } catch (Exception e) {

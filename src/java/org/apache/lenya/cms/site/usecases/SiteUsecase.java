@@ -34,10 +34,10 @@ public class SiteUsecase extends DocumentUsecase {
     protected static final String ISLIVE = "is_live";
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
-    protected void doInitialize() {
-        super.doInitialize();
+    protected void initParameters() {
+        super.initParameters();
         WorkflowResolver resolver = null;
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);

@@ -36,10 +36,10 @@ public class Overview extends SiteUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
-    protected void doInitialize() {
-        super.doInitialize();
+    protected void initParameters() {
+        super.initParameters();
         this.dc = getSourceDocument().getDublinCore();
         try {
 	        setParameter("languages", getSourceDocument().getLanguages());

@@ -365,8 +365,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     public final void initialize() throws Exception {
         super.initialize();
         this.documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-        doInitialize();
-        initParameters();
     }
 
     /**
@@ -383,7 +381,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     /**
      * Does the actual initialization. Template method.
      */
-    protected void doInitialize() {
+    protected final void doInitialize() {
     }
 
     /**
@@ -467,6 +465,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      */
     public void setSourceURL(String url) {
         this.sourceUrl = url;
+        initParameters();
     }
 
 }

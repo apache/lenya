@@ -17,18 +17,12 @@
 
 package org.apache.lenya.cms.usecase;
 
-import java.util.Map;
-
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.util.ServletHelper;
 
 /**
  * <p>
@@ -64,30 +58,26 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
+     * @see org.apache.lenya.cms.usecase.Usecase#setSourceURL(java.lang.String)
      */
-    protected void doInitialize() {
-        super.doInitialize();
+    public void setSourceURL(String url) {
         try {
-            Map objectModel = ContextHelper.getObjectModel(getContext());
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            String webappUri = ServletHelper.getWebappURI(request);
-
             DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
             PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
-            Publication publication = pubFactory.getPublication(this.manager, webappUri);
+            Publication publication = pubFactory.getPublication(this.manager, url);
 
-            if (factory.isDocument(publication, getSourceURL())) {
-                this.sourceDocument = factory.getFromURL(publication, getSourceURL());
+            if (factory.isDocument(publication, url)) {
+                this.sourceDocument = factory.getFromURL(publication, url);
             }
 
-            URLInformation info = new URLInformation(webappUri);
+            URLInformation info = new URLInformation(url);
             this.completeArea = info.getCompleteArea();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        super.setSourceURL(url);
     }
-
+    
     private Document sourceDocument = null;
 
     /**

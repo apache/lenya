@@ -35,16 +35,6 @@ import org.apache.lenya.xml.DocumentHelper;
  */
 public class Assets extends SiteUsecase {
 
-    private ResourcesManager resourcesManager = null;
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
-     */
-    protected void doInitialize() {
-        super.doInitialize();
-        this.resourcesManager = getSourceDocument().getResourcesManager();
-    }
-
     /**
      * Validates the request parameters.
      * @throws UsecaseException if an error occurs.
@@ -72,7 +62,8 @@ public class Assets extends SiteUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-        File[] resources = this.resourcesManager.getResources();
+        ResourcesManager resourcesManager = getSourceDocument().getResourcesManager();
+        File[] resources = resourcesManager.getResources();
 
         if (resources != null) {
             Map[] assets = new Map[resources.length];
@@ -83,7 +74,7 @@ public class Assets extends SiteUsecase {
                 String format = "";
                 org.w3c.dom.Document metaDoc;
                 try {
-                    metaDoc = DocumentHelper.readDocument(this.resourcesManager
+                    metaDoc = DocumentHelper.readDocument(resourcesManager
                             .getMetaFile(resources[i]));
                     title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
                             "title").item(0).getChildNodes().item(0).getNodeValue();
@@ -123,7 +114,7 @@ public class Assets extends SiteUsecase {
      */
     protected void deleteAsset() throws Exception {
         String assetName = getParameterAsString("delete");
-        this.resourcesManager.deleteResource(assetName);
+        getSourceDocument().getResourcesManager().deleteResource(assetName);
     }
 
     /**
@@ -140,7 +131,7 @@ public class Assets extends SiteUsecase {
         metadata.put("creator", creator);
         metadata.put("rights", rights);
         try {
-            this.resourcesManager.addResource(file, metadata);
+            getSourceDocument().getResourcesManager().addResource(file, metadata);
         } catch (final Exception e) {
             getLogger().error("The resource could not be added: ", e);
             addErrorMessage("The resource could not be added (see log files for details).");

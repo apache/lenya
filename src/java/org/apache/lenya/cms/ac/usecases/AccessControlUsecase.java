@@ -48,10 +48,10 @@ public class AccessControlUsecase extends AbstractUsecase {
     private AccessController accessController;
 
     /**
+     * Initializes the accreditable managers.
      * FIXME: This method resolves the AccessController, it has to be released after it is used!
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
      */
-    protected void doInitialize() {
+    protected void initializeAccessController() {
         super.doInitialize();
         
         this.accessController = null;
@@ -92,30 +92,49 @@ public class AccessControlUsecase extends AbstractUsecase {
      * @return Returns the groupManager.
      */
     protected GroupManager getGroupManager() {
+        if (this.groupManager == null) {
+            initializeAccessController();
+        }
         return this.groupManager;
     }
+    
     /**
      * @return Returns the ipRangeManager.
      */
     protected IPRangeManager getIpRangeManager() {
+        if (this.ipRangeManager == null) {
+            initializeAccessController();
+        }
         return this.ipRangeManager;
     }
+    
     /**
      * @return Returns the roleManager.
      */
     protected RoleManager getRoleManager() {
+        if (this.roleManager == null) {
+            initializeAccessController();
+        }
         return this.roleManager;
     }
+    
     /**
      * @return Returns the userManager.
      */
     protected UserManager getUserManager() {
+        if (this.userManager == null) {
+            initializeAccessController();
+        }
         return this.userManager;
     }
+    
     /**
      * @return Returns the accessController.
      */
     protected AccessController getAccessController() {
+        if (this.accessController == null) {
+            initializeAccessController();
+        }
         return this.accessController;
     }
 }

@@ -89,13 +89,6 @@ public class Search extends DocumentUsecase {
     }
     
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
-     */
-    protected void doInitialize() {
-        super.doInitialize();
-    }
-    
-    /**
      * Validates the request parameters.
      * @throws UsecaseException if an error occurs.
      */

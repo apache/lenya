@@ -48,10 +48,10 @@ public class AccessControl extends AccessControlUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
-    protected void doInitialize() {
-        super.doInitialize();
+    protected void initParameters() {
+        super.initParameters();
 
         try {
             Role[] roles = getRoleManager().getRoles();

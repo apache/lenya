@@ -76,6 +76,8 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
         try {
             resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
             usecase = resolver.resolve(getSourceURL(), getUsecaseName());
+            
+            usecase.setSourceURL(getSourceURL());
             usecase.setName(getUsecaseName());
 
             passParameters(usecase);

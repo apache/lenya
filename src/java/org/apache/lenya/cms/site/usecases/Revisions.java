@@ -37,10 +37,12 @@ public class Revisions extends SiteUsecase {
     private RCML rcml = null;
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
+     *      filter out checkin entries
      */
-    protected void doInitialize() {
-        super.doInitialize();
+    protected void initParameters() {
+        super.initParameters();
+
         try {
             final Publication publication = getSourceDocument().getPublication();
             final String publicationPath = publication.getDirectory().getCanonicalPath();
@@ -58,15 +60,7 @@ public class Revisions extends SiteUsecase {
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
-     *      filter out checkin entries
-     */
-    protected void initParameters() {
-        super.initParameters();
-
+        
         Vector entries;
         try {
             entries = this.rcml.getEntries();

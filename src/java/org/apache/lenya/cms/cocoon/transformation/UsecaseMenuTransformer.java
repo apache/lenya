@@ -113,6 +113,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                     Usecase usecase = null;
                     try {
                         usecase = usecaseResolver.resolve(usecaseName);
+                        usecase.setSourceURL(this.sourceUrl);
+                        usecase.setName(usecaseName);
                         if (attr.getValue(HREF_ATTRIBUTE) != null) {
                             passRequestParameters(usecase, attr.getValue(HREF_ATTRIBUTE));
                         }
@@ -184,6 +186,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     private Role[] roles;
     private Publication publication;
     private AccessControllerResolver acResolver;
+    private String sourceUrl;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -202,6 +205,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         this.authorizer = null;
 
         Request _request = ObjectModelHelper.getRequest(_objectModel);
+        this.sourceUrl = ServletHelper.getWebappURI(request);
 
         try {
             this.roles = PolicyAuthorizer.getRoles(_request);
