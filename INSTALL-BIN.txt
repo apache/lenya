@@ -5,16 +5,16 @@
    +----------------------+
 
 
-1) Copy the war file into the webapps directory of Tomcat
+1) Copy the war file into the webapps directory of your servlet container
 
 2) Set your JAVA_HOME environment, e.g.
 
    [unix] 
-   export JAVA_HOME=/usr/local/j2sdk1.4.2
+   export JAVA_HOME=/usr/local/j2sdk1.4.2   
 
 3) Copy endorsed libraries
 
-4) Start up Tomcat, e.g.
+4) Start up your servlet engine, e.g.
 
    [unix]
    /usr/local/jakarta-tomcat-4.1.24-LE-jdk14/bin/startup.sh

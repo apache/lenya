@@ -13,16 +13,17 @@
    export ANT_HOME=/usr/local/jakarta-ant-1.5.1
    export PATH=$ANT_HOME/bin:$PATH
 
-
 2) Copy "build.properties.sample" to "build.properties"
 
 3) Edit build.properties:
 
-   The most important parameter to update is "cocoon.webapp.dir", which tells
+   The most important parameter to update is "cocoon.webapp.dir", which specifies
    where the Cocoon webapp directory is located (first you need to build Cocoon).
 
    If you want to run Lenya on Tomcat then you should update the following
-   parameters: "install.dir" and "cache.dir"
+   parameters: "install.dir" and "cache.dir".
+   
+   Lenya ships with Jetty, so you do not need Tomcat.
 
 4) Build Lenya by typing
 
@@ -30,9 +31,12 @@
 
 5) Copy endorsed libraries
 
-6) Start up Tomcat, e.g.
+6) Start up your servlet engine, e.g.
 
    [unix]
    /usr/local/jakarta-tomcat-4.1.24-LE-jdk14/bin/startup.sh
+   
+   or
+   lenya.sh to start Jetty
 
-7) Open http://localhost:8080/lenya/ with your browser
+7) Open http://localhost:8080/lenya/ or http://127.0.0.1:8888 (Jetty)
