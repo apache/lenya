@@ -9,8 +9,21 @@
       <xml>
         <pipeline xml="/lenya/publication/authoring/page.html?lenya.usecase=xopus&amp;lenya.step=xml" xsd="/lenya/publication/authoring/page.html?lenya.usecase=xopus&amp;lenya.step=xsd">
           <view id="defaultView" default="true">
+            <transform xsl="/XOPUS_PREFIX/xopusPlugins/preparexinclude.xsl"/>
+            <resolveXIncludes/>
             <transform xsl="/lenya/publication/authoring/page.html?lenya.usecase=xopus&amp;lenya.step=xslt"/>
           </view>
+          <!--
+          <view id="step1">
+            <transform xsl="/XOPUS_PREFIX/xopusPlugins/preparexinclude.xsl"/>
+            <transform xsl="/XOPUS_PREFIX/xopus/media/treeview/tree.xsl"></transform>
+          </view>
+          <view id="step2">
+            <transform xsl="/XOPUS_PREFIX/xopusPlugins/preparexinclude.xsl"/>
+            <resolveXIncludes/>
+            <transform xsl="/XOPUS_PREFIX/xopus/media/treeview/tree.xsl"></transform>
+          </view>
+          -->
           <view id="treeView">
             <transform xsl="/XOPUS_PREFIX/xopus/media/treeview/tree.xsl"></transform>
           </view>
