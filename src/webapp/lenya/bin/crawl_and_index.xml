@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: crawl_and_index.xml,v 1.38 2004/06/03 13:17:42 michi Exp $ -->
+<!-- $Id: crawl_and_index.xml,v 1.39 2004/06/04 08:48:07 michi Exp $ -->
 
 <project default="main" basedir=".">
 
@@ -45,9 +45,9 @@
 
   <path id="class.path">
     <pathelement path="${web-inf.dir}/classes"/>
-    <pathelement path="${web-inf.dir}/lib/xercesImpl-2.6.1.jar"/>
+    <pathelement path="${web-inf.dir}/lib/xercesImpl-2.6.2.jar"/>
     <pathelement path="${web-inf.dir}/lib/xml-apis.jar"/>
-    <pathelement path="${web-inf.dir}/lib/xalan-2.5.2.jar"/>
+    <pathelement path="${web-inf.dir}/lib/endorsed/xalan-2.5.0.jar"/>
     <pathelement path="${web-inf.dir}/lib/log4j-1.2.8.jar"/>
     <pathelement path="${web-inf.dir}/lib/excalibur-io-1.1.jar"/>
     <pathelement path="${web-inf.dir}/lib/lucene-1.4-rc3.jar"/>
