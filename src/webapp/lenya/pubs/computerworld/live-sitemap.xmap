@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.23 2003/04/01 13:18:49 gregor Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.24 2003/05/22 13:18:59 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
 	<!-- =========================== Views ================================ -->
@@ -184,7 +184,7 @@
 			</map:match>
 			
 			<!-- Error handling -->
-			<map:handle-errors>
+			<map:handle-errors type="500">
 				<map:serialize type="xml"/>
 			</map:handle-errors>
 		</map:pipeline>
