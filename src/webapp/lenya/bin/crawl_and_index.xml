@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: crawl_and_index.xml,v 1.40 2004/07/29 05:56:16 michi Exp $ -->
+<!-- $Id$ -->
 
 <project default="main" basedir=".">
 
@@ -51,7 +51,7 @@
     <pathelement path="${web-inf.dir}/lib/endorsed/xalan-2.5.0.jar"/>
     <pathelement path="${web-inf.dir}/lib/log4j-1.2.8.jar"/>
     <pathelement path="${web-inf.dir}/lib/excalibur-io-1.1.jar"/>
-    <pathelement path="${web-inf.dir}/lib/lucene-1.4-rc3.jar"/>
+    <pathelement path="${web-inf.dir}/lib/lucene-1.4.1.jar"/>
     <pathelement path="${web-inf.dir}/lib/websphinx.jar"/>
     <pathelement path="${web-inf.dir}/lib/xml-commons-resolver-1.1.jar"/>
   </path>

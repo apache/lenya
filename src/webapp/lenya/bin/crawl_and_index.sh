@@ -57,7 +57,7 @@ case "$1" in
         echo "Target: $1"
         echo "=========================================================="
         echo ""
-        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.4-rc3.jar
+        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.4.1.jar
 
         INDEX_DIR=$2
 	WORD=$3
