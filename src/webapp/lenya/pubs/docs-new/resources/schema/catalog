@@ -194,3 +194,7 @@ PUBLIC "-//OASIS//DTD Simplified DocBook RefEntry XML V1.0//EN"
 
 PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
        "xhtml1-20020801/DTD/xhtml1-strict.dtd"
+
+PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+       "xhtml11-20010531/DTD/xhtml11.dtd"
+       

@@ -189,4 +189,7 @@
 <public publicId="-//W3C//DTD XHTML 1.0 Strict//EN"
         uri="xhtml1-20020801/DTD/xhtml1-strict.dtd"/>
 
+<public publicId="-//W3C//DTD XHTML 1.1//EN"
+        uri="xhtml11-20010531/DTD/xhtml11.dtd"/>
+
 </catalog>
