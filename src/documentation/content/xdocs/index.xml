@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index.xml,v 1.2 2004/07/30 22:50:28 thorsten Exp $ -->
+<!-- $Id: index.xml,v 1.3 2004/09/01 23:05:13 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document>
@@ -50,7 +50,7 @@ You are very welcome to participate in the <link href="ext:lenya">Lenya project<
 Thank you very much for your suggestions and contributions.
 </p>
 		<section>
-			<title><strong>Incubating Apache Lenya 1.2 released</strong> (27 Juni 2004)</title>
+			<title><strong>Incubating Apache Lenya 1.2 released</strong> (June 27, 2004)</title>
 			<ul>
 				<li>
 					<link href="site:release1.2">Press release 1.2</link>
