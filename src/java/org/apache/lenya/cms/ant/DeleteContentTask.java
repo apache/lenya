@@ -25,7 +25,6 @@ import java.io.IOException;
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -47,12 +46,9 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 
     /**
      * (non-Javadoc)
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public void visitSiteTreeNode(SiteTreeNode node) {
-        Publication publication = getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
-
         String destDocumentid = node.getAbsoluteId();
         String srcDocumentid = destDocumentid
                 .replaceFirst(getSecdocumentid(), getFirstdocumentid());
@@ -100,7 +96,6 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
             log("document-id for the destination :" + this.getSecdocumentid());
             log("area for the destination :" + this.getSecarea());
 
-            Publication publication = getPublication();
             SiteTree tree = getSiteTree(this.getSecarea());
             SiteTreeNode node = tree.getNode(this.getSecdocumentid());
             node.acceptReverseSubtree(this);

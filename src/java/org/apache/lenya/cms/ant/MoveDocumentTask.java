@@ -21,7 +21,6 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -112,11 +111,9 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 	/**
 	 * move the workflow files
 	 * 
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-
 		Label[] labels = node.getLabels();
 		for (int i = 0; i < labels.length; i++) {
 			String language = labels[i].getLanguage();
@@ -130,10 +127,6 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 			// TODO: rcbak (fix the build file)
 
 			//move workflow
-			DocumentBuilder builder = publication.getDocumentBuilder();
-			String url = builder.buildCanonicalUrl(publication, firstarea, srcDocumentid, language);
-			String newurl =
-				builder.buildCanonicalUrl(publication, secarea, destDocumentid, language);
 
 			Document document;
 			Document newDocument;
@@ -141,8 +134,8 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 
 			log("move workflow history");
 			try {
-				document = getIdentityMap().get(url);
-				newDocument = getIdentityMap().get(newurl);
+				document = getIdentityMap().get(firstarea, srcDocumentid, language);
+				newDocument = getIdentityMap().get(secarea, destDocumentid, language);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}
@@ -167,7 +160,6 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 			log("document id for the destination" + this.getSecdocumentid());
 			log("area for the destination" + this.getSecarea());
 
-			Publication publication = getPublication();
 			SiteTree tree = getSiteTree(getFirstarea());
 			SiteTreeNode node = tree.getNode(getFirstdocumentid());
 

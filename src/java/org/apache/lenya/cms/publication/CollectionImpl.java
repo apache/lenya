@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection.
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
-    
+
     private static final Category log = Category.getInstance(CollectionImpl.class);
 
     /**
@@ -61,12 +61,13 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(DocumentIdentityMap map, String id, String area, String language) throws DocumentException {
+    public CollectionImpl(DocumentIdentityMap map, String id, String area, String language)
+            throws DocumentException {
         super(map, id, area, language);
     }
 
     private List documentsList = new ArrayList();
-    
+
     /**
      * Returns the list that holds the documents. Use this method to invoke lazy loading.
      * @return A list.
@@ -93,7 +94,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Collection#add(int, org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.Collection#add(int,
+     *      org.apache.lenya.cms.publication.Document)
      */
     public void add(int position, Document document) throws DocumentException {
         documents().add(position, document);
@@ -105,8 +107,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     public void remove(Document document) throws DocumentException {
         if (!documents().contains(document)) {
-            throw new DocumentException(
-                "Collection [" + this +"] does not contain document [" + document + "]");
+            throw new DocumentException("Collection [" + this + "] does not contain document ["
+                    + document + "]");
         }
         documents().remove(document);
         save();
@@ -126,8 +128,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 helper = getNamespaceHelper();
 
                 Element collectionElement = helper.getDocument().getDocumentElement();
-                Element[] documentElements =
-                    helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
+                Element[] documentElements = helper
+                        .getChildren(collectionElement, ELEMENT_DOCUMENT);
 
                 for (int i = 0; i < documentElements.length; i++) {
                     Element documentElement = documentElements[i];
@@ -150,15 +152,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @throws DocumentBuildException when something went wrong.
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
-        DocumentBuilder builder = getPublication().getDocumentBuilder();
         String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
-        String url =
-            builder.buildCanonicalUrl(
-                getPublication(),
-                getArea(),
-                documentId,
-                getLanguage());
-        Document document = builder.buildDocument(getIdentityMap(), url);
+        Document document = getIdentityMap().get(getArea(), documentId, getLanguage());
         return document;
     }
 
@@ -168,19 +163,21 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     public void save() throws DocumentException {
         try {
-            
+
             NamespaceHelper helper = getNamespaceHelper();
             Element collectionElement = helper.getDocument().getDocumentElement();
-            if (collectionElement.getAttributeNS(null, ATTRIBUTE_ID) == null | collectionElement.getAttribute(ATTRIBUTE_ID).equals("")) {
+            if (collectionElement.getAttributeNS(null, ATTRIBUTE_ID) == null
+                    | collectionElement.getAttribute(ATTRIBUTE_ID).equals("")) {
                 collectionElement.setAttributeNS(null, ATTRIBUTE_ID, this.getId());
-            }                   
-            Element[] existingDocumentElements = helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
+            }
+            Element[] existingDocumentElements = helper.getChildren(collectionElement,
+                    ELEMENT_DOCUMENT);
             for (int i = 0; i < existingDocumentElements.length; i++) {
                 collectionElement.removeChild(existingDocumentElements[i]);
             }
-            
+
             collectionElement.normalize();
-            
+
             NodeList emptyTextNodes = XPathAPI.selectNodeList(collectionElement, "text()");
             for (int i = 0; i < emptyTextNodes.getLength(); i++) {
                 Node node = emptyTextNodes.item(i);
@@ -193,7 +190,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 collectionElement.appendChild(documentElement);
             }
             DocumentHelper.writeDocument(helper.getDocument(), getFile());
-            
+
         } catch (DocumentException e) {
             throw e;
         } catch (Exception e) {
@@ -209,7 +206,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @throws DocumentException when something went wrong.
      */
     protected Element createDocumentElement(Document document, NamespaceHelper helper)
-        throws DocumentException {
+            throws DocumentException {
         Element documentElement = helper.createElement(ELEMENT_DOCUMENT);
         documentElement.setAttributeNS(null, ATTRIBUTE_ID, document.getId());
         return documentElement;
@@ -223,8 +220,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @throws SAXException when something went wrong.
      * @throws IOException when something went wrong.
      */
-    protected NamespaceHelper getNamespaceHelper()
-        throws DocumentException, ParserConfigurationException, SAXException, IOException {
+    protected NamespaceHelper getNamespaceHelper() throws DocumentException,
+            ParserConfigurationException, SAXException, IOException {
 
         NamespaceHelper helper;
 
@@ -233,10 +230,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             org.w3c.dom.Document document = DocumentHelper.readDocument(file);
             helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX, document);
         } else {
-            helper =
-                new NamespaceHelper(
-                    Collection.NAMESPACE,
-                    Collection.DEFAULT_PREFIX,
+            helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX,
                     ELEMENT_COLLECTION);
         }
         return helper;
@@ -262,8 +256,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     public int getFirstPosition(Document document) throws DocumentException {
         load();
         if (!contains(document)) {
-            throw new DocumentException(
-                "The collection [" + this +"] does not contain the document [" + document + "]");
+            throw new DocumentException("The collection [" + this
+                    + "] does not contain the document [" + document + "]");
         }
         return documents().indexOf(document);
     }

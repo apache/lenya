@@ -29,7 +29,6 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -74,11 +73,9 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
             try {
                 resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
                 Publication publication = PublicationFactory.getPublication(resolver, request);
+                DocumentIdentityMap map = new DocumentIdentityMap(publication);
+                if (map.isDocument(url)) {
 
-                DocumentBuilder builder = publication.getDocumentBuilder();
-                if (builder.isDocument(publication, url)) {
-
-                    DocumentIdentityMap map = new DocumentIdentityMap(publication);
                     Document document = map.get(url);
                     WorkflowFactory factory = WorkflowFactory.newInstance();
 

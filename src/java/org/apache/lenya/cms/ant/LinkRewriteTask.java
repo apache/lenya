@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: LinkRewriteTask.java,v 1.5 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 

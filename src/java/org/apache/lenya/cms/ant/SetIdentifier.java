@@ -22,11 +22,8 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -77,18 +74,13 @@ public class SetIdentifier extends PublicationTask {
 
     /**
      * write the document id in the DC Identifier of a document corresponding to this url
+     * @param document The document.
      * 
-     * @param publication The publication the document belongs to.
-     * @param url The URL of the form /{publication-id}/...
      * @throws DocumentBuildException when something went wrong when building the cms document.
      * @throws DocumentException when something went wrong when getting the DublinCore.
      */
-    public void writeDCIdentifier(Publication publication, String url)
+    public void writeDCIdentifier(Document document)
             throws DocumentBuildException, DocumentException {
-        assert url != null;
-
-        Document document = null;
-        document = getIdentityMap().get(url);
         DublinCore dublincore = document.getDublinCore();
         dublincore.setValue("identifier", documentid);
         dublincore.save();
@@ -101,28 +93,21 @@ public class SetIdentifier extends PublicationTask {
         log("document-id " + this.getDocumentid());
         log("area " + this.getArea());
 
-        Publication publication = getPublication();
-
         String language = null;
-        String url = null;
         SiteTree tree;
 
         tree = getSiteTree(area);
         SiteTreeNode node = tree.getNode(documentid);
         Label[] labels = node.getLabels();
 
-        DocumentBuilder builder = publication.getDocumentBuilder();
-
         try {
             if (labels.length < 1) {
                 log("no languages found for the node with id : " + node.getId());
-                url = builder.buildCanonicalUrl(publication, area, documentid);
-                writeDCIdentifier(publication, url);
+                writeDCIdentifier(getIdentityMap().get(area, documentid));
             } else {
                 for (int i = 0; i < labels.length; i++) {
                     language = labels[i].getLanguage();
-                    url = builder.buildCanonicalUrl(publication, area, documentid, language);
-                    writeDCIdentifier(publication, url);
+                    writeDCIdentifier(getIdentityMap().get(area, documentid, language));
                 }
             }
         } catch (DocumentException e1) {

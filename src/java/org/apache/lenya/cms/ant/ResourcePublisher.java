@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
@@ -25,12 +23,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.util.FileUtil;
 import org.apache.tools.ant.BuildException;
 
+/**
+ * Resource publisher.
+ *
+ * @version $Id:$
+ */
 public class ResourcePublisher extends PublicationTask {
 
     private String documentId;
@@ -41,16 +43,10 @@ public class ResourcePublisher extends PublicationTask {
     public void execute() throws BuildException {
 
         try {
-            DocumentBuilder builder = getPublication().getDocumentBuilder();
-
-            String authoringUrl =
-                builder.buildCanonicalUrl(getPublication(), Publication.AUTHORING_AREA, documentId);
-            Document authoringDocument = getIdentityMap().get(authoringUrl);
+            Document authoringDocument = getIdentityMap().get(Publication.AUTHORING_AREA, documentId);
             ResourcesManager authoringManager = new ResourcesManager(authoringDocument);
 
-            String liveUrl =
-                builder.buildCanonicalUrl(getPublication(), Publication.LIVE_AREA, documentId);
-            Document liveDocument = getIdentityMap().get(liveUrl);
+            Document liveDocument = getIdentityMap().get(Publication.LIVE_AREA, documentId);
             ResourcesManager liveManager = new ResourcesManager(liveDocument);
             
             // find all resource files and their associated meta files

@@ -22,7 +22,6 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.tools.ant.BuildException;
 
@@ -238,9 +237,7 @@ public class WriteDCParametersTask extends PublicationTask {
         String rights)
         throws BuildException, DocumentBuildException, DocumentException {
 
-        DocumentBuilder builder = getPublication().getDocumentBuilder();
-        String url = builder.buildCanonicalUrl(getPublication(), area, documentId, lang);
-        Document doc = getIdentityMap().get(url);
+        Document doc = getIdentityMap().get(area, documentId, lang);
         DublinCore dc = doc.getDublinCore();
         dc.setValue(DublinCore.ELEMENT_CREATOR, creator);
         dc.setValue(DublinCore.ELEMENT_TITLE, title);

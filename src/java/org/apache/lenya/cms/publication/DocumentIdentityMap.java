@@ -49,7 +49,17 @@ public class DocumentIdentityMap {
     public Publication getPublication() {
         return publication;
     }
-
+    
+    /**
+     * Checks if a webapp URL represents a document.
+     * @param webappUrl A web application URL.
+     * @return A boolean value.
+     * @throws DocumentBuildException if an error occurs.
+     */
+    public boolean isDocument(String webappUrl) throws DocumentBuildException {
+        return getPublication().getDocumentBuilder().isDocument(getPublication(), webappUrl);
+    }
+    
     /**
      * Returns a document.
      * @param area The area.

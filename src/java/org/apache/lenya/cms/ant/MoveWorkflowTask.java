@@ -21,8 +21,6 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
@@ -30,62 +28,55 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task, which implements the SiteTreeNodeVisitor for the operation move the workflow
- * history files.
- * (Visitor pattern)
+ * Ant task, which implements the SiteTreeNodeVisitor for the operation move the workflow history
+ * files. (Visitor pattern)
  */
 public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 
-	/**
-	 * 
-	 */
-	public MoveWorkflowTask() {
-		super();
-	}
+    /**
+     *  
+     */
+    public MoveWorkflowTask() {
+        super();
+    }
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
-	 */
-	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-		DocumentBuilder builder = publication.getDocumentBuilder();
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
+     */
+    public void visitSiteTreeNode(SiteTreeNode node) {
+        Label[] labels = node.getLabels();
+        for (int i = 0; i < labels.length; i++) {
+            String language = labels[i].getLanguage();
 
-		Label[] labels = node.getLabels(); 
-		for (int i=0 ; i<labels.length; i ++){
-			String language = labels[i].getLanguage();
+            String srcDocumentid = node.getAbsoluteId();
+            String destDocumentid = srcDocumentid.replaceFirst(this.getFirstdocumentid(), this
+                    .getSecdocumentid());
 
-			String srcDocumentid = node.getAbsoluteId();
-			String destDocumentid = srcDocumentid.replaceFirst(this.getFirstdocumentid(),this.getSecdocumentid());
+            Document srcDoc;
+            Document destDoc;
+            WorkflowFactory factory = WorkflowFactory.newInstance();
 
-			String srcUrl = builder.buildCanonicalUrl(publication, getFirstarea(), srcDocumentid, language);
-			String destUrl = builder.buildCanonicalUrl(publication, getSecarea(), destDocumentid, language);
+            log("init workflow history");
+            try {
+                srcDoc = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
+                destDoc = getIdentityMap().get(getSecarea(), destDocumentid, language);
+            } catch (DocumentBuildException e) {
+                throw new BuildException(e);
+            }
 
-			log("url for the source : "+srcUrl);
-			log("url for the destination : "+destUrl);
-
-			Document srcDoc;
-			Document destDoc;
-			WorkflowFactory factory = WorkflowFactory.newInstance();
-			
-			log("init workflow history");
-			try {
-				srcDoc = getIdentityMap().get(srcUrl);
-				destDoc = getIdentityMap().get(destUrl);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-
-			log("move workflow history of "+srcDoc.getFile().getAbsolutePath()+" to " + destDoc.getFile().getAbsolutePath());
-			try {
-				if (factory.hasWorkflow(srcDoc)) {
-					log("has workflow");
-					WorkflowFactory.moveHistory(srcDoc, destDoc);
-					log("workflow moved");
-				}
-			} catch (WorkflowException e) {
-				throw new BuildException(e);
-			}
-		}
-	}
+            log("move workflow history of " + srcDoc.getFile().getAbsolutePath() + " to "
+                    + destDoc.getFile().getAbsolutePath());
+            try {
+                if (factory.hasWorkflow(srcDoc)) {
+                    log("has workflow");
+                    WorkflowFactory.moveHistory(srcDoc, destDoc);
+                    log("workflow moved");
+                }
+            } catch (WorkflowException e) {
+                throw new BuildException(e);
+            }
+        }
+    }
 
 }

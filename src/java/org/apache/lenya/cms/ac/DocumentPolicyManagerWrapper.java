@@ -42,7 +42,6 @@ import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -77,11 +76,10 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         }
 
         Publication publication = getPublication(webappUrl);
-        DocumentBuilder builder = publication.getDocumentBuilder();
         String url = null;
         try {
-            if (builder.isDocument(publication, webappUrl)) {
-                DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            if (map.isDocument(webappUrl)) {
                 Document document = map.get(webappUrl);
                 if (document.existsInAnyLanguage()) {
                     url = "/" + document.getArea() + document.getId();

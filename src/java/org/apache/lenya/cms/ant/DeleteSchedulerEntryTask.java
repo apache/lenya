@@ -22,9 +22,7 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -45,7 +43,6 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
             log("Document ID: [" + documentId + "]");
             log("Area:        [" + area + "]");
 
-            Publication publication = getPublication();
             SiteTree tree = getSiteTree(area);
             SiteTreeNode node = tree.getNode(documentId);
 
@@ -80,16 +77,14 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public void visitSiteTreeNode(SiteTreeNode node) throws DocumentException {
-        Publication publication = getPublication();
 
         Label[] labels = node.getLabels();
         for (int i = 0; i < labels.length; i++) {
 
             String language = labels[i].getLanguage();
-            DocumentBuilder builder = publication.getDocumentBuilder();
 
             try {
                 Document document = getIdentityMap().get(area, documentId, language);

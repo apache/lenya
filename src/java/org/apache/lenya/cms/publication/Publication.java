@@ -139,7 +139,7 @@ public interface Publication {
      * @return A document builder.
      */
     DocumentBuilder getDocumentBuilder();
-
+    
     /**
      * Copies a document from one location to another location.
      * @param sourceDocument The document to copy.

@@ -36,7 +36,6 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -185,7 +184,6 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             if (href != null) {
 
                 Publication publication = getCurrentDocument().getPublication();
-                DocumentBuilder builder = publication.getDocumentBuilder();
 
                 try {
 
@@ -216,7 +214,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                             getLogger().debug(this.indent + "webapp URL: [" + webappUrl + "]");
                             getLogger().debug(this.indent + "anchor:     [" + anchor + "]");
                         }
-                        if (builder.isDocument(publication, webappUrl)) {
+                        if (this.identityMap.isDocument(webappUrl)) {
 
                             Document targetDocument = this.identityMap.get(webappUrl);
 
@@ -226,10 +224,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                                                 + targetDocument + "]");
                             }
 
-                            String currentAreaUrl = builder.buildCanonicalUrl(publication,
-                                    getCurrentDocument().getArea(), targetDocument.getId(),
-                                    targetDocument.getLanguage());
-                            targetDocument = this.identityMap.get(currentAreaUrl);
+                            targetDocument = this.identityMap.get(getCurrentDocument().getArea(),
+                                    targetDocument.getId(), targetDocument.getLanguage());
 
                             if (targetDocument.exists()) {
                                 rewriteLink(newAttrs, targetDocument, anchor);
