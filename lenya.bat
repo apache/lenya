@@ -2,7 +2,7 @@
 :: -----------------------------------------------------------------------------
 :: Lenya Win32 Shell Script
 ::
-:: $Id: lenya.bat,v 1.1 2003/11/06 17:17:03 gregor Exp $
+:: $Id: lenya.bat,v 1.2 2003/11/09 23:29:32 gregor Exp $
 :: -----------------------------------------------------------------------------
 
 :: Configuration variables
@@ -74,6 +74,7 @@ if ""%1"" == ""servlet"" goto doServlet
 if ""%1"" == ""servlet-admin"" goto doAdmin
 if ""%1"" == ""servlet-debug"" goto doDebug
 IF ""%1"" == ""servlet-profile"" goto doProfile
+goto doServlet
 
 echo Usage: lenya (action)
 echo actions:
