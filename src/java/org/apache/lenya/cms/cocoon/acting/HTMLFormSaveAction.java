@@ -66,7 +66,11 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.15 2003/09/18 23:29:39 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.16 2003/09/23 21:56:02 michi Exp $
+ *
+ * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
+ *
+ * FIXME: There seems to be another problem with default namespaces
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
     org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HTMLFormSaveAction.class);
@@ -133,14 +137,14 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                         if (pname.indexOf("<xupdate:") == 0) {
                             String select = pname.substring(pname.indexOf("select") + 8);
                             select = select.substring(0, select.indexOf("\""));
-                            log.error(".act() Select Node: " + select);
+                            log.debug(".act() Select Node: " + select);
 
                             // Check if node exists
                             xpath.setQString(select);
                             org.xmldb.common.xml.queries.XObject result = xpath.execute(document);
                             org.w3c.dom.NodeList selectionNodeList = result.nodeset();
                             if (selectionNodeList.getLength() == 0) {
-                                log.error(".act(): Node does not exist (might have been deleted during update): " + select);
+                                log.warn(".act(): Node does not exist (might have been deleted during update): " + select);
                             } else {
 
                         if (pname.indexOf("xupdate:update") > 0) {
@@ -199,28 +203,5 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                 return hmap;
             }
         }
-    }
-
-    /**
-     *
-     */
-    private void setNodeValue(Document document, String value, String xpath) throws Exception {
-        // FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
-        // FIXME: There seems to be another problem with default namespaces
-
-        //new org.apache.lenya.xml.DOMUtil().setElementValue(document, xpath, value);
-
-        //Node node = DOMUtil.getSingleNode(document.getDocumentElement(), xpath);
-        Node node = org.apache.xpath.XPathAPI.selectSingleNode(document, xpath);
-        if (node == null) {
-            // FIXME: warn
-            getLogger().error(".setNodeValue(): Node does not exist (might have been deleted during update): " + xpath);
-            return;
-        }
-        // FIXME: debug
-        getLogger().error(".setNodeValue(): value = " + DOMUtil.getValueOfNode(node));
-        DOMUtil.setValueOfNode(node, value);
-        // FIXME: debug
-        getLogger().error(".setNodeValue(): value = " + DOMUtil.getValueOfNode(node));
     }
 }
