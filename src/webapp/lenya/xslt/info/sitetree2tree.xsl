@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.8 2003/07/03 13:47:40 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.9 2003/07/08 14:41:31 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -10,9 +10,9 @@
 
 <xsl:output omit-xml-declaration="yes" encoding = "iso-8859-1" />    
 
-    <xsl:param name="contextprefix"/>
-   <xsl:param name="publicationid"/>
-   <xsl:param name="area"/>
+<xsl:param name="contextprefix"/>
+<xsl:param name="publicationid"/>
+<xsl:param name="area"/>
 
 <xsl:template match="/*[local-name()='site']">
     <xsl:param name="parentPath"/>
@@ -24,7 +24,7 @@ STARTALLOPEN = 1
 USEFRAMES = 1
 USEICONS = 0
 WRAPTEXT = 1
-PERSERVESTATE = 0
+PERSERVESTATE = 1
 HIGHLIGHT = 1
 
 foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info&amp;lenya.step=showscreen")
@@ -36,8 +36,6 @@ foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:
 foldersTree.treeID = "t2" 
 </xsl:template>    
 
-
-    
 <xsl:template match="*[local-name()='node']">
     <xsl:param name="parentPath"/>
 <xsl:choose><xsl:when test="descendant::*[local-name()='node']"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:choose><xsl:when test="local-name(parent::node())='site'">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gFld("<xsl:value-of select="*[local-name()='label']"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:when>

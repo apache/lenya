@@ -43,3 +43,24 @@
 	border-bottom: solid 1px #F5F4E9;
 	z-index: 1;
 }
+
+#lenya-info-tree a {
+    font-size: 8pt; 
+    font-family: verdana,helvetica, sans-serif; 
+    text-decoration: none;
+    color: black;	
+    background-color: transparent;
+}
+
+#lenya-info-tree a:hover {
+    color: #FF3333;
+    background-color: transparent;
+}
+   
+#lenya-info-tree td {
+    font-size: 10pt; 
+    font-family: verdana,helvetica, sans-serif; 
+}
+   
+#lenya-info-treecanvas { border: dotted 1px #CCCCCC; width: 200px; float: left; padding: 10px; margin: 2px; }
+#lenya-info-content { border: dotted 1px #CCCCCC; height: 600px; width: 700px; float: left; padding: 10px; margin: 2px;}

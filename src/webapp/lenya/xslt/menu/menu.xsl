@@ -3,7 +3,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <xsl:template match="menu">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="menu">
 <tr>
 <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4">
 <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4" /></td>

@@ -14,9 +14,9 @@
 
 <html>   
 <head>
-<title>Apache Lenya - <xsl:value-of select="menu/url-info/publication-id"/> - <xsl:value-of select="menu/url-info/area"/> - <xsl:value-of select="menu/url-info/document-id"/></title>
+<title>Apache Lenya - <xsl:value-of select="menu/url-info/publication-id"/> - <xsl:value-of select="menu/url-info/area"/> - <xsl:value-of select="menu/url-info/document-id"/> - <xsl:value-of select="cmsbody/html/head/title"/></title>
 <script type="text/javascript" src="/lenya/lenya/menu/menu.js" />
-<link type="text/css" rel="stylesheet" href="/lenya/lenya/menu/menu.css" />
+<link type="text/css" rel="stylesheet" href="/lenya/lenya/css/default.css" />
 </head>
 
 <body bgcolor="#ffffff" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">

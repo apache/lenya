@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <div xmlns="http://www.w3.org/1999/xhtml" class="lenya-frontpage">
-<h2><a name="preamble" />Preamble</h2>
+<h2>Preamble</h2>
 <p>
 Apache Lenya is the refactored version of XPS (Extensible Publishing System).
 XPS is being used by Switzerland's most famous newspaper Neue Z&#252;rcher Zeitung
@@ -10,7 +10,7 @@ is being used 7 days a week and 24 hours a day by editors and automatic processe
 generation of the online version from the print edition). It is up and running since October 2, 2000.
 XPS was Open Source from the beginning (Apache license).</p>
 
-<h2><a name="introduction" />Introduction</h2>
+<h2>Introduction</h2>
 <p>
 Apache Lenya is a Java-based <a href="http://www.opensource.org">Open-Source</a>
 Content Management System. It
