@@ -77,7 +77,7 @@ import org.xml.sax.SAXException;
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCoreImpl.java,v 1.6 2004/02/02 17:33:16 andreas Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.7 2004/02/02 18:02:13 andreas Exp $
  */
 public class DublinCoreImpl implements DublinCore {
     private Document cmsdocument;
@@ -92,7 +92,6 @@ public class DublinCoreImpl implements DublinCore {
 
     private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
     private static final String DC_PREFIX = "dc";
-    private static final String ELEMENT_VALUE = "value";
 
     private static final String[] ELEMENTS =
         {
@@ -193,22 +192,12 @@ public class DublinCoreImpl implements DublinCore {
             NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
             String[] elementNames = arrays[type];
             for (int i = 0; i < elementNames.length; i++) {
-                Element child = helper.getFirstChild(metaElement, elementNames[i]);
-                if (child != null) {
-                    String[] values;
-                    Element[] valueElements = helper.getChildren(child, ELEMENT_VALUE);
-                    if (valueElements.length > 0) {
-                        values = new String[valueElements.length];
-                        for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
-                            values[valueIndex] =
-                                DocumentHelper.getSimpleElementText(valueElements[valueIndex]);
-                        }
-                    } else {
-                        values = new String[1];
-                        values[0] = DocumentHelper.getSimpleElementText(child).trim();
-                    }
-                    maps[type].put(elementNames[i], values);
+                Element[] children = helper.getChildren(metaElement, elementNames[i]);
+                String[] values = new String[children.length];
+                for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
+                    values[valueIndex] = DocumentHelper.getSimpleElementText(children[valueIndex]);
                 }
+                maps[type].put(elementNames[i], values);
             }
         }
     }
@@ -241,21 +230,15 @@ public class DublinCoreImpl implements DublinCore {
             NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
             String[] elementNames = arrays[type];
             for (int i = 0; i < elementNames.length; i++) {
-                Element element = helper.getFirstChild(metaElement, elementNames[i]);
-                if (element != null) {
-                    metaElement.removeChild(element);
+                Element[] children = helper.getChildren(metaElement, elementNames[i]);
+                for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
+                    metaElement.removeChild(children[valueIndex]);
                 }
                 String[] values = (String[]) maps[type].get(elementNames[i]);
-                if (values != null && values.length > 0) {
-
-                    element = helper.createElement(elementNames[i]);
-                    metaElement.appendChild(element);
-
-                    for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
-                        Element valueElement =
-                            helper.createElement(ELEMENT_VALUE, values[valueIndex]);
-                        element.appendChild(valueElement);
-                    }
+                for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
+                    Element valueElement =
+                        helper.createElement(elementNames[i], values[valueIndex]);
+                    metaElement.appendChild(valueElement);
                 }
             }
         }
@@ -318,8 +301,7 @@ public class DublinCoreImpl implements DublinCore {
     public void setCreator(String creator) {
         try {
             addValue(ELEMENT_CREATOR, creator);
-        }
-        catch (DocumentException e) {
+        } catch (DocumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
@@ -547,7 +529,7 @@ public class DublinCoreImpl implements DublinCore {
      */
     protected String[] getElementOrTerm(String key) throws DocumentException {
         String[] values;
-        
+
         List elementList = Arrays.asList(ELEMENTS);
         List termList = Arrays.asList(TERMS);
         if (elementList.contains(key)) {
