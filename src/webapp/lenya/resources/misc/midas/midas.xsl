@@ -1,3 +1,8 @@
+<?xml version="1.0"?>
+
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
 <html>
 <head>
 <meta name="generator" content="HTML Tidy, see www.w3.org" />
@@ -22,13 +27,37 @@ reasons. To enable them for purposes of this demo, you need to <a
 href="http://mozilla.org/editor/midasdemo/securityprefs.html">edit
 your preferences file</a>.</p>
 
+
+
 <form enctype="multipart/form-data" method="post" action="sugus">
+<!--
+<form enctype="multipart/form-data" method="post" action="index.html?lenya.usecase=midas&amp;lenya.step=save">
+-->
+
+<input type="hidden" name="lenya.usecase" value="midas" />
+<input type="hidden" name="lenya.step" value="save" />
+
+<p>
+<input type="file" name="file" />
+</p>
+
+
+
 <p><input name="save" value="Save" type="submit" /> <input
 name="savexit" value="Save and Exit" type="submit" /> <!--
   <input onclick="doAction('save')" value="Save" type="button">
   <input onclick="doAction('savexit')" value="Save and Exit" type="button">
 -->
 </p>
+
+
+<p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<h3>Title:</h3>
+<input name="title" type="text" value="{/xhtml:html/xhtml:head/xhtml:title}" size="50"/>
+</p>
+
+
+<h3>Body:</h3>
 
 <!-- TOOLBAR 1 -->
 <table bgcolor="#c0c0c0" id="toolbar1">
@@ -178,10 +207,9 @@ title="Indent" /></div>
 </table>
 
 <br />
- <iframe id="edit" width="640" height="200"
-src="midas_content/content.html"></iframe> <iframe width="250"
-height="170" id="colorpalette" src="midas_files/colors.html"
-style="visibility: hidden; position: absolute;"></iframe> 
+ <iframe id="edit" width="640" height="200" src="midas_content/content.html"></iframe>
+
+<iframe width="250" height="170" id="colorpalette" src="midas_files/colors.html" style="visibility: hidden; position: absolute;"></iframe> 
 
 <script type="text/javascript">
 function viewsource(source)
@@ -219,4 +247,6 @@ onclick="usecss(this.checked)" />Use CSS <input type="checkbox"
 onclick="readonly(this.checked)" />Read only</form>
 </body>
 </html>
+</xsl:template>
 
+</xsl:stylesheet>
