@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
+       xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+       >
+       
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</xsp:include>
+  </xsp:structure>
+
+  <usecase:publish>
+    
+    <usecase:document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></usecase:document-id>
+    <usecase:area><input:get-attribute module="page-envelope" name="area" as="string"/></usecase:area>
+    <usecase:language><input:get-attribute module="page-envelope" name="document-language" as="string"/></usecase:language>
+    
+    <usecase:task-id>publish</usecase:task-id>
+    
+    <xsp:logic>
+	  DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
+	  Document[] references = helper.getInternalReferences();
+	  if (references.length &gt; 0) {
+        </xsp:logic><referenced-documents><xsp:logic>
+
+        for (int i = 0; i &lt; references.length; i++) {
+	      <referenced-document><xsp:attribute name="href"><xsp-request:get-context-path/><xsp:expr>references[i].getCompleteURL()</xsp:expr></xsp:attribute><xsp:expr>references[i].getId()</xsp:expr> [<xsp:expr>references[i].getLanguage()</xsp:expr>]</referenced-document>
+	    }  
+	    </xsp:logic></referenced-documents><xsp:logic>
+	  }
+      </xsp:logic>
+    
+  </usecase:publish>
+  
+</xsp:page>
