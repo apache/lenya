@@ -24,6 +24,8 @@ import java.util.List;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
@@ -37,7 +39,42 @@ import org.apache.lenya.cms.publication.Publication;
  */
 public class CreateLanguage extends Create {
 
-    private String documentType;
+    private String documentTypeName;
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+
+        String area = getSourceDocument().getArea();
+        if (!area.equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This operation is only supported in the authoring area.");
+        }
+
+        if (getNonExistingLanguages().isEmpty()) {
+            addErrorMessage("All language versions do already exist.");
+        }
+    }
+
+    /**
+     * @return All non-existing language strings for the source document.
+     * @throws DocumentBuildException if an error occurs.
+     * @throws DocumentException if an error occurs.
+     */
+    protected List getNonExistingLanguages() throws DocumentBuildException, DocumentException {
+        Document source = getSourceDocument();
+        List nonExistingLanguages = new ArrayList();
+        String[] languages = source.getPublication().getLanguages();
+        DocumentFactory factory = source.getIdentityMap().getFactory();
+        for (int i = 0; i < languages.length; i++) {
+            Document version = factory.get(source.getArea(), source.getId(), languages[i]);
+            if (!version.exists()) {
+                nonExistingLanguages.add(languages[i]);
+            }
+        }
+        return nonExistingLanguages;
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -49,20 +86,11 @@ public class CreateLanguage extends Create {
         DocumentTypeResolver resolver = null;
 
         try {
-
             resolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
             DocumentType type = resolver.resolve(source);
-            this.documentType = type.getName();
+            this.documentTypeName = type.getName();
 
-            List nonExistingLanguages = new ArrayList();
-            String[] languages = source.getPublication().getLanguages();
-            DocumentFactory factory = source.getIdentityMap().getFactory();
-            for (int i = 0; i < languages.length; i++) {
-                Document version = factory.get(source.getArea(), source.getId(), languages[i]);
-                if (!version.exists()) {
-                    nonExistingLanguages.add(languages[i]);
-                }
-            }
+            List nonExistingLanguages = getNonExistingLanguages();
             setParameter(LANGUAGES, nonExistingLanguages.toArray(new String[nonExistingLanguages
                     .size()]));
 
@@ -71,7 +99,6 @@ public class CreateLanguage extends Create {
         } finally {
             this.manager.release(resolver);
         }
-
     }
 
     /**
@@ -97,16 +124,21 @@ public class CreateLanguage extends Create {
         DocumentFactory factory = source.getIdentityMap().getFactory();
         Document document = factory.get(area, source.getId(), language);
 
-        DocumentType _documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
+        DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);
 
-        String parentId = factory.getParent(document).getId().substring(1);
+        String parentId = "";
+        Document parent = factory.getParent(document);
+        if (parent != null) {
+            parentId = factory.getParent(document).getId().substring(1);
+        }
+        
         String childId = document.getName();
 
         File doctypesDirectory = new File(publication.getDirectory(),
                 DocumentTypeBuilder.DOCTYPE_DIRECTORY);
 
-        _documentType.getCreator().create(new File(doctypesDirectory, "samples"),
+        documentType.getCreator().create(new File(doctypesDirectory, "samples"),
                 new File(publication.getContentDirectory(area), parentId),
                 childId,
                 ParentChildCreatorInterface.BRANCH_NODE,
@@ -121,7 +153,7 @@ public class CreateLanguage extends Create {
      * @see org.apache.lenya.cms.site.usecases.Create#getDocumentTypeName()
      */
     protected String getDocumentTypeName() {
-        return this.documentType;
+        return this.documentTypeName;
     }
 
 }

@@ -29,9 +29,11 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.WorkflowUsecase;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
@@ -39,7 +41,7 @@ import org.apache.lenya.workflow.WorkflowInstance;
  * 
  * @version $Id: Create.java 123982 2005-01-03 15:01:19Z andreas $
  */
-public abstract class Create extends DocumentUsecase {
+public abstract class Create extends WorkflowUsecase {
 
     protected static final String LANGUAGE = "language";
     protected static final String LANGUAGES = "languages";
@@ -61,13 +63,6 @@ public abstract class Create extends DocumentUsecase {
         if (navigationTitle.equals("")) {
             addErrorMessage("The navigation title is required.");
         }
-
-        /*
-         * DocumentIdentityMap map = getSourceDocument().getIdentityMap();
-         * SiteManager manager = null; try { manager =
-         * getSourceDocument().getPublication().getSiteManager(map); } catch
-         * (SiteException e) { throw new UsecaseException(e); }
-         */
     }
 
     /**
@@ -87,7 +82,7 @@ public abstract class Create extends DocumentUsecase {
         instance.getHistory().initialize(getSituation());
 
         setMetaData(document);
-        setTargetDocument(document);
+        setTargetURL(document.getCanonicalWebappURL());
     }
 
     /**
@@ -140,5 +135,31 @@ public abstract class Create extends DocumentUsecase {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         setParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar().getTime()));
 
+    }
+    
+    /**
+     * @return The source document or <code>null</code> if the usecase was not
+     *         invoked on a document.
+     */
+    protected Document getSourceDocument() {
+        Document document = null;
+        String url = getSourceURL();
+        DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
+        try {
+            if (factory.isDocument(url)) {
+                document = factory.getFromURL(url);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return document;
+    }
+
+    /**
+     * @return The area without the "info-" prefix.
+     */
+    public String getArea() {
+        URLInformation info = new URLInformation(getSourceURL());
+        return info.getArea();
     }
 }

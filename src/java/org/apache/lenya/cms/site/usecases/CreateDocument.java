@@ -28,7 +28,7 @@ import org.apache.lenya.cms.publication.Publication;
 
 /**
  * Usecase to create a document.
- *
+ * 
  * @version $Id:$
  */
 public class CreateDocument extends Create {
@@ -43,25 +43,33 @@ public class CreateDocument extends Create {
         super.initParameters();
 
         Document parent = getSourceDocument();
-        setParameter(PARENT_ID, parent.getId());
+        if (parent != null) {
+            setParameter(PARENT_ID, parent.getId());
+        } else {
+            setParameter(PARENT_ID, "");
+        }
 
-        String[] languages = parent.getPublication().getLanguages();
+        String[] languages = getUnitOfWork().getIdentityMap().getPublication().getLanguages();
         setParameter(LANGUAGES, languages);
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
-        
+
         String nodeId = getParameterAsString(DOCUMENT_ID);
         Document parent = getSourceDocument();
         String language = getParameterAsString(LANGUAGE);
         SiteUtility util = new SiteUtility();
-        addErrorMessages(util.canCreate(parent, nodeId, language));
+        addErrorMessages(util.canCreate(getUnitOfWork().getIdentityMap(),
+                getArea(),
+                parent,
+                nodeId,
+                language));
     }
-    
+
     /**
      * @see org.apache.lenya.cms.site.usecases.Create#createDocument()
      */
@@ -102,7 +110,7 @@ public class CreateDocument extends Create {
                 navigationTitle,
                 language,
                 Collections.EMPTY_MAP);
-        
+
         return document;
     }
 

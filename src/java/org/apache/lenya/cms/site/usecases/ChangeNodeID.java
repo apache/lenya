@@ -50,7 +50,11 @@ public class ChangeNodeID extends DocumentUsecase {
         String nodeId = getParameterAsString(NODE_ID);
         Document parent = identityMap.getFactory().getParent(getSourceDocument());
         SiteUtility util = new SiteUtility();
-        addErrorMessages(util.canCreate(parent, nodeId, getSourceDocument().getLanguage()));
+        addErrorMessages(util.canCreate(identityMap,
+                getSourceDocument().getArea(),
+                parent,
+                nodeId,
+                getSourceDocument().getLanguage()));
     }
 
     /**

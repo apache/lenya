@@ -34,7 +34,10 @@ public class SiteUtility {
     /**
      * Checks if a document can be created. This is the case if the document ID
      * is valid and the document does not yet exist.
-     * @param parent The parent of the document.
+     * @param identityMap The identity map to use.
+     * @param area The area.
+     * @param parent The parent of the document or <code>null</code> if the
+     *            document has no parent.
      * @param nodeId The node ID.
      * @param language The language.
      * @return An array of error messages. The array is empty if the document
@@ -42,22 +45,24 @@ public class SiteUtility {
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      */
-    public String[] canCreate(Document parent, String nodeId, String language)
-            throws DocumentBuildException, DocumentException {
+    public String[] canCreate(DocumentIdentityMap identityMap, String area, Document parent,
+            String nodeId, String language) throws DocumentBuildException, DocumentException {
 
         List errorMessages = new ArrayList();
-        String newDocumentId = parent.getId() + "/" + nodeId;
 
-        DocumentIdentityMap identityMap = parent.getIdentityMap();
+        String newDocumentId;
+        if (parent != null) {
+            newDocumentId = parent.getId() + "/" + nodeId;
+        } else {
+            newDocumentId = "/" + nodeId;
+        }
 
         if (nodeId.equals("")) {
             errorMessages.add("The document ID is required.");
         } else if (nodeId.indexOf("/") > -1) {
             errorMessages.add("The document ID may not contain a slash ('/').");
         } else if (identityMap.getFactory().isValidDocumentId(newDocumentId)) {
-            Document newDocument = identityMap.getFactory().get(parent.getArea(),
-                    newDocumentId,
-                    language);
+            Document newDocument = identityMap.getFactory().get(area, newDocumentId, language);
 
             if (newDocument.exists()) {
                 errorMessages.add("A document with this ID already exists.");
