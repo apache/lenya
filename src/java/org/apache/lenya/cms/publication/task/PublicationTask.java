@@ -54,6 +54,7 @@ public abstract class PublicationTask extends AbstractTask {
 
     private static final Logger log = Logger.getLogger(PublicationTask.class);
     private DocumentIdentityMap map;
+    private Publication publication;
 
     /**
      * Returns the publication used by this task.
@@ -61,7 +62,18 @@ public abstract class PublicationTask extends AbstractTask {
      * @throws ExecutionException when an error occurs.
      */
     protected Publication getPublication() throws ExecutionException {
-        return getIdentityMap().getPublication();
+        if (this.publication == null) {
+            try {
+                String publicationId = getParameters().getParameter(Task.PARAMETER_PUBLICATION_ID);
+                String servletContextPath = getParameters()
+                        .getParameter(Task.PARAMETER_SERVLET_CONTEXT);
+                PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+                this.publication = factory.getPublication(publicationId, servletContextPath);
+            } catch (Exception e) {
+                throw new ExecutionException(e);
+            }
+        }
+        return this.publication;
     }
 
     /**
@@ -71,16 +83,7 @@ public abstract class PublicationTask extends AbstractTask {
      */
     protected DocumentIdentityMap getIdentityMap() throws ExecutionException {
         if (this.map == null) {
-            try {
-                String publicationId = getParameters().getParameter(Task.PARAMETER_PUBLICATION_ID);
-                String servletContextPath = getParameters()
-                        .getParameter(Task.PARAMETER_SERVLET_CONTEXT);
-                PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-                Publication publication = factory.getPublication(publicationId, servletContextPath);
-                this.map = new DocumentIdentityMap(publication);
-            } catch (Exception e) {
-                throw new ExecutionException(e);
-            }
+            this.map = new DocumentIdentityMap();
         }
         return this.map;
     }
@@ -138,7 +141,8 @@ public abstract class PublicationTask extends AbstractTask {
      */
     public static final String PARAMETER_ROLE_IDS = "role-ids";
     /**
-     * <code>ROLE_SEPARATOR_REGEXP</code> The role separator regular expression
+     * <code>ROLE_SEPARATOR_REGEXP</code> The role separator regular
+     * expression
      */
     public static final String ROLE_SEPARATOR_REGEXP = ",";
 
@@ -199,11 +203,11 @@ public abstract class PublicationTask extends AbstractTask {
 
         WorkflowFactory factory = WorkflowFactory.newInstance();
         if (factory.hasWorkflow(document)) {
-            
+
             try {
                 String userId = getParameters().getParameter(PARAMETER_USER_ID);
                 String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
-                
+
                 Workflow workflow = factory.getWorkflow(document);
                 Situation situation = factory.buildSituation(getRoleIDs(), userId, machineIp);
                 WorkflowEngine engine = new WorkflowEngineImpl();
@@ -249,7 +253,7 @@ public abstract class PublicationTask extends AbstractTask {
             if (!(manager instanceof TreeSiteManager)) {
                 throw new RuntimeException("Only supported for site trees.");
             }
-            tree = ((TreeSiteManager) manager).getTree(getIdentityMap(), area);
+            tree = ((TreeSiteManager) manager).getTree(getIdentityMap(), getPublication(), area);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {

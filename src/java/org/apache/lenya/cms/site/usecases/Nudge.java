@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -52,13 +51,13 @@ public class Nudge extends DocumentUsecase {
             return;
         }
 
-        DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
-        Publication publication = identityMap.getPublication();
+        Publication publication = getSourceDocument().getPublication();
         SiteManager manager = publication.getSiteManager();
         if (manager instanceof TreeSiteManager) {
 
             TreeSiteManager treeManager = (TreeSiteManager) manager;
             SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
+                    publication,
                     getSourceDocument().getArea());
             SiteTreeNode node = tree.getNode(getSourceDocument().getId());
             SiteTreeNode[] siblings = null;
@@ -86,13 +85,13 @@ public class Nudge extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
-        Publication publication = identityMap.getPublication();
+        Publication publication = getSourceDocument().getPublication();
         SiteManager manager = publication.getSiteManager();
         if (manager instanceof TreeSiteManager) {
 
             TreeSiteManager treeManager = (TreeSiteManager) manager;
             SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
+                    publication,
                     getSourceDocument().getArea());
 
             String direction = getParameterAsString(DIRECTION);

@@ -17,7 +17,7 @@
 package org.apache.lenya.cms.publication;
 
 /**
- * 
+ *  
  */
 public class DocumentFactory {
 
@@ -41,48 +41,53 @@ public class DocumentFactory {
 
     /**
      * Checks if a webapp URL represents a document.
+     * @param publication The publication.
      * @param webappUrl A web application URL.
      * @return A boolean value.
      * @throws DocumentBuildException if an error occurs.
      */
-    public boolean isDocument(String webappUrl) throws DocumentBuildException {
-        Publication pub = getIdentityMap().getPublication();
-        return pub.getDocumentBuilder().isDocument(pub, webappUrl);
+    public boolean isDocument(Publication publication, String webappUrl)
+            throws DocumentBuildException {
+        return publication.getDocumentBuilder().isDocument(publication, webappUrl);
     }
 
     /**
      * Builds a document in the default language.
+     * @param publication The publication.
      * @param area The area.
      * @param documentId The document ID.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    public Document get(String area, String documentId) throws DocumentBuildException {
-        return getIdentityMap().get(area, documentId,
-                getIdentityMap().getPublication().getDefaultLanguage());
+    public Document get(Publication publication, String area, String documentId)
+            throws DocumentBuildException {
+        return get(publication, area, documentId, publication.getDefaultLanguage());
     }
 
     /**
      * Builds a document.
+     * @param publication The publication.
      * @param area The area.
      * @param documentId The document ID.
      * @param language The language.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    public Document get(String area, String documentId, String language)
+    public Document get(Publication publication, String area, String documentId, String language)
             throws DocumentBuildException {
-        return getIdentityMap().get(area, documentId, language);
+        return getIdentityMap().get(publication, area, documentId, language);
     }
 
     /**
      * Builds a document from a URL.
+     * @param publication The publication.
      * @param webappUrl The web application URL.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    public Document getFromURL(String webappUrl) throws DocumentBuildException {
-        return getIdentityMap().getFromURL(webappUrl);
+    public Document getFromURL(Publication publication, String webappUrl)
+            throws DocumentBuildException {
+        return getIdentityMap().getFromURL(publication, webappUrl);
     }
 
     /**
@@ -94,7 +99,7 @@ public class DocumentFactory {
      */
     public Document getLanguageVersion(Document document, String language)
             throws DocumentBuildException {
-        return get(document.getArea(), document.getId(), language);
+        return get(document.getPublication(), document.getArea(), document.getId(), language);
     }
 
     /**
@@ -105,7 +110,7 @@ public class DocumentFactory {
      * @throws DocumentBuildException if an error occurs.
      */
     public Document getAreaVersion(Document document, String area) throws DocumentBuildException {
-        return get(area, document.getId(), document.getLanguage());
+        return get(document.getPublication(), area, document.getId(), document.getLanguage());
     }
 
     /**
@@ -119,7 +124,8 @@ public class DocumentFactory {
         int lastSlashIndex = document.getId().lastIndexOf("/");
         if (lastSlashIndex > 0) {
             String parentId = document.getId().substring(0, lastSlashIndex);
-            parent = get(document.getArea(), parentId, document.getLanguage());
+            parent = get(document.getPublication(), document.getArea(), parentId, document
+                    .getLanguage());
         }
         return parent;
     }
@@ -127,7 +133,8 @@ public class DocumentFactory {
     /**
      * Returns the parent of a document.
      * @param document A document.
-     * @param defaultDocumentId The document ID to use if the document has no parent.
+     * @param defaultDocumentId The document ID to use if the document has no
+     *            parent.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
@@ -135,34 +142,35 @@ public class DocumentFactory {
             throws DocumentBuildException {
         Document parent = getParent(document);
         if (parent == null) {
-            parent = get(document.getArea(), defaultDocumentId, document.getLanguage());
+            parent = get(document.getPublication(), document.getArea(), defaultDocumentId, document
+                    .getLanguage());
         }
         return parent;
     }
-    
+
     /**
      * Checks if a string represents a valid document ID.
      * @param id The string.
      * @return A boolean value.
      */
     public boolean isValidDocumentId(String id) {
-        
+
         if (!id.startsWith("/")) {
             return false;
         }
-        
+
         String[] snippets = id.split("/");
-        
+
         if (snippets.length < 2) {
             return false;
         }
-        
+
         for (int i = 1; i < snippets.length; i++) {
             if (!snippets[i].matches("[a-zA-Z0-9\\-]+")) {
                 return false;
             }
         }
-        
+
         return true;
     }
 

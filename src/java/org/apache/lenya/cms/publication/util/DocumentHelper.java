@@ -47,6 +47,7 @@ public class DocumentHelper {
 
     private Map objectModel;
     private DocumentIdentityMap identityMap;
+    private Publication publication;
 
     /**
      * Ctor.
@@ -55,20 +56,19 @@ public class DocumentHelper {
      */
     public DocumentHelper(Map _objectModel) {
         this.objectModel = _objectModel;
-        Publication publication;
         try {
             PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-            publication = factory.getPublication(_objectModel);
+            this.publication = factory.getPublication(_objectModel);
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
-        this.identityMap = new DocumentIdentityMap(publication);
+        this.identityMap = new DocumentIdentityMap();
     }
 
     /**
-     * Creates a document URL. <br/>If the document ID is null, the current document ID is used.
-     * <br/>If the document area is null, the current area is used. <br/>If the language is null,
-     * the current language is used.
+     * Creates a document URL. <br/>If the document ID is null, the current
+     * document ID is used. <br/>If the document area is null, the current area
+     * is used. <br/>If the language is null, the current language is used.
      * @param documentId The target document ID.
      * @param documentArea The target area.
      * @param language The target language.
@@ -81,8 +81,8 @@ public class DocumentHelper {
         String url = null;
 
         try {
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
-                    this.identityMap, this.objectModel);
+            PageEnvelope envelope = PageEnvelopeFactory.getInstance()
+                    .getPageEnvelope(this.identityMap, this.objectModel);
 
             if (documentId == null) {
                 documentId = envelope.getDocument().getId();
@@ -101,7 +101,9 @@ public class DocumentHelper {
                 language = envelope.getDocument().getLanguage();
             }
 
-            Document document = this.identityMap.getFactory().get(documentArea, documentId,
+            Document document = this.identityMap.getFactory().get(this.publication,
+                    documentArea,
+                    documentId,
                     language);
             url = document.getCanonicalWebappURL();
 
@@ -122,9 +124,9 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns the complete URL of the parent document. If the document is a top-level document, the
-     * /index document is chosen. If the parent does not exist in the appropriate language, the
-     * default language is chosen.
+     * Returns the complete URL of the parent document. If the document is a
+     * top-level document, the /index document is chosen. If the parent does not
+     * exist in the appropriate language, the default language is chosen.
      * @return A string.
      * @throws ProcessingException when something went wrong.
      */
@@ -133,8 +135,8 @@ public class DocumentHelper {
         String parentUrl;
         String contextPath;
         try {
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
-                    this.identityMap, this.objectModel);
+            PageEnvelope envelope = PageEnvelopeFactory.getInstance()
+                    .getPageEnvelope(this.identityMap, this.objectModel);
             Document document = envelope.getDocument();
 
             Request request = ObjectModelHelper.getRequest(this.objectModel);
@@ -156,9 +158,10 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns an existing language version of a document. If the document exists in the default
-     * language, the default language version is returned. Otherwise, a random language version is
-     * returned. If no language version exists, a DocumentException is thrown.
+     * Returns an existing language version of a document. If the document
+     * exists in the default language, the default language version is returned.
+     * Otherwise, a random language version is returned. If no language version
+     * exists, a DocumentException is thrown.
      * 
      * @param document The document.
      * @return A document.
@@ -169,10 +172,11 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns an existing language version of a document. If the document exists in the preferred
-     * language, this version is returned. Otherwise, if the document exists in the default
-     * language, the default language version is returned. Otherwise, a random language version is
-     * returned. If no language version exists, a DocumentException is thrown.
+     * Returns an existing language version of a document. If the document
+     * exists in the preferred language, this version is returned. Otherwise, if
+     * the document exists in the default language, the default language version
+     * is returned. Otherwise, a random language version is returned. If no
+     * language version exists, a DocumentException is thrown.
      * 
      * @param document The document.
      * @param preferredLanguage The preferred language.

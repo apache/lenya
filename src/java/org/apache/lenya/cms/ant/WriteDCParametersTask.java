@@ -27,7 +27,8 @@ import org.apache.tools.ant.BuildException;
 
 /**
  * Ant task to insert a label into an existing node in a tree.
- * @deprecated will be replaced during the 1.4 cycle by org.apache.lenya.cms.metadata.Metadata
+ * @deprecated will be replaced during the 1.4 cycle by
+ *             org.apache.lenya.cms.metadata.Metadata
  */
 public class WriteDCParametersTask extends PublicationTask {
     private String documentId = null;
@@ -39,7 +40,7 @@ public class WriteDCParametersTask extends PublicationTask {
     private String language = null;
     private String publisher = null;
     private String rights = null;
- 
+
     /**
      * Creates a new instance of InsertLabelTask
      */
@@ -226,19 +227,13 @@ public class WriteDCParametersTask extends PublicationTask {
      * @throws DocumentBuildException if an error occurs
      * @throws DocumentException if an error occurs
      */
-    public void writeDublinCoreParameters(
-        String _documentId,
-        String _area,
-        String lang,
-        String _creator,
-        String _title,
-        String _description,
-        String _subject,
-        String _publisher,
-        String _rights)
-        throws BuildException, DocumentBuildException, DocumentException {
+    public void writeDublinCoreParameters(String _documentId, String _area, String lang,
+            String _creator, String _title, String _description, String _subject,
+            String _publisher, String _rights) throws BuildException, DocumentBuildException,
+            DocumentException {
 
-        Document doc = getIdentityMap().getFactory().get(_area, _documentId, lang);
+        Document doc = getIdentityMap().getFactory()
+                .get(getPublication(), _area, _documentId, lang);
         DublinCore dc = doc.getDublinCore();
         dc.setValue(DublinCore.ELEMENT_CREATOR, _creator);
         dc.setValue(DublinCore.ELEMENT_TITLE, _title);
@@ -254,16 +249,15 @@ public class WriteDCParametersTask extends PublicationTask {
      */
     public void execute() throws BuildException {
         try {
-            writeDublinCoreParameters(
-                getDocumentId(),
-                getArea(),
-                getLanguage(),
-                getCreator(),
-                getTitle(),
-                getDescription(),
-                getSubject(),
-                getPublisher(),
-                getRights());
+            writeDublinCoreParameters(getDocumentId(),
+                    getArea(),
+                    getLanguage(),
+                    getCreator(),
+                    getTitle(),
+                    getDescription(),
+                    getSubject(),
+                    getPublisher(),
+                    getRights());
         } catch (final BuildException e) {
             throw new BuildException(e);
         } catch (final DocumentBuildException e) {

@@ -29,8 +29,8 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * anttask to set the document-id in the dc:identifier of all existing files corresponding to this
- * document-id
+ * anttask to set the document-id in the dc:identifier of all existing files
+ * corresponding to this document-id
  */
 public class SetIdentifier extends PublicationTask {
 
@@ -73,12 +73,13 @@ public class SetIdentifier extends PublicationTask {
     }
 
     /**
-     * write the document id in the DC Identifier of a document corresponding to this url
+     * write the document id in the DC Identifier of a document corresponding to
+     * this url
      * @param document The document.
-     * @throws DocumentException when something went wrong when getting the DublinCore.
+     * @throws DocumentException when something went wrong when getting the
+     *             DublinCore.
      */
-    public void writeDCIdentifier(Document document)
-            throws DocumentException {
+    public void writeDCIdentifier(Document document) throws DocumentException {
         DublinCore dublincore = document.getDublinCore();
         dublincore.setValue("identifier", this.documentid);
         dublincore.save();
@@ -101,11 +102,16 @@ public class SetIdentifier extends PublicationTask {
         try {
             if (labels.length < 1) {
                 log("no languages found for the node with id : " + node.getId());
-                writeDCIdentifier(getIdentityMap().getFactory().get(this.area, this.documentid));
+                writeDCIdentifier(getIdentityMap().getFactory().get(getPublication(),
+                        this.area,
+                        this.documentid));
             } else {
                 for (int i = 0; i < labels.length; i++) {
                     language = labels[i].getLanguage();
-                    writeDCIdentifier(getIdentityMap().getFactory().get(this.area, this.documentid, language));
+                    writeDCIdentifier(getIdentityMap().getFactory().get(getPublication(),
+                            this.area,
+                            this.documentid,
+                            language));
                 }
             }
         } catch (DocumentException e1) {

@@ -35,9 +35,9 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentBuilder#buildDocument(org.apache.lenya.cms.publication.DocumentIdentityMap,
-     *      java.lang.String)
+     *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public Document buildDocument(DocumentIdentityMap map, String url)
+    public Document buildDocument(DocumentIdentityMap map, Publication publication, String url)
             throws DocumentBuildException {
 
         URLInformation info = new URLInformation(url);
@@ -53,7 +53,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         documentURL = documentURL.substring(0, documentURL.length() - fullLanguage.length());
 
         if ("".equals(language)) {
-            language = map.getPublication().getDefaultLanguage();
+            language = publication.getDefaultLanguage();
         }
 
         String documentId = documentURL;
@@ -63,7 +63,11 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
                     + "] does not start with '/'!");
         }
 
-        DefaultDocument document = createDocument(map, info.getArea(), documentId, language);
+        DefaultDocument document = createDocument(map,
+                publication,
+                info.getArea(),
+                documentId,
+                language);
         ContainerUtil.enableLogging(document, getLogger());
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
@@ -75,15 +79,16 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      * Creates a new document object. Override this method to create specific
      * document objects, e.g., for different document IDs.
      * @param map The identity map.
+     * @param publication The publication.
      * @param area The area.
      * @param documentId The document ID.
      * @param language The language.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    protected DefaultDocument createDocument(DocumentIdentityMap map, String area,
-            String documentId, String language) throws DocumentBuildException {
-        DefaultDocument document = new DefaultDocument(map, documentId, area, language);
+    protected DefaultDocument createDocument(DocumentIdentityMap map, Publication publication,
+            String area, String documentId, String language) throws DocumentBuildException {
+        DefaultDocument document = new DefaultDocument(map, publication, documentId, area, language);
         return document;
     }
 

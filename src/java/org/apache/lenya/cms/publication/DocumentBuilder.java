@@ -28,11 +28,12 @@ public interface DocumentBuilder {
     /**
      * Builds a document.
      * @param map The identity map the document belongs to.
+     * @param publication The publication.
      * @param url The URL of the form /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    Document buildDocument(DocumentIdentityMap map, String url)
+    Document buildDocument(DocumentIdentityMap map, Publication publication, String url)
         throws DocumentBuildException;
     
     /**

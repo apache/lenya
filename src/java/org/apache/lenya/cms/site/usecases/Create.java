@@ -31,6 +31,8 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -58,7 +60,7 @@ public abstract class Create extends AbstractUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+
         if (!getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         }
@@ -139,8 +141,7 @@ public abstract class Create extends AbstractUsecase {
         User user = identity.getUser();
         if (user != null) {
             setParameter(DublinCore.ELEMENT_CREATOR, user.getId());
-        }
-        else {
+        } else {
             setParameter(DublinCore.ELEMENT_CREATOR, "");
         }
 
@@ -148,7 +149,7 @@ public abstract class Create extends AbstractUsecase {
         setParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar().getTime()));
 
     }
-    
+
     /**
      * @return The source document or <code>null</code> if the usecase was not
      *         invoked on a document.
@@ -158,8 +159,8 @@ public abstract class Create extends AbstractUsecase {
         String url = getSourceURL();
         DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
         try {
-            if (factory.isDocument(url)) {
-                document = factory.getFromURL(url);
+            if (factory.isDocument(getPublication(), url)) {
+                document = factory.getFromURL(getPublication(), url);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -173,5 +174,19 @@ public abstract class Create extends AbstractUsecase {
     public String getArea() {
         URLInformation info = new URLInformation(getSourceURL());
         return info.getArea();
+    }
+
+    private Publication publication;
+
+    protected Publication getPublication() {
+        if (this.publication == null) {
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            try {
+                this.publication = factory.getPublication(this.manager, getSourceURL());
+            } catch (PublicationException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.publication;
     }
 }

@@ -16,8 +16,6 @@
  */
 package org.apache.lenya.cms.usecase;
 
-import java.util.Map;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
@@ -28,8 +26,11 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
@@ -53,16 +54,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String)
      */
     public Usecase resolve(String name) throws ServiceException {
-        Usecase usecase = null;
-        String publicationUsecaseName = getPublicationUsecaseName(name);
-        if (this.selector.isSelectable(publicationUsecaseName)) {
-            usecase = (Usecase) this.selector.select(publicationUsecaseName);
-        }
-        else {
-            usecase = (Usecase) this.selector.select(name);
-            
-        }
-        return usecase;
+        return this.resolve(getWebappURL(), name);
     }
 
     private ServiceManager manager;
@@ -99,17 +91,24 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @see org.apache.lenya.cms.usecase.UsecaseResolver#isRegistered(java.lang.String)
      */
     public boolean isRegistered(String name) throws ServiceException {
-        return this.selector.isSelectable(getPublicationUsecaseName(name))
-                || this.selector.isSelectable(name);
+        return this.isRegistered(getWebappURL(), name);
+    }
+
+    protected String getWebappURL() {
+        Request request = ContextHelper.getRequest(getContext());
+        String context = request.getContextPath();
+        String webappUrl = request.getRequestURI().substring(context.length());
+        return webappUrl;
     }
 
     /**
      * Returns the name of the publication-overridden usecase to be resolved.
+     * @param webappUrl The web application URL.
      * @param name The plain usecase name.
      * @return A string.
      */
-    protected String getPublicationUsecaseName(String name) {
-        return getPublication().getId() + "/" + name;
+    protected String getPublicationUsecaseName(String webappUrl, String name) {
+        return getPublication(webappUrl).getId() + "/" + name;
     }
 
     private Context context;
@@ -131,18 +130,56 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
 
     /**
      * Returns the publication the usecase was invoked in.
+     * @param webappUrl The web application URL.
      * @return A publication.
      */
-    protected Publication getPublication() {
-        Map objectModel = ContextHelper.getObjectModel(getContext());
+    protected Publication getPublication(String webappUrl) {
+
+        SourceResolver resolver = null;
+        Source source = null;
         Publication publication;
         try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI("context://");
+
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            publication = factory.getPublication(objectModel);
-        } catch (PublicationException e) {
+            publication = factory.getPublication(webappUrl, SourceUtil.getFile(source));
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
         }
         return publication;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String,
+     *      java.lang.String)
+     */
+    public Usecase resolve(String webappUrl, String name) throws ServiceException {
+        Usecase usecase = null;
+        String publicationUsecaseName = getPublicationUsecaseName(webappUrl, name);
+        if (this.selector.isSelectable(publicationUsecaseName)) {
+            usecase = (Usecase) this.selector.select(publicationUsecaseName);
+        } else {
+            usecase = (Usecase) this.selector.select(name);
+
+        }
+        return usecase;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.UsecaseResolver#isRegistered(java.lang.String,
+     *      java.lang.String)
+     */
+    public boolean isRegistered(String webappUrl, String name) throws ServiceException {
+        return this.selector.isSelectable(getPublicationUsecaseName(webappUrl, name))
+                || this.selector.isSelectable(name);
     }
 
 }

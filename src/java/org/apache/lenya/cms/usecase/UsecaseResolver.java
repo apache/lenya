@@ -39,12 +39,30 @@ public interface UsecaseResolver {
     Usecase resolve(String name) throws ServiceException;
     
     /**
+     * Resolves a usecase object.
+     * @param webappUrl The web application URL.
+     * @param name The name of the usecase.
+     * @return A usecase object.
+     * @throws ServiceException if the object could not be created.
+     */
+    Usecase resolve(String webappUrl, String name) throws ServiceException;
+    
+    /**
      * Checks if a certain usecase is registered.
      * @param name The usecase name.
      * @return A boolean value.
      * @throws ServiceException if an error occurs.
      */
     boolean isRegistered(String name) throws ServiceException;
+    
+    /**
+     * Checks if a certain usecase is registered.
+     * @param webappUrl The web application URL.
+     * @param name The usecase name.
+     * @return A boolean value.
+     * @throws ServiceException if an error occurs.
+     */
+    boolean isRegistered(String webappUrl, String name) throws ServiceException;
     
     /**
      * Releases a usecase object.

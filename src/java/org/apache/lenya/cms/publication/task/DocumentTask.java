@@ -37,7 +37,8 @@ public abstract class DocumentTask extends PublicationTask {
      */
     public static final String PARAMETER_DOCUMENT_AREA = "document-area";
     /**
-     * <code>PARAMETER_DOCUMENT_LANGUAGE</code> The document language parameter
+     * <code>PARAMETER_DOCUMENT_LANGUAGE</code> The document language
+     * parameter
      */
     public static final String PARAMETER_DOCUMENT_LANGUAGE = "document-language";
 
@@ -72,7 +73,7 @@ public abstract class DocumentTask extends PublicationTask {
     protected Document getDocument(String documentId, String area, String language)
             throws ExecutionException {
         try {
-            return getIdentityMap().getFactory().get(area, documentId, language);
+            return getIdentityMap().getFactory().get(getPublication(), area, documentId, language);
         } catch (DocumentBuildException e) {
             throw new ExecutionException(e);
         }

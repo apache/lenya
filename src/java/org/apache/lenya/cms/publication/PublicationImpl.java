@@ -65,8 +65,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      * @throws PublicationException if there was a problem reading the config
      *             file
      */
-    protected PublicationImpl(String _id, String servletContextPath)
-            throws PublicationException {
+    protected PublicationImpl(String _id, String servletContextPath) throws PublicationException {
         assert _id != null;
         this.id = _id;
 
@@ -292,7 +291,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         DocumentBuilder builder = getDocumentBuilder();
         String url = builder
                 .buildCanonicalUrl(this, area, document.getId(), document.getLanguage());
-        Document destinationDocument = builder.buildDocument(document.getIdentityMap(), url);
+        Document destinationDocument = builder.buildDocument(document.getIdentityMap(), document
+                .getPublication(), url);
         return destinationDocument;
     }
 

@@ -24,6 +24,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XLink;
 import org.w3c.dom.Element;
@@ -38,26 +39,28 @@ public class XlinkCollection extends CollectionImpl {
     /**
      * Ctor.
      * @param map A document identity map.
+     * @param publication The publication.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @throws DocumentException when something went wrong.
      */
-    public XlinkCollection(DocumentIdentityMap map, String id, String area)
+    public XlinkCollection(DocumentIdentityMap map, Publication publication, String id, String area)
             throws DocumentException {
-        super(map, id, area);
+        super(map, publication, id, area);
     }
 
     /**
      * Ctor.
      * @param map A document identity map.
+     * @param publication The publication.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    public XlinkCollection(DocumentIdentityMap map, String id, String area, String language)
-            throws DocumentException {
-        super(map, id, area, language);
+    public XlinkCollection(DocumentIdentityMap map, Publication publication, String id,
+            String area, String language) throws DocumentException {
+        super(map, publication, id, area, language);
     }
 
     /**
@@ -100,10 +103,11 @@ public class XlinkCollection extends CollectionImpl {
         NamespaceHelper helper = super.getNamespaceHelper();
         if (!exists()) {
             Element collectionElement = helper.getDocument().getDocumentElement();
-            String namespaceDeclaration = collectionElement.getAttributeNS(
-                    "http://www.w3.org/2000/xmlns/", "xlink");
+            String namespaceDeclaration = collectionElement
+                    .getAttributeNS("http://www.w3.org/2000/xmlns/", "xlink");
             if (namespaceDeclaration == null || !namespaceDeclaration.equals(XLink.XLINK_NAMESPACE)) {
-                collectionElement.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink",
+                collectionElement.setAttributeNS("http://www.w3.org/2000/xmlns/",
+                        "xmlns:xlink",
                         XLink.XLINK_NAMESPACE);
             }
         }

@@ -74,7 +74,9 @@ public class Delete extends DocumentUsecase {
         String availableId = helper.computeUniqueDocumentId(source.getPublication(),
                 Publication.TRASH_AREA,
                 desiredId);
-        Document target = identityMap.getFactory().get(Publication.TRASH_AREA, availableId);
+        Document target = identityMap.getFactory().get(source.getPublication(),
+                Publication.TRASH_AREA,
+                availableId);
         getDocumentManager().moveAll(source, target);
 
         setTargetDocument(target);

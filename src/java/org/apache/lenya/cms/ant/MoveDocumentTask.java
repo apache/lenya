@@ -30,8 +30,8 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task which implements the SiteTreeNodeVisitor for the operation move a document. (Visitor
- * pattern)
+ * Ant task which implements the SiteTreeNodeVisitor for the operation move a
+ * document. (Visitor pattern)
  */
 public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVisitor {
 
@@ -41,7 +41,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
     private String secdocumentid;
 
     /**
-     *  Constructor
+     * Constructor
      */
     public MoveDocumentTask() {
         super();
@@ -76,32 +76,28 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
     }
 
     /**
-     * @param string
-     *            The area of the source.
+     * @param string The area of the source.
      */
     public void setFirstarea(String string) {
         this.firstarea = string;
     }
 
     /**
-     * @param string
-     *            The document-id corresponding to the source.
+     * @param string The document-id corresponding to the source.
      */
     public void setFirstdocumentid(String string) {
         this.firstdocumentid = string;
     }
 
     /**
-     * @param string
-     *            The area of the destination.
+     * @param string The area of the destination.
      */
     public void setSecarea(String string) {
         this.secarea = string;
     }
 
     /**
-     * @param string
-     *            The document-id corresponding to the destination.
+     * @param string The document-id corresponding to the destination.
      */
     public void setSecdocumentid(String string) {
         this.secdocumentid = string;
@@ -118,7 +114,8 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
             String language = labels[i].getLanguage();
 
             String srcDocumentid = node.getAbsoluteId();
-            String destDocumentid = srcDocumentid.replaceFirst(this.firstdocumentid, this.secdocumentid);
+            String destDocumentid = srcDocumentid.replaceFirst(this.firstdocumentid,
+                    this.secdocumentid);
 
             // TODO: content(fix the build file)
             // TODO: resources (fix the build file)
@@ -133,22 +130,30 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 
             log("move workflow history");
             try {
-                document = getIdentityMap().getFactory().get(this.firstarea, srcDocumentid, language);
-                newDocument = getIdentityMap().getFactory().get(this.secarea, destDocumentid, language);
+                document = getIdentityMap().getFactory().get(getPublication(),
+                        this.firstarea,
+                        srcDocumentid,
+                        language);
+                newDocument = getIdentityMap().getFactory().get(getPublication(),
+                        this.secarea,
+                        destDocumentid,
+                        language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }
             try {
                 if (factory.hasWorkflow(document)) {
                     /*
-                    WorkflowInstance sourceInstance = factory.buildExistingInstance(document);
-                    String workflowName = sourceInstance.getWorkflow().getName();
-                    
-                    WorkflowInstance destInstance = factory.buildNewInstance(newDocument, workflowName);
-                    destInstance.getHistory().replaceWith(sourceInstance.getHistory());
-                    
-                    sourceInstance.getHistory().delete();
-                    */
+                     * WorkflowInstance sourceInstance =
+                     * factory.buildExistingInstance(document); String
+                     * workflowName = sourceInstance.getWorkflow().getName();
+                     * 
+                     * WorkflowInstance destInstance =
+                     * factory.buildNewInstance(newDocument, workflowName);
+                     * destInstance.getHistory().replaceWith(sourceInstance.getHistory());
+                     * 
+                     * sourceInstance.getHistory().delete();
+                     */
                 }
             } catch (Exception e) {
                 throw new BuildException(e);

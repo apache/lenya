@@ -32,7 +32,6 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -91,7 +90,6 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     private Document document;
     private Publication publication;
     private String area;
-    private DocumentBuilder builder;
     private SiteTree siteTree;
     private DocumentIdentityMap identityMap;
 
@@ -110,18 +108,16 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
 
             PageEnvelope envelope = null;
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(_objectModel);
-            this.identityMap = new DocumentIdentityMap(pub);
+            this.publication = factory.getPublication(_objectModel);
+            this.identityMap = new DocumentIdentityMap();
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
                     _objectModel);
 
             setDocument(envelope.getDocument());
-            setPublication(this.document.getPublication());
             setArea(this.document.getArea());
-            setBuilder(this.document.getPublication().getDocumentBuilder());
 
             TreeSiteManager _manager = (TreeSiteManager) this.publication.getSiteManager();
-            setSiteTree(_manager.getTree(this.identityMap, this.area));
+            setSiteTree(_manager.getTree(this.identityMap, this.publication, this.area));
         } catch (final ProcessingException e) {
             throw new ProcessingException(e);
         } catch (final ParameterException e) {
@@ -174,7 +170,10 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     // document
                     Document doc;
                     try {
-                        doc = this.identityMap.getFactory().get(this.area, childId, language);
+                        doc = this.identityMap.getFactory().get(this.publication,
+                                this.area,
+                                childId,
+                                language);
                     } catch (DocumentBuildException e) {
                         throw new SAXException(e);
                     }
@@ -214,7 +213,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                         while (!doc.exists() && j < languages.size()) {
                             String newlanguage = (String) languages.get(j);
                             try {
-                                doc = this.identityMap.getFactory().get(this.area,
+                                doc = this.identityMap.getFactory().get(this.publication,
+                                        this.area,
                                         childId,
                                         newlanguage);
                             } catch (final DocumentBuildException e) {
@@ -278,13 +278,6 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
      */
     public void setArea(String string) {
         this.area = string;
-    }
-
-    /**
-     * @param _builder The document builder.
-     */
-    public void setBuilder(DocumentBuilder _builder) {
-        this.builder = _builder;
     }
 
     /**

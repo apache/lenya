@@ -98,7 +98,6 @@ public class LoadQuartzServlet extends HttpServlet {
      */
     public static final String SERVLET_URL = "/servlet/QuartzSchedulerServlet";
 
-
     /**
      * Returns the scheduler wrapper.
      * @return A scheduler wrapper.
@@ -275,9 +274,9 @@ public class LoadQuartzServlet extends HttpServlet {
                         getServletContextDirectory().getAbsolutePath());
 
                 String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
-                DocumentIdentityMap map = new DocumentIdentityMap(publication);
+                DocumentIdentityMap map = new DocumentIdentityMap();
                 org.apache.lenya.cms.publication.Document document = map.getFactory()
-                        .getFromURL(documentUrl);
+                        .getFromURL(publication, documentUrl);
                 deleteDocumentJobs(document);
             }
 
@@ -396,7 +395,8 @@ public class LoadQuartzServlet extends HttpServlet {
         File publicationsDirectory = new File(getServletContextDirectory(),
                 PublishingEnvironment.PUBLICATION_PREFIX);
 
-        File[] publicationDirectories = publicationsDirectory.listFiles(new IsDirectoryFileFilter());
+        File[] publicationDirectories = publicationsDirectory
+                .listFiles(new IsDirectoryFileFilter());
 
         log.debug("=========================================");
         log.debug("  Restoring jobs.");

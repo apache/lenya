@@ -21,6 +21,7 @@ package org.apache.lenya.cms.publication;
 
 import java.util.Map;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.rc.RCEnvironment;
@@ -149,7 +150,8 @@ public class PageEnvelope {
 
     private String context;
     private String area;
-
+    private Publication publication;
+    
     /**
      * Constructor.
      */
@@ -179,8 +181,11 @@ public class PageEnvelope {
             URLInformation info = new URLInformation(webappURI);
             this.area = info.getArea();
 
-            if (map.getFactory().isDocument(webappURI)) {
-                Document _document = map.getFactory().getFromURL(webappURI);
+            this.publication = PublicationFactory.getInstance(new ConsoleLogger())
+                    .getPublication(objectModel);
+
+            if (map.getFactory().isDocument(publication, webappURI)) {
+                Document _document = map.getFactory().getFromURL(publication, webappURI);
                 setDocument(_document);
             }
 
@@ -216,7 +221,7 @@ public class PageEnvelope {
      * @return a <code>Publication</code> value
      */
     public Publication getPublication() {
-        return getIdentityMap().getPublication();
+        return this.publication;
     }
 
     /**

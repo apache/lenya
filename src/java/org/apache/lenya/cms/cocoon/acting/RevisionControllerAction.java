@@ -41,7 +41,8 @@ import org.apache.lenya.cms.rc.RevisionController;
 /**
  * Revision controller action.
  * 
- * @version $Id$
+ * @version $Id: RevisionControllerAction.java 152682 2005-02-08 18:13:39Z
+ *          gregor $
  */
 public class RevisionControllerAction extends AbstractAction {
 
@@ -53,8 +54,8 @@ public class RevisionControllerAction extends AbstractAction {
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
-     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map,
+     *      java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
             Parameters parameters) throws Exception {
@@ -70,7 +71,7 @@ public class RevisionControllerAction extends AbstractAction {
         PageEnvelope envelope = null;
         PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         Publication publication = factory.getPublication(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap(publication);
+        DocumentIdentityMap map = new DocumentIdentityMap();
         Document document = null;
 
         try {
@@ -108,7 +109,8 @@ public class RevisionControllerAction extends AbstractAction {
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         getLogger().debug(".act(): Identity: " + identity);
 
-        //FIXME: hack because of the uri for the editor bitflux. The filename cannot be get from
+        //FIXME: hack because of the uri for the editor bitflux. The filename
+        // cannot be get from
         // the page-envelope
 
         String documentid = document.getId();
@@ -132,7 +134,10 @@ public class RevisionControllerAction extends AbstractAction {
                 }
             }
 
-            Document srcDoc = map.getFactory().get(document.getArea(), documentid, language);
+            Document srcDoc = map.getFactory().get(publication,
+                    document.getArea(),
+                    documentid,
+                    language);
             File newFile = srcDoc.getFile();
             this.filename = newFile.getCanonicalPath();
 

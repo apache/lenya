@@ -125,11 +125,13 @@ public class ChangeNodeID extends DocumentUsecase {
         String[] availableLanguages = document.getLanguages();
 
         for (int i = 0; i < availableLanguages.length; i++) {
-            Document languageVersion = identityMap.getFactory().get(document.getArea(),
+            Document languageVersion = identityMap.getFactory().get(document.getPublication(),
+                    document.getArea(),
                     document.getId(),
                     availableLanguages[i]);
 
-            Document newLanguageVersion = identityMap.getFactory().get(document.getArea(),
+            Document newLanguageVersion = identityMap.getFactory().get(document.getPublication(),
+                    document.getArea(),
                     newDocumentId,
                     availableLanguages[i]);
 

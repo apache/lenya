@@ -16,24 +16,29 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
- * Clipboard for cut/copy/paste of documents.
- * The clipping method is either {@link #METHOD_CUT} or {@link #METHOD_COPY}.
+ * Clipboard for cut/copy/paste of documents. The clipping method is either
+ * {@link #METHOD_CUT}or {@link #METHOD_COPY}.
  * 
  * @version $Id:$
  */
 public class Clipboard {
 
     private String publicationId;
+    private String servletContextPath;
     private String area;
     private String documentId;
     private String language;
     private int method;
-    
+
     protected static final int METHOD_CUT = 0;
     protected static final int METHOD_COPY = 1;
 
@@ -44,6 +49,7 @@ public class Clipboard {
      */
     public Clipboard(Document document, int method) {
         this.publicationId = document.getPublication().getId();
+        this.servletContextPath = document.getPublication().getServletContext().getAbsolutePath();
         this.area = document.getArea();
         this.documentId = document.getId();
         this.language = document.getLanguage();
@@ -57,11 +63,19 @@ public class Clipboard {
      * @throws DocumentBuildException if the document could not be built.
      */
     public Document getDocument(DocumentIdentityMap identityMap) throws DocumentBuildException {
-        if (!identityMap.getPublication().getId().equals(this.publicationId)) {
-            throw new RuntimeException("A document cannot be pasted in another publication!");
-        }
 
-        Document document = identityMap.getFactory().get(this.area, this.documentId, this.language);
+        PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+        Publication publication;
+        try {
+            publication = factory.getPublication(this.publicationId,
+                    this.servletContextPath);
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+        Document document = identityMap.getFactory().get(publication,
+                this.area,
+                this.documentId,
+                this.language);
         return document;
     }
 

@@ -27,7 +27,7 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
  * @version $Id:$
  */
 public class Paste extends DocumentUsecase {
-    
+
     protected static final String CLIPBOARD_DOCUMENT_ID = "clipboardDocumentId";
 
     /**
@@ -35,20 +35,20 @@ public class Paste extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+
         if (!getErrorMessages().isEmpty()) {
             return;
         }
-        
+
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         if (clipboard == null) {
             addErrorMessage("Cannot paste - the clipboard is empty.");
         }
     }
-    
+
     protected void initParameters() {
         super.initParameters();
-        
+
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         if (clipboard != null) {
             String id;
@@ -60,33 +60,35 @@ public class Paste extends DocumentUsecase {
             setParameter(CLIPBOARD_DOCUMENT_ID, id);
         }
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        
+
         DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
         String targetArea = getSourceDocument().getArea();
-        
+
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         Document clippedDocument = clipboard.getDocument(identityMap);
-        
+
         String language = clippedDocument.getLanguage();
         String nodeId = clippedDocument.getName();
         String potentialDocumentId = getSourceDocument().getId() + "/" + nodeId;
-        
-        Document potentialDocument = identityMap.getFactory().get(targetArea, potentialDocumentId, language);
+
+        Document potentialDocument = identityMap.getFactory().get(getSourceDocument()
+                .getPublication(),
+                targetArea,
+                potentialDocumentId,
+                language);
         Document availableDocument = getDocumentManager().getAvailableDocument(potentialDocument);
-        
+
         if (clipboard.getMethod() == Clipboard.METHOD_COPY) {
             getDocumentManager().copyAll(clippedDocument, availableDocument);
-        }
-        else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
+        } else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
             getDocumentManager().moveAll(clippedDocument, availableDocument);
-        }
-        else {
+        } else {
             throw new RuntimeException("This clipboard method is not supported!");
         }
     }

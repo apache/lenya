@@ -18,6 +18,7 @@ package org.apache.lenya.cms.site.topicmap;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 
@@ -112,9 +113,10 @@ public class TopicMapSiteManager implements SiteManager {
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentIdentityMap,
-     *      java.lang.String)
+     *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public Document[] getDocuments(DocumentIdentityMap map, String area) throws SiteException {
+    public Document[] getDocuments(DocumentIdentityMap map, Publication publication, String area)
+            throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }

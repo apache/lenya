@@ -16,17 +16,16 @@
  */
 package org.apache.lenya.cms.usecase;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.CascadingRuntimeException;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.components.cron.ConfigurableCronJob;
 import org.apache.cocoon.components.cron.ServiceableCronJob;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Job to schedule usecase execution.
@@ -36,88 +35,116 @@ import org.apache.excalibur.source.SourceResolver;
 public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCronJob {
 
     /**
+     * Initializes the job.
+     * @param usecase The usecase.
+     */
+    public void setup(Usecase usecase) {
+        this.usecaseName = usecase.getName();
+        String[] keys = usecase.getParameterNames();
+        for (int i = 0; i < keys.length; i++) {
+            this.parameters.put(keys[i], usecase.getParameter(keys[i]));
+        }
+    }
+
+    private String usecaseName;
+    private String sourceUrl;
+
+    private Map parameters = new HashMap();
+
+    protected static final String USECASE_NAME = "usecaseName";
+
+    protected static final String SOURCE_URL = "sourceUrl";
+
+    protected String getUsecaseName() {
+        return this.usecaseName;
+    }
+    
+    protected String getSourceURL() {
+        return this.sourceUrl;
+    }
+
+    protected Map getParameters() {
+        return Collections.unmodifiableMap(this.parameters);
+    }
+
+    /**
      * @see org.apache.cocoon.components.cron.CronJob#execute(java.lang.String)
      */
     public void execute(String jobname) {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("UsecaseCronJob: " + jobname);
-            getLogger().debug("URI: " + getRequestURI());
-        }
-
-        SourceResolver resolver = null;
-        Source source = null;
+        UsecaseResolver resolver = null;
+        Usecase usecase = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            final String url = "cocoon:/" + getRequestURI();
-            source = resolver.resolveURI(url, url, this.requestParameters);
+            resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
+            usecase = resolver.resolve(getSourceURL(), getUsecaseName());
+            usecase.setName(getUsecaseName());
 
-            InputStream is = source.getInputStream();
-            InputStreamReader reader = new InputStreamReader(is);
-            StringBuffer sb = new StringBuffer();
-            char[] b = new char[8192];
-            int n;
-            while ((n = reader.read(b)) > 0) {
-                sb.append(b, 0, n);
+            passParameters(usecase);
+
+            usecase.checkPreconditions();
+            List errorMessages = usecase.getErrorMessages();
+            if (!errorMessages.isEmpty()) {
+                logErrorMessages("Pre condition messages:", errorMessages);
+            } else {
+                usecase.checkExecutionConditions();
+                errorMessages = usecase.getErrorMessages();
+                if (!errorMessages.isEmpty()) {
+                    logErrorMessages("Execution condition messages:", errorMessages);
+                } else {
+                    usecase.execute();
+                    logErrorMessages("Execution messages:", usecase.getErrorMessages());
+                    usecase.checkPostconditions();
+                    logErrorMessages("Post condition messages:", usecase.getErrorMessages());
+                }
             }
-            reader.close();
+
         } catch (Exception e) {
-            throw new CascadingRuntimeException("UsecaseCronJob: " + jobname
-                    + ", raised an exception: ", e);
+            throw new RuntimeException(e);
         } finally {
             if (resolver != null) {
-                resolver.release(source);
+                if (usecase != null) {
+                    try {
+                        resolver.release(usecase);
+                    } catch (ServiceException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 this.manager.release(resolver);
-                resolver = null;
-                source = null;
             }
+        }
+
+    }
+
+    /**
+     * @param headline The headline of the messages.
+     * @param errorMessages The messages to log.
+     */
+    protected void logErrorMessages(String headline, List errorMessages) {
+        getLogger().error("Usecase [" + getUsecaseName() + "] - " + headline);
+        for (Iterator i = errorMessages.iterator(); i.hasNext();) {
+            getLogger().error((String) i.next());
         }
     }
 
-    private String requestUri;
-    private Map requestParameters;
-
     /**
-     * @return The request URI.
+     * @param usecase The usecase to pass the parameters to.
      */
-    protected String getRequestURI() {
-        return requestUri;
+    protected void passParameters(Usecase usecase) {
+        Map parameters = getParameters();
+        for (Iterator i = parameters.keySet().iterator(); i.hasNext();) {
+            String key = (String) i.next();
+            Object value = parameters.get(key);
+            usecase.setParameter(key, value);
+        }
     }
-    
-    protected static final String SOURCE_URL = "sourceUrl";
-    protected static final String USECASE_NAME = "usecaseName";
 
     /**
      * @see org.apache.cocoon.components.cron.ConfigurableCronJob#setup(org.apache.avalon.framework.parameters.Parameters,
      *      java.util.Map)
      */
-    public void setup(Parameters params, Map objects) {
-
-        try {
-            final String sourceUri = (String) objects.get(SOURCE_URL);
-            if (sourceUri == null) {
-                throw new RuntimeException("Source URI not set!");
-            }
-            
-            final String usecaseName = (String) objects.get(USECASE_NAME);
-            if (usecaseName == null) {
-                throw new RuntimeException("Usecase name not set!");
-            }
-
-            this.requestParameters = new HashMap(Parameters.toProperties(params));
-            this.requestParameters.put("lenya.usecase", usecaseName);
-            this.requestParameters.put("lenya.schedule", "true");
-
-//            String requestUri = sourceUri + "?lenya.usecase=" + usecaseName + "&lenya.schedule=true";
-
-            String[] names = params.getNames();
-            for (int i = 0; i < names.length; i++) {
-                requestUri += "&" + names[i] + "=" + params.getParameter(names[i]);
-            }
-            this.requestUri = sourceUri;
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public void setup(Parameters parameters, Map objects) {
+        this.parameters.putAll(Parameters.toProperties(parameters));
+        this.usecaseName = (String) objects.get(USECASE_NAME);
+        this.sourceUrl = (String) objects.get(SOURCE_URL);
     }
+
 }

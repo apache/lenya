@@ -74,10 +74,10 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
         DocumentIdentityMap identityMap = originalTargetDocument.getIdentityMap();
 
         SiteManager siteManager;
-        Document[] documents; 
+        Document[] documents;
         try {
             siteManager = publication.getSiteManager();
-            documents = siteManager.getDocuments(identityMap, area);
+            documents = siteManager.getDocuments(identityMap, publication, area);
         } catch (SiteException e) {
             throw new RuntimeException(e);
         }
@@ -131,8 +131,9 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                 if (url.startsWith(contextPath + "/" + publication.getId())) {
                                     final String webappUrl = url.substring(contextPath.length());
 
-                                    if (docFactory.isDocument(webappUrl)) {
-                                        Document targetDocument = docFactory.getFromURL(webappUrl);
+                                    if (docFactory.isDocument(publication, webappUrl)) {
+                                        Document targetDocument = docFactory
+                                                .getFromURL(publication, webappUrl);
 
                                         if (matches(targetDocument, originalTargetDocument)) {
                                             String newTargetUrl = getNewTargetURL(targetDocument,

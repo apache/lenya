@@ -53,10 +53,12 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * Creates a new instance of DefaultDocument. The language of the document
      * is the default language of the publication.
      * @param map The identity map the document belongs to.
+     * @param publication The publication.
      * @param _id The document ID (starting with a slash).
      * @param _area The area.
      */
-    protected DefaultDocument(DocumentIdentityMap map, String _id, String _area) {
+    protected DefaultDocument(DocumentIdentityMap map, Publication publication, String _id,
+            String _area) {
         if (_id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
@@ -64,11 +66,12 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
         this.id = _id;
+        this.publication = publication;
 
         this.identityMap = map;
 
         setArea(_area);
-        setLanguage(this.identityMap.getPublication().getDefaultLanguage());
+        setLanguage(getPublication().getDefaultLanguage());
 
         this.dublincore = new DublinCoreProxy(this);
     }
@@ -77,11 +80,13 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * Creates a new instance of DefaultDocument.
      * 
      * @param map The identity map the document belongs to.
+     * @param publication The publication.
      * @param _id The document ID (starting with a slash).
      * @param _area The area.
      * @param _language the language
      */
-    protected DefaultDocument(DocumentIdentityMap map, String _id, String _area, String _language) {
+    protected DefaultDocument(DocumentIdentityMap map, Publication publication, String _id,
+            String _area, String _language) {
         if (_id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
@@ -89,6 +94,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
         this.id = _id;
+        this.publication = publication;
 
         this.identityMap = map;
         this.language = _language;
@@ -114,11 +120,13 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return nodeId;
     }
 
+    private Publication publication;
+
     /**
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
     public Publication getPublication() {
-        return getIdentityMap().getPublication();
+        return this.publication;
     }
 
     /**
@@ -378,9 +386,9 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     public void accept(DocumentVisitor visitor) throws PublicationException {
         visitor.visitDocument(this);
     }
-    
+
     private History history;
-    
+
     /**
      * @return The workflow history.
      */
@@ -432,7 +440,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         path = path.replace('/', File.separatorChar);
         return new File(getPublication().getDirectory(), path);
     }
-    
+
     /**
      * @return The source URI of the history file.
      */
@@ -441,7 +449,9 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow, org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
+     * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow,
+     *      org.apache.lenya.workflow.Version,
+     *      org.apache.lenya.workflow.Situation)
      */
     public void newVersion(Workflow workflow, Version version, Situation situation) {
         getHistory().newVersion(workflow, version, situation);

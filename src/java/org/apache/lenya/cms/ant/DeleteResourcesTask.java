@@ -28,8 +28,9 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to delete the resources of documents corresponding to a defined subtree (Visitor
- * pattern) Visitor of the subtree. The subtree is reverse visited.
+ * Ant task to delete the resources of documents corresponding to a defined
+ * subtree (Visitor pattern) Visitor of the subtree. The subtree is reverse
+ * visited.
  */
 public class DeleteResourcesTask extends TwoDocumentsOperationTask {
 
@@ -56,7 +57,10 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
             String language = labels[i].getLanguage();
             Document srcDoc;
             try {
-                srcDoc = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
+                srcDoc = getIdentityMap().getFactory().get(getPublication(),
+                        getFirstarea(),
+                        srcDocumentid,
+                        language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }

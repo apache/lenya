@@ -31,7 +31,6 @@ import org.apache.lenya.cms.publication.Publication;
  */
 public class DocumentIdentityMap {
 
-    private Publication publication;
     private Map key2document = new HashMap();
     private DocumentFactory factory;
     
@@ -39,10 +38,8 @@ public class DocumentIdentityMap {
 
     /**
      * Ctor.
-     * @param _publication The publication to use.
      */
-    public DocumentIdentityMap(Publication _publication) {
-        this.publication = _publication;
+    public DocumentIdentityMap() {
     }
     
     /**
@@ -56,14 +53,6 @@ public class DocumentIdentityMap {
         return this.factory;
     }
 
-    /**
-     * Returns the publication.
-     * @return A publication.
-     */
-    public Publication getPublication() {
-        return this.publication;
-    }
-    
     /**
      * Returns a site structure object.
      * @param publication The publication.
@@ -92,20 +81,21 @@ public class DocumentIdentityMap {
     
     /**
      * Returns a document.
+     * @param publication The publication.
      * @param area The area.
      * @param documentId The document ID.
      * @param language The language.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    protected Document get(String area, String documentId, String language)
+    protected Document get(Publication publication, String area, String documentId, String language)
             throws DocumentBuildException {
         String key = getKey(area, documentId, language);
         Document document = (Document) this.key2document.get(key);
         if (document == null) {
-            DocumentBuilder builder = getPublication().getDocumentBuilder();
-            String url = builder.buildCanonicalUrl(getPublication(), area, documentId, language);
-            document = builder.buildDocument(this, url);
+            DocumentBuilder builder = publication.getDocumentBuilder();
+            String url = builder.buildCanonicalUrl(publication, area, documentId, language);
+            document = builder.buildDocument(this, publication, url);
             this.key2document.put(key, document);
         }
         return document;
@@ -113,18 +103,19 @@ public class DocumentIdentityMap {
 
     /**
      * Returns the document identified by a certain web application URL.
+     * @param publication The publication to use.
      * @param webappUrl The web application URL.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    protected Document getFromURL(String webappUrl) throws DocumentBuildException {
-        DocumentBuilder builder = getPublication().getDocumentBuilder();
-        if (!builder.isDocument(getPublication(), webappUrl)) {
+    protected Document getFromURL(Publication publication, String webappUrl) throws DocumentBuildException {
+        DocumentBuilder builder = publication.getDocumentBuilder();
+        if (!builder.isDocument(publication, webappUrl)) {
             throw new DocumentBuildException("The webapp URL [" + webappUrl
                     + "] does not identify a valid document");
         }
 
-        Document document = builder.buildDocument(this, webappUrl);
+        Document document = builder.buildDocument(this, publication, webappUrl);
         String key = getKey(document.getArea(), document.getId(), document.getLanguage());
 
         Document resultDocument;

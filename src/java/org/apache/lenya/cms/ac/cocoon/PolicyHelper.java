@@ -46,9 +46,6 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * Helper class for the policy GUI.
@@ -188,12 +185,8 @@ public class PolicyHelper {
     private String computeUrl(Map objectModel, String area) throws ProcessingException {
         PageEnvelope envelope;
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication publication = factory.getPublication(objectModel);
-            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            DocumentIdentityMap map = new DocumentIdentityMap();
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
-        } catch (PublicationException e) {
-            throw new ProcessingException(e);
         } catch (PageEnvelopeException e) {
             throw new ProcessingException(e);
         }

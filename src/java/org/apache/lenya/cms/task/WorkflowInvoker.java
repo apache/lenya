@@ -194,8 +194,8 @@ public class WorkflowInvoker extends ParameterWrapper {
             // check for workflow instance first (task can initialize the workflow history)
             WorkflowFactory factory = WorkflowFactory.newInstance();
             try {
-                DocumentIdentityMap map = new DocumentIdentityMap(publication);
-                this.document = map.getFactory().getFromURL(webappUrl);
+                DocumentIdentityMap map = new DocumentIdentityMap();
+                this.document = map.getFactory().getFromURL(publication, webappUrl);
             } catch (DocumentBuildException e) {
                 throw new ExecutionException(e);
             }

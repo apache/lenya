@@ -32,8 +32,6 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -152,13 +150,9 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
         }
 
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(_objectModel);
-            this.identityMap = new DocumentIdentityMap(pub);
+            this.identityMap = new DocumentIdentityMap();
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
                     _objectModel);
-        } catch (final PublicationException e) {
-            throw new ProcessingException("Resolving page envelope failed: ", e);
         } catch (final PageEnvelopeException e) {
             throw new ProcessingException("Resolving page envelope failed: ", e);
         }
@@ -228,6 +222,7 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
             throw new ProcessingException("Invalid area: " + this.area);
         }
         siteTree = ((TreeSiteManager) this.publication.getSiteManager()).getTree(this.identityMap,
+                this.publication,
                 this.area);
 
         SiteTreeNode node = siteTree.getNode(this.documentid);
@@ -257,7 +252,7 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
     protected void generateFragmentInitial(String siteArea) throws SiteException, SAXException {
 
         SiteTree siteTree = ((TreeSiteManager) this.publication.getSiteManager())
-                .getTree(this.identityMap, siteArea);
+                .getTree(this.identityMap, this.publication, siteArea);
 
         String label = "";
         String isFolder = "";

@@ -55,14 +55,18 @@ public final class PublicationHelper {
     public Document[] getAllDocuments(DocumentIdentityMap map, String area, String language)
             throws DocumentException {
         try {
-            Document[] allDocuments = getPublication().getSiteManager().getDocuments(map, area);
+            Document[] allDocuments = getPublication().getSiteManager().getDocuments(map,
+                    this.publication,
+                    area);
 
             List documents = new ArrayList();
 
             for (int i = 0; i < allDocuments.length; i++) {
                 Document doc = allDocuments[i];
-                Document languageDoc = doc.getIdentityMap().getFactory().get(doc.getArea(),
-                        doc.getId(), language);
+                Document languageDoc = doc.getIdentityMap().getFactory().get(getPublication(),
+                        doc.getArea(),
+                        doc.getId(),
+                        language);
                 documents.add(languageDoc);
             }
 

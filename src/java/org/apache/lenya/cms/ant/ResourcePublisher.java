@@ -30,7 +30,7 @@ import org.apache.tools.ant.BuildException;
 
 /**
  * Resource publisher.
- *
+ * 
  * @version $Id$
  */
 public class ResourcePublisher extends PublicationTask {
@@ -43,21 +43,22 @@ public class ResourcePublisher extends PublicationTask {
     public void execute() throws BuildException {
 
         try {
-            Document authoringDocument = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, this.documentId);
+            Document authoringDocument = getIdentityMap().getFactory().get(getPublication(),
+                    Publication.AUTHORING_AREA,
+                    this.documentId);
             ResourcesManager authoringManager = authoringDocument.getResourcesManager();
 
-            Document liveDocument = getIdentityMap().getFactory().get(Publication.LIVE_AREA, this.documentId);
+            Document liveDocument = getIdentityMap().getFactory().get(getPublication(),
+                    Publication.LIVE_AREA,
+                    this.documentId);
             ResourcesManager liveManager = liveDocument.getResourcesManager();
-            
+
             // find all resource files and their associated meta files
-            List resourcesList =
-                new ArrayList(Arrays.asList(authoringManager.getResources()));
-            resourcesList.addAll(
-                Arrays.asList(authoringManager.getMetaFiles()));
-            File[] resources =
-                (File[])resourcesList.toArray(new File[resourcesList.size()]);
+            List resourcesList = new ArrayList(Arrays.asList(authoringManager.getResources()));
+            resourcesList.addAll(Arrays.asList(authoringManager.getMetaFiles()));
+            File[] resources = (File[]) resourcesList.toArray(new File[resourcesList.size()]);
             File liveDirectory = liveManager.getPath();
-            
+
             for (int i = 0; i < resources.length; i++) {
                 File liveResource = new File(liveDirectory, resources[i].getName());
                 String destPath = liveResource.getAbsolutePath();

@@ -28,96 +28,103 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.tools.ant.BuildException;
 
-
 /**
- * Ant task, which implements the SiteTreeNodeVisitor for the operation init the workflow history files
- * when copying documents
- * (Visitor pattern)
+ * Ant task, which implements the SiteTreeNodeVisitor for the operation init the
+ * workflow history files when copying documents (Visitor pattern)
  */
 public class InitCopyWorkflowTask extends TwoDocumentsOperationTask {
 
-	private String userId = "";
-	private String machineIp = "";
+    private String userId = "";
+    private String machineIp = "";
 
-	/**
-	 * 
-	 */
-	public InitCopyWorkflowTask() {
-		super();
-	}
+    /**
+     *  
+     */
+    public InitCopyWorkflowTask() {
+        super();
+    }
 
-	/**
-	 * Returns the machine IP address from which the history was initialized.
-	 * @return A string.
-	 */
-	public String getMachineIp() {
-		return this.machineIp;
-	}
+    /**
+     * Returns the machine IP address from which the history was initialized.
+     * @return A string.
+     */
+    public String getMachineIp() {
+        return this.machineIp;
+    }
 
-	/**
-	 * Sets the machine IP address from which the history was initialized.
-	 * @param _machineIp A string.
-	 */
-	public void setMachineIp(String _machineIp) {
-		this.machineIp = _machineIp;
-	}
+    /**
+     * Sets the machine IP address from which the history was initialized.
+     * @param _machineIp A string.
+     */
+    public void setMachineIp(String _machineIp) {
+        this.machineIp = _machineIp;
+    }
 
-	/**
-	 * Returns the ID of the user who initialized the history.
-	 * @return A string.
-	 */
-	public String getUserId() {
-		return this.userId;
-	}
+    /**
+     * Returns the ID of the user who initialized the history.
+     * @return A string.
+     */
+    public String getUserId() {
+        return this.userId;
+    }
 
-	/**
-	 * Sets the ID of the user who initialized the history.
-	 * @param _userId A string.
-	 */
-	public void setUserId(String _userId) {
-		this.userId = _userId;
-	}
+    /**
+     * Sets the ID of the user who initialized the history.
+     * @param _userId A string.
+     */
+    public void setUserId(String _userId) {
+        this.userId = _userId;
+    }
 
-	/**
-	 * @param node The node to visit
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
-	 */
-	public void visitSiteTreeNode(SiteTreeNode node) {
-		Label[] labels = node.getLabels(); 
-		for (int i = 0 ; i < labels.length; i++){
-			String language = labels[i].getLanguage();
+    /**
+     * @param node The node to visit
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
+     */
+    public void visitSiteTreeNode(SiteTreeNode node) {
+        Label[] labels = node.getLabels();
+        for (int i = 0; i < labels.length; i++) {
+            String language = labels[i].getLanguage();
 
-			String srcDocumentid = node.getAbsoluteId();
-			String destDocumentid = srcDocumentid.replaceFirst(this.getFirstdocumentid(),this.getSecdocumentid());
+            String srcDocumentid = node.getAbsoluteId();
+            String destDocumentid = srcDocumentid.replaceFirst(this.getFirstdocumentid(), this
+                    .getSecdocumentid());
 
-			Document document;
-			Document newdocument;
-			WorkflowFactory factory = WorkflowFactory.newInstance();
-			
-			log("init workflow history");
-			try {
-				document = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
-				newdocument = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-			try {
-				if (factory.hasWorkflow(document)) {
-					String[] roles = new String[0];
-					Situation situation =
-						factory.buildSituation(roles, getUserId(), getMachineIp());
-                    
+            Document document;
+            Document newdocument;
+            WorkflowFactory factory = WorkflowFactory.newInstance();
+
+            log("init workflow history");
+            try {
+                document = getIdentityMap().getFactory().get(getPublication(),
+                        getFirstarea(),
+                        srcDocumentid,
+                        language);
+                newdocument = getIdentityMap().getFactory().get(getPublication(),
+                        getSecarea(),
+                        destDocumentid,
+                        language);
+            } catch (DocumentBuildException e) {
+                throw new BuildException(e);
+            }
+            try {
+                if (factory.hasWorkflow(document)) {
+                    String[] roles = new String[0];
+                    Situation situation = factory
+                            .buildSituation(roles, getUserId(), getMachineIp());
+
                     /*
-                    WorkflowInstance sourceInstance = factory.buildExistingInstance(document);
-                    String workflowName = sourceInstance.getWorkflow().getName();
-                    WorkflowInstance destInstance = factory.buildNewInstance(newdocument, workflowName);
-                    destInstance.getHistory().initialize(situation);
-                    */
-				}
-			} catch (Exception e) {
-				throw new BuildException(e);
-			}
-		}
-	}
+                     * WorkflowInstance sourceInstance =
+                     * factory.buildExistingInstance(document); String
+                     * workflowName = sourceInstance.getWorkflow().getName();
+                     * WorkflowInstance destInstance =
+                     * factory.buildNewInstance(newdocument, workflowName);
+                     * destInstance.getHistory().initialize(situation);
+                     */
+                }
+            } catch (Exception e) {
+                throw new BuildException(e);
+            }
+        }
+    }
 
 }

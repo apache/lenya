@@ -27,6 +27,8 @@ import java.util.Map;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -47,9 +49,9 @@ public final class PublicationFactory extends AbstractLogEnabled {
     private PublicationFactory(Logger logger) {
         ContainerUtil.enableLogging(this, logger);
     }
-    
+
     private static PublicationFactory instance;
-    
+
     /**
      * Returns the publication factory instance.
      * @param logger The logger to use.
@@ -65,12 +67,13 @@ public final class PublicationFactory extends AbstractLogEnabled {
     private static Map keyToPublication = new HashMap();
 
     /**
-     * Creates a new publication.
-     * The publication ID is resolved from the request URI.
-     * The servlet context path is resolved from the context object.
+     * Creates a new publication. The publication ID is resolved from the
+     * request URI. The servlet context path is resolved from the context
+     * object.
      * @param objectModel The object model of the Cocoon component.
      * @return a <code>Publication</code>
-     * @throws PublicationException if there was a problem creating the publication.
+     * @throws PublicationException if there was a problem creating the
+     *             publication.
      */
     public Publication getPublication(Map objectModel) throws PublicationException {
 
@@ -81,15 +84,17 @@ public final class PublicationFactory extends AbstractLogEnabled {
     }
 
     /**
-     * Create a new publication with the given publication-id and servlet context path.
-     * These publications are cached and reused for similar requests.
+     * Create a new publication with the given publication-id and servlet
+     * context path. These publications are cached and reused for similar
+     * requests.
      * @param id the publication id
      * @param servletContextPath the servlet context path of the publication
      * @return a <code>Publication</code>
-     * @throws PublicationException if there was a problem creating the publication.
+     * @throws PublicationException if there was a problem creating the
+     *             publication.
      */
     public Publication getPublication(String id, String servletContextPath)
-        throws PublicationException {
+            throws PublicationException {
 
         assert id != null;
         assert servletContextPath != null;
@@ -108,22 +113,22 @@ public final class PublicationFactory extends AbstractLogEnabled {
         }
 
         if (publication == null) {
-            throw new PublicationException("The publication for ID [" + id + "] could not be created.");
+            throw new PublicationException("The publication for ID [" + id
+                    + "] could not be created.");
         }
         return publication;
     }
 
     /**
-     * Generates a key to cache a publication.
-     * The cache key is constructed using the canonical servlet context path
-     * and the publication ID.
+     * Generates a key to cache a publication. The cache key is constructed
+     * using the canonical servlet context path and the publication ID.
      * @param publicationId The publication ID.
      * @param servletContextPath The servlet context path.
      * @return A cache key.
      * @throws PublicationException when the servlet context does not exist.
      */
     protected static String generateKey(String publicationId, String servletContextPath)
-        throws PublicationException {
+            throws PublicationException {
         String key;
         File servletContext = new File(servletContextPath);
         String canonicalPath;
@@ -141,10 +146,10 @@ public final class PublicationFactory extends AbstractLogEnabled {
      * @param request A request.
      * @param context A context.
      * @return A publication.
-     * @throws PublicationException if there was a problem creating the publication.
+     * @throws PublicationException if there was a problem creating the
+     *             publication.
      */
-    public Publication getPublication(Request request, Context context)
-        throws PublicationException {
+    public Publication getPublication(Request request, Context context) throws PublicationException {
 
         getLogger().debug("Creating publication from Cocoon object model");
         String webappUrl = ServletHelper.getWebappURI(request);
@@ -154,13 +159,14 @@ public final class PublicationFactory extends AbstractLogEnabled {
 
     /**
      * Creates a publication from a webapp URL and a servlet context directory.
-     * @param webappUrl The URL within the web application (without context prefix)
+     * @param webappUrl The URL within the web application (without context
+     *            prefix)
      * @param servletContext The Lenya servlet context directory
      * @return A publication
      * @throws PublicationException when something went wrong
      */
     public Publication getPublication(String webappUrl, File servletContext)
-        throws PublicationException {
+            throws PublicationException {
         getLogger().debug("Creating publication from webapp URL and servlet context");
 
         getLogger().debug("    Webapp URL:       [" + webappUrl + "]");
@@ -173,7 +179,8 @@ public final class PublicationFactory extends AbstractLogEnabled {
      * Checks if a publication with a certain ID exists in a certain context.
      * @param id The publication ID.
      * @param servletContextPath The webapp context path.
-     * @return <code>true</code> if the publication exists, <code>false</code> otherwise.
+     * @return <code>true</code> if the publication exists, <code>false</code>
+     *         otherwise.
      */
     public static boolean existsPublication(String id, String servletContextPath) {
 
@@ -181,13 +188,8 @@ public final class PublicationFactory extends AbstractLogEnabled {
             servletContextPath = servletContextPath.substring(0, servletContextPath.length() - 1);
         }
 
-        File publicationDirectory =
-            new File(
-                servletContextPath
-                    + File.separator
-                    + Publication.PUBLICATION_PREFIX
-                    + File.separator
-                    + id);
+        File publicationDirectory = new File(servletContextPath + File.separator
+                + Publication.PUBLICATION_PREFIX + File.separator + id);
 
         boolean exists = true;
         exists = exists && publicationDirectory.isDirectory();
@@ -204,15 +206,26 @@ public final class PublicationFactory extends AbstractLogEnabled {
      * @throws PublicationException when something went wrong.
      */
     public Publication getPublication(SourceResolver resolver, Request request)
-        throws PublicationException {
+            throws PublicationException {
         getLogger().debug("Creating publication from resolver and request");
+        String webappUrl = ServletHelper.getWebappURI(request);
+        return getPublication(resolver, webappUrl);
+    }
+
+    /**
+     * @param resolver A source resolver.
+     * @param webappUrl A webapp URL.
+     * @return A publication.
+     * @throws PublicationException if an error occurs.
+     */
+    public Publication getPublication(SourceResolver resolver, String webappUrl)
+            throws PublicationException {
         Publication publication;
-        String webappUri = ServletHelper.getWebappURI(request);
         Source source = null;
         try {
             source = resolver.resolveURI("context:///");
             File servletContext = SourceUtil.getFile(source);
-            publication = getPublication(webappUri, servletContext);
+            publication = getPublication(webappUrl, servletContext);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
@@ -222,5 +235,28 @@ public final class PublicationFactory extends AbstractLogEnabled {
         }
         return publication;
     }
-    
+
+    /**
+     * @param manager A service manager.
+     * @param webappUrl A webapp URL.
+     * @return A publication.
+     * @throws PublicationException if an error occurs.
+     */
+    public Publication getPublication(ServiceManager manager, String webappUrl)
+            throws PublicationException {
+        Publication publication = null;
+        SourceResolver resolver = null;
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            publication = getPublication(resolver, webappUrl);
+        } catch (ServiceException e) {
+            throw new PublicationException(e);
+        } finally {
+            if (resolver != null) {
+                manager.release(resolver);
+            }
+        }
+        return publication;
+    }
+
 }

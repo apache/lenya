@@ -87,8 +87,8 @@ public class WorkflowInvokerAction extends ServiceableAction {
 
         PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
         Publication pub = pubFactory.getPublication(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap(pub);
-        Document document = map.getFactory().get(area, documentId, language);
+        DocumentIdentityMap map = new DocumentIdentityMap();
+        Document document = map.getFactory().get(pub, area, documentId, language);
         
         WorkflowResolver workflowResolver = null;
         

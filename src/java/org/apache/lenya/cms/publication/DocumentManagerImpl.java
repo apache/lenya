@@ -103,7 +103,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         ResourcesManager resourcesManager = document.getResourcesManager();
         resourcesManager.deleteResources();
-        
+
         WorkflowManager workflowManager = null;
         try {
             workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
@@ -213,7 +213,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } else if (nodeId.indexOf("/") > -1) {
             errorMessages.add("The document ID may not contain a slash ('/').");
         } else if (identityMap.getFactory().isValidDocumentId(newDocumentId)) {
-            Document newDocument = identityMap.getFactory().get(area, newDocumentId, language);
+            Document newDocument = identityMap.getFactory().get(parent.getPublication(),
+                    area,
+                    newDocumentId,
+                    language);
 
             if (newDocument.exists()) {
                 errorMessages.add("A document with this ID already exists.");
@@ -233,8 +236,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         String availableDocumentId = uniqueDocumentId.computeUniqueDocumentId(document
                 .getPublication(), document.getArea(), document.getId());
         DocumentFactory factory = document.getIdentityMap().getFactory();
-        Document availableDocument = factory.get(document.getArea(), availableDocumentId, document
-                .getLanguage());
+        Document availableDocument = factory.get(document.getPublication(),
+                document.getArea(),
+                availableDocumentId,
+                document.getLanguage());
         return availableDocument;
     }
 
@@ -262,8 +267,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      *      org.apache.lenya.cms.publication.Document)
      */
     public void copyAll(Document source, Document target) throws PublicationException {
-        DocumentIdentityMap identityMap = source.getIdentityMap();
-        SiteManager manager = identityMap.getPublication().getSiteManager();
+        SiteManager manager = source.getPublication().getSiteManager();
         Document[] descendantsArray = manager.getRequiringResources(source);
         OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
         descendants.add(source);
@@ -284,7 +288,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
             Document sourceVersion = identityMap.getFactory().getLanguageVersion(source,
                     languages[i]);
-            Document targetVersion = identityMap.getFactory().get(target.getArea(),
+            Document targetVersion = identityMap.getFactory().get(target.getPublication(),
+                    target.getArea(),
                     target.getId(),
                     languages[i]);
             copyDocument(sourceVersion, targetVersion);
@@ -396,7 +401,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String childId = source.getId().substring(rootSourceId.length());
             String targetId = rootTargetId + childId;
             DocumentFactory factory = getRootTarget().getIdentityMap().getFactory();
-            return factory.get(getRootTarget().getArea(), targetId, source.getLanguage());
+            return factory.get(getRootTarget().getPublication(),
+                    getRootTarget().getArea(),
+                    targetId,
+                    source.getLanguage());
         }
     }
 
@@ -429,8 +437,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteAll(org.apache.lenya.cms.publication.Document)
      */
     public void deleteAll(Document document) throws PublicationException {
-        DocumentIdentityMap identityMap = document.getIdentityMap();
-        SiteManager manager = identityMap.getPublication().getSiteManager();
+        SiteManager manager = document.getPublication().getSiteManager();
         Document[] descendantsArray = manager.getRequiringResources(document);
         OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
         descendants.add(document);

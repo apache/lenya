@@ -40,8 +40,6 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * A factory for the "lenya" scheme (virtual protocol), which is used to 
@@ -107,9 +105,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
 
                 Map objectModel = ContextHelper.getObjectModel(this.context);
                 try {
-                    PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                    Publication pub = factory.getPublication(objectModel);
-                    DocumentIdentityMap map = new DocumentIdentityMap(pub);
+                    DocumentIdentityMap map = new DocumentIdentityMap();
                     PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
 
                     if (pageEnvelopeFactory != null) {
@@ -123,9 +119,6 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                                     + area + path;
                         }
                     }
-                } catch (final PublicationException e1) {
-                    throw new SourceException(
-                            "Cannot attach publication-id and/or area to " + path, e1);
                 } catch (final PageEnvelopeException e1) {
                     throw new SourceException(
                             "Cannot attach publication-id and/or area to " + path, e1);

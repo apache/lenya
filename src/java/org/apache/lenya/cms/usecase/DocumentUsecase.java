@@ -25,6 +25,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.util.ServletHelper;
 
@@ -60,25 +62,28 @@ public class DocumentUsecase extends AbstractUsecase {
             addErrorMessage("This usecase can only be invoked on documents!");
         }
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
      */
     protected void doInitialize() {
         super.doInitialize();
         try {
-            DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
-            if (factory.isDocument(getSourceURL())) {
-                this.sourceDocument = factory.getFromURL(getSourceURL());
-            }
-            
             Map objectModel = ContextHelper.getObjectModel(getContext());
             Request request = ObjectModelHelper.getRequest(objectModel);
             String webappUri = ServletHelper.getWebappURI(request);
-            
+
+            DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
+            PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
+            Publication publication = pubFactory.getPublication(this.manager, webappUri);
+
+            if (factory.isDocument(publication, getSourceURL())) {
+                this.sourceDocument = factory.getFromURL(publication, getSourceURL());
+            }
+
             URLInformation info = new URLInformation(webappUri);
             this.completeArea = info.getCompleteArea();
-        } catch (DocumentBuildException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -128,7 +133,8 @@ public class DocumentUsecase extends AbstractUsecase {
     public String getTargetURL(boolean success) {
         Document document = getTargetDocument(success);
         String documentUrl = document.getCanonicalDocumentURL();
-        String url = "/" + document.getPublication().getId() + "/" + this.completeArea + documentUrl;
+        String url = "/" + document.getPublication().getId() + "/" + this.completeArea
+                + documentUrl;
         return url;
     }
 
@@ -147,7 +153,8 @@ public class DocumentUsecase extends AbstractUsecase {
      */
     protected void setTargetURL(String url) {
         try {
-            this.sourceDocument = getUnitOfWork().getIdentityMap().getFactory().getFromURL(url);
+            this.targetDocument = getUnitOfWork().getIdentityMap().getFactory()
+                    .getFromURL(getSourceDocument().getPublication(), url);
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }

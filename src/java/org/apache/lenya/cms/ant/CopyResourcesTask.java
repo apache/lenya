@@ -34,20 +34,21 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task, which implements the SiteTreeNodeVisitor for the operation copy the resources. (Visitor
- * pattern)
+ * Ant task, which implements the SiteTreeNodeVisitor for the operation copy the
+ * resources. (Visitor pattern)
  */
 public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
     /**
-     *  Constructor
+     * Constructor
      */
     public CopyResourcesTask() {
         super();
     }
 
     /**
-     * Copy the resources files belongs to the documents corresponding to this node
+     * Copy the resources files belongs to the documents corresponding to this
+     * node
      * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public void visitSiteTreeNode(SiteTreeNode node) {
@@ -63,7 +64,10 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
         String language = labels[0].getLanguage();
         Document srcDoc;
         try {
-            srcDoc = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
+            srcDoc = getIdentityMap().getFactory().get(getPublication(),
+                    getFirstarea(),
+                    srcDocumentid,
+                    language);
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }
@@ -79,7 +83,10 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
         Document destDoc;
         try {
-            destDoc = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
+            destDoc = getIdentityMap().getFactory().get(getPublication(),
+                    getSecarea(),
+                    destDocumentid,
+                    language);
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }

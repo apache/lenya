@@ -35,8 +35,6 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * Action that checks the sitetree if there is a node with the current document-id and the current
@@ -68,9 +66,7 @@ public class LanguageExistsAction extends AbstractAction {
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
 
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-        Publication pub = factory.getPublication(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        DocumentIdentityMap map = new DocumentIdentityMap();
         PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
                 objectModel);
 

@@ -31,8 +31,9 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to copy the contents (xml files) belonging to a subtree defined by a given document id
- * and a given area. Visitor of the defined subtree (visitor pattern)
+ * Ant task to copy the contents (xml files) belonging to a subtree defined by a
+ * given document id and a given area. Visitor of the defined subtree (visitor
+ * pattern)
  */
 public class CopyContentTask extends TwoDocumentsOperationTask {
 
@@ -56,7 +57,10 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
             String language = labels[i].getLanguage();
             Document srcDoc;
             try {
-                srcDoc = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
+                srcDoc = getIdentityMap().getFactory().get(getPublication(),
+                        getFirstarea(),
+                        srcDocumentid,
+                        language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }
@@ -67,7 +71,10 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
             }
             Document destDoc;
             try {
-                destDoc = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
+                destDoc = getIdentityMap().getFactory().get(getPublication(),
+                        getSecarea(),
+                        destDocumentid,
+                        language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }

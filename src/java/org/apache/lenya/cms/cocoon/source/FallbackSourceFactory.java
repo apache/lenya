@@ -29,13 +29,16 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.Constants;
+import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Context;
+import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.usecase.AbstractOperation;
@@ -45,8 +48,8 @@ import org.apache.lenya.cms.usecase.AbstractOperation;
  * 
  * @version $Id$
  */
-public class FallbackSourceFactory extends AbstractOperation implements SourceFactory,
-        Serviceable, Contextualizable, URIAbsolutizer {
+public class FallbackSourceFactory extends AbstractOperation implements SourceFactory, Serviceable,
+        Contextualizable, URIAbsolutizer {
 
     /**
      * Ctor.
@@ -56,7 +59,8 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
     }
 
     /**
-     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
+     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String,
+     *      java.util.Map)
      */
     public Source getSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
@@ -86,11 +90,20 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
 
         PublicationTemplateManager templateManager = null;
         SourceResolver sourceResolver = null;
+        Source contextSource = null;
         Source source;
         try {
+            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            
             templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
-            Publication pub = getUnitOfWork().getIdentityMap().getPublication();
+
+            contextSource = sourceResolver.resolveURI("context://");
+            Request request = ContextHelper.getRequest(this.context);
+            String webappUrl = request.getRequestURI().substring(request.getContextPath().length());
+
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication pub = factory.getPublication(webappUrl, SourceUtil.getFile(contextSource));
             templateManager.setup(pub);
 
             ExistingSourceResolver resolver = new ExistingSourceResolver();
@@ -106,7 +119,6 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
                 resolvedUri = contextUri;
             }
 
-            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = sourceResolver.resolveURI(resolvedUri);
 
         } catch (Exception e) {
@@ -116,6 +128,9 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
                 this.manager.release(templateManager);
             }
             if (sourceResolver != null) {
+                if (contextSource != null) {
+                    sourceResolver.release(contextSource);
+                }
                 this.manager.release(sourceResolver);
             }
         }
@@ -123,10 +138,8 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
         if (getLogger().isDebugEnabled()) {
             long endTime = new GregorianCalendar().getTimeInMillis();
             long time = endTime - startTime;
-            getLogger()
-                    .debug(
-                            "Processing time: "
-                                    + new SimpleDateFormat("hh:mm:ss.S").format(new Date(time)));
+            getLogger().debug("Processing time: "
+                    + new SimpleDateFormat("hh:mm:ss.S").format(new Date(time)));
         }
 
         return source;
@@ -173,7 +186,7 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 resolver.release(source);
             } catch (ServiceException ignore) {
-    		    // ignore the exception
+                // ignore the exception
             } finally {
                 this.manager.release(resolver);
             }

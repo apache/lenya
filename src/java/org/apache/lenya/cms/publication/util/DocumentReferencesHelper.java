@@ -68,22 +68,25 @@ public class DocumentReferencesHelper {
     }
 
     /**
-     * Construct a search string for the search of references, i.e. links from other documents to
-     * the current document. This is done using the assumption that internal links look as if they
-     * were copied directly from the browser, e.g. /lenya/default/authoring/doctypes/2columns.html
+     * Construct a search string for the search of references, i.e. links from
+     * other documents to the current document. This is done using the
+     * assumption that internal links look as if they were copied directly from
+     * the browser, e.g. /lenya/default/authoring/doctypes/2columns.html
      * 
      * @return the search string
      */
     protected String getReferencesSearchString() {
         return "href\\s*=\\s*\"" + this.pageEnvelope.getContext() + "/"
                 + this.pageEnvelope.getPublication().getId() + "/"
-                + this.pageEnvelope.getDocument().getArea() + this.pageEnvelope.getDocument().getId();
+                + this.pageEnvelope.getDocument().getArea()
+                + this.pageEnvelope.getDocument().getId();
     }
 
     /**
-     * Construct a search string for the search of internal references, i.e from the current
-     * document to others. This is done using the assumption that internal links look as if they
-     * were copied directly from the browser, e.g. /lenya/default/authoring/doctypes/2columns.html
+     * Construct a search string for the search of internal references, i.e from
+     * the current document to others. This is done using the assumption that
+     * internal links look as if they were copied directly from the browser,
+     * e.g. /lenya/default/authoring/doctypes/2columns.html
      * 
      * @return the search string
      */
@@ -103,19 +106,19 @@ public class DocumentReferencesHelper {
         // DocumentToPathMapper and will probably fail if the URL
         // looks different.
 
-        return Pattern
-                .compile("href\\s*=\\s*\"" + this.pageEnvelope.getContext() + "/"
-                        + this.pageEnvelope.getPublication().getId() + "/"
-                        + this.pageEnvelope.getDocument().getArea()
-                        + "(/[-a-zA-Z0-9_/]+?)(_[a-z][a-z])?\\.html");
+        return Pattern.compile("href\\s*=\\s*\"" + this.pageEnvelope.getContext() + "/"
+                + this.pageEnvelope.getPublication().getId() + "/"
+                + this.pageEnvelope.getDocument().getArea()
+                + "(/[-a-zA-Z0-9_/]+?)(_[a-z][a-z])?\\.html");
     }
 
     /**
-     * Find a list of document-ids which have references to the current document.
+     * Find a list of document-ids which have references to the current
+     * document.
      * @param area The area.
      * 
-     * @return an <code>array</code> of documents if there are references, an empty
-     *         <code>array</code> otherwise
+     * @return an <code>array</code> of documents if there are references, an
+     *         empty <code>array</code> otherwise
      * 
      * @throws ProcessingException if the search for references failed.
      */
@@ -133,12 +136,18 @@ public class DocumentReferencesHelper {
                 inconsistentFiles = Grep.find(publication.getContentDirectory(area),
                         getReferencesSearchString());
                 for (int i = 0; i < inconsistentFiles.length; i++) {
-                    // for performance reasons the getReferencesSearchString() is
-                    // constructed in a way such that it will catch all files which
-                    // have a link to any language version of the current document.
-                    // That's why we need to do some additional tests for each hit.
-                    String languageOfCurrentDocument = this.pageEnvelope.getDocument().getLanguage();
-                    String defaultLanguage = this.pageEnvelope.getPublication().getDefaultLanguage();
+                    // for performance reasons the getReferencesSearchString()
+                    // is
+                    // constructed in a way such that it will catch all files
+                    // which
+                    // have a link to any language version of the current
+                    // document.
+                    // That's why we need to do some additional tests for each
+                    // hit.
+                    String languageOfCurrentDocument = this.pageEnvelope.getDocument()
+                            .getLanguage();
+                    String defaultLanguage = this.pageEnvelope.getPublication()
+                            .getDefaultLanguage();
                     Pattern referencesSearchStringWithLanguage = Pattern
                             .compile(getReferencesSearchString() + "_" + languageOfCurrentDocument);
                     Pattern referencesSearchStringWithOutLanguage = Pattern
@@ -149,22 +158,27 @@ public class DocumentReferencesHelper {
                             + referencesSearchStringWithOutLanguage.pattern());
                     log.debug("referencesSearchStringWithLanguage: "
                             + referencesSearchStringWithLanguage.pattern());
-                    // a link is indeed to the current document if the following conditions
+                    // a link is indeed to the current document if the following
+                    // conditions
                     // are met:
                     // 1. the link is to foo_xx and the language of the current
                     //    document is xx.
-                    // 2. or the link is to foo.html and the language of the current
+                    // 2. or the link is to foo.html and the language of the
+                    // current
                     //    document is the default language.
-                    // Now negate the expression because we continue if above (1) and (2) are
+                    // Now negate the expression because we continue if above
+                    // (1) and (2) are
                     // false, and you'll get the following if statement
                     if (!Grep.containsPattern(inconsistentFiles[i],
                             referencesSearchStringWithLanguage)
                             && !(Grep.containsPattern(inconsistentFiles[i],
                                     referencesSearchStringWithOutLanguage) && languageOfCurrentDocument
                                     .equals(defaultLanguage))) {
-                        // the reference foo_xx is neither to the language of the current
+                        // the reference foo_xx is neither to the language of
+                        // the current
                         // document.
-                        // nor is the reference foo.html and the current document is in the
+                        // nor is the reference foo.html and the current
+                        // document is in the
                         // default language.
                         // So the reference is of no importance to us, skip
                         continue;
@@ -179,7 +193,10 @@ public class DocumentReferencesHelper {
                     }
                     log.debug("language: " + language);
 
-                    documents.add(this.identityMap.getFactory().get(area, documentId, language));
+                    documents.add(this.identityMap.getFactory().get(publication,
+                            area,
+                            documentId,
+                            language));
                 }
             } catch (IOException e) {
                 throw new ProcessingException(e);
@@ -193,11 +210,12 @@ public class DocumentReferencesHelper {
     }
 
     /**
-     * Find all internal references in the current document to documents which have not been
-     * published yet.
+     * Find all internal references in the current document to documents which
+     * have not been published yet.
      * 
-     * @return an <code>array</code> of <code>Document</code> of references from the current
-     *         document to documents which have not been published yet.
+     * @return an <code>array</code> of <code>Document</code> of references
+     *         from the current document to documents which have not been
+     *         published yet.
      * 
      * @throws ProcessingException if the current document cannot be opened.
      */
@@ -207,9 +225,10 @@ public class DocumentReferencesHelper {
         Publication publication = this.pageEnvelope.getPublication();
         try {
             String[] internalLinks = Grep.findPattern(this.pageEnvelope.getDocument().getFile(),
-                    internalLinkPattern, 1);
-            String[] internalLinksLanguages = Grep.findPattern(
-                    this.pageEnvelope.getDocument().getFile(), internalLinkPattern, 2);
+                    internalLinkPattern,
+                    1);
+            String[] internalLinksLanguages = Grep.findPattern(this.pageEnvelope.getDocument()
+                    .getFile(), internalLinkPattern, 2);
 
             for (int i = 0; i < internalLinks.length; i++) {
                 String docId = internalLinks[i];
@@ -226,7 +245,9 @@ public class DocumentReferencesHelper {
                 }
                 log.debug("language: " + language);
 
-                Document liveDocument = this.identityMap.getFactory().get(Publication.LIVE_AREA, docId,
+                Document liveDocument = this.identityMap.getFactory().get(publication,
+                        Publication.LIVE_AREA,
+                        docId,
                         language);
                 if (!liveDocument.exists()) {
                     // the docId has not been published for the given language
@@ -234,8 +255,8 @@ public class DocumentReferencesHelper {
                     if (liveLanguage == null) {
                         liveLanguage = publication.getDefaultLanguage();
                     }
-                    unpublishedReferences.add(this.identityMap.getFactory().getLanguageVersion(
-                            liveDocument, liveLanguage));
+                    unpublishedReferences.add(this.identityMap.getFactory()
+                            .getLanguageVersion(liveDocument, liveLanguage));
                 }
             }
         } catch (final DocumentBuildException e) {
@@ -247,6 +268,6 @@ public class DocumentReferencesHelper {
         }
 
         return (Document[]) unpublishedReferences
-            .toArray(new Document[unpublishedReferences.size()]);
+                .toArray(new Document[unpublishedReferences.size()]);
     }
 }

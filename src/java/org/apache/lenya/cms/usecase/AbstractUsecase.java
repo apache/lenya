@@ -28,14 +28,10 @@ import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.cron.CronJob;
 import org.apache.cocoon.components.cron.JobScheduler;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.util.ServletHelper;
 
 /**
  * Abstract usecase implementation.
@@ -388,15 +384,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * Does the actual initialization. Template method.
      */
     protected void doInitialize() {
-        Map objectModel = ContextHelper.getObjectModel(this.context);
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        String webappUri = ServletHelper.getWebappURI(request);
-
-        this.sourceUrl = webappUri;
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Invoking usecase on URL: [" + this.sourceUrl + "]");
-        }
     }
 
     /**
@@ -473,6 +460,13 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     public String[] getParameterNames() {
         Set keys = this.parameters.keySet();
         return (String[]) keys.toArray(new String[keys.size()]);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#setSourceURL(java.lang.String)
+     */
+    public void setSourceURL(String url) {
+        this.sourceUrl = url;
     }
 
 }

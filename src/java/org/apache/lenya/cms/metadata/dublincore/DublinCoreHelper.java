@@ -32,10 +32,10 @@ import org.apache.log4j.Logger;
 public final class DublinCoreHelper {
 
     /**
-     *  Constructor
+     * Constructor
      */
     private DublinCoreHelper() {
-	    // do nothing
+        // do nothing
     }
 
     private static Logger log = Logger.getLogger(DublinCoreHelper.class);
@@ -51,19 +51,22 @@ public final class DublinCoreHelper {
      */
     public static String getDCIdentifier(Publication publication, String area, String documentId)
             throws DocumentException {
-        
+
         String identifier = null;
         try {
             identifier = null;
-            
-            DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            Document baseDocument = map.getFactory().get(area, documentId);
+
+            DocumentIdentityMap map = new DocumentIdentityMap();
+            Document baseDocument = map.getFactory().get(publication, area, documentId);
             String[] languages = baseDocument.getLanguages();
-            
+
             int i = 0;
             if (languages.length > 0) {
                 while (identifier == null && i < languages.length) {
-                    Document document = map.getFactory().get(area, documentId, languages[i]);
+                    Document document = map.getFactory().get(publication,
+                            area,
+                            documentId,
+                            languages[i]);
                     log.debug("document file : " + document.getFile().getAbsolutePath());
                     DublinCore dublincore = document.getDublinCore();
                     log.debug("dublincore title : "
@@ -77,10 +80,10 @@ public final class DublinCoreHelper {
                 identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
             }
         } catch (final DocumentBuildException e) {
-            log.error("" +e.toString());
+            log.error("" + e.toString());
             throw new DocumentException(e);
         } catch (final DocumentException e) {
-            log.error("" +e.toString());
+            log.error("" + e.toString());
             throw new DocumentException(e);
         }
 

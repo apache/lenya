@@ -31,6 +31,11 @@ public interface Usecase {
      * The <code>Usecase</code> role.
      */
     String ROLE = Usecase.class.getName();
+    
+    /**
+     * @param url The URL the usecase is invoked on.
+     */
+    void setSourceURL(String url);
 
     /**
      * Sets a parameter from the form.

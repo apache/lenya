@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * <p>
@@ -26,19 +27,21 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
  * </p>
  * 
  * <p>
- * Dependence on a set of resources must be a strict partial order <strong>&lt; </strong>:
+ * Dependence on a set of resources must be a strict partial order <strong>&lt;
+ * </strong>:
  * </p>
  * <ul>
- * <li><em>irreflexive:</em> d <strong>&lt; </strong>d does not hold for any resource d</li>
- * <li><em>antisymmetric:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>d implies
- * d=e</li>
- * <li><em>transitive:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>f implies d
- * <strong>&lt; </strong>f</li>
+ * <li><em>irreflexive:</em> d <strong>&lt; </strong>d does not hold for any
+ * resource d</li>
+ * <li><em>antisymmetric:</em> d <strong>&lt; </strong>e and e <strong>&lt;
+ * </strong>d implies d=e</li>
+ * <li><em>transitive:</em> d <strong>&lt; </strong>e and e <strong>&lt;
+ * </strong>f implies d <strong>&lt; </strong>f</li>
  * </ul>*
  * @version $Id$
  */
 public interface SiteManager {
-    
+
     /**
      * The Avalon role.
      */
@@ -68,7 +71,7 @@ public interface SiteManager {
      * @throws SiteException if an error occurs.
      */
     Document[] getRequiringResources(Document resource) throws SiteException;
-    
+
     /**
      * Adds a document to the site structure.
      * @param document The document to add.
@@ -77,7 +80,8 @@ public interface SiteManager {
     void add(Document document) throws SiteException;
 
     /**
-     * Checks if the site structure contains a certain resource in a certain area.
+     * Checks if the site structure contains a certain resource in a certain
+     * area.
      * @param resource The resource.
      * @return A boolean value.
      * @throws SiteException if an error occurs.
@@ -85,8 +89,8 @@ public interface SiteManager {
     boolean contains(Document resource) throws SiteException;
 
     /**
-     * Checks if the site structure contains any language version of a certain resource in a certain
-     * area.
+     * Checks if the site structure contains any language version of a certain
+     * resource in a certain area.
      * @param resource The resource.
      * @return A boolean value.
      * @throws SiteException if an error occurs.
@@ -115,7 +119,7 @@ public interface SiteManager {
      * @throws SiteException if an error occurs.
      */
     String getLabel(Document document) throws SiteException;
-    
+
     /**
      * Sets the label of a certain document.
      * @param document The document.
@@ -127,10 +131,12 @@ public interface SiteManager {
     /**
      * Returns all documents in a certain area.
      * @param identityMap The identityMap to use.
+     * @param publication The publication.
      * @param area The area.
      * @return An array of documents.
      * @throws SiteException if an error occurs.
      */
-    Document[] getDocuments(DocumentIdentityMap identityMap, String area) throws SiteException;
-    
+    Document[] getDocuments(DocumentIdentityMap identityMap, Publication publication, String area)
+            throws SiteException;
+
 }

@@ -35,13 +35,13 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 /**
- * Abstract base class for publication-dependent Ant tasks. It requires some project parameters that
- * are set by the AntTask.
+ * Abstract base class for publication-dependent Ant tasks. It requires some
+ * project parameters that are set by the AntTask.
  */
 public abstract class PublicationTask extends Task {
     /** Creates a new instance of PublicationTask */
     public PublicationTask() {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -76,22 +76,15 @@ public abstract class PublicationTask extends Task {
         return new File(getProject().getProperty(AntTask.SERVLET_CONTEXT_PATH));
     }
 
+    private Publication publication;
+
     /**
      * Returns the document identity map.
      * @return An identity map.
      */
     protected DocumentIdentityMap getIdentityMap() {
         if (this.identityMap == null) {
-            try {
-                PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-                Publication publication = factory.getPublication(getPublicationId(),
-                        getServletContext().getCanonicalPath());
-                this.identityMap = new DocumentIdentityMap(publication);
-            } catch (IOException e) {
-                throw new BuildException(e);
-            } catch (PublicationException e) {
-                throw new BuildException(e);
-            }
+            this.identityMap = new DocumentIdentityMap();
         }
         return this.identityMap;
     }
@@ -104,7 +97,18 @@ public abstract class PublicationTask extends Task {
      * @throws BuildException if the publication could not be found
      */
     protected Publication getPublication() throws BuildException {
-        return getIdentityMap().getPublication();
+        if (this.publication == null) {
+            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+            try {
+                this.publication = factory.getPublication(getPublicationId(), getServletContext()
+                        .getCanonicalPath());
+            } catch (IOException e) {
+                throw new BuildException(e);
+            } catch (PublicationException e) {
+                throw new BuildException(e);
+            }
+        }
+        return this.publication;
     }
 
     /**
@@ -122,7 +126,7 @@ public abstract class PublicationTask extends Task {
             if (!(manager instanceof TreeSiteManager)) {
                 throw new RuntimeException("Only supported for site trees.");
             }
-            tree = ((TreeSiteManager) manager).getTree(getIdentityMap(), area);
+            tree = ((TreeSiteManager) manager).getTree(getIdentityMap(), getPublication(), area);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {

@@ -49,7 +49,7 @@ public class CreateDocument extends Create {
             setParameter(PARENT_ID, "");
         }
 
-        String[] languages = getUnitOfWork().getIdentityMap().getPublication().getLanguages();
+        String[] languages = getPublication().getLanguages();
         setParameter(LANGUAGES, languages);
     }
 
@@ -92,7 +92,10 @@ public class CreateDocument extends Create {
 
         Publication publication = parent.getPublication();
         String area = parent.getArea();
-        Document document = parent.getIdentityMap().getFactory().get(area, documentId, language);
+        Document document = parent.getIdentityMap().getFactory().get(getPublication(),
+                area,
+                documentId,
+                language);
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);

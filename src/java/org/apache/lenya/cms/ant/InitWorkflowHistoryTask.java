@@ -79,7 +79,10 @@ public class InitWorkflowHistoryTask extends PublicationTask {
         }
         Document document;
         try {
-            document = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, getDocumentId(), _language);
+            document = getIdentityMap().getFactory().get(getPublication(),
+                    Publication.AUTHORING_AREA,
+                    getDocumentId(),
+                    _language);
             log(".execute(): " + document.getLanguage());
         } catch (final DocumentBuildException e) {
             throw new BuildException(e);
@@ -87,15 +90,17 @@ public class InitWorkflowHistoryTask extends PublicationTask {
 
         try {
             String[] roles = new String[0];
-            Situation situation = WorkflowFactory.newInstance().buildSituation(roles, getUserId(),
+            Situation situation = WorkflowFactory.newInstance().buildSituation(roles,
+                    getUserId(),
                     getMachineIp());
             DocumentType type = DocumentTypeBuilder.buildDocumentType(getDocumentType(),
                     getPublication());
             WorkflowFactory factory = WorkflowFactory.newInstance();
             /*
-            WorkflowInstance instance = factory.buildNewInstance(document, type.getWorkflowFileName());
-            instance.getHistory().initialize(situation);
-            */
+             * WorkflowInstance instance = factory.buildNewInstance(document,
+             * type.getWorkflowFileName());
+             * instance.getHistory().initialize(situation);
+             */
         } catch (final BuildException e) {
             throw new BuildException(e);
         } catch (final DocumentTypeBuildException e) {

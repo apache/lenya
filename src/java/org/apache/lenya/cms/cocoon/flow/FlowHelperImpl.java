@@ -104,15 +104,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
      * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#getPageEnvelope(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon)
      */
     public PageEnvelope getPageEnvelope(FOM_Cocoon cocoon) throws PageEnvelopeException {
-
-        Publication pub;
-        try {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            pub = factory.getPublication(cocoon.getObjectModel());
-        } catch (PublicationException e) {
-            throw new PageEnvelopeException(e);
-        }
-        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        DocumentIdentityMap map = new DocumentIdentityMap();
         PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
         return factory.getPageEnvelope(map, cocoon.getObjectModel());
     }

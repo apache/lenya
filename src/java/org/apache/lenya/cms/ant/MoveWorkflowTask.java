@@ -28,8 +28,8 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task, which implements the SiteTreeNodeVisitor for the operation move the workflow history
- * files. (Visitor pattern)
+ * Ant task, which implements the SiteTreeNodeVisitor for the operation move the
+ * workflow history files. (Visitor pattern)
  */
 public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 
@@ -59,8 +59,14 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 
             log("init workflow history");
             try {
-                srcDoc = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
-                destDoc = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
+                srcDoc = getIdentityMap().getFactory().get(getPublication(),
+                        getFirstarea(),
+                        srcDocumentid,
+                        language);
+                destDoc = getIdentityMap().getFactory().get(getPublication(),
+                        getSecarea(),
+                        destDocumentid,
+                        language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }
@@ -71,15 +77,17 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
                 if (factory.hasWorkflow(srcDoc)) {
                     log("has workflow");
                     /*
-                    WorkflowInstance sourceInstance = factory.buildExistingInstance(srcDoc);
-                    String workflowName = sourceInstance.getWorkflow().getName();
-                    
-                    WorkflowInstance destInstance = factory.buildNewInstance(destDoc, workflowName);
-                    destInstance.getHistory().replaceWith(sourceInstance.getHistory());
-                    
-                    sourceInstance.getHistory().delete();
-                    log("workflow moved");
-                    */
+                     * WorkflowInstance sourceInstance =
+                     * factory.buildExistingInstance(srcDoc); String
+                     * workflowName = sourceInstance.getWorkflow().getName();
+                     * 
+                     * WorkflowInstance destInstance =
+                     * factory.buildNewInstance(destDoc, workflowName);
+                     * destInstance.getHistory().replaceWith(sourceInstance.getHistory());
+                     * 
+                     * sourceInstance.getHistory().delete(); log("workflow
+                     * moved");
+                     */
                 }
             } catch (Exception e) {
                 throw new BuildException(e);

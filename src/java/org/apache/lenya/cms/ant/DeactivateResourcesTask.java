@@ -30,9 +30,9 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to remove the resources belonging to a document with document id <documentid>, area
- * <area>and language <language>. The resources are removed when no more version of this document is
- * available.
+ * Ant task to remove the resources belonging to a document with document id
+ * <documentid>, area <area>and language <language>. The resources are removed
+ * when no more version of this document is available.
  */
 public class DeactivateResourcesTask extends PublicationTask {
     private String area;
@@ -47,8 +47,9 @@ public class DeactivateResourcesTask extends PublicationTask {
     }
 
     /**
-     * Remove the resources belonging to the document with document id <documentid>, area <area>and
-     * language <language>, when no more version of this document is available.
+     * Remove the resources belonging to the document with document id
+     * <documentid>, area <area>and language <language>, when no more version of
+     * this document is available.
      * @param _language The language
      * @param _documentid The document id
      * @param _area The area
@@ -66,7 +67,10 @@ public class DeactivateResourcesTask extends PublicationTask {
 
             Document doc;
             try {
-                doc =getIdentityMap().getFactory().get(_area, _documentid, _language);
+                doc = getIdentityMap().getFactory().get(getPublication(),
+                        _area,
+                        _documentid,
+                        _language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }

@@ -31,6 +31,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -48,31 +49,35 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     /**
      * Ctor.
      * @param map A document identity map.
+     * @param publication The publication.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(DocumentIdentityMap map, String id, String area) throws DocumentException {
-        super(map, id, area);
+    public CollectionImpl(DocumentIdentityMap map, Publication publication, String id, String area)
+            throws DocumentException {
+        super(map, publication, id, area);
     }
 
     /**
      * Ctor.
      * @param map A document identity map.
+     * @param publication The publication.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(DocumentIdentityMap map, String id, String area, String language)
-            throws DocumentException {
-        super(map, id, area, language);
+    public CollectionImpl(DocumentIdentityMap map, Publication publication, String id, String area,
+            String language) throws DocumentException {
+        super(map, publication, id, area, language);
     }
 
     private List documentsList = new ArrayList();
 
     /**
-     * Returns the list that holds the documents. Use this method to invoke lazy loading.
+     * Returns the list that holds the documents. Use this method to invoke lazy
+     * loading.
      * @return A list.
      * @throws DocumentException when something went wrong.
      */
@@ -156,7 +161,10 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
-        Document document = getIdentityMap().getFactory().get(getArea(), documentId, getLanguage());
+        Document document = getIdentityMap().getFactory().get(getPublication(),
+                getArea(),
+                documentId,
+                getLanguage());
         return document;
     }
 
@@ -215,7 +223,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             documentElement.setAttributeNS(null, ATTRIBUTE_ID, document.getId());
             return documentElement;
         } catch (final DOMException e) {
-           throw new DocumentException(e);
+            throw new DocumentException(e);
         }
     }
 

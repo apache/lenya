@@ -46,8 +46,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -116,9 +114,7 @@ public class UploadAction extends AbstractConfigurableAction {
 
         Map results = new HashMap();
         Request request = ObjectModelHelper.getRequest(objectModel);
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-        Publication pub = factory.getPublication(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap(pub);
+        DocumentIdentityMap map = new DocumentIdentityMap();
         this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         this.document = this.pageEnvelope.getDocument();
 

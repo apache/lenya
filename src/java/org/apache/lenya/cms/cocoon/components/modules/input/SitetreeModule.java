@@ -52,12 +52,14 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
      * <code>ARCHIVE_NODE</code> The archive node
      */
     public static final String ARCHIVE_NODE = "archive-node";
-    
-    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, TRASH_NODE, ARCHIVE_NODE };
+
+    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, TRASH_NODE,
+            ARCHIVE_NODE };
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -67,26 +69,28 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
         try {
             PageEnvelope envelope = getEnvelope(objectModel);
             Publication publication = envelope.getPublication();
-            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            DocumentIdentityMap map = new DocumentIdentityMap();
             TreeSiteManager _manager = (TreeSiteManager) publication.getSiteManager();
 
             if (name.equals(AUTHORING_NODE)) {
-                SiteTree authoringTree = _manager.getTree(map, Publication.AUTHORING_AREA);
+                SiteTree authoringTree = _manager.getTree(map,
+                        publication,
+                        Publication.AUTHORING_AREA);
                 value = authoringTree.getNode(envelope.getDocument().getId());
             }
 
             if (name.equals(LIVE_NODE)) {
-                SiteTree liveTree = _manager.getTree(map, Publication.LIVE_AREA);
+                SiteTree liveTree = _manager.getTree(map, publication, Publication.LIVE_AREA);
                 value = liveTree.getNode(envelope.getDocument().getId());
             }
-            
+
             if (name.equals(TRASH_NODE)) {
-                SiteTree trashTree = _manager.getTree(map, Publication.TRASH_AREA);
+                SiteTree trashTree = _manager.getTree(map, publication, Publication.TRASH_AREA);
                 value = trashTree.getNode(envelope.getDocument().getId());
             }
-            
+
             if (name.equals(ARCHIVE_NODE)) {
-                SiteTree archiveTree = _manager.getTree(map, Publication.ARCHIVE_AREA);
+                SiteTree archiveTree = _manager.getTree(map, publication, Publication.ARCHIVE_AREA);
                 value = archiveTree.getNode(envelope.getDocument().getId());
             }
         } catch (Exception e) {
@@ -107,7 +111,8 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {

@@ -46,7 +46,7 @@ public class CreateLanguage extends Create {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+
         if (getSourceDocument() == null) {
             addErrorMessage("This operation must be invoked on a document.");
             return;
@@ -74,7 +74,8 @@ public class CreateLanguage extends Create {
         String[] languages = source.getPublication().getLanguages();
         DocumentFactory factory = source.getIdentityMap().getFactory();
         for (int i = 0; i < languages.length; i++) {
-            Document version = factory.get(source.getArea(), source.getId(), languages[i]);
+            Document version = factory.get(source.getPublication(), source.getArea(), source
+                    .getId(), languages[i]);
             if (!version.exists()) {
                 nonExistingLanguages.add(languages[i]);
             }
@@ -98,8 +99,8 @@ public class CreateLanguage extends Create {
                 this.documentTypeName = type.getName();
 
                 List nonExistingLanguages = getNonExistingLanguages();
-                setParameter(LANGUAGES, nonExistingLanguages.toArray(new String[nonExistingLanguages
-                        .size()]));
+                setParameter(LANGUAGES, nonExistingLanguages
+                        .toArray(new String[nonExistingLanguages.size()]));
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -130,7 +131,7 @@ public class CreateLanguage extends Create {
         Publication publication = source.getPublication();
         String area = source.getArea();
         DocumentFactory factory = source.getIdentityMap().getFactory();
-        Document document = factory.get(area, source.getId(), language);
+        Document document = factory.get(publication, area, source.getId(), language);
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);
@@ -140,7 +141,7 @@ public class CreateLanguage extends Create {
         if (parent != null) {
             parentId = factory.getParent(document).getId().substring(1);
         }
-        
+
         String childId = document.getName();
 
         File doctypesDirectory = new File(publication.getDirectory(),

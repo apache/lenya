@@ -20,7 +20,6 @@ package org.apache.lenya.cms.cocoon.scheduler;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
@@ -29,9 +28,6 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
 import org.apache.lenya.cms.scheduler.ServletJob;
 import org.apache.lenya.cms.task.ExecutionException;
@@ -77,9 +73,7 @@ public class SchedulerHelper {
 
             NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
 
-            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-            Publication pub = factory.getPublication(this.objectModel);
-            DocumentIdentityMap identityMap = new DocumentIdentityMap(pub);
+            DocumentIdentityMap identityMap = new DocumentIdentityMap();
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(identityMap,
                     this.objectModel);
 
@@ -89,8 +83,6 @@ public class SchedulerHelper {
                     .getPublication().getId());
             map.putAll(schedulerParameters.getPrefixedMap());
         } catch (final ExecutionException e) {
-            throw new ProcessingException(e);
-        } catch (final PublicationException e) {
             throw new ProcessingException(e);
         } catch (final PageEnvelopeException e) {
             throw new ProcessingException(e);

@@ -32,8 +32,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
@@ -123,9 +121,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         WorkflowResolver workflowResolver = null;
 
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(_objectModel);
-            DocumentIdentityMap map = new DocumentIdentityMap(pub);
+            DocumentIdentityMap map = new DocumentIdentityMap();
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, _objectModel);
 
             Document document = envelope.getDocument();
