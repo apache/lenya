@@ -5,7 +5,7 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
-  <page:title><i18n:text>Edit User Profile</i18n:text></page:title>
+  <page:title><i18n:text>Edit Group Profile</i18n:text></page:title>
   <page:body>
     
     <form>
