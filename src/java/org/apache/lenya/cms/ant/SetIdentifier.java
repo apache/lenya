@@ -19,11 +19,11 @@
 
 package org.apache.lenya.cms.ant;
 
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DublinCore;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.Label;

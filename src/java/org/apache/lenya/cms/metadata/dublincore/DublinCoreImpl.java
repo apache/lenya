@@ -15,9 +15,9 @@
  *
  */
 
-/* $Id: DublinCoreImpl.java,v 1.17 2004/07/30 10:18:35 andreas Exp $  */
+/* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.metadata.dublincore;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +31,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
@@ -286,14 +289,14 @@ public class DublinCoreImpl {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DublinCore#getValues(java.lang.String)
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#getValues(java.lang.String)
      */
     public String[] getValues(String key) throws DocumentException {
         return getElementOrTerm(key);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DublinCore#addValue(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#addValue(java.lang.String, java.lang.String)
      */
     public void addValue(String key, String value) throws DocumentException {
         String[] existingValues = getElementOrTerm(key);
@@ -314,7 +317,7 @@ public class DublinCoreImpl {
     }
 	
     /**
-     * @see org.apache.lenya.cms.publication.DublinCore#setValue(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#setValue(java.lang.String, java.lang.String)
      */
     public void setValue(String key, String value) throws DocumentException {
         String[] newValues = { value };
@@ -332,7 +335,7 @@ public class DublinCoreImpl {
     }
     
 	/**
-	 * @see org.apache.lenya.cms.publication.DublinCore#addValues(java.lang.String, java.lang.String[])
+	 * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#addValues(java.lang.String, java.lang.String[])
 	 */
 	public void addValues(String key, String[] values) throws DocumentException {
 		for (int i = 0; i < values.length; i++) {
@@ -341,7 +344,7 @@ public class DublinCoreImpl {
 	}
 	
     /**
-     * @see org.apache.lenya.cms.publication.DublinCore#removeValue(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#removeValue(java.lang.String, java.lang.String)
      */
     public void removeValue(String key, String value) throws DocumentException {
         String[] existingValues = getElementOrTerm(key);
@@ -368,7 +371,7 @@ public class DublinCoreImpl {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DublinCore#removeAllValues(java.lang.String)
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#removeAllValues(java.lang.String)
      */
     public void removeAllValues(String key) throws DocumentException {
         List elementList = Arrays.asList(ELEMENTS);
@@ -384,7 +387,7 @@ public class DublinCoreImpl {
     }
     
 	/**
-	 * @see org.apache.lenya.cms.publication.DublinCore#replaceBy(org.apache.lenya.cms.publication.DublinCore)
+	 * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#replaceBy(org.apache.lenya.cms.publication.DublinCore)
 	 */
 	public void replaceBy(DublinCore other) throws DocumentException {
 		for (int i = 0; i < ELEMENTS.length; i++) {

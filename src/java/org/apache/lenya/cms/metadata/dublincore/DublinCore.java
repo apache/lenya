@@ -15,9 +15,11 @@
  *
  */
 
-/* $Id: DublinCore.java,v 1.26 2004/07/30 10:18:09 andreas Exp $  */
+/* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.metadata.dublincore;
+
+import org.apache.lenya.cms.publication.DocumentException;
 
 public interface DublinCore {
 

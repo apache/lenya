@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DublinCoreModule.java,v 1.2 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -27,9 +27,9 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DublinCoreImpl;
 
 /**
  * Input module to access the dublin core values.

@@ -15,12 +15,14 @@
  *
  */
 
-/* $Id: Document.java,v 1.24 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.util.Date;
+
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 
 /**
  * A CMS document.

@@ -17,8 +17,13 @@
 
 /* $Id$  */
 
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.metadata.dublincore;
 
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
