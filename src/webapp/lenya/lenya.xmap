@@ -32,6 +32,13 @@
     </map:pipeline>
     <map:pipeline>
       <map:match pattern="css/**.css">
+        <map:act type="resource-exists" src="resources/css/{1}.xml">
+          <map:generate src="resources/css/{../1}.xml"/>
+          <map:transform src="resources/css/css.xsl">
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          </map:transform>
+          <map:serialize type="text"/>
+        </map:act>
         <map:read src="resources/css/{1}.css" mime-type="text/css"/>
       </map:match>
       <map:handle-errors>

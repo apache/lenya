@@ -106,7 +106,7 @@
       <tr valign="top">
         <td valign="top" colspan="3">
           <div id="navTop">
-            <div id="navTopBG" style="background-image: url('{$contextprefix}/lenya/menu/images/menu-bg_2.gif');">
+            <div id="navTopBG">
             	<div style="height: 100%; padding: 3px 0px;">
 						    <div style="float:left; width:12px; border-right: solid 1px #999999;">&#160;</div>
   	            <xsl:apply-templates select="menu:menus/menu:menu" mode="nav"/>&#160;
@@ -175,7 +175,7 @@
   
   <xsl:template match="menu:menu" mode="menu">
     <div id="menu{@label}" class="menuOutline">
-      <div class="menuBg">
+      <div class="menuBg" style="">
       	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@authoring = 'false') and not(starts-with($completearea, 'info'))]"/>
       </div>
     </div>
