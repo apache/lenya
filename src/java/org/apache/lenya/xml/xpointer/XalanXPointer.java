@@ -69,7 +69,7 @@ import java.util.*;
  * XPointer implementation
  *
  * @author Michael Wechner
- * @version $Id: XalanXPointer.java,v 1.14 2003/12/15 17:31:49 michi Exp $
+ * @version $Id: XalanXPointer.java,v 1.15 2003/12/20 23:45:04 michi Exp $
  */
 public class XalanXPointer implements XPointer {
     private static Category log = Category.getInstance(XalanXPointer.class);
@@ -123,7 +123,7 @@ public class XalanXPointer implements XPointer {
     }
 
     /**
-     * DOCUMENT ME!
+     * Select node by specified XPath
      *
      * @param node DOCUMENT ME!
      * @param xpath DOCUMENT ME!
@@ -162,7 +162,6 @@ public class XalanXPointer implements XPointer {
         Vector nodes = new Vector();
 
         for (int i = 0; i < nl.getLength(); i++) {
-            log.warn("Nodes: " + ((Node) nl.item(i)).getNodeName());
             nodes.addElement(nl.item(i));
         }
 
