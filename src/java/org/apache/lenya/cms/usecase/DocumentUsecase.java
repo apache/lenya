@@ -17,9 +17,16 @@
 
 package org.apache.lenya.cms.usecase;
 
+import java.util.Map;
+
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * <p>
@@ -35,6 +42,7 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 public class DocumentUsecase extends WorkflowUsecase {
 
     protected static final String DOCUMENT = "document";
+    private String completeArea;
 
     /**
      * Ctor.
@@ -63,6 +71,13 @@ public class DocumentUsecase extends WorkflowUsecase {
             if (factory.isDocument(getSourceURL())) {
                 this.sourceDocument = factory.getFromURL(getSourceURL());
             }
+            
+            Map objectModel = ContextHelper.getObjectModel(getContext());
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            String webappUri = ServletHelper.getWebappURI(request);
+            
+            URLInformation info = new URLInformation(webappUri);
+            this.completeArea = info.getCompleteArea();
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }
@@ -111,7 +126,10 @@ public class DocumentUsecase extends WorkflowUsecase {
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {
-        return getTargetDocument(success).getCanonicalWebappURL();
+        Document document = getTargetDocument(success);
+        String documentUrl = document.getCanonicalDocumentURL();
+        String url = "/" + document.getPublication().getId() + "/" + this.completeArea + documentUrl;
+        return url;
     }
 
     /**
