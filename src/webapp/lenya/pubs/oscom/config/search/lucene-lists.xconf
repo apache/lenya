@@ -5,6 +5,6 @@
 <!--
   <update-index type="incremental"/>
 -->
-  <index-dir src="../../resources/publication/search/lucene/index-lists"/>
-  <htdocs-dump-dir src="../../resources/publication/search/lucene/htdocs_dump/lists.oscom.org"/>
+  <index-dir src="../resources/search/lucene/index/index-lists"/>
+  <htdocs-dump-dir src="../resources/search/lucene/htdocs_dump/lists.oscom.org"/>
 </lucene>
