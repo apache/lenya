@@ -26,7 +26,7 @@
 			<tr bgcolor="#EFEFE7">
 				<td width="440" valign="middle" colspan="2">
 					<!-- EVTL. BILD  WIDTH="50" HEIGHT="50" ALIGN="LEFT" -->
-<xsl:apply-templates select="head/media">
+<xsl:apply-templates select="head/media[1]">
   <xsl:with-param name="href"><xsl:value-of select="$href"/></xsl:with-param>
 </xsl:apply-templates>
 					<!-- NEWS LAUFTEXT -->

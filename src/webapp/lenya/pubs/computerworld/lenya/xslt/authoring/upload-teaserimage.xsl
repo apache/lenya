@@ -26,7 +26,6 @@
       <input type="hidden" name="step" value="upload"/>
       <input type="hidden" name="publisher" value="{current_username}"/>
       <input type="hidden" name="referer" value="{referer}"/>
-      <input type="hidden" name="identifier" value="teaser"/>
       <table border="0">
 	<tr>
 	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile"/></td>

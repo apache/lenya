@@ -379,7 +379,7 @@ src="/img/layout/linecontent440x3.gif" width="440" /></td>
 
 <tr>
 <td valign="center" align="left" width="440" colspan="2"
-height="30"><span class="txt-l-black"><b><xsl:apply-templates select="/article/head/title"/></b></span></td>
+height="30"><xsl:apply-templates select="/article/head/title"/></td>
 </tr>
 
 
@@ -398,9 +398,8 @@ height="30"><span class="txt-l-black"><b><xsl:apply-templates select="/article/h
 						<tr bgcolor="#EFEFE7"><td width="140" height="3" valign="top" align="left" style="background-image:url(/img/layout/lines/linecontent440x3.gif)"><img src="/img/layout/trans1x1.gif" width="1" height="3"/></td></tr>
 					</table>
           </div>
-<span
-class="txt-m-black-bold"><xsl:apply-templates select="/article/head/abstract"/></span> <br />
- <span class="txt-m-black"><xsl:apply-templates select="/article/body"/></span>
+<xsl:apply-templates select="/article/head/abstract"/> <br />
+<xsl:apply-templates select="/article/body/p"/>
 &#160;<xsl:apply-templates select="/article/head/byline"/></td>
 </tr>
 
@@ -602,12 +601,12 @@ border="0" /> </td>
     </title>
   </xsl:template>
 
-  <xsl:template match="body">
-    <body contentEditable="true">
+  <xsl:template match="p">
+    <p contentEditable="true">
       <xsl:for-each select=".">
         <xsl:apply-templates/>
       </xsl:for-each>
-    </body>
+    </p>
   </xsl:template>
 
  <xsl:template match="abstract">

@@ -32,9 +32,9 @@
 
 			<tr>
 				<td width="440" align="left" valign="top" colspan="2">
-<xsl:apply-templates select="body/media"/>
+<xsl:apply-templates select="body/media[1]"/>
 <span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
-        	<span class="txt-m-black">   <xsl:apply-templates select="body"/>
+        	<span class="txt-m-black">   <xsl:apply-templates select="body/p"/>
           &#160;<a href="../impressum/" class="txt-m-red">(<xsl:value-of select="head/byline" />)</a></span></td>
 			</tr>
 

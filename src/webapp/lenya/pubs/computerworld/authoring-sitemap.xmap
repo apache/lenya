@@ -192,6 +192,12 @@
 				</map:generate>
 				<map:serialize type="xml"/>
 			</map:match>
+			<map:match pattern="menus/static/**">
+				<map:generate type="serverpages" src="docs/publication/menus/front.xsp">
+					<map:parameter name="articleId" value="{1}"/>
+				</map:generate>
+				<map:serialize type="xml"/>
+			</map:match>
 			<map:handle-errors>
 				<map:serialize type="xml"/>
 			</map:handle-errors>
@@ -378,6 +384,10 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
+			<!-- Catch-all matcher -->
+			<map:match pattern="news/">
+				<map:redirect-to uri="/wyona-cms/computerworld/index.html" session="true"/>
+			</map:match>
 		</map:pipeline>
 		<!-- Samples for resource/document creation -->
 		<map:pipeline>
@@ -393,17 +403,17 @@
 				<map:serialize type="xml"/>
 			</map:match>
 						<!-- Fallback matcher (for wraping files) -->
-			<map:match pattern="*/*">
+			<map:match pattern="**">
 				<map:aggregate element="wyona" label="gregor">
-					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part src="cocoon:/menus/static/{1}"/>
 					<map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
-					<map:part src="docs/publication/authoring/{1}/{2}" element="wrapper"/>
+					<map:part src="docs/publication/authoring/{1}" element="wrapper"/>
 					<map:part src="docs/publication/authoring/small-preview.xml"/>
 					<map:part src="docs/publication/authoring/sitetree.xml"/>
 					<map:part src="cocoon:/today"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Authoring/wrapper.xsl">
-					<map:parameter name="id" value="/{1}/index.html"/>
+					<map:parameter name="id" value="/{1}"/>
 					<map:parameter name="authoring" value="true"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.6 2003/01/21 19:49:30 gregorcms Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.7 2003/01/26 14:10:51 gregorcms Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -83,7 +83,7 @@
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
-		<!-- Generate todays date  -->
+			<!-- Generate todays date  -->
 			<map:match pattern="today">
 				<map:generate type="serverpages" src="docs/publication/today.xsp"/>
 				<map:serialize type="html"/>
@@ -109,16 +109,16 @@
 				<map:read mime-type="image/{2}" src="resources/publication/images/live/categories/{1}.{2}"/>
 			</map:match>
 			<!-- Fallback matcher (for wraping files) -->
-			<map:match pattern="*/*">
+			<map:match pattern="**">
 				<map:aggregate element="wyona" label="gregor">
 					<map:part element="cmsbody" src="docs/publication/live/wrapper.html"/>
-					<map:part src="docs/publication/live/{1}/{2}" element="wrapper"/>
+					<map:part src="docs/publication/live/{1}" element="wrapper"/>
 					<map:part src="docs/publication/live/small-preview.xml"/>
 					<map:part src="docs/publication/live/sitetree.xml"/>
 					<map:part src="cocoon:/today"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Live/wrapper.xsl">
-					<map:parameter name="id" value="/{1}/index.html"/>
+					<map:parameter name="id" value="/{1}"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>

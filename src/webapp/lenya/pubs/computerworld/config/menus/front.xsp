@@ -35,12 +35,12 @@
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Preview</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/small-preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Small Preview</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/small-preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Small Preview</item>
 				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/&amp;task-id=publish</xsp:attribute>Publish&#160;this Page
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/"+articleId+"&amp;task-id=publish</xsp:attribute>Publish&#160;this Page
 					</item>
 				</block>
 				<block>

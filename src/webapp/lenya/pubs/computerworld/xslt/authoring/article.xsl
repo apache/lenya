@@ -18,7 +18,7 @@
       <tr>
         <td class="txt-s-black"><b>Teaser-Image</b></td>
 	<td class="txt-s-black">
-         <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/article/head">
+         <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/article/head/abstract">
           <xsl:choose>
             <xsl:when test="head/media">
               <img src="{head/media/media-reference/@source}" border="0" alt="Teaser Image" align="middle" /> Change Image
@@ -52,10 +52,10 @@
 			<tr>
 				<td width="440" align="left" valign="top" colspan="2">
 					<br/>
-	<a href="levi.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/body"><img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a>
-<xsl:apply-templates select="body/media"/>
+	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/body/p"><img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a>
+<xsl:apply-templates select="body/media[1]"/>
 	<span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
-        	<span class="txt-m-black"><xsl:apply-templates select="body"/>
+        	<span class="txt-m-black"><xsl:apply-templates select="body/p"/>
           &#160;<a href="../impressum/" class="txt-m-red">(<xsl:value-of select="head/byline" />)</a></span></td>
 			</tr>
 
@@ -72,7 +72,6 @@
 		</table>
   </xsl:template>
   
-  <xsl:template match="body"><xsl:apply-templates/></xsl:template>
 
 <xsl:template match="body/media">
           <div align="left">

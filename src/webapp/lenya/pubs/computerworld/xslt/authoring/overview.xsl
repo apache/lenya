@@ -18,28 +18,6 @@
 							<td>Article</td>
 							<td>Published on</td>
 						</tr>
-						<!--
-						<xsl:for-each select="article">
-						<xsl:sort select="head/dateline/story.date/@millis" order="descending"/>
-							<xsl:variable name="href">
-								<xsl:value-of select="@href"/>
-							</xsl:variable>
-							<tr bgcolor="#EFEFE7">
-								<td height="30" width="320" valign="middle">
-									<a href="{$href}" class="txt-l-black">
-										<b>
-											<xsl:value-of select="head/title"/>
-										</b>
-									</a>
-								</td>
-								<td height="30" width="120" valign="middle" align="right">
-									<span class="txt-s-black">
-										<xsl:value-of select="head/dateline/story.date/@norm"/>
-									</span>
-								</td>
-							</tr>
-						</xsl:for-each>
--->
 						<xsl:copy>
 							<xsl:for-each select="article">
 								<xsl:choose>
