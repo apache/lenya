@@ -25,7 +25,7 @@
 
   <project-information href="" label="Project" tab="project">
      <index_pm href="index.html" label="About"/>
-        <!--<changes href="changes.html" label="Changes"/>-->
+        <changes href="changes.html" label="Changes"/>
         <charter href="charter.html" label="Charter"/>
         <history href="history.html" label="History"/>
         <screenshots href="screenshots.html" label="Screenshots"/>
