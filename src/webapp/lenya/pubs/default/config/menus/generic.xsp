@@ -37,14 +37,14 @@
 </block>
       </menu>
       
-      <menu name="Edit" label="Edit">
+      <menu name="Edit" label="Search">
 <block>
 <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
 	  <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
 </block>
       </menu>
       
-      <menu name="Tools" label="Tools">
+      <menu name="Tools" label="Help">
 <block>
 <item><xsp:attribute name="href">../xopus<xsp:expr>xsp_lenya_pub_url.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
 	  <item href="../xopus/xdoc.xsd">View&#160;Xopus&#160;XSD</item>
@@ -54,7 +54,7 @@
 </block>
 </menu>
 
-      <menu name="Help" label="Help">
+      <menu name="Help" label="Debug">
 <block>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
