@@ -14,10 +14,14 @@ the ways the Lenya community pays back.
  ------------------
 
 * Edith Chevrier
+* Dale Christ
 * Christian Egli
+* Antonio Gallardo
 * Andreas Hartmann   Andreas runs the cocooncenter.org site.
+* Andreas Kuckartz   Tester, Bugzilla reporter
 * Rolf Kulemann
 * Gregor J. Rothfuss http://greg.abstrakt.ch
+* Thorsten Scherler
 * Michael Wechner    http://wyona.com/people/michael-wechner/
                      Lenya was originally started by Michael in early 1999 to 
                      manage the content of the Journal of Pattern Formation. 
@@ -38,7 +42,6 @@ the ways the Lenya community pays back.
 * Felix Maeder
 * Rene Niedermowe
 * Giacomo Pati        helped to port the predecessor of Lenya to Cocoon.
-* Thorsten Scherler
 
  Other Contributors:
  -------------------
@@ -53,7 +56,6 @@ the ways the Lenya community pays back.
 * Jorge Gutierrez      Spanish translation.
 * Martin Hitz
 * Margrit John
-* Andreas Kuckartz     Tester, Bugzilla reporter
 * Olivier Lange        French translation.
 * Jean Pierre LeJacq   Build system improvements.
 * Martin Lüthi         Mail class.
