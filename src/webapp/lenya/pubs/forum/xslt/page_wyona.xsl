@@ -33,7 +33,7 @@
 <a href="http://www.xmlhack.com/rss10.php">xmlhack</a><br />
 <a href="http://xml.apache.org/cocoon/">Cocoon</a><br />
 <a href="http://www.xopus.org">Xopus</a><br />
-<a href="index.rdf">RSS</a><br />
+<a href="index.rss">RSS</a><br />
 </b>
 </font>
   </td>

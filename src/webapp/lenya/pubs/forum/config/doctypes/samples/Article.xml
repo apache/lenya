@@ -6,12 +6,16 @@
 <!--
      <id>@ID@</id>
 -->
-<!--
-     <editor>martin</editor>
-     <author>michael</author>
-     <date><year>2002</year><month name="June">6</month><day name="Saturday">1</day><hour>23</hour><minute>35</minute></date>
-     <category></category>
--->
+   <editor>@EDITOR@</editor>
+   <author>@AUTHOR@</author>
+   <date>
+     <year>0000</year>
+     <month name="@MONTH_NAME@">00</month>
+     <day name="@DAY_NAME@">00</day>
+     <hour>00</hour>
+     <minute>00</minute>
+   </date>
+   <category/>
    </meta>
    <head>
      <title>Sample Title</title>
@@ -19,7 +23,7 @@
    <body>
    <p>
    Sample Person writes:
-   <quotation>Sample Quotation ...</quotation>
+   <quotation>Sample Quotation ...</quotation>.
    Sample Text ...
    </p>
    </body>

@@ -52,7 +52,7 @@
         <map:serialize type="html"/>
       </map:match>
 
-      <map:match pattern="index.rdf">
+      <map:match pattern="index.rss">
         <map:generate src="cocoon:/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Front/rdf.xsl"/>
         <map:serialize type="xml"/>
