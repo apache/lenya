@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.9 2003/04/25 10:36:11 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.10 2003/04/29 16:40:14 edith Exp $ -->
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 	<lenya:name>Unipublic</lenya:name>
 	<lenya:version>1.0</lenya:version>
@@ -140,6 +140,18 @@ src/webapp/lenya/bitflux.xmap
   <lenya:test>Navigate to newly created article</lenya:test>
   <lenya:test>Edit article with Bitflux (title, lead)</lenya:test>
   <lenya:test>Edit article with Xopus</lenya:test>
+  <lenya:test>Check the reserved Checkout/Checkin : </lenya:test>
+  <lenya:test>Edit article with Bitflux. Exit without saving the changes</lenya:test>
+  <lenya:test>Logout and Login with another user</lenya:test>
+  <lenya:test>Edit article with Bitflux. Error message</lenya:test>
+  <lenya:test>Logout and Login with original user</lenya:test>
+  <lenya:test>Edit article with Bitflux. Save and exit</lenya:test>
+  <lenya:test>Logout and Login with another user</lenya:test>
+  <lenya:test>Edit article with Bitflux. Save and exit</lenya:test>
+  <lenya:test>Check the number of older versions</lenya:test>
+  <lenya:test>View the older versions</lenya:test>
+  <lenya:test>Rollback to an older version</lenya:test>
+  <lenya:test>Check the changes</lenya:test>
   <lenya:test>Publish article</lenya:test>
   <lenya:test>Check date (top of article)</lenya:test>
   <lenya:test>Check if article published (click on "live")</lenya:test>
