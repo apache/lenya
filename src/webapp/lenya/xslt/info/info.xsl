@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.48 2003/11/25 10:01:25 egli Exp $
+ $Id: info.xsl,v 1.49 2003/12/08 13:15:00 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -322,29 +322,37 @@
 	<xsl:param name="area"/>
 	<xsl:param name="type"/>
 	<xsl:param name="title"/>
-	<form method="get">
-	<input type="hidden" name="lenya.usecase" value="info-ac-{$area}"/>
-	<input type="hidden" name="lenya.step" value="showscreen"/>
-	<td><xsl:value-of select="$title"/>:</td>
-	<td><xsl:apply-templates select="//lenya-info:items[@type = $type]"/></td>
-	<td>
-		<xsl:choose>
-			<xsl:when test="$area = 'authoring'">
-				<xsl:apply-templates select="//lenya-info:items[@type = 'role']"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<input type="hidden" name="role_id" value="visit"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</td>
-	<td>
-		<input type="submit" name="add_credential_{$type}" value="Add">
-			<xsl:if test="not(//lenya-info:items[@type = $type]/lenya-info:item)">
-				<xsl:attribute name="disabled">disabled</xsl:attribute>
-			</xsl:if>
-		</input>
-	</td>
-	</form>
+	<xsl:variable name="visitor-role" select="//lenya-info:visitor-role"/>
+	<xsl:choose>
+  	<xsl:when test="$visitor-role">
+    	<form method="get">
+    	<input type="hidden" name="lenya.usecase" value="info-ac-{$area}"/>
+    	<input type="hidden" name="lenya.step" value="showscreen"/>
+    	<td><xsl:value-of select="$title"/>:</td>
+    	<td><xsl:apply-templates select="//lenya-info:items[@type = $type]"/></td>
+    	<td>
+    		<xsl:choose>
+    			<xsl:when test="$area = 'authoring'">
+    				<xsl:apply-templates select="//lenya-info:items[@type = 'role']"/>
+    			</xsl:when>
+    			<xsl:otherwise>
+    				<input type="hidden" name="role_id" value="{//lenya-info:visitor-role}"/>
+    			</xsl:otherwise>
+    		</xsl:choose>
+    	</td>
+    	<td>
+    		<input type="submit" name="add_credential_{$type}" value="Add">
+    			<xsl:if test="not(//lenya-info:items[@type = $type]/lenya-info:item)">
+    				<xsl:attribute name="disabled">disabled</xsl:attribute>
+    			</xsl:if>
+    		</input>
+    	</td>
+    	</form>
+  	</xsl:when>
+  	<xsl:otherwise>
+  	  No visitor role found which can be assigned in the live area.
+  	</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 

@@ -36,6 +36,19 @@
 <lenya-info:info>
    
     <xsp:logic>
+      
+      RoleManager roleManager = (RoleManager) <input:get-attribute module="access-control" name="role-manager" as="object"/>;
+      
+      Role[] roles = roleManager.getRoles();
+      String visitorRole = "";
+      for (int i = 0; i &lt; roles.length; i++) {
+          if (roles[i].getId().equals("visitor") || roles[i].getId().equals("visit")) {
+              visitorRole = roles[i].getId();
+          }
+      }
+      
+      <li:visitor-role><xsp:expr>visitorRole</xsp:expr></li:visitor-role>
+      
       String area = parameters.getParameter("area", null);
 			PolicyHelper helper = new PolicyHelper();
 			helper.setup(objectModel, this.manager, area);
@@ -87,8 +100,6 @@
 								    }
 								}
 								
-								RoleManager roleManager = (RoleManager)
-										<input:get-attribute module="access-control" name="role-manager" as="object"/>;
 								Role role = roleManager.getRole(roleId);
 								
 								if (role == null) {
