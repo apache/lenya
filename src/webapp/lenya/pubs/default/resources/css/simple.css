@@ -33,7 +33,7 @@ bold {
 	font-weight: bold;
 }
 
-bxlistitem {
+bxlistitem, listitem {
 	display: list-item;
 	margin-left: 40px;
 }
