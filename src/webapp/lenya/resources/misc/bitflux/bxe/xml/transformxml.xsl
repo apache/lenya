@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: transformxml.xsl,v 1.4 2002/11/17 16:48:14 felixcms Exp $ -->
+<!-- $Id: transformxml.xsl,v 1.5 2002/11/23 11:47:33 felixcms Exp $ -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:xhtml="http://www.w3.org/1999/xhtml">
 <xsl:output method="xml" encoding="iso-8859-1"/>
@@ -31,9 +31,8 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml">
         	<xsl:attribute name="bxe_internalid" >yes</xsl:attribute>            
         </xsl:otherwise>
 </xsl:choose>
-<!--
+
 <xsl:attribute name="bxe_originalname"><xsl:value-of select="name()"/></xsl:attribute>
--->
 </xsl:template>        
 
 <!-- listitem crashes mozilla, if we delete such a node... replace it bxlistitem 

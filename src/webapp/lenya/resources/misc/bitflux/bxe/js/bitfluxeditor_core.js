@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_core.js,v 1.4 2002/11/17 16:48:14 felixcms Exp $
+// $Id: bitfluxeditor_core.js,v 1.5 2002/11/23 11:47:33 felixcms Exp $
 
 /**
  * @file
@@ -2348,7 +2348,7 @@ function BX_errorMessage(e) {
             BX_innerHTML(BX_error_window.document,"");
             BX_error_window.document.writeln("<pre>");
             mes += "UserAgent: "+navigator.userAgent +"\n";
-            mes += "bitfluxeditor.js Info: $Revision: 1.4 $  $Name:  $  $Date: 2002/11/17 16:48:14 $ \n";
+            mes += "bitfluxeditor.js Info: $Revision: 1.5 $  $Name:  $  $Date: 2002/11/23 11:47:33 $ \n";
             BX_error_window.document.writeln(mes);
             mes = "\nError Object:\n\n";
             for (var b in e) {

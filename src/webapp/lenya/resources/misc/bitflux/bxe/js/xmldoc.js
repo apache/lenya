@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: xmldoc.js,v 1.3 2002/11/17 16:48:14 felixcms Exp $
+// $Id: xmldoc.js,v 1.4 2002/11/23 11:47:33 felixcms Exp $
 
 /**
  * @file

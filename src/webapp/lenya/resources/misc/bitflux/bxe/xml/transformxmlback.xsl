@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: transformxmlback.xsl,v 1.4 2002/11/17 16:48:14 felixcms Exp $ -->
+<!-- $Id: transformxmlback.xsl,v 1.5 2002/11/23 11:47:33 felixcms Exp $ -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" encoding="iso-8859-1"/>
 <!-- the following 2 lines are not needed for this simpler example, they are needed for the 
@@ -14,7 +14,7 @@ wyona uni_zh integration :
 <xsl:choose>
 	<xsl:when test="@bxe_originalname">
 		<xsl:call-template name="apply">
-			<xsl:with-param name="elementName" />
+			<xsl:with-param name="elementName" select="@bxe_originalname"/>
 		</xsl:call-template>
 	</xsl:when>
 	<xsl:otherwise>
@@ -35,7 +35,6 @@ be sure to adjust BX_elements also to bxlistitem, otherwise it won't work
 
 <xsl:template name="apply">
 <xsl:param name="elementName" select="name()"/>
-
      <xsl:choose>
 	 
 	 <!-- check if we can delete the element
@@ -43,7 +42,7 @@ be sure to adjust BX_elements also to bxlistitem, otherwise it won't work
 	 2) if it has attributes id and bxe_internalid (this will not delete elements with only id)
 	 3) if there is no text in the element except whitespaces
 	 4) if there are no child elements
-	 5) if there is no attribut bxe_bitfluxspan -->
+	 5) if there is no attribute bxe_bitfluxspan -->
     	<xsl:when test="(not(@*[not(name() = 'bxe_originalname') and not(name() = 'bxe_internalid') and not(name() = 'id')]) 
 		and ( @id and @bxe_internalid)
 		and  not(normalize-space(.))  
@@ -53,15 +52,14 @@ be sure to adjust BX_elements also to bxlistitem, otherwise it won't work
         <xsl:when test="@bxe_temporaryelement = 'yes'"></xsl:when>
 <!--        <xsl:when test="@id = 'BX_cursor'"></xsl:when>-->
         <xsl:otherwise>
-		    <xsl:copy>
-
+		    <xsl:element name="{$elementName}">
     		    <xsl:for-each select="@*">
 	        		<xsl:if test="not(starts-with(name(),'bxe_')) and not(name() = 'style') and not(name() = 'id' and ../@bxe_internalid)">
 						<xsl:copy/>
 					</xsl:if>
 	        	</xsl:for-each>
     		    <xsl:apply-templates/>
-		    </xsl:copy>
+		    </xsl:element>
         </xsl:otherwise>
 </xsl:choose>
 

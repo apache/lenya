@@ -1,3 +1,21 @@
+2002-11-20  Christian Stocker  <chregu@bitflux.ch>
+
+    * xml/transformxml.xsl
+      xml/transformxmlback.xsl: fix for mixedcase tagnames
+
+    * xml/transformxml.xsl
+      xml/transformxmlback.xsl: do bxe_originalname again
+
+2002-11-15  Christian Stocker  <chregu@bitflux.ch>
+
+    * js/td/wyona.js
+      xml/transformxmlback.xsl: MFG
+
+    * xml/transformxmlback.xsl:
+    do not delete elements with only id and no bxe_internalid
+
+    * js/td/wyona.js: fix by wyona
+
 2002-10-31  Christian Stocker  <chregu@bitflux.ch>
 
     * js/bitfluxeditor_core.js: fix for bug 26
