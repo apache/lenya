@@ -4,6 +4,8 @@
 
 <xsl:include href="variables.xsl"/>
 
+<xsl:param name="year"/>
+
 <xsl:template match="MainNavigation" xmlns:xi="http://www.w3.org/2001/XInclude">
   <table border="0" cellpadding="0" cellspacing="0" width="115">
     <xsl:for-each select="Channels/Channel">
@@ -15,10 +17,10 @@
             <tr>
               <xsl:choose>
                 <xsl:when test="@highlighted='true'">
-                  <td align="right"><a href="{$unipublic}{$view}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_light_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
+                  <td align="right"><a href="{$unipublic}{$view}/{../../@name}/{@id}/{$year}/"><img height="25" src="{$img-unipub}/nav_light_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
                 </xsl:when>
                 <xsl:otherwise>
-                  <td align="right"><a href="{$unipublic}{$view}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
+                  <td align="right"><a href="{$unipublic}{$view}/{../../@name}/{@id}/{$year}/"><img height="25" src="{$img-unipub}/nav_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
                 </xsl:otherwise>
               </xsl:choose>
             </tr>

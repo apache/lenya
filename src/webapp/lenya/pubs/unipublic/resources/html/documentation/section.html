@@ -2,5 +2,82 @@
 <head><title>Unipublic - Section</title></head>
 <body>
 <h2>Section</h2>
+<h3>New Year</h3>
+<p>When the new Year beginn, we should
+<ul>
+<li>create new directories for this year: for the articles, for all sections and channels. Exp: 
+  <p>
+  <ul>
+   <li><code>.../pubs/unipublic/docs/publication/authoring/magazin/geist/articles/2003 </code></li>
+   <li><code>.../pubs/unipublic/docs/publication/authoring/magazin/gesundheit//articles/2003 </code></li>
+   <li><code>.../pubs/unipublic/docs/publication/authoring/magazin/recht/articles/2003 </code></li>
+   <li><code>.../pubs/unipublic/docs/publication/authoring/magazin/.../articles/2003 </code></li>
+   <li><code>.../pubs/unipublic/docs/publication/authoring/campus/.../articles/2003 </code></li>
+   <li><code>.../pubs/unipublic/docs/publication/authoring/.../.../articles/2003 </code></li>
+  </ul>
+  </p>
+</li>
+<li>put the corresponding branches in the tree: <b>.../pubs/unipublic/docs/publication/authoring/tree.xml</b>:
+<p>
+<code>
+&lt;?xml version="1.0"?/&gt;</br>
+ 
+&lt;tree&gt;</br>
+&nbsp;&lt;branch relURI="" doctype="Front" menuName="Home"&gt;</br>
+&nbsp;&nbsp;    &lt;branch relURI="magazin" doctype="Channel" menuName="Magazin"&gt;</br/
+&nbsp;&nbsp;&nbsp;      &lt;branch relURI="geist" doctype="Section" menuName="Geist"&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;        &lt;branch relURI="articles" doctype="Articles" menuName="Articles"&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         &lt;branch relURI="2002" doctype="Year" menuName="2002"/&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         &lt;branch relURI="2003" doctype="Year" menuName="2003"/&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;        &lt;/branch&gt;</br>
+&nbsp;&nbsp;&nbsp;      &lt;/branch&gt;</br>
+&nbsp;&nbsp;&nbsp;      &lt;branch relURI="gesundheit" doctype="Section" menuName="Gesundheit"&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;        &lt;branch relURI="articles" doctype="Articles" menuName="Articles"&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         &lt;branch relURI="2002" doctype="Year" menuName="2002"/&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         &lt;branch relURI="2003" doctype="Year" menuName="2003"/&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;        &lt;/branch&gt;</br>
+&nbsp;&nbsp;&nbsp;      &lt;/branch&gt;</br>
+&nbsp;&nbsp;&nbsp;      .... </br>
+&nbsp;&nbsp;    &lt;/branch&gt;</br>
+&nbsp;&nbsp;    &lt;branch relURI="channel" doctype="Channel" menuName="Campus"/&gt;</br>
+&nbsp;&nbsp;&nbsp;      &lt;branch relURI="section" doctype="Section" menuName="Uni-News"&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;        &lt;branch relURI="articles" doctype="Articles" menuName="Articles"&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          &lt;branch relURI="2002" doctype="Year" menuName="2002"/&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          &lt;branch relURI="2003" doctype="Year" menuName="2003"/&gt;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;        &lt;/branch&gt;</br>
+&nbsp;&nbsp;&nbsp;      &lt;/branch&gt;</br>
+&nbsp;&nbsp;&nbsp;      .... </br>
+&nbsp;&nbsp;   &lt;/branch&gt;</br>
+&nbsp;&nbsp; ...</br>
+&nbsp;  &lt;/branch&gt;</br>
+&lt;/tree&gt;</br>
+</code>
+</p> 
+</li>
+<li>change the hardcoded redirect in the sitemaps: <b>.../pubs/unipublic/authoring-sitemap.xmap</b> and <b>.../pubs/unipublic/live-sitemap.xmap</b>: 
+<p>
+<code>
+... </br>
+&nbsp;&lt;map:match pattern="*/*/"&gt;</br>
+&nbsp;&nbsp;        &lt;map:redirect-to uri="2003/index.html" session="true"/&gt;</br>
+&nbsp;      &lt;/map:match&gt;</br>
+&nbsp;      &lt;map:match pattern="*/*/index.html"&gt;</br>
+&nbsp;&nbsp;        &lt;map:redirect-to uri="2003/index.html" session="true"/&gt;</br>
+&nbsp;      &lt;/map:match&gt;</br>
+...
+</code>
+</p>
+</li>
+<li>put the old year in the hardcoded year's navigation in the section stylesheet: <b>.../pubs/unipublic/stylesheets/publication/Page/Section/page.xsl</b>:
+<p>
+<code>
+
+ &lt;b&gt;&lt;a href="../{$year}/"&gt;&lt;xsl:value-of select="$year"/&gt;&lt;/a&gt;&lt;/b&gt; |  &lt;a href="../2002/"&gt;2002&lt;/a&gt; | &lt;a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2001/"&gt;2001&lt;/a&gt; | &lt;a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2000/"&gt;2000&lt;/a&gt; | &lt;a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/1999/"&gt;1999&lt;/a&gt;
+
+</code>
+</p>
+</li>
+</ul>
+</p>
 </body>
 </html>
