@@ -1,5 +1,5 @@
 /*
- * $Id: MultipartHttpServletRequestAction.java,v 1.1 2003/05/27 02:34:59 michi Exp $
+ * $Id: MultipartHttpServletRequestAction.java,v 1.2 2003/05/30 09:24:38 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,29 +49,13 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
 
 import org.apache.cocoon.acting.AbstractConfigurableAction;
-import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.environment.http.HttpRequest;
-import org.apache.cocoon.util.PostInputStream;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.Node;
-
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
-
 import java.io.*;
 
 import java.util.*;
 import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.servlet.multipart.MultipartHttpServletRequest;
 import org.apache.cocoon.servlet.multipart.Part;
 
 

@@ -6,7 +6,6 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.acting.AbstractAction;
