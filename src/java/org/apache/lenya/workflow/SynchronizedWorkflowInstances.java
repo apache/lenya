@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowDocumentSet.java,v 1.2 2003/10/10 16:42:12 andreas Exp $
+$Id: SynchronizedWorkflowInstances.java,v 1.1 2003/10/10 16:42:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,37 +53,23 @@ $Id: WorkflowDocumentSet.java,v 1.2 2003/10/10 16:42:12 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.workflow;
+package org.apache.lenya.workflow;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentSet;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstancesImpl;
 
 /**
- * A synchronized workflow instance representing a set of documents.
- * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class WorkflowDocumentSet extends SynchronizedWorkflowInstancesImpl {
-
+public interface SynchronizedWorkflowInstances {
+    
     /**
-     * Ctor.
-     * @param documentSet The document set.
-     * @param mainDocument The main document of the set, i.e. the document to
-     * invoke the workflow on if the transition is not synchronized.
-     * @throws WorkflowException when something went wrong.
+     * Returns all executable events.
+     * @see org.apache.lenya.workflow.WorkflowInstance#getExecutableEvents(org.apache.lenya.workflow.Situation)
      */
-    public WorkflowDocumentSet(DocumentSet documentSet, Document mainDocument) throws WorkflowException {
-        Document[] documents = documentSet.getDocuments();
-        WorkflowInstance[] instances = new WorkflowInstance[documents.length];
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        for (int i = 0; i < documents.length; i++) {
-            instances[i] = factory.buildInstance(documents[i]);
-        }
-        setInstances(instances);
-        setMainInstance(factory.buildInstance(mainDocument));
-    }
-
+    Event[] getExecutableEvents(Situation situation) throws WorkflowException;
+    
+    /**
+     * Invokes an event on all documents.
+     * @see org.apache.lenya.workflow.WorkflowInstance#invoke(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.Event)
+     */
+    void invoke(Situation situation, Event event) throws WorkflowException;
 }

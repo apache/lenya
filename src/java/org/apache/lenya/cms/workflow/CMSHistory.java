@@ -69,7 +69,7 @@ import java.io.File;
 
 /**
  * @author andreas
- * @version $Id: CMSHistory.java,v 1.19 2003/09/30 14:45:50 egli Exp $
+ * @version $Id: CMSHistory.java,v 1.20 2003/10/10 16:42:12 andreas Exp $
  *
  */
 public class CMSHistory extends History {
@@ -145,7 +145,7 @@ public class CMSHistory extends History {
 
     /**
      * Returns the path of the history file inside the publication directory.
-     * @param Document A CMS document.
+     * @param document A CMS document.
      * @return A string.
      */
     public String getHistoryPath(Document document) {

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.20 2003/10/09 22:34:25 stefano Exp $
+$Id: WorkflowAuthorizer.java,v 1.21 2003/10/10 16:42:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,7 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 
 /**
  * If the client requested invoking a workflow event, this authorizer checks if

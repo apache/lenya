@@ -1,5 +1,5 @@
 /*
-$Id: SynchronizedWorkflowInstances.java,v 1.1 2003/10/02 15:27:42 andreas Exp $
+$Id: SynchronizedWorkflowInstancesImpl.java,v 1.1 2003/10/10 16:42:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.State;
@@ -71,14 +72,14 @@ import org.apache.log4j.Category;
  * workflow instances.
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class SynchronizedWorkflowInstances {
+public class SynchronizedWorkflowInstancesImpl implements SynchronizedWorkflowInstances {
 
-    private static final Category log = Category.getInstance(SynchronizedWorkflowInstances.class);
+    private static final Category log = Category.getInstance(SynchronizedWorkflowInstancesImpl.class);
 
     /**
      * Ctor.
      */
-    public SynchronizedWorkflowInstances() {
+    public SynchronizedWorkflowInstancesImpl() {
     }
 
     /**
@@ -86,7 +87,7 @@ public class SynchronizedWorkflowInstances {
      * @param instances The set of workflow instances to synchronize.
      * @param mainInstance The main workflow instance to invoke for non-synchronized transitions.
      */
-    public SynchronizedWorkflowInstances(
+    public SynchronizedWorkflowInstancesImpl(
         WorkflowInstance[] instances,
         WorkflowInstance mainInstance) {
         setInstances(instances);
