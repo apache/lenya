@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:xsp-session="http://apache.org/xsp/session/2.0"
+  create-session="true">
+
+<page>
+<info>
+  <request-uri><xsp-request:get-uri/></request-uri>
+  <task-id>deleteTrash</task-id>
+</info>
+</page>
+</xsp:page>
