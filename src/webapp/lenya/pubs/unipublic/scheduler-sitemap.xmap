@@ -64,11 +64,12 @@
         </map:aggregate>
         <map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl">
 	  <map:parameter name="documentUri" value="{1}"/>
+	  <map:parameter name="publication-id" value="unipublic"/>
 	</map:transform>
         <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl">
           <map:parameter name="use-request-parameters" value="true"/>
 	</map:transform>
-        <map:transform src="../../stylesheets/cms/Page/Scheduler/scheduler.xsl">
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/scheduler-document.xsl">
           <map:parameter name="use-request-parameters" value="true"/>
           <map:parameter name="documentUri" value="{1}"/>
         </map:transform>
@@ -88,7 +89,7 @@
         <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl">
           <map:parameter name="use-request-parameters" value="true"/>
 	</map:transform>
-        <map:transform src="../../stylesheets/cms/Page/Scheduler/scheduler.xsl">
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/scheduler-admin.xsl">
           <map:parameter name="use-request-parameters" value="true"/>
           <map:parameter name="publication-id" value="{1}"/>
         </map:transform>

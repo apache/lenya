@@ -32,6 +32,31 @@
     <xsl:text/>
   </xsl:variable>
   
+  <!-- navigation menu -->
+  <xsl:template name="navigation-menu">
+    <div class="menu">
+        <xsl:variable name="menu-separator" select="'&#160;&#160;|&#160;&#160;'"/>
+        <a href="{$uri-prefix}/authoring/{$documentUri}">
+          <strong>Back to page</strong>
+        </a>
+        <xsl:value-of select="$menu-separator"/>
+        <a>
+          <xsl:attribute name="href">
+            <xsl:text/>
+            <xsl:value-of select="$uri-prefix"/>
+            <xsl:text>/scheduler/docid/</xsl:text>
+            <xsl:value-of select="$documentUri"/>
+            <xsl:text/>
+            <xsl:call-template name="parameters-as-request-parameters"/>
+            <xsl:text/>
+          </xsl:attribute>
+        
+<!--         href="{$uri-prefix}/scheduler/docid/{$documentUri}?task.sources={$task.sources}&amp;task.uris={$task.uris}&amp;documentType={$documentType}&amp;documentUri={$documentUri}">-->
+          <strong>Refresh</strong>
+        </a>
+    </div>
+  </xsl:template>
+  
   <xsl:template match="/">
     <xsl:apply-templates/>
   </xsl:template>
@@ -65,28 +90,14 @@
         <xsl:apply-templates select="sch:exception"/>
         <h1>Scheduler</h1>
         <xsl:call-template name="navigation-menu"/>
-
-        <!-- ================================================================== -->
-        <!-- print document URI or publication ID -->
-        <!-- ================================================================== -->
         <p>
-        <xsl:if test="$publication-id != ''">
           <strong>Publication:</strong>&#160;&#160;<xsl:value-of select="$publication-id"/>
-        </xsl:if>
-        <xsl:if test="$documentUri != ''">
           <br/>
           <strong>Document:</strong>&#160;&#160;<xsl:value-of select="$documentUri"/>
-        </xsl:if>
         </p>
         <br />
-        
-        
 	  <table width="100%" height="3" border="0" cellpadding="0" cellspacing="0">
           
-        <!-- ================================================================== -->
-        <!-- begin: if document URI is provided -->
-        <!-- ================================================================== -->
-          <xsl:if test="$documentUri">
 	    <tr> 
               <td class="table-head"><div class="menu">Add new job</div></td>
 	      <td class="table-head">Task</td>
@@ -97,10 +108,6 @@
 	    </tr>
             <xsl:call-template name="table-separator-space"/>
 	    <xsl:call-template name="schedulerForm"/>
-          </xsl:if>
-        <!-- ================================================================== -->
-        <!-- end: if document URI is provided -->
-        <!-- ================================================================== -->
         
             <tr>
               <td colspan="6">&#160;</td>
@@ -141,30 +148,16 @@
 			<xsl:apply-templates select="sch:parameter"/>
                       </td>
 		      <td>
-                        <xsl:choose>
-                          <xsl:when test="$documentUri = ''">
-                            <xsl:variable name="task-id" select="sch:task/sch:parameter[@name='id']/@value"/>
-                            <xsl:for-each select="/sch:scheduler/sch:tasks/sch:task">
-                              <xsl:if test="@id = $task-id/">
-                                <strong><xsl:value-of select="label"/></strong>
-                              </xsl:if>
-                            </xsl:for-each>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:call-template name="tasks">
-                              <xsl:with-param name="current-task-id"
-                                  select="sch:task/sch:parameter[@name='id']/@value"/>
-                            </xsl:call-template>
-                          </xsl:otherwise>
-                        </xsl:choose>
+                        <xsl:call-template name="tasks">
+                          <xsl:with-param name="current-task-id"
+                              select="sch:task/sch:parameter[@name='id']/@value"/>
+                        </xsl:call-template>
 		      </td>
                       <xsl:choose>
                         <xsl:when test="sch:trigger">
                           <xsl:apply-templates select="sch:trigger"/>
                           <td>
-                            <xsl:if test="$documentUri != ''">
-                              <input type="submit" name="Action" value="Modify"/>
-                            </xsl:if>
+                            <input type="submit" name="Action" value="Modify"/>
                           </td>
                         </xsl:when>
                         <xsl:otherwise>
@@ -188,29 +181,7 @@
     </html>
   </xsl:template>
 
-  <xsl:template name="table-separator-space">
-    <xsl:param name="background" select="'White'"/>
-    <tr>
-      <td colspan="6" bgcolor="{$background}">
-        <img src="{$uri-prefix}/images/util/pixel.gif" width="1" height="5"/>
-      </td>
-    </tr>
-  </xsl:template>
-  
-  <xsl:template name="table-separator">
-    <xsl:call-template name="table-separator-space"/>
-    <tr height="1">
-<!--      <td />-->
-      <td class="table-separator" colspan="6">
-        <img src="{$uri-prefix}/images/util/pixel.gif"/>
-      </td>
-    </tr>
-    <xsl:call-template name="table-separator-space"/>
-  </xsl:template>
-  
   <xsl:template match="sch:trigger">
-    <xsl:choose>
-    <xsl:when test="$documentUri != ''">
     <td>
       <font size="2"> 
         <xsl:apply-templates select="sch:parameter[@name='day']"/>
@@ -225,19 +196,6 @@
         <xsl:apply-templates select="sch:parameter[@name='minute']"/>
       </font>
     </td>
-    </xsl:when>
-    <xsl:otherwise>
-    <td>
-      <xsl:value-of select="format-number(sch:parameter[@name='day']/@value, '00')"/>.
-      <xsl:value-of select="format-number(sch:parameter[@name='month']/@value, '00')"/>.
-      <xsl:value-of select="format-number(sch:parameter[@name='year']/@value, '00')"/>
-    </td>
-    <td>
-      <xsl:value-of select="format-number(sch:parameter[@name='hour']/@value, '00')"/>:<xsl:text/>
-      <xsl:value-of select="format-number(sch:parameter[@name='minute']/@value, '00')"/>
-    </td>
-    </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="sch:parameter[@name='day']">
@@ -286,22 +244,10 @@
     </input>
   </xsl:template>
 
-  <!-- document URI -->
-  <xsl:template match="sch:parameter[@name='documentUri']">
-    <xsl:if test="not($documentUri)">
-      <a href="{$uri-prefix}{@value}"><xsl:value-of select="@value"/></a>
-    </xsl:if>
-  </xsl:template>
-
   <!-- job id -->  
   <xsl:template match="sch:parameter[@name='id']">
     <input type="hidden" name="job.id" value="{@value}"/>
   </xsl:template>
-
-<!--   <xsl:template match="sch:parameter"> -->
-<!--     default -->
-<!--     <br /><xsl:apply-templates select="@name"/>:&#160;<xsl:apply-templates select="@value"/> -->
-<!--   </xsl:template> -->
 
 <xsl:template match="sch:exception">
 <font color="red">EXCEPTION: <xsl:value-of select="@type"/></font> (check the log files)
