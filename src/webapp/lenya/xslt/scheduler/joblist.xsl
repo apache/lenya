@@ -55,39 +55,36 @@
 
 <xsl:template match="sch:job">
   <tr>
-    <form method="GET">
-    	
-			<td>
-				<xsl:variable name="current-task-id" select="task:task/task:parameter[@name='wrapper.task-id']/@value"/>
-				<xsl:value-of select="/sch:scheduler/sch:tasks/sch:task[@id = $current-task-id]/sch:label"/>
-			</td>
-      <xsl:choose>
-        <xsl:when test="sch:trigger">
-          <xsl:apply-templates select="sch:trigger"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <td colspan="2">The job date has expired.</td>
-        </xsl:otherwise>
-      </xsl:choose>
-    </form>
+		<td>
+			<xsl:variable name="current-task-id" select="task:task/task:parameter[@name='wrapper.task-id']/@value"/>
+			<xsl:value-of select="/sch:scheduler/sch:tasks/sch:task[@id = $current-task-id]/sch:label"/>
+		</td>
+		<xsl:choose>
+			<xsl:when test="sch:trigger">
+				<xsl:apply-templates select="sch:trigger"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<td colspan="2">The job date has expired.</td>
+			</xsl:otherwise>
+		</xsl:choose>
   </tr>
 </xsl:template>
 
 
-  <xsl:template match="sch:trigger">
-    <td>
-			<xsl:value-of select="sch:parameter[@name='year']/@value"/>
-			<xsl:text>-</xsl:text>
-			<xsl:value-of select="sch:parameter[@name='month']/@value"/>
-			<xsl:text>-</xsl:text>
-			<xsl:value-of select="sch:parameter[@name='day']/@value"/>.
-    </td>
-    <td>
-			<xsl:value-of select="sch:parameter[@name='hour']/@value"/>
-			<xsl:text>:</xsl:text>
-			<xsl:value-of select="sch:parameter[@name='minute']/@value"/>
-    </td>
-  </xsl:template>
-  
+<xsl:template match="sch:trigger">
+	<td>
+		<xsl:value-of select="sch:parameter[@name='year']/@value"/>
+		<xsl:text>-</xsl:text>
+		<xsl:value-of select="sch:parameter[@name='month']/@value"/>
+		<xsl:text>-</xsl:text>
+		<xsl:value-of select="sch:parameter[@name='day']/@value"/>.
+	</td>
+	<td>
+		<xsl:value-of select="sch:parameter[@name='hour']/@value"/>
+		<xsl:text>:</xsl:text>
+		<xsl:value-of select="sch:parameter[@name='minute']/@value"/>
+	</td>
+</xsl:template>
+
 
 </xsl:stylesheet> 

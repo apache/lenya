@@ -114,6 +114,7 @@
         <map:aggregate element="scheduler" label="aggregation" ns="http://apache.org/cocoon/lenya/scheduler/1.0" prefix="sch">
           <map:part src="cocoon:/tasks/{1}"/>
           <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
+          <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
         </map:aggregate>
         <map:transform src="xslt/scheduler/filter-publication.xsl">
           <map:parameter name="publication-id" value="{1}"/>
@@ -130,6 +131,19 @@
         <map:serialize type="xml"/>
       </map:match>
     
+    	<!-- scheduler/{publication-id}/{area-document-url}.xsl -->
+    	<map:match pattern="scheduler/*/**.xsl">
+    		<map:generate src="cocoon:/scheduler-page-document/{1}/{2}"/>
+    		<map:transform src="xslt/scheduler/jobs2xslt.xsl"/>
+    		<map:serialize type="xml"/>
+    	</map:match>
+    	
+    	<!-- scheduler-xsp -->
+    	<map:match pattern="scheduler-xsp">
+    		<map:generate type="serverpages" src="content/scheduler/scheduler.xsp"/>
+    		<map:serialize type="xml"/>
+    	</map:match>
+    	
     </map:pipeline>
     
     <!-- =================================================================== -->
@@ -198,7 +212,7 @@
           </map:match>
           
           <!-- other steps: add job (redirect to page) -->
-         	<map:generate src="cocoon:/scheduler-page-publication/{../../1}"/>
+         	<map:generate src="cocoon:/scheduler-page-publication/{../1}"/>
 					<map:transform src="xslt/util/redirect.xsl">
 						<map:parameter name="url" value="{request:requestURI}"/>
 					</map:transform>
@@ -276,6 +290,7 @@
               <map:parameter name="stylesheet" value="publishing/publish-screen.xsl"/>
             </map:call>
             <map:transform src="cocoon:/notification/{../../1}/publish.xsl"/>
+            <map:transform src="cocoon:/scheduler/{../../1}/{../../2}/{../../3}.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
