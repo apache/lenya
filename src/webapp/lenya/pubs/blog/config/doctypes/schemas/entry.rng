@@ -28,7 +28,7 @@
       </element>
       <element name="echo:author">
         <element name="echo:name">
-          <data type="NCName"/>
+          <data type="string"/>
         </element>
       </element>
       <element name="echo:link">
