@@ -23,6 +23,9 @@
       <link rel="stylesheet" href="{$root}/css/page.css" mime-type="text/css"/>
     </head>
     <body>
+      <div style="text-align: center">
+        <img src="{$root}/images/project-logo.gif"/>
+      </div>
       <xsl:apply-templates select="xhtml:div[@id = 'tabs']"/>
       <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
       <div id="main">
