@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!--
-    Document   : lenya-header.xsl
-    Created on : 14. Mai 2003, 16:38
-    Author     : andreas
-    Description:
-        Purpose of transformation follows.
--->
+<!-- $Id: lenya-header.xsl,v 1.4 2003/08/08 13:20:46 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns="http://www.w3.org/1999/xhtml"
-    exclude-result-prefixes="lenya"
+    exclude-result-prefixes="dc"
     >
 
-<xsl:template match="lenya:document-title">
+<xsl:template match="dc:title">
   <h1><xsl:apply-templates/></h1>
 </xsl:template>
 
-<xsl:template match="lenya:abstract">
+<xsl:template match="dc:description">
   <p class="abstract"><xsl:apply-templates/></p>
 </xsl:template>
 
