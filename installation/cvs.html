@@ -142,10 +142,13 @@
 <div class="menupagetitle">CVS</div>
 <div class="menupageitemgroup">
 <div class="menupageitem">
-<a href="#CVS+at+Wyona">CVS at Wyona</a>
+<a href="#CVS+for+the+public">CVS for the public</a>
 </div>
 <div class="menupageitem">
-<a href="#CVS+at+Apache">CVS at Apache</a>
+<a href="#CVS+for+committers">CVS for committers</a>
+</div>
+<div class="menupageitem">
+<a href="#ViewCVS">ViewCVS</a>
 </div>
 <div class="menupageitem">
 <a href="#CVS+Tips">CVS Tips</a>
@@ -193,24 +196,25 @@
 </tr>
 </table> 
 
+<!--
+<section>
+<title>CVS at Wyona</title>
 
-<a name="N101CC"></a><a name="CVS+at+Wyona"></a>
-<h3>CVS at Wyona</h3>
-<div style="margin-left: 0 ; border: 2px">
 <p>
 The CVS command line for the Wyona CVS server:
 </p>
-<pre class="code">
+<source>
 cvs -d :pserver:anonymous@cvs.wyona.org:/usr/local/repositories checkout lenya
-</pre>
-</div>
+</source>
+</section>
+-->
 
 
-<a name="N101DB"></a><a name="CVS+at+Apache"></a>
-<h3>CVS at Apache</h3>
+<a name="N101CE"></a><a name="CVS+for+the+public"></a>
+<h3>CVS for the public</h3>
 <div style="margin-left: 0 ; border: 2px">
 <p>
-The CVS command line for the Apache CVS server (<strong>Note:</strong> This module has not been populated yet):
+Start the shell of your choice and enter:
 </p>
 <pre class="code">
 cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login
@@ -220,7 +224,31 @@ cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic checkout cocoon-lenya
 </div>
 
 
-<a name="N101ED"></a><a name="CVS+Tips"></a>
+<a name="N101DD"></a><a name="CVS+for+committers"></a>
+<h3>CVS for committers</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+Start the shell of your choice and enter:
+</p>
+<pre class="code">
+export CVS_RSH=ssh
+cvs -d :ext:userid@cvs.apache.org:/home/cvs checkout cocoon-lenya
+</pre>
+</div>
+
+
+<a name="N101EC"></a><a name="ViewCVS"></a>
+<h3>ViewCVS</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+
+<a href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/</a>
+
+</p>
+</div>
+
+
+<a name="N101FA"></a><a name="CVS+Tips"></a>
 <h3>CVS Tips</h3>
 <div style="margin-left: 0 ; border: 2px">
 <ul>
