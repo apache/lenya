@@ -5,7 +5,6 @@
   xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns:dc="http://purl.org/dc/elements/1.1/" 
   xmlns="http://www.w3.org/1999/xhtml"
-  disable-output-escaping="yes"
   exclude-result-prefixes="lenya-info wf rc dc usecase"
   >
   
