@@ -57,7 +57,7 @@
 											<tr>
 												<td align="left" valign="middle" height="18" style="background-image:url(/img/layout/trans1x1.gif)"><img border="0" src="/img/layout/cw-desc.gif" width="300" height="11" alt="" /></td>
 												<td align="right" valign="middle" height="18" style="background-image:url(/img/layout/trans1x1.gif)">
-													<span class="txt-s-black" id="today">Montag, 9. Dezember 2002&#160;</span>
+													<span class="txt-s-black"><span id="today">, 9. Dezember 2002&#160;</span></span>
 												</td>
 											</tr>
 										</table>

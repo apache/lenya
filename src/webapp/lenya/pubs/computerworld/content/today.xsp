@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp">
 	<!--logic tag that identifies embedded logic in the page-->
-		<xsp:structure>
-			<xsp:include>java.text.DateFormat</xsp:include>
-			<xsp:include>java.util.Locale</xsp:include>
-		</xsp:structure>
-
+	<xsp:structure>
+		<xsp:include>java.text.DateFormat</xsp:include>
+		<xsp:include>java.util.Locale</xsp:include>
+	</xsp:structure>
 	<today>
 		<xsp:logic>
  
@@ -20,7 +19,7 @@
         DateFormat fullDateFormatCH =
             DateFormat.getDateTimeInstance(
             DateFormat.FULL, // date FULL, LONG, MEDIUM, SHORT
-            DateFormat.MEDIUM, // time
+            DateFormat.SHORT, // time
             localeCH);
  
         genText = fullDateFormatCH.format(date);		
