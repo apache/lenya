@@ -103,6 +103,8 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
 <a target="_blank" href="http://www.contentmanager.de/itguide/produktvergleich_cms_opensource.html">contentmanager.de</a>
 <br/><br/>
 <a target="_blank" href="http://www.content-wire.com">Content-Wire</a>
+<br/><br/>
+<a target="_blank" href="http://www.clueful.com.au/cgi-bin/cmsdirectory/browse/Products%3aFree%20systems">Clueful Consulting</a>
 </font>
 </td>
   </tr>
