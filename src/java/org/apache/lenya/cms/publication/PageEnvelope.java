@@ -21,10 +21,12 @@ import org.xml.sax.SAXException;
 import org.apache.log4j.Category;
 
 import org.apache.lenya.cms.rc.RCEnvironment;
+
 /**
- * Describe class <code>PageEnvelope</code> here.
+ * A page envelope carries a set of information that are needed
+ * during the presentation of a document.
  *
- * @author  nobby
+ * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class PageEnvelope {
     static Category log = Category.getInstance(PageEnvelope.class);
@@ -56,18 +58,18 @@ public class PageEnvelope {
      * @exception IOException if an error occurs
      */
     public PageEnvelope(Publication publication, Request request)
-            throws PageEnvelopeException, ProcessingException, SAXException, IOException {
-                
-	// compute area
-	String requestURI = request.getRequestURI();
-	log.debug("requestURI: " + requestURI);
-	String[] directories = requestURI.split("/");
+        throws PageEnvelopeException, ProcessingException, SAXException, IOException {
+
+        // compute area
+        String requestURI = request.getRequestURI();
+        log.debug("requestURI: " + requestURI);
+        String[] directories = requestURI.split("/");
         area = directories[AREA_POS];
-        
+
         String urlPrefix = request.getContextPath() + "/" + publication.getId() + "/" + area;
         documentUrl = requestURI.substring(urlPrefix.length());
 
-	documentId = computeDocumentId(requestURI);
+        documentId = computeDocumentId(requestURI);
         this.publication = publication;
         rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
         context = request.getContextPath();
@@ -83,36 +85,37 @@ public class PageEnvelope {
      * @exception IOException if an error occurs
      */
     public PageEnvelope(SourceResolver resolver, Request request)
-            throws PageEnvelopeException, ProcessingException, SAXException, IOException {
+        throws PageEnvelopeException, ProcessingException, SAXException, IOException {
         Source inputSource = resolver.resolveURI("");
         String publicationUri = inputSource.getURI();
         String directories[] = publicationUri.split("/");
-	//FIXME: what if no publicationId is specified?
+        //FIXME: what if no publicationId is specified?
         String publicationId = directories[directories.length - 1];
-        String path = null; 
-        if (publicationUri.indexOf("/lenya/pubs/" + publicationId) >= 0)  {
-          path = publicationUri.substring(0, publicationUri.indexOf("/lenya/pubs/" +
-								    publicationId));
+        String path = null;
+        if (publicationUri.indexOf("/lenya/pubs/" + publicationId) >= 0) {
+            path =
+                publicationUri.substring(0, publicationUri.indexOf("/lenya/pubs/" + publicationId));
         } else {
-          throw new PageEnvelopeException("Cannot find the publication because no " +
-					  "publicationId specified in URI : " +
-					  publicationUri);       
+            throw new PageEnvelopeException(
+                "Cannot find the publication because no "
+                    + "publicationId specified in URI : "
+                    + publicationUri);
         }
-	// apparently on windows the path will be something like
-	// "file://foo/bar/baz" where as on *nix it will be
-	// "file:/foo/bar/baz". The following hack will transparently
-	// take care of this.
+        // apparently on windows the path will be something like
+        // "file://foo/bar/baz" where as on *nix it will be
+        // "file:/foo/bar/baz". The following hack will transparently
+        // take care of this.
         path = path.replaceAll("file://", "/");
         path = path.replaceAll("file:", "");
         path = path.replace('/', File.separatorChar);
 
-	// compute area
-	String requestURI = request.getRequestURI();
-	log.debug("requestURI: " + requestURI);
-	directories = requestURI.split("/");
+        // compute area
+        String requestURI = request.getRequestURI();
+        log.debug("requestURI: " + requestURI);
+        directories = requestURI.split("/");
         area = directories[AREA_POS];
 
-	documentId = computeDocumentId(requestURI);
+        documentId = computeDocumentId(requestURI);
         publication = new Publication(publicationId, path);
         rcEnvironment = new RCEnvironment(path);
         context = request.getContextPath();
@@ -130,32 +133,34 @@ public class PageEnvelope {
      * @return a <code>String</code> value
      */
     protected String computeDocumentId(String requestURI) {
-	// the computation of the document id is based on the
-	// assumption that and URI matches of the following pattern:
-	// http:/<context-prefix>/<publication-id>/<area>/<document-id>.*
-	// where document-id can be foo/bar/baz
+        // the computation of the document id is based on the
+        // assumption that and URI matches of the following pattern:
+        // http:/<context-prefix>/<publication-id>/<area>/<document-id>.*
+        // where document-id can be foo/bar/baz
 
         String directories[] = requestURI.split("/");
-	String documentId = "";
-	List documentIds = Arrays.asList(directories).subList(DOCUMENT_ID_POS, directories.length);
-	// remove the suffix from the last element
-	log.debug("documentIds: " + documentIds);
-	String lastPartOfDocumentId = (String)documentIds.get(documentIds.size()-1);
-	log.debug("lastPartOfDocumentId: " + lastPartOfDocumentId);
-	int startOfSuffix = lastPartOfDocumentId.indexOf('.');
-	log.debug("startOfSuffix: " + startOfSuffix);
-	if (startOfSuffix >= 0) {
-	    documentIds.set(documentIds.size()-1, lastPartOfDocumentId.substring(0, startOfSuffix));
-	    log.debug("w/oSuffix: " + lastPartOfDocumentId.substring(0, startOfSuffix));
-	}
+        String documentId = "";
+        List documentIds = Arrays.asList(directories).subList(DOCUMENT_ID_POS, directories.length);
+        // remove the suffix from the last element
+        log.debug("documentIds: " + documentIds);
+        String lastPartOfDocumentId = (String) documentIds.get(documentIds.size() - 1);
+        log.debug("lastPartOfDocumentId: " + lastPartOfDocumentId);
+        int startOfSuffix = lastPartOfDocumentId.indexOf('.');
+        log.debug("startOfSuffix: " + startOfSuffix);
+        if (startOfSuffix >= 0) {
+            documentIds.set(
+                documentIds.size() - 1,
+                lastPartOfDocumentId.substring(0, startOfSuffix));
+            log.debug("w/oSuffix: " + lastPartOfDocumentId.substring(0, startOfSuffix));
+        }
 
-	log.debug("documentIds: " + documentIds);
-	for (Iterator i = documentIds.iterator(); i.hasNext();) {
-	    documentId += "/" + i.next();
-	}
-	return documentId;
+        log.debug("documentIds: " + documentIds);
+        for (Iterator i = documentIds.iterator(); i.hasNext();) {
+            documentId += "/" + i.next();
+        }
+        return documentId;
     }
-    
+
     /**
      * Returns the publication of this PageEnvelope.
      * @return a <code>Publication</code> value
@@ -163,7 +168,7 @@ public class PageEnvelope {
     public Publication getPublication() {
         return publication;
     }
-    
+
     /**
      * Returns the rcEnvironment.
      * @return a <code>RCEnvironment</code> value
@@ -179,7 +184,7 @@ public class PageEnvelope {
     public String getContext() {
         return context;
     }
-    
+
     /**
      * Returns the area (authoring/live).
      * @return a <code>String</code> value
@@ -187,7 +192,7 @@ public class PageEnvelope {
     public String getArea() {
         return area;
     }
-    
+
     /**
      * Returns the document-id.
      * @return a <code>String</code> value
@@ -195,7 +200,7 @@ public class PageEnvelope {
     public String getDocumentId() {
         return documentId;
     }
-    
+
     /**
      * Returns the document URL (without prefix and area).
      * @return a <code>String</code> value
@@ -207,13 +212,13 @@ public class PageEnvelope {
     /**
      * The names of the page envelope parameters.
      */
-    public static String[] PARAMETER_NAMES = {
-        PageEnvelope.AREA,
-        PageEnvelope.CONTEXT,
-        PageEnvelope.PUBLICATION_ID,
-        PageEnvelope.PUBLICATION,
-        PageEnvelope.DOCUMENT_ID,
-        PageEnvelope.DOCUMENT_URL
-    };
-    
+    public static String[] PARAMETER_NAMES =
+        {
+            PageEnvelope.AREA,
+            PageEnvelope.CONTEXT,
+            PageEnvelope.PUBLICATION_ID,
+            PageEnvelope.PUBLICATION,
+            PageEnvelope.DOCUMENT_ID,
+            PageEnvelope.DOCUMENT_URL };
+
 }
