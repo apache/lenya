@@ -52,9 +52,10 @@
     <specs href="specs/" label="Specifications">
       <namespaces href="namespaces.html" label="Namespaces"/>
     </specs>
-    <node-94 href="proposals/" label="Proposals / Requests for Comment (RFC)">
+    <proposals href="proposals/" label="Proposals / Requests for Comment (RFC)">
       <sitetree-proposal href="siteTree.html" label="Site tree"/>
-    </node-94>
+      <openoffice href="openoffice.html" label="OpenOffice"/>
+    </proposals>
   </documentation>
   
   <community href="community/" label="Community">
