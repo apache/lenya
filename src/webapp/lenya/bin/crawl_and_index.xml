@@ -124,6 +124,12 @@ CLASSPATH=$CLASSPATH:$PDFBOX/classes
 -->
 </target>
 
+<target name="pdfadobe" description="Extract text from PDF via Adobe PDF Conversion webpage" depends="init">
+  <echo>INFO: Extract text from PDF via Adobe PDF Conversion webpage</echo>
+
+  <echo>INFO: http://www.adobe.com/products/acrobat/access_simple_form.html</echo>
+</target>
+
 <target name="show-config" description="Show configuration" depends="init">
   <echo>INFO: Show configuration</echo>
 
