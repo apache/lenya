@@ -19,7 +19,7 @@
         <xsl:call-template name="Searchbox"/>
 
           <table cellspacing="0" cellpadding="0" border="0" width="585" bordercolor="green">
-
+	  <span bxe-editable="true">
 	   <!-- Lead -->
            <tr>
              <td colspan="3" valign="top" bgcolor="white" class="tsr-text">
@@ -64,6 +64,7 @@
                </xsl:call-template>
              </td>
            </tr>
+	  </span>
          </table>
        </div>
      </body>
