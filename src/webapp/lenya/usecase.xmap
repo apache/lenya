@@ -269,7 +269,7 @@
           
           <map:match pattern="create" type="step">
             <map:act type="task">
-              <map:parameter name="task-id" value="create-workflow"/>
+              <map:parameter name="task-id" value="create"/>
               <map:redirect-to uri="{request:requestURI}"/>
             </map:act>
           </map:match>
@@ -320,7 +320,7 @@
           </map:match>
           
         </map:match>
-
+	
 
 
       <!-- ************************************************************** -->
