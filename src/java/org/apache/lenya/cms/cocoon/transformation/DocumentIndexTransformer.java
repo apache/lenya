@@ -93,7 +93,10 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
             throws ProcessingException, SAXException, IOException {
         try {
-            parameterize(parameters);
+
+        	super.setup(resolver, objectModel, src, parameters);
+
+        	parameterize(parameters);
 
             PageEnvelope envelope = null;
             Publication pub = PublicationFactory.getPublication(objectModel);
