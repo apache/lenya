@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UploadHelper.java,v 1.1 2004/03/15 14:49:43 michi Exp $  */
+/* $Id: UploadHelper.java,v 1.2 2004/03/15 14:58:28 michi Exp $  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -50,7 +50,7 @@ public class UploadHelper {
     public boolean save(Part part) {
 
         File file = new File(baseDir + File.separator + part.getFileName());
-        log.error(file.getAbsolutePath());
+        log.debug(file.getAbsolutePath());
         File parent = new File(file.getParent());
         if (!parent.isDirectory()) {
             parent.mkdirs();

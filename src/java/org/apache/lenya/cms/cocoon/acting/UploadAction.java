@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UploadAction.java,v 1.6 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: UploadAction.java,v 1.7 2004/03/15 14:58:28 michi Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -53,6 +53,8 @@ import org.w3c.dom.Element;
  * The class <code>UploadAction</code> implements an action that allows for
  * asset and content upload. An upload consists of a file upload plus optionally a file creation
  * for the meta data of the asset.
+ *
+ * Also see org.apache.lenya.cms.authoring.UploadHelper
  */
 public class UploadAction extends AbstractConfigurableAction {
 	
