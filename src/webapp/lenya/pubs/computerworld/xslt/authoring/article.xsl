@@ -18,7 +18,7 @@
       <tr>
         <td class="txt-s-black"><b>Teaser-Image</b></td>
 	<td class="txt-s-black">
-         <a href="../{$documentid}?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/article/head/abstract">
+         <a href="../{$documentid}?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/article/head/*[1]">
           <xsl:choose>
             <xsl:when test="head/media">
               <img src="/img/news/{head/media/media-reference/@source}" border="0" alt="Teaser Image" align="middle" /> Change Image
