@@ -82,5 +82,17 @@ or
 </source>
 </section>
 
+<section>
+<title>Extract text from a PDF document</title>
+<source>
+<![CDATA[
+ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dhtdocs.dump.dir=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/work/search/lucene/htdocs_dump xpdf
+]]>
+</source>
+<p>
+Also see the targets <code>pdfbox</code> and <code>pdfadobe</code>.
+</p>
+</section>
+
 </body>
 </document>
