@@ -71,6 +71,7 @@
 	
 	<xslt:template match="not:select">
 		<select name="notification.tolist" class="lenya-form-element">
+		  <option value="">[no notification]</option>
 			<xslt:for-each select="not:users/not:user">
 				<option>
 					<xslt:attribute name="value"><xslt:value-of select="@email"/></xslt:attribute>
