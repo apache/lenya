@@ -59,7 +59,7 @@
         <doctypes href="docs/publication/doctypes/"/>
       </map:action>                                                                                                                         
       <map:action logger="action.upload" name="file-upload"
-	src="org.wyona.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+	src="ch.unizh.unipublic.wyona.cms.ArticleImageUploadCreatorAction">
         <images-dir href="resources/publication/images/authoring" />
         <meta-dir href="docs/publication/authoring" />
 	<insert-image-before value="true" />
