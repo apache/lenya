@@ -68,10 +68,10 @@
 <a class="base-not-selected" href="../index.html">Project</a>
 </li>
 <li>
-<a class="base-not-selected" href="../installation/index.html">Installation</a>
+<a class="base-not-selected" href="../1_4/index.html">Version 1.4</a>
 </li>
 <li>
-<a class="base-not-selected" href="../docs/index.html">Documentation</a>
+<a class="base-not-selected" href="../1_2_x/index.html">Version 1.2</a>
 </li>
 <li class="current">
 <a class="base-selected" href="../community/index.html">Community</a>
@@ -183,7 +183,7 @@
 <li>run <span class="codefrag">java -jar saxon8.jar -o status.xml log.xml tools/svn2changes.xsl</span>
 </li>
   
-<li>run <span class="codefrag">forest</span> (You may have to increase <span class="codefrag">forrest.maxmemory</span> in forrest.properties to get around out of memory exceptions.)</li>
+<li>run <span class="codefrag">forest</span> (You may have to increase <span class="codefrag">forrest.maxmemory</span> in forrest.properties to get around out of memory exceptions.) Forrest will take a LONG TIME to generate changes.html.</li>
 
 </ul>
 <p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
@@ -201,16 +201,15 @@
 <span class="codefrag">svn co https://svn.apache.org/repos/asf/lenya/site/ lenya.apache.org</span> -&gt;This is our deployed website tree (it is the svn-root for our website)</li>
   
 <li>
-<a href="http://forrest.apache.org/build.html">Build Forrest</a>
-</li>
+<a href="http://forrest.apache.org/docs/your-project.html#installing">Install Forrest 0.6</a> (Note that you need to use 0.6, other version do not work)</li>
   
 <li>
 <span class="codefrag">go to the root of lenya/docu</span>
 </li>
   
 <li>
-<span class="codefrag">forrest</span>
-</li>
+<span class="codefrag">forrest</span> (Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
+    can be ignored. If the site looks ok to you, and there were no validation errors, go for it.)</li>
   
 <li>Create and copy the Javadoc (<span class="codefrag">build javadocs</span>, Copy from <span class="codefrag">build/webapp/site/apidocs</span> to <span class="codefrag">lenya/site/apidocs/1.2</span>)</li>
   
@@ -248,7 +247,7 @@ document.write("Last Published: " + document.lastModified);
 //  --></script>
 </div>
 <div class="copyright">
- Copyright &copy; 2002-2004 The Apache Software Foundation.</div>
+ Copyright &copy; 2002-2005 The Apache Software Foundation.</div>
 <div id="feedback">
     Send feedback about the website to:
   <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0community/website-update.html">dev@lenya.apache.org</a>
