@@ -20,12 +20,8 @@
   <replication>
     <pending-documents href="content/replication/pending"/>
   </replication>
-<!-- FIXME? -->
   <export>
     <destination href="resources/export/pending"/>
-<!--
-    <destination href="/usr/local/apache/htdocs_oscom"/>
--->
     <substitution regexp="/lenya/oscom" replacement=""/>
   </export>
 </publication>

@@ -36,7 +36,6 @@
 <!--
       <block>
         <item>Edit&#160;with&#160;Xopus2</item>
-        <item>Edit&#160;with&#160;Bitflux</item>
         <item>Publish</item>
         <item>Export&#160;Live</item>
 -->
@@ -54,10 +53,6 @@
     </menu>
 
     <menu name="Search" label="Search">
-      <block>
-        <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
-        <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
-      </block>
       <block>
         <item href="../search-live/lucene">Search&#160;with&#160;Lucene</item>
       </block>

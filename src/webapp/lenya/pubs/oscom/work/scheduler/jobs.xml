@@ -8,22 +8,11 @@
   <sch:publication name="oscom">
     <sch:jobs>
 
-
 <!-- Say Hello -->
       <sch:job>
         <sch:task>
           <sch:parameter name="id" value="hello-world"/>
           <sch:parameter name="publication-id" value="oscom"/>
-
-<!--
-          <sch:parameter name="server-uri" value="http://127.0.0.1"/>
-          <sch:parameter name="server-port" value="1313"/>
-          <sch:parameter name="servlet-context" value="/usr/local/jakarta-tomcat-4.0.4-b3/webapps/lenya/"/>
-          <sch:parameter name="authoring-path" value="content/authoring"/>
-          <sch:parameter name="tree-authoring-path" value="content/authoring/tree.xml"/>
-          <sch:parameter name="uris" value="/lenya/oscom/weekly-column.html"/>
-          <sch:parameter name="sources" value="/weekly-column-body.xml"/>
--->
         </sch:task>
         <sch:parameter name="class" value="org.apache.lenya.cms.scheduler.TaskJob"/>
         <sch:parameter name="group" value="oscom"/>
@@ -45,32 +34,6 @@
         </sch:trigger>
       </sch:job>
 <!-- Trigger repeated: Seconds, Minutes, Hours, Day of Month, Months, Day of Week -->
-
-
-<!-- Print the Date -->
-<!--
-      <sch:job>
-        <sch:task>
-          <sch:parameter name="sources" value="/weekly-column-body.xml"/>
-          <sch:parameter name="id" value="command-line"/>
-          <sch:parameter name="server-uri" value="http://127.0.0.1"/>
-          <sch:parameter name="publication-id" value="oscom"/>
-          <sch:parameter name="tree-authoring-path" value="content/authoring/tree.xml"/>
-          <sch:parameter name="server-port" value="1313"/>
-          <sch:parameter name="authoring-path" value="content/authoring"/>
-          <sch:parameter name="uris" value="/lenya/oscom/weekly-column.html"/>
-        </sch:task>
-        <sch:parameter name="class" value="org.apache.lenya.cms.scheduler.TaskJob"/>
-        <sch:parameter name="group" value="oscom"/>
-        <sch:parameter name="id" value="job_01037570742549"/>
-        <sch:parameter name="documentUri" value="weekly-column.html"/>
-        <sch:trigger type="repeated">
-          <sch:parameter name="expression" value="47 * * * * ?"/>
-        </sch:trigger>
-      </sch:job>
--->
-
-
 
 <!-- Export the OSCOM Homepage -->
 <!--

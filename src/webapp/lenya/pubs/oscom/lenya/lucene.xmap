@@ -1,11 +1,20 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: lucene.xmap,v 1.5 2003/11/26 00:30:18 michi Exp $ -->
+<!-- CVS: $Id: lucene.xmap,v 1.6 2003/12/08 18:54:44 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
 
-  <map:components/>
+  <map:components>
+    <map:generators default="file"/>
+    <map:transformers default="xalan"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+    <map:selectors/>
+  </map:components>
+
 
 
   <map:views>

@@ -24,22 +24,12 @@
     <parameter name="substitute-regexp" value="s/\/lenya\/oscom//g"/>
 -->
   </task>
-  
-  <task id="hello-world" class="org.apache.lenya.cms.task.HelloWorldTask">
-    <label>Print Message into Log</label>
-    <parameter name="text" value="Hello OSCOM"/>
-  </task>
-  
+    
   <task id="command-line" class="org.apache.lenya.cms.task.CommandLineTask">
     <label>Command Line</label>
     <parameter name="command" value="date"/>
   </task>
   
-  <task id="downloadRSS" class="org.apache.lenya.cms.task.CommandLineTask">
-    <label>Download RSS</label>
-    <parameter name="command" value="sh /usr/local/jakarta-tomcat-4.0.4-b3/webapps/lenya/lenya/pubs/oscom/bin/wget-rss.sh"/>
-  </task>
-
   <task id="replicate" class="org.apache.lenya.cms.task.CommandLineTask">
     <label>Replicate</label>
     <parameter name="command" value="sh /usr/local/jakarta-tomcat-4.0.4-b3/webapps/lenya/lenya/bin/replicate.sh"/>

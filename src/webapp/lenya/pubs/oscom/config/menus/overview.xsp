@@ -49,10 +49,6 @@
 
     <menu name="Search" label="Search">
       <block>
-        <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
-        <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
-      </block>
-      <block>
         <item href="../../search-live/lucene">Search&#160;with&#160;Lucene</item>
       </block>
     </menu>
