@@ -20,16 +20,15 @@
     String referer=request.getHeader("Referer");
     Session session=request.getSession(true);
     String status=request.getParameter("status");
-    if(status == null){
+    if (status == null) {
       session.setAttribute("org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri",referer);
       <xsp:content><referer><xsp:expr>referer</xsp:expr></referer></xsp:content>
-      }
-    else{
+    } else {
       <xsp:content><referer><xsp:expr>session.getAttribute("org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri")</xsp:expr></referer></xsp:content>
-      if(status.equals("failed")){
+      if (status.equals("failed")) {
         <xsp:content><exception/></xsp:content>
-        }
       }
+    }
     <xsp:content><parentid><xsp:expr>request.getParameter("parentid")</xsp:expr></parentid></xsp:content>
     <xsp:content><doctype><xsp:expr>request.getParameter("doctype")</xsp:expr></doctype></xsp:content>
   </xsp:logic>
