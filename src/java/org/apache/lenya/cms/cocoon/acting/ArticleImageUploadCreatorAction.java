@@ -1,5 +1,5 @@
 /*
-$Id: ArticleImageUploadCreatorAction.java,v 1.37 2003/07/23 13:21:30 gregor Exp $
+$Id: ArticleImageUploadCreatorAction.java,v 1.38 2003/08/25 16:43:37 egli Exp $
 <License>
 
  ============================================================================
@@ -101,6 +101,14 @@ import java.util.Properties;
  * image upload.
  *
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
+ * 
+ * @deprecated this class is very specific to the unipublic publication as it inserts 
+ * very specific tags into the original document. This action has been superceded by the
+ * AssetUploadAction and the ant tasks which take care of inserting tags in the
+ * original document in a configurable way.
+ * @see org.apache.lenya.cms.cocoon.acting
+ * @see ant task for inserting of assets
+ * 
  */
 public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
     implements ThreadSafe {
