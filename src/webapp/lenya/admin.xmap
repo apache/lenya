@@ -75,6 +75,14 @@
   <map:pipelines>
     
     <map:pipeline>
+
+      <map:select type="parameter">
+        <map:parameter name="parameter-selector-test" value="{request-param:lenya.usecase}"/>
+        <map:when test="">
+          <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=admin.users"/>
+        </map:when>
+      </map:select>
+
       <map:match type="registered-usecase">
         <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
