@@ -25,7 +25,7 @@
 <xsl:template match="articles" mode="Section_copyright">
   <tr>
     <td colspan="2" bgcolor="white"><br />
-      <div align="left"><a href="#topofpage"><img height="4" width="10" src="{$img-unipub}/1.gif"/><font size="1">zum Anfang<br /><br />
+      <div align="left"><a href="#topofpage"><!--<img height="4" width="10" src="{$img-unipub}/1.gif"/>-->&#160;&#160;<font size="1">zum Anfang<br /><br />
         </font></a><img height="4" width="10" src="{$img-unipub}/1.gif"/><img height="1" width="390" src="{$img-unipub}/999999.gif" alt=" "/><br />
         <img height="4" width="10" src="{$img-unipub}/1.gif"/><font size="1">&#169; Universit&#228;t Z&#252;rich,&#160;<xsl:apply-templates select="article[1]/body.head/dateline/story.date/@norm"/>,&#160;
         <a href="/ssi_unipublic/impressum.html">Impressum</a></font></div><br />
@@ -37,7 +37,7 @@
   <tr>
     <td width="135"></td>
     <td colspan="2"><br />
-      <div align="left"><a href="#topofpage"><img height="4" width="4" src="{$img-unipub}/1.gif"/><font size="1">zum Anfang<br /><br /></font></a>
+      <div align="left"><a href="#topofpage"><!--<img height="4" width="4" src="{$img-unipub}/1.gif"/>-->&#160;<font size="1">zum Anfang<br /><br /></font></a>
         <img height="4" width="4" src="{$img-unipub}/1.gif"/><img height="1" width="390" src="{$img-unipub}/999999.gif" alt=" "/><br />
         <img height="4" width="4" src="{$img-unipub}/1.gif"/><font size="1">&#169; Universit&#228;t Z&#252;rich,&#160;<xsl:apply-templates select="Article[1]/body.head/dateline/story.date/@norm"/>,&#160;<a href="/ssi_unipublic/impressum.html">Impressum</a></font></div><br /></td>
   </tr>

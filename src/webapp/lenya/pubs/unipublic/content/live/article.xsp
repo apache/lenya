@@ -15,8 +15,11 @@
   String id=parameters.getParameter("id","null");
  </xsp:logic>
 
-<Content xmlns:xi="http://www.w3.org/2001/XInclude">
+<Content xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/2001/XLink">
+    <article xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:<xsp:expr>channel+"/"+section+"/"+year+"/"+id</xsp:expr>/index.xml</xsp:attribute></article>
+<!--
     <xi:include xml:base="cocoon:"><xsp:attribute name="href"><xsp:expr>channel+"/"+section+"/"+year+"/"+id</xsp:expr>/index.xml</xsp:attribute></xi:include>
+-->
 </Content>
 </up:Page>
 

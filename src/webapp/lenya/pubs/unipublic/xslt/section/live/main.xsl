@@ -4,12 +4,12 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:include href="../../root.xsl"/>
+<xsl:include href="page.xsl"/>
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../foot.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../navigation.xsl"/>
 <xsl:include href="../../variables.xsl"/>
 <xsl:include href="articles.xsl"/>
-<xsl:include href="page.xsl"/>
 
 </xsl:stylesheet>

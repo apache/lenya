@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<conf xmlns:xlink="http://www.w3.org/xlink">
+<!--
+	<Proxy host="proxy1.wyona.org" port="8080">
+		<include>.*</include>
+		<exclude>.*\.wyona\.org</exclude>
+		<include>www\.wyona\.org</include>
+	</Proxy>
+
+	<Proxy host="proxy2.wyona.org" port="8888">
+		<include>.*</include>
+		<exclude>xps\.wyona\.org</exclude>
+	</Proxy>
+-->
+</conf>

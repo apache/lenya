@@ -8,14 +8,12 @@
 <xsl:include href="../../foot.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables.xsl"/>
+<!--
 <xsl:include href="../../navigation.xsl"/>
+-->
 <xsl:include href="webperls.xsl"/>
 <xsl:include href="../services.xsl"/>
 <xsl:include href="headlines.xsl"/>
 <xsl:include href="page.xsl"/>
-<!--
-<xsl:template match="/">
-  <xsl:apply-templates/>
-</xsl:template>
--->
+
 </xsl:stylesheet>

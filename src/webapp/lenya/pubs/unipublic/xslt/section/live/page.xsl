@@ -5,7 +5,14 @@
 
 <xsl:variable name="sectiontext"><xsl:apply-templates select="/up:Page/Content/MainColumn/section" mode="section-name"/></xsl:variable>
 
-<xsl:template match="up:Page/Content">
+<!--
+<xsl:template match="up:Page">
+-->
+<xsl:template match="Page">
+  <xsl:apply-templates select="Content"/>
+</xsl:template>
+
+<xsl:template match="Content">
 <html>
 <head>
 <title>unipublic - <xsl:value-of select="$sectiontext"/> (<xsl:value-of select="MainColumn/section/@type"/>)</title>
