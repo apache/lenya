@@ -72,6 +72,14 @@ ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dcrawler.xconf=/home/username/s
 ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
 ]]>
 </source>
+<p>
+or
+</p>
+<source>
+<![CDATA[
+/usr/local/j2sdk1.4.2/bin/java -classpath build/lenya/webapp/WEB-INF/classes:build/lenya/webapp/WEB-INF/lib/log4j-1.2.7.jar:build/lenya/webapp/WEB-INF/lib/xercesImpl-2.5.0.jar:build/lenya/webapp/WEB-INF/lib/xml-apis.jar:build/lenya/webapp/WEB-INF/lib/lucene-1.3-dev1.jar:build/lenya/webapp/WEB-INF/lib/excalibur-io-1.1.jar org.apache.lenya.lucene.index.Index src/webapp/lenya/pubs/oscom/config/search/lucene-cmfsMatrix.xconf true
+]]>
+</source>
 </section>
 
 </body>
