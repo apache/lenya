@@ -260,6 +260,15 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
+			<!-- ALL articles overview -->			
+			<map:match pattern="overview.html">
+				<map:aggregate element="wyona" label="gregor">
+					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part element="cmsbody" src="cocoon:/all-headlines"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Authoring/overview.xsl"/>
+				<map:serialize type="html"/>
+			</map:match>			
 			<!-- Include ALL articles -->
 			<map:match pattern="all-headlines">
 				<map:generate type="directory" src="docs/publication/authoring/news/"/>
