@@ -1,5 +1,5 @@
 /*
- * $Id: EditorProjectCreator.java,v 1.5 2003/02/27 15:59:34 egli Exp $
+ * $Id: EditorProjectCreator.java,v 1.6 2003/02/28 00:06:37 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -82,6 +82,7 @@ public class EditorProjectCreator extends DefaultLeafCreator {
 
         log.debug(".transformXML(): " + parameters.keySet());
         log.debug(".transformXML(): " + parameters.get("project_name"));
-        log.debug(".transformXML(): " + parameters.get("project_home_url"));
+        String project_url = (String)parameters.get("project_url");
+        du.setElementValue(doc, "/system/main_url", project_url);
     }
 }
