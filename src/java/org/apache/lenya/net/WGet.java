@@ -75,7 +75,7 @@ import java.util.List;
  * Similar to the UNIX wget
  *
  * @author Michael Wechner
- * @version $Id: WGet.java,v 1.29 2004/01/18 12:23:13 michi Exp $
+ * @version $Id: WGet.java,v 1.30 2004/01/20 18:10:02 gregor Exp $
  */
 public class WGet {
     static Category log = Category.getInstance(WGet.class);
@@ -235,7 +235,7 @@ public class WGet {
         try {
             org.apache.lenya.util.HTML html = new org.apache.lenya.util.HTML(url.toString());
             links = html.getImageSrcs(false);
-            // FIXME: Get also css links, etc.
+            links.addAll(html.getLinkHRefs(false));
         } catch (Exception e) {
             log.error(".getLinks() Exception 423432: ", e);
         }
