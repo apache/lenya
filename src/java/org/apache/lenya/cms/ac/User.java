@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.8 2003/06/03 13:45:48 egli Exp $
+ * $Id: User.java,v 1.9 2003/06/03 16:37:12 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -171,7 +171,7 @@ public abstract class User {
 	 */
 	public boolean equals(Object obj) {
 		if (obj instanceof User) {
-			return id.equals(((User) obj).getId());
+			return getId().equals(((User) obj).getId());
 		}
 		return false;
 	}
@@ -180,7 +180,7 @@ public abstract class User {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return id.hashCode();
+		return getId().hashCode();
 	}
 
 }
