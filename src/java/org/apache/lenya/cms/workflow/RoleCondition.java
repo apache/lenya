@@ -76,12 +76,10 @@ public class RoleCondition implements Condition {
         CMSSituation situationImpl = (CMSSituation) situation;
         Role[] roles = situationImpl.getRoles();
 
-        Role conditionRole = new Role(getExpression().trim());
-
         boolean complied = false;
 
         for (int i = 0; i < roles.length; i++) {
-            if (conditionRole.equals(roles[i])) {
+            if (getExpression().equals(roles[i].getId())) {
                 complied = true;
             }
         }
@@ -97,7 +95,7 @@ public class RoleCondition implements Condition {
      */
     public void setExpression(String expression) {
         assert expression != null;
-        this.expression = expression;
+        this.expression = expression.trim();
     }
 
     /**
