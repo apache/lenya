@@ -89,6 +89,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     }
 
     /**
+     * Returns the context.
+     * @return A context.
+     */
+    protected Context getContext() {
+        return this.context;
+    }
+
+    /**
      * Checks if the operation can be executed and returns the error messages. Error messages
      * prevent the operation from being executed.
      * @return A boolean value.
