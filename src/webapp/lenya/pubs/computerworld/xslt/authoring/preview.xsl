@@ -39,7 +39,7 @@ alt="Aktuelle Ausgabe jetzt am Kiosk" />
 <br/>
                                         <a 
 href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid=preview.xml&amp;xpath=/preview/*[1]">
-                                                <img src="/images/lenya/util/reddot.gif" alt="Insert 
+                                                <img src="/lenya/lenya/images/util/reddot.gif" alt="Insert 
 Image" border="0"/>
                                         </a>
                                         <br/>

@@ -6,13 +6,13 @@
    		 	String bitflux_prefix=""+xsp_lenya_context_prefix+"/bitflux";
     		String articleId=parameters.getParameter("articleId","null");
   		</xsp:logic>
-		<live_uri><xsp:expr>"/"+articleId</xsp:expr></live_uri>
+		<live_uri><xsp:expr>"/"+articleId+".html"</xsp:expr></live_uri>
 		<menus>
 			<menu name="File" label="File">
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/lenya/publishScreen?sources=/"+articleId+"&amp;task-id=publish</xsp:attribute>Publish this Page
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/lenya/publishScreen?sources=/<xsp:expr>articleId</xsp:expr>.xml&amp;task-id=publish</xsp:attribute>Publish this Page
 					</item>
 				</block>
 				<block>

@@ -1,15 +1,7 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.22 2003/03/19 10:28:52 edith Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.23 2003/04/01 13:18:49 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-	<!-- =========================== Components ================================ -->
-	<map:components>
-		<map:generators default="file"/>
-		<map:transformers/>
-		<map:serializers default="html"/>
-		<map:readers default="resource"/>
-		<map:matchers default="wildcard"/>
-		<map:actions/>
-	</map:components>
+
 	<!-- =========================== Views ================================ -->
 	<map:views>
 		<map:view name="output" from-label="gregor">
@@ -23,14 +15,14 @@
 	<map:resources>
 		<map:resource name="404">
 			<map:aggregate element="lenya" label="gregor">
-				<map:part element="cmsbody" src="content/live/wrapper.html"/>
-				<map:part src="content/live/error.html" element="wrapper"/>
+				<map:part element="cmsbody" src="content/live/wrapper.xml"/>
+				<map:part src="content/live/error.xml" element="wrapper"/>
 				<map:part src="content/live/small-preview.xml"/>
 				<map:part src="content/live/sitetree.xml"/>
 				<map:part src="cocoon:/today"/>
 			</map:aggregate>
 			<map:transform src="xslt/live/wrapper.xsl">
-				<map:parameter name="id" value="/error.html"/>
+				<map:parameter name="id" value="/error.xml"/>
 			</map:transform>
 			<map:transform src="xslt/live/images.xsl" label="content"/>
 			<map:serialize type="html"/>
@@ -45,7 +37,7 @@
 			</map:match>
 			<map:match pattern="index.html">
 				<map:aggregate element="lenya" label="gregor">
-					<map:part element="cmsbody" src="content/live/index.html"/>
+					<map:part element="cmsbody" src="content/live/index.xml"/>
 					<map:part src="content/live/preview.xml"/>
 					<map:part src="content/live/small-preview.xml"/>
 					<map:part src="content/live/sitetree.xml"/>
@@ -64,7 +56,7 @@
 				<map:act type="resource-exists">
 					<map:parameter name="url" value="content/live/news/{1}.xml"/>
 					<map:aggregate element="lenya" label="gregor">
-						<map:part element="cmsbody" src="content/live/index.html"/>
+						<map:part element="cmsbody" src="content/live/index.xml"/>
 						<map:part src="content/live/news/{../1}.xml"/>
 						<map:part src="content/live/small-preview.xml"/>
 						<map:part src="content/live/sitetree.xml"/>
@@ -79,11 +71,6 @@
 					<map:serialize type="html"/>
 				</map:act>
 				<map:call resource="404"/>
-				<!--
-<map:generate src="cocoon:/404.xml"/>
-<map:transform src="xslt/404.xsl" label="content"/>
-<map:serialize type="xml"/>
--->
 			</map:match>
 			<!-- Include only articles specified in headlines.xml -->
 			<map:match pattern="selected-headlines">
@@ -97,7 +84,7 @@
 			<!-- ALL it-stellen overview -->
 			<map:match pattern="it-stellen/index.html">
 				<map:aggregate element="lenya" label="gregor">
-					<map:part element="cmsbody" src="content/live/wrapper.html"/>
+					<map:part element="cmsbody" src="content/live/wrapper.xml"/>
 					<map:part src="cocoon:/all-it-stellen"/>
 					<map:part src="content/live/small-preview.xml"/>
 					<map:part src="content/live/sitetree.xml"/>
@@ -115,7 +102,7 @@
 			<!-- ALL it-kalender overview -->
 			<map:match pattern="it-kalender/index.html">
 				<map:aggregate element="lenya" label="gregor">
-					<map:part element="cmsbody" src="content/live/wrapper.html"/>
+					<map:part element="cmsbody" src="content/live/wrapper.xml"/>
 					<map:part src="cocoon:/all-it-kalender"/>
 					<map:part src="content/live/small-preview.xml"/>
 					<map:part src="content/live/sitetree.xml"/>
@@ -154,13 +141,6 @@
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- graphics -->
-			<!-- General Lenya -->
-			<map:match pattern="images/lenya/**.gif">
-				<map:read src="../../resources/images/{1}.gif" mime-type="images/gif">
-					<map:parameter name="expires" value="2000000000"/>
-				</map:read>
-			</map:match>
-			<!-- /General Lenya -->
 			<map:match pattern="css/**.css">
 				<map:read mime-type="text/css" src="resources/css/live/{1}.css"/>
 			</map:match>
@@ -175,8 +155,8 @@
 			</map:match>
 			<map:match pattern="404.xml">
 				<map:aggregate element="lenya" label="gregor">
-					<map:part element="cmsbody" src="content/live/wrapper.html"/>
-					<map:part src="content/live/error.html" element="wrapper"/>
+					<map:part element="cmsbody" src="content/live/wrapper.xml"/>
+					<map:part src="content/live/error.xml" element="wrapper"/>
 					<map:part src="content/live/small-preview.xml"/>
 					<map:part src="content/live/sitetree.xml"/>
 					<map:part src="cocoon:/today"/>
@@ -184,18 +164,18 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<!-- Fallback matcher (for wraping files) -->
-			<map:match pattern="**">
+			<map:match pattern="**.html">
 				<map:act type="resource-exists">
-					<map:parameter name="url" value="content/live/{1}"/>
+					<map:parameter name="url" value="content/live/{1}.xml"/>
 					<map:aggregate element="lenya" label="gregor">
-						<map:part element="cmsbody" src="content/live/wrapper.html"/>
-						<map:part src="content/live/{../1}" element="wrapper"/>
+						<map:part element="cmsbody" src="content/live/wrapper.xml"/>
+						<map:part src="content/live/{../1}.xml" element="wrapper"/>
 						<map:part src="content/live/small-preview.xml"/>
 						<map:part src="content/live/sitetree.xml"/>
 						<map:part src="cocoon:/today"/>
 					</map:aggregate>
 					<map:transform src="xslt/live/wrapper.xsl">
-						<map:parameter name="id" value="/{../1}"/>
+						<map:parameter name="id" value="/{../1}.html"/>
 					</map:transform>
 					<map:transform src="xslt/live/images.xsl" label="content"/>
 					<map:serialize type="html"/>
