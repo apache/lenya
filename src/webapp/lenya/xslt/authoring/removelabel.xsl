@@ -12,6 +12,7 @@
   <xsl:variable name="language"><xsl:value-of select="/usecase:removelabel/usecase:language"/></xsl:variable>
   <xsl:variable name="label"><xsl:value-of select="/usecase:removelabel/usecase:label"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/usecase:removelabel/usecase:task-id"/></xsl:variable>
+  <xsl:variable name="referer"><xsl:value-of select="/usecase:removelabel/usecase:referer"/></xsl:variable>
   
   <xsl:template match="/usecase:removelabel">
     
@@ -31,7 +32,7 @@
 	    <div class="menu">Do you really want to remove the "<xsl:value-of select="$language"/>" language version from document '<xsl:value-of select="$document-id"/>' (cannot be undone)?</div>
 	    
 	    <input type="submit" value="YES, remove label"/>
-            &#160;&#160;&#160;<input type="button" onClick="location.href='{referer}';" value="Cancel"/>
+            &#160;&#160;&#160;<input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
 	  </form>
 	</p>
 	
