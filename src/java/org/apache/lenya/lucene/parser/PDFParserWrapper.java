@@ -1,5 +1,4 @@
 /*
-$Id: PDFParserWrapper.java,v 1.4 2003/07/23 13:21:21 gregor Exp $
 <License>
 
  ============================================================================
@@ -67,8 +66,9 @@ import java.net.URLConnection;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: PDFParserWrapper.java,v 1.5 2003/12/03 11:15:05 michi Exp $
  */
 public class PDFParserWrapper extends AbstractHTMLParser {
     /** Creates a new instance of PDFParserWrapper */
@@ -88,6 +88,17 @@ public class PDFParserWrapper extends AbstractHTMLParser {
     public String getTitle() throws IOException {
         try {
             return getParser().getTitle();
+        } catch (InterruptedException e) {
+            throw new IOException(e.getMessage());
+        }
+    }
+
+    /** Returns the keywords of the HTML document.
+     *
+     */
+    public String getKeywords() throws IOException {
+        try {
+            return getParser().getKeywords();
         } catch (InterruptedException e) {
             throw new IOException(e.getMessage());
         }

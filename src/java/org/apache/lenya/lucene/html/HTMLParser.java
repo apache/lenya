@@ -1,5 +1,4 @@
 /*
-$Id: HTMLParser.java,v 1.10 2003/07/23 13:21:17 gregor Exp $
 <License>
 
  ============================================================================
@@ -60,10 +59,10 @@ import java.io.*;
 
 
 /**
- * DOCUMENT ME!
+ * HTML Parser
  *
- * @author $author$
- * @version $Revision: 1.10 $
+ * @author Michael Wechner
+ * @version $Id: HTMLParser.java,v 1.11 2003/12/03 11:15:05 michi Exp $
  */
 public class HTMLParser implements HTMLParserConstants {
     public static int SUMMARY_LENGTH = 200;
@@ -203,6 +202,18 @@ public class HTMLParser implements HTMLParserConstants {
         }
 
         return title.toString().trim();
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return keywords
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws InterruptedException DOCUMENT ME!
+     */
+    public String getKeywords() throws IOException, InterruptedException {
+        return "";
     }
 
     /**
