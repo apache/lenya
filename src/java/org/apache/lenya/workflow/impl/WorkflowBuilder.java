@@ -15,7 +15,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -36,8 +35,8 @@ public class WorkflowBuilder {
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/workflow/1.0";
     public static final String DEFAULT_PREFIX = "wf";
 
-    public static Workflow buildWorkflow(File file) throws WorkflowException {
-        Workflow workflow;
+    public static WorkflowImpl buildWorkflow(File file) throws WorkflowException {
+        WorkflowImpl workflow;
 
         try {
             Document document = DocumentHelper.readDocument(file);
@@ -49,7 +48,7 @@ public class WorkflowBuilder {
         return workflow;
     }
 
-    public static Workflow buildWorkflow(Document document)
+    protected static WorkflowImpl buildWorkflow(Document document)
         throws
             ParserConfigurationException,
             SAXException,

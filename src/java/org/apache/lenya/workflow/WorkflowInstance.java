@@ -44,4 +44,15 @@ public interface WorkflowInstance {
      */
     boolean getValue(String variableName) throws WorkflowException;
 
+    /**
+     * Adds a workflow listener.
+     * @param listener The listener to add.
+     */
+    void addWorkflowListener(WorkflowListener listener);
+    
+    /**
+     * Removes a workflow listener.
+     * @param listener The listener to remove.
+     */
+    void removeWorkflowListener(WorkflowListener listener);
 }

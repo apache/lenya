@@ -17,16 +17,11 @@ import org.apache.lenya.cms.ac.Identity;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-import org.w3c.dom.Element;
 
 /**
  *
@@ -45,15 +40,12 @@ public class WorkflowFactory {
         return new WorkflowFactory();
     }
 
-    public static final String WORKFLOW_ELEMENT = "workflow";
-    public static final String SRC_ATTRIBUTE = "src";
-    
     /*
      * Creates a new workflow instance.
      */
     public WorkflowInstance buildInstance(Document document) throws WorkflowException {
         assert document != null;
-        return new WorkflowDocument(document);
+        return new CMSHistory(document).getInstance();
     }
     
     /**
@@ -63,49 +55,19 @@ public class WorkflowFactory {
      * @return <code>true</code> if the document has a workflow, <code>false</code> otherwise.
      */
     public boolean hasWorkflow(Document document) {
-        File historyFile = WorkflowDocument.getHistoryFile(document);
-        return historyFile.exists();
+        return new CMSHistory(document).isInitialized();
     }
 
-    protected static Workflow buildWorkflow(Publication publication, DocumentType documentType)
+    protected static Workflow buildWorkflow(Publication publication, String workflowFileName)
         throws WorkflowException {
             
         assert publication != null;
-        assert documentType != null;
+        assert workflowFileName != null && !"".equals(workflowFileName);
 
-        File doctypesDirectory =
-            new File(publication.getDirectory(), DocumentTypeBuilder.DOCTYPE_DIRECTORY);
-        File doctypeFile = new File(doctypesDirectory, documentType.getName() + ".xml");
+        File workflowDirectory = new File(publication.getDirectory(), WORKFLOW_DIRECTORY);
+        File workflowFile = new File(workflowDirectory, workflowFileName);
+        Workflow workflow = WorkflowBuilder.buildWorkflow(workflowFile);
 
-        Workflow workflow;
-
-        try {
-            org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(doctypeFile);
-
-            NamespaceHelper helper =
-                new NamespaceHelper(
-                    DocumentType.NAMESPACE,
-                    DocumentType.DEFAULT_PREFIX,
-                    xmlDocument);
-            Element root = xmlDocument.getDocumentElement();
-
-            Element workflowElement =
-                (Element) root.getElementsByTagNameNS(
-                    DocumentType.NAMESPACE,
-                    WORKFLOW_ELEMENT).item(
-                    0);
-
-            String source = workflowElement.getAttribute(SRC_ATTRIBUTE);
-            assert source != null;
-
-            File publicationDirectory = publication.getDirectory();
-            File workflowDirectory = new File(publicationDirectory, WORKFLOW_DIRECTORY);
-            File workflowFile = new File(workflowDirectory, source);
-
-            workflow = WorkflowBuilder.buildWorkflow(workflowFile);
-        } catch (Exception e) {
-            throw new WorkflowException(e);
-        }
         return workflow;
     }
 
@@ -143,6 +105,18 @@ public class WorkflowFactory {
         }
         
         return buildSituation(user);
+    }
+    
+   
+    /**
+     * Initializes the history of a document.
+     * @param document The document object.
+     * @param type The document type the document belongs to.
+     * @param user The user who created the document.
+     * @throws WorkflowException When something goes wrong.
+     */
+    public static void initHistory(Document document, String workflowId) throws WorkflowException {
+        new CMSHistory(document).initialize(workflowId);
     }
     
 }
