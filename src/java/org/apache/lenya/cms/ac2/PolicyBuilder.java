@@ -1,5 +1,5 @@
 /*
-$Id: PolicyBuilder.java,v 1.5 2003/08/07 10:23:27 andreas Exp $
+$Id: PolicyBuilder.java,v 1.6 2003/08/12 15:17:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,7 @@ $Id: PolicyBuilder.java,v 1.5 2003/08/07 10:23:27 andreas Exp $
 
 package org.apache.lenya.cms.ac2;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -104,20 +104,19 @@ public class PolicyBuilder {
     protected static final String SSL_ATTRIBUTE = "ssl";
 
     /**
-     * Builds a policy from a file. When the file is not present, an empty policy is returned.
+     * Builds a policy from an input stream.
      * @param controller An access controller.
-     * @param file The file.
+     * @param stream The input stream to read the policy from..
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    public DefaultPolicy buildPolicy(AccreditableManager controller, File file)
+    public DefaultPolicy buildPolicy(AccreditableManager controller, InputStream stream)
         throws AccessControlException {
-        assert(null != file) && file.isFile();
 
         Document document;
 
         try {
-            document = DocumentHelper.readDocument(file);
+            document = DocumentHelper.readDocument(stream);
         } catch (Exception e) {
             throw new AccessControlException(e);
         }
