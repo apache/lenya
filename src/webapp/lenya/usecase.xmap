@@ -594,6 +594,7 @@
           <map:match pattern="copy" type="step">
             <map:act type="session-propagator">
               <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
+              <map:parameter name="org.apache.lenya.cms.info.firstarea" value="{request-param:area}"/>
               <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
