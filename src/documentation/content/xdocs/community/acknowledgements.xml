@@ -34,6 +34,7 @@
 <li><strong>Christian Egli (egli at apache.org)</strong></li>
 <li><strong>Antonio Gallardo (antonio at apache.org)</strong></li>
 <li><strong>Andreas Hartmann (andreas at apache.org)</strong></li>
+<li><strong>J. Wolfgang Kaltz (jwkaltz at apache.org)</strong></li>
 <li><strong><em>Rolf Kulemann (roku at apache.org)</em></strong></li>
 <li><strong>Gregor J. Rothfuss(gregor at apache.org)</strong></li>
 <li><strong>[TS] - Thorsten Scherler (thorsten at apache.org)</strong></li>
@@ -51,7 +52,7 @@
 <li>Giacomo Pati (giacomo at apache.org)</li>
 <li>Marc Liyanage</li>
 <li>Alexander McLintock</li>
-<li>Felix M&#228;der (felix at apache.org))</li>
+<li>Felix M&#228;der (felix at apache.org)</li>
 </ul>
 </section>
 
@@ -59,33 +60,33 @@
 <section id="contributor">
 <title>Other Contributors</title>
 <ul>
-<li><strong>Olivier Lange</strong> (french translation)</li>
-<li><strong>Kars Veiling</strong></li>
-<li><strong>Lon Boonen</strong>
+<li>Olivier Lange (french translation)</li>
+<li>Kars Veiling</li>
+<li>Lon Boonen
 <p>
 Lon is the original creator of Xopus. He helped a lot to integrate Xopus into Lenya.
 He rewrote the JavaScript of the Lenya menubar.
 <br />&#160;
 </p>
 </li>
-<li><strong>Christian Stocker</strong>
+<li>Christian Stocker
 <p>
 Christian is the original creator of the Bitflux Editor. He helped a
 lot to integrate Bitflux Editor into Lenya.  <br />&#160;
 </p>
 </li>
-<li><strong>Markus Vaterlaus</strong></li>
-<li><strong>Marc von Wattenwyl</strong></li>
-<li><strong>Margrit John</strong></li>
-<li><strong>Martin L&#252;thi</strong></li>
-<li><strong>Stephen England</strong>
+<li>Markus Vaterlaus</li>
+<li>Marc von Wattenwyl</li>
+<li>Margrit John</li>
+<li>Martin L&#252;thi</li>
+<li>Stephen England
 <p>
 The Lenya logo has been designed by Stephen.  <br />&#160;
 </p>
 </li>
-<li><strong>Thomas Werschlein</strong></li>
-<li><strong>Urs St&#246;ckli</strong></li>
-<li><strong>Martin Hitz</strong></li>
+<li>Thomas Werschlein</li>
+<li>Urs St&#246;ckli</li>
+<li>Martin Hitz</li>
 </ul>
 </section>
     <section id="credits-software">
