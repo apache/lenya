@@ -5,7 +5,7 @@
   <!-- 
   This target exports a specified Forrest-based publication as static HTML.
   -->
-  <target name="export-forrest" depends="webapp" description="Builds the webapp directory ready to be linked into a servlet engines context directory">
+  <target name="export-forrest" depends="webapp" description="Exports a forrest-based publication to static HTML.">
   
     <property name="publication" value="docs-new"/>
     <property name="publication.dir" value="${build.webapp}/lenya/pubs/${publication}"/>
@@ -33,3 +33,43 @@
     <ant antfile="${forrest.home}/forrest.antproxy.xml" dir="${export.dir}"/>
 
   </target>
+  
+<target name="export" depends="webapp" description="Exports a publication to static HTML.">
+  <property name="publication" value=""/>
+  <property name="publication.dir" value="${build.webapp}/lenya/pubs/${publication}"/>
+  <property name="build.export" value="${build.dir}/export"/>
+  <property name="build.work" value="${build.dir}/work"/>
+    
+  <property name="project.debuglevel" value="DEBUG"/>
+      
+  <echo>INFO: Copying source files from authoring to live</echo>
+  <copy todir="${publication.dir}/content/live">
+    <fileset dir="${publication.dir}/content/authoring"/>
+  </copy>
+
+  <java classname="org.apache.cocoon.Main"
+    fork="true"
+    maxmemory="128m"
+    dir="."
+    failonerror="true">
+    
+  <classpath>
+    <pathelement location="${build.webapp}/WEB-INF/classes"/>
+    <fileset dir="${build.webapp}/WEB-INF/lib" includes="*.jar"/>
+    <fileset dir="${install.dir}/../../common/lib" includes="servlet**.jar"/>
+  </classpath>
+  
+    <jvmarg value="-Djava.endorsed.dirs=${build.webapp}/WEB-INF/lib/endorsed${path.separator}${java.endorsed.dirs}"/>
+    
+    <arg value="-c${build.webapp}"/>   <!-- input to the process -->
+    <arg value="-d${build.export}"/>   <!-- output to be put -->
+    <arg value="-w${build.work}"/>   <!-- temp dir to use for e.g. cache -->
+    <arg value="-u${project.debuglevel}"/> <!-- threshold for log messages -->
+    <arg value="-C${build.webapp}/WEB-INF/cocoon.xconf"/> <!-- cocoon.xconf file to use -->
+    <arg value="-b${build.export}/brokenlinks.txt"/>  <!-- output list of broken links -->
+    <arg value="-k${build.webapp}/WEB-INF/logkit.xconf"/>  <!-- logkit configuration -->
+    <arg value="${publication}/live/index.html"/>  <!-- starting page -->
+    <arg value="-V" />  <!-- be verbose -->
+  </java>
+  
+</target>
