@@ -63,6 +63,14 @@
       </fileset>
     </copy>
 
+    <!-- now copy our xml configuration files -->
+    <echo>INFO: Copy xml configuration files from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.src}">
+        <include name="**/*.xml"/>
+      </fileset>
+    </copy>
+
     <!-- now copy our roles -->
     <echo>INFO: Copy properties from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
     <copy todir="${build.webapp}/WEB-INF/classes">
