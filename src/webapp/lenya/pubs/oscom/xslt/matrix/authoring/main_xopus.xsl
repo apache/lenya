@@ -19,12 +19,12 @@
 <br /><br /><br /><br />
 <b>............ LOADING CMS/F PROJECT ............</b>
  	<xml>
-		<pipeline xml="matrix/{$projectid}.xml" xsd="matrix.xsd">
+		<pipeline xml="/matrix/{$projectid}.xml" xsd="/matrix.xsd">
 			<view id="defaultView" default="true">
-				<transform xsl="matrix/authoring/body_xopus.xsl"></transform>
+				<transform xsl="/matrix/authoring/body_xopus.xsl"></transform>
 			</view>
 			<view id="treeView">
-				<transform xsl="home/authoring/tree.xsl"></transform>
+				<transform xsl="/home/authoring/tree.xsl"></transform>
 			</view>
 		</pipeline>
     </xml>

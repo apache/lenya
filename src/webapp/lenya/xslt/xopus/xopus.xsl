@@ -23,9 +23,18 @@
 	<script language="javascript" src="/software/xopus/xopus.js">;</script>
 -->
 	<script language="javascript" src="/lenya/xopus/xopus/xopus.js">;</script>
+<!--
+	<script language="javascript" src="/levi/xopus/xopus.js">;</script>
+-->
 	<script language="javascript">
 		//xopus_globs.LENYA_CMS_URL="<xsl:value-of select="$context_prefix" />";
-		xopus_consts.LENYA_CMS_URL="<xsl:value-of select="$context_prefix" />/xopus/XopusInterface";
+ 
+                // Xopus 2.0.0.1
+		//xopus_consts.LENYA_CMS_URL="<xsl:value-of select="$context_prefix" />/xopus/XopusInterface";
+
+                // Xopus 2.0.0.8
+		xopus_globs.WYONA_CMS_URL="<xsl:value-of select="$context_prefix" />/xopus/XopusInterface";
+		xopus_globs.WYONA_CMS_EXIT_URL="/lenya/oscom/authoring/matrix/cocoon.html";
 	</script>
 </xsl:template>
 

@@ -18,9 +18,21 @@
 
   <map:pipelines>
 
+    <map:component-configurations>
+      <global-variables>
+        <!-- Xopus 2.0.0.8 -->
+        <xopus-resources>resources/misc/xopus2.0.0.8/</xopus-resources>
+
+        <!-- Xopus 2.0.0.1 -->
+<!--
+        <xopus-resources>resources/misc/xopus/</xopus-resources>
+-->
+      </global-variables>
+    </map:component-configurations>
+
     <map:pipeline>
       <map:match pattern="**.js">
-        <map:read src="resources/misc/xopus/{1}.js" mime-type="text/javascript"/>
+        <map:read src="{global:xopus-resources}{1}.js" mime-type="text/javascript"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
@@ -29,7 +41,7 @@
 
     <map:pipeline>
       <map:match pattern="**.html">
-        <map:read src="resources/misc/xopus/{1}.html" mime-type="text/html"/>
+        <map:read src="{global:xopus-resources}{1}.html" mime-type="text/html"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
@@ -38,7 +50,7 @@
 
     <map:pipeline>
       <map:match pattern="**.xml">
-        <map:generate src="resources/misc/xopus/{1}.xml"/>
+        <map:generate src="{global:xopus-resources}{1}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:handle-errors>
@@ -48,7 +60,7 @@
 
     <map:pipeline>
       <map:match pattern="**.xsl">
-        <map:generate src="resources/misc/xopus/{1}.xsl"/>
+        <map:generate src="{global:xopus-resources}{1}.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:handle-errors>
@@ -58,7 +70,7 @@
 
     <map:pipeline>
       <map:match pattern="**.gif">
-        <map:read src="resources/misc/xopus/{1}.gif" mime-type="images/gif"/>
+        <map:read src="{global:xopus-resources}{1}.gif" mime-type="images/gif"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
@@ -67,7 +79,7 @@
 
     <map:pipeline>
       <map:match pattern="**.css">
-        <map:read src="resources/misc/xopus/{1}.css" mime-type="text/css"/>
+        <map:read src="{global:xopus-resources}{1}.css" mime-type="text/css"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
