@@ -48,7 +48,7 @@
        }
       
       <xi:include >
-        <xsp:attribute name="href"><xsp:expr>parameters.getParameter("catalogue-file", "null").substring(1)</xsp:expr>#xpointer(//message)</xsp:attribute>
+        <xsp:attribute name="href"><xsp:expr>parameters.getParameter("catalogue-file", "null")</xsp:expr>#xpointer(//message)</xsp:attribute>
       </xi:include>
       
     </xsp:logic> 
