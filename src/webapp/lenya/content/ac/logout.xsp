@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"  
+       >
+  <xsp:structure>
+    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>java.util.Vector</xsp:include>
+  </xsp:structure>
+
+<page>
+<body>
+<invalidate>
+  <xsp:logic>
+    String referer=request.getHeader("Referer");
+    if(referer != null){
+      <xsp:content><referer><xsp:expr>referer</xsp:expr></referer></xsp:content>
+      }
+    else{
+      <xsp:content><no_referer/></xsp:content>
+      }
+    Session session=request.getSession(false);
+    if(session != null){
+      session.removeAttribute("org.wyona.cms.ac.Identity");
+      Vector history=(Vector)session.getAttribute("org.wyona.cms.cocoon.acting.History");
+      if(history != null){
+        for(int i=0;i&lt;history.size();i++){
+          String uri=(String)history.elementAt(i);
+          <xsp:content><uri><xsp:expr>uri</xsp:expr></uri></xsp:content>
+          }
+        }
+      }
+  </xsp:logic>
+</invalidate>
+</body>
+</page>
+
+</xsp:page>
