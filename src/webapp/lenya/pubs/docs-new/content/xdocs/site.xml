@@ -38,6 +38,7 @@
 				</deployment>
 				<misc href="editors/" label="Editors">
 					<namespaces href="htmlform.html" label="HTML Form Editor"/>
+					<namespaces href="1form.html" label="HTML One Form Editor"/>
 					<namespaces href="bxeng.html" label="Bitflux Editor"/>
 				</misc>
 				<layout href="layout/" label="Layout">
