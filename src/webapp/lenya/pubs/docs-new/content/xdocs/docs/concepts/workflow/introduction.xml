@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document> 
+
+<header> 
+    <title>Using Workflow</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section><title>Terms</title>
+
+<dl>
+
+<dt>Workflow Schema</dt>
+<dd>A workflow schema defines a state machine (deterministic finite
+automaton - DFA), consisting of 
+  <ul>
+    <li>states, including a marked initial state,</li>
+    <li>transitions, and</li>
+    <li>state variables.</li>
+  </ul>
+</dd>
+
+<dt>Workflow Instance</dt>
+<dd>A workflow instance is an incarnation of a workflow schema.
+It consists of
+<ul>
+  <li>a current state,</li>
+  <li>a mapping which assigns values to all state variables.</li>
+</ul>
+</dd>
+
+<dt>Transition</dt>
+<dd>A transition describes the switching of a workflow instance
+from one state to another. A transition has
+<ul>
+  <li>a source state,</li>
+  <li>a destination state,</li>
+  <li>an event,</li>
+  <li>a set of conditions,</li>
+  <li>a set of assignments.</li>
+</ul>
+Additionally, a transition can be marked as synchronized.
+</dd>
+
+<dt>History</dt>
+<dd>The history of a workflow instance contains all versions
+of the instance. A version contains
+<ul>
+  <li>the state,</li>
+  <li>the event that caused the transition (omitted in the first version)</li>
+</ul>
+</dd>
+
+<dt>State Variable</dt>
+<dd>A workflow schema can contain a set of state variables.
+For each instance, the state variables hold certain values.
+Values can be assigned during transitions, so a variable can change
+its value when a transition fires. Currently, Lenya supports only
+boolean state variables.
+</dd>
+
+<dt>Condition</dt>
+<dd>
+A condition can prevent a transition from firing, based on
+the current situation.
+Examples:
+<ul>
+  <li>Does the current user have a certain role on the current URL?
+    (<code>RoleCondition</code>, included in Lenya)</li>
+  <li>Does a certain state variable have a certain value
+    (e.g., is the document published)?
+    (<code>BooleanVariableCondition</code>, included in Lenya)</li>
+  <li>Is the sun shining? (e.g., if the weather report may only
+     be published on sunny days)</li>
+</ul>
+</dd>
+
+<dt>Situation</dt>
+<dd>A situation defines the state of the environment
+of a workflow instance. Examples are:
+<ul>
+  <li>the current user ID</li>
+  <li>the roles of the current user on the current URL</li>
+</ul>
+</dd>
+
+</dl>
+
+</section>
+
+<section><title>The State Machine</title>
+<p>
+When an event <em>e</em> is invoked on a workflow instance <em>I</em>, the following
+algorithm is executed:
+</p>
+<ul>
+  <li>The current state <em>s<sub>current</sub></em> is determined.</li>
+  <li>The transition <em>t</em> from <em>s<sub>current</sub></em> to <em>s<sub>next</sub></em>
+      which has the event <em>e</em> is determined.</li>
+  <li>If <em>t</em> is not exactly defined, an exception is thrown.</li>
+  <li>All conditions of <em>t</em> are validated.</li>
+  <li>If all conditions are complied, the transition <em>t</em> fires:
+  <ul>
+    <li>All assignments of <em>t</em> are executed.</li>
+    <li>The workflow instance <em>I</em> is advanced to the state <em>s<sub>next</sub></em>.</li>
+  </ul>
+  </li>
+</ul>
+</section>
+
+<section><title>The Workflow Schema</title>
+<p>The workflow schema definition files of a publication are located at</p>
+<source>
+{publication}/config/workflow/
+</source>
+</section>
+
+<section><title>Assigning Workflow Schemas to Document Types</title>
+<p>A workflow schema can be assigned to a document type in</p>
+<source>
+{publication}/config/doctypes/doctypes.xconf
+</source>
+<source><![CDATA[<doctypes>
+  <doc type="content-page">
+    ...
+    <workflow src="workflow.xml"/>
+  </doc>
+  ...
+</doctypes>]]></source>
+</section>
+
+<section><title>Initializing the Workflow History</title>
+</section>
+
+<section><title>Synchronization</title>
+</section>
+
+</body>
+</document>

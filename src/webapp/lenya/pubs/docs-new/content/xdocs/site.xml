@@ -61,6 +61,9 @@
       	<terms href="policymanagers.html" label="Policy&#160;Managers"/>
       	<terms href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
       </accesscontrol>
+      <workflow href="workflow/" label="Workflow">
+      	<introduction href="introduction.html" label="Introduction"/>
+      </workflow>
     </concepts>
     <customization href="customization/" label="Customization">
       <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
