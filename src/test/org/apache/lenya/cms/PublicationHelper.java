@@ -26,6 +26,10 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
+import org.apache.avalon.framework.logger.Logger;
+
+
 /**
  * A publication helper
  */
@@ -49,7 +53,7 @@ public class PublicationHelper {
         String servletContextPath = args[0];
         String publicationId = args[1];
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(null);
+            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
             publication = factory.getPublication(publicationId, servletContextPath);
         } catch (PublicationException e) {
             e.printStackTrace();
