@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.233 2004/08/11 08:36:15 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.234 2004/08/11 08:37:46 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -177,8 +177,8 @@
           
           <map:match pattern="overview" type="step">
             <map:generate src="pubs/{../../1}/logs/tasks" type="directory"/>
-            <map:transform src="xslt/logs/directory2html.xsl"/>
-            <map:transform src="xslt/util/page2xhtml.xsl">
+            <map:transform src="{fallback:xslt/logs/directory2html.xsl}"/>
+            <map:transform src="{fallback:xslt/util/page2xhtml.xsl}">
               <map:parameter name="context-prefix" value="{request:contextPath}"/>
             </map:transform>
             <map:serialize/>
@@ -190,9 +190,9 @@
               <map:parameter name="parameters" value="true"/>
               <map:generate src="pubs/{../../../1}/logs/tasks/{logfile}"/>
             </map:act>
-            <map:transform src="xslt/logs/antlog2html.xsl"/>
-            <map:transform src="xslt/logs/antlog2page.xsl"/>
-            <map:transform src="xslt/util/page2xhtml.xsl">
+            <map:transform src="{fallback:xslt/logs/antlog2html.xsl}"/>
+            <map:transform src="{fallback:xslt/logs/antlog2page.xsl}"/>
+            <map:transform src="{fallback:xslt/util/page2xhtml.xsl}">
               <map:parameter name="context-prefix" value="{request:contextPath}"/>
             </map:transform>
             <map:serialize/>
