@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Load Xopus ...</title>
+    <script language="JavaScript" src="/Xopus195.226.6.70/xopus/xopus.js"> </script>
+  </head>
+  <body bgcolor="#FFFFFF">
+    <div xopus="true" autostart="true">
+      ...Xopus hasn't started yet...
+      <xml>
+        <pipeline xml="/lenya/publication/authoring/page.html?lenya.usecase=xopus&amp;lenya.step=xml" xsd="/lenya/publication/authoring/page.html?lenya.usecase=xopus&amp;lenya.step=xsd">
+          <view id="defaultView" default="true">
+            <transform xsl="/lenya/publication/authoring/page.html?lenya.usecase=xopus&amp;lenya.step=xslt"/>
+          </view>
+<!--
+          <view id="xmlView">
+            <transform xsl="unity.xsl"></transform>
+          </view>
+          <view id="treeView">
+            <transform xsl="/Xopus195.226.6.70/xopus/media/treeview/tree.xsl"></transform>
+          </view>
+-->
+        </pipeline>
+      </xml>
+    </div>
+  </body>
+</html>
