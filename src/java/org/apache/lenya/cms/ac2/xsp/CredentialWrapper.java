@@ -22,40 +22,50 @@ import org.apache.lenya.cms.ac2.Accreditable;
 public class CredentialWrapper {
 
     /**
-     * @return
+     * Returns the accreditable ID.
+     * @return A string.
      */
     public String getAccreditableId() {
         return accreditableId;
     }
 
     /**
-     * @return
+     * Returns the accreditable name.
+     * @return A string.
      */
     public String getAccreditableName() {
         return accreditableName;
     }
 
     /**
-     * @return
+     * Returns the role ID.
+     * @return A string.
      */
     public String getRoleId() {
         return roleId;
     }
 
     /**
-     * @return
+     * Returns the role name.
+     * @return A string.
      */
     public String getRoleName() {
         return roleName;
     }
 
     /**
-     * @return
+     * Returns the accreditable type ({@link #USER}, {@link GROUP}, or {@link IPRANGE})
+     * @return A string.
      */
     public String getType() {
         return type;
     }
 
+    /**
+     * Ctor.
+     * @param accreditable The accreditable of the credential to wrap.
+     * @param role The role of the credential to wrap.
+     */
     public CredentialWrapper(Accreditable accreditable, Role role) {
         if (accreditable instanceof Item) {
             Item item = (Item) accreditable;

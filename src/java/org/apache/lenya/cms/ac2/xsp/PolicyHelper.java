@@ -1,5 +1,5 @@
 /*
-$Id: PolicyHelper.java,v 1.3 2003/07/30 15:03:25 gregor Exp $
+$Id: PolicyHelper.java,v 1.4 2003/08/06 13:06:00 andreas Exp $
 <License>
 
  ============================================================================
@@ -80,12 +80,26 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 
 /**
+ * Helper class for the policy GUI.
+ * 
  * @author andreas
  */
-public class PolicyHelper {
+public final class PolicyHelper {
+    
+    /**
+     * Ctor.
+     */
+    private PolicyHelper() {
+    }
 
-    protected static final String DEFAULT_RESOLVER = "composable";
-
+    /**
+     * Returns the URI credential wrappers for the request of this object model.
+     * @param objectModel The Cocoon object model.
+     * @param area The selected area.
+     * @param manager The ComponentManager to use.
+     * @return An array of CredentialWrappers.
+     * @throws ProcessingException when something went wrong.
+     */
     public static CredentialWrapper[] getURICredentials(
         Map objectModel,
         String area,
@@ -94,6 +108,15 @@ public class PolicyHelper {
         return getCredentials(objectModel, area, manager, true);
     }
 
+    /**
+     * Returns the credential wrappers for the parent URI of the URL
+     * belonging to the request of this object model.
+     * @param objectModel The Cocoon object model.
+     * @param area The selected area.
+     * @param manager The ComponentManager to use.
+     * @return An array of CredentialWrappers.
+     * @throws ProcessingException when something went wrong.
+     */
     public static CredentialWrapper[] getParentCredentials(
         Map objectModel,
         String area,
@@ -102,6 +125,16 @@ public class PolicyHelper {
         return getCredentials(objectModel, area, manager, false);
     }
 
+    /**
+     * Returns the credentials of the policy of the selected URL.
+     * @param objectModel The Cocoon object model.
+     * @param area The selected area.
+     * @param manager The ComponentManager to use.
+     * @param urlOnly If true, the URL policy credentials are returned.
+     * If false, the credentials of all ancestor policies are returned.
+     * @return An array of CredentialWrappers.
+     * @throws ProcessingException when something went wrong.
+     */
     public static CredentialWrapper[] getCredentials(
         Map objectModel,
         String area,
@@ -120,7 +153,9 @@ public class PolicyHelper {
         try {
             selector =
                 (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver = (AccessControllerResolver) selector.select(DEFAULT_RESOLVER);
+            resolver =
+                (AccessControllerResolver) selector.select(
+                    AccessControllerResolver.DEFAULT_RESOLVER);
 
             accessController = (DefaultAccessController) resolver.resolveAccessController(url);
 
@@ -162,6 +197,14 @@ public class PolicyHelper {
         return (CredentialWrapper[]) credentials.toArray(new CredentialWrapper[credentials.size()]);
     }
 
+    /**
+     * Computes the webapp URL belonging to an object model with respect to the selected
+     * area.
+     * @param objectModel The Cocoon object model.
+     * @param area The selected area.
+     * @return A string.
+     * @throws ProcessingException when something went wrong.
+     */
     private static String computeUrl(Map objectModel, String area) throws ProcessingException {
         PageEnvelope envelope;
         try {
@@ -174,6 +217,16 @@ public class PolicyHelper {
         return url;
     }
 
+    /**
+     * Returns the policies for a certain URL.
+     * @param accreditableManager The accreditable manager to use.
+     * @param policyManager The policy manager to use.
+     * @param url The URL to get the policies for.
+     * @param onlyUrl If true, only the URL policies are returned.
+     * Otherwise, all ancestor policies are returned.
+     * @return An array of DefaultPolicy objects.
+     * @throws AccessControlException when something went wrong.
+     */
     protected static DefaultPolicy[] getPolicies(
         AccreditableManager accreditableManager,
         InheritingPolicyManager policyManager,
@@ -198,10 +251,20 @@ public class PolicyHelper {
 
         return policies;
     }
-    
+
     public static final String ADD = "add";
     public static final String DELETE = "delete";
 
+    /**
+     * Changes a credential by adding or deleting an item for a role.
+     * @param objectModel The Cocoon object model.
+     * @param item The item to add or delete.
+     * @param role The role.
+     * @param area The selected area.
+     * @param operation The operation, either {@link #ADD} or {@link #DELETE}.
+     * @param manager The ComponentManager to use.
+     * @throws ProcessingException when something went wrong.
+     */
     public static void manipulateCredential(
         Map objectModel,
         Item item,
@@ -221,7 +284,9 @@ public class PolicyHelper {
         try {
             selector =
                 (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver = (AccessControllerResolver) selector.select(DEFAULT_RESOLVER);
+            resolver =
+                (AccessControllerResolver) selector.select(
+                    AccessControllerResolver.DEFAULT_RESOLVER);
 
             accessController = (DefaultAccessController) resolver.resolveAccessController(url);
 
@@ -231,16 +296,14 @@ public class PolicyHelper {
             DefaultPolicy policy = policyManager.buildSubtreePolicy(accreditableManager, url);
 
             Accreditable accreditable = (Accreditable) item;
-            
+
             if (operation.equals(ADD)) {
                 policy.addRole(accreditable, role);
-            }
-            else if (operation.equals(DELETE)) {
+            } else if (operation.equals(DELETE)) {
                 policy.removeRole(accreditable, role);
             }
-            
+
             policyManager.saveSubtreePolicy(url, policy);
-            
 
         } catch (Exception e) {
             throw new ProcessingException("Manipulating credential failed: ", e);
