@@ -265,5 +265,6 @@
                 <tomcat5 href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0"/>
                 <tomcat5.setup href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/setup.html"/>
                 <tomcat5.classloader href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html"/>
+                <subversion href="http://subversion.tigris.org/"/>
 	</external-refs>
 </site>

@@ -118,7 +118,7 @@
           <p>
             Extract the downloaded Lenya archive to the
             <code>lenya-1.2.x</code> directory as described below. If
-            you use Subversion, create your Lenya checkout inside the
+            you use <link href="site:subversion">Subversion</link>, create your Lenya checkout inside the
             <code>src</code> directory as described below.  It is
             recommended to use the following directory structure for an
             easier build experience.
