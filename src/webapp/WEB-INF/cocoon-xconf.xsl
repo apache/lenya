@@ -48,8 +48,8 @@
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
     
-    <component-instance class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory" name="fallback"/>
-    <component-instance class="org.apache.lenya.cms.cocoon.source.LenyaSourceFactory" logger="lenya.source" name="lenya" scheme="context:"/>
+    <component-instance class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory" logger="lenya.source.fallback" name="fallback"/>
+    <component-instance class="org.apache.lenya.cms.cocoon.source.LenyaSourceFactory" logger="lenya.source.lenya" name="lenya" scheme="context:"/>
   </xsl:copy>
 </xsl:template>
 
