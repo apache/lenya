@@ -35,9 +35,6 @@
 	      <xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/ParentChildScreenNewArticle?parentid=/"+"&amp;doctype=XDoc"</xsp:expr>
 	    </xsp:attribute>New Document</item>
 	</block>
-	<separator>
-	  <item>-----------------</item>
-	</separator>
 	<block>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
 	</block>
@@ -56,9 +53,6 @@
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
 	</block>
-	<separator>
-	  <item>-----------------</item>
-	</separator>
 	<block>
 	  <item href="http://www.lenya.org">About&#160;Lenya</item>
 	</block>
@@ -70,9 +64,6 @@
 	  <item href="../xopus/xdoc.xsd">View&#160;Xopus&#160;XSD</item>
 	  <item href="../xopus/xdoc.xsl">View&#160;Xopus&#160;XSLT</item>
 	</block>
-	<separator>
-	  <item>-----------------</item>
-	</separator>
       </menu>
     </menus>
     
