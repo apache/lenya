@@ -43,7 +43,7 @@
 (Based on Lenya <b><xsl:value-of select="../lenya:version"/></b>)
 <p>
 <h3>About</h3>
-  <xsl:copy-of select="."/>
+  <xsl:apply-templates />
   <br/><br/>
   <xsl:apply-templates select="../lenya:readme"/>
 </p>
@@ -51,7 +51,7 @@
 
 <xsl:template match="lenya:readme">
 <h3>Readme</h3>
-  <xsl:copy-of select="."/>
+  <xsl:apply-templates />
 </xsl:template>
 
 <xsl:template match="lenya:tests">
@@ -63,7 +63,11 @@
 </xsl:template>
 
 <xsl:template match="lenya:test">
-  <li><xsl:copy-of select="."/></li>
+  <li><xsl:apply-templates /></li>
+</xsl:template>
+
+<xsl:template match="@*|node()">
+  <xsl:copy><xsl:apply-templates select="@*|node()"/></xsl:copy>
 </xsl:template>
 
 </xsl:stylesheet>
