@@ -96,7 +96,7 @@ $PUB_HOME
     <section>
       <title>Architecture</title>
       <p>
-        A usecase request - denoted by the request parameter <em>lenya.usecase</em> - is dispatched by <code>$LENYA_WEBAPP/lenya/usecases/usecase.xmap</code>.
+        A usecase request - denoted by the request parameter <code>lenya.usecase</code> - is dispatched by <code>$LENYA_WEBAPP/lenya/usecases/usecase.xmap</code>.
         All usecases are handled by a single flowscript <code>$LENYA_WEBAPP/lenya/usecases/usecases.js</code>. This keeps javascript maintenance costs at a minimum.
       </p>
       <p>
@@ -127,7 +127,7 @@ $PUB_HOME
         <title>Prerequisites</title>
         <ol>
           <li>Choose a name to identify the usecase, e.g. editHeadline. It is possible to group usecases
-              using "." as delimiter, for instance <em>article.editHeadline</em>.
+              using "." as delimiter, for instance <code>article.editHeadline</code>.
           </li>
         </ol>
       </section>
@@ -198,7 +198,7 @@ $PUB_HOME
   </page:body>
 </page:page>]]></source>
           </li>
-          <li>Take care of adding the hidden <em>lenya.usecase</em> and <em>lenya.continuation</em> fields as shown above.</li>
+          <li>Take care of adding the hidden <code>lenya.usecase</code> and <code>lenya.continuation</code> fields as shown above.</li>
           <li>The template has to be located at <code><![CDATA[$PUB_HOME/lenya/usecases/<usecase>.jx]]></code>
             (replace . with /), for instance
           </li>
