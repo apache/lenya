@@ -16,7 +16,7 @@
 -->
 
 <!--
-    $Id: log4j-properties.xsl,v 1.15 2004/06/08 10:57:03 roku Exp $
+    $Id: log4j-properties.xsl,v 1.16 2004/08/03 16:27:22 andreas Exp $
     Description: Create log4j.properties file
 -->
 
@@ -62,8 +62,6 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # Showing the method might slow down logging. In order to improve performance use the pattern above
 log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c.%M():%L %x - %m%n
 
-#log4j.category.org.apache.lenya.cms.cocoon.transformation.IncludeTransformer=DEBUG
-#log4j.category.org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper=DEBUG
 log4j.category.org.apache.lenya.lucene.index.AbstractIndexer=INFO
 log4j.category.org.apache.lenya.lucene.index.IndexInformation=INFO
 log4j.category.org.apache.lenya.lucene.index.IndexIterator=INFO
