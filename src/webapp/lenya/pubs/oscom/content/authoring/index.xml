@@ -5,6 +5,6 @@
 <title>Welcome to OSCOM</title>
 </head>
 <body>
-<b>Welcome</b> to the OSCOM <a href="matrix/index.html">matrix</a>.
+<span style="font-weight: bold;">Welcome</span> to the OSCOM <a href="matrix/index.html">matrix</a>.
 </body>
 </html>

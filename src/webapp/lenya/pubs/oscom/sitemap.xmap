@@ -37,14 +37,21 @@
 
 <!-- Redirects -->
     <map:pipeline>
+      <!-- Publication -->
       <map:match pattern="">
         <map:redirect-to uri="introduction.html"/>
       </map:match>
       <map:match pattern="index.html">
         <map:redirect-to uri="introduction.html"/>
       </map:match>
+      <!-- Home -->
+      <map:match pattern="*/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
     </map:pipeline>
 <!-- /Redirects -->
+
+
 
 <!-- Images -->
     <map:pipeline>
@@ -62,6 +69,9 @@
     </map:pipeline>
 <!-- /Images -->
 
+
+
+
 <!-- Matrix Overview (sorted by frameworks and cms) -->
     <map:pipeline>
       <map:match pattern="*/matrix/">
@@ -69,7 +79,9 @@
       </map:match>
       <map:match pattern="*/matrix/index.html">
         <map:generate src="cocoon:/{1}/matrix/overview.xml"/>
-        <map:transform src="xslt/overview/{1}/main.xsl"/>
+        <map:transform src="xslt/overview/{1}/main.xsl">
+          <map:parameter name="relativePrefix" value="../"/>
+        </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/matrix/overview.xml"/>
         <map:serialize type="html"/>
       </map:match>
@@ -96,7 +108,9 @@
     <map:pipeline>
       <map:match pattern="*/matrix/*.html">
         <map:generate src="cocoon:/{1}/matrix/{2}.xml"/>
-        <map:transform src="xslt/matrix/{1}/main.xsl"/>
+        <map:transform src="xslt/matrix/{1}/main.xsl">
+          <map:parameter name="relativePrefix" value="../"/>
+        </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/matrix/{2}.xml"/>
         <map:serialize type="html"/>
       </map:match>
@@ -153,8 +167,8 @@
 
 
 
-  <map:pipeline>
-      <!-- XML -->
+    <!-- XML -->
+    <map:pipeline>
       <map:match pattern="*/**.xml">
         <map:generate src="content/{1}/{2}.xml"/>
         <map:transform type="xlink">
@@ -162,14 +176,12 @@
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
+    </map:pipeline>
 
-      <!-- Home -->
-      <map:match pattern="*/">
-        <map:redirect-to uri="index.html"/>
-      </map:match>
-      <!-- /Home -->
 
-      <!-- Generic (XHTML) -->
+
+    <!-- Generic (XHTML) -->
+    <map:pipeline>
       <map:match pattern="*/**.html">
         <map:aggregate element="lenya">
           <map:part src="cocoon:/{1}/{2}-envelope.xml" element="cmsbody"/>
@@ -178,7 +190,15 @@
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/xhtml/{2}.xml"/>
         <map:serialize type="html"/>
       </map:match>
-   </map:pipeline>
+
+      <map:handle-errors type="500">
+        <map:transform src="xslt/404-redirect-to.xsl">
+          <map:parameter name="requestURI" value="{request:requestURI}"/>
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+    </map:pipeline>
 
 
    <!-- Lenya CMS -->
@@ -191,6 +211,8 @@
        <map:transform src="../../xslt/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>
+
+     <!--
      <map:match pattern="authoring/lenya/publishScreen*">
        <map:generate type="serverpages" src="../../content/publishing/publish-screen.xsp" label="xml"/>
        <map:transform src="../../xslt/publishing/main.xsl"/>
@@ -202,8 +224,9 @@
        </map:act>
        <map:redirect-to uri="publishScreen?status=failed" session="true"/>
      </map:match>
+     -->
    </map:pipeline>
 
 
- </map:pipelines>
+  </map:pipelines>
 </map:sitemap>

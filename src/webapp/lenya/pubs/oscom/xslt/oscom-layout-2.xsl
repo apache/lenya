@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:error="http://apache.org/cocoon/error/2.0" xmlns:n-rdf="http://my.netscape.com/rdf/simple/0.9/" xmlns:oscom="http://www.oscom.org/2002/oscom">
+<xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:oscom="http://www.oscom.org/2002/oscom"
+>
+
+<xsl:param name="relativePrefix" select="''"/>
 
 <xsl:variable name="oscombarcolor">#ffa500</xsl:variable>
 
@@ -21,6 +26,9 @@
 <xsl:variable name="searchURL">/search/go</xsl:variable>
 -->
 <xsl:variable name="searchURL">/lenya/oscom/search-live/lucene</xsl:variable>
+
+
+
 
 
 <xsl:template match="oscom">
@@ -210,18 +218,18 @@ content="text/html; charset=iso-latin-1" />
 <tr>
 <td valign="top" width="100%" bgcolor="{$navbarcolor}" class="topnavi">
 
+<!-- NAVIGATION: dynamic -->
 <xsl:apply-templates select="oscom_navigation" mode="top"/>
-<!--
-<xsl:apply-templates select="oscom_navigation"/>
--->
+<!-- /NAVIGATION: dynamic -->
 
+<!-- NAVIGATION: static -->
 <!--
 <table border="0" cellpadding="0" cellspacing="0">
 <tbody>
 <tr>
 
 <td height="21" class="topnavigation" align="left">
-  <a href="/index.html" class="navigationwhite">Home</a>
+  <a href="../index.html" class="navigationwhite">Home</a>
 </td>
 <td height="21" width="19" align="left">
   <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
@@ -234,7 +242,6 @@ content="text/html; charset=iso-latin-1" />
   <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
-
 <td height="21" class="topnavigation" align="left">
   <a href="/lenya/oscom/matrix/index.html" class="navigationwhite">
     <span class="naviselected">CMS Matrix</span>
@@ -244,8 +251,6 @@ content="text/html; charset=iso-latin-1" />
   <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
-
-
 <td height="21" class="topnavigation" align="left">
   <a href="/Projects/" class="navigationwhite">Projects</a>
 </td>
@@ -253,15 +258,12 @@ content="text/html; charset=iso-latin-1" />
   <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
-
-
 <td height="21" class="topnavigation" align="left">
   <a href="/Mailing%20lists/" class="navigationwhite">Mailing lists</a>
 </td>
 <td height="21" width="19" align="left">
   <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
-
 
 <td height="21" class="topnavigation" align="left">
   <a href="http://blog.oscom.org/" class="navigationwhite">Blog</a>
@@ -281,6 +283,7 @@ content="text/html; charset=iso-latin-1" />
 </tbody>
 </table>
 -->
+<!-- /NAVIGATION: static -->
 
 
 </td>
@@ -384,7 +387,7 @@ width="24" height="16" border="0" /></td>
 
 <xsl:template match="leaf" mode="top">
 <td height="21" class="topnavigation" align="left">
-  <a href="{@href}" class="navigationwhite">
+  <a href="{$relativePrefix}{@href}" class="navigationwhite">
     <xsl:choose>
       <xsl:when test="@selected">
         <span class="naviselected"><xsl:value-of select="@name"/></span>
