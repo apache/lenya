@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role-list>
+
+  <role name="org.apache.lenya.cms.ac2.AccessController"
+        shorthand="access-controller"
+        default-class="org.apache.lenya.cms.ac2.file.FileAccessController"/>
+    
+  <role name="org.apache.lenya.cms.ac2.AccessControllerSelector"
+        shorthand="access-controllers"
+        default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector"/>
+
+</role-list>
