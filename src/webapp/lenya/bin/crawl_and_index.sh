@@ -33,20 +33,6 @@ echo "INFO: classpath = $CLASSPATH"
 
 
 case "$1" in
-    crawl)
-        echo ""
-        echo "=========================================================="
-        echo "Target: $1"
-        echo "=========================================================="
-        echo ""
-
-        CRAWLER_CONF=$2
-
-        echo "INFO: crawler.xconf = $CRAWLER_CONF"
-        $JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.CrawlerConfiguration $CRAWLER_CONF
-        echo ""
-        $JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
-	;;
     xpdf)
         echo ""
         echo "=========================================================="
@@ -80,7 +66,7 @@ case "$1" in
         $JAVA -cp $CLASSPATH org.apache.lenya.lucene.SearchFiles $INDEX_DIR $WORD
 	;;
     *)
-        echo "Usage: $0 {crawl|xpdf|search}"
+        echo "Usage: $0 {xpdf|search}"
         exit 1
         ;;
 esac
