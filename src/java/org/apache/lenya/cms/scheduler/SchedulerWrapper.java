@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.22 2003/08/29 17:17:07 andreas Exp $
+$Id: SchedulerWrapper.java,v 1.23 2003/10/03 13:19:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -86,6 +86,8 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -214,12 +216,21 @@ public class SchedulerWrapper {
             JobDetail jobDetail = new JobDetail(uniqueJobId, jobGroup, jobClass);
             jobDetail.setJobDataMap(map);
 
-            if (startTime.after(new GregorianCalendar().getTime())) {
+            Date now = new GregorianCalendar().getTime();
+            if (log.isDebugEnabled()) {
+                DateFormat format = new SimpleDateFormat();
+                log.debug("Trigger time: [" + format.format(startTime) + "]");
+                log.debug("Current time: [" + format.format(now) + "]");
+            }
+
+            if (startTime.after(now)) {
                 Trigger trigger =
                     TriggerHelper.createSimpleTrigger(uniqueJobId, jobGroup, startTime);
                 addJob(jobDetail, trigger);
+                log.debug("Scheduling job.");
             } else {
                 addJob(jobDetail);
+                log.debug("Adding job without scheduling.");
             }
 
             log.debug("----------------------------------------------");
@@ -553,18 +564,37 @@ public class SchedulerWrapper {
             ServletJob job = ServletJobFactory.createJob(jobClassName);
             JobDetail jobDetail = job.load(jobElement, jobGroup, getServletContextPath());
 
-            Element triggerElement = helper.getFirstChild(jobElement, "trigger");
+            Trigger trigger = null;
 
+            Element triggerElement = helper.getFirstChild(jobElement, "trigger");
             if (triggerElement != null) {
-                Trigger trigger =
+                trigger =
                     TriggerHelper.createTrigger(
                         triggerElement,
                         jobDetail.getName(),
                         jobDetail.getGroup());
 
-                // FIXME: In the case of CronTrigger, getFinalFireTime does not make sense!
+                Date now = new GregorianCalendar().getTime();
+                if (log.isDebugEnabled()) {
+                    DateFormat format = new SimpleDateFormat();
+                    log.debug("    Trigger time: [" + format.format(trigger.getFinalFireTime()) + "]");
+                    log.debug("    Current time: [" + format.format(now) + "]");
+                }
+                if (!trigger.getFinalFireTime().after(now)) {
+                    trigger = null;
+                }
+            }
+
+            // FIXME: In the case of CronTrigger, getFinalFireTime does not make sense!
+            if (trigger != null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("    Trigger time in future - scheduling job.");
+                }
                 addJob(jobDetail, trigger);
             } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("    Trigger time has expired - adding job without scheduling.");
+                }
                 addJob(jobDetail);
             }
         } catch (Exception e) {
@@ -609,24 +639,26 @@ public class SchedulerWrapper {
     public void modifyJob(String jobId, String jobGroup, Date startTime)
         throws SchedulerException {
         log.debug("Modifying job [" + jobId + "][" + jobGroup + "]");
-        
+
         JobDetail jobDetail = getScheduler().getJobDetail(jobId, jobGroup);
         if (jobDetail == null) {
             throw new SchedulerException("Job not found!");
         }
-        
+
         Trigger trigger = getTrigger(jobDetail.getName(), jobGroup);
         if (trigger == null) {
-            log.debug("No trigger found.");
-        }
-        else {
-            log.debug("Trigger found. Setting new start time.");
-            getScheduler().unscheduleJob(trigger.getName(), trigger.getGroup());
-
+            log.debug("    No trigger found.");
+        } else {
+            log.debug("    Trigger found. Setting new start time.");
             jobDetail.setDurability(true);
             if (startTime.after(new GregorianCalendar().getTime())) {
+                log.debug("    Start time is in future - re-scheduling job.");
+                getScheduler().unscheduleJob(trigger.getName(), trigger.getGroup());
                 trigger = TriggerHelper.createSimpleTrigger(jobId, jobGroup, startTime);
                 getScheduler().scheduleJob(trigger);
+            } else {
+                log.debug("    Start time has already expired - deleting job.");
+                getScheduler().deleteJob(jobId, jobGroup);
             }
             writeSnapshot(jobGroup);
         }
