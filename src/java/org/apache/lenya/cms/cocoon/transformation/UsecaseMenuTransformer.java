@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.5 2003/09/12 16:49:08 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.6 2003/10/31 15:17:17 andreas Exp $
 <License>
 
  ============================================================================
@@ -110,7 +110,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                 getLogger().debug("Found usecase [" + usecase + "]");
 
                 try {
-                    if (!authorizer.authorizeUsecase(webappUrl, usecase, roles, publication)) {
+                    if (!authorizer.authorizeUsecase(usecase, roles, publication)) {
                         getLogger().debug("Usecase not authorized");
                         int hrefIndex = attributes.getIndex("href");
                         if (hrefIndex > -1) {
@@ -130,7 +130,6 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
     private UsecaseAuthorizer authorizer;
     private ComponentSelector selector = null;
-    private String webappUrl;
     private Role[] roles;
     private Publication publication;
     private AccessControllerResolver acResolver;
