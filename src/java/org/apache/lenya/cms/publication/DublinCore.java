@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DublinCore.java,v 1.1 2003/07/15 09:24:22 gregor Exp $
 <License>
 
  ============================================================================
@@ -55,70 +55,118 @@ $Id
 */
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
 
+import java.io.File;
+import java.util.Arrays;
+
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+
+import org.apache.xpath.XPathAPI;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 /**
- * A CMS document.
+ * A publication.
  *
- * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
+ * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  */
-public interface Document {
-    /**
-     * Returns the document ID of this document.
-     * @return A URI object.
-     */
-    String getId();
+public class DublinCore {
+	private PublishingEnvironment environment;
+	private File servletContext;
 
-    /**
-     * Returns the publication this document belongs to.
-     * @return A publication object.
+    /** 
+     * Creates a new instance of Dublin Core
+     * 
      */
-    Publication getPublication();
-
-    /**
-     * Returns the complete URL of this document:<br/>
-     * /{publication-id}/{area}{document-id}{language-suffix}.{extension}
-     * @return A string.
-     */
-    String getCompleteUrl();
-
-    /**
-     * Returns the URL of this document:
-     * {document-id}{language-suffix}.{extension}
-     * The URL always starts with a slash (/).
-     * @return A string.
-     */
-    String getDocumentUrl();
+    protected DublinCore() {
+    }
 
 	/**
-	 * Returns the dublin core class for this document.
-	 * @return A DublinCore object.
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	DublinCore getDublinCore();
+	public String getTitle() {
+/*
+			infofile = getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(), getLanguage());
+			domdocument = DocumentHelper.readDocument(infofile);
+*/
+			return null;
+	}
 
-    /**
-     * Returns the language of this document.
-     * @return A string denoting the language.
-     */
-    String getLanguage();
+	/**
+	 * Set the DC title
+	 * 
+	 * @param title the title
+	 */
+	public void setTitle(String title) {
+	}
 
-    /**
-     * Returns the area this document belongs to.
-     * @return The area.
-     */
-    String getArea();
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getCreator() { 
+			return null;
+		}
 
-    /**
-     * Returns the file for this document.
-     * @return A file object.
-     */
-    File getFile();
+	/**
+	 * Set the DC creator
+	 * 
+	 * @param creator the Creator
+	 */
+	public void setCreator(String creator) {
+	}
 
-    /**
-     * Returns the extension in the URL.
-     * @return A string.
-     */
-    String getExtension();
-    
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getSubject() { 
+			return null;
+		}
+
+	/**
+	 * Set the DC Subject
+	 * 
+	 * @param subject the subject
+	 */
+	public void setSubject(String subject) {
+	}
+
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getDescription() { 
+			return null;
+		}
+	
+	/**
+	 * Set the DC Description
+	 * 
+	 * @param description the description
+	 */
+	public void setDescription(String description) {
+	}
+
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getRights() { 
+			return null;
+		}
+
+	/**
+	 * Set the DC Rights
+	 * 
+	 * @param rights the rights
+	 */
+	public void setRights(String rights) {
+	}
+
+
 }

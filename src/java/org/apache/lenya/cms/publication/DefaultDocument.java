@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.10 2003/07/14 16:59:32 michi Exp $
+$Id: DefaultDocument.java,v 1.11 2003/07/15 09:24:22 gregor Exp $
 <License>
 
  ============================================================================
@@ -56,21 +56,9 @@ $Id: DefaultDocument.java,v 1.10 2003/07/14 16:59:32 michi Exp $
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import java.io.IOException;
 
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
 
 import org.apache.log4j.Category;
-import org.apache.xpath.XPathAPI;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 /**
  * A typical CMS document.
@@ -115,6 +103,7 @@ public class DefaultDocument implements Document {
 
     private String id;
     private Publication publication;
+	private DublinCore dublincore;
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getFile()
@@ -129,6 +118,13 @@ public class DefaultDocument implements Document {
     public Publication getPublication() {
         return publication;
     }
+
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDublinCore()
+	 */
+	public DublinCore getDublinCore() {
+		return dublincore;
+	}
 
     /**
      * Returns the file for this document.
@@ -214,42 +210,4 @@ public class DefaultDocument implements Document {
         return getId() + languageSuffix + extensionSuffix;
     }
     
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getDCTitle() {
-/*
-            infofile = getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(), getLanguage());
-            domdocument = DocumentHelper.readDocument(infofile);
-*/
-            return null;
-	}
-
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getDCCreator() { 
-            return null;
-        }
-
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getDCSubject() { 
-            return null;
-        }
-
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getDCDescription() { 
-            return null;
-        }
-	
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getDCRights() { 
-            return null;
-        }
 }
