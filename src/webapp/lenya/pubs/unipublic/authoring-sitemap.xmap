@@ -430,6 +430,7 @@
           <map:when test="explorer">
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
               <map:parameter name="section" value="{2}"/>
+              <map:parameter name="documentid" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
               <map:parameter name="authoring" value="true"/>
             </map:transform>
 <!--

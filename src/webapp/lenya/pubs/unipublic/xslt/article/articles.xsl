@@ -3,6 +3,7 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:param name="section" select="'default_value'"/>
+<xsl:param name="documentid"/>
 <xsl:param name="authoring"/>
 
 <xsl:template match="text()">
@@ -67,7 +68,7 @@
   <xsl:param name="block-position"/>
   <p>
     <xsl:if test="$authoring and not(preceding-sibling::media)">
-      <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{position()}]"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+      <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{position()}]"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
     </xsl:if>
     <xsl:if test="not(preceding-sibling::p)">
       <xsl:apply-templates select="../hl2" mode="block"/>
