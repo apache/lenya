@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>XHTML templating</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Gregor J. Rothfuss" email="gregor.rothfuss@lenya.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section><title>The XHTML Templating Concept</title> 
+<p>There are various approaches to templating within a Lenya
+publication. The XHTML approach is effective under the following
+conditions:
+</p>
+<ul>
+  <li>Designers want to edit the layout with their conventional tools.</li> 
+<li>The page layout contains large parts of static HTML.</li>
+<li>Pages are typically composed of simple elements.</li>
+</ul>
+
+<p>
+If these conditions are met, it is possible to define the overall
+layout of a page in a XHTML document, using tools like Dreamweaver.
+Special placeholders need to be inserted to indicate where Lenya
+elements should later be substituted. This can be done by inserting
+&lt;div id="navigation" /&gt; as the placeholder for the navigation, for
+instance, or &lt;div id="cmsbody" /&gt; for the body part of a page.
+</p><p>
+If these XHTML documents are finished, they can then be called
+from Lenya, and the placeholders be substituted with CMS content.
+Schematically, this process looks as follows:
+</p>
+<p>1)</p>
+
+<p>XML document (article)    -&gt;</p>
+<p>XML document (navigation) -&gt;  Aggregation to one XML document</p>
+<p>XHTML template            -&gt;</p> 
+
+<p>2)</p>
+
+<p>aggregated XML document   -&gt;  Processing with XSLT</p>
+<p>
+Step 2) identifies the various placeholders ( &lt;div id="navigation" /&gt;
+and &lt;div id="cmsbody" /&gt; in this example) and applies XSL transformations
+to substitute the placeholders with the transformed contents of
+(navigation, article) respectively.
+</p><p>
+What are the advantages of this approach?</p>
+<ul>
+  <li>less XSLT is required, making it easier to delegate design work</li>
+<li>XSLT are easier to understand, as they only affect a small part
+  of a page</li>
+</ul>
+<p>What are the pitfalls of this approach?</p>
+<ul>
+  <li>it may not be appropriate to put the content (here: article) into
+  the XHTML format</li>
+<li>template reuse may be hampered</li>
+</ul>
+</section>
+
+</body>
+</document>
