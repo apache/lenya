@@ -39,6 +39,8 @@
     <fail unless="xsltproc.output">:            
       ********************************************
       * Please install "xsltproc" to build Kupu. *
+	  * ftp://ftp.zlatkovic.com/pub/libxml/      *
+	  * (you also need zlib and iconv)           *
       ********************************************
       
     </fail>
