@@ -84,11 +84,12 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
     public boolean authorize(Request request,Map map) throws Exception{
         String remoteAddress=request.getRemoteAddr();
 
-        // Permit Identity and Policy requests for localhost
+        // Permit ?Identity? and Policy requests for localhost
         String sitemap_uri=request.getRequestURI();
-        getLogger().error("POLICIES: "+sitemap_uri+" "+policies);
+        if(getLogger().isDebugEnabled()){
+          getLogger().debug("POLICIES: "+sitemap_uri+" "+policies);
+          }
         if(remoteAddress.equals("127.0.0.1") && (sitemap_uri.indexOf(policies) >= 0)){
-            //if(remoteAddress.equals("127.0.0.1")){
             return true;
         }
     
@@ -170,7 +171,9 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
         }
         pmlURLString=pmlURLString+"/"+policies+sitemap_uri+".acml";
         //pmlURLString=pmlURLString+"/"+policies+sitemap_uri+".pml";
-        getLogger().error(".getPolicyDoc(): "+pmlURLString);
+        if(getLogger().isDebugEnabled()){
+          getLogger().debug(".getPolicyDoc(): "+pmlURLString);
+          }
         DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
         DocumentBuilder db=dbf.newDocumentBuilder();
         return db.parse(new URL(pmlURLString).openStream());
