@@ -661,6 +661,13 @@
       </map:match>
     </map:pipeline>
 
+    <!-- Editor Epoz -->
+    <map:pipeline>
+      <map:match pattern="epoz/**">
+        <map:read src="lenya/resources/epoz/{1}"/>
+      </map:match>
+    </map:pipeline>
+
 
 
     <map:pipeline>
