@@ -23,15 +23,15 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   limitations under the License.
 -->
 
-<!-- $Id: index_de.xml,v 1.7 2004/03/17 19:49:28 gregor Exp $ -->
+<!-- $Id$ -->
     <lenya:meta>
         <dc:title>Der XHTML Dokumenttyp</dc:title>
-        <dc:creator>Christian Egli</dc:creator>
-        <dc:subject>DC Subject</dc:subject>
-       <dc:description>Abstract that can be used on an overview page</dc:description>
-        <dc:publisher/>
+        <dc:creator>Lenya Development Team</dc:creator>
+        <dc:subject>XHTML Dokumenttyp</dc:subject>
+       <dc:description>Erklärt den XHTML Dokumenttyp</dc:description>
+        <dc:publisher>Apache Software Foundation</dc:publisher>
         <dc:contributor/>
-        <dc:date>2003-5-21</dc:date>
+        <dc:date>2005-01-31</dc:date>
         <dc:type/>
         <dc:format/>
         <dc:identifier/>
@@ -39,7 +39,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
         <dc:language>de</dc:language>
         <dc:relation/>
         <dc:coverage/>
-        <dc:rights>DC Rights</dc:rights>
+        <dc:rights>Alle Rechte vorbehalten</dc:rights>
     </lenya:meta>
   <head>
     <title>Der XHTML Dokumenttyp</title>
