@@ -1,5 +1,5 @@
 /*
-$Id: DefaultCreator.java,v 1.22 2003/07/30 15:30:06 egli Exp $
+$Id: DefaultCreator.java,v 1.23 2003/07/31 17:09:56 egli Exp $
 <License>
 
  ============================================================================
@@ -298,5 +298,16 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         String childId,
         String language) {
         return null;
+    }
+
+    /**
+     * Create the language suffix for a file name given a language string
+     * 
+     * @param language the language
+     * 
+     * @return the suffix for the language dependant file name
+     */
+    protected String getLanguageSuffix(String language) {
+        return (language != null) ? "_" + language : "";
     }
 }
