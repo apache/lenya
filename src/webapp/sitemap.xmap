@@ -9,6 +9,9 @@
     <map:generator label="content,data" logger="sitemap.generator.file" name="file" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.generation.FileGenerator"/>
     <map:generator label="content,data" logger="sitemap.generator.file-nolabel" name="file-nolabel" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.generation.FileGenerator"/>
     <map:generator label="content,data" logger="sitemap.generator.serverpages" name="serverpages" pool-grow="2" pool-max="32" pool-min="4" src="org.apache.cocoon.generation.ServerPagesGenerator"/>
+    <map:generator label="content" logger="sitemap.generator.wsproxy" name="wsproxy" src="org.apache.cocoon.generation.WebServiceProxyGenerator"/>
+    <!-- FIXME: What is the difference to wsproxy? -->
+    <map:generator label="content" logger="sitemap.generator.proxy" name="proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
 <!-- =========================== Lenya CMS ================================= -->
     <map:generator name="servletproxy" src="org.apache.lenya.cms.cocoon.generation.ProxyGenerator"/>
   </map:generators>
