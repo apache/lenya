@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
-<Webperls id="webperlen">
-  <Title>HANDVERLESENE PERLEN AUS DEM WEB DER UNI</Title>
-  <Webperl>
-    <Title href="http://www.rektorat.unizh.ch/matrikel">Die Matrikel der Universit&#228;t Z&#252;rich</Title>
-    <Byline>1833 bis 1912 (-1914)</Byline>
-  </Webperl>
-  <Webperl>
-    <Title href="http://www.bse.zh.ch">Die BSE Homepage</Title>
-    <Byline>Fachwissen zum Thema BSE - mit Video!</Byline>
-  </Webperl>
-  <Webperl>
-    <Title href="http://www.lavater.unizh.ch">Johann Caspar Lavater</Title>
-    <Byline>Ausgew&#228;hlte Werke in historisch-kritischer Ausgabe</Byline>
-  </Webperl>
-</Webperls>
+<webperls id="webperlen">
+  <title>HANDVERLESENE PERLEN AUS DEM WEB DER UNI</title>
+  <webperl>
+    <title href="http://www.rektorat.unizh.ch/matrikel">Die Matrikel der Universit&#228;t Z&#252;rich</title>
+    <byline>1833 bis 1912 (-1914)</byline>
+  </webperl>
+  <webperl>
+    <title href="http://www.bse.zh.ch">Die BSE Homepage</title>
+    <byline>Fachwissen zum Thema BSE - mit Video!</byline>
+  </webperl>
+  <webperl>
+    <title href="http://www.lavater.unizh.ch">Johann Caspar Lavater</title>
+    <byline>Ausgew&#228;hlte Werke in historisch-kritischer Ausgabe</byline>
+  </webperl>
+</webperls>

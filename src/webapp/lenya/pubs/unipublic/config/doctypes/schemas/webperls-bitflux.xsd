@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bxe="http://bitfluxeditor.org/schema/1.0">
+	<xs:element name="title" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Title</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Title</bxe:name>
+				<bxe:noaddparas>1</bxe:noaddparas>
+				<bxe:requiredattributes>href</bxe:requiredattributes>
+				<bxe:returnelement>none</bxe:returnelement>
+				<!-- 
+				<bxe:returnelement><![CDATA[<Byline>Byline</Byline>]]></bxe:returnelement> 
+				<bxe:insertafter>
+					<bxe:element>byline</bxe:element>
+				</bxe:insertafter>
+				-->
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="byline" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Byline</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Byline</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+				<bxe:noaddparas>1</bxe:noaddparas>
+				<!--
+				<bxe:insertafter>
+					<bxe:element>title</bxe:element>
+				</bxe:insertafter>
+				-->
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="webperl">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Webperl</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Webperl</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+				<bxe:insertafter>
+					<bxe:element>webperl</bxe:element>
+				</bxe:insertafter>
+				<bxe:addalso><![CDATA[<title href="http://www.unizh.ch">Title</title><byline>Byline</byline>]]></bxe:addalso>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="title"/>
+				<xs:element ref="byline"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="webperls">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Webperls</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Webperls</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="webperl" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

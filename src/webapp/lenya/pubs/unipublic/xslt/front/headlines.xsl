@@ -10,7 +10,7 @@
 </xsl:template>
 
 <xsl:template match="Articles">
-
+<span bxe-editable="headlines">
 <table cellspacing="0" cellpadding="0" width="315"
 bgcolor="#CCCC99" border="0" bordercolor="blue">
 <tbody>
@@ -82,6 +82,7 @@ src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
 
     </xsl:if>
   </xsl:for-each>
+</span>
 </xsl:template>
 
 <xsl:template match="Articles" mode="top">

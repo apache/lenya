@@ -1,9 +1,8 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <Articles>
-  <Article channel="magazin" section="gesundheit" year="2002" dir="0595"/>
-  <Article channel="magazin" section="gesundheit" year="2002" dir="0465"/>
-  <Article channel="magazin" section="geist" year="2002" dir="0470"/>
-  <Article channel="magazin" section="umwelt" year="2002" dir="0385"/>
-  <Article channel="magazin" section="recht" year="2002" dir="0413"/>
+  <Article channel="magazin" section="gesundheit" year="2002" dir="0465">Leben mit tödlichem«PIP3»</Article>
+  <Article channel="magazin" section="geist" year="2002" dir="0470">«Die Geschichte ist nie zu Ende geschrieben»</Article>
+  <Article channel="magazin" section="umwelt" year="2002" dir="0385">Spaziergang in die Vergangenheit</Article>
+  <Article channel="magazin" section="recht" year="2002" dir="0413">Der Homo oeconomicus - neu definiert</Article>
 </Articles>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bxe="http://bitfluxeditor.org/schema/1.0">
+	<xs:element name="article" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Article</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Article</bxe:name>
+				<bxe:noaddparas>1</bxe:noaddparas>
+				<bxe:returnelement>none</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="articles">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Articles</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Articles</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
+	<!--
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="Webperl" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:complexType>
+	-->
+	</xs:element>
+</xs:schema>

@@ -5,22 +5,6 @@
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
       <title>Authoring</title>
-      <style type="text/css">
-/*<![CDATA[*/
-<!--
-        .awyona {
-            color: #0066FF;
-            text-decoration: none;
-        }
-
-        .awyona:visited {
-            
-            color: #0066FF;
-            text-decoration: none;
-        }
-      -->
-/*]]>*/
-</style>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
       <title>unipublic -</title>
       <link href="/wyona-cms/unipublic/unipublic.css" rel="stylesheet" type="text/css"/>

@@ -94,6 +94,13 @@
     </map:selectors>
   </map:components>
 
+  <!-- =========================== Views     ================================ -->
+  <map:views>
+    <map:view name="orig" from-position="first">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+
   <!-- =========================== Pipelines ================================ -->
 
   <map:pipelines>
@@ -309,11 +316,30 @@
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
       <map:match pattern="index.html">
-        <map:generate src="cocoon:/index.xml"/> 
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/front.xml"/>
+          <map:part src="cocoon:/index.xml" element="cmsbody"/>
+        </map:aggregate>
         <map:transform src="stylesheets/publication/Page/Front/Authoring/main.xsl">
           <map:parameter name="year" value="2002"/>
         </map:transform>
         <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Used to build the bitflux stylesheets for headlines, webperlen, dossierkasten dynamically  -->
+      <map:match pattern="index.xhtml">
+	<!--    Not possible to do it with the cocoon protocol because this pipeline is already called 
+	through the cocoon protocol from bitflux.xmap - and that appears not to work
+        <map:generate src="cocoon:/index.xml"/>
+	-->
+        <map:generate src="docs/publication/authoring/frontpage/index.xml"/>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/authoring/frontpage/index.xml"/>
+        </map:transform>
+        <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl">
+          <map:parameter name="year" value="2002"/>
+        </map:transform>
+        <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="headlines.xml">
@@ -325,11 +351,13 @@
         <map:serialize type="xml"/>
       </map:match>
 
+      <map:match pattern="webperls.xml">
+        <map:generate src="docs/publication/authoring/frontpage/webperls.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
       <map:match pattern="index.xml">
-        <map:aggregate element="wyona">
-          <map:part src="cocoon:/menus/front.xml" label="Menu"/>
-          <map:part src="docs/publication/authoring/frontpage/index.xml" element="cmsbody" label="Content"/>
-        </map:aggregate>
+        <map:generate src="docs/publication/authoring/frontpage/index.xml"/>
         <map:transform type="xlink">
           <map:parameter name="href" value="docs/publication/authoring/frontpage/index.xml"/>
         </map:transform>

@@ -61,6 +61,7 @@
 	<br />
 	<a href="{$unipublic}{$view}/dossiers/"><img src="{$img-unipub}/dossiers/doss_rub_title.gif" alt="Dossiers" width="112" height="28" border="0" /></a>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<span bxe-editable="dossierkasten">
 	<xsl:for-each select="dossier">
 	  <tr>
 	    <td colspan="2" bgcolor="{head/color}"><a href="{$unipublic}{$view}/dossiers/{@id}/index.html"><img src="{$unipublic}/dossiers/{@id}/{head/media/media-reference/@source}" alt="" width="80" height="60" border="0" /></a></td>
@@ -81,6 +82,7 @@
 	    <td class="tsr-text" valign="top" bgcolor="white" width="3"><img src="{$img-unipub}/spacer.gif" alt=" " width="3" height="10" border="0" /></td>
 	  </tr>
 	</xsl:for-each>
+	</span>
 	</table>
 </xsl:template>	
 
