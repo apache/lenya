@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SitetreeModule.java,v 1.2 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -30,13 +30,15 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
+import org.apache.lenya.cms.publication.SiteTreeNode;
 
 public class SitetreeModule extends AbstractInputModule {
 
     public static final String AUTHORING_NODE = "authoring-node";
     public static final String LIVE_NODE = "live-node";
+    public static final String FIRST_CHILD_ID = "first-child-id";
 
-    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE };
+    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, FIRST_CHILD_ID };
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
@@ -58,6 +60,17 @@ public class SitetreeModule extends AbstractInputModule {
             if (name.equals(LIVE_NODE)) {
                 SiteTree liveTree = publication.getSiteTree(Publication.LIVE_AREA);
                 value = liveTree.getNode(envelope.getDocument().getId());
+            }
+
+            if (name.equals(FIRST_CHILD_ID)) {
+                SiteTree siteTree = publication.getSiteTree(envelope.getDocument().getArea());
+                SiteTreeNode node = siteTree.getNode(envelope.getDocument().getId()); 
+                SiteTreeNode[] children = node.getChildren(envelope.getDocument().getLanguage());
+                if (children.length > 0){
+                    value = children[0].getId();
+                } else {
+                    value = null;   
+                }
             }
 
         } catch (Exception e) {
