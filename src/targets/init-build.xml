@@ -100,8 +100,9 @@
       <fileset dir="${cocoon.webapp.dir}">
         <exclude name="*.xml"/>
         <exclude name="*.xslt"/>
-        <exclude name="test-suite"/>
-        <exclude name="legal"/>
+        <exclude name="test-suite/**"/>
+        <exclude name="legal/**"/>
+        <exclude name="WEB-INF/db/**"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
         <exclude name="WEB-INF/logkit.xconf"/>
         <exclude name="WEB-INF/web.xml"/>

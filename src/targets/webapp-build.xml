@@ -146,7 +146,14 @@
       </fileset>
     </copy>
 
-    <condition property="servlet.engine.tomcat">
+    <!-- Copy database files to ${build.webapp}/WEB-INF/db -->
+    <copy todir="${build.webapp}/WEB-INF/db">
+      <fileset dir="${src.database.dir}">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+
+  	<condition property="servlet.engine.tomcat">
       <equals arg1="${web.app.server}" arg2="Tomcat"/>
     </condition>
     <antcall target="successfully-built-message-tomcat"/>
