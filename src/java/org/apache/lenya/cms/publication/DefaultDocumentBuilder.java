@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.8 2003/07/30 15:03:24 gregor Exp $
+$Id: DefaultDocumentBuilder.java,v 1.9 2003/08/05 14:53:27 andreas Exp $
 <License>
 
  ============================================================================
@@ -129,13 +129,12 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      * @return A string.
      */
     protected String getLanguage(String urlWithoutSuffix) {
-        int startOfLanguage = urlWithoutSuffix.lastIndexOf('_');
+        
         String suffix = "";
-
-        if ((startOfLanguage > -1) && !urlWithoutSuffix.endsWith("_")) {
-            suffix = urlWithoutSuffix.substring(startOfLanguage + 1);
+        String url = urlWithoutSuffix;
+        if (url.length() >= 3 && url.charAt(url.length() - 3) == '_') {
+            suffix = url.substring(url.length() - 2);
         }
-
         return suffix;
     }
 
