@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.14 2003/07/23 13:21:45 gregor Exp $
+$Id: PageEnvelopeModule.java,v 1.15 2003/07/23 19:16:56 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
-
 /**
  * Input module wrapping the page envelope. This module provides publication
  * related information such as document-id, area, publication-id.
@@ -77,7 +76,7 @@ import java.util.Map;
  * @author  andreas
  */
 public class PageEnvelopeModule extends AbstractInputModule {
-	
+
     /**
      * Get the the page envelope for the given objectModel.
      * 
@@ -92,9 +91,12 @@ public class PageEnvelopeModule extends AbstractInputModule {
         PageEnvelope envelope = null;
 
         try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            envelope =
+                PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
         } catch (Exception e) {
-            throw new ConfigurationException("Resolving page envelope failed: ", e);
+            throw new ConfigurationException(
+                "Resolving page envelope failed: ",
+                e);
         }
 
         return envelope;
@@ -103,61 +105,73 @@ public class PageEnvelopeModule extends AbstractInputModule {
     /** (non-Javadoc)
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
-    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException, PageEnvelopeException, PublicationException {
+    public Object getAttribute(
+        String name,
+        Configuration modeConf,
+        Map objectModel)
+        throws ConfigurationException {
         PageEnvelope envelope = getEnvelope(objectModel);
         Object value = null;
 
-        if (name.equals(PageEnvelope.AREA)) {
-            value = envelope.getArea();
-        } else if (name.equals(PageEnvelope.CONTEXT)) {
-            value = envelope.getContext();
-        } else if (name.equals(PageEnvelope.PUBLICATION_ID)) {
-            value = envelope.getPublication().getId();
-        } else if (name.equals(PageEnvelope.PUBLICATION)) {
-            value = envelope.getPublication();
-        } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
-            value = envelope.getDocumentId();
-        } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
-            value = envelope.getDocumentURL();
-        } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
-            value = envelope.getDocumentPath();
-        } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
-            value = envelope.getDocumentFile();
-        } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
-            value = envelope.getDocument().getLanguage();
-		} else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
-			  value = envelope.getDocument().getDublinCore().getTitle();
-		} else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {
-			value = envelope.getDocument().getDublinCore().getCreator();
-        } else if (name.equals(PageEnvelope.DOCUMENT_DC_SUBJECT)) {
-			value = envelope.getDocument().getDublinCore().getSubject();
-        } else if (name.equals(PageEnvelope.DOCUMENT_DC_DESCRIPTION)) {
-			value = envelope.getDocument().getDublinCore().getDescription();
-        } else if (name.equals(PageEnvelope.DOCUMENT_DC_RIGHTS)) {  
-			value = envelope.getDocument().getDublinCore().getRights();
-		} else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {  
-			value = envelope.getDocument().getLastModified();
-		}
+        try {
+            if (name.equals(PageEnvelope.AREA)) {
+                value = envelope.getArea();
+            } else if (name.equals(PageEnvelope.CONTEXT)) {
+                value = envelope.getContext();
+            } else if (name.equals(PageEnvelope.PUBLICATION_ID)) {
+                value = envelope.getPublication().getId();
+            } else if (name.equals(PageEnvelope.PUBLICATION)) {
+                value = envelope.getPublication();
+            } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
+                value = envelope.getDocumentId();
+            } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
+                value = envelope.getDocumentURL();
+            } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
+                value = envelope.getDocumentPath();
+            } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
+                value = envelope.getDocumentFile();
+            } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
+                value = envelope.getDocument().getLanguage();
+            } else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
+                value = envelope.getDocument().getDublinCore().getTitle();
+            } else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {
+                value = envelope.getDocument().getDublinCore().getCreator();
+            } else if (name.equals(PageEnvelope.DOCUMENT_DC_SUBJECT)) {
+                value = envelope.getDocument().getDublinCore().getSubject();
+            } else if (name.equals(PageEnvelope.DOCUMENT_DC_DESCRIPTION)) {
+                value = envelope.getDocument().getDublinCore().getDescription();
+            } else if (name.equals(PageEnvelope.DOCUMENT_DC_RIGHTS)) {
+                value = envelope.getDocument().getDublinCore().getRights();
+            } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
+                value = envelope.getDocument().getLastModified();
+            }
+        } catch (Exception e) {
+            throw new ConfigurationException(
+                "Getting attribute for name [" + name + "] failed: ",
+                e);
+        }
         return value;
     }
 
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
-	 */
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
         throws ConfigurationException {
         return Arrays.asList(PageEnvelope.PARAMETER_NAMES).iterator();
     }
 
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
-	 */
-    public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException, PageEnvelopeException, PublicationException {
-        Object[] objects = { getAttribute(name, modeConf, objectModel) };
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     */
+    public Object[] getAttributeValues(
+        String name,
+        Configuration modeConf,
+        Map objectModel)
+        throws ConfigurationException {
+        Object[] objects = { getAttribute(name, modeConf, objectModel)};
 
         return objects;
     }
