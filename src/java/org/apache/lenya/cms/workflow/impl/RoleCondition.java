@@ -19,9 +19,8 @@ import org.apache.lenya.cms.workflow.Situation;
  *
  * @author  andreas
  */
-public class RoleCondition
-    implements Condition {
-    
+public class RoleCondition implements Condition {
+
     /**
      * Returns if the condition is complied in a certain situation.
      * The condition is complied when the current user has the
@@ -29,8 +28,10 @@ public class RoleCondition
      * @param situation The situation to check.
      * @return if the condition is complied.
      */
-        public boolean isComplied(Situation situation) {
-        User user = situation.getUser();
+    public boolean isComplied(Situation situation) {
+
+        CMSSituation situationImpl = (CMSSituation) situation;
+        User user = situationImpl.getUser();
         Iterator userGroups = user.getGroups();
         Set userRoles = null;
         
@@ -42,7 +43,7 @@ public class RoleCondition
         }
         
         Role conditionRole = new Role(getExpression().trim());
-        
+
         boolean complied = false;
         Iterator roles = userRoles.iterator();
         while (!complied && roles.hasNext()) {
@@ -52,9 +53,9 @@ public class RoleCondition
         }
         return complied;
     }
-    
+
     private String expression;
-        
+
     /** Sets the expression for this condition.
      * @param expression The expression.
      *
@@ -63,9 +64,16 @@ public class RoleCondition
         assert expression != null;
         this.expression = expression;
     }
-    
+
     public String getExpression() {
         return expression;
     }
-    
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getExpression();
+    }
+
 }
