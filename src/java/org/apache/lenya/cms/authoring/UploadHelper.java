@@ -7,7 +7,7 @@
  * for the specific language governing permissions and limitations under the License.
  */
 
-/* $Id: UploadHelper.java,v 1.4 2004/04/14 17:41:32 andreas Exp $ */
+/* $Id: UploadHelper.java,v 1.5 2004/08/16 12:10:52 andreas Exp $ */
 
 package org.apache.lenya.cms.authoring;
 
@@ -19,12 +19,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Helper class for uploading files.
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner </a>
- * @version $Id: UploadHelper.java,v 1.4 2004/04/14 17:41:32 andreas Exp $
+ * @version $Id: UploadHelper.java,v 1.5 2004/08/16 12:10:52 andreas Exp $
  */
 public class UploadHelper {
 
@@ -67,9 +68,11 @@ public class UploadHelper {
             }
         }
 
+        InputStream in = null;
+        OutputStream out =  null;
         try {
-            FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
-            InputStream in = part.getInputStream();
+            out = new FileOutputStream(file.getAbsolutePath());
+            in = part.getInputStream();
             byte[] buf = new byte[4096];
             int read = in.read(buf);
 
@@ -77,12 +80,20 @@ public class UploadHelper {
                 out.write(buf, 0, read);
                 read = in.read(buf);
             }
-        } catch (IOException e) {
-            log.error(e);
-            return false;
         } catch (Exception e) {
             log.error(e);
             return false;
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+                log.error(e);
+            }
         }
         return true;
     }
@@ -93,13 +104,12 @@ public class UploadHelper {
      * @return The saved file or <code>null</code> if the upload was not successful.
      * @throws Exception when something went wrong.
      */
-    public File save(Request request, String requestParameter)
-            throws Exception {
+    public File save(Request request, String requestParameter) throws Exception {
 
         Part part = (Part) request.get(requestParameter);
 
         File file = null;
-        
+
         boolean success = save(part);
         if (success) {
             file = new File(directory, part.getFileName());
