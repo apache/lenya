@@ -39,21 +39,31 @@ public class ArticleImageUploadCreatorAction
     Properties default_properties = null;
 
     /**
-     * The variable <code>uploadDirName</code> is configured trough
+     * The variable <code>recourcesRoot</code> is configured trough
      * parameters to the action in the sitemap. It defines the path to
      * where images are uploaded.
      *
      */
-    protected String uploadDirName = null;
+    protected String recourcesRoot = null;
 
     /**
-     * The variable <code>metaDirName</code> is configured trough
+     * The variable <code>metaRoot</code> is configured trough
      * parameters to the action in the sitemap. It defines where meta
      * files which contain dublin core information for the uploaded
      * image are to be stored.
      *
      */
-    protected String metaDirName = null;
+    protected String metaRoot = null;
+
+    /**
+     * The variable <code>docsRoot</code> is configured trough
+     * parameters to the action in the sitemap. It defines where the
+     * xml files are located. This is needed to find the path to the
+     * original file that requested the upload where we need to insert
+     * a media tag.
+     *
+     */
+    protected String docsRoot = null;
 
     /**
      * The variable <code>insertImageBefore</code> is configured trough
@@ -94,13 +104,14 @@ public class ArticleImageUploadCreatorAction
 
 	// The name of the uploaddir is specified as a parameter of
 	// the action. The parameter is a child of the configuration.
-	uploadDirName = conf.getChild("images-dir").getAttribute("href");
-	metaDirName = conf.getChild("meta-dir").getAttribute("href");
+	recourcesRoot = conf.getChild("resources-root").getAttribute("href");
+	docsRoot = conf.getChild("docs-root").getAttribute("href");
+	metaRoot = conf.getChild("meta-root").getAttribute("href");
 	insertImageBefore =
 	    conf.getChild("insert-image-before").getAttributeAsBoolean("value",
 								       true);
-	getLogger().debug("uploadDirName:" + uploadDirName);
-	getLogger().debug("metaDirName:" + metaDirName);
+	getLogger().debug("recourcesRoot:" + recourcesRoot);
+	getLogger().debug("metaRoot:" + metaRoot);
 	getLogger().debug("insertImageBefore:" + insertImageBefore);
     }
 
@@ -130,7 +141,7 @@ public class ArticleImageUploadCreatorAction
 	sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
 	getLogger().debug("sitemapPath: " + sitemapPath);
 
-	String absoluteMetaDirName = sitemapPath + File.separator + metaDirName;
+	String absoluteMetaDirName = sitemapPath + File.separator + metaRoot;
 	
 	Properties properties = new Properties(default_properties);
 	byte[] buf = new byte[4096];
@@ -146,16 +157,18 @@ public class ArticleImageUploadCreatorAction
 	getLogger().debug(REFERER_PARAM_NAME + ": " + referer);
 
 	String imageXPath = request.getParameter(IMAGEXPATH_PARAM_NAME);
-	String requestingDocumentPath = request.getParameter(DOCUMENTID_PARAM_NAME);
+	String documentId = request.getParameter(DOCUMENTID_PARAM_NAME);
 	String uploadFile = request.getParameter(UPLOADFILE_PARAM_NAME);
 	String insert = request.getParameter(INSERTBEFORE_PARAM_NAME);
 
 	getLogger().debug("imageXPath: " + imageXPath);
-	getLogger().debug("requestingDocumentPath: " + requestingDocumentPath);
+	getLogger().debug("documentId: " + documentId);
 	getLogger().debug("uploadFile: " + uploadFile);
 	getLogger().debug("insert: " + insert);
 
-	// request parameters to indicate if the image should be inserted before or after the given xpath, overwrites the sitemap configuration
+	// request parameters to indicate if the image should be
+	// inserted before or after the given xpath, overwrites the
+	// sitemap configuration
 	insertBefore = false;
 	insertAfter  = false;
 	if (insert != null) {
@@ -232,8 +245,8 @@ public class ArticleImageUploadCreatorAction
 	    }
 		
 	    String imagePath = getImagePath(sitemapPath,
-					    uploadDirName,
-					    requestingDocumentPath,
+					    recourcesRoot,
+					    documentId,
 					    fileName);
 
 	    getLogger().debug("sitemapPath: " + sitemapPath);
@@ -263,8 +276,8 @@ public class ArticleImageUploadCreatorAction
 	    
 	    // insert <media> tags at the location sepecified by the
 	    // cpath in the original document (the referer)
-	    insertMediaTag(sitemapPath + requestingDocumentPath, imageXPath,
-			   fileName, dublinCoreParams);
+	    insertMediaTag(sitemapPath + docsRoot + File.separator + documentId,
+			   imageXPath, fileName, dublinCoreParams);
 	    
 	} else {
 	    getLogger().debug("parameter " + UPLOADFILE_PARAM_NAME + " is not of type FilePart");
@@ -387,23 +400,26 @@ public class ArticleImageUploadCreatorAction
     /**
      * Figure out where the image is to be stored. The default
      * implementation simply concatenates the sitemapPath and
-     * uploadDirName (which is defined in the sitemap) with the
-     * filename. Derived classes might want to change this into more
-     * elaborate schemes, i.e. store the image together with the
-     * document where the image is inserted.
+     * recourcesRoot (which is defined in the sitemap) with the parent
+     * of documentId and the filename. Derived classes might want to
+     * change this into more elaborate schemes, i.e. store the image
+     * together with the document where the image is inserted.
      *
      * @param sitemapPath a <code>String</code> value
-     * @param uploadDirName a <code>String</code> value
-     * @param requestingDocumentPath a <code>String</code> value
+     * @param recourcesRoot a <code>String</code> value
+     * @param documentId a <code>String</code> value
      * @param fileName a <code>String</code> value
      * @return a <code>String</code> value
      */
     protected String getImagePath(String sitemapPath,
-				  String uploadDirName,
-				  String requestingDocumentPath,
+				  String recourcesRoot,
+				  String documentId,
 				  String fileName) {
-	return sitemapPath + File.separator + uploadDirName + File.separator +
-	    fileName;
+
+	String requestingDocumentPath =
+	    (new File(documentId)).getParent();
+	return sitemapPath + File.separator + recourcesRoot + File.separator +
+	    requestingDocumentPath + File.separator + fileName;
 	
     }
 }
