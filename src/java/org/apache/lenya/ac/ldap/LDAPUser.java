@@ -21,14 +21,17 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Properties;
 
+import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
-import javax.naming.ldap.LdapContext;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -41,23 +44,36 @@ import com.sun.jndi.ldap.LdapCtxFactory;
 
 /**
  * LDAP user.
- * @version $Id: LDAPUser.java,v 1.6 2004/08/16 16:36:57 andreas Exp $
+ * @version $Id$
  */
 public class LDAPUser extends FileUser {
     private static Properties defaultProperties = null;
     private static Category log = Category.getInstance(LDAPUser.class);
 
     public static final String LDAP_ID = "ldapid";
-    private static String PROVIDER_URL = "provider-url";
-    private static String MGR_DN = "mgr-dn";
-    private static String MGR_PW = "mgr-pw";
-    private static String PARTIAL_USER_DN = "partial-user-dn";
-    private static String KEY_STORE = "key-store";
-    private static String SECURITY_PROTOCOL = "security-protocol";
-    private static String SECURITY_AUTHENTICATION = "security-authentication";
-    private String ldapId;
+    private static String LDAP_PROPERTIES_FILE = "ldap.properties"; 
+    private static String PROVIDER_URL_PROP = "provider-url";
+    private static String MGR_DN_PROP = "mgr-dn";
+    private static String MGR_PW_PROP = "mgr-pw";
+    private static String KEY_STORE_PROP = "key-store";
+    private static String SECURITY_PROTOCOL_PROP = "security-protocol";
+    private static String SECURITY_AUTHENTICATION_PROP = "security-authentication";
+    private static String USR_ATTR_PROP = "usr-attr";
+    private static String USR_ATTR_DEFAULT = "uid";
+    private static String USR_NAME_ATTR_PROP = "usr-name-attr";
+    private static String USR_NAME_ATTR_DEFAULT = "gecos";
+    private static String USR_BRANCH_PROP = "usr-branch";
+    private static String USR_BRANCH_DEFAULT = "ou=People";
+    private static String USR_AUTH_TYPE_PROP = "usr-authentication";
+    private static String USR_AUTH_TYPE_DEFAULT = "simple";
+    private static String BASE_DN_PROP = "base-dn";
+    private static String DOMAIN_NAME_PROP = "domain-name";
 
+    private String ldapId;
     private String ldapName;
+
+    // deprecated: for backwards compatibility only !
+    private static String PARTIAL_USER_DN_PROP = "partial-user-dn";
 
     /**
      * Creates a new LDAPUser object.
@@ -105,71 +121,78 @@ public class LDAPUser extends FileUser {
 
     /**
      * Checks if a user exists.
+     * 
      * @param ldapId The LDAP id.
-     * @return A boolean value.
-     * @throws AccessControlException when an error occurs. FIXME: This method does not work.
+     * @return A boolean value indicating whether the user is found in the directory
+     * @throws AccessControlException when an error occurs. 
      */
     public boolean existsUser(String ldapId) throws AccessControlException {
 
+	if (log.isDebugEnabled())
+	    log.debug("existsUser() checking id " + ldapId);
+
         boolean exists = false;
-        LdapContext context = null;
 
         try {
             readProperties();
+	    SearchResult entry = getDirectoryEntry(ldapId);
 
-            context = bind(defaultProperties.getProperty(MGR_DN), defaultProperties
-                    .getProperty(MGR_PW));
+	    exists = (entry != null);
 
-            String peopleName = "ou=People";
-            Attributes attributes = new BasicAttributes("uid", ldapId);
-            NamingEnumeration enumeration = context.search(peopleName, attributes);
-
-            exists = enumeration.hasMoreElements();
         } catch (Exception e) {
+	    if (log.isDebugEnabled())
+		log.debug("existsUser() for id " + ldapId + " got exception: " + e);
             throw new AccessControlException("Exception during search: ", e);
-        } finally {
-            try {
-                if (context != null) {
-                    close(context);
-                }
-            } catch (NamingException e) {
-                throw new AccessControlException("Closing context failed: ", e);
-            }
-        }
+        } 
+
         return exists;
     }
 
     /**
      * Initializes this user.
+     *
+     * The current (already authenticated) ldapId is queried in the directory, 
+     * in order to retrieve additional information, such as the user name.
+     * In current implementation, only the user name is actually retrieved, but
+     * other attributes may be used in the future (such as groups ?)
+     *
+     * TODO: should the code be changed to not throw an exception when something
+     * goes wrong ? After all, it's only used to get additional info for display?
+     * This is a design decision, I'm not sure what's best.
      * 
      * @throws ConfigurationException when something went wrong.
      */
     protected void initialize() throws ConfigurationException {
-        LdapContext context = null;
+        DirContext context = null;
         try {
-            readProperties();
+	    if (log.isDebugEnabled())
+		log.debug("initialize() getting entry ...");
 
-            String name = null;
-            context = bind(defaultProperties.getProperty(MGR_DN), defaultProperties
-                    .getProperty(MGR_PW));
+	    SearchResult entry = getDirectoryEntry(ldapId);
+	    StringBuffer name = new StringBuffer();
 
-            String[] attrs = new String[1];
-            attrs[0] = "gecos"; /* users full name */
+	    if (entry != null) {
+		/* users full name */
+		String usrNameAttr = 
+		    defaultProperties.getProperty(USR_NAME_ATTR_PROP, USR_NAME_ATTR_DEFAULT);
 
-            String searchString = "uid=" + ldapId + ",ou=People";
-            Attributes answer = context.getAttributes(searchString, attrs);
+		if (log.isDebugEnabled())
+		    log.debug("initialize() got entry, going to look for attribute " + usrNameAttr + " in entry, which is: " + entry);
+		
+		Attributes attributes = entry.getAttributes();
+		if (attributes != null) {
+		    Attribute userNames = attributes.get(usrNameAttr);
+		    if (userNames != null) {
+			for (NamingEnumeration enum = userNames.getAll(); enum.hasMore(); enum.next()) {
+			    name.append((String)userNames.get());
+			}
+		    }
+		}
+	    }
+	    ldapName = name.toString();
+	    if (log.isDebugEnabled())
+		log.debug("initialize() set name to " + ldapName);
 
-            if (answer != null) {
-                Attribute attr = answer.get("gecos");
-
-                if (attr != null) {
-                    for (NamingEnumeration enum = attr.getAll(); enum.hasMore(); enum.next()) {
-                        name = (String) attr.get();
-                    }
-                }
-            }
-
-            this.ldapName = name;
         } catch (Exception e) {
             throw new ConfigurationException("Could not read properties", e);
         } finally {
@@ -216,29 +239,39 @@ public class LDAPUser extends FileUser {
     }
 
     /**
-     * (non-Javadoc)
+     * Authenticate a user against the directory.
+     *
+     * The principal to be authenticated is either constructed by use of the
+     * configured properties, or by lookup of this ID in the directory. 
+     * This principal then attempts to authenticate against the directory with
+     * the provided password.
      * 
      * @see org.apache.lenya.ac.User#authenticate(java.lang.String)
      */
     public boolean authenticate(String password) {
 
-        String principal = "uid=" + getLdapId() + ","
-                + defaultProperties.getProperty(PARTIAL_USER_DN);
-        Context ctx = null;
-
-        if (log.isDebugEnabled()) {
-            log.debug("Authenticating with principal [" + principal + "]");
-        }
-
-        boolean authenticated = false;
+	boolean authenticated = false;
+	String principal = "";
+	Context ctx = null;
 
         try {
-            ctx = bind(principal, password);
+	    principal = getPrincipal();
+	    
+	    if (log.isDebugEnabled())
+		log.debug("Authenticating with principal [" + principal + "]");
+
+            ctx = bind(principal, password,
+		       defaultProperties.getProperty(USR_AUTH_TYPE_PROP, 
+						     USR_AUTH_TYPE_DEFAULT));
             authenticated = true;
             close(ctx);
             if (log.isDebugEnabled()) {
                 log.debug("Context closed.");
             }
+        } catch (IOException e) {
+	    log.warn("authenticate handling IOException, check your setup: " + e);
+        } catch (AuthenticationException e) {
+	    log.info("authenticate failed for principal " + principal + ", exception " + e);
         } catch (NamingException e) {
             // log this failure
             // StringWriter writer = new StringWriter();
@@ -249,6 +282,7 @@ public class LDAPUser extends FileUser {
         }
 
         return authenticated;
+
     }
 
     /**
@@ -293,10 +327,12 @@ public class LDAPUser extends FileUser {
      * 
      * @param principal the principal string for the LDAP connection
      * @param credentials the credentials for the LDAP connection
-     * @return a <code>LdapContext</code>
+     * @param authMethod the authentication method
+     * @return a <code>DirContext</code>
      * @throws NamingException if there are problems establishing the Ldap connection
      */
-    private LdapContext bind(String principal, String credentials) throws NamingException {
+    private DirContext bind(String principal, String credentials,
+			    String authMethod) throws NamingException {
 
         log.info("Binding principal: [" + principal + "]");
 
@@ -304,17 +340,19 @@ public class LDAPUser extends FileUser {
 
         System.setProperty("javax.net.ssl.trustStore", getConfigurationDirectory()
                 .getAbsolutePath()
-                + File.separator + defaultProperties.getProperty(KEY_STORE));
+                + File.separator + defaultProperties.getProperty(KEY_STORE_PROP));
 
         env.put(Context.INITIAL_CONTEXT_FACTORY, LdapCtxFactory.class.getName());
-        env.put(Context.PROVIDER_URL, defaultProperties.getProperty(PROVIDER_URL));
-        env.put(Context.SECURITY_PROTOCOL, defaultProperties.getProperty(SECURITY_PROTOCOL));
-        env.put(Context.SECURITY_AUTHENTICATION, defaultProperties
-                .getProperty(SECURITY_AUTHENTICATION));
-        env.put(Context.SECURITY_PRINCIPAL, principal);
-        env.put(Context.SECURITY_CREDENTIALS, credentials);
+        env.put(Context.PROVIDER_URL, defaultProperties.getProperty(PROVIDER_URL_PROP));
+        env.put(Context.SECURITY_PROTOCOL, defaultProperties.getProperty(SECURITY_PROTOCOL_PROP));
 
-        LdapContext ctx = new InitialLdapContext(env, null);
+        env.put(Context.SECURITY_AUTHENTICATION, authMethod);
+	if (authMethod != null && ! authMethod.equals("none")) {
+	    env.put(Context.SECURITY_PRINCIPAL, principal);
+	    env.put(Context.SECURITY_CREDENTIALS, credentials);
+	}
+
+        DirContext ctx = new InitialLdapContext(env, null);
 
         log.info("Finished binding principal.");
 
@@ -338,7 +376,7 @@ public class LDAPUser extends FileUser {
      */
     private void readProperties() throws IOException {
         // create and load default properties
-        File propertiesFile = new File(getConfigurationDirectory(), "ldap.properties");
+        File propertiesFile = new File(getConfigurationDirectory(), LDAP_PROPERTIES_FILE);
 
         if (defaultProperties == null) {
             defaultProperties = new Properties();
@@ -354,4 +392,171 @@ public class LDAPUser extends FileUser {
             }
         }
     }
+
+    /** 
+     * Wrapping of the decision whether a recursive search is wanted or not.
+     * Implementation: 
+     * If the USR_BRANCH_PROP is present, this is the new style of configuration
+     * (starting Lenya 1.2.2); if it has a value, then a specific branch is wanted:
+     * no recursive search. If the property is present, but has no value,
+     * search recursively.
+     */
+    private boolean isSubtreeSearch() {
+	boolean recurse = false;
+	String usrBranchProp = defaultProperties.getProperty(USR_BRANCH_PROP);
+	if (usrBranchProp != null)
+	    if (usrBranchProp.trim().length() == 0)
+		recurse = true;
+	
+	return recurse;
+    }
+
+
+    private SearchResult getDirectoryEntry(String userId) 
+	throws NamingException, IOException
+    {
+	DirContext context = null;
+	String searchFilter = "";
+	String objectName = "";
+	boolean recursiveSearch;
+	SearchResult result = null;
+	
+	try {
+            readProperties();
+	    
+            context = bind(defaultProperties.getProperty(MGR_DN_PROP), 
+			   defaultProperties.getProperty(MGR_PW_PROP),
+			   defaultProperties.getProperty(SECURITY_AUTHENTICATION_PROP));
+
+	    // Get search information and user attribute from properties
+	    // provide defaults if not present (backward compatibility)
+	    String userAttribute = 
+		defaultProperties.getProperty(USR_ATTR_PROP, USR_ATTR_DEFAULT);
+	    searchFilter = "(" + userAttribute + "=" + userId + ")";
+	    SearchControls scope = new SearchControls();
+	    NamingEnumeration results;
+
+	    recursiveSearch = isSubtreeSearch();
+	    if (recursiveSearch) {
+		scope.setSearchScope(SearchControls.SUBTREE_SCOPE);
+		objectName = defaultProperties.getProperty(PROVIDER_URL_PROP);
+	    }
+	    else {
+		scope.setSearchScope(SearchControls.ONELEVEL_SCOPE);
+		objectName =  
+		    defaultProperties.getProperty(USR_BRANCH_PROP, USR_BRANCH_DEFAULT);
+	    }
+	
+	    if (log.isDebugEnabled())
+		log.debug("searching object " + objectName + " filtering with " + searchFilter + ", recursive search ? " + recursiveSearch);
+
+	    results = context.search(objectName, searchFilter, scope);
+
+	    if (results != null && results.hasMore()) {
+		result = (SearchResult)results.next();
+
+		// sanity check
+		if (results.hasMore()) {
+		    log.warn("Found more than one entry in the directory for user " + userId + ". You probably should deactivate recursive searches. The first entry was used as a work-around.");
+		}
+		
+	    }
+	}
+        catch (NamingException e) {
+	    if (log.isDebugEnabled())
+		log.debug("NamingException caught when searching on objectName = " + objectName + " and searchFilter=" + searchFilter + ", this exception will be propagated: " + e);
+            throw e;
+        } 
+	finally {
+            try {
+                if (context != null) {
+                    close(context);
+                }
+            } catch (NamingException e) {
+		log.warn("this should not happen: exception closing context " + e);
+            }
+        }
+	return result;
+    }
+
+    /**
+     * Encapsulation of the creation of a principal: we need to distinguish
+     * three cases, in order to support different modes of using a directory.
+     * The first is the use of a domain-name (requirement of MS Active Directory):
+     * if this property is set, this is used to construct the principal.
+     * The second case is where a user-id is somewhere in a domain, but not in a
+     * specific branch: in this case, a subtree search is performed to retrieve
+     * the complete path.
+     * The third case is where a specific branch of the directory is to be used;
+     * this is the case where usr-branch is set to a value. In this case, this branch
+     * is used to construct the principal.
+     */
+    private String getPrincipal() throws IOException, NamingException {
+
+	String principal;
+
+	// 1. Check if domain-name is to be supported
+	String domainProp = defaultProperties.getProperty(DOMAIN_NAME_PROP);
+	if (domainProp != null && domainProp.trim().length() > 0) {
+	    principal = domainProp + "\\" + getLdapId();
+	}
+	else {
+	    if (isSubtreeSearch()) {
+		// 2. Principal is constructed from directory entry
+		SearchResult entry = getDirectoryEntry(getLdapId());
+		principal = entry.getName();
+		if (entry.isRelative()) {
+		    if (principal.length()>0){
+			principal = principal +","+ defaultProperties.getProperty(BASE_DN_PROP);
+		    }
+		}
+	    }
+	    else {
+		// 3. Principal is constructed from properties
+		principal = constructPrincipal(getLdapId());
+	    }
+	}
+
+	return principal;
+    }
+
+    /**
+     * Construct the principal for a user, by using the given userId along
+     * with the configured properties.
+     *
+     */
+    private String constructPrincipal(String userId) {
+	StringBuffer principal = new StringBuffer();
+	principal
+	    .append(defaultProperties.getProperty(USR_ATTR_PROP, USR_ATTR_DEFAULT))
+	    .append("=")
+	    .append(userId)
+	    .append(",");
+
+	String baseDn = defaultProperties.getProperty(BASE_DN_PROP);
+	if (baseDn != null && baseDn.length() > 0) {
+	    // USR_BRANCH_PROP may be empty, so only append when not-empty
+	    String usrBranch = defaultProperties.getProperty(USR_BRANCH_PROP);
+	    if (usrBranch != null) {
+		if (usrBranch.trim().length() > 0)
+		    principal.append(usrBranch).append(",");
+	    }
+	    else
+		principal.append(USR_BRANCH_DEFAULT).append(",");
+		
+	    principal.append(defaultProperties.getProperty(BASE_DN_PROP));
+	}
+	else {
+	    // try for backwards compatibility of ldap properties
+	    log.warn("getPrincipal() read a deprecated format in ldap properties, please update");
+	    principal.append(defaultProperties.getProperty(PARTIAL_USER_DN_PROP));
+	}
+
+	if (log.isDebugEnabled())
+	    log.debug("getPrincipal() returning " + principal.toString());
+
+	return principal.toString();
+    }
+
+
 }
