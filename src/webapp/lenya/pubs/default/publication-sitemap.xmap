@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.24 2003/05/12 16:17:02 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.25 2003/05/12 16:44:22 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -119,7 +119,7 @@
 
 
     <map:pipeline>
-      <map:match pattern="lenyabody/*/*/*/*">
+      <map:match pattern="lenyabody/*/*/*/**">
         <map:aggregate element="cmsbody">
 <!--
           <map:aggregate element="body" prefix="page" ns="http://www.lenya.org/2003/page" label="aggregation">
