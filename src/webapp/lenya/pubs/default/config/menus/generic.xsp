@@ -281,9 +281,12 @@
 	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
 	</block>
 
+<!-- TODO: This usecase doesn't seem to work -->
+<!--
         <block>
           <item uc:usecase="view-logs" uc:step="overview" href="?"><i18n:text>View Task Logs</i18n:text></item>
 	</block>
+-->
       </menu>
     </menus>
 
