@@ -38,7 +38,7 @@ import org.apache.lenya.cms.publication.DocumentHelper;
  * <code>{document-url:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}}</code>
  * </p>
  * 
- * @version: $Id: DocumentURLModule.java,v 1.1 2004/07/25 11:04:25 andreas Exp $
+ * @version: $Id: DocumentURLModule.java,v 1.2 2004/07/26 17:33:10 andreas Exp $
  */
 public class DocumentURLModule extends AbstractPageEnvelopeModule implements Serviceable {
 
@@ -68,7 +68,7 @@ public class DocumentURLModule extends AbstractPageEnvelopeModule implements Ser
             DocumentHelper helper = new DocumentHelper(objectModel);
             url = helper.getDocumentUrl(documentId, area, language);
         } catch (Exception e) {
-            throw new ConfigurationException(e.getMessage());
+            throw new ConfigurationException("Resolving attribute [" + name + "] failed: ", e);
         }
 
         return url;
