@@ -49,7 +49,7 @@ import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 
@@ -92,7 +92,6 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
 	public static final String DOCUMENT_ID = "tutorial";
 	public static final String AUTHORING_PATH = "content/authoring".replace('/', File.separatorChar);
 	public static final String LIVE_PATH = "content/live".replace('/', File.separatorChar);
-	public static final String TREE_FILE = "sitetree.xml";
 	
 	/**
 	 * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
@@ -142,14 +141,11 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
 
         //TODO evaluation of resources, meta, workflow
         
-        File authoringSitetreeFile = new File(authoringDirectory, TREE_FILE);
-		File liveSitetreeFile = new File(liveDirectory, TREE_FILE);
-        
-		SiteTree authoringSitetree = new DefaultSiteTree(authoringSitetreeFile);
+		SiteTree authoringSitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
 		SiteTreeNode node = authoringSitetree.getNode(DOCUMENT_ID);
 		assertNotNull(node);
 		System.out.println("Sitetree node with id "+node.getId()+"is always in authoring");
-		SiteTree liveSitetree = new DefaultSiteTree(liveSitetreeFile);
+		SiteTree liveSitetree = PublicationHelper.getPublication().getSiteTree(Publication.LIVE_AREA);
 		SiteTreeNode livenode = liveSitetree.getNode(DOCUMENT_ID);
 		assertNull(livenode);
 		System.out.println("Sitetree node for document id "+DOCUMENT_ID+" was deleted from the live tree");

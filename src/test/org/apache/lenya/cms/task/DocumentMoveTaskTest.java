@@ -51,7 +51,7 @@ import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.rc.RevisionController;
@@ -68,7 +68,8 @@ public class DocumentMoveTaskTest extends AntTaskTest {
 
 	/**
      * Creates a new DocumentMoveTaskTest object.
-	 * @param test
+     * 
+	 * @param test the test
 	 */
 	public DocumentMoveTaskTest(String test) {
 		super(test);
@@ -95,7 +96,6 @@ public class DocumentMoveTaskTest extends AntTaskTest {
 	public static final String FIRST_DOCUMENT_ID = "/concepts";
 	public static final String SEC_DOCUMENT_ID = "/features";
 	public static final String AUTHORING_PATH = "content/authoring".replace('/', File.separatorChar);
-	public static final String TREE_FILE = "sitetree.xml";
 	public static final String AUTHORING_RESOURCE = "resources/authoring";
 	public static final String RCML_DIR = "content/rcml";
 	public static final String RCBAK_DIR = "content/rcbak";
@@ -120,6 +120,8 @@ public class DocumentMoveTaskTest extends AntTaskTest {
 
 	/**
 	 * prepare the test
+     * 
+     * @throws Exception if an error occurs
 	 */
 	protected void prepareTest() throws Exception {
 		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
@@ -139,6 +141,8 @@ public class DocumentMoveTaskTest extends AntTaskTest {
 
 	/**
 	 * evaluate the test
+     * 
+     * @throws Exception if an error occurs
 	 */
 	protected void evaluateTest() throws Exception {
 		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
@@ -185,9 +189,7 @@ public class DocumentMoveTaskTest extends AntTaskTest {
         
         //TODO evaluation of meta, workflow
         
-        File sitetreeFile = new File(authoringDirectory, TREE_FILE);
-        
-		SiteTree sitetree = new DefaultSiteTree(sitetreeFile);
+		SiteTree sitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
 		SiteTreeNode node = sitetree.getNode(secdocumentid);
 		assertNotNull(node);
 		System.out.println("Sitetree node with id "+node.getId()+" was created as child of node with id: " + node.getAbsoluteParentId());
