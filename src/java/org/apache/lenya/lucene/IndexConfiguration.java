@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: IndexConfiguration.java,v 1.10 2004/03/01 16:18:25 gregor Exp $  */
-
 package org.apache.lenya.lucene;
 
 import java.io.File;
@@ -29,19 +27,20 @@ import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
+/**
+ * @version $Id:$
+ */
 public class IndexConfiguration {
     static Category log = Category.getInstance(IndexConfiguration.class);
     private String configurationFilePath;
-    private String update_index_type;
-    private String index_dir;
-    private String htdocs_dump_dir;
+    private String updateIndexType;
+    private String indexDir;
+    private String htdocsDumpDir;
     private Class indexerClass;
 
     /**
      * Creates a new IndexConfiguration object.
-     *
-     * @param configurationFilePath DOCUMENT ME!
+     * @param configurationFilePath The path of the configuration file.
      */
     public IndexConfiguration(String configurationFilePath) {
         this.configurationFilePath = configurationFilePath;
@@ -52,19 +51,18 @@ public class IndexConfiguration {
             configure(document.getDocumentElement());
         } catch (Exception e) {
             log.error("Cannot load publishing configuration! ", e);
-            System.err.println("Cannot load publishing configuration! " + e);
+            System.err.println("Cannot load publishing configuration! ");
+            e.printStackTrace(System.err);
         }
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
+     * Main method.
+     * @param args The command line arguments.
      */
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Usage: org.apache.lenya.lucene.IndexConfiguration lucene.xconf");
-
+            System.err.println("Usage: " + IndexConfiguration.class.getName() + " lucene.xconf");
             return;
         }
 
@@ -86,78 +84,71 @@ public class IndexConfiguration {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Configures this object.
+     * @param root The document element of the configuration XML.
+     * @throws Exception if an error occurs.
      */
     public void configure(Element root) throws Exception {
         DOMUtil du = new DOMUtil();
-        update_index_type = du.getAttributeValue(root, new XPath("update-index/@type"));
-        index_dir = du.getAttributeValue(root, new XPath("index-dir/@src"));
-        htdocs_dump_dir = du.getAttributeValue(root, new XPath("htdocs-dump-dir/@src"));
+        updateIndexType = du.getAttributeValue(root, new XPath("update-index/@type"));
+        indexDir = du.getAttributeValue(root, new XPath("index-dir/@src"));
+        htdocsDumpDir = du.getAttributeValue(root, new XPath("htdocs-dump-dir/@src"));
 
         String indexerClassName = du.getAttributeValue(root, new XPath("indexer/@class"));
         indexerClass = Class.forName(indexerClassName);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Configuring indexer:"
+                    + "\nupdate index type:     " + updateIndexType
+                    + "\nindex directory:       " + indexDir
+                    + "\nhtdocs dump directory: " + htdocsDumpDir
+                    + "\nindexer class:         " + indexerClass.getName());
+        }
+
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the update index type.
+     * @return A string.
      */
     public String getUpdateIndexType() {
-        log.debug(".getUpdateIndexType(): " + update_index_type);
-
-        return update_index_type;
+        return updateIndexType;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the directory where the index is stored.
+     * @return A string.
      */
     public String getIndexDir() {
-        log.debug(".getIndexDir(): " + index_dir);
-
-        return index_dir;
+        return indexDir;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the directory where the HTML documents are dumped.
+     * @return A string.
      */
     public String getHTDocsDumpDir() {
-        log.debug(".getHTDocsDumpDir(): " + htdocs_dump_dir);
-
-        return htdocs_dump_dir;
+        return htdocsDumpDir;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the class of the indexer to use.
+     * @return A class.
      */
     public Class getIndexerClass() {
-        log.debug(".getIndexerClass(): " + indexerClass);
-
         return indexerClass;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param path DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Resolves a path. If the path is relative, it is resolved relatively
+     * to the configuration directory.
+     * @param path A string.
+     * @return A string.
      */
     public String resolvePath(String path) {
         if (path.indexOf(File.separator) == 0) {
             return path;
         }
-
         return FileUtil.catPath(configurationFilePath, path);
     }
 }
