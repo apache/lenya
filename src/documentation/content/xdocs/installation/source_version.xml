@@ -54,7 +54,7 @@
           <p>
             <strong>Apache Cocoon</strong>
             <br/>
-            version: 2.1.5.1
+            version: 2.1.6
             <br/>
             source: <link href="site:cocoon/mirror">http://cocoon.apache.org/mirror.cgi</link>
           </p>
@@ -128,7 +128,7 @@
             your_home/ (or c:\ on Windows, NOT My Documents)
               `-- src/
                    |-- lenya-1.2.x/            $LENYA_HOME
-                   `-- cocoon/                 $COCOON_HOME
+                   `-- cocoon-2.1.6/           $COCOON_HOME
                         `-- build/
                              `-- webapp/       $COCOON_WEBAPP
           </source>
@@ -184,7 +184,7 @@
           <p>
             If your Cocoon source tree is set up as described above, you
             can skip this step.  If your Cocoon source tree is not at
-            <code>../cocoon</code> relative to Lenya, you need
+            <code>../cocoon-2.1.6</code> relative to Lenya, you need
             to edit your build properties. To do this, copy
             <code>$LENYA_HOME/build.properties</code> to
             <code>$LENYA_HOME/local.build.properties</code>.
@@ -335,7 +335,7 @@
             <code>tomcat.home.dir</code> is an absolute path. Replace
             <code>$TOMCAT_HOME</code> by your Tomcat installation
             directory.  If your Cocoon source directory is not at
-            <code>../cocoon-2.1.5.1</code> relative to Lenya, then change
+            <code>../cocoon-2.1.6</code> relative to Lenya, then change
             the <code>cocoon.webapp.dir</code> and
             <code>cocoon.src.dir</code> properties.
           </p>
