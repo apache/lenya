@@ -37,7 +37,6 @@ function executeUsecase() {
 	var success = false;
 	
 	var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
-	Packages.java.lang.System.out.println(usecaseView);
 	
 	while (!ready) {
 	
