@@ -24,15 +24,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.cocoon.environment.Request;
-import org.apache.log4j.Category;
 
 /**
  * Servlet utility class.
  */
 public final class ServletHelper {
 	
-	private static Category log = Category.getInstance(ServletHelper.class);
-
     /**
      * Ctor.
      */
@@ -65,9 +62,6 @@ public final class ServletHelper {
 		if (url.length() > 0 && !url.startsWith("/")) {
 			url = "/" + url;
 		}
-		
-		log.debug("    Context prefix:   [" + context + "]");
-		log.debug("    Webapp URL:       [" + url + "]");
 		
         return url;
     }

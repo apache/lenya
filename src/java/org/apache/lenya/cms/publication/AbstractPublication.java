@@ -32,14 +32,11 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
-import org.apache.log4j.Category;
 
 /**
  * A publication.
  */
 public abstract class AbstractPublication extends AbstractLogEnabled implements Publication {
-
-    private static Category log = Category.getInstance(AbstractPublication.class);
 
     private static final String[] areas = { AUTHORING_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
             ARCHIVE_AREA, TRASH_AREA, INFO_AREA_PREFIX + AUTHORING_AREA,
@@ -139,8 +136,8 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
 
                 Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
                 this.areaSsl2proxy.put(key, proxy);
-                if (log.isDebugEnabled()) {
-                    log.debug("Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
                             + "]");
                 }
             }
@@ -148,7 +145,6 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
         } catch (PublicationException e) {
             throw e;
         } catch (Exception e) {
-            log.error(e);
             throw new PublicationException("Problem with config file: "
                     + configFile.getAbsolutePath(), e);
         }
@@ -389,9 +385,9 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
         Object key = getProxyKey(document.getArea(), isSslProtected);
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
 
-        if (log.isDebugEnabled()) {
-            log.debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
-            log.debug("Resolved proxy: [" + proxy + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
+            getLogger().debug("Resolved proxy: [" + proxy + "]");
         }
 
         return proxy;
