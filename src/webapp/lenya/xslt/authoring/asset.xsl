@@ -107,8 +107,9 @@ function check(fileinput) {
 	  <input type="hidden" name="insertWhere" value="{$insertWhere}"/>
 	  <input type="hidden" name="properties.insert.asset.document-id" value="{/usecase:asset/usecase:document-id}"/>
 	  <input type="hidden" name="properties.insert.asset.language" value="{/usecase:asset/usecase:language}"/>
-          <input type="hidden" name="properties.insert.asset.insertTemplate" value="{$insertTemplate}"/>
-          <input type="hidden" name="properties.insert.asset.insertReplace" value="{$insertReplace}"/>
+      <input type="hidden" name="properties.asset.date" value="{/usecase:asset/usecase:date}"/>
+      <input type="hidden" name="properties.insert.asset.insertTemplate" value="{$insertTemplate}"/>
+      <input type="hidden" name="properties.insert.asset.insertReplace" value="{$insertReplace}"/>
 	  <table class="lenya-table-noborder">
 	    <xsl:if test="$error = 'true'">
 	      <tr>
@@ -130,13 +131,6 @@ function check(fileinput) {
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/usecase:asset/usecase:creator}"/></td>
-	    </tr>
-	    <tr>
-	      <td class="lenya-form-caption">Subject:</td><td><input class="lenya-form-element" type="text" name="properties.asset.subject"/></td>
-	    </tr>
-	    <tr>
-	      <td class="lenya-form-caption">Date:</td><td><input
-	      class="lenya-form-element" type="hidden" name="properties.asset.date" value="{/usecase:asset/usecase:date}"/><xsl:value-of select="/usecase:asset/usecase:date"/></td>
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights"/></td>
@@ -202,7 +196,7 @@ function check(fileinput) {
 		</tr>
 		<tr><td>&#160;</td></tr>
 		<tr>
-		  <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
+		  <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
 		</tr>
 		<xsl:if test="$insertimage = 'true'">
 		  <tr>
