@@ -63,7 +63,7 @@ import org.w3c.dom.Element;
  */
 public class WorkflowDocument extends AbstractWorkflowable {
 
-    public WorkflowDocument(Document document) throws WorkflowBuildException {
+    protected WorkflowDocument(Document document) throws WorkflowBuildException {
         assert document != null;
         this.document = document;
 
@@ -134,7 +134,7 @@ public class WorkflowDocument extends AbstractWorkflowable {
     /**
      * @return
      */
-    public Workflow getWorkflow() {
+    protected Workflow getWorkflow() {
         return workflow;
     }
 

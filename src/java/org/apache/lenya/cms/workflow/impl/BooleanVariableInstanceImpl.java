@@ -17,7 +17,7 @@ public class BooleanVariableInstanceImpl implements BooleanVariableInstance {
     private boolean value;
 
     /** Creates a new instance of BooleanVariableInstanceImpl */
-    public BooleanVariableInstanceImpl() {
+    protected BooleanVariableInstanceImpl() {
     }
 
     /**

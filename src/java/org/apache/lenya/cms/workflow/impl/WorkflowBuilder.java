@@ -38,7 +38,7 @@ public class WorkflowBuilder {
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/workflow/1.0";
     public static final String DEFAULT_PREFIX = "wf";
 
-    public Workflow buildWorkflow(File file) throws WorkflowBuildException {
+    protected Workflow buildWorkflow(File file) throws WorkflowBuildException {
         Workflow workflow;
 
         try {
@@ -51,7 +51,7 @@ public class WorkflowBuilder {
         return workflow;
     }
 
-    public Workflow buildWorkflow(Document document)
+    protected Workflow buildWorkflow(Document document)
         throws
             ParserConfigurationException,
             SAXException,
@@ -114,16 +114,16 @@ public class WorkflowBuilder {
             && (initialAttribute.equals("yes") || initialAttribute.equals("true"));
     }
 
-    public static final String STATE_ELEMENT = "state";
-    public static final String TRANSITION_ELEMENT = "transition";
-    public static final String EVENT_ELEMENT = "event";
-    public static final String CONDITION_ELEMENT = "condition";
-    public static final String ACTION_ELEMENT = "action";
-    public static final String ID_ATTRIBUTE = "id";
-    public static final String INITIAL_ATTRIBUTE = "initial";
-    public static final String SOURCE_ATTRIBUTE = "source";
-    public static final String DESTINATION_ATTRIBUTE = "destination";
-    public static final String CLASS_ATTRIBUTE = "class";
+	protected static final String STATE_ELEMENT = "state";
+	protected static final String TRANSITION_ELEMENT = "transition";
+	protected static final String EVENT_ELEMENT = "event";
+	protected static final String CONDITION_ELEMENT = "condition";
+	protected static final String ACTION_ELEMENT = "action";
+	protected static final String ID_ATTRIBUTE = "id";
+	protected static final String INITIAL_ATTRIBUTE = "initial";
+	protected static final String SOURCE_ATTRIBUTE = "source";
+	protected static final String DESTINATION_ATTRIBUTE = "destination";
+	protected static final String CLASS_ATTRIBUTE = "class";
 
     protected StateImpl buildState(Element element) {
         assert element.getLocalName().equals(STATE_ELEMENT);

@@ -15,7 +15,7 @@ import org.apache.lenya.cms.workflow.State;
 public class StateImpl implements State {
 
     /** Creates a new instance of StateImpl */
-    public StateImpl(String id) {
+    protected StateImpl(String id) {
         assert id != null;
         this.id = id;
     }

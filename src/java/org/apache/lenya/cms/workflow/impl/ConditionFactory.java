@@ -15,7 +15,7 @@ import org.apache.lenya.cms.workflow.WorkflowBuildException;
  */
 public class ConditionFactory {
 
-    public static Condition createCondition(
+    protected static Condition createCondition(
         String className,
         String expression)
         throws WorkflowBuildException {

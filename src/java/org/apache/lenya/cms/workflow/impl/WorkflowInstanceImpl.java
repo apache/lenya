@@ -22,7 +22,7 @@ import org.apache.lenya.cms.workflow.WorkflowInstance;
 public class WorkflowInstanceImpl implements WorkflowInstance {
 
     /** Creates a new instance of WorkflowInstanceImpl */
-    public WorkflowInstanceImpl(Workflow workflow) {
+    protected WorkflowInstanceImpl(Workflow workflow) {
         assert workflow != null;
         this.workflow = workflow;
         setCurrentState(getWorkflow().getInitialState());
@@ -74,7 +74,7 @@ public class WorkflowInstanceImpl implements WorkflowInstance {
 
     private State currentState;
 
-    public void setCurrentState(State state) {
+    protected void setCurrentState(State state) {
         assert state != null
             && ((WorkflowImpl) getWorkflow()).containsState(state);
         this.currentState = state;

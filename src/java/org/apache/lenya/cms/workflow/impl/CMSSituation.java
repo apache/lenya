@@ -16,7 +16,7 @@ import org.apache.lenya.cms.workflow.Situation;
 public class CMSSituation implements Situation {
 
     /** Creates a new instance of Situation */
-    public CMSSituation(User user) {
+    protected CMSSituation(User user) {
 
         assert user != null;
         this.user = user;

@@ -30,7 +30,7 @@ public class WorkflowFactoryImpl extends WorkflowFactory {
         "config/workflow".replace('/', File.separatorChar);
 
     /** Creates a new instance of WorkflowFactory */
-    public WorkflowFactoryImpl(Document document, User user) {
+    protected WorkflowFactoryImpl(Document document, User user) {
 
         assert document != null;
         this.document = document;

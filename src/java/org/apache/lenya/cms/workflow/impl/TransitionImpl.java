@@ -22,7 +22,7 @@ import org.apache.lenya.cms.workflow.Transition;
 public class TransitionImpl implements Transition {
 
     /** Creates a new instance of TransitionImpl */
-    public TransitionImpl(State source, State destination) {
+    protected TransitionImpl(State source, State destination) {
 
         assert source != null;
         assert destination != null;

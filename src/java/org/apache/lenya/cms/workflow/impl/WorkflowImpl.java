@@ -21,7 +21,7 @@ import org.apache.lenya.cms.workflow.Workflow;
 public class WorkflowImpl implements Workflow {
 
     /** Creates a new instance of WorkflowImpl */
-    public WorkflowImpl(State initialState) {
+    protected WorkflowImpl(State initialState) {
         this.initialState = initialState;
         addState(initialState);
     }
