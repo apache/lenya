@@ -43,9 +43,16 @@
         <td background="{$image-prefix}/grau-bg2.gif" nowrap="nowrap">
 
 <!-- ADMIN TAB -->
+<xsl:choose>
+<xsl:when test="menu:tabs/menu:tab[@label = 'admin']/@show = 'false'">
+<!-- don't show live tab -->
+</xsl:when>
+<xsl:otherwise>
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">admin</xsl:with-param>
           </xsl:call-template>
+</xsl:otherwise>
+</xsl:choose>
           
 
 <!-- INFO/SITE TAB -->
@@ -75,10 +82,17 @@
           </xsl:call-template>
           
 <!-- LIVE TAB -->
+<xsl:choose>
+<xsl:when test="menu:tabs/menu:tab[@label = 'live']/@show = 'false'">
+<!-- don't show live tab -->
+</xsl:when>
+<xsl:otherwise>
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">live</xsl:with-param>
             <xsl:with-param name="target">_blank</xsl:with-param>
           </xsl:call-template>
+</xsl:otherwise>
+</xsl:choose>
           
         </td>
         
