@@ -379,10 +379,16 @@
                   <map:parameter name="form" value="{request-param:form}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:transform>
+                <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
+                  <map:parameter name="edit" value="{request-param:edit}"/>
+                </map:transform>
+                <map:call resource="style-cms-page"/>
+<!--
                 <map:transform src="xslt/authoring/edit/form-layout.xsl">
                   <map:parameter name="edit" value="{request-param:edit}"/>
                 </map:transform>
                 <map:serialize type="html" />
+-->
               </map:act>
 
               <!-- Stop Editing: Save and Cancel -->

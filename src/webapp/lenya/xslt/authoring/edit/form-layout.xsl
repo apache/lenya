@@ -36,10 +36,12 @@
 
   <xsl:if test="message">
     <tr>
-      <td class="lenya-entry-caption"><span class="lenya-error">Message:</span></td>
+      <td valign="top" class="lenya-entry-caption"><span class="lenya-error">Message:</span></td>
       <td>
+<font color="red">
         <xsl:value-of select="message"/>
-        <br/>
+</font>
+        <br/><br/>
         (Check log files for more details: lenya/WEB-INF/logs/*)
       </td>
     </tr>
