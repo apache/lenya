@@ -37,7 +37,7 @@
       </tr>
       
       <tr>
-        <td rowspan="2" valign="bottom" align="right" background="{$contextprefix}/lenya/menu/images/grau-bg.gif">
+        <td class="lenya-menubar-td-left" rowspan="2" valign="bottom" align="right" background="{$contextprefix}/lenya/menu/images/grau-bg.gif">
           <img src="{$image-prefix}/blau_anfang_oben.gif" />
         </td>
         <td background="{$image-prefix}/grau-bg2.gif" nowrap="nowrap">

@@ -104,6 +104,10 @@ table.lenya-menubar-menu img {border:0px}
         text-align:right;
 }
 
+.lenya-menubar-td-left {
+        text-align:right;
+}
+
 .lenya-menubar-infoline {
 	margin-right: 10px;
 	color: #FFFFFF;
