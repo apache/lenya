@@ -76,13 +76,19 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.35 2004/02/16 10:27:50 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.36 2004/02/16 10:43:03 gregor Exp $
  *
- * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
+ * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when 
+ * namespaces are not declared within the root element. Unfortunately the XSLTs 
+ * (during Cocoon transformation) are moving the namespaces to the elements which use them! 
+ * One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them 
+ * and add them to the document root element, before sending it through the 
+ * org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
  * FIXME: There seems to be another problem with default namespaces
  *
- * WARNING: Internet Explorer does not send the name without the coordinates if input type is equals image. Mozilla does.
+ * WARNING: Internet Explorer does not send the name without the coordinates if 
+ * input type is equals image. Mozilla does.
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
     org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HTMLFormSaveAction.class);
@@ -97,18 +103,6 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         }
     }
 
-    /**
-     * Describe <code>configure</code> method here.
-     *
-     * @param conf a <code>Configuration</code> value
-     *
-     * @exception ConfigurationException if an error occurs
-     */
-/*
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-    }
-*/
 
     /**
      * Save data to temporary file
@@ -129,9 +123,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         File schema = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("schema"));
         File unnumberTagsXSL = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("unnumberTagsXSL"));
 
-
         Request request = ObjectModelHelper.getRequest(objectModel);
-
 
 
         if(request.getParameter("cancel") != null) {
@@ -143,8 +135,6 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                 getLogger().debug(".act(): Save modifications to " + file.getAbsolutePath());
 
                 try {
-                    //Document document = DocumentHelper.readDocument(file);
-
                     Document document = null;
                     DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
                     parserFactory.setValidating(false);
@@ -163,11 +153,13 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                         String pname = (String) params.nextElement();
                         log.debug("Parameter: " + pname + " (" + request.getParameter(pname)  + ")");
 
+                        // Extract the xpath to edit
                         if (editSelect == null && pname.indexOf("edit[") >= 0 && pname.endsWith("].x")) {
                             editSelect = pname.substring(5, pname.length() - 3);
                            log.debug("Edit: " + editSelect);
                         }
 
+                        // Make sure we are dealing with an xupdate statement, else skip
                         if (pname.indexOf("<xupdate:") == 0) {
                             String select = pname.substring(pname.indexOf("select") + 8);
                             select = select.substring(0, select.indexOf("\""));
@@ -246,7 +238,9 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                         getLogger().info(".act(): Save");
                         return null;
                     } else {
-                        // Loop while editing
+                        /* There are potentially multiple xupdate statements for every save. Continue to loop
+                         * if there are multiple ones.
+                         */
                         HashMap hmap = new HashMap();
                         if (editSelect != null) {
                             hmap.put("editSelect", editSelect);
