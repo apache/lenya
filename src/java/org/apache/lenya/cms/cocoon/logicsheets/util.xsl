@@ -21,6 +21,7 @@
         <xsp:include>org.apache.cocoon.environment.Source</xsp:include>
         <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+        <xsp:include>org.apache.lenya.cms.publication.PageEnvelope</xsp:include>
       </xsp:structure>
       
       <xsl:apply-templates/>
@@ -77,7 +78,10 @@
          <xsp:content><referer><xsp:expr>xsp_lenya_session.getAttribute("org.apache.lenya.cms.cocoon.acting.TaskAction.parent_uri")</xsp:expr></referer></xsp:content>
        }
     }
-    
+	PageEnvelope xspPageEnvelope = null;
+	try {
+		xspPageEnvelope = new PageEnvelope(resolver, request);
+	} catch (Exception e) {}
         Publication xspUtilPublication = null;
         String xspUtilServletContextPath = null;
         String xspUtilPublicationPath = null;
@@ -103,8 +107,20 @@
 </xsl:template>
 
 
+<xsl:template match="xsp-lenya:context-prefix">
+  <xsp:expr>xspPageEnvelope.getContext()</xsp:expr>
+</xsl:template>
+
 <xsl:template match="xsp-lenya:publication-id">
-  <xsp:expr>xspUtilPublication.getId()</xsp:expr>
+  <xsp:expr>xspPageEnvelope.getPublication().getId()</xsp:expr>
+</xsl:template>
+
+<xsl:template match="xsp-lenya:area">
+  <xsp:expr>xspPageEnvelope.getArea()</xsp:expr>
+</xsl:template>
+
+<xsl:template match="xsp-lenya:document-id">
+  <xsp:expr>xspPageEnvelope.getDocumentId()</xsp:expr>
 </xsl:template>
 
 
