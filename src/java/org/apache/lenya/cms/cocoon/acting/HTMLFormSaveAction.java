@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.11 2003/08/20 14:21:51 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.12 2003/08/20 16:31:32 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -178,7 +178,13 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      *
      */
     private void setNodeValue(Document document, String value, String xpath) throws Exception {
-        Node node = DOMUtil.getSingleNode(document.getDocumentElement(), xpath);
+        // FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
+        // FIXME: There seems to be another problem with default namespaces
+
+        //new org.apache.lenya.xml.DOMUtil().setElementValue(document, xpath, value);
+
+        //Node node = DOMUtil.getSingleNode(document.getDocumentElement(), xpath);
+        Node node = org.apache.xpath.XPathAPI.selectSingleNode(document, xpath);
         if (node == null) {
             // FIXME: warn
             getLogger().error(".setNodeValue(): Node does not exist (might have been deleted during update): " + xpath);
