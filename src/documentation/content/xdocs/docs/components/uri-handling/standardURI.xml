@@ -93,7 +93,7 @@
 	  <th>Name</th>
 	</tr>
 	<tr>
-	  <td>lenya</td>
+	  <td>/lenya</td>
 	  <td><code>context-prefix</code></td>
 	</tr>
 	<tr>
@@ -105,7 +105,7 @@
 	  <td><code>area</code></td>
 	</tr>
 	<tr>
-	  <td>news/foo</td>
+	  <td>/news/foo</td>
 	  <td><code>document-id</code></td>
 	</tr>
       </table>
