@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentIdToPathMapper.java,v 1.11 2003/08/08 09:09:07 egli Exp $
+$Id: DefaultDocumentIdToPathMapper.java,v 1.12 2003/08/28 10:11:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -120,5 +120,5 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
         }
         return "index" + languageSuffix + ".xml";
     }
-
+    
 }
