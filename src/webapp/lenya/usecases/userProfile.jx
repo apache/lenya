@@ -1,0 +1,59 @@
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <page:title><i18n:text>Edit User Profile</i18n:text></page:title>
+  <page:body>
+    
+    <form>
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+
+      <table class="lenya-table-noborder">
+        <tr>
+          <td colspan="2">
+            <ul>
+            <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+              <li>
+                <i18n:text><jx:out value="${message}"/></i18n:text>
+              </li>
+            </jx:forEach>
+            <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+              <li>
+                <i18n:text><jx:out value="${message}"/></i18n:text>
+              </li>
+            </jx:forEach>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="lenya-entry-caption"><i18n:text>Name</i18n:text> *</td>
+          <td><input type="text" name="fullName" class="lenya-form-entry" value="${usecase.getParameter('fullName')}"/></td>
+        </tr>
+        <tr>
+          <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text></td>
+          <td>
+            <textarea name="description" class="lenya-form-entry">
+              <jx:out value="${usecase.getParameter('description')}"/>
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="lenya-entry-caption"><i18n:text>E-Mail</i18n:text> *</td>
+          <td><input type="text" name="email" class="lenya-form-entry" value="${usecase.getParameter('email')}"/></td>
+        </tr>
+        
+        <tr>
+          <td/>
+          <td>
+            <input i18n:attr="value" type="submit" name="submit" value="Save"/>
+            <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </page:body>
+</page:page>
