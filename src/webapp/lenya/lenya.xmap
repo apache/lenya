@@ -37,7 +37,7 @@
           <map:transform src="resources/css/css.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
-          <map:serialize type="text"/>
+          <map:serialize type="text" mime-type="text/css"/>
         </map:act>
         <map:read src="resources/css/{1}.css" mime-type="text/css"/>
       </map:match>
