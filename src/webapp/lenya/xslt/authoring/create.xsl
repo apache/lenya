@@ -25,8 +25,34 @@
       <div class="lenya-box">
         <div class="lenya-box-title">New Document</div>
       <div class="lenya-box-body">  
-	<form method="GET" 
-	  action="{/parent-child/referer}">
+        <script Language="JavaScript">
+function validRequired(formField,fieldLabel)
+{
+	var result = true;
+	
+	if (formField.value == "")
+	{
+		alert('Please enter a value for the "' + fieldLabel +'" field.');
+		formField.focus();
+		result = false;
+	}
+	
+	return result;
+}
+
+function validateForm(theForm)
+{
+	if (!validRequired(theForm["properties.create.child-id"],"Document ID"))
+		return false;
+
+	if (!validRequired(theForm["properties.create.child-name"],"Navigation Title"))
+		return false;
+	
+	return true;
+}
+</script>
+   	<form method="GET" 
+	  action="{/parent-child/referer}" onsubmit="return validateForm(this)">
 	  <input type="hidden" name="properties.create.parent-id" value="{/parent-child/parentid}"/>
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
 	  <input type="hidden" name="lenya.step" value="create"/>
@@ -34,10 +60,10 @@
 	  <input type="hidden" name="properties.create.doctype" value="{/parent-child/doctype}"/>
 	  <table class="lenya-table-noborder">
 	    <tr>
-	      <td class="lenya-form-caption">Parent ID:</td><td>hidden value="<xsl:value-of select="/parent-child/parentid"/>"</td>
+	      <td class="lenya-form-caption">Parent ID:</td><td><xsl:value-of select="/parent-child/parentid"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">ID:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-id"/></td>
+	      <td class="lenya-form-caption">Document ID:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-id"/></td>
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Name:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
