@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentMoveTaskTest.java,v 1.4 2004/03/20 11:46:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -165,7 +165,7 @@ public class DocumentMoveTaskTest extends AntTaskTest {
         
         //TODO evaluation of meta, workflow
         
-		SiteTree sitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
+		SiteTree sitetree = PublicationHelper.getPublication().getTree(Publication.AUTHORING_AREA);
 		SiteTreeNode node = sitetree.getNode(secdocumentid);
 		assertNotNull(node);
 		System.out.println("Sitetree node with id "+node.getId()+" was created as child of node with id: " + node.getAbsoluteParentId());

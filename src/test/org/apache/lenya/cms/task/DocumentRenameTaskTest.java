@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentRenameTaskTest.java,v 1.6 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -180,7 +180,7 @@ public class DocumentRenameTaskTest extends AntTaskTest {
 		//TODO evaluation of meta, workflow
         
         //evaluate the node
-		SiteTree sitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
+		SiteTree sitetree = PublicationHelper.getPublication().getTree(Publication.AUTHORING_AREA);
 		SiteTreeNode node = sitetree.getNode(secdocumentid);
 		assertNotNull(node);
         System.out.println(

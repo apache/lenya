@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentCopyTaskTest.java,v 1.7 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -126,7 +126,7 @@ public class DocumentCopyTaskTest extends AntTaskTest {
         assertTrue(documentFile.exists());
 		System.out.println("Document was copied: " + documentFile.getAbsolutePath());
 
-        SiteTree sitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
+        SiteTree sitetree = PublicationHelper.getPublication().getTree(Publication.AUTHORING_AREA);
         SiteTreeNode node = sitetree.getNode(secdocumentid);
         assertNotNull(node);
         System.out.println("Sitetree node with id " + node.getId() +

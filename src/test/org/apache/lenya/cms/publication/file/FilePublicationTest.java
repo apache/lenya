@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePublicationTest.java,v 1.4 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.file;
 
@@ -139,7 +139,7 @@ public class FilePublicationTest extends TestCase {
         
         assertTrue(destinationDocument.exists());
         
-        SiteTree destinationTree = publication.getSiteTree(destinationArea);
+        SiteTree destinationTree = publication.getTree(destinationArea);
         SiteTreeNode destinationNode = destinationTree.getNode(destinationDocumentId);
         assertNotNull(destinationNode);
         Label destinationLabel = destinationNode.getLabel(destinationLanguage);

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentDeactivateTaskTest.java,v 1.5 2004/03/20 11:46:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -120,11 +120,11 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
 
         //TODO evaluation of resources, meta, workflow
         
-		SiteTree authoringSitetree = PublicationHelper.getPublication().getSiteTree(Publication.AUTHORING_AREA);
+		SiteTree authoringSitetree = PublicationHelper.getPublication().getTree(Publication.AUTHORING_AREA);
 		SiteTreeNode node = authoringSitetree.getNode(DOCUMENT_ID);
 		assertNotNull(node);
         System.out.println("Sitetree node with id ["+node.getId()+"] is always in authoring");
-		SiteTree liveSitetree = PublicationHelper.getPublication().getSiteTree(Publication.LIVE_AREA);
+		SiteTree liveSitetree = PublicationHelper.getPublication().getTree(Publication.LIVE_AREA);
 		SiteTreeNode livenode = liveSitetree.getNode(DOCUMENT_ID);
 		assertNull(livenode);
         System.out.println("Sitetree node for document id ["+DOCUMENT_ID+"] was deleted from the live tree");

@@ -84,7 +84,7 @@ public class DocumentCreatorTest extends TestCase {
         assertTrue(documentFile.exists());
         System.out.println("File was created: " + documentFile.getAbsolutePath());
 
-        SiteTree sitetree = publication.getSiteTree(AREA);
+        SiteTree sitetree = publication.getTree(AREA);
         SiteTreeNode node = sitetree.getNode(PARENT_ID + "/" + CHILD_ID);
         assertNotNull(node);
         System.out.println("Sitetree node was created: " + node.getId() + " (label: " +
