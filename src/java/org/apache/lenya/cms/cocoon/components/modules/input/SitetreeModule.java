@@ -38,8 +38,9 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
 
     public static final String AUTHORING_NODE = "authoring-node";
     public static final String LIVE_NODE = "live-node";
-
-    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE };
+    public static final String TRASH_NODE = "trash-node";
+    
+    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, TRASH_NODE };
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -65,7 +66,11 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
                 SiteTree liveTree = manager.getTree(Publication.LIVE_AREA);
                 value = liveTree.getNode(envelope.getDocument().getId());
             }
-
+            
+            if (name.equals(TRASH_NODE)) {
+                SiteTree authoringTree = publication.getSiteTree(Publication.TRASH_AREA);
+                value = authoringTree.getNode(envelope.getDocument().getId());
+            }
         } catch (Exception e) {
             throw new ConfigurationException("Obtaining value for [" + name + "] failed: ", e);
         }
