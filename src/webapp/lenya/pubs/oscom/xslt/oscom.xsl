@@ -8,7 +8,10 @@
 <html>
 <head><title>OSCOM - Open Source Content Management</title></head>
 <body bgcolor="#ffffff">
+  <table cellpadding="0" cellspacing="0" border="0">
+<!--
   <table width="750" cellpadding="0" cellspacing="0" border="0">
+-->
     <tr>
       <td bgcolor="{$tablecolor}" colspan="8">
        <font face="verdana" color="white" size="+2"><b>OSCOM</b></font><br />
@@ -33,7 +36,7 @@
     <td bgcolor="{$tablecolor}" width="1"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
     <td width="8"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>
 
-    <td valign="top" width="460">
+    <td valign="top" width="468">
       <xsl:call-template name="body"/>
     </td>
 

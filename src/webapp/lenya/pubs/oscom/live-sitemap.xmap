@@ -140,9 +140,12 @@
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="">
+        <map:redirect-to uri="index.html"/>
+<!--
         <map:generate src="cocoon:/live/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Home/Live/main.xsl"/>
         <map:serialize type="html"/>
+-->
       </map:match>
       <map:match pattern="index.html">
         <map:generate src="cocoon:/live/index.xml"/>
