@@ -15,12 +15,11 @@
  *
  */
 
-/* $Id: UploadAction.java,v 1.9 2004/08/25 09:13:36 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

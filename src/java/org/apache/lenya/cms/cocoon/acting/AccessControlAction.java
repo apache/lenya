@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: AccessControlAction.java,v 1.11 2004/03/03 12:56:32 gregor Exp $  */
-
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.util.Collections;
@@ -33,6 +31,11 @@ import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.util.ServletHelper;
 
+/**
+ * Super class for access control actions.
+ * 
+ * @version $Id:$
+ */
 public abstract class AccessControlAction extends ConfigurableServiceableAction {
 
     private AccessController accessController;

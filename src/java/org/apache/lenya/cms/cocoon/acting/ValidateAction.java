@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ValidateAction.java,v 1.10 2004/03/18 14:51:58 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -103,6 +103,7 @@ public class ValidateAction extends AbstractConfigurableAction {
      * @param schema The relax ng schema.
      * @param file The file to validate
      * @return The validation error message or null.
+     * @throws Exception if an error occurs.
      */
     private String validateDocument(File schema, File file) throws Exception {
         return RelaxNG.validate(schema, file);
