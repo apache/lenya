@@ -62,7 +62,7 @@
 </target>
 
 
-<target name="jtidy" description="JTidy" depends="init">
+<target name="jtidy" description="JTidy: -Djtidy-in.html=file:///home/lenya/html/index.html" depends="init">
   <echo>INFO: JTidy</echo>
 
   <java classname="org.apache.lenya.util.TidyCommandLine">

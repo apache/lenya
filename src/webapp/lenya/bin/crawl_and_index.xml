@@ -43,7 +43,7 @@
 </target>
 
 <target name="crawl" description="Crawl and dump hypertext documents" depends="init">
-  <echo>INFO: Crawl and dump hypertext documents(${crawler.xconf})</echo>
+  <echo>INFO: Crawl and dump hypertext documents (${crawler.xconf})</echo>
 
   <java classname="org.apache.lenya.search.crawler.CrawlerConfiguration">
     <arg value="${crawler.xconf}"/>
