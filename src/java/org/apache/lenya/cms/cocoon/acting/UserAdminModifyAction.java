@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminModifyAction.java,v 1.4 2003/06/06 17:59:23 egli Exp $
+ * $Id: UserAdminModifyAction.java,v 1.5 2003/06/25 14:43:19 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,6 +49,7 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Map;
 
@@ -61,6 +62,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.GroupManager;
+import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -103,11 +105,12 @@ public class UserAdminModifyAction
 			return null;
 		}
 
+        File configurationDirectory = new File(publication.getDirectory(), ItemManager.PATH);
 		UserManager userManager = null;
 		GroupManager groupManager = null;
 		try {
-			userManager = UserManager.instance(publication);
-			groupManager = GroupManager.instance(publication);
+			userManager = UserManager.instance(configurationDirectory);
+			groupManager = GroupManager.instance(configurationDirectory);
 		} catch (AccessControlException e) {
 			getLogger().error(e.getMessage(), e);
 			return null;
@@ -118,10 +121,10 @@ public class UserAdminModifyAction
 		user.setEmail(email);
 		user.setPassword(password);
 
-		user.removeAllGroups();
+		user.removeFromAllGroups();
 		for (int i = 0; i < groups.length; i++) {
 			Group group = (Group) groupManager.getGroup(groups[i]);
-			user.addGroup(group);
+			group.add(user);
 		}
 		try {
 			user.save();

@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminDeleteAction.java,v 1.4 2003/06/10 13:59:25 egli Exp $
+ * $Id: UserAdminDeleteAction.java,v 1.5 2003/06/25 14:43:04 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,6 +49,7 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Map;
 
@@ -59,6 +60,7 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -92,9 +94,10 @@ public class UserAdminDeleteAction
 
 		String userId = request.getParameter(USER_ID);
 
+        File configurationDirectory = new File(publication.getDirectory(), ItemManager.PATH);
 		UserManager manager = null;
 		try {
-			manager = UserManager.instance(publication);
+			manager = UserManager.instance(configurationDirectory);
 		} catch (AccessControlException e) {
 			getLogger().error(e.getMessage(), e);
 			return null;

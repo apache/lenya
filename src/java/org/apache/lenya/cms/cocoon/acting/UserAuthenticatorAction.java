@@ -1,5 +1,5 @@
 /*
- * $Id: UserAuthenticatorAction.java,v 1.1 2003/06/19 14:47:33 egli Exp $
+ * $Id: UserAuthenticatorAction.java,v 1.2 2003/06/25 14:46:03 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,6 +49,7 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -57,6 +58,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -91,8 +93,13 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
         Map map)
         throws Exception {
 
-        UserManager manager = UserManager.instance(publication);
+        File configurationDirectory = new File(publication.getDirectory(), ItemManager.PATH);
+        UserManager manager = UserManager.instance(configurationDirectory);
         User user = manager.getUser(username);
+        
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Authenticating user: " + user);
+        }
 
         if (user.authenticate(password)) {
             String context = request.getContextPath();
@@ -127,6 +134,14 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
 
         publication = PublicationFactory.getPublication(objectModel);
         return super.act(redirector, resolver, objectModel, src, parameters);
+    }
+
+    /**
+     * Returns the publication.
+     * @return The publication.
+     */
+    public Publication getPublication() {
+        return publication;
     }
 
 }

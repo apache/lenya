@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminAddAction.java,v 1.2 2003/06/06 17:22:50 egli Exp $
+ * $Id: UserAdminAddAction.java,v 1.3 2003/06/25 14:42:20 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,6 +49,7 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Map;
 
@@ -62,6 +63,7 @@ import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.FileUser;
 import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.GroupManager;
+import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
@@ -99,20 +101,21 @@ public class UserAdminAddAction
 			return null;
 		}
 
+        File configurationDirectory = new File(publication.getDirectory(), ItemManager.PATH);
 		GroupManager manager = null;
 		try {
-			manager = GroupManager.instance(publication);
+			manager = GroupManager.instance(configurationDirectory);
 		} catch (AccessControlException e) {
 			getLogger().error(e.getMessage(), e);
 			return null;
 		}
 				
 		FileUser user =
-			new FileUser(publication, userId, fullName, email, password);
+			new FileUser(configurationDirectory, userId, fullName, email, password);
 		String[] groups = request.getParameterValues(GROUPS);
 		for (int i = 0; i < groups.length; i++) {
 			Group group = (Group) manager.getGroup(groups[i]);
-			user.addGroup(group);
+			group.add(user);
 		}
 				
 		try {
