@@ -29,7 +29,10 @@
     </node>
   </node>
   
-  <node id="simple-document">
-    <label>Test</label>
+  <node id="default">
+    <label>Default Publication</label>
+    <node id="simple-document">
+      <label>Simple Doctype</label>
+    </node>
   </node>
 </site>

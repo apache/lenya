@@ -3,11 +3,12 @@
 <simple-document
   xmlns:lenya="http://lenya.org/2003/"
   xmlns:dc="http://dc.org/2003/"
+  xmlns="http://www.lenya.org/2003/simple-document"
   >
 <!-- the root element indicates the doctype -->
   <lenya:meta>
-    <dc:title>These are the dublin core meta data</dc:title>
-    <dc:creator></dc:creator>
+    <dc:title>The Simple Document Type</dc:title>
+    <dc:creator>Andreas Hartmann</dc:creator>
     <dc:subject></dc:subject>
     <dc:description></dc:description>
     <dc:publisher></dc:publisher>
@@ -31,7 +32,10 @@
   <body>
     <subtitle></subtitle>
     <crossheading></crossheading>
-    <p></p>
+    <p>
+    This is a page written in the simple document type describing the simple
+    document type.
+    </p>
     <informaltable>
       <tgroup>
         <tbody>

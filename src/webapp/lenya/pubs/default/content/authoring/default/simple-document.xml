@@ -3,7 +3,6 @@
 <simple-document
   xmlns:lenya="http://lenya.org/2003/"
   xmlns:dc="http://dc.org/2003/"
-  xmlns="http://www.lenya.org/2003/simple-document"
   >
 <!-- the root element indicates the doctype -->
   <lenya:meta>

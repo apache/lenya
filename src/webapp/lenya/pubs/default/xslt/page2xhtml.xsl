@@ -16,7 +16,11 @@
     >
     
 <xsl:param name="root"/>
-    
+
+
+<xsl:output method="html"/>
+
+
 <xsl:template match="/page:page">
   <html>
     <head>
@@ -37,7 +41,7 @@
 </xsl:template>
 
 
-<xsl:template match="@*|node()">
+<xsl:template match="@*|node()" priority="-1">
   <xsl:copy>
     <xsl:apply-templates select="@*|node()"/>
   </xsl:copy>
