@@ -69,7 +69,7 @@ import java.io.File;
 
 /**
  * @author andreas
- * @version $Id: CMSHistory.java,v 1.20 2003/10/10 16:42:12 andreas Exp $
+ * @version $Id: CMSHistory.java,v 1.21 2003/10/24 12:04:16 andreas Exp $
  *
  */
 public class CMSHistory extends History {
@@ -230,8 +230,10 @@ public class CMSHistory extends History {
 
         Element identityElement = helper.getFirstChild(element, IDENTITY_ELEMENT);
         Element userElement = helper.getFirstChild(identityElement, USER_ELEMENT);
-        String userId = userElement.getAttribute(ID_ATTRIBUTE);
-        cmsVersion.setUserId(userId);
+        if (userElement != null) {
+        	String userId = userElement.getAttribute(ID_ATTRIBUTE);
+        	cmsVersion.setUserId(userId);
+        }
 
         return cmsVersion;
     }
