@@ -25,8 +25,7 @@
     <xsp:logic>
       try {
           Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
-          SiteTree liveTree = document.getPublication().getSiteTree(Publication.LIVE_AREA);
-          SiteTreeNode liveNode = liveTree.getNode(document.getId());
+          SiteTreeNode liveNode = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="live-node"/>;
           SiteTreeNode[] liveChildren = liveNode.getChildren(document.getLanguage());
           Publication publication = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
           
