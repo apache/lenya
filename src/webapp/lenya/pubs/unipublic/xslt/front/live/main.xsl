@@ -53,8 +53,9 @@
 
         <table border="0" cellpadding="0" cellspacing="0" width="585">
           <tr>
-            <td width="135" valign="bottom" align="right"><img height="21" width="120" src="{$img-unipub}/t_magazin.gif" alt="magazin"/></td>
-            <td width="315">
+            <td width="135" height="50" valign="top" align="right">
+            </td>
+            <td width="315" rowspan="2" valign="bottom">
               <table border="0" cellpadding="0" cellspacing="0" width="315">
                 <tr>
                   <td valign="bottom" width="19"><img height="9" width="19" src="{$img-unipub}/eck.gif"/></td>
@@ -64,22 +65,26 @@
                 </tr>
               </table>
             </td>
-            <td width="135" valign="bottom" align="left"><img height="21" width="120" src="{$img-unipub}/t_service.gif" alt= "service"/></td>
+            <td width="135" valign="top" align="left">
+            </td>
           </tr>
-
           <tr>
-            <td width="135" align="right" valign="top">
-
+            <td width="135" align="right" valign="top" rowspan="2">
               <!-- Navigation und Dossier -->
               <xsl:apply-templates select="FirstColumn"/>
             </td>
+            <td width="135" align="left" valign="bottom" >
+              <img height="21" width="120" src="{$img-unipub}/t_service.gif" alt= "service"/>
+            </td>
+          </tr>
+
+          <tr>
             <td width="315" valign="top">
 
               <!-- Artikel -->
               <xsl:apply-templates select="MainColumn"/>
             </td>
             <td width="135" valign="top">
-
               <!--Service, Newsletter und Webperlen-->
               <xsl:apply-templates select="LastColumn"/>
 

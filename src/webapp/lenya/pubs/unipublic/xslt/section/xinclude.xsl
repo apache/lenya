@@ -12,9 +12,14 @@
     <Content>
 <!--      FirstColumn-->
           <MainNavigation>
+<!--
             <Channels> 
              <xi:include xml:base="cocoon:" href="navigation.xml#xpointer(/FirstColumn/MainNavigation/Channels/Channel[@name='{$channel}'])"/>
+-->    
+             <xi:include xml:base="cocoon:" href="navigation.xml#xpointer(/FirstColumn/MainNavigation/Channels)"/>
+<!--
             </Channels> 
+-->
           </MainNavigation>   
 <!--      End FirstColumn-->
       <MainColumn>

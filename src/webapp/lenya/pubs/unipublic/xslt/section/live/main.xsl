@@ -41,9 +41,7 @@
 </tr>
 </table>
 </td>
-<!--
 <td width="135" valign="bottom"></td>
--->
 </tr>
 
 <tr>
@@ -51,24 +49,21 @@
 <xsl:apply-templates select="MainNavigation"/>
 </td>
 <td width="315" height="21" valign="bottom"><img src="{$img-unipub}/r_{MainColumn/section/@type}.gif" border="0" alt="{$sectiontext}"/></td>
-
-<!--
-<td width="135" valign="top" align="right"></td>
--->
+<td width="135" valign="bottom" align="right"></td>
 </tr>
 
 <tr>
-<td valign="top">
+<td valign="top" colspan="2">
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 <td width="5" valign="top" bgcolor="white">&#160;</td>
-<td width="100%" bgcolor="white"><font size="1" face="Geneva,Helvetica,Arial,Swiss,Nu Sans Regular"><br />
+<td width="295" bgcolor="white"><font size="1" face="Geneva,Helvetica,Arial,Swiss,Nu Sans Regular"><br />
  <b>2002</b> | 2001 | 2000 | 1999</font></td>
 </tr>
 
 <tr>
 <td width="5" bgcolor="white" valign="top">&#160;</td>
-<td width="100%" bgcolor="white" class="tsr-text"><br />
+<td width="295" bgcolor="white" class="tsr-text"><br />
 
 <xsl:for-each select="MainColumn/section/articles/article">
 <p>
@@ -84,7 +79,7 @@
 </tr>
 
 <tr>
-<td bgcolor="white"><br />
+<td colspan="2" bgcolor="white"><br />
   
 
 <div align="left"><a href="#topofpage"><font size="1">zum
