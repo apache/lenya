@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.7 2003/05/14 13:57:06 edith Exp $
+ * $Id: DefaultSiteTree.java,v 1.8 2003/05/14 16:33:01 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -135,7 +135,7 @@ public class DefaultSiteTree
 
     public void addNode(SiteTreeNode node)
 	throws SiteTreeException {
-	this.addNode(node.getParentId(), node.getId(), node.getLabels(),
+	this.addNode(node.getAbsoluteParentId(), node.getId(), node.getLabels(),
 		     node.getHref(), node.getSuffix(), node.hasLink());
     }
 
@@ -151,9 +151,9 @@ public class DefaultSiteTree
 	log.debug("PARENT ELEMENT: " + parentNode);
 	
         // Check if child already exists
-        Node childNode = getNodeInternal(id); 
+        Node childNode = getNodeInternal(parentid + "/" + id); 
         if (childNode != null) {
-          log.info("This node (id = "+ id +") was already insert");
+          log.info("This node: " + parentid + "/" + id + " has already been inserted");
           return;
         }          
 
