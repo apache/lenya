@@ -1,49 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>Default Publication</title>
-  </head>
+<simple-document xmlns="http://www.lenya.org/2003/simple-document" xmlns:dc="http://dc.org/2003/" xmlns:lenya="http://lenya.org/2003/">
+    <!-- the root element indicates the doctype -->
+    <lenya:meta>
+        <dc:title></dc:title>
+        <dc:creator>Christian Egli</dc:creator>
+        <dc:subject/>
+        <dc:description/>
+        <dc:publisher/>
+        <dc:contributor/>
+        <dc:date>2003-5-21</dc:date>
+        <dc:type/>
+        <dc:format/>
+        <dc:identifier/>
+        <dc:source/>
+        <dc:language/>
+        <dc:relation/>
+        <dc:coverage/>
+        <dc:rights/>
+    </lenya:meta>
+    <lenya:header>
+        <lenya:document-title>Default Publication</lenya:document-title>
+        <lenya:abstract></lenya:abstract>
+    </lenya:header>
   <body>
-    <h1>Default Publication</h1>
-
     <p>Hello and welcome to the Lenya default publication!</p>
 
     <p>Apache Lenya is a Java Open-Source Content Management System
     based on open standards such as XML and XSLT and the Apache
-    Software Stack in particular the XML publishing framework Apache
+    Software Stack, in particular the XML publishing framework Apache
     Cocoon.</p>
 
     <p>For an overview of the concepts and the terminology used in
-    Apache Lenya please see the <a href="concepts.html">Concepts
-    section</a>. To see what you can do with Apache Lenya please refer
-    to the <a href="features.html">Features section</a>.</p>
+    Apache Lenya please see the <ulink url="concepts.html">Concepts
+    section</ulink>. To see what you can do with Apache Lenya please
+    refer to the <ulink url="features.html">Features
+    section</ulink>.</p>
 
     <p>If you'd like to get a quick introduction on how to use Apache
-    Lenya CMS please go through the <a
-    href="tutorial.html">tutorial</a>.</p> 
+    Lenya CMS please go through the <ulink
+    url="tutorial.html">tutorial</ulink>.</p>
 
     <p>The purpose of this publication is</p>
 
-    <ul>
+    <itemizedlist>
+      <listitem>to show beginners the basic functionality of the Apache
+      Lenya CMS,</listitem>
 
-      <li>to show beginners the basic functionality of the Apache
-      Lenya CMS,</li>
-      
-      <li>to provide an "out of the box" publication that can be
-      easily adapted and used,</li>
+      <listitem>to provide an "out of the box" publication that can be
+      easily adapted and used,</listitem>
 
-      <li>and to provide a basis for reference implementations of new
-      concepts and best practices.</li>
+      <listitem>and to provide a basis for reference implementations of new
+      concepts and best practices.</listitem>
 
-    </ul>
+    </itemizedlist>
 
     <p>This publication does not go to the limit of what's possible
     with Apache Lenya CMS, there are no fancy bells and whistles to
     confuse you, this publication simply contains everything you need
     to get started.</p>
-
-  </body>
-</html>
+    </body>
+</simple-document>
