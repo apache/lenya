@@ -1,5 +1,5 @@
 /*
- * $Id: CMSProjectCreator.java,v 1.2 2003/02/07 12:14:12 ah Exp $
+ * $Id: CMSProjectCreator.java,v 1.3 2003/02/10 15:17:06 michicms Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,19 +44,26 @@
 package org.wyona.cms.pubs.oscom;
 
 import org.apache.log4j.Category;
+import org.apache.xpath.XPathAPI;
 
+/*
 import org.dom4j.Document;
 import org.dom4j.Element;
-
 import org.dom4j.io.SAXReader;
+*/
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import org.wyona.cms.authoring.AbstractParentChildCreator;
-
 import org.wyona.util.DateUtil;
+import org.wyona.xml.DocumentHelper;
+import org.wyona.xml.DOMUtil;
 
 import java.io.File;
 import java.io.FileWriter;
-
+import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -65,7 +72,7 @@ import java.util.GregorianCalendar;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version 2002.12.29
+ * @version 2003.2.11
  */
 public class CMSProjectCreator extends AbstractParentChildCreator {
     static Category log = Category.getInstance(CMSProjectCreator.class);
@@ -132,37 +139,25 @@ public class CMSProjectCreator extends AbstractParentChildCreator {
         // Read sample file
         log.debug(".create(): Try to read file: " + doctypeSample);
 
-        Document doc = new SAXReader().read("file:" + doctypeSample);
+        Document doc=DocumentHelper.readDocument(new URL("file:" + doctypeSample));
 
-        // Replace id
-        Element eid = (Element) doc.selectSingleNode("/system/id");
 
-        if (eid != null) {
-            log.debug(eid.getPath() + " " + eid.getText());
-            eid.addText(id);
-            log.debug(eid.getPath() + " " + eid.getText());
-        }
+        DOMUtil du = new DOMUtil();
+        du.setElementValue(doc, "/system/id",id);
+        du.setElementValue(doc, "/system/system_name",childName);
 
-        // Replace name
-        Element ename = (Element) doc.selectSingleNode("/system/system_name");
+        log.debug(".create(): system_name = "+du.getElementValue(doc.getDocumentElement(), new org.wyona.xml.XPath("system_name")));
 
-        if (ename != null) {
-            log.debug(ename.getPath() + " " + ename.getText());
-            ename.addText(childName);
-            log.debug(ename.getPath() + " " + ename.getText());
-        }
 
-        // Write file
+        // Create parent directory
         File parent = new File(new File(filename).getParent());
-
         if (!parent.exists()) {
             parent.mkdirs();
         }
 
-        FileWriter fileWriter = new FileWriter(filename);
-        doc.write(fileWriter);
-        fileWriter.close();
-
-        //copyFile(new File(doctypeSample),new File(filename));
+        // Write file
+        java.io.FileOutputStream out=new java.io.FileOutputStream(filename);
+        new org.wyona.xml.DOMWriter(out).printWithoutFormatting(doc);
+        out.close();
     }
 }
