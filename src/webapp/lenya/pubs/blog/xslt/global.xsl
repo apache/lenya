@@ -12,7 +12,8 @@
 <head>
 <link rel="stylesheet" type="text/css" href="css/styles.css" title="default css"/>
 <title>
-  <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/> - <xsl:value-of select="feed/subtitle"/><xsl:value-of select="feed/echo:subtitle"/>
+  <!-- FIXME: namespace -->
+  <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/>
 </title>
 </head>
 
@@ -24,6 +25,11 @@
     <!-- FIXME: namespace -->
     <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/>
   </a>
+</td>
+</tr>
+<tr>
+<td colspan="2" id="subtitle">
+    XML and beyond <!-- subtitle has been removed from Atom specification -->
 </td>
 </tr>
 
