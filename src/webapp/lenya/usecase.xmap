@@ -342,6 +342,18 @@
         <map:match pattern="edit" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
+
+              <map:act type="reserved-checkout">
+                <map:generate type="serverpages" src="content/rc/{exception}.xsp">
+                  <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="filename" value="{filename}"/>
+                  <map:parameter name="date" value="{date}"/>
+                </map:generate>
+                <map:transform src="xslt/rc/rco-exception.xsl"/>
+                <map:call resource="style-cms-page"/>
+              </map:act>
+
+
               <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
               <map:transform src="xslt/authoring/edit/numberTags.xsl"/>
               <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
@@ -357,6 +369,8 @@
                 <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
               </map:transform>
               <map:call resource="style-cms-page"/>
+
+
             </map:match>
           </map:match>
 
@@ -390,6 +404,17 @@
               </map:act>
 
               <!-- Stop Editing: Save and Cancel -->
+              <map:act type="reserved-checkin">
+                <map:generate src="content/rc/{exception}.xsp" type="serverpages">
+                  <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="filename" value="{filename}"/>
+                  <map:parameter name="checkType" value="{checkType}"/>
+                  <map:parameter name="date" value="{date}"/>
+                </map:generate>
+                <map:transform src="xslt/rc/rco-exception.xsl"/>
+                <map:serialize/>
+              </map:act>
+
               <map:generate src="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
               <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
 
