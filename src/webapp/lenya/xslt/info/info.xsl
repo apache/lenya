@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.22 2003/08/20 18:36:47 felix Exp $
+ $Id: info.xsl,v 1.23 2003/08/20 18:57:59 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -35,7 +35,7 @@
 	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">assets</xsl:with-param></xsl:call-template>Assets</a>
 	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a>
 	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a>
-	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-auth</xsl:with-param></xsl:call-template>AC Auth</a>
+	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC Auth</a>
 	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC Live</a>
 
 	<!--  
@@ -45,11 +45,8 @@
 	-->
 	<div id="contentblock1" class="lenya-tab">
 		<xsl:choose>
-			<xsl:when test="$tab = 'ac-auth'">
-               <xsl:apply-templates select="lenya-info:permissions[@area='authoring']"/>
-			</xsl:when>
-			<xsl:when test="$tab = 'ac-live'">
-              <xsl:apply-templates select="lenya-info:permissions[@area='live']"/>
+			<xsl:when test="$tab = 'ac-authoring' or $tab = 'ac-live'">
+               <xsl:apply-templates select="lenya-info:permissions"/>
 			</xsl:when>
 			<xsl:otherwise>
                <xsl:apply-templates/>
@@ -206,9 +203,8 @@
   <tr>
     <td>
     	<form method="get" name="form_ssl_{@area}">
-				<input type="hidden" name="lenya.usecase" value="info-ac-{substring(@area, 1, 4)}"/>
+				<input type="hidden" name="lenya.usecase" value="info-ac-{@area}"/>
 				<input type="hidden" name="lenya.step" value="showscreen"/>
-				<input type="hidden" name="area" value="{@area}"/>
 				<input type="hidden" name="change_ssl" value="true"/>
         <input type="checkbox" name="ssl"
         	onclick="document.forms.form_ssl_{@area}.submit()" value="true">
@@ -267,9 +263,8 @@
 	<xsl:param name="type"/>
 	<xsl:param name="title"/>
 	<form method="get">
-	<input type="hidden" name="lenya.usecase" value="info-ac-{substring($area, 1, 4)}"/>
+	<input type="hidden" name="lenya.usecase" value="info-ac-{$area}"/>
 	<input type="hidden" name="lenya.step" value="showscreen"/>
-	<input type="hidden" name="area" value="{$area}"/>
 	<td><xsl:value-of select="$title"/>:</td>
 	<td><xsl:apply-templates select="//lenya-info:items[@type = $type]"/></td>
 	<td>
@@ -347,9 +342,8 @@
   	<td>
   		<xsl:if test="not(@type = 'parent')">
   		<form>
-				<input type="hidden" name="lenya.usecase" value="info-ac-{substring($area, 1, 4)}"/>
+				<input type="hidden" name="lenya.usecase" value="info-ac-{$area}"/>
 				<input type="hidden" name="lenya.step" value="showscreen"/>
-				<input type="hidden" name="area" value="{$area}"/>
   			<input type="hidden" name="accreditable_id" value="{@accreditable-id}"/>
   			<input type="hidden" name="role_id" value="{@role-id}"/>
   			<input type="submit" name="delete_credential_{@accreditable-type}" value="Delete"/>
