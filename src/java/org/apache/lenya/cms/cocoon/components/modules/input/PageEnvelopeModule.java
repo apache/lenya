@@ -70,6 +70,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
+import org.apache.lenya.cms.publication.DublinCore;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 
@@ -80,7 +81,7 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
  * @see org.apache.lenya.cms.publication.PageEnvelope
  * 
  * @author  Andreas Hartmann
- * @version $Id: PageEnvelopeModule.java,v 1.34 2004/02/02 02:50:40 stefano Exp $
+ * @version $Id: PageEnvelopeModule.java,v 1.35 2004/02/20 10:50:15 andreas Exp $
  */
 public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Serviceable {
 
@@ -168,32 +169,42 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
                 }
                 value = csv;
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
-                value = envelope.getDocument().getDublinCore().getTitle();
+                value =
+                    envelope.getDocument().getDublinCore().getFirstValue(DublinCore.ELEMENT_TITLE);
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {
-                value = envelope.getDocument().getDublinCore().getCreator();
+                value =
+                    envelope.getDocument().getDublinCore().getFirstValue(
+                        DublinCore.ELEMENT_CREATOR);
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_PUBLISHER)) {
-                value = envelope.getDocument().getDublinCore().getPublisher();
+                value =
+                    envelope.getDocument().getDublinCore().getFirstValue(
+                        DublinCore.ELEMENT_PUBLISHER);
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_SUBJECT)) {
-                value = envelope.getDocument().getDublinCore().getSubject();
+                value =
+                    envelope.getDocument().getDublinCore().getFirstValue(
+                        DublinCore.ELEMENT_SUBJECT);
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_DESCRIPTION)) {
-                value = envelope.getDocument().getDublinCore().getDescription();
+                value =
+                    envelope.getDocument().getDublinCore().getFirstValue(
+                        DublinCore.ELEMENT_DESCRIPTION);
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_RIGHTS)) {
-                value = envelope.getDocument().getDublinCore().getRights();
+                value =
+                    envelope.getDocument().getDublinCore().getFirstValue(DublinCore.ELEMENT_RIGHTS);
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_DATE_CREATED)) {
-                value = envelope.getDocument().getDublinCore().getDateCreated();
+                value =
+                    envelope.getDocument().getDublinCore().getFirstValue(DublinCore.TERM_CREATED);
             } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
                 Date date = envelope.getDocument().getLastModified();
-                value = new SimpleDateFormat(DATE_FORMAT).format(date); 
+                value = new SimpleDateFormat(DATE_FORMAT).format(date);
             } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
                 value = envelope.getPublication().getBreadcrumbPrefix();
             } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
                 value = getDocumentType(objectModel, envelope);
-            }
-            else {
-            	throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+            } else {
+                throw new ConfigurationException("The attribute [" + name + "] is not supported!");
             }
         } catch (ConfigurationException e) {
-        	throw e;
+            throw e;
         } catch (Exception e) {
             throw new ConfigurationException(
                 "Getting attribute for name [" + name + "] failed: ",
@@ -206,7 +217,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
 
         return value;
     }
-    
+
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
@@ -217,13 +228,14 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
      * @throws ServiceException when something went wrong.
      * @throws URIParameterizerException when something went wrong.
      */
-    protected String getDocumentType(Map objectModel, PageEnvelope envelope) throws ServiceException, URIParameterizerException {
+    protected String getDocumentType(Map objectModel, PageEnvelope envelope)
+        throws ServiceException, URIParameterizerException {
         String documentType;
         URIParameterizer parameterizer = null;
         Map map = null;
         try {
             parameterizer = (URIParameterizer) manager.lookup(URIParameterizer.ROLE);
-        
+
             Parameters parameters = new Parameters();
             parameters.setParameter(
                 URI_PARAMETER_DOCTYPE,
@@ -231,11 +243,12 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
                     + envelope.getPublication().getId()
                     + "/"
                     + URI_PARAMETER_DOCTYPE);
-                    
-            String source = envelope.getDocument().getArea() + envelope.getDocument().getDocumentURL();
-                    
+
+            String source =
+                envelope.getDocument().getArea() + envelope.getDocument().getDocumentURL();
+
             Request request = ObjectModelHelper.getRequest(objectModel);
-        
+
             map = parameterizer.parameterize(request.getRequestURI(), source, parameters);
             documentType = (String) map.get(URI_PARAMETER_DOCTYPE);
         } finally {
