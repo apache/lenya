@@ -114,6 +114,16 @@
       <outputproperty name="indent" value="yes"/>
     </xslt>
     
+    <!-- patch logkit.xconf -->
+    <echo>INFO: patching logkit.xconf with XSLT stylesheet</echo>
+    <xslt
+        in="${src.cocoon.dir}/WEB-INF/logkit.xconf"
+        out="${build.webapp}/WEB-INF/logkit.xconf"
+        style="${src.webapp.dir}/WEB-INF/logkit-xconf.xsl"
+        >
+      <outputproperty name="indent" value="yes"/>
+    </xslt>
+    
     <!-- patch web.xml -->
     <echo>INFO: patching web.xml with XSLT stylesheet</echo>
     <xslt
