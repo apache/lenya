@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+>
+
+<menu>
+
+  <xsp-lenya:util/>
+
+  <xsp:logic>
+    String projectid=parameters.getParameter("projectid","null");
+  </xsp:logic>
+
+  <live_uri>/live<xsp:expr>xsp_lenya_pub_url</xsp:expr></live_uri>
+
+  <menus>
+    <menu name="File" label="File">
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/editor-matrix/"+projectid+".html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/editor-matrix/"+projectid+".html,/lenya/oscom/editor-matrix/index.html&amp;sources=/editor-matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
+      </block>
+      <separator>
+        <item>-----------------</item>
+      </separator>
+      <block>
+        <item>Passwd</item>
+        <item>Switch&#160;User</item>
+<!--
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_lenya_id == null ? "nobody" : xsp_lenya_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
+-->
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+      </block>
+    </menu>
+
+    <menu name="Search" label="Search">
+      <block>
+        <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
+        <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
+      </block>
+    </menu>
+
+    <menu name="Help" label="Help">
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+      </block>
+      <separator>
+        <item>-----------------</item>
+      </separator>
+      <block>
+        <item href="http://www.lenya.org">About&#160;Lenya</item>
+      </block>
+    </menu>
+
+    <menu name="Debug" label="Debug">
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>projectid</xsp:expr>.xml</xsp:attribute>View&#160;Page&#160;XML</item>
+        <item><xsp:attribute name="href">body-<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute>View&#160;Body&#160;XML</item>
+      </block>
+      <separator>
+        <item>-----------------</item>
+      </separator>
+      <block>
+        <item href="../../xopus/matrix.xsl">View&#160;Xopus&#160;XSLT</item>
+        <item href="../../xopus/matrix.xsd">View&#160;Xopus&#160;XSD</item>
+      </block>
+      <separator>
+        <item>-----------------</item>
+      </separator>
+      <block>
+<!--
+        <item href="../bitflux/home.xsl">View&#160;Bitflux&#160;XSLT</item>
+        <item href="../bitflux/home.xsd">View&#160;Bitflux&#160;XSD</item>
+        <item href="../bitflux/home.css">View&#160;Bitflux&#160;CSS</item>
+-->
+        <item>View&#160;Bitflux&#160;XSLT</item>
+        <item>View&#160;Bitflux&#160;XSD</item>
+        <item>View&#160;Bitflux&#160;CSS</item>
+      </block>
+    </menu>
+  </menus>
+
+</menu>
+
+</xsp:page>
