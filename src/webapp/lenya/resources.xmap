@@ -7,42 +7,42 @@
     <map:pipeline>
           <!-- matches pub-id/css/**.css -->
           <map:match pattern="*/css/**.css">
-            <map:read src="pubs/{1}/resources/css/{3}.css" mime-type="text/css" />
+            <map:read src="pubs/{1}/resources/css/{2}.css" mime-type="text/css" />
           </map:match>
 
           <!-- matches pub-id/javascript/**.js -->
           <map:match pattern="*/javascript/**.js">
-            <map:read src="pubs/{1}/resources/javascript/{3}.js" mime-type="application/javascript" />
+            <map:read src="pubs/{1}/resources/javascript/{2}.js" mime-type="application/javascript" />
           </map:match>
 
           <!-- matches pub-id/images/**.gif -->
           <map:match pattern="*/images/**.gif">
-            <map:read src="pubs/{1}/resources/images/{3}.gif" mime-type="image/gif" />
+            <map:read src="pubs/{1}/resources/images/{2}.gif" mime-type="image/gif" />
           </map:match>
 
           <!-- matches pub-id/images/**.png -->
           <map:match pattern="*/images/**.png">
-            <map:read src="pubs/{1}/resources/images/{3}.png" mime-type="image/png" />
+            <map:read src="pubs/{1}/resources/images/{2}.png" mime-type="image/png" />
           </map:match>
 
           <!-- matches pub-id/images/**.jpg -->
           <map:match pattern="*/images/**.jpg">
-            <map:read src="pubs/{1}/resources/images/{3}.jpg" mime-type="image/jpeg" />
+            <map:read src="pubs/{1}/resources/images/{2}.jpg" mime-type="image/jpeg" />
           </map:match>
 
           <!-- matches pub-id/images/**.jpeg -->
           <map:match pattern="*/images/**.jpeg">
-            <map:read src="pubs/{1}/resources/images/{3}.jpeg" mime-type="image/jpeg" />
+            <map:read src="pubs/{1}/resources/images/{2}.jpeg" mime-type="image/jpeg" />
           </map:match>
 
           <!-- matches pub-id/pdf/**.pdf -->
           <map:match pattern="*/pdf/**.pdf">
-            <map:read src="pubs/{1}/resources/pdf/{3}.pdf" mime-type="application/pdf" />
+            <map:read src="pubs/{1}/resources/pdf/{2}.pdf" mime-type="application/pdf" />
           </map:match>
 
           <!-- matches pub-id/flash/**.swf -->
           <map:match pattern="*/flash/**.swf">
-            <map:read src="pubs/{1}/resources/flash/{3}.swf" mime-type="application/x-shockwave-flash" />
+            <map:read src="pubs/{1}/resources/flash/{2}.swf" mime-type="application/x-shockwave-flash" />
           </map:match>
 
     </map:pipeline>
