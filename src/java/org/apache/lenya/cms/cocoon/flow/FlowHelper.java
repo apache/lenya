@@ -1,5 +1,5 @@
 /*
- * $Id: FlowHelper.java,v 1.5 2004/02/02 02:12:22 stefano Exp $ <License>
+ * $Id: FlowHelper.java,v 1.6 2004/02/04 10:36:46 andreas Exp $ <License>
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import org.apache.log4j.Category;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class FlowHelper {
-    
+
     private static final Category log = Category.getInstance(FlowHelper.class);
 
     /**
@@ -137,7 +137,7 @@ public class FlowHelper {
         PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
         return factory.getPageEnvelope(cocoon.getObjectModel());
     }
-    
+
     /**
      * Returns the request URI of the current request.
      * @param cocoon The FOM_Cocoon object.
@@ -146,9 +146,9 @@ public class FlowHelper {
     public String getRequestURI(FOM_Cocoon cocoon) {
         return cocoon.getRequest().getRequestURI();
     }
-    
+
     public static final String SEPARATOR = ":";
-    
+
     /**
      * Resolves the request parameter value for a specific name.
      * The parameter names are encoded as <code>{name}:{value}.{axis}</code>.
@@ -159,22 +159,25 @@ public class FlowHelper {
      * @return A string.
      */
     public String getImageParameterValue(FOM_Cocoon cocoon, String parameterName) {
-        
+
         log.debug("Resolving parameter value for name [" + parameterName + "]");
-        
+
         Request request = cocoon.getRequest();
-        String value = null;
-        String prefix = parameterName + SEPARATOR;
-        Enumeration e = request.getParameterNames();
-        while (e.hasMoreElements() && value == null) {
-            String name = (String) e.nextElement();
-            if (name.startsWith(prefix)) {
-                log.debug("Complete parameter name: [" + name + "]");
-                value = name.substring(prefix.length(), name.length() - 2);
-                log.debug("Resolved value: [" + value + "]");
+        String value = request.getParameter(parameterName);
+
+        if (value == null) {
+            String prefix = parameterName + SEPARATOR;
+            Enumeration e = request.getParameterNames();
+            while (e.hasMoreElements() && value == null) {
+                String name = (String) e.nextElement();
+                if (name.startsWith(prefix)) {
+                    log.debug("Complete parameter name: [" + name + "]");
+                    value = name.substring(prefix.length(), name.length() - 2);
+                    log.debug("Resolved value: [" + value + "]");
+                }
             }
         }
-        
+
         return value;
     }
 
