@@ -3,28 +3,14 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
   xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
-  xmlns:li="http://apache.org/cocoon/lenya/info/1.0"
   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
-  xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
-  xmlns:request="http://apache.org/xsp/request/2.0"
 >
 
-  <xsp:structure>
-    <xsp:include>java.io.IOException</xsp:include>
-    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-    <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
-  </xsp:structure>
-    
-<lenya-info:info> 
+<lenya-info:info>
   <lenya-info:workflow>
-    	<wf:version date="(?)" state="redaktion" user="michael"/>
-   		<wf:version date="(?)" event="publish" state="review" user="gregor"/>
-  </lenya-info:workflow>  
+  	This document has no workflow.
+  </lenya-info:workflow>
 </lenya-info:info>
 
 </xsp:page>
