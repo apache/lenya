@@ -91,7 +91,7 @@
       <map:match pattern="">
         <!--<map:generate src="docs/publication/live/frontpage/index.xml"/>-->
         <map:generate type="directory" src="docs/publication/live/magazin/gesundheit/articles/2002"/>
-         <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
         <map:transform type="xinclude"/>
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
