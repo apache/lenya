@@ -7,11 +7,11 @@ table.menu img {border:0px}
 
 
 #navTopBG {
-	height: 21px;
-	background-image: url('/lenya/lenya/menu/images/menu-bg.gif'); 
+	height: 22px;
+	background-image: url('/lenya/lenya/menu/images/menu-bg_2.gif'); 
 	background-repeat: repeat-x;
-	padding-top: 1px;
 	font-size: 10pt;
+	color: #333333;
 }
 
 #navBlue {
@@ -26,28 +26,20 @@ table.menu img {border:0px}
 	display:block;
 	visibility:hidden;
 	width:170px;
-	top:56px;
+	top:54px;
 	overflow: hidden;
 }
 
 #menuFile {left:14px;}
-#menuSearch {left:117px;}
-#menuHelp {left:220px;}
-#menuDebug {left:323px;}
+#menuSearch {left:114px;}
+#menuHelp {left:214px;}
+#menuDebug {left:314px;}
 
-/*
-.menuOutline {
-	border: 1px #999999 solid;
-	border-bottom: 2px #999999 solid;
-	background:#EEEEEE;
-	color: black;
-}
-*/
 
 .menuOutline {
-	border: 1px solid #999999;
-	padding: 2px;
+	border: 1px solid #666666;
 	border-top: 0px;
+	padding: 2px;
 	background-color: #EEEEEE;
 
 /*

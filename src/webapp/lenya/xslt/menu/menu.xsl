@@ -84,13 +84,13 @@
       </tr>
       
       <tr valign="top">
-        <td width="13" background="/lenya/lenya/menu/images/menu-bg.gif">
-          <img border="0" src="/lenya/lenya/menu/images/menu_bg_anfang2.gif" />
-        </td>
-        <td colspan="2" valign="top" background="/lenya/lenya/menu/images/menu-bg.gif">
+        <td valign="top" colspan="3">
           <div id="navTop">
             <div id="navTopBG">
-              <xsl:apply-templates select="menus/menu" mode="nav"/>
+            	<div style="height: 100%; padding: 3px 0px;">
+						    <div style="float:left; width:12px; border-right: solid 1px #999999;">&#160;</div>
+  	            <xsl:apply-templates select="menus/menu" mode="nav"/>&#160;
+            	</div>
             </div>
           </div>
         </td>
@@ -110,25 +110,16 @@
   
     
   <xsl:template match="menu" mode="nav">
-  	<xsl:if test="position() = 1">
-    <div style="float:left; width:1px; padding-top: 2px;"><img src="/lenya/lenya/menu/images/grau.gif" width="1" height="15" /></div>
-    </xsl:if>
-    
-    <div style="float:left; width:10px">&#160;</div>
-    
-    <div id="nav{@label}" class="click" style="float:left; width:46px">
-      <b>&#160;<xsl:value-of select="@name"/></b>
+    <div id="nav{@label}" class="click" style="float:left; width: 100px; border-right: 1px solid #999999;">
+      &#160;&#160;<xsl:value-of select="@name"/>
     </div>
-    
-    <div style="float:left; width:46px">&#160;</div>
-    <div style="float:left; width:1px; padding-top: 2px;"><img src="/lenya/lenya/menu/images/grau.gif" width="1" height="15" /></div>
   </xsl:template>
   
   
   <xsl:template match="menu" mode="menu">
   	
     <div id="menu{@label}" class="menuOutline">
-
+    	
       <div class="menuBg">
         <xsl:for-each select="block">
           <xsl:for-each select="item">
