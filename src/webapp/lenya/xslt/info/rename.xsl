@@ -58,12 +58,10 @@
       <div class="lenya-box-body">
         <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
         <script Language="JavaScript">
-function validateForm(theForm)
-{
-	if (!validContent(theForm["properties.node.secdocumentid"],"New Document ID"))
-		return false;
+function validateForm(theForm) {
 
-	return true;
+if (!validContent(theForm["properties.node.secdocumentid"],"New Document ID")) return false;
+return true;
 }
 </script>
            <form method="get" onsubmit="return validateForm(this)">
