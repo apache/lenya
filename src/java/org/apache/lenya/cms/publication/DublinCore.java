@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.14 2003/08/14 13:49:21 andreas Exp $
+$Id: DublinCore.java,v 1.15 2003/08/14 16:32:59 egli Exp $
 <License>
 
  ============================================================================
@@ -474,26 +474,26 @@ public class DublinCore {
     }
 
     /**
-     * Get the date of publication.
+     * Get the date of creation
      * 
-     * @return the date of publication
+     * @return the date of creation
      * 
      * @throws DocumentException if an error occurs
-     * @deprecated Use {@link #getDateIssued()} instead!
      */
-    public String getDatePublished() throws DocumentException {
-        return getDateIssued();
+    public String getDateCreated() throws DocumentException {
+        checkValidity();
+        return (String) terms.get(TERM_CREATED);
     }
 
     /**
-     * Set the publication date
+     * Set the date of creation
      * 
-     * @param datePublished the date of publication
-     * @deprecated Use {@link #setDateIssued(String)} instead!
+     * @param dateCreated the date of creation
      */
-    public void setDatePublished(String datePublished) {
-        setDateIssued(datePublished);
+    public void setDateCreated(String dateCreated) {
+        terms.put(TERM_CREATED, dateCreated);
     }
+
 
     /**
      * Get the rights
