@@ -139,13 +139,11 @@ public class Normalize
                       sb.append("&#223;");
                       break;
                       }
-/*
                    case 225: // aacute
                       {
                       sb.append("&#225;");
                       break;
                       }
-*/
                    case 228: // ae
                       {
                       sb.append("&#228;");
@@ -156,13 +154,11 @@ public class Normalize
                       sb.append("&#232;");
                       break;
                       }
-//
                    case 233: // eacute
                       {
                       sb.append("&#233;");
                       break;
                       }
-//
                    case 234: // ecirc
                       {
                       sb.append("&#234;");
@@ -230,7 +226,6 @@ public class Normalize
                    int power=1;
                    for(int j=substring.length()-2;j>=2;j--)
                       {
-                      //System.out.println(substring.charAt(j));
                       try
                         {
                         Integer integer=new Integer(""+substring.charAt(j));
@@ -245,8 +240,6 @@ public class Normalize
                       }
                    if(ascii >= 0)
                      {
-                     //System.out.println("|"+substring.toString()+"|");
-                     //System.out.println(ascii);
                      char character=(char)ascii;
                      sb.append(character);
                      i=i+substring.length()-1;
