@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreatorTest.java,v 1.5 2003/08/07 16:08:21 egli Exp $
+$Id: DocumentCreatorTest.java,v 1.6 2003/08/08 10:37:41 egli Exp $
 <License>
 
  ============================================================================
@@ -115,14 +115,12 @@ public class DocumentCreatorTest extends TestCase {
         DocumentCreator creator = new DocumentCreator();
         File authoringDirectory = new File(publication.getDirectory(), AUTHORING_DIR);
 
-        creator.create(publication, authoringDirectory, TREE_FILE, PARENT_ID, CHILD_ID, CHILD_NAME,
+        creator.create(publication, authoringDirectory, AREA, PARENT_ID, CHILD_ID, CHILD_NAME,
             CHILD_TYPE, DOCUMENT_TYPE, DOCUMENT_LANGUAGE);
 
         File documentFile = new File(authoringDirectory, CREATED_FILE);
         assertTrue(documentFile.exists());
         System.out.println("File was created: " + documentFile.getAbsolutePath());
-
-        File sitetreeFile = new File(authoringDirectory, TREE_FILE);
 
         SiteTree sitetree = publication.getSiteTree(AREA);
         SiteTreeNode node = sitetree.getNode(PARENT_ID + "/" + CHILD_ID);
@@ -132,20 +130,19 @@ public class DocumentCreatorTest extends TestCase {
     }
 
     protected static final String AUTHORING_DIR = "content" + File.separator + "authoring";
-    protected static final String TREE_FILE = "sitetree.xml";
     protected static final String PARENT_ID = "/tutorial";
     protected static final String CHILD_ID = "test-document";
     protected static final String CHILD_NAME = "Test Document";
     protected static final String CHILD_TYPE = "leaf";
     protected static final String DOCUMENT_TYPE = "simple";
-    protected static final String CREATED_FILE = "tutorial/test-document/index.xml";
+    protected static final String CREATED_FILE = "tutorial/test-document/index_en.xml";
     protected static final String DOCUMENT_LANGUAGE = "en";
     protected static final String AREA = "authoring";
 
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {
         if (PublicationHelper.getPublication() == null) {
-            String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
+            String[] args = { "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya", "test" };
             PublicationHelper.extractPublicationArguments(args);
         }
     }
