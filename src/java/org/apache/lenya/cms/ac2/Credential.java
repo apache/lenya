@@ -1,5 +1,5 @@
 /*
-$Id: Credential.java,v 1.5 2003/07/24 18:36:37 andreas Exp $
+$Id: Credential.java,v 1.6 2003/10/26 18:23:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -138,5 +138,13 @@ public class Credential {
      */
     public boolean contains(Role role) {
         return roles.contains(role);
+    }
+    
+    /**
+     * Returns if the credential is empty (contains no roles).
+     * @return A boolean value.
+     */
+    public boolean isEmpty() {
+    	return roles.isEmpty();
     }
 }
