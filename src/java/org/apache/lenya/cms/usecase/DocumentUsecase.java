@@ -92,7 +92,12 @@ public class DocumentUsecase extends WorkflowUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getSourceURL()
      */
     protected String getSourceURL() {
-        return getSourceDocument().getCanonicalWebappURL();
+        if (this.sourceDocument == null) {
+            return super.getSourceURL();
+        }
+        else {
+            return getSourceDocument().getCanonicalWebappURL();
+        }
     }
 
     /**
