@@ -7,4 +7,7 @@
   <usecase id="edit">
     <role id="editor"/>
   </usecase>
+  <usecase id="publish">
+    <role id="editor"/>
+  </usecase>
 </usecases>

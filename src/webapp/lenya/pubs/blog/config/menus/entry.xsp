@@ -6,6 +6,7 @@
   xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
 >
 
 <menu>
@@ -38,9 +39,9 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item href="?lenya.usecase=edit&amp;lenya.step=open">Edit&#160;with&#160;Forms</item>
+        <item uc:usecase="edit" href="?lenya.step=open">Edit&#160;with&#160;Forms</item>
         <item>Edit&#160;with&#160;Midas</item>
-        <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr></xsp:attribute>Publish</item>
+        <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr></xsp:attribute>Publish</item>
       </block>
       <block>
         <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
