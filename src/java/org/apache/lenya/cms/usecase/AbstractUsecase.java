@@ -29,6 +29,7 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -71,8 +72,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     }
 
     /**
-     * Checks if the operation can be executed and returns the error messages. Error messages
-     * prevent the operation from being executed.
+     * Checks if the operation can be executed and returns the error messages.
+     * Error messages prevent the operation from being executed.
      * @return A boolean value.
      */
     public List getErrorMessages() {
@@ -81,7 +82,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
 
     /**
      * Returns the information messages to show on the confirmation screen.
-     * @return An array of strings. Info messages do not prevent the operation from being executed.
+     * @return An array of strings. Info messages do not prevent the operation
+     *         from being executed.
      */
     public List getInfoMessages() {
         return Collections.unmodifiableList(this.infoMessages);
@@ -250,7 +252,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     private Map parameters = new HashMap();
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
+     *      java.lang.Object)
      */
     public void setParameter(String name, Object value) {
         if (getLogger().isDebugEnabled()) {
@@ -277,9 +280,10 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         }
         return valueString;
     }
+
     /**
-     * Returns one of the strings "true" or "false" depending on whether the corresponding checkbox
-     * was checked.
+     * Returns one of the strings "true" or "false" depending on whether the
+     * corresponding checkbox was checked.
      * @param name The parameter name.
      * @return A string.
      */
@@ -328,16 +332,34 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     public void contextualize(Context _context) throws ContextException {
         this.context = _context;
     }
+    
+    private DocumentManager documentManager;
+    
+    protected DocumentManager getDocumentManager() {
+        return this.documentManager;
+    }
 
     /**
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public final void initialize() throws Exception {
         super.initialize();
+        this.documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
         doInitialize();
         initParameters();
     }
 
+    /**
+     * @see org.apache.avalon.framework.activity.Disposable#dispose()
+     */
+    public void dispose() {
+        super.dispose();
+        
+        if (this.documentManager != null) {
+            this.manager.release(documentManager);
+        }
+    }
+    
     /**
      * Does the actual initialization. Template method.
      */
@@ -345,7 +367,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         Map objectModel = ContextHelper.getObjectModel(this.context);
         Request request = ObjectModelHelper.getRequest(objectModel);
         String webappUri = ServletHelper.getWebappURI(request);
-        
+
         this.sourceUrl = webappUri;
 
         if (getLogger().isDebugEnabled()) {
@@ -359,7 +381,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     public void advance() {
         // do nothing
     }
-    
+
     /**
      * Deletes a parameter.
      * @param name The parameter name.
