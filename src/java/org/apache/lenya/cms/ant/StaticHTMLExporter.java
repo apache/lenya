@@ -14,7 +14,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 /**
- *
+ * Ant task that exports a set of HTML URIs as static HTML files.
  * @author  andreas
  */
 public class StaticHTMLExporter
@@ -26,55 +26,94 @@ public class StaticHTMLExporter
     
     private String serverURL;
     
+    /**
+     * Returns the server URL.
+     */
     protected URL getServer()
         throws MalformedURLException {
         return new URL(serverURL);
     }
     
+    /**
+     * Sets the server URL.
+     */
     public void setServer(String serverURL) {
         this.serverURL = serverURL;
     }
     
     private String path;
     
+    /**
+     * Returns the path to the exported files.
+     */
     protected String getPath() {
         return path;
     }
     
+    /**
+     * Sets the path to the exported files.
+     */
     public void setPath(String path) {
         this.path = path;
     }
     
     private String uris;
     
+    /**
+     * Returns the URIs to export.
+     */
     protected String[] getUris() {
         return uris.split(",");
     }
     
+    /**
+     * Sets the URIs to export.
+     */
     public void setUris(String uris) {
         this.uris = uris;
     }
     
     private String expression;
-    
+
+    /**
+     * Returns the expression in the URI to be replaced.
+     */
     protected String getExpression() {
         return expression;
     }
     
+    /**
+     * Sets the expression in the URI to be replaced.
+     */
     public void setExpression(String expression) {
         this.expression = expression;
     }
     
     private String replacement;
     
+    /**
+     * Returns the string in the URI that replaces the expression.
+     */
     protected String getReplacement() {
         return replacement;
     }
     
+    /**
+     * Sets the string in the URI that replaces the expression.
+     */
     public void setReplacement(String replacement) {
         this.replacement = replacement;
     }
     
+    /**
+     * Exports a set of URIs as a HTML file.
+     * @param serverURI The server to download the file from.
+     * @param publicationDirectory The directory of the publication.
+     * @param exportPath The path to export the files to (relative to publicationDirectory).
+     * @param uris The URIs to export (relative to the publication URI).
+     * @param substituteExpression A part of the complete URIs to be substituted.
+     * @param substituteReplacement A string to replace substituteExpression.
+     */
     public void export(URL serverURI, File publicationDirectory, String exportPath,
         String[] uris, String substituteExpression, String substituteReplacement)
         throws ExportException {
@@ -106,6 +145,9 @@ public class StaticHTMLExporter
         }
     }
     
+    /**
+     * Executes the task.
+     */
     public void execute()
         throws BuildException {
             
