@@ -56,8 +56,6 @@
  * Typical usage:
  * <script type="text/javascript" language="JavaScript" src="breadcrumbs.js"></script>
  *
- *@author     <a href="mailto:leosimons@apache.org">Leo Simons</a> (main author)
- *@author     <a href="mailto:nicolaken@apache.org">Nicola Ken Barozzi</a> (integration in skin)
  *@created    July 12, 2002
  *@version    1.0
  */

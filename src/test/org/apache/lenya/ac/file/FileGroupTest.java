@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileGroupTest.java,v 1.3 2004/03/04 15:37:59 egli Exp $  */
+/* $Id: FileGroupTest.java,v 1.4 2004/03/20 11:46:20 gregor Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -32,11 +32,6 @@ import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
 import org.xml.sax.SAXException;
 
-/**
- * @author egli
- *
- *
- */
 public class FileGroupTest extends AccessControlTest {
 
     /**
