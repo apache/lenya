@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<document> 
+  <header> 
+    <title>Welcome to XDOC</title> 
+  </header> 
+  <body> 
+    <section>
+      <title>Congratulations</title>
+      <p>You have successfully generated and rendered an Apache Forrest site.
+        This page is from the site template. It is found in
+        <code>my-site/src/documentation/content/xdocs/index.xml</code>
+        Please edit it and replace this text with content of your own.</p>
+    </section>
+  </body>
+</document>

@@ -24,6 +24,12 @@
         <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
 -->
       </block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/ParentChildScreenNewArticle?parentid=/"+"&amp;doctype=XDoc"</xsp:expr>
+						</xsp:attribute>New Document</item>
+				</block>
       <separator>
         <item>-----------------</item>
       </separator>
