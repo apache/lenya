@@ -30,4 +30,5 @@
   
   <node href="documentation/" label="Documentation"/>
 
+  <node href="simple-document.html" label="Test"/>
 </site>
