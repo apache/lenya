@@ -192,7 +192,7 @@ public class DocumentRenameTaskTest extends AntTaskTest {
             "Sitetree node with id "
                 + node.getId()
                 + " was created as child of node with id: "
-                + node.getAbsoluteParentId());
+                + node.getParent().getAbsoluteId());
 		SiteTreeNode firstnode = sitetree.getNode(FIRST_DOCUMENT_ID);
 		assertNull(firstnode);
 		System.out.println("Sitetree node for document id "+FIRST_DOCUMENT_ID+" was deleted");

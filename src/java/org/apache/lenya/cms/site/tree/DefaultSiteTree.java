@@ -203,7 +203,7 @@ public class DefaultSiteTree implements SiteTree {
      *      java.lang.String)
      */
     public void addNode(SiteTreeNode node, String refDocumentId) throws SiteException {
-        this.addNode(node.getAbsoluteParentId(), node.getId(), node.getLabels(), node.getHref(),
+        this.addNode(node.getParent().getAbsoluteId(), node.getId(), node.getLabels(), node.getHref(),
                 node.getSuffix(), node.hasLink(), refDocumentId);
     }
 

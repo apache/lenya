@@ -173,7 +173,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         } else {
 
             SiteTreeNode[] siblings = sourceNode.getNextSiblings();
-            String parentId = sourceNode.getAbsoluteParentId();
+            String parentId = sourceNode.getParent().getAbsoluteId();
             SiteTreeNode sibling = null;
             String siblingDocId = null;
 

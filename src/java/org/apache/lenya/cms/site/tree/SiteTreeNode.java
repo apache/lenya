@@ -52,13 +52,6 @@ public interface SiteTreeNode {
     String getAbsoluteId();
 
     /**
-     * Get the absolute parent-id of this node.
-     * 
-     * @return  the absolute parent-id.
-     */
-    String getAbsoluteParentId();
-
-    /**
      * Get the id of this node.
      * 
      * @return the node id.

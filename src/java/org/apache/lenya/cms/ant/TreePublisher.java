@@ -96,7 +96,7 @@ public class TreePublisher extends PublicationTask {
 
             SiteTreeNode authoringNode = authoringTree.getNode(documentId);
             SiteTreeNode[] siblings = authoringNode.getNextSiblings();
-            String parentId = authoringNode.getAbsoluteParentId();
+            String parentId = authoringNode.getParent().getAbsoluteId();
             SiteTreeNode sibling = null;
             String siblingDocId = null;
             for (int i = 0; i < siblings.length; i++) {

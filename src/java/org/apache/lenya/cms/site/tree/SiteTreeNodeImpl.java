@@ -69,15 +69,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getAbsoluteParentId()
-     * @deprecated use getParent().getAbsoluteId() instead
-     */
-    public String getAbsoluteParentId() {
-        SiteTreeNode parent = this.getParent();
-        return (parent == null) ? "" : parent.getAbsoluteId();
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getAbsoluteId()
      */
     public String getAbsoluteId() {
