@@ -74,7 +74,7 @@ import org.xml.sax.SAXException;
  * This class uses the dublin core specification from 2003-03-04.
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
- * @version $Id: DublinCoreImpl.java,v 1.3 2004/01/07 10:18:46 michi Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.4 2004/01/30 18:36:53 andreas Exp $
  */
 public class DublinCoreImpl implements DublinCore {
     private Document cmsdocument;
@@ -281,7 +281,7 @@ public class DublinCoreImpl implements DublinCore {
                     metaElement.removeChild(element);
                 }
                 String value = (String) maps[type].get(elementNames[i]);
-                if (value != null) {
+                if (value != null && !"".equals(value.trim())) {
                     element = helper.createElement(elementNames[i], value);
                     metaElement.appendChild(element);
                 }
