@@ -52,6 +52,10 @@
               <td><xsl:value-of select="email"/></td>
             </tr>
             <tr>
+              <td class="lenya-entry-caption">Description:</td>
+              <td><xsl:value-of select="description"/></td>
+            </tr>
+            <tr>
               <td/>
               <td>
 				        <form method="GET" action="lenya.usecase.change_profile">

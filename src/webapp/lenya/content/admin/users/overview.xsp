@@ -55,6 +55,7 @@
       <id><xsp:expr>user.getId()</xsp:expr></id>
       <fullname><xsp:expr>user.getFullName()</xsp:expr></fullname>
       <email><xsp:expr>user.getEmail()</xsp:expr></email>
+      <description><xsp:expr>user.getDescription()</xsp:expr></description>
       <groups>
         <xsp:logic>
             Group groups[] = user.getGroups();

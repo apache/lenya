@@ -12,6 +12,7 @@
       <id><jpath:value-of select="user-id"/></id>
       <fullname><jpath:value-of select="fullname"/></fullname>
       <email><jpath:value-of select="email"/></email>
+      <description><jpath:value-of select="description"/></description>
     </user>
   </page>
   

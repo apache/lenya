@@ -26,8 +26,9 @@ function user_change_profile(userId) {
 
 	initAccessController();
     var user = accessController.getUserManager().getUser(userId);
-	var fullName = user.fullName;
-	var email = user.email;
+	var fullName = user.getFullName();
+	var email = user.getEmail();
+	var description = user.getDescription();
 	
 	// at the moment the loop is executed only once (no form validation)
 	
@@ -35,7 +36,8 @@ function user_change_profile(userId) {
 	    sendPageAndWait("users/lenya.usecase.change_profile/profile.xml", {
 	    	"user-id" : userId,
 	    	"fullname" : fullName,
-	    	"email" : email
+	    	"email" : email,
+	    	"description" : description
 	    });
 	    
 	    if (cocoon.request.get("cancel")) {
@@ -47,6 +49,8 @@ function user_change_profile(userId) {
 	       	user.setFullName(fullName);
 		    email = cocoon.request.get("email");
 	       	user.setEmail(email);
+	       	description = cocoon.request.get("description");
+	       	user.setDescription(description);
 	   		user.save();
 	    	break;
 	    }

@@ -46,7 +46,7 @@
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Full&#160;Name</td>
+              <td class="lenya-entry-caption">Name</td>
               <td>
                 <input class="lenya-form-element" name="fullname" type="text">
                   <xsl:attribute name="value">
@@ -61,6 +61,16 @@
                 <input class="lenya-form-element" name="email" type="text">
                   <xsl:attribute name="value">
                     <xsl:value-of select="email"/>
+                  </xsl:attribute>
+                </input>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption">Description</td>
+              <td>
+                <input class="lenya-form-element" name="description" type="text">
+                  <xsl:attribute name="value">
+                    <xsl:value-of select="description"/>
                   </xsl:attribute>
                 </input>
               </td>

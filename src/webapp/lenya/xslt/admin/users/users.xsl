@@ -35,7 +35,7 @@
       </tr>
       <xsl:apply-templates select="user">
         <xsl:sort select="id"/>
-      </xsl:apply-templates/>
+      </xsl:apply-templates>
     </table>
   </xsl:template>
   
