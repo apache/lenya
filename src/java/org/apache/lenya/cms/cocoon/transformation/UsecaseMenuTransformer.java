@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.9 2004/02/12 10:24:55 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.10 2004/02/12 10:30:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,8 +59,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.component.ComponentManager;
 import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -199,13 +201,13 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             if (acResolver != null) {
                 componentSelector.release(acResolver);
             }
-            manager.release(componentSelector);
+            ((ComponentManager) manager).release(componentSelector);
         }
         if (serviceSelector != null) {
             if (acResolver != null) {
                 serviceSelector.release(acResolver);
             }
-            manager.release(serviceSelector);
+            ((ServiceManager) manager).release(serviceSelector);
         }
     }
 
