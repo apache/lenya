@@ -10,6 +10,7 @@
 <xsl:template match="cmsbody">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="service.edit" type="application/x.atom+xml" href="introspection.xml" title="AtomAPI"/>
 <link rel="stylesheet" type="text/css" href="css/styles.css" title="default css"/>
 <title>
   <!-- FIXME: namespace -->

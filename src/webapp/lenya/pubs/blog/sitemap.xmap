@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.39 2003/11/28 00:20:39 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.40 2003/11/29 00:14:25 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -68,6 +68,15 @@
           <map:part src="content/{1}/sidebar.xml"/>
         </map:aggregate>
         <map:serialize type="xml"/>
+      </map:match>
+      <!-- FIXME: serializing as XHTML within the Authoring area doesn't seem to work -->
+      <map:match pattern="live/entries/*/*/*/*/index.html">
+        <map:generate src="cocoon:/live/entries/{1}/{2}/{3}/{4}/lenya-page-body.xml"/>
+        <map:transform src="xslt/entry/main-live.xsl">
+          <map:parameter name="relative2root" value="../../../../.."/>
+        </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/live/entry.xml"/>
+        <map:serialize type="xhtml"/>
       </map:match>
       <map:match pattern="*/entries/*/*/*/*/index.html">
         <map:generate src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
