@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: resources-shared.xmap,v 1.5 2004/04/13 14:33:44 edith Exp $ -->
+<!-- $Id: resources-shared.xmap,v 1.6 2004/04/14 10:50:23 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:components/>
@@ -25,6 +25,38 @@
       
       <!-- Lenya Publications -->
       
+      <!-- matches pub-id/area/css/*.css -->
+      <map:match pattern="*/*/css/*.css">
+        <map:act type="resource-exists" src="pubs/{1}/resources/shared/css/{3}.xml">
+          <map:generate src="pubs/{../1}/resources/shared/css/{../3}.xml"/>
+          <map:transform src="resources/css/css.xsl">
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          </map:transform>
+          <map:serialize type="text" mime-type="text/css"/>
+        </map:act>
+        <map:read src="pubs/{1}/resources/shared/css/{3}.css" mime-type="text/css" />
+      </map:match>
+      
+          <!-- matches pub-id/area/javascript/**.js -->
+          <map:match pattern="*/*/javascript/**.js">
+            <map:read src="pubs/{1}/resources/shared/javascript/{3}.js" mime-type="application/javascript" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.jpg -->
+          <map:match pattern="*/*/**.jpg">
+            <map:read src="pubs/{1}/resources/shared/{3}.jpg" mime-type="image/jpeg" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.gif -->
+          <map:match pattern="*/*/**.gif">
+            <map:read src="pubs/{1}/resources/shared/{3}.gif" mime-type="image/gif" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.png -->
+          <map:match pattern="*/*/**.png">
+            <map:read src="pubs/{1}/resources/shared/{3}.png" mime-type="image/png" />
+          </map:match>
+
           <!-- matches pub-id/area/**.tar.gz -->
           <map:match pattern="*/*/**.tar.gz">
             <map:read src="pubs/{1}/resources/shared/{3}.tar.gz" mime-type="application/x-gtar" />
