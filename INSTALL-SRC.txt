@@ -104,7 +104,7 @@
              vi src/webapp/WEB-INF/logkit.xconf   (DEBUG, ERROR)
              vi src/webapp/cocoon.xconf   (asynchron, synchron)
              ant
-             tail -f build/webapp/WEB-INF/logs/*
+             tail -f build/webapp/WEB-INF/logs/* | grep Sitemap -B10
              lynx http://localhost:8080/wyona-cms/
              #lynx http://localhost:8080/cocoon/
 
