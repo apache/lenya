@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: User.java,v 1.20 2003/07/17 11:01:18 egli Exp $
 <License>
 
  ============================================================================
@@ -108,6 +108,7 @@ public abstract class User extends AbstractGroupable implements Identifiable {
      * Get the full name
      *
      * @return a <code>String</code>
+     * @deprecated has been superceded by getName()
      */
     public String getFullName() {
         return getName();

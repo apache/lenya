@@ -233,12 +233,12 @@ public class FileUserTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testGetFullName() throws AccessControlException {
-        String userName = "alice";
-        String fullName = "Alice Wonderland";
-        FileUser user = createAndSaveUser(userName, fullName, "alice@wonderland.org", "secret");
-        assertTrue(user.getFullName().equals(fullName));
+        String userID = "alice";
+        String userName = "Alice Wonderland";
+        FileUser user = createAndSaveUser(userID, userName, "alice@wonderland.org", "secret");
+        assertTrue(user.getName().equals(userName));
         user = loadUser(userName);
-        assertTrue(user.getFullName().equals(fullName));
+        assertTrue(user.getName().equals(userName));
     }
 
     /**

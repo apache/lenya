@@ -196,9 +196,9 @@ public class LDAPUser extends FileUser {
     }
 
     /** (non-Javadoc)
-     * @see org.apache.lenya.cms.ac.User#getFullName()
+     * @see org.apache.lenya.cms.ac.User#getName()
      */
-    public String getFullName() {
+    public String getName() {
         String fullName = null;
         LdapContext ctx;
 
@@ -232,16 +232,15 @@ public class LDAPUser extends FileUser {
     }
 
     /**
-     * LDAP Users fetch their full name information from the LDAP server,
+     * LDAP Users fetch their name information from the LDAP server,
      * so we don't store it locally. Since we only have read access we basically
-     * can't set the full name, i.e. any request to change the full name
-     * is ignored.
+     * can't set the name, i.e. any request to change the name is ignored.
      *
      * @param string is ignored
      */
-    public void setFullName(String string) {
+    public void setName(String string) {
         // we do not have write access to LDAP, so we ignore 
-        // change request to the full name.
+        // change request to the name.
     }
 
     /**
