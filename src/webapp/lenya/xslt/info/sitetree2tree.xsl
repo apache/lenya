@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.27 2003/09/04 17:04:54 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.28 2003/09/05 14:42:38 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -15,6 +15,7 @@
 <xsl:param name="publicationid"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
+<xsl:param name="cutdocumentid"/>
    
 <xsl:template match="lenya">
     <xsl:param name="parentPath"/>
@@ -41,7 +42,6 @@ foldersTree.treeID = "t2"
   <xsl:param name="parentPath"/>
   <xsl:variable name="suffix">
   	<xsl:if test="not($chosenlanguage = $defaultlanguage)">_<xsl:value-of select="$chosenlanguage"/></xsl:if>
-  	<xsl:text>.html</xsl:text>
   </xsl:variable>
   
   <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', @area, '/', $suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
@@ -61,13 +61,16 @@ foldersTree.treeID = "t2"
   <xsl:variable name="exists-language" select="s:label[lang($chosenlanguage)]"/>
   <xsl:variable name="no-language-pre"><xsl:if test="not($exists-language)">&lt;span class='lenya-info-nolanguage'&gt;</xsl:if></xsl:variable>
   <xsl:variable name="no-language-post"><xsl:if test="not($exists-language)">&lt;/span&gt;</xsl:if></xsl:variable>
+  
+  <xsl:variable name="cut-pre"><xsl:if test="$cutdocumentid = concat('/', @basic-url)">&lt;span class='lenya-info-cut'&gt;[</xsl:if></xsl:variable>
+  <xsl:variable name="cut-post"><xsl:if test="$cutdocumentid = concat('/', @basic-url)">]&lt;/span&gt;</xsl:if></xsl:variable>
 
   <xsl:choose>
   	<xsl:when test="descendant::s:node">
   		<xsl:value-of select="generate-id(.)"/>
   		= insFld(
   			   <xsl:value-of select="generate-id(..)"/>,
-           gFld("&#160;<xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabels"/><xsl:value-of select="$no-language-post"/>&#160;",
+           gFld("&lt;span style='padding: 0px 5px;'&gt;<xsl:value-of select="$cut-pre"/><xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabels"/><xsl:value-of select="$no-language-post"/><xsl:value-of select="$cut-post"/>&lt;/span&gt;",
            "<xsl:value-of select="$link"/>")
       );
     </xsl:when>
@@ -75,7 +78,7 @@ foldersTree.treeID = "t2"
     	insDoc(<xsl:value-of select="generate-id(..)"/>,
     	       gLnk(
     	           "S",
-    	           "&#160;<xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabels"/><xsl:value-of select="$no-language-post"/>&#160;",
+    	           "&lt;span style='padding: 0px 5px;'&gt;<xsl:value-of select="$cut-pre"/><xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabels"/><xsl:value-of select="$no-language-post"/><xsl:value-of select="$cut-post"/>&lt;/span&gt;",
     	           "<xsl:value-of select="$link"/>")
       );
       </xsl:otherwise>
