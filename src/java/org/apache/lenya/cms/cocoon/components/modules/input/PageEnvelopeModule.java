@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PageEnvelopeModule.java,v 1.39 2004/05/23 17:27:06 roku Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -161,8 +161,6 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
                 value = new SimpleDateFormat(DATE_FORMAT).format(date);
             } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
                 value = envelope.getPublication().getBreadcrumbPrefix();
-            } else if (name.equals(PageEnvelope.SSL_PREFIX)) {
-                value = envelope.getPublication().getSSLPrefix();
             } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
                 value = getDocumentType(objectModel, envelope);
             } else {

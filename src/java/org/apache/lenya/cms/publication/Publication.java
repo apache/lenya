@@ -21,8 +21,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
-
 /**
  * A Lenya publication.
  */
@@ -123,28 +121,6 @@ public interface Publication {
      * @return the breadcrumb prefix
      */
     String getBreadcrumbPrefix();
-
-    /**
-     * Get the SSL prefix. If you want to serve SSL-protected pages through a special site, use this
-     * prefix. This can come in handy if you have multiple sites that need SSL protection and you want
-     * to share one SSL certificate.
-     * 
-     * @return the SSL prefix
-     * @deprecated Use the proxy configuration instead.
-     */
-    String getSSLPrefix();
-
-    /**
-     * Get the Live mount point. The live mount point is used to rewrite links that are of the form 
-     * /contextprefix/publication/area/documentid to /livemountpoint/documentid
-     * 
-     * This is useful if you serve your live area through mod_proxy. to enable this functionality, set
-     * the Live mount point to / or something else. An empty mount point disables the feature.
-     * 
-     * @return the Live mount point
-     * @deprecated Use the proxy configuration instead.
-     */
-    String getLiveMountPoint();
 
     /**
      * Get the sitetree for a specific area of this publication. 

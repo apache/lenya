@@ -42,14 +42,11 @@ public abstract class AbstractPublication implements Publication {
             INFO_AREA_PREFIX + ARCHIVE_AREA, INFO_AREA_PREFIX + TRASH_AREA };
 
     private String id;
-    private PublishingEnvironment environment;
     private File servletContext;
     private DocumentIdToPathMapper mapper = null;
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
-    private String sslprefix = null;
-    private String livemountpoint = null;
     private HashMap siteTrees = new HashMap();
     private boolean hasSitetree = true;
 
@@ -75,9 +72,6 @@ public abstract class AbstractPublication implements Publication {
         File servletContext = new File(servletContextPath);
         assert servletContext.exists();
         this.servletContext = servletContext;
-
-        // FIXME: remove PublishingEnvironment from publication
-        environment = new PublishingEnvironment(servletContextPath, id);
 
         File configFile = new File(getDirectory(), CONFIGURATION_FILE);
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
@@ -159,10 +153,6 @@ public abstract class AbstractPublication implements Publication {
 
         breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
 
-        sslprefix = config.getChild(SSL_PREFIX).getValue("");
-
-        livemountpoint = config.getChild(LIVE_MOUNT_POINT).getValue("");
-
     }
 
     /**
@@ -171,15 +161,6 @@ public abstract class AbstractPublication implements Publication {
      */
     public String getId() {
         return id;
-    }
-
-    /**
-     * Returns the publishing environment of this publication.
-     * @return A {@link PublishingEnvironment}object.
-     * @deprecated It is planned to decouple the environments from the publication.
-     */
-    public PublishingEnvironment getEnvironment() {
-        return environment;
     }
 
     /**
@@ -273,30 +254,6 @@ public abstract class AbstractPublication implements Publication {
      */
     public String getBreadcrumbPrefix() {
         return breadcrumbprefix;
-    }
-
-    /**
-     * Get the SSL prefix. If you want to serve SSL-protected pages through a special site, use this
-     * prefix. This can come in handy if you have multiple sites that need SSL protection and you
-     * want to share one SSL certificate.
-     * 
-     * @return the SSL prefix
-     */
-    public String getSSLPrefix() {
-        return sslprefix;
-    }
-
-    /**
-     * Get the Live mount point. The live mount point is used to rewrite links that are of the form
-     * /contextprefix/publication/area/documentid to /livemountpoint/documentid
-     * 
-     * This is useful if you serve your live area through mod_proxy. to enable this functionality,
-     * set the Live mount point to / or something else. An empty mount point disables the feature.
-     * 
-     * @return the Live mount point
-     */
-    public String getLiveMountPoint() {
-        return livemountpoint;
     }
 
     /**
