@@ -67,7 +67,7 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
       return null;
       }
     // Get session
-    Session session=request.getSession(true);
+    Session session=request.getSession(false);
     if(session == null){
       getLogger().error(".act(): No session object");
       return null;

@@ -94,7 +94,7 @@
 
 		<!-- Frontpage: Headlines -->
 		<map:pipeline>
-			<map:match pattern="headlines.xml">
+			<map:match pattern="frontpage/headlines.xml">
 				<map:generate src="docs/publication/authoring/frontpage/headlines.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
