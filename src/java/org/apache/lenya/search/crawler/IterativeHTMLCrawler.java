@@ -123,6 +123,7 @@ public class IterativeHTMLCrawler{
  */
   public URL addURL(String urlCandidate,String currentURLPath) throws MalformedURLException{
     URL url=new URL(parseHREF(urlCandidate,urlCandidate.toLowerCase(),currentURLPath)); //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
+
     if(filterURL(urlCandidate,currentURLPath,urlsToCrawlLowerCase)){
       urlsToCrawl.add(url);
       urlsToCrawlLowerCase.add(url.toString().toLowerCase());
@@ -239,14 +240,17 @@ public class IterativeHTMLCrawler{
         urlLowCase = url.toLowerCase();
         }
       }
+    else{
+      //System.out.println(".filterURL(): INFO: URL starts with \"http://\" or \"https://\": "+urlLowCase);
+      }
+
     //System.out.println(".filterURL(): "+urlLowCase);
 
     if(url != null && inScope(urlLowCase)){
       //System.out.println(".filterURL(): In scope: "+url);
       if(!links.contains(urlLowCase)){
-        links.add(urlLowCase);
-        //linkQueue.push(url);
-        //System.out.println(".filterURL(): Added: "+url);
+        //links.add(urlLowCase);
+        //System.out.println(".filterURL(): Added: "+urlLowCase);
         return true;
         }
       else{
@@ -265,6 +269,10 @@ public class IterativeHTMLCrawler{
     //System.out.println(".parseHREF(): "+url);
     //System.out.println(".parseHREF(): "+urlLowCase);
     //System.out.println(".parseHREF(): "+currentURLPath);
+
+    if(urlLowCase.startsWith("http://") || urlLowCase.startsWith("https://")){
+      return url;
+      }
 
         // Looks for incomplete URL and completes them
         if (urlLowCase.startsWith("/")) {

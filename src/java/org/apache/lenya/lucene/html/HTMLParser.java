@@ -58,8 +58,8 @@ public class HTMLParser implements HTMLParserConstants {
         if(summary.length() >= SUMMARY_LENGTH){
           break;
           }
-        System.out.println("HTMLParser().getSummary(): Current length: "+summary.length());
-        System.out.println("HTMLParser().getSummary(): wait(10)");
+        //System.out.println("HTMLParser().getSummary(): Current length: "+summary.length());
+        //System.out.println("HTMLParser().getSummary(): wait(10)");
 
         wait(10);
 
@@ -96,7 +96,7 @@ public class HTMLParser implements HTMLParserConstants {
  *
  */
   void addToSummary(String text) {
-    System.out.println("HTMLParser.addToSummary(): Current length: "+summary.length()+" ("+text+")");
+    //System.out.println("HTMLParser.addToSummary(): Current length: "+summary.length()+" ("+text+")");
     if (summary.length() < SUMMARY_LENGTH) {
       summary.append(text);
       if (summary.length() >= SUMMARY_LENGTH) {
@@ -110,7 +110,7 @@ public class HTMLParser implements HTMLParserConstants {
  *
  */
   void addToTitle(String text){
-    System.out.println("HTMLParser.addToTitle(): Current length: "+title.length()+" ("+text+")");
+    //System.out.println("HTMLParser.addToTitle(): Current length: "+title.length()+" ("+text+")");
     title.append(text);
     }
 /**

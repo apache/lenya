@@ -175,7 +175,7 @@ class IndexHTML {
  *
  */
   private static void indexDocs(File file,File root) throws Exception {
-    System.out.println("IndexHTML.indexDocs(File,File): "+file+" "+root);
+    //System.out.println("IndexHTML.indexDocs(File,File): "+file+" "+root);
 
     if(file.isDirectory()) {			  // if a directory
       String[] files = file.list();		  // list its files
@@ -188,14 +188,14 @@ class IndexHTML {
 	       file.getPath().endsWith(".htm") || // index .htm files
 	       file.getPath().endsWith(".txt")) { // index .txt files
       
-      System.out.println("IndexHTML.indexDocs(File,File): File: "+file);
+      //System.out.println("IndexHTML.indexDocs(File,File): File: "+file);
       if (uidIter != null) {
 
-        System.out.println("IndexHTML.indexDocs(File,File): Constructing uid ...");
+        //System.out.println("IndexHTML.indexDocs(File,File): Constructing uid ...");
 	String uid = HTMLDocument.uid(file,root);	  // construct uid for doc
 	//String uid = HTMLDocument.uid(file);	  // construct uid for doc
 
-        System.out.println("IndexHTML.indexDocs(File,File): uid: "+uid);
+        //System.out.println("IndexHTML.indexDocs(File,File): uid: "+uid);
 
 	while (uidIter.term() != null && uidIter.term().field() == "uid" &&
 	       uidIter.term().text().compareTo(uid) < 0) {
@@ -210,7 +210,7 @@ class IndexHTML {
 	  uidIter.next();			  // keep matching docs
 	  } 
         else if (!deleting) {			  // add new docs
-	  System.out.println("IndexHTML.indexDocs(File,File): parsing (!deleting==true): " + file);
+	  //System.out.println("IndexHTML.indexDocs(File,File): parsing (!deleting==true): " + file);
 	  Document doc = HTMLDocument.Document(file,root);
 	  System.out.println("IndexHTML.indexDocs(File,File): adding (!deleting==true) " + doc.get("url"));
 	  writer.addDocument(doc);
@@ -219,7 +219,7 @@ class IndexHTML {
 	  }
         } 
       else{					  // creating a new index
-        System.out.println("IndexHTML.indexDocs(File,File): parsing (unconditionally): " + file);
+        //System.out.println("IndexHTML.indexDocs(File,File): parsing (unconditionally): " + file);
         Document doc = HTMLDocument.Document(file,root);
         System.out.println("IndexHTML.indexDocs(File,File): adding (unconditionally) " + doc.get("url"));
         writer.addDocument(doc);		  // add docs unconditionally

@@ -88,7 +88,7 @@ public class HTMLDocument {
   public static Document Document(File f,File htdocsDumpDir)
     throws IOException, InterruptedException  {
 
-    System.out.println("HTMLDocument.Document(File,File): "+f);
+    //System.out.println("HTMLDocument.Document(File,File): "+f);
 
     // make a new, empty document
     Document doc = new Document();
@@ -97,16 +97,16 @@ public class HTMLDocument {
 
     // Add the url as a field named "url".  Use an UnIndexed field, so
     // that the url is just stored with the document, but is not searchable.
-    System.out.println("HTMLDocument.Document(File,File): Adding 'url' as un-indexed field ...");
+    //System.out.println("HTMLDocument.Document(File,File): Adding 'url' as un-indexed field ...");
     //String requestURI=f.getPath().replace(dirSep,'/');
     String requestURI=f.getPath().replace(dirSep,'/').substring(htdocsDumpDir.getPath().length());
-    System.out.println(requestURI);
+    //System.out.println(requestURI);
     if(requestURI.substring(requestURI.length()-8).equals(".pdf.txt")){
       requestURI=requestURI.substring(0,requestURI.length()-4); // Remove .txt extension from PDF text file
-      System.out.println(requestURI);
+      //System.out.println(requestURI);
       }
     doc.add(Field.UnIndexed("url", requestURI));
-    System.out.println("HTMLDocument.Document(File,File): 'url' added!");
+    //System.out.println("HTMLDocument.Document(File,File): 'url' added!");
 
 
     // Add the mime-type as a field named "mime-type"
@@ -144,19 +144,19 @@ public class HTMLDocument {
     // get tokenized and indexed.
     doc.add(Field.Text("contents", parser.getReader()));
 
-    System.out.println("LEVI");
+    //System.out.println("LEVI");
 
     // Add the summary as an UnIndexed field, so that it is stored and returned
     // with hit documents for display.
     doc.add(Field.UnIndexed("summary", parser.getSummary()));
 
-    System.out.println("VANYA");
+    //System.out.println("VANYA");
 
     // Add the title as a separate Text field, so that it can be searched
     // separately.
     doc.add(Field.Text("title", parser.getTitle()));
 
-    System.out.println("KARIN");
+    //System.out.println("KARIN");
 
     return doc;
   }
