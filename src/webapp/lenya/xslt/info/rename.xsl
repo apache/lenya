@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.7 2003/07/03 12:59:55 edith Exp $
+ $Id: rename.xsl,v 1.8 2003/07/04 13:29:14 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -13,10 +13,10 @@
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-  <xsl:variable name="request-uri"><xsl:value-of select="/info/request-uri"/></xsl:variable>
-  <xsl:variable name="first-document-id"><xsl:value-of select="/info/first-document-id"/></xsl:variable>
-  <xsl:variable name="last-id"><xsl:value-of select="/info/last-id"/></xsl:variable>
-  <xsl:variable name="task-id"><xsl:value-of select="/info/task-id"/></xsl:variable>
+  <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
+  <xsl:variable name="first-document-id"><xsl:value-of select="/page/info/first-document-id"/></xsl:variable>
+  <xsl:variable name="last-id"><xsl:value-of select="/page/info/last-id"/></xsl:variable>
+  <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
 
   <xsl:template match="/">
     <xsl:apply-templates/>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: cut.xsl,v 1.8 2003/07/03 12:59:55 edith Exp $
+ $Id: cut.xsl,v 1.9 2003/07/04 13:29:14 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -13,9 +13,9 @@
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
-  <xsl:variable name="request-uri"><xsl:value-of select="/info/request-uri"/></xsl:variable>
-  <xsl:variable name="document-id"><xsl:value-of select="/info/document-id"/></xsl:variable>
-  <xsl:variable name="action"><xsl:value-of select="/info/action"/></xsl:variable>
+  <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
+  <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
+  <xsl:variable name="action"><xsl:value-of select="/page/info/action"/></xsl:variable>
 
   <xsl:template match="/">
     <xsl:apply-templates/>
