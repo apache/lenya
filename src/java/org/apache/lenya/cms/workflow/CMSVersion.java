@@ -19,6 +19,8 @@
 
 package org.apache.lenya.cms.workflow;
 
+import java.util.Date;
+
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.impl.Version;
@@ -27,6 +29,24 @@ import org.apache.lenya.workflow.impl.Version;
  * A CMS version
  */
 public class CMSVersion extends Version {
+    
+    private Date date;
+
+    /**
+     * Returns the date.
+     * @return A string.
+     */
+    public Date getDate() {
+        return this.date;
+    }
+
+    /**
+     * Sets the date.
+     * @param _date A date.
+     */
+    public void setDate(Date _date) {
+        this.date = _date;
+    }
 
     /**
      * Returns the user ID.

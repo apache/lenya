@@ -20,6 +20,7 @@
 package org.apache.lenya.cms.workflow;
 
 import java.io.File;
+import java.util.Date;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
@@ -183,6 +184,8 @@ public class CMSHistory extends HistoryImpl {
             throws WorkflowException {
         Version version = super.restoreVersion(helper, element);
         CMSVersion cmsVersion = new CMSVersion(version.getEvent(), version.getState());
+        Date date = new Date(element.getAttribute(DATE_ATTRIBUTE));
+        cmsVersion.setDate(date);
 
         Element identityElement = helper.getFirstChild(element, IDENTITY_ELEMENT);
         Element userElement = helper.getFirstChild(identityElement, USER_ELEMENT);
