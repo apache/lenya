@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.14 2003/07/15 14:46:07 egli Exp $
+$Id: Publication.java,v 1.15 2003/07/15 15:41:22 egli Exp $
 <License>
 
  ============================================================================
@@ -87,6 +87,7 @@ public class Publication {
 
     public static final String PUBLICATION_PREFIX =
         "lenya" + File.separator + "pubs";
+	public static final String CONFIGURATION_PATH = "config";
 
     private static final String[] areas =
         { AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA };
@@ -129,6 +130,8 @@ public class Publication {
                     + File.separator
                     + id
                     + File.separator
+                    + CONFIGURATION_PATH
+                    + File.separator
                     + configFileName);
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 
@@ -148,7 +151,7 @@ public class Publication {
 				Configuration languageConfig = languages[i];
                 String language = languageConfig.getValue();
                 this.languages.add(language);
-                if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR) != null) {
+                if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR, null) != null) {
                     defaultLanguage = language;
                 }
             }
