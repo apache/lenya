@@ -3,12 +3,12 @@
 DIRNAME=`dirname $0`
 echo "dirname: $DIRNAME"
 
-PREFIX=/home/michi/src/wyonacms
+PREFIX=/home/michiii/src/wyonacms
 JAVA=/usr/local/jdk1.3.1/bin/java
 PDFBOX=/home/michiii/src/PDFBox-0.5.5
 XPDF=/home/michiii/bin/xpdf-2.01-linux/pdftotext
 
-CLASSPATH=$PREFIX/build/wyona-cms/classes:$PREFIX/src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar:$PREFIX/src/cocoon/WEB-INF/lib/avalon-excalibur-20020402.jar:$PREFIX/src/cocoon/WEB-INF/lib/xml-apis.jar:$PREFIX/src/cocoon/WEB-INF/lib/xercesImpl-2.0.0.jar:$PREFIX/lib/log4j-1.2.3.jar:$PREFIX/src/java
+CLASSPATH=$PREFIX/build/wyona-cms/classes:$PREFIX/src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar:$PREFIX/src/cocoon/WEB-INF/lib/avalon-excalibur-20020402.jar:$PREFIX/src/cocoon/WEB-INF/lib/xml-apis.jar:$PREFIX/src/cocoon/WEB-INF/lib/xercesImpl-2.0.0.jar:$PREFIX/lib/log4j-1.2.3.jar:$PREFIX/lib/websphinx.jar:$PREFIX/src/java
 
 #echo $CLASSPATH
 
@@ -26,7 +26,7 @@ echo "=========================================================="
 echo "Target: crawl"
 echo "=========================================================="
 echo ""
-$JAVA -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF
+#$JAVA -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF
 $JAVA -cp $CLASSPATH org.wyona.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
 
 
@@ -53,8 +53,8 @@ echo "Target: index"
 echo "=========================================================="
 echo ""
 CLASSPATH=$CLASSPATH:$PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar
-$JAVA -cp $CLASSPATH org.wyona.lucene.IndexEnvironment $LUCENE_CONF
-$JAVA -cp $CLASSPATH org.wyona.lucene.IndexHTML $LUCENE_CONF
+#$JAVA -cp $CLASSPATH org.wyona.lucene.IndexEnvironment $LUCENE_CONF
+#$JAVA -cp $CLASSPATH org.wyona.lucene.IndexHTML $LUCENE_CONF
 
 
 echo ""
