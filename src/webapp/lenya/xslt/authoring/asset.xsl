@@ -20,6 +20,8 @@
 
   <xsl:param name="error"/>
 
+  <xsl:param name="extensions" select="'doc,dot,rtf,txt,asc,ascii,xls,xlw,xlt,ppt,pot,gif,jpg,png,tif,eps,pct,mu3,kar,mid,smf,mp3,swa,mpg,mpv,mp4,mov,bin,sea,hqx,sit,zip,jmx,jcl,qz,jbc,jmt,cfg'"/>
+
   <xsl:template match="/">
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
       <xsl:choose>
@@ -62,44 +64,28 @@
 	</xsl:otherwise>
       </xsl:choose>
       <div class="lenya-box-body">
-<script type="javascript">
-function insertAsset(src, size) {
-  window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'">'+src+' ('+size+' KB)</asset>',window.opener.bxe_ContextNode);
-  window.close();
-}
-
-function check() {
-   if(ListFind('gif,jpg,jpeg,bmp,psd,png,tif,pdf', ListLast(form.fileinput.value, '.') == -1))
-   {
-     // file doesn't have one of the accepted extensions.
-     alert("wrong");
-   }
-   else
-   {
-      // file has one of the accepted extensions.
-      alert("right");
-   }
-}
-           
-function ListFind(list, value) {
+<script>
+function check(fileinput) {
   var i = 0;
+  var ext = '<xsl:value-of select="$extensions"/>';
   var delimiter = ',';
-  var returnValue = -1;
+  var thefile = fileinput["properties.asset.data"].value;
   var _tempArray = new Array();
-  if(ListFind.arguments.length == 3) delimiter = ListFind.arguments[2];
-  _tempArray = list.split(delimiter);
-  for(i = 0; i = _tempArray.length -1; i++)
+  _tempArray = ext.split(delimiter);
+  for(i in _tempArray)
   {
-    if(_tempArray[i] == value)
+    if(thefile.indexOf('.' + _tempArray[i]) != -1)
     {
-      returnValue = i;
-      break;
-    }
+     // file has one of the accepted extensions.
+     return true;
+     }
   }
-  return returnValue;
+   // file does not have one of the accepted extensions.
+   alert("You tried to upload a file with an invalid extension. Valid extensions are <xsl:value-of select="$extensions"/>");
+   return false;
 }
 </script>  
-	<form name="fileinput" action="{/usecase:asset/usecase:request-uri}" method="post" enctype="multipart/form-data">
+	<form name="fileinput" action="{/usecase:asset/usecase:request-uri}" method="post" enctype="multipart/form-data" onsubmit="return check(fileinput)">
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
 	  <input type="hidden" name="lenya.event" value="edit"/>
 	  <xsl:choose>
@@ -170,7 +156,7 @@ function ListFind(list, value) {
 	    <tr>
 	      <td/>
 	      <td>
-		<input type="submit" value="Submit" onClick="javascript:check();"/>&#160;
+		<input type="submit" value="Submit"/>&#160;
 		<input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}';" value="Cancel"/>
 	      </td>
 	    </tr>
