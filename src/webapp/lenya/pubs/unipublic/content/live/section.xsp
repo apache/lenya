@@ -4,9 +4,10 @@
   language="java"
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+  xmlns:up="http://www.unipublic.unizh.ch/2002/up"
 >
 
-<Page>
+<up:Page xmlns:up="http://www.unipublic.unizh.ch/2002/up">
  <xsp:logic>
   String channel=parameters.getParameter("channel","null");
   String section=parameters.getParameter("section","null");
@@ -22,6 +23,6 @@
     <xi:include xml:base="cocoon:"><xsp:attribute name="href"><xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/articles.xml</xsp:attribute></xi:include>
   </MainColumn>
 </Content>
-</Page>
+</up:Page>
 
 </xsp:page>

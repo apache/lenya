@@ -9,7 +9,7 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="/">
-  <xsl:apply-templates select="Page/Content/NewsML"/>
+  <xsl:apply-templates select="up:Page/Content/NewsML"/>
 </xsl:template>
 
 <xsl:template match="NewsML">
@@ -160,7 +160,7 @@
 </xsl:template>
 
 <xsl:template match="block">
-  <xsl:apply-templates/>
+  <xsl:apply-templates select="p | media"/>
 </xsl:template>
 
 <xsl:template match="p">

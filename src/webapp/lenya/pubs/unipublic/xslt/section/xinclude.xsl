@@ -8,18 +8,6 @@
 <xsl:param name="year"/>
 
 <xsl:template match="/" xmlns:xi="http://www.w3.org/2001/XInclude">
-<!--
-  <Page> 
-    <Content>
-          <MainNavigation>
-             <xi:include xml:base="cocoon:" href="{$channel}/{$section}/{$year}/navigation.xml#xpointer(/MainNavigation/Channels)"/>
-          </MainNavigation>   
-      <MainColumn>
-        <xsl:apply-templates select="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0"/>
-      </MainColumn>
-    </Content>
-  </Page>
--->
   <xsl:apply-templates select="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0"/>
 </xsl:template>                                                                                                                             
 

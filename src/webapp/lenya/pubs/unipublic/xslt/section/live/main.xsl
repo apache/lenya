@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+                xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../navigation.xsl"/>
 <xsl:include href="../../variables.xsl"/>
 
-<xsl:variable name="sectiontext"><xsl:apply-templates select="/Page/Content/MainColumn/section" mode="section-name"/></xsl:variable>
+<xsl:variable name="sectiontext"><xsl:apply-templates select="/up:Page/Content/MainColumn/section" mode="section-name"/></xsl:variable>
 
-<xsl:template match="/Page/Content">
+<xsl:template match="/up:Page/Content">
 <html>
 <head>
 <!--
@@ -33,6 +34,7 @@
 <tr>
 <td width="135" valign="bottom"></td>
 <td width="315">
+
 <table border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td width="169">&#160;</td>
@@ -40,6 +42,7 @@
 <td width="38">&#160;</td>
 </tr>
 </table>
+
 </td>
 <td width="135" valign="bottom"></td>
 </tr>
