@@ -55,28 +55,32 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import junit.swingui.TestRunner;
+import junit.framework.TestCase;
 
+/*
 import org.apache.avalon.excalibur.testcase.ExcaliburTestCase;
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.context.DefaultContext;
 import org.apache.cocoon.Constants;
-import org.lenya.cms.ac.Identity;
 import org.apache.cocoon.environment.commandline.CommandlineContext;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.excalibur.xml.EntityResolver;
 import org.xml.sax.InputSource;
+*/
+
+
+import org.lenya.cms.ac.Identity;
 
 /**
  * A test case for cms/ac/Identity
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: IdentityTestCase.java,v 1.1 2003/04/16 15:50:22 michi Exp $
+ * @version CVS $Id: IdentityTestCase.java,v 1.2 2003/04/17 16:47:06 michi Exp $
  */
-public final class IdentityTestCase
-         extends ExcaliburTestCase
-         implements Initializable, Disposable
+public final class IdentityTestCase extends TestCase
+//public final class IdentityTestCase extends ExcaliburTestCase implements Initializable, Disposable
 {
 
     /**
@@ -85,7 +89,7 @@ public final class IdentityTestCase
      * @since
      */
     public IdentityTestCase() {
-        this("IdentityTestCase");
+        //this("IdentityTestCase");
     }
 
 
@@ -99,6 +103,8 @@ public final class IdentityTestCase
     public static void main(final String[] args) throws Exception {
         final String[] testCaseName = {IdentityTestCase.class.getName()};
         TestRunner.main(testCaseName);
+
+        //Identity id = new Identity("asda", null);
     }
 
     /**
@@ -137,10 +143,12 @@ public final class IdentityTestCase
     public void tearDown() throws Exception {
         super.tearDown();
 
+/*
         if (Identity != null) {
 //            manager.release(Identity);
             Identity = null;
         }
+*/
     }
 
 

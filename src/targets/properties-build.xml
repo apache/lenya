@@ -35,6 +35,13 @@
   <property name="build.webapp" value="${build.dir}/webapp"/>
 
 
+  
+  <!-- This is where the source of the tests are located -->
+  <property name="src.test" value="src/test"/>
+  <!-- This is where we do the tests -->
+  <property name="build.test" value="${build.root}/test"/>
+
+
   <!-- All packaging for distribution takes place in dist.root -->
   <property name="dist.root" value="./dist"/>
 
