@@ -25,6 +25,11 @@ import org.apache.lenya.cms.publication.Document;
  * @version $Id:$
  */
 public interface LinkRewriter {
+    
+    /**
+     * The avalon component role.
+     */
+    String ROLE = LinkRewriter.class.getName();
 
     /**
      * Rewrites the links to a document and all its descendants, including all
