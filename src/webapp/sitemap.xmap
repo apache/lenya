@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.137 2004/08/19 20:37:30 roku Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -91,14 +91,6 @@
     <map:transformer name="writeDOMsession" logger="sitemap.transformer.writeDOMsession" src="org.apache.cocoon.transformation.WriteDOMSessionTransformer"/>
     <map:transformer name="write-source" logger="sitemap.transformer.write-source" src="org.apache.cocoon.transformation.SourceWritingTransformer"/>
     
-    <!-- NOTE: This used to be the default XSLT processor. The default now is XSLTC -->
-    <map:transformer name="xalan" logger="sitemap.transformer.xalan" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.TraxTransformer">
-      <use-request-parameters>false</use-request-parameters>
-      <use-session-parameters>false</use-session-parameters>
-      <use-cookie-parameters>false</use-cookie-parameters>
-      <transformer-factory>org.apache.xalan.processor.TransformerFactoryImpl</transformer-factory>
-    </map:transformer>
-
     <map:transformer name="xinclude" logger="sitemap.transformer.xinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
     
     <map:transformer name="xlink" src="org.apache.lenya.cms.cocoon.transformation.IncludeTransformer">
