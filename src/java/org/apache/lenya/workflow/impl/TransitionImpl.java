@@ -1,5 +1,5 @@
 /*
-$Id: TransitionImpl.java,v 1.7 2003/09/08 19:29:54 andreas Exp $
+$Id: TransitionImpl.java,v 1.8 2003/10/02 15:27:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -90,6 +90,7 @@ public class TransitionImpl implements Transition {
     }
 
     private List actions = new ArrayList();
+    private boolean isSynchronized = false;
 
     /**
      * DOCUMENT ME!
@@ -230,4 +231,21 @@ public class TransitionImpl implements Transition {
 
         return string;
     }
+
+    /**
+     * Returns if this transition is synchronized.
+     * @return A boolean value.
+     */
+    public boolean isSynchronized() {
+        return isSynchronized;
+    }
+
+    /**
+     * Sets if this transition is synchronized.
+     * @param isSynchronized A boolean value.
+     */
+    protected void setSynchronized(boolean isSynchronized) {
+        this.isSynchronized = isSynchronized;
+    }
+
 }

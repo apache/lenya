@@ -1,5 +1,5 @@
 /*
-$Id: Transition.java,v 1.6 2003/09/02 13:17:22 andreas Exp $
+$Id: Transition.java,v 1.7 2003/10/02 15:27:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -86,4 +86,10 @@ public interface Transition {
      * @throws WorkflowException when an error occurs.
      */
     boolean canFire(Situation situation, WorkflowInstance instance) throws WorkflowException;
+    
+    /**
+     * Returns if this transition is synchronized.
+     * @return A boolean value.
+     */
+    boolean isSynchronized();
 }

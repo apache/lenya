@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.23 2003/09/09 10:29:14 edith Exp $
+$Id: WorkflowFactory.java,v 1.24 2003/10/02 15:27:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,10 +66,13 @@ import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.LanguageVersions;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.impl.History;
+import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
 
 import java.io.File;
@@ -106,6 +109,23 @@ public class WorkflowFactory {
         assert document != null;
 
         return new CMSHistory(document).getInstance();
+    }
+
+    /**
+     * Creates a new synchronized workflow instances object..
+     * @param document The document to create the instances for.
+     * @return A synchronized workflow instances object.
+     * @throws WorkflowException when something went wrong.
+     */
+    public SynchronizedWorkflowInstances buildSynchronizedInstance(Document document) throws WorkflowException {
+        assert document != null;
+        LanguageVersions versions;
+        try {
+            versions = new LanguageVersions(document);
+        } catch (DocumentException e) {
+            throw new WorkflowException(e);
+        }
+        return new WorkflowDocumentSet(versions, document);
     }
 
     /**

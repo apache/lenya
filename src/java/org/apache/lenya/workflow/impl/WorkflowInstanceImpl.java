@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInstanceImpl.java,v 1.9 2003/09/08 19:29:54 andreas Exp $
+$Id: WorkflowInstanceImpl.java,v 1.10 2003/10/02 15:27:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -157,18 +157,40 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
                 "' cannot be invoked in the situation '" + situation + "'.");
         }
 
-        Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
-
-        for (int i = 0; i < transitions.length; i++) {
-            if (transitions[i].getEvent().equals(event)) {
-                fire((TransitionImpl) transitions[i]);
-            }
-        }
+        fire(getNextTransition(event));
 
         for (Iterator iter = listeners.iterator(); iter.hasNext();) {
             WorkflowListener listener = (WorkflowListener) iter.next();
             listener.transitionFired(this, situation, event);
         }
+    }
+
+    /**
+     * Returns the transition that would fire for a given event.
+     * @param event The event.
+     * @return A transition.
+     * @throws WorkflowException if no single transition would fire.
+     */
+    protected TransitionImpl getNextTransition(Event event) throws WorkflowException {
+        TransitionImpl nextTransition = null;
+        Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
+
+        for (int i = 0; i < transitions.length; i++) {
+            if (transitions[i].getEvent().equals(event)) {
+                
+                if (nextTransition != null) {
+                    throw new WorkflowException("More than one transition found for event [" + event + "]!");
+                }
+                
+                nextTransition = (TransitionImpl) transitions[i];
+            }
+        }
+        
+        if (nextTransition == null) {
+            throw new WorkflowException("No transition found for event [" + event + "]!");
+        }
+        
+        return nextTransition;
     }
 
     /**
@@ -316,4 +338,13 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
     public void removeWorkflowListener(WorkflowListener listener) {
         listeners.remove(listener);
     }
+
+    /**
+     * @see org.apache.lenya.workflow.WorkflowInstance#isSynchronized(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.Event)
+     */
+    public boolean isSynchronized(Event event) throws WorkflowException {
+        Transition nextTransition = getNextTransition(event);
+        return nextTransition.isSynchronized();
+    }
+
 }

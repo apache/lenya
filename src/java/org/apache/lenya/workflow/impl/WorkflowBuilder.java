@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowBuilder.java,v 1.10 2003/09/08 19:29:54 andreas Exp $
+$Id: WorkflowBuilder.java,v 1.11 2003/10/02 15:27:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,15 +77,14 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-
 /**
  *
  * @author  andreas
  */
 public class WorkflowBuilder {
-    
+
     private static final Category log = Category.getInstance(WorkflowBuilder.class);
-    
+
     /**
      * Ctor.
      */
@@ -101,8 +100,7 @@ public class WorkflowBuilder {
      *
      * @throws WorkflowException DOCUMENT ME!
      */
-    public static WorkflowImpl buildWorkflow(File file)
-        throws WorkflowException {
+    public static WorkflowImpl buildWorkflow(File file) throws WorkflowException {
         WorkflowImpl workflow;
 
         try {
@@ -153,7 +151,8 @@ public class WorkflowBuilder {
         WorkflowImpl workflow = new WorkflowImpl(initialState);
 
         // load variables
-        NodeList variableElements = root.getElementsByTagNameNS(Workflow.NAMESPACE, VARIABLE_ELEMENT);
+        NodeList variableElements =
+            root.getElementsByTagNameNS(Workflow.NAMESPACE, VARIABLE_ELEMENT);
 
         for (int i = 0; i < variableElements.getLength(); i++) {
             Element element = (Element) variableElements.item(i);
@@ -173,12 +172,12 @@ public class WorkflowBuilder {
         }
 
         // load transitions
-        NodeList transitionElements = root.getElementsByTagNameNS(Workflow.NAMESPACE,
-                TRANSITION_ELEMENT);
+        NodeList transitionElements =
+            root.getElementsByTagNameNS(Workflow.NAMESPACE, TRANSITION_ELEMENT);
 
         for (int i = 0; i < transitionElements.getLength(); i++) {
-            TransitionImpl transition = buildTransition((Element) transitionElements.item(i),
-                    states, events, variables);
+            TransitionImpl transition =
+                buildTransition((Element) transitionElements.item(i), states, events, variables);
             workflow.addTransition(transition);
         }
 
@@ -195,8 +194,8 @@ public class WorkflowBuilder {
 
         String initialAttribute = element.getAttribute(INITIAL_ATTRIBUTE);
 
-        return (initialAttribute != null) &&
-        (initialAttribute.equals("yes") || initialAttribute.equals("true"));
+        return (initialAttribute != null)
+            && (initialAttribute.equals("yes") || initialAttribute.equals("true"));
     }
 
     protected static final String STATE_ELEMENT = "state";
@@ -214,6 +213,7 @@ public class WorkflowBuilder {
     protected static final String VARIABLE_ATTRIBUTE = "variable";
     protected static final String VALUE_ATTRIBUTE = "value";
     protected static final String NAME_ATTRIBUTE = "name";
+    protected static final String SYNCHRONIZED_ATTRIBUTE = "synchronized";
 
     /**
      * Builds a state from an XML element.
@@ -238,13 +238,17 @@ public class WorkflowBuilder {
      * @return A transition.
      * @throws WorkflowException when something went wrong.
      */
-    protected static TransitionImpl buildTransition(Element element, Map states, Map events,
-        Map variables) throws WorkflowException {
-            
+    protected static TransitionImpl buildTransition(
+        Element element,
+        Map states,
+        Map events,
+        Map variables)
+        throws WorkflowException {
+
         if (log.isDebugEnabled()) {
             log.debug("Building transition");
         }
-            
+
         assert element.getLocalName().equals(TRANSITION_ELEMENT);
 
         String sourceId = element.getAttribute(SOURCE_ATTRIBUTE);
@@ -262,8 +266,8 @@ public class WorkflowBuilder {
         TransitionImpl transition = new TransitionImpl(source, destination);
 
         // set event
-        Element eventElement = (Element) element.getElementsByTagNameNS(Workflow.NAMESPACE,
-                EVENT_ELEMENT).item(0);
+        Element eventElement =
+            (Element) element.getElementsByTagNameNS(Workflow.NAMESPACE, EVENT_ELEMENT).item(0);
         String id = eventElement.getAttribute(ID_ATTRIBUTE);
         assert id != null;
 
@@ -275,10 +279,10 @@ public class WorkflowBuilder {
         if (log.isDebugEnabled()) {
             log.debug("    Event: [" + event + "]");
         }
-            
+
         // load conditions
-        NodeList conditionElements = element.getElementsByTagNameNS(Workflow.NAMESPACE,
-                CONDITION_ELEMENT);
+        NodeList conditionElements =
+            element.getElementsByTagNameNS(Workflow.NAMESPACE, CONDITION_ELEMENT);
 
         for (int i = 0; i < conditionElements.getLength(); i++) {
             Condition condition = buildCondition((Element) conditionElements.item(i));
@@ -286,21 +290,28 @@ public class WorkflowBuilder {
         }
 
         // load assignments
-        NodeList assignmentElements = element.getElementsByTagNameNS(Workflow.NAMESPACE,
-                ASSIGNMENT_ELEMENT);
+        NodeList assignmentElements =
+            element.getElementsByTagNameNS(Workflow.NAMESPACE, ASSIGNMENT_ELEMENT);
 
         for (int i = 0; i < assignmentElements.getLength(); i++) {
-            BooleanVariableAssignmentImpl action = buildAssignment(variables,
-                    (Element) assignmentElements.item(i));
+            BooleanVariableAssignmentImpl action =
+                buildAssignment(variables, (Element) assignmentElements.item(i));
             transition.addAction(action);
         }
 
         // load actions
-        NodeList actionElements = element.getElementsByTagNameNS(Workflow.NAMESPACE, ACTION_ELEMENT);
+        NodeList actionElements =
+            element.getElementsByTagNameNS(Workflow.NAMESPACE, ACTION_ELEMENT);
 
         for (int i = 0; i < actionElements.getLength(); i++) {
             Action action = buildAction((Element) actionElements.item(i));
             transition.addAction(action);
+        }
+
+        // set synchronization
+        if (element.hasAttribute(SYNCHRONIZED_ATTRIBUTE)) {
+            Boolean isSynchronized = Boolean.valueOf(element.getAttribute(SYNCHRONIZED_ATTRIBUTE));
+            transition.setSynchronized(isSynchronized.booleanValue());
         }
 
         return transition;
@@ -326,8 +337,7 @@ public class WorkflowBuilder {
      * @return A condition.
      * @throws WorkflowException when something went wrong.
      */
-    protected static Condition buildCondition(Element element)
-        throws WorkflowException {
+    protected static Condition buildCondition(Element element) throws WorkflowException {
         String className = element.getAttribute(CLASS_ATTRIBUTE);
         String expression = DocumentHelper.getSimpleElementText(element);
         Condition condition = ConditionFactory.createCondition(className, expression);

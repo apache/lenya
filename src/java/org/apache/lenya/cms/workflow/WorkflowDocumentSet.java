@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInstance.java,v 1.8 2003/10/02 15:27:42 andreas Exp $
+$Id: WorkflowDocumentSet.java,v 1.1 2003/10/02 15:27:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,67 +53,28 @@ $Id: WorkflowInstance.java,v 1.8 2003/10/02 15:27:42 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.workflow;
+package org.apache.lenya.cms.workflow;
+
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentSet;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.impl.SynchronizedWorkflowInstances;
 
 /**
- *
- * @author  andreas
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public interface WorkflowInstance {
-    /**
-     * Returns the workflow this instance belongs to.
-     * @return A Workflow object.
-     */
-    Workflow getWorkflow();
+public class WorkflowDocumentSet extends SynchronizedWorkflowInstances {
 
-    /**
-     * Returns the current state of this WorkflowInstance.
-     * 
-     * @return the current state
-     */
-    State getCurrentState();
+    public WorkflowDocumentSet(DocumentSet documentSet, Document mainDocument) throws WorkflowException {
+        Document[] documents = documentSet.getDocuments();
+        WorkflowInstance[] instances = new WorkflowInstance[documents.length];
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        for (int i = 0; i < documents.length; i++) {
+            instances[i] = factory.buildInstance(documents[i]);
+        }
+        setInstances(instances);
+        setMainInstance(factory.buildInstance(mainDocument));
+    }
 
-    /**
-     * Returns the executable events in a certain situation.
-     * @param situation The situation.
-     * @return An array of events.
-     * @throws WorkflowException when something went wrong.
-     */
-    Event[] getExecutableEvents(Situation situation) throws WorkflowException;
-
-    /**
-     * Indicates that the user invoked an event.
-     * 
-     * @param situation The situation in which the event was invoked.
-     * @param event The event that was invoked.
-     * @throws WorkflowException when something went wrong.
-     */
-    void invoke(Situation situation, Event event) throws WorkflowException;
-
-    /**
-     * Returns the current value of a variable.
-     * @param variableName A variable name.
-     * @return A boolean value.
-     * @throws WorkflowException when the variable does not exist.
-     */
-    boolean getValue(String variableName) throws WorkflowException;
-
-    /**
-     * Adds a workflow listener.
-     * @param listener The listener to add.
-     */
-    void addWorkflowListener(WorkflowListener listener);
-
-    /**
-     * Removes a workflow listener.
-     * @param listener The listener to remove.
-     */
-    void removeWorkflowListener(WorkflowListener listener);
-
-    /**
-     * Returns if the transition for a certain event is synchronized.
-     * @param event An event.
-     * @return A boolean value.
-     */
-    boolean isSynchronized(Event event) throws WorkflowException;
 }
