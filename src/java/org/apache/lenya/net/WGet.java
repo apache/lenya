@@ -14,10 +14,13 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+/*
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+*/
+
 import org.apache.log4j.Category;
 /*
 import org.apache.regexp.RE;
@@ -54,7 +57,6 @@ public class WGet{
           wget.setDirectoryPrefix(args[i].substring(2)); // -P/home/wyona/download, 2: remove "-P"
           }
         }
-      System.out.println(wget);
       byte[] response=wget.download(new URL(args[0]),"s/\\/wyona-cms\\/oscom//g");
       //System.out.println(".main(): Response from remote server:\n\n"+new String(response));
       }
@@ -80,47 +82,11 @@ public class WGet{
 /**
  *
  */
-  public byte[] download(URL url,String prefixSubstitute) throws IOException, HttpException{
+  public byte[] download(URL url,String prefixSubstitute) throws IOException{
     log.debug(".download(): "+url);
 
-    if(true){
-      return downloadUsingHttpClient(url,prefixSubstitute);
-      }
-/*
-    if(true){
-      return downloadUsingWgetAndSed(url,prefixSubstitute);
-      }
-*/
-
-    return null;
+    return downloadUsingHttpClient(url,prefixSubstitute);
     }
-/**
- *
- */
-/*
-  public byte[] downloadUsingWgetAndSed(URL url,String prefixSubstitute) throws IOException, HttpException{
-    log.debug(".downloadUsingWgetAndSed(): "+url);
-
-    String command="/usr/bin/wget "+"-P"+directory_prefix+" "+"--page-requisites"+" "+url;
-    //String command="/usr/bin/wget "+"-P"+directory_prefix+" "+"--convert-links"+" "+"--page-requisites"+" "+url;
-    try{
-      log.info("WGET");
-      byte[] wget_response=runProcess(command);
-
-
-      substitutePrefix(directory_prefix+"/127.0.0.1:48080"+url.getFile(),prefixSubstitute);
-      //substitutePrefix(directory_prefix+"/127.0.0.1"+url.getFile(),prefixSubstitute);
-
-
-
-      }
-    catch(Exception e){
-      log.error(".downloadUsingWgetAndSed(): "+e);
-      }
-
-    return null;
-    }
-*/
 /**
  *
  */
@@ -136,18 +102,6 @@ public class WGet{
       saveToFile(file.getAbsolutePath(),sresponse);
 
       substitutePrefix(file.getAbsolutePath(),prefixSubstitute);
-
-      List links=getLinks(url);
-      if(links != null){
-        Iterator iterator=links.iterator();
-        while(iterator.hasNext()){
-          String link=(String)iterator.next();
-          URL child_url=new URL(org.wyona.util.URLUtil.complete(url.toString(),link));
-          log.debug(".downloadUsingHttpClient(): Child URL: "+child_url);
-          byte[] child_sresponse=getResource(child_url);
-          saveToFile(directory_prefix+File.separator+child_url.getHost()+":"+child_url.getPort()+child_url.getFile(),child_sresponse);
-          }
-        }
       }
     catch(MalformedURLException e){
       log.error(".downloadUsingHttpClient(): "+e);
@@ -155,11 +109,34 @@ public class WGet{
     catch(FileNotFoundException e){
       log.error(".downloadUsingHttpClient(): "+e);
       }
-    catch(HttpException e){
-      log.error(".downloadUsingHttpClient(): "+e);
-      }
     catch(IOException e){
       log.error(".downloadUsingHttpClient(): "+e);
+      }
+
+
+
+    List links=null;
+    try{
+      links=getLinks(url);
+      }
+    catch(IOException ioe){
+      log.error(".downloadUsingHttpClient(): "+ioe);
+      }
+
+    if(links != null){
+      Iterator iterator=links.iterator();
+      while(iterator.hasNext()){
+        String link=(String)iterator.next();
+        try{
+          URL child_url=new URL(org.wyona.util.URLUtil.complete(url.toString(),link));
+          //log.debug(".downloadUsingHttpClient(): Child URL: "+child_url);
+          byte[] child_sresponse=getResource(child_url);
+          saveToFile(directory_prefix+File.separator+child_url.getHost()+":"+child_url.getPort()+child_url.getFile(),child_sresponse);
+          }
+        catch(Exception e){
+          log.error(".downloadUsingHttpClient(): "+e);
+          }
+        }
       }
 
     return sresponse;
@@ -167,7 +144,7 @@ public class WGet{
 /**
  *
  */
-  public byte[] getResource(URL url) throws IOException, HttpException{
+  public byte[] getResource(URL url) throws IOException{
     log.debug(".getResource(): "+url);
 
 
@@ -189,8 +166,8 @@ public class WGet{
  *
  */
 /*
-  public URL[] getLinks(URL url) throws IOException, HttpException{
-    log.debug(".getLinks(): "+url);
+  public URL[] getLinksViaCocoon(URL url) throws IOException, HttpException{
+    log.debug(".getLinksViaCocoon(): "+url);
 
     java.io.BufferedReader br=null;
     try{
@@ -202,11 +179,11 @@ public class WGet{
       br = new java.io.BufferedReader(new java.io.InputStreamReader(is));
       String line;
       while((line = br.readLine()) != null){
-        log.debug(".getLinks(): Link: "+line);
+        log.debug(".getLinksViaCocoon(): Link: "+line);
         }
       }
     catch(Exception e){
-      log.error(".getLinks(): "+e);
+      log.error(".getLinksViaCocoon(): "+e);
       }
 
     return null;
@@ -216,7 +193,7 @@ public class WGet{
  *
  */
   public List getLinks(URL url) throws IOException{
-    log.debug(".getLinks(): "+url);
+    log.debug(".getLinks(): Get links from "+url);
     List links=null;
 
     try{
@@ -224,14 +201,17 @@ public class WGet{
       links=html.getImageSrcs(false);
       }
     catch(Exception e){
-      log.error(".getLinks(): "+e);
+      log.error(".getLinks() Exception 423432: "+e);
       }
 
     if(links != null){
+      log.debug(".getLinks(): Number of links found: "+links.size());
+/*
       Iterator iterator=links.iterator();
       while(iterator.hasNext()){
         log.debug(".getLinks(): Another Link: "+(String)iterator.next());
         }
+*/
       }
 
     return links;
@@ -239,7 +219,7 @@ public class WGet{
 /**
  *
  */
-  public byte[] substitutePrefix(String filename,String prefixSubstitute) throws IOException, HttpException{
+  public byte[] substitutePrefix(String filename,String prefixSubstitute) throws IOException{
     log.debug(".substitutePrefix(): "+filename+" "+prefixSubstitute);
 
     try{
@@ -279,7 +259,7 @@ public class WGet{
       log.info(".saveToFile(): Directory will be created: "+parent.getAbsolutePath());
       parent.mkdirs();
       }
-    log.debug(".saveToFile(): Filename: "+file.getAbsolutePath());
+    //log.debug(".saveToFile(): Filename: "+file.getAbsolutePath());
     FileOutputStream out=new FileOutputStream(file.getAbsolutePath());
     out.write(bytes);
     out.close();

@@ -147,7 +147,7 @@ public class IterativeHTMLCrawler{
             if (httpCon.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 String contentType = httpCon.getContentType();
                 if (contentType.indexOf("text/html") != -1) {
-                    return handleHTML(httpCon,currentURLPath);
+                    return handleHTML(httpCon);
                 } else if (contentType.indexOf("application/pdf") != -1) {
                     handlePDF(httpCon);
                 } else {
@@ -173,18 +173,16 @@ public class IterativeHTMLCrawler{
 /**
  *
  */
-  public java.util.List handleHTML(HttpURLConnection httpCon,String currentURLPath) throws java.io.IOException{
+  public static java.util.List handleHTML(HttpURLConnection httpCon) throws java.io.IOException{
     ContentHandler handler = new HTMLHandler();
     handler.parse(httpCon.getInputStream());
 
     if(handler.getRobotFollow()){
       java.util.List links = handler.getLinks();
       System.out.println(".handleHTML(): Number of links found : " + links.size());
-/*
       for(int i = 0; i < links.size(); i++){
         System.out.println(".handleHTML(): "+(String)links.get(i));
         }
-*/
       if(true){
         return links;
         }
