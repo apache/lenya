@@ -25,7 +25,18 @@
       String xmlSource = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
       String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
       String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
+      String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
+
       String docType = "";
+      try {
+      Document document = (Document) <input:get-attribute as="object" module="page-envelope" name="document"/>;
+          if (document.exists()) {
+              docType = <input:get-attribute as="string" module="page-envelope" name="document-type"/>;
+          }
+      }
+      catch (Exception e) {
+          throw new ProcessingException(e);
+      }
       
       boolean isDocument = false;
       {
@@ -33,7 +44,6 @@
         try {
           if (document != "" &amp;&amp; ((Document) document).exists()) {
             isDocument = true;
-            docType = <input:get-attribute as="string" module="page-envelope" name="document-type"/>;
           }
         }
         catch (Exception e) {
@@ -48,7 +58,6 @@
 	  
 	  <xsp:logic>
 	    {
-	      String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
         if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
           <item>New Document</item>
         }
@@ -61,8 +70,9 @@
 	<block>
 	  <xsp:logic>
 	    {
-	    
-	      if (isDocument) {
+	      if (isDocument
+            &amp;&amp; Publication.AUTHORING_AREA.equals(area)
+	          ) {
           <xsp:content>
             <item uc:usecase="create-language" uc:step="showscreen" href="?">New language version</item>
           </xsp:content>
@@ -74,7 +84,10 @@
 	      }
 	    
 	      String[] availableLanguages = (String[])<input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
-	      if (isDocument &amp;&amp; availableLanguages.length &gt; 1) {
+	      if (isDocument
+            &amp;&amp; Publication.AUTHORING_AREA.equals(area)
+	          &amp;&amp; availableLanguages.length &gt; 1
+	          ) {
 	        <xsp:content>
 	          <item uc:usecase="removelabel" uc:step="showscreen" href="?">Remove language version</item>
 	        </xsp:content>
@@ -94,18 +107,15 @@
       <menu name="Edit" label="Search">
         
         <block info="false">
-          <xsp:logic>
-            if (docType.equals("xhtml")) {
           <item wf:event="edit" uc:usecase="epoz" uc:step="open" href="?">Edit&#160;with&#160;Epoz</item>
-            }
-          </xsp:logic>
-          <item wf:event="edit" uc:usecase="bxe" uc:step="open" href="?">Edit&#160;with&#160;BXE</item>
-          <item uc:usecase="edit" uc:step="open" wf:event="edit"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute>Edit&#160;with&#160;Forms</item>
+          <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?">Edit&#160;with&#160;BXE</item>
+          <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute>Edit&#160;with&#160;Forms</item>
           <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?">Edit&#160;with&#160;one&#160;Form</item>
         </block>
         <block info="false">
           <item wf:event="edit" uc:usecase="info-meta" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/info-<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute>Edit Metadata</item>
           <item wf:event="edit" uc:usecase="rename-label" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-uri/>?</xsp:attribute>Edit Navigation Title</item>
+          <item wf:event="edit" uc:usecase="asset" uc:step="showdots"><xsp:attribute name="href"><xsp-request:get-uri/>?</xsp:attribute>Image Upload</item>
         </block>
 
         <block authoring="false">
@@ -113,7 +123,6 @@
         <xsp:logic>
           
         {
-          String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
           String docId = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
           
           if (isDocument
@@ -154,7 +163,8 @@
       </block>
       <block authoring="false">
         <xsp:logic>
-          if (isDocument &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)) {
+          if (isDocument &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
+              &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
             <item uc:usecase="rename" uc:step="showscreen" href="?">Rename URL</item>
           }
           else {
@@ -173,6 +183,7 @@
         <xsp:logic>
           if (isDocument
               &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
+              &amp;&amp; Publication.AUTHORING_AREA.equals(area)
               &amp;&amp; !"/index".equals(<input:get-attribute module="sitetree" as="string" name="document-id"/>)) {
             <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=up</xsp:attribute>Move Up</item>
             <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=down</xsp:attribute>Move Down</item>
@@ -198,7 +209,6 @@
             <item>Archive</item>
        	  }
        	
-        	String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
         	if (isDocument &amp;&amp; (area.equals(Publication.TRASH_AREA) || area.equals(Publication.ARCHIVE_AREA))) {
             <item wf:event="restore" uc:usecase="restore" uc:step="showscreen" href="?">Restore</item>
         	}
@@ -216,17 +226,19 @@
 	<block>
 	  <xsp:logic>
       {
-        if (isDocument) {
-          <item uc:usecase="submit" uc:step="showscreen" wf:event="submit" href="?">Submit for review</item>
+        if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
+          <item uc:usecase="submit" uc:step="showscreen" wf:event="submit" href="?">Submit</item>
           <item uc:usecase="reject" uc:step="showscreen" wf:event="reject" href="?">Reject</item>
           <item uc:usecase="publish" uc:step="showscreen" wf:event="publish"><xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;sources=<xsp:expr>xmlSource</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
           <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?task-id=deactivateDocument">Deactivate</item>
+          <item uc:usecase="schedule" uc:step="showscreen" href="?">Schedule</item>
         }
         else {
           <item>Submit</item>
           <item>Reject</item>
           <item>Publish</item>
           <item>Deactivate</item>
+          <item>Schedule</item>
         }
       }
 	  </xsp:logic>
@@ -235,7 +247,9 @@
 
       <menu name="Help" label="Debug">
 	<block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>User Documentation</item>
+	  <item>System Documentation</item>
+	  <item>Support</item>
 	</block>
   <block>
 	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
@@ -244,10 +258,10 @@
 
         <block>
           <item uc:usecase="view-logs" uc:step="overview" href="?">View Task Logs</item>
+          <item uc:usecase="schedule" uc:step="showscreen" href="?">Scheduler</item> 
 	</block>
       </menu>
     </menus>
     
   </menu>
 </xsp:page>
-
