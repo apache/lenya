@@ -202,9 +202,10 @@
       +-->
 
   <community href="community/" label="Community" tab="community">
-        <index_com href="index.html" label="Contributing"/>
-        <node-h href="acknowledgements.html" label="Credits"/>
-        <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>
+    <index_com href="index.html" label="Contributing"/>
+    <wiki href="ext:wiki/lenya" label="Lenya Wiki" />
+    <node-h href="acknowledgements.html" label="Credits"/>
+    <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>
         <node-g
                 href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=Importance"
                 label="Bug Tracker"/>
