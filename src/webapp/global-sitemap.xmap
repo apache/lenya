@@ -692,6 +692,15 @@
       </map:match>
 
 
+      <!-- Access Control Policies -->
+      <map:pipeline>
+        <map:match pattern="*/policies/**">
+          <map:mount uri-prefix="{1}/policies" src="lenya/pubs/{1}/policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+      </map:pipeline>
+
+
+
       <!-- Edit XHTML with Midas -->
       <map:pipeline>
         <map:match pattern="default/authoring/sugus">
