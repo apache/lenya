@@ -48,6 +48,17 @@
     </map:pipeline>
 
     <map:pipeline>
+      <map:match pattern="http/cmswatch.xml">
+        <map:generate src="http://www.cmswatch.com/RSS/cmswatch.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <map:pipeline>
       <map:match pattern="live/*.rdf">
         <map:generate src="docs/publication/live/rss-rdf/{1}.rdf"/>
         <map:serialize type="xml"/>

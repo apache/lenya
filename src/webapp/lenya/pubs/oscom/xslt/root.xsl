@@ -120,13 +120,14 @@
     <td>
   <font face="verdana" size="-2">
   <!--  rdf:RDF -->
-  <xsl:for-each select="n-rdf:item">
+  <xsl:variable name="n">5</xsl:variable>
+  <xsl:for-each select="n-rdf:item[position() &lt;= $n]">
     <p>
     <a href="{n-rdf:link}" target="_blank"><xsl:value-of select="n-rdf:title"/></a>
     </p>
   </xsl:for-each>
   <!-- rss -->
-  <xsl:for-each select="channel/item">
+  <xsl:for-each select="channel/item[position() &lt;= $n]">
     <p>
     <a href="{link}" target="_blank"><xsl:value-of select="title"/></a>
     </p>
