@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: URLKeyUtil.java,v 1.2 2004/03/03 12:56:32 gregor Exp $  */
-
 package org.apache.lenya.ac.cache;
 
 import java.io.IOException;
@@ -25,6 +23,10 @@ import java.net.MalformedURLException;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 
+/**
+ * Utility class to generate String cache keys from webapp URLs.
+ * @version $Id: URLKeyUtil.java,v 1.3 2004/08/16 16:06:14 andreas Exp $
+ */
 public final class URLKeyUtil {
 
     /**

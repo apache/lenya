@@ -15,12 +15,14 @@
  *
  */
 
-/* $Id: InputStreamBuilder.java,v 1.2 2004/03/03 12:56:32 gregor Exp $  */
-
 package org.apache.lenya.ac.cache;
 
 import java.io.InputStream;
 
+/**
+ * Interface for objects capable of building objects from input streams.
+ * @version $Id: InputStreamBuilder.java,v 1.3 2004/08/16 16:06:14 andreas Exp $
+ */
 public interface InputStreamBuilder {
 
     /**

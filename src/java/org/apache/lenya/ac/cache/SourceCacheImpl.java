@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: SourceCacheImpl.java,v 1.4 2004/04/26 12:07:56 andreas Exp $  */
-
 package org.apache.lenya.ac.cache;
 
 import java.io.IOException;
@@ -34,6 +32,10 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceValidity;
 import org.apache.lenya.util.CacheMap;
 
+/**
+ * Basic implementation of a source cache.
+ * @version $Id: SourceCacheImpl.java,v 1.5 2004/08/16 16:06:14 andreas Exp $
+ */
 public class SourceCacheImpl
     extends AbstractLogEnabled
     implements SourceCache, Serviceable, Disposable {
@@ -181,6 +183,7 @@ public class SourceCacheImpl
      * @throws MalformedURLException when an error occurs.
      * @throws IOException when an error occurs.
      * @throws SourceNotFoundException when an error occurs.
+     * @throws BuildException if an error occurs.
      */
     protected Object buildObject(String sourceUri, InputStreamBuilder builder)
         throws MalformedURLException, IOException, SourceNotFoundException, BuildException {
