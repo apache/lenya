@@ -95,7 +95,8 @@
                   </tr>
                   <tr>
                     <td align="left" width="90" class="rel-text">
-		      <xsl:if test="$authoring">
+		     <xsl:choose>
+		      <xsl:when test="$authoring">
     		        <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/dossier/head/title">
       		        <xsl:choose>
         		  <xsl:when test="head/media/media-reference">
@@ -106,7 +107,13 @@
         		  </xsl:otherwise>
       		        </xsl:choose>
     			</a>
-  		      </xsl:if>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:if test="head/media/media-reference">
+                            <img height="60" alt="" src="{head/media/media-reference/@source}" width="80" border="0"/>
+                        </xsl:if>
+		      </xsl:otherwise>
+  		     </xsl:choose>
                     </td>
                     <td class="dos-title1" valign="top" width="308">Dossier:<br/>
                     <xsl:value-of select="head/title" />
