@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseAuthorizer.java,v 1.2 2003/07/29 14:27:15 andreas Exp $
+$Id: UsecaseAuthorizer.java,v 1.3 2003/07/30 13:20:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -155,9 +155,15 @@ public class UsecaseAuthorizer
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration config) throws ConfigurationException {
+        
+        getLogger().debug("Configuring");
         Configuration fileConfig = config.getChild(FILE_ELEMENT, false);
         
-        if (fileConfig != null) {
+        if (fileConfig == null) {
+            getLogger().debug("No configuration file provided.");
+        }
+        else {
+            getLogger().debug("Configuration file provided.");
             configurationPath = fileConfig.getAttribute(SRC_ATTRIBUTE);
         
             SourceResolver resolver = null;
@@ -178,10 +184,13 @@ public class UsecaseAuthorizer
                 Element[] usecaseElements = helper.getChildren(document.getDocumentElement(), USECASE_ELEMENT);
                 for (int i = 0; i < usecaseElements.length; i++) {
                     String usecaseId = usecaseElements[i].getAttribute(ID_ATTRIBUTE);
+                    getLogger().debug("Found usecase [" + usecaseId + "]");
                     Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
                     Set roleIds = new HashSet();
                     for (int j = 0; j < roleElements.length; j++) {
-                        roleIds.add(roleElements[i].getAttribute(ID_ATTRIBUTE));
+                        String roleId = roleElements[i].getAttribute(ID_ATTRIBUTE);
+                        roleIds.add(roleId);
+                        getLogger().debug("Adding role [" + roleId + "]");
                     }
                     usecaseToRoles.put(usecaseId, roleIds);
                 }

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.8 2003/07/29 17:23:18 andreas Exp $
+$Id: DefaultAccessController.java,v 1.9 2003/07/30 13:20:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,9 @@ $Id: DefaultAccessController.java,v 1.8 2003/07/29 17:23:18 andreas Exp $
 */
 package org.apache.lenya.cms.ac2;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configurable;
@@ -94,7 +94,7 @@ public class DefaultAccessController
     private AccreditableManager accreditableManager;
 
     private ServiceSelector authorizerSelector;
-    private List authorizers = new ArrayList();
+    private Map authorizers = new HashMap();
 
     private ServiceSelector policyManagerSelector;
     private PolicyManager policyManager;
@@ -171,6 +171,7 @@ public class DefaultAccessController
                 setupAuthenticator();
                 isInitialized = true;
             }
+            configureAuthorizers(conf);
 
             Configuration accreditableManagerConfiguration =
                 conf.getChild(ACCREDITABLE_MANAGER_ELEMENT);
@@ -185,14 +186,8 @@ public class DefaultAccessController
     /**
      * Creates the accreditable manager. 
      * @param configuration The access controller configuration.
-<<<<<<< DefaultAccessController.java
      * @throws ConfigurationException when the configuration failed.
      * @throws ServiceException when something went wrong.
-=======
-     * 
-     * @throws ServiceException if an error occurs
-     * @throws ConfigurationException if an error occurs
->>>>>>> 1.4
      */
     protected void setupAccreditableManager(Configuration configuration)
         throws ConfigurationException, ServiceException {
@@ -222,8 +217,21 @@ public class DefaultAccessController
         for (int i = 0; i < authorizerConfigurations.length; i++) {
             String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
             Authorizer authorizer = (Authorizer) authorizerSelector.select(type);
-            authorizers.add(authorizer);
+            authorizers.put(type, authorizer);
             getLogger().debug("Adding authorizer [" + type + "]");
+        }
+    }
+    
+    protected void configureAuthorizers(Configuration configuration) throws ConfigurationException {
+        Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
+
+        for (int i = 0; i < authorizerConfigurations.length; i++) {
+            String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
+            Authorizer authorizer = (Authorizer) authorizers.get(type);
+            if (authorizer instanceof Configurable) {
+                getLogger().debug("Configuring authorizer [" + type + "]");
+                ((Configurable) authorizer).configure(authorizerConfigurations[i]);
+            }
         }
     }
 
@@ -275,7 +283,7 @@ public class DefaultAccessController
      * @return An array of authorizers.
      */
     protected Authorizer[] getAuthorizers() {
-        return (Authorizer[]) authorizers.toArray(new Authorizer[authorizers.size()]);
+        return (Authorizer[]) authorizers.values().toArray(new Authorizer[authorizers.size()]);
     }
 
     /**
