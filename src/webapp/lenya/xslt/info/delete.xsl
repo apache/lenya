@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: delete.xsl,v 1.9 2003/09/05 14:42:59 andreas Exp $
+ $Id: delete.xsl,v 1.10 2003/09/30 14:24:57 egli Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -10,8 +10,8 @@
    xmlns:session="http://www.apache.org/xsp/session/2.0"
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
-   
-<xsl:param name="lenya.event"/>
+  
+  <xsl:param name="lenya.event"/>
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
@@ -29,7 +29,7 @@
       <page:title>Delete Document</page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
-	    <xsl:apply-templates select="info"/>
+        <xsl:apply-templates select="info"/>
       </page:body>
     </page:page>
   </xsl:template>
@@ -51,26 +51,40 @@
           <input type="hidden" name="properties.secarea" value="trash"/>
           
           <table class="lenya-table-noborder">
-          	<tr>
-          		<td/>
-          		<td>Do you really want to delete all language versions of this document?<br/><br/></td>
-          	</tr>
-          	<tr>
-          		<td class="lenya-entry-caption">Document:</td>
-          		<td><xsl:value-of select="document-id"/></td>
-          	</tr>
-          	<tr>
-          		<td/>
-          		<td>
-          			<br/>
+            <tr>
+              <td/>
+              <td>Do you really want to delete all language versions of this document?<br/><br/></td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption">Document:</td>
+              <td><xsl:value-of select="document-id"/></td>
+            </tr>
+            <tr>
+	      <xsl:apply-templates select="inconsistent-documents"/>
+            </tr>
+            <tr>
+              <td/>
+              <td>
+                <br/>
                 <input type="submit" value="Delete"/>&#160;
                 <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
-          		</td>
-          	</tr>
+              </td>
+            </tr>
           </table>
         </form>
       </div>
     </div>
   </xsl:template>
 
+  <xsl:template match="inconsistent-documents">
+    <td class="lenya-entry-caption">
+      <span class="lenya-form-message-error">The following documents<br/> have links to this document:</span>
+    </td>
+    <td valign="top">
+      <xsl:for-each select="inconsistent-document">
+	<a target="_blank" href="{@href}"><xsl:value-of select="@id"/><xsl:value-of select="."/></a><br/>
+      </xsl:for-each>
+    </td>
+  </xsl:template>
+  
 </xsl:stylesheet>
