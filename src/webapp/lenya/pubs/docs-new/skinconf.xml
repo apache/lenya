@@ -100,6 +100,7 @@ be used to configure the chosen Forrest skin.
   <!-- Credits are typically rendered as a set of small clickable images in the
   page footer -->
   <credits>
+  <!--
     <credit>
       <name>Built with Cocoon</name>
       <url>http://xml.apache.org/cocoon/</url>
@@ -114,5 +115,6 @@ be used to configure the chosen Forrest skin.
       <width>138</width>
       <height>31</height>
     </credit>
+  -->
   </credits>
 </skinconfig>
