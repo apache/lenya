@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Revision Controller Markup Language (RCML)</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Edith Chevrier" email="edith@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+    <section>
+	  <title>Location</title>
+	  <p>The RCML-file are located in a rcml directory</p>
+	  <source>
+        {publication}/content/rcml/
+      </source>
+      <p> which can be configured in </p>
+	  <source>
+        cocoon-lenya/src/webapp/lenya/config/rc/revision-controller.xconf
+      </source>
+      <p>For a document with an xml file {publication}/content/authoring/{filename}, the rcml file is </p> 	  
+	  <source>
+        {publication}/{rcml-directory}/content/authoring/{filename}.rcml
+      </source>
+    </section>
+
+    <section>
+	  <title>Markup Language</title>
+	  <p>A rcml-file is typically</p>
+	  <source><![CDATA[
+        <?xml version="1.0" encoding="utf-8"?> 
+          <XPSRevisionControl>
+            <CheckIn><Identity>lenya</Identity><Time>1023102128815</Time></CheckIn>
+            <CheckOut><Identity>lenya</Identity><Time>1023102128780</Time></CheckOut>
+            <CheckIn><Identity>lenya</Identity><Time>1023102125300</Time></CheckIn>
+            <CheckOut><Identity>lenya</Identity><Time>1023102121346</Time></CheckOut>
+            <CheckIn><Identity>roger</Identity><Time>1023102110381</Time></CheckIn>
+            <CheckOut><Identity>roger</Identity><Time>1023102110349</Time></CheckOut>
+            <CheckIn><Identity>lenya</Identity><Time>1023102073728</Time></CheckIn>
+            <CheckOut><Identity>lenya</Identity><Time>1023102012990</Time></CheckOut> 
+            <CheckOut><Identity>lenya</Identity><Time>1023102010354</Time></CheckOut> 
+            <CheckIn><Identity>System</Identity><Time>1022569908000</Time></CheckIn>
+          </XPSRevisionControl> 
+      ]]></source>
+    </section>
+
+    <section>
+      <title>Size</title>
+      <p>The size of the rcml file is limited to the value (2 * maximalNumberOfEntries) + 1,
+       where maximalNumberOfEntries is in org.apache.lenya.cms.rc.RCML hard coded (value 10)</p>
+    </section> 
+  </body>
+</document>

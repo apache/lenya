@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Rollback</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Edith Chevrier" email="edith@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	<section>
+	  <title>Revision Controller</title>
+	  <p>To rollback a file call</p>
+	  <source>org.apache.lenya.cms.rc.RevisionController.rollback(String destination, String identity, boolean backupFlag, long time)</source>
+	  <p>where destination is the path of the file from the publication,identity is the identity of the user,
+	   backupFlag is a boolean to choose if you want a backup of the current version, and time is the time of
+	    the version to roll back to.
+      </p>
+	  
+	</section>
+    
+    <section>
+	  <title>The RollbackAction</title>
+	  <p>To invoke a rollback from a sitemap pipeline, you use The RollbackAction.</p>
+      <p>The check-in time is needed as request parameter</p>
+      <source><![CDATA[
+
+      <map:components>
+        ...
+        <map:actions>
+  	      <map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction"/>
+        </map:actions>
+        ...
+      </map:components>
+
+      ]]></source>
+      
+      <source><![CDATA[
+            <map:act type="rollback">
+              <map:redirect-to session="true" uri="{location}"/>
+            </map:act>
+      ]]></source>
+    </section>
+
+    <section>
+	  <title>URL</title>
+	  <p>The call of the URL </p>
+	  <source><![CDATA[{document-URL}?lenya.usecase=rollback&lenya usecase.step=rollback&rollbackTime={time-point}]]></source>
+      <p>invokes the rollbak to the version corresponding to the time {time-point}</p>   
+    </section>
+
+  </body>
+</document>

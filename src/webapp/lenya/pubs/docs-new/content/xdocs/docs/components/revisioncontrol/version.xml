@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Revision</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Edith Chevrier" email="edith@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+  <section>
+	<title>Location</title>
+	  <p>The backup files are located in a rcback directory</p>
+	  <source>
+        {publication}/content/rcbak/
+      </source>
+      <p> which can be configured in </p>
+	  <source>
+        cocoon-lenya/src/webapp/lenya/config/rc/revision-controller.xconf
+      </source>
+      <p>For a document with an xml file {publication}/content/authoring/{filename}, the backup files are </p> 	  
+	  <source>
+        {publication}/{rcback-directory}/content/authoring/{filename}.timestamp
+      </source>
+    </section>
+
+    <section>
+	  <title>Revision Screen</title>
+      <p>To get the revision screen, use the serverpage</p>
+      <source>cocoon-lenya/src/webapp/lenya/content/rc/versions-screen.xsp</source> 
+
+      <p>Sitemap :</p>
+      <source><![CDATA[
+            <map:generate src="content/rc/versions-screen.xsp" type="serverpages"/>
+            <map:transform src="xslt/rc/rollback.xsl"/>
+            <map:serialize/>
+      ]]></source>
+	  
+    </section>
+
+    <section>
+	  <title>View of an old version</title>
+      <p>To get the view of a backup version, use the serverpage</p>
+      <source>cocoon-lenya/src/webapp/lenya/content/rc/view.xsp</source> 
+      <p>It needs  the check-in time as request parameter</p>
+
+      <p>Sitemap in the publication :</p>
+      <source><![CDATA[
+          <map:generate type="serverpages" src="../../content/rc/view.xsp">
+          </map:generate>
+          <map:transform src="xslt/toDoc.xsl"/>
+          <map:transform src="xslt/{../2}2xhtml.xsl"/>
+          <map:serialize type="xml"/>
+      ]]></source>
+    </section>
+
+    <section>
+	  <title>URL</title>
+	  <p>The call of the URL </p>
+	  <source><![CDATA[{document-URL}?lenya.usecase=rollback&lenya usecase.step=view&rollbackTime={time-point}]]></source>
+      <p>shows the version corresponding to the time {time-point}</p>   
+    </section>
+
+    <section>
+	  <title>Disable the backup </title>
+      <p>To disable the backup set in the ReservedCheckinAction the backup boolean of getRC().reservedCheckIn(String destination, String identity, boolean backup) to false.</p>
+    </section>
+  </body>
+</document>

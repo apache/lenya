@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN"
+"document-v11.dtd">
+<document>
+  <header>
+    <title>Revision Controller</title>
+    <version />
+    <type />
+    <authors>
+      <person name="Edith Chevrier" email="edith@apache.org" />
+    </authors>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>The Revision Controller controls the different reserved
+      check-in and check-out of documents, the backup versions and the
+      rollback. It is filesystem oriented</p>
+    </section>
+
+    <section>
+      <title>Check-in / Check-out</title>
+      <p>The 
+      <link href="checkin.html">check-in</link>
+      and 
+      <link href="checkout.html">check-out</link>
+      are reserved: a checked out document cannot be checked out by
+      another user.</p>
+      <p>A user "System" exists, who can force internally a checkin</p>
+      <p>The different check-in/check-out states (the checkin/out,
+      the time, the user's identity) of a document are stored in an
+      xml file with a own markup language: the 
+      <link href="rcml.html">RCML-file.</link></p>
+    </section>
+
+    <section>
+      <title>Versions</title>
+      <p>When a document is checked in, the old version of the
+      document is copied ( 
+      <link href="version.html">backup</link>
+      )</p>
+    </section>
+
+    <section>
+      <title>Rollback</title>
+      <p>It is also possible to retrieve an old version with the 
+      <link href="rollback.html">rollback</link>
+      </p>
+    </section>
+    
+    <section>
+      <title>Package</title>
+      <source>org.apache.lenya.cms.rc</source>
+    </section>
+  </body>
+</document>
+
