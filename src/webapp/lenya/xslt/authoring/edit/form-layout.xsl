@@ -64,7 +64,10 @@
   <div class="lenya-box-body">
   
   <table class="lenya-table">
+    <xsl:apply-templates mode="nodes"/>
+<!--
     <xsl:apply-templates select="node"/>
+-->
   </table>
 
   </div>
@@ -93,7 +96,7 @@
 </page:page>
 </xsl:template>
 
-<xsl:template match="node">
+<xsl:template match="node" mode="nodes">
 <tr>
   <td valign="top"><xsl:apply-templates select="action"/><xsl:if test="not(action)">&#160;</xsl:if><xsl:apply-templates select="@select"/></td>
   <xsl:choose>
@@ -106,6 +109,23 @@
     </xsl:otherwise>
   </xsl:choose>
 </tr>
+</xsl:template>
+
+<xsl:template match="insert-after" mode="nodes">
+    <tr>
+      <td><input type="submit" value="INSERT" name="update"/></td>
+      <td colspan="2">
+        <select name="select" size="1">
+<xsl:for-each select="element">
+          <option value="{@value}"><xsl:value-of select="@name"/></option>
+</xsl:for-each>
+        </select>
+        <xsl:value-of select="@select"/>
+      </td>
+    </tr>
+</xsl:template>
+
+<xsl:template match="node()" mode="nodes" priority="-1">
 </xsl:template>
 
 <xsl:template match="action">
@@ -135,6 +155,9 @@
 </xsl:template>
 
 <xsl:template match="insert">
+<!--
+<input type="submit" name="{@name}" value="INSERT"/>
+-->
 <input type="image" src="{$imagesPath}/insert.gif" name="{@name}" value="LENYA"/>
 </xsl:template>
 
