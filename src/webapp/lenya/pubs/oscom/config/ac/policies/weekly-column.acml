@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<ac>
+<request>
+  <action name="read"/>
+</request>
+<policy>
+ <object match="/">
+  <subjects>
+    <user id="tom">
+      <actions>
+        <read/>
+      </actions>
+    </user>
+    <group id="root">
+      <actions>
+        <read/>
+      </actions>
+    </group>
+  </subjects>
+ </object>
+</policy>
+</ac>
