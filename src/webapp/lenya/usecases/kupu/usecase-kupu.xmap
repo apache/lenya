@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<!--
+  Kupu usecase sitemaps. Integrates the Kupu editor (http://kupu.oscom.org/) into Lenya.
+  Most matchers serve as callbacks for Kupu running in a client's browser.
+  Make sure that Kupu is installed under lenya/resources/kupu.
+  
+  Enjoy using Kupu.
+-->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <!-- =========================== Components ================================ -->
+  <map:components>
+    <!--
+    <map:generators default="file"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+    <map:selectors/>
+    -->
+  </map:components>
+  <!-- =========================== Resources ================================ -->
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="{global:basedir}/xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="{global:basedir}/xslt/util/strip_namespaces.xsl"/>
+      <map:serialize type="xhtml"/>
+    </map:resource>    
+  </map:resources>  
+  <!-- =========================== Flow ===================================== -->
+  <map:flow language="javascript">
+    <map:script src="usecase-kupu.js"/>
+  </map:flow>
+  <!-- =========================== Pipelines ================================ -->  
+  <map:pipelines>
+    <map:component-configurations>
+      <global-variables>
+        <!-- To access core resources -->
+        <basedir>../..</basedir>
+      </global-variables>
+    </map:component-configurations>
+
+    <map:pipeline internal-only="true">
+      <map:match pattern="kupu-stream">
+        <map:generate type="stream"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match pattern="sitetree_link_library_template">
+        <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/sitetree_link_library.xml.jx}" type="jx">
+          <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images/right_arrow.png"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>      
+    </map:pipeline>
+    
+    <!-- Usecase pipeline -->  
+    <map:pipeline>
+      <!--
+      <map:match pattern="**">
+        <map:redirect-to uri="/default/authoring/tutorial.html?pattern={1}"/>
+      </map:match>
+      -->
+      <map:match pattern="kupu" type="usecase">
+        <map:match pattern="open" type="step">
+          <map:match pattern="*/authoring/**.html">
+            <!-- Check if Kupu is installed -->
+            <map:act type="resource-exists" 
+              src="{global:basedir}/resources/kupu/common/kupueditor.js">
+              <map:act type="reserved-checkout">
+                <map:generate type="serverpages" 
+                  src="{global:basedir}/content/rc/{exception}.xsp">
+                  <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="filename" value="{filename}"/>
+                  <map:parameter name="date" value="{date}"/>
+                  <map:parameter name="message" value="{message}"/>
+                </map:generate>
+                <map:transform src="xslt/rc/rco-exception.xsl"/>
+                <map:call resource="style-cms-page"/>
+              </map:act>
+              <map:generate 
+                src="{fallback:resources/kupu/apache-lenya/kupu/kupumacros.html}"/>
+              <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/kupumacros.xsl}">
+                <map:parameter name="contentfile" 
+                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=content"/>
+                <map:parameter name="context-prefix" value="{request:contextPath}"/>
+                <!-- Only used to display the document path of the edited doc  -->
+                <map:parameter name="document-path" value="{page-envelope:document-path}"/>
+                <map:parameter name="save-destination" 
+                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=save"/>
+                <map:parameter name="exit-destination" 
+                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=exit"/>
+                <map:parameter name="reload-after-save" value="1"/>
+                <map:parameter name="use-css" value="1"/>
+                <map:parameter name="imagedrawer-xsl-uri" 
+                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=imagedrawerxsl"/>
+                <map:parameter name="linkdrawer-xsl-uri" 
+                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=linkdrawerxsl"/>
+                <map:parameter name="image-libraries-uri" 
+                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=image_libraries"/>
+                <map:parameter name="link-libraries-uri" 
+                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=link_libraries"/>
+              </map:transform>
+              <map:serialize type="html"/>
+            </map:act>
+            <!-- If Kupu is not installed; Action failed -->
+            <map:generate src="{global:basedir}/resources/misc/kupu/download.xhtml"/>
+            <map:call resource="style-cms-page"/>
+          </map:match>
+        </map:match>
+        <!-- Requested by Kupu to load the document into the editor -->    
+        <map:match pattern="content" type="step">
+          <map:match pattern="*/authoring/**">
+            <map:generate src="{global:basedir}/pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+            <map:transform 
+              src="{fallback:resources/kupu/apache-lenya/lenya/content2edit.xsl}">
+              <map:parameter name="css" 
+                value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
+            </map:transform>
+            <map:transform src="{global:basedir}/xslt/util/strip_namespaces.xsl"/>
+              <map:serialize type="xhtml"/>
+          </map:match>            
+        </map:match>
+        
+        <!-- Kupu Image Drawer -->
+        <map:match pattern="*drawerxsl" type="step">
+          <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/{1}drawer.xsl}" 
+            type="jx">
+            <map:parameter name="import-stylesheet-url" value="{page-envelope:context-prefix}/kupu/common/kupudrawers/{1}drawer.xsl"/>
+          </map:generate>  
+          <map:serialize type="xml"/>
+        </map:match>
+        
+        <map:match pattern="image_libraries" type="step">
+          <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/imagelibraries.xml.jx}" type="jx">
+            <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=global_image_library"/>
+            <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=page_image_library"/>
+            <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images"/>
+          </map:generate>
+          <map:serialize type="xml"/>
+        </map:match>
+        <map:match pattern="link_libraries" type="step">
+          <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/linklibraries.xml.jx}" type="jx">
+            <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=sitetree_link_library"/>
+            <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=other_link_library"/>
+            <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images"/>
+          </map:generate>
+          <map:serialize type="xml"/>
+        </map:match>
+                  
+        <map:match pattern="page_image_library" type="step">
+          <map:generate src="{fallback:content/info/assets.xsp}" type="serverpages"/>
+          <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/pageassets2kupulibrary.xsl}">
+            <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images/right_arrow.png"/>
+            <map:parameter name="resource-path-url" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-id}/"/>
+          </map:transform>
+          <map:serialize type="xml"/>            
+        </map:match>
+        <map:match pattern="sitetree_link_library" type="step">
+          <map:call function="sitetree_link_library"/>
+        </map:match>
+        <map:match pattern="*_library" type="step">
+          <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/{1}_library.xml.jx}" type="jx"/>
+          <map:serialize type="xml"/>
+        </map:match>
+        <!-- /Kupu Image Drawer -->  
+        
+        <!-- Checkin document on exit and trigger workflow -->
+        <map:match pattern="exit" type="step">
+          <map:act type="reserved-checkin">
+            <map:generate src="{global:basedir}/content/rc/{exception}.xsp" type="serverpages">
+              <map:parameter name="user" value="{user}"/>
+              <map:parameter name="filename" value="{filename}"/>
+              <map:parameter name="checkType" value="{checkType}"/>
+              <map:parameter name="date" value="{date}"/>
+              <map:parameter name="message" value="{message}"/>
+            </map:generate>
+            <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
+            <map:serialize/>
+          </map:act>
+          <map:act type="workflow">
+            <map:parameter name="area" value="{page-envelope:area}"/>
+            <map:parameter name="document-id" 
+              value="{page-envelope:document-id}"/>
+            <map:parameter name="language" 
+              value="{page-envelope:document-language}"/>
+            <map:parameter name="event" value="edit"/>
+          </map:act>
+          <map:redirect-to uri="{request:requestURI}"/>
+        </map:match>
+      
+        <!-- 
+             Kupu uses PUT to transmit the edited file for save.
+             The problem is, Kupu removes namespace information. 
+             That means we can not use the StreamGenerator, because 
+             it complains about an unbound element.
+        -->
+        <map:match pattern="save" type="step">
+          <map:select type="request-method">
+            <map:when test="PUT">
+              <map:act type="reserved-checkout-test">
+                <map:generate type="serverpages" 
+                  src="{global:basedir}/../../content/rc/{exception}.xsp">
+                  <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="filename" value="{filename}"/>
+                  <map:parameter name="date" value="{date}"/>
+                  <map:parameter name="message" value="{message}"/>
+                </map:generate>
+                <map:transform src="{global:basedir}/../../xslt/rc/rco-exception.xsl"/>
+                <map:call resource="style-cms-page"/>
+              </map:act>
+              
+              <!-- Merge changed dcoument sent by Kupu with orginial.
+                   I.e. the dc meta data needs to be preserved.
+              -->
+              <map:aggregate element="edit-envelope">
+                <map:part element="edited" src="cocoon:/kupu-stream"/>
+                <map:part element="original" 
+                  src="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+              </map:aggregate>              
+              <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/kupusave.xsl}"/>
+              <!-- Save the document -->
+              <map:transform src="{global:basedir}/xslt/authoring/edit/addSourceTags.xsl">
+                <map:parameter name="source" 
+                  value="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+              </map:transform>
+              <map:transform type="write-source"/>
+                              
+              <map:serialize type="xml" status-code="204"/>
+            </map:when>
+          </map:select>
+        </map:match>
+      </map:match>
+    </map:pipeline>
+  </map:pipelines>
+
+</map:sitemap>
