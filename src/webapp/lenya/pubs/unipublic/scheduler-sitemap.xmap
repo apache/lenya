@@ -27,7 +27,7 @@
       
       <!-- load task list -->
       <map:match pattern="tasks">
-        <map:generate src="content/tasks.xconf"/>
+        <map:generate src="config/tasks/tasks.xconf"/>
         <map:serialize type="xml"/>
       </map:match>
       
