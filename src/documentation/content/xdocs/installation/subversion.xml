@@ -39,6 +39,25 @@ Start the shell of your choice and enter:
 <source>
 svn co http://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X lenya-1.2.x
 </source>
+<p>
+  If you have used the old incubating svn checkout, then please change to the dir
+  that contains the former checkout and:
+</p>
+<source>
+svn sw http://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
+</source>
+<p>You can test that by using</p>
+<source>svn info</source>
+<source>Path: .
+URL: https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
+Repository UUID: 13f79535-47bb-0310-9956-ffa450edef68
+Revision: 76126
+Node Kind: directory
+Schedule: normal
+Last Changed Author: gregor
+Last Changed Rev: 55623
+Last Changed Date: 2004-10-26 19:23:29 +0200 (Tue, 26 Oct 2004)
+Properties Last Updated: 2004-10-26 17:07:46 +0200 (Tue, 26 Oct 2004)</source>
 </section>
 
 <section>
