@@ -72,7 +72,6 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
     public void service(ServiceManager manager) throws ServiceException {
-        //this.sourceResolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
         this.manager = manager;
     }
 
@@ -113,7 +112,6 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                         String area = pageEnvelope.getDocument().getArea();
                         path = "/" + publicationID + "/" + Publication.CONTENT_PATH + "/" + area
                                 + path;
-
                     }
                 }
             } catch (PageEnvelopeException e) {
