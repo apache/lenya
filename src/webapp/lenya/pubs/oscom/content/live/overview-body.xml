@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<oscom topic="system overviews">
+<!-- 
+======================================================================
+OSCOM CMS List
 
+$Id: overview-body.xml,v 1.2 2002/08/30 08:34:47 michicms Exp $
+======================================================================
+-->
+<oscom topic="system overviews">
 <system type="cms">
   <id>8</id>
-  <system_name>bitflux</system_name>
+  <system_name>Bitflux</system_name>
   <system_version>1.0</system_version>
   <system_startdate>Fall 1999</system_startdate>
   <url>
@@ -77,7 +83,6 @@ license.</license_description>
 <faq_url><![CDATA[http://demo.iuveno-net.de/iuveno/Products/Kontentor/CVS]]></faq_url>
   <license>
     <license_name>GPL (GNU Public License)</license_name>
-    <license_description></license_description>
     <license_url>http://www.gnu.org/licenses/gpl.html</license_url>
   </license>
 </system>
@@ -119,11 +124,43 @@ license.</license_description>
   <license>
     <license_name>GNU General Public License (GPL)</license_name>
     <license_description></license_description>
-    
-<license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
+    <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
   </license>
 </system>
-
+<system type="cms">
+  <system_name>phpSlash</system_name>
+  <main_url>http://www.phpSlash.org</main_url>
+  <system_version>0.65</system_version>
+  <system_startdate>Fall 1998</system_startdate>
+  <url>
+    <url_homepage>http://www.phpslash.org</url_homepage>    
+    <url_faq><![CDATA[http://www.phpslash.org/article.php3?story_id=27&topic_id=39&section_id=8]]></url_faq>
+    <url_documentation><![CDATA[http://www.phpslash.org/article.php3?story_id=34&section_id=8&topic_id=39]]></url_documentation>
+    <url_rss>http://www.phpslash.org/backend.php3</url_rss>
+  </url>
+  <requirements>
+    <requirements_db>MySQL</requirements_db>
+    <requirements_web>Apache, IIS, Zeus</requirements_web>
+    <requirements_os>Linux, Windows, Mac, Solaris</requirements_os>  
+  </requirements>
+  <features>
+    <features_internationalization>yes</features_internationalization>
+    <features_search>yes</features_search>
+    <features_acl>yes</features_acl>
+    <features_workflow>no</features_workflow>
+    <features_personalization>yes</features_personalization>
+  </features>
+  <standards>
+    <standards_xhtml>Yes</standards_xhtml>
+    <standards_css>Yes</standards_css>
+    <standards_accessibility>Yes</standards_accessibility>
+  </standards>
+  <license>
+    <license_name>GNU General Public License (GPL)</license_name>
+    <license_description></license_description>
+    <license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+  </license>
+</system>
 <system type="cms">
   <system_name>Plone</system_name>
   <main_url>http://www.plone.org</main_url>
@@ -131,21 +168,17 @@ license.</license_description>
     <license_name>BSD License</license_name>
   </license>
 </system>
-
 <system type="cms">
   <id>14</id>
   <system_name>postnuke</system_name>
-  <main_url>http://www.postnuke.com/</main_url>
-  
-<faq_url><![CDATA[http://centre.ics.uci.edu/~grape/modules.php?op=modload&amp;name=FAQ&amp;file=index]]></faq_url>
+  <main_url>http://www.postnuke.com/</main_url> 
+  <faq_url><![CDATA[http://centre.ics.uci.edu/~grape/modules.php?op=modload&amp;name=FAQ&amp;file=index]]></faq_url>
   <license>
     <license_name>GNU General Public License (GPL)</license_name>
-    <license_description></license_description>
-    
-<license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
+    <license_description></license_description> 
+    <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
   </license>
 </system>
-
 <system type="cms">
   <system_name>Silva</system_name>
   <main_url>http://www.infrae.nl/products/silva</main_url>
@@ -172,8 +205,7 @@ license.</license_description>
   <license>
     <license_name>Apache Software License</license_name>
     <license_description></license_description>
-    
-<license_url>http://www.opensource.org/licenses/apachepl.html</license_url>
+    <license_url>http://www.opensource.org/licenses/apachepl.html</license_url>
   </license>
 </system>
 <system type="framework">
@@ -205,41 +237,34 @@ license.</license_description>
   <faq_url><![CDATA[http://www.midgard-project.org/faq/]]></faq_url>
   <license>
     <license_name>GNU Lesser General Public License (LGPL)</license_name>
-    <license_description>core libraries</license_description>
-    
-<license_url>http://www.gnu.org/licenses/licenses.html#LGPL</license_url>
+    <license_description>core libraries</license_description> 
+    <license_url>http://www.gnu.org/licenses/licenses.html#LGPL</license_url>
   </license>
   <license>
     <license_name>X Consortium license</license_name>
-    <license_description>administration tools and usage 
-examples</license_description>
+    <license_description>administration tools and usage examples</license_description>
     <license_url>http://www.x.org/terms.htm</license_url>
   </license>
   <license>
     <license_name>GNU General Public License (GPL)</license_name>
-    <license_description>new administration site, 
-Asgard</license_description>
-    
-<license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
+    <license_description>new administration site, Asgard</license_description>
+    <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
   </license>
   <license>
     <license_name>GNU Free Documentation License</license_name>
     <license_description>official documentation</license_description>
-    
-<license_url>http://www.gnu.org/licenses/licenses.html#FDL</license_url>
+    <license_url>http://www.gnu.org/licenses/licenses.html#FDL</license_url>
   </license>
 </system>
 <system type="framework">
   <id>4</id>
   <system_name>Slide</system_name>
   <main_url>http://jakarta.apache.org/slide/</main_url>
-  
-<faq_url><![CDATA[http://faq.globalvision.com.au/cgi-bin/fom]]></faq_url>
+  <faq_url><![CDATA[http://faq.globalvision.com.au/cgi-bin/fom]]></faq_url>
   <license>
     <license_name>Apache Software License</license_name>
-    <license_description></license_description>
-    
-<license_url>http://www.opensource.org/licenses/apachepl.html</license_url>
+    <license_description></license_description>  
+    <license_url>http://www.opensource.org/licenses/apachepl.html</license_url>
   </license>
 </system>
 <system type="framework">
@@ -260,12 +285,11 @@ Asgard</license_description>
   <faq_url><![CDATA[http://www.webdav.org/other/faq.html]]></faq_url>
   <license>
     <license_name>IETF Proposed Standard</license_name>
-    <license_description>published as RFC 2518</license_description>
   </license>
 </system>
 <system type="framework">
   <id>7</id>
-  <system_name>zope</system_name>
+  <system_name>Zope</system_name>
   <main_url>http://www.zope.org/</main_url>
   <faq_url><![CDATA[http://zdp.zope.org/projects/zfaq]]></faq_url>
   <license>
@@ -274,5 +298,4 @@ Asgard</license_description>
     <license_url>http://www.zope.org/Resources/ZPL</license_url>
   </license>
 </system>
-
 </oscom>

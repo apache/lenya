@@ -206,7 +206,7 @@
       <!-- Generic (XHTML) -->
       <map:match pattern="conferences/berkeley2002/**.html">
         <map:generate src="cocoon:/live/conferences/sanfrancisco2002/{1}.xml"/>
-        <map:transform src="stylesheets/publication/Page/Generic/Live/main.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Generic/Live/main_berkeley.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
