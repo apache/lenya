@@ -18,7 +18,7 @@
  *
  */
 
-/* $Id: scheduler.xsl,v 1.4 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id: scheduler.xsl,v 1.5 2004/03/31 18:03:44 gregor Exp $  */
 -->
 
 <xsl:stylesheet version="1.0"
@@ -38,7 +38,7 @@
 				<sch:month><xsp:expr>calendar.get(java.util.Calendar.MONTH) + 1</xsp:expr></sch:month>
 				<sch:day><xsp:expr>calendar.get(java.util.Calendar.DAY_OF_MONTH)</xsp:expr></sch:day>
 				<sch:hour><xsp:expr>calendar.get(java.util.Calendar.HOUR_OF_DAY)</xsp:expr></sch:hour>
-				<sch:minute><xsp:expr>calendar.get(java.util.Calendar.MINUTE)</xsp:expr></sch:minute>
+				<sch:minute><xsp:expr>calendar.get(java.util.Calendar.MINUTE) + 2</xsp:expr></sch:minute>
 				<sch:second><xsp:expr>calendar.get(java.util.Calendar.SECOND)</xsp:expr></sch:second>
     
     	org.apache.lenya.cms.cocoon.scheduler.SchedulerHelper helper = 
