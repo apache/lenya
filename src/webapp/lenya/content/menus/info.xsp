@@ -6,6 +6,7 @@
     xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
     xmlns:xsp-request="http://apache.org/xsp/request/2.0"
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+	xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
 >
 
 <xsp:structure>
@@ -66,12 +67,13 @@
 
     <menu name="Workflow" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=publish&amp;lenya.step=showscreen</xsp:attribute>Publish</item>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=delete&amp;lenya.step=showscreen</xsp:attribute>Delete</item>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=archive&amp;lenya.step=showscreen</xsp:attribute>Archive</item>
+        <item wf:event="publish"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=publish&amp;lenya.step=showscreen</xsp:attribute>Publish</item>
+        <item wf:event="delete"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=delete&amp;lenya.step=showscreen</xsp:attribute>Delete</item>
+        <item wf:event="archive"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=archive&amp;lenya.step=showscreen</xsp:attribute>Archive</item>
+        <item wf:event="restore"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=restore&amp;lenya.step=showscreen</xsp:attribute>Restore</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=approval-submit&amp;lenya.step=showscreen</xsp:attribute>Submit for Approval</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=approval-reject&amp;lenya.step=showscreen</xsp:attribute>Reject</item>
-        <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=deactivate&amp;lenya.step=showscreen</xsp:attribute>Deactivate</item>
+        <item wf:event="deactivate"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=deactivate&amp;lenya.step=showscreen</xsp:attribute>Deactivate</item>
       </block>
     </menu>
 
