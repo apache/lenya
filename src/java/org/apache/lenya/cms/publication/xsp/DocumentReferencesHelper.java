@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.1 2003/09/30 14:20:27 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.2 2003/09/30 14:33:09 egli Exp $
 <License>
 
  ============================================================================
@@ -75,16 +75,17 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.search.Grep;
 
 /**
- * Helper class for the policy GUI.
+ * Helper class for finding references to the current document.
  * 
- * @author andreas
+ * @author Christian Egli
+ * @version $Revision: 1.2 $
  */
 public class DocumentReferencesHelper {
 
     private PageEnvelope pageEnvelope = null;
 
     /**
-     * Create a new DocumentlanguageHelper.
+     * Create a new DocumentReferencesHelper
      * 
      * @param objectModel the objectModel
      * 
@@ -157,10 +158,14 @@ public class DocumentReferencesHelper {
     }
 
     /**
+     * Build an URL given the current publication and prefix and an area 
+     * and a document-id.
      * 
-     * @param area
-     * @param documentId
-     * @return
+     * @param area the area of the document for which we're requesting the URL
+     * @param documentId the document-id of the document for which we're requesting the URL
+     * 
+     * @return the canonical URL of the document-id in the given area in the 
+     * current publication and context.
      */
     public String getURL(String area, String documentId) {
         DocumentBuilder builder = DefaultDocumentBuilder.getInstance();
