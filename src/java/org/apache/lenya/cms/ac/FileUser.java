@@ -76,6 +76,7 @@ public class FileUser extends User implements Item {
     public static final String ID = "identity";
     public static final String FULL_NAME = "fullname";
     public static final String EMAIL = "email";
+    public static final String DESCRIPTION = "description";
     public static final String PASSWORD = "password";
     public static final String GROUPS = "groups";
     public static final String GROUP = "group";
@@ -115,6 +116,7 @@ public class FileUser extends User implements Item {
         setId(config.getAttribute(ID_ATTRIBUTE));
         setFullName(config.getChild(FULL_NAME).getValue(null));
         setEmail(config.getChild(EMAIL).getValue());
+        setDescription(config.getChild(DESCRIPTION).getValue(""));
         setEncryptedPassword(config.getChild(PASSWORD).getValue(null));
 
         Configuration[] groups = config.getChildren(GROUPS);
@@ -172,6 +174,11 @@ public class FileUser extends User implements Item {
         // add email node
         child = new DefaultConfiguration(EMAIL);
         child.setValue(getEmail());
+        config.addChild(child);
+
+        // add description node
+        child = new DefaultConfiguration(DESCRIPTION);
+        child.setValue(getDescription());
         config.addChild(child);
 
         // add password node

@@ -74,6 +74,7 @@ public abstract class User extends AbstractGroupable implements Identifiable {
     private String fullName;
     private String email;
     private String encryptedPassword;
+    private String description = "";
     private Set groups = new HashSet();
 
     /**
@@ -251,5 +252,23 @@ public abstract class User extends AbstractGroupable implements Identifiable {
      */
     public String toString() {
         return "[user " + getId() + "]";
+        
     }
+    /**
+     * Returns the description of this user.
+     * @return A string.
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets the description of this user.
+     * @param description A string.
+     */
+    public void setDescription(String description) {
+        assert description != null;
+        this.description = description;
+    }
+
 }
