@@ -45,6 +45,7 @@
 
     <td valign="top" width="150">
       <xsl:apply-templates select="news"/>
+      <xsl:apply-templates select="related-content"/>
     </td>
     </tr>
   </table>
@@ -56,4 +57,4 @@
 </html>
 </xsl:template>
  
-</xsl:stylesheet>  
+</xsl:stylesheet>

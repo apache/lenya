@@ -6,7 +6,11 @@
 
   <map:components>
     <map:generators default="file"/>
-    <map:transformers default="xslt"/>
+    <map:transformers default="xslt">
+      <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+        <publication type="oscom"/>
+      </map:transformer>
+    </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
@@ -162,7 +166,12 @@
     <map:match pattern="authoring/matrix/index.xml">
       <map:generate type="directory" src="docs/publication/authoring/matrix/"/>
       <map:transform src="stylesheets/publication/Page/Matrix/xinclude.xsl"/>
+<!--
       <map:transform type="xinclude"/>
+-->
+      <map:transform type="xlink">
+        <map:parameter name="href" value="docs/publication/authoring/overview_dummy.xml"/>
+      </map:transform>
       <map:serialize type="xml"/>
     </map:match>
     <!-- /Overview -->
@@ -303,6 +312,7 @@
         <map:transform src="stylesheets/publication/Page/Overview/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
+      <!-- /CM/F Overview -->
 
       <!-- Board -->
       <map:match pattern="authoring/board.html">

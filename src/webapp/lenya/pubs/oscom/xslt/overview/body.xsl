@@ -5,8 +5,23 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template name="body">
- <font face="verdana">
- <h3>Content Management Frameworks/Systems Overview</h3>
+<font face="verdana">
+<h3>Content Management Frameworks/Systems Overview</h3>
+
+<font size="-1">
+<p>
+The data of the CMF/S projects listed below are NOT maintained
+by OSCOM itself, but rather by people from each project.
+Please contact them directly in case the data might be outdated.
+</p>
+
+<p>
+If you want your CMS/F project being added to the list below, please send an email to
+<a href="mailto:michael.wechner@oscom.org">Michael</a>.
+For all other inquiries please use OSCOM's <a href="../mailing-lists.html">mailing lists</a>.
+</p>
+</font>
+
  <h4>Content Management Frameworks</h4>
   <table cellspacing="0" cellpadding="0" width="450">
   <tr>
@@ -56,6 +71,10 @@
 
 <xsl:template match="license_url">
 <xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute>
+</xsl:template>
+
+<xsl:template match="related-content">
+Overview: Related Content
 </xsl:template>
  
 </xsl:stylesheet>  
