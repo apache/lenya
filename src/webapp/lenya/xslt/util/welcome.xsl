@@ -5,7 +5,7 @@
     xmlns:lenya="http://lenya.org/2003/publication"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:page="http://www.lenya.org/2003/cms-page"
+    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     >
 
 <xsl:template match="lenya:lenya">

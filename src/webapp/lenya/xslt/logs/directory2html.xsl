@@ -11,7 +11,7 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:dir="http://apache.org/cocoon/directory/2.0"
-    xmlns:page="http://www.lenya.org/2003/cms-page"
+    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     >
     
 
