@@ -6,7 +6,7 @@
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
 >
 
-  <xsl:include href="page/simple-page2html.xsl"/>
+  <xsl:include href="../ac/simple-page2html.xsl"/>
 
   <xsl:template match="xsp-request:uri">
     <b><xsl:value-of select="."/></b>
