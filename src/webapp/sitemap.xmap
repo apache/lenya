@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.27 2002/12/19 01:11:09 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.28 2003/01/09 01:05:47 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -104,6 +104,12 @@
 
  </map:components>
 
+  <map:views>
+    <map:view name="first" from-position="first">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+
  <map:pipelines>
 
 
@@ -118,12 +124,29 @@
    </map:pipeline>
 
 
-   <map:pipeline>
 <!-- Search with Lucene -->
+   <map:pipeline>
      <map:match pattern="lucene/**">
        <map:mount uri-prefix="lucene" src="wyona/cms/lucene.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
 
+     <map:match pattern="*/search/lucene">
+       <map:generate type="serverpages" src="wyona/cms/docs/cms/search-and-results.xsp">
+         <map:parameter name="index-dir" value="wyona/cms/pubs/{1}/resources/publication/search/lucene/index"/>
+         <!--<map:parameter name="index-dir" value="/tmp/wyona-cms/pubs/{1}/resources/publication/search/lucene/index"/>-->
+         <map:parameter name="excerpt-dir" value="wyona/cms/pubs/{1}/resources/publication/search/lucene"/>
+       </map:generate>
+       <map:transform src="wyona/cms/stylesheets/cms/Page/Search/search-and-results.xsl"/>
+       <map:serialize type="html"/>
+     </map:match>
+
+     <map:handle-errors>
+       <map:serialize type="xml"/>
+     </map:handle-errors>
+   </map:pipeline>
+<!-- /Search with Lucene -->
+
+   <map:pipeline>
 <!-- Editor Xopus -->
      <map:match pattern="xopus/**">
        <map:mount uri-prefix="xopus" src="wyona/cms/xopus.xmap" check-reload="true" reload-method="synchron"/>
@@ -148,16 +171,21 @@
      </map:match>
    </map:pipeline>
 
-   <map:pipeline>
 <!-- Original Cocoon Sitemap (without SVG and FOP!) -->
+<!--
+   <map:pipeline>
      <map:match pattern="**">
        <map:mount uri-prefix="" src="cocoon.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
-   <map:handle-errors>
-    <map:transform src="context://stylesheets/system/error2html.xsl"/>
-    <map:serialize status-code="500"/>
-   </map:handle-errors>
+      <map:handle-errors>
+        <map:transform src="context://stylesheets/system/error2html.xsl"/>
+        <map:serialize status-code="500"/>
+      </map:handle-errors>
    </map:pipeline>
+-->
+<!-- /Original Cocoon Sitemap (without SVG and FOP!) -->
+
+
  </map:pipelines>
 </map:sitemap>
