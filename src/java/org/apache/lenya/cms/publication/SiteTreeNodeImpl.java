@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.20 2003/09/18 16:25:26 andreas Exp $
+$Id: SiteTreeNodeImpl.java,v 1.21 2003/09/23 13:46:02 edith Exp $
 <License>
 
  ============================================================================
@@ -73,8 +73,8 @@ import java.util.List;
  * 
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
- * @author $Author: andreas $
- * @version $Revision: 1.20 $
+ * @author $Author: edith $
+ * @version $Revision: 1.21 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -357,6 +357,19 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
         return (SiteTreeNode[]) siblingElements.toArray(new SiteTreeNode[siblingElements.size()]);
     }
+
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTreeNode#getNextSiblingDocumentId()
+	 */
+	public String getNextSiblingDocumentId() {
+		SiteTreeNode[] siblings = getNextSiblings();
+        if (siblings != null && siblings.length >0 ){
+			return siblings[0].getAbsoluteParentId()+ "/" + siblings[0].getId();       	 
+        } else {
+        	return null;
+        }
+	}
+
     /**
      * (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#accept(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
