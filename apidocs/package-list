@@ -14,10 +14,10 @@ org.apache.lenya.cms.cocoon.components.modules.input
 org.apache.lenya.cms.cocoon.flow
 org.apache.lenya.cms.cocoon.generation
 org.apache.lenya.cms.cocoon.scheduler
-org.apache.lenya.cms.cocoon.sitemap
 org.apache.lenya.cms.cocoon.task
 org.apache.lenya.cms.cocoon.transformation
 org.apache.lenya.cms.cocoon.uriparameterizer
+org.apache.lenya.cms.cocoon.workflow
 org.apache.lenya.cms.mail
 org.apache.lenya.cms.publication
 org.apache.lenya.cms.publication.file
@@ -29,6 +29,7 @@ org.apache.lenya.cms.scheduler
 org.apache.lenya.cms.scheduler.xml
 org.apache.lenya.cms.task
 org.apache.lenya.cms.workflow
+org.apache.lenya.defaultpub.cms.task
 org.apache.lenya.lucene
 org.apache.lenya.lucene.html
 org.apache.lenya.lucene.index
