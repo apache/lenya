@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  $Id: cmsui.xml,v 1.25 2004/02/22 20:38:35 roku Exp $
+  $Id: cmsui.xml,v 1.26 2004/02/22 20:46:13 roku Exp $
   
   @author Rolf Kulemann (roku at apache.org)
   
@@ -115,8 +115,9 @@
   <message key="Edit with BXE">Edit with BXE</message>
   <message key="Edit with one Form">Edit with one Form</message>
   <message key="Edit with Forms">Edit with Forms</message>
-  <message key="Edit Metadata">Edit Metadata</message>
-  <message key="Edit Navigation Title">Edit Navigation Title</message>
+  <message key="Edit Metadata">Edit&#160;Metadata</message>
+  <message key="Edit Navigation Title">Edit&#160;Navigation&#160;Title</message>
+  <message key="Rename URL">Rename&#160;URL</message>
   
   <!-- cms tabs -->
   <message key="Server Time">Server Time</message>  

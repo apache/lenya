@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.30 2004/02/22 20:38:35 roku Exp $
+   $Id: cmsui_de.xml,v 1.31 2004/02/22 20:46:13 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -117,6 +117,7 @@
   <message key="Edit with Forms">Bearbeiten mit Formwizard</message>
   <message key="Edit Metadata">Metadata bearbeiten</message>
   <message key="Edit Navigation Title">Navigationstitel bearbeiten</message>
+  <message key="Rename URL">URL&#160;umbenennen</message>
 
   <!-- cms tabs -->
   <message key="Server Time">Serverzeit</message>  
