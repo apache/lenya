@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.29 2003/07/15 15:03:40 egli Exp $
+$Id: PageEnvelope.java,v 1.30 2003/07/17 14:31:43 gregor Exp $
 <License>
 
  ============================================================================
@@ -82,6 +82,11 @@ public class PageEnvelope {
     public static final String DOCUMENT_URL = "document-url";
     public static final String DOCUMENT_PATH = "document-path";
     public static final String DOCUMENT_LANGUAGE = "document-language";
+	public static final String DOCUMENT_DC_TITLE = "document-dc-title";
+	public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
+	public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
+	public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
+	public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     private String context;
 
     /**
@@ -261,6 +266,46 @@ public class PageEnvelope {
         return getDocument().getFile();
     }
 
+	/**
+	 * Returns the DC title for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCTitle() {
+		return getDocument().getDublinCore().getTitle();
+	}
+
+	/**
+	 * Returns the DC subject for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCSubject() {
+		return getDocument().getDublinCore().getSubject();
+	}
+
+	/**
+	 * Returns the DC creator for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCCreator() {
+		return getDocument().getDublinCore().getCreator();
+	}
+
+	/**
+	 * Returns the DC description for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCDescription() {
+		return getDocument().getDublinCore().getDescription();
+	}
+
+	/**
+	 * Returns the DC rights for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCRights() {
+		return getDocument().getDublinCore().getRights();
+	}
+
     /**
      * The names of the page envelope parameters.
      */
@@ -273,7 +318,13 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_ID,
             PageEnvelope.DOCUMENT_URL,
             PageEnvelope.DOCUMENT_PATH,
-            PageEnvelope.DOCUMENT_LANGUAGE };
+            PageEnvelope.DOCUMENT_LANGUAGE, 
+			PageEnvelope.DOCUMENT_DC_TITLE,
+			PageEnvelope.DOCUMENT_DC_CREATOR,
+			PageEnvelope.DOCUMENT_DC_SUBJECT,
+			PageEnvelope.DOCUMENT_DC_DESCRIPTION,
+			PageEnvelope.DOCUMENT_DC_RIGHTS           
+        };
 
     /**
      * @param string The context.
