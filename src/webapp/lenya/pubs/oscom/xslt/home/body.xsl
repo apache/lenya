@@ -5,8 +5,10 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template name="body">
+  <div id_xopus="about_and_features" xml_xopus="index.xml" xsl_xopus="Page/Home/Authoring/xopus.xsl" xsd_xopus="home.xsd">
   <xsl:apply-templates select="about"/>
   <xsl:apply-templates select="features"/>
+  </div>
 </xsl:template>
 
 <xsl:template match="about">
@@ -31,6 +33,10 @@
 </xsl:template>
 
 <xsl:template match="a">
+<a href="{@href}"><xsl:apply-templates/></a>
+</xsl:template>
+
+<xsl:template match="A">
 <a href="{@href}"><xsl:apply-templates/></a>
 </xsl:template>
 

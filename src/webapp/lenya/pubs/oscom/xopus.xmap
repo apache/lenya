@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- CVS: $Id: xopus.xmap,v 1.1 2002/05/20 21:30:16 michicms Exp $ -->
+
+<!--
+    This subsitemap manages the functions related to the
+    Xopus editor. It is mounted from the main sitemap,
+    sitemap.xmap
+-->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <!-- =========================== Components ================================ -->
+
+  <map:components>
+    <map:generators default="file"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions>
+      <map:action name="xopushandler" src="org.wyona.cms.cocoon.acting.XopusHandlerAction" logger="sitemap.action.xopus-handler">
+        <xml href="docs/publication/authoring"/>
+        <xsl href="stylesheets/publication"/>
+        <xsd href="docs/publication/doctypes/schemas"/>
+        <temp href="temp"/>
+      </map:action>
+    </map:actions>
+  </map:components>
+
+  <!-- =========================== Views =================================== -->
+  <!-- =========================== Resources ================================= -->
+  <!-- ========================== Action sets ================================ -->
+  <!-- =========================== Pipelines ================================= -->
+
+  <map:pipelines>
+    <map:pipeline>
+
+      <map:match pattern="XopusInterface">
+        <map:act type="xopushandler">
+          <map:generate src="{reqFilePath}"/>
+          <map:transform src="xopus_response.xsl">
+            <map:parameter name="reqId" value="{reqId}"/>
+            <map:parameter name="reqType" value="{reqType}"/>
+            <map:parameter name="reqFile" value="{reqFile}"/>
+            <map:parameter name="fileType" value="{fileType}"/>
+          </map:transform>
+          <map:serialize type="xml"/>
+        </map:act>
+        <map:generate src="xopus_error.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- This snippet is just for development purposes -->
+      <map:match pattern="**">
+        <map:generate src="resources/html/scratchpad/xopus/{1}.xml"/>
+        <map:transform src="resources/html/scratchpad/xopus/stylesheets/{1}.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      
+      <!-- Error handling -->
+      <map:handle-errors>
+        <map:transform src="context://stylesheets/system/error2html.xsl"/>
+        <map:serialize status-code="500"/>
+      </map:handle-errors>
+
+<!-- ==== write files for debugging ==== -->
+<!--        <map:transform src="stylesheets/wyona/cms/edit/htmlform/saveToFile.xsl"> -->
+<!--          <map:parameter name="filename" value="/home/tinu/debug/edit.xml"/> -->
+<!--        </map:transform> -->
+
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>

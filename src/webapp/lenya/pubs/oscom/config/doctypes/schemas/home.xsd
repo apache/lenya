@@ -1,0 +1,33 @@
+<Schema xmlns="urn:schemas-microsoft-com:xml-data" xmlns:dt="urn:schemas-microsoft-com:datatypes">
+
+<ElementType content="eltOnly" model="closed" name="oscom">
+ <group>
+  <element type="about" minOccurs="1" maxOccurs="1"/>
+  <element type="features" minOccurs="1" maxOccurs="1"/>
+ </group>
+</ElementType>
+
+<ElementType content="eltOnly" model="closed" name="about">
+ <group>
+  <element type="p" minOccurs="1" maxOccurs="*"/>
+ </group>
+</ElementType>
+
+<ElementType content="eltOnly" model="closed" name="features">
+ <group>
+  <element type="feature" minOccurs="1" maxOccurs="3"/>
+ </group>
+</ElementType>
+
+<ElementType content="eltOnly" model="closed" name="feature">
+ <group>
+  <element type="title" minOccurs="1" maxOccurs="1"/>
+  <element type="p" minOccurs="1" maxOccurs="*"/>
+ </group>
+</ElementType>
+
+<ElementType content="mixed" model="open" name="title" dt:type="string"/>
+
+<ElementType content="mixed" model="open" name="p" dt:type="html"/>
+
+</Schema>

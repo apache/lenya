@@ -11,7 +11,29 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions/>
-    <map:selectors/>
+    <map:selectors default="browser">
+      <map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
+      <!-- 
+           # NOTE: The appearance indicates the search order. This is very important since
+           #       some words may be found in more than one browser description. (MSIE is
+           #       presented as "Mozilla/4.0 (Compatible; MSIE 4.01; ...")
+      -->
+        <browser name="explorer" useragent="MSIE"/>
+        <browser name="pocketexplorer" useragent="MSPIE"/>
+        <browser name="handweb" useragent="HandHTTP"/>
+        <browser name="avantgo" useragent="AvantGo"/>
+        <browser name="imode" useragent="DoCoMo"/>
+        <browser name="opera" useragent="Opera"/>
+        <browser name="lynx" useragent="Lynx"/>
+        <browser name="java" useragent="Java"/>
+        <browser name="wap" useragent="Nokia"/>
+        <browser name="wap" useragent="UP"/>
+        <browser name="wap" useragent="Wapalizer"/>
+        <browser name="mozilla5" useragent="Mozilla/5"/>
+        <browser name="mozilla5" useragent="Netscape6/"/>
+        <browser name="netscape" useragent="Mozilla"/>
+      </map:selector>
+    </map:selectors>
   </map:components>
 
   <!-- =========================== Pipelines ================================ -->
@@ -84,12 +106,26 @@
       <!-- Home -->
       <map:match pattern="authoring/">
         <map:generate src="cocoon:/authoring/index.xml"/>
-        <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
+        <map:select>
+          <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus.xsl"/>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
+          </map:otherwise>
+        </map:select>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="authoring/index.html">
         <map:generate src="cocoon:/authoring/index.xml"/>
-        <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
+        <map:select>
+          <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus.xsl"/>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
+          </map:otherwise>
+        </map:select>
         <map:serialize type="html"/>
       </map:match>
 
