@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.29 2003/08/25 09:53:24 andreas Exp $
+$Id: TaskJob.java,v 1.30 2003/08/25 15:41:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,7 +64,6 @@ import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.DefaultTaskWrapper;
-import org.apache.lenya.cms.task.TaskWrapperParameters;
 import org.apache.lenya.xml.NamespaceHelper;
 
 import org.apache.log4j.Category;
