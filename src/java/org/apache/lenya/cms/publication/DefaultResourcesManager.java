@@ -285,21 +285,14 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      */
     public void deleteResources() {
 
-        File stopDirectory = new File(getDocument().getPublication().getDirectory(),
-                RESOURCES_PREFIX);
-
         File[] resources = getResources();
         for (int i = 0; i < resources.length; i++) {
             resources[i].delete();
-            //TODO replace with excalibur
-            // FileUtil.deleteParentDirs(resources[i], stopDirectory);
         }
 
         File[] metas = getMetaFiles();
         for (int i = 0; i < metas.length; i++) {
             metas[i].delete();
-            //TODO replace with excalibur FileUtil.deleteParentDirs(metas[i],
-            // stopDirectory);
         }
     }
 
