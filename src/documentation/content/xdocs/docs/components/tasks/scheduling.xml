@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -15,13 +15,27 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication-test-build.xml,v 1.6 2004/07/01 23:59:24 thorsten Exp $ -->
-<project name="pubtest">
+<!-- $Id: scheduling.xml,v 1.1 2004/07/01 23:59:20 thorsten Exp $ -->
 
-  <description>
-    Publication Test Targets
-  </description>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
-<target depends="init, tests.prepare" name="test.publications">
-</target>
-</project>
+<document> 
+
+<header> 
+    <title>Scheduling a Task</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section><title>Scheduling a Task</title>
+<p>
+See section <strong>Scheduler</strong>.
+</p>
+</section>
+
+</body>
+</document>

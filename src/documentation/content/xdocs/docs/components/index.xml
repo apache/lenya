@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml,v 1.1 2004/07/01 23:59:25 thorsten Exp $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Hello Forrest</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+<section><title>Forrest as a Lenya Publication</title>
+<p>Thanks to Gregor, Andreas and Christian we now have Forrest as a Lenya publication.</p>
+<p>Click on the menu "File" and then click on the item "Edit with Xopus2" to edit this page.</p>
+</section>
+  </body>
+</document>

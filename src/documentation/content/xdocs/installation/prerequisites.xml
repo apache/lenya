@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: prerequisites.xml,v 1.1 2004/07/01 23:59:25 thorsten Exp $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document> 
+
+<header> 
+    <title>Prerequisites</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<p>
+The following list describes the setup that is tested and recommended.
+Several items, e.g. the servlet container, may be replaced by other products.
+</p>
+<ul>
+  <li>
+    <p>
+    <strong>Java 2 Platform, Standard Edition</strong> (required: J2SE 1.4.1 or newer)<br/>
+    <link href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</link>
+    </p>
+  </li>
+  
+  <li>
+    <p>
+    <strong>Apache Tomcat</strong> for JDK 1.4 (recommended: 4.1.29)<br/>
+    <link href="http://www.apache.org/dist/jakarta/tomcat-4/v4.1.29/bin/">Tomcat release builds</link><br/>
+    Pick one of the <code>jakarta-tomcat-4.1.24-LE-jdk14</code> files!
+    </p>
+  </li>
+  
+  <li>
+    <p>
+    <strong>Apache Ant</strong> (required: 1.6.1 or newer)<br/>
+    <link href="http://www.apache.org/dist/ant/">Ant main distribution directory</link>
+    </p>
+  </li>
+  
+  <li>
+    <p>
+    <strong>Apache Cocoon</strong> (required: Cocoon 2.1.4)<br/>
+    <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>
+    </p>
+  </li>
+  
+  <li>
+    <p>
+    <strong>Endorsed Libraries</strong> (recommended: Xalan 2.5.0 Xerces 2.5.0)<br/>
+    </p>
+  </li>
+</ul>
+
+</body>
+</document>

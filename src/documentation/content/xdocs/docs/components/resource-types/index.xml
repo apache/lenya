@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml,v 1.1 2004/07/01 23:59:25 thorsten Exp $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Resource Types (formerly known as Document Types)</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Andreas Hartmann" email="andreas@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+<section>
+	<title>Basics</title>
+	
+	<p>
+	A resource type defines a certain XML source format, together with processing options.
+	It typically consists of
+	</p>
+	<ul>
+	  <li>an XML structure definition (e.g., Relax NG)</li>
+	  <li>a workflow schema,</li>
+	  <li>some presentation pipelines,</li>
+	  <li>some presentation XSLT stylesheets,</li>
+	  <li>a Lenya menubar.</li>
+	</ul>
+	<p>
+	  All of these can be shared between several resource types.
+	</p>
+</section>
+
+<section>
+  <title>Adding a Resource Type to a Publication</title>
+  <p>
+    Adding a custom resource type to your publication includes the following steps:
+  </p>
+  
+  <section><title>Choose a Unique Resource Type Name</title>
+  <p>
+    You should choose a reasonable name for your resource type.
+    In the examples, we use <em>profile</em> (page with information about a person).
+  </p>
+  </section>
+  
+  <section><title>Providing a Sample XML Document</title>
+    <p>
+      If you want to enable users to create new resources belonging to
+      your resource type, it is useful to provide a sample XML document.
+      If you want to use the <code>DefaultBranchCreator</code> that ships
+      with Lenya, you have to add the sample document because it is used
+      as a template for creating new resources.
+    </p>
+    <p>
+      The sample document is placed in <code>{publication}/config/doctypes/samples/</code>.
+      You can choose an arbitrary filename, but it is recommended to
+      use the resource type name (e.g., <code>profile.xml</code>).
+    </p>
+  </section>
+  
+  <section><title>Providing an XML Structure Definition</title>
+    <p>
+      This step is only needed if you want to edit resources with Lenya
+      or validate them after they have been imported or manipulated.
+      The type of the structure definition
+      (<link href="http://www.w3.org/XML/Schema">XML Schema</link>,
+      <link href="http://www.relaxng.org/">Relax NG</link>, ...)
+      depends on the editor or validator you want to use. For instance,
+      the <link href="http://www.bitfluxeditor.org/">BXE</link> WYSIWYG
+      editor requires a Relax NG document.
+    </p>
+    <p>The structure definition document is placed in the directory
+      <code>{publication}/config/doctypes/schemas/</code>. The name
+      of the file is arbitrary, but it is recommended to use the
+      resource type name (e.g., <code>profile.rng</code>).
+    </p>
+  </section>
+  
+  <section><title>Creating a Workflow Schema</title>
+    <p>
+      If your resources should have a workflow, you have to add a workflow
+      schema for your resource type as described in
+      <link href="../workflow/configuration.html">Workflow Configuration</link>.
+      A workflow schema can be shared between multiple resource types.
+    </p>
+  </section>
+  
+  <section><title>The Resource Type Definition</title>
+    <p>
+    To assign the creator and the workflow schema to your resource type,
+	  declare it in <code>{publication}/config/doctypes/doctypes.xconf</code>:
+	  </p>
+<source><![CDATA[<doc type="profile">
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>profile.xml</sample-name>
+    </creator>
+    <workflow src="2stage.xml"/>
+  </doc>]]></source>
+  </section>
+  
+  <section><title>Define the Mapping From URLs to Resource Types</title>
+    <p>
+      The resource type of a resource is determined based on the resource URL.
+      This mapping happens in <code>{publication}/parameter-doctype.xmap</code>.
+    </p>
+    <p>
+      A typical approach to determine the resource type is to apply the
+      <code>SourceTypeAction</code> on the source document:
+    </p>
+<source><![CDATA[<map:match pattern="*/**.html">
+  <map:act type="sourcetype" src="content/{1}/{page-envelope:document-path}">
+    <map:generate type="serverpages" src="../../config/parameters/default.xsp">
+      <map:parameter name="value" value="{sourcetype}"/>
+    </map:generate>
+    <map:serialize type="xml"/>
+  </map:act>
+</map:match>]]></source>
+
+    <p>Another way is to return the resource type by just matching
+    certain URLs:</p>
+
+<source><![CDATA[<map:match pattern="*/profiles/*.html">
+  <map:generate type="serverpages" src="../../config/parameters/default.xsp">
+    <map:parameter name="value" value="profile"/>
+  </map:generate>
+  <map:serialize type="xml"/>
+</map:match>]]></source>
+
+  </section>
+  
+  <section><title>Define a Custom Menubar</title>
+    <p>
+      If you want to use a custom menubar for your resource type,
+      follow the guidelines on the page
+      <link href="../layout/lenya-menubar.html">The Lenya Menubar</link>.
+      Typically, a menubar is shared between multiple resource types.
+      Small customizations can be achieved with Java code in the menubar XSP.
+    </p>
+    <p>
+      To let the user create new resources using the <code>DefaultBranchCreator</code>,
+      you have to add the following menu item:
+    </p>
+<source><![CDATA[<item uc:usecase="create" uc:step="showscreen" href="?doctype=profile"><i18n:text>New Document</i18n:text></item>]]>
+</source>
+  </section>
+  
+  <section><title>Presentation</title>
+    
+    <p>
+      To make your resources available as HTTP pages, you have to add the
+      appropriate pipelines and XSLT stylesheets. In general, there are no
+      restrictions.
+    </p>
+    <p>
+      If you derive your publication from the default publication,
+      the pipelines have to be placed in
+      <code>{publication}/doctypes.xmap</code>. The stylesheets are located in
+      <code>{publication}/xslt/</code> and are named <code>{resource-type}2xhtml.xsl</code>
+      (e.g., <code>profile2xhtml.xsl</code>). The stylesheet is supposed to generate
+      a valid XHTML fragment (in the XHTML namespace) with <code>&lt;div id="body"&gt;</code>
+      as the document element.
+    </p>
+    
+  </section>
+
+</section>
+
+
+
+  </body>
+</document>
