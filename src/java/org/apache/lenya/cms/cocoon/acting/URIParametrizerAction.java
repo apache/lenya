@@ -2,6 +2,9 @@ package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -16,11 +19,14 @@ import org.xml.sax.Attributes;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Iterator;
 
 import org.apache.log4j.Category;
 
 public class URIParametrizerAction extends ConfigurableComposerAction  {
     static Category log = Category.getInstance(URIParametrizerAction.class);
+
+    private Map parameters;
 
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
 
@@ -53,10 +59,30 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 	}
     }
 
+    /**
+     * Describe <code>configure</code> method here.
+     *
+     * @param conf a <code>Configuration</code> value
+     *
+     * @exception ConfigurationException if an error occurs
+     */
+    public void configure(Configuration conf) throws ConfigurationException {
+        super.configure(conf);
+	
+	Configuration[] parameterConfigs = null;
+	this.parameters = new HashMap();
+
+	parameterConfigs = conf.getChildren("parameter");
+	for (int i = 0; i < parameterConfigs.length; i++) {
+	    parameters.put(parameterConfigs[i].getAttribute("name"),
+			   parameterConfigs[i].getAttribute("src"));
+	}
+    }
+
 
     public Map act (Redirector redirector, SourceResolver resolver,
 		    Map objectModel, String src, Parameters par) throws Exception {
-	Source inputSource = resolver.resolveURI(src);
+	Source inputSource = null;
 	URIParametrizerConsumer xmlConsumer = new URIParametrizerConsumer();
 
 	Map map = new HashMap();
@@ -65,10 +91,18 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 	    this.getLogger().debug("processing file " + src);
 	    this.getLogger().debug("file resolved to " + inputSource.getURI());
 	}
- 	resolver.toSAX(inputSource, xmlConsumer);
+
+	Iterator parameterMappings = this.parameters.keySet().iterator();
+	while (parameterMappings.hasNext()) {
+	    String parameterName = (String)parameterMappings.next();
+	    String parameterSrc = (String)parameters.get(parameterName);
+		
+	    inputSource = resolver.resolveURI(parameterSrc);
+
+	    resolver.toSAX(inputSource, xmlConsumer);
 	
-	map.put("parameter", xmlConsumer.getParameter());
-	
+	    map.put(parameterName, xmlConsumer.getParameter());
+	}
 	return map;
     }
 }
