@@ -62,7 +62,6 @@ div.sidebar-content {
   /*border: 1pt solid red;*/
 }
 
-
 td#sidebar a {
   text-decoration: none;
 }
@@ -84,6 +83,10 @@ div.title {
   font-size: x-large;
   font-weight: bold;
   /*border: 1pt solid red;*/
+}
+
+div.title a {
+  text-decoration: none;
 }
 
 div.subtitle {

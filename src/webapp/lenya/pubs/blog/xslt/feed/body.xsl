@@ -13,7 +13,7 @@
 
 <xsl:template match="entry">
   <div class="dateline"><xsl:value-of select="issued"/></div>
-  <div class="title"><xsl:value-of select="title"/></div>
+  <div class="title"><a href="../../entries/{id}/index.html"><xsl:value-of select="title"/></a></div>
   <div class="subtitle"><xsl:value-of select="subtitle"/></div>
   <i><xsl:value-of select="summary"/></i>
   <xsl:apply-templates select="content"/>
