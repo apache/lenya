@@ -9,8 +9,4 @@
     <role id="reviewer"/>
   </group>
   
-  <ip-range id="localhost">
-    <role id="visitor"/>
-  </ip-range>
-  
 </policy> 
