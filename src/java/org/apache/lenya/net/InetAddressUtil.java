@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: InetAddressUtil.java,v 1.12 2004/05/17 16:34:02 michi Exp $  */
+/* $Id: InetAddressUtil.java,v 1.13 2004/05/17 16:56:20 andreas Exp $  */
 
 package org.apache.lenya.net;
 
@@ -138,8 +138,10 @@ public class InetAddressUtil {
                 return -1;
             }
         }
-        log.error(".checkNetmask(): Illegal Netmask: " + netmask);
-        return -1;
+        if (log.isDebugEnabled()) {
+            log.debug("All parts equal 255: " + netmask);
+        }
+        return 3;
     }
 
     /**
