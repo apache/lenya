@@ -388,16 +388,24 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throws PublicationException {
 
         SourceResolver sourceResolver = null;
+        Source source = null;
+        Source destination = null;
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            Source source = sourceResolver.resolveURI(sourceDocument.getSourceURI());
-            Source destination = sourceResolver.resolveURI(destinationDocument.getSourceURI());
+            source = sourceResolver.resolveURI(sourceDocument.getSourceURI());
+            destination = sourceResolver.resolveURI(destinationDocument.getSourceURI());
             SourceUtil.copy(source, (ModifiableSource) destination, true);
             destinationDocument.getDublinCore().replaceBy(sourceDocument.getDublinCore());
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
             if (sourceResolver != null) {
+                if (source != null) {
+                    sourceResolver.release(source);
+                }
+                if (destination != null) {
+                    sourceResolver.release(destination);
+                }
                 this.manager.release(sourceResolver);
             }
         }
@@ -411,14 +419,18 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     protected void deleteDocumentSource(Document document) throws PublicationException {
 
         SourceResolver sourceResolver = null;
+        Source source = null;
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            Source source = sourceResolver.resolveURI(document.getSourceURI());
+            source = sourceResolver.resolveURI(document.getSourceURI());
             ((ModifiableSource) source).delete();
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
             if (sourceResolver != null) {
+                if (source != null) {
+                    sourceResolver.release(source);
+                }
                 this.manager.release(sourceResolver);
             }
         }
