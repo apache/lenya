@@ -4,7 +4,9 @@
   <home href="index.html">Home</home>
 
   <project-information href="project/" label="Project Information">
+<!-- FIXME: The demo needs to be improved
     <node-a href="http://demo.wyona.org" label="Demo" />
+-->
     <node-d href="roadmap.html" label="Roadmap" />
     <node-e href="../community/mailing-lists.html" label="Mailing Lists" />
     <node-h href="acknowledgements.html" label="Credits" />

@@ -3,7 +3,9 @@
 <book software="Forrest" title="Apache Forrest" copyright="2002 The Apache Software Foundation">
 
   <menu label="Project Information">
+<!-- FIXME: The demo needs to be improved
     <menu-item href="http://demo.wyona.org" label="Demo" />
+-->
     <menu-item href="project/roadmap.html" label="Roadmap" />
     <menu-item href="community/mailing-lists.html" label="Mailing Lists" />
     <menu-item href="project/acknowledgements.html" label="Credits" />
