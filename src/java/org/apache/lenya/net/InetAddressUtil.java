@@ -62,7 +62,7 @@ import org.apache.log4j.Category;
  * A utility class for InetAddress
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.3 2003/10/27 15:20:06 andreas Exp $
+ * @version $Id: InetAddressUtil.java,v 1.4 2003/10/27 17:24:39 andreas Exp $
  */
 public class InetAddressUtil {
 	
@@ -125,7 +125,7 @@ public class InetAddressUtil {
      * @return An integer value.
      */
     public static int getClassPart(InetAddress ip, short partNumber) {
-        String[] parts = ip.getHostAddress().split(".");
+        String[] parts = ip.getHostAddress().split("\\.");
         String part = parts[partNumber];
         return new Integer(part).intValue();
     }
