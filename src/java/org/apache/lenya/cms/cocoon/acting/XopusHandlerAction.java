@@ -1,31 +1,39 @@
 package org.wyona.cms.cocoon.acting;
 
-import java.io.Reader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.StringReader;
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringReader;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.excalibur.io.IOUtil;
 import org.apache.avalon.framework.component.ComponentException;
+import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.ComposerAction;
 import org.apache.cocoon.components.parser.Parser;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.util.PostInputStream;
+import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.serialization.Serializer;
 import org.apache.cocoon.util.IOUtils;
+import org.apache.cocoon.util.PostInputStream;
+import org.apache.cocoon.xml.dom.DOMStreamer;
+import org.dom4j.io.DOMReader;
+import org.dom4j.io.XMLWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.dom4j.io.XMLWriter;
-import org.dom4j.io.DOMReader;
 
 /**
  * Interfaces with Xopus: handles the requests and replies to them
@@ -41,7 +49,10 @@ public class XopusHandlerAction extends ComposerAction {
                             Map objectModel, 
                             String source, 
                             Parameters params)
-                            throws IOException, ComponentException, SAXException {
+                            throws IOException, 
+                                   ComponentException, 
+                                   SAXException, 
+                                   ProcessingException {
 
     // Get request object
     HttpRequest httpReq = (HttpRequest)objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
@@ -53,18 +64,21 @@ public class XopusHandlerAction extends ComposerAction {
     PostInputStream reqContent = new PostInputStream(httpReq.getInputStream(), length);
     
     // read inputstream into stringbuffer
+    /*
     StringBuffer request = new StringBuffer();
     int n = 0;
     while ((n = reqContent.read()) != -1) {
       request.append((char)n);
     }
+    */
     
     // construct DOM document from the request contents
-    Reader reqReader = new StringReader(request.toString());
+    //Reader reqReader = new StringReader(request.toString());
     Parser parser = (Parser) this.manager.lookup(Parser.ROLE);
-    Document requestDoc = parser.newDocument();
-    InputSource saxSource = new InputSource(reqReader);
-    requestDoc = parser.parseDocument(saxSource);
+    //InputSource saxSource = new InputSource(reqReader);
+    InputSource saxSource = new InputSource(reqContent);
+    //InputSource saxSource = new InputSource(reqContent);
+    Document requestDoc = parser.parseDocument(saxSource);
     
     // get the root element (should be "request") and its attributes ---> FixMe: Add error handling
     Element root = requestDoc.getDocumentElement();
@@ -93,22 +107,36 @@ public class XopusHandlerAction extends ComposerAction {
     sitemapParams.put("fileType", fileType);
     
     // save to temporary file, if needed
-    if (reqType.equals("save") || reqType.equals("checkin")) {    
+    if ("save".equals(reqType) || "checkin".equals(reqType)) {    
+      //FIXME(): remove hard coding
       File tempFileDir = new File("xopustmp");
       if (!(tempFileDir.exists())) tempFileDir.mkdir();
       File tempFile = IOUtils.createFile(tempFileDir, reqFile); 
-      IOUtils.serializeString(tempFile, request.toString());
-    }
-    
-    // save to permanent file, if needed
-    if (reqType.equals("checkin")) {
-//      write(data);
+      final OutputStream os = new FileOutputStream(tempFile);
+      ComponentSelector selector = (ComponentSelector)super.manager.lookup(Serializer.ROLE + "Selector");
+      //FIXME: remove hardcoding stuff
+      Serializer serializer = (Serializer)selector.select("xml");
+      serializer.setOutputStream(os);
+      serializer.startDocument();
+      DOMStreamer domStreamer = new DOMStreamer(serializer);
+      Element contentNode = (Element) data.getFirstChild();
+      domStreamer.stream(contentNode);
+      serializer.endDocument();
+      getLogger().debug("NODE IS: \n" + contentNode.toString());
+      selector.release(serializer);
+      super.manager.release(selector);
+      os.flush();
+      os.close();
+      
+      // save to permanent file, if needed
+      if (reqType.equals("checkin")) {
+        File permFileDir = new File("resources/html/scratchpad/xopus");
+        File permFile = IOUtils.createFile(permFileDir, reqFile); 
+        FileUtil.copyFile(tempFile, permFile);
+      }
     }
     
     return sitemapParams;
     
   }
 }
-
-//      IOUtils.serializeObject(tempFile, (Object) data);
-
