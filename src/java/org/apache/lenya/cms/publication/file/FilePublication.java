@@ -1,5 +1,5 @@
 /*
-$Id: FilePublication.java,v 1.2 2003/11/27 14:01:49 andreas Exp $
+$Id: FilePublication.java,v 1.3 2003/11/28 15:52:32 andreas Exp $
 <License>
 
  ============================================================================
@@ -101,9 +101,9 @@ public class FilePublication extends AbstractPublication {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.AbstractPublication#copyDocumentSource(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
      */
-    public void copyDocument(Document sourceDocument, Document destinationDocument)
+    public void copyDocumentSource(Document sourceDocument, Document destinationDocument)
         throws PublicationException {
         File file = sourceDocument.getFile();
         File destinationDirectory = destinationDocument.getFile().getParentFile();

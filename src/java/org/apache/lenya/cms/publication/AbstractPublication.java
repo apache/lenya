@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublication.java,v 1.2 2003/11/27 14:01:49 andreas Exp $
+$Id: AbstractPublication.java,v 1.3 2003/11/28 15:52:32 andreas Exp $
 <License>
 
  ============================================================================
@@ -381,4 +381,23 @@ public abstract class AbstractPublication implements Publication {
         return key.hashCode();
     }
 
+    /**
+     * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)}
+     * to implement access to a custom repository.
+     * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
+     */
+    public void copyDocument(Document sourceDocument, Document destinationDocument)
+        throws PublicationException {
+            
+        copyDocumentSource(sourceDocument, destinationDocument);
+    }
+    
+    /**
+     * Copies a document source.
+     * @param sourceDocument The source document.
+     * @param destinationDocument The destination document.
+     * @throws PublicationException when something went wrong.
+     */
+    protected abstract void copyDocumentSource(Document sourceDocument, Document destinationDocument) throws PublicationException;
+    
 }
