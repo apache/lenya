@@ -138,6 +138,7 @@ class IndexHTML {
       System.out.println(" caught a " + e.getClass() +
 			 "\n with message: " + e.getMessage());
     }
+  System.out.println("Thanks for indexing with Lucene!");
   }
 
   /* Walk directory hierarchy in uid order, while keeping uid iterator from
@@ -211,7 +212,13 @@ class IndexHTML {
 	  } 
         else if (!deleting) {			  // add new docs
 	  //System.out.println("IndexHTML.indexDocs(File,File): parsing (!deleting==true): " + file);
-	  Document doc = HTMLDocument.Document(file,root);
+          Document doc=null;
+          try{
+	    doc = HTMLDocument.Document(file,root);
+            }
+          catch(Exception e){
+            e.printStackTrace();
+            }
 	  System.out.println("IndexHTML.indexDocs(File,File): adding (!deleting==true) " + doc.get("url"));
 	  writer.addDocument(doc);
           numberOfAddedDocs++;
@@ -220,7 +227,13 @@ class IndexHTML {
         } 
       else{					  // creating a new index
         //System.out.println("IndexHTML.indexDocs(File,File): parsing (unconditionally): " + file);
-        Document doc = HTMLDocument.Document(file,root);
+        Document doc=null;
+        try{
+          doc = HTMLDocument.Document(file,root);
+          }
+        catch(Exception e){
+          e.printStackTrace();
+          }
         System.out.println("IndexHTML.indexDocs(File,File): adding (unconditionally) " + doc.get("url"));
         writer.addDocument(doc);		  // add docs unconditionally
         numberOfAddedDocs++;
