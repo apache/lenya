@@ -18,7 +18,7 @@
         
 <xsl:template match="/">
   <div id="body">
-    <xsl:apply-templates select="simple-document/body/node()"/>
+    <xsl:apply-templates select="simple:simple-document/simple:body/node()"/>
   </div>
 </xsl:template>
 
@@ -66,7 +66,7 @@
 </xsl:template>
 
 
-<xsl:template match="itemizedlist">
+<xsl:template match="simple:itemizedlist">
   <li><xsl:apply-templates/></li>
 </xsl:template>
 
