@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTree.java,v 1.8 2003/06/11 17:25:08 edith Exp $
+ * $Id: SiteTree.java,v 1.9 2003/06/11 19:31:40 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,20 +45,20 @@ package org.apache.lenya.cms.publication;
 
 public interface SiteTree {
 
-    /**
-     * Add a node.
-     * 
+	/**
+	 * Add a node.
+	 * 
 	 * @param parentid e.g. "/tutorial"
 	 * @param id e.g. "concepts"
 	 * @param labels
 	 * @throws SiteTreeException
 	 */
 	void addNode(String parentid, String id, Label[] labels)
-	throws SiteTreeException;
-    
-    /**
-     * Add a node.
-     * 
+		throws SiteTreeException;
+
+	/**
+	 * Add a node.
+	 * 
 	 * @param parentid
 	 * @param id
 	 * @param labels
@@ -67,10 +67,15 @@ public interface SiteTree {
 	 * @param link
 	 * @throws SiteTreeException
 	 */
-	void addNode(String parentid, String id, Label[] labels,
-		 String href, String suffix, boolean link)
-	throws SiteTreeException;
-    
+	void addNode(
+		String parentid,
+		String id,
+		Label[] labels,
+		String href,
+		String suffix,
+		boolean link)
+		throws SiteTreeException;
+
 	/**
 	 * Add a node.
 	 * Compute the parent id and the id of the node from the document-id
@@ -81,36 +86,39 @@ public interface SiteTree {
 	 * @param suffix
 	 * @param link
 	 */
-	void addNode(String documentid, Label[] labels, String href,
-		 String suffix, boolean link)
-	throws SiteTreeException;
+	void addNode(
+		String documentid,
+		Label[] labels,
+		String href,
+		String suffix,
+		boolean link)
+		throws SiteTreeException;
 
-    /**
-     * Add a node. This method is typically used when publishing,
-     * i.e. when copying a node from the authoring tree to the live
-     * tree. The existing node already has a parent node (in the
-     * authoring tree). The node that is added will be a copy of
-     * the original node and will be inserted at the same parentid
-     * as the original node.
-     * 
+	/**
+	 * Add a node. This method is typically used when publishing,
+	 * i.e. when copying a node from the authoring tree to the live
+	 * tree. The existing node already has a parent node (in the
+	 * authoring tree). The node that is added will be a copy of
+	 * the original node and will be inserted at the same parentid
+	 * as the original node.
+	 * 
 	 * @param node
 	 * @throws SiteTreeException
 	 */
-	void addNode(SiteTreeNode node)
-	throws SiteTreeException;
-    
-    /**
-	 * Removes the node corresponding to the given document-id 
-     * from the tree, and returns it.
-     * 
-     * @param documentId
-	 * @return
-	 */
-	SiteTreeNode removeNode(String documentId); 
+	void addNode(SiteTreeNode node) throws SiteTreeException;
 
 	/**
-     * Return the Node for a given document-id.
-     * 
+	 * Removes the node corresponding to the given document-id 
+	 * from the tree, and returns it.
+	 * 
+	 * @param documentId
+	 * @return
+	 */
+	SiteTreeNode removeNode(String documentId);
+
+	/**
+	 * Return the Node for a given document-id.
+	 * 
 	 * @param documentId
 	 * @return
 	 */

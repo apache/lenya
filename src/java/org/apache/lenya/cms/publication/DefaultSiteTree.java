@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.16 2003/06/11 17:25:08 edith Exp $
+ * $Id: DefaultSiteTree.java,v 1.17 2003/06/11 19:30:22 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -181,18 +181,23 @@ public class DefaultSiteTree implements SiteTree {
 	/* (non-Javadoc)
 	 * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
 	 */
-	public void addNode(String documentid, Label[] labels, String href, String suffix, boolean link)
-	throws SiteTreeException  {
-		
-		String parentid="";
+	public void addNode(
+		String documentid,
+		Label[] labels,
+		String href,
+		String suffix,
+		boolean link)
+		throws SiteTreeException {
+
+		String parentid = "";
 		StringTokenizer st = new StringTokenizer(documentid, "/");
-		int length=st.countTokens();
-        for (int i=0; i<length-1; i++){   
-			parentid=parentid+"/"+st.nextToken();
-        }
-        String id = st.nextToken();
+		int length = st.countTokens();
+		for (int i = 0; i < length - 1; i++) {
+			parentid = parentid + "/" + st.nextToken();
+		}
+		String id = st.nextToken();
 		this.addNode(parentid, id, labels, href, suffix, link);
-    	
+
 	}
 
 	/* (non-Javadoc)
@@ -261,7 +266,7 @@ public class DefaultSiteTree implements SiteTree {
 	 * @see org.apache.lenya.cms.publication.SiteTree#removeNode(java.lang.String)
 	 */
 	public SiteTreeNode removeNode(String documentId) {
-		
+
 		assert documentId != null;
 
 		Node node = removeNodeInternal(documentId);
@@ -279,8 +284,8 @@ public class DefaultSiteTree implements SiteTree {
 	 * @return a org.w3c.dom.Node
 	 */
 	private Node removeNodeInternal(String documentId) {
-		Node node=this.getNodeInternal(documentId);
-		Node parentNode= node.getParentNode();
+		Node node = this.getNodeInternal(documentId);
+		Node parentNode = node.getParentNode();
 		Node newNode = parentNode.removeChild(node);
 		return newNode;
 	}
