@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.29 2003/08/18 17:13:40 andreas Exp $
+$Id: LoadQuartzServlet.java,v 1.30 2003/08/19 18:46:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -84,7 +84,7 @@ import javax.servlet.http.HttpServletResponse;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.29 2003/08/18 17:13:40 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.30 2003/08/19 18:46:53 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -204,6 +204,10 @@ public class LoadQuartzServlet extends HttpServlet {
         doGet(req, resp);
     }
 
+    protected static final String ADD = "add";
+    protected static final String MODIFY = "modify";
+    protected static final String DELETE = "delete";
+
     /**
      * Handles a servlet request.
      * @param request The request.
@@ -241,18 +245,14 @@ public class LoadQuartzServlet extends HttpServlet {
         try {
             // check if the request wants to submit, modify or delete a job.
             if (action == null) {
-                // simply return all scheduled jobs, which is done below
-            } else if (action.equals("Add") || action.equals("Modify")) {
+            } else if (action.equals(ADD)) {
                 Date startTime = getDate(request);
-
-                if (action.equals("Add")) {
-                    getScheduler().addJob(documentUri, publicationId, startTime, request);
-                    log.debug(".handleRequest() Add : server-port:" + request.getServerPort());
-                } else if (action.equals("Modify")) {
-                    getScheduler().deleteJob(jobId, publicationId);
-                    getScheduler().addJob(documentUri, publicationId, startTime, request);
-                }
-            } else if (action.equals("Delete")) {
+                getScheduler().addJob(documentUri, publicationId, startTime, request);
+            } else if (action.equals(MODIFY)) {
+                Date startTime = getDate(request);
+                getScheduler().deleteJob(jobId, publicationId);
+                getScheduler().addJob(documentUri, publicationId, startTime, request);
+            } else if (action.equals(DELETE)) {
                 getScheduler().deleteJob(jobId, publicationId);
             }
 
