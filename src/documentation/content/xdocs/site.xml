@@ -20,6 +20,7 @@
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" tab="project">
     <project-information href="" label="Project" tab="project">
         <index_pm href="index.html" label="About"/>
+        <changes href="changes.html" label="Changes"/>
         <charter href="charter.html" label="Charter"/>
         <history href="history.html" label="History"/>
         <node-d href="roadmap.html" label="Roadmap"/>
