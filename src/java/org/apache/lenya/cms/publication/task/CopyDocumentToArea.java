@@ -41,7 +41,7 @@ public class CopyDocumentToArea extends DocumentTask {
         String area;
         try {
             area = getParameters().getParameter(PARAMETER_DESTINATION_AREA);
-            getPublication().copyDocumentToArea(document, area);
+//            getPublication().copyDocumentToArea(document, area);
         } catch (Exception e) {
             throw new ExecutionException(e);
         }

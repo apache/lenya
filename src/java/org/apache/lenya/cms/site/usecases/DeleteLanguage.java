@@ -69,7 +69,9 @@ public class DeleteLanguage extends DocumentUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-        setParameter("documentId", getSourceDocument().getId());
-        setParameter("language", getSourceDocument().getLanguage());
+        if (getSourceDocument() != null) {
+            setParameter("documentId", getSourceDocument().getId());
+            setParameter("language", getSourceDocument().getLanguage());
+        }
     }
 }

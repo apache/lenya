@@ -89,21 +89,23 @@ public class CreateLanguage extends Create {
         super.initParameters();
 
         Document source = getSourceDocument();
-        DocumentTypeResolver resolver = null;
+        if (source != null) {
+            DocumentTypeResolver resolver = null;
 
-        try {
-            resolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-            DocumentType type = resolver.resolve(source);
-            this.documentTypeName = type.getName();
+            try {
+                resolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
+                DocumentType type = resolver.resolve(source);
+                this.documentTypeName = type.getName();
 
-            List nonExistingLanguages = getNonExistingLanguages();
-            setParameter(LANGUAGES, nonExistingLanguages.toArray(new String[nonExistingLanguages
-                    .size()]));
+                List nonExistingLanguages = getNonExistingLanguages();
+                setParameter(LANGUAGES, nonExistingLanguages.toArray(new String[nonExistingLanguages
+                        .size()]));
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            this.manager.release(resolver);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                this.manager.release(resolver);
+            }
         }
     }
 

@@ -44,8 +44,12 @@ public class InvokeWorkflow extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        String eventName = getParameterAsString(EVENT);
         
+        if (!getErrorMessages().isEmpty()) {
+            return;
+        }
+        
+        String eventName = getParameterAsString(EVENT);
         WorkflowInstance instance = getWorkflowInstance(getSourceDocument());
         if (!instance.canInvoke(getSituation(), eventName)) {
             addErrorMessage("The event [" + eventName + "] is not executable on document ["

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id$  */
+/* $Id: AbstractPublication.java 155024 2005-02-23 15:27:31Z andreas $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
 /**
  * A publication.
  */
-public abstract class AbstractPublication extends AbstractLogEnabled implements Publication {
+public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     private static final String[] areas = { AUTHORING_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
             ARCHIVE_AREA, TRASH_AREA, INFO_AREA_PREFIX + AUTHORING_AREA,
@@ -62,9 +62,11 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
      * Creates a new instance of Publication
      * @param _id the publication id
      * @param servletContextPath the servlet context of this publication
-     * @throws PublicationException if there was a problem reading the config file
+     * @throws PublicationException if there was a problem reading the config
+     *             file
      */
-    protected AbstractPublication(String _id, String servletContextPath) throws PublicationException {
+    protected PublicationImpl(String _id, String servletContextPath)
+            throws PublicationException {
         assert _id != null;
         this.id = _id;
 
@@ -95,8 +97,8 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
             }
 
             try {
-                Configuration documentBuilderConfiguration = config.getChild(
-                        ELEMENT_DOCUMENT_BUILDER, false);
+                Configuration documentBuilderConfiguration = config
+                        .getChild(ELEMENT_DOCUMENT_BUILDER, false);
                 if (documentBuilderConfiguration != null) {
                     documentBuilderClassName = documentBuilderConfiguration.getValue();
                     Class documentBuilderClass = Class.forName(documentBuilderClassName);
@@ -138,8 +140,8 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
                 Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
                 this.areaSsl2proxy.put(key, proxy);
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
-                            + "]");
+                    getLogger().debug("Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=["
+                            + ssl + "]");
                 }
             }
         } catch (final ConfigurationException e) {
@@ -164,7 +166,6 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
             throw new PublicationException("Problem with config file: "
                     + configFile.getAbsolutePath(), e);
         }
-
 
         this.breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
 
@@ -197,7 +198,8 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
 
     /**
      * Return the directory of a specific area.
-     * @param area a <code>File</code> representing the root of the area content directory.
+     * @param area a <code>File</code> representing the root of the area
+     *            content directory.
      * @return the directory of the given content area.
      */
     public File getContentDirectory(String area) {
@@ -255,8 +257,8 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
     }
 
     /**
-     * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger
-     * site
+     * Get the breadcrumb prefix. It can be used as a prefix if a publication is
+     * part of a larger site
      * @return the breadcrumb prefix
      */
     public String getBreadcrumbPrefix() {
@@ -317,80 +319,6 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
         return key.hashCode();
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#addDocument(org.apache.lenya.cms.publication.Document)
-     */
-    public void addDocument(Document document) throws PublicationException {
-        getSiteManager(document.getIdentityMap()).add(document);
-    }
-    /**
-     * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)}
-     * to implement access to a custom repository.
-     * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
-     */
-    public void copyDocument(Document sourceDocument, Document destinationDocument)
-            throws PublicationException {
-
-        copyDocumentSource(sourceDocument, destinationDocument);
-        getSiteManager(sourceDocument.getIdentityMap()).copy(sourceDocument, destinationDocument);
-        
-        ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
-        try {
-            resourcesManager.copyResourcesTo(destinationDocument);
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        }
-    }
-
-    /**
-     * Copies a document source.
-     * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
-     * @throws PublicationException when something went wrong.
-     */
-    protected abstract void copyDocumentSource(Document sourceDocument, Document destinationDocument)
-            throws PublicationException;
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#deleteDocument(org.apache.lenya.cms.publication.Document)
-     */
-    public void deleteDocument(Document document) throws PublicationException {
-        if (!document.exists()) {
-            throw new PublicationException("Document [" + document + "] does not exist!");
-        }
-        getSiteManager(document.getIdentityMap()).delete(document);
-        deleteDocumentSource(document);
-        
-        ResourcesManager resourcesManager = document.getResourcesManager();
-        resourcesManager.deleteResources();
-    }
-
-    /**
-     * Deletes the source of a document.
-     * @param document The document to delete.
-     * @throws PublicationException when something went wrong.
-     */
-    protected abstract void deleteDocumentSource(Document document) throws PublicationException;
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#moveDocument(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
-     */
-    public void moveDocument(Document sourceDocument, Document destinationDocument)
-            throws PublicationException {
-        copyDocument(sourceDocument, destinationDocument);
-        deleteDocument(sourceDocument);
-        
-        ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
-        try {
-            resourcesManager.copyResourcesTo(destinationDocument);
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        }
-        resourcesManager.deleteResources();
-    }
-
     private Map areaSsl2proxy = new HashMap();
 
     /**
@@ -413,7 +341,8 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
+            getLogger()
+                    .debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
             getLogger().debug("Resolved proxy: [" + proxy + "]");
         }
 

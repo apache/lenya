@@ -51,13 +51,15 @@ public class ChangeLabel extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
         Document document = getSourceDocument();
-        setParameter(DOCUMENT_ID, document.getId());
-        try {
-            SiteManager _manager = document.getPublication().getSiteManager(document
-                    .getIdentityMap());
-            setParameter(LABEL, _manager.getLabel(document));
-        } catch (SiteException e) {
-            throw new RuntimeException(e);
+        if (document != null) {
+            setParameter(DOCUMENT_ID, document.getId());
+            try {
+                SiteManager _manager = document.getPublication().getSiteManager(document
+                        .getIdentityMap());
+                setParameter(LABEL, _manager.getLabel(document));
+            } catch (SiteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

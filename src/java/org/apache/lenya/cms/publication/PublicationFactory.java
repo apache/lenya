@@ -33,7 +33,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
-import org.apache.lenya.cms.publication.file.FilePublication;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -102,7 +101,7 @@ public final class PublicationFactory extends AbstractLogEnabled {
             publication = (Publication) keyToPublication.get(key);
         } else {
             if (PublicationFactory.existsPublication(id, servletContextPath)) {
-                publication = new FilePublication(id, servletContextPath);
+                publication = new PublicationImpl(id, servletContextPath);
                 ContainerUtil.enableLogging(publication, getLogger());
                 keyToPublication.put(key, publication);
             }

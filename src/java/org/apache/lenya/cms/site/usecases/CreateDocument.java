@@ -62,12 +62,12 @@ public class CreateDocument extends Create {
         String nodeId = getParameterAsString(DOCUMENT_ID);
         Document parent = getSourceDocument();
         String language = getParameterAsString(LANGUAGE);
-        SiteUtility util = new SiteUtility();
-        addErrorMessages(util.canCreate(getUnitOfWork().getIdentityMap(),
+        String[] messages = getDocumentManager().canCreate(getUnitOfWork().getIdentityMap(),
                 getArea(),
                 parent,
                 nodeId,
-                language));
+                language);
+        addErrorMessages(messages);
     }
 
     /**

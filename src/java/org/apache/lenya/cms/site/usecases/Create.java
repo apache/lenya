@@ -33,15 +33,14 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.usecase.WorkflowUsecase;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.cms.usecase.AbstractUsecase;
 
 /**
  * Abstract superclass for usecases to create a resource.
  * 
  * @version $Id: Create.java 123982 2005-01-03 15:01:19Z andreas $
  */
-public abstract class Create extends WorkflowUsecase {
+public abstract class Create extends AbstractUsecase {
 
     protected static final String LANGUAGE = "language";
     protected static final String LANGUAGES = "languages";
@@ -60,7 +59,7 @@ public abstract class Create extends WorkflowUsecase {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         
-        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+        if (!getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         }
     }
@@ -84,13 +83,10 @@ public abstract class Create extends WorkflowUsecase {
 
         Document document = createDocument();
         Publication publication = document.getPublication();
+        getDocumentManager().addDocument(document);
 
         SiteManager _manager = publication.getSiteManager(document.getIdentityMap());
-        _manager.add(document);
         _manager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
-
-        WorkflowInstance instance = getWorkflowInstance(document);
-        instance.getHistory().initialize(getSituation());
 
         setMetaData(document);
         setTargetURL(document.getCanonicalWebappURL());
@@ -141,7 +137,12 @@ public abstract class Create extends WorkflowUsecase {
         Session session = request.getSession(false);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         User user = identity.getUser();
-        setParameter(DublinCore.ELEMENT_CREATOR, user.getId());
+        if (user != null) {
+            setParameter(DublinCore.ELEMENT_CREATOR, user.getId());
+        }
+        else {
+            setParameter(DublinCore.ELEMENT_CREATOR, "");
+        }
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         setParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar().getTime()));

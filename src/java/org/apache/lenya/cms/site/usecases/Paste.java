@@ -78,14 +78,13 @@ public class Paste extends DocumentUsecase {
         String potentialDocumentId = getSourceDocument().getId() + "/" + nodeId;
         
         Document potentialDocument = identityMap.getFactory().get(targetArea, potentialDocumentId, language);
-        SiteUtility util = new SiteUtility();
-        Document availableDocument = util.getAvailableDocument(potentialDocument);
+        Document availableDocument = getDocumentManager().getAvailableDocument(potentialDocument);
         
         if (clipboard.getMethod() == Clipboard.METHOD_COPY) {
-            util.copyAll(clippedDocument, availableDocument);
+            getDocumentManager().copyAll(clippedDocument, availableDocument);
         }
         else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
-            util.moveAll(clippedDocument, availableDocument);
+            getDocumentManager().moveAll(clippedDocument, availableDocument);
         }
         else {
             throw new RuntimeException("This clipboard method is not supported!");

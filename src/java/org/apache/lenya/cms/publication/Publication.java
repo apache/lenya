@@ -21,7 +21,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
-import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 
@@ -211,59 +210,6 @@ public interface Publication {
      */
     DocumentBuilder getDocumentBuilder();
     
-    /**
-     * Copies a document from one location to another location.
-     * @param sourceDocument The document to copy.
-     * @param destinationDocument The destination document.
-     * @throws PublicationException if a document which destinationDocument depends on
-     * does not exist.
-     */
-    void copyDocument(Document sourceDocument, Document destinationDocument)
-        throws PublicationException;
-
-    /**
-     * Copies a document to another area.
-     * @param sourceDocument The document to copy.
-     * @param destinationArea The destination area.
-     * @throws PublicationException if a document which the
-     * destination document depends on does not exist.
-     */
-    void copyDocumentToArea(Document sourceDocument, String destinationArea)
-        throws PublicationException;
-
-    /**
-     * Copies a document set to another area.
-     * @param documentSet The document set to copy.
-     * @param destinationArea The destination area.
-     * @throws PublicationException if a document which one of the
-     * destination documents depends on does not exist.
-     */
-    void copyDocumentSetToArea(DocumentSet documentSet, String destinationArea)
-        throws PublicationException;
-    
-    /**
-     * Adds a document.
-     * @param document The document.
-     * @throws PublicationException if the document is already contained.
-     */
-    void addDocument(Document document) throws PublicationException;
-        
-    /**
-     * Deletes a document.
-     * @param document The document to delete.
-     * @throws PublicationException when something went wrong.
-     */
-    void deleteDocument(Document document) throws PublicationException;
-    
-    /**
-     * Moves a document from one location to another.
-     * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
-     * @throws PublicationException if a document which the
-     * destination document depends on does not exist.
-     */
-    void moveDocument(Document sourceDocument, Document destinationDocument) throws PublicationException;
-
     /**
      * Creates a version of the document object in another area.
      * @param document The document to clone.

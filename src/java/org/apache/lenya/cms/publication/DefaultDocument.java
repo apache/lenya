@@ -219,7 +219,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @param _area A string.
      */
     protected void setArea(String _area) {
-        if (!AbstractPublication.isValidArea(_area)) {
+        if (!PublicationImpl.isValidArea(_area)) {
             throw new IllegalArgumentException("The area [" + _area + "] is not valid!");
         }
         this.area = _area;

@@ -152,7 +152,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
             if (slashIndex > -1) {
                 String area = publicationURI.substring(0, slashIndex);
                 String documentUri = publicationURI.substring(slashIndex);
-                if (AbstractPublication.isValidArea(area) && !area.equals(Publication.ADMIN_AREA)
+                if (PublicationImpl.isValidArea(area) && !area.equals(Publication.ADMIN_AREA)
                         && documentUri.startsWith("/") && documentUri.length() > 1) {
                     isDocument = true;
                 }

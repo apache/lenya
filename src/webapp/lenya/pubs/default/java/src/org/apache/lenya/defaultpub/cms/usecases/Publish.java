@@ -107,11 +107,10 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
      */
     protected void publish(Document authoringDocument) {
 
-        Publication publication = authoringDocument.getPublication();
         boolean success = false;
 
         try {
-            publication.copyDocumentToArea(authoringDocument, Publication.LIVE_AREA);
+            getDocumentManager().copyDocumentToArea(authoringDocument, Publication.LIVE_AREA);
             triggerWorkflow(getEvent(), authoringDocument);
             success = true;
         } catch (Exception e) {

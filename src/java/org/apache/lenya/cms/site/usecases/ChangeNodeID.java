@@ -40,7 +40,9 @@ public class ChangeNodeID extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
         Document document = getSourceDocument();
-        setParameter(NODE_ID, document.getName());
+        if (document != null) {
+            setParameter(NODE_ID, document.getName());
+        }
     }
 
     /**
@@ -74,12 +76,13 @@ public class ChangeNodeID extends DocumentUsecase {
 
         String nodeId = getParameterAsString(NODE_ID);
         Document parent = identityMap.getFactory().getParent(getSourceDocument());
-        SiteUtility util = new SiteUtility();
-        addErrorMessages(util.canCreate(identityMap,
+        String[] messages = getDocumentManager().canCreate(identityMap,
                 getSourceDocument().getArea(),
                 parent,
                 nodeId,
-                getSourceDocument().getLanguage()));
+                getSourceDocument().getLanguage());
+
+        addErrorMessages(messages);
     }
 
     /**
@@ -117,7 +120,6 @@ public class ChangeNodeID extends DocumentUsecase {
         Document newDocument = null;
 
         DocumentIdentityMap identityMap = document.getIdentityMap();
-        Publication publication = identityMap.getPublication();
         String newDocumentId = getNewDocumentId();
 
         String[] availableLanguages = document.getLanguages();
@@ -131,7 +133,7 @@ public class ChangeNodeID extends DocumentUsecase {
                     newDocumentId,
                     availableLanguages[i]);
 
-            publication.moveDocument(languageVersion, newLanguageVersion);
+            getDocumentManager().moveDocument(languageVersion, newLanguageVersion);
 
             if (availableLanguages[i].equals(document.getLanguage())) {
                 newDocument = newLanguageVersion;

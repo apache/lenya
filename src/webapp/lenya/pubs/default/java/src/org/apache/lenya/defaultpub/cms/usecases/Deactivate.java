@@ -84,7 +84,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         try {
             Document liveDocument = publication.getAreaVersion(authoringDocument,
                     Publication.LIVE_AREA);
-            publication.deleteDocument(liveDocument);
+            getDocumentManager().deleteDocument(liveDocument);
 
             triggerWorkflow(getEvent(), authoringDocument);
             success = true;
