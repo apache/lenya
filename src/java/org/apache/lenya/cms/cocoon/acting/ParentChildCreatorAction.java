@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.27 2003/03/27 13:25:39 gregor Exp $
+ * $Id: ParentChildCreatorAction.java,v 1.28 2003/04/02 14:58:56 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,6 +52,7 @@ import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -193,12 +194,20 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         getLogger().debug(".act(): Creator : " + creator.getClass().getName());
 
         // Init creator
-        org.dom4j.Node creatorNode = doctypesDoc.selectSingleNode("/doctypes/doc[@type='" +
-                doctype + "']/creator");
+	// "Read" the configuration from the DOM node
+	DefaultConfigurationBuilder defaultConfigBuilder = new DefaultConfigurationBuilder();
+	Configuration[] docTypeConfigs =
+	    defaultConfigBuilder.buildFromFile(absoluteDoctypesPath +
+					       "doctypes.xconf").getChildren();
 
-	// FIXME: the config for the doctype should of course be read
-	// from the doctypes file
 	Configuration doctypeConf = null;
+	for (int i = 0; i < docTypeConfigs.length; i++) {
+	    String typeName = docTypeConfigs[i].getAttribute("type");
+	    if (typeName.equals(doctype)) {
+		doctypeConf = docTypeConfigs[i].getChild("creator", false);
+	    }
+	}
+
 	creator.init(doctypeConf);
 
         // Transaction should actually be started here!

@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultLeafCreator.java,v 1.5 2003/03/06 20:45:41 gregor Exp $
+ * $Id: DefaultLeafCreator.java,v 1.6 2003/04/02 14:58:56 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -72,7 +72,7 @@ public class DefaultLeafCreator extends DefaultCreator {
 	return parentDir + File.separator + childId + ".xml";
     }
 
-    protected String getCildMetaFileName(File parentDir, String childId) {
+    protected String getChildMetaFileName(File parentDir, String childId) {
 	return parentDir + File.separator + childId + "-meta.xml";
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.14 2003/03/06 20:45:41 gregor Exp $
+ * $Id: DefaultCreator.java,v 1.15 2003/04/02 14:58:56 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -150,7 +150,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         // Set filenames
 	String id = generateTreeId(childId, childType);
         String filename = getChildFileName(parentDir, id);
-        String filenameMeta = getCildMetaFileName(parentDir, id);
+        String filenameMeta = getChildMetaFileName(parentDir, id);
 
         String doctypeSample = samplesDir + File.separator + sampleResourceName;
         String doctypeMeta = samplesDir + File.separator + sampleMetaName;
@@ -209,7 +209,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 		return null;
     }
 
-    protected String getCildMetaFileName(File parentDir, String childId) {
+    protected String getChildMetaFileName(File parentDir, String childId) {
         return null;
     }
 }
