@@ -27,6 +27,10 @@
 <tr>
   <td>&#160;</td><td valign="top">Feature Description</td><td><textarea name="element./system/features/feature/description[{description/@tagID}]" cols="40" rows="3"><xsl:value-of select="description" /></textarea></td>
 </tr>
+<tr>
+  <!-- FIXME: Add parent and children, e.g. feature/title feature/description (see XUpdate) -->
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./system/features/feature[{@tagID}]element./system/features/feature"/></td><td colspan="2">Feature</td>
+</tr>
 </xsl:template>
  
 </xsl:stylesheet>  

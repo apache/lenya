@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.8 2003/08/13 14:41:56 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.9 2003/08/13 15:23:55 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -136,6 +136,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             getLogger().error(".act() Sibling: XPath: " + xpathSibling);
                             getLogger().error(".act() Insert Element: XPath: " + xpathElement);
                             // FIXME: insert-after and insert-before remains to be implemented
+                            // FIXME: insert parents and required children (see XUpdate)
                             new org.apache.lenya.xml.DOMUtil().addElement(document, xpathElement, "My text");
                         } else if (name.equals("delete")) { // Delete Element
                             String value = request.getParameter("delete");
