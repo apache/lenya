@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<crawler>
+  <base-url href="http://127.0.0.1:48080/wyona-cms/oscom/matrix/index.html"/>
+  <scope-url href="http://127.0.0.1:48080/wyona-cms/oscom/matrix/"/>
+  <user-agent>wyona</user-agent>
+
+  <uri-list src="../lucene/uris.txt"/>
+  <htdocs-dump-dir src="../lucene/htdocs_dump_regression_test"/>
+</crawler>

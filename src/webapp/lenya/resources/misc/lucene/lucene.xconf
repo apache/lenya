@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<lucene>
+  <update-index type="new"/>
+<!--
+  <update-index type="incremental"/>
+-->
+  <index-dir src="../lucene/index"/>
+  <htdocs-dump-dir src="../lucene/htdocs_dump_regression_test"/>
+</lucene>

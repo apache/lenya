@@ -1,0 +1,9 @@
+# www.wyona.com
+
+User-agent: *
+Disallow: /there_seems_to_be_a_bug_within_websphinx_Robot_Exclusion.html
+#Disallow:
+
+User-agent: wyona
+Disallow: /docs/
+Disallow: /license.html
