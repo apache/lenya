@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: entry.xsp,v 1.27 2004/09/01 23:25:32 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -50,16 +50,30 @@
   <menus>
     <menu name="File" label="File">
       <block>
+        <menu name="Edit">
+          <block>
+            <item uc:usecase="edit" href="?lenya.step=open&amp;form=entry">With&#160;Forms</item>
+            <item href="index-bxeng.html">With&#160;BXE</item>
+            <item uc:usecase="1formedit" href="?lenya.step=open">With&#160;one&#160;Form</item>
+          </block>
+        </menu>
+      </block>
+      <!-- Edit as a submenu -->
+      <!--
+      <block>
         <item uc:usecase="edit" href="?lenya.step=open&amp;form=entry">Edit&#160;with&#160;Forms</item>
         <item href="index-bxeng.html">Edit&#160;with&#160;BXE</item>
         <item uc:usecase="1formedit" href="?lenya.step=open">Edit&#160;with&#160;one&#160;Form</item>
       </block>
+      -->
       <block>
         <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute>Publish</item>
       </block>
+      <!--
       <block>
         <item uc:usecase="rollback" uc:step="showscreen" href="?">Revisions</item>
       </block>
+      -->
       <block>
         <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
       </block>
