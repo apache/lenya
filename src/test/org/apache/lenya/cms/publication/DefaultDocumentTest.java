@@ -114,8 +114,8 @@ public class DefaultDocumentTest extends TestCase {
         System.out.println("ID:           " + document.getId());
         System.out.println("Area:         " + document.getArea());
         System.out.println("Language:     " + document.getLanguage());
-        System.out.println("Document URL: " + document.getDocumentUrl());
-        System.out.println("Complete URL: " + document.getCompleteUrl());
+        System.out.println("Document URL: " + document.getDocumentURL());
+        System.out.println("Complete URL: " + document.getCompleteURL());
         System.out.println("Extension:    " + document.getExtension());
 
         Publication publication = PublicationHelper.getPublication();
@@ -123,8 +123,8 @@ public class DefaultDocumentTest extends TestCase {
         assertEquals(document.getId(), testSet.getId());
         assertEquals(document.getArea(), testSet.getArea());
         assertEquals(document.getLanguage(), testSet.getLanguage());
-        assertEquals(document.getDocumentUrl(), testSet.getUrl());
-        assertEquals(document.getCompleteUrl(),
+        assertEquals(document.getDocumentURL(), testSet.getUrl());
+        assertEquals(document.getCompleteURL(),
             "/" + publication.getId() + "/" + document.getArea() + testSet.getUrl());
         assertEquals(document.getExtension(), testSet.getExtension());
 
