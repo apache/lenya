@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
    
@@ -17,11 +17,22 @@
    limitations under the License.
 
    
-   $Id: cmsui_es.xml,v 1.1 2004/03/13 09:59:45 roku Exp $
-   
+   $Id: cmsui_es.xml,v 1.2 2004/04/16 11:31:30 roku Exp $
+
+   Translator: Salvador Cobrero
+   email: salvador_cobrero_jimenez@dmr-consulting.com
+   Organization: DMR Consulting
+   Last Updated: 2004/04/13
+
 -->
 
 <catalogue xml:lang="es">
+
+  <message key="default.createdoc.idtaken">El ID introducido ya existe. Por favor, escoja otro.</message>
+ 
+  <message key="Create new language version">Crear nueva version de idioma</message>
+  <message key="New language for existing Document">Nuevo idioma para el Documento existente</message>
+  <message key="default.createdoc.info.all-language-versions-exists">Ya existen versiones de este documento para todos los idiomas.</message>
 
 </catalogue>
 
