@@ -1,5 +1,5 @@
 /*
-$Id: Task.java,v 1.14 2003/07/23 13:21:45 gregor Exp $
+$Id: Task.java,v 1.15 2003/08/25 09:54:10 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,7 +57,6 @@ package org.apache.lenya.cms.task;
 
 import org.apache.avalon.framework.parameters.Parameterizable;
 
-
 /**
  * A Task is a command that can be executed. <br/
  * > When a Task is executed from a TaskAction or initialized from a TaskJob, the default
@@ -66,6 +65,10 @@ import org.apache.avalon.framework.parameters.Parameterizable;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public interface Task extends Parameterizable {
+    
+    String NAMESPACE = "http://apache.org/cocoon/lenya/task/1.0";
+    String DEFAULT_PREFIX = "task";
+
     /**
      * The path of the servlet
      * context:<br/><code>/home/user_id/build/jakarta-tomcat/webapps/lenyacms</code>
@@ -95,6 +98,14 @@ public interface Task extends Parameterizable {
      * ID:<br/><code>http://www.yourhost.com:8080/lenya/<strong>publication</strong>/index.html</code>
      */
     String PARAMETER_PUBLICATION_ID = "publication-id";
+
+    String[] PARAMETERS =
+        {
+            PARAMETER_SERVLET_CONTEXT,
+            PARAMETER_SERVER_URI,
+            PARAMETER_SERVER_PORT,
+            PARAMETER_CONTEXT_PREFIX,
+            PARAMETER_PUBLICATION_ID };
 
     /**
      * Execute the task. All parameters must have been set with parameterize().
