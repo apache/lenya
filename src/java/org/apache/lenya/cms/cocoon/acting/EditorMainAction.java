@@ -31,7 +31,7 @@ import org.w3c.dom.Document;
 import org.wyona.util.Stack;
 
 /**
- * $Id: EditorMainAction.java,v 1.4 2002/02/06 09:15:47 uid523 Exp $
+ * $Id: EditorMainAction.java,v 1.5 2002/02/23 22:28:33 michicms Exp $
  *
  * @author Martin Lüthi
  * @created 2002.01.22
@@ -108,12 +108,14 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction im
       boolean checkout=true;
       if(checkout){
         String formeditorPath = context.getRealPath("formeditor");
-        String tempFile=formeditorPath+request.getRequestURI()+".xml";
+        String tempFile=formeditorPath+request.getRequestURI();
+        //String tempFile=formeditorPath+request.getRequestURI()+".xml";
         //         Source source = resolver.resolve("cocoon:/"+request.getSitemapURI());
         //         String cont=source.getSystemId().substring(10); // remove
         //         "context://"
         String wyonaPath="wyona/cms/pubs/ethz-mat/docs/ethz/mat/";
-        String editFile=context.getRealPath("/")+wyonaPath+request.getSitemapURI()+".xml";
+        String editFile=context.getRealPath("/")+wyonaPath+request.getSitemapURI();
+        //String editFile=context.getRealPath("/")+wyonaPath+request.getSitemapURI()+".xml";
         getLogger().debug("**** tempfile="+tempFile);
         getLogger().debug("**** editfile="+editFile);
 

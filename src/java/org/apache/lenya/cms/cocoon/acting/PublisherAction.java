@@ -89,7 +89,6 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
     StringTokenizer st=new StringTokenizer(docids,",");
     while(st.hasMoreTokens()){
       String docId=st.nextToken();
-      //String docId=st.nextToken()+".xml";
       File sourceFile=new File(absoluteAuthoringPath+docId);
       File destinationFile=new File(absoluteLivePath+docId);
       if(copyFile(sourceFile,destinationFile)){
