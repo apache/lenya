@@ -108,6 +108,8 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
             throws ProcessingException, SAXException, IOException {
 
+        super.setup(resolver, objectModel, src, parameters);
+        
         PageEnvelope envelope = null;
 
         try {

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UsecaseMenuTransformer.java,v 1.13 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.transformation;
 
@@ -101,6 +101,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
      */
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
         throws ProcessingException, SAXException, IOException {
+        
+        super.setup(resolver, objectModel, src, parameters);
 
         getLogger().debug("Setting up transformer");
 
