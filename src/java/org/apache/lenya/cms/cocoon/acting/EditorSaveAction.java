@@ -76,6 +76,7 @@ public class EditorSaveAction extends AbstractValidatorAction implements ThreadS
         getLogger().error("------------------------------------------ Writing file  "+editfilename);
         HashMap sitemapParams = new HashMap();
         sitemapParams.put("tempfilename", tempfilename);
+        sitemapParams.put("finalRedirect", finalredirect);
         return sitemapParams;
       } catch (Exception e) {
         getLogger().error("filename not existing "+editfilename+" "+e);

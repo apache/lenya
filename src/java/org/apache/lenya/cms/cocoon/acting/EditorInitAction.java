@@ -86,12 +86,14 @@ public class EditorInitAction extends AbstractValidatorAction implements ThreadS
             os.write(bytes_buffer, 0, bytes_read);                           
           }                                                                       
 
-          String finalredirect = request.getContextPath();
+          String finalredirect = request.getHeader("Referer");
+
           sitemapParams.put("filename", editfilename);
           sitemapParams.put("tempfilename", tempfilename);
           sitemapParams.put("finalredirect", finalredirect);
           getLogger().error("formedit =====> filename: "+editfilename);
           getLogger().error("formedit =====> tempfilename: "+tempfilename);
+          getLogger().error("formedit =====> finalredirect: "+finalredirect);
 
           Session session=request.getSession(true);
           if(session == null){
@@ -100,7 +102,6 @@ public class EditorInitAction extends AbstractValidatorAction implements ThreadS
           }
           session.setAttribute("org.wyona.cms.cocoon.acting.EditorTempfile",tempfilename);
           session.setAttribute("org.wyona.cms.cocoon.acting.EditorEditfile",editfilename);
-          //           String finalredirect = request.getRequestURI()
           session.setAttribute("org.wyona.cms.cocoon.acting.EditorFinalRedirect",finalredirect);
 
           getLogger().error("==============session tempfile =====> : "+
