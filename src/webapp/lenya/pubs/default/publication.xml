@@ -19,8 +19,8 @@
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
   <lenya:name>Default Publication</lenya:name>
-  <lenya:pub-version>1.2.2-dev</lenya:pub-version>
-  <lenya:lenya-version>1.2.2-dev</lenya:lenya-version>
+  <lenya:pub-version>1.2.2</lenya:pub-version>
+  <lenya:lenya-version>1.2.2</lenya:lenya-version>
   <lenya:cocoon-version>2.1.6</lenya:cocoon-version>
   <lenya:description>This publication is a best practice, getting started publication.</lenya:description>
   <lenya:credits>Special thanks to </lenya:credits>
