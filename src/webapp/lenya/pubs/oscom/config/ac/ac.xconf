@@ -1,7 +1,17 @@
 <?xml version="1.0"?>
 
-<access-controller type="sitemap">
-  <accreditable-manager>
+<access-controller type="bypassable">
+  <accreditable-manager type="file">
     <parameter name="directory" value="context:///lenya/pubs/oscom/config/ac/passwd"/>
   </accreditable-manager>
+
+  <policy-manager type="sitemap"/>
+
+  <authorizer type="policy"/>
+
+  <authorizer type="usecase">
+    <parameter name="configuration" value="context:///lenya/pubs/oscom/config/ac/usecase-policies.xml"/>
+  </authorizer>
+
+  <authorizer type="workflow"/>
 </access-controller>
