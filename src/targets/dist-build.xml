@@ -144,8 +144,6 @@
 
 
   <target name="zip-webapp" depends="init" description="Zips the webapp in order to deploy within another servlet container">
-    <echo>Create ./${build.dir}/${snapshot.bin.name}.tar.gz</echo>
-
     <tar tarfile="./${build.dir}/${snapshot.bin.name}.tar" basedir="${build.webapp}"/>
     <gzip zipfile="./${build.dir}/${snapshot.bin.name}.tar.gz" src="./${build.dir}/${snapshot.bin.name}.tar"/>
     <delete file="./${build.dir}/${snapshot.bin.name}.tar"/>    

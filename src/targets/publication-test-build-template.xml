@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication-test-build-template.xml,v 1.2 2004/03/21 18:35:46 gregor Exp $ -->
+<!-- $Id$ -->
 <project name="pubtest">
 
   <description>

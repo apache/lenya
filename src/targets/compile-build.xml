@@ -62,9 +62,7 @@
   </target>
 
   <target name="clean" depends="init" description="Cleans the build directories">
-    <echo>INFO: Delete ${build.root}</echo>
     <delete dir="${build.root}"/>
-    <echo>INFO: Delete ${dist.root}</echo>
     <delete dir="${dist.root}"/>
 
     <condition property="servlet.engine.tomcat">

@@ -34,7 +34,6 @@
     
   <property name="project.debuglevel" value="DEBUG"/>
       
-  <echo>INFO: Copying source files from authoring to live</echo>
   <copy todir="${publication.dir}/content/live">
     <fileset dir="${publication.dir}/content/authoring"/>
   </copy>
