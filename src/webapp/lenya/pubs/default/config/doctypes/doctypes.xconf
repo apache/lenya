@@ -15,13 +15,28 @@
   limitations under the License.
 -->
 
-<!-- $Id: doctypes.xconf,v 1.6 2004/03/13 12:34:16 gregor Exp $ -->
+<!-- $Id$ -->
 
 <doctypes>
+
+  <doc type="links">
+    <children>
+      <doc type="xhtml"/>
+      <doc type="links"/>
+    </children>
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>links.xml</sample-name>
+    </creator>
+    <tasks>
+      <task id="publish"/>
+    </tasks>
+    <workflow src="workflow.xml"/>
+  </doc>
 
   <doc type="xhtml">
     <children>
       <doc type="xhtml"/>
+      <doc type="links"/>
     </children>
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>xhtml.xml</sample-name>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<links xmlns="http://cocoon.apache.org/lenya/pubs/default/1.0">
+  <title>Links</title>
+  <link href="http://cocoon.apache.org/lenya/">Apache Lenya Website</link>
+  <link href="http://wiki.apache.org/cocoon-lenya/">Apache Lenya Wiki</link>
+</links>
