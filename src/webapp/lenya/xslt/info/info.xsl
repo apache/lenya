@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.66 2004/05/21 14:36:31 andreas Exp $ -->
+<!-- $Id: info.xsl,v 1.67 2004/08/22 22:50:41 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -184,6 +184,7 @@
     <table class="lenya-table">
       <tr>
         <th><i18n:text>Assets</i18n:text></th>
+        <th><i18n:text>Title</i18n:text></th>
         <th><i18n:text>File Size</i18n:text></th>
         <th><i18n:text>Creation Date</i18n:text></th>
         <th></th>
@@ -191,6 +192,7 @@
       <xsl:for-each select="lenya-info:asset">
         <xsl:sort select="dc:title"/>
         <tr>
+          <td><xsl:value-of select="dc:source"/></td>
           <td><xsl:value-of select="dc:title"/></td>
           <td align="right"><xsl:value-of select="dc:extent"/> kB</td>
           <td align="right"><xsl:value-of select="dc:date"/></td>
@@ -206,7 +208,7 @@
               </input>
               <input type="hidden" name="properties.remove.asset.name">
                 <xsl:attribute name="value">
-                  <xsl:value-of select="dc:title"/>
+                  <xsl:value-of select="dc:source"/>
                 </xsl:attribute>
               </input>
               <xsl:choose>

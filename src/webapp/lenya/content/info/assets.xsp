@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: assets.xsp,v 1.8 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id: assets.xsp,v 1.9 2004/08/22 22:50:41 roku Exp $ -->
 
 <xsp:page 
   language="java" 
@@ -34,6 +34,7 @@
     <xsp:include>org.apache.lenya.cms.publication.ResourcesManager</xsp:include>
     <xsp:include>java.util.Date</xsp:include>
     <xsp:include>java.text.SimpleDateFormat</xsp:include>
+    <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
   </xsp:structure>
   
   <lenya-info:info>
@@ -50,10 +51,23 @@
       <lenya-info:language><input:get-attribute module="page-envelope" name="document-language"/></lenya-info:language>
       <xsp:logic>
 	if (resources != null) {
-	  for(int i = 0; i &lt; resources.length; i++) {
+	  for(int i = 0; i &lt; resources.length; i++) {    
+      <!-- The follwoing code should be moved into a more generic dc class library
+           i.e. to o.a.l.xml.dc or o.a.l.dc
+           We also should consolidate the *.publication.DublinCore  * classes to use the newer lib.
+           But this would be to heavy for 1.2.1, so I do this hack here, sorry :) /roku
+      -->
+      File metaFile;
+      String title;
+      org.w3c.dom.Document metaDoc;
+      try {
+        metaDoc = DocumentHelper.readDocument(resourceMgr.getMetaFile(resources[i]));
+				title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
+      } catch(Exception e) { continue; } 
 	  <xsp:content>
-	    <lenya-info:asset>
-	      <dc:title><xsp:expr>resources[i].getName()</xsp:expr></dc:title>
+	    <lenya-info:asset>   
+	      <dc:source><xsp:expr>resources[i].getName()</xsp:expr></dc:source>
+        <dc:title><xsp:expr>title</xsp:expr></dc:title>
 	      <dc:date><xsp:expr>SimpleDateFormat.getDateInstance().format(new Date(resources[i].lastModified()))</xsp:expr></dc:date>
 	      <dc:extent><xsp:expr>resources[i].length()/1024</xsp:expr></dc:extent>
 	    </lenya-info:asset>
