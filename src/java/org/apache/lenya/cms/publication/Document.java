@@ -114,4 +114,34 @@ public interface Document {
      * @return A string.
      */
     String getExtension();
+    
+	/**
+	 * Returns the Dublin Core Creator for this document.
+	 * @return A string.
+	 */
+	String getDCCreator();
+
+	/**
+	 * Returns the Dublin Core Title for this document.
+	 * @return A string.
+	 */
+	String getDCTitle();
+
+	/**
+	 * Returns the Dublin Core Subject for this document.
+	 * @return A string.
+	 */
+	String getDCSubject();
+
+	/**
+	 * Returns the Dublin Core Description for this document.
+	 * @return A string.
+	 */
+	String getDCDescription();
+
+	/**
+	 * Returns the Dublin Core Rights for this document.
+	 * @return A string.
+	 */
+	String getDCRights();
 }
