@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: site.xml,v 1.2 2004/07/21 05:22:55 thorsten Exp $ -->
+<!-- $Id: site.xml,v 1.3 2004/07/22 20:07:17 thorsten Exp $ -->
 
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" tab="project">
     <project-information href="" label="Project" tab="project">
@@ -29,9 +29,9 @@
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
     <installation href="installation/" label="Installation" tab="installation">
-        <install-overview href="index.html" label="Overview"/>
+        <!--install-overview href="index.html" label="Overview"/-->
         <prerequisites href="prerequisites.html" label="Prerequisites"/>
-        <download href="download.html" label="Download"/>
+        <download href="index.html" label="Download"/>
         <cvs href="cvs.html" label="CVS Access"/>
         <install href="source_version.html" label="Installation Instructions"/>
     </installation>
@@ -209,8 +209,9 @@
         <live-sites href="live-sites.html" label="Live Sites"/>
         <website-update href="website-update.html" label="Website Update"/>
     </community>
+    
     <external-refs>
-       
+       <nightly.builds href="http://cvs.wyona.org/nightly-builds/"/>
         <asf href="http://www.apache.org/"/>
         <cocoon href="http://cocoon.apache.org/">
             <cocoon.2.1.features href="2.1/features.html"/>

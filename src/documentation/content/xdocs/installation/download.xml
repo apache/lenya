@@ -15,40 +15,38 @@
   limitations under the License.
 -->
 
-<!-- $Id: download.xml,v 1.2 2004/07/07 08:36:05 michi Exp $ -->
+<!-- $Id: download.xml,v 1.3 2004/07/22 20:07:17 thorsten Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
 
 <header> 
-    <title>Download Lenya</title>
+    <title>Downloading and Installing Lenya</title>
     <version>0.1</version> 
     <type>Documentation</type> 
-    <authors>
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
-    </authors> 
 </header> 
 <body> 
 
-<section>
-<title>Releases</title>
-
 <ul>
-  <li><link href="http://cvs.apache.org/dist/incubator/lenya/">http://cvs.apache.org/dist/incubator/lenya/</link></li>
+  <li>
+    <link href="prerequisites.html">Prerequisites</link>
+  </li>
+  <li>
+    Download Lenya
+    <ul>
+      <li><link href="cvs.html">CVS</link></li>
+      <li><link href="ext:nightly.builds">Nightly Snapshots</link></li>
+      <li><link href="ext:incubator.lenya">Incubating-lenya-1.2</link></li>
+    </ul>
+  </li>
+  <li>
+    Install Lenya
+    <ul>
+      <li><link href="source_version.html">Source Version</link></li>
+    </ul>
+  </li>
 </ul>
-
-</section>
-
-<section>
-<title>CVS Nightly Snapshots (Source and Binary)</title>
-
-<ul>
-  <li><link href="http://cvs.wyona.org/nightly-builds/">http://cvs.wyona.org/nightly-builds/</link></li>
-</ul>
-
-</section>
-
 
 </body>
 </document>
