@@ -3,16 +3,17 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:sch="http://www.wyona.org/2002/sch">
   
-  <xsl:param name="documentType"/>
+  <xsl:param name="documentType" select="''"/>
 
   <xsl:template match="sch:doctypes">
   <sch:test id="{$documentType}"></sch:test>
-    <xsl:apply-templates/>
+    <sch:tasks>
+      <xsl:apply-templates/>
+    </sch:tasks>
   </xsl:template>
   
   <xsl:template match="sch:doctypes/sch:doc">
-    <xsl:if test="@type = $documentType">
-      <sch:tasks>
+    <xsl:if test="$documentType = '' or @type = $documentType">
         <xsl:for-each select="sch:tasks/sch:task">
           <sch:task id="{@id}">
             <label>
@@ -20,7 +21,6 @@
             </label>
           </sch:task>
         </xsl:for-each>
-      </sch:tasks>
     </xsl:if>
   </xsl:template>
 
