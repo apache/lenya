@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.30 2003/08/27 16:58:34 egli Exp $
+$Id: DefaultSiteTree.java,v 1.31 2003/08/31 13:02:24 andreas Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -548,10 +548,10 @@ public class DefaultSiteTree implements SiteTree {
 			DocumentHelper.writeDocument(document, treefile);
 		} catch (TransformerException e) {
 			throw new SiteTreeException(
-				"The document  " + document.getLocalName() + " could not be transformed");
+				"The document [" + document.getLocalName() + "] could not be transformed");
 		} catch (IOException e) {
 			throw new SiteTreeException(
-				"The saving of document" + document.getLocalName() + " failed");
+				"The saving of document [" + document.getLocalName() + "] failed");
 		}
     }
 }
