@@ -158,6 +158,7 @@ else
         cd build/lenya/webapp
         $JAVA_HOME/bin/jar -xf lenya.war
         cd ../../..
+        mkdir -p build/lenya/webapp/WEB-INF/logs
         rm build/lenya/webapp/lenya.war
     else
         echo "INFO: No such war file lenya.war or build directory!"

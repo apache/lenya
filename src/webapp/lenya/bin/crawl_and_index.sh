@@ -27,7 +27,7 @@ XPDF=`grep xpdf.bin $DIRNAME/search.properties | grep -v "#" | sed -e 's/xpdf.bi
 
 JAVA_XMX=64M
 
-CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.8.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar:$LIB_DIR/websphinx.jar
+CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.8.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar:$LIB_DIR/websphinx-0.5.jar
 
 echo "INFO: classpath = $CLASSPATH"
 
@@ -57,7 +57,7 @@ case "$1" in
         echo "Target: $1"
         echo "=========================================================="
         echo ""
-        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.4-rc3.jar
+        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.4.3.jar
 
         INDEX_DIR=$2
 	WORD=$3

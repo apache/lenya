@@ -93,6 +93,7 @@ mkdir build\lenya\webapp
 cd build\lenya\webapp
 "%JAVA_HOME%\bin\jar.exe" -xf ..\..\..\lenya.war
 cd ..\..\..
+mkdir build\lenya\webapp\WEB-INF\logs
 
 :: ----- Check action ----------------------------------------------------------
 :action

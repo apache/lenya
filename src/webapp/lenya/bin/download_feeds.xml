@@ -29,6 +29,7 @@
     <property name="pubs.dir" value="${lenya.dir}/pubs"/>
     <echo>Pubs Directory ${pubs.dir}</echo>
 
+    <property file="local.feeds.properties"/>
     <property file="feeds.properties"/>
     <!-- [URL],[PATH],... -->
     <!-- NOTE: No whitespace after and before colons -->
