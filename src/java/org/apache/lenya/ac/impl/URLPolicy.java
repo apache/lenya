@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URLPolicy.java,v 1.7 2004/04/28 16:19:09 andreas Exp $  */
+/* $Id: URLPolicy.java,v 1.8 2004/08/16 08:18:15 andreas Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -68,9 +68,9 @@ public class URLPolicy implements Policy {
         }
     }
 
-    protected static final String[] VISITOR_ROLES = { "visitor", "visit" };
-    protected static final String[] ADMINISTRATOR_ROLES = { "administrator", "admin", "organize" };
-    protected static final String[] AUTHOR_ROLES = { "author", "edit" };
+    static final String[] VISITOR_ROLES = { "visitor", "visit" };
+    static final String[] ADMINISTRATOR_ROLES = { "administrator", "admin", "organize" };
+    static final String[] AUTHOR_ROLES = { "author", "edit" };
 
     /**
      * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
@@ -95,6 +95,7 @@ public class URLPolicy implements Policy {
 
     /**
      * Returns the visitor role.
+     * @param manager The accreditable manager.
      * @return A role.
      * @throws AccessControlException when something went wrong.
      */
@@ -111,6 +112,7 @@ public class URLPolicy implements Policy {
 
     /**
      * Returns the administrator role.
+     * @param manager The accreditable manager.
      * @return A role.
      * @throws AccessControlException when something went wrong.
      */
@@ -127,6 +129,7 @@ public class URLPolicy implements Policy {
 
     /**
      * Returns the author role.
+     * @param manager The accreditable manager.
      * @return A role.
      * @throws AccessControlException when something went wrong.
      */
