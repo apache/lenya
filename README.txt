@@ -6,7 +6,20 @@
   Contents
   --------
 
+  -Hardware Requirements
   -Installation Instruction
+
+
+  Hardware Requirements
+  ---------------------
+
+  It's advisable to have a lot of RAM and a fast CPU.
+  You will be able to develop without a problem when you have
+  1GB of RAM and a 1GHz Processor. The system is also
+  running pretty fast when you have a Laptop with 96MB RAM and a 255MHz
+  processor. But the startup will take quite some time and
+  developing is very hard.
+
 
 
   Installation Instruction
