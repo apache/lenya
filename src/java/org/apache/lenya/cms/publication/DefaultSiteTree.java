@@ -40,13 +40,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * DOCUMENT ME!
+ * Default Sitetree implementation
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
-
-    public static final String NAMESPACE_URI = "http://apache.org/cocoon/lenya/sitetree/1.0";
-    public static final String SITE_TREE_FILENAME = "sitetree.xml";
 
     private Document document = null;
     private File treefile = null;

@@ -21,6 +21,9 @@ package org.apache.lenya.cms.publication;
 
 public interface SiteTree {
 
+    public static final String NAMESPACE_URI = "http://apache.org/cocoon/lenya/sitetree/1.0";
+    public static final String SITE_TREE_FILENAME = "sitetree.xml";
+
     /**
      * Add a node.
      *

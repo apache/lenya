@@ -160,7 +160,7 @@ public interface Publication {
      * 
      * @throws SiteTreeException if an error occurs 
      */
-    DefaultSiteTree getSiteTree(String area) throws SiteTreeException;
+    SiteTree getSiteTree(String area) throws SiteTreeException;
 
     /**
      * Returns the document builder of this instance.

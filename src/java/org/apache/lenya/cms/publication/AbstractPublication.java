@@ -319,13 +319,13 @@ public abstract class AbstractPublication implements Publication {
      * 
      * @throws SiteTreeException if an error occurs
      */
-    public DefaultSiteTree getSiteTree(String area) throws SiteTreeException {
+    public SiteTree getSiteTree(String area) throws SiteTreeException {
 
-        DefaultSiteTree sitetree = null;
+        SiteTree sitetree = null;
 
         if (hasSitetree) {
             if (siteTrees.containsKey(area)) {
-                sitetree = (DefaultSiteTree) siteTrees.get(area);
+                sitetree = (SiteTree) siteTrees.get(area);
             } else {
                 sitetree = new DefaultSiteTree(getDirectory(), area);
                 siteTrees.put(area, sitetree);

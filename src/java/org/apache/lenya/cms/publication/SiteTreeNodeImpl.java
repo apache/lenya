@@ -447,7 +447,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
      */
     protected NamespaceHelper getNamespaceHelper() {
         NamespaceHelper helper =
-            new NamespaceHelper(DefaultSiteTree.NAMESPACE_URI, "", node.getOwnerDocument());
+            new NamespaceHelper(SiteTree.NAMESPACE_URI, "", node.getOwnerDocument());
         return helper;
     }
 
