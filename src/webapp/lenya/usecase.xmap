@@ -433,9 +433,7 @@
 
                 <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
                   <map:parameter name="source" value="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
-<!--
-                  <map:parameter name="source" value="test-epoz.xml"/>
--->
+                  <!--<map:parameter name="source" value="test-epoz.xml"/>-->
                 </map:transform>
                 <map:transform type="write-source"/>
 			
@@ -628,8 +626,21 @@
           </map:match>
           <map:match pattern="xml" type="step">
             <map:match pattern="*/authoring/**.html">
-              <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-              <map:serialize type="xml"/>
+              <map:select type="request-method">
+                <map:when test="POST"> <!-- Save -->
+                  <map:generate type="stream"/>
+                  <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+                    <map:parameter name="source" value="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+                    <!--<map:parameter name="source" value="test-xopus.xml"/>-->
+                  </map:transform>
+                  <map:transform type="write-source"/>
+                  <map:serialize type="xml"/>
+                </map:when>
+                <map:otherwise> <!-- GET: Open -->
+                  <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+                  <map:serialize type="xml"/>
+                </map:otherwise>
+              </map:select>
             </map:match>
           </map:match>
           <map:match pattern="xsd" type="step">
