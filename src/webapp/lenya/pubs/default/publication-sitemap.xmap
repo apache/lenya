@@ -1,26 +1,23 @@
-<?xml version="1.0"?>
-
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.48 2003/09/12 09:39:36 andreas Exp $ -->
-
-  <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.49 2003/09/12 09:49:14 andreas Exp $ -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
-    <map:generators default="file" />
+    <map:generators default="file"/>
     <map:matchers default="wildcard"/>
-    <map:actions />
+    <map:actions/>
     <map:selectors/>
   </map:components>
-
+  
   <map:views>
-    <map:view name="aggregation" from-label="aggregation">
+    <map:view from-label="aggregation" name="aggregation">
       <map:serialize type="xml"/>
     </map:view>
   </map:views>
-
+  
   <map:resources/>
-
+  
   <map:pipelines>
-
     <map:pipeline>
       <map:match pattern="**/">
         <map:redirect-to uri="index.html"/>
@@ -30,81 +27,82 @@
     <map:pipeline>
       <!-- pattern="{area}/simple/{document-path}" -->
       <map:match pattern="lenya-document/*/*/**.xml">
-        <map:mount uri-prefix="lenya-document/" src="doctypes.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount check-reload="true" reload-method="synchron" src="doctypes.xmap" uri-prefix="lenya-document/"/>
       </map:match>
     </map:pipeline>
     
     <!-- Edit Article with Xopus2 -->
     <map:pipeline>
+      
       <map:match pattern="authoring/xopus2/**.xml">
-	<map:act type="reserved-checkout"> 
-	  <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
-	    <map:parameter name="user" value="{user}"/>
-	    <map:parameter name="filename" value="{filename}"/>
-	    <map:parameter name="date" value="{date}"/>
-	  </map:generate>
+        
+        <map:act type="reserved-checkout">
+          <map:generate src="../../content/rc/{exception}.xsp" type="serverpages">
+            <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="date" value="{date}"/>
+          </map:generate>
           <map:transform src="../../xslt/rc/rco-exception.xsl"/>
-	  <map:serialize type="html"/>
-	</map:act>
-	
-	<map:act type="uriparametrizer" src="authoring/{1}.xml">
-	  <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
-	  <map:aggregate element="lenya" label="aggregation">
-	    <map:part src="cocoon:/lenyamenubar/authoring/article.xml"/>
-	    <map:part src="content/authoring/{../1}.xml" element="cmsbody"/>
-	  </map:aggregate>         
-	  <map:transform src="xslt/authoring/xopus2-{doctype}.xsl">
-	    <map:parameter name="articleid" value="{../1}"/>
-	  </map:transform> 
-	  <map:serialize type="html" />
-	</map:act>
+          <map:serialize type="html"/>
+        </map:act>
+        
+        <map:act src="authoring/{1}.xml" type="uriparametrizer">
+          <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
+          <map:aggregate element="lenya" label="aggregation">
+            <map:part src="cocoon:/lenyamenubar/authoring/article.xml"/>
+            <map:part element="cmsbody" src="content/authoring/{../1}.xml"/>
+          </map:aggregate>
+          <map:transform src="xslt/authoring/xopus2-{doctype}.xsl">
+            <map:parameter name="articleid" value="{../1}"/>
+          </map:transform>
+          <map:serialize type="html"/>
+        </map:act>
+        
       </map:match>
+      
     </map:pipeline>
     
-
     <!-- This is the pipeline that builds the page. It aggregates all
     the navigational elements (breadcrumb, tabs, menu) with the actual
     content of the document. -->
     <map:pipeline>
+      
       <!-- /lenyabody/{publication-id}/{area}/{doctype}/{document-id} -->
       <map:match pattern="lenyabody/*/*/*/**">
         <map:aggregate element="cmsbody">
-            <map:part src="cocoon://navigation/{1}/{2}/breadcrumb/{4}.xml"/>
-            <map:part src="cocoon://navigation/{1}/{2}/tabs/{4}.xml"/>
-            <map:part src="cocoon://navigation/{1}/{2}/menu/{4}.xml"/>
-            <map:part src="cocoon://{1}/lenya-document/{2}/{3}/{page-envelope:document-path}"/>
-          </map:aggregate>
-	  <map:transform src="xslt/page2xhtml.xsl">
-	    <map:parameter name="root" value="{page-envelope:context-prefix}/{1}/{2}"/>
-	  </map:transform>
+          <map:part src="cocoon://navigation/{1}/{2}/breadcrumb/{4}.xml"/>
+          <map:part src="cocoon://navigation/{1}/{2}/tabs/{4}.xml"/>
+          <map:part src="cocoon://navigation/{1}/{2}/menu/{4}.xml"/>
+          <map:part src="cocoon://{1}/lenya-document/{2}/{3}/{page-envelope:document-path}"/>
+        </map:aggregate>
+        <map:transform src="xslt/page2xhtml.xsl">
+          <map:parameter name="root" value="{page-envelope:context-prefix}/{1}/{2}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
+      
     </map:pipeline>
-
-
+    
     <!-- This is the main entry point into the publication. This
     pipeline uses the uriparametrizer to determine the doctype of this
     request. It then aggregates the lenya menu (for the given area) and
     the lenya body, the actual document. -->
     <map:pipeline>
+      
       <map:match pattern="*/**.html">
-	<map:act type="uriparametrizer" src="{1}/{2}.html">
-	  <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
-    <map:generate src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{doctype}/{page-envelope:document-id}"/>
-	  <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}/{../2}.xml"/>
-	</map:act>
-	
-	<map:serialize type="html"/>
+        <map:act src="{1}/{2}.html" type="uriparametrizer">
+          <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
+          <map:generate src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{doctype}/{page-envelope:document-id}"/>
+          <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}/{../2}.xml"/>
+        </map:act>
+        <map:serialize type="html"/>
       </map:match>
-     
+      
       <map:handle-errors type="500">
         <!-- FIXME: other exceptions are also caught here! -->
-        <!--
         <map:transform src="../../xslt/exception/not-published-yet.xsl"/>
-	<map:serialize type="html"/>
-	-->
+        <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
-
   </map:pipelines>
 </map:sitemap>
