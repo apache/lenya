@@ -26,6 +26,16 @@
     <type/>
   </header>
   <body>
+<section><title>Generating changes.html</title>
+<p>changes.html can be directly generated from the SVN commit logs with the following procedure:</p>
+<ul>
+  <li>install <link href="http://saxon.sf.net">Saxon 8</link> (the svn2changes stylesheet requires a XSLT 2.0 processor)</li>
+  <li>run <code>svn log -v --xml http://svn.apache.org/repos/asf/lenya > log.xml</code> in the root of the docu branch. This might take a while as the log file is several MB in size.</li>
+  <li>run <code>java -jar saxon8.jar -o status.xml log.xml tools/svn2changes.xsl</code></li>
+  <li>run <code>forest</code> (You may have to increase <code>forrest.maxmemory</code> in forrest.properties to get around out of memory exceptions.) Forrest will take a LONG TIME to generate changes.html.</li>
+</ul>
+<p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
+</section>
 <section><title>Updating the Lenya website</title>
 <ul>
   <li><code>svn co https://svn.apache.org/repos/asf/lenya/docu/ lenya.docu</code> ->This is our documentation and website source tree</li>
@@ -33,7 +43,7 @@
   <li><link href="ext:forrest.install">Install Forrest</link></li>
   <li><code>go to the root of lenya/docu</code></li>
   <li><code>forrest</code></li>
-  <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>build/webapp/site/apidocs</code> to <code>lenya/site/apidocs/1.2</code>)</li>
+  <li>Create and copy the Javadoc (<code>build javadocs</code>, Copy from <code>build/webapp/site/apidocs</code> to <code>lenya/site/apidocs/1.2</code>)</li>
   <li>Add, remove, commit to <code>lenya/site</code></li>
 </ul>
 <p>There is a cron job on minotaur which will do 'svn update'
