@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.2 2003/08/08 15:37:36 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.3 2003/08/11 16:03:42 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -104,9 +104,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
-        if(request.getParameter("cancel") != null) {
-            getLogger().error(".act(): Cancel editing");
-        } else {
+        if(request.getParameter("save") != null) {
             if(file.isFile()) {
                 getLogger().error(".act(): Save modifications to " + file.getAbsolutePath());
 
@@ -134,6 +132,15 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                 getLogger().error(".act(): No such file: " + file.getAbsolutePath());
                 return new HashMap();
             }
+        } else if(request.getParameter("insert") != null) {
+            getLogger().error(".act(): Insert");
+            Enumeration params = request.getParameterNames();
+            while (params.hasMoreElements()) {
+                String name = (String) params.nextElement();
+                getLogger().error(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
+            }
+        } else { // cancel
+            getLogger().error(".act(): Cancel editing");
         }
 
         return null;
