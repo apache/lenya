@@ -49,7 +49,8 @@
 	
 <section>
 	<title>Policy Managers</title>
-	<p>A PolicyManager is used to resolve the policy for a certain URL. Lenya ships with the following PolicyManagers:</p>
+	<p>A <em>PolicyManager</em> is used to resolve the policy for a certain URL.
+	Lenya ships with the following <em>PolicyManager</em>s:</p>
 </section>
 	
 	<section>
@@ -57,7 +58,7 @@
 		<p>This is an abstract base class. It merges the policies
 		  of all steps in the URL. For each
 			URL, a <em>url policy</em> and a <em>subtree policy</em> can be defined.
-			The InheritingPolicyManager adds the credentials of</p>
+			The <em>InheritingPolicyManager</em> adds the credentials of</p>
 		<ul>
 			<li>the subtree policies for all parent directories of the requested page,</li>
 			<li>the subtree policy of the requested page, and</li>
@@ -76,25 +77,37 @@
 	
 	<section>
 		<title>File Policy Manager</title>
-		<p>The <code>FilePolicyManager</code> is an <code>InheritingPolicyManager</code>. The policies are defined by policy files that are arranged as a directory tree that reflects the URI space, e.g.:
+		<p>The <em>FilePolicyManager</em> is an <em>InheritingPolicyManager</em>.
+		The policies are defined by policy files that are arranged as a
+		directory tree that reflects the URI space, e.g.:
 			</p>
 <source>/subtree-policy.acml
 /lenya/subtree-policy.acml
 /lenya/news/index.html/subtree-policy.acml
 /lenya/news/index.html/url-policy.acml</source>
 			<p>If a certain policy file does not exist (like /lenya/news in the above example), an empty policy is used instead.</p>
+			
+			<p>The <em>FilePolicyManager</em> needs a <code>directory</code> parameter
+			which contains a URL pointing to the policies directory:</p>
+
+<source><![CDATA[<policy-manager type="file">
+  <parameter name="directory"
+      value="context:///lenya/pubs/mypub/config/ac/policies"/>
+</policy-manager>]]></source>
+
 	</section>
 	
 	<section>
 		<title>Document Policy Manager Wrapper</title>
-		<p>This <code>InheritingPolicyManager</code> subclass is used together with another
-  		<code>InheritingPolicyManager.</code>
+		<p>This <em>InheritingPolicyManager</em> subclass is used together with another
+  		<em>InheritingPolicyManager.</em>
 		  It is able to apply a single policy to all versions of a document
 		  (languages, print version, ...). E.&#160;g., if you define
 		</p>
 		<ul><li><code>/foo/bar/subtree-policy.xml</code></li></ul>
 		<p>
-		  and you use the <code>DefaultDocumentBuilder</code>, this policy is applied to the URLs
+		  and you use the <em>DefaultDocumentBuilder</em>,
+		  this policy is applied to the URLs
 		</p>
 		<ul>
 		  <li><code>/foo/bar.html</code></li>
@@ -103,11 +116,21 @@
 		  <li>...</li>
 		</ul>
 		
+		<p>To configure the <em>DefaultDocumentBuilder</em>, just put the
+		declaration of the wrapped <em>PolicyManager</em> inside the
+		<em>DefaultDocumentBuilder</em> declaration:</p>
+		
+<source><![CDATA[<policy-manager type="document">
+  <policy-manager type="file">
+    <parameter name="directory"
+        value="context:///lenya/pubs/mypub/config/ac/policies"/>
+  </policy-manager>
+</policy-manager>]]></source>
 	</section>
 	
 	<section>
 		<title>Sitemap Policy Manager</title>
-		<p>The SitemapPolicyManager uses the policy sitemap to resolve the policy
+		<p>The <em>SitemapPolicyManager</em> uses the policy sitemap to resolve the policy
 			for a certain URL. For this purpose it sends a request of the form
     </p>
 	  <source>cocoon://{publication-id}/policies{url}.acml
@@ -120,6 +143,9 @@ cocoon://mypub/policies/authoring/foo/bar_de.html.acml
 			to <code>lenya/pubs/{publication-id}/policies-sitemap.xmap</code>.
 			The request is supposed to return a valid policy XML document.
 	</p>
+	<p>The configuration of the <em>SitemapPolicyManager</em> is very simple:</p>
+	
+<source><![CDATA[<policy-manager type="sitemap"/>]]></source>
 	</section>
 		
   </body>

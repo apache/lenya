@@ -15,24 +15,31 @@
 	
 <section>
 	<title>Role</title>
-	<p>Roles are the connection between access control and CMS functionality. On
-		the access control side, you assign roles to users, IP address ranges and
-		groups at certain URL spaces. On the CMS side, you define which roles are
-		needed to execute certain usecases and workflow transitions.</p>
-	<p>Examples of roles are</p>
+	<p><em>Role</em>s are the connection between access control and CMS functionality. On
+		the access control side, you assign <em>Role</em>s to users, IP address ranges and
+		groups at certain URL spaces. On the CMS side, you define which <em>Role</em>s are
+		needed to execute certain usecases and workflow transitions. If the client has a certain
+		<em>Role</em>, this means he is allowed to do something.</p>
+	<p>Each <em>Role</em> has a unique name. Role names can be arbitrary strings. Examples are</p>
 	<ul>
 		<li>author</li>
-		<li>editor</li>
+		<li>reviewer</li>
 		<li>admin</li>
+	</ul>
+	<p>Another common approach and useful is to use verbs as role names:</p>
+	<ul>
+		<li>edit</li>
+		<li>review</li>
+		<li>administrate</li>
 	</ul>
 </section>
 
 
 <section>
 	<title>Identifiable</title>
-	<p>An Identifiable is a characteristic of the client that can be identified.
-		Every Identifiable is Accreditable. Lenya currently supports the following
-		identifiables:</p>
+	<p>An <em>Identifiable</em> is a characteristic of the client that can be identified.
+		Every <em>Identifiable</em> is <em>Accreditable</em>. Lenya currently supports the following
+		<em>Identifiable</em>s:</p>
 	<ul>
 		<li>users</li>
 		<li>machines</li>
@@ -42,21 +49,25 @@
 </section>
 
 
-<section>
-	<title>Identity</title>
-	<p>An Identity is the collection of all Identifiables that have access to the
-		system in the current session. The identity always contains the world and
+<section><title>Identity</title>
+	<p>An <em>Identity</em> is the collection of all <em>Identifiable</em>s
+	  that have access to the
+		system in the current session. The <em>Identity</em> always contains the world and
 		the machine that produced the request. If you logged in, the user is also
-		contained in the identity.</p>
+		contained in the <em>Identity</em>.</p>
 	<p>For instance, if you log in from the machine 192.168.0.16 as the user john,
-		your identity contains this machine, this user and the world.</p>
+		the <em>Identity</em> of the client contains</p>
+  <ul>
+    <li>the machine 192.168.0.16,</li>
+    <li>the user john</li>, and
+    <li>the world.</li>
+  </ul>
 </section>
 
 
-<section>
-	<title>Accreditable</title>
-	<p>An Accreditable can be accredited with roles at URLs. Lenya currently
-		supports the following accreditables:</p>
+<section><title>Accreditable</title>
+  <p>An <em>Accreditable</em> can be accredited with <em>Role</em>s in <em>Policies</em>.
+	Lenya currently supports the following <em>Accreditable</em>s:</p>
 	<ul>
 		<li>users</li>
 		<li>machines (accredition not implemented, use IP ranges instead)</li>
@@ -69,10 +80,10 @@
 
 <section>
 	<title>Credential</title>
-	<p>A Credential assigns a set of Roles to an Accreditable, e.g.:</p>
+	<p>A <em>Credential</em> assigns a set of <em>Role</em>s to an <em>Accreditable</em>, e.g.:</p>
 	<ul>
-		<li><code>news_editors: editor, reviewer</code> means "The group 
-			<code>news_editors</code> has the roles <code>editor</code> and <code>
+		<li><code>news_editors: editor, reviewer</code><br/> means "The group 
+			<code>news_editors</code> has the <em>Role</em>s <code>editor</code> and <code>
 			reviewer</code>."</li>
 	</ul>
 </section>
@@ -80,9 +91,9 @@
 
 <section>
 	<title>Policy</title>
-	<p>A Policy defines a set of Credentials for a certain URL. It has the
-		responsibility to return all Roles of an Accreditable at a certain URL.</p>
-	<p>If for instance the policy for the URL /tv/news contains the credentials</p>
+	<p>A <em>Policy</em> defines a set of <em>Credential</em>s for a certain URL. It has the
+		responsibility to return all <em>Role</em>s of an <em>Accreditable</em> at a certain URL.</p>
+	<p>If for instance the <em>Policy</em> for the URL /tv/news contains the <em>Credential</em>s</p>
 	<ul>
 		<li>
 			<code>news_editors: editor, reviewer</code>
@@ -95,14 +106,14 @@
 		</li>
 	</ul>
 	<p>and user <code>john</code> belongs to the group <code>news_editors</code> 
-		and has logged in from the machine <code>192.168.0.72</code>, the policy
-		returns the role set <code>editor, reviewer, admin, visitor</code> for the
-		accreditable <code>john</code>.</p>
-	<p>A policy may not contain invalid accreditables. E.g., if a user is deleted
+		and has logged in from the machine <code>192.168.0.72</code>, the <em>Policy</em>
+		returns the <em>Role</em>s <code>editor, reviewer, admin, visitor</code> for the
+		<em>Accreditable</em> <code>john</code>.</p>
+	<p>A <em>Policy</em> may not contain invalid <em>Accreditable</em>s.
+	  E.g., if a user is deleted
 		and another user with the same ID is created, he may not get the same
 		privileges as the former one.</p>
 </section>
-
 
   </body>
 </document>

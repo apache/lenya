@@ -15,8 +15,8 @@
 	
 <section>
 	<title>Introduction</title>
-	<p>An access controller can be used to authenticate entities and to authorize
-		requests.</p>
+	<p>An <em>AccessController</em> has the responsibility to authenticate
+	  clients and to authorize requests.</p>
 </section>
 <section>
 	<title>Defining the Role in lenya.roles</title>
@@ -24,22 +24,22 @@
     shorthand="access-controller"
     default-class="org.apache.lenya.cms.ac2.BypassableAccessController"/>]]></source>
 </section>
-			
+
 <section>
 	<title>Declaring an AccessController in cocoon.xconf</title>
 	
 	<p>
-		Each AccessController component needs a type that is attached to the
-		role attribute, separated with a slash (/). This allows you to choose an
-		AccessController in your publication in combination with the
-		Publication<link href="accesscontrollerresolvers.html">AccessControllerResolver</link>.
-		The following example shows the declaration of an AccessController with
-		the type <em>global</em>:
+		Each <em>AccessController</em> component needs a type that is attached to the
+		<code>role</code> attribute, separated with a slash (/). This allows you to choose an
+		<em>AccessController</em> in your publication in combination with the
+		<em>Publication<link href="accesscontrollerresolvers.html">AccessControllerResolver</link></em>.
+		The following example shows the declaration of an <em>AccessController</em> with
+		the type <em>bypassable</em>:
 	</p>
 	
-	<source><![CDATA[<component logger="lenya.ac.accesscontroller.global"
+	<source><![CDATA[<component logger="lenya.ac.accesscontroller.bypassable"
     class="org.apache.lenya.cms.ac2.BypassableAccessController"
-    role="org.apache.lenya.cms.ac2.AccessController/global">
+    role="org.apache.lenya.cms.ac2.AccessController/bypassable">
     ...
 </component>]]></source>
 
@@ -47,56 +47,32 @@
 
 	<section>
 		<title>Default Access Controller</title>
-		<p>The DefaultAccessController combines an
+		<p>The <em>DefaultAccessController</em> combines an
 			<link href="authenticators.html">Authenticator</link>, a set of
 			<link href="authorizers.html">Authorizers</link>, an
 			<link href="accreditablemanagers.html">AccreditableManager</link> and a
 			<link href="policymanagers.html">PolicyManager</link> to perform these tasks.</p>
-		<section>
-			<title>Declaring an DefaultAccessController in cocoon.xconf</title>
-			<p>
-				The DefaultAccessController configuration includes the configuration
-				of its sub-components, as you see in the following example:
-			</p>
-			<source><![CDATA[<component logger="lenya.ac.accesscontroller.global"
+			<source><![CDATA[<component logger="lenya.ac.accesscontroller.default"
     class="org.apache.lenya.cms.ac2.DefaultAccessController"
-    role="org.apache.lenya.cms.ac2.AccessController/global">
-    
-  <accreditable-manager type="file">
-    <parameter name="directory"
-        value="context:///lenya/config/ac/passwd"/>
-  </accreditable-manager>
-  
-  <policy-manager type="file"/>
-  
-  <authorizer type="policy"/>
-  <authorizer type="workflow"/>
-  <authorizer type="usecase"/>
-  
-</component>]]></source>
-		</section>
+    role="org.apache.lenya.cms.ac2.AccessController/default"/>]]></source>
 	</section>
 
 <section>
 	<title>Bypassable Access Controller</title>
-	<p>The BypassableAccessController is a DefaultAccessController that can be
+	<p>The <em>BypassableAccessController</em> is a <em>DefaultAccessController</em> that can be
 		bypassed for certain URL patterns. For URLs that match those patterns
 		(regular expressions), access is granted for free.</p>
 		
-		<section>
-			<title>Declaring an DefaultAccessController in cocoon.xconf</title>
 			<p>
-				In addition to the DefaultAccessController, the BypassableAccessController
-				allows the definition of a regular expresssion for the public URL
+				The <em>BypassableAccessController</em>
+				allows the definition of a regular expression for the public URL
 				patterns:
 			</p>
-			<source><![CDATA[<component logger="lenya.ac.accesscontroller.global"
+			<source><![CDATA[<component logger="lenya.ac.accesscontroller.bypassable"
     class="org.apache.lenya.cms.ac2.BypassableAccessController"
-    role="org.apache.lenya.cms.ac2.AccessController/global">
-  ...
+    role="org.apache.lenya.cms.ac2.AccessController/bypassable">
   <public>.*[.]css|.*[.]jpg|.*[.]gif</public>
 </component>]]></source>
-		</section>
 </section>
 
 

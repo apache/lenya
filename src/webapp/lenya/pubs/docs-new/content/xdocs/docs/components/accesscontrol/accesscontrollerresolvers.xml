@@ -15,17 +15,21 @@
 	
 <section>
 	<title>Introduction</title>
-	<p>An AccessControllerResolver resolves the appropriate AccessController for a URL.</p>
+	<p>
+	In Lenya, the <em>AccessController</em> is chosen dynamically,
+	depending on the requested URL.
+	An <em>AccessControllerResolver</em> resolves the appropriate
+	<em>AccessController</em> for a URL.</p>
 </section>
 
 <section>
 	<title>Defining the Roles in lenya.roles</title>
 	
-	<p>To obtain an AccessControllerResolver, the AccessControllerResolverSelector is
-		used. A component which wants to obtain an AccessController asks the
-		selector for the <code>composable</code> AccessControllerResolver.
-		The <code>composable</code> AccessControllerResolver itself uses the
-		selector to obtain its child AccessControllerResolvers.
+	<p>To obtain an <em>AccessControllerResolver</em>, the <em>AccessControllerResolverSelector</em> is
+		used. A component which wants to obtain an <em>AccessController</em> asks the
+		selector for the <em>ComposableAccessControllerResolver</em>.
+		The <em>ComposableAccessControllerResolver</em> itself uses the
+		selector to obtain its child <em>AccessControllerResolver</em>s.
 		</p>
 	
 	<source><![CDATA[<role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
@@ -66,32 +70,49 @@
 
 <section>
 	<title>Publication Access Controller Resolver</title>
-	<p>The PublicationAccessControllerResolver looks for a <code>config/ac.xconf</code>
-		file inside the publication. If you want to use multiple AccessControllers
-		within your Lenya installation, just declare them in the <code>
-		cocoon-xconf.xsl</code> file and choose the type in the <code>
-		config/ac.xconf</code> file:</p>
+	<p>The <em>PublicationAccessControllerResolver</em> looks for a <code>config/ac.xconf</code>
+    file inside the publication. If you want to use multiple <em>AccessController</em>s
+    within your Lenya installation, just declare them in the <code>
+    cocoon-xconf.xsl</code> file and choose the type in the <code>config/ac.xconf</code> file.
+    The <code>type</code> attribute selects an <em>AccessController</em>
+    from the definitions in <code>cocoon.xconf</code>.
+  </p>
+  <p>
+		You have to configure the complete <em>AccessController</em> in this file. For instance,
+		if you want to use a <em>BypassableAccessController</em> together with
+		a certain set of components, you declare it as follows:</p>
 	<source><![CDATA[<?xml version="1.0"?>
-<access-controller type="publication-file">
-  <authorizer type="usecase">
-    <config-file
-        src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/>
-  </authorizer>
-  <accreditable-manager>
+<access-controller type="bypassable">
+  
+  <accreditable-manager type="file">
     <parameter name="directory"
-        value="context:///lenya/pubs/default/config/ac/passwd"/>
+        value="context:///lenya/pubs/mypub/config/ac/passwd"/>
   </accreditable-manager>
-</access-controller>]]></source>
-	<p>As you see here, you can put additional configuration code inside the 
-		<code><![CDATA[<access-controller>]]></code> element. This allows you to use
-		the same AccessController type for multiple publications with different
-		configurations.</p>
+  
+  <policy-manager type="document">
+    <policy-manager type="file">
+      <parameter name="directory"
+          value="context:///lenya/pubs/mypub/config/ac/policies"/>
+    </policy-manager>
+  </policy-manager>
+  
+  <authorizer type="policy"/>
+  
+  <authorizer type="usecase">
+    <parameter name="configuration"
+        value="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/>
+  </authorizer>
+  
+  <authorizer type="workflow"/>
+  
+</access-controller>
+]]></source>
 </section>
 
 <section>
 	<title>Configurable Access Controller Resolver</title>
-	<p>The ConfigurableAccessControllerResolver can be configured with an
-		AccessController directly inside <code>cocoon.xconf</code>:</p>
+	<p>The <em>ConfigurableAccessControllerResolver</em> can be configured with an
+		<em>AccessController</em> directly inside <code>cocoon.xconf</code>:</p>
 	<source><![CDATA[<component-instance logger="lenya.ac.accesscontrollerresolver"
     class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
     name="global">
@@ -101,10 +122,10 @@
 
 <section>
 	<title>Composable Access Controller Resolver</title>
-	<p>The ComposableAccessControllerResolver is configured with a list of
-		AccessControllerResolvers. Each one of these resolvers is invoked until one
-		is successful. If no resolver finds an AccessController, the
-		ComposableAccessControllerResolver returns <code>null</code>.</p>
+	<p>The <em>ComposableAccessControllerResolver</em> is configured with a list of
+		<em>AccessControllerResolver</em>s. Each one of these resolvers is invoked until one
+		is successful. If no resolver finds an <em>AccessController</em>, the
+		<em>ComposableAccessControllerResolver</em> returns <code>null</code>.</p>
 		
 	<source><![CDATA[<component-instance logger="lenya.ac.accesscontrollerresolver"
     class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"

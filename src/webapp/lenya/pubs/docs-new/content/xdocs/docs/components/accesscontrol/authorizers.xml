@@ -15,22 +15,39 @@
 	
 <section>
 	<title>Introduction</title>
-	<p>An authorizer checks if an identity is authorized to invoke a certain request. The DelegatingAuthorizerAction tries to resolve an AccessController for the URL. If an AccessController could be resolved, its Authorizer is used to authorize the request. If no AccessController could be found, the access to the request is granted for free.</p>
+	<p>An <em>Authorizer</em> checks if an <em>Identity</em> is authorized
+	to invoke a certain request.
+	</p>
+	
+	<p>
+	The <em>DelegatingAuthorizerAction</em> tries to
+	resolve an <em>AccessController</em> for the URL. If an <em>AccessController</em>
+	could be resolved, its <code>authorize(Request)</code> method is used to authorize the request.
+	If no <code>AccessController</code> could be found, the access to the request
+	is granted for free.</p>
+	
+	<p>
+	  The <em>DefaultAccessController</em> delegates the authorization to its
+	  <em>Authorizer</em>s. Only when all <em>Authorizer</em>s return <code>true</code>,
+	  the request is authorized.
+	</p>
 </section>
 	
 	<section>
 		<title>PolicyAuthorizer</title>
-		<p>A PolicyAuthorizer uses policies for authorizing.</p>
+		<p>A <em>PolicyAuthorizer</em> uses <em>Policies</em> for authorizing. It returnes <code>true</code>,
+		when the current <em>Identity</em> has at least one <em>Role</em> for the requested URL.</p>
 	</section>
 	
 	<section>
 		<title>UsecaseAuthorizer</title>
-		<p>This authorizer looks for the <code>lenya.usecase</code> request
-			parameter and checks the usecase policy file for the roles that are
+		<p>This <em>Authorizer</em> looks for the <code>lenya.usecase</code> request
+			parameter and checks the usecase policy file for the <em>Role</em>s that are
 			allowed to execute this usecase. The location of this file is defined
-			using the <code><![CDATA[<config-file>]]></code> tag:</p>
+			using the <code>configuration</code> parameter which points to a URL:</p>
 		<source><![CDATA[<authorizer type="usecase">
-  <config-file src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/>
+  <parameter name="configuration"
+      value="context:///lenya/pubs/mypub/config/ac/usecase-policies.xml"/>
 </authorizer>]]></source>
 
 		<p>The usecase policy file might look as follows:</p>
@@ -40,19 +57,26 @@
   <usecase id="create">
     <role id="editor"/>
   </usecase>
+  <usecase id="rename">
+    <role id="editor"/>
+  </usecase>
 </usecases>]]></source>
 	</section>
 	
 	<section>
 		<title>WorkflowAuthorizer</title>
-		<p>The WorkflowAuthorizer is responsible for protecting workflow
+		<p>The <em>WorkflowAuthorizer</em> is responsible for protecting workflow
 			transitions. Therefore it</p>
 		<ul>
 			<li>looks for the <code>lenya.event</code> request parameter,</li>
 			<li>determines the current state of the workflow instance, and</li>
-			<li>checks if the event may be invoked by one of the current roles in this
+			<li>checks if the event may be invoked by one of the current <em>Role</em>s in this
 				state.</li>
 		</ul>
+		
+		<p>The <em>WorkflowAuthorizer</em> has no configuration options:</p>
+		
+		<source><![CDATA[<authorizer type="workflow"/>]]></source>
 	</section>
 	
   </body>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">-->
+<!DOCTYPE faqs PUBLIC
+       "-//APACHE//DTD FAQ V1.1//EN"
+       "faq-v11.dtd">
+<faqs title="Access Control FAQ">
+	<authors>
+		<person name="Andreas Hartmann" email="andreas@apache.org"/>
+	</authors>
+
+<part><title>Customizing Access Control</title>
+
+<faq>
+<question>How can I store my users in a database?</question>
+
+<answer>
+<p>You have to implement a <em>UserManager</em> wich accesses the
+database to obtain the user information. Additionally, you have to
+implement an <em>AccreditableManager</em> which uses this <em>UserManager</em>.
+This <em>AccreditableManager</em> has to be declared in <code>cocoon.xconf</code>
+and assigned to your <em>AccessController</em> in <code>lenya/pubs/mypub/config/ac/ac.xconf</code>.
+</p>
+</answer>
+</faq>
+
+</part>
+
+</faqs>

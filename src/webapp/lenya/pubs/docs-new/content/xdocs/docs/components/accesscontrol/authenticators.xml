@@ -15,7 +15,11 @@
 	
 <section>
 	<title>Introduction</title>
-	<p>An authenticator is used to identify a client.</p>
+	<p>
+	An authenticator is used to identify a client.
+	It is supposed to setup the <em>Identity</em> object which is attached
+	to the session.
+	</p>
 </section>
 
 <section>
@@ -26,17 +30,24 @@
 </section>
 
 	<section>
-		<title>UserAuthenticator</title>
-		<p>The UserAuthenticator uses the request parameters</p>
+		<title>The UserAuthenticator</title>
+		<p>The <em>UserAuthenticator</em> uses the request parameters</p>
 		<ul>
 			<li><code>username</code> and</li>
 			<li><code>password</code></li>
 		</ul>
-		<p>to authenticate or reject a user.</p>
+		<p>to authenticate or reject a user. It is configured in <code>cocoon.xconf</code>
+		as follows:</p>
 		
 	<source><![CDATA[<component logger="lenya.ac.authenticator"
     class="org.apache.lenya.cms.ac2.UserAuthenticator"
     role="org.apache.lenya.cms.ac2.Authenticator"/>]]></source>
+    
+    <p>
+      When a valid username/password combination is entered, the previous
+      user is removed from the session <em>Identity</em> object
+      and the current user is added.
+    </p>
 		
 	</section>
 

@@ -15,8 +15,9 @@
 	
 		<section>
 			<title>Introduction</title>
-			<p>An AccreditableManager combines a UserManager, a GroupManager, an
-				IPRangeManager and a RoleManager.</p>
+			<p>
+			An <em>AccreditableManager</em> combines a <em>UserManager</em>,
+			a <em>GroupManager</em>, an <em>IPRangeManager</em> and a <em>RoleManager</em>.</p>
 		</section>
 		<section>
 			<title>UserManager</title>
@@ -32,7 +33,7 @@
 		</section>
 		<section>
 			<title>RoleManager</title>
-			<p>A RoleManager manages roles.</p>
+			<p>A RoleManager manages <em>Role</em>s.</p>
 		</section>
 	
   </body>

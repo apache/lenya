@@ -19,13 +19,14 @@
 		<integrator-dev-guide label="Integrator/Dev Guide">
 			<components href="components/" label="Components">
 				<accesscontrol href="accesscontrol/" label="Access&#160;Control">
-					<terms href="terms.html" label="Basic Terms"/>
-					<terms href="accesscontrollers.html" label="Access&#160;Controllers"/>
-					<terms href="accesscontrollerresolvers.html" label="Access Controller Resolvers"/>
-					<terms href="authenticators.html" label="Authenticators"/>
-					<terms href="authorizers.html" label="Authorizers"/>
-					<terms href="policymanagers.html" label="Policies and Policy&#160;Managers"/>
-					<terms href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
+					<ac-terms href="terms.html" label="Basic Terms"/>
+					<accesscontrollers href="accesscontrollers.html" label="Access&#160;Controllers"/>
+					<ac-resolvers href="accesscontrollerresolvers.html" label="Access Controller Resolvers"/>
+					<authenticators href="authenticators.html" label="Authenticators"/>
+					<authorizers href="authorizers.html" label="Authorizers"/>
+					<policies href="policymanagers.html" label="Policies and Policy&#160;Managers"/>
+					<accr-mng href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
+					<ac-faq href="faq.html" label="FAQ"/>
 				</accesscontrol>
 				<authoring href="authoring/" labe="Authoring">
 					<namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
