@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: rco-exception.xsl,v 1.12 2004/04/29 14:46:08 gregor Exp $ -->
+<!-- $Id: rco-exception.xsl,v 1.13 2004/05/22 19:43:41 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -24,8 +24,6 @@
   >
   <xsl:import href="../util/page-util.xsl"/>
   
-  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
-
   <xsl:template match="/">
     <xsl:apply-templates/>
   </xsl:template>
@@ -85,7 +83,7 @@
  	    <div class="lenya-box">
 	    <div class="lenya-box-title">Generic Exception</div>
 	      <div class="lenya-box-body">
-            <p>
+            <p>Reason: <xsl:value-of select="rc:message"/><br />
             Check the log files.
             </p>
             <table>

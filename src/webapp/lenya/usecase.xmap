@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.209 2004/05/17 14:54:30 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.210 2004/05/22 19:43:41 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -542,7 +542,6 @@
 
 		<!-- Validation succeeded -->
 		<!-- Save: Overwrite original file  -->
-		<!--<map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>-->
 		<map:generate src="pubs/{../1}/work/oneformeditor/authoring/{../2}.xml"/>
 		<map:transform src="xslt/authoring/edit/addSourceTags.xsl">
 		  <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
@@ -798,6 +797,7 @@
                     <map:parameter name="user" value="{user}"/>
                     <map:parameter name="filename" value="{filename}"/>
                     <map:parameter name="date" value="{date}"/>
+                    <map:parameter name="message" value="{message}"/>
                   </map:generate>
                   <map:transform src="xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>

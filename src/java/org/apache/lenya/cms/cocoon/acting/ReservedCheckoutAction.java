@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReservedCheckoutAction.java,v 1.17 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: ReservedCheckoutAction.java,v 1.18 2004/05/22 19:43:41 gregor Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -89,7 +89,7 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
         } catch (Exception e) {
             actionMap.put("exception", "genericException");
             actionMap.put("filename", getFilename());
-            actionMap.put("message", "" + e);
+            actionMap.put("message", "" + e.getMessage());
             log.error("The document " + getFilename() + " couldn't be checked out: ", e);
 
             return actionMap;
