@@ -76,11 +76,13 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.34 2004/02/06 16:47:36 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.35 2004/02/16 10:27:50 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
  * FIXME: There seems to be another problem with default namespaces
+ *
+ * WARNING: Internet Explorer does not send the name without the coordinates if input type is equals image. Mozilla does.
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
     org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HTMLFormSaveAction.class);
@@ -187,31 +189,18 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                         xupdateModifications = update(request, pname, select, selectionNodeList);
                                     }
                                 } else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">.x")) {
-                                // FIXME: Internet Explorer does not send the name without the coordinates if input type is equals image. Mozilla does.
-                                //} else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">")) {
-                                    // no .x and .y from input type="image"
                                     xupdateModifications = append(pname.substring(0, pname.length()-2));
-                                    //xupdateModifications = append(pname);
                                 } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">.x")) {
-                                //} else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">")) {
-                                    // no .x and .y from input type="image"
                                     xupdateModifications = insertBefore(pname.substring(0, pname.length()-2));
-                                    //xupdateModifications = insertBefore(pname);
                                 } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith("/>")) {
-                                    // select:option
+                                    // QUESTIONMARK: select:option
                                     if (!request.getParameter(pname).equals("null")) {
                                         xupdateModifications = insertAfter(request.getParameter(pname));
                                     }
                                 } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">.x")) {
-                                //} else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">")) {
-                                    // no .x and .y from input type="image"
                                     xupdateModifications = insertAfter(pname.substring(0, pname.length()-2));
-                                    //xupdateModifications = insertAfter(pname);
                                 } else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>.x")) {
-                                //} else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>")) {
-                                    // no .x and .y from input type="image"
                                     xupdateModifications = remove(pname.substring(0, pname.length()-2));
-                                    //xupdateModifications = remove(pname);
                                 }
 
                                 if (xupdateModifications != null) {
@@ -228,6 +217,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
 
 
+// DEBUG:
 /*
                     java.io.StringWriter writer = new java.io.StringWriter();
                     org.apache.xml.serialize.OutputFormat OutFormat = new org.apache.xml.serialize.OutputFormat("xml", "UTF-8", true);
@@ -286,6 +276,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
             }
         }
     }
+
     /**
      * Get attributes
      */
