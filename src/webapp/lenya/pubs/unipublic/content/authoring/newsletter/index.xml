@@ -6,10 +6,10 @@
 		<subject>Newsletter 1/2003</subject>
 	</email>
 	<title>Newsletter-Titel</title>
-	<abstract></abstract>
+	<abstract>Das ist ein Beispiel-Newsletter.</abstract>
 <articles>
   <article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
   <article channel="magazin" section="geist" year="2002" dir="0470"/>
 </articles>
-	<footer></footer>
+	<footer>Und das ist die Fusszeile.</footer>
 </newsletter>
