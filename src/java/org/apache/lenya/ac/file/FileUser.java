@@ -18,6 +18,7 @@
 package org.apache.lenya.ac.file;
 
 import java.io.File;
+import java.io.Serializable;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -33,7 +34,7 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  * File-based user implementation.
  * @version $Id$
  */
-public class FileUser extends AbstractUser implements Item {
+public class FileUser extends AbstractUser implements Item, Serializable {
 
     protected static final String ID = "identity";
     protected static final String EMAIL = "email";
