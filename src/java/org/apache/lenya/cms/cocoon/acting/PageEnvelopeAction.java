@@ -35,7 +35,7 @@ public class PageEnvelopeAction
         
         result.put(PageEnvelope.PUBLICATION_ID, envelope.getPublication().getId());
         result.put(PageEnvelope.CONTEXT, envelope.getContext());
-        result.put(PageEnvelope.STAGE, envelope.getStage());
+        result.put(PageEnvelope.AREA, envelope.getArea());
         
         return result;
     }

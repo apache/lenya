@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: doctypes.xmap,v 1.3 2003/04/17 12:09:51 egli Exp $ -->
+<!-- CVS: $Id: doctypes.xmap,v 1.4 2003/04/17 14:33:04 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -28,14 +28,14 @@
   <map:pipelines>
 
     <map:pipeline>
-      <!-- pattern="{stage}/{doctype}/{document-id}.html" -->
+      <!-- pattern="{area}/{doctype}/{document-id}.html" -->
       <map:match pattern="*/simple/**.html">
         <map:act type="page-envelope">
           <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page">
-	    <!-- /navigation/{publication-id}/{stage}/tabs/{document-id}.html.xml -->
-            <map:part src="cocoon://navigation/{publication-id}/{stage}/tabs/{../2}.html.xml"/>
-            <map:part src="cocoon://navigation/{publication-id}/{stage}/menu/{../2}.html.xml"/>
-            <map:part src="content/{stage}/{../2}.xml"/>
+	    <!-- /navigation/{publication-id}/{area}/tabs/{document-id}.html.xml -->
+            <map:part src="cocoon://navigation/{publication-id}/{area}/tabs/{../2}.html.xml"/>
+            <map:part src="cocoon://navigation/{publication-id}/{area}/menu/{../2}.html.xml"/>
+            <map:part src="content/{area}/{../2}.xml"/>
           </map:aggregate>
           <map:transform src="xslt/page2xhtml.xsl">
             <map:parameter name="root" value="{context-prefix}/{publication-id}/"/>

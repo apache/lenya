@@ -28,12 +28,12 @@ This sitemap creates default navigation components.
       <map:serialize type="xml"/>
     </map:match>
   
-    <!-- pattern: <pub-id>/<stage>/<nav-element>/<path>.xml -->
+    <!-- pattern: <pub-id>/<area>/<nav-element>/<path>.xml -->
     <map:match pattern="*/*/*/**.xml">
     
       <!-- load sitetree -->
       <!--<map:generate src="cocoon:/{1}/{2}/sitetree.xml"/>-->
-      <!--                     pub-id      stage -->
+      <!-- src="pubs/{publication-id}/content/{area}/sitetree.xml" -->
       <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
       
       <!-- use publication-specific presentation if available -->

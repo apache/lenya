@@ -25,12 +25,12 @@ public class PageEnvelope {
 
     public static final String PUBLICATION_ID = "publication-id";
     public static final String CONTEXT = "context-prefix";
-    public static final String STAGE = "stage";
-    public static final int STAGE_POS = 3;
+    public static final String AREA = "area";
+    public static final int AREA_POS = 3;
     
     private Publication publication;
     private String context;
-    private String stage;
+    private String area;
 
     /** Creates a new instance of PageEnvelope */
     public PageEnvelope(SourceResolver resolver, Request request)
@@ -48,10 +48,11 @@ public class PageEnvelope {
         path = path.replaceAll("file:", "");
         path = path.replace('/', File.separatorChar);
 
+	// compute area
 	String requestURI = request.getRequestURI();
 	log.debug("requestURI: " + requestURI);
 	directories = requestURI.split("/");
-        stage = directories[STAGE_POS];;
+        area = directories[AREA_POS];;
 
         publication = new Publication(publicationId, path);
         context = request.getContextPath();
@@ -69,8 +70,8 @@ public class PageEnvelope {
         return context;
     }
     
-    public String getStage() {
-        return stage;
+    public String getArea() {
+        return area;
     }
     
 }
