@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publication.java,v 1.47 2004/04/04 15:25:53 gregor Exp $  */
+/* $Id: Publication.java,v 1.48 2004/04/07 10:05:52 michi Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -31,6 +31,7 @@ public interface Publication {
     String AUTHORING_AREA = "authoring";
     String STAGING_AREA = "staging";
     String LIVE_AREA = "live";
+    String PENDING_AREA = "pending";
     String ADMIN_AREA = "admin";
     String ARCHIVE_AREA = "archive";
     String TRASH_AREA = "trash";
