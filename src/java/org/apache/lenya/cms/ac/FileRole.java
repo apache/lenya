@@ -1,5 +1,5 @@
 /*
- * $Id: FileRole.java,v 1.1 2003/06/02 09:26:36 egli Exp $
+ * $Id: FileRole.java,v 1.2 2003/06/02 17:15:00 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -55,6 +55,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author egli
@@ -68,16 +69,31 @@ public class FileRole extends Role {
 	public static final String CLASS_ATTRIBUTE = "class";
 
 
+	/**
+	 * @param name
+	 */
+	public FileRole(String name) {
+		super(name);
+	}
+
+	/**
+	 * @param config
+	 * @throws ConfigurationException
+	 */
 	public FileRole(Configuration config) throws ConfigurationException {
 		super(config.getAttribute(NAME_ATTRIBUTE));
 	}
 	
-	public void save() throws AccessControlException {
+	/**
+	 * @param publication
+	 * @throws AccessControlException
+	 */
+	public void save(Publication publication) throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
-		// TODO where do I get the file from?
-		File xmlfile = null;
+		File xmlPath = RoleManager.instance(publication).getPath();
+		File xmlfile = new File(xmlPath, getName() + RoleManager.SUFFIX);
 		try {
 			serializer.serializeToFile(xmlfile, config);
 		} catch (Exception e) {

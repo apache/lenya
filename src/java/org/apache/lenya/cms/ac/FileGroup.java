@@ -1,5 +1,5 @@
 /*
- * $Id: FileGroup.java,v 1.1 2003/06/02 09:27:23 egli Exp $
+ * $Id: FileGroup.java,v 1.2 2003/06/02 17:15:00 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -56,6 +56,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author egli
@@ -78,12 +79,12 @@ public class FileGroup extends Group {
 		//		}		
 	}
 	
-	public void save() throws AccessControlException {
+	public void save(Publication publication) throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
-		// TODO where do I get the file from?
-		File xmlfile = null;
+		File xmlPath = GroupManager.instance(publication).getPath();
+		File xmlfile = new File(xmlPath, name + GroupManager.SUFFIX);
 		try {
 			serializer.serializeToFile(xmlfile, config);
 		} catch (Exception e) {

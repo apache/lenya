@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.3 2003/06/02 09:28:43 egli Exp $
+ * $Id: FileUser.java,v 1.4 2003/06/02 17:15:00 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -56,6 +56,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author egli
@@ -131,12 +132,12 @@ public class FileUser extends User {
 	/* (non-Javadoc)
 	 * @see org.apache.lenya.cms.ac.User#save()
 	 */
-	public void save() throws AccessControlException {
+	public void save(Publication publication) throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
-		// TODO where do I get the file from?
-		File xmlfile = null;
+		File xmlPath = UserManager.instance(publication).getPath();
+		File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
 		try {
 			serializer.serializeToFile(xmlfile, config);
 		} catch (Exception e) {
