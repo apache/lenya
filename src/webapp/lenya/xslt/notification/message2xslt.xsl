@@ -38,24 +38,25 @@
 <xsl:template match="/not:notification[@enabled = 'true']">
 	
 	<xslt:template match="not:notification">
-		<input type="hidden" name="properties.mail.subject"
+		<input type="hidden" name="notification.subject"
 			value="{not:message/not:subject}"/>
 		<div class="lenya-box">
 			<div class="lenya-box-title">Notification</div>
 			<div class="lenya-box-body">
 			<table class="lenya-table-noborder">
 				<tr>
-					<td class="lenya-entry-caption">Recipient:</td>
+					<td class="lenya-entry-caption">Recipient(s):</td>
 					<td>
-						<xslt:apply-templates select="not:users"/>
+						<xslt:apply-templates/>
 					</td>
 				</tr>
 				<tr>
 					<td class="lenya-entry-caption">Comment:</td>
 					<td>
-						<textarea name="properties.mail.message" class="lenya-form-element">
-							<xsl:value-of select="not:message/not:body"/>
-							&#160;
+						<textarea name="notification.message" class="lenya-form-element">
+							<xsl:text/>
+							<xsl:value-of select="normalize-space(not:message/not:body)"/>
+							<xsl:text>&#160;</xsl:text>
 						</textarea>
 					</td>
 				</tr>
@@ -64,37 +65,37 @@
 		</div>
 	</xslt:template>
 	
-	<xslt:template match="not:users">
-		<xslt:choose>
-			<xslt:when test="count(not:user) &gt; 1">
-				<select name="properties.mail.tolist" class="lenya-form-element">
-					<xslt:apply-templates select="not:user" mode="multiple"/>
-				</select>
-			</xslt:when>
-			<xslt:otherwise>
-				<xslt:apply-templates select="not:user" mode="single"/>
-			</xslt:otherwise>
-		</xslt:choose>
+	
+	<xslt:template match="not:select">
+		<select name="notification.tolist" class="lenya-form-element">
+			<xslt:for-each select="not:users/not:user">
+				<option>
+					<xslt:attribute name="value"><xslt:value-of select="@email"/></xslt:attribute>
+					<xslt:value-of select="@id"/>
+					<xslt:if test="@name != ''">&#160;(<xslt:value-of select="@name"/>)</xslt:if>
+				</option>
+			</xslt:for-each>
+		</select>
 	</xslt:template>
 	
-	<xslt:template match="not:user" mode="multiple">
-		<option>
-			<xslt:attribute name="value"><xslt:value-of select="@email"/></xslt:attribute>
-			<xslt:value-of select="@id"/>
-			<xslt:if test="@name != ''">&#160;(<xslt:value-of select="@name"/>)</xslt:if>
-		</option>
+	
+	<xslt:template match="not:textarea">
+		<textarea name="notification.tolist" class="lenya-form-element">&#160;</textarea>
 	</xslt:template>
 	
-	<xslt:template match="not:user" mode="single">
-		<input type="hidden" name="properties.mail.tolist">
-			<xslt:attribute name="value"><xslt:value-of select="@email"/></xslt:attribute>
+	
+	<xslt:template match="not:preset">
+		<xslt:variable name="user" select="not:users/not:user"/>
+		<input type="hidden" name="notification.tolist">
+			<xslt:attribute name="value"><xslt:value-of select="$user/@email"/></xslt:attribute>
 		</input> 
 		<span style="white-space: nobreak">
-			<xslt:value-of select="@id"/>
-			<xslt:if test="@name != ''">&#160;(<xslt:value-of select="@name"/>)</xslt:if>
+			<xslt:value-of select="$user/@id"/>
+			<xslt:if test="@name != ''">&#160;(<xslt:value-of select="$user/@name"/>)</xslt:if>
 		</span>
 	</xslt:template>
-
+	
+	
 	<xslt:template match="@*|node()">
 		<xslt:copy><xslt:apply-templates select="@*|node()"/></xslt:copy>
 	</xslt:template>
