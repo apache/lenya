@@ -5,6 +5,8 @@ p {  background-color: #FFFFFF; margin: 10px 0px 0px 0px; font-family: Verdana, 
 
 ol.wide ul li { margin-bottom: 0px; }
 ol.wide li { margin-bottom: 1.5em; }
+ul.wide ul li { margin-bottom: 0px; }
+ul.wide li { margin-bottom: 1.5em; }
 
 .textheader { display: none;  }
 .headerlogo { padding: 0px 2px 2px 0px;  }

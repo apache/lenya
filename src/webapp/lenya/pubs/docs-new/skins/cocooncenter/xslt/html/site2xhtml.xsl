@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.3 2003/05/05 11:37:05 andreas Exp $
+$Id: site2xhtml.xsl,v 1.4 2003/05/05 15:30:50 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -127,19 +127,20 @@ $Id: site2xhtml.xsl,v 1.3 2003/05/05 11:37:05 andreas Exp $
 
           </tr>
           
-          
+          <!--
           <tr>
           <td colspan="4" bgcolor="{$background-bars}" width="50%" align="left">
-            <!-- ============ Page number =========== -->
+            <!- ============ Page number =========== ->
             <div style="padding: 3px">
             <span class="trail">
               <script type="text/javascript" language="JavaScript" src="{$root}skin/breadcrumbs.js"></script>
-              <!-- <b>Page 1 of 5</b> -->
+              <!- <b>Page 1 of 5</b> ->
             </span>
             <img src="{$spacer}" alt="" height="8" width="10" />
             </div>
           </td>
           </tr>
+          -->
           
           <tr>
             <td colspan="2" bgcolor="{$header-color}" valign="bottom">
