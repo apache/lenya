@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RevisionController.java,v 1.28 2004/07/16 15:43:59 edith Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.rc;
 
@@ -51,21 +51,6 @@ public class RevisionController {
 
     /**
      * Creates a new RevisionController object.
-     * 
-     */
-    public RevisionController() {
-        Configuration conf = new Configuration();
-        rcmlDir = conf.getRcmlDirectory();
-        if (!new File(rcmlDir).exists())
-            log.error("No such directory: " + rcmlDir);
-        backupDir = conf.getBackupDirectory();
-        if (!new File(backupDir).exists())
-            log.error("No such directory: " + backupDir);
-        rootDir = "conf.rootDirectory";
-    }
-
-    /**
-     * Creates a new RevisionController object.
      *
      * @param rcmlDirectory The directory for the RCML files
      * @param backupDirectory The directory for the backup versions
@@ -75,16 +60,6 @@ public class RevisionController {
         this.rcmlDir = rcmlDirectory;
         this.backupDir = backupDirectory;
         this.rootDir = rootDirectory;
-    }
-
-    /**
-     * Creates a new RevisionController object.
-     *
-     * @param rootDir The publication directory
-     */
-    public RevisionController(String rootDir) {
-        this();
-        this.rootDir = rootDir;
     }
 
     /**

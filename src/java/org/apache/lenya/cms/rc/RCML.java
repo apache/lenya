@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RCML.java,v 1.27 2004/08/15 04:23:03 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.rc;
 
@@ -65,9 +65,6 @@ public class RCML {
      * Creates a new RCML object.
      */
     public RCML() {
-        /*Deprecated
-        maximalNumberOfEntries = new org.apache.lenya.xml.Configuration().maxNumberOfRollbacks;
-        */
         maximalNumberOfEntries = 10;
         maximalNumberOfEntries = (2 * maximalNumberOfEntries) + 1;
     }
