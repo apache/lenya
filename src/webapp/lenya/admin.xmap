@@ -39,6 +39,19 @@
       </map:match>
     </map:pipeline>
 
+   <map:pipeline>
+   <map:match pattern="status.html">
+    <map:generate src="status" type="status"/>
+    <map:transform src="xslt/admin/status2html.xslt">
+      <map:parameter name="contextPath" value="{request:contextPath}"/>
+    </map:transform>
+    <map:serialize type="html"/>
+<!--
+    <map:serialize type="xml"/>
+-->
+   </map:match>
+   </map:pipeline>
+
     <map:pipeline>
       <map:match pattern="**">
         <map:aggregate element="lenya" label="aggregate">
