@@ -22,7 +22,9 @@
   <!-- =========================== Pipelines ================================ -->
 
   <map:pipelines>
+
     <!-- Samples -->
+<!--
     <map:pipeline>
       <map:match pattern="mirror/img_unipublic/*.gif">
         <map:read src="resources/publication/images/live/img_unipublic/{1}.gif" mime-type="images/gif">
@@ -46,22 +48,35 @@
         <map:read src="resources/publication/html/live/{1}/index.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>
+-->
 
-    <!-- Live -->
+    <!-- Authoring -->
+    <!-- Menus -->
+    <map:pipeline>
+      <map:match pattern="menus/**.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/front.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
+      <!-- XML -->
+<!--
+      <map:match pattern="authoring/**.xml">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/authoring/menus/{1}.xml"/>
+          <map:part src="docs/publication/authoring/{1}.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform type="xinclude"/>
+        <map:serialize type="xml"/>
+      </map:match>
+-->
+
     <map:pipeline>
       <map:match pattern="*.css">
         <map:read src="resources/publication/styles/live/{1}.css" mime-type="text/css">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
-
-<!-- General Wyona -->
-      <map:match pattern="images/wyona/cms/**.gif">
-        <map:read src="../../resources/cms/images/{1}.gif" mime-type="images/gif">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-<!-- /General Wyona -->
 
       <map:match pattern="*/*.gif">
         <map:read src="resources/publication/images/live/{1}/{2}.gif" mime-type="images/gif">
@@ -85,7 +100,7 @@
       </map:match>
       <map:match pattern="index.html">
         <map:generate src="cocoon:/index.xml"/> 
-        <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Front/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
@@ -100,7 +115,10 @@
       </map:match>
 
       <map:match pattern="index.xml">
-        <map:generate src="docs/publication/live/frontpage/index.xml"/>
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/front.xml"/>
+          <map:part src="docs/publication/live/frontpage/index.xml" element="cmsbody"/>
+        </map:aggregate>
         <map:transform type="xlink">
           <map:parameter name="href" value="docs/publication/live/frontpage/index.xml"/>
         </map:transform>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<ac>
+<request>
+  <action name="read"/>
+</request>
+<policy>
+ <object match="/">
+  <subjects>
+    <group id="editor">
+      <actions>
+        <read/>
+      </actions>
+    </group>
+  </subjects>
+ </object>
+</policy>
+</ac>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.15 2002/06/07 23:37:14 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.16 2002/06/10 13:42:57 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -147,7 +147,7 @@
 
 <!-- Unipublic -->
      <map:match pattern="unipublic/**">
-       <map:mount uri-prefix="unipublic" src="wyona/cms/pubs/unipublic/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+       <map:mount uri-prefix="unipublic" src="wyona/cms/pubs/unipublic/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
 
 <!-- Materials Science -->
