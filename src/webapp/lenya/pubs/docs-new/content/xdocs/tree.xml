@@ -45,10 +45,11 @@
       <branch relURI="" doctype="XDoc" menuName="Directory structure" />
       <branch relURI="" doctype="XDoc"
       menuName="Different sitemaps and their function" />
-      <branch relURI="" doctype="XDoc" menuName="Site tree" />
+      <branch relURI="siteTree.html" doctype="XDoc" menuName="Site tree" />
       <branch relURI="" doctype="XDoc" menuName="Doctypes" />
       <branch relURI="" doctype="XDoc" menuName="URI space" />
-      <branch relURI="" doctype="XDoc" menuName="Page envelope" />
+      <branch relURI="pageEnvelope.html" doctype="XDoc" menuName="Page envelope" />
+      <branch relURI="navigation.html" doctype="XDoc" menuName="Navigation"/>
       <branch relURI="" doctype="XDoc" menuName="XHTML templating" />
       <branch relURI="" doctype="XDoc" menuName="Metadata" />
       <branch relURI="tasks/" doctype="XDoc" menuName="Tasks">

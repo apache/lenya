@@ -6,6 +6,7 @@
     <version major="0" minor="1">Initial version</version>
     <authors>
       <person name="Christian Egli" email="christian.egli@wyona.org"/>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/>
     </authors> 
     <notice></notice> 
     <abstract>Proposal for a a general framework for management of
@@ -94,6 +95,73 @@ respectively.</p>
 	  <figure src="URIParametrizer.png" alt="Diagram of URIParametrizer"/>
 	</section>
       </section>
+    </section>
+    
+    <section>
+      <title>The Sitetree Schema</title>
+      <p>The proposed sitetree schema looks as follows:</p>
+<source><![CDATA[
+<?xml version="1.0"?>
+
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.lenya.org/2003/sitetree"
+    xmlns="http://www.lenya.org/2003/sitetree"
+    elementFormDefault="qualified">
+    
+  <xs:element name="site">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="node"
+            minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="node">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="node"
+            minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="href" type="xs:string"/>
+      <xs:attribute name="label" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+    
+</xs:schema>
+]]></source>
+
+      <p>
+        An example <code>sitetree.xml</code> could look like follows:
+      </p>
+      
+<source><![CDATA[
+<site
+    xmlns="http://www.lenya.org/2003/sitetree"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation=
+        "http://www.lenya.org/2003/sitetree
+        ../../../../resources/entities/sitetree.xsd">
+    
+  <node href="index.html" label="Home"/>
+  
+  <node href="demo/" label="Demo">
+    <node href="unipublic.html" label="Unipublic"/>
+    <node href="news.html" label="Wyona News and Comments"/>
+    <node href="oscom.html" label="OSCOM"/>
+  </node>
+  
+  <node href="download/" label="Download">
+    <node href="source.html" label="Source Version"/>
+    <node href="binary.html" label="Binary Version"/>
+  </node>
+  
+  <node href="documentation/" label="Documentation"/>
+
+</site>
+]]></source>
+      
     </section>
 
     <section>

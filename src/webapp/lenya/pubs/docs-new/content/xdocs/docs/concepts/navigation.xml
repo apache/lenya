@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<document> 
+  <header> 
+    <title>The Navigation Framework</title>
+    <version major="0" minor="1">Initial version</version>
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/>
+    </authors> 
+    <notice></notice> 
+    <abstract>Proposal for a standard navigation framework.</abstract> 
+  </header> 
+  <body> 
+
+<section>
+  <title>Introduction</title>
+
+  <p>
+    To goal of the navigation framework is to
+  </p>
+  <ul>
+    <li>
+      simplify and standardize the generation of navigation
+      widgets like menubars, tabs, breadcrumb paths.
+    </li>
+  </ul>
+
+  <p>With the approach that is presented here it shall be possible to
+  </p>
+  <ul>
+    <li>
+      use pre-defined XHTML navigation components and present them
+      with a custom CSS,
+    </li>
+    <li>
+      override these components in a publication whereby the logic
+      can be reused, and
+    </li>
+    <li>
+      create and integrate new publication-specific navigation components
+      using the same scheme.
+    </li>
+  </ul>
+</section>
+    
+<section>
+  <title>Architecture</title>
+  
+  <p>
+    The navigation framework consists of the following components:
+  </p>
+    
+  <dl>
+    <dt><code>/lenya/navigation.xmap</code></dt>
+    <dd>The sitemap where the navigation components are loaded.<br/><br/></dd>
+    <dt><code>/lenya/xslt/navigation/*.xsl</code></dt>
+    <dd>The default navigation components that are shipped with Lenya.<br/><br/></dd>
+    <dt><code>/lenya/pubs/lenya/xslt/navigation/*.xsl</code></dt>
+    <dd>Custom navigation components of the publication.<br/><br/></dd>
+  </dl>
+  
+</section>
+
+<section>
+  <title>Using the Navigation Framework</title>  
+  
+  <section><title>Loading a Navigation Component</title>
+  
+    <p>
+      You can load a navigation component from the following URI:
+    </p>
+<source><![CDATA[
+cocoon://navigation/<pub-id>/<component>/<path>.xml
+]]></source>
+
+<p>
+The URI steps are:
+</p>
+<dl>
+  <dt><code>&lt;pub-id&gt;</code></dt>
+  <dd>The publicaton ID.</dd>
+  <dt><code>&lt;component&gt;</code></dt>
+  <dd>The navigation component to load (tabs, menu, etc.).</dd>
+  <dt><code>&lt;path&gt;</code></dt>
+  <dd>The navigation path. It is a concatenation of the <code>href</code>
+    attributes of the sitetree nodes that lead to the current node,
+    e.g. <code>demo/oscom.html</code> for the sitetree
+    fragment
+<source><![CDATA[
+<site xmlns="http://www.lenya.org/2003/sitetree">
+  <node href="demo/" label="Demo">
+    <node href="oscom.html" label="OSCOM"/>
+    ...
+  </node>
+  ...
+</site>
+]]></source>
+  </dd>
+</dl>
+  
+  </section>
+  
+  <section><title>Aggregating the Navigation Components</title>
+  
+  <p>
+    In the publication sitemap (<code>lenya/pubs/&lt;pub-id&gt;/sitemap.xmap</code>)
+    the navigation components are aggregated. Here you decide which components
+    you want to use:
+  </p>
+<source><![CDATA[
+    <map:pipeline>
+      <map:match pattern="navigation/**.html">
+(1)     <map:act type="page-envelope">
+
+(2)       <map:aggregate element="page" prefix="page"
+              ns="http://www.lenya.org/2003/page">
+              
+(3)         <map:part src="cocoon://navigation/
+                {publication-id}/breadcrumb/{../1}.html.xml"/>
+                
+(4)         <map:part src="cocoon://navigation/
+                {publication-id}/tabs/{../1}.html.xml"/>
+                
+(5)         <map:part src="cocoon://navigation/
+               {publication-id}/menu/{../1}.html.xml"/>
+               
+          </map:aggregate>
+          
+(7)       <map:transform src="xslt/page2xhtml.xsl">
+(8)          <map:parameter name="root"
+                 value="{context}/{publication-id}/"/>
+          </map:transform>
+          
+        </map:act>
+        
+(9)     <map:serialize type="xhtml"/>
+
+      </map:match>
+    </map:pipeline>
+]]></source>
+  
+<ol>
+  <li>
+    The <code>PageEnvelopeAction</code> provides the page envelope
+    values as sitemap parameters.
+  </li>
+  <li>
+    The navigation elements are aggregated together with other document parts.
+  </li>
+  <li>
+    Load the breadcrumb XHTML fragment.
+  </li>
+  <li>
+    Load the tabs XHTML fragment.
+  </li>
+  <li>
+    Load the menu XHTML fragment.
+  </li>
+  <li>
+    Load the remaining parts of the document.
+  </li>
+  <li>
+    Create the XHTML page.
+  </li>
+  <li>
+    The stylesheet can use this parameter to generate absolute URLs.
+  </li>
+  <li>
+    Finally, serialize the page as XHTML.
+  </li>
+</ol>
+
+  </section>
+  
+</section>
+  
+<section>
+  <title>Developing Navigation Components</title>
+  
+  <p>
+    The following contracts define the development of navigation components:
+  </p>
+  <ul>
+    <li>A navigation component is an XSLT stylesheet that is located at<br/><br/>
+    <dl>
+      <dt><code>lenya/xslt/navigation/&lt;component&gt;.xsl</code></dt>
+      <dd>for default components and<br/><br/></dd>
+      <dt><code>lenya/pubs/&lt;publication-id&gt;/lenya/xslt/&lt;component&gt;.xsl</code></dt>
+      <dd>for default components.<br/><br/></dd>
+    </dl>
+    </li>
+    <li>
+      The default components produce an XHTML fragment with the
+      top level element <![CDATA[<div class="<component>"/>]]>.
+    </li>
+  </ul>
+
+</section>
+
+  </body> 
+  <footer> 
+    <legal>© 200 wyona.org</legal> 
+  </footer>
+</document>
