@@ -19,7 +19,15 @@
 <tr>
 <td colspan="2" id="title">
   <!-- FIXME: namespace -->
-  <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/>
+  <a>
+    <xsl:attribute name="href">
+      <xsl:choose>
+        <xsl:when test="$doctype='entry'">../../../../../index.html</xsl:when>
+        <xsl:otherwise>../../index.html</xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
+    <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/>
+  </a>
 </td>
 </tr>
 <tr>
