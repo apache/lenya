@@ -8,7 +8,9 @@
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
 <publications>
   <xsl:for-each select="dir:directory">
+    <publication pid="{@name}">
     <publication xlink:href="{@name}/publication.xml" xlink:show="embed"/>
+    </publication>
   </xsl:for-each>
 </publications>
 </xsl:template>
