@@ -1,5 +1,5 @@
 /*
- * $Id: UserManager.java,v 1.7 2003/06/24 16:50:10 egli Exp $
+ * $Id: UserManager.java,v 1.8 2003/06/25 14:37:07 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -55,7 +55,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
 
 /**
@@ -75,30 +74,30 @@ public class UserManager extends ItemManager {
 	/**
 	 * Create a UserManager
 	 * 
-	 * @param publication for which the UserManager should be instanciated.
+	 * @param configurationDirectory for which the UserManager should be instanciated.
 	 * @throws AccessControlException if the UserManager could not be 
 	 * 	instantiated.
 	 */
-    protected UserManager(Publication publication)
+    protected UserManager(File configurationDirectory)
         throws AccessControlException {
 
-        super(publication);
+        super(configurationDirectory);
     }
 
     /**
      * Describe <code>instance</code> method here.
      *
-     * @param publication a <code>Publication</code> value
+     * @param configurationDirectory a directory
      * @return an <code>UserManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static UserManager instance(Publication publication)
+    public static UserManager instance(File configurationDirectory)
         throws AccessControlException {
 
-        assert publication != null;
-        if (!instances.containsKey(publication))
-            instances.put(publication, new UserManager(publication));
-        return (UserManager) instances.get(publication);
+        assert configurationDirectory != null && configurationDirectory.isDirectory();
+        if (!instances.containsKey(configurationDirectory))
+            instances.put(configurationDirectory, new UserManager(configurationDirectory));
+        return (UserManager) instances.get(configurationDirectory);
     }
 
     /**

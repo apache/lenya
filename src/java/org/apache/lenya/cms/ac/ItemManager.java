@@ -1,5 +1,5 @@
 /*
- * $Id: ItemManager.java,v 1.6 2003/06/25 08:56:32 egli Exp $
+ * $Id: ItemManager.java,v 1.7 2003/06/25 14:37:07 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,7 +51,6 @@ package org.apache.lenya.cms.ac;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.lang.reflect.Constructor;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -59,45 +58,50 @@ import java.util.Set;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
 
 /**
+ * Abstract superclass for classes that manage items loaded from configuration files.
  * @author egli
- * 
- * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public abstract class ItemManager {
-	static final Category log = Category.getInstance(ItemManager.class);
+	private static final Category log = Category.getInstance(ItemManager.class);
 
 	public static final String PATH =
 		"config" + File.separator + "ac" + File.separator + "passwd";
 
 	private Set items = null;
-	private Publication publication = null;
+    private File configurationDirectory;  
 
 	/**
 	 * Create a new ItemManager
 	 * 
-	 * @param publication where the items are fetched from
+	 * @param configurationDirectory where the items are fetched from
 	 * @throws AccessControlException if the item manager cannot be instantiated
 	 */
-	protected ItemManager(Publication publication)
+	protected ItemManager(File configurationDirectory)
 		throws AccessControlException {
+            
+        assert configurationDirectory != null;
+            
+        if (!configurationDirectory.exists()
+            || !configurationDirectory.isDirectory()) {
+            throw new AccessControlException(
+                "The directory [" + configurationDirectory.getAbsolutePath()
+                + "] does not exist!");
+        }
 
-		this.publication = publication;
+		this.configurationDirectory = configurationDirectory;
 		
-		File groupDir = new File(publication.getDirectory(), PATH);
-		if (!groupDir.exists() || !groupDir.isDirectory()) {
-			//			throw new Execption();
-		}
-		File[] itemFiles = groupDir.listFiles(getFileFilter());
+		File[] itemFiles = configurationDirectory.listFiles(getFileFilter());
 		items = new HashSet();
 		Configuration config = null;
 		for (int i = 0; i < itemFiles.length; i++) {
 			DefaultConfigurationBuilder builder =
 				new DefaultConfigurationBuilder();
 			try {
+                assert itemFiles[i].exists(); 
 				config = builder.buildFromFile(itemFiles[i]);
 			} catch (Exception e) {
 				String errorMsg =
@@ -116,12 +120,9 @@ public abstract class ItemManager {
 				log.error(errorMsg);
 				throw new AccessControlException(errorMsg, e);
 			}
-			Object item = null;
+			Item item = null;
 			try {
-				Class[] constructorClasses = { Publication.class, Configuration.class };
-				Constructor constructor = Class.forName(klass).getConstructor(constructorClasses);
-				Object[] arguments = { publication, config };
-				item = constructor.newInstance(arguments);
+				item = (Item) Class.forName(klass).newInstance();
 			} catch (Exception e) {
 				String errorMsg =
 					"Exception when trying to instanciate: "
@@ -133,6 +134,15 @@ public abstract class ItemManager {
 				log.error(errorMsg);
 				throw new AccessControlException(errorMsg, e);
 			}
+            item.setConfigurationDirectory(configurationDirectory);
+            try {
+                item.configure(config);
+            } catch (ConfigurationException e) {
+                String errorMsg =
+                    "Exception when trying to configure: "
+                        + klass;
+                throw new AccessControlException(errorMsg, e);
+            }
 			items.add(item);
 		}
 	}
@@ -165,13 +175,13 @@ public abstract class ItemManager {
 		items.remove(item);
 	}
 	
-	/**
-	 * Get the path where the items are located.
-	 * 
-	 * @return a <code>File</code>
-	 */
-	public File getPath() {
-		return new File(publication.getDirectory(), PATH);
+    /**
+     * Get the directory where the items are located.
+     * 
+     * @return a <code>File</code>
+     */
+	public File getConfigurationDirectory() {
+		return configurationDirectory;
 	}
 	
 	/**
@@ -181,14 +191,5 @@ public abstract class ItemManager {
 	 */
 	protected abstract FileFilter getFileFilter();
 	
-	/**
-	 * Items are attached to a publication. Get the publication
-	 * to which the items are attached to.
-	 * 
-	 * @return a <code>Publication</code>
-	 */
-	public Publication getPublication() {
-		return publication;
-	}
 
 }

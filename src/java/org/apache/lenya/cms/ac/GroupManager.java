@@ -1,5 +1,5 @@
 /*
- * $Id: GroupManager.java,v 1.3 2003/06/24 16:50:10 egli Exp $
+ * $Id: GroupManager.java,v 1.4 2003/06/25 14:37:07 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -55,7 +55,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
 
 /**
@@ -63,37 +62,39 @@ import org.apache.log4j.Category;
  * 
  * 
  */
-public class GroupManager extends ItemManager {
-	static private Category log = Category.getInstance(GroupManager.class);
+public final class GroupManager extends ItemManager {
+	private static Category log = Category.getInstance(GroupManager.class);
 
 	protected static final String SUFFIX = ".gml";
 
 	private static Map instances = new HashMap();
+    
 
 	/**
 	 * Create a GroupManager
 	 * 
-	 * @param publication for which the GroupManager is to be created
+	 * @param configurationDirectory for which the GroupManager is to be created
 	 * @throws AccessControlException if no GroupManager could be instanciated
 	 */
-	protected GroupManager(Publication publication)
+	private GroupManager(File configurationDirectory)
 		throws AccessControlException {
-		super(publication);
+		super(configurationDirectory);
 	}
 
 	/**
 	 * Return the <code>GroupManager</code> for the given publication.
 	 * The <code>GroupManager</code> is a singleton.
 	 * 
-	 * @param publication for which the GroupManager is requested
+	 * @param configurationDirectory for which the GroupManager is requested
 	 * @return a <code>GroupManager</code>
 	 * @throws AccessControlException if no GroupManager could be instanciated
 	 */
-	public static GroupManager instance(Publication publication)
+	public static GroupManager instance(File configurationDirectory)
 		throws AccessControlException {
-		if (!instances.containsKey(publication))
-			instances.put(publication, new GroupManager(publication));
-		return (GroupManager) instances.get(publication);
+        assert configurationDirectory != null;
+		if (!instances.containsKey(configurationDirectory))
+			instances.put(configurationDirectory, new GroupManager(configurationDirectory));
+		return (GroupManager) instances.get(configurationDirectory);
 	}
 
 	/**

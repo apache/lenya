@@ -1,5 +1,5 @@
 /*
- * $Id: RoleManager.java,v 1.2 2003/06/24 16:50:10 egli Exp $
+ * $Id: RoleManager.java,v 1.3 2003/06/25 14:37:07 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -55,7 +55,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
 
 /**
@@ -63,37 +62,73 @@ import org.apache.log4j.Category;
  * 
  * 
  */
-public class RoleManager extends ItemManager {
-    private static Category log = Category.getInstance(RoleManager.class);
+public final class RoleManager extends ItemManager {
+	private static Category log = Category.getInstance(RoleManager.class);
 
     protected static final String SUFFIX = ".rml";
 
     private static Map instances = new HashMap();
 
-    /**
-     * Create a RoleManager
-     * 
-     * @param publication for which the RoleManager is to be created
-     * @throws AccessControlException if the RoleManager could not be instantiated
-     */
-    protected RoleManager(Publication publication)
-        throws AccessControlException {
-        super(publication);
-    }
-
 	/**
-	 * Return the <code>RoleManager</code> for this publication. 
+	 * Return the <code>RoleManager</code> for this configuration directory. 
 	 * The <code>RoleManager</code> is a singleton.
 	 * 
-	 * @param publication the <code>Publication</code> for which the RoleManager is requested.
-	 * @return a <code>RoleManager</code>
+	 * @param configurationDirectory the directory for which the RoleManager is requested.
 	 * @throws AccessControlException if the <code>RoleManager<code> could not be instantiated
 	 */
-    public static RoleManager instance(Publication publication)
-        throws AccessControlException {
-        if (!instances.containsKey(publication))
-            instances.put(publication, new RoleManager(publication));
-        return (RoleManager) instances.get(publication);
+	protected RoleManager(File configurationDirectory)
+		throws AccessControlException {
+		super(configurationDirectory);
+	}
+
+    /**
+     * Returns the role manager for this configuration directory.
+     * @param configurationDirectory The configuration directory.
+     * @return A role manager.
+     * @throws AccessControlException when something went wrong.
+     */
+	public static RoleManager instance(File configurationDirectory)
+		throws AccessControlException {
+		if (!instances.containsKey(configurationDirectory))
+			instances.put(configurationDirectory, new RoleManager(configurationDirectory));
+		return (RoleManager) instances.get(configurationDirectory);
+	}
+
+    /**
+     * Get the role for the given roleName
+     * 
+     * @param roleName the name of the role requested
+     * @return a <code>Role</code> or null if no role with the given name found
+     */
+	public Role getRole(String roleName) {
+		Role role = null;
+		Iterator iter = getRoles();
+		while (iter.hasNext()) {
+			Role element = (Role) iter.next();
+			if (element.getName().equals(roleName)) {
+				role = element;
+			}
+		}
+        if (role == null) {
+            throw new IllegalArgumentException("Role '" + roleName + "' not found!");
+        }
+		return role;
+	}
+	
+
+    /**
+     * Get a file filter for role files
+     * 
+     * @return a <code>FileFilter</code>
+     */ 
+    protected FileFilter getFileFilter() {
+        FileFilter filter = new FileFilter() {
+
+            public boolean accept(File pathname) {
+                return (pathname.getName().endsWith(SUFFIX));
+            }
+        };
+        return filter;
     }
 
     /**
@@ -121,39 +156,6 @@ public class RoleManager extends ItemManager {
      */
     public void remove(Role role) {
         super.remove(role);
-    }
-
-    /**
-     * Get the role for the given roleName
-     * 
-     * @param roleName the name of the role requested
-     * @return a <code>Role</code> or null if no role with the given name found
-     */
-    public Role getRole(String roleName) {
-        Role role = null;
-        Iterator iter = getRoles();
-        while (iter.hasNext()) {
-            Role element = (Role) iter.next();
-            if (element.getName().equals(roleName)) {
-                role = element;
-            }
-        }
-        return role;
-    }
-
-    /**
-     * Get a file filter for role files
-     * 
-     * @return a <code>FileFilter</code>
-     */ 
-    protected FileFilter getFileFilter() {
-        FileFilter filter = new FileFilter() {
-
-            public boolean accept(File pathname) {
-                return (pathname.getName().endsWith(SUFFIX));
-            }
-        };
-        return filter;
     }
 
 }
