@@ -68,6 +68,16 @@ public class TaskJob
         PublishingEnvironment environment = new PublishingEnvironment(publicationPath);
 
         Parameters parameters = new Parameters();
+
+        parameters.setParameter("context-path", servletContextPath);
+        parameters.setParameter("server-port", Integer.toString(request.getServerPort()));
+        log.debug(".getParameters() : server-port: "+Integer.toString(request.getServerPort()));
+        parameters.setParameter("server-uri", "http://" + request.getServerName());
+        parameters.setParameter("publication-id", publicationId);
+        parameters.setParameter("authoring-path", environment.getAuthoringPath());
+        parameters.setParameter("tree-authoring-path", environment.getTreeAuthoringPath());
+
+        // Add Request Parameters
         Parameters requestParameters = new Parameters();
         for (Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) {
             String name = (String) e.nextElement();
@@ -77,13 +87,7 @@ public class TaskJob
             }
         }
         parameters.merge(requestParameters);
-        
-        parameters.setParameter("context-path", servletContextPath);
-        parameters.setParameter("server-port", Integer.toString(request.getServerPort()));
-        parameters.setParameter("server-uri", "http://" + request.getServerName());
-        parameters.setParameter("publication-id", publicationId);
-        parameters.setParameter("authoring-path", environment.getAuthoringPath());
-        parameters.setParameter("tree-authoring-path", environment.getTreeAuthoringPath());
+        // /Add Request Parameters
 
         return parameters;
     }

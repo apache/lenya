@@ -19,6 +19,13 @@
   <map:resources/>
 
   <map:pipelines>
+    <map:pipeline internal-only="true">
+      <!-- create the current date -->
+      <map:match pattern="scheduler-xsp">
+        <map:generate type="serverpages" src="../../docs/cms/scheduler/scheduler.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
 
     <!-- scheduler aggregation pipeline -->
     <map:pipeline internal-only="true">
@@ -32,12 +39,6 @@
       <!-- load task list -->
       <map:match pattern="tasks">
         <map:generate src="docs/publication/tasks.xconf"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
-      <!-- create the current date -->
-      <map:match pattern="scheduler-xsp">
-        <map:generate type="serverpages" src="../../docs/cms/scheduler/scheduler.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       

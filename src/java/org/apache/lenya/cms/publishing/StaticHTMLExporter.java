@@ -83,6 +83,7 @@ public class StaticHTMLExporter
                 = PublishingEnvironment.getPublicationPath(contextPath, publicationId);
 
             int serverPort = getParameters().getParameterAsInteger("server-port");
+            log.debug(".execute(): Server Port: "+serverPort);
             String serverURI = getParameters().getParameter("server-uri");
 
             String urisString = getParameters().getParameter("uris");

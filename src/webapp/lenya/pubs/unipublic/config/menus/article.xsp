@@ -21,9 +21,7 @@
 
   <xsp:logic>
     String domain_prefix=""+xsp_wyona_context_prefix+"/bitflux";
-    //String domain_prefix="http://cvs.wyona.org:8080"+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
-    //String domain_prefix_bitflux="http://cvs.wyona.org:8080"+xsp_wyona_context_prefix;
     
     String sourcesParameter =
             "sources=/" + channel + "/" + section + "/" + year + "/" + articleId + "/index.xml";

@@ -3,21 +3,30 @@
 <tasks>
 
   <task id="publish">
-    <label>Publish</label>
+    <label>Publish and Export</label>
     <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher">
       <parameter name="live-path" value="docs/publication/live"/>
       <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>
     </task>
-<!--
     <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter">
+<!--
       <parameter name="export-path" value="resources/publication/export/pending"/>
-      <parameter name="substitute-regexp" value="s/\/wyona-cms\/unipublic//g"/>
+      <parameter name="substitute-regexp" value="s/\/wyona-cms\/oscom//g"/>
+-->
+      <parameter name="my-server-port" value="1313"/>
     </task>
+  </task>
+
+  <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter">
+    <label>Export</label>
+<!--
+    <parameter name="export-path" value="resources/publication/export/pending"/>
+    <parameter name="substitute-regexp" value="s/\/wyona-cms\/oscom//g"/>
 -->
   </task>
   
   <task id="hello-world" class="org.wyona.cms.task.HelloWorldTask">
-    <label>Print Message</label>
+    <label>Print Message into Log</label>
     <parameter name="text" value="Hello OSCOM"/>
   </task>
 

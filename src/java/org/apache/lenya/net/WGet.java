@@ -162,6 +162,8 @@ public class WGet{
 */
   public byte[] runProcess(String command) throws Exception{
     Process process=Runtime.getRuntime().exec(command);
+
+
     java.io.InputStream in=process.getInputStream();
     byte[] buffer=new byte[1024];
     int bytes_read=0;
@@ -169,14 +171,15 @@ public class WGet{
     while((bytes_read=in.read(buffer)) != -1){
       baout.write(buffer,0,bytes_read);
       }
-    log.debug(".download(): InputStream: "+baout.toString());
+    log.debug(".download(): InputStream: %%%S"+baout.toString()+"E%%%");
+
 
     java.io.InputStream in_e=process.getErrorStream();
     java.io.ByteArrayOutputStream baout_e=new java.io.ByteArrayOutputStream();
     while((bytes_read=in_e.read(buffer)) != -1){
       baout_e.write(buffer,0,bytes_read);
       }
-    log.error(".download(): ErrorStream: "+baout_e.toString());
+    log.error(".download(): ErrorStream: ###S"+baout_e.toString()+"E###");
 
     return baout.toByteArray();
     }

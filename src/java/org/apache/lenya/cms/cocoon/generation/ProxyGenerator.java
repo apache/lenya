@@ -32,14 +32,18 @@ import java.net.MalformedURLException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.wrapper.*;
+
+import org.apache.log4j.Category;
 
 /**
  * @author Michael Wechner
  * @version 2002.8.27
  */
 public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements Parameterizable {
-  //static Category log=Category.getInstance(ProxyGenerator.class);
+  static Category log=Category.getInstance(ProxyGenerator.class);
   protected String src;
 
   // The URI of the namespace of this generator
@@ -68,12 +72,21 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
  */
   public void generate() throws SAXException{
 
-/*      
+/*  NOTE: httpRequest not used anymore!     
     HttpRequest httpRequest
         = (HttpRequest) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
+    log.debug(".generate(): server-port: "+httpRequest.getServerPort());
 */
+
+
     Request request
         = (Request) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
+
+    if (request instanceof RequestWrapper) {
+        log.debug("\nWrapper: " +request.getServerPort());
+//        log.debug("\nOriginal: "+ ((RequestWrapper) request).getRequest().getServerPort();
+
+}
     
     String submitMethod = request.getMethod();
 
@@ -202,10 +215,12 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
     URL url=null;
     try{
       url=new URL(this.src);
+      log.debug(".createURL(): "+url);
       }
     catch(MalformedURLException e){
       //log.warn(".createURL(): "+e);
       url=new URL("http://127.0.0.1:"+request.getServerPort()+this.src);
+      log.debug(".createURL(): Add localhost and port: "+url);
       }
     return url;
     }
