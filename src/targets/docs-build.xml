@@ -1,0 +1,41 @@
+  <!-- ============================================================ -->
+  <!-- Set a variable if javadoc is already up-to-date.             -->
+  <!-- ============================================================ -->
+  <target name="javadocs_check">
+    <uptodate property="javadocs.notrequired" targetfile="${dist.bin.javadocs}/packages.html" >
+      <srcfiles dir="${build.src}" includes="**/*.java"/>
+    </uptodate>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- If javadoc is already up-to-date, print a message saying so.        -->
+  <!-- =================================================================== -->
+  <target name="javadocs_done" if="javadocs.notrequired">
+    <echo message="-------------------------------------------------------------"/>
+    <echo message="  Not rebuilding Javadocs, as they are up-to-date:"/>
+    <echo message="  ${dist.bin.javadocs}/packages.html is more recent than"/>
+    <echo message="  ${build.src}/**/*.java"/>
+    <echo message="-------------------------------------------------------------"/>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Creates the API documentation                                -->
+  <!-- ============================================================ -->
+
+  <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done" unless="javadocs.notrequired" description="Generates the API documentation">
+    <mkdir dir="${dist.bin.javadocs}"/>
+    <javadoc packagenames="${packages}"
+             sourcepath="${build.src}"
+             destdir="${dist.bin.javadocs}"
+             author="true"
+             version="true"
+             use="false"
+             noindex="true"
+             windowtitle="${Name} API - Version ${version}"
+             doctitle="${Name}"
+             bottom="Copyright &#169; ${year} Wyona. All Rights Reserved."
+             stylesheetfile="${resource.dir}/javadoc.css"
+             source="1.4">
+      <classpath refid="classpath"/>
+    </javadoc>
+  </target>

@@ -1,0 +1,122 @@
+  <!-- ============================================================ -->
+  <!-- Produce the webapp                                           -->
+  <!-- ============================================================ -->
+
+  <!-- 
+  This target creates a webapp directory which exactly mirrors how
+  the war file will look. It is used to create the war file for
+  the "war" target but it can also be used by developers
+  directly.
+  This is useful if the reloadable attribute of the context
+  in the server.xml configuration is set to true so changes in the classes
+  are reflected immediately.
+  -->
+  <target name="webapp" depends="compile,javadocs" description="Builds the webapp directory ready to be linked into a servlet engines context directory">
+  
+    <!--
+    Copy CMS files and overwrite some parts of the previously unpacked cocoon webapp package with our customized files
+    -->
+    <echo>INFO: Copy files from ${src.webapp.dir} to ${build.webapp}</echo>
+    <copy todir="${build.webapp}">
+      <fileset dir="${src.webapp.dir}">
+        <exclude name="lenya/pubs/**"/>
+      </fileset>
+    </copy>
+
+    <!-- Copy Documentation -->
+    <echo>INFO: Copy Documentation from ${src.webapp.dir}/lenya/pubs/docs to ${build.webapp}/lenya/pubs/docs</echo>
+    <copy todir="${build.webapp}/lenya/pubs/docs">
+      <fileset dir="${src.webapp.dir}/lenya/pubs/docs">
+      </fileset>
+    </copy>
+
+    <!-- Copy publications -->
+    <echo>INFO: Copy publications from ${src.webapp.dir}/lenya/pubs to ${build.webapp}/lenya/pubs</echo>
+    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}">
+    </copyPubs>
+
+    <!-- create directory classes within webapp -->
+    <mkdir dir="${build.webapp}/WEB-INF/classes"/>
+
+    <!-- now copy our compiled classes -->
+    <echo>INFO: Copy classes from ${build.dest} to ${build.webapp}/WEB-INF/classes</echo>
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.dest}">
+        <include name="**/*.class"/>
+      </fileset>
+    </copy>
+
+    <!-- now copy our logicsheets -->
+    <echo>INFO: Copy logicsheets from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.src}">
+        <include name="**/*.xsl"/>
+      </fileset>
+    </copy>
+
+    <!-- now copy our properties -->
+    <echo>INFO: Copy properties from ${build.src} to ${build.webapp}/WEB-INF/classes</echo>
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.src}">
+        <include name="**/*.properties"/>
+      </fileset>
+    </copy>
+
+    <!-- now create logs directory, where log4j can write to -->
+    <echo>INFO: Create logs directory ${build.webapp}/WEB-INF/logs</echo>
+    <mkdir dir="${build.webapp}/WEB-INF/logs"/>
+    
+    <!-- now copy any additional libraries in ./lib -->
+    <mkdir dir="${build.webapp}/WEB-INF/lib"/>
+
+    <echo>INFO: Copy libraries from ${lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
+    <echo>INFO: exclude: servlet.jar</echo>
+    <copy todir="${build.webapp}/WEB-INF/lib">
+      <fileset dir="${lib.dir}">
+        <include name="**/*"/>
+        <!-- servlet.jar is used to build Wyona, but for deployment the servlet.jar from the servlet engine will be taken -->
+        <exclude name="servlet.jar"/>
+      </fileset>
+    </copy>
+
+    <!--    
+    <echo>INFO: Copy publication libraries from ${pubs.root.dirs}/WEB-INF/lib to ${build.webapp}/WEB-INF/lib</echo>
+    <copy todir="${build.webapp}/WEB-INF/lib">
+      <fileset dir="${pubs.root.dirs}/WEB-INF">
+    </copy>
+    -->
+
+  </target>
+
+  <!--
+  The war target just packs up what was created in the webapp target
+  (and triggers the javadoc target with the dependency)
+  -->
+  <target name="war" depends="webapp, javadocs" description="Builds the deployable war file">
+    <mkdir dir="${dist.bin.dir}"/>
+    <jar jarfile="${dist.bin.warfile}" basedir="${build.webapp}" excludes="META-INF/MANIFEST.MF"/>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Clean targets                                                -->
+  <!-- ============================================================ -->
+
+  <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
+    <!-- Empty server cache - this directory is set in the "build.properties" file -->
+    <delete dir="${cache.dir}"/>
+    <mkdir dir="${install.dir}" />
+    <delete includeEmptyDirs="true">
+      <fileset dir="${install.dir}" excludes="${target.reset.excludes}" />
+    </delete>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Install webapp                                               -->
+  <!-- ============================================================ -->
+  <target name="install" depends="webapp" description="Install the webapp into servlet engine context">
+    <copy todir="${install.dir}" filtering="off">
+      <fileset dir="${build.webapp}" excludes="${target.install.excludes}">
+      </fileset>
+    </copy>
+    <echo>INFO: Copy From build.webapp=${build.webapp} To install.dir=${install.dir}</echo>
+  </target>

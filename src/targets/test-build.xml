@@ -1,29 +1,4 @@
-<?xml version="1.0"?>
-
-<project default="junit.tests" name="lenya" basedir=".">
-
 <!-- === Test targets =========================================================== -->
-
-<target name="init">
-    <property name="build.test" value="build/test"/>
-    <property name="test" value="src/test"/>
-    <property name="target.vm"      value="1.4"/>
-  <property name="lib.dir" value="lib"/>
-
-  <property name="build.root" value="build"/>
-  <property name="build.dir" value="${build.root}/${ant.project.name}"/>
-  <property name="build.webapp" value="${build.dir}/webapp"/>
-
-  <path id="classpath">
-    <fileset dir="${lib.dir}">
-      <include name="*.jar"/>
-    </fileset>
-    <fileset dir="${build.webapp}/WEB-INF/lib">
-      <include name="*.jar"/>
-    </fileset>
-    <!--<pathelement path="${java.class.path}/"/>-->
-  </path>
-</target>
 
   <!-- Runs all tests -->
   <target name="test" depends="junit.tests, anteater.tests" description="Runs all tests"/>
@@ -98,5 +73,3 @@
     </exec>
     -->
   </target>
-
-</project>
