@@ -18,7 +18,7 @@ package org.apache.lenya.cms.workflow.usecases;
 
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.CMSHistory;
-import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.impl.Version;
 
@@ -28,21 +28,27 @@ import org.apache.lenya.workflow.impl.Version;
  * @version $Id$
  */
 public class History extends DocumentUsecase {
-    
+
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     * TODO get wf variables, get date and machine ip for versions
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
+     *      get wf variables, get date and machine ip for versions
      */
     protected void initParameters() {
         super.initParameters();
 
+        WorkflowResolver resolver = null;
         try {
-            WorkflowInstance instance = getWorkflowInstance(getSourceDocument());
-            CMSHistory history = (CMSHistory)instance.getHistory();
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+            WorkflowInstance instance = resolver.getWorkflowInstance(getSourceDocument());
+            CMSHistory history = (CMSHistory) instance.getHistory();
             Version[] versions = history.getVersions();
             setParameter("versions", versions);
-        } catch (final WorkflowException e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
         }
     }
 }

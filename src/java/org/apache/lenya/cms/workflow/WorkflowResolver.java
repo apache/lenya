@@ -25,7 +25,7 @@ import org.apache.lenya.workflow.WorkflowInstance;
 /**
  * Class to resolve workflow-related objects.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface WorkflowResolver {
 

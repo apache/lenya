@@ -18,9 +18,8 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.util.Arrays;
 
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
@@ -30,42 +29,35 @@ import org.apache.lenya.workflow.WorkflowInstance;
  */
 public class SiteUsecase extends DocumentUsecase {
 
-    protected Document doc = null;
-    protected WorkflowInstance instance = null;
-    protected static final String AREA = "area";
-    protected static final String DOCUMENTID = "documentid";
-    protected static final String DOCUMENTNAME = "documentname";
-    protected static final String LANGUAGEEXISTS = "languageexists";
     protected static final String STATE = "state";
     protected static final String ISLIVE = "is_live";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
-    /*TODO make common parameters available to site usecases: area, documentid, languageexists etc
-     * may need to take special areas into acccount, such as info-authoring */
+     */
     protected void doInitialize() {
         super.doInitialize();
+        WorkflowResolver resolver = null;
         try {
-            this.doc = getSourceDocument();
-            if (hasWorkflow(getSourceDocument())) {
-                this.instance = getWorkflowInstance(getSourceDocument());
-                setParameter(STATE, this.instance.getCurrentState().toString());
-                String[] variableNames = this.instance.getWorkflow().getVariableNames();
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+            if (resolver.hasWorkflow(getSourceDocument())) {
+                WorkflowInstance instance = resolver.getWorkflowInstance(getSourceDocument());
+                setParameter(STATE, instance.getCurrentState().toString());
+                String[] variableNames = instance.getWorkflow().getVariableNames();
                 if (Arrays.asList(variableNames).contains(ISLIVE)) {
-                    setParameter("islive", Boolean.valueOf(this.instance.getValue(ISLIVE)));
+                    setParameter("islive", Boolean.valueOf(instance.getValue(ISLIVE)));
                 }
             } else {
                 setParameter("state", "");
             }
-        } catch (WorkflowException e) {
-        	getLogger().error("Could not get workflow state.");
-        	addErrorMessage("Could not get workflow state.");
+        } catch (Exception e) {
+            getLogger().error("Could not get workflow state.", e);
+            addErrorMessage("Could not get workflow state. See log files for details.");
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
         }
-
-        setParameter(AREA, this.doc.getArea());
-        setParameter(DOCUMENTID, this.doc.getId());
-        setParameter(DOCUMENTNAME, this.doc.getName());
-        setParameter(LANGUAGEEXISTS, "true");
     }
 
 }

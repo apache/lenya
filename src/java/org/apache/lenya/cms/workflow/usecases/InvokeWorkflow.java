@@ -16,8 +16,11 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 
 /**
  * Invoke a workflow event on the current document. The event is obtained from
@@ -25,18 +28,15 @@ import org.apache.lenya.workflow.WorkflowInstance;
  * 
  * @version $Id:$
  */
-public class InvokeWorkflow extends DocumentUsecase {
+public class InvokeWorkflow extends DocumentUsecase implements Configurable {
 
-    /**
-     * The name of the event request parameter.
-     */
-    public static final String EVENT = "lenya.event";
+    private String event;
 
     /**
      * @return The workflow event to use.
      */
     protected String getEvent() {
-        return getParameterAsString(EVENT);
+        return event;
     }
 
     /**
@@ -44,16 +44,22 @@ public class InvokeWorkflow extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+
         if (!getErrorMessages().isEmpty()) {
             return;
         }
-        
-        String eventName = getParameterAsString(EVENT);
-        WorkflowInstance instance = getWorkflowInstance(getSourceDocument());
-        if (!instance.canInvoke(getSituation(), eventName)) {
-            addErrorMessage("The event [" + eventName + "] is not executable on document ["
-                    + getSourceDocument() + "].");
+
+        WorkflowManager workflowManager = null;
+        try {
+            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            if (!workflowManager.canInvoke(getSourceDocument(), getEvent())) {
+                addErrorMessage("The event [" + getEvent() + "] is not executable on document ["
+                        + getSourceDocument() + "].");
+            }
+        } finally {
+            if (workflowManager != null) {
+                this.manager.release(workflowManager);
+            }
         }
     }
 
@@ -63,7 +69,25 @@ public class InvokeWorkflow extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        String eventName = getParameterAsString(EVENT);
-        triggerWorkflow(eventName);
+        WorkflowManager workflowManager = null;
+        try {
+            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            workflowManager.invoke(getSourceDocument(), getEvent());
+        } finally {
+            if (workflowManager != null) {
+                this.manager.release(workflowManager);
+            }
+        }
     }
+    
+    protected static final String ELEMENT_EVENT = "event";
+    protected static final String ATTRIBUTE_ID = "id";
+
+    /**
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration config) throws ConfigurationException {
+        this.event = config.getChild(ELEMENT_EVENT).getAttribute(ATTRIBUTE_ID);
+    }
+
 }

@@ -39,7 +39,7 @@ import org.apache.lenya.util.ServletHelper;
  * <li><code>document</code>- the document</li>
  * </ul>
  */
-public class DocumentUsecase extends WorkflowUsecase {
+public class DocumentUsecase extends AbstractUsecase {
 
     protected static final String DOCUMENT = "document";
     private String completeArea;
@@ -151,15 +151,6 @@ public class DocumentUsecase extends WorkflowUsecase {
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Triggers a workflow event on the source document by calling
-     * {@link #triggerWorkflow(String, Document)}.
-     * @param event the event.
-     */
-    protected void triggerWorkflow(String event) {
-        triggerWorkflow(event, getSourceDocument());
     }
 
     /**
