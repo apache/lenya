@@ -184,14 +184,6 @@
       
     </map:pipeline>
 
-    <!-- Menus -->
-    <map:pipeline internal-only="true">
-      <map:match pattern="menus/info.xml">
-        <map:generate type="serverpages" src="content/menus/info.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-    
 		<!-- main pipeline -->    
     <map:pipeline>
     	
@@ -201,7 +193,7 @@
         <map:match pattern="info-*" type="usecase">
           
           <map:aggregate element="lenya" label="aggregate">
-            <map:part src="cocoon:/menus/info.xml"/>
+            <map:part src="cocoon://menu/{../1}/info.xml"/>
             <map:part element="cmsbody" src="cocoon:/cmsbody/{1}/{../3}"/>
           </map:aggregate>
           <map:transform src="xslt/info/root.xsl" label="content">
