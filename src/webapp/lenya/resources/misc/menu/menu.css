@@ -30,6 +30,7 @@ IMG {border:0px}
 .mI, .mI:visited {display:block; padding:4px; font:11px verdana, arial, san-serif; color:#444444; padding-top:2px; padding-bottom:2px;} /*50555A*/
 	.mI:hover {background:#FFFFFF}
 
+span.mI { color: #AAAAAA;}
 
 /* Misc */
 .click {cursor:hand}
