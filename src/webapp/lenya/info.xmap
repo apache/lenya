@@ -15,7 +15,7 @@
   <map:resources>
     <map:resource name="style-cms-page">
       <map:transform src="xslt/util/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
       </map:transform>
       <map:serialize/>
     </map:resource>
@@ -41,7 +41,11 @@
     <map:pipeline>
       <map:match pattern="output.js">
 	    <map:generate src="pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
-	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content" />
+	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
+        <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
+        <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+       <map:parameter name="area" value="{page-envelope:area}"/>
+      </map:transform>
 	    <map:serialize type="text"/>
       </map:match>
     </map:pipeline>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.6 2003/06/16 09:34:32 gregor Exp $
+ $Id: root.xsl,v 1.7 2003/07/01 16:40:39 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -32,7 +32,7 @@
         font-size: 10pt; 
         font-family: verdana,helvetica; 
    }
-   #navigation { border: dotted 1px #CCCCCC; height: 600px; width: 200px; float: left; padding: 10px; margin: 2px; }
+   #navigation { border: dotted 1px #CCCCCC; width: 200px; float: left; padding: 10px; margin: 2px; }
    #content { border: dotted 1px #CCCCCC; height: 600px; width: 700px; float: left; padding: 10px; margin: 2px;}
 .contextmenu{
 position:absolute;

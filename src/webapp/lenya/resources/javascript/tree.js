@@ -1,4 +1,4 @@
-// $Id: tree.js,v 1.4 2003/06/23 08:22:49 gregor Exp $
+// $Id: tree.js,v 1.5 2003/07/01 16:40:39 gregor Exp $
 //**************************************************************** 
 // TreeView by Marcelino Martins http://www.treeview.net
 //**************************************************************** 
@@ -609,7 +609,8 @@ function clickOnLink(clickedId, target, windowName) {
     highlightObjLink(findObj(clickedId));
     if (isLinked(target)) {
         window.open(target,windowName);
-        SetCookie("org.apache.lenya.cms.info.target", target)
+        documentid = target.substring(0,target.length() - 45);
+        SetCookie("org.apache.lenya.cms.info.target", documentid)
     }
 }
 
