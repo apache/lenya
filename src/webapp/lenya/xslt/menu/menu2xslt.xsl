@@ -26,7 +26,7 @@
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
 <xsl:param name="area"/>
-<xsl:param name="documentid"/>
+<xsl:param name="documenturl"/>
   
 <xsl:namespace-alias stylesheet-prefix="xso" result-prefix="xsl"/>
   
@@ -60,10 +60,10 @@
   
   <xso:template name="title">
     <title>
-      Apache Lenya -
-      <xsl:value-of select="$publicationid"/> -
-      <xsl:value-of select="$area"/> -
-      <xsl:value-of select="$documentid"/> -
+      Apache Lenya |
+      <xsl:value-of select="$publicationid"/> |
+      <xsl:value-of select="$area"/> |
+      <xsl:value-of select="$documenturl"/> |
       <xso:value-of select="xhtml:html/xhtml:head/xhtml:title"/>
     </title>
   </xso:template>
