@@ -32,7 +32,7 @@
 
   <target name="cocoon-does-not-exist" description="Check if Cocoon webapp exists" unless="cocoon.exists">
     <echo>ERROR: Cocoon webapp does not exist: ${cocoon.webapp.dir}</echo>
-    <fail message="Cocoon webapp does not exist: ${cocoon.webapp.dir}"/>
+    <fail message="Cocoon webapp does not exist: ${cocoon.webapp.dir}. Build Cocoon with the local properties from lenya/src/cocoon directory."/>
   </target>
 
   <!-- ============================================================ -->
