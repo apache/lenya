@@ -178,10 +178,10 @@
 
       <!-- Dossier -->
       <map:match pattern="dossiers/*/*/content.xml">
-        <map:generate src="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+        <map:generate src="docs/publication/live/dossiers/{1}/{2}/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Dossier/xinclude.xsl" />
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+          <map:parameter name="href" value="docs/publication/live/dossiers/{1}/{2}/index.xml"/>
         </map:transform>
         <map:transform src="stylesheets/publication/Page/Section/Authoring/sort.xsl"/>
         <map:serialize type="xml"/>
