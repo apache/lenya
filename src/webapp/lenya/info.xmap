@@ -74,7 +74,9 @@
       
       <!-- {publication-id}/{area}/sitetree.xml -->
       <map:match pattern="*/*/sitetree.xml">
-        <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
+        <map:generate type="sitetree">
+	  <map:parameter name="area" value="{2}"/>
+	</map:generate>
         <map:call resource="i18n"/>
         <map:transform type="access-control-sitetree">
           <map:parameter name="publication-id" value="{1}"/>
