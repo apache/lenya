@@ -23,7 +23,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   limitations under the License.
 -->
 
-<!-- $Id: index_en.xml,v 1.3 2004/03/17 19:49:28 gregor Exp $ -->
+<!-- $Id: index_en.xml,v 1.4 2004/04/24 21:04:38 gregor Exp $ -->
     <lenya:meta>
         <dc:title>How to create a new doctype</dc:title>
         <dc:creator>Michael Wechner</dc:creator>
@@ -52,36 +52,36 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
     <h2>The standard way</h2>
 
     <p>
-    Add a link where people can click on: <i>config/menus/menu.xsp</i>
+    Add a link where people can click on: <em>config/menus/menu.xsp</em>
     </p>
 
     <p>
-    Create a usecase sitemap where the "flow" is defined: <i>usecase-create-my_doctype.xmap</i>
+    Create a usecase sitemap where the "flow" is defined: <em>usecase-create-my_doctype.xmap</em>
     </p>
 
     <p>
-    Define what class shall be used for the actual creation: <i>config/doctypes/doctypes.xconf</i>
+    Define what class shall be used for the actual creation: <em>config/doctypes/doctypes.xconf</em>
     </p>
     
     <p>
-    In many cases a new document is created based on a sample: <i>config/doctypes/samples/my_doctype.xml</i>
-    The name of the sample needs to be configured within <i>config/doctypes/doctypes.xconf</i>
+    In many cases a new document is created based on a sample: <em>config/doctypes/samples/my_doctype.xml</em>
+    The name of the sample needs to be configured within <em>config/doctypes/doctypes.xconf</em>
     </p>
     
     <p>
-    Add doctype such that XSLT can be found: <i>parameter-doctype.xmap</i>
+    Add doctype such that XSLT can be found: <em>parameter-doctype.xmap</em>
     </p>
     
     <p>
-    Create XSLT: <i>xslt/my_doctype2xhtml.xsl</i>
+    Create XSLT: <em>xslt/my_doctype2xhtml.xsl</em>
     </p>
     
     <p>
-    OPTIONAL: Create new menu: <i>menus.xmap</i>, <i>config/menus/my_doctype.xsp</i>
+    OPTIONAL: Create new menu: <em>menus.xmap</em>, <em>config/menus/my_doctype.xsp</em>
     </p>
     
     <p>
-    OPTIONAL: Create workflow: <i>config/workflow/my_doctype.xml</i>, <i>config/doctypes/doctypes.xconf</i>
+    OPTIONAL: Create workflow: <em>config/workflow/my_doctype.xml</em>, <em>config/doctypes/doctypes.xconf</em>
     </p>
 
   </body>

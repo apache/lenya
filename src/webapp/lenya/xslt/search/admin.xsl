@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: admin.xsl,v 1.2 2004/03/13 12:42:20 gregor Exp $ -->
+<!-- $Id: admin.xsl,v 1.3 2004/04/24 21:04:38 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -32,30 +32,30 @@
 
 <xsl:template match="crawler">
 <h3>Crawler</h3>
-Filename: <i><xsl:value-of select="../../@name"/></i>
+Filename: <em><xsl:value-of select="../../@name"/></em>
 <br/>
-User-Agent: <i><xsl:value-of select="user-agent"/></i>
+User-Agent: <em><xsl:value-of select="user-agent"/></em>
 <br/>
-Start crawling at: <i><xsl:value-of select="base-url/@href"/></i>
+Start crawling at: <em><xsl:value-of select="base-url/@href"/></em>
 <br/>
-Scope of crawling: <i><xsl:value-of select="scope-url/@href"/></i>
+Scope of crawling: <em><xsl:value-of select="scope-url/@href"/></em>
 <br/>
-Directory where documents will be dumped: <i><xsl:value-of select="htdocs-dump-dir/@src"/></i>
+Directory where documents will be dumped: <em><xsl:value-of select="htdocs-dump-dir/@src"/></em>
 <br/>
-List of all crawled URLs: <i><xsl:value-of select="uri-list/@src"/></i>
+List of all crawled URLs: <em><xsl:value-of select="uri-list/@src"/></em>
 </xsl:template>
 
 <xsl:template match="lucene">
 <h3>Lucene</h3>
-Filename: <i><xsl:value-of select="../../@name"/></i>
+Filename: <em><xsl:value-of select="../../@name"/></em>
 <br/>
-Type of index update: <i><xsl:value-of select="update-index/@type"/></i>
+Type of index update: <em><xsl:value-of select="update-index/@type"/></em>
 <br/>
-Directory of Documents to be indexed: <i><xsl:value-of select="htdocs-dump-dir/@src"/></i>
+Directory of Documents to be indexed: <em><xsl:value-of select="htdocs-dump-dir/@src"/></em>
 <br/>
-Directory of Search Index: <i><xsl:value-of select="index-dir/@src"/></i>
+Directory of Search Index: <em><xsl:value-of select="index-dir/@src"/></em>
 <br/>
-Indexer class: <i><xsl:value-of select="indexer/@class"/></i>
+Indexer class: <em><xsl:value-of select="indexer/@class"/></em>
 </xsl:template>
 
 </xsl:stylesheet>

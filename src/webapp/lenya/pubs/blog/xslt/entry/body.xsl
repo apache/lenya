@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.15 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id: body.xsl,v 1.16 2004/04/24 21:04:39 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -41,7 +41,7 @@
 
 
 <xsl:template match="echo:summary">
-  <i><xsl:copy-of select="node()"/></i>
+  <em><xsl:copy-of select="node()"/></em>
 </xsl:template>
 
 <xsl:template match="echo:content[@type='application/xhtml+xml']">
