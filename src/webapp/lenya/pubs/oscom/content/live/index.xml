@@ -13,7 +13,6 @@
   <wyonasite name="OSCOM">
     <xi:include href="/news.rss" xml:base="cocoon:"/>
   </wyonasite>
--->
   <site name="Freshmeat">
     <xi:include href="rss-rdf/fm.rdf"/>
   </site>
@@ -23,6 +22,7 @@
   <site name="CMSWatch">
     <xi:include href="rss-rdf/cmswatch.xml"/>
   </site>
+-->
 </news>
 
 </oscom>
