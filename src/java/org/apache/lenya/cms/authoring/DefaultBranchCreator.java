@@ -1,5 +1,4 @@
 /*
-$Id: DefaultBranchCreator.java,v 1.13 2003/08/28 14:08:12 egli Exp $
 <License>
 
  ============================================================================
@@ -61,6 +60,7 @@ import java.io.File;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
+ * @version $Id: DefaultBranchCreator.java,v 1.14 2004/02/29 14:13:09 michi Exp $
  */
 public class DefaultBranchCreator extends DefaultCreator {
     /**
