@@ -1,0 +1,11 @@
+SHORT TERM
+- webdav driver
+- use nodeIterators for finding next Node  (resp. TreeWalker, NodeIterator is not implemented in Mozilla yet)
+( http://www.w3.org/TR/DOM-Level-2-Traversal-Range/traversal.html#Iterator-overview) 
+- fix those NameSpaces Issues.
+
+LONGER TERM
+- better schema import
+
+UNDEFINED TERM
+- MSIE Support

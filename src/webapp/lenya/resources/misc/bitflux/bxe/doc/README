@@ -1,0 +1,139 @@
+BITLFUX EDITOR
+**************
+
+(This documentation is just plain text until we have the new
+bitfluxeditor.org webpage online. At this time it wil be a nice
+hyperlinked great looking and real manual :) )
+
+INTRODUCTION
+============
+
+Bitflux Editor (aka BXE) is a browser-based (currently mozilla only)
+WYSIWYG XML editor which is written in JavaScript and uses XML, XSLT, and
+CSS for rendering. It is usable with any XML document and features tables,
+lists, images, special chars, clipboard, undo/redo, and easy
+customization. 
+
+ARCHITECTURE
+============
+
+Basically, BXE needs 5 different customizable files to work correctly. Most
+of those files are in XML format, so they can be easily loaded with
+document.load or XMLHttpRequest and this will make wirting customizable
+transport driver quite easy (see more on that topic below).
+
+We shortly describe in the following part, what those files are and then,
+how they are used. More about them, you'll find in the topic FILES):
+
+config.xml
+----------
+
+In this file, you set all the relevant options (which files to load, which
+buttons to show, which options to use, etc). It is the first file loaded on
+startup and you can provide any url for that (in <body
+onload="BX_load('config.xml')">). 
+
+
+data.xml (xml/data.xml, BX_xmlfile)
+-------------------------------------- 
+
+In this file, we have the actual data, which we like to modify. It can be
+almost any XML-File, but you will most certainly have some namespace
+problems for the time being, if you use different ones (not really tested).
+This is the only which will change and sent back to the server on save.
+
+
+transform.xsl (xml/transform.xsl, BX_xslfile)
+-------------------------------------------
+
+This is the XSLT file. It does the transformation from the XML Document
+above to the representation you like to show in the browser. This will
+normaly be mostly HTML, but you have to follow some special rules. See below
+for the details.
+
+schema.xsd (schema/editor.xsd, BX_schemafile)
+---------------------------------------------
+
+The XML Schema (http://www.w3.org/XML/Schema) Document, which describes,
+which elements are allowed where. Currently, BXE supports only a very
+limited subset of the official XML Schema definition. This will hopefully
+change in the future. The best thing you can do at the moment, is to look at
+the example schema file and adjust it to your needs.
+Additionally, in this file some application specific stuff is defined. For
+example, what happens if you press the return key, when should it show up in
+the pop-up menu, etc. For more details about that, see below as well.
+
+style.css (css/style.css)
+-------------------------
+
+(This file can not be loaded over some XML transport protocols, since it
+uses the standard html tag <script> for loading it, and this is just a
+simple HTTP-get) 
+
+In this file, you define how the single elements should look like. As BXE
+does not (or better said, you should not) transform everything to HTML but
+uses the XML representation for rendering (this makes it much faster), you
+have to define the look of every element in here. CSS is quite powerfull in
+mozilla, therefore you can do a lot with this technique. A good overview on
+how HTML-Elements are defined in CSS can be found at 
+http://www.w3.org/TR/REC-CSS2/sample.html
+
+Other files
+-----------
+
+There are 4 more files needed by BXE, but you shouldn't have to change them.
+
+bxe/xml/transformxml.xsl: This file converts your data.xml to the
+representation BXE needs. It adds IDs for the nodes without one.
+
+bxe/xml/transformxsl.xsl: This file converts your transform.xsl to the
+representation BXE needs. 
+
+bxe/xml/transformxmlback.xsl: This file transforms your data.xml back to the
+format it was delivered (mainly removing those IDs added.
+
+bxe/css/editor.css: This css is for the overall look of the editor. If you
+want to adjust the look of the editor, you have to adjust this file.
+
+And last but not least, there are a few js files, which will be splitted
+even more in the future
+
+bxe/js/bitfluxeditor_table.js: The functions for making tables
+
+bxe/js/bitfluxeditor_sc.js: The functions for the special chars (additionally
+there is some stuff in the directory bxe/specialchars)
+
+bxe/js/bitfluxeditor_images.js: The stuff for images (additionally
+there is some stuff in the directory bxe/insertpicture)
+
+How this works together
+-----------------------
+
+BXE loads first config.xml. From this file it knows which other files
+should be loaded (see inc/config.xml for some more description). After
+loading of all these files (first it does the css-files, then the js-files
+and at the end the xml files) it applies transformxml.xsl to data.xml and
+transformxsl.xsl to transform.xsl. This results in 2 new documents, which 
+are then transformed again to the final representation. This will be finally
+output to the browser. It takes the element with the ID "bxe_area" from the
+original index.html document to know, where it should append the output
+from this transformation.
+After you modified the data and you hit save, BXE searches for all the
+nodes, which are editable, inserts them into the original XML document,
+applies transformxmlback.xsl on it and sends it back to the server.
+
+CUSTOMIZATION 
+=============
+
+TRANSPORT DRIVERS
+=================
+
+FILES
+=====
+
+INTERNALS
+=========
+
+
+
+$Id: README,v 1.1 2002/10/25 10:14:53 felixcms Exp $
