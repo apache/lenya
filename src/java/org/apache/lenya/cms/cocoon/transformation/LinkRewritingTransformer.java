@@ -193,9 +193,23 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
                     if (href.startsWith(context + "/" + publication.getId())) {
                         
-                        String webappUrl = href.substring(context.length());
+                        final String webappUrlWithAnchor = href.substring(context.length());
+                        
+                        String anchor = null;
+                        String webappUrl = null;
+                        
+                        int anchorIndex = webappUrlWithAnchor.indexOf("#");
+                        if (anchorIndex > -1) {
+                            webappUrl = webappUrlWithAnchor.substring(0, anchorIndex);
+                            anchor = webappUrlWithAnchor.substring(anchorIndex + 1);
+                        }
+                        else {
+                            webappUrl = webappUrlWithAnchor;
+                        }
+                        
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug(this.indent + "webapp URL: [" + webappUrl + "]");
+                            getLogger().debug(this.indent + "anchor:     [" + anchor + "]");
                         }
                         if (builder.isDocument(publication, webappUrl)) {
 
@@ -213,7 +227,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                             targetDocument = builder.buildDocument(publication, currentAreaUrl);
 
                             if (targetDocument.exists()) {
-                                rewriteLink(newAttrs, targetDocument);
+                                rewriteLink(newAttrs, targetDocument, anchor);
                             } else {
                                 this.ignoreAElement = true;
                             }
@@ -250,7 +264,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * @throws AccessControlException when something went wrong.
      * @throws PublicationException when something went wrong.
      */
-    protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument)
+    protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument, String anchor)
             throws AccessControlException, PublicationException {
         String webappUrl = targetDocument.getCompleteURL();
         Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
@@ -262,6 +276,10 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             rewrittenURL = this.request.getContextPath() + webappUrl;
         } else {
             rewrittenURL = proxy.getURL(targetDocument);
+        }
+        
+        if (anchor != null) {
+            rewrittenURL += "#" + anchor;
         }
 
         if (getLogger().isDebugEnabled()) {
