@@ -22,7 +22,7 @@
 <xsl:template match="cmsbody">
   <html>
     <head>
-      <link rel="stylesheet" href="{$root}/css/page.css" mime-type="text/css"/>
+      <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
     </head>	
     <body>
       <div id="page">
