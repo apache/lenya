@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: feed.xsp,v 1.15 2004/06/01 17:50:51 michi Exp $ -->
+<!-- $Id: feed.xsp,v 1.16 2004/09/01 23:25:32 michi Exp $ -->
  
 <xsp:page
   language="java"
@@ -55,8 +55,6 @@
     </menu>
  
     <menu name="Search" label="Search">
-      <block>
-      </block>
     </menu>
  
     <menu name="Help" label="Help">

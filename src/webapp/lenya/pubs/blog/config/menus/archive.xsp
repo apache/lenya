@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: archive.xsp,v 1.7 2004/03/13 12:31:32 gregor Exp $ -->
+<!-- $Id: archive.xsp,v 1.8 2004/09/01 23:25:32 michi Exp $ -->
 
 <xsp:page 
   language="java" 
@@ -48,8 +48,6 @@
     </menu>
 
     <menu name="Search" label="Search">
-      <block>
-      </block>
     </menu>
 
     <menu name="Help" label="Help">
