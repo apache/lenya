@@ -19,15 +19,17 @@
 
     <xsp:logic>
 
-      String docId=request.getParameter("documentid");                 
       String rollbackTime=request.getParameter("rollbackTime");
 
       Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
       String rootDir=publication.getEnvironment().getPublicationPath();
       String servletContextPath = publication.getServletContext().getCanonicalPath();
 
-      String filename = publication.CONTENT_PATH +"/"+ <input:get-attribute module="page-envelope" as="string" name="area"/> +"/"+ <input:get-attribute module="page-envelope" as="string" name="document-path"/>;    
-      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
+      String contextPath = publication.CONTENT_PATH;
+      String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
+      String documentPath = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
+      String filename = "/" + contextPath + "/" + area + "/" + documentPath;    
+      RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
       String rcmlDirectory = rcEnvironment.getRCMLDirectory();
       rcmlDirectory=rootDir+rcmlDirectory;
       String backupDirectory = rcEnvironment.getBackupDirectory();

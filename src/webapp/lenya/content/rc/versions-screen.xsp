@@ -18,11 +18,11 @@
 
     <!-- Import Lenya Page Envelope -->
     <xsp:logic>
-      String docId = request.getParameter("documentid");
+      String docId = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
       <xsp:content><documentId><xsp:expr>docId</xsp:expr></documentId></xsp:content>
 
       Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
-      String filename=publication.getEnvironment().getAuthoringPath() + "/" +docId;
+      String filename=publication.CONTENT_PATH +"/"+ <input:get-attribute module="page-envelope" as="string" name="area"/> +"/"+ <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
       <xsp:content><usecase><xsp:expr>request.getParameter("lenya.usecase")</xsp:expr></usecase></xsp:content>
       <xsp:content><request_uri><xsp:expr>request.getRequestURI()</xsp:expr></request_uri></xsp:content>
 
