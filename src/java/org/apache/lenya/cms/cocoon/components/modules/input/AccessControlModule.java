@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.5 2003/07/22 17:01:48 andreas Exp $
+$Id: AccessControlModule.java,v 1.6 2003/08/07 14:03:23 andreas Exp $
 <License>
 
  ============================================================================
@@ -170,6 +170,14 @@ public class AccessControlModule
 
     protected static final String DEFAULT_RESOLVER = "composable";
 
+    /**
+     * Returns the item manager for a certain name.
+     * @param request The request.
+     * @param name The name of the manager ({@link #USER_MANAGER},
+     * {@link #ROLE_MANAGER}, {@link #GROUP_MANAGER}, or {@link IP_RANGE_MANAGER}
+     * @return An item manager.
+     * @throws ConfigurationException when something went wrong.
+     */
     protected ItemManager getItemManager(Request request, String name)
         throws ConfigurationException {
         AccessController accessController = null;
