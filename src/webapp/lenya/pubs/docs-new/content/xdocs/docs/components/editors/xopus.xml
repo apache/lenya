@@ -60,7 +60,9 @@ t.responseText);
     // Save data END
 ]]>
 </source>
+<p>
 whereas the text of the alerts might be replaced by something else.
+</p>
 </section>
 
 <section>
@@ -76,7 +78,9 @@ whereas the text of the alerts might be replaced by something else.
   },
 ]]>
 </source>
+<p>
 whereas the text of the alert might be replaced by something else.
+</p>
 </section>
 
 <section>

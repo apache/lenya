@@ -59,7 +59,7 @@
 	  <title>Ant Task </title>
 	  <p>The ant target <code>movenode</code> is in the publication :</p>
 	  <source>{publication}/config/tasks/targets.xml</source>
-      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/index.html">Javadoc</link></p>
+      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../../apidocs/index.html">Javadoc</link></p>
     </section>
 
   </body>
