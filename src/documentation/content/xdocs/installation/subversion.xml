@@ -34,10 +34,17 @@
 <section>
 <title>Subversion for the public</title>
 <p>
-Start the shell of your choice and enter:
+Start the shell of your choice and enter for the HEAD (1.4-dev):
 </p>
 <source>
 svn co http://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
+</source>
+
+<p>
+or the 1.2.x-dev BRANCH:
+</p>
+<source>
+svn co http://svn.apache.org/repos/asf/incubator/lenya/branches/BRANCH_1_2_X lenya_1.2.x
 </source>
 </section>
 
