@@ -1,5 +1,5 @@
 /*
-$Id: RevisionController.java,v 1.22 2003/10/22 14:57:43 edith Exp $
+$Id: RevisionController.java,v 1.23 2003/10/23 00:35:55 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,19 +55,16 @@ $Id: RevisionController.java,v 1.22 2003/10/22 14:57:43 edith Exp $
 */
 package org.apache.lenya.cms.rc;
 
-import org.apache.lenya.util.XPSFileOutputStream;
-
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.Date;
-import java.util.Vector;
+
+import org.apache.lenya.util.XPSFileOutputStream;
+import org.apache.log4j.Category;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.7 2003/10/22 16:39:18 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.8 2003/10/23 00:35:55 stefano Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.cocoon.ProcessingException;
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
@@ -80,7 +79,7 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class DocumentReferencesHelper {
 

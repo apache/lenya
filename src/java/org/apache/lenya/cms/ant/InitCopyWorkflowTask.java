@@ -1,5 +1,5 @@
 /*
-$Id: InitCopyWorkflowTask.java,v 1.2 2003/10/21 09:51:54 andreas Exp $
+$Id: InitCopyWorkflowTask.java,v 1.3 2003/10/23 00:35:55 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,6 @@ $Id: InitCopyWorkflowTask.java,v 1.2 2003/10/21 09:51:54 andreas Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
