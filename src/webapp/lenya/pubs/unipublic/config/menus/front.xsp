@@ -16,7 +16,9 @@
     <menu name="File">
       <block>
         <item>Edit</item>
-        <item>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/headlines.html&amp;docids=/frontpage/headlines.xml</xsp:attribute>Publish&#160;Headlines</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/webperls.html&amp;docids=/frontpage/webperls.xml</xsp:attribute>Publish&#160;Webperls</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/dossier.html&amp;docids=/frontpage/dossier.xml</xsp:attribute>Publish&#160;Dossiers</item>
         <item>Schedule&#160;Headlines</item>
         <item>Schedule&#160;Webperls</item>
 <!--
