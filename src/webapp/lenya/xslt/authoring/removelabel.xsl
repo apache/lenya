@@ -29,10 +29,34 @@
 	      <xsl:with-param name="prefix" select="''"/>
 	    </xsl:call-template>
 	    
-	    <div class="menu">Do you really want to remove the "<xsl:value-of select="$language"/>" language version from document '<xsl:value-of select="$document-id"/>' (cannot be undone)?</div>
-	    
-	    <input type="submit" value="YES, remove label"/>
-            &#160;&#160;&#160;<input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+	    <div class="lenya-box">
+	      <div class="lenya-box-title">Remove Language Version</div>
+	      <div class="lenya-box-body">
+	    <table class="lenya-table-noborder">
+	      <tr>
+	        <td/>
+	        <td>Do you really want to remove this language version?<br/>This cannot be undone!</td>
+	      </tr>
+	      <tr>
+	        <td class="lenya-entry-caption">Document:</td>
+	        <td><xsl:value-of select="$document-id"/></td>
+	      </tr>
+	      <tr>
+	        <td class="lenya-entry-caption">Language:</td>
+	        <td><xsl:value-of select="$language"/></td>
+	      </tr>
+	      <tr>
+	        <td/>
+	        <td>
+	          <br/>
+      	    <input type="submit" value="Remove"/>
+            &#160;
+            <input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+	        </td>
+	      </tr>
+	    </table>
+	    </div>
+	    </div>
 	  </form>
 	</p>
 	
