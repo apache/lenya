@@ -18,11 +18,11 @@
 <xsl:param name="url"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
-<xsl:param name="breadcrumbprefix"/>
+<!--<xsl:param name="breadcrumbprefix"/>-->
 
 <xsl:template match="nav:site">
   <div id="breadcrumb">
-    <xsl:value-of select="$breadcrumbprefix"/><xsl:apply-templates select="nav:node"/>
+    <!--<xsl:value-of select="$breadcrumbprefix"/>--><xsl:apply-templates select="nav:node"/>
   </div>
 </xsl:template>
 
