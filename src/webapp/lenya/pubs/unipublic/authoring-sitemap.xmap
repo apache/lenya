@@ -609,7 +609,11 @@
           </map:generate>
           <map:serialize type="xml"/>
         </map:act>
+
         <map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
+<!--
+        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
+-->
         <map:serialize type="xml"/>
       </map:match>
 
@@ -617,9 +621,6 @@
       <map:match pattern="rci/*/*/*/*/index.xml">
         <map:act type="reserved-checkin">
           <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
-<!--
-          <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkin-exception.xsp">
--->
           <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
             <map:parameter name="filename" value="{filename}"/>
@@ -628,7 +629,11 @@
           </map:generate>
           <map:serialize type="xml"/>
         </map:act>
+
         <map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
+<!--
+        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
+-->
         <map:serialize type="xml"/>
       </map:match>
 
