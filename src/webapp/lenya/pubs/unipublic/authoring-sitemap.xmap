@@ -35,7 +35,13 @@
         <live href="docs/publication/live/"/>
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
-      </map:action>                                                                                                                         
+      </map:action>
+      <map:action name="article-publisher" src="ch.unizh.unipublic.wyona.cms.ArticlePublisherAction">
+        <authoring href="docs/publication/authoring/"/>
+        <live href="docs/publication/live/"/>
+        <tree-authoring href="docs/publication/authoring/tree.xml"/>
+        <tree-live href="docs/publication/live/tree.xml"/>
+      </map:action>
       <map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <docs href="docs/publication/authoring"/>
@@ -87,6 +93,19 @@
 
     <!-- Publisher  -->
     <map:pipeline>
+      <!-- Article -->
+      <map:match pattern="wyona/publishArticleScreen*">
+        <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
+        <map:transform src="stylesheets/cms/Page/Publish/article-main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="wyona/publishArticle*">
+        <map:act type="article-publisher">
+          <map:redirect-to uri="{parent_uri}" session="true"/>
+        </map:act>
+        <map:redirect-to uri="publishScreen?status=failed" session="true"/>
+      </map:match>
+      <!-- otherwise (Frontpage, etc.) -->
       <map:match pattern="wyona/publishScreen*">
         <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
         <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
