@@ -44,6 +44,7 @@
         shorthand="access-controller-resolvers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
     <hint shorthand="composable" class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/>
+    <hint shorthand="configurable" class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"/>
     <hint shorthand="publication" class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
   </role>
   
