@@ -200,7 +200,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             url = new URL(this.source);
             log.debug(".createURL(): " + url);
         } catch (MalformedURLException e) {
-            url = new URL("http://" + request.getServerName() + :" + request.getServerPort() + this.source);
+            url = new URL("http://" + request.getServerName() + ":" + request.getServerPort() + this.source);
             log.debug(".createURL(): Add localhost and port: " + url);
         }
 
