@@ -45,7 +45,10 @@ package org.apache.lenya.workflow.impl;
 
 import java.io.File;
 
+import javax.xml.transform.TransformerException;
+
 import org.apache.lenya.cms.workflow.CMSSituation;
+import org.apache.lenya.workflow.BooleanVariable;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.State;
@@ -54,6 +57,7 @@ import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.WorkflowListener;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -71,6 +75,9 @@ public abstract class History implements WorkflowListener {
     public static final String STATE_ATTRIBUTE = "state";
     public static final String USER_ATTRIBUTE = "user";
     public static final String EVENT_ATTRIBUTE = "event";
+    public static final String VARIABLE_ELEMENT = "variable";
+    public static final String NAME_ATTRIBUTE = "name";
+    public static final String VALUE_ATTRIBUTE = "value";
 
     /**
      * Creates a new history object. A new history file is created and initialized. 
@@ -91,6 +98,8 @@ public abstract class History implements WorkflowListener {
 
             Element historyElement = helper.getDocument().getDocumentElement();
             historyElement.setAttribute(WORKFLOW_ATTRIBUTE, workflowId);
+            createVariableElements(helper);
+            saveVariables(helper);
 
             DocumentHelper.writeDocument(helper.getDocument(), file);
         } catch (Exception e) {
@@ -109,7 +118,7 @@ public abstract class History implements WorkflowListener {
     protected History() {
     }
     
-    private WorkflowInstanceImpl instance;
+    private WorkflowInstanceImpl instance = null;
     
     
     
@@ -147,25 +156,12 @@ public abstract class History implements WorkflowListener {
             }
             instance.setWorkflow(workflowId);
             
-            State state;
-            Element versionElements[] =
-                helper.getChildren(helper.getDocument().getDocumentElement(), VERSION_ELEMENT);
-            if (versionElements.length > 0) {
-                Element lastElement = versionElements[versionElements.length - 1];
-                String stateId = lastElement.getAttribute(STATE_ATTRIBUTE);
-                state = instance.getWorkflowImpl().getState(stateId);
-            }
-            else {
-                state = instance.getWorkflow().getInitialState();
-            }
-            instance.setCurrentState(state);
-        
-            // TODO restore state variables
+            restoreState(instance, helper);
+            restoreVariables(instance, helper);
         
             instance.addWorkflowListener(this);
             setInstance(instance);
         }
-        
         
         return instance;
     }
@@ -219,6 +215,9 @@ public abstract class History implements WorkflowListener {
                 createVersionElement(helper, (StateImpl) instance.getCurrentState(), situation, event);
 
             root.appendChild(versionElement);
+            
+            saveVariables(helper);
+            
             DocumentHelper.writeDocument(xmlDocument, getHistoryFile());
 
         } catch (Exception e) {
@@ -232,5 +231,78 @@ public abstract class History implements WorkflowListener {
     public void setInstance(WorkflowInstanceImpl impl) {
         instance = impl;
     }
-
+    
+    /**
+     * Saves the state variables as children of the document element.
+     * @param helper The helper that holds the document.
+     */
+    protected void saveVariables(NamespaceHelper helper) throws WorkflowException {
+        Element parent = helper.getDocument().getDocumentElement();
+        BooleanVariable variables[] = getInstance().getWorkflowImpl().getVariables();
+        for (int i = 0; i < variables.length; i++) {
+            String name = variables[i].getName();
+            boolean value = getInstance().getValue(name);
+            try {
+                Element element = (Element) XPathAPI.selectSingleNode(parent,
+                    "*[local-name() = '" + VARIABLE_ELEMENT + "']" +
+                    "[@" + NAME_ATTRIBUTE + " = '" + name + "']");
+                if (element == null) {
+                    throw new WorkflowException("Variable element for variable '" + name + "' not found!");
+                }
+                element.setAttribute(VALUE_ATTRIBUTE, Boolean.toString(value));
+                
+            } catch (TransformerException e) {
+                throw new WorkflowException(e);
+            }
+        }
+    }
+    
+    protected void createVariableElements(NamespaceHelper helper) throws WorkflowException {
+        Element parent = helper.getDocument().getDocumentElement();
+        BooleanVariable variables[] = getInstance().getWorkflowImpl().getVariables();
+        for (int i = 0; i < variables.length; i++) {
+            Element element = helper.createElement(VARIABLE_ELEMENT);
+            element.setAttribute(NAME_ATTRIBUTE, variables[i].getName());
+            parent.appendChild(element);
+        }
+    }
+    
+    /**
+     * Restores the state variables of a workflow instance.
+     * @param instance The instance to restore.
+     * @param helper The helper that wraps the history document.
+     * @throws WorkflowException
+     */
+    protected void restoreVariables(WorkflowInstanceImpl instance, NamespaceHelper helper) throws WorkflowException {
+        Element parent = helper.getDocument().getDocumentElement();
+        
+        Element variableElements[] = helper.getChildren(parent, VARIABLE_ELEMENT);
+        for (int i = 0; i < variableElements.length; i++) {
+            String name = variableElements[i].getAttribute(NAME_ATTRIBUTE);
+            String value = variableElements[i].getAttribute(VALUE_ATTRIBUTE);
+            instance.setValue(name, new Boolean(value).booleanValue());
+        }
+    }
+    
+    /**
+     * Restores the state of a workflow instance.
+     * @param instance The instance to restore.
+     * @param helper The helper that wraps the history document.
+     * @throws WorkflowException
+     */
+    protected void restoreState(WorkflowInstanceImpl instance, NamespaceHelper helper) throws WorkflowException {
+        State state;
+        Element versionElements[] =
+            helper.getChildren(helper.getDocument().getDocumentElement(), VERSION_ELEMENT);
+        if (versionElements.length > 0) {
+            Element lastElement = versionElements[versionElements.length - 1];
+            String stateId = lastElement.getAttribute(STATE_ATTRIBUTE);
+            state = instance.getWorkflowImpl().getState(stateId);
+        }
+        else {
+            state = instance.getWorkflow().getInitialState();
+        }
+        instance.setCurrentState(state);
+    }
+    
 }
