@@ -63,18 +63,18 @@ import org.apache.log4j.Category;
  * A utility class for InetAddress. Also see http://jodies.de/ipcalc
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.8 2003/11/13 16:11:58 andreas Exp $
+ * @version $Id: InetAddressUtil.java,v 1.9 2004/02/03 11:13:18 andreas Exp $
  */
 public class InetAddressUtil {
-    
+
     private static final Category log = Category.getInstance(InetAddressUtil.class);
 
     /**
      * Ctor.
-     */    
+     */
     private InetAddressUtil() {
     }
-	
+
     /**
      * Checks if a subnet contains a specific IP address.
      * @param network The network address.
@@ -98,30 +98,30 @@ public class InetAddressUtil {
         int networkPart = getClassPart(network, part);
         int netmaskPart = getClassPart(netmask, part);
         int ipPart = getClassPart(ip, part);
-			
+
         int firstHostAddress = networkPart + 1;
         int broadcastAddress = networkPart + (256 - netmaskPart - 1);
         int lastHostAddress = broadcastAddress - 1;
-			
+
         contained = contained && firstHostAddress <= ipPart && ipPart <= lastHostAddress;
         for (int i = 0; i < part; i++) {
             contained = contained && getClassPart(network, i) == getClassPart(ip, i);
         }
-    		
-//			if (log.isDebugEnabled()) {
-				log.error("---------------------------------------");
-				log.error("Checking part           [" + part + "]");
-				log.error("    Network:            [" + network.getHostAddress() + "]");
-				log.error("    Netmask:            [" + netmask.getHostAddress() + "]");
-				log.error("    Address:            [" + ip.getHostAddress() + "]");
-				log.error("    Network class part: [" + networkPart + "]");
-				log.error("    Netmask class part: [" + netmaskPart + "]");
-				log.error("    Address class part: [" + ipPart + "]");
-				log.error("    First host address: [" + firstHostAddress + "]");
-				log.error("    Last host address:  [" + lastHostAddress + "]");
-				log.error("    Contained:          [" + contained + "]");
-//			}
-    	
+
+        if (log.isDebugEnabled()) {
+            log.debug("---------------------------------------");
+            log.debug("Checking part           [" + part + "]");
+            log.debug("    Network:            [" + network.getHostAddress() + "]");
+            log.debug("    Netmask:            [" + netmask.getHostAddress() + "]");
+            log.debug("    Address:            [" + ip.getHostAddress() + "]");
+            log.debug("    Network class part: [" + networkPart + "]");
+            log.debug("    Netmask class part: [" + netmaskPart + "]");
+            log.debug("    Address class part: [" + ipPart + "]");
+            log.debug("    First host address: [" + firstHostAddress + "]");
+            log.debug("    Last host address:  [" + lastHostAddress + "]");
+            log.debug("    Contained:          [" + contained + "]");
+        }
+
         log.debug("---------------------------------------");
         log.debug("Contained:              [" + contained + "]");
         log.debug("=======================================");
@@ -153,11 +153,11 @@ public class InetAddressUtil {
             numbers[i] = new Integer(parts[i]);
         }
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             log.error(".checkNetmask(): Check part: " + numbers[i]);
             if (0 <= numbers[i].intValue() && numbers[i].intValue() <= 255) {
                 if (numbers[i].intValue() != 255) {
-                    for(int k = i + 1; k < 4; k++) {
+                    for (int k = i + 1; k < 4; k++) {
                         if (numbers[k].intValue() != 0) {
                             log.error(".checkNetmask(): Illegal Netmask: " + netmask);
                             return -1;
