@@ -44,7 +44,7 @@ import java.util.HashMap;
 
 /**
  * @author andreas
- * @version $Id: DefaultDocumentBuilder.java,v 1.23 2003/10/29 15:31:12 andreas Exp $
+ * @version $Id: DefaultDocumentBuilder.java,v 1.24 2003/10/31 17:44:07 andreas Exp $
  *  
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
@@ -88,9 +88,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         String fullLanguage = "".equals(language) ? "" : ("_" + language);
         documentURL = documentURL.substring(0, documentURL.length() - fullLanguage.length());
 
-        boolean defaultLanguageForced = false;
         if ("".equals(language)) {
-            defaultLanguageForced = true;
             language = publication.getDefaultLanguage();
         }
 
@@ -105,30 +103,6 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
             new DefaultDocument(publication, documentId, info.getArea(), language);
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
-
-        if (defaultLanguageForced) {
-            // unfortunatelly we cannot count on the document to always be available
-            // in the default language. So if the default language is not in the list
-            // of available languages for this document, simply use the first available
-            // language.
-            HashMap languagesMap = new HashMap();
-            String[] languages = null;
-            try {
-                languages = document.getLanguages();
-            } catch (DocumentException e) {
-                throw new DocumentBuildException(e);
-            }
-            // If the document has no languages, we'll just leave it
-            // as it is (i.e. we leave it at the default language)
-            if (languages.length > 0) {
-                for (int i = 0; i < languages.length; i++) {
-                    languagesMap.put(languages[i], languages[i]);
-                }
-                if (!languagesMap.containsKey(document.getLanguage())) {
-                    document.setLanguage(languages[0]);
-                }
-            }
-        }
 
         return document;
     }
