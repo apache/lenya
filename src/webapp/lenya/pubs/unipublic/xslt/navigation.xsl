@@ -23,7 +23,7 @@
             <tr>
               <xsl:choose>
                 <xsl:when test="@highlighted='true'">
-                  <td align="right"><a href="{$unipublic}{$view}/{../../@name}/{@id}/{$year}/"><img height="25" src="{$img-unipub}/nav_light_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
+                  <td align="right"><a href="{$unipublic}{$view}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_light_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
                 </xsl:when>
                 <xsl:otherwise>
                   <td align="right">
@@ -33,7 +33,7 @@
                       <xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute>
                     </xsl:when>
                     <xsl:otherwise>
-                      <xsl:attribute name="href"><xsl:value-of select="$unipublic"/><xsl:value-of select="$view"/>/<xsl:value-of select="../../@name"/>/<xsl:value-of select="@id"/>/<xsl:value-of select="$year"/>/</xsl:attribute>
+                      <xsl:attribute name="href"><xsl:value-of select="$unipublic"/><xsl:value-of select="$view"/>/<xsl:value-of select="../../@name"/>/<xsl:value-of select="@id"/>/</xsl:attribute>
                     </xsl:otherwise>
                   </xsl:choose>
                   <img height="25" src="{$img-unipub}/nav_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/>
