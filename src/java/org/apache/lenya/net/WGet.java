@@ -1,5 +1,5 @@
 /*
- * $Id: WGet.java,v 1.22 2003/04/07 17:33:43 michi Exp $
+ * $Id: WGet.java,v 1.23 2003/04/17 14:11:48 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -97,7 +97,7 @@ public class WGet {
                 }
             }
 
-            byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/oscom//g");
+            byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/oscom//g", "");
 
         } catch (MalformedURLException e) {
             System.err.println(e);
@@ -116,20 +116,18 @@ public class WGet {
     }
 
     /**
-     * DOCUMENT ME!
+     * @param url The url of the resource to download
+     * @param prefixSubstitute Regexp which shall be replaced
+     * @param substituteReplacement Replacement of the regexp
      *
-     * @param url DOCUMENT ME!
-     * @param prefixSubstitute DOCUMENT ME!
+     * @return bytes of downloaded resource
      *
-     * @return DOCUMENT ME!
-     *
-     * @throws IOException DOCUMENT ME!
+     * @throws IOException URL might not exist
      */
-    public byte[] download(URL url, String prefixSubstitute)
-        throws IOException {
-        log.debug(".download(): " + url);
+    public byte[] download(URL url, String prefixSubstitute, String substituteReplacement) throws IOException {
+        log.debug(".download(): " + url + " " + prefixSubstitute + " " + substituteReplacement);
 
-        return downloadUsingHttpClient(url, prefixSubstitute);
+        return downloadUsingHttpClient(url, prefixSubstitute, substituteReplacement);
     }
 
     /**
@@ -140,7 +138,7 @@ public class WGet {
      *
      * @return DOCUMENT ME!
      */
-    public byte[] downloadUsingHttpClient(URL url, String prefixSubstitute) {
+    public byte[] downloadUsingHttpClient(URL url, String prefixSubstitute, String substituteReplacement) {
         log.debug(".downloadUsingHttpClient(): " + url);
 
         byte[] sresponse = null;
@@ -148,11 +146,11 @@ public class WGet {
         try {
             sresponse = getResource(url);
 
-            File file = new File(createFileName(url));
+            File file = new File(createFileName(url, prefixSubstitute, substituteReplacement));
 
             saveToFile(file.getAbsolutePath(), sresponse);
 
-            substitutePrefix(file.getAbsolutePath(), prefixSubstitute);
+            substitutePrefix(file.getAbsolutePath(), prefixSubstitute, substituteReplacement);
         } catch (MalformedURLException e) {
             log.error(".downloadUsingHttpClient(): " + e);
         } catch (FileNotFoundException e) {
@@ -179,7 +177,7 @@ public class WGet {
                     URL child_url = new URL(org.lenya.util.URLUtil.complete(url.toString(), link));
 
                     byte[] child_sresponse = getResource(child_url);
-                    saveToFile(createFileName(child_url), child_sresponse);
+                    saveToFile(createFileName(child_url, prefixSubstitute, substituteReplacement), child_sresponse);
 
                 } catch (Exception e) {
                     log.error(".downloadUsingHttpClient(): " + e);
@@ -264,19 +262,18 @@ public class WGet {
      *
      * @param filename DOCUMENT ME!
      * @param prefixSubstitute DOCUMENT ME!
+     * @param substituteReplacement DOCUMENT ME!
      *
      * @return DOCUMENT ME!
      *
      * @throws IOException DOCUMENT ME!
      */
-    public byte[] substitutePrefix(String filename, String prefixSubstitute)
-        throws IOException {
-        log.debug(".substitutePrefix(): " + filename + " " + prefixSubstitute);
-
+    public byte[] substitutePrefix(String filename, String prefixSubstitute, String substituteReplacement) throws IOException {
         try {
             File file = new File(filename);
-            String command = "/usr/bin/sed --expression=" + prefixSubstitute + " " +
-                file.getAbsolutePath();
+            String command = "/usr/bin/sed --expression=s/" + escapeSlashes(prefixSubstitute) + "/" + escapeSlashes(substituteReplacement) + "/g " + file.getAbsolutePath();
+
+
             byte[] wget_response_sed = runProcess(command);
 
             java.io.ByteArrayInputStream bain = new java.io.ByteArrayInputStream(wget_response_sed);
@@ -292,6 +289,23 @@ public class WGet {
         }
 
         return null;
+    }
+
+    /**
+     * Escape slashes
+     *
+     * @return String with escaped slashes
+     */
+    public String escapeSlashes(String string) {
+        StringBuffer buffer = new StringBuffer("");
+        for (int i = 0; i < string.length(); i++) {
+            if (string.charAt(i) == '/') {
+               buffer.append("\\/");
+            } else {
+                buffer.append(string.charAt(i));
+            }
+        }
+        return buffer.toString();
     }
 
     /**
@@ -321,16 +335,12 @@ public class WGet {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param url DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @param url URL of resource, which has been downloaded and shall be saved
+     * @return Absolute substituted filename
      */
-    public String createFileName(URL url) {
+    public String createFileName(URL url, String prefixSubstitute, String substituteReplacement) {
         File file = new File(directory_prefix + File.separator + url.getFile());
-
-        return file.getAbsolutePath();
+        return file.getAbsolutePath().replaceAll(prefixSubstitute, substituteReplacement);
     }
 
     /*
@@ -382,8 +392,7 @@ public class WGet {
         }
 
         if (baout_e.toString().length() > 0) {
-            log.error(".runProcess(): ###ErrorStream:START" + baout_e.toString() +
-                "END:ErrorStream###");
+            log.error(".runProcess(): ###ErrorStream:START" + baout_e.toString() + "END:ErrorStream###");
         }
 
         return baout.toByteArray();

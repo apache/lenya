@@ -1,5 +1,5 @@
 /*
- * $Id: StaticHTMLExporter.java,v 1.12 2003/04/07 17:33:43 michi Exp $
+ * $Id: StaticHTMLExporter.java,v 1.13 2003/04/17 14:11:48 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -82,7 +82,7 @@ public class StaticHTMLExporter extends AbstractExporter {
      * @throws ExportException DOCUMENT ME!
      */
     public void export(URL serverURI, int serverPort, String publicationPath, String exportPath,
-        String[] uris, String substituteExpression) throws ExportException {
+        String[] uris, String substituteExpression, String substituteReplacement) throws ExportException {
         try {
             String exportDirectory = publicationPath + exportPath;
             if (new File(exportPath).isAbsolute()) {
@@ -99,7 +99,7 @@ public class StaticHTMLExporter extends AbstractExporter {
                 URL uri = new URL(fullServerURI + uris[i]);
                 log.info(".export(): Export static HTML: " + uri);
 
-                wget.download(uri, substituteExpression);
+                wget.download(uri, substituteExpression, substituteReplacement);
             }
         } catch (Exception e) {
             throw new ExportException(e);
@@ -125,6 +125,8 @@ public class StaticHTMLExporter extends AbstractExporter {
                 environment.getExportDirectory());
             taskParameters.setParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REGEXP,
                 environment.getSubstituteExpression());
+            taskParameters.setParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REPLACEMENT,
+                environment.getSubstituteReplacement());
 
             taskParameters.merge(getParameters());
             parameterize(taskParameters);
@@ -148,7 +150,8 @@ public class StaticHTMLExporter extends AbstractExporter {
 
             export(new URL(serverURI), serverPort, publicationPath,
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_EXPORT_PATH), uris,
-                getParameters().getParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REGEXP));
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REGEXP),
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REPLACEMENT));
         } catch (Exception e) {
             throw new ExecutionException(e);
         }

@@ -1,5 +1,5 @@
 /*
- * $Id: XPSSourceInformation.java,v 1.10 2003/03/06 20:45:53 gregor Exp $
+ * $Id: XPSSourceInformation.java,v 1.11 2003/04/17 14:11:49 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -107,8 +107,7 @@ public class XPSSourceInformation {
             if (urlString.indexOf("/") == 0) {
                 url = new URL("file:" + urlString);
             } else if (urlString.indexOf("cocoon:") == 0) {
-                log.warn("Protocol 7789: COCOON (" + urlString +
-                    ") -- will be transformed into http");
+                log.warn("Protocol 7789: COCOON (" + urlString + ") -- will be transformed into http");
 
                 if (cocoon != null) {
                     url = new URL(cocoon + "/" + urlString.substring(7)); // remove "cocoon:" protocol
@@ -127,7 +126,7 @@ public class XPSSourceInformation {
             }
         } catch (MalformedURLException e) // let's hope it's a relative path
          {
-            log.warn("1079: " + e + " -- Let's hope it's a relative path!");
+            log.debug("1079: " + e + " -- Let's hope it's a relative path!");
 
             File parent = new File(parentInfo.url.getFile());
 

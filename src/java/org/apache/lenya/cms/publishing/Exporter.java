@@ -1,5 +1,5 @@
 /*
- * $Id: Exporter.java,v 1.7 2003/03/06 20:45:41 gregor Exp $
+ * $Id: Exporter.java,v 1.8 2003/04/17 14:11:48 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,6 +69,6 @@ public interface Exporter {
      * @throws Exception DOCUMENT ME!
      */
     public void export(URL serverURI, int serverPort, String publicationPath,
-        String exportPathPrefix, String[] uris, String substituteExpression)
+        String exportPathPrefix, String[] uris, String substituteExpression, String substituteReplacement)
         throws ExportException;
 }

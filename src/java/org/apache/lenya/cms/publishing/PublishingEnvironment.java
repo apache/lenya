@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.12 2003/04/14 09:41:15 michi Exp $
+ * $Id: PublishingEnvironment.java,v 1.13 2003/04/17 14:11:48 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -68,6 +68,7 @@ public class PublishingEnvironment implements Configurable {
     public static final String PARAMETER_REPLICATION_PATH = "replication-path";
     public static final String PARAMETER_EXPORT_PATH = "export-path";
     public static final String PARAMETER_SUBSTITUTE_REGEXP = "substitute-regexp";
+    public static final String PARAMETER_SUBSTITUTE_REPLACEMENT = "substitute-replacement";
     private String publicationPath;
     private String replicationDirectory;
     private String authoringPath;
@@ -76,6 +77,7 @@ public class PublishingEnvironment implements Configurable {
     private String treeLivePath;
     private String exportDirectory;
     private String substituteExpression;
+    private String substituteReplacement;
 
     /**
      * Creates a new PublishingEnvironment object.
@@ -132,8 +134,8 @@ public class PublishingEnvironment implements Configurable {
 
         // export
         setExportDirectory(configuration.getChild("export").getChild("destination").getAttribute("href"));
-        setSubstituteExpression(configuration.getChild("export").getChild("substitution")
-                                             .getAttribute("regexp"));
+        setSubstituteExpression(configuration.getChild("export").getChild("substitution").getAttribute("regexp"));
+        setSubstituteReplacementExpression(configuration.getChild("export").getChild("substitution").getAttribute("replacement"));
 
         log.debug("CONFIGURATION:\nauthoring path=" + getAuthoringPath() + "\nlive path=" +
             getLivePath());
@@ -255,6 +257,21 @@ public class PublishingEnvironment implements Configurable {
 
     protected void setSubstituteExpression(String substitute) {
         substituteExpression = substitute;
+    }
+
+    /**
+     * Set replacement string, which was read from publication.xconf
+     */
+    protected void setSubstituteReplacementExpression(String replacement) {
+        substituteReplacement = replacement;
+    }
+    /**
+     * Get the replacement string, which was read from publication.xconf
+     *
+     * @return The replacement string
+     */
+    public String getSubstituteReplacement() {
+        return substituteReplacement;
     }
 
     /**

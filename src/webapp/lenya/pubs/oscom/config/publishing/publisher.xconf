@@ -23,6 +23,12 @@
 <!-- FIXME? -->
   <export>
     <destination href="resources/export/pending"/>
-    <substitution regexp="s/\/lenya\/oscom//g"/>
+<!--
+    <destination href="/usr/local/apache/htdocs_oscom"/>
+-->
+    <substitution regexp="/lenya/oscom" replacement=""/>
+<!--
+    <substitution regexp="/lenya/oscom" replacement="/levi/vanya"/>
+-->
   </export>
 </publication>
