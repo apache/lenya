@@ -43,7 +43,10 @@
  */
 package org.apache.lenya.cms.ac2.workflow;
 
+import java.util.Arrays;
+
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac2.Identity;
@@ -77,35 +80,44 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
         boolean authorized = true;
 
         String event = request.getParameter(EVENT_PARAMETER);
-
-        if (event != null) {
+        Document document =
+            new DefaultDocument(envelope.getPublication(), envelope.getDocumentId());
+        
+        try {
+                
             WorkflowFactory factory = WorkflowFactory.newInstance();
-
-            Document document =
-                new DefaultDocument(envelope.getPublication(), envelope.getDocumentId());
-            WorkflowInstance instance;
-            Situation situation;
-            try {
-                instance = factory.buildInstance(document);
-                Policy policy = getAccessController().getPolicy(envelope);
-                Role roles[] = policy.getRoles(identity);
-                situation = factory.buildSituation(roles);
-            } catch (WorkflowException e) {
-                throw new AccessControlException(e);
-            }
-
-            authorized = false;
-            Event[] events = instance.getExecutableEvents(situation);
-            int i = 0;
-            while (!authorized && i < events.length) {
-                if (events[i].getName().equals(event)) {
-                    authorized = true;
+            WorkflowInstance instance = factory.buildInstance(document);
+            Policy policy = getAccessController().getPolicy(envelope);
+            Role[] roles = policy.getRoles(identity);
+            saveRoles(request, roles);
+    
+            if (event != null) {
+                authorized = false;
+                Situation situation = factory.buildSituation(roles);
+                Event[] events = instance.getExecutableEvents(situation);
+                int i = 0;
+                while (!authorized && i < events.length) {
+                    if (events[i].getName().equals(event)) {
+                        authorized = true;
+                    }
+                    i++;
                 }
-                i++;
             }
-        }
 
+        } catch (WorkflowException e) {
+            throw new AccessControlException(e);
+        }
         return authorized;
+    }
+    
+    /**
+     * Saves the roles of the current identity to the request.
+     * @param request The request.
+     * @param roles The roles.
+     */
+    protected void saveRoles(Request request, Role[] roles) {
+        Session session = request.getSession(true);
+        session.setAttribute(Role.class.getName(), Arrays.asList(roles));
     }
 
 }
