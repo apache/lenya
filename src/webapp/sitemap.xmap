@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.127 2004/04/24 21:20:50 gregor Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.128 2004/04/29 15:33:49 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -93,6 +93,9 @@
     <map:serializer name="text" logger="sitemap.serializer.text" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer"/>
     <map:serializer name="text-iso-8859-1" logger="sitemap.serializer.text-iso-8859-1" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
       <encoding>ISO-8859-1</encoding>
+    </map:serializer>
+     <map:serializer name="text-utf-8" logger="sitemap.serializer.text-iso-8859-1" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
+      <encoding>UTF-8</encoding>
     </map:serializer>
   </map:serializers>
 
