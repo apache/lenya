@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.208 2004/05/16 19:54:27 michi Exp $ -->
+<!-- $Id: usecase.xmap,v 1.209 2004/05/17 14:54:30 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -209,9 +209,7 @@
               <map:parameter name="serverpage" value="scheduler/screen.xsp"/>
               <map:parameter name="stylesheet" value="scheduler/screen.xsl"/>
             </map:call>
-            <!--
             <map:transform src="cocoon:/notification/{../../1}/publish.xsl"/>
-            -->
             <map:transform src="cocoon://scheduler/{../../1}/{page-envelope:area}/{../../3}.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>

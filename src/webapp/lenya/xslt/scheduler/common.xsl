@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: common.xsl,v 1.16 2004/03/13 12:42:07 gregor Exp $ -->
+<!-- $Id: common.xsl,v 1.17 2004/05/17 14:53:46 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -114,7 +114,15 @@
       </input>
       </td>
       <td>
-        <input i18n:attr="value" type="submit" value="Add" />
+        <input type="hidden" name="notification.subject" value=""/>
+        <input type="hidden" name="notification.message" value=""/>
+        <input type="hidden" name="notification.tolist" value=""/>
+        <input i18n:attr="value" type="submit" value="Add"
+          onclick="
+            elements['notification.subject'].value = document.getElementById('notification.subject').value;
+            elements['notification.message'].value = document.getElementById('notification.message').value;
+            elements['notification.tolist'].value = document.getElementById('notification.tolist').value;
+          "/>
       </td>
     </tr>
   </xsl:template>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: message2xslt.xsl,v 1.6 2004/03/13 12:42:18 gregor Exp $ -->
+<!-- $Id: message2xslt.xsl,v 1.7 2004/05/17 14:53:46 andreas Exp $ -->
 
 <!--
 	This stylesheet converts a notification message to a named stylesheet.
@@ -56,7 +56,7 @@
 <xsl:template match="/not:notification[@enabled = 'true']">
 	
 	<xslt:template match="not:notification">
-		<input type="hidden" name="notification.subject"
+		<input id="notification.subject" type="hidden" name="notification.subject"
 			value="{not:message/not:subject}"/>
 		<div class="lenya-box">
 			<div class="lenya-box-title">Notification</div>
@@ -71,7 +71,7 @@
 				<tr>
 					<td class="lenya-entry-caption">Comment:</td>
 					<td>
-						<textarea name="notification.message" class="lenya-form-element">
+						<textarea id="notification.message" name="notification.message" class="lenya-form-element">
 							<xsl:text/>
 							<xsl:apply-templates select="not:message/not:body"/>
 							<xsl:text>&#160;</xsl:text>
@@ -99,7 +99,7 @@
 	
 	
 	<xslt:template match="not:textarea">
-		<textarea name="notification.tolist" class="lenya-form-element">&#160;</textarea>
+		<textarea id="notification.tolist" name="notification.tolist" class="lenya-form-element">&#160;</textarea>
 	</xslt:template>
 	
 	
