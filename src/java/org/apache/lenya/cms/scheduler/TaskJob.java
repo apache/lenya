@@ -56,8 +56,7 @@ public class TaskJob
         
 	if (publicationId == null || publicationId.equals("")) {
             log.error("No publication ID provided! ", new IllegalStateException());
-            // FIXME:
-            publicationId = "unipublic";
+            publicationId = "no_such_publication";
 	}
         
         // FIXME: Don't translate parameters

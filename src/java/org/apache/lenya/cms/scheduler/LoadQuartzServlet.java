@@ -34,7 +34,7 @@ import org.wyona.cms.publishing.PublishingEnvironment;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.7 2002/11/15 10:59:12 ah Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.8 2002/11/15 13:38:20 ah Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -181,12 +181,12 @@ public class LoadQuartzServlet extends HttpServlet {
 	log.debug("-------------------- End Session Attributes --------------------");
 	
 	// the publicationID is fetched from the session
-	String publicationId = (String) request.getSession().getAttribute("publicationID");
+	String publicationId = (String) request.getSession().getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
 	if (publicationId == null || publicationId.equals("")) {
 	    publicationId = "No_session_was_passed_in"; 
             log.error("No publication ID provided! ", new IllegalStateException());
             // FIXME:
-            publicationId = "unipublic";
+            publicationId = "no_such_publication";
 	}
 
 	// we grab the document URI from from a hidden field if a job is
