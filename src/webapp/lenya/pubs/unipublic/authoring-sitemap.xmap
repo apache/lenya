@@ -5,15 +5,19 @@
   <!-- =========================== Components ================================ -->
 
   <map:components>
+  
     <map:generators default="file">
-      <map:generator  name="servletproxy" src="org.wyona.cms.cocoon.generation.ProxyGenerator"/>
+      <map:generator name="file" src="org.apache.cocoon.generation.FileGenerator"/>
+      <map:generator name="servletproxy" src="org.wyona.cms.cocoon.generation.ProxyGenerator"/>
     </map:generators>                                                                                                                       
+    
     <map:transformers default="xslt">
       <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
         <publication type="unipublic"/>
       </map:transformer>
       <map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
     </map:transformers>
+
     <map:readers default="resource"/>
     <map:serializers default="html"/>
 
@@ -41,30 +45,31 @@
         <rcmlDirectory href="docs/publication/rcml"/>
         <backupDirectory href="docs/publication/rcbak"/>
       </map:action>
+
+      <!-- publishing -->
+      <map:action name="publisher" src="org.wyona.cms.cocoon.acting.TaskAction">
+        <task id="publish"/>
+      </map:action>
+      <map:action name="article-publisher" src="org.wyona.cms.cocoon.acting.TaskAction">
+        <task id="publish-article"/>
+      </map:action>
+      
+      <!-- dossier selection -->
+      <map:action name="dossier" src="ch.unizh.unipublic.wyona.cms.DossierAction"/>
+
+      <!-- request parameters -->
+      <map:action name="request-parameters" src="org.apache.cocoon.acting.RequestParamAction"/>
+
+<!--
       <map:action name="publisher" src="org.wyona.cms.cocoon.acting.PublisherAction">
-        <authoring href="docs/publication/authoring/"/>
-        <live href="docs/publication/live/"/>
-        <tree-authoring href="docs/publication/authoring/tree.xml"/>
-        <tree-live href="docs/publication/live/tree.xml"/>
-        <export-directory prefix="resources/publication/export/pending"/>
-        <export-url-prefix substitute="s/\/wyona-cms\/unipublic//g"/>
-<!--
-        <export-substitute-uri pattern="/wyona-cms/unipublic/" substitution="/"/>
--->
+        <publisher class="org.wyona.cms.publishing.DefaultFilePublisher"/>
+        <exporter class="org.wyona.cms.publishing.StaticHTMLExporter"/>
       </map:action>
-
-      <map:action name="article-publisher" src="ch.unizh.unipublic.wyona.cms.ArticlePublisherAction">
-        <authoring href="docs/publication/authoring/"/>
-        <live href="docs/publication/live/"/>
-        <tree-authoring href="docs/publication/authoring/tree.xml"/>
-        <tree-live href="docs/publication/live/tree.xml"/>
-        <export-directory prefix="resources/publication/export/pending"/>
-        <export-url-prefix substitute="s/\/wyona-cms\/unipublic//g"/>
-<!--
-        <export-substitute-uri pattern="/wyona-cms/unipublic/" substitution="/"/>
--->
+      <map:action name="article-publisher" src="org.wyona.cms.cocoon.acting.PublisherAction">
+        <publisher class="ch.unizh.unipublic.wyona.cms.ArticlePublisher"/>
+        <exporter class="org.wyona.cms.publishing.StaticHTMLExporter"/>
       </map:action>
-
+-->
       <map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <docs href="docs/publication/authoring"/>
@@ -156,7 +161,10 @@
       <!-- Article -->
       <map:match pattern="wyona/publishArticleScreen*">
         <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
-        <map:transform src="stylesheets/cms/Page/Publish/article-main.xsl"/>
+<!--        <map:transform src="stylesheets/cms/Page/Publish/article-main.xsl"/>-->
+        <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl">
+          <map:parameter name="title" value="Publish Article"/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="wyona/publishArticle*">
@@ -610,9 +618,41 @@
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
+
+      <!-- select dossier screen -->
+      <map:match pattern="selectDossierScreen">
+        <map:act type="request-parameters">
+          <map:parameter name="parameters" value="true"/>
+          <map:aggregate element="dossiers">
+            <map:part src="cocoon:/select-dossier-dossiers"/>
+            <map:part src="cocoon:/{article-file}"/>
+          </map:aggregate>
+        </map:act>
+<!--        <map:serialize type="xml"/>-->
+        <map:transform src="stylesheets/cms/Page/Dossier/select-dossier.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- select dossier -->
+      <map:match pattern="selectDossier">
+        <map:act type="dossier">
+          <map:redirect-to uri="{parent_uri}" session="true"/>
+        </map:act>
+      </map:match>
     </map:pipeline>
 
-
+    <!-- dossier selection -->
+    <map:pipeline internal-only="true">
+      <map:match pattern="select-dossier-dossiers">
+        <map:generate type="serverpages" src="docs/publication/dossiers/dossier-list.xsp">
+          <map:parameter name="dossiers-path" value="docs/publication/authoring/dossiers"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    
     <!-- Samples for resource/document creation -->
     <map:pipeline>
       <map:match pattern="doctypes/samples/*.xml">

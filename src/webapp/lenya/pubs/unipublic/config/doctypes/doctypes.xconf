@@ -5,6 +5,9 @@
   <children>
     <doc type="Article"/>
   </children>
+  <tasks>
+    <task id="publish"/>
+  </tasks>
 </doc>
 
 <doc type="Article">
@@ -12,6 +15,9 @@
   <creator src="org.wyona.cms.authoring.DefaultParentChildCreator"/>
 -->
   <creator src="ch.unizh.unipublic.wyona.cms.authoring.NewArticleCreator"/>
+  <tasks>
+    <task id="publish-article"/>
+  </tasks>
 </doc>
 
 <doc type="Dossier">
@@ -21,5 +27,8 @@
     <sample>Dossier.xml</sample>
     <!-- <sampleMeta>Meta.xml</sampleMeta> -->
   </creator>
+  <tasks>
+    <task id="publish"/>
+  </tasks>
 </doc>
 </doctypes>

@@ -41,8 +41,8 @@
         <item>-----------------</item>
       </separator>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?docid=<xsp:expr>xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html,"+xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/index.html"</xsp:expr>&amp;docids=<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Publish</item>            
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?uris=<xsp:expr>xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html,"+xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/index.html"</xsp:expr>&amp;sources=<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html?task.uris=<xsp:expr>xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html,"+xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/index.html"</xsp:expr>&amp;task.sources=<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml&amp;documentType=Article</xsp:attribute>Schedule</item>
 <!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            
 -->
@@ -52,6 +52,12 @@
       </separator>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin/pubid/unipublic</xsp:attribute>Admin&#160;Scheduler</item>            
+      </block>
+      <separator>
+        <item>-----------------</item>
+      </separator>
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/selectDossierScreen?article-file=<xsp:expr>channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Assign to Dossier</item>
       </block>
       <separator>
         <item>-----------------</item>
