@@ -30,7 +30,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      * Non-public constructor.
      */
     public DefaultDocumentBuilder() {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -72,8 +72,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     }
 
     /**
-     * Creates a new document object. Override this method to create specific document objects,
-     * e.g., for different document IDs.
+     * Creates a new document object. Override this method to create specific
+     * document objects, e.g., for different document IDs.
      * @param map The identity map.
      * @param area The area.
      * @param documentId The document ID.
@@ -88,8 +88,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     }
 
     /**
-     * Removes all "."-separated extensions from a URL (e.g., <code>/foo.print.html</code> is
-     * transformed to <code>/foo</code>).
+     * Removes all "."-separated extensions from a URL (e.g.,
+     * <code>/foo.print.html</code> is transformed to <code>/foo</code>).
      * @param url The URL to trim.
      * @return A URL string.
      */
@@ -110,7 +110,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
         String language = "";
         String url = urlWithoutSuffix;
-        
+
         int languageSeparatorIndex = url.lastIndexOf("_");
         if (languageSeparatorIndex > -1) {
             String suffix = url.substring(languageSeparatorIndex + 1);
@@ -152,7 +152,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
             if (slashIndex > -1) {
                 String area = publicationURI.substring(0, slashIndex);
                 String documentUri = publicationURI.substring(slashIndex);
-                if (AbstractPublication.isValidArea(area) && documentUri.startsWith("/")) {
+                if (AbstractPublication.isValidArea(area) && !area.equals(Publication.ADMIN_AREA)
+                        && documentUri.startsWith("/") && documentUri.length() > 1) {
                     isDocument = true;
                 }
             }
