@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.13 2003/06/11 14:56:39 egli Exp $
+ * $Id: User.java,v 1.14 2003/06/12 15:46:06 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -53,12 +53,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.log4j.Category;
+
 /**
  *
  * @author  nobby
  */
 public abstract class User {
-
+	private Category log = Category.getInstance(User.class);
+	
 	protected String id;
 	protected String fullName;
 	protected String email;
@@ -157,6 +160,17 @@ public abstract class User {
 	}
 
 	/**
+	 * This method can be used for subclasses to set the password without it
+	 * being encrypted again. Some subclass might have knowledge of the encrypted
+	 * password and needs to be able to set it.
+	 * 
+	 * @param encryptedPassword
+	 */
+	protected void setEncryptedPassword(String encryptedPassword) {
+		this.encryptedPassword = encryptedPassword;
+	}
+	
+	/**
 	 * @param publication
 	 * @throws AccessControlException
 	 */
@@ -185,5 +199,20 @@ public abstract class User {
 	public int hashCode() {
 		return getId().hashCode();
 	}
-
+	
+	/**
+	 * Authenticate a user. This is done by encrypting 
+	 * the given password and comparing this to the 
+	 * encryptedPassword.
+	 * 
+	 * @param password
+	 * @return true if the given passwprd matches the password for this user
+	 */
+	public boolean authenticate(String password) {
+		log.debug("Password: " + password);
+		log.debug("pw encypted: " + Password.encrypt(password));
+		log.debug("orig encrypted pw: " + this.encryptedPassword);
+		
+		return this.encryptedPassword.equals(Password.encrypt(password));
+	}
 }
