@@ -19,7 +19,14 @@
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
       <xsl:choose>
 	<xsl:when test="$insert = 'true'">
-	  <page:title>Insert Asset</page:title>
+	  <xsl:choose>
+	    <xsl:when test="$insertimage = 'true'">
+	      <page:title>Insert Image</page:title>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <page:title>Insert Asset</page:title>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:when>
 	<xsl:otherwise>
 	  <page:title>Asset Upload</page:title>
@@ -36,7 +43,14 @@
     <div class="lenya-box">
       <xsl:choose>
 	<xsl:when test="$insert = 'true'">
-	  <div class="lenya-box-title">Insert a new Asset</div>
+	  <xsl:choose>
+	    <xsl:when test="$insertimage = 'true'">
+	      <div class="lenya-box-title">Insert a new Image</div>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <div class="lenya-box-title">Insert a new Asset</div>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:when>
 	<xsl:otherwise>
 	  <div class="lenya-box-title">Upload an Asset</div>
@@ -69,7 +83,7 @@
 	      <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="hidden" name="properties.asset.creator" value="{/usecase:asset/usecase:creator}"/><xsl:value-of select="/usecase:asset/usecase:creator"/></td>
+	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/usecase:asset/usecase:creator}"/></td>
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Subject:</td><td><input class="lenya-form-element" type="text" name="properties.asset.subject"/></td>
@@ -106,7 +120,14 @@
     <xsl:choose>
       <xsl:when test="$insert = 'true'">
 	<div class="lenya-box">
-	  <div class="lenya-box-title">Insert an existing Asset</div>
+	  <xsl:choose>
+	    <xsl:when test="$insertimage = 'true'">
+	      <div class="lenya-box-title">Insert an existing Image</div>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <div class="lenya-box-title">Insert an existing Asset</div>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	  <div class="lenya-box-body">
 	    <form method="GET"
 	      action="">
