@@ -56,7 +56,7 @@
   
   <community href="community/" label="Community">
     <node-f href="http://cvs.wyona.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
-    <node-g href="http://cvs.wyona.org/bugs/" label="Bug Tracker" />
+    <node-g href="http://nagoya.apache.org/bugzilla/" label="Bug Tracker" />
     <node-e href="mailing-lists.html" label="Mailing Lists" />
     <irc href="irc.html" label="IRC"/>
     <meetings href="meetings.html" label="Meetings and Sprints"/>

@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Apache Lenya: Mailing Lists</title>
+    <title>Meetings and Sprints</title>
     <version/>
     <type/>
     <authors>
@@ -11,22 +11,9 @@
     </authors>
   </header>
   <body>
-<section><title>Mailing Lists</title>
+<section><title>Sprints</title>
 <p>
-Please go to our Mailman mailings list info <link href="http://lenya.org/cgi-bin/mailman/listinfo">page</link>.
-</p>
-
-<p>
-You can also view our mailing lists archive at <link href="http://gmane.org/">Gmane</link>
-</p>
-<ol>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.user">lenyacms-users</link></li>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.devel">lenyacms-dev</link></li>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.cvs">lenyacms-cvs-commit</link></li>
-</ol>
-
-<p>
-Send questions or comments to <link href="mailto:mailman-owner@lenya.org">mailman-owner@lenya.org</link>.
+An introduction to sprints can be found <link href="http://www.oscom.org/Conferences/Sprints/">here</link>.
 </p>
 </section>
   </body>
