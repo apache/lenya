@@ -60,8 +60,6 @@ import junit.textui.TestRunner;
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.file.FilePolicyManager;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
