@@ -201,7 +201,7 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String)
      */
-    public void addNode(SiteTreeNode node, String refDocumentId) throws SiteTreeException {
+    public synchronized void addNode(SiteTreeNode node, String refDocumentId) throws SiteTreeException {
         this.addNode(
             node.getAbsoluteParentId(),
             node.getId(),
@@ -216,28 +216,28 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[])
      */
-    public void addNode(String parentid, String id, Label[] labels, boolean visibleInNav ) throws SiteTreeException {
+    public synchronized void addNode(String parentid, String id, Label[] labels, boolean visibleInNav ) throws SiteTreeException {
         addNode(parentid, id, labels, visibleInNav, null, null, false);
     }
 
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], boolean)
      */
-    public void addNode(String parentid, String id, Label[] labels) throws SiteTreeException {
+    public synchronized void addNode(String parentid, String id, Label[] labels) throws SiteTreeException {
         addNode(parentid, id, labels, true);
     }
 
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(org.apache.lenya.cms.publication.SiteTreeNode)
      */
-    public void addNode(SiteTreeNode node) throws SiteTreeException {
+    public synchronized void addNode(SiteTreeNode node) throws SiteTreeException {
         this.addNode(node, null);
     }
 
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean, java.lang.String)
      */
-    public void addNode(
+    public synchronized void addNode(
         String documentid,
         Label[] labels,
         boolean visibleInNav,
@@ -261,7 +261,7 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
      */
-    public void addNode(
+    public synchronized void addNode(
         String documentid,
         Label[] labels,
         boolean visibleInNav,
@@ -274,7 +274,7 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
      */
-    public void addNode(
+    public synchronized void addNode(
         String parentid,
         String id,
         Label[] labels,
@@ -289,7 +289,7 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
      */
-    public void addNode(
+    public synchronized void addNode(
         String parentid,
         String id,
         Label[] labels,
@@ -371,7 +371,7 @@ public class DefaultSiteTree implements SiteTree {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
      */
-    public void addLabel(String documentId, Label label) {
+    public synchronized void addLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);
         if (node != null) {
             node.addLabel(label);
@@ -382,7 +382,7 @@ public class DefaultSiteTree implements SiteTree {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#removeLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
      */
-    public void removeLabel(String documentId, Label label) {
+    public synchronized void removeLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);
         if (node != null) {
             node.removeLabel(label);
@@ -392,7 +392,7 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#removeNode(java.lang.String)
      */
-    public SiteTreeNode removeNode(String documentId) {
+    public synchronized SiteTreeNode removeNode(String documentId) {
         assert documentId != null;
 
         Node node = removeNodeInternal(documentId);
@@ -412,7 +412,7 @@ public class DefaultSiteTree implements SiteTree {
      * 
      * @return the <code>Node</code> that was removed
      */
-    private Node removeNodeInternal(String documentId) {
+    private synchronized Node removeNodeInternal(String documentId) {
         Node node = this.getNodeInternal(documentId);
         Node parentNode = node.getParentNode();
         Node newNode = parentNode.removeChild(node);
@@ -461,7 +461,7 @@ public class DefaultSiteTree implements SiteTree {
      * @param documentid The document id for the node.
      * @throws SiteTreeException if the moving failed.
      */
-    public void moveUp(String documentid) throws SiteTreeException {
+    public synchronized void moveUp(String documentid) throws SiteTreeException {
         Node node = this.getNodeInternal(documentid);
         if (node == null) {
             throw new SiteTreeException("Node to move: " + documentid + " not found");
@@ -496,7 +496,7 @@ public class DefaultSiteTree implements SiteTree {
      * @param documentid The document id for the node.
      * @throws SiteTreeException if the moving failed.
      */
-    public void moveDown(String documentid) throws SiteTreeException {
+    public synchronized void moveDown(String documentid) throws SiteTreeException {
         Node node = this.getNodeInternal(documentid);
         if (node == null) {
             throw new SiteTreeException("Node to move: " + documentid + " not found");
@@ -529,7 +529,7 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#importSubtree(org.apache.lenya.cms.publication.SiteTreeNode, org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String)
      */
-    public void importSubtree(
+    public synchronized void importSubtree(
         SiteTreeNode newParent,
         SiteTreeNode subtreeRoot,
         String newid,
@@ -567,7 +567,7 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#save()
      */
-    public void save() throws SiteTreeException {
+    public synchronized void save() throws SiteTreeException {
         try {
             DocumentHelper.writeDocument(document, treefile);
         } catch (TransformerException e) {
@@ -582,7 +582,7 @@ public class DefaultSiteTree implements SiteTree {
     /**
      * @see org.apache.lenya.cms.publication.SiteTree#setLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
      */
-    public void setLabel(String documentId, Label label) {
+    public synchronized void setLabel(String documentId, Label label) {
         SiteTreeNode node = getNode(documentId);
         if (node != null) {
             node.setLabel(label);
