@@ -32,7 +32,7 @@
 <h1><xsl:value-of select="$title"/></h1>
 <form action="{$action}">
 <input type="hidden" name="uris" value="{uris}"/>
-<input type="hidden" name="sources" value="{sources}"/>
+<input type="hidden" name="properties.publish.sources" value="{sources}"/>
 <input type="hidden" name="task-id" value="{task-id}"/>
 <!-- FIXME: arbitrary request parameters set within the menubar should be transfered!
 <input type="hidden" name="server-port" value="1937"/>

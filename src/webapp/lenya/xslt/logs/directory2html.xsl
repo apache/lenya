@@ -12,6 +12,8 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:dir="http://apache.org/cocoon/directory/2.0"
     >
+    
+<xsl:param name="test"/>
 
 <xsl:template match="/">
   <html>
@@ -19,7 +21,7 @@
       <title>Task Log History</title>
     </head>
     <body>
-      <h1>Task Log History</h1>
+      <h1>Task Log History: <xsl:value-of select="$test"/></h1>
       <xsl:apply-templates/>
     </body>
   </html>
