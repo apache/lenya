@@ -56,7 +56,6 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
 
     private Context context;
     private ServiceManager manager;
-    private SourceResolver sourceResolver;
     private String delegationScheme;
     private String delegationPrefix;
 
@@ -89,39 +88,46 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
     public Source getSource(final String location, final Map parameters)
             throws MalformedURLException, IOException, SourceException {
 
+        SourceResolver sourceResolver = null;
+
         try {
-            this.sourceResolver = (SourceResolver) manager
+            sourceResolver = (SourceResolver) manager
                     .lookup(org.apache.excalibur.source.SourceResolver.ROLE);
-        } catch (ServiceException e) {
-            throw new SourceException(e.getMessage());
-        }
 
-        String path = location.substring(SCHEME.length());
+            String path = location.substring(SCHEME.length());
 
-        if (!path.startsWith("//")) {
+            if (!path.startsWith("//")) {
 
-            Map objectModel = ContextHelper.getObjectModel(this.context);
-            try {
-                PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
+                Map objectModel = ContextHelper.getObjectModel(this.context);
+                try {
+                    PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
 
-                if (pageEnvelopeFactory != null) {
-                    PageEnvelope pageEnvelope = pageEnvelopeFactory.getPageEnvelope(objectModel);
+                    if (pageEnvelopeFactory != null) {
+                        PageEnvelope pageEnvelope = pageEnvelopeFactory
+                                .getPageEnvelope(objectModel);
 
-                    if (pageEnvelope != null) {
-                        String publicationID = pageEnvelope.getPublication().getId();
-                        String area = pageEnvelope.getDocument().getArea();
-                        path = "/" + publicationID + "/" + Publication.CONTENT_PATH + "/" + area
-                                + path;
+                        if (pageEnvelope != null) {
+                            String publicationID = pageEnvelope.getPublication().getId();
+                            String area = pageEnvelope.getDocument().getArea();
+                            path = "/" + publicationID + "/" + Publication.CONTENT_PATH + "/"
+                                    + area + path;
+                        }
                     }
+                } catch (PageEnvelopeException e) {
+                    throw new SourceException(
+                            "Cannot attach publication-id and/or area to " + path, e);
                 }
-            } catch (PageEnvelopeException e) {
-                throw new SourceException("Cannot attach publication-id and/or area to " + path, e);
             }
+
+            path = this.delegationScheme + this.delegationPrefix + path;
+
+            return sourceResolver.resolveURI(path);
+            
+        } catch (ServiceException e) {
+            throw new SourceException(e.getMessage(), e);
+        } finally {
+            this.manager.release(sourceResolver);
         }
-
-        path = this.delegationScheme + this.delegationPrefix + path;
-
-        return sourceResolver.resolveURI(path);
     }
 
     /**
