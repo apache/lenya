@@ -82,14 +82,14 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * This transformer lists the children of a document if the tag <namespaceURI:index> 
+ * This transformer lists the children of a document if the tag <namespaceURI:children> 
  * is present in this document. The list of the children is in the form :
- * <namespaceURI:index>
+ * <namespaceURI:children>
  *   <child href="....html>
  *     <ci:include src="..." element="included"/> 
  *   </child>
  *   ...
- * </namespaceURI:index>
+ * </namespaceURI:children>
  * Multiple language : if a child doesn't exist in the parent language, then the version 
  * in the default language will be considered. If it doesn't exist too, any other existent 
  * language will be considered.
@@ -101,7 +101,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     private String namespace;
     private String cIncludeNamespace;
 
-    public static final String INDEX_ELEMENT = "index";
+    public static final String CHILDREN_ELEMENT = "children";
     public static final String ABSTRACT_ATTRIBUTE = "abstract";
     
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/documentindex/1.0";
@@ -157,7 +157,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
         if (uri != null
             && uri.equals(namespace)
             && cIncludeNamespace != null
-            && localName.equals(INDEX_ELEMENT)) {
+            && localName.equals(CHILDREN_ELEMENT)) {
                 
             if (getLogger().isInfoEnabled()) {
                 getLogger().info("Inserting index");
