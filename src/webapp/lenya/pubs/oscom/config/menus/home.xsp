@@ -15,16 +15,20 @@
   <menus>
     <menu name="File">
       <block>
-        <item>Edit</item>
-        <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
-        <item href="index.xml">View&#160;XML</item>
+        <item href="xopus2/index.html">Edit&#160;with&#160;Xopus2</item>
+        <item href="/wyona-cms/bitfluxeditor/index.html">Edit&#160;with&#160;Bitflux</item>
+        <item href="wyona/publishScreen?docid=/index.html&amp;docids=/home.xml">Publish</item>
       </block>
       <block>
-        <item>-----------</item>
+        <item>-----------------</item>
       </block>
       <block>
+        <item>Passwd</item>
+        <item>Switch&#160;User</item>
+<!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
+-->
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
@@ -36,10 +40,21 @@
     </menu>
     <menu name="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#devguide</xsp:attribute>Developer's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+      </block>
+      <block>
+        <item>-----------------</item>
+      </block>
+      <block>
         <item href="http://www.wyona.org">About&#160;Wyona</item>
+      </block>
+    </menu>
+
+    <menu name="Debug">
+      <block>
+        <item href="index.xml">View&#160;XML</item>
       </block>
     </menu>
   </menus>

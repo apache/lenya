@@ -116,6 +116,12 @@
         <map:serialize type="xml"/>
       </map:match>
 
+      <!-- XML Home -->
+      <map:match pattern="authoring/home.xml">
+        <map:generate src="docs/publication/authoring/home.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
       <!-- XML -->
       <map:match pattern="authoring/**.xml">
         <map:aggregate element="wyona">
@@ -128,6 +134,8 @@
 
       <!-- Home -->
       <map:match pattern="authoring/">
+        <map:redirect-to uri="index.html"/>
+<!--
         <map:generate src="cocoon:/authoring/index.xml"/>
         <map:select>
           <map:when test="explorer">
@@ -138,12 +146,16 @@
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>
+-->
       </map:match>
       <map:match pattern="authoring/index.html">
         <map:generate src="cocoon:/authoring/index.xml"/>
         <map:select>
           <map:when test="explorer">
+<!--
             <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus.xsl"/>
+-->
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
           </map:when>
           <map:otherwise>
             <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
@@ -151,6 +163,25 @@
         </map:select>
         <map:serialize type="html"/>
       </map:match>
+
+      <!-- Edit with Xopus2 -->
+      <map:match pattern="authoring/xopus2/index.html">
+        <map:generate src="cocoon:/authoring/index.xml"/>
+        <map:select>
+          <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus2.xsl"/>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus2.xsl"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:match>
+
+
+
+
+
 
       <!-- Mailing Lists -->
       <map:match pattern="authoring/mailing-lists.html">

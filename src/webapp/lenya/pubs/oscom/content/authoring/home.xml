@@ -1,13 +1,6 @@
 <?xml version="1.0"?>
 
-<oscom xmlns:xi="http://www.w3.org/2001/XInclude">
-
-<xi:include href="navigation.xml"/>
-
-<xi:include href="home.xml#xpointer(/home/about)"/>
-<xi:include href="home.xml#xpointer(/home/features)"/>
-
-<!--
+<home>
 <about>
 <p>
 OSCOM is an international, not-for-profit organization
@@ -32,7 +25,7 @@ open source content management solutions out there.
 Due to the great success of the first conference
 we are organizing another conference at Berkeley, California 
 from Wednesday, 25 September to Friday, 27 September 2002.
-For more details please see <a href="conferences/sanfrancisco2002/program.html">program</a>.
+For more details please see <a href="conferences/berkeley2002/program.html">program</a>.
 Looking forward to seeing you.
 </p>
 </feature>
@@ -50,25 +43,4 @@ Peace and respects to everyone who helped to organize and attended the conferenc
 </feature>
 
 </features>
--->
-
-<news xmlns:xi="http://www.w3.org/2001/XInclude">
-<!--
-  <site name="OSCOM">
-    <xi:include href="rss-rdf/oscom.rdf"/>
-  </site>
--->
-  <site name="Freshmeat">
-    <xi:include href="rss-rdf/fm.rdf"/>
-    <!--<xi:include href="fm.rdf"/>-->
-  </site>
-  <cmsinfosite name="CMSInfo">
-    <xi:include href="rss-rdf/cmsinfo.rdf"/>
-  </cmsinfosite>
-  <site name="CMSWatch">
-    <xi:include href="rss-rdf/cmswatch.xml"/>
-    <!--<xi:include xml:base="http://www.cmswatch.com" href="/RSS/cmswatch.xml"/>-->
-  </site>
-</news>
-
-</oscom>
+</home>
