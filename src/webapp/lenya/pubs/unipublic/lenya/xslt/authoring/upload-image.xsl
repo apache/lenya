@@ -16,8 +16,8 @@
   </xsl:template>
   
   <xsl:template match="upload-image">
-    <h1>Upload Image</h1>
-    <p>Please browse for an image (gif, jpeg, png) on your harddisk. If you enter a identifier it will be used as filename (optional). Entering metadata is optional.</p>
+    <h1>Image Upload</h1>
+    <p>Please browse for an image (gif, jpg) on your harddisk.</p>
     <form action="{request-uri}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="xpath" value="{xpath}"/>
       <input type="hidden" name="documentid" value="{documentid}"/>
@@ -31,15 +31,18 @@
 	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile"/></td>
 	</tr>
 	<tr>
-	  <td>Identifier&#160;</td><td><input type="text" name="identifier"/></td>
+	  <td>Identifier&#160;</td><td><input type="text" name="identifier"/>&#160;&#160;<i>(optional)</i></td>
+	</tr>
+	<tr><td>&#160;</td>
+	<td><font size="-1">Will be used as filename. If you leave this field empty the name of the uploaded file will be used. Make sure that the filename resp. the identifier does not contain any white spaces or special characters like +, &amp;, /, etc.</font></td>
 	</tr>
 	<tr><td>&#160;</td></tr>
 	<tr><td colspan="2"><h3>Metadata (Dublin Core)</h3></td></tr>
 	<tr>
-	  <td>Author (Creator)&#160;</td><td><input type="text" name="creator" size="40"/></td>
+  <td>Author (Creator)&#160;</td><td><input type="text" name="creator" size="40"/>&#160;&#160;<i>(optional)</i></td>
 	</tr>
 	<tr>
-	  <td>Alt-Text (Image Title)&#160;</td><td><input type="text" name="title" size="40"/></td>
+	  <td>Alt-Text (Image Title)&#160;</td><td><input type="text" name="title" size="40"/>&#160;&#160;<i>(optional)</i></td>
 	</tr>
 <!--
 	<tr>
@@ -47,7 +50,7 @@
 	</tr>
 -->
 	<tr>
-	  <td>Caption (Image Description)&#160;</td><td><input type="text" name="description" size="40"/></td>
+	  <td>Caption (Image Description)&#160;</td><td><input type="text" name="description" size="40"/>&#160;&#160;<i>(optional)</i></td>
 	</tr>
 <!--
 	<tr>
