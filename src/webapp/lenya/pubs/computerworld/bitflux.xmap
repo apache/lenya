@@ -28,6 +28,8 @@
 				<xsl href="stylesheets/publication"/>
 				<xsd href="docs/publication/doctypes/schemas"/>
 				<temp href="temp"/>
+                                <rcmlDirectory href="docs/publication/rcml"/>
+                                <backupDirectory href="docs/publication/rcbak"/>
 			</map:action>
 		</map:actions>
 	</map:components>
@@ -110,27 +112,26 @@
 			</map:match>
 		</map:pipeline>
 		<!-- /GET -->
-<!--		<map:pipeline> -->
-			<!-- POST (in the case of Bitflux the action only is used for saving and NOT for opening) -->
-			<!-- Save Article -->
-			<!-- Save Generic -->
 
-<!--			<map:match pattern="save/*">
+
+		<!-- POST (in the case of Bitflux the action only is used for saving and NOT for opening) -->
+		<map:pipeline>
+			<map:match pattern="save/*">
 				<map:act type="xopushandler">
-					<map:parameter name="save-filename" value="{1}"/> -->
-					<!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
-<!--					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
+					<map:parameter name="save-filename" value="{1}"/>
+                                        <map:generate src="docs/cms/bitflux_response_ok.xml"/>
 					<map:serialize type="xml"/>
 				</map:act>
 				<map:generate src="xopus_error.xml"/>
 				<map:serialize type="xml"/>
-			</map:match> -->
-			<!-- Error handling -->
-<!--			<map:handle-errors>
+			</map:match>
+			<map:handle-errors>
 				<map:transform src="context://stylesheets/system/error2html.xsl"/>
 				<map:serialize status-code="500"/>
 			</map:handle-errors>
-		</map:pipeline> -->
+		</map:pipeline>
 		<!-- /POST -->
+
+
 	</map:pipelines>
 </map:sitemap>
