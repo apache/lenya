@@ -17,7 +17,7 @@
       <title>Motivation</title>
 
       <p>Currently there is no standard way to manage the navigation
-in Lenya. Previous attempts have shown their own merrits and
+in Lenya. Previous attempts have shown their own merits and
 drawbacks. A general and standard approach is needed.</p>
 
     </section>
@@ -39,10 +39,10 @@ drawbacks. A general and standard approach is needed.</p>
 	<p>There are a couple of known implementations to choose from:</p>
 	<ul>
 	  <li>The existing Lenya tree.xml</li> 
-	  <li>The forrest site.xml.</li>
+	  <li>The Forrest site.xml.</li>
 	  <li>The hashmap way: A sitetree.xml and purlspace.xml combination
    where the purlspace.xml contains all existing documents and
-   sitetree.xml contains the navigational hierarchy.</li>
+   sitetree.xml contains the navigation hierarchy.</li>
 	</ul>
       </section>
 
@@ -53,7 +53,7 @@ drawbacks. A general and standard approach is needed.</p>
 XPath and some ambiguity the documents can be found almost
 independent of their actual location</p>
 
-	<p>With the existing Lenya or the hasmap solution changing of document
+	<p>With the existing Lenya or the hashmap solution changing of document
 location requires editing of the tree.xml or the purlspace.xml
 respectively.</p>
       </section>
@@ -78,18 +78,19 @@ respectively.</p>
 	<section>
 	  <title>URIParametrizer</title>
 	  <p>The URIParametrizer is a black box (probably an action)
-   which internaly issues cocoon requests to different sitemaps which
+   which internally issues cocoon requests to different sitemaps which
    return different attributes (doctype, etc.) for a given request
    URI.</p>
-	  <p>This amounts to a combination of Alfred's hashmap with the basic
-   cocoon concepts: The request URIs aren't matched against a hashmap
-   but are handled by a sitemap instead. The sitemap contains normal
-   pipelines and matchers which match on the request. As a catch-all
-   there is still the possibility of using a hashmap for URIs that
-   didn't match any pipelines.</p>
-	  <p>Finally a new (internal) request is generated using the parameter
-   values. This request is handled by a normal cocoon sitemap as if
-   the original request had contained these parameters.</p>
+	  <p>This amounts to a combination of the hashmap solution
+   with the basic cocoon concepts: The request URIs aren't matched
+   against a hashmap but are handled by a sitemap instead. The sitemap
+   contains normal pipelines and matchers which match on the
+   request. As a catch-all there is still the possibility of using a
+   hashmap for URIs that didn't match any pipelines.</p>
+	  <p>Finally a new (internal) request is generated using the
+   parameter values. This request is handled by a normal cocoon
+   sitemap as if the original request had contained these
+   parameters.</p>
 	  <figure src="URIParametrizer.png" alt="Diagram of URIParametrizer"/>
 	</section>
       </section>
