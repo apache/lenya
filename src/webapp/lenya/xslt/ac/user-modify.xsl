@@ -33,7 +33,7 @@
 	<tr>
 	  <td>User ID</td>
 	  <td>
-	    <input type="text" name="user-id">
+	    <input type="text" name="user-id" readonly="true">
 	      <xsl:attribute name="value">
 		<xsl:value-of select="id"/>
 	      </xsl:attribute>
@@ -43,9 +43,9 @@
 	<tr>
 	  <td>Full Name</td>
 	  <td>
-	    <input type="text" name="fullName">
+	    <input type="text" name="fullname">
 	      <xsl:attribute name="value">
-		<xsl:value-of select="fullName"/>
+		<xsl:value-of select="fullname"/>
 	      </xsl:attribute>
 	    </input>
 	  </td>
