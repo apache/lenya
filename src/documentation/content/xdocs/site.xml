@@ -15,12 +15,9 @@
   limitations under the License.
 -->
 
-<!-- $Id: site.xml,v 1.1 2004/07/01 23:59:23 thorsten Exp $ -->
+<!-- $Id: site.xml,v 1.2 2004/07/21 05:22:55 thorsten Exp $ -->
 
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" tab="project">
-    <!--  <main_index_file tab="home">
-	<home href="index.html">Home</home>
-  </main_index_file>-->
     <project-information href="" label="Project" tab="project">
         <index_pm href="index.html" label="Project Information"/>
         <node-d href="roadmap.html" label="Roadmap"/>
@@ -38,122 +35,167 @@
         <cvs href="cvs.html" label="CVS Access"/>
         <install href="source_version.html" label="Installation Instructions"/>
     </installation>
-    	<documentation href="docs/" label="Documentation" tab="docs">
-         <index_doc href="index.html" label="Documentation"/>
-		<integrator-dev-guide label="Integrator/Dev Guide">
-			<components href="components/" label="Components">
-<index_comp href="index.html" label="Components"/>
-				<resource-types href="resource-types/" label="Resource&#160;Types"/>
-				<accesscontrol href="accesscontrol/" label="Access&#160;Control">
-					<ac-terms href="terms.html" label="Basic Terms"/>
-					<accesscontrollers href="accesscontrollers.html" label="Access&#160;Controllers"/>
-					<ac-resolvers href="accesscontrollerresolvers.html" label="Access Controller Resolvers"/>
-					<authenticators href="authenticators.html" label="Authenticators"/>
-					<authorizers href="authorizers.html" label="Authorizers"/>
-					<policies href="policymanagers.html" label="Policies and Policy&#160;Managers"/>
-					<accr-mng href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
-					<ssl href="ssl.html" label="SSL Encryption"/>
-					<ac-faq href="faq.html" label="FAQ"/>
-				</accesscontrol>
-				<authoring href="authoring/" labe="Authoring">
-					<namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
-					<namespaces href="image-upload.html" label="Image Upload"/>
-					<openoffice href="openoffice.html" label="OpenOffice"/>
-				</authoring>
-				<deployment href="deployment/" label="Deployment">
-					<namespaces href="mod_proxy.html" label="mod_proxy"/>
-				</deployment>
-				<misc href="editors/" label="Editors">
-					<namespaces href="htmlform.html" label="HTML Form Editor"/>
-					<namespaces href="1form.html" label="HTML One Form Editor"/>
-					<namespaces href="bxeng.html" label="Bitflux Editor"/>
-					<namespaces href="kupu.html" label="Kupu"/>
-					<namespaces href="xopus.html" label="Xopus"/>
-				</misc>
-				<layout href="layout/" label="Layout">
-					<navigation href="navigation.html" label="Navigation"/>
-					<xhtml-templating href="xhtml-templating.html" label="XHTML templating"/>
-					<static-resources href="static-resources.html" label="Serving static resources"/>
-					<menubar href="lenya-menubar.html" label="Lenya Menubar"/>
-				</layout>
-				<publication href="publication/" label="Publication">
-					<pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
-					<sitetree href="siteTree.html" label="Site tree"/>
-				</publication>
-				<revisioncontrol href="revisioncontrol/" label="Revision Control">
-					<namespaces href="revisioncontroller.html" label="Revision Controller"/>
-					<namespaces href="rcml.html" label="RCML"/>
-					<namespaces href="checkin.html" label="Check In"/>
-					<namespaces href="checkout.html" label="Check Out"/>
-					<namespaces href="version.html" label="Revisions"/>
-					<namespaces href="rollback.html" label="Rollback"/>
-				</revisioncontrol>
-				<repository href="repository/" label="Repository">
-					<namespaces href="webdav.html" label="WebDAV Servers"/>
-				</repository>
-				<search href="search/" label="Search">
-					<namespaces href="lucene.html" label="Searching with Lucene"/>
-				</search>
-				<uri-handling href="uri-handling/" label="URI Handling">
-					<uri-parametrizer href="URIParametrizer.html" label="URI Parametrizer"/>
-					<standard-uri href="standardURI.html" label="URI Scheme"/>
-					<usecases href="usecases.html" label="Usecases"/>
-				</uri-handling>
-        <asset-management href="asset-management/" label="Asset Management">
-          <asset-management-1 href="management.html" label="Asset Management"/>
-        </asset-management>
-        <link-management href="link-management/" label="Link Management">
-          <link-management-1 href="link-management.html" label="Link Management"/>
-        </link-management>
-        <meta-data href="metadata/" label="Meta Data">
-          <meta-data-1 href="metadata.html" label="Meta Data Handling"/>
-	</meta-data>
-        <multilingual href="multilingual/" label="Multilingual Documents">
-          <multilingual-1 href="multilingual.html" label="Multilingual Document Handling"/>
-	</multilingual>
-				<node-40 href="tasks/" label="Tasks">
-					<node-41 href="concept.html" label="The Task Concept"/>
-					<node-42 href="defining.html" label="Defining Tasks"/>
-					<node-43 href="taskaction.html" label="The TaskAction"/>
-					<node-44 href="scheduling.html" label="Scheduling a Task"/>
-					<node-45 label="Included tasks">
-						<node-46 href="anttask.html" label="AntTask"/>
-						<node-47 href="publisher.html" label="DefaultFilePublisher"/>
-						<node-48 href="exporter.html" label="StaticHTMLExporter"/>
-						<node-49 href="mailtask.html" label="MailTask"/>
-					</node-45>
-					<node-50 href="development.html" label="Developing Tasks"/>
-				</node-40>
-				<workflow href="workflow/" label="Workflow">
-					<introduction href="terms.html" label="Terms"/>
-					<introduction href="state-machine.html" label="The State Machine"/>
-					<introduction href="configuration.html" label="Configuration"/>
-					<introduction href="implementation.html" label="Implementation"/>
-				</workflow>
-				<sitemanagement href="sitemanagement/" label="Site Management">
-					<archive href="archive.html" label="Archive"/>
-					<copy href="copy.html" label="Copy"/>
-					<deactivate href="deactivate.html" label="Deactivate"/>
-					<delete href="delete.html" label="Delete"/>
-					<deletetrash href="deletetrash.html" label="Delete the trash"/>
-					<move href="move.html" label="Move"/>
-					<moveupdown href="moveupdown.html" label="Move Up/Down"/>
-					<rename href="rename.html" label="Rename"/>
-					<restore href="restore.html" label="Restore"/>
-				</sitemanagement>
-			</components>
-			<specs href="specs/" label="Specifications">
-				<namespaces href="namespaces.html" label="Namespaces"/>
-			</specs>
-			<misc href="misc/" label="Miscellaneous">
-				<coding href="coding-guidelines.html" label="Coding Guidelines"/>
-				<javadoc-error href="javadoc-error.html"/>
-				<node-e href="unittests.html" label="Unit Tests"/>
-				<node-e href="xinclude-processor.html" label="XInclude Processor"/>
-			</misc>
-			<javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
-		</integrator-dev-guide>
-	</documentation>
+        <documentation href="docs/" label="Documentation" tab="docs">
+            <index_doc href="index.html" label="Documentation" 
+                wholesite="true"/>
+            <whole_docu href="../docu.pdf" label="pdf docu (whole)" />
+            <whole_docu href="../docu.html" label="html docu (whole)" 
+                />
+            <integrator-dev-guide label="Integrator/Dev Guide" >
+                <components href="components/" label="Components" 
+                    wholesite="true">
+                    <index_comp href="index.html" label="Components"/>
+                    <!--resource-types href="resource-types/" 
+                        label="Resource&#160;Types"/-->
+                    <accesscontrol href="accesscontrol/" 
+                        label="Access&#160;Control" >
+                        <ac-terms href="terms.html" label="Basic Terms"/>
+                        <accesscontrollers href="accesscontrollers.html" 
+                            label="Access&#160;Controllers"/>
+                        <ac-resolvers href="accesscontrollerresolvers.html" 
+                            label="Access Controller Resolvers"/>
+                        <authenticators href="authenticators.html" 
+                            label="Authenticators"/>
+                        <authorizers href="authorizers.html" 
+                            label="Authorizers"/>
+                        <policies href="policymanagers.html" 
+                            label="Policies and Policy&#160;Managers"/>
+                        <accr-mng href="accreditablemanagers.html" 
+                            label="Accreditable&#160;Managers"/>
+                        <ssl href="ssl.html" label="SSL Encryption"/>
+                        <ac-faq href="faq.html" label="FAQ"/>
+                    </accesscontrol>
+                    <authoring href="authoring/" labe="Authoring">
+                        <namespaces href="adding-document-creator.html" 
+                            label="Adding a new document creator"/>
+                        <namespaces href="image-upload.html" 
+                            label="Image Upload"/>
+                        <openoffice href="openoffice.html" label="OpenOffice"/>
+                    </authoring>
+                    <deployment href="deployment/" label="Deployment">
+                        <namespaces href="mod_proxy.html" label="mod_proxy"/>
+                    </deployment>
+                    <misc href="editors/" label="Editors">
+                        <namespaces href="htmlform.html" 
+                            label="HTML Form Editor"/>
+                        <namespaces href="1form.html" 
+                            label="HTML One Form Editor"/>
+                        <namespaces href="bxeng.html" label="Bitflux Editor"/>
+                        <namespaces href="kupu.html" label="Kupu"/>
+                        <namespaces href="xopus.html" label="Xopus"/>
+                    </misc>
+                    <layout href="layout/" label="Layout">
+                        <navigation href="navigation.html" label="Navigation"/>
+                        <xhtml-templating href="xhtml-templating.html" 
+                            label="XHTML templating"/>
+                        <static-resources href="static-resources.html" 
+                            label="Serving static resources"/>
+                        <menubar href="lenya-menubar.html" 
+                            label="Lenya Menubar"/>
+                    </layout>
+                    <publication href="publication/" label="Publication">
+                        <pageenvelopemodule href="pageenvelopemodule.html" 
+                            label="PageEnvelopeModule"/>
+                        <sitetree href="siteTree.html" label="Site tree"/>
+                    </publication>
+                    <revisioncontrol href="revisioncontrol/" 
+                        label="Revision Control">
+                        <namespaces href="revisioncontroller.html" 
+                            label="Revision Controller"/>
+                        <namespaces href="rcml.html" label="RCML"/>
+                        <namespaces href="checkin.html" label="Check In"/>
+                        <namespaces href="checkout.html" label="Check Out"/>
+                        <namespaces href="version.html" label="Revisions"/>
+                        <namespaces href="rollback.html" label="Rollback"/>
+                    </revisioncontrol>
+                    <repository href="repository/" label="Repository">
+                        <namespaces href="webdav.html" label="WebDAV Servers"/>
+                    </repository>
+                    <search href="search/" label="Search">
+                        <namespaces href="lucene.html" 
+                            label="Searching with Lucene"/>
+                    </search>
+                    <uri-handling href="uri-handling/" label="URI Handling">
+                        <uri-parametrizer href="URIParametrizer.html" 
+                            label="URI Parametrizer"/>
+                        <standard-uri href="standardURI.html" 
+                            label="URI Scheme"/>
+                        <usecases href="usecases.html" label="Usecases"/>
+                    </uri-handling>
+                    <asset-management href="asset-management/" 
+                        label="Asset Management">
+                        <asset-management-1 href="management.html" 
+                            label="Asset Management"/>
+                    </asset-management>
+                    <link-management href="link-management/" 
+                        label="Link Management">
+                        <link-management-1 href="link-management.html" 
+                            label="Link Management"/>
+                    </link-management>
+                    <meta-data href="metadata/" label="Meta Data">
+                        <meta-data-1 href="metadata.html" 
+                            label="Meta Data Handling"/>
+                    </meta-data>
+                    <multilingual href="multilingual/" 
+                        label="Multilingual Documents">
+                        <multilingual-1 href="multilingual.html" 
+                            label="Multilingual Document Handling"/>
+                    </multilingual>
+                    <node-40 href="tasks/" label="Tasks">
+                        <node-41 href="concept.html" label="The Task Concept"/>
+                        <node-42 href="defining.html" label="Defining Tasks"/>
+                        <node-43 href="taskaction.html" label="The TaskAction"/>
+                        <node-44 href="scheduling.html" 
+                            label="Scheduling a Task"/>
+                        <node-45 label="Included tasks">
+                            <node-46 href="anttask.html" label="AntTask"/>
+                            <node-47 href="publisher.html" 
+                                label="DefaultFilePublisher"/>
+                            <node-48 href="exporter.html" 
+                                label="StaticHTMLExporter"/>
+                            <node-49 href="mailtask.html" label="MailTask"/>
+                        </node-45>
+                        <node-50 href="development.html" 
+                            label="Developing Tasks"/>
+                    </node-40>
+                    <workflow href="workflow/" label="Workflow">
+                        <introduction href="terms.html" label="Terms"/>
+                        <introduction href="state-machine.html" 
+                            label="The State Machine"/>
+                        <introduction href="configuration.html" 
+                            label="Configuration"/>
+                        <introduction href="implementation.html" 
+                            label="Implementation"/>
+                    </workflow>
+                    <sitemanagement href="sitemanagement/" 
+                        label="Site Management">
+                        <archive href="archive.html" label="Archive"/>
+                        <copy href="copy.html" label="Copy"/>
+                        <deactivate href="deactivate.html" label="Deactivate"/>
+                        <delete href="delete.html" label="Delete"/>
+                        <deletetrash href="deletetrash.html" 
+                            label="Delete the trash"/>
+                        <move href="move.html" label="Move"/>
+                        <moveupdown href="moveupdown.html" 
+                            label="Move Up/Down"/>
+                        <rename href="rename.html" label="Rename"/>
+                        <restore href="restore.html" label="Restore"/>
+                    </sitemanagement>
+                </components>
+                <specs href="specs/" label="Specifications" wholesite="true">
+                    <namespaces href="namespaces.html" label="Namespaces"/>
+                </specs>
+                <misc href="misc/" label="Miscellaneous" wholesite="true">
+                    <coding href="coding-guidelines.html" 
+                        label="Coding Guidelines"/>
+                    <javadoc-error href="javadoc-error.html"/>
+                    <node-e href="unittests.html" label="Unit Tests"/>
+                    <node-e href="xinclude-processor.html" 
+                        label="XInclude Processor"/>
+                </misc>
+                <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
+            </integrator-dev-guide>
+        </documentation>
     <community href="community/" label="Community" tab="community">
         <index_com href="index.html" label="Community"/>
         <node-f href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/" 
