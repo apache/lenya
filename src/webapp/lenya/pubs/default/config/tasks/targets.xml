@@ -728,4 +728,8 @@
   />
 </target>
 
+  <target name="deletecache">
+    <delete dir="${cachedir}"/>
+  </target>
+
 </project>
