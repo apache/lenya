@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.237 2004/08/11 08:50:38 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.238 2004/08/18 08:32:12 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -315,21 +315,20 @@
 
         </map:match>
         
-        <!-- ************************************************************** 
+        <!-- 
+         ************************************************************** 
          ** Kupu                                                                              
-         **                                                                                       
-         ** NOTE: page-envelope:document-path depends on the       
-         **           publication-specific DocumentIdToPathMapper which  
-         **           is configured within config/publication.xconf      
-         ************************************************************** -->
+         ************************************************************** 
+        -->
         <map:match pattern="kupu" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
               <!-- Check for Kupu-->
-              <map:act type="resource-exists" src="resources/kupu/common/kupueditor.js">
-
+              <map:act type="resource-exists" 
+                src="resources/kupu/common/kupueditor.js">
                 <map:act type="reserved-checkout">
-                  <map:generate type="serverpages" src="content/rc/{exception}.xsp">
+                  <map:generate type="serverpages" 
+                    src="content/rc/{exception}.xsp">
                     <map:parameter name="user" value="{user}"/>
                     <map:parameter name="filename" value="{filename}"/>
                     <map:parameter name="date" value="{date}"/>
@@ -338,17 +337,24 @@
                   <map:transform src="xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
                 </map:act>
-
-                <map:generate src="resources/kupu/apache-lenya/kupumacros.html"/>
-                <map:transform src="resources/kupu/apache-lenya/kupumacros-xhtml.xsl">
-                  <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=content"/>
-                  <map:parameter name="context" value="{request:contextPath}"/>
-                  <map:parameter name="document-path" value="{page-envelope:document-path}"/>
-                  <map:parameter name="root" value="{page-envelope:context-prefix}"/>
-                  <map:parameter name="save-destination" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=save"/>
-                  <map:parameter name="reload-on-save" value="0"/> <!-- 1 means you can see the saving -->
+                <map:generate 
+                  src="{fallback:resources/kupu/apache-lenya/kupu/kupumacros.html}"/>
+                <map:transform 
+                  src="{fallback:resources/kupu/apache-lenya/lenya/kupumacros.xsl}">
+                  <map:parameter name="contentfile" 
+                    value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=content"/>
+                  <map:parameter name="context-prefix" 
+                    value="{request:contextPath}"/>
+                  <!-- Only used to display the document path of the edited doc  -->  
+                  <map:parameter name="document-path" 
+                    value="{page-envelope:document-path}"/>
+                  <map:parameter name="save-destination" 
+                    value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=save"/>
+                  <map:parameter name="reload-after-save" value="0"/>
+                  <!-- 1 means you can see the saving -->
                   <map:parameter name="use-css" value="1"/>
-                  <map:parameter name="redirect-to" value="{page-envelope:document-name}.html"/>
+                  <map:parameter name="redirect-to" 
+                    value="{page-envelope:document-name}.html"/>
                 </map:transform>
                 <map:serialize type="html"/>
               </map:act>
@@ -360,8 +366,10 @@
           <map:match pattern="content" type="step">
             <map:match pattern="*/authoring/**.html">
               <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-              <map:transform src="resources/kupu/apache-lenya/kupucontent-xhtml.xsl">
-                <map:parameter name="css" value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
+              <map:transform 
+                src="{fallback:resources/kupu/apache-lenya/lenya/content2edit.xsl}">
+                <map:parameter name="css" 
+                  value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
               </map:transform>
               <map:transform src="xslt/util/strip_namespaces.xsl"/>
                 <map:serialize type="xhtml"/>
@@ -375,11 +383,11 @@
                it complains about an unbound element.
           -->
           <map:match pattern="save" type="step">
-            <map:select type="request-method">  
+            <map:select type="request-method">
               <map:when test="PUT">
-
                 <map:act type="reserved-checkout-test">
-                  <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
+                  <map:generate type="serverpages" 
+                    src="../../content/rc/{exception}.xsp">
                     <map:parameter name="user" value="{user}"/>
                     <map:parameter name="filename" value="{filename}"/>
                     <map:parameter name="date" value="{date}"/>
@@ -388,16 +396,16 @@
                   <map:transform src="../../xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
                 </map:act>
-
                 <map:aggregate element="edit-envelope">
                   <map:part element="edited" src="cocoon:/kupu-stream"/>
-                  <map:part element="original" src="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+                  <map:part element="original" 
+                    src="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
                 </map:aggregate>
-
-                <map:transform src="resources/kupu/apache-lenya/kupusave-xhtml.xsl"/>
-
+                <map:transform 
+                  src="{fallback:resources/kupu/apache-lenya/lenya/kupusave.xsl}"/>
                 <map:act type="reserved-checkin">
-                  <map:generate src="content/rc/{exception}.xsp" type="serverpages">
+                  <map:generate src="content/rc/{exception}.xsp" 
+                    type="serverpages">
                     <map:parameter name="user" value="{user}"/>
                     <map:parameter name="filename" value="{filename}"/>
                     <map:parameter name="checkType" value="{checkType}"/>
@@ -407,23 +415,23 @@
                   <map:transform src="xslt/rc/rco-exception.xsl"/>
                   <map:serialize/>
                 </map:act>
-
                 <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-                  <map:parameter name="source" value="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+                  <map:parameter name="source" 
+                    value="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
                 </map:transform>
                 <map:transform type="write-source"/>
-
                 <!-- Trigger workflow with *edit* action -->
                 <map:act type="workflow">
                   <map:parameter name="area" value="{page-envelope:area}"/>
-                  <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-                  <map:parameter name="language" value="{page-envelope:document-language}"/>
+                  <map:parameter name="document-id" 
+                    value="{page-envelope:document-id}"/>
+                  <map:parameter name="language" 
+                    value="{page-envelope:document-language}"/>
                   <map:parameter name="event" value="edit"/>
-                </map:act> 
-
+                </map:act>
                 <map:serialize type="xml" status-code="204"/>
-              </map:when>						
-            </map:select>  				
+              </map:when>
+            </map:select>
           </map:match>
 
         </map:match>
