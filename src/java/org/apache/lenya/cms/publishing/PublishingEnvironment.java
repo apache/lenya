@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.13 2003/04/17 14:11:48 michi Exp $
+ * $Id: PublishingEnvironment.java,v 1.14 2003/04/23 13:37:43 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,7 +59,8 @@ import java.io.File;
  */
 public class PublishingEnvironment implements Configurable {
     static Category log = Category.getInstance(PublishingEnvironment.class);
-    public static final String CONFIGURATION_FILE = "content" + File.separator + "publication.xconf";
+    public static final String CONFIGURATION_FILE =
+	"config" + File.separator + "publishing" + File.separator + "publisher.xconf";
     public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs" + File.separator;
     public static final String PARAMETER_AUTHORING_PATH = "authoring-path";
     public static final String PARAMETER_TREE_AUTHORING_PATH = "tree-authoring-path";
