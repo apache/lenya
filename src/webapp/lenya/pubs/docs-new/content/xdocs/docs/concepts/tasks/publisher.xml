@@ -13,7 +13,6 @@
 </header> 
 <body> 
 
-<section><title>The DefaultFilePublisher Task</title> 
 <p>
 The DefaultFilePublisher is a task that copies XML source files from
 the authoring directory to another location, usually the live directory.
@@ -75,6 +74,5 @@ e. g. to use several publishers to publish into different directories:
 The remaining parameters, <code>publication-id</code> and <code>sources</code>, are
 passed to the task as request parameters.
 </p>
-</section>
 </body>
 </document>

@@ -13,13 +13,10 @@
 </header> 
 <body> 
 
-<section>
-<title>The AntTask</title> 
 <p>
 The <code>org.apache.lenya.cms.task.AntTask</code> class can be used to invoke targets
 of an Ant project.
 </p>
-</section>
 
 <section>
 <title>Task Parameters</title>

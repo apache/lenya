@@ -14,12 +14,12 @@
 
 
   <tab label="Home" dir=""/>
-  <tab label="Installation" dir="installation"/>
+  <tab label="Installation" dir="docs/installation"/>
+  <!--
   <tab label="How-To's" dir="howtos"/>
   <tab label="Concepts" dir="concepts"/>
   <tab label="Components" dir="components"/>
   <tab label="Admin" dir="administration"/>
-  <!--
   <tab label="Proposals" dir="proposals"/>
   <tab label="Related Topics" dir="related"/>
   -->

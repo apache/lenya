@@ -13,11 +13,17 @@
 </header> 
 <body> 
 
-<section><title>The MailTask</title> 
 <p>
 A <code>MailTask</code> sends an e-mail. The parameters, such as recipient
 address, subject, and body, can either be provided as a task parameter or
-extracted from an XML document. The following parameters must be provided:</p>
+extracted from an XML document.
+</p>
+
+<section>
+<title>Task Parameters</title>
+
+<p>
+The following parameters must be provided:</p>
 <ul>
   <li><strong>server</strong>: the SMTP server URI</li>
   <li><strong>from</strong>: you@yourhost.com</li>

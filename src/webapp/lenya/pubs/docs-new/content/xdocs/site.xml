@@ -1,145 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya">
   <node-1 label="Table of Contents">
-    <node-a href="http://demo.lenya.org" label="Demo" />
+    <node-a href="http://demo.wyona.org" label="Demo" />
     <node-b href="download/downloading_and_installing.html" label="Download" />
     <node-d href="roadmap.html" label="Roadmap" />
     <node-e href="mailing-lists.html" label="Mailing Lists" />
-    <node-f href="http://cvs.lenya.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
-    <node-g href="http://cvs.lenya.org/bugs/" label="Bug Tracker" />
+    <node-f href="http://cvs.wyona.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
+    <node-g href="http://cvs.wyona.org/bugs/" label="Bug Tracker" />
     <node-h href="acknowledgements.html" label="Credits" />
     <node-i href="license.html" label="License" />
     <node-i href="related-projects.html" label="Related Projects" />
     <node-c href="docs/" label="Documentation">
     <node-2 href="installation/" label="Installation">
-      <node-3 label="Requisites"/>
-      <node-4 label="Binary Version"/>
       <node-5 href="source_version.html" label="Source Version"/>
     </node-2>
-    <node-6 label="Getting Started (How-to's)">
-      <node-7 href="howtos/" label="Customizing the default publication">
-        <node-8 label="Change the look"/>
-      </node-7>
-      <node-9 label="Creating your own publication">
-        <node-10 label="Copy the default publication"/>
-        <node-11 label="Some basic configuration"/>
-        <node-12 label="Customize the navigation"/>
-        <node-13 label="Further steps"/>
-      </node-9>
-      <node-14 label="Adding a new doctype">
-        <node-15 label="Create the directories"/>
-        <node-16 label="Customize the sitemap"/>
-        <node-17 label="Create the dummy xml"/>
-        <node-18 label="Create the look (xhtml, xslt)"/>
-        <node-19 label="Make the document editable">
-          <node-20 label="With Bitfluxeditor"/>
-          <node-21 label="With Xopus"/>
-          <node-22 label="With HTMLFormEditor"/>
-        </node-19>
-        <node-23 label="Configure menus, creator, publisher, scheduler"/>
-      </node-14>
-    </node-6>
     <node-24 href="concepts/" label="Concepts and Best Practises">
-      <node-25 label="Architecture">
-        <node-26 label="Overview"/>
-        <node-27 label="Apache Cocoon"/>
-        <node-28 label="Apache Slide"/>
-        <node-29 label="Apache Lucene"/>
-        <node-30 label="Third-party Editors"/>
-      </node-25>
-      <node-31 label="Directory structure"/>
-      <node-32 label="Different sitemaps and their function"/>
       <node-33 href="siteTree.html" label="Site tree"/>
-      <node-34 label="Doctypes"/>
-      <node-35 label="URI space"/>
       <node-36 href="pageEnvelope.html" label="Page envelope"/>
       <node-37 href="navigation.html" label="Navigation"/>
       <node-38 href="xhtml-templating.html" label="XHTML templating"/>
       <node-381 href="static-resources.html" label="Serving static resources"/>
-      <node-39 label="Metadata"/>
       <node-40 href="tasks/" label="Tasks">
         <node-41 href="concept.html" label="The Task Concept"/>
-        <node-42 label="Defining Tasks"/>
-        <node-43 label="The TaskAction"/>
-        <node-44 label="Scheduling a Task"/>
+        <node-42 href="defining.html" label="Defining Tasks"/>
+        <node-43 href="taskaction.html" label="The TaskAction"/>
+        <node-44 href="scheduling.html" label="Scheduling a Task"/>
         <node-45 label="Included tasks">
           <node-46 href="anttask.html" label="AntTask"/>
-          <node-47 label="DefaultFilePublisher"/>
-          <node-48 label="StaticHTMLExporter"/>
-          <node-49 label="The MailTask"/>
+          <node-47 href="publisher.html" label="DefaultFilePublisher"/>
+          <node-48 href="exporter.html" label="StaticHTMLExporter"/>
+          <node-49 href="mailtask.html" label="MailTask"/>
         </node-45>
-        <node-50 label="Developing Tasks"/>
+        <node-50 href="development.html" label="Developing Tasks"/>
       </node-40>
     </node-24>
-    <node-51 href="components/" label="Components ">
-      <node-52 label="Access controlling">
-        <node-53 label="Overview"/>
-        <node-54 label="Users and roles (IML)"/>
-        <node-55 label="Policies (PML)"/>
-        <node-56 label="Authenticators and authorisers"/>
-      </node-52>
-      <node-57 label="Revision controlling ">
-        <node-58 label="Revision controller"/>
-        <node-59 label="Check-out"/>
-        <node-60 label="Check-in"/>
-        <node-61 label="Rollback (RCML)"/>
-      </node-57>
-      <node-62 label="Workflow management"/>
-      <node-63 label="Scheduler">
-        <node-64 label="Configuring the scheduler tasks"/>
-        <node-65 label="Quartz scheduler"/>
-      </node-63>
-      <node-66 label="Editors and editor interfaces">
-        <node-67 label="HTMLFormEditor"/>
-        <node-68 label="Bitfluxeditor"/>
-        <node-69 label="Xopus"/>
-        <node-70 label="Integrating other editors"/>
-      </node-66>
-      <node-71 label="Page/document creator">
-        <node-72 label="DefaultCreator"/>
-        <node-73 label="Developing your own creator"/>
-      </node-71>
-      <node-74 label="Publisher/replicator">
-        <node-75 label="File system publishing"/>
-        <node-76 label="Database publishing"/>
-        <node-77 label="Publishing static HTML"/>
-        <node-78 label="Replication">
-          <node-79 label="Via scp"/>
-          <node-80 label="Via ftp/sftp"/>
-        </node-78>
-        <node-81 label="Developing your own publisher/replicator"/>
-      </node-74>
-      <node-82 label="Syndication">
-        <node-83 label="RSS"/>
-      </node-82>
-      <node-84 label="File upload"/>
-      <node-85 label="Menus">
-        <node-86 label="Default menus"/>
-        <node-87 label="Customizing the menus"/>
-      </node-85>
-      <node-88 label="Navigation">
-	<uriParametrizer label="URI Parametrizer Action" href="URIParametrizer.html"/>
-      </node-88>
-      <node-89 label="Search Engine (Lucene)"/>
-    </node-51>
-    <node-90 href="administration/" label="Deployment and Administration">
-      <node-91 label="Server architecture"/>
-      <node-92 label="Performance"/>
-      <node-93 label="Testing"/>
-    </node-90>
     <node-94 href="proposals/" label="Proposals / Requests for Comment (RFC)">
       <siteTree href="siteTree.html" label="Site tree"/>
     </node-94>
-    <node-95 href="related/" label="Related Topics">
-      <node-96 label="Application Integration"/>
-      <node-97 label="Interesting editors"/>
-      <node-98 label="Testing tools"/>
-      <node-99 label="HSQL Database "/>
-      <node-100 label="Java Virtual Machine: Encoding"/>
-      <node-101 label="Publisher-Dispatcher-Notifier-Subscriber Pattern "/>
-      <node-102 label="Spell Checking"/>
-      <node-103 label="..."/>
-    </node-95>
    </node-c>
   </node-1>
 </site>

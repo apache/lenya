@@ -13,7 +13,6 @@
 </header> 
 <body> 
 
-<section><title>The StaticHTMLExporter Task</title> 
 <p>
 The StaticHTMLExporter is a task that downloads HTML pages from a server and
 saves them as HTML files. It needs the following
@@ -66,6 +65,5 @@ e. g. to use several publishers to publish into different directories:
 
 ]]></source>
 
-</section>
 </body>
 </document>

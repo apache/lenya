@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Defining Tasks</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@lenya.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<p>
+All tasks to be used in a publication must be declared in the file
+<code>[publication-directory]/content/tasks.xconf</code>.
+A typical task configuration file looks like follows:
+</p>
+<source><![CDATA[
+
+<?xml version="1.0"?>
+<tasks>
+
+  <!-- publish page -->
+  <task id="publish">
+    <label>Publish</label>
+    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher">
+      <parameter name="live-path" value="content/live"/>
+      <parameter name="tree-live-path" value="content/live/tree.xml"/>
+    </task>
+    <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter">
+      <parameter name="export-path" value="resources/export/pending"/>
+      <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
+    </task>
+  </task>
+
+  <!-- print message -->
+  <task id="hello-world" class="org.lenya.cms.task.HelloWorldTask">
+    <label>Print Message</label>
+  </task>
+
+</tasks>
+
+]]></source>
+<p>
+Every task must have a unique <code>id</code> attribute. This identifier is
+used to address the task from the sitemap.
+Every top-level task must have a child element <code>&lt;label&gt;</code>. The
+content of this element is used, e. g., by the scheduler to let the user choose
+a task from a list. The actual implementation of a task is identified using the
+<code>class</code> attribute.
+</p>
+
+<section><title>Parameters</title>
+<p>
+Usually, a task needs some parameters to be executed properly.
+There are two possibilities to pass parameters to a task:</p>
+<ol>
+  <li>
+    You can define all parameters or a subset of them in the <code>tasks.xconf</code> file.
+  </li>
+  <li>
+    The remainig parameters can be handled to the <code>TaskAction</code> or the
+    <code>TaskJob</code> that executes the task. Request parameters always have a higher
+    priority than parameters from the <code>tasks.xconf</code> file.
+  </li>
+</ol>
+<p>
+To simplifiy the passing of parameters to tasks, the <code>TaskAction</code> and
+<code>TaskJob</code> objects create some default parameters based on
+the request and session objects:</p>
+<ul>
+  <li>
+    <code>Task.PARAMETER_SERVLET_CONTEXT</code> - the path of the servlet context<br/>
+    <code>/home/user_id/build/jakarta-tomcat/webapps/lenyacms</code>
+  </li>
+  <li>
+    <code>Task.PARAMETER_SERVER_URI</code> - the server URI<br/>
+    <code>http://www.yourhost.com:8080/lenya/publication/index.html</code>
+  </li>
+  <li>
+    <code>Task.PARAMETER_SERVER_PORT</code> - the server port<br/>
+    <code>http://www.yourhost.com:8080/lenya/publication/index.html</code>
+  </li>
+  <li>
+    <code>Task.PARAMETER_CONTEXT_PREFIX</code> - the part of the URI that precedes the publication ID<br/>
+    <code>http://www.yourhost.com:8080/lenya/publication/index.html</code>
+  </li>
+  <li>
+    <code>Task.PARAMETER_PUBLICATION_ID</code> - the publication ID<br/>
+    <code>http://www.yourhost.com:8080/lenya/publication/index.html</code>
+  </li>
+</ul>
+</section>
+
+<section><title>Task Sequences</title>
+<p>
+Tasks can be nested using so-called <em>task sequences</em>. Sub-tasks of other
+tasks don't need to have <code>&lt;label&gt;</code> elements because they can't
+be addressed independently. Whenever a task sequence is executed, all sub-tasks
+are executed in the same order as they are declared.
+</p>
+<p>
+When you group tasks, the enclosing <code>&lt;task&gt;</code> element does not
+need a <code>&lt;class&gt;</code> attribute. If you omit it, the <code>TaskSequence</code>
+class is used as default. If you want to implement your own task grouping
+mechanism using a subclass of <code>TaskSequence</code>, you can append a
+class attribute.
+</p>
+<p>
+All parameters that are passed to a TaskSequence are forwarded to all tasks
+in the sequence. By creating a subclass of <code>TaskSequence</code> you could implement
+a parameter selection mechanism, e. g. using namespace prefixes.
+</p>
+</section>
+
+<section><title>Assigning Tasks to Document Types</title>
+<p>
+Every document type can support a set of tasks. The labels of these tasks
+are displayed on the scheduler screen of a document of this type.
+To assign a task to a document type, you have to edit the file
+<code>[publication-directory]/config/doctypes/doctypes.xconf</code>:
+</p>
+<source><![CDATA[
+
+<doctypes>
+  <doc type="Simple-Document">
+    <tasks>
+      <task id="publish"/>
+      <task id="backup"/>
+      ...
+    </tasks>
+  </doc>
+  ...
+</doctypes>
+
+]]></source>
+<p>
+You can associate every task with an arbitrary number of document types.
+</p>
+
+</section>
+
+
+</body>
+</document>

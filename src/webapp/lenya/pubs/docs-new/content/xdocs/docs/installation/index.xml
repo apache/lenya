@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Hello Forrest</title>
+    <title>Installation</title>
     <version/>
     <type/>
     <authors>
@@ -11,9 +11,13 @@
     </authors>
   </header>
   <body>
-<section><title>Forrest as a Lenya Publication</title>
-<p>Thanks to Gregor, Andreas and Christian we now have Forrest as a Lenya publication.</p>
-<p>Click on the menu "File" and then click on the item "Edit with Xopus2" to edit this page.</p>
-</section>
+  
+  <section><title>Source Version</title>
+    <ul>
+      <li><link href="source_version.html">MS Windows</link></li>
+    </ul>
+    
+  </section>  
+  
   </body>
 </document>
