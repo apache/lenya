@@ -1,5 +1,5 @@
 /*
-$Id: UploadAction.java,v 1.1 2003/10/21 15:05:32 gregor Exp $
+$Id: UploadAction.java,v 1.2 2003/10/21 15:29:14 gregor Exp $
 <License>
 
  ============================================================================
@@ -93,6 +93,7 @@ import javax.xml.transform.TransformerException;
  * for the meta data of the asset.
  *
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
+ * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  */
 public class UploadAction extends AbstractConfigurableAction {
 	
@@ -169,7 +170,7 @@ public class UploadAction extends AbstractConfigurableAction {
             enum.hasMoreElements();
             ) {
             String param = (String)enum.nextElement();
-            getLogger().info(
+            getLogger().debug(
                 param
                     + ": "
                     + request.getParameter(param)
@@ -181,6 +182,7 @@ public class UploadAction extends AbstractConfigurableAction {
         // determine if the upload is an asset or a content upload
         String uploadType = request.getParameter("uploadtype");
 
+        // make asset upload the default if it is not specified
 		if (uploadType == null) {
 			uploadType = "asset";
 		}
@@ -205,7 +207,7 @@ public class UploadAction extends AbstractConfigurableAction {
 
         while (iter.hasNext()) {
             String paramName = (String)iter.next();
-            getLogger().info(
+            getLogger().debug(
                 paramName + ": " + dublinCoreParams.get(paramName));
         }
 
@@ -225,10 +227,9 @@ public class UploadAction extends AbstractConfigurableAction {
         results.put(UPLOADASSET_RETURN_MIMETYPE, mimeType);
         results.put(UPLOADASSET_RETURN_FILESIZE, new Integer(fileSize));
 
+		// FIXME: write fileSize into dc meta data
         dublinCoreParams.put("format", mimeType);
         dublinCoreParams.put("extent", Integer.toString(fileSize));
-
-        // FIXME: write fileSize into dc meta data
 
         if (uploadType.equals("asset")) {
         	ResourcesManager resourcesMgr =
@@ -249,7 +250,7 @@ public class UploadAction extends AbstractConfigurableAction {
         // must be a content upload then
         else {
 			assetFile = new File(document.getPublication().getDirectory()+getPathFromPublication().replace('/', File.separatorChar), part.getFileName());
-            getLogger().info("assetFile: "+assetFile);
+            getLogger().debug("assetFile: "+assetFile);
         }
         
 		assetFile.createNewFile();
