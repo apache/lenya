@@ -717,6 +717,11 @@
         <map:serialize/>
       </map:match>
       
+      <!-- Enter the actual publication (url = "") -->
+      <map:match pattern="*/">
+        <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      
       <!-- Resources -->
       <map:match pattern="*/**">
         <map:act type="resource-exists">
