@@ -6,6 +6,7 @@
 >
 
 <xsl:param name="configfile"/>
+<xsl:param name="context"/>
 
 <xsl:template match="xhtml:head/xhtml:title">
   <title><xsl:value-of select="$configfile"/></title>
@@ -13,6 +14,14 @@
 
 <xsl:template match="xhtml:body/@onload">
   <xsl:attribute name="onload">bxe_start('<xsl:value-of select="$configfile"/>')</xsl:attribute>
+</xsl:template>
+
+<xsl:template match="xhtml:head/xhtml:link/@href">
+  <xsl:attribute name="href"><xsl:value-of select="$context"/>/bxeng/css/editor.css</xsl:attribute>
+</xsl:template>
+
+<xsl:template match="xhtml:head/xhtml:script/@src">
+  <xsl:attribute name="src"><xsl:value-of select="$context"/>/bxeng/bxeLoader.js</xsl:attribute>
 </xsl:template>
 
 <xsl:template match="@*|node()">

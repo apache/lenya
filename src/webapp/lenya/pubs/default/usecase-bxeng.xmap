@@ -43,7 +43,9 @@
       <map:match type="usecase" pattern="bxeng">
         
       <map:match type="step" pattern="open">
-       <map:act type="resource-exists" src="../../../../ROOT/bxeng/bxeLoader.js"> <!-- Check for BXENG -->
+       <!-- Check for BXENG -->
+       <!-- <map:act type="resource-exists" src="../../../../ROOT/bxeng/bxeLoader.js"> -->
+       <map:act type="resource-exists" src="../../resources/bxeng/bxeLoader.js">
         <map:act type="reserved-checkout">
           <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
@@ -61,6 +63,7 @@
         <map:transform src="../../xslt/bxeng/aggregate.xsl"/>
         <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
           <map:parameter name="configfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=config"/>
+          <map:parameter name="context" value="{request:contextPath}"/>
         </map:transform>
         <map:serialize type="xhtml-iso-8859-1"/>
         </map:act>
