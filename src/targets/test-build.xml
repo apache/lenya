@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: test-build.xml,v 1.18 2004/03/21 18:35:15 gregor Exp $ -->
+<!-- $Id$ -->
 
 <project name="test">
 
@@ -99,7 +99,7 @@
   
   <!-- Identity Test -->
   <target name="test.identity">
-    <java fork="yes" classname="org.apache.lenya.cms.ac.IdentityTestCase">
+    <java fork="yes" classname="org.apache.lenya.ac.impl.IdentityTest">
       <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="oscom"/>
       <classpath refid="classpath"/>
@@ -159,7 +159,7 @@
 
   <!-- Access Control Test -->
   <target name="test.accesscontrol" depends="test.pub.prepare">
-    <java fork="yes" classname="org.apache.lenya.cms.ac.AccessControlTest">
+    <java fork="yes" classname="org.apache.lenya.ac.impl.AccessControllerTest">
       <jvmarg value="-enableassertions"/>
       <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
       <arg value="${test.pub.id}"/>
