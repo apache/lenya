@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: screen.xsl,v 1.4 2004/04/19 10:17:18 gregor Exp $ -->
+<!-- $Id: screen.xsl,v 1.5 2004/04/29 14:24:08 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -47,13 +47,13 @@
         <td>
         
           
-        <not:notification>
+<!--        <not:notification>
           <not:preset>
             <xsl:apply-templates select="not:users/not:user"/>
           </not:preset>
           <not:textarea/>
         </not:notification>
-          
+-->          
         <sch:scheduler-form>
           
           <sch:job tasklabel="Publish">
