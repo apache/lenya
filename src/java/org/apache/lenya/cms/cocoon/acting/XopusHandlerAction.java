@@ -63,7 +63,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
     tempRoot=conf.getChild("temp").getAttribute("href");
     getLogger().debug("CONFIGURATION:\n" + "Relative XML Root Directory: " + xmlRoot + "\n"
                                          + "Relative XSL Root Directory: " + xslRoot + "\n"
-                                         + "Relative XSD Root Directory: " + xslRoot + "\n"
+                                         + "Relative XSD Root Directory: " + xsdRoot + "\n"
                                          + "Relative Temp Directory: " + tempRoot);
                                          
     // Encode File types and their root directories, relative to the sitemap directory
