@@ -97,7 +97,7 @@
           processor="trax"
           style="src/resources/dev/eclipse/make-classpath.xsl">
        <param name="exportlib" expression="${ide.eclipse.export.libs}"/>
-       <param name="eclipse-cocoon-project" expression="Cocoon 2.1.6"/>
+       <param name="eclipse-cocoon-project" expression="Cocoon 2.1.7"/>
     </xslt>
 
     <!-- copy the project file (expand version) -->
