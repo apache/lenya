@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 
-<oscom>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<head>
+<title>Welcome to OSCOM</title>
+</head>
 <body>
-Live
+<b>Welcome</b> to the OSCOM <a href="matrix/index.html">matrix</a>.
 </body>
 </html>
-</oscom>
