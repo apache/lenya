@@ -99,10 +99,13 @@
                 <map:parameter name="schema" value="{global:basedir}/pubs/{../1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
 
               <!--+
-	          | This section seems to be redundant as the editor works as well
-		  | if this remains commented out
+	          | RelaxNG validation of the edited document (in the oneformeditorsave action) failed!
+		  | Re-display the edit screen with the edited file from the work/oneformeditor 
+		  | directory to allow the user to correct the validation errors.
+		  | If the user presses cancel here, the original document will remain unchanged!
+		  +-->
 
-              <map:generate src="{global:basedir}/pubs/{../../1}/content/authoring/{page-envelope:document-path}"/>
+              <map:generate  src="{global:basedir}/pubs/{page-envelope:publication-id}/work/oneformeditor/authoring/{page-envelope:document-id}.xml" />
                 <map:transform src="{global:basedir}/xslt/authoring/edit/oneform.xsl">
                   <map:parameter name="docid" value="{page-envelope:document-id}"/>
                   <map:parameter name="language" value="{page-envelope:document-language}"/>
@@ -110,7 +113,6 @@
                 </map:transform>
                 <map:call resource="style-cms-page"/> 
 		
-		  +-->
 
               </map:act>
 
