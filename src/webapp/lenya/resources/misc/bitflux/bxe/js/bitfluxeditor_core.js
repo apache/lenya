@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_core.js,v 1.6 2003/01/21 17:00:55 gregorcms Exp $
+// $Id: bitfluxeditor_core.js,v 1.7 2003/05/22 14:48:34 gregor Exp $
 
 /**
  * @file
@@ -55,8 +55,8 @@ function BX_init() {
     var node;
     var options = BX_config_getNodes("/config/options/option");
     while (node = options.iterateNext()) {
-		// don't parse the element BX_root_dir..
-		if (node.getAttribute("name") != "BX_root_dir") {
+        // don't parse the element BX_root_dir..
+        if (node.getAttribute("name") != "BX_root_dir") {
         if (node.firstChild) {
             var nodeValue = BX_config_translateUrl(node);
             //replace quotes typed in config.xml. can go away later.
@@ -72,7 +72,7 @@ function BX_init() {
         } else {
             eval(node.getAttribute("name") + " = ''");
         }
-		}
+        }
     }
     BX_init_page();
 
@@ -147,66 +147,69 @@ function BX_schema_loaded(e) {
             if (appinfo_node.namespaceURI == "http://bitfluxeditor.org/schema/1.0") {
                 switch(appinfo_node.localName) {
                 case "returnelement":
-					if (appinfo_node.firstChild) {
-	                    BX_elements[name]["returnElement"] = appinfo_node.firstChild.data;
-					}
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["returnElement"] = appinfo_node.firstChild.data;
+                    }
                     break;
                 case "name":
-					if (appinfo_node.firstChild) {
-	                    BX_elements[name]["name"] = appinfo_node.firstChild.data;
-					}
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["name"] = appinfo_node.firstChild.data;
+                    }
                     break;
                 case "noaddparas":
-					if (appinfo_node.firstChild) {
-	                    BX_elements[name]["noAddParas"] = appinfo_node.firstChild.data;
-					}
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["noAddParas"] = appinfo_node.firstChild.data;
+                    }
                     break;
                 case "originalname":
-					if (appinfo_node.firstChild) {
-    	                BX_elements[name]["originalName"] = appinfo_node.firstChild.data;
-					}
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["originalName"] = appinfo_node.firstChild.data;
+                    }
                     break;
                 case "requiredattributes":
-					if (appinfo_node.firstChild) {
-    	                BX_elements[name]["requiredAttributes"] = appinfo_node.firstChild.data;
-					}
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["requiredAttributes"] = appinfo_node.firstChild.data;
+                    }
                     break;
                 case "addalso":
-					if (appinfo_node.firstChild) {
-    	                BX_elements[name]["addAlso"] = appinfo_node.firstChild.data;
-					}
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["addAlso"] = appinfo_node.firstChild.data;
+                    }
                     break;
                 case "altmenu":
-					if (appinfo_node.firstChild) {
-    	                BX_elements[name]["altMenu"] = appinfo_node.firstChild.data;
-					}
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["altMenu"] = appinfo_node.firstChild.data;
+                    }
                     break;
-				case "afteremptylineelement":
-					if (appinfo_node.firstChild) {
-						BX_elements[name]["afterEmptyLineElement"] = appinfo_node.firstChild.data;
-					}
+                case "afteremptylineelement":
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["afterEmptyLineElement"] = appinfo_node.firstChild.data;
+                    }
                     break;
-				case "afteremptylineparent":
-					if (appinfo_node.firstChild) {
-						BX_elements[name]["afterEmptyLineParent"] = appinfo_node.firstChild.data;
-					}
+                case "afteremptylineparent":
+                    if (appinfo_node.firstChild) {
+                        BX_elements[name]["afterEmptyLineParent"] = appinfo_node.firstChild.data;
+                    }
                     break;
 
 
                 case "insertafter":
-					if (appinfo_node.firstChild) {
-    	                insertafter_result = BX_xml_getChildNodesByTagName("bxe:element",appinfo_node,nsResolver);
-        	            if ( insertafter_node = insertafter_result.iterateNext()) {
-            	            var inserttext = insertafter_node.firstChild.data;
+                    if (appinfo_node.firstChild) {
+                        insertafter_result = BX_xml_getChildNodesByTagName("bxe:element",appinfo_node,nsResolver);
+                        if ( insertafter_node = insertafter_result.iterateNext()) {
+                            var inserttext = insertafter_node.firstChild.data;
 
-                	        while (insertafter_node = insertafter_result.iterateNext()) {
-                    	        inserttext += " | " + insertafter_node.firstChild.data;
-                        	}
-	                        BX_elements[name]["insertAfter"] = inserttext;
-    	                }
-					}
+                            while (insertafter_node = insertafter_result.iterateNext()) {
+                                inserttext += " | " + insertafter_node.firstChild.data;
+                            }
+                            BX_elements[name]["insertAfter"] = inserttext;
+                        }
+                    }
                 }
             }
+        }
+        if (!BX_elements[name]["name"]) {
+            BX_elements[name]["name"] = name;
         }
 
         var complexType_result = BX_xml_getChildNodesByTagName("xs:complexType",node,nsResolver);
@@ -216,7 +219,7 @@ function BX_schema_loaded(e) {
             if (complexType.getAttribute("mixed") == "true") {
                 BX_elements[name]["allowedElements"] = "#PCDATA | ";
             }
-            var elements_result = BX_xml_getChildNodesByXpath("xs:choice/xs:element","*[name() = 'xs:choice']/*[name() = 'xs:element']",complexType,nsResolver);
+            var elements_result = BX_xml_getChildNodesByXpath("xs:choice/xs:element|xs:sequence/xs:element","*[name() = 'xs:choice']/*[name() = 'xs:element']",complexType,nsResolver);
 
             while (element = elements_result.iterateNext()) {
                 BX_elements[name]["allowedElements"] +=  element.getAttribute("ref") + " | ";
@@ -286,7 +289,7 @@ function BX_transformDoc() {
         var out = BX_xml.doc.implementation.createDocument("","",null);
         BX_xsltProcessor.transformDocument( BX_xml.doc, BX_xsl.doc, out, null);
 
-        //				<xsl:attribute name="oncontextmenu">BX_RangeCaptureOnContextMenu(event.target);event.preventDefault();</xsl:attribute>
+        //              <xsl:attribute name="oncontextmenu">BX_RangeCaptureOnContextMenu(event.target);event.preventDefault();</xsl:attribute>
 
         var result = out.evaluate("//*[@name='bitfluxspan']",out.documentElement, null, 0, null);
         var node = null;
@@ -517,9 +520,9 @@ function BX_getElementById(id,xml) {
 }
 
 function BX_focusSpan (w_div,isNode) {
-	if (!isNode) {
-	    var w_div= BX_find_bitfluxspanNode(w_div.target);
-	}
+    if (!isNode) {
+        var w_div= BX_find_bitfluxspanNode(w_div.target);
+    }
 
     if (!(BX_dotFocus) || BX_dotFocus != w_div) {
 
@@ -615,11 +618,11 @@ function BX_keypress(e) {
             e.stopPropagation();
             break;
         case e.DOM_VK_HOME:
-			if (BX_selection.anchorNode.nodeType == 1) {
-				BX_selection.anchorNode.normalize();
-			} else {
-				BX_selection.anchorNode.parentNode.normalize();
-			}
+            if (BX_selection.anchorNode.nodeType == 1) {
+                BX_selection.anchorNode.normalize();
+            } else {
+                BX_selection.anchorNode.parentNode.normalize();
+            }
 
             BX_cursor_moveToStartInNode(BX_selection.anchorNode,false);
             BX_updateButtons();
@@ -627,12 +630,12 @@ function BX_keypress(e) {
             e.stopPropagation();
             break;
         case e.DOM_VK_END:
-			if (BX_selection.anchorNode.nodeType == 1) {
-				BX_selection.anchorNode.normalize();
-			} else {
-				BX_selection.anchorNode.parentNode.normalize();
-			}
-			
+            if (BX_selection.anchorNode.nodeType == 1) {
+                BX_selection.anchorNode.normalize();
+            } else {
+                BX_selection.anchorNode.parentNode.normalize();
+            }
+            
             BX_cursor_moveToStartInNode(BX_selection.anchorNode,true);
             BX_updateButtons();
             e.preventDefault();
@@ -682,16 +685,16 @@ function BX_onkeyup(e) {
         if (!BX_no_events) {
             BX_update_buttons = true;
             window.setTimeout("BX_updateButtonsDelayed()",10);
-			var _node = window.getSelection().anchorNode;
-			_node.target = _node;
-			BX_focusSpan(_node);
+            var _node = window.getSelection().anchorNode;
+            _node.target = _node;
+            BX_focusSpan(_node);
         }
         e.preventDefault();
         e.stopPropagation();
     }
 }
 function BX_updateButtonsDelayed() {
-	
+    
     if (BX_update_buttons) {
         BX_get_selection();
         BX_updateButtons();
@@ -705,9 +708,9 @@ function BX_insertContent(content, doNoCollapse) {
     var StartPosition = BX_range.startOffset;
 
     if (typeof(content) == "string") {
-		try {
-    	    bla = BX_range.deleteContents();
-	    } catch(e) {}
+        try {
+            bla = BX_range.deleteContents();
+        } catch(e) {}
 
         if (content.length == 1) {
             content = document.createTextNode(content);
@@ -724,21 +727,21 @@ function BX_insertContent(content, doNoCollapse) {
         } else {
             content = document.createTextNode(content);
         }
-        //		BX_range.createContextualFragment(content);
+        //      BX_range.createContextualFragment(content);
     } else {
-		
-		// we have to remove all Ranges before going further
-		// otherwise we have strange selection stuff on the screen
-		// it is only needed, when we insert nodes, so it's only here
-		// (and BX_range.deleteContents is doubled..)
-		// hope this resolves bug #6
-		BX_selection.removeAllRanges();
-		try {
-    	    BX_range.deleteContents();
-	    } catch(e) {}
+        
+        // we have to remove all Ranges before going further
+        // otherwise we have strange selection stuff on the screen
+        // it is only needed, when we insert nodes, so it's only here
+        // (and BX_range.deleteContents is doubled..)
+        // hope this resolves bug #6
+        BX_selection.removeAllRanges();
+        try {
+            BX_range.deleteContents();
+        } catch(e) {}
 
-	}
-	
+    }
+    
     var startOffBefore = BX_range.startOffset;
 
     if (StartContainer.nodeType==StartContainer.TEXT_NODE && content.nodeType==content.TEXT_NODE) {
@@ -760,8 +763,8 @@ function BX_insertContent(content, doNoCollapse) {
 
         if (startOffBefore == BX_range.startOffset) {
             try { BX_range.setEnd(BX_range.endContainer ,BX_range.endOffset +1);}
-			catch(e) {};
-            //	        BX_range.setEnd(EndContainer ,EndPosition +1);
+            catch(e) {};
+            //          BX_range.setEnd(EndContainer ,EndPosition +1);
         }
 
         if (!doNoCollapse) {
@@ -786,12 +789,12 @@ function BX_key_delete() {
 
         if (/[^\t\n\r\s]/.test(leftOfSelection)) {
             var stripWS = rightOfSelection.replace(/^[\t\n\r\s]+/," ");
-            /*	maybe this would be a solution for inline handling...
-            			if (BX_getComputedStyle(BX_range.endContainer.parentNode,"display") == "inline") {
-            					var stripWS = rightOfSelection.replace(/^[\t\n\r\s]+/," ");
-            				} else {
-            					var stripWS = rightOfSelection.replace(/^[\t\n\r\s]+/,"");
-            				}*/
+            /*  maybe this would be a solution for inline handling...
+                        if (BX_getComputedStyle(BX_range.endContainer.parentNode,"display") == "inline") {
+                                var stripWS = rightOfSelection.replace(/^[\t\n\r\s]+/," ");
+                            } else {
+                                var stripWS = rightOfSelection.replace(/^[\t\n\r\s]+/,"");
+                            }*/
         } else {
             var stripWS = rightOfSelection.replace(/^[\t\n\r\s]+$/,"");
         }
@@ -822,8 +825,8 @@ function BX_key_delete() {
 
         BX_range.setEnd(BX_range.endContainer, BX_range.endOffset+( rightOfSelection.length - stripWS.length) + 1);
     }
-	//maybe using CDATA.deleteData instead of extractContents
-	// see mozilla/dom/public/idl/core/nsIDOMCharacterData.idl
+    //maybe using CDATA.deleteData instead of extractContents
+    // see mozilla/dom/public/idl/core/nsIDOMCharacterData.idl
 
     BX_range.extractContents();
     BX_selection.removeAllRanges();
@@ -841,8 +844,8 @@ function BX_cursor_moveLeft () {
     document.dispatchEvent(ev);
     */
     BX_selection = window.getSelection();
-	if (BX_selection.anchorNode.nodeType != 3) {
-	// if the anchornode is not a textnode. find the next previous one.
+    if (BX_selection.anchorNode.nodeType != 3) {
+    // if the anchornode is not a textnode. find the next previous one.
         var walker = document.createTreeWalker(document,NodeFilter.SHOW_TEXT,
                                                {
                                            acceptNode : function(node) {
@@ -852,23 +855,23 @@ function BX_cursor_moveLeft () {
                                                    }
                                                }
                                                ,null);
-		BX_selection.anchorNode.normalize();
-		walker.currentNode = BX_selection.anchorNode;
-		//if selection has childnodes, we assume, that there is a textnode in it and are looking for that
-		// this is not perfect...
-		if (BX_selection.anchorNode.hasChildNodes()) {									   
-    	    var nextNode = walker.nextNode();
-		} else {
-		    var nextNode = walker.prevNode();
-		}
-		
-		var stripWS = nextNode.data.replace(/^[\t\n\r\s]*$/,"").replace(/[\t\n\r\s]{2,}$/," ");
-	    BX_selection.collapse(nextNode,stripWS.length);
-	
-	} else {
-	    var stripWS = BX_selection.anchorNode.data.substring(0,BX_selection.anchorOffset).replace(/^[\t\n\r\s]*$/,"").replace(/[\t\n\r\s]{2,}$/," ");
-    	BX_selection.collapse(BX_selection.anchorNode,stripWS.length);
-	}
+        BX_selection.anchorNode.normalize();
+        walker.currentNode = BX_selection.anchorNode;
+        //if selection has childnodes, we assume, that there is a textnode in it and are looking for that
+        // this is not perfect...
+        if (BX_selection.anchorNode.hasChildNodes()) {                                     
+            var nextNode = walker.nextNode();
+        } else {
+            var nextNode = walker.prevNode();
+        }
+        
+        var stripWS = nextNode.data.replace(/^[\t\n\r\s]*$/,"").replace(/[\t\n\r\s]{2,}$/," ");
+        BX_selection.collapse(nextNode,stripWS.length);
+    
+    } else {
+        var stripWS = BX_selection.anchorNode.data.substring(0,BX_selection.anchorOffset).replace(/^[\t\n\r\s]*$/,"").replace(/[\t\n\r\s]{2,}$/," ");
+        BX_selection.collapse(BX_selection.anchorNode,stripWS.length);
+    }
     // if we are at the beginning of a node, search nextNode..
     if (BX_selection.anchorOffset == 0 ) {
         var walker = document.createTreeWalker(document,NodeFilter.SHOW_TEXT,
@@ -1018,7 +1021,7 @@ function BX_add_tag(tag, afterNodeId,splitNode) {
         element.appendChild(frag);
     }
     if (afterNodeId) {
-        //    	document.getElementById = BX_getElementById;
+        //      document.getElementById = BX_getElementById;
         var node = document.getElementById(afterNodeId);
         if (!(node)) {
             var node = BX_getElementByIdClean(afterNodeId,document,1);
@@ -1142,10 +1145,10 @@ function BX_getCurrentNodeName(node) {
 function BX_transform(selectNode) {
 
     BX_get_selection();
-	BX_node_clean_bg();
+    BX_node_clean_bg();
     BX_range.collapse(true);
     var BX_cursor = document.createElementNS("http://www.w3.org/1999/xhtml","span");
-    //	BX_cursor.appendChild(document.createTextNode("|"));
+    //  BX_cursor.appendChild(document.createTextNode("|"));
     BX_cursor.setAttribute("id","bx_cursor");
     BX_insertContent(BX_cursor);
     if (typeof BX_mixedCaseAttributes != "undefined" && BX_mixedCaseAttributes) {
@@ -1205,16 +1208,16 @@ function BX_updateXML() {
             if (!(myNodeAttr)) {
                 continue;
             }
-	     try {myNodeAttr.setAttribute("bxe_bitfluxspan","true");}
-		catch (e) {
-	     }
+         try {myNodeAttr.setAttribute("bxe_bitfluxspan","true");}
+        catch (e) {
+         }
 
             BX_tmp_r1.selectNodeContents(myNodeAttr);
 
             BX_tmp_r1.extractContents();
 
             BX_tmp_r2.selectNodeContents(BX_getElementById(allDivs[i].getAttribute("id"),document));
-			
+            
             if (BX_tmp_r2.toString().length > 0) {
                 BX_tmp_r1.insertNode(BX_tmp_r2.cloneContents());
             }
@@ -1261,19 +1264,19 @@ function BX_RangeCaptureOnMouseUp(e) {
         }
 
 
-		var bx_span_anchor = BX_find_bitfluxspanNode(BX_selection.anchorNode);
-		var bx_span_offset  = BX_find_bitfluxspanNode(BX_selection.focusNode);
-		if (bx_span_anchor != bx_span_offset) {
-			if (bx_span_anchor.compareTreePosition(bx_span_offset) & document.TREE_POSITION_PRECEDING) {
-				//preceding
-				BX_selection.extend(bx_span_anchor,0);																	
-			} else {
-				BX_selection.extend(bx_span_anchor,bx_span_anchor.childNodes.length);																	
+        var bx_span_anchor = BX_find_bitfluxspanNode(BX_selection.anchorNode);
+        var bx_span_offset  = BX_find_bitfluxspanNode(BX_selection.focusNode);
+        if (bx_span_anchor != bx_span_offset) {
+            if (bx_span_anchor.compareTreePosition(bx_span_offset) & document.TREE_POSITION_PRECEDING) {
+                //preceding
+                BX_selection.extend(bx_span_anchor,0);                                                                  
+            } else {
+                BX_selection.extend(bx_span_anchor,bx_span_anchor.childNodes.length);                                                                   
 
-			}
-		}
+            }
+        }
 
-	    if (e.which == 1) {
+        if (e.which == 1) {
             BX_popup.style.top = window.innerHeight + "px";
             BX_popup.style.visibility = "hidden";
         }
@@ -1368,7 +1371,7 @@ function BX_updateButtons(again) {
 
     }
 
-	if (!startNode) {
+    if (!startNode) {
         return false;
     }
     startNode = startNode.parentNode;
@@ -1389,7 +1392,7 @@ function BX_updateButtons(again) {
     } else if (BX_elements[startNode.nodeName]) {
         infotext =  "<a onmouseout=\"BX_hide_node('"+startNodeId+"')\"  onmouseover=\"BX_show_node('"+startNodeId+"')\" href=\"javascript:BX_popup_node_bitfluxspan('"+startNodeId+"');\" >" + BX_elements[startNode.nodeName]["name"] + "</a>"+ infotext;
 
-        //		infotext = "<span class=\"tagBelow\" onmouseout=\"BX_hide_node('"+startNodeId+"')\"  onmouseover=\"BX_show_node('"+startNodeId+"')\">" + BX_elements[startNode.nodeName]["name"] +  "</span> " + infotext;
+        //      infotext = "<span class=\"tagBelow\" onmouseout=\"BX_hide_node('"+startNodeId+"')\"  onmouseover=\"BX_show_node('"+startNodeId+"')\">" + BX_elements[startNode.nodeName]["name"] +  "</span> " + infotext;
         document.removeEventListener("keypress",BX_onkeyup,false);
         document.addEventListener("keypress",BX_keypress,false);
     } else {
@@ -1420,7 +1423,7 @@ function BX_infobar_printAttributes(node) {
             if (node.attributes[i].nodeName != "bxe_originalname" && node.attributes[i].nodeName != "bxe_internalid" && node.attributes[i].nodeName != "id" && node.attributes[i].nodeName != "style"  ) {
                 BX_innerHTML(infotext_attr,"<a href=\"javascript:BX_infobar_printAttributes(BX_getElementByIdClean('"+element_id+"',document));BX_up();\">"+ node.attributes[i].nodeName + "=" + node.attributes[i].nodeValue+"</a> ");
                 infotext2 += "<tr ><td>" + node.attributes[i].nodeName + ": </td>\n";
-                infotext2 += "<td><input onchange=\"BX_getElementByIdClean('"+element_id+"',document).setAttribute('"+node.attributes[i].nodeName+"',this.value); \" onfocus=\"javascript: BX_range= null;\" size=\"40\" value=\""+node.attributes[i].nodeValue+"\" /></td></tr>\n";
+                infotext2 += "<td><input onchange=\"BX_getElementByIdClean('"+element_id+"',document).setAttribute('"+node.attributes[i].nodeName+"',BX_replaceent(this.value));\" onfocus=\"javascript: BX_range= null;\" size=\"40\" alue=\""+node.attributes[i].nodeValue+"\" /></td></tr>\n";
             }
         }
         /**
@@ -1493,7 +1496,7 @@ function calculateMarkup( node, isXML, inRange ) {
         return retVal.replace(/\&/g, "&amp;").replace(/</g,
                 "&lt;").replace(/>/g, "&gt;");
 
-    case Node.COMMENT_NODE:	//Comment nodes are not parsed
+    case Node.COMMENT_NODE: //Comment nodes are not parsed
         var retVal = node.data;
         if(  calcRange && inRange.compareNode(node) != Range.NODE_INSIDE ) {
             if( node != inRange.endContainer && node != inRange.startContainer)
@@ -1535,7 +1538,7 @@ function calculateMarkup( node, isXML, inRange ) {
         for (var i = 0; i < len; i++) {
             attr = attrs.item(i);
             //if it has not been specified than it assumes it default
-            //value and does not need to be included.					if( attr.specified )
+            //value and does not need to be included.                   if( attr.specified )
             retVal += " " + calculateMarkup( attr, isXML, null );
         }
 
@@ -1565,7 +1568,7 @@ function calculateMarkup( node, isXML, inRange ) {
             retVal += " " + node.internalSubset;
         return retVal + ">\n";
 
-    case Node.ENTITY_NODE:		//cannot test this code due to Mozilla Bug #15118
+    case Node.ENTITY_NODE:      //cannot test this code due to Mozilla Bug #15118
         var retVal = "<!ENTITY " + node.nodeName;
         if( node.publicId ) {
             retVal += ' PUBLIC "' + node.publicId + '"';
@@ -1588,7 +1591,7 @@ function calculateMarkup( node, isXML, inRange ) {
         }
         return retVal + ">";
 
-    case Node.NOTATION_NODE:	//cannot test this code due to Mozilla Bug #15118
+    case Node.NOTATION_NODE:    //cannot test this code due to Mozilla Bug #15118
         var retVal = "<!NOTATION " + node.nodeName;
         if( node.publicId ) {
             retVal += ' PUBLIC "' + node.publicId + '"';
@@ -1635,7 +1638,7 @@ function BX_scrollToCursor(node) {
         var anchorNode = BX_selection.anchorNode;
         var anchorOffset = BX_selection.anchorOffset;
 
-        if (BX_selection.isCollapsed)	{
+        if (BX_selection.isCollapsed)   {
             var focusNode = false;
         } else {
             var focusNode = BX_selection.focusNode;
@@ -1647,13 +1650,13 @@ function BX_scrollToCursor(node) {
         var focusNode =false;
     }
 
-    //	var BX_cursor = document.createElement("span");
-    //	BX_cursor.appendChild(document.createTextNode("|"));
+    //  var BX_cursor = document.createElement("span");
+    //  BX_cursor.appendChild(document.createTextNode("|"));
     /*    BX_cursor.setAttribute("id","bx_cursor");
-    	
-    	BX_insertContent(BX_cursor);
+        
+        BX_insertContent(BX_cursor);
     */
-	
+    
     if (anchorNode.nodeType == 3) {
 
         var cursorNode = anchorNode.parentNode;
@@ -1672,12 +1675,12 @@ function BX_scrollToCursor(node) {
     if (cursorPos > (window.innerHeight + window.pageYOffset - 230)) {
         window.scrollTo(0,cursorPos - window.innerHeight + 270);
     }
-    /*	else if (cursorPos < window.pageYOffset - 15)
-    	{
-    		window.scrollTo(0,cursorPos - 80);
+    /*  else if (cursorPos < window.pageYOffset - 15)
+        {
+            window.scrollTo(0,cursorPos - 80);
 
-    	}*/
-    //	BX_cursor.parentNode.removeChild(BX_cursor);
+        }*/
+    //  BX_cursor.parentNode.removeChild(BX_cursor);
     BX_selection.collapse(anchorNode,anchorOffset);
     if(focusNode && ( anchorNode != focusNode || focusOffset != anchorOffset)) {
         BX_selection.extend(focusNode,focusOffset);
@@ -1717,13 +1720,13 @@ function BX_splitNode(id) {
     BX_range.collapse(false);
     parent.parentNode.removeChild(parent);
 
-    /*	BX_tmp_r1 = BX_range.cloneRange();
-    	BX_tmp_r1.setEndAfter(BX_range.startContainer);
-    	BX_range.setStartBefore(BX_range.startContainer);
-    	parent.insertBefore(BX_range.extractContents(),BX_tmp_r1.startContainer);
-    	BX_range.selectNode(BX_tmp_r1.startContainer);
-    	BX_range.collapse(true);
-    	BX_tmp_r1.detach();*/
+    /*  BX_tmp_r1 = BX_range.cloneRange();
+        BX_tmp_r1.setEndAfter(BX_range.startContainer);
+        BX_range.setStartBefore(BX_range.startContainer);
+        parent.insertBefore(BX_range.extractContents(),BX_tmp_r1.startContainer);
+        BX_range.selectNode(BX_tmp_r1.startContainer);
+        BX_range.collapse(true);
+        BX_tmp_r1.detach();*/
 }
 
 function BX_getParentNode(startNode,nodename) {
@@ -1761,7 +1764,7 @@ function BX_node_insertID(node) {
 
 
 function BX_node_move_up (id) {
-    //	var node = BX_getElementByIdClean(id,document);
+    //  var node = BX_getElementByIdClean(id,document);
     var node = BX_getElementById(id,document);
 
     var anchorNode = BX_selection.anchorNode;
@@ -1770,7 +1773,7 @@ function BX_node_move_up (id) {
     var next = node.previousSibling;
 
     BX_popup_hide();
-    BX_node_clean_bg()	;
+    BX_node_clean_bg()  ;
 
     BX_opa_node=node.getAttribute("id");
 
@@ -1785,7 +1788,7 @@ function BX_node_move_up (id) {
     //  BX_range_updateToCursor();
     BX_selection.collapse(anchorNode,anchorOffset);
     BX_undo_save();
-	 try {
+     try {
         node.setAttribute("bxe_mark","true")
     } catch(e) {}
     BX_scrollToCursor();
@@ -1795,7 +1798,7 @@ function BX_node_move_up (id) {
 }
 
 function BX_node_move_down (id) {
-    //	var node = BX_getElementByIdClean(id,document);
+    //  var node = BX_getElementByIdClean(id,document);
     var node = document.getElementById(id);
 
     var anchorNode = BX_selection.anchorNode;
@@ -1807,7 +1810,7 @@ function BX_node_move_down (id) {
     BX_node_clean_bg();
 
 
-    //	try{node.style.borderWidth="thin";}
+    //  try{node.style.borderWidth="thin";}
 
 
     while (next != null && next.nodeName == "#text") {
@@ -1847,7 +1850,7 @@ function BX_node_change(node,newNodeName) {
 
     node.parentNode.replaceChild(newNode,node);
 
-    //	BX_range_updateToCursor();
+    //  BX_range_updateToCursor();
     BX_undo_save();
     if (BX_elements[newNodeName]["doTransform"]) {
         BX_transform();
@@ -1919,10 +1922,10 @@ function BX_node_clean_bg() {
     if (BX_opa_node != null) {
 
         var Opa_node = BX_getElementByIdClean(BX_opa_node,document);
-		try {
+        try {
         Opa_node.removeAttribute("bxe_mark");
-		}
-		catch(e) {};
+        }
+        catch(e) {};
         BX_opa_node = null;
     }
 }
@@ -1935,7 +1938,7 @@ function BX_doDrag(e) {
     var difY=e.clientY-window.lastY;
     // Retrieves the X and Y position of editcanvas.
     // Linux does behave strangely...
-    if (	navigator.platform.indexOf("Linux") >= 0) {
+    if (    navigator.platform.indexOf("Linux") >= 0) {
         var newX = parseInt(window.BX_popupLeft) +difX/2;
         var newY = parseInt(window.BX_popupTop) +difY/2;
     } else {
@@ -1967,8 +1970,8 @@ function BX_doDrag(e) {
 
     // Stores the current mouse position as last position.
     //
-    //	window.lastX=e.clientX;
-    //	window.lastY=e.clientY;
+    //  window.lastX=e.clientX;
+    //  window.lastY=e.clientY;
 
 }
 
@@ -2043,7 +2046,7 @@ function BX_popup_link() {
 function BX_removeEvents() {
     document.removeEventListener("keypress",BX_keypress,false);
     document.addEventListener("keypress",BX_onkeyup,false);
-	BX_no_events = true;
+    BX_no_events = true;
     //    document.removeEventListener("keyup",BX_onkeyup,false);
 
     //    var allSpans = document.getElementsByName("bitfluxspan");
@@ -2083,13 +2086,16 @@ function BX_popup_addTagWithAttributes(tag,attributes,defaults) {
 
     document.removeEventListener("keypress",BX_keypress,false);
     document.removeEventListener("keyup",BX_onkeyup,false);
-	BX_no_events = true;
+    BX_no_events = true;
 
     BX_popup_show();
     BX_popup.style.top=BX_popup.offsetTop - 1 + "px";
 
 }
 
+function BX_replaceent(astring) {
+    return astring.replace(/&/g,"&amp;");
+}
 
 function BX_popup_insertTagWithAttributes(tag) {
     //    window.defaultStatus="";
@@ -2105,12 +2111,12 @@ function BX_popup_insertTagWithAttributes(tag) {
         if (document.forms.addtag[i].name == "content") {
             var content = document.forms.addtag[i].value;
         } else if (document.forms.addtag[i].name) {
-            attributes[document.forms.addtag[i].name] = document.forms.addtag[i].value;
+            attributes[document.forms.addtag[i].name] = BX_replaceent(document.forms.addtag[i].value);
         }
     }
     BX_add_tagWithAttributes(tag,content,attributes);
     BX_popup_hide();
-    /*	BX_popup.innerHTML="<span></span>";*/
+    /*  BX_popup.innerHTML="<span></span>";*/
     document.addEventListener("keypress",BX_keypress,false);
     document.addEventListener("keyup",BX_onkeyup,false);
 
@@ -2144,14 +2150,14 @@ function BX_source_edit(id, selectNodeContents) {
                 BX_xslViewSource.load(null);
 
             }
-            //        	BX_xslViewSource.onload = null;  // set the callback when we are done loading
+            //          BX_xslViewSource.onload = null;  // set the callback when we are done loading
 
-			window.setTimeout("BX_source_edit('"+id+"',"+selectNodeContents+")",50);
-			
+            window.setTimeout("BX_source_edit('"+id+"',"+selectNodeContents+")",50);
+            
             return;
         }
 
-        //		var edit_element = document.getElementById(id).cloneNode(true);
+        //      var edit_element = document.getElementById(id).cloneNode(true);
         var edit_element = BX_xml.doc.implementation.createDocument("","",null);
         edit_element.appendChild(BX_getElementById(id,document).cloneNode(true));
         if (edit_element) {
@@ -2162,9 +2168,9 @@ function BX_source_edit(id, selectNodeContents) {
             return;
         }
 
-        //	BX_clipboard = document.getElementById(id).cloneNode(1);
-        //	document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-        //	BX_selection.selectAllChildren(document.getElementById(id));
+        //  BX_clipboard = document.getElementById(id).cloneNode(1);
+        //  document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+        //  BX_selection.selectAllChildren(document.getElementById(id));
         BX_popup_start("Edit Source ",500,0);
 
         var html = ' <center class="text"><form id="bx_form_clipboard" name="clipboard">';
@@ -2237,8 +2243,8 @@ function BX_RangeCaptureOnContextMenu(event) {
         if (BX_elements[target.nodeName] && BX_elements[target.nodeName]["altMenu"] && BX_find_bitfluxspanNode(target)) {
 
             eval(BX_elements[target.nodeName]["altMenu"]+"(target,event)");
-			event.stopPropagation();
-			event.preventDefault();
+            event.stopPropagation();
+            event.preventDefault();
             return;
         }
 
@@ -2252,10 +2258,10 @@ function BX_RangeCaptureOnContextMenu(event) {
         } else {
             var current_nodename = target.nodeName;
         }
-		var target_id = target.getAttribute("id");
+        var target_id = target.getAttribute("id");
 
         if (BX_elements[current_nodename]) {
-			var target_fullname = BX_elements[current_nodename]["name"];
+            var target_fullname = BX_elements[current_nodename]["name"];
             BX_popup_start(target_fullname,0,0);
             if (BX_elements[current_nodename]["allowedElements"]) {
 
@@ -2283,7 +2289,7 @@ function BX_RangeCaptureOnContextMenu(event) {
                 BX_popup_addHr();
                 BX_popup_addLine("Merge " + BX_elements[current_nodename]["name"],"javascript:BX_merge();BX_popup_hide();");
             }
-			BX_popup_addHr();
+            BX_popup_addHr();
 
             if (target.getAttribute("name") != "bitfluxspan") {
 
@@ -2313,21 +2319,21 @@ function BX_RangeCaptureOnContextMenu(event) {
                     target = target.parentNode;
 
                 } while ( target.getAttribute("name")!= "bitfluxspan");
-			BX_popup_addHr();
+            BX_popup_addHr();
             }
 
-		    BX_popup_addLine("Copy","javascript:BX_copy_copy();BX_popup_hide()");
+            BX_popup_addLine("Copy","javascript:BX_copy_copy();BX_popup_hide()");
 
-		    BX_popup_addLine("Cut/Delete","javascript:BX_copy_extract();BX_popup_hide()");
-							
-		    if (BX_clipboard)
-    		{
-    			BX_popup_addLine("Paste","javascript:BX_copy_paste();BX_popup_hide()");
+            BX_popup_addLine("Cut/Delete","javascript:BX_copy_extract();BX_popup_hide()");
+                            
+            if (BX_clipboard)
+            {
+                BX_popup_addLine("Paste","javascript:BX_copy_paste();BX_popup_hide()");
 
-				if (BX_clipboard.nodeType == 1 || ( BX_clipboard.firstChild && BX_clipboard.firstChild.nodeType == 1)) {
-		    		BX_popup_addLine("Paste after " +target_fullname ,"javascript:BX_copy_pasteID('"+target_id+"');BX_popup_hide()");
-				}
-    		}
+                if (BX_clipboard.nodeType == 1 || ( BX_clipboard.firstChild && BX_clipboard.firstChild.nodeType == 1)) {
+                    BX_popup_addLine("Paste after " +target_fullname ,"javascript:BX_copy_pasteID('"+target_id+"');BX_popup_hide()");
+                }
+            }
 
         } else {
             BX_popup_start("Element " + current_nodename + " not defined",0,0);
@@ -2369,7 +2375,7 @@ function BX_errorMessage(e) {
             BX_innerHTML(BX_error_window.document,"");
             BX_error_window.document.writeln("<pre>");
             mes += "UserAgent: "+navigator.userAgent +"\n";
-            mes += "bitfluxeditor.js Info: $Revision: 1.6 $  $Name:  $  $Date: 2003/01/21 17:00:55 $ \n";
+            mes += "bitfluxeditor.js Info: $Revision: 1.7 $  $Name:  $  $Date: 2003/05/22 14:48:34 $ \n";
             BX_error_window.document.writeln(mes);
             mes = "\nError Object:\n\n";
             for (var b in e) {
@@ -2394,9 +2400,9 @@ function BX_errorMessage(e) {
 
         BX_innerHTML(BX_infoerror,"ERROR:\n"+e.message +"\n");
         if (BX_infoerror_timeout) {
-			try {
-            	BX_infoerror_timeout.clearTimeout();
-			} catch(e) {};
+            try {
+                BX_infoerror_timeout.clearTimeout();
+            } catch(e) {};
         }
         BX_infoerror_timeout = window.setTimeout("BX_clearInfoError()",10000);
     }
@@ -2405,7 +2411,8 @@ function BX_errorMessage(e) {
 
 function BX_find_bitfluxspanNode(node ) {
 
-    while(node && node.nodeName == "#text" || (node.parentNode.nodeName != "html" && node.getAttribute("name") != "bitfluxspan")) {
+    while(node && node.nodeName == "#text" && node.parentNode || (node.parentNode.nodeName != "html" && node.getAttribute("name") != "bitfluxspan")) {
+        
         node = node.parentNode;
     }
     if (node.getAttribute("name") == "bitfluxspan") {
@@ -2422,15 +2429,15 @@ function BX_show_node(id) {
 
     node.setAttribute("bxe_mark","true");
 
-    //	try{node.style.borderWidth="thin";}
-    //	catch(e){};
+    //  try{node.style.borderWidth="thin";}
+    //  catch(e){};
 }
 
 
 function BX_hide_node(id) {
     var node = BX_getElementByIdClean(id,document);
     node.removeAttribute("bxe_mark");
-    //	node.setAttribute("bxe_mark",null);
+    //  node.setAttribute("bxe_mark",null);
 }
 
 function BX_show_xml(node) {
@@ -2441,7 +2448,7 @@ function BX_show_xml(node) {
 function BX_init_buttonBar() {
     BX_buttonbar = document.getElementById("BX_buttonbar");
     BX_buttonbar.style.width = window.innerWidth + "px";
-    //	document.getElementsByTagName("body")[0].style.height = window.innerWidth + "px";
+    //  document.getElementsByTagName("body")[0].style.height = window.innerWidth + "px";
     var result = BX_config.doc.evaluate("/config/buttons//*", BX_config.doc, null, 0, null);
     var node;
     var resultArray = new Array();
@@ -2558,12 +2565,12 @@ function BX_xml_removeWhiteSpaceNodes(node) {
 function BX_window_onunload (e) {
     /* we should do something, if the users leaves the page without saving it. but onunload can't be canceled... */
 
-    /*	if(confirm("There current document has been modified. \n Do you really want to leave?")) {
-    		return true;
-    	}
-    	else {
-    		return false;
-    	}*/
+    /*  if(confirm("There current document has been modified. \n Do you really want to leave?")) {
+            return true;
+        }
+        else {
+            return false;
+        }*/
 
 }
 
@@ -2576,103 +2583,103 @@ function BX_noBackspace(e) {
 
 function BX_walker_findNextEditableNode(startnode) {
 
-	if (startnode.nodeType == 1 && startnode.getAttribute("name") == "bitfluxspan" && startnode.childNodes.length == 0 ) {
-		var newTextNode = startnode.appendChild(document.createTextNode(""));
-		return newTextNode;
-		}
+    if (startnode.nodeType == 1 && startnode.getAttribute("name") == "bitfluxspan" && startnode.childNodes.length == 0 ) {
+        var newTextNode = startnode.appendChild(document.createTextNode(""));
+        return newTextNode;
+        }
 
     var nodeIt = document.createTreeWalker(document,
                                            NodeFilter.SHOW_TEXT,{
                                            acceptNode : function(node) {
-										   	if (node.parentNode.getAttribute("name") == "bitfluxspan") {
-												return NodeFilter.FILTER_ACCEPT;
-											} else {
-												return NodeFilter.FILTER_REJECT;
-											}
-												
-											}
-											},
+                                            if (node.parentNode.getAttribute("name") == "bitfluxspan") {
+                                                return NodeFilter.FILTER_ACCEPT;
+                                            } else {
+                                                return NodeFilter.FILTER_REJECT;
+                                            }
+                                                
+                                            }
+                                            },
                                            false);
 
-	nodeIt.currentNode = startnode;
+    nodeIt.currentNode = startnode;
 
     var node;
-	node = nodeIt.nextNode(  );
-	if (node == null) {
-		node = nodeIt.previousNode();
-	}
-	if (node != null && !(/[^\t\n\r\s]/.test(node.data))) {	
+    node = nodeIt.nextNode(  );
+    if (node == null) {
+        node = nodeIt.previousNode();
+    }
+    if (node != null && !(/[^\t\n\r\s]/.test(node.data))) { 
     var nodeIt2 = document.createTreeWalker(startnode,
                                            NodeFilter.SHOW_TEXT,{
                                            acceptNode : function(node) {
-										   	if ((/[^\t\n\r\s]/.test(node.data))) {
-												return NodeFilter.FILTER_ACCEPT;
-											} else {
-												return NodeFilter.FILTER_REJECT;
-											}
-												
-											}
-											},
+                                            if ((/[^\t\n\r\s]/.test(node.data))) {
+                                                return NodeFilter.FILTER_ACCEPT;
+                                            } else {
+                                                return NodeFilter.FILTER_REJECT;
+                                            }
+                                                
+                                            }
+                                            },
                                            false);
-		node = nodeIt2.nextNode(  );										   
-	
-	}	
-	if (node) {
-		return node;
-	} else {
-		return  null;
-	}
+        node = nodeIt2.nextNode(  );                                           
+    
+    }   
+    if (node) {
+        return node;
+    } else {
+        return  null;
+    }
 }
 
 function BX_cursor_moveToStartInNode(node, end) {
-	
+    
     if (!end) {
-		if ( BX_selection.anchorOffset == 0) {
-    		var nodeIt2 = document.createTreeWalker(document,
+        if ( BX_selection.anchorOffset == 0) {
+            var nodeIt2 = document.createTreeWalker(document,
                                            NodeFilter.SHOW_TEXT,{
                                            acceptNode : function(node) {
-										   	if ((/[^\t\n\r\s]/.test(node.data))) {
-												return NodeFilter.FILTER_ACCEPT;
-											} else {
-												return NodeFilter.FILTER_REJECT;
-											}
-												
-											}
-											},
+                                            if ((/[^\t\n\r\s]/.test(node.data))) {
+                                                return NodeFilter.FILTER_ACCEPT;
+                                            } else {
+                                                return NodeFilter.FILTER_REJECT;
+                                            }
+                                                
+                                            }
+                                            },
                                            false);
-			nodeIt2.currentNode = node;										   
-			node = nodeIt2.previousNode(  );
-		} 
-		if (BX_find_bitfluxspanNode(node)) {
-	        BX_selection.collapse(node,0);
-		}
-		
+            nodeIt2.currentNode = node;                                        
+            node = nodeIt2.previousNode(  );
+        } 
+        if (BX_find_bitfluxspanNode(node)) {
+            BX_selection.collapse(node,0);
+        }
+        
     } else {
 
 document.normalize();
-			if (node.nodeType == 1 || BX_selection.anchorOffset == node.data.length) {
-    		var nodeIt2 = document.createTreeWalker(node,
+            if (node.nodeType == 1 || BX_selection.anchorOffset == node.data.length) {
+            var nodeIt2 = document.createTreeWalker(node,
                                            NodeFilter.SHOW_TEXT,{
                                            acceptNode : function(node) {
-										   	if ((/[^\t\n\r\s]/.test(node.data))) {
-												return NodeFilter.FILTER_ACCEPT;
-											} else {
-												return NodeFilter.FILTER_REJECT;
-											}
-												
-											}
-											},
+                                            if ((/[^\t\n\r\s]/.test(node.data))) {
+                                                return NodeFilter.FILTER_ACCEPT;
+                                            } else {
+                                                return NodeFilter.FILTER_REJECT;
+                                            }
+                                                
+                                            }
+                                            },
                                            false);
-			node = nodeIt2.nextNode(  );
-			
-			
-				
-		
-		} 
-		if (BX_find_bitfluxspanNode(node)) {
-	    
-	        	BX_selection.collapse(node,node.data.length);
-		}
+            node = nodeIt2.nextNode(  );
+            
+            
+                
+        
+        } 
+        if (BX_find_bitfluxspanNode(node)) {
+        
+                BX_selection.collapse(node,node.data.length);
+        }
 
     }
 
@@ -2680,9 +2687,9 @@ document.normalize();
 }
 
 function BX_cursor_moveToNextEditable(firstnode,last) {
-	if (! (editnode = BX_walker_findNextEditableNode(firstnode))) {
-		return false;
-	}
+    if (! (editnode = BX_walker_findNextEditableNode(firstnode))) {
+        return false;
+    }
     BX_selection = window.getSelection();
     if (!last) {
         BX_selection.collapse(editnode,0);
@@ -2926,7 +2933,7 @@ function BX_keypress_enter(e) {
 
                     var parent = BX_range.startContainer;
                     parent.parentNode.insertBefore(newReturnElement,parent.nextSibling);
-					BX_selection.selectAllChildren(parent.nextSibling);
+                    BX_selection.selectAllChildren(parent.nextSibling);
 //                   BX_selection.collapse(parent.nextSibling,0);
                 }
 
@@ -2943,15 +2950,15 @@ function BX_keypress_enter(e) {
                 while (bla.firstChild )  {
                     bla = bla.firstChild;
                 }
-                //						BX_selection.collapse(bla,0);
+                //                      BX_selection.collapse(bla,0);
                 if (bla.nodeName=="#text") {
                     bla = bla.parentNode;
                 }
 
                 BX_selection.selectAllChildren(bla);
 
-                /*						BX_range.collapse(false);
-                						BX_insertContent(newReturnElement);*/
+                /*                      BX_range.collapse(false);
+                                        BX_insertContent(newReturnElement);*/
 
             }
         }
@@ -2969,7 +2976,7 @@ function BX_keypress_enter(e) {
 
     BX_scrollToCursor();
 
-    //			BX_selection.addRange(BX_range);
+    //          BX_selection.addRange(BX_range);
     BX_update_buttons = true;
     e.preventDefault();
     e.stopPropagation();
@@ -2977,16 +2984,16 @@ function BX_keypress_enter(e) {
 
 function BX_dump (text,level) {
 
-	if (BX_debugging) {
-	//	dump (" \n");
-		dump(new Date());
-		dump(": " + text );
-		dump ("\n");
-/*		dump("    in: ");
-		for(c = arguments.callee; c; c = c.caller){
-			dump(c.name + " ");
-		}*/
-	}
+    if (BX_debugging) {
+    //  dump (" \n");
+        dump(new Date());
+        dump(": " + text );
+        dump ("\n");
+/*      dump("    in: ");
+        for(c = arguments.callee; c; c = c.caller){
+            dump(c.name + " ");
+        }*/
+    }
 
 }
 

@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor.js,v 1.6 2002/11/23 11:47:33 felixcms Exp $
+// $Id: bitfluxeditor.js,v 1.7 2003/05/22 14:48:34 gregor Exp $
 
 /**
  * @file
@@ -149,7 +149,8 @@ function BX_load(config_file,fromUrl,path) {
 		} else {
 			BX_root_dir = path;
 		}
- 		BX_innerHTML(document.getElementById("bxe_area"),"<br/><img hspace='5' width='314' height='34' src='"+BX_root_dir+"img/bxe_logo.png'/><br/><span style='font-family: Arial; padding: 5px; background-color: #ffffff'>"+text.replace(/\n/g,"<br/><br/>")+"</span>");
+        document.getElementsByTagName("body")[0].style.margin = 0;
+ 		BX_innerHTML(document.getElementById("bxe_area"),"<div style='background-color: #ff6600'><br/><img hspace='30' width='235' height='30' src='"+BX_root_dir+"img/bxe_logo.png'/><br/><span style='font-family: Arial; padding: 30px; background-color: transparent'>"+text.replace(/\n/g,"<br/><br/>")+"<br/> </span></div>");
 
 	    var head = document.getElementsByTagName("head")[0];
 		// first load the core js files
@@ -435,7 +436,7 @@ function BXE_browser() {
 			this.mozillaVersion = 1.2;
 		}
 
-		else if (navigator.productSub >= 20020826 && this.mozillaRvVersionInt  >= 1.0) {
+		else if (navigator.productSub >= 20020826 && this.mozillaRvVersionInt  >= 1.1) {
 			this.mozillaVersion  = 1.1;
 		}
 		else if (navigator.productSub >= 20020523)	{

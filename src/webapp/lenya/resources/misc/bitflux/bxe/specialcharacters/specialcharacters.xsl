@@ -215,7 +215,7 @@ onChange="displaydesc(this.value)">
 
 </xsl:template>
  
-<!-- only for demo purposes - this textarea will be integrated in the bitflux Editor
+<!-- only for demo purposes - this textarea will be integrated in the Bitflux Editor
 <textarea name="my_textarea">lfdsjfdsaf</textarea></form>-->
 
 </xsl:stylesheet>

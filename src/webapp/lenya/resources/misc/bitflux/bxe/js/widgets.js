@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: widgets.js,v 1.4 2002/11/23 11:47:33 felixcms Exp $
+// $Id: widgets.js,v 1.5 2003/05/22 14:48:34 gregor Exp $
 
 /**
  * @file
@@ -34,21 +34,27 @@ function BXE_widget_loadMessage() {
 
 	function set(text) {
 	try {
- 		 BX_innerHTML(document.getElementById("bxe_area"),"<br/><img hspace='5' width='314' height='34' src='"+ BX_root_dir + "img/bxe_logo.png'/><br/><span style='font-family: Arial; padding: 5px; background-color: #ffffff'>"+text.replace(/\n/g,"<br/><br/>")+"</span>"); 
-		
+		if (text != "Loading Bitflux Editor files....") {
+ 		 BX_innerHTML(document.getElementById("bxe_area"),"<div style='background-color: #ff6600'><br/><img hspace='30' width='235' height='30' src='bxe/img/bxe_logo.png' /><br/><span style='font-family: Arial; padding: 30px; background-color: transparent'>"+text.replace(/\n/g,"<br/><br/>")+"<br/> </span></div>"); 
+		}
 	} catch (e) {
 		alert(text);
 	}
-	
 	}
 	BXE_widget_loadMessage.prototype.set = set;
 }
 
 function BXE_widget_initAlert(object) {
+    
 	if (object) {
-		this.set(object);
+        try {
+            this.set(object);
+        }
+        catch (e) {
+            alert(  object);   
+        }
 	}
-
+    
 
 	function set(e) {
 	    var mes = "ERROR in initialising Bitflux Editor:\n"+e.message +"\n";
@@ -58,7 +64,7 @@ function BXE_widget_initAlert(object) {
         }
         catch (e)
         {
-            mes += "In File: " + le.fileName +"\n";
+            mes += "In File: " + e.fileName +"\n";
         }
         try
         {
