@@ -38,6 +38,7 @@ public class RoleCondition implements Condition {
         
         while (userGroups.hasNext()) {
         	Iterator groupRoles = ((Group)userGroups.next()).getRoles();
+            assert groupRoles != null;
         	while (groupRoles.hasNext()) {
         		userRoles.add(groupRoles.next());
         	}
