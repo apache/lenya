@@ -784,6 +784,9 @@
       </map:match>
       
       <!-- Resources -->
+      <map:match pattern="css/default.css">
+        <map:read src="lenya/resources/css/default.css"/>
+      </map:match>
       <map:match pattern="*/**">
         <map:act type="resource-exists">
           <map:parameter name="url" value="lenya/pubs/{1}/resources/{2}"/>
