@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Access Controllers</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Andreas Hartmann" email="andreas@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+<section>
+	<title>Introduction</title>
+	<p>An access controller can be used to authenticate entities and to authorize
+		requests. (See below for more info on authentication and authorization).
+		Lenya ships with the following AccessControllers:</p>
+</section>
+	<section>
+		<title>DefaultAccessController</title>
+		<p>The DefaultAccessController combines an Authenticator, an Authorizer, an
+			AccreditableManager and a PolicyManager to perform these tasks.</p>
+	</section>
+	<section>
+		<title>BypassableAccessController</title>
+		<p>The BypassableAccessController is a DefaultAccessController that can be
+			bypassed for certain URL patterns. For URLs that match those patterns
+			(regular expressions), access is granted for free.</p>
+	</section>
+
+  </body>
+</document>

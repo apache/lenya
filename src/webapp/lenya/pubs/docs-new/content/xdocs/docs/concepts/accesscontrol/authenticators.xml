@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Authenticators</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Andreas Hartmann" email="andreas@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+<section>
+	<title>Introduction</title>
+	<p>An authenticator is used to identify a certain entity.</p>
+</section>
+	<section>
+		<title>UserAuthenticator</title>
+		<p>The UserAuthenticator uses the request parameters</p>
+		<ul>
+			<li><code>username</code> and</li>
+			<li><code>password</code></li>
+		</ul>
+		<p>to authenticate or reject a user.</p>
+	</section>
+
+  </body>
+</document>

@@ -52,6 +52,15 @@
         </node-45>
         <node-50 href="development.html" label="Developing Tasks"/>
       </node-40>
+      <accesscontrol href="accesscontrol/" label="Access&#160;Control">
+      	<terms href="terms.html" label="Basic Terms"/>
+      	<terms href="accesscontrollers.html" label="Access&#160;Controllers"/>
+      	<terms href="accesscontrollerresolvers.html" label="Access Controller Resolvers"/>
+      	<terms href="authenticators.html" label="Authenticators"/>
+      	<terms href="authorizers.html" label="Authorizers"/>
+      	<terms href="policymanagers.html" label="Policy&#160;Managers"/>
+      	<terms href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
+      </accesscontrol>
     </concepts>
     <customization href="customization/" label="Customization">
       <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>

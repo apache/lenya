@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Access Controller Resolvers</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Andreas Hartmann" email="andreas@apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+<section>
+	<title>Introduction</title>
+	<p>An AccessControllerResolver resolves the appropriate AccessController for a URL.
+
+Lenya ships with the following predefined AccessControllerResolvers: </p>
+</section>
+
+<section>
+	<title>PublicationAccessControllerResolver</title>
+	<p>The PublicationAccessControllerResolver looks for a <code>config/ac.xconf</code>
+		file inside the publication.</p>
+</section>
+<section>
+	<title>ConfigurableAccessControllerResolver</title>
+	<p>The ConfigurableAccessControllerResolver can be configured with an
+		AccessController directly inside cocoon.xconf:</p>
+	<source> <![CDATA[<component-instance logger="lenya.ac.accesscontrollerresolver"
+    class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+    name="global">
+  <access-controller type="global"/>
+</component-instance>]]> </source>
+</section>
+<section>
+	<title>ComposableAccessControllerResolver</title>
+	<p>The ComposableAccessControllerResolver is configured with a list of
+		AccessControllerResolvers. Each one of these resolvers is invoked until one
+		is successful, i.e. it returns an AccessController.</p>
+</section>
+
+  </body>
+</document>
