@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!-- $Id: config.xml,v 1.15 2003/11/27 00:59:05 gregor Exp $ -->
+<!-- $Id: config.xml,v 1.16 2003/12/01 18:15:09 andreas Exp $ -->
 <config>
     <files>
         <input>
@@ -31,9 +31,9 @@
         You can also add your own js-files here.
         -->
             <file>js/bxehtmltb.js</file>
-			<file>js/table.js</file>
-           	<file>mozile/jsdav.js</file>
-          	<file>mozile/td/webdav.js</file>
+            <file>js/table.js</file>
+            <file>mozile/jsdav.js</file>
+            <file>mozile/td/webdav.js</file>
             <file>mozile/mozilekb.js</file>
             
             
