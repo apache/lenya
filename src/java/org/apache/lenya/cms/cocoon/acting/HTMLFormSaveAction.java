@@ -76,7 +76,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.40 2004/02/16 12:47:17 gregor Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.41 2004/02/16 15:16:34 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when 
  * namespaces are not declared within the root element. Unfortunately the XSLTs 
@@ -210,19 +210,35 @@ public Map act(
                         } else {
                             String xupdateModifications = null;
                             // now check for the different xupdate statements, and handle appropriately
-                            if (pname.indexOf("xupdate:update") > 0) {
-                                log.debug(".act(): UPDATE Node: " + pname);
+                            if (pname.indexOf("xupdate:update-parent") > 0) {
+                                log.debug("UPDATE PARENT Node: " + pname);
                                 // CDATA updates need to be handled seperately
                                 if (pname.indexOf("<![CDATA[") > 0) {
                                     xupdateModifications =
-                                        updateCDATA(request, pname);
+                                        updateCDATA(request, pname, true);
                                 } else {
                                     xupdateModifications =
                                         update(
                                             request,
                                             pname,
                                             select,
-                                            selectionNodeList);
+                                            selectionNodeList,
+                                            true);
+                                }
+                            } else if (pname.indexOf("xupdate:update") > 0) {
+                                log.debug("UPDATE Node: " + pname);
+                                // CDATA updates need to be handled seperately
+                                if (pname.indexOf("<![CDATA[") > 0) {
+                                    xupdateModifications =
+                                        updateCDATA(request, pname, false);
+                                } else {
+                                    xupdateModifications =
+                                        update(
+                                            request,
+                                            pname,
+                                            select,
+                                            selectionNodeList,
+                                            false);
                                 }
                             } else if (
                                 pname.indexOf("xupdate:append") > 0
@@ -403,13 +419,15 @@ private XUpdateAttributes getAttributes(Node node) {
 
 /**
  * xupdate:update
- * FIXME: Updating the "parent" element doesn't work this way
+ *
+ * @param parent if true then attributes of parent will also be updated
  */
 private String update(
     Request request,
     String pname,
     String select,
-    NodeList selectionNodeList) {
+    NodeList selectionNodeList,
+    boolean parent) {
     log.debug("Update node: " + select);
 
     Node nodeToCopy = selectionNodeList.item(0);
@@ -435,19 +453,37 @@ private String update(
         if (namespace != null) {
             namespaceAttribute = " namespace=\"" + namespace + "\"";
         }
-        // WARNING: getAttributes adds the attribute tagID with value "temp"
-        XUpdateAttributes xa = getAttributes(nodeToCopy);
-        String xupdateInsertAfter =
-            "<xupdate:insert-after select=\""
-                + select
-                + " \"><xupdate:element name=\""
-                + new XPath(select).getNameWithoutPredicates()
-                + "\""
-                + namespaceAttribute
-                + ">"
-                + xa.xupdateAttrExpr
-                + request.getParameter(pname)
-                + "</xupdate:element></xupdate:insert-after>";
+        // NOTE: getAttributes adds the attribute tagID with value "temp", which will be replaced further down
+        XUpdateAttributes xa = null;
+        String xupdateInsertAfter = null;
+        if (parent) {
+            // FIXME: New parent attributes need to be updated, removed and inserted
+            xa = getAttributes(nodeToCopy);
+            xupdateInsertAfter =
+                "<xupdate:insert-after select=\""
+                    + select
+                    + " \"><xupdate:element name=\""
+                    + new XPath(select).getNameWithoutPredicates()
+                    + "\""
+                    + namespaceAttribute
+                    + ">"
+                    + xa.xupdateAttrExpr
+                    + removeParent(request.getParameter(pname))
+                    + "</xupdate:element></xupdate:insert-after>";
+        } else {
+            xa = getAttributes(nodeToCopy);
+            xupdateInsertAfter =
+                "<xupdate:insert-after select=\""
+                    + select
+                    + " \"><xupdate:element name=\""
+                    + new XPath(select).getNameWithoutPredicates()
+                    + "\""
+                    + namespaceAttribute
+                    + ">"
+                    + xa.xupdateAttrExpr
+                    + request.getParameter(pname)
+                    + "</xupdate:element></xupdate:insert-after>";
+        }
         log.debug(
             ".update(): Update Node (insert-after): " + xupdateInsertAfter);
 
@@ -476,8 +512,10 @@ private String update(
 
 /**
  * xupdate:update CDATA
+ *
+ * @param parent if true then attributes of parent will also be updated
  */
-private String updateCDATA(Request request, String pname) {
+private String updateCDATA(Request request, String pname, boolean parent) {
     String xupdateUpdate =
         pname + request.getParameter(pname) + "]]></xupdate:update>";
     return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
@@ -550,5 +588,17 @@ private String validateDocument(
         log.error(e);
         return "" + e;
         }
+    }
+
+    /**
+     * Remove parent element
+     */
+    private String removeParent(String xmlSnippet) {
+        String xmlSnippetWithoutParent = xmlSnippet;
+        xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent.indexOf(">") + 1);
+        xmlSnippetWithoutParent = org.apache.lenya.util.StringUtil.reverse(xmlSnippetWithoutParent);
+        xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent.indexOf("<") + 1);
+        xmlSnippetWithoutParent = org.apache.lenya.util.StringUtil.reverse(xmlSnippetWithoutParent);
+        return xmlSnippetWithoutParent;
     }
 }
