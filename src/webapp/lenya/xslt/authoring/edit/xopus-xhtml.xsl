@@ -19,7 +19,7 @@
   <xsl:attribute name="xsd"><xsl:value-of select="$xsd"/></xsl:attribute>
 </xsl:template>
 
-<xsl:template match="body/div/xml/pipeline/view[@id='defaultView']/transform/@xsl">
+<xsl:template match="body/div/xml/pipeline/view[@id='defaultView']/transform[last()]/@xsl">
   <xsl:attribute name="xsl"><xsl:value-of select="$xslt"/></xsl:attribute>
 </xsl:template>
 
