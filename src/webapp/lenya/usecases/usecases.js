@@ -38,6 +38,20 @@ function passRequestParameters(flowHelper, usecase) {
 	}
 }
 
+/* Helper method to choose the appropriate view pipeline. The usecases displayed in a tab in the site
+   area need a more complex view, so they have their own pipeline. */
+function selectView(usecaseName) { 
+	var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
+	var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
+	if (isTabUsecase) {
+		var view = "view-tab/" + usecaseView;
+	} else {
+		var view = "view/" + usecaseView;
+	}
+
+	return view;
+}
+
 function executeUsecase() {
 	var usecaseName = cocoon.request.getParameter("lenya.usecase");
 	var usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
@@ -50,14 +64,14 @@ function executeUsecase() {
 	
 	passRequestParameters(flowHelper, usecase);
 	
+	var view = selectView(usecaseName);
+
 	var ready = false;
 	var success = false;
-	
-	var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
-	
+
 	while (!ready) {
 	
-		cocoon.sendPageAndWait("view/" + usecaseView, {
+		cocoon.sendPageAndWait(view, {
 		    "usecase" : usecase
 		});
 		

@@ -25,29 +25,29 @@
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td>
-          <a href="?lenya.usecase=site.overview" class="lenya-tablink">
+          <a href="?lenya.usecase=tab.overview" class="lenya-tablink">
             <i18n:text>Overview</i18n:text>
           </a>
         </td>
         <jx:if test="${usecase.getParameter('languageexists').equals('true')}">
           <jx:if test="${not(usecase.getParameter('documentid').equals('/'))}">
             <td>
-              <a href="?lenya.usecase=site.meta" class="lenya-tablink">
+              <a href="?lenya.usecase=tab.meta" class="lenya-tablink">
                 <i18n:text>Meta</i18n:text>
               </a>
             </td>
             <td>
-              <a href="?lenya.usecase=site.assets" class="lenya-tablink">
+              <a href="?lenya.usecase=tab.assets" class="lenya-tablink">
                 <i18n:text>Assets</i18n:text>
               </a>
             </td>
             <td>
-              <a href="?lenya.usecase=site.workflow" class="lenya-tablink-active">
+              <a href="?lenya.usecase=tab.workflow" class="lenya-tablink-active">
                 <i18n:text>Workflow</i18n:text>
               </a>
             </td>
             <td>
-              <a href="?lenya.usecase=site.revisions" class="lenya-tablink">
+              <a href="?lenya.usecase=tab.revisions" class="lenya-tablink">
                 <i18n:text>Versions</i18n:text>
               </a>
             </td>
@@ -55,33 +55,33 @@
           <jx:choose>
             <jx:when test="${usecase.getParameter('area').equals('authoring')}">
               <td>
-                <a href="?lenya.usecase=site.acAuthoring" class="lenya-tablink">
+                <a href="?lenya.usecase=tab.acAuthoring" class="lenya-tablink">
                   <i18n:text>AC Auth</i18n:text>
                 </a>
               </td>
               <td>
-                <a href="?lenya.usecase=site.acLive" class="lenya-tablink">
+                <a href="?lenya.usecase=tab.acLive" class="lenya-tablink">
                   <i18n:text>AC Live</i18n:text>
                 </a>
               </td>
             </jx:when>
             <jx:when test="${usecase.getParameter('area').equals('archive')}">
               <td>
-                <a href="?lenya.usecase=site.acArchive" class="lenya-tablink">
+                <a href="?lenya.usecase=tab.acArchive" class="lenya-tablink">
                   <i18n:text>AC Archive</i18n:text>
                 </a>
               </td>
             </jx:when>
             <jx:when test="${usecase.getParameter('area').equals('trash')}">
               <td>
-                <a href="?lenya.usecase=site.acTrash" class="lenya-tablink">
+                <a href="?lenya.usecase=tab.acTrash" class="lenya-tablink">
                   <i18n:text>AC Trash</i18n:text>
                 </a>
               </td>
             </jx:when>
           </jx:choose>
           <td>
-            <a href="?lenya.usecase=site.scheduler" class="lenya-tablink">
+            <a href="?lenya.usecase=tab.scheduler" class="lenya-tablink">
               <i18n:text>Scheduler</i18n:text>
             </a>
           </td>
