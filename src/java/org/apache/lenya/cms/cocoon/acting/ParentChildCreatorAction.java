@@ -31,6 +31,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.dom4j.XPath;
 
+
 import org.wyona.cms.authoring.AbstractParentChildCreator;
 
 /**
@@ -112,10 +113,11 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
       //getLogger().debug("CREATOR 2: DefaultCreator");
       creator=(AbstractParentChildCreator)Class.forName("org.wyona.cms.authoring.DefaultParentChildCreator").newInstance();
       }
-    getLogger().debug("CREATOR : "+creator.getClass().getName());
-
+    getLogger().debug("CREATOR : "+creator.getClass().getName());   
+    // evaluate doctype.xconf 
+    org.dom4j.Node creatorNode=doctypesDoc.selectSingleNode("/doctypes/doc[@type='"+doctype+"']/creator");
+    creator.init(creatorNode);
     // Transaction should actually be started here!
-
     // Read tree
     String treefilename=sitemapParentPath+treeAuthoringPath;
     getLogger().debug("FILENAME OF TREE: "+treefilename);
