@@ -352,7 +352,7 @@ function user_delete_user() {
 		cocoon.sendPageAndWait("users/confirm-delete-common.xml", {
 			"id" : userId,
 			"name" : name,
-			"type" : user
+			"type" : "user"
 		});
 			
 		if (cocoon.request.get("cancel")) {
