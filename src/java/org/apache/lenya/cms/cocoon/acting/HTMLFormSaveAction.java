@@ -76,7 +76,7 @@ import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.23 2003/11/09 01:37:17 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.24 2003/11/28 18:46:57 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -102,9 +102,11 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      *
      * @exception ConfigurationException if an error occurs
      */
+/*
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
     }
+*/
 
     /**
      * Save data to temporary file
@@ -122,11 +124,16 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source, Parameters parameters) throws Exception {
         File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
         File file = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("file"));
+        File schema = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("schema"));
+
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
+
+
         if(request.getParameter("cancel") != null) {
-            getLogger().info(".act(): Cancel editing");
+            getLogger().warn(".act(): Editing has been canceled");
+            // FIXME: document needs to be restored from original document
             return null;
         } else {
             if(file.isFile()) {
@@ -166,7 +173,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             } else {
                                 String xupdateModifications = null;
                                 if (pname.indexOf("xupdate:update") > 0) {
-                                    log.error(".act(): UPDATE Node: " + pname);
+                                    log.debug(".act(): UPDATE Node: " + pname);
                                     if (pname.indexOf("<![CDATA[") > 0) {
                                         xupdateModifications = updateCDATA(request, pname);
                                     } else {
@@ -192,7 +199,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                 }
 
                                 if (xupdateModifications != null) {
-                                    log.error(".act(): MODIFICATIONS: " + xupdateModifications);
+                                    log.debug(".act(): MODIFICATIONS: " + xupdateModifications);
                                     xq.setQString(xupdateModifications);
                                     xq.execute(document);
                                 } else {
@@ -212,10 +219,23 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     serializer.asDOMSerializer().serialize((Document) document);
                     log.error(".act(): XUpdate Result: \n"+writer.toString());
 */
+
                     DocumentHelper.writeDocument(document, file);
 
+		    if (schema.isFile()) {
+                        String message = validateDocument(schema, file);
+                        if (message != null) {
+                            log.error("Validation failed: " + message);
+                            HashMap hmap = new HashMap();
+                            hmap.put("message", message);
+                            return hmap;
+                        }
+                    } else {
+                        log.warn("No such schema: " + schema.getAbsolutePath());
+                    }
+
                     if(request.getParameter("save") != null) {
-                        getLogger().error(".act(): Save");
+                        getLogger().info(".act(): Save");
                         return null;
                     } else {
                         return new HashMap();
@@ -253,10 +273,10 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         if (attributes != null) {
             for (int i = 0;i < attributes.getLength();i++) {
               org.w3c.dom.Attr attribute = (org.w3c.dom.Attr)attributes.item(i);
-              log.error(".getAttributes(): " + attribute.getName() + " " + attribute.getValue());
+              log.debug(".getAttributes(): " + attribute.getName() + " " + attribute.getValue());
               if (!attribute.getName().equals("tagID")) {
                   String namespace = attribute.getNamespaceURI();
-                  log.error(".getAttributes(): Namespace: " + namespace);
+                  log.debug(".getAttributes(): Namespace: " + namespace);
                   String namespaceAttribute = "";
                   if (namespace != null) {
                       namespaceAttribute = " namespace=\"" + namespace + "\"";
@@ -270,7 +290,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         } else {
             xupdateString = "";
         }
-        log.error(".getAttributes(): " + xupdateString);
+        log.debug(".getAttributes(): " + xupdateString);
 
         return new XUpdateAttributes(xupdateString, tagID);
     }
@@ -282,7 +302,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new and remove original
         Node nodeToCopy = selectionNodeList.item(0);
         String namespace = nodeToCopy.getNamespaceURI();
-        log.error(".update(): Update Node (namespace): " + namespace);
+        log.debug(".update(): Update Node (namespace): " + namespace);
         String namespaceAttribute = "";
         if (namespace != null) {
             namespaceAttribute = " namespace=\"" + namespace + "\"";
@@ -290,11 +310,11 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         // WARNING: getAttributes adds the attribute tagID with value "temp"
         XUpdateAttributes xa = getAttributes(nodeToCopy);
         String xupdateInsertAfter = "<xupdate:insert-after select=\"" + select  + " \"><xupdate:element name=\"" + new XPath(select).getNameWithoutPredicates()  + "\"" + namespaceAttribute  + ">" + xa.xupdateAttrExpr + request.getParameter(pname)  + "</xupdate:element></xupdate:insert-after>";
-        log.error(".update(): Update Node (insert-after): " + xupdateInsertAfter);
+        log.debug(".update(): Update Node (insert-after): " + xupdateInsertAfter);
         String xupdateRemove = "<xupdate:remove select=\"" + select  + " \"/>";
-        log.error(".update(): Update Node (remove): " + xupdateRemove);
+        log.debug(".update(): Update Node (remove): " + xupdateRemove);
         String xupdateUpdateAttribute = "<xupdate:update select=\"" + new XPath(select).removePredicates(select) + "[@tagID='temp']/@tagID"  + " \">" + xa.tagID  + "</xupdate:update>";
-        log.error(".update(): Update Node (update tagID attribute): " + xupdateUpdateAttribute);
+        log.debug(".update(): Update Node (update tagID attribute): " + xupdateUpdateAttribute);
         return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateInsertAfter + xupdateRemove + xupdateUpdateAttribute  + "</xupdate:modifications>";
 
 /*
@@ -315,7 +335,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      * xupdate:append
      */
     private String append(String pname) {
-        log.error(".append() APPEND Node: " + pname);
+        log.debug(".append() APPEND Node: " + pname);
         return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
     }
  
@@ -323,7 +343,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      * xupdate:insert-before
      */
     private String insertBefore(String pname) {
-        log.error(".insertBefore() INSERT-BEFORE Node: " + pname);
+        log.debug(".insertBefore() INSERT-BEFORE Node: " + pname);
         return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
     }
  
@@ -331,7 +351,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      * xupdate:insert-after
      */
     private String insertAfter(String pname) {
-        log.error(".insertAfter() INSERT-AFTER Node: " + pname);
+        log.debug(".insertAfter() INSERT-AFTER Node: " + pname);
         return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
     }
  
@@ -339,7 +359,14 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      * xupdate:remove
      */
     private String remove(String pname) {
-        log.error(".remove() REMOVE Node: " + pname);
+        log.debug(".remove() REMOVE Node: " + pname);
         return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
+    }
+
+    /**
+     * Validate Document
+     */
+    private String validateDocument(File schema, File file) {
+        return null;
     }
 }
