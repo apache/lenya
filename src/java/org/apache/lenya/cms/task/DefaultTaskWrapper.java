@@ -1,5 +1,5 @@
 /*
-$Id: DefaultTaskWrapper.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
+$Id: DefaultTaskWrapper.java,v 1.3 2003/08/28 10:16:00 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,12 @@ $Id: DefaultTaskWrapper.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
 */
 package org.apache.lenya.cms.task;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -94,19 +97,47 @@ public class DefaultTaskWrapper implements TaskWrapper {
 
     /**
      * Ctor to be called when all task wrapper parameters are known.
+     * All keys and values must be strings or string arrays.
      * @param parameters The prefixed parameters.
      */
     public DefaultTaskWrapper(Map parameters) {
         log.debug("Creating");
-        this.parameters.putAll(parameters);
         
-        if (log.isDebugEnabled()) {
-            for (Iterator i = parameters.keySet().iterator(); i.hasNext();) {
-                String key = (String) i.next();
-                String value = (String) parameters.get(key);
+        List keys = new ArrayList();
+        for (Iterator i = parameters.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            keys.add(key);
+        }
+        
+        Collections.sort(keys);
+        
+        for (Iterator i = keys.iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            String value = null;
+            Object valueObject = parameters.get(key);
+            if (valueObject instanceof String) {
+                value = ((String) valueObject).trim();
+            }
+            else if (valueObject instanceof String[]) {
+                String[] values = (String[]) valueObject;
+                value = "";
+                for (int j = 0; j < values.length; j++) {
+                    if (j > 0 && !"".equals(value)) {
+                        value += ",";
+                    }
+                    value += values[j].trim();
+                }
+            }
+            else {
+                log.debug("Not a string value: [" + key + "] = [" + valueObject + "]");
+            }
+            
+            if (value != null) {
                 log.debug("Setting parameter: [" + key + "] = [" + value + "]");
+                this.parameters.put(key, value);
             }
         }
+        
     }
 
     /**
@@ -260,7 +291,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * Returns the task wrapper parameters.
      * @return A task wrapper parameters object.
      */
-    protected TaskWrapperParameters getWrapperParameters() {
+    public TaskWrapperParameters getWrapperParameters() {
         return wrapperParameters;
     }
     
@@ -268,7 +299,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * Returns the task parameters.
      * @return A task parameters object.
      */
-    protected TaskParameters getTaskParameters() {
+    public TaskParameters getTaskParameters() {
         return taskParameters;
     }
 
@@ -293,6 +324,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
             Element parameterElement = taskHelper.createElement(ELEMENT_PARAMETER);
             parameterElement.setAttribute(ATTRIBUTE_NAME, key);
             parameterElement.setAttribute(ATTRIBUTE_VALUE, (String) getParameterMap().get(key));
+            element.appendChild(parameterElement);
         }
 
         return element;
