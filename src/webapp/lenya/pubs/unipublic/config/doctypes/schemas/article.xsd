@@ -163,7 +163,10 @@
           <xs:element name="media-reference" minOccurs="1" maxOccurs="1">
             <xs:complexType mixed="true">
               <xs:choice minOccurs="0" maxOccurs="0"/>
+              <xs:attribute name="alternate-text" type="xs:string"/>
+<!--
               <xs:attribute name="alternate-text" use="required" type="xs:string"/>
+-->
               <xs:attribute name="copyright" type="xs:string"/>
               <xs:attribute name="mime-type" type="xs:string"/>
               <xs:attribute name="source" use="required" type="xs:string"/>
