@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.53 2003/04/07 12:08:15 andreas Exp $
+   @version CVS $Id: build.xml,v 1.54 2003/04/09 15:54:41 andreas Exp $
 
 -->
 
@@ -207,7 +207,8 @@
            target="${target.vm}"
            nowarn="${nowarn}"
            includes="org/lenya/cms/ant/**"
-           classpathref="classpath"/>
+           classpathref="classpath"
+           source="1.4"/>
 
     <taskdef name="copyJavaSources" classpath="build/tools/anttasks" classname="org.lenya.cms.ant.CopyJavaSourcesTask"/>
     <taskdef name="copyPubs"        classpath="build/tools/anttasks" classname="org.lenya.cms.ant.CopyTask"/>
@@ -352,7 +353,8 @@
            optimize="${optimize}"
            deprecation="${deprecation}"
            target="${target.vm}"
-           nowarn="${nowarn}">
+           nowarn="${nowarn}"
+           source="1.4">
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -373,7 +375,8 @@
            optimize="${optimize}"
            deprecation="on"
            target="${target.vm}"
-           nowarn="off">
+           nowarn="off"
+           source="1.4">
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -414,7 +417,8 @@
              windowtitle="${Name} API - Version ${version}"
              doctitle="${Name}"
              bottom="Copyright &#169; ${year} Wyona. All Rights Reserved."
-             stylesheetfile="${resource.dir}/javadoc.css">
+             stylesheetfile="${resource.dir}/javadoc.css"
+             source="1.4">
       <classpath refid="classpath"/>
     </javadoc>
   </target>
@@ -433,7 +437,7 @@
   are reflected immediately.
   -->
   <target name="webapp" depends="compile,javadocs" description="Builds the webapp directory ready to be linked into a servlet engines context directory">
-
+  
     <!--
     Copy CMS files and overwrite some parts of the previously unpacked cocoon webapp package with our customized files
     -->
