@@ -71,7 +71,7 @@ import org.w3c.dom.Element;
  *
  * @author Philipp Klaus
  * @author Michael Wechner
- * @version $Id: ProxyManager.java,v 1.15 2004/02/08 17:21:29 andreas Exp $
+ * @version $Id: ProxyManager.java,v 1.16 2004/02/21 23:23:59 michi Exp $
  */
 public class ProxyManager {
     static Category log = Category.getInstance(ProxyManager.class);
@@ -185,7 +185,7 @@ public class ProxyManager {
 
         try {
             proxyElements = xpf.select(document.getDocumentElement(), "xpointer(/conf/Proxy)");
-            if (proxyElements.size() == 0) log.warn("No proxy defined (" + configFile + ")");
+            if (proxyElements.size() == 0) log.info("No proxy defined (" + configFile + ")");
         } catch (Exception e) {
             log.error(e);
             return null;

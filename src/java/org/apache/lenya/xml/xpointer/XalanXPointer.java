@@ -69,7 +69,7 @@ import org.w3c.dom.NodeList;
  * XPointer implementation
  *
  * @author Michael Wechner
- * @version $Id: XalanXPointer.java,v 1.16 2004/02/02 02:50:38 stefano Exp $
+ * @version $Id: XalanXPointer.java,v 1.17 2004/02/21 23:23:59 michi Exp $
  */
 public class XalanXPointer implements XPointer {
     private static Category log = Category.getInstance(XalanXPointer.class);
@@ -125,10 +125,10 @@ public class XalanXPointer implements XPointer {
     /**
      * Select node by specified XPath
      *
-     * @param node DOCUMENT ME!
-     * @param xpath DOCUMENT ME!
+     * @param node Node to select from
+     * @param xpath XPath to select nodes
      *
-     * @return DOCUMENT ME!
+     * @return Selected nodes
      *
      * @exception Exception ...
      */
@@ -155,7 +155,7 @@ public class XalanXPointer implements XPointer {
 
 
 	if (nl != null && nl.getLength() == 0) {
-            log.warn("No such nodes: " + xpath);
+            log.info("No such nodes: " + xpath);
             return new Vector();
         }
 
