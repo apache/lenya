@@ -100,13 +100,17 @@ function user_change_password(checkPassword, userId) {
 			if (cocoon.request.get("submit")) {	    
 			    oldPassword = cocoon.request.get("old-password");
 			    newPassword = cocoon.request.get("new-password");
+                password = new Packages.java.lang.String(newPassword);
 			    confirmPassword = cocoon.request.get("confirm-password");
 			    
 			    if (checkPassword && !user.authenticate(oldPassword)) {
-			    	message = "Wrong password!";
+			    	message = "You entered a wrong password.";
+			    }
+	            else if (password.length() == 0) {
+			    	message = "New password cannot be empty.";
 			    }
 	            else if (!newPassword.equals(confirmPassword)) {
-			    	message = "New password and confirmed password are not equal!";
+			    	message = "New password and confirmed password are not equal.";
 			    }
 			    else {
 		        	user.setPassword(newPassword);
