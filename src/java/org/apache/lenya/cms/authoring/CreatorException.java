@@ -71,22 +71,28 @@ public class CreatorException extends Exception {
     }
 
     /**
-     * @param message
+     * Create an instance of <code>CreatorException</code>
+     * 
+     * @param message the exception message
      */
     public CreatorException(String message) {
         super(message);
     }
 
     /**
-     * @param cause
+     * Create an instance of <code>CreatorException</code>
+     * 
+     * @param cause the cause of the exception
      */
     public CreatorException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * @param message
-     * @param cause
+     * Create an instance of <code>CreatorException</code>
+     * 
+     * @param message the exception message
+     * @param cause the cause of the exception
      */
     public CreatorException(String message, Throwable cause) {
         super(message, cause);

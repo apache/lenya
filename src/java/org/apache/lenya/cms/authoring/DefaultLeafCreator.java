@@ -66,7 +66,7 @@ import java.io.File;
  * @author Christian Egli
  */
 public class DefaultLeafCreator extends DefaultCreator {
-    static Category log = Category.getInstance(DefaultLeafCreator.class);
+    private static Category log = Category.getInstance(DefaultLeafCreator.class);
 
     /**
      * Return the child type.
@@ -81,10 +81,16 @@ public class DefaultLeafCreator extends DefaultCreator {
         return LEAF_NODE;
     }
 
+    /** (non-Javadoc)
+     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
+     */
     protected String getChildFileName(File parentDir, String childId) {
         return parentDir + File.separator + childId + ".xml";
     }
 
+    /** (non-Javadoc)
+     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildMetaFileName(java.io.File, java.lang.String)
+     */
     protected String getChildMetaFileName(File parentDir, String childId) {
         return parentDir + File.separator + childId + "-meta.xml";
     }

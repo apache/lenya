@@ -66,7 +66,7 @@ import java.io.File;
  * @author Michael Wechner
  */
 public class DefaultBranchCreator extends DefaultCreator {
-    static Category log = Category.getInstance(DefaultBranchCreator.class);
+    private static Category log = Category.getInstance(DefaultBranchCreator.class);
 
     /**
      * Return the child type.
@@ -81,10 +81,16 @@ public class DefaultBranchCreator extends DefaultCreator {
         return BRANCH_NODE;
     }
 
+    /** (non-Javadoc)
+     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
+     */
     protected String getChildFileName(File parentDir, String childId) {
         return parentDir + File.separator + childId + File.separator + "index.xml";
     }
 
+    /** (non-Javadoc)
+     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildMetaFileName(java.io.File, java.lang.String)
+     */
     protected String getChildMetaFileName(File parentDir, String childId) {
         return parentDir + File.separator + childId + File.separator + "indexmeta.xml";
     }
