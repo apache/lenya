@@ -83,7 +83,7 @@
             <tr>
               <td />
               <td>
-                <input i18n:attr="value" type="submit" value="Login" />
+                <input i18n:attr="value" name="submit" type="submit" value="Login" />
               </td>
             </tr>
           </table>
