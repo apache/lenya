@@ -1,5 +1,4 @@
 /*
-$Id: CopyJavaSourcesTask.java,v 1.17 2003/10/09 22:34:25 stefano Exp $
 <License>
 
  ============================================================================
@@ -71,6 +70,7 @@ import org.apache.tools.ant.types.Path;
 
 /**
  * @author Michael Wechner
+ * @version $Id: CopyJavaSourcesTask.java,v 1.18 2003/11/16 18:46:16 michi Exp $
  */
 public class CopyJavaSourcesTask extends Task {
     private Path pubsRootDirs;
@@ -127,16 +127,14 @@ public class CopyJavaSourcesTask extends Task {
 
         numberOfDirectoriesCreated = twoTuple.x;
         numberOfFilesCopied = twoTuple.y;
-        System.out.println("Copying " + numberOfDirectoriesCreated + " directories to " +
-            absoluteBuildDir);
+        System.out.println("Copying " + numberOfDirectoriesCreated + " directories to " + absoluteBuildDir);
         System.out.println("Copying " + numberOfFilesCopied + " files to " + absoluteBuildDir);
     }
 
     /**
      * Copies the directory "source" into the directory "destination"
      */
-    static public void copyDir(File source, File destination, TwoTuple twoTuple,
-        FilenameFilter filenameFilter) {
+    static public void copyDir(File source, File destination, TwoTuple twoTuple, FilenameFilter filenameFilter) {
         File actualDestination = new File(destination, source.getName());
         actualDestination.mkdirs();
         copyContentOfDir(source, actualDestination, twoTuple, filenameFilter);
@@ -165,8 +163,7 @@ public class CopyJavaSourcesTask extends Task {
                     //System.out.println("CopyJavaSourcesTask.copyContentOfDir(): " + source + " " + destination);
                     copyContentOfDir(file, new File(destination, files[i]), twoTuple, filenameFilter);
                 } else {
-                    System.err.println(
-                        "CopyJavaSourcesTask.copyDir(): Neither file nor directory: " + file);
+                    System.err.println("CopyJavaSourcesTask.copyDir(): Neither file nor directory: " + file);
                 }
             }
         } else {

@@ -1,5 +1,4 @@
 /*
-$Id: JavaFilenameFilter.java,v 1.6 2003/08/06 14:02:26 michi Exp $
 <License>
 
  ============================================================================
@@ -63,6 +62,7 @@ import java.util.StringTokenizer;
 
 /**
  * @author Michael Wechner
+ * @version $Id: JavaFilenameFilter.java,v 1.7 2003/11/16 18:46:16 michi Exp $
  */
 public class JavaFilenameFilter implements FilenameFilter {
 
@@ -72,8 +72,8 @@ public class JavaFilenameFilter implements FilenameFilter {
 	 */
     public boolean accept(File dir, String name) {
         if (new File(dir, name).isFile()) {
-            //System.out.println("JavaFilenameFilter.accept(): " + getExtension(name));
-            if (getExtension(name).equals("java")) {
+            String suffix = getExtension(name);
+            if (suffix.equals("java") || suffix.equals("properties")) {
                 return true;
             } else {
                 return false;
