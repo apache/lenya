@@ -102,7 +102,7 @@ be used to configure the chosen Forrest skin.
   <!-- Some skins use this to form a 'breadcrumb trail' of links. If you don't
   want these, set the attributes to blank. The DTD purposefully requires them.
   -->
-  <trail>
+  <trail location="alt">
     <link1 name="apache" href="http://www.apache.org/"/>
     <link2 name="cocoon" href="http://cocoon.apache.org/"/>
     <link3 name="" href=""/>
@@ -121,7 +121,12 @@ be used to configure the chosen Forrest skin.
 
   <!-- Heading types can be clean|underlined|boxed  -->
   <headings type="underlined"/>
-  
+
+    <feedback to="lenya-user@cocoon.apache.org"
+    href="mailto:lenya-user@cocoon.apache.org?subject=Feedback &#160;" >
+    Send feedback about the website to:
+  </feedback>
+
   <extra-css>
   </extra-css>
   
@@ -133,14 +138,12 @@ be used to configure the chosen Forrest skin.
 
     <color name="tab-selected" value="#E5E4D9" link="#000000" vlink="#000000" hlink="#000000"/>
     <color name="tab-unselected" value="#F5F4E9" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="subtab-selected" value="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
+    <color name="subtab-selected" value="#E5E4D9" link="#000000" vlink="#000000" hlink="#000000"/>
     <color name="subtab-unselected" value="#E5E4D9" link="#000000" vlink="#000000" hlink="#000000"/>
-
     <color name="heading" value="#E5E4D9"/>
-    <color name="subheading" value="#000000"/>
-    <color name="published" value="#000000"/>
-<!--#E5F5F8-->
-    <color name="navstrip" value="#F5F4E9" font="#000000"/>
+    <color name="subheading" value="#E5E4D9"/>
+    <color name="published" value="#E5E4D9" font="#FFFFFF"/>
+    <color name="navstrip" value="#E5E4D9" font="#000000"/>
     <color name="toolbox" value="#CFDCED" font="#000000"/>
     <color name="border" value="#999999"/>
 
@@ -190,7 +193,7 @@ be used to configure the chosen Forrest skin.
   <!-- Credits are typically rendered as a set of small clickable images in the
   page footer -->
   <credits>
-    <credit>
+    <credit box-location="alt">
       <name>Built with Apache Forrest</name>
       <url>http://forrest.apache.org/</url>
       <image>images/built-with-forrest-button.png</image>
