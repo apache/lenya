@@ -132,7 +132,7 @@
   <message key="Logout">Logout</message>
   <message key="View Task Logs">View Task Logs</message>
   <message key="Support">Support</message>
-  <message key="System Documentation">System Documentation</message>
+  <message key="System Documentation">System&#160;Documentation</message>
   <message key="User Documentation">User Documentation</message>
   <message key="About Apache Lenya">About Apache Lenya</message>
   <message key="Apache Lenya Homepage">Apache Lenya Homepage</message>
