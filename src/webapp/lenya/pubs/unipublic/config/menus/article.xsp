@@ -22,17 +22,11 @@
 		<menus>
 			<menu name="File" label="File">
 				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-article</xsp:attribute>Publish</item>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?documentUri=<xsp:expr>channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html&amp;task.<xsp:expr>sourcesParameter</xsp:expr>&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;documentType=Article</xsp:attribute>Schedule</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-article</xsp:attribute>Publish</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?documentUri=<xsp:expr>channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html&amp;task.<xsp:expr>sourcesParameter</xsp:expr>&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;documentType=Article</xsp:attribute>Schedule</item>
 				</block>
 				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/selectDossierScreen?article-file=<xsp:expr>channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Assign&#160;to&#160;Dossier</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/selectDossierScreen?article-file=<xsp:expr>channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Assign&#160;to&#160;Dossier</item>
 				</block>
 				<block>
 					<!--
@@ -43,9 +37,7 @@
 -->
 					<item>Passwd</item>
 					<item>Switch&#160;User</item>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
 				</block>
 			</menu>
 			<menu name="Edit" label="Search">
@@ -55,31 +47,18 @@
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/xopus2<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
 -->
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.xsd&amp;url-css="+domain_prefix+"/css/article.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/save/"+channel+"/"+section+"/"+year+"/"+articleId+"&amp;url-back="+domain_prefix_bitflux+"/authoring/"+channel+"/"+section+"/"+year+"/"+articleId+"/"</xsp:expr>
-						</xsp:attribute>Edit&#160;with&#160;Bitflux</item>
+					<item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.xsd&amp;url-css="+domain_prefix+"/css/article.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/save/"+channel+"/"+section+"/"+year+"/"+articleId+"&amp;url-back="+domain_prefix_bitflux+"/authoring/"+channel+"/"+section+"/"+year+"/"+articleId+"/"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
 </block>
 <block>
-<item>
-  <xsp:attribute name="href">
-  <xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/xopus2<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/xopus2<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
 </block>
 			</menu>
 			<menu name="Tools" label="Help">
 				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/index.html
-						</xsp:attribute>
-						Newsletter
-					</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/index.html</xsp:attribute>Newsletter</item>
 				</block>
 <block>
-<item>
-  <xsp:attribute name="href">
-  <xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr>
-  </xsp:attribute>Rollback</item>
+<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
 </block>
 <!--
 <block>
@@ -94,12 +73,7 @@
 </block>
 -->
 				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication?publication-id=unipublic
-						</xsp:attribute>
-						Scheduler&#160;Admin
-					</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication?publication-id=unipublic</xsp:attribute>Scheduler&#160;Admin</item>
 				</block>
       <block>
         <item href="../../../../../search/lucene?publication-id=unipublic">Search&#160;within&#160;this&#160;Publication</item>
@@ -108,23 +82,12 @@
 			</menu>
 			<menu name="Help" label="Debug">
 				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html
-						</xsp:attribute>
-						About&#160;this&#160;Publication
-					</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html</xsp:attribute>About&#160;this&#160;Publication</item>
 				</block>
 				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
 				</block>
 				<block>
 					<item href="http://www.wyona.org">About&#160;Wyona</item>
