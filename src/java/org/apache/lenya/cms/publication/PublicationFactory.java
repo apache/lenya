@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PublicationFactory.java,v 1.7 2003/07/02 17:50:38 andreas Exp $
 <License>
 
  ============================================================================
@@ -84,23 +84,9 @@ public final class PublicationFactory {
      */
     public static Publication getPublication(Map objectModel) {
         assert objectModel != null;
-
         Request request = ObjectModelHelper.getRequest(objectModel);
-        String contextPath = request.getContextPath();
-
-        if (contextPath == null) {
-            contextPath = "";
-        }
-
-        String webappUri = request.getRequestURI().substring(contextPath.length());
-
-        String publicationId = webappUri.split("/")[1];
-        assert !"".equals(publicationId);
-
         Context context = ObjectModelHelper.getContext(objectModel);
-        String servletContextPath = context.getRealPath("");
-
-        return getPublication(publicationId, servletContextPath);
+        return getPublication(request, context);
     }
 
     /**
@@ -128,4 +114,27 @@ public final class PublicationFactory {
 
         return publication;
     }
+    
+    /**
+     * Creates a new publication based on a request and a context.
+     * @param request A request.
+     * @param context A context.
+     * @return A publication.
+     */
+    public static Publication getPublication(Request request, Context context) {
+        String contextPath = request.getContextPath();
+
+        if (contextPath == null) {
+            contextPath = "";
+        }
+
+        String webappUri = request.getRequestURI().substring(contextPath.length());
+
+        String publicationId = webappUri.split("/")[1];
+        assert !"".equals(publicationId);
+
+        String servletContextPath = context.getRealPath("");
+        return getPublication(publicationId, servletContextPath);
+    }
+    
 }
