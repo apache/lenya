@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu2xul.xsl,v 1.3 2004/09/02 21:57:21 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -177,7 +177,7 @@
     <xsl:if test="menu:block">
       <xul:menu label="{@name}">
      	 <xul:menupopup style="background-image: url({$contextprefix}/lenya/menu/images/bottombg.gif);">
-           <xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
+           <xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]" mode="menu"/>
        </xul:menupopup>
       </xul:menu>
     </xsl:if>
@@ -185,15 +185,17 @@
   
   
   <!-- match blocks with not area='false' -->
-  <xsl:template match="menu:block">
-      <xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
-      <xsl:if test="position() != last()">
-        <xul:menuseparator/>
-      </xsl:if>
+  <xsl:template match="menu:block" mode="menu">
+    <!-- * is menu and item -->
+    <xsl:apply-templates select="*[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]" mode="menu"/>
+
+    <xsl:if test="position() != last()">
+      <xul:menuseparator/>
+    </xsl:if>
   </xsl:template>
   	
   <!-- match items with not area='false' -->
-  <xsl:template match="menu:item">
+  <xsl:template match="menu:item" mode="menu">
 		<xsl:choose>
 			<xsl:when test="@href">
 			  <xul:menuitem label="{.}">
