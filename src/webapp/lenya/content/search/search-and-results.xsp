@@ -43,8 +43,6 @@
   public void contextualize(Context context) throws ContextException {
     super.contextualize( context );
     workDir = (File) context.get(Constants.CONTEXT_WORK_DIR);
-    //workDir = (File) context.get(Constants.CONTEXT_CACHE_DIR);
-    //workDir = (File) context.get(Constants.CONTEXT_UPLOAD_DIR);
     }
 /**
  *
