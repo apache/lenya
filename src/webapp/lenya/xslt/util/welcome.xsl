@@ -32,8 +32,22 @@ efficiently its own publication. The <a href="docs/tutorial/index.html">tutorial
 -->
 <ol>
 <xsl:for-each select="lenya:publication">
-  <li><a href="{@pid}/introduction.html">
-  <xsl:apply-templates select="lenya:publication/lenya:name"/></a></li>
+  <xsl:choose>
+    <xsl:when test="lenya:XPSEXCEPTION">
+      <li><font color="red">Exception:</font> (publication id = <xsl:value-of select="@pid"/>) <xsl:value-of select="lenya:XPSEXCEPTION"/></li>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:choose>
+        <xsl:when test="lenya:publication/@show = 'false'">
+          <!-- do not list this publication. Might be a "template" publication -->
+        </xsl:when>
+        <xsl:otherwise>
+          <li><a href="{@pid}/introduction.html">
+          <xsl:apply-templates select="lenya:publication/lenya:name"/></a></li>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:for-each>
 </ol>
 </xsl:template>
