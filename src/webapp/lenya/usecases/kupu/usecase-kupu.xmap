@@ -157,7 +157,7 @@
         <!-- Kupu Image Drawer -->
         <map:match pattern="*drawerxsl" type="step">
           <map:generate type="jx" src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/{1}drawer.xsl}">
-            <!-- We need to use the hole uri schem i.e. http://servername:port/, since IE xslt processor  
+            <!-- We need to use the hole uri scheme i.e. http://servername:port/, since IE xslt processor  
                  throws an access violation upon loading of xslts from the internet.
              -->
             <map:parameter name="import-stylesheet-url"
