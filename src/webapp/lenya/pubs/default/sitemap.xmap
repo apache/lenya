@@ -15,18 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.22 2004/04/24 21:20:50 gregor Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components>
-    <map:generators default="file"/>
-    <map:transformers default="xslt"/>
-    <map:readers default="resource"/>
-    <map:serializers default="html"/>
-    <map:matchers default="wildcard"/>
-    <map:actions/>
-  </map:components>
+  <map:components/>
 
   <map:resources>
     <map:resource name="style-cms-page">

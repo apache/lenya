@@ -19,18 +19,7 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
-  <map:components>
-    <map:generators default="file"/>
-    <map:matchers default="wildcard"/>
-    <map:actions>
-      <map:action logger="sitemap.action.language-exists" 
-        name="language-exists" 
-        src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
-    </map:actions>
-    <map:selectors>
-     <map:selector name="request-method" logger="sitemap.selector.request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
-    </map:selectors>
-  </map:components>
+  <map:components/>
   
   <map:views>
     <map:view from-label="aggregation" name="aggregation">

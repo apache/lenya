@@ -22,22 +22,12 @@
 	<!-- =========================== Components ================================ -->
 	<map:components>
 		<map:generators default="file"/>
-		<map:transformers default="xalan">
-      <map:transformer name="cinclude"
-        src="org.apache.cocoon.transformation.CIncludeTransformer"/>
-      </map:transformers>
+		<map:transformers default="xalan"/>
 		<map:readers default="resource"/>
 		<map:serializers default="xhtml"/>
 		<map:matchers default="wildcard"/>
-    <map:actions>
-      <map:action name="upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.UploadAction" />
-    </map:actions>
-		
-		<map:selectors>
-      <map:selector name="request-method" logger="sitemap.selector.request-method"
-        src="org.apache.cocoon.selection.RequestMethodSelector"/>
-		</map:selectors>
-		
+        <map:actions/>
+		<map:selectors/>
 	</map:components>
 	
   <!-- =========================== Resources ================================ -->

@@ -15,21 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: xopus.xmap,v 1.7 2004/03/19 10:21:35 gregor Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <!-- =========================== Components ================================ -->
 
-  <map:components>
-    <map:generators default="file"/>
-    <map:transformers default="xslt"/>
-    <map:readers default="resource"/>
-    <map:serializers default="html"/>
-    <map:matchers default="wildcard"/>
-    <map:actions/>
-    <map:selectors/>
-  </map:components>
+  <map:components/>
 
   <!-- =========================== Pipelines ================================ -->
 

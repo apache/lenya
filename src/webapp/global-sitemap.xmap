@@ -15,20 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap,v 1.68 2004/09/01 22:55:23 michi Exp $ -->
+<!-- $Id$ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components>
-    <map:generators default="file"/>
-    <map:transformers default="xslt"/>
-    <map:serializers default="html"/>
-    <map:readers default="resource"/>
-    <map:matchers default="wildcard"/>
-    <map:selectors default="browser"/>
-    <map:actions/>
-    <map:pipes default="caching"/>
-  </map:components>
+  <map:components/>
 
 <!-- =========================== Views =================================== -->
 
