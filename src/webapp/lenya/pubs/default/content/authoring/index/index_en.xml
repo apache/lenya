@@ -23,7 +23,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   limitations under the License.
 -->
 
-<!-- $Id: index_en.xml,v 1.10 2004/04/26 10:06:37 gregor Exp $ -->
+<!-- $Id$ -->
     <lenya:meta>
         <dc:title>Welcome to the Lenya default publication</dc:title>
         <dc:creator>Christian Egli</dc:creator>
@@ -45,7 +45,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
     <title>Welcome to the Default publication</title>
   </head>
   <body>
-    <p>Hello and welcome to the Lenya default publication!</p>
+    <h1>Hello and welcome to the Lenya default publication!</h1>
 
     <p>Apache Lenya is a Java Open-Source Content Management System
     based on open standards such as XML and XSLT and the Apache
