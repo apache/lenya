@@ -67,6 +67,9 @@ td#sidebar a {
   text-decoration: none;
 }
 
-p.dateline {
-  border: 1pt solid red;
+p.issued {
+  text-align: right;
+  color: #999999;
+  font-size: x-small;
+  /*border: 1pt solid red;*/
 }

@@ -17,7 +17,7 @@
   <i><xsl:value-of select="summary"/></i>
   <xsl:apply-templates select="content"/>
   <xsl:apply-templates select="echo:content"/>
-  <p class="dateline">
+  <p class="issued">
   <b>Posted by <a href="{author/homepage}"><xsl:value-of select="author/name"/></a> at <xsl:value-of select="issued"/></b>&#160;|&#160;<a href="../../entries/{id}/index.html">Permalink</a>
   </p>
 </xsl:template>
