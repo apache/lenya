@@ -21,20 +21,20 @@ SFTP_BATCH=$CONTEXT/wyona/cms/bin/copy-recursive.sh
 
 PUBLICATION_ID_1=unipublic
 EXPORT_DIR_1=$PUBLICATION_DIR/unipublic/resources/publication/export
-PENDING_DIR_1=$EXPORT_DIR_1/pending/127.0.0.1/wyona-cms/unipublic
+PENDING_DIR_1=$EXPORT_DIR_1/pending/wyona-cms/unipublic
 REPLICATION_DIR_1=$EXPORT_DIR_1/replication
-RU_1_1=michi
-RH_1_1=cvs.wyona.org
-RDOCS_1_1=/usr/local/apache/htdocs_unipublic
-RU_1_2=michi
-RH_1_2=cvs.wyona.org
+RU_1_1=michiii
+RH_1_1=127.0.0.1
+RDOCS_1_1=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/ROOT
+RU_1_2=michiii
+RH_1_2=127.0.0.1
 RDOCS_1_2=/usr/local/apache/htdocs_unipublic
 
 
 
 PUBLICATION_ID_2=oscom
 EXPORT_DIR_2=$PUBLICATION_DIR/oscom/resources/publication/export
-PENDING_DIR_2=$EXPORT_DIR_2/pending/127.0.0.1:48080/wyona-cms/oscom
+PENDING_DIR_2=$EXPORT_DIR_2/pending/wyona-cms/oscom
 REPLICATION_DIR_2=$EXPORT_DIR_2/replication
 RU_2_1=michiii
 RH_2_1=127.0.0.1
@@ -47,7 +47,7 @@ RDOCS_2_2=/usr/local/apache/htdocs_oscom
 
 PUBLICATION_ID_3=forum
 EXPORT_DIR_3=$PUBLICATION_DIR/forum/resources/publication/export
-PENDING_DIR_3=$EXPORT_DIR_3/pending/127.0.0.1/wyona-cms/forum
+PENDING_DIR_3=$EXPORT_DIR_3/pending/wyona-cms/forum
 REPLICATION_DIR_3=$EXPORT_DIR_3/replication
 RU_3_1=michi
 RH_3_1=cvs.wyona.org
@@ -111,11 +111,13 @@ if [ -d $REPLICATION_DIR_1 ];then
 
     if [ -d $TEMP_DIR ];then
 ##      cp -r $TEMP_DIR/* $RDOCS_1_1/.
-      $SCP -r $TEMP_DIR/* $RU_1_1@$RH_1_1:$RDOCS_1_1/.
+##      $SCP -r $TEMP_DIR/* $RU_1_1@$RH_1_1:$RDOCS_1_1/.
+      sh $SFTP_BATCH $TEMP_DIR $RDOCS_1_1 $REPLICATION_DIR_1 $RU_1_1 $RH_1_1
     fi
     if [ -d $TEMP_DIR ];then
 ##      cp -r $TEMP_DIR/* $RDOCS_1_2/.
-      $SCP -r $TEMP_DIR/* $RU_1_2@$RH_1_2:$RDOCS_1_2/.
+##      $SCP -r $TEMP_DIR/* $RU_1_2@$RH_1_2:$RDOCS_1_2/.
+      sh $SFTP_BATCH $TEMP_DIR $RDOCS_1_2 $REPLICATION_DIR_1 $RU_1_2 $RH_1_2
     fi
 
 
@@ -166,13 +168,13 @@ if [ -d $REPLICATION_DIR_2 ];then
 
     if [ -d $TEMP_DIR ];then
 ##      cp -r $TEMP_DIR/* $RDOCS_2_1/.
-##      $SCP -r $TEMP_DIR/* $RU_2_1@$RH_2_1:$RDOCS_2_1/.
-        sh $SFTP_BATCH $TEMP_DIR $RDOCS_2_1 $REPLICATION_DIR_2 $RU_2_1 $RH_2_1
+      $SCP -r $TEMP_DIR/* $RU_2_1@$RH_2_1:$RDOCS_2_1/.
+##      sh $SFTP_BATCH $TEMP_DIR $RDOCS_2_1 $REPLICATION_DIR_2 $RU_2_1 $RH_2_1
     fi
     if [ -d $TEMP_DIR ];then
 ##      cp -r $TEMP_DIR/* $RDOCS_2_2/.
-##      $SCP -r $TEMP_DIR/* $RU_2_2@$RH_2_2:$RDOCS_2_2/.
-        sh $SFTP_BATCH $TEMP_DIR $RDOCS_2_2 $REPLICATION_DIR_2 $RU_2_2 $RH_2_2
+      $SCP -r $TEMP_DIR/* $RU_2_2@$RH_2_2:$RDOCS_2_2/.
+##      sh $SFTP_BATCH $TEMP_DIR $RDOCS_2_2 $REPLICATION_DIR_2 $RU_2_2 $RH_2_2
     fi
 
 
