@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system type="framework" xmlns:xlink="http://www.w3.org/xlink">
+			<id>krysalis</id>
+			<editor email="acostin@interakt.ro">Alexandru Costin</editor>
+			<system_name>Krysalis Foundation</system_name>
+			<description>
+For a web applications programmer who
+has to develop complex enterprise level applications, web services or
+multi language dynamic websites (Content Management Systems), Krysalis
+is a development platform that improves the Apache/PHP framework by
+separating the application logic from the presentation layer, using open
+standards as XML/XSL/SOAP. Unlike any other application servers and
+frameworks, our platform is an open source solution for productive web
+development.
+  </description>
+			<main_url>http://www.interakt.ro/products/Krysalis/</main_url>
+			<license>
+				<license_name>LGPL</license_name>
+				<license_url>http://www.interakt.ro/products/Licenses/26.txt</license_url>
+			</license>
+		</system>

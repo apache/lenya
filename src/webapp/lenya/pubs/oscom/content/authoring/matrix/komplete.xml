@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system type="cms" xmlns:xlink="http://www.w3.org/xlink">
+			<id>komplete</id>
+			<editor email="acostin@interakt.ro">Alexandru Costin</editor>
+			<system_name>Komplete Lite</system_name>
+			<description>
+For companies that want to publish web content or
+individuals that want to blog, Komplete Lite is an Open Source CMS
+(Content Management System) that allows intuitive content publishing.
+Unlike other free CMS solutions, that are designed for technical aware
+persons, Komplete Lite is built from scratch to allow visual content
+editing with no HTML knowledge required. Komplete Lite features: Easy
+site structure editing; Multiple layout support; Integrated WYSIWYG
+editor; Easy nugget administration; RSS generator/importer; MySQL
+support; Based on the Krysalis platform; Supports multiple operating
+systems.
+  </description>
+			<main_url>http://www.interakt.ro/products/KompleteLite/</main_url>
+			<license>
+				<license_name>GPL</license_name>
+				<license_url>http://www.interakt.ro/products/Licenses/53.txt</license_url>
+			</license>
+		</system>

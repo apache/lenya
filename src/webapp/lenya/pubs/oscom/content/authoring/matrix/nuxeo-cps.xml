@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system type="cms" xmlns:xlink="http://www.w3.org/xlink">
+			<id>nuxeo-cps</id>
+			<editor email="sf@nuxeo.com">Stefane Fermigier</editor>
+			<system_name>Nuxeo CPS</system_name>
+			<description>
+Nuxeo CPS (Collaborative Portal Server) is an extensive
+collaborative Web content management system (CMS) implemented on top of
+Zope. Nuxeo CPS enables organizations to easily, quickly and
+efficiently implement collaborative intranet, extranet or internet
+applications.
+  </description>
+			<main_url>http://www.cps-project.org</main_url>
+			<license>
+				<license_name>GPL</license_name>
+				<license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+			</license>
+		</system>

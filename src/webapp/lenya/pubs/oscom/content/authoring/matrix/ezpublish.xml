@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system type="cms" xmlns:xlink="http://www.w3.org/xlink">
+			<id>ezpublish</id>
+			<editor email="tg@ez.no">Terje Kaste</editor>
+			<system_name>eZ publish</system_name>
+			<description>
+eZ publish 3 is an open source content management system and development framework.
+
+As a content management system (CMS) it's most notable feature is its revolutionary, fully customizable and extendable content model. This is also what makes it suitable as a platform for general web development. Its stand-alone libraries can be used for cross-platform, database independent PHP projects. eZ publish is also well suited for news publishing, e-commerce (B2B and B2C), portals, and corporate web sites, intranets, and extranets.
+
+eZ publish is dual licenced between GPL and the eZ publish professional licence, which means you can use it for free under GPL for your website or you can build commercial software with the professional licence.
+
+eZ publish is build after the eZ software philosophy: Open software that has an open and dynamic architecture, and follow general open standards. Usability for the target user is a top priority and the software is developed following strict academic processes ensuring a high quality and ease of use. 
+  </description>
+			<main_url>http://ez.no/developer/ez_publish_3</main_url>
+			<license>
+				<license_name>GPL</license_name>
+				<license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+			</license>
+		</system>

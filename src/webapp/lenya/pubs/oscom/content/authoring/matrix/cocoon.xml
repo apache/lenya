@@ -1,15 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
-<system type="framework">
-  <id>cocoon</id>
-  <system_name>Cocoon</system_name>
-  <description>
+<system type="framework" xmlns:xlink="http://www.w3.org/xlink" xmlns:xopus="http://www.xopus.org/xmlns/id"><id>cocoon</id><system_name>Apache Cocoon</system_name><description>
 Apache Cocoon is an XML publishing framework that raises the usage of XML and XSLT technologies for server applications to a new level. Designed for performance and scalability around pipelined SAX processing, Cocoon offers a flexible environment based on a separation of concerns between content, logic, and style. To top this all off, Cocoons centralized configuration system and sophisticated caching help you to create, deploy, and maintain rock-solid XML server applications.
-  </description>
-  <main_url>http://xml.apache.org/cocoon/</main_url>
-  <license>
-    <license_name>Apache Software License</license_name>
-    <license_url>http://xml.apache.org/cocoon/license.html</license_url>
-  </license>
-  <programming-language>Java</programming-language>
-</system>
+  </description><main_url>http://xml.apache.org/cocoon/</main_url><license><license_name>Apache Software License</license_name><license_url>http://xml.apache.org/cocoon/license.html</license_url></license><programming-language xmlns:xopus="http://www.xopus.org/xmlns/id">Java</programming-language></system>

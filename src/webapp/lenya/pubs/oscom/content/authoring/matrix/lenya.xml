@@ -13,7 +13,7 @@ Hence it is totally based on XML, XSLT and other related open standards.
 Lenya supports inline WYSIWYG editing within a Web browser, where Xopus and Bitflux are both
 shipped together with Lenya.
   </description>
-  <main_url>http://cocoon.apache.org/lenya/</main_url>
+  <main_url>http://www.wyona.org</main_url>
   <license>
     <license_name>Apache Software License</license_name>
     <license_url>http://www.wyona.org/license.html</license_url>

@@ -1,10 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<system type="cms">
-  <id>webeditor</id>
-  <system_name>webEditor</system_name>
-  <main_url>http://webeditor.sourceforge.net/index.html</main_url>
-  <license>
-    <license_name>?</license_name>
-  </license>
-</system>
+<system type="cms" xmlns:xopus="http://www.xopus.org/xmlns/id"><id>webeditor</id><system_name>webEditor</system_name><description xmlns:xopus="http://www.xopus.org/xmlns/id">webEditor is born with the intention to become a helpful tool for the web content management. </description><main_url>http://webeditor.sourceforge.net/index.html</main_url><license><license_name>???</license_name></license></system>
