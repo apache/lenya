@@ -59,7 +59,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         month = fmtMM.format(date);
         day = fmtdd.format(date);
 
-        log.error(".init(): Initialize Creator: " + year + "/" + month + "/" + day);
+        log.debug(".init(): Initialize Creator: " + year + "/" + month + "/" + day);
     }
 
     /**
@@ -67,7 +67,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
      */
     protected String getChildFileName(File parentDir, String childId, String language) {
         String newFilename = parentDir + File.separator + "entries" + File.separator + year + File.separator + month + "/" + day + "/" + childId + "/index.xml";
-        log.error(".getChildFileName(): " + newFilename);
+        log.debug(".getChildFileName(): " + newFilename);
         return newFilename;
     }
 
