@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+
+<cms>
+<overview>
+<type>cms</type>
+<description>
+Lenya is a CMS based on the XML publishing/application framework Cocoon from the Apache Software Foundation.
+Hence it is totally based on XML, XSLT and other related open standards.
+Lenya supports inline WYSIWYG editing within a Web browser, where Xopus and Bitflux are both
+shipped together with Lenya.
+</description>
+<name>
+ <product>Lenya</product>
+ <organization>Apache</organization>
+</name>
+<url>
+ <product>http://www.wyona.org</product>
+ <organization>http://www.apache.org</organization>
+ <documentation>http://www.wyona.org/docs/</documentation>
+</url>
+<license>
+  <name>Apache Software License</name>
+  <url>http://www.wyona.org/license.html</url>
+</license>
+
+<technology> 
+ <os>
+  <name>Linux/UNIX/MacOSX</name>
+  <name>Windows</name>
+ </os>
+ <webserver>
+  <name>Any Servlet Engine</name>
+ </webserver>
+ <db>
+  <name>Any relational DB with JDBC</name>
+  <name>Xindice (XML Database)</name>
+ </db> 
+ <framework>
+  <name>Apache Cocoon</name>
+  <name>Apache Slide</name>
+ </framework>
+ <language>
+  <name>English</name>
+ </language> 
+</technology>
+
+
+<status> 
+<release>0.8</release> 
+<startdate>2000.03.15</startdate>
+</status>
+
+<community>
+</community>
+
+<marketing> 
+<price/> 
+</marketing>
+
+<installation> 
+</installation>
+
+<support>
+yes
+</support>
+</overview>
+
+<features>
+<creation>
+<acquisition> 
+</acquisition>
+
+<aggregation> 
+</aggregation>
+
+<authoring>
+ <content>
+   <wysiwyg/>
+   <form/>
+   <source/> 
+ </content>
+ <templates>
+   <wysiwyg/>
+   <source/> 
+ </templates>
+ <metadata> 
+   <thesaurus/>
+   <taxonomy/>
+ </metadata>
+</authoring>
+</creation>
+
+<management>
+<workflow> 
+</workflow>
+
+<messaging> 
+</messaging>
+
+<versioning> 
+</versioning>
+<personalization> 
+</personalization>
+<localization> 
+</localization>
+<reporting> 
+</reporting>
+<storage> 
+<format/>
+<db/>
+<filesystem/> 
+</storage>
+<backup> 
+</backup>
+<security> 
+</security>
+<staging>
+</staging>
+</management>
+
+<delivery> 
+<accessibility/>
+<syndication> 
+<rss/>
+</syndication>
+</delivery> 
+</features>
+</cms>
