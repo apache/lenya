@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<namespaces>
+
+<xmlns>echo=http://example.com/newformat#</xmlns>
+<xmlns>ent=http://www.purl.org/NET/ENT/1.0/</xmlns>
+
+</namespaces>
