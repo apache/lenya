@@ -47,7 +47,7 @@
 	need to refer to documents in <code>live</code></li>
       </ol>
 
-      <p>These four cases have to be dealt with seperately.</p>
+      <p>These four cases have to be dealt with separately.</p>
       <section>
 	<title>A document is not yet live</title>
 	<p>This case can happen if the user tries to publish a

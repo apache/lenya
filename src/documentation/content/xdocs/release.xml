@@ -54,7 +54,7 @@ lock-in. Apache Lenya is built around Off the Shelf components from the
 Apache Software Foundation.
 </p><p>Apache Lenya comes with the features you can expect of a modern
 Content Management System, such as Revision Control, Scheduling, a
-built-in Search Engine, seperate Staging Areas, and Workflow.
+built-in Search Engine, separate Staging Areas, and Workflow.
 </p><p>
 Because Apache Lenya is based on Cocoon, you can use <link href="ext:cocoon.2.1.features">Cocoon features</link>
 
@@ -101,7 +101,7 @@ approvals.
 </li>
 <li> Workflow events such as publishing or deactivating a page can be scheduled.
 </li>
-<li>Lenya supports seperate authoring, staging and live areas. For convenience, the staging area is disabled by default.
+<li>Lenya supports separate authoring, staging and live areas. For convenience, the staging area is disabled by default.
 </li>
 <li>All workflow steps are logged, providing an audit trail.
 </li>
@@ -132,7 +132,7 @@ publications can be created with a cloning process.
 </li>
 <li> Lenya supports XHTML+CSS templating, eliminating the need to learn
 yet another templating language. Wherever possible, Lenya uses CSS for
-styling, therefore enforcing the seperation of content and layout.
+styling, therefore enforcing the separation of content and layout.
 
 </li>
 <li>The navigation framework automatically creates navigation items

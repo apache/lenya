@@ -147,7 +147,7 @@
 <section>
 <title>Rules for the live server</title>
 <p>This sample configuration uses <code>cms.sandbox.live.ch</code> as the host name.</p>
-<ul><li>  each publication is mounted as a seperate virtualhost </li>
+<ul><li>  each publication is mounted as a separate virtualhost </li>
 <li>  assumes Tomcat, with Lenya running under /lenya (for Jetty, remove /lenya from the configuration)</li>
   <li>The publication in this sample is named sandbox</li>
 <li>  Files within the directory static and files with the extension php are not redirected to Lenya. </li>
