@@ -104,28 +104,26 @@ your_home (or c:\ on Windows, NOT My Dcouments)
     <p>
     <strong>Get Apache Cocoon</strong> (see <link href="prerequisites.html">Prerequisites</link>)
     </p>
-    <warning>The current CVS version of Lenya works only with Cocoon  2.1
-    and newer versions.</warning>
   </li>
   <li>
     <p>
     <strong>Compile Cocoon</strong>
     </p>
-    <p>
-    See <link href="http://cocoon.apache.org/2.0/installing/index.html">Installing Apache Cocoon</link>
-    </p>
-    <p>
-    <strong>MS Windows</strong>
-    </p>
+    <p>You need to build Cocoon with the local.blocks.properties and
+    local.build.properties which are optimized for lenya</p>
+    <p>Copy $LENYA_HOME/src/cocoon/* to $COCOON_HOME/.</p>
+
+    <p><strong>MS Windows</strong></p>
 <source>
 $COCOON_HOME > build.bat
 </source>
-    <p>
-    <strong>Unix</strong>
-    </p>
+
+    <p><strong>Unix</strong></p>
+
 <source>
 $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
 </source>
+    <p>See also <link href="http://cocoon.apache.org/2.0/installing/index.html">Installing Apache Cocoon</link></p>
   </li>
   <li>
     <p>
