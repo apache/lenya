@@ -20,7 +20,7 @@ package org.apache.lenya.cms.publication;
 import java.util.List;
 
 /**
- * @version $Id: PublicationHelper.java,v 1.1 2004/08/26 22:18:19 roku Exp $
+ * @version $Id$
  */
 public final class PublicationHelper {
 
@@ -39,7 +39,7 @@ public final class PublicationHelper {
      */
     public Document[] getAllDocuments(String area, String language) throws DocumentException {
         try {
-            List allNodes = getPublication().getSiteTree(area).getNode("/").preOrder();
+            List allNodes = getPublication().getTree(area).getNode("/").preOrder();
             Document[] documents = new Document[allNodes.size()-1];
         
             for(int i=1; i<allNodes.size(); i++) {

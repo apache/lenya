@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentReferencesHelper.java,v 1.17 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.xsp;
 
@@ -255,7 +255,7 @@ public class DocumentReferencesHelper {
         Publication publication = pageEnvelope.getPublication();
         DocumentBuilder builder = publication.getDocumentBuilder();
         try {
-            sitetree = publication.getSiteTree(Publication.LIVE_AREA);
+            sitetree = publication.getTree(Publication.LIVE_AREA);
             String[] internalLinks =
                 Grep.findPattern(
                     pageEnvelope.getDocument().getFile(),
