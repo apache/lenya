@@ -69,12 +69,16 @@
       <!-- use publication-specific schema if available -->
       <map:act src="pubs/{publication-id}/content/authoring/create.xsp" type="resource-exists">
         <map:generate src="pubs/{../publication-id}/content/authoring/create.xsp" type="serverpages"/>
-        <map:transform src="pubs/{../publication-id}/xslt/authoring/create.xsl"/>
+        <map:transform src="pubs/{../publication-id}/xslt/authoring/create.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
+        </map:transform>
         <map:serialize/>
       </map:act>
       <!-- otherwise use default schema -->
       <map:generate src="content/authoring/create.xsp" type="serverpages"/>
-      <map:transform src="xslt/authoring/create.xsl"/>
+      <map:transform src="xslt/authoring/create.xsl">
+        <map:parameter name="use-request-parameters" value="true"/>
+      </map:transform>
       <map:serialize/>
     </map:resource>
     
@@ -116,6 +120,7 @@
       
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
+        
         <!-- mount publication-specific usecase sitemap -->
         <map:act src="pubs/{1}/usecase.xmap" type="resource-exists">
           <map:mount check-reload="true" reload-method="synchron" src="pubs/{../1}/usecase.xmap" uri-prefix="{../1}"/>
@@ -195,16 +200,8 @@
           
         </map:match>
         <!-- usecase -->
-        
-      </map:match>
-      <!-- uri -->
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
+
+
         
         <!-- Publish -->
         <map:match pattern="publish" type="usecase">
@@ -229,27 +226,30 @@
           
         </map:match>
         
-      </map:match>
-      
-      <map:handle-errors type="500">
-        <!--
-        <map:select type="exception">  
-          <map:when test="publishing">
-            <map:generate src= "sitetreeException.xml"/> 
-          </map:when>  
-        </map:select>  
-        <map:serialize/>
--->
-      </map:handle-errors>
-      
-    </map:pipeline>
-    
-    <!-- Create -->
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
+
+        <!-- create-workflow -->
+        <map:match pattern="create-workflow" type="usecase">
+
+          <map:match pattern="showscreen" type="step">
+            <map:call resource="usecase-create">
+              <map:parameter name="publication-id" value="{../../1}"/>
+            </map:call>
+          </map:match>
+          
+          <map:match pattern="create" type="step">
+            <map:act type="task">
+              <map:parameter name="task-id" value="create-workflow"/>
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
+            <map:call resource="usecase-create">
+              <map:parameter name="publication-id" value="{../../1}"/>
+            </map:call>
+          </map:match>
+
+        </map:match>
         
+        
+        <!-- create -->      
         <map:match pattern="create" type="usecase">
           
           <map:match pattern="showscreen" type="step">
@@ -272,16 +272,8 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <!--Rollback-->
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
+        <!--Rollback-->
         <map:match pattern="rollback" type="usecase">
           
           <map:match pattern="showscreen" type="step">
@@ -303,6 +295,7 @@
           
         </map:match>
         
+        
         <!-- CheckOut -->
         <map:match pattern="checkout" type="usecase">
           
@@ -320,6 +313,7 @@
           </map:match>
           
         </map:match>
+        
         
         <!-- CheckIn -->
         <map:match pattern="checkin" type="usecase">
@@ -340,15 +334,8 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <!-- Info area use cases start here -->
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
+        
+        <!-- Info area use cases start here -->
         
         <map:match pattern="add-child" type="usecase">
           <map:match pattern="showscreen" type="step">
@@ -361,14 +348,7 @@
           </map:match>
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
+
         
         <map:match pattern="add-sibling" type="usecase">
           
@@ -384,14 +364,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="approval-reject" type="usecase">
           
@@ -407,14 +379,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="approval-submit" type="usecase">
           
@@ -430,14 +394,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="archive" type="usecase">
           
@@ -453,14 +409,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="copy" type="usecase">
           
@@ -476,14 +424,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="cut" type="usecase">
           
@@ -499,14 +439,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="deactivate" type="usecase">
           
@@ -522,14 +454,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      <!-- {publication-id}/{area}/{uri}-->
-      
-      <map:match pattern="*/*/**">
         
         <map:match pattern="delete" type="usecase">
           
@@ -545,14 +469,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="move-down" type="usecase">
           
@@ -568,14 +484,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="move-up" type="usecase">
           
@@ -591,14 +499,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="paste" type="usecase">
           
@@ -614,14 +514,6 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
         <map:match pattern="rename" type="usecase">
           
@@ -637,16 +529,8 @@
           
         </map:match>
         
-      </map:match>
-      
-    </map:pipeline>
-    
-    <!-- UserAdmin -->
-    <map:pipeline>
-      
-      <!-- {publication-id}/{area}/{uri}-->
-      <map:match pattern="*/*/**">
         
+        <!-- UserAdmin -->
         <map:match pattern="user-admin" type="usecase">
           
           <map:match pattern="showscreen" type="step">
@@ -709,6 +593,17 @@
         </map:match>
         
       </map:match>
+      
+      <map:handle-errors type="500">
+        <!--
+        <map:select type="exception">  
+          <map:when test="publishing">
+            <map:generate src= "sitetreeException.xml"/> 
+          </map:when>  
+        </map:select>  
+        <map:serialize/>
+-->
+      </map:handle-errors>
       
     </map:pipeline>
     
