@@ -16,11 +16,14 @@
 
 <!-- publishing properties -->
 <property name="authoring.dir" value="content/authoring"/>
-<property name="authoring.tree" value="sitetree.xml"/>
+<property name="authoring.area" value="authoring"/>
+<property name="sitetree" value="sitetree.xml"/>
 <property name="authoring.resource.dir" value="resources/images/authoring"/>
 <property name="live.dir" value="content/live"/>
 <property name="live.resource.dir" value="resources/images/live"/>
 <property name="replication.dir" value="content/replication/pending"/>
+<property name="rcml.dir" value="content/rcml"/>
+<property name="rcbak.dir" value="content/rcbak"/>
 
 <property name="export.server" value="http://localhost:8080"/>
 <property name="export.dir" value="resources/export/pending"/>
@@ -32,6 +35,14 @@
 <property name="publish.language" value=""/>
 <property name="publish.sources" value=""/>
 <property name="servlet.context" value=""/>
+
+<!--copy/move/rename properties -->
+<property name="node.firstdocumentid" value=""/>
+<property name="node.secdocumentid" value=""/>
+<property name="node.newdocumentid" value=""/>
+
+<property name="file.firstdocumentdir" value=""/>
+<property name="file.secdocumentdir" value=""/>
 
 <target name="test">
   <echo>This is a test of the AntTask: ${text}</echo>
@@ -69,14 +80,14 @@
 
   <echo>Publish tree</echo>
   <echo>Copy node for ${publish.documentid}</echo>
-  <echo>from tree ${pub.dir}/${authoring.dir}/${authoring.tree}</echo>
-  <echo>and insert it in tree ${pub.dir}/${live.dir}/${authoring.tree}</echo>
+  <echo>from tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
+  <echo>and insert it in tree ${pub.dir}/${live.dir}/${sitetree}</echo>
 
   <publishtree 
-      documentid= "${publish.documentid}"
+      documentid= "${publish.documentid}" 
       language= "${publish.language}"
-      absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${authoring.tree}"
-      absolutetreelivepath = "${pub.dir}/${live.dir}/${authoring.tree}" 
+      absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${sitetree}"
+      absolutetreelivepath = "${pub.dir}/${live.dir}/${sitetree}" 
       />
 
   <taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter"/>
@@ -107,7 +118,7 @@
       childtype="${create.child-type}"
       authoringpath="${authoring.dir}"
       documenttype="${create.doctype}"
-      treefile="${authoring.tree}"/>
+      treefile="${sitetree}"/>
       
   <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
   <init-history
@@ -115,6 +126,153 @@
       documenttype="${create.doctype}"
       />
       
+</target>
+
+<target name = "newcopydocumentid">
+  <taskdef name="computesecdocumentid" classname="org.apache.lenya.cms.ant.ComputeCopyDocumentId"/>
+  <computesecdocumentid
+    firstdocumentid="${node.firstdocumentid}"
+    secdocumentid="${node.secdocumentid}"
+    absolutetreepath="${pub.dir}/${authoring.dir}/${sitetree}"
+  />
+  <echo>the document id for the copy is now ${node.newdocumentid}</echo>
+</target>
+
+<target name = "newnamedocumentid">
+  <taskdef name="computerenamedocumentid" classname="org.apache.lenya.cms.ant.ComputeRenameDocumentId"/>
+  <computerenamedocumentid
+    firstdocumentid="${node.firstdocumentid}"
+    secdocumentid="${node.secdocumentid}"
+    absolutetreepath="${pub.dir}/${authoring.dir}/${sitetree}"
+  />
+  <echo>the document id for the renamed file is now ${node.newdocumentid}</echo>
+</target>
+
+<target name = "documentpath">
+  <taskdef name="mapdocumentidtopath" classname="org.apache.lenya.cms.ant.DocumentIdToPath"/>
+  <mapdocumentidtopath
+    area="${authoring.area}" 
+    documentid="${node.firstdocumentid}"
+    propertyname="file.firstdocumentdir" 
+  />
+
+  <mapdocumentidtopath
+    area="${authoring.area}" 
+    documentid="${node.newdocumentid}"
+    propertyname="file.secdocumentdir" 
+  />
+</target>
+
+<target name = "copyDocument" depends="newcopydocumentid, documentpath">
+  <echo>Copy Content</echo>
+  <copy todir="${file.secdocumentdir}" flatten="true">
+    <fileset dir="${file.firstdocumentdir}"/>
+  </copy>
+  
+  <echo>Copy Resources</echo>
+  <copy todir="${pub.dir}/${authoring.resource.dir}/${node.newdocumentid}" flatten="true">
+    <fileset dir="${pub.dir}/">
+      <include name="${authoring.resource.dir}/${node.firstdocumentid}/*"/>
+      <exclude name="${authoring.resource.dir}/*"/>  
+    </fileset>
+  </copy>
+
+  <echo>Copy Meta </echo>
+  <!-- To Do -->
+
+  <echo>Copy Workflow</echo>
+  <!-- To Do -->
+
+  <echo> Copy node of firstdocumentid to secdocumentid in</echo>
+  <echo> the tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
+
+  <taskdef name="insertcopynode" classname="org.apache.lenya.cms.ant.InsertCopyNode"/>
+
+  <insertcopynode
+    firstdocumentid="${node.firstdocumentid}"
+    secdocumentid="${node.newdocumentid}"
+    absolutetreepath="${pub.dir}/${authoring.dir}/${sitetree}"
+  />
+ 
+</target>
+
+<target name = "move">
+  <echo>Copy Content</echo>
+  <copy todir="${file.secdocumentdir}" flatten="true">
+    <fileset dir="${file.firstdocumentdir}"/>
+  </copy>
+  
+  
+  <echo>Copy Resources</echo>
+  <copy todir="${pub.dir}/${authoring.resource.dir}/${node.newdocumentid}" flatten="true">
+    <fileset dir="${pub.dir}/">
+      <include name="${authoring.resource.dir}/${node.firstdocumentid}/*"/>
+      <exclude name="${authoring.resource.dir}/*"/>  
+    </fileset>
+  </copy>
+
+  <echo>Copy Meta </echo>
+  <!-- To Do -->
+
+  <echo>Copy Revision</echo>
+  <echo>from ${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}/</echo>
+  <echo>to ${pub.dir}/${rcml.dir}/${authoring.dir}/${node.newdocumentid}</echo>
+  <copy todir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.newdocumentid}" flatten="true">
+    <fileset dir="${pub.dir}/">
+      <include name="${rcml.dir}/${authoring.dir}/${node.firstdocumentid}/*"/>
+      <exclude name="${rcml.dir}/${authoring.dir}/*"/>  
+      <exclude name="${rcml.dir}/*"/>  
+    </fileset>
+  </copy>
+
+  <echo>Copy Backups</echo>
+  <copy todir="${pub.dir}/${rcbak.dir}/${authoring.dir}/${node.newdocumentid}" flatten="true">
+    <fileset dir="${pub.dir}/">
+      <include name="${rcbak.dir}/${authoring.dir}/${node.firstdocumentid}/*"/>
+      <exclude name="${rcbak.dir}/${authoring.dir}/*"/>  
+      <exclude name="${rcbak.dir}/*"/>  
+    </fileset>
+  </copy>
+
+  <echo>Copy Workflow</echo>
+  <!-- To Do -->
+
+  <echo> Move node of firstdocumentid to secdocumentid in</echo>
+  <echo> the tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
+
+  <taskdef name="movenode" classname="org.apache.lenya.cms.ant.MoveNode"/>
+
+  <movenode
+    firstdocumentid="${node.firstdocumentid}"
+    secdocumentid="${node.newdocumentid}"
+    absolutetreepath="${pub.dir}/${authoring.dir}/${sitetree}"
+  />
+
+  <echo> Delete document with id ${node.firstdocumentid}</echo> 
+
+  <echo>Delete Content</echo>
+  <delete dir="${file.firstdocumentdir}" includeemptydirs="true"/>
+
+  <echo>Delete Resources</echo>
+  <delete dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}" includeemptydirs="true"/>
+
+  <echo>Delete Meta </echo>
+  <!-- To Do -->
+
+  <echo>Delete Revision</echo>
+  <delete dir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}"/>
+
+  <echo>Delete Backups</echo>
+  <delete dir="${pub.dir}/${rcbak.dir}/${authoring.dir}/${node.firstdocumentid}"/>
+
+  <echo>Delete Workflow</echo>
+  <!-- To Do -->
+ 
+</target>
+<target name = "moveDocument" depends="newcopydocumentid, documentpath, move">
+  <echo>moveDocument</echo> 
+</target>
+<target name = "renameDocument" depends="newnamedocumentid, documentpath, move">
 </target>
 
 </project>
