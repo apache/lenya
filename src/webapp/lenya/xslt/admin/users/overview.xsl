@@ -66,32 +66,10 @@
           </table>
       </div>
     </div>
-    
-    <div class="lenya-box">
-      <div class="lenya-box-title">Password</div>
-      <div class="lenya-box-body">
-        
-          <table class="lenya-table-noborder">
-            
-            <tr>
-              <td class="lenya-entry-caption">User:</td>
-              <td>
-				        <form method="GET" action="lenya.usecase.change_password_user">
-				          <input type="submit" value="Change Password"/>
-				        </form>
-				      </td>
-				    </tr>
-            <tr>
-              <td class="lenya-entry-caption">Admin:</td>
-              <td>
-				        <form method="GET" action="lenya.usecase.change_password_admin">
-				          <input type="submit" value="Change Password"/>
-				        </form>
-              </td>
-            </tr>
-          </table>
-      </div>
-    </div>
+
+    <xsl:if test="not(user/@ldap = 'false')">
+      <xsl:call-template name="password"/>
+    </xsl:if>
     
     <div class="lenya-box">
       <div class="lenya-box-title">Group Affiliation</div>
@@ -139,6 +117,35 @@
       &#160;(<xsl:value-of select="."/>)
     </xsl:if>
     </span>
+  </xsl:template>
+  
+  
+  <xsl:template name="password">
+    <div class="lenya-box">
+      <div class="lenya-box-title">Password</div>
+      <div class="lenya-box-body">
+        
+          <table class="lenya-table-noborder">
+            
+            <tr>
+              <td class="lenya-entry-caption">User:</td>
+              <td>
+				        <form method="GET" action="lenya.usecase.change_password_user">
+				          <input type="submit" value="Change Password"/>
+				        </form>
+				      </td>
+				    </tr>
+            <tr>
+              <td class="lenya-entry-caption">Admin:</td>
+              <td>
+				        <form method="GET" action="lenya.usecase.change_password_admin">
+				          <input type="submit" value="Change Password"/>
+				        </form>
+              </td>
+            </tr>
+          </table>
+      </div>
+    </div>
   </xsl:template>
   
   
