@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<namespaces>
+
+<xmlns>simple=http://apache.org/cocoon/lenya/doctypes/simple-document/1.0</xmlns>
+<xmlns>dc=http://purl.org/dc/elements/1.1/</xmlns>
+<xmlns>lenya=http://apache.org/cocoon/lenya/page-envelope/1.0</xmlns>
+
+</namespaces>
