@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CollectionImpl.java,v 1.12 2004/05/03 13:55:10 andreas Exp $  */
+/* $Id: CollectionImpl.java,v 1.13 2004/07/10 22:59:55 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -171,8 +171,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             
             NamespaceHelper helper = getNamespaceHelper();
             Element collectionElement = helper.getDocument().getDocumentElement();
-            if (collectionElement.getAttribute(ATTRIBUTE_ID) == null | collectionElement.getAttribute(ATTRIBUTE_ID).equals("")) {
-                collectionElement.setAttribute(ATTRIBUTE_ID, this.getId());
+            if (collectionElement.getAttributeNS(null, ATTRIBUTE_ID) == null | collectionElement.getAttribute(ATTRIBUTE_ID).equals("")) {
+                collectionElement.setAttributeNS(null, ATTRIBUTE_ID, this.getId());
             }                   
             Element[] existingDocumentElements = helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
             for (int i = 0; i < existingDocumentElements.length; i++) {
@@ -211,7 +211,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     protected Element createDocumentElement(Document document, NamespaceHelper helper)
         throws DocumentException {
         Element documentElement = helper.createElement(ELEMENT_DOCUMENT);
-        documentElement.setAttribute(ATTRIBUTE_ID, document.getId());
+        documentElement.setAttributeNS(null, ATTRIBUTE_ID, document.getId());
         return documentElement;
     }
 
