@@ -70,14 +70,12 @@ import org.apache.tools.ant.types.Path;
 
 /**
  * @author Michael Wechner
- * @version $Id: CopyJavaSourcesTask.java,v 1.18 2003/11/16 18:46:16 michi Exp $
+ * @version $Id: CopyJavaSourcesTask.java,v 1.19 2004/02/20 08:52:03 andreas Exp $
  */
 public class CopyJavaSourcesTask extends Task {
     private Path pubsRootDirs;
     private String javaDir;
     private String buildDir;
-
-    private static final String FILENAMEPATTERN = ".*\\.java";
 
     /**
      *
