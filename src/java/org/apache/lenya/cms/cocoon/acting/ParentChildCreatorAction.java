@@ -148,7 +148,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     else{
       childtype="leaf";
       }
-    parent_element.addElement(childtype).addAttribute("relURI",creator.generateTreeId(childid)).addAttribute("doctype",doctype).addAttribute("menuName",childname);
+    parent_element.addElement(childtype).addAttribute("relURI",creator.generateTreeId(childid,childType)).addAttribute("doctype",doctype).addAttribute("menuName",childname);
     getLogger().debug("Tree has been modified: "+doc.asXML());
 
     // Write new tree
@@ -159,7 +159,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     // Transaction should actually be finished here!
 
     // Create actual document
-    creator.create(new File(absoluteDoctypesPath+"samples"),new File(sitemapParentPath+docsPath+parentid),childid);
+    creator.create(new File(absoluteDoctypesPath+"samples"),new File(sitemapParentPath+docsPath+parentid),childid,childType);
 
     // Redirect to referer
     if(7 > 1){

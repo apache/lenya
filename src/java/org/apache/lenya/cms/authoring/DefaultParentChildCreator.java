@@ -17,12 +17,12 @@ public class DefaultParentChildCreator extends AbstractParentChildCreator{
 /**
  *
  */
-  public String generateTreeId(String childId) throws Exception{
+  public String generateTreeId(String childId,short childType) throws Exception{
     return childId;
     }
 /**
  *
  */
-  public void create(File samplesDir,File parentDir,String childId) throws Exception{
+  public void create(File samplesDir,File parentDir,String childId,short childType) throws Exception{
     }
   }

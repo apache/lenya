@@ -17,11 +17,11 @@ public static short BRANCH_NODE=1;
 /**
  *
  */
-  public abstract String generateTreeId(String childId) throws Exception;
+  public abstract String generateTreeId(String childId,short childType) throws Exception;
 /**
  *
  */
-  public abstract void create(File samplesDir,File parentDir,String childId) throws Exception;
+  public abstract void create(File samplesDir,File parentDir,String childId,short childType) throws Exception;
 /**
  *
  */
