@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourcesManager.java,v 1.12 2004/08/21 22:25:07 roku Exp $  */
+/* $Id: ResourcesManager.java,v 1.13 2004/08/26 22:18:52 roku Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -50,7 +50,7 @@ public class ResourcesManager {
      * @return the path to the resources
      */
     public String getPathFromPublication() {
-        return RESOURCES_PREFIX + "/" + document.getArea() + document.getId();
+        return RESOURCES_PREFIX + "/" + getDocument().getArea() + getDocument().getId();
     }
 
     /**
@@ -59,12 +59,26 @@ public class ResourcesManager {
      * @return the path to the resources
      */
     public File getPath() {
-        File publicationPath = document.getPublication().getDirectory();
+        File publicationPath = getDocument().getPublication().getDirectory();
         File resourcesPath = new File(publicationPath, getPathFromPublication().replace('/',
                 File.separatorChar));
         return resourcesPath;
     }
 
+    /**
+     * Returns the path of a resource relative to the context prefix.
+     * @return The path of a resource relative to the context prefix.
+     */
+    public String getResourceUrl(File resource) {
+        return 
+            getDocument().getPublication().getId() 
+            + "/" 
+            + getDocument().getArea()
+            + getDocument().getId()
+            + "/" 
+            + resource.getName();   
+    }
+    
     /**
      * Get all resources for the associated document.
      * 
@@ -81,6 +95,22 @@ public class ResourcesManager {
         };
 
         return getFiles(filter);
+    }
+
+    /**
+     * Return all resources which are images.
+     * @return All image resources.
+     */
+    public File[] getImageResources() {
+        final String[] IMAGE_FILE_EXTENSIONS = {".jpg", ".png", ".bmp", ".gif", ".svg"};
+        return getFiles( new FileFilter() {
+                public boolean accept(File file) {
+                    for(int i=0; i<IMAGE_FILE_EXTENSIONS.length; i++)
+                        if (file.getName().toLowerCase().endsWith(IMAGE_FILE_EXTENSIONS[i]))
+                            return true;
+                    return false;
+                }
+            });
     }
     
     /**
@@ -140,7 +170,7 @@ public class ResourcesManager {
      */
     public void deleteResources() {
 
-        File stopDirectory = new File(document.getPublication().getDirectory(), RESOURCES_PREFIX);
+        File stopDirectory = new File(getDocument().getPublication().getDirectory(), RESOURCES_PREFIX);
 
         File[] resources = getResources();
         for (int i = 0; i < resources.length; i++) {
@@ -155,4 +185,7 @@ public class ResourcesManager {
         }
     }
 
+    public Document getDocument() {
+        return document;
+    }
 }
