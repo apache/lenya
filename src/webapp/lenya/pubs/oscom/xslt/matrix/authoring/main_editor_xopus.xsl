@@ -21,7 +21,7 @@
  	<xml>
 		<pipeline xml="editor-matrix/{$projectid}.xml" xsd="matrix.xsd">
 			<view id="defaultView" default="true">
-				<transform xsl="Page/Matrix/Authoring/body_editor_xopus2.xsl"></transform>
+				<transform xsl="Page/Matrix/Authoring/body_editor_xopus.xsl"></transform>
 			</view>
 			<view id="treeView">
 				<transform xsl="Page/Home/Authoring/tree.xsl"></transform>

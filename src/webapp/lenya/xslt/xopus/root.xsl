@@ -37,13 +37,17 @@
     <body bgcolor="#ffffff">
       <xsl:call-template name="xopus_body"/>
 
+<!--
       <xsl:apply-templates select="menu"/>
+-->
       <xsl:apply-templates select="cmsbody"/>
     </body>
   </html>
 </xsl:template>
 
+<!--
 <xsl:include href="menu.xsl"/>
+-->
 
 <xsl:template match="xopus" mode="top">
   <xsl:call-template name="xopus_top"/>
