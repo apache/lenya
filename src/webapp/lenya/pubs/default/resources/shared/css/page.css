@@ -125,11 +125,21 @@ td.tab-post-separator {
     font-size: 80%;
 }
 
-#search {
-   margin-left: 8cm;
+#breadcrumb a {
+    text-decoration: none;
+    color: Maroon;
 }
 
-#breadcrumb a {
+#search {
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 80%;
+    margin-right: 10px;
+    text-align: right;
+    position:relative;
+    top:-19px
+}
+
+#search a {
     text-decoration: none;
     color: Maroon;
 }
