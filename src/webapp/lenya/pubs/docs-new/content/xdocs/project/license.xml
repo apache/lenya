@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
 <document>
   <header>
@@ -78,7 +78,7 @@
 This software consists of voluntary contributions made by many
 individuals on behalf of the Apache Software Foundation.  For more
 information on the Apache Software Foundation, please see
-<a href="http://www.apache.org">http://www.apache.org</a>.
+<link href="http://www.apache.org">http://www.apache.org</link>.
 </p>
 <p>
 Portions of this software are based upon public domain software
