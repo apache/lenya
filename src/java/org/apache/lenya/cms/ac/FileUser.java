@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.7 2003/06/04 13:16:42 egli Exp $
+ * $Id: FileUser.java,v 1.8 2003/06/05 12:00:50 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -108,9 +108,9 @@ public class FileUser extends User {
 	public FileUser(Publication publication, Configuration config)
 		throws ConfigurationException {
 		id = config.getAttribute(ID_ATTRIBUTE);
-		setEmail(config.getValue(EMAIL));
-		setFullName(config.getValue(FULL_NAME));
-		setPassword(config.getValue(PASSWORD));
+		setEmail(config.getChild(EMAIL).getValue());
+		setFullName(config.getChild(FULL_NAME).getValue());
+		setPassword(config.getChild(PASSWORD).getValue());
 		Configuration[] groups = config.getChildren(GROUPS);
 		if (groups.length == 1) {
 			groups = groups[0].getChildren(GROUP);
@@ -167,12 +167,12 @@ public class FileUser extends User {
 		child.setAttribute(PASSWORD_ATTRIBUTE, "md5");
 		config.addChild(child);		
 		// add group nodes
-		child = new DefaultConfiguration(GROUP);
+		child = new DefaultConfiguration(GROUPS);
 		config.addChild(child);		
 
 		Iterator groupsIter = getGroups();
 		while (groupsIter.hasNext()) {
-			DefaultConfiguration groupNode = new DefaultConfiguration(GROUPS);
+			DefaultConfiguration groupNode = new DefaultConfiguration(GROUP);
 			groupNode.setValue(((Group) groupsIter.next()).getName());
 			child.addChild(groupNode);
 		}
