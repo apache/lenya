@@ -111,6 +111,13 @@ public class AntTask
         Throwable error = null;
         
         try {
+
+            // create task log directory if it doesn't exist
+            File logDirectory = logFile.getParentFile();
+            if (!logDirectory.exists()) {
+                logDirectory.mkdirs();
+            }
+            
             project.setUserProperty("XmlLogger.file", logFile.getAbsolutePath());
             XmlLogger logger = new XmlLogger();
             project.addBuildListener(logger);
