@@ -17,7 +17,7 @@ import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
  *
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
-public class DocumentTypeBuilder {
+public final class DocumentTypeBuilder {
 
     /** Creates a new instance of DocumentTypeBuilder */
     private DocumentTypeBuilder() {
@@ -46,6 +46,7 @@ public class DocumentTypeBuilder {
      * @param name A string value.
      * @param publication The publication the document type belongs to.
      * @return A document type object.
+     * @throws DocumentTypeBuildException When something went wrong.
      */
     public static DocumentType buildDocumentType(String name, Publication publication)
         throws DocumentTypeBuildException {
