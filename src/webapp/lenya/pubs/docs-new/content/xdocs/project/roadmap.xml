@@ -28,7 +28,7 @@
 The Lenya roadmap is determined by the Lenya positioning diagram. It specifies the priorities
 and orientation, and shows areas for futher development. The 1.0 release marks the point
 where Lenya is donated to the Apache foundation. Subsequent releases are under the Apache
-umbrella.<br /><br />
+umbrella. Items in bold type mark completed items.<br /><br />
 <img src="images/live/cms-positioning.png" alt=""/><br /><br />
 
 The positioning diagram defines 8 areas, with a relative weight of 1-7. The current Lenya code base is
@@ -99,7 +99,7 @@ used for bug fixes, e.g. 1.0.2.
 <li>Provide Class Diagrams</li>
 <li><strong>Disentangle CMS and publications</strong></li>
 <li><strong>Create outline of new documentation</strong></li>
-<li>Provide default publication</li>
+<li><strong>Provide default publication</strong></li>
 </ul>
 </section>
 
@@ -111,7 +111,7 @@ used for bug fixes, e.g. 1.0.2.
 <li><strong>Remove dead code</strong></li>
 <li>Provide unit tests for core classes</li>
 <li><strong>Simplify directory structure</strong></li>
-<li>Provide default implementations in root sitemap, with overriding capability</li>
+<li><strong>Provide default implementations in root sitemap, with overriding capability</strong></li>
 </ul>
 
 
@@ -155,8 +155,8 @@ used for bug fixes, e.g. 1.0.2.
 <section><title>Usability</title>
 
 <ul>
-<li>Standardize CMS screens</li>
-<li>Standardize Lenya menus</li>
+<li><strong>Standardize CMS screens</strong></li>
+<li><strong>Standardize Lenya menus</strong></li>
 </ul>
 
 </section></section>
@@ -173,11 +173,11 @@ used for bug fixes, e.g. 1.0.2.
 <section><title>Low Entry Barrier</title>
 
 <ul>
-<li>Improve and standardize templating (XHTML)</li>
+<li><strong>Improve and standardize templating (XHTML)</strong></li>
 <li>Allow for documentation annotation (like php.net)</li>
 <li>Write a publication HOWTO</li>
 <li>Maintain a FAQ</li>
-<li>Elminate redundancies between authoring and live areas</li>
+<li><strong>Elminate redundancies between authoring and live areas</strong></li>
 <li>Write Lenya Tutorials</li>
 </ul>
 
@@ -186,9 +186,9 @@ used for bug fixes, e.g. 1.0.2.
 
 <ul>
 <li>Complete JavaDoc</li>
-<li>Unify CMS URIs</li>
-<li>Standardize sitemaps</li>
-<li>Work out upgrade schedule for dependent components (Cocoon etc)</li>
+<li><strong>Unify CMS URIs</strong></li>
+<li><strong>Standardize sitemaps</strong></li>
+<li><strong>Work out upgrade schedule for dependent components (Cocoon etc)</strong></li>
 </ul>
 
 </section>
@@ -211,17 +211,17 @@ used for bug fixes, e.g. 1.0.2.
 
 <ul>
 <li>Integrate Slide</li>
-<li>Implement workflow engine</li>
-<li>Implement generic sitetree navigation framework</li>
-<li>Integrate HTML Form Editor (Slash Edit)</li>
-<li>Provide GUI for user administration</li>
+<li><strong>Implement workflow engine</strong></li>
+<li><strong>Implement generic sitetree navigation framework</strong></li>
+<li><strong>Integrate HTML Form Editor</strong></li>
+<li><strong>Provide GUI for user administration</strong></li>
 </ul>
 
 </section>
 <section><title>Standards Compliance</title>
 
 <ul>
-<li>Provide LDAP authentication</li>
+<li><strong>Provide LDAP authentication</strong></li>
 </ul>
 
 </section>
@@ -282,8 +282,8 @@ used for bug fixes, e.g. 1.0.2.
 
 <ul>
 <li>Provide (Open) Office integration</li>
-<li>Implement link management</li>
-<li>Implement multilingual capabilities</li>
+<li><strong>Implement link management</strong></li>
+<li><strong>Implement multilingual capabilities</strong></li>
 </ul>
 
 </section>
@@ -297,12 +297,12 @@ used for bug fixes, e.g. 1.0.2.
 <section><title>Usability</title>
 
 <ul>
-<li>Provide administration GUI</li>
+<li><strong>Provide administration GUI</strong></li>
 <li>Complete the move to an in-place UI paradigm</li>
 </ul>
 
 </section></section>
-<p>$Id: roadmap.xml,v 1.5 2003/05/23 15:07:55 gregor Exp $</p>
+<p>$Id: roadmap.xml,v 1.6 2003/10/02 19:22:23 gregor Exp $</p>
   </body>
 </document>
 
