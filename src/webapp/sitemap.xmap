@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.30 2003/01/13 00:55:39 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.31 2003/01/14 01:23:56 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -137,6 +137,7 @@
          <map:parameter name="excerpt-dir" value="wyona/cms/pubs/{1}/resources/publication/export/pending"/>
          <!--<map:parameter name="excerpt-dir" value="wyona/cms/pubs/{1}/resources/publication/search/lucene/htdocs_dump"/>-->
        </map:generate>
+       <map:transform src="wyona/cms/stylesheets/cms/Page/Search/sort.xsl"/>
        <map:transform src="wyona/cms/stylesheets/cms/Page/Search/search-and-results.xsl"/>
        <map:serialize type="html"/>
      </map:match>

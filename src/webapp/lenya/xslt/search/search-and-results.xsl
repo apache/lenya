@@ -11,6 +11,9 @@
 <body>
 <h1>Wyona CMS Search Interface -- powered by Lucene</h1>
   <form>
+<table bgcolor="#dddddd">
+<!--
+<tr><td>
     <xsl:for-each select="configuration/publication">
       <xsl:choose>
         <xsl:when test="@pid = ../@checked-pid">
@@ -21,11 +24,34 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-    <br />
+</td></tr>
+-->
+<tr><td>
     <input type="text" name="queryString" size="60">
       <xsl:attribute name="value"><xsl:value-of select="search/query-string"/></xsl:attribute>
     </input>
+</td></tr>
+<tr><td>
+    Sort by 
+    <select name="sortBy">
+      <option value="score">
+        <xsl:if test="search/sort-by='score'">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        Score
+      </option>
+      <option value="title">
+        <xsl:if test="search/sort-by='title'">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        Title
+      </option>
+    </select>
+</td></tr>
+<tr><td align="right">
     <input type="submit" name="find" value="Search"/>
+</td></tr>
+</table>
   </form>
 
   <xsl:apply-templates select="results"/>
