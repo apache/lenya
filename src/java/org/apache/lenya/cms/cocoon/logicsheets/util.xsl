@@ -18,7 +18,7 @@
 
       <xsp:structure>
         <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-        <xsp:include>org.apache.cocoon.environment.Source</xsp:include>
+        <xsp:include>org.apache.excalibur.source.Source</xsp:include>
         <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PublicationFactory</xsp:include>
@@ -40,8 +40,8 @@
     String xspUtilServletContextPath = null;
     String xspUtilPublicationPath = null;
     {
-        Source inputSource = resolver.resolve("");
-        String publicationPath = inputSource.getSystemId();
+        Source inputSource = resolver.resolveURI("");
+        String publicationPath = inputSource.getURI();
         String directories[] = publicationPath.split("/");
         String publicationId = directories[directories.length - 1];
         String path = publicationPath.substring(0, publicationPath.indexOf("/lenya/pubs/" + publicationId));
