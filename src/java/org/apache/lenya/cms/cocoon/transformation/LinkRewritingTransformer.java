@@ -170,7 +170,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         }
 
         AttributesImpl newAttrs = null;
-        if (lookingAtAElement(name)) {
+        if (lookingAtLinkElement(name)) {
 
             setIgnoreAElement(false);
 
@@ -328,7 +328,18 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         }
     }
 
-    private boolean lookingAtAElement(String name) {
+    /**
+     * Check if we are looking at a link element
+     * 
+     * @param name name of the element
+     * 
+     * @return true if we are looking at a link element
+     */
+    protected boolean lookingAtLinkElement(String name) {
+        return lookingAtAElement(name);
+    }
+
+    protected boolean lookingAtAElement(String name) {
         return name.equals("a");
     }
 
