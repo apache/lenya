@@ -8,17 +8,11 @@
         <xsl:when test="../../search/sort-by='score'">
           <xsl:for-each select="hit">
             <xsl:sort data-type="number" order="descending" select="score"/>
-<!--
-            <xsl:sort data-type="number" order="ascending" select="score"/>
--->
             <xsl:apply-templates select="."/>
           </xsl:for-each>
         </xsl:when>
         <xsl:when test="../../search/sort-by='title'">
           <xsl:for-each select="hit">
-<!--
-            <xsl:sort data-type="text" order="descending" select="title"/>
--->
             <xsl:sort data-type="text" order="ascending" select="title"/>
             <xsl:apply-templates select="."/>
           </xsl:for-each>

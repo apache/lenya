@@ -4,9 +4,6 @@
 
 
 <xsl:variable name="uriName">lucene</xsl:variable>
-<!--
-<xsl:variable name="uriName">go</xsl:variable>
--->
 
 <xsl:param name="area" value="live"/>
 
@@ -134,9 +131,6 @@
       <td>File: <xsl:value-of select="path"/></td>
     </xsl:when>
     <xsl:when test="uri">
-<!--
-      <td>URL: <xsl:value-of select="uri"/></td>
--->
       <td>
         Title: <a><xsl:attribute name="href"><xsl:value-of select="/search-and-results/search/publication-prefix"/><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
         <br />
