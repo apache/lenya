@@ -1,5 +1,4 @@
 /*
-$Id: WGet.java,v 1.27 2003/08/19 18:47:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,10 +72,10 @@ import java.util.List;
 
 
 /**
- * DOCUMENT ME!
+ * Similar to the UNIX wget
  *
  * @author Michael Wechner
- * @version 0.1
+ * @version $Id: WGet.java,v 1.28 2004/01/14 08:33:37 michi Exp $
  */
 public class WGet {
     static Category log = Category.getInstance(WGet.class);
@@ -225,31 +224,9 @@ public class WGet {
         return sresponse;
     }
 
-    /*
-    //FIXME: This is an unfinished attempt at getting the links via cocoon.
-    public URL[] getLinksViaCocoon(URL url) throws IOException, HttpException {
-        log.debug(".getLinksViaCocoon(): "+url);
-
-        java.io.BufferedReader br = null;
-        try {
-            String linkViewQuery = "cocoon-view=links";
-            String sURL = url.getFile();
-            URL links = new URL(url, sURL + ((sURL.indexOf("?") == -1) ? "?" : "&") + linkViewQuery);
-            java.net.URLConnection links_url_connection = links.openConnection();
-            java.io.InputStream is = links_url_connection.getInputStream();
-            br = new java.io.BufferedReader(new java.io.InputStreamReader(is));
-            String line;
-            while ((line = br.readLine()) != null) {
-                log.debug(".getLinksViaCocoon(): Link: "+line);
-            }
-        }
-        catch(Exception e){
-            log.error(".getLinksViaCocoon(): "+e);
-        }
-
-        return null;
-    }
-    */
+    /**
+     *
+     */
     public List getLinks(URL url) throws IOException {
         log.debug(".getLinks(): Get links from " + url);
 
@@ -258,6 +235,7 @@ public class WGet {
         try {
             org.apache.lenya.util.HTML html = new org.apache.lenya.util.HTML(url.toString());
             links = html.getImageSrcs(false);
+            // FIXME: Get also css links, etc.
         } catch (Exception e) {
             log.error(".getLinks() Exception 423432: ", e);
         }
@@ -284,6 +262,7 @@ public class WGet {
         String substituteReplacement) throws IOException {
         try {
             File file = new File(filename);
+            // FIXME: sed should be replaced by some Java component
             String command = "/usr/bin/sed --expression=s/" + escapeSlashes(prefixSubstitute) +
                 "/" + escapeSlashes(substituteReplacement) + "/g " + file.getAbsolutePath();
 
