@@ -137,31 +137,6 @@
       </map:handle-errors>
     </map:pipeline>
 
-    <!-- new images -->
-    <map:pipeline>
-      <map:match pattern="oscom-proposals_files/*.gif">
-        <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-      <map:match pattern="**/oscom-proposals_files/*.gif">
-        <map:read src="resources/images/live/{2}.gif" mime-type="images/gif">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-
-      <map:match pattern="oscom-proposals_files/*.png">
-        <map:read src="resources/images/live/{1}.png" mime-type="images/png">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-      <map:match pattern="**/oscom-proposals_files/*.png">
-        <map:read src="resources/images/live/{2}.png" mime-type="images/png">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-    </map:pipeline>
-
     <map:pipeline>
       <!-- images gif -->
       <map:match pattern="live/images/**.gif">

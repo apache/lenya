@@ -3,18 +3,25 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:error="http://apache.org/cocoon/error/2.0" xmlns:n-rdf="http://my.netscape.com/rdf/simple/0.9/" xmlns:oscom="http://www.oscom.org/2002/oscom">
 
 <xsl:variable name="oscombarcolor">#ffa500</xsl:variable>
+
+
 <!--
 <xsl:variable name="navbarcolor">#3366cc</xsl:variable>
 -->
 <xsl:variable name="navbarcolor">#ffc36b</xsl:variable>
-<xsl:variable name="imagesPrefix">go/oscom-proposals_files</xsl:variable>
+
+
 <!--
-<xsl:variable name="imagesPrefix">oscom-proposals_files</xsl:variable>
+<xsl:variable name="imagesPrefix">go/oscom-proposals_files</xsl:variable>
 -->
+<xsl:variable name="imagesPrefix">oscom-proposals_files</xsl:variable>
+
+
 <!--
 <xsl:variable name="searchURL">/search/go</xsl:variable>
 -->
 <xsl:variable name="searchURL">/lenya/oscom/search-live/lucene</xsl:variable>
+
 
 <xsl:template match="oscom">
 <html>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.32 2003/11/10 17:26:08 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.33 2003/11/16 23:04:05 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -59,6 +59,22 @@
       </map:match>
       <map:match pattern="index.html">
         <map:redirect-to uri="introduction.html"/>
+      </map:match>
+    </map:pipeline>
+
+
+    <!-- new images -->
+    <map:pipeline>
+      <map:match pattern="**/oscom-proposals_files/*.gif">
+        <map:read src="resources/images/live/{2}.gif" mime-type="images/gif">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
+      </map:match>
+
+      <map:match pattern="**/oscom-proposals_files/*.png">
+        <map:read src="resources/images/live/{2}.png" mime-type="images/png">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
       </map:match>
     </map:pipeline>
 
