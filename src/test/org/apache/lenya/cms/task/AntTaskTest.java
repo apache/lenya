@@ -62,15 +62,15 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * Class for testing AntTasks.
  * Extend this class to test your own AntTask.
- * The task ID can be passed as a command-line argument.
- * If the argument is omitted, the task ID is "ant-test".
- * Override {@link #getTaskId()} to provide a hard-coded task ID.
+ * The target can be passed as a command-line argument.
+ * If the argument is omitted, the target is "test".
+ * Override {@link #getTarget()} to provide a hard-coded target.
  * Override {@link #evaluateTest()} to add your evaluation code.
  * @author  andreas
  */
 public class AntTaskTest extends TestCase {
 
-    private static String taskId = "ant-test";
+    private static String target = "test";
 
     /**
      * Creates a new AntTaskTest object.
@@ -85,13 +85,17 @@ public class AntTaskTest extends TestCase {
      * @param args The command line arguments
      */
     public static void main(String[] args) {
-        args = PublicationHelper.extractPublicationArguments(args);
-        if (args.length > 0) {
-            taskId = args[0];
-        }
+        initialize(args);
         TestRunner.run(getSuite());
     }
-
+    
+    public static void initialize(String args[]) {
+        args = PublicationHelper.extractPublicationArguments(args);
+        if (args.length > 0) {
+            target = args[0];
+        }
+    }
+    
     /**
      * Creates a test suite.
      */
@@ -104,16 +108,16 @@ public class AntTaskTest extends TestCase {
      * Template method, please override {@link #evaluateTest()} and {@link #getTaskId()}.
      */
     public final void testAntTask() throws Exception {
-        doTest(getTaskId());
+        doTest(getTarget());
         evaluateTest();
     }
 
     /**
-     * Returns the task ID of the task to test.
-     * @return The task ID.
+     * Returns the target to test.
+     * @return The target.
      */
-    protected String getTaskId() {
-        return taskId;
+    protected String getTarget() {
+        return target;
     }
 
     /**
@@ -123,16 +127,21 @@ public class AntTaskTest extends TestCase {
      * @throws IOException
      * @throws ParameterException
      */
-    protected void doTest(String taskId)
+    protected void doTest(String target)
         throws ExecutionException, IOException, ParameterException {
-
+            
+        System.out.println("Testing target [" + target + "]:");
+        
         Publication publication = PublicationHelper.getPublication();
 
         TaskManager manager = new TaskManager(publication.getDirectory().getCanonicalPath());
-        AntTask task = (AntTask) manager.getTask(taskId);
+        AntTask task = (AntTask) manager.getTask(TaskManager.ANT_TASK);
 
-        Parameters parameters = new Parameters();
-        parameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publication.getId());
+        Parameters parameters = getTaskParameters();
+        parameters.setParameter(AntTask.PARAMETER_PUBLICATION_ID, publication.getId());
+        parameters.setParameter(AntTask.PARAMETER_SERVLET_CONTEXT,
+            publication.getServletContext().getCanonicalPath());
+        parameters.setParameter(AntTask.TARGET, getTarget());
         task.parameterize(parameters);
 
         final GregorianCalendar beforeExecution = new GregorianCalendar();
@@ -150,11 +159,34 @@ public class AntTaskTest extends TestCase {
         File logFile = logFiles[0];
 
     }
+    
+    /**
+     * Returns the task parameters.
+     * You don't need to specify the publication-id.
+     * @return The task parameters.
+     */
+    protected Parameters getTaskParameters() {
+        return new Parameters();
+    }
 
     /**
      * Override this method to add your test evaluation code.
      */
     protected void evaluateTest() throws Exception {
+        System.out.println("evaluate");
+    }
+
+    /* (non-Javadoc)
+     * @see junit.framework.TestCase#setUp()
+     */
+    protected void setUp() throws Exception {
+        if (PublicationHelper.getPublication() == null) {
+            String args[] = {
+                "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya",
+                "test"
+            };
+            PublicationHelper.extractPublicationArguments(args);
+        }
     }
 
 }
