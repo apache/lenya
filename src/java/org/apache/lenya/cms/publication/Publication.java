@@ -58,6 +58,7 @@ package org.apache.lenya.cms.publication;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 
 import java.io.File;
+import java.util.Arrays;
 
 
 /**
@@ -68,6 +69,11 @@ import java.io.File;
 public class Publication {
     public static final String AUTHORING_AREA = "authoring";
     public static final String LIVE_AREA = "live";
+    public static final String INFO_AREA = "info";
+    
+    private final static String[] areas = {
+        AUTHORING_AREA, LIVE_AREA, INFO_AREA
+    };
 
     /** Creates a new instance of Publication */
     protected Publication(String id, String servletContextPath) {
@@ -144,5 +150,14 @@ public class Publication {
      */
     public DocumentIdToPathMapper getPathMapper() {
         return mapper;
+    }
+    
+    /**
+     * Returns if a given string is a valid area name.
+     * @param area The area string to test.
+     * @return A boolean value.
+     */
+    public static boolean isValidArea(String area) {
+        return area != null && Arrays.asList(areas).contains(area);
     }
 }

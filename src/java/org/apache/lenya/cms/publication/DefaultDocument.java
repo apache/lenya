@@ -165,8 +165,7 @@ public class DefaultDocument implements Document {
      * @param area A string.
      */
     protected void setArea(String area) {
-        assert (area != null) &&
-        (area.equals(Publication.AUTHORING_AREA) || area.equals(Publication.LIVE_AREA));
+        assert Publication.isValidArea(area); 
         this.area = area;
     }
 
