@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree2tree.xsl,v 1.37 2004/08/23 08:46:36 andreas Exp $ -->
+<!-- $Id$ -->
 
 <!--
         Converts a sitetree into a javascript array suitable for the tree widget.
@@ -27,7 +27,7 @@
 
 <xsl:import href="../util/string-functions.xsl"/>
 
-<xsl:output omit-xml-declaration="yes" encoding = "iso-8859-1" />    
+<xsl:output omit-xml-declaration="yes"/>    
 
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
