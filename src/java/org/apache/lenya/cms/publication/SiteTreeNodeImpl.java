@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.9 2003/07/08 09:24:33 egli Exp $
+$Id: SiteTreeNodeImpl.java,v 1.10 2003/07/09 12:57:36 egli Exp $
 <License>
 
  ============================================================================
@@ -73,7 +73,7 @@ import java.util.ArrayList;
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
  * @author $Author: egli $
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -208,7 +208,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         for (int i = 0; i < labels.length; i++) {
             language = labels[i].getLanguage();
 
-            if (((xmlLanguage == null) && (language == null))
+            if ((((xmlLanguage == null) || (xmlLanguage.equals(""))) && (language == null))
                 || ((language != null) && (language.equals(xmlLanguage)))) {
                 label = labels[i];
 
