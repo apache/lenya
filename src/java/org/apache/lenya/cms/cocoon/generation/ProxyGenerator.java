@@ -45,7 +45,7 @@ import org.xml.sax.SAXException;
 /**
  * Proxy generator.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements
         Parameterizable {
@@ -195,15 +195,18 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
         return new ByteArrayInputStream(bufferOut.toByteArray());
     }
 
+    /**
+     * Add server name and server port if necessary
+     */
     private URL createURL(Request request) throws MalformedURLException {
         URL url = null;
 
         try {
             url = new URL(this.source);
-            getLogger().debug(".createURL(): " + url);
+            getLogger().debug("Is URL: " + url);
         } catch (MalformedURLException e) {
-            url = new URL("http://127.0.0.1:" + request.getServerPort() + this.source);
-            getLogger().debug(".createURL(): Add localhost and port: " + url);
+            url = new URL("http://" + request.getServerName() + ":" + request.getServerPort() + this.source);
+            getLogger().debug("Add localhost and port: " + url);
         }
 
         return url;
