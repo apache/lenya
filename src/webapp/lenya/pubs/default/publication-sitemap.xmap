@@ -158,11 +158,15 @@
 
           <map:select type="browser">
             <map:when test="mozilla5DISABLED">
-              <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}.xml?doctype={page-envelope:document-type}&amp;uiml=xul"/>
+              <map:match pattern="authoring/**.html">
+                <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}.xml?doctype={page-envelope:document-type}&amp;uiml=xul"/>
+              </map:match>
               <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
             </map:when>
             <map:otherwise>
-              <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}.xml?doctype={page-envelope:document-type}"/>
+              <map:match pattern="authoring/**.html">
+                <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}.xml?doctype={page-envelope:document-type}"/>
+              </map:match>
               <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
     	      <map:serialize type="html"/>
             </map:otherwise>
