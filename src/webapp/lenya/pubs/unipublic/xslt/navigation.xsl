@@ -59,27 +59,21 @@
 <xsl:template match="Dossiers">
 	<img src="{$img-unipub}/spacer.gif" alt=" " width="50" height="15" border="0" />
 	<br />
-	<a href="{$unipublic}{$view}/{@href}"><img src="{$img-unipub}/dossiers/doss_rub_title.gif" alt="Dossiers" width="112" height="28" border="0" /></a>
+	<a href="{$unipublic}{$view}/{@href}/"><img src="{$img-unipub}/dossiers/doss_rub_title.gif" alt="Dossiers" width="112" height="28" border="0" /></a>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<xsl:for-each select="Dossier">
 	  <tr>
-	    <td colspan="2" bgcolor="{Dossier[1]/Color}"><a href="{$unipublic}{$view}/{@href}{Dossier[1]/@href}"><img src="" alt="" width="80" height="60" border="0" /></a></td>
+	    <td colspan="2" bgcolor="{Color}"><a href="{$unipublic}{$view}/{../@href}/{@href}/"><img src="{$unipublic}/{../@href}/{@href}/{Image/@href}" alt="" width="80" height="60" border="0" /></a></td>
 	  </tr>
 	  <tr>
 	    <td class="tsr-text" bgcolor="white">
-		<span class="tsr-title"><a href="{$unipublic}{$view}/{@href}{Dossier[1]/@href}"><xsl:value-of select="Dossier[1]/Title"/></a></span><br />
-		<xsl:value-of select="Dossier[1]/Teaser"/> 
+		<span class="tsr-title"><a href="{$unipublic}{$view}/{../@href}/{@href}/"><xsl:value-of select="Title"/></a></span><br />
+		<xsl:value-of select="Teaser"/> 
 	    </td>
 	    <td class="tsr-text" valign="top" bgcolor="white" width="3"><img src="{$img-unipub}/spacer.gif" alt=" " width="3" height="10" border="0" /></td>
 	  </tr>
+	</xsl:for-each>
 	</table>
 </xsl:template>	
-<!--
-<xsl:template match="Dossiers" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <tr>
-    <td><a href="{@href}"><img src="{$unipublic}/img/dossiers.gif" width="120" height="21" border="0"/></a></td>
-  </tr>
 
-  <tr><td class="tsr-text"><span class="tsr-title"><a href="{@href}{Dossier/@href}"><xsl:value-of select="Dossier/Title"/></a></span><br /><xsl:value-of select="Dossier/Teaser"/></td></tr>
-</xsl:template>
--->
 </xsl:stylesheet>
