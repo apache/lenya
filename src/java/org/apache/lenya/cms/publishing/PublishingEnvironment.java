@@ -125,8 +125,8 @@ public class PublishingEnvironment implements Configurable {
         } catch (Exception e) {
             log.warn(
                 "Did not load publishing configuration from publication.xconf (file is missing). " +
-                "That means you can't access all PublishingEnvironment parameters and you should only" +
-                "use the AntTask.");
+                "That means you can't access all PublishingEnvironment parameters and you should only " +
+                "use the AntTask. BTW, publication.xconf has been deprecated.");
         }
     }
 
