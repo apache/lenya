@@ -37,13 +37,13 @@ import org.apache.lenya.cms.publication.DocumentException;
 public class DublinCoreModule extends AbstractPageEnvelopeModule {
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
 
-        if (!Arrays.asList(DublinCoreImpl.ELEMENTS).contains(name)
-            && !Arrays.asList(DublinCoreImpl.TERMS).contains(name)) {
+        if (!DublinCoreImpl.isValidElement(name) && !DublinCoreImpl.isValidTerm(name)) {
             throw new ConfigurationException("The attribute [" + name + "] is not supported!");
         }
 
@@ -56,32 +56,33 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
         try {
             value = document.getDublinCore().getFirstValue(name);
         } catch (DocumentException e) {
-            throw new ConfigurationException(
-                "Obtaining dublin core value for [" + name + "] failed: ",
-                e);
+            throw new ConfigurationException("Obtaining dublin core value for [" + name
+                    + "] failed: ", e);
         }
 
         return value;
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
 
         List names = new ArrayList();
-        names.addAll(Arrays.asList(DublinCoreImpl.ELEMENTS));
-        names.addAll(Arrays.asList(DublinCoreImpl.TERMS));
+        names.addAll(Arrays.asList(DublinCoreImpl.getElements()));
+        names.addAll(Arrays.asList(DublinCoreImpl.getTerms()));
         return names.iterator();
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
-        Object[] objects = { getAttribute(name, modeConf, objectModel)};
+            throws ConfigurationException {
+        Object[] objects = { getAttribute(name, modeConf, objectModel) };
         return objects;
     }
 

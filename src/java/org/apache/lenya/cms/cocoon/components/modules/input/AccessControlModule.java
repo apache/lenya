@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AccessControlModule.java,v 1.12 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -64,7 +64,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     /**
       * The names of the AccessControlModule parameters.
       */
-    public static final String[] PARAMETER_NAMES =
+    static final String[] PARAMETER_NAMES =
         {
             IP_ADDRESS,
             USER_ID,
@@ -166,7 +166,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
      * Returns the item manager for a certain name.
      * @param request The request.
      * @param name The name of the manager ({@link #USER_MANAGER},
-     * {@link #ROLE_MANAGER}, {@link #GROUP_MANAGER}, or {@link IP_RANGE_MANAGER}
+     * {@link #ROLE_MANAGER}, {@link #GROUP_MANAGER}, or {@link #IP_RANGE_MANAGER}
      * @return An item manager.
      * @throws ConfigurationException when something went wrong.
      */

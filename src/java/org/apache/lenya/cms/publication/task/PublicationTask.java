@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationTask.java,v 1.7 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.task;
 
@@ -73,9 +73,7 @@ public abstract class PublicationTask extends AbstractTask {
      * Copies the resources of a document to another document.
      * @param sourceDocument The source document.
      * @param destinationDocument The destination document.
-     * @throws PublicationException when something went wrong.
      * @throws ExecutionException when something went wrong.
-     * @throws IOException when something went wrong.
      */
     protected void copyResources(Document sourceDocument, Document destinationDocument)
         throws ExecutionException {
@@ -172,8 +170,7 @@ public abstract class PublicationTask extends AbstractTask {
     /**
      * Invokes the workflow on a document.
      * @param document The document.
-     * @throws ParameterException when something went wrong.
-     * @throws WorkflowException when something went wrong.
+     * @throws ExecutionException when something went wrong.
      */
     protected void triggerWorkflow(Document document) throws ExecutionException {
 
@@ -268,6 +265,7 @@ public abstract class PublicationTask extends AbstractTask {
     /**
      * Returns the role IDs.
      * @return An array of strings.
+     * @throws ParameterException when the parameter does not exist.
      */
     protected String[] getRoleIDs() throws ParameterException {
         String rolesString = getParameters().getParameter(PARAMETER_ROLE_IDS);

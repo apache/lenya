@@ -40,8 +40,8 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 /**
- * Access dublin core meta data in documents.
- * This class uses the dublin core specification from 2003-03-04.
+ * Access dublin core meta data in documents. This class uses the dublin core specification from
+ * 2003-03-04.
  */
 public class DublinCoreImpl {
     private Document cmsdocument;
@@ -58,23 +58,12 @@ public class DublinCoreImpl {
     /**
      * The dublin core elements.
      */
-    public static final String[] ELEMENTS =
-        {
-            DublinCore.ELEMENT_TITLE,
-            DublinCore.ELEMENT_CREATOR,
-            DublinCore.ELEMENT_SUBJECT,
-            DublinCore.ELEMENT_DESCRIPTION,
-            DublinCore.ELEMENT_PUBLISHER,
-            DublinCore.ELEMENT_CONTRIBUTOR,
-            DublinCore.ELEMENT_DATE,
-            DublinCore.ELEMENT_TYPE,
-            DublinCore.ELEMENT_FORMAT,
-            DublinCore.ELEMENT_IDENTIFIER,
-            DublinCore.ELEMENT_SOURCE,
-            DublinCore.ELEMENT_LANGUAGE,
-            DublinCore.ELEMENT_RELATION,
-            DublinCore.ELEMENT_COVERAGE,
-            DublinCore.ELEMENT_RIGHTS };
+    static final String[] ELEMENTS = { DublinCore.ELEMENT_TITLE, DublinCore.ELEMENT_CREATOR,
+            DublinCore.ELEMENT_SUBJECT, DublinCore.ELEMENT_DESCRIPTION,
+            DublinCore.ELEMENT_PUBLISHER, DublinCore.ELEMENT_CONTRIBUTOR, DublinCore.ELEMENT_DATE,
+            DublinCore.ELEMENT_TYPE, DublinCore.ELEMENT_FORMAT, DublinCore.ELEMENT_IDENTIFIER,
+            DublinCore.ELEMENT_SOURCE, DublinCore.ELEMENT_LANGUAGE, DublinCore.ELEMENT_RELATION,
+            DublinCore.ELEMENT_COVERAGE, DublinCore.ELEMENT_RIGHTS };
 
     private static final String DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
     private static final String DCTERMS_PREFIX = "dcterms";
@@ -82,44 +71,22 @@ public class DublinCoreImpl {
     /**
      * The dublin core terms.
      */
-    public static final String[] TERMS =
-        {
-            DublinCore.TERM_AUDIENCE,
-            DublinCore.TERM_ALTERNATIVE,
-            DublinCore.TERM_TABLEOFCONTENTS,
-            DublinCore.TERM_ABSTRACT,
-            DublinCore.TERM_CREATED,
-            DublinCore.TERM_VALID,
-            DublinCore.TERM_EXTENT,
-            DublinCore.TERM_AVAILABLE,
-            DublinCore.TERM_ISSUED,
-            DublinCore.TERM_MODIFIED,
-            DublinCore.TERM_EXTENT,
-            DublinCore.TERM_MEDIUM,
-            DublinCore.TERM_ISVERSIONOF,
-            DublinCore.TERM_HASVERSION,
-            DublinCore.TERM_ISREPLACEDBY,
-            DublinCore.TERM_REPLACES,
-            DublinCore.TERM_ISREQUIREDBY,
-            DublinCore.TERM_REQUIRES,
-            DublinCore.TERM_ISPARTOF,
-            DublinCore.TERM_HASPART,
-            DublinCore.TERM_ISREFERENCEDBY,
-            DublinCore.TERM_REFERENCES,
-            DublinCore.TERM_ISFORMATOF,
-            DublinCore.TERM_HASFORMAT,
-            DublinCore.TERM_CONFORMSTO,
-            DublinCore.TERM_SPATIAL,
-            DublinCore.TERM_TEMPORAL,
-            DublinCore.TERM_MEDIATOR,
-            DublinCore.TERM_DATEACCEPTED,
-            DublinCore.TERM_DATECOPYRIGHTED,
-            DublinCore.TERM_DATESUBMITTED,
-            DublinCore.TERM_EDUCATIONLEVEL,
-            DublinCore.TERM_ACCESSRIGHTS,
+    static final String[] TERMS = { DublinCore.TERM_AUDIENCE, DublinCore.TERM_ALTERNATIVE,
+            DublinCore.TERM_TABLEOFCONTENTS, DublinCore.TERM_ABSTRACT, DublinCore.TERM_CREATED,
+            DublinCore.TERM_VALID, DublinCore.TERM_EXTENT, DublinCore.TERM_AVAILABLE,
+            DublinCore.TERM_ISSUED, DublinCore.TERM_MODIFIED, DublinCore.TERM_EXTENT,
+            DublinCore.TERM_LICENSE, DublinCore.TERM_MEDIUM, DublinCore.TERM_ISVERSIONOF,
+            DublinCore.TERM_HASVERSION, DublinCore.TERM_ISREPLACEDBY, DublinCore.TERM_REPLACES,
+            DublinCore.TERM_ISREQUIREDBY, DublinCore.TERM_REQUIRES, DublinCore.TERM_ISPARTOF,
+            DublinCore.TERM_HASPART, DublinCore.TERM_ISREFERENCEDBY, DublinCore.TERM_REFERENCES,
+            DublinCore.TERM_RIGHTSHOLDER, DublinCore.TERM_ISFORMATOF, DublinCore.TERM_HASFORMAT,
+            DublinCore.TERM_CONFORMSTO, DublinCore.TERM_SPATIAL, DublinCore.TERM_TEMPORAL,
+            DublinCore.TERM_MEDIATOR, DublinCore.TERM_DATEACCEPTED,
+            DublinCore.TERM_DATECOPYRIGHTED, DublinCore.TERM_DATESUBMITTED,
+            DublinCore.TERM_EDUCATIONLEVEL, DublinCore.TERM_ACCESSRIGHTS,
             DublinCore.TERM_BIBLIOGRAPHICCITATION };
 
-    /** 
+    /**
      * Creates a new instance of Dublin Core
      * 
      * @param aDocument the document for which the Dublin Core instance is created.
@@ -128,11 +95,8 @@ public class DublinCoreImpl {
      */
     protected DublinCoreImpl(Document aDocument) throws DocumentException {
         this.cmsdocument = aDocument;
-        infofile =
-            cmsdocument.getPublication().getPathMapper().getFile(
-                cmsdocument.getPublication(),
-                cmsdocument.getArea(),
-                cmsdocument.getId(),
+        infofile = cmsdocument.getPublication().getPathMapper().getFile(
+                cmsdocument.getPublication(), cmsdocument.getArea(), cmsdocument.getId(),
                 cmsdocument.getLanguage());
         loadValues();
     }
@@ -167,8 +131,8 @@ public class DublinCoreImpl {
                     Element[] children = helper.getChildren(metaElement, elementNames[i]);
                     String[] values = new String[children.length];
                     for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
-                        values[valueIndex] =
-                            DocumentHelper.getSimpleElementText(children[valueIndex]);
+                        values[valueIndex] = DocumentHelper
+                                .getSimpleElementText(children[valueIndex]);
                     }
                     maps[type].put(elementNames[i], values);
                 }
@@ -179,7 +143,7 @@ public class DublinCoreImpl {
 
     /**
      * Save the meta data.
-     *
+     * 
      * @throws DocumentException if the meta data could not be made persistent.
      */
     public void save() throws DocumentException {
@@ -211,8 +175,8 @@ public class DublinCoreImpl {
                 }
                 String[] values = (String[]) maps[type].get(elementNames[i]);
                 for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
-                    Element valueElement =
-                        helper.createElement(elementNames[i], values[valueIndex]);
+                    Element valueElement = helper
+                            .createElement(elementNames[i], values[valueIndex]);
                     metaElement.appendChild(valueElement);
                 }
             }
@@ -237,8 +201,8 @@ public class DublinCoreImpl {
      * @throws DocumentException if an error occurs.
      */
     protected Element getMetaElement(org.w3c.dom.Document doc) throws DocumentException {
-        NamespaceHelper namespaceHelper =
-            new NamespaceHelper(PageEnvelope.NAMESPACE, PageEnvelope.DEFAULT_PREFIX, doc);
+        NamespaceHelper namespaceHelper = new NamespaceHelper(PageEnvelope.NAMESPACE,
+                PageEnvelope.DEFAULT_PREFIX, doc);
         Element documentElement = doc.getDocumentElement();
         Element metaElement = namespaceHelper.getFirstChild(documentElement, META);
 
@@ -271,7 +235,7 @@ public class DublinCoreImpl {
     }
 
     /**
-     * Returns the element or term values, resp.,  for a certain key.
+     * Returns the element or term values, resp., for a certain key.
      * @param key The key.
      * @return An array of strings.
      * @throws DocumentException if an error occurs.
@@ -286,8 +250,8 @@ public class DublinCoreImpl {
         } else if (termList.contains(key)) {
             values = (String[]) terms.get(key);
         } else {
-            throw new DocumentException(
-                "The key [" + key + "] does not refer to a dublin core element or term!");
+            throw new DocumentException("The key [" + key
+                    + "] does not refer to a dublin core element or term!");
         }
         if (values == null) {
             values = new String[0];
@@ -326,17 +290,21 @@ public class DublinCoreImpl {
         } else if (termList.contains(key)) {
             terms.put(key, newValues);
         } else {
-            throw new DocumentException(
-                "The key [" + key + "] does not refer to a dublin core element or term!");
+            throw new DocumentException("The key [" + key
+                    + "] does not refer to a dublin core element or term!");
         }
     }
-	
+
     /**
-     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#setValue(java.lang.String, java.lang.String)
+     * @param key The key.
+     * @param value The value.
+     * @throws DocumentException if an error occurs.
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#setValue(java.lang.String,
+     *      java.lang.String)
      */
     public void setValue(String key, String value) throws DocumentException {
         String[] newValues = { value };
-        
+
         List elementList = Arrays.asList(ELEMENTS);
         List termList = Arrays.asList(TERMS);
         if (elementList.contains(key)) {
@@ -344,30 +312,38 @@ public class DublinCoreImpl {
         } else if (termList.contains(key)) {
             terms.put(key, newValues);
         } else {
-            throw new DocumentException(
-                "The key [" + key + "] does not refer to a dublin core element or term!");
+            throw new DocumentException("The key [" + key
+                    + "] does not refer to a dublin core element or term!");
         }
     }
-    
-	/**
-	 * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#addValues(java.lang.String, java.lang.String[])
-	 */
-	public void addValues(String key, String[] values) throws DocumentException {
-		for (int i = 0; i < values.length; i++) {
-            addValue(key,values[i]);
-        }
-	}
-	
+
     /**
-     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#removeValue(java.lang.String, java.lang.String)
+     * @param key The key.
+     * @param values The values.
+     * @throws DocumentException if an error occurs.
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#addValues(java.lang.String,
+     *      java.lang.String[])
+     */
+    public void addValues(String key, String[] values) throws DocumentException {
+        for (int i = 0; i < values.length; i++) {
+            addValue(key, values[i]);
+        }
+    }
+
+    /**
+     * @param key The key.
+     * @param value The value.
+     * @throws DocumentException if an error occurs.
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#removeValue(java.lang.String,
+     *      java.lang.String)
      */
     public void removeValue(String key, String value) throws DocumentException {
         String[] existingValues = getElementOrTerm(key);
         List list = new ArrayList(Arrays.asList(existingValues));
 
         if (!list.contains(value)) {
-            throw new DocumentException(
-                "The key [" + key + "] does not contain the value [" + value + "]!");
+            throw new DocumentException("The key [" + key + "] does not contain the value ["
+                    + value + "]!");
         }
 
         list.remove(value);
@@ -380,12 +356,14 @@ public class DublinCoreImpl {
         } else if (termList.contains(key)) {
             terms.put(key, newValues);
         } else {
-            throw new DocumentException(
-                "The key [" + key + "] does not refer to a dublin core element or term!");
+            throw new DocumentException("The key [" + key
+                    + "] does not refer to a dublin core element or term!");
         }
     }
 
     /**
+     * @param key The key.
+     * @throws DocumentException if an error occurs.
      * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#removeAllValues(java.lang.String)
      */
     public void removeAllValues(String key) throws DocumentException {
@@ -396,16 +374,18 @@ public class DublinCoreImpl {
         } else if (termList.contains(key)) {
             terms.put(key, new String[0]);
         } else {
-            throw new DocumentException(
-                "The key [" + key + "] does not refer to a dublin core element or term!");
+            throw new DocumentException("The key [" + key
+                    + "] does not refer to a dublin core element or term!");
         }
     }
-    
-	/**
-	 * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#replaceBy(org.apache.lenya.cms.publication.DublinCore)
-	 */
-	public void replaceBy(DublinCore other) throws DocumentException {
-		for (int i = 0; i < ELEMENTS.length; i++) {
+
+    /**
+     * @param other The other dublin core.
+     * @throws DocumentException if an error occurs.
+     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#replaceBy(org.apache.lenya.cms.metadata.dublincore.DublinCore)
+     */
+    public void replaceBy(DublinCore other) throws DocumentException {
+        for (int i = 0; i < ELEMENTS.length; i++) {
             String key = ELEMENTS[i];
             removeAllValues(key);
             addValues(key, other.getValues(key));
@@ -415,6 +395,40 @@ public class DublinCoreImpl {
             removeAllValues(key);
             addValues(key, other.getValues(key));
         }
-	}
+    }
+
+    /**
+     * Returns the term keys.
+     * @return An array of strings.
+     */
+    public static String[] getTerms() {
+        return (String[]) Arrays.asList(TERMS).toArray(new String[TERMS.length]);
+    }
+
+    /**
+     * Returns the element keys.
+     * @return An array of strings.
+     */
+    public static String[] getElements() {
+        return (String[]) Arrays.asList(ELEMENTS).toArray(new String[ELEMENTS.length]);
+    }
+
+    /**
+     * Checks if a key represents a valid dublin core term.
+     * @param key The key.
+     * @return A boolean value.
+     */
+    public static boolean isValidTerm(String key) {
+        return Arrays.asList(DublinCoreImpl.TERMS).contains(key);
+    }
+
+    /**
+     * Checks if a key represents a valid dublin core element.
+     * @param key The key.
+     * @return A boolean value.
+     */
+    public static boolean isValidElement(String key) {
+        return Arrays.asList(DublinCoreImpl.ELEMENTS).contains(key);
+    }
 
 }

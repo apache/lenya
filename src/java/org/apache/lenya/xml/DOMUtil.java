@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMUtil.java,v 1.18 2004/07/16 15:01:08 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
