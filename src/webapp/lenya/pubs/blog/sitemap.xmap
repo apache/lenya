@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.6 2003/08/18 09:48:26 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.7 2003/08/18 22:40:59 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -68,6 +68,7 @@
 -->
         <map:serialize type="xml"/>
       </map:match>
+      <!-- GET and PUT -->
       <map:match pattern="*/entries/*/*/*/*/index-bxeng.xml">
         <map:generate src="content/{1}/entries/2003/07/28/1/test.xml"/>
 <!--
