@@ -1,5 +1,4 @@
 /*
-$Id: DefaultCreator.java,v 1.25 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -56,6 +55,7 @@ $Id: DefaultCreator.java,v 1.25 2004/02/02 02:50:36 stefano Exp $
 package org.apache.lenya.cms.authoring;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -67,6 +67,7 @@ import org.w3c.dom.Document;
  * DOCUMENT ME!
  *
  * @author <a href="mailto:bigalke@geophysik.uni-frankfurt.de">Juergen Bigalke</a>
+ * @version $Id: DefaultCreator.java,v 1.26 2004/02/29 14:14:44 michi Exp $
  */
 public class DefaultCreator implements ParentChildCreatorInterface {
     private static Category log = Category.getInstance(DefaultCreator.class);
@@ -185,6 +186,12 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
         String doctypeSample = samplesDir + File.separator + sampleResourceName;
         String doctypeMeta = samplesDir + File.separator + sampleMetaName;
+
+        File sampleFile = new File(doctypeSample);
+        if (!sampleFile.exists()) {
+            log.error("No such sample file: " + sampleFile);
+            throw new FileNotFoundException("" + sampleFile);
+        }
 
         // Read sample file
         log.debug("Read sample file: " + doctypeSample);
