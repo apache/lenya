@@ -29,9 +29,15 @@
 <xsl:apply-templates select="echo:content"/>
 
 <tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;New XHTML content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
+  <td colspan="2">Content (text/xhtml)</td>
+</tr>
+<!--
+<tr>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New CDATA content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
   <td colspan="2">Content (text/plain as CDATA)</td>
 </tr>
+-->
 </xsl:template>
 
 <xsl:template match="echo:summary">
@@ -41,6 +47,7 @@
   <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5"><xsl:apply-templates select="node()" mode="mixed" /></textarea></td>
 </tr>
 </xsl:template>
+
 
 <xsl:template match="echo:content[@type='text/plain']">
 <tr>
@@ -54,9 +61,27 @@
 </tr>
 </xsl:template>
 
+
+<xsl:template match="echo:content[@type='text/xhtml']">
+<tr>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;" value="LENYA"/></td>
+  <td colspan="2">Content (text/xhtml)</td>
+</tr>
+<tr>
+  <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
+  <td valign="top">Content (text/xhtml)</td>
+  <td>
+    <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">
+      <xsl:apply-templates select="." mode="mixed"/>
+    </textarea>
+  </td>
+</tr>
+</xsl:template>
+
+
 <xsl:template match="echo:content">
 <tr>
-  <td>&#160;</td><td valign="top">Content (<xsl:value-of select="@type"/>)</td><td><xsl:apply-templates/></td>
+  <td>&#160;</td><td valign="top">Content (Either no @type attribute or no xsl:template with such a @type attribute!)</td><td><xsl:apply-templates/></td>
 </tr>
 </xsl:template>
 
@@ -67,14 +92,21 @@
 <xsl:template match="echo:title//*" mode="mixed">
 <xsl:copy>
 <xsl:copy-of select="@*[local-name()!='tagID']"/>
-<xsl:apply-templates select="node()"/>
+<xsl:apply-templates select="node()" mode="mixed"/>
 </xsl:copy>
 </xsl:template>
 
 <xsl:template match="echo:summary//*" mode="mixed">
 <xsl:copy>
 <xsl:copy-of select="@*[local-name()!='tagID']"/>
-<xsl:apply-templates select="node()"/>
+<xsl:apply-templates select="node()" mode="mixed"/>
+</xsl:copy>
+</xsl:template>
+
+<xsl:template match="echo:content//*" mode="mixed">
+<xsl:copy>
+<xsl:copy-of select="@*[local-name()!='tagID']"/>
+<xsl:apply-templates select="node()" mode="mixed"/>
 </xsl:copy>
 </xsl:template>
  

@@ -25,9 +25,15 @@
     <echo:issued>2003-02-05T08:29:29-04:00</echo:issued>
     <echo:modified>2003-02-05T12:29:29Z</echo:modified>
 
+    <echo:content type="text/xhtml" xml:lang="en-us">
+      <p>Hello, <i><b>weblog</b> <a href="http://www.apache.org">world</a></i>!</p>
+    </echo:content>
+
+<!--
     <echo:content type="text/plain" xml:lang="en-us" mode="escaped">
       <![CDATA[ Plain Text (as CDATA): < & > ]]>
     </echo:content>
+-->
 
 <!--
     <echo:content type="application/xhtml+xml" xml:lang="en-us">
