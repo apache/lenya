@@ -96,6 +96,8 @@ public class AntTask
      * @param properties A map mapping the project properties to their values.
      */
     public void executeAntTarget(
+            String servletContextPath,
+            String publicationId,
             File publicationDirectory,
             File buildFile,
             String target,
@@ -120,6 +122,8 @@ public class AntTask
             helper.parse(project, buildFile);
             
             project.setUserProperty(PUBLICATION_DIRECTORY, publicationDirectory.getAbsolutePath());
+            project.setUserProperty(PUBLICATION_ID, publicationId);
+            project.setUserProperty(SERVLET_CONTEXT_PATH, servletContextPath);
             
             for (Iterator keys = properties.keySet().iterator(); keys.hasNext(); ) {
                 String key = (String) keys.next();
@@ -152,6 +156,8 @@ public class AntTask
     }
     
     public static final String PUBLICATION_DIRECTORY = "pub.dir";
+    public static final String PUBLICATION_ID = "pub.id";
+    public static final String SERVLET_CONTEXT_PATH = "servlet.context";
     public static final String BUILDFILE = "buildfile";
     public static final String TARGET = "target";
     public static final String ANT_PREFIX = "ant";
@@ -169,6 +175,7 @@ public class AntTask
      */
     public void execute(String servletContextPath) throws ExecutionException {
         
+        String publicationId;
         File publicationDirectory;
         File buildFile;
         String target;
@@ -182,7 +189,7 @@ public class AntTask
                 = getParameters().getParameter("buildfile", DEFAULT_BUILDFILE)
                 .replace('/', File.separatorChar);
 
-            String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
+            publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
             
             if (publicationId.equals("")) {
                 publicationDirectory = new File(".");
@@ -214,7 +221,7 @@ public class AntTask
             throw new ExecutionException(e);
         }
         
-        executeAntTarget(publicationDirectory, buildFile, target, arguments, properties, logFile);
+        executeAntTarget(servletContextPath, publicationId, publicationDirectory, buildFile, target, arguments, properties, logFile);
         
     }
 }
