@@ -15,22 +15,50 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.12 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id: body.xsl,v 1.13 2004/05/11 07:38:44 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:echo="http://purl.org/atom/ns#"
+  xmlns:ent="http://www.purl.org/NET/ENT/1.0/"
 >
 
 <xsl:import href="../entry/body.xsl"/>
 
 <xsl:template match="echo:title">
-<div class="title"><a href="../../entries/{normalize-space(../echo:id)}/index.html"><xsl:apply-templates/></a></div>
+  <xsl:param name="id"/>
+
+  <xsl:variable name="lenyaEntryID">
+    <xsl:call-template name="get-lenya-id">
+      <xsl:with-param name="entry-id" select="$id"/>
+    </xsl:call-template>
+  </xsl:variable>
+
+  <div class="title"><a href="{$lenyaEntryID}"><xsl:apply-templates/></a></div>
 </xsl:template>
+
 
 <xsl:template name="permalink">
   <xsl:param name="id"/>
-  <a href="../../entries/{normalize-space($id)}/index.html">Permalink</a>
+
+  <xsl:variable name="lenyaEntryID">
+    <xsl:call-template name="get-lenya-id">
+      <xsl:with-param name="entry-id" select="$id"/>
+    </xsl:call-template>
+  </xsl:variable>
+
+  <a href="{$lenyaEntryID}">Permalink</a>
+</xsl:template>
+
+
+<xsl:template name="get-lenya-id">
+  <xsl:param name="entry-id"/>
+
+  <xsl:variable name="id" select="substring-after($entry-id,',')"/>
+
+  <xsl:variable name="bar">../../entries/<xsl:value-of select="translate($id,':','/')"/>/index.html</xsl:variable>
+  <xsl:value-of select="$bar"/>
+ 
 </xsl:template>
 
 </xsl:stylesheet>  

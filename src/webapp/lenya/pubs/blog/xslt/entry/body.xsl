@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.16 2004/04/24 21:04:39 gregor Exp $ -->
+<!-- $Id: body.xsl,v 1.17 2004/05/11 07:38:44 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -25,12 +25,12 @@
 
 <xsl:template match="echo:entry">
   <div class="dateline"><xsl:value-of select="echo:issued"/></div>
-  <xsl:apply-templates select="echo:title"/>
+  <xsl:apply-templates select="echo:title"><xsl:with-param name="id" select="echo:id"/></xsl:apply-templates>
   <xsl:apply-templates select="echo:summary"/>
   <xsl:apply-templates select="echo:content"/>
   <br />
   <p class="issued">
-  <strong>Posted <xsl:apply-templates select="echo:author"/> at <xsl:value-of select="echo:issued"/>&#160;|&#160;<xsl:call-template name="permalink"><xsl:with-param name="id" select="echo:id"/></xsl:call-template></strong>
+  </strong>Posted <xsl:apply-templates select="echo:author"/> AT <xsl:value-of select="echo:issued"/>&#160;|&#160;<xsl:call-template name="permalink"><xsl:with-param name="id" select="echo:id"/></xsl:call-template></strong>
   </p>
 </xsl:template>
 

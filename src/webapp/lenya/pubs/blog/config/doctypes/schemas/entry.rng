@@ -15,69 +15,67 @@
   limitations under the License.
 -->
 
-<!-- $Id: entry.rng,v 1.10 2004/04/26 14:59:02 michi Exp $ -->
+<!-- $Id: entry.rng,v 1.11 2004/05/11 07:38:44 gregor Exp $ -->
 
-<grammar xmlns:echo="http://purl.org/atom/ns#" ns="http://www.w3.org/XML/1998/namespace" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns:echo="http://purl.org/atom/ns#" ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <element name="echo:entry">
-      <attribute name="version">
-        <data type="decimal"/>
-      </attribute>
       <element name="echo:title">
         <text/>
       </element>
-<!-- FIXME: BXE seems to have a problem with optional summary -->
-      <optional>
-        <element name="echo:summary">
-          <text/>
-        </element>
-      </optional>
+      <element name="echo:summary">
+        <text/>
+      </element>
       <element name="echo:author">
         <element name="echo:name">
-          <text/>
+          <data type="NCName"/>
         </element>
       </element>
       <element name="echo:link">
-        <data type="anyURI"/>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+        <attribute name="rel">
+          <data type="NCName"/>
+        </attribute>
+        <attribute name="type"/>
       </element>
       <element name="echo:id">
-        <text/>
+        <data type="anyURI"/>
       </element>
       <element name="echo:created">
-        <text/>
+        <data type="NMTOKEN"/>
       </element>
       <element name="echo:issued">
-        <text/>
+        <data type="NMTOKEN"/>
       </element>
       <element name="echo:modified">
-        <text/>
+        <data type="NMTOKEN"/>
       </element>
-      <oneOrMore>
       <element name="echo:content">
         <attribute name="type"/>
-        <element>
-          <name ns="">p</name>
-          <oneOrMore>
-            <choice>
-              <text/>
-              <element>
-                <name ns="">strong</name>
+        <oneOrMore>
+          <element name="p">
+            <oneOrMore>
+              <choice>
                 <text/>
-              </element>
-              <element>
-                <name ns="">em</name>
-                <text/>
-              </element>
-              <element>
-                <name ns="">a</name>
-                <attribute name="href"/>
-                <text/>
-              </element>
-            </choice>
-          </oneOrMore>
-        </element>
+                <element name="a">
+                  <attribute name="href">
+                    <data type="anyURI"/>
+                  </attribute>
+                  <text/>
+                </element>
+                <element name="strong">
+                  <data type="NCName"/>
+                </element>
+                <element name="em">
+                  <data type="NCName"/>
+                </element>
+              </choice>
+            </oneOrMore>
+          </element>
+        </oneOrMore>
       </element>
-      </oneOrMore>
     </element>
   </start>
 </grammar>

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: NewBlogEntryCreator.java,v 1.5 2004/03/20 12:08:56 gregor Exp $  */
+/* $Id: NewBlogEntryCreator.java,v 1.6 2004/05/11 07:38:44 gregor Exp $  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -79,10 +79,18 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         DOMUtil du = new DOMUtil();
 
         // Replace id
-        du.setElementValue(doc, "/echo:entry/echo:id", year + "/" + month + "/" + day + "/" + childId);
+        du.setElementValue(doc, "/echo:entry/echo:id", "tag:bob.blog," + year + ":" + month + ":" + day + ":" + childId);
 
         // Replace title 
         du.setElementValue(doc, "/echo:entry/echo:title", (String)parameters.get("title"));
+
+        // Replace Summary
+        du.setElementValue(doc, "/echo:entry/echo:summary", "Summary");
+
+	// Replace link:
+        du.setAttributeValue(doc, "/echo:entry/echo:link/@rel",  "alternate");
+        du.setAttributeValue(doc, "/echo:entry/echo:link/@href", "http://bob.blog/");
+        du.setAttributeValue(doc, "/echo:entry/echo:link/@type", "text/xml");
 
         // Replace author
         Identity identity = (Identity)parameters.get("org.apache.lenya.ac.Identity");
