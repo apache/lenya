@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simple-document xmlns="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+    <!-- the root element indicates the doctype -->
+    <lenya:meta>
+        <dc:title>Standardpublikation</dc:title>
+        <dc:creator>Christian Egli</dc:creator>
+        <dc:subject>DC Subject</dc:subject>
+        <dc:description>DC Description</dc:description>
+        <dc:publisher/>
+        <dc:contributor/>
+        <dc:date>2003-5-21</dc:date>
+        <dc:type/>
+        <dc:format/>
+        <dc:identifier/>
+        <dc:source/>
+        <dc:language>de</dc:language>
+        <dc:relation/>
+        <dc:coverage/>
+        <dc:rights>DC Rights</dc:rights>
+    </lenya:meta>
+    <lenya:header>
+        <lenya:document-title>Standardpublikation</lenya:document-title>
+        <lenya:abstract></lenya:abstract>
+    </lenya:header>
+  <body>
+    <p>Hello and welcome to the Lenya default publication!</p>
+
+    <p>Apache Lenya is a Java Open-Source Content Management System
+    based on open standards such as XML and XSLT and the Apache
+    Software Stack, in particular the XML publishing framework Apache
+    Cocoon.</p>
+
+    <p>For an overview of the concepts and the terminology used in
+    Apache Lenya please see the <ulink url="concepts.html">Concepts
+    section</ulink>. To see what you can do with Apache Lenya please
+    refer to the <ulink url="features.html">Features
+    section</ulink>.</p>
+
+    <p>If you'd like to get a quick introduction on how to use Apache
+    Lenya CMS please go through the <ulink
+    url="tutorial.html">tutorial</ulink>.</p>
+
+    <p>The purpose of this publication is</p>
+
+    <itemizedlist>
+      <listitem>to show beginners the basic functionality of the Apache
+      Lenya CMS,</listitem>
+
+      <listitem>to provide an "out of the box" publication that can be
+      easily adapted and used,</listitem>
+
+      <listitem>and to provide a basis for reference implementations of new
+      concepts and best practices.</listitem>
+
+    </itemizedlist>
+
+    <p>This publication does not go to the limit of what's possible
+    with Apache Lenya CMS, there are no fancy bells and whistles to
+    confuse you, this publication simply contains everything you need
+    to get started.</p>
+    </body>
+</simple-document>

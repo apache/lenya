@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+    <!-- the root element indicates the doctype -->
+    <lenya:meta>
+        <dc:title>Konzepte</dc:title>
+        <dc:creator>Christian Egli</dc:creator>
+        <dc:subject>DC Subject</dc:subject>
+        <dc:description>DC Description</dc:description>
+        <dc:publisher/>
+        <dc:contributor/>
+        <dc:date>2003-5-21</dc:date>
+        <dc:type/>
+        <dc:format/>
+        <dc:identifier/>
+        <dc:source/>
+        <dc:language>de</dc:language>
+        <dc:relation/>
+        <dc:coverage/>
+        <dc:rights>DC Rights</dc:rights>
+    </lenya:meta>
+    <lenya:header>
+        <lenya:document-title>Konzepte</lenya:document-title>
+        <lenya:abstract>Abstract that can be used on an overview page</lenya:abstract>
+    </lenya:header>
+  <head>
+    <title>Konzepte</title>
+  </head>
+  <body>
+    <h1>Konzepte</h1>
+    
+    <h2>Publications</h2>
+    
+    <p>In Apache Lenya, a website is called a
+    <strong>publication</strong>.</p>
+    
+    <h2>Areas: Authoring and Live</h2>
+
+    <p>Apache Lenya separates between different areas:</p>
+    <ul>
+      <li>The authoring area is for creating and editing of
+      content. All CMS functions are available here.</li>
+
+      <li>Once the content has been published it is moved to the live
+      area. The live area can be served by a web server directly or
+      you can add another intermediate step where the content is
+      replicated from the live area to the actual web server. In any
+      case the live area simply serves as a preview to the content
+      that will be served by the web server.</li>
+    </ul>
+    
+    <h2>Document types</h2>
+
+    <p>As Apache Lenya is based on Apache Cocoon, it has strong XML and
+    XSLT foundations. It is possible to ensure that a document
+    conforms to an XML schema. Typically you define different types of
+    documents, like an news article or an opinion piece, conforming to
+    different XML schemas. These different types are referred to as
+    document types. They are used to ensure the XML schema conformance
+    when editing and typically also when preparing a presentation of
+    the document, where an opinion piece has a different layout than a
+    news article.</p>
+
+  </body>
+</html>
