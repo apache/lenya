@@ -5,6 +5,7 @@
   xmlns:xsp="http://apache.org/xsp"  
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
   >
   
   <xsp:structure>
@@ -38,6 +39,13 @@
     <referer><xsp-request:get-uri/></referer>
     <doctype><xsp:expr><xsp-request:get-parameter name="doctype"/></xsp:expr></doctype>
     <default-language><xsp:expr>pub.getDefaultLanguage()</xsp:expr></default-language>
+
+    <dc:creator><input:get-attribute module="access-control" as="string" name="user-id"/></dc:creator>
+    <dc:subject></dc:subject>
+    <dc:publisher>Universität Zürich</dc:publisher>
+    <dc:date></dc:date>
+    <dc:rights></dc:rights>
+    <dc:language><xsp:expr>pub.getDefaultLanguage()</xsp:expr></dc:language>
+
   </parent-child>
-  
 </xsp:page>
