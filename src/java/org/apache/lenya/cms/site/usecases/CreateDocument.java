@@ -53,18 +53,13 @@ public class CreateDocument extends Create {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
-        
-        String documentId = getParameterAsString(DOCUMENT_ID);
-
-        if (documentId.equals("")) {
-            addErrorMessage("The document ID is required.");
-        }
-
-        if (documentId.matches("[^a-zA-Z0-9\\-]+")) {
-            addErrorMessage("The document ID is not valid.");
-        }
-
         super.doCheckExecutionConditions();
+        
+        String nodeId = getParameterAsString(DOCUMENT_ID);
+        Document parent = getSourceDocument();
+        String language = getParameterAsString(LANGUAGE);
+        SiteUtility util = new SiteUtility();
+        addErrorMessages(util.canCreate(parent, nodeId, language));
     }
     
     /**

@@ -139,5 +139,31 @@ public class DocumentFactory {
         }
         return parent;
     }
+    
+    /**
+     * Checks if a string represents a valid document ID.
+     * @param id The string.
+     * @return A boolean value.
+     */
+    public boolean isValidDocumentId(String id) {
+        
+        if (!id.startsWith("/")) {
+            return false;
+        }
+        
+        String[] snippets = id.split("/");
+        
+        if (snippets.length < 2) {
+            return false;
+        }
+        
+        for (int i = 1; i < snippets.length; i++) {
+            if (!snippets[i].matches("[a-zA-Z0-9\\-]+")) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 
 }
