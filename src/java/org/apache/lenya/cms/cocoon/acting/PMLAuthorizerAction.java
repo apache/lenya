@@ -82,6 +82,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  *
  * @author Michael Wechner
  * @version 2.1.6
+ * @deprecated Replaced by the new access controller.
  */
 public class PMLAuthorizerAction extends AbstractAuthorizerAction implements ThreadSafe {
     private String domain = null;

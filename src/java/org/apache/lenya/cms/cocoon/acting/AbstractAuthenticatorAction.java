@@ -76,6 +76,7 @@ import java.util.Map;
  *
  * @author Michael Wechner
  * @version 2001.12.10
+ * @deprecated Replaced by the new access controller.
  */
 public abstract class AbstractAuthenticatorAction extends AbstractComplementaryConfigurableAction
     implements Configurable {

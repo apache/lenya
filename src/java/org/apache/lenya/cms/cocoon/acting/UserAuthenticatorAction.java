@@ -83,8 +83,7 @@ import java.util.Map;
 
 /**
  * @author egli
- *
- *
+ * @deprecated Replaced by the new access controller.
  */
 public class UserAuthenticatorAction extends IMLAuthenticatorAction {
 

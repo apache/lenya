@@ -65,6 +65,7 @@ import java.util.Map;
  *
  * @author Michael Wechner
  * @version 1.12.29
+ * @deprecated Replaced by the new access controller.
  */
 public abstract class AbstractUsernamePasswordAuthenticatorAction
     extends AbstractAuthenticatorAction {
