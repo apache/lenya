@@ -10,7 +10,14 @@
 
   <xsp-wyona:util/>
 
-  <live_uri>/magazin/gesundheit/2002/0465/index.html</live_uri>
+  <xsp:logic>
+    String channel=parameters.getParameter("channel","null");
+    String section=parameters.getParameter("section","null");
+    String year=parameters.getParameter("year","null");
+    String articleId=parameters.getParameter("articleId","null");
+  </xsp:logic>                                                                                                                              
+
+  <live_uri><xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html"</xsp:expr></live_uri>
 
   <xsp:logic>
     String domain_prefix="http://194.191.122.220:8080"+xsp_wyona_context_prefix+"/authoring";

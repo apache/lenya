@@ -4,7 +4,6 @@
 <!--
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 -->
-
 <xsl:include href="../../../../../../../stylesheets/cms/Page/root.xsl"/>
 <xsl:template match="cmsbody">
   <xsl:apply-templates/>
