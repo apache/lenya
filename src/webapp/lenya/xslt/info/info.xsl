@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.65 2004/04/04 07:37:44 roku Exp $ -->
+<!-- $Id: info.xsl,v 1.66 2004/05/21 14:36:31 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -298,28 +298,16 @@
 				<input type="hidden" name="lenya.usecase" value="info-ac-{@area}"/>
 				<input type="hidden" name="lenya.step" value="showscreen"/>
 				<input type="hidden" name="change_ssl" value="true"/>
-<!-- FIXME What is this test supposed to accomplish? it disabled ssl editing everywhere
-                    <xsl:choose>
-                  <xsl:when test="$area != 'authoring'">       
-                  --> 
-                    <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_{@area}.submit()" value="true">
-       		        <xsl:if test="@ssl = 'true'">
-	        	      <xsl:attribute name="checked">checked</xsl:attribute>
-       	 	        </xsl:if>
-        	        <i18n:text>SSL Encryption</i18n:text>
-                    </input>
-<!--                  </xsl:when>
-                  <xsl:otherwise>
-                    <input disabled="disabled" type="checkbox" name="ssl" value="true">
-       		          <xsl:if test="@ssl = 'true'">
-	        	        <xsl:attribute name="checked">checked</xsl:attribute>
-       		          </xsl:if>
-        	          <i18n:text>SSL Encryption</i18n:text>
-                    </input>
-                  </xsl:otherwise>
-                </xsl:choose>        
-                -->      
-    	</form>
+        <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_{@area}.submit()" value="true">
+           <xsl:if test="@ssl = 'true' or @ancestor-ssl = 'true'">
+            <xsl:attribute name="checked">checked</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@ancestor-ssl = 'true'">
+              <xsl:attribute name="disabled">disabled</xsl:attribute>
+            </xsl:if>
+          <i18n:text>SSL Encryption</i18n:text>
+        </input>
+      </form>
     </td>
 	</tr>
 	<tr>
