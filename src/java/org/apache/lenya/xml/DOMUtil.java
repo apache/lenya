@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMUtil.java,v 1.16 2004/07/16 10:15:41 andreas Exp $  */
+/* $Id: DOMUtil.java,v 1.17 2004/07/16 10:20:26 andreas Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -23,38 +23,40 @@ import java.io.StringReader;
 import java.util.Vector;
 
 import org.apache.log4j.Category;
+import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
 /**
- * This class is a utility class for miscellaneous DOM functions, similar to org.apache.cocoon.xml.dom.DOMUtil
- * FIXME: Merge classes or extend functionality
+ * This class is a utility class for miscellaneous DOM functions, similar to
+ * org.apache.cocoon.xml.dom.DOMUtil FIXME: Merge classes or extend functionality
  */
 public class DOMUtil {
     static Category log = Category.getInstance(DOMUtil.class);
+
     DOMParserFactory dpf = null;
+
     XPointerFactory xpf = null;
 
     /**
-       *
-       */
+     *  
+     */
     public DOMUtil() {
         dpf = new DOMParserFactory();
         xpf = new XPointerFactory();
     }
 
     /**
-       *
-       */
+     *  
+     */
     public static void main(String[] args) {
         try {
             DOMUtil du = new DOMUtil();
-            Document document = du.create(
-                    "<?xml version=\"1.0\"?><Artikel><Datum><Monat Name=\"Juli\"/><Tag>23</Tag></Datum><Content/></Artikel>");
+            Document document = du
+                    .create("<?xml version=\"1.0\"?><Artikel><Datum><Monat Name=\"Juli\"/><Tag>23</Tag></Datum><Content/></Artikel>");
             new DOMWriter(System.out).printWithoutFormatting(document);
             du.setElementValue(document, "/Artikel/Datum/Tag", "25");
             du.setElementValue(document, "/Artikel/Datum/Monat", "7");
@@ -77,30 +79,32 @@ public class DOMUtil {
             }
 
             System.out.print("\n");
-            System.out.println("Datum/Monat=" +
-                du.getElementValue(document.getDocumentElement(), new XPath("Datum/Monat")));
-            System.out.println("Datm=" +
-                du.getElementValue(document.getDocumentElement(), new XPath("Datm")));
+            System.out.println("Datum/Monat="
+                    + du.getElementValue(document.getDocumentElement(), new XPath("Datum/Monat")));
+            System.out.println("Datm="
+                    + du.getElementValue(document.getDocumentElement(), new XPath("Datm")));
 
-            System.out.println("Datum/Monat/@Name=" +
-                du.getAttributeValue(document.getDocumentElement(), new XPath("Datum/Monat/@Name")));
+            System.out.println("Datum/Monat/@Name="
+                    + du.getAttributeValue(document.getDocumentElement(), new XPath(
+                            "Datum/Monat/@Name")));
         } catch (Exception e) {
             System.err.println(e);
         }
     }
 
     /**
-       * @deprecated Use {@link DocumentHelper#readDocument(String)} instead.
-       */
+     * @deprecated Use {@link DocumentHelper#readDocument(java.lang.String)} instead.
+     */
     public Document create(String xml) throws Exception {
         return dpf.getDocument(new StringReader(xml));
     }
 
     /**
-       *
-       */
-    public Element[] select(Document document, String xpath)
-        throws Exception {
+     * @deprecated Use
+     *             {@link org.apache.xpath.XPathAPI#selectNodeList(org.w3c.dom.Node, java.lang.String)}
+     *             instead.
+     */
+    public Element[] select(Document document, String xpath) throws Exception {
         log.debug(".select(): " + xpath);
 
         Vector nodes = xpf.select(document, "xpointer(" + xpath + ")");
@@ -114,8 +118,15 @@ public class DOMUtil {
     }
 
     /**
-       *
-       */
+     * <p>
+     * This method removes all child nodes from an element and inserts a text node instead.
+     * </p>
+     * <p>
+     * Caution: Child elements are removed as well!
+     * </p>
+     * @param element The element.
+     * @param text The string to insert as a text node.
+     */
     public void replaceText(Element element, String text) {
         NodeList nl = element.getChildNodes();
 
@@ -127,18 +138,16 @@ public class DOMUtil {
     }
 
     /**
-       *
-       */
-    public String getElementValue(Document document, XPath xpath)
-        throws Exception {
+     *  
+     */
+    public String getElementValue(Document document, XPath xpath) throws Exception {
         return getElementValue(document.getDocumentElement(), xpath);
     }
 
     /**
-       *
-       */
-    public String getElementValue(Element element, XPath xpath)
-        throws Exception {
+     *  
+     */
+    public String getElementValue(Element element, XPath xpath) throws Exception {
         String value = "";
         NodeList nl = getElement(element, xpath).getChildNodes();
 
@@ -156,11 +165,10 @@ public class DOMUtil {
     }
 
     /**
-     * Check if elements exists
-     * This method just checks the root element! TODO: Implementation is not really finished, or is it!
+     * Check if elements exists This method just checks the root element! TODO: Implementation is
+     * not really finished, or is it!
      */
-    public boolean elementExists(Element element, XPath xpath)
-        throws Exception {
+    public boolean elementExists(Element element, XPath xpath) throws Exception {
         log.debug(xpath);
 
         if (xpath.parts.length > 0) {
@@ -172,14 +180,13 @@ public class DOMUtil {
                 return true;
             }
         }
-    return false;
+        return false;
     }
 
     /**
      * Get element via XPath
      */
-    public Element getElement(Element element, XPath xpath)
-        throws Exception {
+    public Element getElement(Element element, XPath xpath) throws Exception {
         log.debug(xpath);
 
         if (xpath.parts.length > 0) {
@@ -188,8 +195,8 @@ public class DOMUtil {
             if (nl.getLength() == 0) {
                 throw new Exception("There are no elements with Name \"" + xpath.parts[0] + "\".");
             } else if (nl.getLength() == 1) {
-                log.debug("There is one element with Name \"" + xpath.parts[0] + "\" (" +
-                    xpath.parts.length + ").");
+                log.debug("There is one element with Name \"" + xpath.parts[0] + "\" ("
+                        + xpath.parts.length + ").");
 
                 if (xpath.parts.length == 1) {
                     return (Element) nl.item(0);
@@ -203,8 +210,8 @@ public class DOMUtil {
                     return getElement((Element) nl.item(0), new XPath(newXPathString));
                 }
             } else {
-                throw new Exception("There are more elements than one with Name \"" +
-                    xpath.parts[0] + "\".");
+                throw new Exception("There are more elements than one with Name \""
+                        + xpath.parts[0] + "\".");
             }
         }
 
@@ -213,18 +220,17 @@ public class DOMUtil {
 
     /**
      * get all elements with |xpath|, xpath has to start with the root node
-     *
+     * 
      * @param document a value of type 'Document'
      * @param xpath a value of type 'XPath'
-     *
+     * 
      * @return a value of type 'Element[]'
-     *
+     * 
      * @exception Exception if an error occurs
      */
-    public Element[] getAllElements(Document document, XPath xpath)
-        throws Exception {
-        Vector nodes = xpf.select(document.getDocumentElement(),
-                "xpointer(" + xpath.toString() + ")");
+    public Element[] getAllElements(Document document, XPath xpath) throws Exception {
+        Vector nodes = xpf.select(document.getDocumentElement(), "xpointer(" + xpath.toString()
+                + ")");
         Element[] elements = new Element[nodes.size()];
 
         for (int i = 0; i < nodes.size(); i++) {
@@ -235,20 +241,18 @@ public class DOMUtil {
     }
 
     /**
-     * get all elements values from |xpath|, xpath has to start with the root
-     * node
-     *
+     * get all elements values from |xpath|, xpath has to start with the root node
+     * 
      * @param document a value of type 'Document'
      * @param xpath a value of type 'XPath'
-     *
+     * 
      * @return a value of type 'String[]'
-     *
+     * 
      * @exception Exception if an error occurs
      */
-    public String[] getAllElementValues(Document document, XPath xpath)
-        throws Exception {
-        Vector nodes = xpf.select(document.getDocumentElement(),
-                "xpointer(" + xpath.toString() + ")");
+    public String[] getAllElementValues(Document document, XPath xpath) throws Exception {
+        Vector nodes = xpf.select(document.getDocumentElement(), "xpointer(" + xpath.toString()
+                + ")");
         log.debug("n elements " + nodes.size());
 
         String[] values = new String[nodes.size()];
@@ -261,8 +265,8 @@ public class DOMUtil {
     }
 
     /**
-       *
-       */
+     *  
+     */
     public String getElementValue(Element element) throws Exception {
         String value = "";
         NodeList nl = element.getChildNodes();
@@ -273,8 +277,8 @@ public class DOMUtil {
             if (nodeType == Node.TEXT_NODE) {
                 value = value + nl.item(i).getNodeValue();
             } else {
-                log.warn("Element " + element.getNodeName() +
-                    " contains node types other than just TEXT_NODE");
+                log.warn("Element " + element.getNodeName()
+                        + " contains node types other than just TEXT_NODE");
             }
         }
 
@@ -282,18 +286,16 @@ public class DOMUtil {
     }
 
     /**
-     * Return the value of an attribte named e.g.
-     * "this/myelement/(at)myattribute"
-     *
+     * Return the value of an attribte named e.g. "this/myelement/(at)myattribute"
+     * 
      * @param element a value of type 'Element'
      * @param xpath a value of type 'XPath'
-     *
+     * 
      * @return a value of type 'String'
-     *
+     * 
      * @exception Exception if an error occurs
      */
-    public String getAttributeValue(Element element, XPath xpath)
-        throws Exception {
+    public String getAttributeValue(Element element, XPath xpath) throws Exception {
         Element el = getElement(element, new XPath(xpath.getElementName()));
 
         return el.getAttribute(xpath.getName());
@@ -301,21 +303,20 @@ public class DOMUtil {
 
     /**
      * Describe 'setElementValue' method here.
-     *
+     * 
      * @param document a value of type 'Document'
      * @param xpath a value of type 'String'
      * @param value a value of type 'String'
-     *
+     * 
      * @exception Exception if an error occurs
      */
-    public void setElementValue(Document document, String xpath, String value)
-        throws Exception {
+    public void setElementValue(Document document, String xpath, String value) throws Exception {
         Element[] elements = select(document, xpath);
 
         if (elements.length >= 1) {
             if (elements.length > 1) {
-                log.warn("There are more elements than one with XPath \"" + xpath +
-                    "\". The value of the first element will be replaced");
+                log.warn("There are more elements than one with XPath \"" + xpath
+                        + "\". The value of the first element will be replaced");
             }
 
             replaceText(elements[0], value);
@@ -329,10 +330,9 @@ public class DOMUtil {
     }
 
     /**
-       *
-       */
-    public void addElement(Document document, String xpath, String value)
-        throws Exception {
+     *  
+     */
+    public void addElement(Document document, String xpath, String value) throws Exception {
         XPath xp = new XPath(xpath);
         Node parent = createNode(document, xp.getParent());
         Element element = dpf.newElementNode(document, xp.getName());
@@ -344,10 +344,9 @@ public class DOMUtil {
     }
 
     /**
-       *
-       */
-    public void setAttributeValue(Document document, String xpath, String value)
-        throws Exception {
+     *  
+     */
+    public void setAttributeValue(Document document, String xpath, String value) throws Exception {
         Vector nodes = xpf.select(document, "xpointer(" + xpath + ")");
 
         if (nodes.size() >= 1) {
@@ -363,10 +362,9 @@ public class DOMUtil {
     }
 
     /**
-       *
-       */
-    public void setValue(Document document, XPath xpath, String value)
-        throws Exception {
+     *  
+     */
+    public void setValue(Document document, XPath xpath, String value) throws Exception {
         short type = xpath.getType();
 
         if (type == Node.ATTRIBUTE_NODE) {
@@ -379,10 +377,9 @@ public class DOMUtil {
     }
 
     /**
-       *
-       */
-    public Node createNode(Document document, XPath xpath)
-        throws Exception {
+     *  
+     */
+    public Node createNode(Document document, XPath xpath) throws Exception {
         log.debug(xpath);
 
         Node node = null;
