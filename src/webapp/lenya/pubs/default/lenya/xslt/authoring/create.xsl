@@ -98,9 +98,7 @@ function validateForm(theForm)
             <tr>
               <td class="lenya-entry-caption">Navigation Title*: </td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
             </tr>
-            <tr>
-              <td class="lenya-entry-caption">Language*:</td><td><input class="lenya-form-element" type="text" name="properties.create.language" value="{/parent-child/dc:language}"/></td>
-            </tr>
+	    <xsl:apply-templates select="allowedLanguages"/>
             <tr>
               <td class="lenya-entry-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.create.creator" value="{/parent-child/dc:creator}"/></td>
             </tr>
@@ -131,6 +129,23 @@ function validateForm(theForm)
       </div>
       </div>
     </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="allowedLanguages">
+    <tr>
+      <td class="lenya-entry-caption">Language*:</td>
+      <td>
+        <select class="lenya-form-element" name="properties.create.language">
+	  <xsl:apply-templates select="allowedLanguage"/>
+        </select>
+      </td>
+    </tr>
+  </xsl:template>
+  
+  <xsl:template match="allowedLanguage">
+    <option>
+      <xsl:value-of select="."/>
+    </option>
   </xsl:template>
   
   <xsl:template match="exception">

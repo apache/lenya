@@ -32,9 +32,17 @@
       }
 
       Publication pub = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
-      
+
     </xsp:logic>
 
+    <allowedLanguages>
+    <xsp:logic>
+      String[] languages = pub.getLanguages();
+      for (int i = 0; i &lt; languages.length; i++) {
+	<allowedLanguage><xsp:expr>languages[i]</xsp:expr></allowedLanguage>
+      }
+    </xsp:logic>
+    </allowedLanguages>
     <parentid><xsp:expr>parentId</xsp:expr></parentid>
     <referer><xsp-request:get-uri/></referer>
     <doctype><xsp:expr><xsp-request:get-parameter name="doctype"/></xsp:expr></doctype>
