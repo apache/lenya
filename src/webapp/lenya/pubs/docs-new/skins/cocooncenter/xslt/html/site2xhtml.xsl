@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.4 2003/05/05 15:30:50 andreas Exp $
+$Id: site2xhtml.xsl,v 1.5 2003/05/07 09:58:05 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -45,23 +45,9 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/05 15:30:50 andreas Exp $
         <table cellspacing="0" cellpadding="0" border="0" width="100%" summary="header with logos">
           <tr>
 
-            <xsl:comment>================= start Project Logo ==================</xsl:comment>
-            <td bgcolor="{$header-color}" align="left">
-             <div class="headerlogo" style="margin-top: 10px; margin-left: 10px;">
-              <xsl:call-template name="renderlogo">
-                <xsl:with-param name="name" select="$config/project-name"/>
-                <xsl:with-param name="url" select="$config/project-url"/>
-                <xsl:with-param name="logo" select="$config/project-logo"/>
-                <xsl:with-param name="root" select="$root"/>
-              </xsl:call-template>
-              &#160;&#160;&#160;
-              </div>
-            </td>
-            <xsl:comment>================= end Project Logo ==================</xsl:comment>
-
             <xsl:comment>================= start Group Logo ==================</xsl:comment>
             <td>&#160;</td>
-            <td bgcolor="{$header-color}" colspan="2" valign="bottom">
+            <td bgcolor="{$header-color}" colspan="2" valign="middle">
               
               <xsl:if test="$config/group-url">
                 <div class="headerlogo">
@@ -78,6 +64,20 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/05 15:30:50 andreas Exp $
             </td>
             <xsl:comment>================= end Group Logo ==================</xsl:comment>
             
+            <xsl:comment>================= start Project Logo ==================</xsl:comment>
+            <td bgcolor="{$header-color}" align="right" valign="middle">
+             <div class="headerlogo" style="margin-top: 10px; margin-left: 10px;">
+              <xsl:call-template name="renderlogo">
+                <xsl:with-param name="name" select="$config/project-name"/>
+                <xsl:with-param name="url" select="$config/project-url"/>
+                <xsl:with-param name="logo" select="$config/project-logo"/>
+                <xsl:with-param name="root" select="$root"/>
+              </xsl:call-template>
+              &#160;&#160;&#160;
+              </div>
+            </td>
+            <xsl:comment>================= end Project Logo ==================</xsl:comment>
+
             <!--
             <xsl:comment>================= start Search ==================</xsl:comment>
             <td class="search" align="right" bgcolor="{$header-color}" rowspan="2" valign="top">

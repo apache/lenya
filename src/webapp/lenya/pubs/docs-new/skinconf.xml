@@ -73,11 +73,9 @@ be used to configure the chosen Forrest skin.
 
   <!-- optional group logo
        skin: forrest-site renders it at the top-left corner -->
-  <!--
-  <group-name>Apache XML</group-name>
-  <group-url>http://xml.apache.org/</group-url>
+  <group-name>Apache Cocoon</group-name>
+  <group-url>http://xml.apache.org/cocoon/</group-url>
   <group-logo>images/group-logo.gif</group-logo>
-  -->
 
   <!-- optional host logo (e.g. sourceforge logo)
        skin: forrest-site renders it at the bottom-left corner -->
