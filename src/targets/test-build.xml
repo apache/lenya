@@ -60,7 +60,8 @@
   			test.identity,
   			test.workflow,
   			test.anttask,
-  			test.creator"
+  			test.creator,
+  			test.publisher"
   />
 
   
@@ -107,6 +108,16 @@
   <!-- DocumentCreator Test -->
   <target name="test.creator" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.authoring.DocumentCreatorTest">
+      <jvmarg value="-enableassertions"/>
+      <arg value="${install.dir}"/>
+      <arg value="${test.pub.id}"/>
+      <classpath refid="classpath.default"/>
+    </java>
+  </target>  
+
+  <!-- Publisher Test -->
+  <target name="test.publisher" depends="test.pub.prepare">
+    <java fork="yes" classname="org.apache.lenya.cms.task.PublisherTest">
       <jvmarg value="-enableassertions"/>
       <arg value="${install.dir}"/>
       <arg value="${test.pub.id}"/>
