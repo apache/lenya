@@ -9,7 +9,10 @@
 # --------------------                              --------------------
 
 # Has to be defined for tomcat
-export JAVA_HOME=/usr/local/j2sdk1.4.1_02
+USER="michi"
+
+# Has to be defined for tomcat
+JAVA_HOME="/usr/local/j2sdk1.4.1_02"
 
 # The bin directories of all the servers
 DAEMONS="/usr/local/jakarta-tomcat-4.1.21-LE-jdk14/bin"
@@ -30,32 +33,36 @@ case "$1" in
 	echo "Starting $DESC: $NAME"
 	for daemon in $DAEMONS; do 
 	    echo "Starting $daemon/startup.sh"
-	    eval $daemon/startup.sh
+	    su - $USER -c "export JAVA_HOME=$JAVA_HOME; sh $daemon/startup.sh"
 	done;
 	;;
   stop)
 	echo "Stopping $DESC: $NAME "
 	for daemon in $DAEMONS; do 
 	    echo "Stopping $daemon/shutdown.sh"
-	    eval $daemon/shutdown.sh
+	    su - $USER -c "export JAVA_HOME=$JAVA_HOME; sh $daemon/shutdown.sh"
 	done;
 	;;
   restart|force-reload)
+        # FIXME: Tomcat does not shutdown properly
 	#
 	#	If the "reload" option is implemented, move the "force-reload"
 	#	option to the "reload" entry above. If not, "force-reload" is
 	#	just the same as "restart".
 	#
-	echo "Restarting $DESC: $NAME"
-	for daemon in $DAEMONS; do 
-	    echo "Stopping $daemon/shutdown.sh"
-	    eval $daemon/shutdown.sh
-	done;
-	sleep 10
-	for daemon in $DAEMONS; do 
-	    echo "Starting $daemon/startup.sh"
-	    eval $daemon/startup.sh
-	done;
+	echo "FIXME"
+	#echo "Restarting $DESC: $NAME"
+	#for daemon in $DAEMONS; do 
+	#    echo "Stopping $daemon/shutdown.sh"
+	#    eval $daemon/shutdown.sh
+	#done;
+        #
+	#sleep 10
+	#for daemon in $DAEMONS; do 
+	#    echo "Starting $daemon/startup.sh"
+	#    eval $daemon/startup.sh
+	#done;
+	#
 	;;
   *)
 	#echo "Usage: $NAME {start|stop|restart|force-reload}" >&2
