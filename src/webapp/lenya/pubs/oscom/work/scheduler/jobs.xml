@@ -24,12 +24,18 @@
         <sch:parameter name="group" value="oscom"/>
         <sch:parameter name="id" value="job_01037570742547"/>
         <sch:parameter name="documentUri" value="weekly-column.html"/>
+<!--
         <sch:trigger type="once">
           <sch:parameter name="year" value="2002"/>
           <sch:parameter name="month" value="12"/>
           <sch:parameter name="day" value="17"/>
           <sch:parameter name="hour" value="23"/>
           <sch:parameter name="minute" value="10"/>
+        </sch:trigger>
+-->
+<!-- Seconds, Minutes, Hours, Day of Month, Months, Day of Week -->
+        <sch:trigger type="repeated">
+          <sch:parameter name="expression" value="30 * * * * ?"/>
         </sch:trigger>
       </sch:job>
     </sch:jobs>

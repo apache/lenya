@@ -6,23 +6,31 @@
 
 package org.wyona.cms.scheduler.xml;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+
 import org.dom4j.Attribute;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
+
 import org.quartz.SimpleTrigger;
+import org.quartz.CronTrigger;
 import org.quartz.Trigger;
+
 import org.wyona.cms.scheduler.xml.SchedulerXMLFactory;
+
+import org.apache.log4j.Category;
 
 /**
  *
  * @author  ah
  */
 public class TriggerHelper {
+    static Category log=Category.getInstance(TriggerHelper.class);
     
     public static final String YEAR = "year";
     public static final String MONTH = "month";
@@ -59,7 +67,7 @@ public class TriggerHelper {
         }
 
         if (triggerType.equals(REPEATED)) {
-            return null;
+            return createCronTrigger(jobName, jobGroup, "45 * * * * ?");
         }
      
         throw new IllegalStateException("Trigger type '" + triggerType + "' not defined!");
@@ -75,6 +83,21 @@ public class TriggerHelper {
         return new SimpleTrigger(
                 createUniqueTriggerId(), "triggerGroup1", jobName, jobGroup,
                 date, null, 0, 0);
+    }
+    
+/**
+ * @author Michael Wechner
+ * Create CronTrigger
+ * @param cron_expression Seconds, Minutes, Hours, Day of Month, Months, Day of Week (e.g. 34 * * * * ?)
+ */
+    public static Trigger createCronTrigger(String jobName, String jobGroup, String cron_expression) {
+        try{
+          return new CronTrigger(createUniqueTriggerId(), "triggerGroup1", jobName, jobGroup, cron_expression);
+          }
+        catch(ParseException e){
+          log.error(".createCronTrigger(): "+e);
+          }
+        return null;
     }
     
     public static Element createElement(Trigger trigger) {

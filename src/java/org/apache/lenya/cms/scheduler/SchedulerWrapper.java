@@ -444,11 +444,15 @@ public class SchedulerWrapper {
             Trigger trigger = TriggerHelper.createTrigger(
                 triggerElement, jobDetail.getName(), jobDetail.getGroup());
             
+// FIXME: In the case of CronTrigger, getFinalFireTime does not make sense!
+            addJob(jobDetail, trigger);
+/*
             GregorianCalendar now = new GregorianCalendar();
             if (trigger.getFinalFireTime().after(now.getTime()))
                 addJob(jobDetail, trigger);
             else
                 addJob(jobDetail);
+*/
         }
         else {
             addJob(jobDetail);
