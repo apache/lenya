@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMUtil.java,v 1.14 2004/03/05 11:01:21 michi Exp $  */
+/* $Id: DOMUtil.java,v 1.15 2004/06/25 16:05:15 michi Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -157,6 +157,7 @@ public class DOMUtil {
 
     /**
      * Check if elements exists
+     * This method just checks the root element! TODO: Implementation is not really finished, or is it!
      */
     public boolean elementExists(Element element, XPath xpath)
         throws Exception {
