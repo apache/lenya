@@ -34,6 +34,10 @@
     <usecase:area><input:get-attribute module="page-envelope" name="area" as="string"/></usecase:area>
     <usecase:language><input:get-attribute module="page-envelope" name="document-language" as="string"/></usecase:language>
     <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
+    <usecase:user-id><input:get-attribute module="access-control" name="user-id" as="string"/></usecase:user-id>
+    <usecase:ip-address><input:get-attribute module="access-control" name="ip-address" as="string"/></usecase:ip-address>
+    <usecase:role-ids><input:get-attribute module="access-control" name="role-ids" as="string"/></usecase:role-ids>
+    <usecase:workflow-event><input:get-attribute module="request-param" name="lenya.event" as="string"/></usecase:workflow-event>
     
     <usecase:task-id>publish</usecase:task-id>
     

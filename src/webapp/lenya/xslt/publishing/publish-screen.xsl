@@ -92,14 +92,15 @@
         
         <form name="form_publish">
           
-          <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
           <input type="hidden" name="lenya.step" value="publish"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
           
-          <input type="hidden" name="properties.publish.sources" value="{$sources}"/>
-          <input type="hidden" name="properties.publish.documentid" value="{$document-id}"/>
-          <input type="hidden" name="properties.export.uris" value="{$uris}"/>
-          <input type="hidden" name="properties.publish.language" value="{$document-language}"/>
+          <input type="hidden" name="document-id" value="{$document-id}"/>
+          <input type="hidden" name="document-language" value="{$document-language}"/>
+          <input type="hidden" name="user-id" value="{/usecase:publish/usecase:user-id}"/>
+          <input type="hidden" name="ip-address" value="{/usecase:publish/usecase:ip-address}"/>
+          <input type="hidden" name="role-ids" value="{/usecase:publish/usecase:role-ids}"/>
+          <input type="hidden" name="workflow-event" value="publish"/>
           
           <div class="lenya-box">
             <div class="lenya-box-title">Publish</div>
@@ -128,7 +129,7 @@
                   <td/>
                   <td>
                     <input type="submit" name="lenya.usecase" value="publish"/>
-                    &#160;&#160;&#160;
+                    <xsl:text> </xsl:text>
                     <input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
                   </td>
                 </tr>
@@ -145,7 +146,7 @@
           </not:notification>
           
         </form>
-        
+        <!--
         <sch:scheduler-form>
           
           <sch:job tasklabel="Publish">
@@ -165,6 +166,7 @@
           </sch:job>
           
         </sch:scheduler-form>
+        -->
         
         <div style="text-align: right">
         <form action="{$referer}"><input type="submit" value="Back to Page"/></form>

@@ -22,18 +22,25 @@
     
     <request-uri><xsp-request:get-uri/></request-uri>
     <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
+    <document-language><input:get-attribute module="page-envelope" name="document-language" as="string"/></document-language>
+    
+    <workflow-event><input:get-attribute module="request-param" name="lenya.event" as="string"/></workflow-event>
+    <user-id><input:get-attribute module="access-control" name="user-id" as="string"/></user-id>
+    <ip-address><input:get-attribute module="access-control" name="ip-address" as="string"/></ip-address>
+    <role-ids><input:get-attribute module="access-control" name="role-ids" as="string"/></role-ids>
+    
     <task-id>deactivateDocument</task-id>
     
     <xsp:logic>
       try {
           Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
           SiteTreeNode liveNode = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="live-node"/>;
-          SiteTreeNode[] liveChildren = liveNode.getChildren();
           <language><xsp:expr>document.getLanguage()</xsp:expr></language>
           Publication publication = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
           
           Label[] labels = liveNode.getLabels();
-          if (labels.length &lt; 2) {
+          if (labels.length == 1) {
+              SiteTreeNode[] liveChildren = liveNode.getChildren();
               if (liveChildren.length &gt; 0) {
                   <message id="children-live"/>
               }
@@ -41,7 +48,7 @@
               DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
               for (int i = 0; i &lt; liveChildren.length; i++) {
                   Label[] languages = liveChildren[i].getLabels(); 
-                  for (int j = 0; j &lt; languages.length; j++){
+                  for (int j = 0; j &lt; languages.length; j++) {
                       String language = languages[j].getLanguage();
                       String url = builder.buildCanonicalUrl(publication,
                           document.getArea(), document.getId() + "/" + liveChildren[i].getId(), language);
@@ -54,9 +61,9 @@
                   }
               }
           }    
-    	  DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
-	  Document[] references = helper.getReferences(Publication.LIVE_AREA);
-    	  if (references.length &gt; 0) {
+        DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
+        Document[] references = helper.getReferences(Publication.LIVE_AREA);
+        if (references.length &gt; 0) {
               </xsp:logic><inconsistent-documents><xsp:logic>
 
               for (int i = 0; i &lt; references.length; i++) {

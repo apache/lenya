@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: deactivate.xsl,v 1.15 2003/11/11 15:10:57 andreas Exp $
+ $Id: deactivate.xsl,v 1.16 2004/01/23 08:44:12 andreas Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -10,8 +10,6 @@
   xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
   >
   
-  <xsl:param name="lenya.event"/>
-  
   <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
   
   <xsl:variable name="document-id">
@@ -19,7 +17,7 @@
   </xsl:variable>
   
   <xsl:variable name="language">
-    <xsl:value-of select="/page/info/language"/>
+    <xsl:value-of select="/page/info/document-language"/>
   </xsl:variable>
 
   <xsl:variable name="task-id">
@@ -52,12 +50,9 @@
         <div class="lenya-box-title">Deactivate Document</div>
         <div class="lenya-box-body">
           
-          <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
           <input type="hidden" name="lenya.step" value="deactivate"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
-          
-          <input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
-          <input type="hidden" name="properties.node.language" value="{$language}"/>
+          <xsl:call-template name="task-parameters"/>
           
           <table class="lenya-table-noborder">
             <tr>
@@ -78,21 +73,23 @@
         </div>
       </div>
       
+      <!--
       <not:notification>
         <not:textarea/>
       </not:notification>
+      -->
     </form>
       
+    <!--
     <sch:scheduler-form>
       <sch:job tasklabel="Deactivate">
-        <input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
-        <input type="hidden" name="properties.node.language" value="{$language}"/>
-        <input type="hidden" name="workflow.event" value="deactivate"/>
         <input type="hidden" name="wrapper.task-id" value="deactivateDocument"/>
+        <xsl:call-template name="task-parameters"/>
       </sch:job>
     </sch:scheduler-form>
     
     <form action="{$request-uri}"><input type="submit" value="Back to Page"/></form>
+    -->
       
   </xsl:template>
   
@@ -138,6 +135,15 @@
 	<a target="_blank" href="{@href}"><xsl:value-of select="@id"/><xsl:value-of select="."/></a><br/>
       </xsl:for-each>
     </td>
+  </xsl:template>
+  
+  <xsl:template name="task-parameters">
+    <input type="hidden" name="document-id" value="{$document-id}"/>
+    <input type="hidden" name="document-language" value="{$language}"/>
+    <input type="hidden" name="workflow-event" value="{/page/info/workflow-event}"/>
+    <input type="hidden" name="user-id" value="{/page/info/user-id}"/>
+    <input type="hidden" name="ip-address" value="{/page/info/ip-address}"/>
+    <input type="hidden" name="role-ids" value="{/page/info/role-ids}"/>
   </xsl:template>
   
 </xsl:stylesheet>

@@ -8,10 +8,14 @@
     <parameter name="properties.text" value="The test was successful."/>
   </task>
 
-  <task id="publish" class="org.apache.lenya.cms.task.AntTask">
+  <task id="publish" class="org.apache.lenya.defaultpub.cms.task.Publish">
     <label>Publish</label>
-    <parameter name="target" value="publish"/>
   </task>
+
+  <task id="deactivateDocument" class="org.apache.lenya.defaultpub.cms.task.Deactivate">
+    <label>Deactivate</label>
+  </task>
+
 
   <task id="create" class="org.apache.lenya.cms.task.AntTask">
     <label>Create</label>
@@ -51,11 +55,6 @@
   <task id="renameDocument" class="org.apache.lenya.cms.task.AntTask">
     <label>RenameDocument</label>
     <parameter name="target" value="renameDocument"/>
-  </task>
-
-  <task id="deactivateDocument" class="org.apache.lenya.cms.task.AntTask">
-    <label>Deactivate</label>
-    <parameter name="target" value="deactivateDocument"/>
   </task>
 
   <task id="movenode" class="org.apache.lenya.cms.task.AntTask">
