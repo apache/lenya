@@ -279,6 +279,10 @@ function user_delete_user() {
 			"type" : user
 		});
 		
+	    if (cocoon.request.get("cancel")) {
+	    	break;
+	    }
+	    
 		if (cocoon.request.get("submit")) {
 			userManager.remove(user);
 			user['delete']();
