@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowTest.java,v 1.23 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.workflow;
 
@@ -46,8 +46,8 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * To change the template for this generated type comment go to Window>Preferences>Java>Code
+ * Generation>Code and Comments
  */
 public class WorkflowTest extends AccessControlTest {
     /**
@@ -60,7 +60,7 @@ public class WorkflowTest extends AccessControlTest {
 
     /**
      * The main program for the WorkflowTest class
-     *
+     * 
      * @param args The command line arguments
      */
     public static void main(String[] args) {
@@ -88,18 +88,14 @@ public class WorkflowTest extends AccessControlTest {
      * @throws PageEnvelopeException when something went wrong.
      * @throws DocumentBuildException when something went wrong.
      */
-    public void testWorkflow()
-        throws
-            DocumentTypeBuildException,
-            WorkflowException,
-            AccessControlException,
-            PageEnvelopeException,
-            DocumentBuildException {
+    public void testWorkflow() throws DocumentTypeBuildException, WorkflowException,
+            AccessControlException, PageEnvelopeException, DocumentBuildException {
         Publication publication = PublicationHelper.getPublication();
         String url = "/" + publication.getId() + URL;
         Document document = publication.getDocumentBuilder().buildDocument(publication, url);
 
-        File configDir = new File(publication.getDirectory(), FileItemManager.PATH);
+        File configDir = new File(publication.getDirectory(), "config" + File.separator + "ac"
+                + File.separator + "passwd");
         assertTrue(configDir.exists());
 
         Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), url);
@@ -109,8 +105,7 @@ public class WorkflowTest extends AccessControlTest {
 
         WorkflowFactory factory = WorkflowFactory.newInstance();
 
-        String[] emptyRoles = {
-        };
+        String[] emptyRoles = {};
         Situation situation = factory.buildSituation(emptyRoles, "test", "127.0.0.1");
 
         WorkflowFactory.initHistory(document, workflowId, situation);
@@ -123,8 +118,7 @@ public class WorkflowTest extends AccessControlTest {
             System.out.println("Current state: " + instance.getCurrentState());
 
             Identity identity = new Identity();
-            User user =
-                getAccreditableManager().getUserManager().getUser(
+            User user = getAccreditableManager().getUserManager().getUser(
                     situations[situationIndex].getUser());
             identity.addIdentifiable(user);
 
@@ -166,21 +160,20 @@ public class WorkflowTest extends AccessControlTest {
 
             assertTrue(instance.getValue(variableName) == situations[situationIndex].getValue());
 
-            System.out.println(
-                "Variable: " + variableName + " = " + instance.getValue(variableName));
+            System.out.println("Variable: " + variableName + " = "
+                    + instance.getValue(variableName));
             System.out.println("------------------------------------------------------");
         }
 
         System.out.println("Test completed.");
     }
 
-    private static final TestSituation[] situations =
-        {
+    private static final TestSituation[] situations = {
             new TestSituation("lenya", "submit", false),
             new TestSituation("roger", "reject", false),
             new TestSituation("lenya", "submit", false),
             new TestSituation("roger", "publish", true),
-            new TestSituation("roger", "deactivate", false)};
+            new TestSituation("roger", "deactivate", false) };
 
     /**
      * A test situation.
