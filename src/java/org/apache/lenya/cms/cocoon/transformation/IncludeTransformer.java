@@ -1,5 +1,5 @@
 /*
- * $Id: IncludeTransformer.java,v 1.4 2003/02/13 19:17:35 andreas Exp $
+ * $Id: IncludeTransformer.java,v 1.5 2003/02/17 11:58:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -90,14 +90,6 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
             String sitemapPath = input_source.getSystemId();
             getLogger().debug("Absolute SITEMAP Directory: " + sitemapPath);
 
-            /*
-                  String[] params=this.parameters.getNames();
-                  String names="";
-                  for(int i=0;i<params.length;i++){
-                    names=names+" "+params[i];
-                    }
-                  getLogger().debug("Parameter Names: " + names);
-            */
             String href = this.parameters.getParameter("href", null);
 
             if (href != null) {
@@ -133,10 +125,4 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
 
         return doc;
     }
-
-    /*
-      protected Document transform(Document doc){
-        return doc;
-        }
-    */
 }

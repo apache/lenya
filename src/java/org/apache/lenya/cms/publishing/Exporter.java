@@ -1,5 +1,5 @@
 /*
- * $Id: Exporter.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
+ * $Id: Exporter.java,v 1.4 2003/02/17 11:58:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,7 +44,6 @@
 /*
  * Exporter.java
  *
- * Created on November 4, 2002, 6:08 PM
  */
 package org.wyona.cms.publishing;
 

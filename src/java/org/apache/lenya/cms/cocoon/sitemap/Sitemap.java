@@ -1,5 +1,5 @@
 /*
- * $Id: Sitemap.java,v 1.3 2003/02/07 12:14:09 ah Exp $
+ * $Id: Sitemap.java,v 1.4 2003/02/17 11:58:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -103,7 +103,6 @@ public class Sitemap {
      * @throws Exception DOCUMENT ME!
      */
     public void save(File file) throws Exception {
-        //System.out.println(doc.asXML());
         java.io.FileWriter fileWriter = new java.io.FileWriter(file.getAbsolutePath());
         doc.write(fileWriter);
         fileWriter.close();

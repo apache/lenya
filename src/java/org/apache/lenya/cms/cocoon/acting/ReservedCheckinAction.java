@@ -1,5 +1,5 @@
 /*
- * $Id: ReservedCheckinAction.java,v 1.2 2003/02/07 12:14:08 ah Exp $
+ * $Id: ReservedCheckinAction.java,v 1.3 2003/02/17 11:58:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -116,18 +116,5 @@ public class ReservedCheckinAction extends RevisionControllerAction implements C
         }
 
         return null;
-
-        /*
-            if(true){
-              HashMap actionMap=new HashMap();
-              actionMap.put("user",username);
-              actionMap.put("filename",filename);
-              getLogger().warn("Document already checked-out");
-              return actionMap;
-              }
-            else{
-              return null;
-              }
-        */
     }
 }

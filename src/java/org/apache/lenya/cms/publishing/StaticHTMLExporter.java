@@ -1,5 +1,5 @@
 /*
- * $Id: StaticHTMLExporter.java,v 1.7 2003/02/12 23:30:22 andreas Exp $
+ * $Id: StaticHTMLExporter.java,v 1.8 2003/02/17 11:58:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -95,10 +95,7 @@ public class StaticHTMLExporter extends AbstractExporter {
                 URL uri = new URL(fullServerURI + uris[i]);
                 log.info(".export(): Export static HTML: " + uri);
 
-                // byte[] response =
                 wget.download(uri, substituteExpression);
-
-                //wget.saveToFile(url.getFile(),response);
             }
         } catch (Exception e) {
             throw new ExportException(e);

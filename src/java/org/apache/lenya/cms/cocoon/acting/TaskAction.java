@@ -1,5 +1,5 @@
 /*
- * $Id: TaskAction.java,v 1.7 2003/02/10 14:53:06 egliwyona Exp $
+ * $Id: TaskAction.java,v 1.8 2003/02/17 11:58:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -142,7 +142,6 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
 
         String publicationPrefix = PublishingEnvironment.PUBLICATION_PREFIX;
 
-        //        String contextPath = publicationPath.replaceAll(publicationPrefix, "");
         String contextPath = publicationPath.substring(0,
                 publicationPath.length() - publicationPrefix.length());
 

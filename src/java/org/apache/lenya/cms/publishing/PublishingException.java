@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingException.java,v 1.2 2003/02/12 23:30:22 andreas Exp $
+ * $Id: PublishingException.java,v 1.3 2003/02/17 11:58:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,13 +43,6 @@
  */
 package org.wyona.cms.publishing;
 
-/**
- * Created by IntelliJ IDEA.
- * User: nobby
- * Date: Feb 12, 2003
- * Time: 2:50:27 PM
- * To change this template use Options | File Templates.
- */
 public class PublishingException
     extends Exception {
 

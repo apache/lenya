@@ -1,5 +1,5 @@
 /*
- * $Id: RollbackAction.java,v 1.4 2003/02/13 19:17:35 andreas Exp $
+ * $Id: RollbackAction.java,v 1.5 2003/02/17 11:58:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -151,27 +151,6 @@ public class RollbackAction extends RevisionControllerAction implements Configur
 
                 return actionMap;
 
-                /*
-                      } else if (action.equals("view")){
-                        // Show the contents of an old revision
-                        String backupFilename = rc.getBackupFilename(new Long(rollbackTime).longValue(), filename);
-
-                        DOMParserFactory dpf=new DOMParserFactory();
-                        Document doc = dpf.getDocument(backupFilename);
-
-                //      Document doc = new XPSAssembler("enclose").assemble("file:" + backupFilename);
-
-                        ByteArrayOutputStream outBuffer = new ByteArrayOutputStream();
-                        try {
-                          new DOMWriter(outBuffer).printWithoutFormatting(doc);
-                        } catch (Exception e) {
-                          getLogger().error("RollbackAction: Unable to view file, DOMWriter threw exception: " + backupFilename);
-                          return null;
-                        }
-
-                        actionMap.put("version", outBuffer.toString());
-                        return actionMap;
-                */
             } else {
                 getLogger().error("The action is no defined");
 
