@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.24 2002/06/21 23:39:22 michicms Exp $
+   @version CVS $Id: build.xml,v 1.25 2002/06/24 14:29:43 michicms Exp $
 
 -->
 
@@ -427,6 +427,8 @@
 
     <gzip zipfile="${snapshot.bin.dir}.tar.gz" src="${snapshot.bin.dir}.tar"/>
     <delete file="${snapshot.bin.dir}.tar"/>
+
+    <zip zipfile="${snapshot.bin.dir}.zip" basedir="${dist.root}/${fullname}-bin-${SNAPSHOT_STAMP}"/>
 
   </target>
 
