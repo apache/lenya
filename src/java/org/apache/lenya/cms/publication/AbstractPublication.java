@@ -69,7 +69,7 @@ import org.apache.log4j.Category;
  * A publication.
  *
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
- * @version $Id: AbstractPublication.java,v 1.12 2004/02/02 02:50:39 stefano Exp $
+ * @version $Id: AbstractPublication.java,v 1.13 2004/02/18 18:43:52 andreas Exp $
  */
 public abstract class AbstractPublication implements Publication {
     private static Category log = Category.getInstance(AbstractPublication.class);
@@ -167,7 +167,9 @@ public abstract class AbstractPublication implements Publication {
             throw e;
         } catch (Exception e) {
             log.error(e);
-            throw new PublicationException("Problem with config file: " + configFile.getAbsolutePath(), e);
+            throw new PublicationException(
+                "Problem with config file: " + configFile.getAbsolutePath(),
+                e);
         }
 
         breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
@@ -345,14 +347,24 @@ public abstract class AbstractPublication implements Publication {
      */
     public Document[] getRequiredDocuments(Document document) throws PublicationException {
 
-        Document[] documents;
+        List documents = new ArrayList();
+        addRequiredDocuments(document, documents);
 
+        return (Document[]) documents.toArray(new Document[documents.size()]);
+    }
+
+    /**
+     * Adds the documents which are required by a document to the list.
+     * @param document The document.
+     * @param documents The list.
+     * @throws DocumentBuildException if an error occurs.
+     */
+    protected void addRequiredDocuments(Document document, List documents)
+        throws DocumentBuildException {
         // remove leading slash
         String id = document.getId().substring(1);
         int slashIndex = id.lastIndexOf("/");
-        if (slashIndex == -1) {
-            documents = new Document[0];
-        } else {
+        if (slashIndex != -1) {
             String parentId = "/" + id.substring(0, slashIndex);
             String parentUrl =
                 getDocumentBuilder().buildCanonicalUrl(
@@ -361,11 +373,9 @@ public abstract class AbstractPublication implements Publication {
                     parentId,
                     document.getLanguage());
             Document parent = getDocumentBuilder().buildDocument(this, parentUrl);
-            documents = new Document[1];
-            documents[0] = parent;
+            documents.add(parent);
+            addRequiredDocuments(parent, documents);
         }
-
-        return documents;
     }
 
     /**
@@ -519,8 +529,7 @@ public abstract class AbstractPublication implements Publication {
      */
     public void deleteDocument(Document document) throws PublicationException {
         if (!document.exists()) {
-            throw new PublicationException(
-                "Document [" + document + "] does not exist!");
+            throw new PublicationException("Document [" + document + "] does not exist!");
         }
         deleteFromSiteStructure(document);
         deleteDocumentSource(document);
@@ -539,16 +548,16 @@ public abstract class AbstractPublication implements Publication {
             } catch (SiteTreeException e) {
                 throw new PublicationException(e);
             }
-        
+
             SiteTreeNode node = tree.getNode(document.getId());
-        
+
             if (node == null) {
                 throw new PublicationException(
                     "Sitetree node for document [" + document + "] does not exist!");
             }
-        
+
             Label label = node.getLabel(document.getLanguage());
-        
+
             if (label == null) {
                 throw new PublicationException(
                     "Sitetree label for document ["
@@ -557,20 +566,20 @@ public abstract class AbstractPublication implements Publication {
                         + document.getLanguage()
                         + "]does not exist!");
             }
-        
+
             if (node.getLabels().length == 1 && node.getChildren().length > 0) {
                 throw new PublicationException(
                     "Cannot delete last language version of document ["
                         + document
                         + "] because this node has children.");
             }
-        
+
             node.removeLabel(label);
-        
+
             if (node.getLabels().length == 0) {
                 tree.removeNode(document.getId());
             }
-        
+
             try {
                 tree.save();
             } catch (SiteTreeException e) {
@@ -593,6 +602,30 @@ public abstract class AbstractPublication implements Publication {
         throws PublicationException {
         copyDocument(sourceDocument, destinationDocument);
         deleteDocument(sourceDocument);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getDependingDocuments(org.apache.lenya.cms.publication.Document)
+     */
+    public Document[] getDependingDocuments(Document document) throws PublicationException {
+        Document[] documents = new Document[0];
+        if (hasSitetree) {
+            SiteTree tree;
+            try {
+                tree = getSiteTree(document.getArea());
+            } catch (SiteTreeException e) {
+                throw new PublicationException(e);
+            }
+            
+            SiteTreeNode node = tree.getNode(document.getId());
+            List preOrder = node.preOrder();
+            preOrder.remove(0);
+            documents = new Document[preOrder.size()];
+            for (int i = 0; i < preOrder.size(); i++) {
+            }
+            
+        }
+        return documents;
     }
 
 }
