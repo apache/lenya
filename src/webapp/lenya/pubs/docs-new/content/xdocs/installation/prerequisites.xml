@@ -60,12 +60,22 @@ Several items, e.g. the servlet container, may be replaced by other products.
 </ul>
 
 <section><title>Recommended Combinations</title>
+<ul>
+      <li><strong>Ant:</strong> <link href="http://www.wyona.org/lenya/jakarta-ant-1.5.1-bin.tar.gz">jakarta-ant-1.5.1-bin.tar.gz</link></li>
+      <li><strong>Tomcat:</strong> <link href="http://www.wyona.org/lenya/jakarta-tomcat-4.1.21-LE-jdk14.tar.gz">jakarta-tomcat-4.1.21-LE-jdk14.tar.gz</link></li>
+      <li><strong>Endorsed Libraries:</strong> <link href="http://www.wyona.org/lenya/endorsed.tar.gz">endorsed.tar.gz</link></li>
+      <li><strong>Apache Cocoon:</strong> <link href="http://www.wyona.org/lenya/cocoon-2.1-M1-build.tar.gz">cocoon-2.1-M1-build.tar.gz</link></li>
+</ul>
+
+
+
+<!--
     <ol>
     <li>
       <strong>For all versions:</strong>
       <ul>
-      <li>Ant: <link href="../download/jakarta-ant-1.5.1-bin.tar.gz">jakarta-ant-1.5.1-bin.tar.gz</link></li>
-      <li>Tomcat: <link href="../download/jakarta-tomcat-4.1.21-LE-jdk14.tar.gz">jakarta-tomcat-4.1.21-LE-jdk14.tar.gz</link></li>
+      <li>Ant: <link href="http://www.wyona.org/lenya/jakarta-ant-1.5.1-bin.tar.gz">jakarta-ant-1.5.1-bin.tar.gz</link></li>
+      <li>Tomcat: <link href="http://www.wyona.org/lenya/jakarta-tomcat-4.1.21-LE-jdk14.tar.gz">jakarta-tomcat-4.1.21-LE-jdk14.tar.gz</link></li>
       </ul>
       <p/>
     </li>
@@ -97,6 +107,7 @@ Several items, e.g. the servlet container, may be replaced by other products.
       <p/>
     </li>
     </ol>
+-->
 </section>
 
 </body>
