@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublication.java,v 1.6 2003/12/01 16:46:25 andreas Exp $
+$Id: AbstractPublication.java,v 1.7 2003/12/02 13:18:13 andreas Exp $
 <License>
 
  ============================================================================
@@ -127,9 +127,12 @@ public abstract class AbstractPublication implements Publication {
             }
 
             try {
-                documentBuilderClassName = config.getChild(ELEMENT_DOCUMENT_BUILDER).getValue();
-                Class documentBuilderClass = Class.forName(documentBuilderClassName);
-                this.documentBuilder = (DocumentBuilder) documentBuilderClass.newInstance();
+                Configuration documentBuilderConfiguration = config.getChild(ELEMENT_DOCUMENT_BUILDER, false);
+                if (documentBuilderConfiguration != null) {
+                    documentBuilderClassName = documentBuilderConfiguration.getValue();
+                    Class documentBuilderClass = Class.forName(documentBuilderClassName);
+                    this.documentBuilder = (DocumentBuilder) documentBuilderClass.newInstance();
+                }
             } catch (ClassNotFoundException e) {
                 throw new PublicationException(
                     "Cannot instantiate document builder: [" + pathMapperClassName + "]",
@@ -296,6 +299,11 @@ public abstract class AbstractPublication implements Publication {
      * @return A document builder.
      */
     public DocumentBuilder getDocumentBuilder() {
+        
+        if (documentBuilder == null) {
+            throw new IllegalStateException("The document builder was not defined in publication.xconf!");
+        }
+        
         return documentBuilder;
     }
 
