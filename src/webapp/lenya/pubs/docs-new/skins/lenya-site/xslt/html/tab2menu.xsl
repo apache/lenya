@@ -20,7 +20,7 @@ The output of this stylesheet is HTML of the form:
 
 which is then merged by site2xhtml.xsl
 
-$Id: tab2menu.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
+$Id: tab2menu.xsl,v 1.2 2003/05/08 12:03:48 andreas Exp $
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -37,53 +37,66 @@ $Id: tab2menu.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
   </xsl:template>
 
   <xsl:template name="pre-separator">
-    <xsl:call-template name="separator"/>
+    <td valign="bottom" width="10">
+      <div class="tab-separator">
+        <img src="{$root}skin/images/spacer.gif" width="10" alt=""/>
+      </div>
+    </td>
   </xsl:template>
 
   <xsl:template name="post-separator">
   </xsl:template>
 
   <xsl:template name="separator">
-    <td width="8">
-      <img src="{$root}skin/images/spacer.gif" width="8" height="8" alt=""/>
-    </td>
   </xsl:template>
 
   <xsl:template name="selected">
-    <td valign="bottom">
-      <table cellspacing="0" cellpadding="0" border="0" summary="selected tab">
-        <tr>
-          <td class="top-left" height="22"></td>
-          <td bgcolor="#a5b6c6" valign="middle" height="22">
-            <span class="tab">
-              <b>
-                <xsl:call-template name="base-selected"/>
-              </b>
-            </span>
-          </td>
-          <td class="top-right" height="22"></td>
-        </tr>
-      </table>
+    <td width="5" valign="top" background="{$root}skin/images/tab-left-selected.png">
+      <img src="{$root}skin/images/tab-corner-left-selected.png"/>
+    </td>
+    <td class="tab" valign="bottom">
+      <div class="tab-selected">
+        <nobr><xsl:call-template name="base-selected"/></nobr>
+      </div>
+    </td>
+    <td width="5" valign="top" background="{$root}skin/images/tab-right-selected.png">
+      <img src="{$root}skin/images/tab-corner-right-selected.png"/>
     </td>
   </xsl:template>
 
   <xsl:template name="not-selected">
-    <td valign="bottom">
-      <table cellspacing="0" cellpadding="0" border="0" summary="non selected tab">
-        <tr>
-          <td class="top-left-tab" height="18"></td>
-          <td bgcolor="#cedfef" valign="middle" height="18">
-            <span class="tab">
-              <xsl:call-template name="base-not-selected"/>
-            </span>              
-          </td>
-          <td class="top-right-tab" height="18"></td>
-        </tr>
-        <tr>
-          <td height="1" colspan="3">
-          </td>
-        </tr>     
-      </table>
+    <td class="tab" valign="bottom">
+      <div class="tab-separator">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="5" width="5" valign="top" background="{$root}skin/images/tab-left.png">
+              <img src="{$root}skin/images/tab-corner-left.png"/>
+            </td>
+            <td class="tab" valign="bottom" rowspan="2">
+              <div class="tab-not-selected-shadow">
+                <div class="tab-not-selected">
+                <nobr><xsl:call-template name="base-not-selected"/></nobr>
+                </div>
+              </div>              
+            </td>
+            <td height="5" width="5" valign="top" background="{$root}skin/images/tab-right.png">
+              <img src="{$root}skin/images/tab-corner-right.png"/>
+            </td>
+          </tr>
+          <tr>
+            <td valign="bottom" background="{$root}skin/images/tab-left.png">
+              <div class="tab-not-selected-shadow-left">
+                <img src="{$root}skin/images/spacer.gif" width="4" />
+              </div>
+            </td>
+            <td valign="bottom" background="{$root}skin/images/tab-right.png">
+              <div class="tab-not-selected-shadow-right">
+                <img src="{$root}skin/images/spacer.gif" width="4" />
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </td>
   </xsl:template>
 

@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
+$Id: site2xhtml.xsl,v 1.5 2003/05/08 12:03:48 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -34,9 +34,8 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
       <head>
         <title><xsl:value-of select="div[@class='content']/table/tr/td/h1"/></title>
         <link rel="stylesheet" href="{$root}skin/page.css" type="text/css"/>
-        <script type="text/javascript" language="javascript" src="{$root}skin/fontsize.js"></script>
       </head>
-      <body bgcolor="#FFFFFF" text="#000000" onload="init()">
+      <body bgcolor="#FFFFFF" text="#000000">
 
         <!-- ================================= top bar with logo's and search box ===================================  -->
 
@@ -65,7 +64,7 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
             <xsl:comment>================= end Group Logo ==================</xsl:comment>
             
             <xsl:comment>================= start Project Logo ==================</xsl:comment>
-            <td colspan="3" bgcolor="{$header-color}" align="right" >
+            <td bgcolor="{$header-color}" align="right" valign="bottom" width="100%">
              <div class="headerlogo" style="padding: 10px">
               <xsl:call-template name="renderlogo">
                 <xsl:with-param name="name" select="$config/project-name"/>
@@ -74,13 +73,15 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
                 <xsl:with-param name="root" select="$root"/>
               </xsl:call-template>
               </div>
+              <!-- border for tabs -->
+              <div class="tab-separator"/>
             </td>
             <xsl:comment>================= end Project Logo ==================</xsl:comment>
 
           </tr>
         </table>
         <xsl:comment>================= end Banner ==================</xsl:comment>
-
+        <div class="tab-bar"><img src="{$spacer}" height="5" /></div>
 
         <xsl:comment>================= start Menu, NavBar, Content ==================</xsl:comment>
         <table cellspacing="0" cellpadding="0" border="0" width="100%" bgcolor="#ffffff" summary="page content">
@@ -89,23 +90,17 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
               <table cellpadding="0" cellspacing="0" border="0" summary="menu">
                 <tr>
                   <xsl:comment>================= start left top NavBar ==================</xsl:comment>
-                  <td valign="top" rowspan="3">
-                    <table cellspacing="0" cellpadding="0" border="0" summary="blue line">
-                      <tr><td bgcolor="{$header-color2}"><img src="{$spacer}" alt="" height="1" width="10" /></td></tr>
-                      <tr><td bgcolor="{$background-bars}"><font face="Arial, Helvetica, Sans-serif" size="4" color="{$menu-border}">&#160;</font></td></tr>
-                      <tr><td bgcolor="{$header-color}"><img src="{$spacer}" alt="" height="1" width="10" /></td></tr>
-                    </table>
-                  </td>
                   <xsl:comment>================= end left top NavBar ==================</xsl:comment>
 
-                  <td bgcolor="{$header-color2}"><img src="{$spacer}" alt="" height="1" width="1" /></td>
-                  <td bgcolor="{$menu-border}" valign="bottom"><img src="{$spacer}" alt="" height="10" width="10" /></td>
-                  <td bgcolor="{$menu-border}" valign="top">
+                  <td valign="top"><div class="tab-subbar"><img src="{$spacer}" alt="" height="5" width="10" /></div></td>
+
+                  <td valign="top">
                   <!--<td bgcolor="{$menu-border}" valign="top" nowrap="nowrap">-->
 
                     <xsl:comment>================= start Menu items ==================</xsl:comment>
                     <!-- original: <xsl:apply-templates select="div[@class='menu']"/>    -->
 
+                    
                     <div class="menu">
                         <xsl:for-each select = "div[@class='menu']/ul/li">
                           <xsl:call-template name = "innermenuli" />
@@ -114,20 +109,15 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
 
                     <xsl:comment>================= end Menu items ==================</xsl:comment>
                   </td>
-                  <td bgcolor="{$menu-border}" valign="bottom"><img src="{$spacer}" alt="" height="10" width="10" /></td>
-                  <td bgcolor="{$header-color2}"><img src="{$spacer}" alt="" height="1" width="1" /></td>
+                  <td valign="top"><div class="tab-subbar">&#160;&#160;</div></td>
                 </tr>
 
                 <tr>
-                  <td class="bottom-left-thick" rowspan="2" colspan="2"></td>
-                  <td bgcolor="{$header-color2}"><img src="{$spacer}" alt="" border="0" width="10" height="10" /></td>
-                  <td class="bottom-right-thick" rowspan="2" colspan="2"></td>
-                </tr>
-                <tr>
-                  <td bgcolor="{$header-color2}" height="1"><img src="{$spacer}" alt="" height="1" width="1" /></td>
-                </tr>
-                <tr>
-                  <td height="5"><img src="{$spacer}" alt="" height="5" width="1" /></td>
+                  <td/>
+                  <td height="5">
+                    <img src="{$spacer}" height="1" width="150" />
+                  </td>
+                  <td/>
                 </tr>                
         
                 
@@ -166,43 +156,10 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
             <td width="100%" valign="top">
               <table cellspacing="0" cellpadding="0" border="0" width="100%" summary="content">
 
-                <xsl:comment>================= start middle NavBar ==================</xsl:comment>
-                <tr><td bgcolor="{$header-color2}" colspan="3"><img src="{$spacer}" alt="" height="1" width="10" /></td></tr>
                 <tr>
-                  <td bgcolor="{$background-bars}" width="10" align="left"><img src="{$spacer}" alt="" height="1" width="10" /></td>
-                  <td width="100%" bgcolor="{$background-bars}">
-                  <table cellspacing="0" cellpadding="0" border="0" width="100%" >
-                  <tr>
-                  <td bgcolor="{$background-bars}" width="50%" align="left">
-                    <!-- ============ Page number =========== -->
-                    <span class="trail">
-                      &#160;
-                      <!--<script type="text/javascript" language="JavaScript" src="{$root}skin/breadcrumbs.js"></script>-->
-                      <!-- <b>Page 1 of 5</b> -->
-                    </span>
-                    <img src="{$spacer}" alt="" height="8" width="10" />
-                  </td>
-                  <td bgcolor="{$background-bars}" width="50%" align="right">
-                    <!-- ============ Page navigation =========== -->
-                    <!--
-                      <span class="trail">Font size: 
-                        &#160;<input type="button" onclick="ndeSetTextSize('decr'); return false;" title="Shrink text" class="smallerfont" value="-a"/>
-                        &#160;<input type="button" onclick="ndeSetTextSize('incr'); return false;" title="Enlarge text" class="biggerfont" value="+a"/>
-                        &#160;<input type="button" onclick="ndeSetTextSize('reset'); return false;" title="Reset text" class="resetfont" value="Reset"/>           
-                    </span>
-                    <img src="{$spacer}" alt="" height="8" width="10" />
-                    -->
-                  </td>
-                  </tr>
-                  </table>
-                  </td>
-                  <td bgcolor="#CFDCED" width="10">
-                    <font face="Arial, Helvetica, Sans-serif" size="4" color="{$menu-border}">&#160;</font>
-                    <img src="{$spacer}" alt="" height="1" width="10" /></td>
+                  <td colspan="3" valign="top"><div class="tab-subbar">&#160;&#160;</div></td>
                 </tr>
-                <tr><td bgcolor="{$header-color2}" colspan="4"><img src="{$spacer}" alt="" height="1" width="10" /></td></tr>
-                <xsl:comment>================= end middle NavBar ==================</xsl:comment>
-
+                  
                 <xsl:comment>================= start Content==================</xsl:comment>
                 <tr>
                   <td width="10" align="left"><img src="{$spacer}" alt="" height="1" width="10" /></td>
@@ -225,9 +182,10 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
         <xsl:comment>================= end Menu, NavBar, Content ==================</xsl:comment>
 
         <xsl:comment>================= start Footer ==================</xsl:comment>
+        <div class="footer">
         <table border="0" width="100%" cellpadding="0" cellspacing="0" summary="footer">
           <tr>
-            <td bgcolor="{$menu-border}" height="1" colspan="2">
+            <td height="1" colspan="2">
               <img src="{$spacer}" alt="" width="1" height="1" />
               <a href="{$skin-img-dir}/label.gif"/>
               <a href="{$skin-img-dir}/page.gif"/>
@@ -249,7 +207,7 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
                 </xsl:call-template>
               </div>
             </xsl:if>
-            <td width="90%" align="center" class="copyright" bgcolor="{$header-color2}" colspan="2">
+            <td width="90%" align="center" class="copyright" colspan="2">
               <span class="footnote">Copyright &#169;
                 <xsl:value-of select="$config/year"/>&#160;<xsl:value-of
                   select="$config/vendor"/> All rights reserved.
@@ -257,7 +215,7 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
                   document.write(" - "+"Last Published: " + document.lastModified);
                   //  -->]]></script></span>
             </td>
-            <td class="logos" bgcolor="{$header-color2}" align="right" nowrap="nowrap">
+            <td class="logos" align="right" nowrap="nowrap">
 
               <xsl:call-template name="compliancy-logos"/>
               <!-- old place where to put credits icons-->
@@ -286,6 +244,7 @@ $Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
             </td>
           </tr>
         </table>
+        </div>
         <xsl:comment>================= end Footer ==================</xsl:comment>
       </body>
     </html>
