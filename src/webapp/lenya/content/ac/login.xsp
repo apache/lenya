@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: login.xsp,v 1.10 2004/03/13 12:31:32 gregor Exp $ -->
+<!-- $Id: login.xsp,v 1.11 2004/07/10 23:52:49 andreas Exp $ -->
 
 <xsp:page
        language="java"
@@ -32,7 +32,8 @@
 <login>
 
   <xsp:logic>
-      Session session=request.getSession(false);
+      Session session = request.getSession(true);
+      
       String authenticatorId=(String)session.getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
       String authenticatorName=(String)session.getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.name");
 
@@ -44,8 +45,6 @@
       else{
           <no_authenticator_id_yet/>
       }
-
-
 
       String protected_destination=(String)session.getAttribute("protected_destination");
       if(protected_destination != null){
