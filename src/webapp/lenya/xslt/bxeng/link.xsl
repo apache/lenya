@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: link.xsl,v 1.1 2004/02/14 16:02:04 gregor Exp $
+ $Id: link.xsl,v 1.2 2004/02/14 16:20:50 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -49,9 +49,7 @@
           function insertLink() { 
           var text = document.forms["link"].text.value;
           var title = document.forms["link"].title.value;
-          if (document.forms["link"].url.length != 0) { 
-                url = document.forms["link"].url.value;
-          } 
+          url = '<xsl:value-of select="$contextprefix"/>' + '/<xsl:value-of select="$publicationid"/>' + '/<xsl:value-of select="$area"/>' + document.forms["link"].url.value;
           var content = '<a xmlns="'+window.opener.XHTMLNS+'" href="'+url+'" title="'+title+'">'+text+'</a>'; 
           window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
           window.close();
