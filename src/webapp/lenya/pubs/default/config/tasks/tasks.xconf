@@ -43,8 +43,14 @@
 -->
   </task>
 
-  <task id="deactivateDocument" class="org.apache.lenya.defaultpub.cms.task.Deactivate">
+  <task id="deactivateDocument">
     <label>Deactivate</label>
+    <task id="deactivateDocument" class="org.apache.lenya.defaultpub.cms.task.Deactivate"/>
+    <task id="delect-cache" class="org.apache.lenya.cms.task.AntTask">
+      <label>Delete Cache</label>
+      <parameter name="target" value="deletecache"/>
+      <parameter name="properties.cachedir" value="work/cache"/>
+    </task>
   </task>
 
 
