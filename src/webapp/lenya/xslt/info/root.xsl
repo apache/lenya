@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.23 2003/09/03 10:01:25 andreas Exp $
+ $Id: root.xsl,v 1.24 2003/09/03 10:55:53 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -70,19 +70,34 @@ function findIDbyLink(srclink)
 </head>
 
 <body>
-<a id="de">
-	<xsl:call-template name="activate">
-		<xsl:with-param name="tablanguage">de</xsl:with-param>
-	</xsl:call-template>
-</a>
-<a id="en"> 
-	<xsl:call-template name="activate">
-		<xsl:with-param name="tablanguage">en</xsl:with-param>
-	</xsl:call-template>
-</a>
-
+<div id="lenya-info-body">
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top">
 <div id="lenya-info-treecanvas">
 <!-- Build the tree. -->
+
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td><a id="de">
+							<xsl:call-template name="activate">
+								<xsl:with-param name="tablanguage">de</xsl:with-param>
+							</xsl:call-template>
+						</a></td>
+						<td><a id="en">
+							<xsl:call-template name="activate">
+								<xsl:with-param name="tablanguage">en</xsl:with-param>
+							</xsl:call-template>
+						</a></td>
+					</tr>
+				</table>
+			</td>
+			<td></td>
+		</tr>
+	</table>
 
    <div id="lenya-info-tree">
       <div style="display:none;">
@@ -94,14 +109,22 @@ function findIDbyLink(srclink)
       		</tr>
       	</table>
       </div>
-    </div>
   <script>
  	initializeDocument();
   loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documenturl"/>');
    </script>
+    </div>
 </div>
+</td>	
+<td valign="top">
 <div id="lenya-info-content">
+	<strong>URL:&#160;&#160;</strong><xsl:value-of select="$documenturl"/><br/><br/>
+	
 	<xsl:copy-of select="*"/>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </body>
 </html>
@@ -110,7 +133,7 @@ function findIDbyLink(srclink)
 <xsl:template name="activate">
 	<xsl:param name="tablanguage"/>
 	<xsl:variable name="docidwithoutlanguage"><xsl:value-of select="substring-before($documentid, '_')"/></xsl:variable>
-   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/>.html</xsl:attribute>
+   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>_<xsl:value-of select="$tablanguage"/>.html?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:attribute>
    <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
 

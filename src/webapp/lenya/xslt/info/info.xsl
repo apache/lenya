@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.34 2003/09/03 10:01:25 andreas Exp $
+ $Id: info.xsl,v 1.35 2003/09/03 10:55:53 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -36,22 +36,16 @@
 				<table border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">overview</xsl:with-param></xsl:call-template>Overview</a></td>
-						<td><div class="lenya-tab-separator"/></td>
 						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">meta</xsl:with-param></xsl:call-template>Meta</a></td>
-						<td><div class="lenya-tab-separator"/></td>
 						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">assets</xsl:with-param></xsl:call-template>Assets</a></td>
-						<td><div class="lenya-tab-separator"/></td>
 						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a></td>
-						<td><div class="lenya-tab-separator"/></td>
 						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a></td>
-						<td><div class="lenya-tab-separator"/></td>
 						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC Auth</a></td>
-						<td><div class="lenya-tab-separator"/></td>
 						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC Live</a></td>
 					</tr>
 				</table>
 			</td>
-			<td><div class="lenya-tab-separator"/></td>
+			<td></td>
 		</tr>
 	</table>
 	
@@ -85,30 +79,29 @@
 
 <xsl:template match="lenya-info:overview">
    <table class="lenya-table-noborder">
-   <tr><td>Title:</td><td><xsl:value-of select="dc:title"/></td></tr>
-   <tr><td>Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
-   <tr><td>Workflow State:</td><td><xsl:value-of select="lenya-info:workflow-state"/></td></tr>
-   <tr><td>Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
-   <tr><td>Available Languages:</td><td><xsl:value-of select="lenya-info:languages"/></td></tr>
+   <tr><td class="lenya-entry-caption">Title:</td><td><xsl:value-of select="dc:title"/></td></tr>
+   <tr><td class="lenya-entry-caption">Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
+   <tr><td class="lenya-entry-caption">Workflow State:</td><td><xsl:value-of select="lenya-info:workflow-state"/></td></tr>
+   <tr><td class="lenya-entry-caption">Live:</td><td><xsl:value-of select="lenya-info:is-live"/></td></tr>
+   <tr><td class="lenya-entry-caption">Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
+   <tr><td class="lenya-entry-caption">Available Languages:</td><td><xsl:value-of select="lenya-info:languages"/></td></tr>
    <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
-   <tr><td>Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
-   <tr><td>Document ID:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
+   <tr><td class="lenya-entry-caption">Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
+   <tr><td class="lenya-entry-caption">Document ID:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
    </table>
 </xsl:template>
 
   <xsl:template match="lenya-info:meta">
     <form>
-      <table class="lenya-table">
-        <tr>
-          <th colspan="2">Meta Data</th>
-        </tr>
-        <tr><td>Title:</td><td><input type="text" id="dc:title" name="properties.save.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
-        <tr><td>Creator:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
-        <tr><td>Subject:</td><td><input type="text" id="dc:subject" name="properties.save.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
-        <tr><td>Description:</td><td><input type="text" id="dc:description" name="properties.save.meta.description" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
-        <tr><td>Publisher:</td><td><input type="text" id="dc:publisher" name="properties.save.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
-        <tr><td>Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
-        <tr><td>Rights:</td><td><input type="text" id="dc:rights" name="properties.save.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
+      <table class="lenya-table-noborder">
+        <tr><td class="lenya-entry-caption">Title:</td><td><input type="text" id="dc:title" name="properties.save.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption">Creator:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
+        <tr><td class="lenya-entry-caption">Subject:</td><td><input type="text" id="dc:subject" name="properties.save.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption">Description:</td><td><input type="text" id="dc:description" name="properties.save.meta.description" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption">Publisher:</td><td><input type="text" id="dc:publisher" name="properties.save.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption">Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
+        <tr><td class="lenya-entry-caption">Rights:</td><td><input type="text" id="dc:rights" name="properties.save.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
+        <tr><td/><td><br/><input type="submit" value="Update Metadata"/></td></tr>
       </table>
       <input type="hidden" name="properties.save.meta.documentid" value="{lenya-info:documentid}"/>
       <input type="hidden" name="properties.save.meta.area" value="{lenya-info:area}"/>
@@ -116,7 +109,6 @@
       <input type="hidden" name="lenya.usecase" value="info-meta"/>
       <input type="hidden" name="lenya.step" value="update"/>
       <input type="hidden" name="task-id" value="save-meta-data"/>
-      <input type="submit" value="Update Metadata"/>
     </form>
   </xsl:template>
 

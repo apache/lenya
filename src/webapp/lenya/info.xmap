@@ -99,7 +99,7 @@
 							<map:parameter name="publicationid" value="{../../1}"/>
 							<map:parameter name="area" value="{../../2}"/>
 							<map:parameter name="tab" value="{../1}"/>
-							<map:parameter name="chosenlanguage" value="{page-envelope:language}"/>
+							<map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
 							<map:parameter name="documentid" value="{page-envelope:document-id}"/>
 							<map:parameter name="documenturl" value="/{../../3}"/>
 							<map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>

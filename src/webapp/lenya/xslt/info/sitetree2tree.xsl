@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.22 2003/09/03 09:31:00 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.23 2003/09/03 10:55:53 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -31,7 +31,7 @@ PERSERVESTATE = 1
 HIGHLIGHT = 1
 HIGHLIGHT_BG = "#DDDCCF;"
 HIGHLIGHT_COLOR = "#666666;"
-foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen")
+foldersTree = gFld("&lt;strong&gt;<xsl:value-of select="$publicationid"/>&lt;/strong&gt;", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen")
 		<xsl:apply-templates select="s:site"/>
 
 //Set this string if Treeview and other configuration files may also be loaded in the same session
