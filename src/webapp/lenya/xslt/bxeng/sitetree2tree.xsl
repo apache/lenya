@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree2tree.xsl,v 1.2 2004/03/13 13:09:51 gregor Exp $ -->
+<!-- $Id: sitetree2tree.xsl,v 1.3 2004/04/13 12:21:01 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -35,7 +35,7 @@
 
 //Environment variables are usually set at the top of this file.
 USETEXTLINKS = 1
-STARTALLOPEN = 1
+STARTALLOPEN = 0
 USEFRAMES = 0
 USEICONS = 0
 WRAPTEXT = 1
