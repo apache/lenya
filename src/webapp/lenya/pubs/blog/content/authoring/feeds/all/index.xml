@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<feed xmlns="http://purl.org/atom/ns#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="0.2">
+<feed xmlns="http://purl.org/atom/ns#" version="0.2">
   <title>Lenya's Weblog</title>
   <!-- "subtitle" has been removed from Atom specification. Can be added to xslt/global.xsl -->
   <link>http://cocoon.apache.org/lenya/blog/</link>

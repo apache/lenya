@@ -8,19 +8,23 @@
 
 <xsl:template match="echo:entry">
   <div class="dateline"><xsl:value-of select="echo:issued"/></div>
-  <div class="title"><xsl:value-of select="echo:title"/></div>
+  <xsl:apply-templates select="echo:title"/>
   <xsl:apply-templates select="echo:summary"/>
   <xsl:apply-templates select="echo:content"/>
   <br />
   <p class="issued">
-  <b>Posted <xsl:apply-templates select="echo:author"/> at <xsl:value-of select="echo:issued"/>&#160;|&#160;<a href="index.html">Permalink</a></b>
+  <b>Posted <xsl:apply-templates select="echo:author"/> at <xsl:value-of select="echo:issued"/>&#160;|&#160;<xsl:call-template name="permalink"><xsl:with-param name="id" select="echo:id"/></xsl:call-template></b>
   </p>
 </xsl:template>
 
+
+<xsl:template match="echo:title">
+  <div class="title"><xsl:value-of select="."/></div>
+</xsl:template>
+
+
 <xsl:template match="echo:summary">
-<i>
-  <xsl:copy-of select="node()"/>
-</i>
+  <i><xsl:copy-of select="node()"/></i>
 </xsl:template>
 
 <xsl:template match="echo:content[@type='text/xhtml']">
@@ -43,6 +47,10 @@ by
 <xsl:value-of select="echo:name"/>
 </xsl:otherwise>
 </xsl:choose>
+</xsl:template>
+
+<xsl:template name="permalink">
+  <xsl:text><a href="index.html">Permalink</a></xsl:text>
 </xsl:template>
  
 </xsl:stylesheet>  
