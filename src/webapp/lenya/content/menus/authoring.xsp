@@ -19,8 +19,8 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/editor-matrix/"+projectid+".html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/editor-matrix/"+projectid+".html,/lenya/oscom/editor-matrix/index.html&amp;sources=/editor-matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
+        <item>Edit&#160;with&#160;Xopus2</item>
+        <item>Publish</item>
       </block>
       <separator>
         <item>-----------------</item>
@@ -28,10 +28,6 @@
       <block>
         <item>Passwd</item>
         <item>Switch&#160;User</item>
-<!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_lenya_id == null ? "nobody" : xsp_lenya_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
--->
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
@@ -53,7 +49,7 @@
         <item>-----------------</item>
       </separator>
       <block>
-        <item href="http://www.lenya.org">About&#160;Lenya</item>
+        <item href="http://www.wyona.org">About&#160;Lenya</item>
       </block>
     </menu>
 
