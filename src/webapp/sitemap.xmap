@@ -110,6 +110,7 @@
       | configuration.
       +-->
   <map:transformers default="xslt">
+  <!--<map:transformers default="xalan">-->
 
     <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
       <publication type=""/>
