@@ -64,7 +64,7 @@
     <arg value="-C${build.webapp}/WEB-INF/cocoon.xconf"/> <!-- cocoon.xconf file to use -->
     <arg value="-b${build.export}/brokenlinks.txt"/>  <!-- output list of broken links -->
     <arg value="-k${build.webapp}/WEB-INF/logkit.xconf"/>  <!-- logkit configuration -->
-    <arg value="${publication}/live/index.html"/>  <!-- starting page -->
+    <arg value="/${publication}/live/index.html"/>  <!-- starting page -->
     <arg value="-efalse"/> <!-- don't confirm extensions -->
     <arg value="-V" />  <!-- be verbose -->
   </java>
