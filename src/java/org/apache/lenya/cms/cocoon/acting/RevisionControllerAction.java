@@ -1,5 +1,5 @@
 /*
-$Id: RevisionControllerAction.java,v 1.23 2003/08/08 09:09:44 egli Exp $
+$Id: RevisionControllerAction.java,v 1.24 2003/08/26 15:52:31 edith Exp $
 <License>
 
  ============================================================================
@@ -65,10 +65,10 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
 
@@ -116,10 +116,12 @@ public class RevisionControllerAction extends AbstractAction {
 
         PageEnvelope envelope = null;
         Publication publication = null;
+        Document document = null;
 
         try {
-            publication = PublicationFactory.getPublication(objectModel);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            publication = envelope.getPublication();
+			document =envelope.getDocument();
         } catch (Exception e) {
             getLogger().error("Resolving page envelope failed: ", e);
         }
@@ -127,7 +129,7 @@ public class RevisionControllerAction extends AbstractAction {
         //get Parameters for RC
         String publicationPath = publication.getDirectory().getCanonicalPath();
         String servletContextPath = publication.getServletContext().getCanonicalPath();
-        RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
+		RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
         rcmlDirectory = rcEnvironment.getRCMLDirectory();
         rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
         backupDirectory = rcEnvironment.getBackupDirectory();
@@ -152,17 +154,8 @@ public class RevisionControllerAction extends AbstractAction {
         getLogger().debug(".act(): Identity: " + identity);
         getLogger().debug(".act(): Identity: " + identityTwo);
 
-        String docId = request.getParameter("documentid");
-        String authoringPath =
-            File.separator
-                + Publication.CONTENT_PATH
-                + File.separator
-                + Publication.AUTHORING_AREA;
-        filename =
-            authoringPath
-                + File.separator
-                + docId.replace('/', File.separatorChar);
-        getLogger().debug(".act(): publicationAuthPath + docId : " + authoringPath + " : " + docId);
+		filename = "/" + Publication.CONTENT_PATH +"/"+ document.getArea() +"/"+envelope.getDocumentPath(); 
+        getLogger().debug(".act(): filename : " + filename );
         username = null;
 
         if (identity != null) {
