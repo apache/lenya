@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.3 2003/02/07 17:16:02 michicms Exp $
+ * $Id: DocumentHelper.java,v 1.4 2003/02/07 18:40:23 ah Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,6 +46,9 @@ package org.wyona.xml;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 
@@ -59,7 +62,16 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+/*
+import org.apache.commons.jxpath.Container;
+import org.apache.commons.jxpath.JXPathContext;
+import org.apache.commons.jxpath.xml.DocumentContainer;
+ */
+import org.apache.log.Hierarchy;
+import org.apache.log.Logger;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -179,5 +191,69 @@ public class DocumentHelper {
         return builder.getDOMImplementation().createDocumentType(
                 qualifiedName, publicId, systemId);
     }
+    
+    
+    /**
+     * Returns all child elements of an element that belong to a certain namespace.
+     * @param element The parent element.
+     * @param namespaceUri The namespace that the childen must belong to.
+     * @return The child elements.
+     */    
+    public static Element[] getChildren(Element element, String namespaceUri) {
+        return getChildren(element, namespaceUri, "*");
+    }
+    
+    /**
+     * Returns all child elements of an element that belong to a certain namespace
+     * and have a certain local name.
+     * @param element The parent element.
+     * @param namespaceUri The namespace that the childen must belong to.
+     * @return The child elements.
+     * @param localName The local name of the children.
+     * @return The children.
+     */    
+    public static Element[] getChildren(Element element, String namespaceUri, String localName) {
+        List childElements = new ArrayList();
+        NodeList children = element.getElementsByTagNameNS(namespaceUri, localName);
+        for (int i = 0; i < children.getLength(); i++) {
+            if (children.item(i).getParentNode() == element) {
+                childElements.add(children.item(i));
+            }
+        }
+        return (Element[]) childElements.toArray(new Element[childElements.size()]);
+    }
+
+    /*
+    public static Element[] getXPathElements(File file, String xPath) {
+        
+        URL url = file.toURL();
+        JXPathContext context = JXPathContext.newContext(new XMLFile(url));
+        Object object = context.getValue(xPath);
+        
+        Logger logger = Hierarchy.getDefaultHierarchy().getLoggerFor("DocumentHelper");
+        if (object != null)
+            logger.debug("Object is null");
+        else
+            logger.debug("Object is instance of " + object.getClass().getName());
+    }
+    
+    public static class XMLFile {
+        
+        public XMLFile(URL url) {
+            this.url = url;
+        }
+        
+        private Container locations = null;
+        private URL url;
+
+        public Container getLocations(){
+            if (locations == null) {
+                URL url = getClass().getResource("Vendor.xml");
+                locations = new DocumentContainer(url, DocumentContainer.MODEL_DOM);
+            }
+            return locations;
+        }
+    }
+     */
     
 }
