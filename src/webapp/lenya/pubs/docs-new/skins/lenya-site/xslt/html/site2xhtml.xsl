@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.2 2003/04/30 15:08:07 andreas Exp $
+$Id: site2xhtml.xsl,v 1.3 2003/05/07 13:04:12 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -45,10 +45,8 @@ $Id: site2xhtml.xsl,v 1.2 2003/04/30 15:08:07 andreas Exp $
         <table cellspacing="0" cellpadding="0" border="0" width="100%" summary="header with logos">
           <tr>
 
-          <!--
             <xsl:comment>================= start Group Logo ==================</xsl:comment>
             <td bgcolor="{$header-color}">
-              <h1>&#160;&#160;&#160;<xsl:value-of select="$config/project-name"/> Documentation</h1>
               <xsl:if test="$config/group-url">
                 <div class="headerlogo">
                 <xsl:call-template name="renderlogo">
@@ -62,9 +60,9 @@ $Id: site2xhtml.xsl,v 1.2 2003/04/30 15:08:07 andreas Exp $
               </xsl:if>
             </td>
             <xsl:comment>================= end Group Logo ==================</xsl:comment>
-          -->
+            
             <xsl:comment>================= start Project Logo ==================</xsl:comment>
-            <td colspan="3" bgcolor="{$header-color}" align="left" >
+            <td colspan="3" bgcolor="{$header-color}" align="right" >
              <div class="headerlogo" style="padding: 10px">
               <xsl:call-template name="renderlogo">
                 <xsl:with-param name="name" select="$config/project-name"/>
@@ -134,14 +132,6 @@ $Id: site2xhtml.xsl,v 1.2 2003/04/30 15:08:07 andreas Exp $
               <xsl:comment>================= end Tabs ==================</xsl:comment>
             </td>
             <td bgcolor="{$header-color}"><img src="{$spacer}" height="1" width="1" alt="" /></td>
-          </tr>
-          <tr>
-            <td colspan="3" bgcolor="{$header-color2}" align="right">
-               <img src="{$spacer}" alt="" height="10" width="1" />
-               <span class="datenote"><script language="JavaScript" type="text/javascript"><![CDATA[<!--
-                  document.write("Published: " + document.lastModified);
-                  //  -->]]></script></span>
-            </td>
           </tr>
         </table>
         <xsl:comment>================= end Banner ==================</xsl:comment>
@@ -242,19 +232,21 @@ $Id: site2xhtml.xsl,v 1.2 2003/04/30 15:08:07 andreas Exp $
                     <!-- ============ Page number =========== -->
                     <span class="trail">
                       &#160;
-                      <script type="text/javascript" language="JavaScript" src="{$root}skin/breadcrumbs.js"></script>
+                      <!--<script type="text/javascript" language="JavaScript" src="{$root}skin/breadcrumbs.js"></script>-->
                       <!-- <b>Page 1 of 5</b> -->
                     </span>
                     <img src="{$spacer}" alt="" height="8" width="10" />
                   </td>
                   <td bgcolor="{$background-bars}" width="50%" align="right">
                     <!-- ============ Page navigation =========== -->
+                    <!--
                       <span class="trail">Font size: 
                         &#160;<input type="button" onclick="ndeSetTextSize('decr'); return false;" title="Shrink text" class="smallerfont" value="-a"/>
                         &#160;<input type="button" onclick="ndeSetTextSize('incr'); return false;" title="Enlarge text" class="biggerfont" value="+a"/>
                         &#160;<input type="button" onclick="ndeSetTextSize('reset'); return false;" title="Reset text" class="resetfont" value="Reset"/>           
                     </span>
                     <img src="{$spacer}" alt="" height="8" width="10" />
+                    -->
                   </td>
                   </tr>
                   </table>

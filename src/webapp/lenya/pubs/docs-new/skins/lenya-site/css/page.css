@@ -7,7 +7,7 @@ ol.wide ul li { margin-bottom: 0px; }
 ol.wide li { margin-bottom: 1.5em; }
 
 .textheader { display: none;  }
-.headerlogo { padding: 0px 2px 2px 0px;  }
+.headerlogo { padding: 0px 0px 0px 10px;  }
 
 a:link { color: #0F3660; }
 a:visited { color: #000044; }

@@ -10,7 +10,7 @@ to HTML.  It renders XML as HTML in this form:
 ..which site2xhtml.xsl then combines with HTML from the index (book2menu.xsl)
 and tabs (tab2menu.xsl) to generate the final HTML.
 
-$Id: document2html.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
+$Id: document2html.xsl,v 1.2 2003/05/07 13:04:12 andreas Exp $
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -43,6 +43,7 @@ $Id: document2html.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
 
       <xsl:apply-templates select="body"/>
 
+      <!--
       <xsl:if test="header/authors">
         <p align="right">
           <font size="-2">
@@ -56,6 +57,7 @@ $Id: document2html.xsl,v 1.1 2003/04/10 08:22:12 andreas Exp $
           </font>
         </p>
       </xsl:if>
+      -->
 
     </div>
   </xsl:template>
