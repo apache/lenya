@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.13 2003/08/12 15:18:53 andreas Exp $
+$Id: PublicationFactory.java,v 1.14 2003/08/13 13:15:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -71,20 +71,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Factory for creating publication objects.
  * @author  andreas
  */
 public final class PublicationFactory {
 
     /**
      * Create a new <code>PublicationFactory</code>.
-     * 
      */
     private PublicationFactory() {
     }
 
     private static Category log = Category.getInstance(PublicationFactory.class);
-    private static Map idToPublication = new HashMap();
+    private static Map keyToPublication = new HashMap();
 
     /**
      * Creates a new publication.
@@ -107,7 +106,7 @@ public final class PublicationFactory {
 
     /**
      * Create a new publication with the given publication-id and servlet context path.
-     * These publications are cached and resused for similar requests.
+     * These publications are cached and reused for similar requests.
      *
      * @param id the publication id
      * @param servletContextPath the servlet context path of the publication
@@ -122,18 +121,42 @@ public final class PublicationFactory {
         assert id != null;
         assert servletContextPath != null;
 
+        String key = generateKey(id, servletContextPath);
         Publication publication;
 
-        if (idToPublication.containsKey(id)) {
-            publication = (Publication) idToPublication.get(id);
+        if (keyToPublication.containsKey(key)) {
+            publication = (Publication) keyToPublication.get(key);
         } else {
             publication = new Publication(id, servletContextPath);
-            idToPublication.put(id, publication);
+            keyToPublication.put(key, publication);
         }
 
         assert publication != null;
-
         return publication;
+    }
+
+    /**
+     * Generates a key to cache a publication.
+     * The cache key is constructed using the canonical servlet context path
+     * and the publication ID.
+     * 
+     * @param publicationId The publication ID.
+     * @param servletContextPath The servlet context path.
+     * @return A cache key.
+     * @throws PublicationException when the servlet context does not exist.
+     */
+    protected static String generateKey(String publicationId, String servletContextPath)
+        throws PublicationException {
+        String key;
+        File servletContext = new File(servletContextPath);
+        String canonicalPath;
+        try {
+            canonicalPath = servletContext.getCanonicalPath();
+        } catch (IOException e) {
+            throw new PublicationException(e);
+        }
+        key = canonicalPath + "_" + publicationId;
+        return key;
     }
 
     /**
