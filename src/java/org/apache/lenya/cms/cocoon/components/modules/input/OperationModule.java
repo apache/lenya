@@ -41,11 +41,25 @@ public class OperationModule extends AbstractInputModule implements Operation, S
     private UnitOfWork unitOfWork;
 
     /**
+     * Retrieves a unit-of-work, which gives the operation access to business
+     * objects affected by the operation.
+     *
+     * @return a UnitOfWork, the interface to access the objects
+     * @throws ServiceException if the unit-of-work component can not be initialized by the component framework
+     *
      * @see org.apache.lenya.cms.usecase.Operation#getUnitOfWork()
      */
-    public UnitOfWork getUnitOfWork() {
+    public UnitOfWork getUnitOfWork() throws ServiceException {
+        if (this.unitOfWork == null) {
+           if (getLogger().isDebugEnabled())
+               getLogger().debug("OperationModule.getUnitOfWork() does not yet have instance, looking up role [" + UnitOfWork.ROLE + "]");
+
+           this.unitOfWork = (UnitOfWork) this.manager.lookup(UnitOfWork.ROLE);
+        }
+
         return this.unitOfWork;
     }
+
 
     protected ServiceManager manager;
 
@@ -60,7 +74,7 @@ public class OperationModule extends AbstractInputModule implements Operation, S
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public void initialize() throws Exception {
-        this.unitOfWork = (UnitOfWork) this.manager.lookup(UnitOfWork.ROLE);
+       // do nothing
     }
 
     /**
