@@ -357,6 +357,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
 
     <map:pipeline>
@@ -374,6 +375,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -391,6 +393,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -408,6 +411,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -425,6 +429,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -442,6 +447,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -459,6 +465,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -476,6 +483,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -493,6 +501,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -510,6 +519,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -527,6 +537,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -544,6 +555,7 @@
           <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline>
@@ -561,6 +573,7 @@
 	    <map:redirect-to uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}" session="true"/> 
 	  </map:match>
 	</map:match>
+      </map:match>
     </map:pipeline>
     
     
@@ -577,25 +590,59 @@
 	    <map:serialize />
 	  </map:match>
 	  
-	  <map:match type="step" pattern="edit">
+	</map:match>
+	
+	<map:match type="usecase" pattern="user-add">
+	  
+	  <map:match type="step" pattern="showscreen">
+	    <map:generate type="serverpages" src="content/ac/user-add.xsp"/>
+	    <map:transform src="xslt/ac/user-add.xsl"/>
+	    <map:serialize />
+	  </map:match>
+	  
+	  <map:match type="step" pattern="add">
 	    <map:generate type="serverpages" src="content/ac/user-edit.xsp"/>
 	    <map:transform src="xslt/ac/user-edit.xsl"/>
 	    <map:serialize />
 	  </map:match>
-
-	  <map:match type="step" pattern="delete">
-	    <map:act type="default-create">
-	      <!-- if the action suceeds redirect to the requestURI -->
-	      <map:redirect-to uri="{request:requestURI}"/>
-	    </map:act>
-	    <!-- otherwise the action could not validate some of the -->
-	    <!-- input and we present the upload form again -->
+	  
+	</map:match>
+	
+	<map:match type="usecase" pattern="user-modify">
+	  
+	  <map:match type="step" pattern="showscreen">
+	    <map:generate type="serverpages" src="content/ac/user-modify.xsp"/>
+	    <map:transform src="xslt/ac/user-modify.xsl"/>
+	    <map:serialize />
+	  </map:match>
+	  
+	  <map:match type="step" pattern="modify">
+	    <map:generate type="serverpages" src="content/ac/user-edit.xsp"/>
+	    <map:transform src="xslt/ac/user-edit.xsl"/>
+	    <map:serialize />
 	  </map:match>
 	  
 	</map:match>
+	
+	<map:match type="usecase" pattern="user-delete">
+	  
+	  <map:match type="step" pattern="showscreen">
+	    <map:generate type="serverpages" src="content/ac/user-modify.xsp"/>
+	    <map:transform src="xslt/ac/user-delete.xsl"/>
+	    <map:serialize />
+	  </map:match>
+	  
+	  <map:match type="step" pattern="delete">
+	    <map:generate type="serverpages" src="content/ac/user-edit.xsp"/>
+	    <map:transform src="xslt/ac/user-edit.xsl"/>
+	    <map:serialize />
+	  </map:match>
+	  
+	</map:match>
+	
       </map:match>
     </map:pipeline>
-
+    
   </map:pipelines>
-
+  
 </map:sitemap>
