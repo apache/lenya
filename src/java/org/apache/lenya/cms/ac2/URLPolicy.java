@@ -1,5 +1,5 @@
 /*
-$Id: URLPolicy.java,v 1.11 2003/08/07 10:23:27 andreas Exp $
+$Id: URLPolicy.java,v 1.12 2003/10/02 16:09:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -111,8 +111,21 @@ public class URLPolicy implements Policy {
 	public Role[] getRoles(Identity identity) throws AccessControlException {
         obtainPolicies();
         Set roles = new HashSet();
-        for (int i = 0; i < policies.length; i++) {
-            addRoles(policies[i], identity, roles);
+        
+        // no policies defined: return "visit" or "visitor" role
+        if (isEmpty()) {
+            Role visitorRole = getAccreditableManager().getRoleManager().getRole("visit");
+            if (visitorRole == null) {
+                visitorRole = getAccreditableManager().getRoleManager().getRole("visitor");
+            }
+            if (visitorRole != null) {
+                roles.add(visitorRole);
+            }
+        }
+        else {
+            for (int i = 0; i < policies.length; i++) {
+                addRoles(policies[i], identity, roles);
+            }
         }
 		return (Role[]) roles.toArray(new Role[roles.size()]);
 	}
@@ -170,6 +183,21 @@ public class URLPolicy implements Policy {
         }
         
         return ssl;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.Policy#isEmpty()
+     */
+    public boolean isEmpty() throws AccessControlException {
+        boolean empty = true;
+        
+        int i = 0;
+        while (empty && i < policies.length) {
+            empty = empty && policies[i].isEmpty();
+            i++;
+        }
+        
+        return empty;
     }
     
 }
