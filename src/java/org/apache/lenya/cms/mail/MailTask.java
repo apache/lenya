@@ -184,8 +184,10 @@ public class MailTask
         
 // </debug>                
                 
-                
                 Document document = builder.parse(uri);
+                dumpTree(document);
+                
+                
                 Element root = (Element) document.getChildNodes().item(0);
 /*
                 log.debug(
@@ -237,6 +239,29 @@ public class MailTask
             log.error("Sending mail failed: ", e);
         }
     }        
+    
+    public void dumpTree(Document document) {
+        log.error(
+            "\n-------------------------------------------------" +
+            "\n DUMP:" +
+            dumpNode(document, 0)
+            +
+            "\n-------------------------------------------------"
+            );
+    }
+    
+    public String dumpNode(Node node, int depth) {
+        String s = "\n";
+        for (int i = 0; i < depth; i++)
+            s += "  ";
+        s += node.toString() + " - " + node.getNodeValue();
+        NodeList children = node.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            Node child = children.item(i);
+            s += dumpNode(child, depth + 1);
+        }
+        return s;
+    }
         
     public void sendMail(String host, String from, String to, String cc, String subject, String body) {
         log.debug(
