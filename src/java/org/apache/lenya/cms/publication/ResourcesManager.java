@@ -1,5 +1,5 @@
 /*
-$Id: ResourcesManager.java,v 1.8 2003/12/01 16:46:03 andreas Exp $
+$Id: ResourcesManager.java,v 1.9 2004/01/21 16:12:39 edith Exp $
 <License>
 
  ============================================================================
@@ -151,9 +151,14 @@ public class ResourcesManager {
      * Deletes all resources.
      */
     public void deleteResources() {
+        
         File[] resources = getResources();
+        File[] metas = getMetaFiles();
         for (int i = 0; i < resources.length; i++) {
             resources[i].delete();
+        }
+        for (int i = 0; i < metas.length; i++) {
+            metas[i].delete();
         }
         File directory = getPath();
         if (directory.isDirectory() && directory.listFiles().length == 0) {
