@@ -78,6 +78,16 @@ td#sidebar a:visited:hover {
   background-color: transparent;
 }
 
+td#footer {
+  border-top: solid 1pt #b1b1b1;
+  padding: 10pt;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: verdana, sans-serif;
+  font-size: small;
+  /*border: 1pt solid blue;*/
+}
+
 div.sidebar-title {
   font-style: verdana, sans-serif;
   font-weight: bold;

@@ -55,13 +55,11 @@
 </td>
 </tr>
 
-<!--
 <tr>
 <td colspan="2" id="footer">
-Copyright &#169; Apache Software Foundation
+Copyright &#169; 2003 The Apache Software Foundation. All rights reserved.
 </td>
 </tr>
--->
 </table>
 </body>
 </html>
