@@ -48,8 +48,34 @@
       <div class="lenya-box">
         <div class="lenya-box-title">New language for existing Document</div>
         <div class="lenya-box-body">  
+        <script Language="JavaScript">
+function validRequired(formField,fieldLabel)
+{
+	var result = true;
+	
+	if (formField.value == "")
+	{
+		alert('Please enter a value for the "' + fieldLabel +'" field.');
+		formField.focus();
+		result = false;
+	}
+	
+	return result;
+}
+
+function validateForm(theForm)
+{
+	if (!validRequired(theForm["properties.create.child-name"],"Navigation Title"))
+		return false;
+
+	if (!validRequired(theForm["properties.create.title"],"Document Title"))
+		return false;
+	
+	return true;
+}
+</script>
           <form method="GET" 
-            action="{/parent-child/referer}">
+            action="{/parent-child/referer}" onsubmit="return validateForm(this)">
             <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
             <input type="hidden" name="lenya.step" value="create"/>
             <input type="hidden" name="properties.create.document-id" value="{/parent-child/document-id}"/>
@@ -64,7 +90,7 @@
                 <td class="lenya-form-caption">Navigation Title*:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">Title*:</td><td><input class="lenya-form-element" type="text" name="properties.create.title"/></td>
+                <td class="lenya-form-caption">Document Title*:</td><td><input class="lenya-form-element" type="text" name="properties.create.title"/></td>
               </tr>
               <tr>
                 <td class="lenya-form-caption">Language:</td><td><select class="lenya-form-element"  name="properties.create.new.language"><xsl:apply-templates select="dc:languages"/></select></td>
