@@ -13,17 +13,27 @@ function passwd() {
       newpassword = cocoon.request.getParameter("newpassword");
       confirmednewpassword = cocoon.request.getParameter("confirmednewpassword");
 
+/*
       if (oldpassword != 'vanya') {
           exceptionMessage = 'Authentication failed';
           continue;
       }
-      if (newpassword != 'levi') {
-      //if (newpassword != confirmednewpassword) {
-          exceptionMessage = 'New password and confirmed new password do not match';
+      //if (newpassword != 'levi') {
+      if (newpassword.trim() != newpassword.trim()) {
+      //if (newpassword.trim() != confirmednewpassword.trim()) {
+          exceptionMessage = "New password and confirmed new password do not match (#" + newpassword + "##" + confirmednewpassword + "#)";
           continue;
       }
+      //if (oldpassword == 'vanya' && newpassword == confirmednewpassword) {
       if (oldpassword == 'vanya' && newpassword == 'levi') {
           break;
+      }
+*/
+      if (Packages.org.lenya.cms.ac.Identity.changePassword(oldpassword, newpassword, confirmednewpassword)) {
+          break;
+      } else {
+          exceptionMessage = "Either authentication failed or new password and confirmed new password do not match (#" + newpassword + "##" + confirmednewpassword + "#)";
+          continue;
       }
   }
 

@@ -1,5 +1,5 @@
 /*
- * $Id: Identity.java,v 1.6 2003/03/06 20:45:41 gregor Exp $
+ * $Id: Identity.java,v 1.7 2003/04/20 01:02:33 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -185,4 +185,12 @@ public class Identity {
 
         return s;
     }
+
+    /**
+     * Change Password
+     */
+     public static boolean changePassword(String oldP, String newP, String confirmedP) {
+         if (oldP.equals("levi") && newP.equals(confirmedP)) return true;
+         return false;
+     }
 }
