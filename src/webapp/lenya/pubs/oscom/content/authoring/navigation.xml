@@ -18,6 +18,6 @@
 -->
 </branch>
 <leaf name="Mailing&#160;Lists" href="mailing-lists.html"/>
-<leaf name="CVS" href="cvs.html"/>
+<leaf name="CVS" href="http://cvs.oscom.org"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>

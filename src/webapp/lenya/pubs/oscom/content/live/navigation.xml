@@ -19,8 +19,6 @@
 <leaf name="Glossary"/>
 <leaf name="Interop" href="interop.html"/>
 <leaf name="Mailing Lists" href="mailing-lists.html"/>
-<!--
-<leaf name="CVS" href="cvs.html"/>
--->
+<leaf name="CVS" href="http://cvs.oscom.org"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>
