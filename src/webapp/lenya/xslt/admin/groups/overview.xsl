@@ -69,18 +69,8 @@
         
           <table class="lenya-table-noborder">
             
-            <tr>
-              <td class="lenya-entry-caption" valign="top">Users:</td>
-              <td>
-                <xsl:apply-templates select="users"/>
-              </td>
-            </tr>
-            <tr>
-              <td class="lenya-entry-caption" valign="top">IP Ranges:</td>
-              <td>
-                <xsl:apply-templates select="machines"/>
-              </td>
-            </tr>
+					<xsl:apply-templates select="users"/>
+					<xsl:apply-templates select="machines"/>
             <tr>
               <td/>
               <td>
@@ -100,10 +90,26 @@
   </xsl:template>
   
   
-  <xsl:template match="users|machines">
-      <xsl:apply-templates select="member">
-        <xsl:sort/>
-      </xsl:apply-templates>
+  <xsl:template match="users">
+		<tr>
+			<td class="lenya-entry-caption" valign="top">Users:</td>
+			<td>
+				<xsl:apply-templates select="member">
+					<xsl:sort/>
+				</xsl:apply-templates>
+			</td>
+		</tr>
+  </xsl:template>
+  
+  <xsl:template match="machines">
+		<tr>
+			<td class="lenya-entry-caption" valign="top">IP Ranges:</td>
+			<td>
+				<xsl:apply-templates select="member">
+					<xsl:sort/>
+				</xsl:apply-templates>
+			</td>
+		</tr>
   </xsl:template>
   
   
