@@ -28,21 +28,6 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="dateline">
-		<xs:complexType mixed="true">
-			<xs:sequence>
-				<xs:choice minOccurs="0" maxOccurs="unbounded">
-					<xs:element name="story.date" minOccurs="0" maxOccurs="unbounded">
-						<xs:complexType>
-							<xs:choice minOccurs="0" maxOccurs="0"/>
-							<xs:attribute name="norm" type="xs:string"/>
-							<xs:attribute name="millis" type="xs:string"/>
-						</xs:complexType>
-					</xs:element>
-				</xs:choice>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
 	<xs:element name="abstract">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Abstract</xs:documentation>
@@ -75,65 +60,9 @@
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="title"/>
 					<xs:element ref="abstract"/>
-					<xs:element ref="dateline"/>
-					<xs:element ref="media"/>
 				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
-	</xs:element>
-	<xs:element name="media">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">Media</xs:documentation>
-			<xs:appinfo>
-				<bxe:name>Media</bxe:name>
-				<bxe:returnelement>none</bxe:returnelement>
-				<bxe:insertafter>
-					<bxe:element>p</bxe:element>
-				</bxe:insertafter>
-			</xs:appinfo>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:choice>
-				<xs:element ref="media-reference"/>
-				<xs:element ref="media-caption" minOccurs="0"/>
-				<xs:element ref="authorline" minOccurs="0"/>
-			</xs:choice>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="media-reference">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">Reference</xs:documentation>
-			<xs:appinfo>
-				<bxe:name>Reference</bxe:name>
-				<bxe:returnelement>none</bxe:returnelement>
-				<bxe:requiredattributes>source</bxe:requiredattributes>
-				<bxe:requiredattributes>alternate-text</bxe:requiredattributes>
-			</xs:appinfo>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="media-caption" type="xs:string">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">Caption</xs:documentation>
-			<xs:appinfo>
-				<bxe:name>Caption</bxe:name>
-				<bxe:returnelement>none</bxe:returnelement>
-				<bxe:insertafter>
-					<bxe:element>authorline</bxe:element>
-				</bxe:insertafter>
-			</xs:appinfo>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="authorline" type="xs:string">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">Author</xs:documentation>
-			<xs:appinfo>
-				<bxe:name>Author</bxe:name>
-				<bxe:returnelement>none</bxe:returnelement>
-				<bxe:insertafter>
-					<bxe:element>media-caption</bxe:element>
-				</bxe:insertafter>
-			</xs:appinfo>
-		</xs:annotation>
 	</xs:element>
 	<xs:element name="article">
 		<xs:annotation>

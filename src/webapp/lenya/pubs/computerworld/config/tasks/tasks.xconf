@@ -1,24 +1,14 @@
 <?xml version="1.0"?>
-
 <tasks>
-
-  <task id="publish">
-    <label>Publish</label>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
-  </task>
-
-  <task id="publish-article">
-    <label>Publish Article</label>
-    <task id="prepare" class="ch.unizh.unipublic.wyona.cms.ArticleTask"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
-  </task>
-  
-  <!-- hello world task -->
-    
-  <task id="hello-world" class="org.wyona.cms.task.HelloWorldTask">
-    <label>Print Message</label>
-  </task>
-
+	<task id="publish">
+		<label>Publish</label>
+		<task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
+		<task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+	</task>
+	<task id="publish-article">
+		<label>Publish Article</label>
+		<task id="prepare" class="ch.computerworld.wyona.cms.ArticleTask"/>
+		<task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
+		<task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+	</task>
 </tasks>

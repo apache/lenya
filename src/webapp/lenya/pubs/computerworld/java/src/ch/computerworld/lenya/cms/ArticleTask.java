@@ -4,10 +4,6 @@
  * Created on January 18, 2003, 11:25 AM
  */
 
-/* COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..
-
-
-
 package ch.computerworld.wyona.cms;
 
 import org.apache.avalon.framework.configuration.Configurable;
@@ -52,14 +48,12 @@ import org.wyona.cms.publishing.DefaultFilePublisher;
 import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.task.AbstractTask;
 
-COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
 
 /**
  *
  * @author  gjr
  */
 
-/* COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..
 
 public class ArticleTask
     extends AbstractTask {
@@ -89,14 +83,12 @@ public class ArticleTask
                 
     }
 
-COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..   */
 
     /** insert the article in the frontpage
      * @param docId id to determine the article
      * @param domainPath path for the different domain (authoring or live)
      */
 
-/* COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..
 
     private void addToHeadlines(String docId, String domainPath) throws Exception{
 
@@ -191,13 +183,11 @@ COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..   */
 
     }
 
-COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
     
     /** set the published date to the article, only one time 
      *  @param filename Filename of the article
      */
 
-/* COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..
 
     private boolean setFirstPublishedDate(String filename) throws Exception{
 
@@ -249,13 +239,11 @@ COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
         return true;
     }                                                                                                                                       
 
-COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
 
     /** set the revision date and the compute the revision id
      * @param filename Filename of the article 
      */
 
-/* COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..
 
     private void setRevisionDateAndId(String filename) throws Exception{
         //get the date
@@ -282,13 +270,11 @@ COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
         }
     }                                                                                                                                       
 
-COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
 
     /**
      *
      */
 
-/* COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..
 
   public synchronized String getMillis(){
     String millis = Long.toString(new Date().getTime());
@@ -300,13 +286,11 @@ COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
     return millis;
     }
 
-COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
   
     /** Execute the task.
     *
     */
 
-/* COMMENT OUT WHOLE FILE UNTIL TIME TO FIX..
  
    public void execute(String contextPath) {
         try {
@@ -345,5 +329,3 @@ COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */
     }
   
 }
-
-COMMENT OUT WHOLE FILE UNTIL TIME TO FIX.. */

@@ -5,8 +5,10 @@
 <xsl:include href="skeleton.xsl"/>
 
 <xsl:template match="span[@id = 'preview']">
+	<span id="preview" bxe-editable="article">
     <!-- Insert article content here... -->
     <xsl:apply-templates select="/wyona/article"/>
+    </span>
 </xsl:template>
 
   <xsl:template match="article">
@@ -27,7 +29,7 @@
 			</tr>
 
 			<tr>
-				<td width="440" align="left" valign="top" colspan="2"><span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span>
+				<td width="440" align="left" valign="top" colspan="2"><span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
         	<span class="txt-m-black"> <xsl:value-of select="body" />
           &#160;<a href="../impressum/" class="txt-m-red">(gis)</a></span></td>
 			</tr>

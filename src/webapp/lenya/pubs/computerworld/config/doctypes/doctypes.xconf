@@ -11,6 +11,12 @@
 			<task id="publish-article"/>
 		</tasks>
 	</doc>
+<!-- FIXME: Only a dummy to allow scheduling from the front page :) -->
+	<doc type="Headlines">
+		<tasks>
+			<task id="publish"/>
+		</tasks>
+	</doc>
 	<doc type="Preview">
 		<tasks>
 			<task id="publish"/>
