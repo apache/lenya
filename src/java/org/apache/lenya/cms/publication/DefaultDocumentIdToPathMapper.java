@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultDocumentIdToPathMapper.java,v 1.17 2003/10/31 15:21:04 egli Exp $ <License>
+ * $Id: DefaultDocumentIdToPathMapper.java,v 1.18 2004/01/07 13:28:54 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -49,7 +49,7 @@ import java.io.File;
  */
 public class DefaultDocumentIdToPathMapper
     implements DocumentIdToPathMapper, PathToDocumentIdMapper {
-
+    	
     /**
 	 * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication,
 	 *      java.lang.String, java.lang.String, java.lang.String)
@@ -137,14 +137,18 @@ public class DefaultDocumentIdToPathMapper
      * the file has no language.
      */
     public String getLanguage(File file) {
-        String fileName = file.getAbsolutePath();
+        String fileName = file.getName();
         String language = null;
+        String fileNameSuffix = ".xml";
+        String fileNamePrefix = "index";
         // check if the file is of the form index.html or index_en.html
-        if (fileName.startsWith("index") && fileName.endsWith(".html")) {
+
+        if (fileName.startsWith(fileNamePrefix)
+            && fileName.endsWith(fileNameSuffix)) {
             String languageSuffix =
                 fileName.substring(
-                    "index".length() - 1,
-                    fileName.indexOf(".html"));
+                    fileNamePrefix.length(),
+                    fileName.indexOf(fileNameSuffix));
             if (languageSuffix.length() > 0) {
                 // trim the leading '_'
                 language = languageSuffix.substring(1);
