@@ -1,5 +1,5 @@
 /*
- * $Id: Password.java,v 1.8 2003/04/24 13:52:37 gregor Exp $
+ * $Id: Password.java,v 1.9 2003/06/11 10:26:01 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -85,7 +85,7 @@ public class Password {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public static String encrypt(String plain) throws Exception {
+    public static String encrypt(String plain) {
         Md5 md5 = new Md5(plain);
         byte[] b = md5.processString();
 
