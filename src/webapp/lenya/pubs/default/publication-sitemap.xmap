@@ -1,25 +1,32 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.6 2003/04/11 17:03:05 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.7 2003/04/16 10:03:51 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
     <map:generators default="file" />
     <map:matchers default="wildcard">
-<!-- FIXME: Factor out to root sitemap -->
-      <map:matcher name="lenya-usecase" logger="sitemap.matcher.wrpmatcher" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+      <!-- FIXME: Factor out to root sitemap -->
+      <map:matcher name="lenya-usecase"
+	logger="sitemap.matcher.wrpmatcher"
+	src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
         <parameter-name>lenya.usecase</parameter-name>
       </map:matcher>
-<!-- FIXME: Factor out to root sitemap -->
-      <map:matcher name="lenya-step" logger="sitemap.matcher.wrpmatcher" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+      <!-- FIXME: Factor out to root sitemap -->
+      <map:matcher name="lenya-step"
+	logger="sitemap.matcher.wrpmatcher"
+	src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
         <parameter-name>lenya.step</parameter-name>
       </map:matcher>
     </map:matchers>
     <map:actions>
-<!-- FIXME: Factor out to root sitemap -->
-      <map:action name="task" logger="sitemap.action.task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
-      <map:action name="page-envelope" logger="sitemap.action.page-envelope" src="org.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
+      <!-- FIXME: Factor out to root sitemap -->
+      <map:action name="task" logger="sitemap.action.task"
+	src="org.lenya.cms.cocoon.acting.TaskAction"/>
+      <map:action name="page-envelope"
+      logger="sitemap.action.page-envelope"
+	src="org.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
       <map:action name="uriparametrizer"
 	src="org.lenya.cms.cocoon.acting.URIParametrizerAction"
 	logger="sitemap.action.uriparametrizer"/>
@@ -33,8 +40,8 @@
 
   <map:pipelines>
 
-        <!-- Xopus Interface -->
-<!-- FIXME: Factor out to root sitemap -->
+    <!-- Xopus Interface -->
+    <!-- FIXME: Factor out to root sitemap -->
     <map:pipeline>
       <map:match pattern="xopus/**">
            <map:mount uri-prefix="xopus" src="xopus.xmap"/>
@@ -42,7 +49,7 @@
     </map:pipeline>
 
     <!-- CSS -->
-<!-- FIXME: Factor out to root sitemap -->
+    <!-- FIXME: Factor out to root sitemap -->
     <map:pipeline>
       <map:match pattern="css/**.css">
         <map:read src="resources/css/{1}.css" mime-type="text/css"/>
@@ -50,7 +57,7 @@
     </map:pipeline>
 
     <!-- images -->
-<!-- FIXME: Factor out to root sitemap -->
+    <!-- FIXME: Factor out to root sitemap -->
     <map:pipeline>
       <map:match pattern="**images/**.gif">
         <map:read src="../ina/resources/images/live/{2}.gif" mime-type="image/gif" />
@@ -70,9 +77,6 @@
       </map:match>
     </map:pipeline>
     
-    
-    
-    
     <map:pipeline>
       <map:match pattern="**/">
         <map:redirect-to uri="index.html"/>
@@ -80,11 +84,13 @@
     </map:pipeline>
     
     <map:pipeline>
-      <map:match pattern="article/**.html">
+      <map:match pattern="*/article/**.html">
         <map:act type="page-envelope">
           <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page">
-            <map:part src="cocoon://navigation/{publication-id}/tabs/{../1}.html.xml"/>
-            <map:part src="cocoon://navigation/{publication-id}/menu/{../1}.html.xml"/>
+	    <!--                                                 stage       path -->
+            <map:part src="cocoon://navigation/{publication-id}/{stage}/tabs/{../2}.html.xml"/>
+            <map:part src="cocoon://navigation/{publication-id}/{stage}/menu/{../2}.html.xml"/>
+            <map:part src="content/{stage}/{../2}.xml"/>
           </map:aggregate>
           <map:transform src="xslt/page2xhtml.xsl">
             <map:parameter name="root" value="{context}/{publication-id}/"/>
@@ -94,20 +100,21 @@
       </map:match>
     </map:pipeline>
     
-    <map:pipeline>
-      <map:match pattern="**.html">
-        <map:act type="page-envelope">
-          <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page">
-            <map:part src="cocoon://navigation/{publication-id}/tabs/{../1}.html.xml"/>
-            <map:part src="cocoon://navigation/{publication-id}/menu/{../1}.html.xml"/>
-          </map:aggregate>
-          <map:transform src="xslt/page2xhtml.xsl">
-            <map:parameter name="root" value="{context}/{publication-id}/"/>
-          </map:transform>
-        </map:act>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
+<!--     <map:pipeline> -->
+<!--       <map:match pattern="**.html"> -->
+<!--         <map:act type="page-envelope"> -->
+<!--           <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page"> -->
+<!--             <map:part src="cocoon://navigation/{publication-id}/{stage}/tabs/{../1}.html.xml"/> -->
+<!--             <map:part src="cocoon://navigation/{publication-id}/{stage}/menu/{../1}.html.xml"/> -->
+<!--             <map:part src="content/{stage}/{../2}.xml"/> -->
+<!--           </map:aggregate> -->
+<!--           <map:transform src="xslt/page2xhtml.xsl"> -->
+<!--             <map:parameter name="root" value="{context}/{publication-id}/"/> -->
+<!--           </map:transform> -->
+<!--         </map:act> -->
+<!--         <map:serialize type="xml"/> -->
+<!--       </map:match> -->
+<!--     </map:pipeline> -->
     
     <map:pipeline>
     <map:match pattern="**.html">
@@ -115,15 +122,15 @@
 	<map:act type="uriparametrizer">
           <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
           <map:parameter name="path" value="cocoon://uri-parameter/{publication-id}/path"/>
-	  <map:generate src="cocoon:/{doctype}/{path}"/>
+	  <map:generate src="cocoon://{../publication-id}/{../stage}/{doctype}/{path}"/>
 	</map:act>
       </map:act>
-      <map:serialize type="xhtml"/>
+      <map:serialize type="html"/>
     </map:match>
     </map:pipeline>
 
     <!-- Redirect to introduction -->
-<!-- FIXME: Factor out to root sitemap -->
+    <!-- FIXME: Factor out to root sitemap -->
     <map:pipeline>
       <map:match pattern="">
         <map:redirect-to uri="introduction.html"/>
