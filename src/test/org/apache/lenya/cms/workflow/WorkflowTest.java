@@ -50,6 +50,9 @@ import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.DocumentTypeBuildException;
+import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
@@ -83,33 +86,8 @@ public class WorkflowTest extends TestCase {
      */
     public static void main(String[] args) {
         args = PublicationHelper.extractPublicationArguments(args);
-
-        String documentTypeName = args[0];
-        WorkflowTest.init(documentTypeName);
-
+        documentTypeName = args[0];
         TestRunner.run(getSuite());
-    }
-
-    public static void init(String documentTypeName) {
-
-        Publication publication = PublicationHelper.getPublication();
-        
-        WorkflowInstance instance = null;
-        Document document = new DefaultDocument(publication,  "index");
-        
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        Exception exception = null;
-        try {
-            WorkflowFactory.initHistory(document, "workflow.xml");
-            instance = factory.buildInstance(document);
-        } catch (WorkflowException e) {
-            e.printStackTrace(System.err);
-            exception = e;
-        }
-        assertNull(exception);
-        
-        setInstance(instance);
-
     }
 
     /**
@@ -121,13 +99,23 @@ public class WorkflowTest extends TestCase {
 
     private static final String variableName = "is-live";
 
-    public void testWorkflow() {
+    public void testWorkflow() throws DocumentTypeBuildException, WorkflowException {
 
-        assertNotNull(getInstance());
-
+        Publication publication = PublicationHelper.getPublication();
+        Document document = new DefaultDocument(publication,  "index");
+        
+        DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
+        String workflowId = type.getWorkflowFileName();
+        WorkflowFactory.initHistory(document, workflowId);
+        
+        WorkflowFactory factory = WorkflowFactory.newInstance();
         for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
             
-            System.out.println("Current state: " + getInstance().getCurrentState());
+            WorkflowInstance instance = null;
+            instance = factory.buildInstance(document);
+            assertNotNull(instance);
+            
+            System.out.println("Current state: " + instance.getCurrentState());
             
             User user = new FileUser(PublicationHelper.getPublication(), "test-user", "Test Fullname", "test@email", "testPassword");
             Role role = new Role(situations[situationIndex].getRole());
@@ -138,14 +126,13 @@ public class WorkflowTest extends TestCase {
         
             user.addGroup(group);
         
-            WorkflowFactory factory = WorkflowFactory.newInstance();
             Situation situation = null;
             try {
                 situation = factory.buildSituation(user);
             } catch (WorkflowException e1) {
                 e1.printStackTrace(System.err);
             }
-            Event events[] = getInstance().getExecutableEvents(situation);
+            Event events[] = instance.getExecutableEvents(situation);
             
             Event event = null;
             System.out.print("Events:");
@@ -159,16 +146,11 @@ public class WorkflowTest extends TestCase {
             System.out.println();
         
             System.out.println("Executing event: " + event);
-            try {
-                getInstance().invoke(situation, event);
-            } catch (WorkflowException e) {
-                e.printStackTrace(System.err);
-            }
-            try {
-                System.out.println("Variable: " + variableName + " = " + getInstance().getValue(variableName));
-            } catch (WorkflowException e) {
-                e.printStackTrace(System.err);
-            }
+            instance.invoke(situation, event);
+            
+            assertTrue(instance.getValue(variableName) == situations[situationIndex].getValue());
+            
+            System.out.println("Variable: " + variableName + " = " + instance.getValue(variableName));
             System.out.println("------------------------------------------------------");
         
         }
@@ -178,21 +160,25 @@ public class WorkflowTest extends TestCase {
     }
     
     private static final TestSituation situations[] = {
-        new TestSituation("editor", "publish"),
-        new TestSituation("manager", "approve"),
-        new TestSituation("editor", "edit")
+        new TestSituation("editor", "submit", false),
+        new TestSituation("reviewer", "reject", false),
+        new TestSituation("editor", "submit", false),
+        new TestSituation("reviewer", "publish", true),
+        new TestSituation("reviewer", "deactivate", false)
     };
     
     public static class TestSituation {
         
         private String role;
         private String event;
+        private boolean value; 
         
-        public TestSituation(String role, String event) {
+        public TestSituation(String role, String event, boolean value) {
             assert role != null;
             this.role = role;
             assert event != null;
             this.event = event;
+            this.value = value;
         }
         
         /**
@@ -209,38 +195,29 @@ public class WorkflowTest extends TestCase {
             return role;
         }
 
+        /**
+         * @return
+         */
+        public boolean getValue() {
+            return value;
+        }
+
     }
     
-    private static WorkflowInstance instance;
+    private static String documentTypeName;
     
-
     /* (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
-        if (getInstance() == null) {
-            
+        if (documentTypeName == null) {
             String args[] = {
                 "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya",
                 "test"                
             };
             PublicationHelper.extractPublicationArguments(args);
-            init("simple");
+            documentTypeName = "simple";
         }
-    }
-
-    /**
-     * @return
-     */
-    public static WorkflowInstance getInstance() {
-        return instance;
-    }
-
-    /**
-     * @param instance
-     */
-    public static void setInstance(WorkflowInstance instance) {
-        WorkflowTest.instance = instance;
     }
 
 }
