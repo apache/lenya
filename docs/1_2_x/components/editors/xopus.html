@@ -419,6 +419,26 @@
 <li>
 <a href="#Making+a+page+editable+with+Xopus%3A+Schemas%2C+Views+%28XSLT%29+and+Menus">Making a page editable with Xopus: Schemas, Views (XSLT) and Menus</a>
 </li>
+<li>
+<a href="#Things+to+watch+out+for">Things to watch out for</a>
+<ul class="minitoc">
+<li>
+<a href="#Check+your+Internet+Explorer+cache+settings">Check your Internet Explorer cache settings</a>
+</li>
+<li>
+<a href="#Check+your+local.build.properties">Check your local.build.properties</a>
+</li>
+<li>
+<a href="#Check+your+schema+files">Check your schema files</a>
+</li>
+<li>
+<a href="#Check+your+CSS+files">Check your CSS files</a>
+</li>
+<li>
+<a href="#Missing+preparexinclude.xsl">Missing preparexinclude.xsl</a>
+</li>
+</ul>
+</li>
 </ul>
 </div> 
 
@@ -531,6 +551,67 @@ Editing with Xopus is implemented as a usecase. One can add a menu item as follo
     usecase.xmap pertaining to xopus. This will help you understand how the integration was done
     (which admittedly is a bit clunky as it predates many Lenya concepts).
     </p>
+</div>
+
+<a name="N10099"></a><a name="Things+to+watch+out+for"></a>
+<h2 class="underlined_10">Things to watch out for</h2>
+<div class="section">
+<a name="N1009F"></a><a name="Check+your+Internet+Explorer+cache+settings"></a>
+<h3 class="underlined_5">Check your Internet Explorer cache settings</h3>
+<p>Make sure that the page is loaded from scratch everytime you visit it, because
+otherwise you'll always see a cached version. This cached version will be
+saved if you click on 'save' in Xopus.</p>
+<a name="N100A9"></a><a name="Check+your+local.build.properties"></a>
+<h3 class="underlined_5">Check your local.build.properties</h3>
+<p>Your variable settings could look like this:</p>
+<pre class="code">
+
+  xopus.context=Xopus-2.1.72   root directory for all Xopus files
+  xopus.path=../../ROOT        relative path from usecase.xmap to Xopus root
+                               directory
+
+</pre>
+<a name="N100B7"></a><a name="Check+your+schema+files"></a>
+<h3 class="underlined_5">Check your schema files</h3>
+<p>I had troubles with schemas including other schema files. You have to insert a
+separate pipeline for this kind of architecture. Unfortunately I couldn't
+figure out if I had to put this matcher in
+'$PUBLICATION/publication-sitemap.xmap' or elsewhere. I ended up using one and
+only one schema file for a specific doctype.</p>
+<a name="N100C1"></a><a name="Check+your+CSS+files"></a>
+<h3 class="underlined_5">Check your CSS files</h3>
+<p>You have to provide a stylesheet for Xopus in
+'$PUBLICATION/lenya/xslt/xopus/$DOCTYPE.xsl'. If you use a *.css file to
+control layout and style of the XML file displayed by Xopus, you'll have to
+insert a pipeline matcher in '$PUBLICATION/publication-sitemap.xmap':</p>
+<pre class="code">
+
+  &lt;map:pipeline&gt;
+    &lt;map:match pattern="**/xopus.css"&gt;
+      &lt;map:read src="resources/shared/css/xopus.css" mime-type="text/css"/&gt;
+    &lt;/map:match&gt;
+  &lt;/map:pipeline&gt;
+
+</pre>
+<a name="N100CF"></a><a name="Missing+preparexinclude.xsl"></a>
+<h3 class="underlined_5">Missing preparexinclude.xsl</h3>
+<p>If Xopus complains that it cannot find <span class="codefrag">$XOPUS/xopusPlugins/preparexinclude.xsl</span>, then add the following at that location:</p>
+<pre class="code">
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0"
+                       xmlns:x="http://www.w3.org/2001/XInclude"
+                       xmlns:xlink="http://www.w3.org/1999/xlink"
+                       xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                       &gt;
+
+  &lt;xsl:template match="@*|node()"&gt;
+    &lt;xsl:copy&gt;
+      &lt;xsl:apply-templates select="@*|node()"/&gt;
+    &lt;/xsl:copy&gt;
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</pre>
 </div>
 
 <p align="right">
