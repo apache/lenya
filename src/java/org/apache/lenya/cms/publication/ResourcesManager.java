@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourcesManager.java,v 1.11 2004/08/07 18:46:37 andreas Exp $  */
+/* $Id: ResourcesManager.java,v 1.12 2004/08/21 22:25:07 roku Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -82,7 +82,7 @@ public class ResourcesManager {
 
         return getFiles(filter);
     }
-
+    
     /**
      * Returns the resources that are matched by a certain file filter.
      * @param filter A file filter.
@@ -112,6 +112,29 @@ public class ResourcesManager {
         return getFiles(filter);
     }
 
+    /**
+     * Returns a meta file for a given resource.
+     * @param resource A resource the meta file should be returned for.
+     * @return A file containing meta information about a resource. 
+     * Returns null if no meta file was found.
+     * @throws IllegalArgumentException If resource is a meta file itself.
+     */
+    public File getMetaFile(final File resource) throws IllegalArgumentException {
+        if(resource.getName().endsWith(RESOURCES_META_SUFFIX))
+            throw new IllegalArgumentException("File is itself a meta file.");
+        
+        final FileFilter filter = new FileFilter() {
+            public boolean accept(File file) {
+                return file.isFile() && 
+                    file.getName().equals(resource.getName().concat(RESOURCES_META_SUFFIX));
+            }
+        };
+        
+        final File[] metaFiles = getFiles(filter);
+        assert(metaFiles.length == 0);
+        return metaFiles[0];
+    }
+    
     /**
      * Deletes all resources.
      */
