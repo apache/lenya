@@ -34,8 +34,6 @@ public class HTML{
       HTML html=new HTML(args[0]);
       html.getSrcs();
       html.getHRefs();
-      html.getSrcs();
-      html.getHRefs();
       }
     catch(Exception e){
       System.err.println(".main(): "+e);
@@ -61,15 +59,17 @@ public class HTML{
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
     while((element = iterator.next()) != null){
-      System.out.println(".getHRefs(): Element Name: "+element.getName());
-      if(element.getName().equals("a")){
-        System.out.println(".getHRefs(): Element Name: "+element.getName());
-        System.out.println(".getHRefs(): HRef Value: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
+      //System.out.println(".getHRefs(): Element Name: "+element.getName());
+
+      // Extract <link href=""/>
+      if(element.getName().equals("link")){
+        System.out.println(".getHRefs(): <link href=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
         }
+
+      // Extract <a href="">content</a>
       SimpleAttributeSet sas=(SimpleAttributeSet)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Tag.A);
-      //SimpleAttributeSet sas=(SimpleAttributeSet)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Tag.LINK);
       if(sas != null){
-        System.out.println(".getHRefs(): "+sas.getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
+        System.out.println(".getHRefs(): <a href=\"\">content</a>: "+sas.getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
         }
       }
     }
@@ -81,10 +81,19 @@ public class HTML{
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
     while((element = iterator.next()) != null){
+      // Extract <im src=""/>
+      if(element.getName().equals("img")){
+        System.out.println(".getSrcs(): <im src=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.SRC));
+        }
+
+
+
+/*
       SimpleAttributeSet sas=(SimpleAttributeSet)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Tag.IMG);
       if(sas != null){
         System.out.println(".getSrcs(): "+sas.getAttribute(javax.swing.text.html.HTML.Attribute.SRC));
         }
+*/
       }
     }
 /**
