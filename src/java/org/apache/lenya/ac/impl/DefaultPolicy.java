@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultPolicy.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id: DefaultPolicy.java,v 1.5 2004/04/28 16:18:33 andreas Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -145,7 +145,7 @@ public class DefaultPolicy implements Policy {
 	 * @param accreditable An accreditable.
 	 * @return A credential.
 	 */
-    protected Credential getCredential(Accreditable accreditable) {
+    public Credential getCredential(Accreditable accreditable) {
         return (Credential) accreditableToCredential.get(accreditable);
     }
 
