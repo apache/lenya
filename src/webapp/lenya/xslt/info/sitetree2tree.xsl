@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.19 2003/08/20 15:31:55 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.20 2003/08/29 15:44:50 felix Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 

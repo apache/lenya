@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!-- $Id: config.xml,v 1.6 2003/08/29 11:34:46 michi Exp $ -->
+<!-- $Id: config.xml,v 1.7 2003/08/29 15:44:50 felix Exp $ -->
 <config>
     <files>
         <input>
@@ -10,6 +10,9 @@
             <file name="BX_xmlfile">index-bxeng.xml</file>
             <!-- The XSL-document which transforms the xml to the output format -->
             <file name="BX_xslfile">entry-bxeng.xsl</file>
+            <!-- The xhtml with the appropriate div tag (e.g. <div bxe_xpath="/xhtml:html/lenya:meta/dc:title" />)
+                 An xhtml file can be used instead of an xsl to provide the page layout of the non-editable part -->
+            <file name="BX_xhtmlfile">testxhtml.xml</file>
             <!-- The RelaxNG (XML Schema) -->
             <file name="BX_validationfile">relaxng.xml</file>
         </input>
