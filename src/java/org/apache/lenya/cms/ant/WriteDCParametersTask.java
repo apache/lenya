@@ -1,5 +1,5 @@
 /*
-$Id: WriteDCParametersTask.java,v 1.4 2003/10/21 09:51:54 andreas Exp $
+$Id: WriteDCParametersTask.java,v 1.5 2004/02/20 14:25:26 andreas Exp $
 <License>
 
  ============================================================================
@@ -280,12 +280,12 @@ public class WriteDCParametersTask extends PublicationTask {
         String url = builder.buildCanonicalUrl(getPublication(), area, documentId, lang);
         Document doc = builder.buildDocument(getPublication(), url);
         DublinCore dc = doc.getDublinCore();
-        dc.setCreator(creator);
-        dc.setTitle(title);
-        dc.setDescription(description);
-        dc.setSubject(subject);
-        dc.setPublisher(publisher);
-        dc.setRights(rights);
+        dc.setValue(DublinCore.ELEMENT_CREATOR, creator);
+        dc.setValue(DublinCore.ELEMENT_TITLE, title);
+        dc.setValue(DublinCore.ELEMENT_DESCRIPTION, description);
+        dc.setValue(DublinCore.ELEMENT_SUBJECT, subject);
+        dc.setValue(DublinCore.ELEMENT_PUBLISHER, publisher);
+        dc.setValue(DublinCore.ELEMENT_RIGHTS, rights);
         dc.save();
     }
 
