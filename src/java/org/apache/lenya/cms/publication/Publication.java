@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.19 2003/07/30 15:03:24 gregor Exp $
+$Id: Publication.java,v 1.20 2003/08/05 16:28:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -87,6 +87,7 @@ public class Publication {
 
     public static final String PUBLICATION_PREFIX =
         "lenya" + File.separator + "pubs";
+    public static final String PUBLICATION_PREFIX_URI = "lenya/pubs";
 	public static final String CONFIGURATION_PATH = "config";
 
     private static final String[] areas =
