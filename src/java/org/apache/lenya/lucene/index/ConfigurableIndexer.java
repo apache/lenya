@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableIndexer.java,v 1.15 2004/04/04 00:06:39 michi Exp $  */
+/* $Id: ConfigurableIndexer.java,v 1.16 2004/05/16 21:54:47 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -170,14 +170,14 @@ public class ConfigurableIndexer extends AbstractIndexer {
     }
 
     /**
-     *
+     * Check if node <extensions src="..."/> exists
      */
     private boolean extensionsExists(Element indexer) {
         NodeList nl = indexer.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
             Node node = nl.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("extensions")) {
-                log.error("Node extensions exists!");
+                log.debug("Node <extensions src=\"...\"/> exist");
                 return true;
             }
         }
