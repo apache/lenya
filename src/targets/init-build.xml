@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: init-build.xml,v 1.27 2004/04/22 15:40:21 gregor Exp $ -->
+<!-- $Id: init-build.xml,v 1.28 2004/04/23 20:42:13 michi Exp $ -->
 
 <project name="init">
 
@@ -52,8 +52,6 @@
     <property name="snapshot.bin.dir" value="${dist.root}/${fullname}-bin-${SNAPSHOT_STAMP}"/>
     <property name="snapshot.src.dir" value="${dist.root}/${fullname}-src-${SNAPSHOT_STAMP}"/>
 
-    <available file="${tools.jar}" property="tools.jar.present"/>
-    
     
   </target>
 
@@ -77,32 +75,10 @@
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
   </target>
 
- <!-- ============================================================ -->
-  <!-- Check the tools.jar existance                                -->
-  <!-- =============================================================-->
-  <target name="check-tools-lib" unless="tools.jar.present" depends="init">
-    <!-- NOTE: java.home is normally set by the JVM to the /jre directory -->
-    <echo message="-------------------------------------------------------------"/>
-    <echo message="Couldn't find the tools.jar."/>
-    <echo message="  Make sure to copy the tools.jar from your"/>
-    <echo message="  $$JAVA_HOME/lib directory to the"/>
-    <echo message="  ${build.webapp}/WEB-INF/lib/javac.jar"/>
-    <echo message="  directory prior to build/install the webapp/war file(s)"/>
-    <echo message="-------------------------------------------------------------"/>
-  </target>
-
-  <!-- ============================================================ -->
-  <!-- Copies the tools.jar to javac.jar in web-inf/lib             -->
-  <!-- =============================================================-->
-  <target name="prepare-tools-lib" if="tools.jar.present" depends="init">
-    <!-- NOTE: java.home is normally set by the JVM to the /jre directory -->
-    <copy file="${tools.jar}" tofile="${build.webapp}/WEB-INF/lib/javac.jar"/>
-  </target>
-
   <!-- ============================================================ -->
   <!-- Prepares the build webapp directory                          -->
   <!-- ============================================================ -->
-  <target name="prepare-cocoon" depends="init,check-tools-lib,prepare-tools-lib">
+  <target name="prepare-cocoon" depends="init">
     <echo>INFO: exclude: sitemap.xmap</echo>
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 

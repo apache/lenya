@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: properties-build.xml,v 1.16 2004/03/21 21:26:21 gregor Exp $ -->
+<!-- $Id: properties-build.xml,v 1.17 2004/04/23 20:42:13 michi Exp $ -->
 
 <project name="properties">
 
@@ -138,8 +138,6 @@
   -->
   <property name="src.webapp.dir" value="src/webapp"/>
 
-  <property name="tools.jar" value="${java.home}/../lib/tools.jar"/>
-  
   <property name="tools.tasks.dest" value="tools/anttasks"/>
   
   <!-- HSQLDB server port -->
