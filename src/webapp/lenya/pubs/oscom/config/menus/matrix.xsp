@@ -20,7 +20,9 @@
     <menu name="File" label="File">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/matrix/"+projectid+".html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+<!--
         <item>Edit&#160;with&#160;Bitflux</item>
+-->
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/matrix/"+projectid+".html,/lenya/oscom/matrix/index.html&amp;sources=/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
       </block>
       <separator>

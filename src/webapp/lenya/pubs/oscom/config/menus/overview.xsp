@@ -21,10 +21,9 @@
         <item>-----------------</item>
       </separator>
       <block>
+<!--
         <item>Edit&#160;with&#160;Xopus2</item>
         <item>Edit&#160;with&#160;Bitflux</item>
-<!--
-        <item>Publish</item>
 -->
         <item href="../lenya/publishAllCMSProjectsScreen">Publish</item>
       </block>
