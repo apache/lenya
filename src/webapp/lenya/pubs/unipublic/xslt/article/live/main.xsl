@@ -118,7 +118,7 @@ Programm</a></td>
 <td valign="top" bgcolor="white" width="388" class="art-text">
 <p class="art-date">3.4.2002</p>
 
-<p class="art-title1">Rauschen im musikalischen Museum</p>
+<p class="art-title1"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head/hedline/hl1"/></p>
 
 <p class="art-lead">In der Vorlesungsreihe &#171;Inventur im
 Museum&#187; des Musikwissenschaftlichen Seminars wird unser
