@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.51 2003/04/06 11:34:55 michi Exp $
+   @version CVS $Id: build.xml,v 1.52 2003/04/07 09:01:39 andreas Exp $
 
 -->
 
@@ -277,6 +277,11 @@
         out="${build.webapp}/WEB-INF/web.xml"
         style="${src.webapp.dir}/WEB-INF/web-xml.xsl"
         >
+      <xmlcatalog>
+        <dtd 
+          publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
+          location="${src.webapp.dir}/WEB-INF/entities/web-app_2_2.dtd"/>
+      </xmlcatalog>
       <outputproperty name="indent" value="yes"/>
     </xslt>
 
