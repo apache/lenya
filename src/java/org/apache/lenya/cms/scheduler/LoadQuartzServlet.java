@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.32 2003/08/29 11:38:34 andreas Exp $
+$Id: LoadQuartzServlet.java,v 1.33 2003/08/29 17:14:43 andreas Exp $
 <License>
 
  ============================================================================
@@ -91,7 +91,7 @@ import javax.servlet.http.HttpServletResponse;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.32 2003/08/29 11:38:34 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.33 2003/08/29 17:14:43 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -100,7 +100,6 @@ public class LoadQuartzServlet extends HttpServlet {
     private String schedulerConfigurations;
 
     public static final String PREFIX = "scheduler";
-    public static final String PARAMETER_INVOKED = "invoked";
     public static final String PARAMETER_ACTION = "action";
     public static final String PARAMETER_PUBLICATION_ID = "publication-id";
     public static final String CONFIGURATION_ELEMENT = "scheduler-configurations";
@@ -273,8 +272,7 @@ public class LoadQuartzServlet extends HttpServlet {
             } else if (action.equals(MODIFY)) {
                 Date startTime = TriggerHelper.getDate(schedulerParameters);
                 String jobId = getJobId(schedulerParameters);
-                getScheduler().deleteJob(jobId, publicationId);
-                getScheduler().addJob(publicationId, startTime, request);
+                getScheduler().modifyJob(jobId, publicationId, startTime);
             } else if (action.equals(DELETE)) {
                 String jobId = getJobId(schedulerParameters);
                 getScheduler().deleteJob(jobId, publicationId);
