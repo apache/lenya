@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<public publicId="-//OpenOffice.org//DTD OfficeDocument 1.0//EN" uri="file:///home/egli/src/lenya/src/webapp/lenya/resources/dtd/openoffice/office.dtd"/>
+</catalog>
