@@ -346,6 +346,7 @@
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="form" value="{request-param:form}"/>
               </map:transform>
+              <map:transform src="xslt/authoring/edit/form-layout.xsl"/>
               <map:serialize type="html" />
             </map:match>
           </map:match>
@@ -374,6 +375,7 @@
                   <map:parameter name="form" value="{request-param:form}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:transform>
+                <map:transform src="xslt/authoring/edit/form-layout.xsl"/>
                 <map:serialize type="html" />
               </map:act>
 

@@ -9,84 +9,74 @@
 <xsl:import href="../../../../../xslt/authoring/edit/form.xsl"/>
 
 <xsl:template match="echo:entry">
-<tr>
-  <td>&#160;</td>
-  <td>Title</td>
+<node name="Title">
 <!-- FIXME: In the case of text input field, < and > need to be replaced by &lt; and &gt;
-  <td><input type="text" name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:apply-templates select="echo:title/node()" mode="mixed"/></xsl:attribute></input></td>
+  <content><input type="text" name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:apply-templates select="echo:title/node()" mode="mixed"/></xsl:attribute></input></content>
 -->
-  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" cols="40" rows="1"><xsl:apply-templates select="echo:title/node()" mode="mixedcontent"/></textarea></td>
-</tr>
+  <content><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" cols="40" rows="1"><xsl:apply-templates select="echo:title/node()" mode="mixedcontent"/></textarea></content>
+</node>
 
 <xsl:if test="not(echo:summary)">
-<tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-after select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:summary&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;New summary&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;" value="LENYA"/></td>
-  <td colspan="2">Summary</td>
-</tr>
+<node name="Summary">
+  <action><insert name="&lt;xupdate:insert-after select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:summary&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;New summary&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/></action>
+</node>
 </xsl:if>
 
 <xsl:apply-templates select="echo:summary"/>
 <xsl:apply-templates select="echo:content"/>
 
-<tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;New XHTML content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
-  <td colspan="2">Content (text/xhtml)</td>
-</tr>
+<node name="Content (text/xhtml)">
+  <action><insert name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;New XHTML content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/></action>
+</node>
 <!--
-<tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New CDATA content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
-  <td colspan="2">Content (text/plain as CDATA)</td>
-</tr>
+<node name="Content (text/plain as CDATA)">
+  <action><insert name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New CDATA content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/></action>
+</node>
 -->
 </xsl:template>
 
 <xsl:template match="echo:summary">
-<tr>
-  <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
-  <td valign="top">Summary</td>
-  <td>
+<node name="Summary">
+  <action><delete name="&lt;xupdate:remove select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;/&gt;"/></action>
+  <content>
     <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">
       <xsl:apply-templates mode="mixedcontent" />
     </textarea>
-  </td>
-</tr>
+  </content>
+</node>
 </xsl:template>
 
 
 <xsl:template match="echo:content[@type='text/plain']">
-<tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;" value="LENYA"/></td>
-  <td colspan="2">Content (text/plain as CDATA)</td>
-</tr>
-<tr>
-  <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
-  <td valign="top">Content (text/plain as CDATA)</td>
-  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;![CDATA[" cols="40" rows="5"><xsl:value-of select="."/></textarea></td>
-</tr>
+<node name="Content (text/plain as CDATA)">
+  <action><insert name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;"/></action>
+</node>
+<node name="Content (text/plain as CDATA)">
+  <action><delete name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;"/></action>
+  <content><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;![CDATA[" cols="40" rows="5"><xsl:value-of select="."/></textarea></content>
+</node>
 </xsl:template>
 
 
 <xsl:template match="echo:content[@type='text/xhtml']">
-<tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;" value="LENYA"/></td>
-  <td colspan="2">Content (text/xhtml)</td>
-</tr>
-<tr>
-  <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
-  <td valign="top">Content (text/xhtml)</td>
-  <td>
+<node name="Content (text/xhtml)">
+  <action><insert name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;"/></action>
+</node>
+<node name="Content (text/xhtml)">
+  <action><delete name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;"/></action>
+  <content>
     <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">
       <xsl:apply-templates mode="mixedcontent"/>
     </textarea>
-  </td>
-</tr>
+  </content>
+</node>
 </xsl:template>
 
 
 <xsl:template match="echo:content">
-<tr>
-  <td>&#160;</td><td valign="top">Content (Either no @type attribute or no xsl:template with such a @type attribute!)</td><td><xsl:apply-templates/></td>
-</tr>
+<node name="Content (Either no @type attribute or no xsl:template with such a @type attribute!)">
+<content><xsl:apply-templates/></content>
+</node>
 </xsl:template>
  
 </xsl:stylesheet>  

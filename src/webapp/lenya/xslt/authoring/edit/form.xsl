@@ -10,43 +10,18 @@
 
 
 <xsl:template match="/">
-<html>
-<body>
-<p>
-Edit Document <b><xsl:value-of select="$docid"/></b> (Form: <xsl:value-of select="$form"/>)
-</p>
-
+<form>
+<docid><xsl:value-of select="$docid"/></docid>
+<ftype><xsl:value-of select="$form"/></ftype>
 <xsl:if test="$message">
-<p>
-<font color="red"><b>Message:</b></font>
-<br /><xsl:value-of select="$message"/>
-<br />(Check log files for more details: lenya/WEB-INF/logs/*)
-</p>
+<message><xsl:value-of select="$message"/></message>
 </xsl:if>
-
-<form method="post" action="?lenya.usecase=edit&amp;lenya.step=close&amp;form={$form}">
-<table border="1">
-<tr>
-  <td colspan="3" align="right"><input type="submit" value="SAVE" name="save"/><input type="submit" value="CANCEL" name="cancel"/></td>
-</tr>
 <xsl:apply-templates/>
-<tr>
-  <td colspan="3" align="right"><input type="submit" value="SAVE" name="save"/><input type="submit" value="CANCEL" name="cancel"/></td>
-</tr>
-</table>
 </form>
-
-<a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>:
-<ul>
-<li>&amp;lt; instead of &lt; (left angle bracket <b>must</b> be escaped)</li>
-<li>&amp;amp; instead of &amp; (ampersand <b>must</b> be escaped)</li>
-<li>&amp;gt; instead of > (right angle bracket)</li>
-<li>&amp;apos; instead of ' (single-quote)</li>
-<li>&amp;quot; instead of " (double-quote)</li>
-</ul>
-</body>
-</html>
 </xsl:template>
+
+
+
 
 <!-- Copy mixed content -->
 <!-- also see oneform.xsl -->
