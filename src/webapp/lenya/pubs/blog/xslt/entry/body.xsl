@@ -50,7 +50,7 @@ by
 </xsl:template>
 
 <xsl:template name="permalink">
-  <xsl:text><a href="index.html">Permalink</a></xsl:text>
+  <a href="index.html">Permalink</a>
 </xsl:template>
  
 </xsl:stylesheet>  
