@@ -78,7 +78,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @param event The event that was invoked.
      */
     public void invoke(Situation situation, Event event) throws WorkflowException {
-        if (Arrays.asList(getExecutableEvents(situation)).contains(event)) {
+        if (!Arrays.asList(getExecutableEvents(situation)).contains(event)) {
             throw new WorkflowException(
                 "The event '"
                     + event
