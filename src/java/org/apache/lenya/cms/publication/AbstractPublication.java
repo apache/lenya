@@ -58,7 +58,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
@@ -69,7 +68,7 @@ import org.apache.log4j.Category;
  * A publication.
  *
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
- * @version $Id: AbstractPublication.java,v 1.13 2004/02/18 18:43:52 andreas Exp $
+ * @version $Id: AbstractPublication.java,v 1.14 2004/02/19 15:51:52 andreas Exp $
  */
 public abstract class AbstractPublication implements Publication {
     private static Category log = Category.getInstance(AbstractPublication.class);
@@ -340,57 +339,6 @@ public abstract class AbstractPublication implements Publication {
     }
 
     /**
-     * This method does not use the sitetree object, but it calculates the
-     * parent using the document ID. The reason for this is that the
-     * actual documents don't have to exist.
-     * @see org.apache.lenya.cms.publication.Publication#getRequiredDocuments(org.apache.lenya.cms.publication.Document)
-     */
-    public Document[] getRequiredDocuments(Document document) throws PublicationException {
-
-        List documents = new ArrayList();
-        addRequiredDocuments(document, documents);
-
-        return (Document[]) documents.toArray(new Document[documents.size()]);
-    }
-
-    /**
-     * Adds the documents which are required by a document to the list.
-     * @param document The document.
-     * @param documents The list.
-     * @throws DocumentBuildException if an error occurs.
-     */
-    protected void addRequiredDocuments(Document document, List documents)
-        throws DocumentBuildException {
-        // remove leading slash
-        String id = document.getId().substring(1);
-        int slashIndex = id.lastIndexOf("/");
-        if (slashIndex != -1) {
-            String parentId = "/" + id.substring(0, slashIndex);
-            String parentUrl =
-                getDocumentBuilder().buildCanonicalUrl(
-                    this,
-                    document.getArea(),
-                    parentId,
-                    document.getLanguage());
-            Document parent = getDocumentBuilder().buildDocument(this, parentUrl);
-            documents.add(parent);
-            addRequiredDocuments(parent, documents);
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#dependsOn(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
-     */
-    public boolean dependsOn(Document dependingDocument, Document requiredDocument)
-        throws PublicationException {
-
-        Document[] requiredDocuments = getRequiredDocuments(dependingDocument);
-        List requiredList = Arrays.asList(requiredDocuments);
-
-        return requiredList.contains(requiredDocument);
-    }
-
-    /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object object) {
@@ -602,30 +550,6 @@ public abstract class AbstractPublication implements Publication {
         throws PublicationException {
         copyDocument(sourceDocument, destinationDocument);
         deleteDocument(sourceDocument);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#getDependingDocuments(org.apache.lenya.cms.publication.Document)
-     */
-    public Document[] getDependingDocuments(Document document) throws PublicationException {
-        Document[] documents = new Document[0];
-        if (hasSitetree) {
-            SiteTree tree;
-            try {
-                tree = getSiteTree(document.getArea());
-            } catch (SiteTreeException e) {
-                throw new PublicationException(e);
-            }
-            
-            SiteTreeNode node = tree.getNode(document.getId());
-            List preOrder = node.preOrder();
-            preOrder.remove(0);
-            documents = new Document[preOrder.size()];
-            for (int i = 0; i < preOrder.size(); i++) {
-            }
-            
-        }
-        return documents;
     }
 
 }

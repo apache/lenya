@@ -61,7 +61,7 @@ import java.util.Date;
  * A CMS document.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: Document.java,v 1.22 2004/02/18 18:45:19 andreas Exp $
+ * @version $Id: Document.java,v 1.23 2004/02/19 15:51:51 andreas Exp $
  */
 public interface Document {
     
@@ -206,10 +206,4 @@ public interface Document {
      */
     boolean existsInAnyLanguage() throws DocumentException;
     
-    /**
-     * Accepts a document visitor.
-     * @param visitor The visitor.
-     * @throws DocumentException if an error occurs.
-     */
-    void accept(DocumentSetVisitor visitor) throws DocumentException;
 }

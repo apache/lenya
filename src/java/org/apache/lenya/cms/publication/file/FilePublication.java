@@ -1,5 +1,5 @@
 /*
-$Id: FilePublication.java,v 1.6 2004/02/17 14:03:52 egli Exp $
+$Id: FilePublication.java,v 1.7 2004/02/19 15:51:52 andreas Exp $
 <License>
 
  ============================================================================
@@ -137,7 +137,7 @@ public class FilePublication extends AbstractPublication {
         boolean deleted = file.delete();
         if (!deleted) {
             throw new PublicationException(
-                "Source file of document [" + document.getId() + "] could not be deleted!");
+                "Source file [" + file + "] of document [" + document + "] could not be deleted!");
         }
     }
 

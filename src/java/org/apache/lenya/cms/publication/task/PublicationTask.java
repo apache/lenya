@@ -1,5 +1,5 @@
 /*
-$Id: PublicationTask.java,v 1.5 2004/01/23 08:44:35 andreas Exp $
+$Id: PublicationTask.java,v 1.6 2004/02/19 15:51:52 andreas Exp $
 <License>
 
  ============================================================================
@@ -172,16 +172,14 @@ public abstract class PublicationTask extends AbstractTask {
         WorkflowFactory factory = WorkflowFactory.newInstance();
         if (factory.hasWorkflow(document)) {
             try {
-                String userId = getParameters().getParameter(PARAMETER_USER_ID);
-                String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
+                Situation situation = getSituation();
+
                 SynchronizedWorkflowInstances instance;
                 try {
                     instance = factory.buildSynchronizedInstance(document);
                 } catch (WorkflowException e) {
                     throw new ExecutionException(e);
                 }
-                Situation situation = factory.buildSituation(getRoleIDs(), userId, machineIp);
-
                 Event event = getExecutableEvent(instance, situation);
                 
                 if (event == null) {
@@ -194,6 +192,19 @@ public abstract class PublicationTask extends AbstractTask {
             }
         }
         return canFire;
+    }
+
+    /**
+     * Returns the workflow situation.
+     * @return A situation.
+     * @throws ParameterException when something went wrong.
+     */
+    protected Situation getSituation() throws ParameterException {
+        WorkflowFactory workflowFactory = WorkflowFactory.newInstance();
+        String userId = getParameters().getParameter(PARAMETER_USER_ID);
+        String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
+        Situation situation = workflowFactory.buildSituation(getRoleIDs(), userId, machineIp);
+        return situation;
     }
 
     /**
@@ -255,7 +266,7 @@ public abstract class PublicationTask extends AbstractTask {
     protected Event getExecutableEvent(SynchronizedWorkflowInstances instance, Situation situation)
         throws WorkflowException, ParameterException {
 
-        String workflowEvent = getParameters().getParameter(PARAMETER_WORKFLOW_EVENT);
+        String workflowEvent = getEventName();
 
         Event event = null;
         Event[] events = instance.getExecutableEvents(situation);
@@ -280,6 +291,16 @@ public abstract class PublicationTask extends AbstractTask {
         }
 
         return event;
+    }
+
+    /**
+     * Returns the workflow event name.
+     * @return A string.
+     * @throws ParameterException when the parameter does not exist.
+     */
+    protected String getEventName() throws ParameterException {
+        String workflowEvent = getParameters().getParameter(PARAMETER_WORKFLOW_EVENT);
+        return workflowEvent;
     }
 
     /**

@@ -14,7 +14,7 @@ import org.apache.lenya.cms.publishing.PublishingEnvironment;
  * A Lenya publication.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: Publication.java,v 1.43 2004/02/18 18:45:19 andreas Exp $
+ * @version $Id: Publication.java,v 1.44 2004/02/19 15:51:51 andreas Exp $
  */
 public interface Publication {
 
@@ -188,35 +188,4 @@ public interface Publication {
      */
     Document getAreaVersion(Document document, String area) throws PublicationException;
 
-    /**
-     * Returns the documents a document depends on (can't exist without).
-     * For instance, in a site tree, a document depends on its parent document.
-     * It is not required that these documents really exist. 
-     * @param document A document.
-     * @return An array of documents.
-     * @throws PublicationException when an error occurs.
-     */
-    Document[] getRequiredDocuments(Document document) throws PublicationException;
-
-    /**
-     * Returns all documents which depend on a document.
-     * For instance, in a site tree, the method returns all documents in the subtree
-     * (without the subtree root).
-     * It is not required that these documents really exist. 
-     * @param document A document.
-     * @return An array of documents.
-     * @throws PublicationException when an error occurs.
-     */
-    Document[] getDependingDocuments(Document document) throws PublicationException;
-    
-    /**
-     * Checks if a document depends on another document.
-     * @param dependingDocument The depending document.
-     * @param requiredDocument The required document.
-     * @return A boolean value.
-     * @throws PublicationException when an error occurs.
-     */
-    boolean dependsOn(Document dependingDocument, Document requiredDocument)
-        throws PublicationException;
-        
 }

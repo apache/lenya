@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentSet.java,v 1.3 2004/02/18 18:45:19 andreas Exp $ <License>
+ * $Id: DocumentSet.java,v 1.4 2004/02/19 15:51:52 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -99,17 +99,4 @@ public class DocumentSet {
         return documents.isEmpty();
     }
     
-    /**
-     * Visits the document set.
-     * @param visitor The visitor.
-     * @throws DocumentException if an error occurs during visiting.
-     */
-    public void visit(DocumentSetVisitor visitor) throws DocumentException {
-        Document[] documents = getDocuments();
-        for (int i = 0; i < documents.length; i++) {
-            documents[i].accept(visitor);
-        }
-    }
-    
-
 }
