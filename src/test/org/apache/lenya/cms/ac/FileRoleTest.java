@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: FileRoleTest.java,v 1.5 2003/07/15 14:42:54 egli Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,6 @@ $Id
 package org.apache.lenya.cms.ac;
 
 import org.apache.lenya.cms.PublicationHelper;
-
 import java.io.File;
 
 
