@@ -510,13 +510,22 @@
       | pipelines, only that they are not accessible from outside.
       | Hence I will explain what's inside below for pipelines.
       +-->
- <map:resources>
-   <map:resource name="navigation">
-     <map:generate src="lenya/pubs/{pub_id}/content/live/sitetree.xml" />
-     <map:transform src="lenya/xslt/util/sitetree2navigation.xsl">
-       <map:parameter name="nav_id" value="{nav_id}"/>
-     </map:transform>
-   </map:resource>
+  <map:resources>
+
+    <map:resource name="navigation">
+      <map:generate src="lenya/pubs/{pub_id}/content/live/sitetree.xml" />
+      <map:transform src="lenya/xslt/util/sitetree2navigation.xsl">
+        <map:parameter name="nav_id" value="{nav_id}"/>
+      </map:transform>
+    </map:resource>
+   
+    <map:resource name="style-cms-page">
+      <map:transform src="lenya/xslt/util/page2xhtml.xsl">
+        <map:parameter name="context-prefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize/>
+    </map:resource>
+   
  </map:resources>
 
 <!-- ========================== Action sets ================================ -->
@@ -602,7 +611,7 @@
           <map:part src="lenya/content/introduction.xml"/>
         </map:aggregate>
         <map:transform src="lenya/xslt/util/welcome.xsl"/>
-        <map:serialize type="html"/>
+        <map:call resource="style-cms-page"/>
       </map:match>
     </map:pipeline>
 
@@ -771,8 +780,9 @@
       <map:match pattern="*/introduction.html">
         <map:generate src="lenya/pubs/{1}/publication.xml" />
         <map:transform src="lenya/xslt/util/publication.xsl"/>
-        <map:serialize type="html" />
+        <map:call resource="style-cms-page"/>
       </map:match>
+
       <!-- Navigation -->
       <map:match pattern="*/navigation_id*.xml">
         <map:call resource="navigation">

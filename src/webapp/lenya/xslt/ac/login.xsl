@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:session="http://www.apache.org/xsp/session/2.0">
-
-<xsl:import href="../util/page-util.xsl"/>
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:session="http://www.apache.org/xsp/session/2.0"
+    xmlns:page="http://www.lenya.org/2003/cms-page"
+    >
 
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
@@ -17,14 +19,9 @@
 </xsl:template>
 
 <xsl:template match="page">
-  <html>
-   <head>
-    <title><xsl:value-of select="$publication_name"/> - <xsl:call-template name="html-title"/></title>
-    <xsl:call-template name="include-css">
-      <xsl:with-param name="context-prefix" select="concat(body/login/context, $prefix)"/>
-    </xsl:call-template>
-    </head>
-    <body bgcolor="#ffffff">
+<page:page>
+  <page:title><xsl:value-of select="$publication_name"/> - <xsl:call-template name="html-title"/></page:title>
+  <page:body>
      <h1><xsl:value-of select="$publication_name"/></h1>
 
      <xsl:apply-templates select="body"/>
@@ -34,8 +31,8 @@
        <xsl:value-of select="$copyright"/>
      </font>
      </p>
-    </body>
-  </html>
+  </page:body>
+</page:page>
 </xsl:template>
 
 <xsl:template name="html-title">

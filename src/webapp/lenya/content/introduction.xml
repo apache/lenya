@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 
-<xhtml xmlns="http://www.w3.org/1999/xhtml">
-<body>
-<a name="preamble" />
-<h2>Preamble</h2>
+<div xmlns="http://www.w3.org/1999/xhtml" class="lenya-frontpage">
+<h2><a name="preamble" />Preamble</h2>
 <p>
 Lenya CMS is the refactored version of XPS (Extensible Publishing System).
 XPS is currently used by Switzerland's most famous newspaper Neue Z&#252;rcher Zeitung
@@ -14,8 +12,7 @@ XPS was Open Source from the beginning (Apache license). Concerning the know-how
 should have become a killer CMS (at least for newspapers), but we made two crucial mistakes: Bad Documentation and a bad installer. We hopefully do a better job this time.
 </p>
 
-<a name="introduction" />
-<h2>Introduction</h2>
+<h2><a name="introduction" />Introduction</h2>
 <p>
 Lenya CMS is an <a href="http://www.opensource.org">Open-Source</a>
 Content Management and Publishing System written in 100% pure Java. It
@@ -51,5 +48,4 @@ directly or authentication and authorization can be managed.
 You are very welcome to participate in the <a href="http://www.lenya.org">Lenya CMS project</a>.
 Thank you very much for your suggestions and contributions.
 </p>
-</body>
-</xhtml>
+</div>

@@ -12,6 +12,7 @@
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:param name="action" select="'publish'"/>
+<xsl:param name="lenya.event"/>
 
 <xsl:variable name="separator" select="','"/>
 
@@ -29,6 +30,7 @@
       <p>
         <form action="">
         
+        <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
         <input type="hidden" name="lenya.usecase" value="publish"/>
         <input type="hidden" name="lenya.step" value="publish"/>
         <input type="hidden" name="task-id" value="{$task-id}"/>

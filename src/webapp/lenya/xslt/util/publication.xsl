@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-                xmlns:lenya="http://lenya.org/2003/publication"
+<xsl:stylesheet
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+    xmlns:lenya="http://lenya.org/2003/publication"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:page="http://www.lenya.org/2003/cms-page"
 >
 
 <xsl:template match="/">
@@ -9,56 +12,37 @@
 </xsl:template>
 
 <xsl:template match="lenya:publication">
-<html>
-<head>
-  <title>Lenya CMS Publication: <xsl:value-of select="lenya:name"/></title>
-  <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
-</head>
-<body>
-<table>
-<tr>
-<td valign="top">
-This&#160;Publication
-<br />
-&#160;&#160;&#160;<a href="authoring/">Login&#160;as&#160;Editor</a>
-<br />
-&#160;&#160;&#160;Document&#160;Types
-<br />
-&#160;&#160;&#160;Collection&#160;Types
-<br />
-&#160;&#160;&#160;<a href="#lenya:tests">Use&#160;Cases/Tests</a>
-<br />
-&#160;&#160;&#160;Features
-<br />
-<a href="../index.html">Other&#160;Publications</a>
-<br />
-<a href="../docs-new/index.html">New&#160;Documentation</a>
-<br />
-<a href="../docs/index.html">Deprecated&#160;Documentation</a>
-</td>
+<page:page>
+  <page:title>Lenya CMS Publication: <xsl:value-of select="lenya:name"/></page:title>
+  <page:body>
 
-<td>&#160;</td>
+<div class="lenya-sidebar">
+<div class="lenya-sidebar-heading">This&#160;Publication</div>
+<ul>
+  <li><a href="authoring/">Login&#160;as&#160;Editor</a></li>
+  <li>Document&#160;Types</li>
+  <li>Collection&#160;Types</li>
+  <li><a href="#lenya:tests">Use&#160;Cases/Tests</a></li>
+  <li>Features</li>
+</ul>
+<div class="lenya-publication-item"><a href="../index.html">Other&#160;Publications</a></div>
+<div class="lenya-publication-item"><a href="../docs-new/index.html">New&#160;Documentation</a></div>
+<div class="lenya-publication-item"><a href="../docs/index.html">Deprecated&#160;Documentation</a></div>
+</div>
 
-<td valign="top">
-  <h3>Publication</h3>
-  <h1><xsl:value-of select="lenya:name"/></h1>
-  
+<div class="lenya-frontpage">
+<h2>About</h2>
+<h3><xsl:value-of select="lenya:name"/></h3>
 <p>
   <xsl:copy-of select="lenya:description"/>
-</p>
-
-<p>
+  <br/><br/>
   <xsl:apply-templates select="lenya:readme"/>
 </p>
+<xsl:apply-templates select="lenya:tests"/>
+</div>
 
-<p>
-  <xsl:apply-templates select="lenya:tests"/>
-</p>
-</td>
-</tr>
-</table>
-</body>
-</html>
+</page:body>
+</page:page>
 </xsl:template>
 
 <xsl:template match="lenya:readme">
@@ -67,7 +51,7 @@ This&#160;Publication
 
 <xsl:template match="lenya:tests">
 <a name="lenya:tests" />
-<h3>Tests</h3>
+<h2>Tests</h2>
 <ol>
   <xsl:apply-templates select="lenya:test"/>
 </ol>
