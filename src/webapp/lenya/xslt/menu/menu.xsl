@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+    >
 
 <xsl:template match="menu">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="menu">
@@ -109,7 +112,11 @@ src="/lenya/lenya/menu/images/lenya_unten.gif" /></td>
           <xsl:for-each select="item">
             <xsl:choose>
               <xsl:when test="@href">
-                <a class="mI"><xsl:attribute name="href"><xsl:value-of select="normalize-space(@href)"/></xsl:attribute><xsl:value-of select="."/></a>
+                <a class="mI">
+                	<xsl:attribute name="href">
+                		<xsl:value-of select="@href"/>
+                		<xsl:apply-templates select="@*[local-name() != 'href']"/>
+                	</xsl:attribute><xsl:value-of select="."/></a>
               </xsl:when>
               <xsl:otherwise>
                 <span class="mI"><xsl:value-of select="."/></span>
@@ -127,5 +134,22 @@ src="/lenya/lenya/menu/images/lenya_unten.gif" /></td>
   </div>
   </div>
 </xsl:template>
+
+
+<xsl:template match="item/@uc:usecase">
+	<xsl:text/>
+	<xsl:choose>
+		<xsl:when test="contains(../@href, '?')">&amp;</xsl:when>
+		<xsl:otherwise>?</xsl:otherwise>
+	</xsl:choose>
+	<xsl:text/>lenya.usecase=<xsl:value-of select="normalize-space(.)"/><xsl:text/>
+</xsl:template>
+
+<xsl:template match="item/@uc:step">
+	<xsl:text/>&amp;lenya.step=<xsl:value-of select="normalize-space(.)"/><xsl:text/>
+</xsl:template>
+
+<xsl:template match="item/@*[not(namespace-uri() = 'http://apache.org/cocoon/lenya/usecase/1.0')]"><xsl:copy-of select="."/></xsl:template>
+
 
 </xsl:stylesheet>
