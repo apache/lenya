@@ -550,8 +550,16 @@
 
    <!-- Wyona CMS -->
    <map:pipeline>
+     <map:match pattern="authoring/wyona/publishAllCMSProjectsScreen*">
+       <map:aggregate element="publish-all" label="xml">
+         <map:part src="cocoon:/authoring/matrix/index.xml"/>
+       </map:aggregate>
+       <map:transform src="stylesheets/publication/Page/Overview/publishScreen.xsl"/>
+       <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
+       <map:serialize type="html"/>
+     </map:match>
      <map:match pattern="authoring/wyona/publishScreen*">
-       <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
+       <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp" label="xml"/>
        <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>
