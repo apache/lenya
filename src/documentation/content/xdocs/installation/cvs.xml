@@ -15,49 +15,70 @@
   limitations under the License.
 -->
 
-<!-- $Id: cvs.xml,v 1.1 2004/07/01 23:59:25 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
 <document> 
 
 <header> 
-    <title>Lenya CVS Guide</title>
+    <title>Lenya Code Repository Guide</title>
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
       <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+      <person name="Rolf Kulemann" email="roku@apache.org"/> 
     </authors> 
 </header> 
 <body> 
 
 <section>
-<title>CVS for the public</title>
+<title>SVN</title>
 <p>
 Start the shell of your choice and enter:
 </p>
 <source>
-cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login
-(password: anoncvs)
-cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic checkout cocoon-lenya
+svn co http://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
 </source>
+
+<p>Comiters must access SVN with <code>https</code>
+  to have write access.
+</p>
+
+<p>Use the following URL pattern to checkout out other tags or branches.</p>
+<ul>
+<li><code>svn co http://svn.apache.org/repos/asf/incubator/lenya/branches/[branch_name]</code></li>
+<li><code>svn co http://svn.apache.org/repos/asf/incubator/lenya/tags/[tag]</code></li>
+</ul>
+
+<p>Release tags are named <code>RELEASE_X_Y_Z</code> i.e. <code>RELEASE_1_2</code>, 
+  where X is the major version number and Y and Z are the minor version numbers.</p>
+  
+<ul>
+  <li></li><a href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/?root=Apache-SVN">Browse the Lenya 
+    code repository</a></li>
+  <li>
+    <a href="http://www.apache.de/dev/version-control.html">ASF documention on source code 
+      repositories</a>
+  </li>
+</ul>
 </section>
 
 <section>
-<title>CVS for committers</title>
+<title>SVN for committers</title>
 <p>
 Start the shell of your choice and enter:
 </p>
 <source>
-export CVS_RSH=ssh
-cvs -d :ext:userid@cvs.apache.org:/home/cvs checkout cocoon-lenya
+svn co https://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
 </source>
 </section>
 
 <section>
-<title>ViewCVS</title>
+<title>ViewSVN</title>
 <p>
-<link href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/</link>
+<link href="http://svn.apache.org/repos/asf/incubator/lenya/">
+  http://svn.apache.org/repos/asf/incubator/lenya/</link>
 </p>
 </section>
 
