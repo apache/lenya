@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Hello Forrest</title>
+    <title>Apache Lenya Documentation</title>
     <version/>
     <type/>
     <authors>
@@ -11,9 +11,9 @@
     </authors>
   </header>
   <body>
-<section><title>Forrest as a Lenya Publication</title>
-<p>Thanks to Gregor, Andreas and Christian we now have Forrest as a Lenya publication.</p>
-<p>Click on the menu "File" and then click on the item "Edit with Xopus2" to edit this page.</p>
+<section>
+<p>In getting started with Lenya, one must learn not only a number of concepts, but a number of 
+details as well. The Concepts section will explain concepts such as the sitemap, publications, and tasks.</p>
 </section>
   </body>
 </document>

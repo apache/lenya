@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Hello Forrest</title>
+    <title>The Apache Lenya Community</title>
     <version/>
     <type/>
     <authors>
@@ -11,9 +11,8 @@
     </authors>
   </header>
   <body>
-<section><title>Forrest as a Lenya Publication</title>
-<p>Thanks to Gregor, Andreas and Christian we now have Forrest as a Lenya publication.</p>
-<p>Click on the menu "File" and then click on the item "Edit with Xopus2" to edit this page.</p>
+<section>
+<p>Here you will find information on how to interact with, and become a member of the Apache Lenya community.</p>
 </section>
   </body>
 </document>
