@@ -74,7 +74,7 @@ import org.apache.log4j.Category;
 /**
  * Crawl iteratively
  *
- * @version $Id: IterativeHTMLCrawler.java,v 1.21 2004/02/26 00:39:12 michi Exp $
+ * @version $Id: IterativeHTMLCrawler.java,v 1.22 2004/03/01 05:32:11 michi Exp $
  */
 public class IterativeHTMLCrawler {
     static Category log = Category.getInstance(IterativeHTMLCrawler.class);
@@ -143,7 +143,7 @@ public class IterativeHTMLCrawler {
         String currentURLPath = start.toString().substring(0, start.toString().lastIndexOf("/"));
 
         try {
-            log.info(".crawl(): Start crawling at: " + start);
+            log.info("Start crawling at: " + start);
 
             if (addURL(start.getFile(), currentURLPath) != null) {
                 dumpHTDoc(start);
@@ -194,8 +194,7 @@ public class IterativeHTMLCrawler {
                 parent.mkdirs();
                 log.warn("Directory has been created: " + parent);
             }
-            java.io.PrintWriter out = new java.io.PrintWriter(new java.io.FileOutputStream(
-                        url_list_file));
+            java.io.PrintWriter out = new java.io.PrintWriter(new FileOutputStream(url_list_file));
 
             for (int i = 0; i < urlsToCrawl.size(); i++) {
                 out.println("" + urlsToCrawl.elementAt(i));
@@ -471,6 +470,16 @@ public class IterativeHTMLCrawler {
 
                 HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
                 java.io.InputStream in = httpConnection.getInputStream();
+
+		FileOutputStream out = new FileOutputStream(file);
+                byte[] buffer = new byte[1024];
+                int bytesRead = -1;
+                while ((bytesRead = in.read(buffer)) >= 0) {
+                    out.write(buffer, 0, bytesRead);
+                }
+                out.close();
+
+/*
                 BufferedInputStream bin = new BufferedInputStream(in);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(bin));
 
@@ -484,22 +493,24 @@ public class IterativeHTMLCrawler {
                 fw.close();
 
                 bin.close();
+*/
                 in.close();
                 httpConnection.disconnect();
 
-                System.out.println(".dumpHTDoc(): INFO: URL dumped: " + url);
+                log.info("URL dumped: " + url + " (" + file + ")");
             } catch (Exception e) {
-                System.err.println(".dumpHTDoc(): ERROR: " + e);
-                System.out.println(".dumpHTDoc(): ERROR: URL not dumped: " + url);
+                log.error("" + e);
+                log.error("URL not dumped: " + url);
             }
         } else {
-            System.out.println(".dumpHTDoc(): INFO: URL not dumped: " + url);
+            log.info("URL not dumped: " + url);
         }
     }
 
     /**
      *
      */
+/*
     public void saveToFile(String filename, byte[] bytes)
         throws FileNotFoundException, IOException {
         File file = new File(filename);
@@ -511,8 +522,7 @@ public class IterativeHTMLCrawler {
         File parent = new File(file.getParent());
 
         if (!parent.exists()) {
-            System.out.println(".saveToFile(): Directory will be created: " +
-                parent.getAbsolutePath());
+            log.warn("Directory will be created: " + parent.getAbsolutePath());
             parent.mkdirs();
         }
 
@@ -520,6 +530,7 @@ public class IterativeHTMLCrawler {
         out.write(bytes);
         out.close();
     }
+*/
 
     /**
      * DOCUMENT ME!
