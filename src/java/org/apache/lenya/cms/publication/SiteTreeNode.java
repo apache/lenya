@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.12 2003/09/18 11:50:42 andreas Exp $
+$Id: SiteTreeNode.java,v 1.13 2003/09/18 13:14:38 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ package org.apache.lenya.cms.publication;
  * delegates everything to the Node.
  *
  * @author $Author: andreas $
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public interface SiteTreeNode {
 
@@ -144,6 +144,15 @@ public interface SiteTreeNode {
      * @return the children.
      */
     SiteTreeNode[] getChildren();
+
+    /**
+     * Get the sitetreenodes, which are children of this node
+     * and contain a label for the given language.
+     * 
+     * @param language A language string.
+     * @return the children.
+     */
+    SiteTreeNode[] getChildren(String language);
 
     /**
      * Remove the children of the node
