@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RevisionControllerTest.java,v 1.5 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.rc;
 
@@ -43,7 +43,7 @@ public class RevisionControllerTest extends TestCase {
         if (args.length != 4) {
             System.out.println(
                 "Usage: "
-                    + new RevisionController().getClass().getName()
+                    + RevisionController.class.getName()
                     + " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
 
             return;
@@ -53,7 +53,7 @@ public class RevisionControllerTest extends TestCase {
         String source = args[1];
         String identityD = args[2];
         String destination = args[3];
-        RevisionController rc = new RevisionController();
+        RevisionController rc = new RevisionController("", "", "");
         try {
             rc.reservedCheckOut(source, identityS);
         } catch (FileNotFoundException e) // No such source file
