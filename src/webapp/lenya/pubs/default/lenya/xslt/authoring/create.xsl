@@ -38,13 +38,13 @@
 	      <td class="lenya-form-caption">Parent ID:</td><td>hidden value="<xsl:value-of select="/parent-child/parentid"/>"</td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">ID:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-id"/></td>
+	      <td class="lenya-form-caption">ID: </td><td><input class="lenya-form-element" type="text" name="properties.create.child-id"/>*</td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Name:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
+	      <td class="lenya-form-caption">Name: </td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/>*</td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Language:</td><td><input class="lenya-form-element" type="text" name="properties.create.language" value="{/parent-child/dc:language}"/></td>
+	      <td class="lenya-form-caption">Language:</td><td><input class="lenya-form-element" type="text" name="properties.create.language" value="{/parent-child/dc:language}"/>*</td>
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.create.creator" value="{/parent-child/dc:creator}"/></td>
