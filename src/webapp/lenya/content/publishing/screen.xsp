@@ -56,32 +56,32 @@
     <usecase:role-ids><input:get-attribute module="access-control" name="role-ids" as="string"/></usecase:role-ids>
     <usecase:workflow-event><input:get-attribute module="request-param" name="lenya.event" as="string"/></usecase:workflow-event>
     
-    <usecase:task-id>publish</usecase:task-id>
-    
-    <xsp:logic>
-      Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
-      DocumentIdentityMap identityMap = document.getIdentityMap();
-      
-      try {
-          Document parent = identityMap.getFactory().getParent(document);
-          Document liveParent = identityMap.getFactory().getAreaVersion(document, Publication.LIVE_AREA);
-          if (!liveParent.exists()) {
-              <usecase:message id="parent-not-live"/>
-          
-              String url = liveParent.getCanonicalWebappURL();
-              
-              <usecase:parent>
-                <xsp:attribute name="href"><xsp-request:get-context-path/><xsp:expr>url</xsp:expr></xsp:attribute>
-                <xsp:attribute name="id"><xsp:expr>liveParent.getId()</xsp:expr></xsp:attribute>
-                <xsp:attribute name="language"><xsp:expr>liveParent.getLanguage()</xsp:expr></xsp:attribute>
-              </usecase:parent>
-          }
-          
-      }
-      catch (Exception e) {
-          throw new ProcessingException(e);
-      }
-    </xsp:logic>
+   <usecase:task-id>publish</usecase:task-id>
+
+   <xsp:logic>
+     Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+     DocumentIdentityMap identityMap = document.getIdentityMap();
+
+     try {
+         Document parent = identityMap.getFactory().getParent(document,"/index");
+         Document liveParent = identityMap.getFactory().getAreaVersion(parent, Publication.LIVE_AREA);
+         if (!liveParent.exists()) {
+             <usecase:message id="parent-not-live"/>
+
+             String url = liveParent.getCanonicalWebappURL();
+
+             <usecase:parent>
+               <xsp:attribute name="href"><xsp-request:get-context-path/><xsp:expr>url</xsp:expr></xsp:attribute>
+               <xsp:attribute name="id"><xsp:expr>liveParent.getId()</xsp:expr></xsp:attribute>
+               <xsp:attribute name="language"><xsp:expr>liveParent.getLanguage()</xsp:expr></xsp:attribute>
+             </usecase:parent>
+         }
+     }
+     catch (Exception e) {
+         throw new ProcessingException(e);
+     }
+   </xsp:logic>
+
     
     <not:users>
     <xsp:logic>
