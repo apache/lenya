@@ -1,5 +1,5 @@
 /*
- * $Id: TaskAction.java,v 1.12 2003/04/24 13:52:38 gregor Exp $
+ * $Id: TaskAction.java,v 1.13 2003/05/16 15:27:11 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,6 +48,12 @@
  */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Arrays;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -57,11 +63,19 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.task.*;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
+import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.cocoon.environment.Context;
+import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.SourceResolver;
+import org.apache.excalibur.source.Source;
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 
 /**
@@ -113,42 +127,12 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
      *
      * @throws java.lang.Exception DOCUMENT ME!
      */
-    public java.util.Map act(org.apache.cocoon.environment.Redirector redirector,
-        org.apache.cocoon.environment.SourceResolver sourceResolver, java.util.Map objectModel,
-        String str, Parameters parameters) throws java.lang.Exception {
-        // Get Source
-        org.apache.cocoon.environment.Source inputSource = sourceResolver.resolve("");
-        String publicationPath = inputSource.getSystemId();
+    public java.util.Map act(Redirector redirector, SourceResolver sourceResolver,
+        Map objectModel, String str, Parameters parameters) throws java.lang.Exception {
 
-        // Remove "file:" protocol
-        publicationPath = publicationPath.substring(5);
-
-        getLogger().info("######### " + publicationPath);
-
-        if (publicationPath.endsWith("/")) {
-            publicationPath = publicationPath.substring(0, publicationPath.length() - 1);
-        }
-
-        getLogger().info("######### " + publicationPath);
-
-        int lastSlashIndex = publicationPath.lastIndexOf("/");
-        String publicationId = publicationPath.substring(lastSlashIndex + 1);
-
-        getLogger().info("#######id " + publicationId);
-
-        publicationPath = publicationPath.substring(0, lastSlashIndex + 1);
-
-        getLogger().info("######### " + publicationPath);
-
-        String publicationPrefix = PublishingEnvironment.PUBLICATION_PREFIX;
-
-        String contextPath = publicationPath.substring(0,
-                publicationPath.length() - publicationPrefix.length());
-
-        getLogger().info("######### " + contextPath);
-
-        publicationPath += publicationId;
-
+        Publication publication = PublicationFactory.getPublication(objectModel);
+        File publicationDirectory = publication.getDirectory();
+        
         // Get request object
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -169,12 +153,12 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         //------------------------------------------------------------
         Parameters taskParameters = new Parameters();
 
-        taskParameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT, contextPath);
+        taskParameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT, publication.getServletContext().getCanonicalPath());
         taskParameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath() + "/");
         taskParameters.setParameter(Task.PARAMETER_SERVER_PORT,
             Integer.toString(request.getServerPort()));
         taskParameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
-        taskParameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publicationId);
+        taskParameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publication.getId());
 
         // set parameters using the request parameters
         for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
@@ -188,11 +172,11 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         getLogger().debug("\n-------------------------------------------------" + "\n- Executing task '" +
             getTaskId() + "'" + "\n-------------------------------------------------");
 
-        TaskManager manager = new TaskManager(publicationPath);
+        TaskManager manager = new TaskManager(publication.getDirectory().getCanonicalPath());
         Task task = manager.getTask(getTaskId());
 
         task.parameterize(taskParameters);
-        task.execute(contextPath);
+        task.execute(publication.getServletContext().getCanonicalPath());
 
         //------------------------------------------------------------
         // get session
@@ -216,4 +200,5 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
 
         return actionMap;
     }
+    
 }
