@@ -46,7 +46,7 @@ public class RelaxNG {
     public static String validate(File schema, File xml) throws Exception {
         InputSource in = ValidationDriver.uriOrFileInputSource(schema.getAbsolutePath());
         PropertyMapBuilder properties = new PropertyMapBuilder();
-	ByteArrayOutputStream error = new ByteArrayOutputStream();
+	    ByteArrayOutputStream error = new ByteArrayOutputStream();
         ErrorHandlerImpl eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(error)));
         ValidateProperty.ERROR_HANDLER.put(properties, eh);
         SchemaReader schemaReader = new AutoSchemaReader();
