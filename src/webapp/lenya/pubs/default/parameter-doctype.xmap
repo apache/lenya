@@ -45,16 +45,6 @@
 
     <map:pipeline>
       <!-- {area}/{uri} -->
-      <map:match pattern="*/index.html">
-        <map:generate type="serverpages" src="../../config/parameters/default.xsp">
-          <map:parameter name="value" value="homepage"/>
-        </map:generate>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-
-    <map:pipeline>
-      <!-- {area}/{uri} -->
       <map:match pattern="*/**.html">
         <map:act type="sourcetype" src="fallback://content/{1}/{page-envelope:document-path}">
           <map:generate type="serverpages" src="../../config/parameters/default.xsp">
