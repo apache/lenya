@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.1 2003/02/21 15:06:15 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.2 2003/03/02 23:25:24 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>OSCOM</lenya:name>
 <lenya:version>1.0</lenya:version>
-<lenya:description>This publication implements the CMS matrix used at oscom.org</lenya:description>
+<lenya:description>OSCOM is an international, not-for-profit organization dedicated to Open Source
+Content Management.
+This publication implements the CMS matrix used at <a href="http://www.oscom.org/matrix/">oscom.org</a></lenya:description>
 <lenya:credits>Special thanks to Eric Wiseman.</lenya:credits>
 <lenya:help></lenya:help>
 <lenya:changelog>changes.xml</lenya:changelog>
 <lenya:license></lenya:license>
 <lenya:readme>
+<ol>
+  <li><a href="index.html">Reader`s View</a> (Live)</li>
+  <li><a href="authoring/">Editor`s View</a> (Authoring)</li>
+</ol>
+
+<h3>Deployment</h3>
+<ol>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/tasks.xconf
+    <ol>
+      <li><code>&lt;parameter name="command" value="PATH_TO_WGET_RSS_SCRIPT"/&gt;</code></li>
+      <li><code>&lt;parameter name="command" value="PATH_TO_REPLICATE_SCRIPT"/&gt;</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/bin/wget-rss.sh
+    <ol>
+      <li><code>PORT=TOMCAT_PORT</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/scheduler/jobs.xml
+    <ol>
+      <li>Remove comments from "Download RSS" and "Export OSCOM" and "Replicate"</li>
+      <li>Export the OSCOM Homepage: <code>&lt;parameter name="server-port" value="TOMCAT_PORT"/&gt;</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/bin/replicate.sh
+    <ol>
+      <li><code>CONTEXT=PATH_CONTEXT_DIR</code></li>
+      <li><code>RDOCS_2_1=PATH_TO_REMOTE_DOCS_DIR</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/live/navigation.xml
+    <ol>
+      <li>Remove temporary entries</li>
+    </ol>
+  </li>
+</ol>
 </lenya:readme>
 </lenya:publication>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.1 2003/02/21 15:05:50 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.2 2003/03/02 23:25:24 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>Forum</lenya:name>
@@ -10,5 +10,22 @@
 <lenya:changelog>changes.xml</lenya:changelog>
 <lenya:license></lenya:license>
 <lenya:readme>
+<ol>
+  <li><a href="index.html">Live</a> (Reader`s View)</li>
+  <li><a href="authoring/index.html">Authoring</a> (Editor`s View)</li>
+  <li>Information Architecture
+    <ol>
+      <li>Pages
+        <ol>
+          <li>Front (XML: <a href="index.xml">Live</a>)</li>
+          <li>Article (XML: <a href="articles/2001/index.xml">Live</a>)</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li><a href="customizing.html">Customizing Layout</a></li>
+  <li><a href="gettingStarted.html">Getting Started</a></li>
+  <li><a href="http://www.webweavertech.com/ovidiu/weblog/archives/000019.html">Ovidu's Wish list for a Weblog tool</a></li>
+</ol>
 </lenya:readme>
 </lenya:publication>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.1 2003/02/21 15:05:24 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.2 2003/03/02 23:25:24 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>Lenya Documentation</lenya:name>
@@ -10,5 +10,14 @@
 <lenya:changelog>changes.xml</lenya:changelog>
 <lenya:license></lenya:license>
 <lenya:readme>
+<p>
+The "Editor's View (Authoring)" is still in an experimental version. Please use the
+"Reader's View (Live)".
+</p>
+
+<ol>
+  <li><a href="index.html">Reader`s View</a> (Live)</li>
+  <li><a href="authoring/index.html">Editor`s View</a> (Authoring)</li>
+</ol>
 </lenya:readme>
 </lenya:publication>

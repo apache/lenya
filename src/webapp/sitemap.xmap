@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.38 2003/02/27 10:48:12 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.39 2003/03/02 23:25:24 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -60,6 +60,9 @@
     <map:view name="first" from-position="first">
       <map:serialize type="xml"/>
     </map:view>
+    <map:view name="xml" from-label="xml">
+      <map:serialize type="xml"/>
+    </map:view>
   </map:views>
   <map:pipelines>
 
@@ -81,14 +84,15 @@
         <map:redirect-to uri="index.html"/>
       </map:match>
       <map:match pattern="index.html">
-<!--
-        <map:aggregate element="lenya">
+        <map:aggregate element="lenya" label="xml">
           <map:part src="cocoon:/publications.xml"/>
           <map:part src="wyona/cms/docs/cms/introduction.xml"/>
         </map:aggregate>
-        <map:serialize type="xml"/>
--->
+        <map:transform src="wyona/cms/stylesheets/cms/Page/util/welcome.xsl"/>
+        <map:serialize type="html"/>
+<!--
         <map:read src="resources/html/index.html" mime-type="text/html"/>
+-->
       </map:match>
     </map:pipeline>
 
@@ -123,45 +127,40 @@
     </map:pipeline>
     <!-- /Search with Lucene -->
 
+
+
     <map:pipeline>
       <!-- Editor Xopus -->
-
       <map:match pattern="xopus/**">
         <map:mount uri-prefix="xopus" src="wyona/cms/xopus.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
-      <!-- Editor Bitflux -->
 
+
+      <!-- Editor Bitflux -->
       <map:match pattern="bitfluxeditor/**">
         <map:mount uri-prefix="bitfluxeditor" src="wyona/cms/bitfluxeditor.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
-    <map:pipeline>
-      <!-- Documentation -->
-      <!-- Wyona GUI -->
 
+
+    <map:pipeline>
+      <!-- Wyona GUI -->
       <map:match pattern="wyona/**">
         <map:mount uri-prefix="wyona" src="wyona/cms/wyona.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
-      <!-- Publications -->
 
+
+      <!-- Publications -->
+      <map:match pattern="*/introduction.html">
+        <map:generate src="wyona/cms/pubs/{1}/publication.xml" />
+        <map:transform src="wyona/cms/stylesheets/cms/Page/util/publication.xsl"/>
+        <map:serialize type="html" />
+      </map:match>
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="wyona/cms/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
-    <!-- Original Cocoon Sitemap (without SVG and FOP!) -->
-    <!--
-   <map:pipeline>
-     <map:match pattern="**">
-       <map:mount uri-prefix="" src="cocoon.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
 
-      <map:handle-errors>
-        <map:transform src="context://stylesheets/system/error2html.xsl"/>
-        <map:serialize status-code="500"/>
-      </map:handle-errors>
-   </map:pipeline>
--->
-    <!-- /Original Cocoon Sitemap (without SVG and FOP!) -->
 
   </map:pipelines>
 </map:sitemap>
