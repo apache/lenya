@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: copy.xsp 42702 2004-03-13 12:34:18Z gregor $ -->
+<page:page xmlns:c="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" >
+           
+  <page:title>
+    <i18n:text>Rename Document</i18n:text>
+  </page:title>
+  <page:body>
+    <div class="lenya-box">
+      <div class="lenya-box-title">
+        <i18n:translate>
+          <i18n:text key="rename-doc"/>
+          <i18n:param>
+            <q>
+              <jx:out value="${usecase.getParameter('documentid')}"/>
+            </q>
+          </i18n:param>
+        </i18n:translate>
+      </div>
+      <div class="lenya-box-body">
+        <script type="text/javascript" src="${contextprefix}/lenya/javascript/validation.js">&#160;</script>
+        <script Language="JavaScript">function validateForm(theForm) { if (!validContent(theForm["secdocumentid"],"New Document ID")) return false; return true; } </script>
+        <form method="get" onsubmit="return validateForm(this)">
+          <input type="hidden" name="lenya.usecase" value="rename"/>
+          <input type="hidden" name="parenturl" value="{parent-url}"/>
+          <table class="lenya-table-noborder">
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>New Document ID</i18n:text>:</td>
+              <td><input type="text" class="lenya-form-element" name="secdocumentid" value="{$destination-id}"/> (<i18n:text>No whitespace, no special characters</i18n:text>)</td>
+            </tr>
+            <tr>
+              <td/>
+              <td> <br/> <input i18n:attr="value" type="submit" value="Rename"/>&#160; <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/> </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </page:body>
+</page:page>

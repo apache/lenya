@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: meta.xsp 42702 2004-03-13 12:34:18Z gregor $ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  <div>
+    <!-- 
+		These are the tabs. Make sure that each of them has the correct id,
+		target and corresponding number in the Tab() call.
+	 -->
+    <table border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <a href="?lenya.usecase=info-overview&amp;lenya.step=showscreen" class="lenya-tablink-active">
+            <i18n:text>Overview</i18n:text>
+          </a>
+        </td>
+        <jx:if test="${usecase.getParameter('languageexists').equals('true')}">
+          <jx:if test="${not(usecase.getParameter('documentid').equals('/'))}">
+            <td>
+              <a href="?lenya.usecase=info-meta&amp;lenya.step=showscreen" class="lenya-tablink">
+                <i18n:text>Meta</i18n:text>
+              </a>
+            </td>
+            <td>
+              <a href="?lenya.usecase=info-assets&amp;lenya.step=showscreen" class="lenya-tablink">
+                <i18n:text>Assets</i18n:text>
+              </a>
+            </td>
+            <td>
+              <a href="?lenya.usecase=info-workflow&amp;lenya.step=showscreen" class="lenya-tablink">
+                <i18n:text>Workflow</i18n:text>
+              </a>
+            </td>
+            <td>
+              <a href="?lenya.usecase=info-revisions&amp;lenya.step=showscreen" class="lenya-tablink">
+                <i18n:text>Versions</i18n:text>
+              </a>
+            </td>
+          </jx:if>
+          <jx:choose>
+            <jx:when test="${usecase.getParameter('area').equals('authoring')}">
+              <td>
+                <a href="?lenya.usecase=info-ac-auth&amp;lenya.step=showscreen" class="lenya-tablink">
+                  <i18n:text>AC Auth</i18n:text>
+                </a>
+              </td>
+              <td>
+                <a href="?lenya.usecase=ac-live&amp;lenya.step=showscreen" class="lenya-tablink">
+                  <i18n:text>AC Live</i18n:text>
+                </a>
+              </td>
+            </jx:when>
+            <jx:when test="${usecase.getParameter('area').equals('archive')}">
+              <td>
+                <a href="?lenya.usecase=ac-archive&amp;lenya.step=showscreen" class="lenya-tablink">
+                  <i18n:text>AC Archive</i18n:text>
+                </a>
+              </td>
+            </jx:when>
+            <jx:when test="${usecase.getParameter('area').equals('trash')}">
+              <td>
+                <a href="?lenya.usecase=ac-trash&amp;lenya.step=showscreen" class="lenya-tablink">
+                  <i18n:text>AC Trash</i18n:text>
+                </a>
+              </td>
+            </jx:when>
+          </jx:choose>
+          <td>
+            <a href="?lenya.usecase=info-scheduler&amp;lenya.step=showscreen" class="lenya-tablink">
+              <i18n:text>Scheduler</i18n:text>
+            </a>
+          </td>
+        </jx:if>
+      </tr>
+    </table>
+    <div id="contentblock1" class="lenya-tab">
+      <jx:choose>
+        <jx:when test="${not(empty(usecase.getParameter('title')))}">
+          <table class="lenya-table-noborder">
+            <tr>
+              <td colspan="2">
+                <ul>
+                  <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+                    <li>
+                      <i18n:text>
+                        <jx:out value="${message}"/>
+                      </i18n:text>
+                    </li>
+                  </jx:forEach>
+                  <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+                    <li>
+                      <i18n:text>
+                        <jx:out value="${message}"/>
+                      </i18n:text>
+                    </li>
+                  </jx:forEach>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Title</i18n:text>:</td>
+              <td>
+                <jx:out value="${usecase.getParameter('title')}"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td>
+              <td>
+                <jx:out value="${usecase.getParameter('description')}"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Workflow State</i18n:text>:</td>
+              <td>
+                <jx:choose>
+                  <jx:when test="${not(empty(usecase.getParameter('state')))}"><jx:out select="${usecase.getParameter('state')}"/></jx:when>
+                  <jx:otherwise><span style="color: #999999;"><i18n:text>[no workflow]</i18n:text></span></jx:otherwise>
+                </jx:choose>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Live</i18n:text>:</td>
+              <td>
+                <jx:out value="${usecase.getParameter('live')}"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Available Languages</i18n:text>:</td>
+              <td>
+                <jx:out value="${usecase.getParameter('languages')}"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Last modified</i18n:text>:</td>
+              <td>
+                <jx:out value="${usecase.getParameter('lastmodified')}"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td>
+              <td>
+                <jx:out value="${usecase.getParameter('documentid')}"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Resource Type</i18n:text>:</td>
+              <td>
+                <jx:out value="${usecase.getParameter('resourcetype')}"/>
+              </td>
+            </tr>
+          </table>
+        </jx:when>
+        <jx:when test="${usecase.getParameter('languageexists').equals('false')}">
+          <i18n:text>This document is not available in this language.</i18n:text><br/><br/>
+          <i18n:text>Available Languages</i18n:text>: <jx:out value="${usecase.getParameter('languages')}"/>
+        </jx:when>
+        <jx:otherwise><i18n:text>No overview available.</i18n:text></jx:otherwise>
+      </jx:choose>
+    </div>
+  </div>
+</page:page>
