@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
-<!-- $Id: config.xml,v 1.1 2003/08/15 09:55:34 michi Exp $ -->
+<!-- $Id: config.xml,v 1.2 2003/08/15 23:02:06 michi Exp $ -->
 <config>
     <files>
         <input>
             <!-- The XML-document with the actual data -->
             <file name="BX_xmlfile" isParam="true">xml</file>
             <!-- The XSL-document which transforms the xml to the output format -->
-            <file name="BX_xslfile">test.xsl</file>
+            <file name="BX_xslfile" isParam="true">xslt</file>
         </input>
         
         <!-- You can't provide a different "method" than http.get for the following files -->
