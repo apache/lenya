@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.39 2003/03/05 14:25:28 michi Exp $
+   @version CVS $Id: build.xml,v 1.40 2003/03/06 13:10:56 andreas Exp $
 
 -->
 
@@ -93,7 +93,7 @@
   <property name="dist.src.dir" value="${dist.root}/${fullname}-src"/>
 
   <!-- The original, unmodified and expanded cocoon.war file upon which we base our package -->
-  <property name="src.cocoon.dir" value="./src/cocoon"/>
+  <!-- <property name="src.cocoon.dir" value="./src/cocoon"/> -->
 
   <!--
   The files that should be copied into the dist
@@ -239,18 +239,29 @@
   <!-- ============================================================ -->
   <target name="prepare-cocoon" depends="init,check-tools-lib,prepare-tools-lib">
     <echo>INFO: exclude: sitemap.xmap</echo>
-    <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo>
-    <echo>INFO: exclude: WEB-INF/lib/lucene-1.2-rc2.jar</echo>
+    <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
+    <echo>INFO: exclude: WEB-INF/lib/lucene**.jar</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${src.cocoon.dir}">
         <exclude name="sitemap.xmap"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
-        <exclude name="WEB-INF/lib/lucene-1.2-rc2.jar"/>
+        <exclude name="WEB-INF/lib/lucene**.jar"/>
         <!--<exclude name="**/logkit.xconf"/>-->
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
+    
+    <!-- patch cocoon.xconf -->
+    <echo>INFO: patching cocoon.xconf with XSLT stylesheet</echo>
+    <xslt
+        in="${src.cocoon.dir}/WEB-INF/cocoon.xconf"
+        out="${build.webapp}/WEB-INF/cocoon.xconf"
+        style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
+        >
+      <outputproperty name="indent" value="yes"/>
+    </xslt>
+    
     <!-- patch lucene -->
     <echo message="INFO: Patch Lucene"/>
     <copy todir="${build.webapp}" filtering="off">

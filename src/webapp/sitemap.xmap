@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.43 2003/03/04 21:46:32 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.44 2003/03/06 13:10:57 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -55,6 +55,19 @@
         <header-name>referer</header-name>
       </map:matcher>
     </map:matchers>
+
+    <map:pipes default="caching">
+      <map:pipe name="caching" src="org.apache.cocoon.components.pipeline.impl.CachingProcessingPipeline"/>
+      <map:pipe name="caching-point" src="org.apache.cocoon.components.pipeline.impl.CachingPointProcessingPipeline">
+        <autoCachingPoint>On</autoCachingPoint>
+      </map:pipe>
+      <map:pipe name="noncaching" src="org.apache.cocoon.components.pipeline.impl.NonCachingProcessingPipeline"/>
+  
+      <!-- The following two can be used for profiling:-->
+      <map:pipe name="profile-caching" src="org.apache.cocoon.components.profiler.ProfilingCachingProcessingPipeline"/>
+      <map:pipe name="profile-noncaching" src="org.apache.cocoon.components.profiler.ProfilingNonCachingProcessingPipeline"/>
+    </map:pipes>
+
   </map:components>
   <map:views>
     <map:view name="first" from-position="first">

@@ -1,5 +1,5 @@
 /*
- * $Id: Policy.java,v 1.6 2003/03/04 19:44:43 gregor Exp $
+ * $Id: Policy.java,v 1.7 2003/03/06 13:10:56 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,7 +48,7 @@
  */
 package org.lenya.cms.ac;
 
-import org.apache.log.Logger;
+import org.apache.avalon.framework.logger.Logger;
 
 import org.apache.xpath.XPathAPI;
 
@@ -75,7 +75,7 @@ public class Policy {
      * @param doc DOCUMENT ME!
      * @param logger DOCUMENT ME!
      */
-    public Policy(Document doc, org.apache.log.Logger logger) {
+    public Policy(Document doc, Logger logger) {
         this.doc = doc;
         this.logger = logger;
     }

@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyGenerator.java,v 1.13 2003/03/04 19:44:44 gregor Exp $
+ * $Id: ProxyGenerator.java,v 1.14 2003/03/06 13:10:57 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,7 +43,7 @@
  */
 package org.lenya.cms.cocoon.generation;
 
-import org.apache.avalon.excalibur.xml.Parser;
+import org.apache.excalibur.xml.sax.SAXParser;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -72,6 +72,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Enumeration;
+import org.apache.avalon.framework.component.Component;
 
 
 /**
@@ -113,7 +114,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
         String submitMethod = request.getMethod();
 
-        Parser parser = null;
+        SAXParser parser = null;
 
         try {
             // DEBUG
@@ -203,7 +204,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
             // Return XML
             InputSource input = new InputSource(new ByteArrayInputStream(sresponse));
-            parser = (Parser) this.manager.lookup(Parser.ROLE);
+            parser = (SAXParser) this.manager.lookup(SAXParser.ROLE);
             parser.parse(input, this.xmlConsumer);
         } catch (Exception e) {
             this.contentHandler.startDocument();
@@ -217,7 +218,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             //log.error(e);
             e.printStackTrace();
         } finally {
-            this.manager.release(parser);
+            this.manager.release((Component) parser);
         }
     }
 
