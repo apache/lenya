@@ -1,5 +1,5 @@
 /*
- * $Id: FileUserTest.java,v 1.4 2003/06/10 13:51:19 egli Exp $
+ * $Id: FileUserTest.java,v 1.5 2003/06/12 15:44:18 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -266,5 +266,29 @@ public class FileUserTest extends TestCase {
 			e.printStackTrace();
 		}
 		assertNull(manager.getUser(id));
+	}
+
+	final public void testAuthenticate() {
+		String password = "daisy";
+		FileUser user =
+			createAndSaveUser(
+				"mickey",
+				"Mickey Mouse",
+				"mickey@mouse.com",
+				password);
+		assertTrue(user.authenticate(password));
+
+		Publication publication = getPublication();
+		UserManager manager = null;
+		try {
+			manager = UserManager.instance(publication);
+		} catch (AccessControlException e1) {
+			e1.printStackTrace();
+		}
+		assertNotNull(manager);
+
+		User lenya = manager.getUser("lenya");
+		assertNotNull(lenya);
+		assertTrue(lenya.authenticate("levi"));
 	}
 }
