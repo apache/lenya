@@ -28,7 +28,7 @@
 
 <!-- CMS/F Matrix Overview -->
      <map:match pattern="authoring/matrix/index.html.acml">
-       <map:generate src="config/ac/policies/root.acml"/>
+       <map:generate src="config/ac/policies/matrix.acml"/>
        <map:serialize type="xml"/>
      </map:match>
 <!-- /CMS/F Matrix Overview -->
