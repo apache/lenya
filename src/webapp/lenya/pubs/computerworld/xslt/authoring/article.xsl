@@ -52,7 +52,7 @@
 			<tr>
 				<td width="440" align="left" valign="top" colspan="2">
 					<br/>
-	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/body/p"><img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a>
+	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/body/*[1]"><img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a>
 <xsl:apply-templates select="body/media[1]"/>
 	<span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
         	<span class="txt-m-black"><xsl:apply-templates select="body/p"/>

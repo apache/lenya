@@ -39,7 +39,7 @@
 				<td width="130" rowspan="8" valign="top" align="right">
 					<!-- TITELBILD AKTUELLE AUSGABE BORDER="1"-->
 					<br/>
-					<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid=preview.xml&amp;xpath=/preview/edition">
+					<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid=preview.xml&amp;xpath=/preview/*[1]">
 						<img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/>
 					</a>
 					<br/>

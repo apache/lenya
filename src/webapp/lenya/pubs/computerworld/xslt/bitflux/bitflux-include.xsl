@@ -9,7 +9,8 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml"
 
 
 <!-- Images can only be displayed having the img tag -->
-<xsl:template match="media-reference">
+<!-- For article images -->
+<xsl:template match="body/media/media-reference">
         <!-- this is usz/bitflux cms related... maybe we should include it from another dir (wysiwyg_config)-->
     <xsl:copy>
         <xsl:for-each select="@*">
@@ -17,12 +18,34 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml"
         </xsl:for-each>
 
         <xsl:call-template name="generateID"/>
-        <xhtml:img src="/img/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
-<!--
+        <xhtml:img src="/wyona-cms/computerworld/authoring/img/news/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
+<!--    The following is from Unipublic
         <xhtml:img src="{$url-back}/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
 -->
 
             </xhtml:img>        
+        <xsl:apply-templates />
+    </xsl:copy>
+</xsl:template>
+
+
+<!-- Images can only be displayed having the img tag -->
+<!-- for small preview images (frontpage) -->
+<xsl:template match="item/media/media-reference">
+        <!-- this is usz/bitflux cms related... maybe we should include it from another dir (wysiwyg_config)-->
+    <xsl:copy>
+        <xsl:for-each select="@*">
+            <xsl:copy/>
+        </xsl:for-each>
+
+        <xsl:call-template name="generateID"/>
+        <xhtml:img src="/wyona-cms/computerworld/authoring/img/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{gen
+erate-id()}">
+<!--    The following is from Unipublic
+        <xhtml:img src="{$url-back}/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
+-->
+
+            </xhtml:img>
         <xsl:apply-templates />
     </xsl:copy>
 

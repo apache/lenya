@@ -57,7 +57,7 @@
 				<resources-root href="resources/publication/images/live"/>
 				<docs-root href="docs/publication/authoring"/>
 				<meta-root href="docs/publication/authoring/images_meta"/>
-				<insert-image-before value="false"/>
+				<insert-image-before value="true"/>
 			</map:action>
 		</map:actions>
 		<!-- =========================== Selectors ================================ -->

@@ -7,7 +7,7 @@
 				<tr>
 					<td width="52" valign="top" align="center">
 						<br/>
-						<a href="small-preview.xml?usecase=uploadimage&amp;step=showscreen&amp;documentid=small-preview.xml&amp;xpath=/small-preview/item[{position()}]/p">
+						<a href="small-preview.xml?usecase=uploadimage&amp;step=showscreen&amp;documentid=small-preview.xml&amp;xpath=/small-preview/item[{position()}]/*[1]">
 							<img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/>
 						</a>
 						<br/>
