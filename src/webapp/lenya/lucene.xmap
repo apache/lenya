@@ -12,6 +12,12 @@
     <map:selectors/>
   </map:components>
 
+  <map:views>
+    <map:view name="xml" from-label="xml">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+
   <map:pipelines>
     <!-- Create Search Index -->
     <map:pipeline>
@@ -39,7 +45,7 @@
     <!-- Search and Result Screen -->
     <map:pipeline>
       <map:match pattern="search">
-        <map:generate type="serverpages" src="docs/cms/search-and-results.xsp"/>
+        <map:generate type="serverpages" src="docs/cms/search-and-results.xsp" label="xml"/>
         <map:transform src="stylesheets/cms/Page/Search/dynamic-page2html.xsl">
 <!--
         <map:transform src="../../stylesheets/dynamic-page2html.xsl">
@@ -49,6 +55,7 @@
 -->
           <map:parameter name="view-source" value="lucene/search-index.xsp"/>
         </map:transform>
+        <map:transform src="stylesheets/cms/Page/Search/search-and-results.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors>
