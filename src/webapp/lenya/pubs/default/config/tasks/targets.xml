@@ -128,6 +128,7 @@
   <init-history
       documentid="${create.parent-id}/${create.child-id}"
       documenttype="${create.doctype}"
+      language="${create.language}"
       />
       
 </target>
