@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.8 2004/05/04 13:50:30 michi Exp $ -->
+<!-- $Id: dist-build.xml,v 1.9 2004/05/14 15:12:04 michi Exp $ -->
 
 <project name="dist">
 
@@ -35,6 +35,8 @@
       <fileset dir="${basedir}">
         <include name="INSTALL-BIN.txt"/>
         <include name="README.txt"/>
+        <include name="lenya.sh"/>
+        <include name="lenya.bat"/>
       </fileset>
     </copy>
 
@@ -72,12 +74,12 @@
       <fileset dir="${dist.root}/${distname}-bin"/>
     </copy>
 
-    <tar tarfile="${snapshot.bin.dir}.tar" basedir="${dist.root}" includes="${distname}-bin-${SNAPSHOT_STAMP}/**"/>
+    <tar tarfile="${snapshot.bin.dir}.tar" basedir="${dist.root}" includes="${snapshot.bin.name}/**"/>
 
     <gzip zipfile="${snapshot.bin.dir}.tar.gz" src="${snapshot.bin.dir}.tar"/>
     <delete file="${snapshot.bin.dir}.tar"/>
 
-    <zip zipfile="${snapshot.bin.dir}.zip" basedir="${dist.root}/${distname}-bin-${SNAPSHOT_STAMP}"/>
+    <zip zipfile="${snapshot.bin.dir}.zip" basedir="${dist.root}/${snapshot.bin.name}"/>
 
   </target>
 
@@ -124,7 +126,7 @@
       <fileset dir="${dist.src.dir}"/>
     </copy>
 
-    <tar tarfile="${snapshot.src.dir}.tar" basedir="${dist.root}" includes="${distname}-src-${SNAPSHOT_STAMP}/**"/>
+    <tar tarfile="${snapshot.src.dir}.tar" basedir="${dist.root}" includes="${snapshot.src.name}/**"/>
 
     <gzip zipfile="${snapshot.src.dir}.tar.gz" src="${snapshot.src.dir}.tar"/>
     <delete file="${snapshot.src.dir}.tar"/>
@@ -133,10 +135,10 @@
 
 
   <target name="zip-webapp" depends="init" description="Zips the webapp in order to deploy within another servlet container">
-    <echo>Create ./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar.gz</echo>
+    <echo>Create ./${build.dir}/${snapshot.bin.name}.tar.gz</echo>
 
-    <tar tarfile="./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar" basedir="${build.webapp}"/>
-    <gzip zipfile="./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar.gz" src="./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar"/>
-    <delete file="./${build.dir}/${fullname}-bin-${SNAPSHOT_STAMP}.tar"/>
+    <tar tarfile="./${build.dir}/${snapshot.bin.name}.tar" basedir="${build.webapp}"/>
+    <gzip zipfile="./${build.dir}/${snapshot.bin.name}.tar.gz" src="./${build.dir}/${snapshot.bin.name}.tar"/>
+    <delete file="./${build.dir}/${snapshot.bin.name}.tar"/>
   </target>
 </project>

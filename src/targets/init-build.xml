@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: init-build.xml,v 1.30 2004/05/12 21:51:29 michi Exp $ -->
+<!-- $Id: init-build.xml,v 1.31 2004/05/14 15:12:04 michi Exp $ -->
 
 <project name="init">
 
@@ -49,8 +49,11 @@
     <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
 
     <property name="today"         value="${TODAY}"/>
-    <property name="snapshot.bin.dir" value="${dist.root}/incubating-${fullname}-bin-${SNAPSHOT_STAMP}"/>
-    <property name="snapshot.src.dir" value="${dist.root}/incubating-${fullname}-src-${SNAPSHOT_STAMP}"/>
+
+    <property name="snapshot.bin.name" value="incubating-${fullname}-${SNAPSHOT_STAMP}-bin"/>
+    <property name="snapshot.src.name" value="incubating-${fullname}-${SNAPSHOT_STAMP}-src"/>
+    <property name="snapshot.bin.dir" value="${dist.root}/${snapshot.bin.name}"/>
+    <property name="snapshot.src.dir" value="${dist.root}/${snapshot.src.name}"/>
 
     
   </target>
