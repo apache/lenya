@@ -16,7 +16,10 @@
     <section>
 	  <title>Revision Controller</title>
 	  <p>To check in a file call:</p>
-	  <source>org.apache.lenya.cms.rc.RevisionController.reservedCheckIn(String destination, String identity, boolean backup)</source>
+
+<source>org.apache.lenya.cms.rc.RevisionController.reservedCheckIn(
+    String destination, String identity, boolean backup)</source>
+	      
 	  <p>where the destination is the path of the file from the publication,
 	     the identity is the identity of the user 
 	     and backup is a boolean.</p>
@@ -28,20 +31,21 @@
 	  <title>The ReservedCheckinAction</title>
 	  <p>To invoke a reserved check-in from a sitemap pipeline, you use The ReservedCheckinAction.</p>
       <source><![CDATA[
-
       <map:components>
         ...
         <map:actions>
-      	  <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
+      	  <map:action name="reserved-checkin"
+      	      src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction"
+      	      logger="sitemap.action.reserved-checkin"/>
         </map:actions>
         ...
       </map:components>
-
       ]]></source>
       
       <source><![CDATA[
             <map:act type="reserved-checkin">
-              <map:generate src="../../content/rc/{exception}.xsp" type="serverpages">
+              <map:generate src="../../content/rc/{exception}.xsp"
+                  type="serverpages">
                 <map:parameter name="user" value="{user}"/>
                 <map:parameter name="filename" value="{filename}"/>
                 <map:parameter name="checkType" value="{checkType}"/>
@@ -56,7 +60,7 @@
     <section>
 	  <title>URL</title>
        <p>The call</p>
-       <source><![CDATA[{document-URL}?lenya.usecase=checkin&lenya usecase.step=checkin]]></source>
+       <source><![CDATA[{document-URL}?lenya.usecase=checkin&lenya.step=checkin]]></source>
        <p>invokes a check-in of the document</p>
     </section>
 
@@ -74,9 +78,9 @@
       Filename:	/content/authoring/index/index_de.xml
 	  </source>
 	  <p>The serverpage</p>
-      <source> cocoon-lenya/src/webapp/lenya/content/rc/fileReservedCheckInException.xsp</source>
+      <source>cocoon-lenya/src/webapp/lenya/content/rc/fileReservedCheckInException.xsp</source>
       <p>generates the xml which will be transformed with </p>
-      <source> cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</source>
+      <source>cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</source>
     </section>
 
     <section>
