@@ -61,6 +61,7 @@
       <namespaces href="webdav.html" label="WebDAV Servers"/>
     </misc>
     <javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
+    <javadoc-error href="javadoc-error.html"/>
   </documentation>
   
   <community href="community/" label="Community">
