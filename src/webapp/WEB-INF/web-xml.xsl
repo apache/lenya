@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: web-xml.xsl,v 1.8 2004/04/15 12:14:53 roku Exp $ -->
+<!-- $Id: web-xml.xsl,v 1.9 2004/04/17 07:37:01 roku Exp $ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -64,16 +64,15 @@
     </servlet-mapping>
     <xsl:comment>/Scheduler</xsl:comment>
   </xsl:template>
-
+  <!-- We definitely should use utf-8 in all places, but this param causes the forms editor to break with special chars.
   <xsl:template match="/web-app/servlet[position() = 1]/init-param[position() = 1]">
     <xsl:copy-of select="."/>
-    <!-- The following param is commented out by default in web.xml-->
  		<init-param>
       <param-name>form-encoding</param-name>
       <param-value>utf-8</param-value>
     </init-param>
   </xsl:template>
-
+  -->
   <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'enable-uploads']">
     <init-param>
       <param-name>enable-uploads</param-name>
