@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.3 2003/06/19 14:00:36 egli Exp $
+ * $Id: LDAPUser.java,v 1.4 2003/06/24 14:33:08 felix Exp $
  * <License>
  * The Apache Software License
  *
@@ -207,7 +207,7 @@ public class LDAPUser extends FileUser {
                     for (NamingEnumeration enum = attr.getAll();
                         enum.hasMore();
                         enum.next()) {
-                        fullName = attr.getID();
+                        fullName = (String) attr.get();
                     }
                 }
             }
