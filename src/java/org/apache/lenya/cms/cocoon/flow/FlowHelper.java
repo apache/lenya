@@ -1,5 +1,5 @@
 /*
- * $Id: FlowHelper.java,v 1.6 2004/02/04 10:36:46 andreas Exp $ <License>
+ * $Id: FlowHelper.java,v 1.7 2004/02/23 17:03:06 andreas Exp $ <License>
 <License>
 
  ============================================================================
@@ -145,6 +145,15 @@ public class FlowHelper {
      */
     public String getRequestURI(FOM_Cocoon cocoon) {
         return cocoon.getRequest().getRequestURI();
+    }
+    
+    /**
+     * Returns the request object of the current request.
+     * @param cocoon The FOM_Cocoon object.
+     * @return A request object.
+     */
+    public Request getRequest(FOM_Cocoon cocoon) {
+        return cocoon.getRequest();
     }
 
     public static final String SEPARATOR = ":";
