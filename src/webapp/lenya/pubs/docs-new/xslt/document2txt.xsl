@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: document2txt.xsl,v 1.5 2004/03/13 12:42:07 gregor Exp $ -->
+<!-- $Id$ -->
     
 <!--
 This stylesheet contains the majority of templates for converting documentv11
@@ -85,8 +85,6 @@ Section handling
 | using the following stylesheet:                                |
 |                                                                |
 | lenya/pubs/docs-new/xslt/document2txt.xsl                      |
-|                                                                |
-| Feel free to improve the layout by changing the stylesheet.    |
 +----------------------------------------------------------------+
 
 
