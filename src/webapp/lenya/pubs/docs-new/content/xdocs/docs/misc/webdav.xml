@@ -38,7 +38,7 @@ make install
 You need to reconfigure <code>httpd.conf</code>, e.g.:
 <source>
 <![CDATA[
-DAVLockDB /home/michi/build/apache/logs/DavLock
+DAVLockDB /home/michiii/build/apache/logs/DavLock
 <Directory "/home/michiii/build/apache/htdocs">
 Dav On
 ]]>
@@ -78,7 +78,7 @@ make install
 You need to reconfigure Apache:
 <source>
 <![CDATA[
-DAVLockDB /home/michi/build/apache2/logs/DavLock
+DAVLockDB /home/michiii/build/apache2/logs/DavLock
 <Directory "/home/michiii/build/apache2/htdocs">
 Dav On
 </Directory>
