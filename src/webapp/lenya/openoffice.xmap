@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<!-- README: -->
+<!-- ======= -->
+
+<!-- The parent sitemap needs to mount this sitemap. One possible way to do -->
+<!-- this is as follows:  -->
+
+<!--       <\!-- OpenOffice -\-> -->
+<!--       <map:match pattern="openoffice/**"> -->
+<!--         <map:mount uri-prefix="openoffice" src="lenya/openoffice.xmap" check-reload="true" reload-method="synchron"/> -->
+<!--       </map:match> -->
+      
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:generators default="file"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+    <map:selectors/>
+  </map:components>
+
+  <map:pipelines>
+    <map:pipeline>
+      
+      <!-- Read the zip/jar file -->
+      <map:match pattern="**.sxw">
+	<map:read src="content/{1}.sxw"/>
+      </map:match>
+
+      <!-- Unpack zip file and transform the OO xml to xhtml -->
+      <map:match pattern="**.oo">
+	<!-- FIXME: make sure the URI points to your location of sxw files -->
+	<map:generate src="jar:http://localhost:8080/{1}.sxw!/content.xml"/>
+	<map:transform src="xslt/openoffice/ooo2html.xsl"/>
+	<map:serialize/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+</map:sitemap>
