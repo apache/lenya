@@ -43,6 +43,7 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper;
+import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -107,8 +108,9 @@ public class DocumentIdToPath extends PublicationTask {
 	}
 
 	/**
-	 * gets the path from the document id and sets this value in the 
+	 * Gets the path from the document id and sets this value in the 
 	 * property of the project with the name propertyname.   
+
 	 * @param area The area (ex authoring)
 	 * @param documentid  The document id.
 	 * @param propertyname The name of the property
@@ -116,8 +118,9 @@ public class DocumentIdToPath extends PublicationTask {
 	public void compute(String area, String documentid, String propertyname) { 
 
 	  Publication publication= getPublication();
-	  DefaultDocumentIdToPathMapper defaultDocumentIdToPathMapper = new DefaultDocumentIdToPathMapper();
-	  String documentpath = defaultDocumentIdToPathMapper.computeDocumentPath (publication, area, documentid);
+	  DocumentIdToPathMapper defaultDocumentIdToPathMapper = new DefaultDocumentIdToPathMapper();
+	  String language = "en";
+	  String documentpath = defaultDocumentIdToPathMapper.getFile(publication, area, documentid, language).getAbsolutePath();
          
 	  Target target=getOwningTarget();
 	  Project project=target.getProject();
