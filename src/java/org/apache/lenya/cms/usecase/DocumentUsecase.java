@@ -39,6 +39,7 @@ import org.apache.lenya.cms.publication.URLInformation;
 public class DocumentUsecase extends AbstractUsecase {
 
     protected static final String DOCUMENT = "document";
+    protected static final String TARGET_DOCUMENT = "private.targetDocument";
     private String completeArea;
 
     /**
@@ -68,7 +69,7 @@ public class DocumentUsecase extends AbstractUsecase {
             Publication publication = pubFactory.getPublication(this.manager, url);
 
             if (factory.isDocument(publication, url)) {
-                this.sourceDocument = factory.getFromURL(publication, url);
+                setParameter(DOCUMENT, factory.getFromURL(publication, url));
             }
 
             URLInformation info = new URLInformation(url);
@@ -78,47 +79,41 @@ public class DocumentUsecase extends AbstractUsecase {
         }
         super.setSourceURL(url);
     }
-    
-    private Document sourceDocument = null;
 
     /**
      * Returns the source document.
      * @return A document.
      */
     protected Document getSourceDocument() {
-        return this.sourceDocument;
+        return (Document) getParameter(DOCUMENT);
     }
-
-    private Document targetDocument = null;
 
     /**
      * Sets the target document.
      * @param document A document.
      */
     protected void setTargetDocument(Document document) {
-        this.targetDocument = document;
+        setParameter(TARGET_DOCUMENT, document);
     }
 
     /**
-     * Returns the document to be redirected to after the usecase has been
-     * completed. If the parameter <code>success</code> is false, the source
-     * document is returned (override this method to change this behaviour).
+     * Returns the document to be redirected to after the usecase has been completed. If the
+     * parameter <code>success</code> is false, the source document is returned (override this
+     * method to change this behaviour).
      * @param success If the usecase was successfully completed.
      * @return A document.
      */
     protected Document getTargetDocument(boolean success) {
-        Document document;
-        if (this.targetDocument != null) {
-            document = this.targetDocument;
-        } else {
+        Document document = (Document) getParameter(TARGET_DOCUMENT);
+        if (document == null) {
             document = getSourceDocument();
         }
         return document;
     }
 
     /**
-     * If {@link #setTargetDocument(Document)}was not called, the URL of the
-     * source document ({@link #getSourceDocument()}) is returned.
+     * If {@link #setTargetDocument(Document)}was not called, the URL of the source document (
+     * {@link #getSourceDocument()}) is returned.
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {
@@ -133,7 +128,7 @@ public class DocumentUsecase extends AbstractUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getSourceURL()
      */
     public String getSourceURL() {
-        if (this.sourceDocument == null) {
+        if (getSourceDocument() == null) {
             return super.getSourceURL();
         }
         return getSourceDocument().getCanonicalWebappURL();
@@ -144,8 +139,9 @@ public class DocumentUsecase extends AbstractUsecase {
      */
     protected void setTargetURL(String url) {
         try {
-            this.targetDocument = getUnitOfWork().getIdentityMap().getFactory()
+            Document target = getUnitOfWork().getIdentityMap().getFactory()
                     .getFromURL(getSourceDocument().getPublication(), url);
+            setParameter(TARGET_DOCUMENT, target);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         } catch (DocumentBuildException e) {

@@ -49,13 +49,13 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         // do nothing
     }
 
-    private String sourceUrl = null;
+    private String SOURCE_URL = "private.sourceUrl";
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL()
      */
     public String getSourceURL() {
-        return this.sourceUrl;
+        return getParameterAsString(SOURCE_URL);
     }
 
     /**
@@ -410,8 +410,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @see org.apache.lenya.cms.usecase.Usecase#setSourceURL(java.lang.String)
      */
     public void setSourceURL(String url) {
-        this.sourceUrl = url;
+        setParameter(SOURCE_URL, url);
         initParameters();
     }
-
+    
 }

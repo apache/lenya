@@ -17,6 +17,8 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -41,16 +43,25 @@ public class Overview extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
         this.dc = getSourceDocument().getDublinCore();
+        
+        DocumentTypeResolver doctypeResolver = null;
         try {
+            doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
+            DocumentType doctype = doctypeResolver.resolve(getSourceDocument());
 	        setParameter("languages", getSourceDocument().getLanguages());
 	        setParameter("title", this.dc.getFirstValue(DublinCore.ELEMENT_TITLE));
 	        setParameter("description", this.dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
-	        setParameter("lastmodified", "");
-	        setParameter("resourcetype", "");
+	        setParameter("lastmodified", getSourceDocument().getLastModified());
+	        setParameter("resourcetype", doctype.getName());
 	        setParameter("live", "");
         } catch (Exception e) {
-        	addErrorMessage("Could not read a value.");
-        	getLogger().error("Could not read value for Overview usecase. " + e.toString());
+        	addErrorMessage("Could not read a value. See log files for details.");
+        	getLogger().error("Could not read value for Overview usecase. ", e);
+        }
+        finally {
+            if (doctypeResolver != null) {
+                this.manager.release(doctypeResolver);
+            }
         }
     }
             
