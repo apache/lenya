@@ -35,6 +35,7 @@
     <pathelement path="${lenya.dir.web-inf}/lib/excalibur-io-1.1.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/lucene-1.3-dev1.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/websphinx.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/jtidy-04aug2000r7-dev.jar"/>
   </path>
 </target>
 
@@ -48,6 +49,30 @@
 </target>
 
 
+
+<target name="ssi" description="Server Side Include" depends="init">
+  <echo>INFO: Server Side Include</echo>
+
+  <java classname="org.lenya.util.SSI">
+    <arg value="ssi.html"/>
+<!--
+    <arg value="../../../../ssi.html"/>
+-->
+    <classpath refid="class.path"/>
+  </java>
+</target>
+
+
+<target name="jtidy" description="JTidy" depends="init">
+  <echo>INFO: JTidy</echo>
+
+  <java classname="org.apache.lenya.util.TidyCommandLine">
+    <arg value="file:/home/michiii/src/lenya/src/webapp/lenya/resources/misc/midas/midas.html"/>
+    <arg value="midas.xhtml"/>
+    <arg value="error.log"/>
+    <classpath refid="class.path"/>
+  </java>
+</target>
 
 
 </project>
