@@ -68,7 +68,10 @@ import junit.textui.TestRunner;
  */
 public class DocumentCreatorTest extends TestCase {
 
-    /** Constructor. */
+    /**
+     * Constructor.
+     * @param test The test to invoke. 
+     */
     public DocumentCreatorTest(String test) {
         super(test);
     }
@@ -84,10 +87,21 @@ public class DocumentCreatorTest extends TestCase {
         TestRunner.run(getSuite());
     }
 
+    /**
+     * Returns the test suite.
+     * @return A Test object.
+     */
     public static Test getSuite() {
         return new TestSuite(DocumentCreatorTest.class);
     }
-    /** Tests whatever you want. */
+    
+    /**
+     * Tests whatever you want.
+     * @throws CreatorException when something went wrong.
+     * @throws ParserConfigurationException when something went wrong.
+     * @throws SAXException when something went wrong.
+     * @throws IOException when something went wrong.
+     */
     public void testCreator() throws CreatorException, ParserConfigurationException, SAXException, IOException {
         
         Publication publication = PublicationHelper.getPublication();
@@ -135,4 +149,5 @@ public class DocumentCreatorTest extends TestCase {
             };
             PublicationHelper.extractPublicationArguments(args);
         }
-    }}
+    }
+}
