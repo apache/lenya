@@ -9,7 +9,7 @@
   <menu>
     <xsp-lenya:util/>
     
-    <live_uri><xsp:expr>xsp_lenya_pub_url</xsp:expr></live_uri>
+    <live_uri>/live<xsp:expr>xsp_lenya_pub_url</xsp:expr></live_uri>
     
     <xsp:logic>
       String bitflux_prefix=""+xsp_lenya_context_prefix+"/bitflux";
