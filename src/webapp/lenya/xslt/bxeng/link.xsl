@@ -103,6 +103,9 @@
            url = prefix + url;
           }
           <![CDATA[
+          url = url.replace(/&amp;/g, "&"); 
+          url = url.replace(/&/g, "&amp;");          
+
           var content = '<a xmlns="'+window.opener.XHTMLNS+'" href="'+url+'" title="'+title+'">'+text+'</a>'; 
           ]]>
           window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
