@@ -45,8 +45,166 @@
 			<ul>
 			<li>PageEnvelope input module</li>
 			</ul>
-
-		</section>
-
+			</section>
+			
+			<section>
+				<title>Authoring Area, Live Area, CMS GUI and several Publications</title>
+				<p>A Lenya installation aggregates a number of different parts into
+				a single Cocoon application. By default, one instance of Lenya can be used
+				to edit and render an arbitrary number of publications which are entirely
+				independent of each other.</p>
+				<p>There are different concepts of what a publication is, but for now,
+				let's assume each publication represents an independent website.</p>
+				<p>Inside each publication, there are</p>
+				<ul>
+				<li>The authoring area</li>
+				<li>The live area</li>
+				<li>The CMS GUI components (Drop Down Menu, CMS screens, editos, ...)</li>
+				</ul>
+				<p>The URI space is used to organize all this.</p> 
+				 
+			</section>
+			
+			<section>
+				<title>The Lenya URI space</title>
+				<p>If you run Lenya in built-in Jetty servlet container, the Lenya webapp
+				is the root application of the container. Therefore http://localhost:8888/ will
+				already hit the Lenya root sitemap.</p>
+				<p>In case you deployed lenya into a non-root context of any servlet container, the first
+				part of the URI will be handled by the container itself to match the responsible webapp.</p>
+				<p>If you deployed lenya.war into Tomcat for example, you will most likely have to use
+				http://localhost:8080/lenya/ to get into the Lenya root sitemap.</p>
+				<p>For the rest of this document, we pretend Lenya is the root webapp in your container
+				as this is the case with the built-in Jetty. Let's examine , what Lenya does in order to 
+				render the document you see when you enter this URL:
+				<code>http://localhost:8888/default/authoring/tutorial/new_doctype.html</code></p>
+				
+				<section>
+					<title>Part 1: The publication ID</title>
+					<p>The first part is the publication id <code>default</code> which selects the <em>Default
+					Publication</em>. There is a difference between the publication ID and the name of the publication.
+					The ID should be compatible to both the filesystem implementation as well as the URI encoding
+					because it will become both the name of the publication directory and a part of the URL. Therefore
+					it is good practice to stick to 7-bit ASCII with no spaces or special characters.</p>
+					<p>In contrast, the display name of the publication (which will show up in the list of publications
+					on the main Lenya entry screen) can be longer and it can contain spaces as well as any
+					Unicode characters.</p>
+					<p>The publication ID is used to mount the publication specific sitemap.xmap from
+					<code>$LENYA_HOME/pubs/{publication-id}</code>. The <code>map:mount</code> will strip the publication ID
+					from the URL, so the publication sitemap will just see the 
+					<code>authoring/tutorial/new_doctype.html</code> portion. Nevertheless a publication has its ID
+					available through the page envelope. More on that later as we're not yet really inside the publication's
+					content.</p>
+				</section>
+				
+				<section>
+					<title>Part 2: The area</title>
+					<p>There are two possible areas.</p>
+					<ul>
+					<li>Authoring</li>
+					<li>Live</li>
+					</ul>
+					<p>You can think of areas as of modes, as in "live mode" and "authoring mode". Live mode is
+					the view of the publication as it is supposed to be displayed on the website to the site
+					visitor. The authoring mode is used by editors and reviewers to edit the publication's content.</p>
+					<p>Technically speaking, the first major difference between the authoring area and the live area is just
+					that in authoring mode the CMS menus are displayed. Following the WYSIWYG principle of Lenya,
+					the publication content is rendered the same way in authoring mode as it would be in live mode.</p>
+					<p>Besides displaying the CMS menus or not, there are different copies of the underlying content
+					repository for the authoring and live areas. This allows the editors to edit a working copy
+					without affecting the live site. When a document is published after it was reviewed, it is
+					just beeing copied over to the live repository.</p>
+					<p>If you're using the default filesystem repository of Lenya, you will find the two different
+					repositories under <code>$LENYA_HOME/lenya/pubs/content/authoring</code> and 
+					<code>$LENYA_HOME/lenya/pubs/content/live</code>.</p>
+					<p>As well as the publication ID the area is also stored in the page envelope. This will make
+					the actual area available to both the sitemap through the page envelope input module as well as
+					to the components in the Java layer of Lenya.</p>
+					<p>At this point, Lenya parsed the URL to the point that is knows:</p>
+					<ul>
+					<li>which publication the request belongs to</li>
+					<li>which repository is to be used, authoring or live</li>
+					<li>wether to display the CMS menus or not</li>
+					</ul>
+					<section>
+					<title>CMS Menus, Usecases and CMS screens</title>
+					<p>Prior to finally turning over to the actual publication content, some remarks
+					on the CMS menus and CMS screens.</p>
+					<p>Lenya uses so-called usecases to perform actions. There are usecases such as</p>
+					<ul>
+					<li>submit (a document)</li>
+					<li>publish (a document)</li>
+					<li>...</li>
+					</ul>
+					<p>The CMS menus are nothing but a convenience mechanism for the CMS user to trigger usecases.
+					As an alternative to choosing the "Workflow"->"Submit" menu option, you could as well append
+					<code>?lenya.usecase=submit</code> to the document URL. As soon as Lenya finds a lenya.usecase
+					request parameter it will branch into the <code>lenya/usecases/usecase.xmap</code> sitemap.</p>
+					<p>All usecases start in the Lenya core. The core contains most of the common access control,
+					workflow and editing usecases. A publication can introduce publication specific usecases.</p>
+					<p>Some usecases require CMS screens to be displayed. These are rendered through the usecase 
+					sitemap portions as well. That way one could for example introduce a new skin for the CMS
+					screens just by means of the Cocoon sitemap.</p>
+					<p>For details on usecases, have a look at the Lenya Usecase Framework.</p>
+					</section>
+				</section>
+				
+				<section>
+					<title>Part 3: The document URL</title>
+					<p>Now it's the publication sitemap's task to take the document URL portion of the
+					original URL (<code>tutorial/new_doctype.html</code> in our example) and generate and
+					render the content page. This sounds easy, but turns out to be quite complex. This
+					portion is actually the heart and soul of every CMS. This is also where differnt
+					CMS have a lot of differences in terms of features and configurability.</p>
+					<p>The easiest way to deal with this would be:</p>
+					<ul>
+					<li>Choose the appropriate content repository (authoring or live)</li>
+					<li>Use the document URL to look for a file with that name and generate it.</li>
+					<li>If necessary: Apply an XSLT stylesheet and serialize the result.</li>
+					</ul>
+					<p>Lenya can do a lot more here, such as:</p>
+					<ul>
+					<li>Use a publication specific mapper class to map the document URL to a backend
+					repository URL. This will allow you to hide the actual repository structure from
+					the website visitor.</li>
+					<li>Apply some intelligence to decide what language version of the document to use.
+					For example, it no specific language version is requested, Lenya will choose the 
+					default language. If there is a specific language requested, Lenya will apply a mapping
+					to built a back-end respository path to query for the requested language and generate this
+					if it is available. If the document is not available in the requested language, Lenya will
+					fall back to the default language again.</li>
+					<li>Choose among a selection of different rendering pipelines based on the source document's
+					resource type. A resource type can be XHTML, but also any other XML format such as RSS, 
+					SVG, SlideML or whatever.</li> 
+					</ul>
+					<p>Most of this logic is implemented in the Java layer. The components are Avalon components
+					which are configured on a per-publication basis. In other words: One could implement and plug
+					in custom versions of these components.</p>
+					<p>Only the mapping between input URL and the path used to access the repository in the backend
+					is implemented as an Avalon component in Java. The actual rendering of the document is done
+					by the means of Cocoon sitemaps, thus allowing anyone with Cocoon knowledge to make changes to
+					the rendering pipelines whithout having to write Java code.</p>
+					<p>An example of an entirely different mapping between the document URL and the repository
+					is the Lenya Weblog publication that comes as a second sample with the Lenya distribution.</p>
+				</section>
+				
+				<section>
+					<title>Part 4: The usecase and workflow parameters (optional)</title>
+					<p>Right after the document URL there may be additional paramters, especially</p>
+					<ul>
+					<li>lenya.usecase and mabye</li>
+					<li>lenya.step</li>
+					</ul>
+					<p>as well as maybe</p>
+					<ul>
+					<li>wf.event</li>
+					</ul>
+					<p>For an explaination of the usecase parameters, see the usecase framework.</p>
+					<p>For an explaination of the workflow engine, see the workflow engine (coming soon).</p>
+				</section>
+			
+			</section>	
+			
+		
 	</body>
 </document>
