@@ -61,7 +61,8 @@ tomcat.endorsed.dir=common/endorsed
 
 
 #------------------------------------------------------------------------------------
-# Enable multipart requests (for security reasons turned off resp. set to false)
+# Enable multipart requests (for security reasons turned off by default. 
+# Uncomment to enable)
 
 #enable.uploads=true
 
