@@ -34,7 +34,7 @@
   </xsp:structure>
   
   <menu>
-  	
+          
     <xsp:logic>
       String projectid = parameters.getParameter("projectid","null");
       
@@ -70,12 +70,12 @@
     
     <menus>
       <menu i18n:attr="name" name="File" label="File">
-	<block>
+        <block>
           <menu name="New">
             <block>
-	  
-	  <xsp:logic>
-	    {
+          
+          <xsp:logic>
+            {
         if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
           <item><i18n:text>XHTML Document</i18n:text></item>
           <item><i18n:text>Links Document</i18n:text></item>
@@ -84,53 +84,53 @@
           <item uc:usecase="site.create" href="?doctype=xhtml"><i18n:text>XHTML Document</i18n:text></item>
           <item uc:usecase="site.create" href="?doctype=links"><i18n:text>Links Document</i18n:text></item>
         }
-	    }
-	  </xsp:logic>
+            }
+          </xsp:logic>
             </block>
           </menu>
-	</block>
-	<block>
-	  <xsp:logic>
-	    {
+        </block>
+        <block>
+          <xsp:logic>
+            {
 
- 	      String[] availableLanguages = (String[]) <input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
-	      if (isDocument
+               String[] availableLanguages = (String[]) <input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
+              if (isDocument
             &amp;&amp; Publication.AUTHORING_AREA.equals(area)
-	          ) {
-	          
+                  ) {
+                  
             Document document = (Document) <input:get-attribute as="object" module="page-envelope" name="document"/>;
-    	      String[] allLanguages = document.getPublication().getLanguages();
-    	      
-	          if (availableLanguages.length &lt; allLanguages.length) {
+                  String[] allLanguages = document.getPublication().getLanguages();
+                  
+                  if (availableLanguages.length &lt; allLanguages.length) {
               <xsp:content>
                 <item uc:usecase="site.createLanguage" href="?"><i18n:text>New Language Version</i18n:text></item>
               </xsp:content>
-    	      }
-    	      else {
+                  }
+                  else {
               <xsp:content>
                 <item><i18n:text>New Language Version</i18n:text></item>
               </xsp:content>
-    	      }
-    	  }
-	    
-	      if (isDocument
+                  }
+              }
+            
+              if (isDocument
             &amp;&amp; Publication.AUTHORING_AREA.equals(area)
-	          &amp;&amp; availableLanguages.length &gt; 1
-	          ) {
-	        <xsp:content>
-	          <item uc:usecase="site.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
-	        </xsp:content>
-	      } else {
-	        <xsp:content>
-	          <item><i18n:text>Remove Language Version</i18n:text></item>
-	        </xsp:content>
-	      } 
-	    }
-	  </xsp:logic>
-	</block>
-	<block>
-	  <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
-	</block>
+                  &amp;&amp; availableLanguages.length &gt; 1
+                  ) {
+                <xsp:content>
+                  <item uc:usecase="site.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
+                </xsp:content>
+              } else {
+                <xsp:content>
+                  <item><i18n:text>Remove Language Version</i18n:text></item>
+                </xsp:content>
+              } 
+            }
+          </xsp:logic>
+        </block>
+        <block>
+          <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
+        </block>
       </menu>
       
       <menu i18n:attr="name" name="Edit" label="Search">
@@ -176,19 +176,19 @@
             <item><i18n:text>Copy</i18n:text></item>
           }
         
-        	String clipboard = (String) <input:get-attribute module="session-attr" as="object" name="org.apache.lenya.cms.info.firstdocid"/> + "/";
-        	String currentDocumentId = <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "/";
-        	
-        	if (clipboard != null
-        	    &amp;&amp; !"".equals(clipboard)
+                String clipboard = (String) <input:get-attribute module="session-attr" as="object" name="org.apache.lenya.cms.info.firstdocid"/> + "/";
+                String currentDocumentId = <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "/";
+                
+                if (clipboard != null
+                    &amp;&amp; !"".equals(clipboard)
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
               &amp;&amp; !currentDocumentId.startsWith(clipboard)
               &amp;&amp; !"/index".equals(docId)) {
-		        <item uc:usecase="paste" uc:step="showscreen" href="?"><i18n:text>Paste</i18n:text></item>
-        	}
-        	else {
-		        <item><i18n:text>Paste</i18n:text></item>
-        	}
+                        <item uc:usecase="paste" uc:step="showscreen" href="?"><i18n:text>Paste</i18n:text></item>
+                }
+                else {
+                        <item><i18n:text>Paste</i18n:text></item>
+                }
         }
         </xsp:logic>
         
@@ -229,71 +229,71 @@
       <block authoring="false">
         
         <xsp:logic>
-       	{
-       	
-       	  if (isDocument &amp;&amp;
-       	    !"/index".equals(<input:get-attribute module="page-envelope" as="string" name="document-id"/>)) {
+               {
+               
+                 if (isDocument &amp;&amp;
+                   !"/index".equals(<input:get-attribute module="page-envelope" as="string" name="document-id"/>)) {
             <item wf:event="delete" uc:usecase="delete" uc:step="showscreen" href="?"><i18n:text>Delete</i18n:text></item>
             <item wf:event="archive" uc:usecase="archive" uc:step="showscreen" href="?"><i18n:text>Archive</i18n:text></item>
-       	  }
-       	  else {
+                 }
+                 else {
             <item><i18n:text>Delete</i18n:text></item>
             <item><i18n:text>Archive</i18n:text></item>
-       	  }
-       	
-        	if (isDocument &amp;&amp; (area.equals(Publication.TRASH_AREA) || area.equals(Publication.ARCHIVE_AREA))) {
+                 }
+               
+                if (isDocument &amp;&amp; (area.equals(Publication.TRASH_AREA) || area.equals(Publication.ARCHIVE_AREA))) {
             <item wf:event="restore" uc:usecase="restore" uc:step="showscreen" href="?">Restore</item>
-        	}
-        	else {
+                }
+                else {
             <item><i18n:text>Restore</i18n:text></item>
-        	}
-      	}
+                }
+              }
         </xsp:logic>
         
       </block>
-	
+        
       </menu>
       
       <menu i18n:attr="name" name="Workflow" label="Help">
-	  <xsp:logic>
+          <xsp:logic>
       {
         if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
-	<block>
+        <block>
           <item uc:usecase="workflow.submit" wf:event="submit" href="?"><i18n:text>Submit</i18n:text></item>
           <item uc:usecase="workflow.reject" wf:event="reject" href="?"><i18n:text>Reject</i18n:text></item>
-          <item uc:usecase="publish" uc:step="showscreen" wf:event="publish"><xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;sources=<xsp:expr>xmlSource</xsp:expr>&amp;task-id=publish</xsp:attribute><i18n:text>Publish</i18n:text></item>
+          <item uc:usecase="workflow.publish" wf:event="publish" href="?"><i18n:text>Publish</i18n:text></item>
           <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?task-id=deactivateDocument"><i18n:text>Deactivate</i18n:text></item>
        </block><block>
           <item uc:usecase="schedule" uc:step="showscreen" href="?"><i18n:text>Schedule</i18n:text></item>
-	</block>
+        </block>
         }
         else {
-	<block>
+        <block>
           <item><i18n:text>Submit</i18n:text></item>
           <item><i18n:text>Reject</i18n:text></item>
           <item><i18n:text>Publish</i18n:text></item>
           <item><i18n:text>Deactivate</i18n:text></item>
        </block><block>
           <item><i18n:text>Schedule</i18n:text></item>
-	</block>
+        </block>
         }
       }
-	  </xsp:logic>
+          </xsp:logic>
       </menu>
 
       <menu i18n:attr="name" name="Help" label="Debug">
-	<block>
-	  <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
-	  <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
-	</block>
-  <block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
-	</block>
+        <block>
+          <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
+          <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
+        </block>
+        <block>
+          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
+          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
+        </block>
 
         <block>
           <item uc:usecase="view-logs" uc:step="overview" href="?"><i18n:text>View Task Logs</i18n:text></item>
-	</block>
+        </block>
       </menu>
     </menus>
     
