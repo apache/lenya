@@ -33,10 +33,12 @@
       <map:serialize type="xhtml"/>
     </map:resource>    
   </map:resources>  
+
   <!-- =========================== Flow ===================================== -->
   <map:flow language="javascript">
     <map:script src="../edit-document.js"/>
   </map:flow>
+
   <!-- =========================== Pipelines ================================ -->  
   <map:pipelines>
     
@@ -55,68 +57,86 @@
       </map:match>
     </map:pipeline>   
     
+
     <!-- Usecase pipeline -->  
     <map:pipeline>           
-         <map:match pattern="1formedit" type="usecase">
 
-          <map:match pattern="open" type="step">
-            <map:match pattern="*/authoring/**.html">
-              <map:act type="reserved-checkout">
-                <map:generate type="serverpages" src="{global:basedir}/content/rc/{exception}.xsp">
-                  <map:parameter name="user" value="{user}"/>
-                  <map:parameter name="filename" value="{filename}"/>
-                  <map:parameter name="date" value="{date}"/>
-                  <map:parameter name="message" value="{message}"/>
-                </map:generate>
-                <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
-                <map:call resource="style-cms-page"/>
-              </map:act>
-              
-              <map:generate src="{global:basedir}/pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-              <map:transform src="{global:basedir}/xslt/authoring/edit/oneform.xsl">
-                <map:parameter name="docid" value="{page-envelope:document-id}"/>
-                <map:parameter name="language" value="{page-envelope:document-language}"/>
-              </map:transform>
+      <map:match pattern="1formedit" type="usecase">
+
+        <map:match pattern="open" type="step">
+
+          <map:match pattern="*/authoring/**.html">
+
+            <map:act type="reserved-checkout">
+              <map:generate type="serverpages" src="{global:basedir}/content/rc/{exception}.xsp">
+                <map:parameter name="user" value="{user}"/>
+                <map:parameter name="filename" value="{filename}"/>
+                <map:parameter name="date" value="{date}"/>
+                <map:parameter name="message" value="{message}"/>
+              </map:generate>
+              <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
               <map:call resource="style-cms-page"/>
-            </map:match>
+            </map:act>
+              
+            <map:generate src="lenya:/{page-envelope:document-path}"/>
+            <map:transform src="{global:basedir}/xslt/authoring/edit/oneform.xsl">
+              <map:parameter name="docid" value="{page-envelope:document-id}"/>
+              <map:parameter name="language" value="{page-envelope:document-language}"/>
+            </map:transform>
+            <map:call resource="style-cms-page"/>
           </map:match>
+        </map:match>
 	
-          <map:match pattern="close" type="step">
-            <map:match pattern="*/authoring/**.html">
-              <map:act type="request-parameter-exists">
-                <map:parameter name="parameters" value="save"/>
-                <map:act type="oneformeditorsave">
-                  <map:parameter name="file" value="{global:basedir}/pubs/{../1}/work/oneformeditor/authoring/{page-envelope:document-id}.xml"/>
-                  <map:parameter name="schema" value="{global:basedir}/pubs/{../1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
-                  <map:generate src="{global:basedir}/pubs/{../../1}/content/authoring/{page-envelope:document-path}"/>
-                  <map:transform src="{global:basedir}/xslt/authoring/edit/oneform.xsl">
-                    <map:parameter name="docid" value="{page-envelope:document-id}"/>
-                    <map:parameter name="language" value="{page-envelope:document-language}"/>
-                    <map:parameter name="message" value="{message}"/>
-                  </map:transform>
-                  <map:call resource="style-cms-page"/>
-                </map:act>
+        <map:match pattern="close" type="step">
 
-                <!-- Validation succeeded -->
-                <!-- Save: Overwrite original file  -->
-                <map:call function="editDocument">
-                  <map:parameter name="sourceUri" value="cocoon:/request2document"/>
-                  <map:parameter name="useBuffer" value="false"/>
-                  <map:parameter name="noStatus" value="true"/>
-                  <map:parameter name="redirectUrl" value="{request:requestURI}"/>
-                </map:call>               
+          <map:match pattern="*/authoring/**.html">
+
+            <map:act type="request-parameter-exists">
+              <map:parameter name="parameters" value="save"/>
+
+              <map:act type="oneformeditorsave">
+                <map:parameter name="file" value="{global:basedir}/pubs/{../1}/work/oneformeditor/authoring/{page-envelope:document-id}.xml"/>
+                <map:parameter name="schema" value="{global:basedir}/pubs/{../1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
+
+              <!--+
+	          | This section seems to be redundant as the editor works as well
+		  | if this remains commented out
+
+              <map:generate src="{global:basedir}/pubs/{../../1}/content/authoring/{page-envelope:document-path}"/>
+                <map:transform src="{global:basedir}/xslt/authoring/edit/oneform.xsl">
+                  <map:parameter name="docid" value="{page-envelope:document-id}"/>
+                  <map:parameter name="language" value="{page-envelope:document-language}"/>
+                  <map:parameter name="message" value="{message}"/>
+                </map:transform>
+                <map:call resource="style-cms-page"/> 
+		
+		  +-->
+
               </map:act>
-              <!-- 
-                Cancel is pressed. Unlock the document. 
-                Alternatively one could use the reserved-checkin action direct.
-              -->
-              <map:redirect-to uri="{page-envelope:context-prefix}/{1}/authoring/{2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false"/>
-            </map:match>
-          </map:match>
 
+              <!-- Validation succeeded -->
+              <!-- Save: Overwrite original file  -->
+              <map:call function="editDocument">
+                <map:parameter name="sourceUri" value="cocoon:/request2document"/>
+                <map:parameter name="useBuffer" value="false"/>
+                <map:parameter name="noStatus" value="true"/>
+                <map:parameter name="redirectUrl" value="{request:requestURI}"/>
+              </map:call>               
+            </map:act>
+
+            <!--+
+                | Cancel has been pressed. Unlock the document. 
+                | Alternatively one could use the reserved-checkin action direct.
+                +-->
+
+            <map:redirect-to uri="{page-envelope:context-prefix}/{1}/authoring/{2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false"/>
+          </map:match>
         </map:match>
 
+      </map:match>
+
     </map:pipeline>
+
   </map:pipelines>
 
 </map:sitemap>
