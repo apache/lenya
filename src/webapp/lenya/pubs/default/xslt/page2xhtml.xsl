@@ -37,11 +37,21 @@
 <!-- The rquest url i.e. /lenya/doctypes/xhtml-document_en.html -->
 <xsl:param name="url"/>
 
+<xsl:param name="document-type"/>
 
 <xsl:template match="cmsbody">
   <html>
     <head>
       <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
+      <!-- Load doctype-specific CSS -->
+      <xsl:choose>
+        <xsl:when test="$document-type">
+            <link rel="stylesheet" href="{$root}/css/{$document-type}.css" type="text/css"/>
+        </xsl:when>
+        <xsl:otherwise>
+            <!-- do nothing -->
+        </xsl:otherwise>
+      </xsl:choose>
       <meta content="Apache Lenya" name="generator"/>
       <title><xsl:value-of select="//lenya:meta/dc:title"/></title>
       <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
