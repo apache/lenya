@@ -1,5 +1,5 @@
 /*
-$Id: RevisionControllerAction.java,v 1.21 2003/07/23 13:21:30 gregor Exp $
+$Id: RevisionControllerAction.java,v 1.22 2003/07/23 14:43:34 michi Exp $
 <License>
 
  ============================================================================
@@ -148,7 +148,9 @@ public class RevisionControllerAction extends AbstractAction {
         }
 
         Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
+        org.apache.lenya.cms.ac2.Identity identityTwo = (org.apache.lenya.cms.ac2.Identity) session.getAttribute("org.apache.lenya.cms.ac2.Identity");
         getLogger().debug(".act(): Identity: " + identity);
+        getLogger().debug(".act(): Identity: " + identityTwo);
 
         String docId = request.getParameter("documentid");
 		String authoringPath = File.separator+"content" + File.separator + Publication.AUTHORING_AREA;
@@ -158,6 +160,8 @@ public class RevisionControllerAction extends AbstractAction {
 
         if (identity != null) {
             username = identity.getUsername();
+        } else if (identityTwo != null) {
+            username = identityTwo.getUser().getId();
         } else {
             getLogger().error(".act(): No identity yet");
         }
