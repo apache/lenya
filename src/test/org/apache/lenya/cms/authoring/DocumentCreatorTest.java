@@ -108,7 +108,7 @@ public class DocumentCreatorTest extends TestCase {
     protected static final String CHILD_ID = "test-document";
     protected static final String CHILD_NAME = "Test Document";
     protected static final String CHILD_TYPE = "leaf";
-    protected static final String DOCUMENT_TYPE = "simple";
+    protected static final String DOCUMENT_TYPE = "xhtml";
     protected static final String CREATED_FILE = "tutorial/test-document/index_en.xml";
     protected static final String DOCUMENT_LANGUAGE = "en";
     protected static final String AREA = "authoring";
