@@ -49,10 +49,9 @@ public class TaskJob
         String contextPath = request.getContextPath();
 	log.debug("Context path: " + contextPath);
         
-        // the publicationID is fetched from the session
-	String publicationId =
-                (String)request.getSession().getAttribute(
-                PublishingEnvironment.PARAMETER_PUBLICATION_ID);
+	// the publicationID is fetched from the session
+	String publicationId = (String) request.getSession().getAttribute(
+                "org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
         
 	if (publicationId == null || publicationId.equals("")) {
             log.error("No publication ID provided! ", new IllegalStateException());
