@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<!-- Returns the value of the parameter "value" as URI parameter. -->
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
+>
+       
+<parameter xmlns="http://apache.org/cocoon/lenya/uri-parameters/1.0"><xsp:expr>parameters.getParameter("value", "")</xsp:expr></parameter>
+       
+</xsp:page>
