@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CollectionImpl.java,v 1.9 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: CollectionImpl.java,v 1.10 2004/03/04 14:59:03 edith Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -163,11 +163,14 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * Saves the XML source of this collection.
      * @throws DocumentException when something went wrong.
      */
-    protected void save() throws DocumentException {
+    public void save() throws DocumentException {
         try {
             
             NamespaceHelper helper = getNamespaceHelper();
             Element collectionElement = helper.getDocument().getDocumentElement();
+            if (!exists()) {
+                collectionElement.setAttribute(ATTRIBUTE_ID, this.getId());
+            }
             
             Element[] existingDocumentElements = helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
             for (int i = 0; i < existingDocumentElements.length; i++) {
@@ -193,6 +196,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     /**
      * Creates an element to store a document.
      * @param helper The namespace helper of the document.
+     * @param document The document.
      * @return An XML element.
      * @throws DocumentException when something went wrong.
      */

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Collection.java,v 1.5 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id: Collection.java,v 1.6 2004/03/04 14:59:03 edith Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -92,4 +92,9 @@ public interface Collection extends Document {
      */
     int size() throws DocumentException;
     
+    /**
+     * Saves the XML source of this collection.
+     * @throws DocumentException when something went wrong.
+     */
+    void save() throws DocumentException;
 }
