@@ -17,6 +17,7 @@
       String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst(".html", replacementString);
       String sourcesParameter = "sources=" + xmlSource;
       String urisParameter = "uris=" + <input:get-attribute as="string" module="page-envelope" name="document-url"/>;
+      String docType = <input:get-attribute as="string" module="page-envelope" name="document-type"/>;
       String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
     </xsp:logic>
         
@@ -40,10 +41,19 @@
       </menu>
       
       <menu label="Search" name="Edit">
+<xsp:logic>
+if (docType.equals("simple")) {
         <block>
           <item href="?lenya.step=open&amp;doctype=simple" uc:usecase="edit" wf:event="edit">Edit&#160;with&#160;Forms</item>
           <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;BXENG</item>
         </block>
+}
+else if (docType.equals("xhtml")) {
+        <block>
+          <item href="?lenya.step=open&amp;doctype=xhtml" uc:usecase="edit" wf:event="edit">Edit&#160;with&#160;Forms</item>
+        </block>
+}
+</xsp:logic>
 <!--
         <block>
           <item href="?lenya.step=open" uc:usecase="midas" wf:event="edit">Edit&#160;with&#160;Midas</item>
