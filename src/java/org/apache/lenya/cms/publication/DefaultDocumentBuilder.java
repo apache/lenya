@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.10 2003/08/12 16:27:12 andreas Exp $
+$Id: DefaultDocumentBuilder.java,v 1.11 2003/08/13 10:02:35 egli Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,12 @@ $Id: DefaultDocumentBuilder.java,v 1.10 2003/08/12 16:27:12 andreas Exp $
 */
 package org.apache.lenya.cms.publication;
 
+import java.util.HashMap;
+
 
 /**
  * @author andreas
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
     /**
@@ -104,7 +104,9 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         String fullLanguage = "".equals(language) ? "" : ("_" + language);
         documentURL = documentURL.substring(0, documentURL.length() - fullLanguage.length());
 
+        boolean defaultLanguageForced = false;
         if ("".equals(language)) {
+            defaultLanguageForced = true;
             language = publication.getDefaultLanguage();
         }
 
@@ -119,6 +121,30 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         DefaultDocument document = new DefaultDocument(publication, documentId, area, language);
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
+        
+        if (defaultLanguageForced) {
+            // unfortunatelly we cannot count on the document to always be available 
+            // in the default language. So if the default language is not in the list
+            // of available languages for this document, simply use the first available
+            // language.
+            HashMap languagesMap = new HashMap();
+            String[] languages = null;
+            try {
+                languages = document.getLanguages();
+            } catch (DocumentException e) {
+                throw new DocumentBuildException(e);
+            }
+            // If the document has no languages, we'll just leave it 
+            // as it is (i.e. we leave it at the default language)
+            if (languages.length > 0) {
+                for (int i = 0; i < languages.length; i++) {
+                    languagesMap.put(languages[i], languages[i]);
+                }
+                if (!languagesMap.containsKey(document.getLanguage())) {
+                    document.setLanguage(languages[0]);
+                }
+            }
+        }
 
         return document;
     }
@@ -157,17 +183,19 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
     /**
      * @see org.apache.lenya.cms.publication.DocumentBuilder#isDocument(org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public boolean isDocument(Publication publication, String url) throws DocumentBuildException {
+    public boolean isDocument(Publication publication, String url)
+        throws DocumentBuildException {
         boolean isDocument = false;
-        
-        String publicationURI = url.substring(("/" + publication.getId()).length());
+
+        String publicationURI =
+            url.substring(("/" + publication.getId()).length());
         if (publicationURI.startsWith("/")) {
             publicationURI = publicationURI.substring(1);
-            
+
             int slashIndex = publicationURI.indexOf("/");
             if (slashIndex > -1) {
                 String area = publicationURI.substring(0, slashIndex);
-                
+
                 String documentUri = publicationURI.substring(slashIndex);
                 if (documentUri.startsWith("/")) {
                     isDocument = true;
