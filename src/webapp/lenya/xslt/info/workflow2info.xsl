@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: workflow2info.xsl,v 1.6 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id: workflow2info.xsl,v 1.7 2004/04/03 17:50:50 roku Exp $ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -56,7 +56,7 @@
 	<tr>
 <!--		<td><i18n:date src-pattern="dd.MM.yyyy HH:mm:ss" pattern="yyyy-M-dd HH:mm:ss"><xsl:value-of select="@date"/></i18n:date></td> -->
 		<td><xsl:value-of select="@date"/></td>
-		<td><xsl:value-of select="@event"/></td>
+		<td><i18n:text><xsl:value-of select="@event"/></i18n:text></td>
 		<td><i18n:text><xsl:value-of select="@state"/></i18n:text></td>
 		<td>
 			<span style="white-space: nobreak">
