@@ -1,5 +1,4 @@
 /*
-$Id: DublinCore.java,v 1.19 2003/08/28 11:39:58 egli Exp $
 <License>
 
  ============================================================================
@@ -57,9 +56,8 @@ $Id: DublinCore.java,v 1.19 2003/08/28 11:39:58 egli Exp $
 package org.apache.lenya.cms.publication;
 
 /**
- * 
- * @author egli
- * 
+ * @author Christian Egli
+ * @version $Id: DublinCore.java,v 1.20 2004/01/07 10:18:46 michi Exp $
  */
 public interface DublinCore {
     
@@ -231,4 +229,22 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     void setRights(String rights) throws DocumentException;
+    
+    /**
+     * Get isReferencedBy
+     * 
+     * @return isReferencedBy
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    String getIsReferencedBy() throws DocumentException;
+    
+    /**
+     * Set isReferencedBy
+     * 
+     * @param isReferencedBy isReferencedBy
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    void setIsReferencedBy(String isReferencedBy) throws DocumentException;
 }

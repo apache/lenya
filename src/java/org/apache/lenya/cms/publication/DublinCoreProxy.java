@@ -1,5 +1,4 @@
 /*
-$Id: DublinCoreProxy.java,v 1.3 2003/10/29 15:31:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,6 +59,7 @@ package org.apache.lenya.cms.publication;
  * only read from file when it is actually requested.
  *
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
+ * @version $Id: DublinCoreProxy.java,v 1.4 2004/01/07 10:18:46 michi Exp $
  */
 public class DublinCoreProxy implements DublinCore {
 
@@ -146,6 +146,14 @@ public class DublinCoreProxy implements DublinCore {
 
     /**
      *  (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DublinCore#getIsReferencedBy()
+     */
+    public String getIsReferencedBy() throws DocumentException {
+        return instance().getIsReferencedBy();
+    }
+
+    /**
+     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getSubject()
      */
     public String getSubject() throws DocumentException {
@@ -214,6 +222,14 @@ public class DublinCoreProxy implements DublinCore {
      */
     public void setRights(String rights) throws DocumentException {
         instance().setRights(rights);
+    }
+
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DublinCore#setIsReferencedBy(java.lang.String)
+     */
+    public void setIsReferencedBy(String isReferencedBy) throws DocumentException {
+        instance().setIsReferencedBy(isReferencedBy);
     }
 
     /**

@@ -74,7 +74,7 @@ import org.xml.sax.SAXException;
  * This class uses the dublin core specification from 2003-03-04.
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
- * @version $Id: DublinCoreImpl.java,v 1.2 2004/01/06 17:55:49 michi Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.3 2004/01/07 10:18:46 michi Exp $
  */
 public class DublinCoreImpl implements DublinCore {
     private Document cmsdocument;
@@ -473,7 +473,6 @@ public class DublinCoreImpl implements DublinCore {
         terms.put(TERM_CREATED, dateCreated);
     }
 
-
     /**
      * Get the rights
      * 
@@ -494,4 +493,23 @@ public class DublinCoreImpl implements DublinCore {
         elements.put(ELEMENT_RIGHTS, rights);
     }
 
+    /**
+     * Get isReferencedBy
+     * 
+     * @return isReferencedBy
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getIsReferencedBy() throws DocumentException {
+        return (String) terms.get(TERM_ISREFERENCEDBY);
+    }
+
+    /**
+     * Set isReferencedBy
+     * 
+     * @param isReferencedBy isReferencedBy
+     */
+    public void setIsReferencedBy(String isReferencedBy) {
+        terms.put(TERM_ISREFERENCEDBY, isReferencedBy);
+    }
 }
