@@ -69,7 +69,7 @@ import java.util.List;
  * A publication.
  *
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
- * @version $Id: AbstractPublication.java,v 1.10 2004/01/17 14:33:12 michi Exp $
+ * @version $Id: AbstractPublication.java,v 1.11 2004/01/19 18:00:48 andreas Exp $
  */
 public abstract class AbstractPublication implements Publication {
     private static Category log = Category.getInstance(AbstractPublication.class);
@@ -518,6 +518,10 @@ public abstract class AbstractPublication implements Publication {
      * @see org.apache.lenya.cms.publication.Publication#deleteDocument(org.apache.lenya.cms.publication.Document)
      */
     public void deleteDocument(Document document) throws PublicationException {
+        if (!document.exists()) {
+            throw new PublicationException(
+                "Document [" + document + "] does not exist!");
+        }
         deleteFromSiteStructure(document);
         deleteDocumentSource(document);
     }
