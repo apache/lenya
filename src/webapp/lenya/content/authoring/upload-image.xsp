@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xsp:page
-       language="java"
-       xmlns:xsp="http://apache.org/xsp"  
-       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
-       >
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  >
 
-<xsp:structure />
-
-<upload-image>
-
-  <!-- Import Lenya Page Envelope -->
-  <xsp-lenya:util/>
-
-  <xsp:logic>
-    <xsp:content><xpath><xsp:expr>request.getParameter("xpath")</xsp:expr></xpath></xsp:content>
-    <xsp:content><documentid><xsp:expr>request.getParameter("documentid")</xsp:expr></documentid></xsp:content>
-    <xsp:content><usecase><xsp:expr>request.getParameter("lenya.usecase")</xsp:expr></usecase></xsp:content>
-    <xsp:content><insertBefore><xsp:expr>request.getParameter("insertBefore")</xsp:expr></insertBefore></xsp:content>
-  </xsp:logic>
-</upload-image>
-
+  <upload-image>
+    
+    <!-- Import Lenya Page Envelope -->
+    <xsp-lenya:util/>
+    
+    <xpath><xsp-request:get-parameter name="xpath"/></xpath>
+    <documentid><xsp-lenya:document-id/></documentid>
+    <usecase><xsp-request:get-parameter name="lenya.usecase"/></usecase>
+    <insertBefore><xsp-request:get-parameter name="insertBefore"/></insertBefore>
+  </upload-image>
+  
 </xsp:page>
