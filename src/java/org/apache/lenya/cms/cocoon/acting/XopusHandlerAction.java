@@ -9,7 +9,9 @@ import java.lang.String;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-// import javax.servlet.ServletInputStream;
+
+//import javax.servlet.ServletInputStream;
+
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.ComposerAction;
 import org.apache.cocoon.Constants;
@@ -62,9 +64,9 @@ public class XopusHandlerAction extends ComposerAction {
     PrintWriter out = new PrintWriter(new FileWriter(workfile.toString(), appendFlag));
     
     HttpRequest httpReq = (HttpRequest) objectModel.get(HttpEnvironment.HTTP_REQUEST_OBJECT);
-    InputStream input = httpReq.getInputStream();
+    //InputStream input = httpReq.getInputStream();
     int length = request.getContentLength();
-    PostInputStream reqContent = new PostInputStream(input, length);
+    //PostInputStream reqContent = new PostInputStream(input, length);
         
 //     Enumeration reqParams = request.getParameterNames();
 //     String currParamName = null;
