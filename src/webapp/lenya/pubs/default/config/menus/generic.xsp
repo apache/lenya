@@ -256,7 +256,7 @@
 	</block>
 
         <block>
-          <item uc:usecase="view-logs" uc:step="overview" href="?"><i18n:text>View task logs</i18n:text></item>
+          <item uc:usecase="view-logs" uc:step="overview" href="?"><i18n:text>View Task Logs</i18n:text></item>
 	</block>
       </menu>
     </menus>
