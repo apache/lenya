@@ -11,8 +11,7 @@
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
     
     String sourcesParameter = "sources=/news/" +  articleId + ".xml";
-    <!-- String urisParameter = "uris=" + xsp_wyona_context_prefix+"/news/"+ articleId + ".html"; -->
-    String urisParameter = "";
+    String urisParameter = "uris=" + xsp_wyona_context_prefix+"/news/"+ articleId + ".html";
 
   </xsp:logic>
 		<menus>
