@@ -352,13 +352,14 @@
         <!-- ** Epoz                                                     ** -->
         <!-- **                                                          ** -->
         <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
-        <!-- **       publication specific DocumentIdToPathMapper which  ** -->
+        <!-- **       publication-specific DocumentIdToPathMapper which  ** -->
         <!-- **       is configured within config/publication.xconf      ** -->
         <!-- ************************************************************** -->
         <map:match pattern="epoz" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
-              <map:act type="resource-exists" src="../../ROOT/epoz/common/epozeditor.js"> <!-- Check for Epoz -->
+              <!-- Check for Epoz -->
+              <map:act type="resource-exists" src="resources/epoz/common/epozeditor.js">
 
                 <map:act type="reserved-checkout">
                   <map:generate type="serverpages" src="content/rc/{exception}.xsp">
@@ -372,7 +373,7 @@
                 </map:act>
 
                 <!-- FIXME: It would be nice to reuse the original macros file -->
-                <!--<map:generate src="../../ROOT/epoz/common/epozmacros.html"/>-->
+                <!--<map:generate src="resources/epoz/common/epozmacros.html"/>-->
                 <map:generate src="resources/misc/epoz/epozmacros.html"/>
                 <map:transform src="xslt/authoring/edit/epozmacros-xhtml.xsl">
                   <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=content"/>
@@ -403,7 +404,7 @@
           </map:match>
 
           <!-- 
-               Epoz uses PUT to transmitt the edited file for save.
+               Epoz uses PUT to transmit the edited file for save.
                The problem is, Epoz removes namespace information. 
                That means we can not use the StreamGenerator, because 
                it complains about an unbound element.			
