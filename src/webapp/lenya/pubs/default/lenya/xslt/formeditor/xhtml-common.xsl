@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml-common.xsl,v 1.4 2004/03/20 12:28:45 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -172,12 +172,12 @@
 </xsl:template>
 
   <xsl:template match="xhtml:object" mode="body">
-    <node name="Object" select="/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']">
+    <node name="Object">
       <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']&quot;/&gt;"/></action>
       <content>
 	<input type="text" name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']&quot;&gt;" size="40">
 	  <xsl:attribute name="value">
-	    <xsl:copy-of select="."/>
+      <xsl:value-of select="@data"/>
 	  </xsl:attribute>
 	</input>
       </content>
@@ -188,14 +188,14 @@
   </xsl:template>
 
   <xsl:template match="lenya:asset" mode="body">
-    <node name="Asset" select="/*/xhtml:body/lenya:asset[@tagID='{@tagID}']">
+    <node name="Asset">
       <action>
 	<delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/lenya:asset[@tagID='{@tagID}']&quot;/&gt;"/>
       </action>
       <content>
 	<input type="text" name="&lt;xupdate:update select=&quot;/*/xhtml:body/lenya:asset[@tagID='{@tagID}']&quot;&gt;" size="40">
 	  <xsl:attribute name="value">
-	    <xsl:copy-of select="."/>
+	    <xsl:value-of select="@src"/>
 	  </xsl:attribute>
 	</input>
       </content>
