@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: PolicyBuilder.java,v 1.3 2004/03/08 16:48:20 gregor Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import java.io.InputStream;
@@ -37,6 +35,10 @@ import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * Builds policies from input streams.
+ * @version $Id: PolicyBuilder.java,v 1.4 2004/08/16 16:34:06 andreas Exp $
+ */
 public class PolicyBuilder implements InputStreamBuilder {
 
     /**
@@ -248,7 +250,7 @@ public class PolicyBuilder implements InputStreamBuilder {
     }
 
     /**
-     * @see org.apache.lenya.ac.cache.InputStreamBuilder#build(org.apache.excalibur.source.Source)
+     * @see org.apache.lenya.ac.cache.InputStreamBuilder#build(java.io.InputStream)
      */
     public Object build(InputStream stream) throws BuildException {
         Object value = null;

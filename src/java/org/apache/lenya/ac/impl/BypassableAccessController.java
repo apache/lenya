@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: BypassableAccessController.java,v 1.3 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id: BypassableAccessController.java,v 1.4 2004/08/16 16:34:06 andreas Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -121,7 +121,7 @@ public class BypassableAccessController extends DefaultAccessController {
     }
 
     /**
-     * @see org.apache.lenya.ac.AccessController#authorize(org.apache.lenya.cms.publication.Publication, org.apache.cocoon.environment.Request)
+     * @see org.apache.lenya.ac.AccessController#authorize(org.apache.cocoon.environment.Request)
      */
     public boolean authorize(Request request)
         throws AccessControlException {

@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: ComposableAccessControllerResolver.java,v 1.3 2004/03/08 16:48:20 gregor Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import java.util.HashMap;
@@ -32,6 +30,12 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 
+/**
+ * Access controller resolver composed of other access controller resolvers.
+ * The member resolvers are called one after the other to resolve the access controllers.
+ * 
+ * @version $Id: ComposableAccessControllerResolver.java,v 1.4 2004/08/16 16:34:06 andreas Exp $
+ */
 public class ComposableAccessControllerResolver
     extends AbstractAccessControllerResolver
     implements Configurable, Disposable {

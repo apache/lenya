@@ -15,22 +15,21 @@
  *
  */
 
-/* $Id: AbstractItem.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import org.apache.lenya.ac.Item;
 
 /**
- * Abstract superclass for all access control objects that can be
- * managed by an {@link ItemManager}. It is only used for code reuse. 
+ * Abstract superclass for all access control objects that can be managed by an
+ * {@link org.apache.lenya.ac.ItemManager}. It is only used for code reuse.
+ * @version $Id: AbstractItem.java,v 1.3 2004/08/16 16:34:06 andreas Exp $
  */
 public abstract class AbstractItem implements Item {
 
     private String id;
     private String description = "";
     private String name = "";
-    
+
     /**
      * Ctor.
      */
@@ -76,12 +75,12 @@ public abstract class AbstractItem implements Item {
      */
     public String toString() {
         return getId();
-        
+
     }
 
     /**
      * Returns the name of this object.
-     *
+     * 
      * @return A <code>String</code>.
      */
     public String getName() {
@@ -90,14 +89,14 @@ public abstract class AbstractItem implements Item {
 
     /**
      * Set the full name
-     *
+     * 
      * @param name the new full name
      */
     public void setName(String name) {
         assert name != null;
         this.name = name;
     }
-    
+
     /**
      * Checks if a string is a valid ID.
      * @param id The string to test.
@@ -106,7 +105,7 @@ public abstract class AbstractItem implements Item {
     public static boolean isValidId(String id) {
         return id != null && id.matches("\\w+");
     }
-    
+
     /**
      * @see java.lang.Object#equals(Object)
      */
@@ -127,5 +126,5 @@ public abstract class AbstractItem implements Item {
     public int hashCode() {
         return getId().hashCode();
     }
-    
+
 }

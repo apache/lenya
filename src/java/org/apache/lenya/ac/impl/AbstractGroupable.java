@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: AbstractGroupable.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import java.util.Arrays;
@@ -27,11 +25,15 @@ import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 
+/**
+ * Abstract implementation for group members.
+ * @version $Id: AbstractGroupable.java,v 1.3 2004/08/16 16:34:06 andreas Exp $
+ */
 public abstract class AbstractGroupable extends AbstractItem implements Groupable, Accreditable {
     private Set groups = new HashSet();
 
     /**
-     * @see org.apache.lenya.cms.ac.Groupable#addedToGroup(org.apache.lenya.ac.Group)
+     * @see org.apache.lenya.ac.Groupable#addedToGroup(org.apache.lenya.ac.Group)
      */
     public void addedToGroup(Group group) {
         assert group != null;
@@ -40,7 +42,7 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.Groupable#removedFromGroup(org.apache.lenya.ac.Group)
+     * @see org.apache.lenya.ac.Groupable#removedFromGroup(org.apache.lenya.ac.Group)
      */
     public void removedFromGroup(Group group) {
         assert group != null;
@@ -65,7 +67,7 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
             groups[i].remove(this);
         }
     }
-    
+
     /**
      * @see org.apache.lenya.ac.Accreditable#getAccreditables()
      */
@@ -82,5 +84,5 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
 
         return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
     }
-    
+
 }

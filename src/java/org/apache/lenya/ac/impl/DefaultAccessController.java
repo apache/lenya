@@ -15,8 +15,6 @@
  *  
  */
 
-/* $Id: DefaultAccessController.java,v 1.8 2004/07/22 21:27:57 andreas Exp $ */
-
 package org.apache.lenya.ac.impl;
 
 import java.util.ArrayList;
@@ -53,6 +51,10 @@ import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.PolicyManager;
 
+/**
+ * Default access controller implementation.
+ * @version $Id: DefaultAccessController.java,v 1.9 2004/08/16 16:34:06 andreas Exp $
+ */
 public class DefaultAccessController extends AbstractLogEnabled implements AccessController,
         Configurable, Serviceable, Disposable, ItemManagerListener {
 
@@ -264,7 +266,6 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      * Set the global component manager.
      * 
      * @param manager The global component manager
-     * @exception ComponentException
      * @throws ServiceException when something went wrong.
      */
     public void service(ServiceManager manager) throws ServiceException {
@@ -432,7 +433,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.ItemManagerListener#itemAdded(org.apache.lenya.cms.ac.Item)
+     * @see org.apache.lenya.ac.ItemManagerListener#itemAdded(org.apache.lenya.ac.Item)
      */
     public void itemAdded(Item item) throws AccessControlException {
         if (getLogger().isDebugEnabled()) {
@@ -445,7 +446,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.ItemManagerListener#itemRemoved(org.apache.lenya.cms.ac.Item)
+     * @see org.apache.lenya.ac.ItemManagerListener#itemRemoved(org.apache.lenya.ac.Item)
      */
     public void itemRemoved(Item item) throws AccessControlException {
         if (getLogger().isDebugEnabled()) {

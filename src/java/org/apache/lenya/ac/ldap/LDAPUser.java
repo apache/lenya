@@ -13,8 +13,6 @@
  *  
  */
 
-/* $Id: LDAPUser.java,v 1.5 2004/08/16 08:20:26 andreas Exp $ */
-
 package org.apache.lenya.ac.ldap;
 
 import java.io.File;
@@ -41,6 +39,10 @@ import org.apache.log4j.Category;
 
 import com.sun.jndi.ldap.LdapCtxFactory;
 
+/**
+ * LDAP user.
+ * @version $Id: LDAPUser.java,v 1.6 2004/08/16 16:36:57 andreas Exp $
+ */
 public class LDAPUser extends FileUser {
     private static Properties defaultProperties = null;
     private static Category log = Category.getInstance(LDAPUser.class);
@@ -182,9 +184,7 @@ public class LDAPUser extends FileUser {
     }
 
     /**
-     * (non-Javadoc)
-     * 
-     * @see org.apache.lenya.cms.ac.FileUser#createConfiguration()
+     * @see org.apache.lenya.ac.file.FileUser#createConfiguration()
      */
     protected Configuration createConfiguration() {
         DefaultConfiguration config = (DefaultConfiguration) super.createConfiguration();
@@ -218,7 +218,7 @@ public class LDAPUser extends FileUser {
     /**
      * (non-Javadoc)
      * 
-     * @see org.apache.lenya.cms.ac.User#authenticate(java.lang.String)
+     * @see org.apache.lenya.ac.User#authenticate(java.lang.String)
      */
     public boolean authenticate(String password) {
 
@@ -252,7 +252,7 @@ public class LDAPUser extends FileUser {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.Item#getName()
+     * @see org.apache.lenya.ac.Item#getName()
      */
     public String getName() {
         return ldapName;

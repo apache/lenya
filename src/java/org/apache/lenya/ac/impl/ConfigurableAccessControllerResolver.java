@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: ConfigurableAccessControllerResolver.java,v 1.3 2004/03/08 16:48:20 gregor Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import org.apache.avalon.framework.configuration.Configurable;
@@ -25,6 +23,10 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 
+/**
+ * Configurable access controller resolver.
+ * @version $Id: ConfigurableAccessControllerResolver.java,v 1.4 2004/08/16 16:34:06 andreas Exp $
+ */
 public class ConfigurableAccessControllerResolver
     extends AbstractAccessControllerResolver
     implements Configurable {

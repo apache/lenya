@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractAccreditableManager.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id: AbstractAccreditableManager.java,v 1.5 2004/08/16 16:34:06 andreas Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -107,7 +107,7 @@ public abstract class AbstractAccreditableManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac.ItemManagerListener#itemAdded(org.apache.lenya.cms.ac.Item)
+	 * @see org.apache.lenya.ac.ItemManagerListener#itemAdded(org.apache.lenya.ac.Item)
 	 */
     public void itemAdded(Item item) throws AccessControlException {
         if (getLogger().isDebugEnabled()) {
@@ -117,7 +117,7 @@ public abstract class AbstractAccreditableManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac.ItemManagerListener#itemRemoved(org.apache.lenya.cms.ac.Item)
+	 * @see org.apache.lenya.ac.ItemManagerListener#itemRemoved(org.apache.lenya.ac.Item)
 	 */
     public void itemRemoved(Item item) throws AccessControlException {
         if (getLogger().isDebugEnabled()) {

@@ -15,14 +15,16 @@
  *
  */
 
-/* $Id: InheritingPolicyManager.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.PolicyManager;
 
+/**
+ * Policy manager which inherits credentials in a policy tree.
+ * @version $Id: InheritingPolicyManager.java,v 1.3 2004/08/16 16:34:06 andreas Exp $
+ */
 public interface InheritingPolicyManager extends PolicyManager {
 
     /**
