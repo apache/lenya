@@ -50,7 +50,7 @@
 
     <map:pipeline internal-only="true">     
       <map:match pattern="request2document">
-        <map:generate src="{global:basedir}/pubs/{page-envelope:publication-id}/work/oneformeditor/authoring/tutorial.xml"/>
+        <map:generate src="{global:basedir}/pubs/{page-envelope:publication-id}/work/oneformeditor/authoring/{page-envelope:document-id}.xml"/>
         <map:serialize type="xml-utf-8"/>
       </map:match>
     </map:pipeline>   
@@ -86,7 +86,7 @@
               <map:act type="request-parameter-exists">
                 <map:parameter name="parameters" value="save"/>
                 <map:act type="oneformeditorsave">
-                  <map:parameter name="file" value="{global:basedir}/pubs/{../1}/work/oneformeditor/authoring/{../2}.xml"/>
+                  <map:parameter name="file" value="{global:basedir}/pubs/{../1}/work/oneformeditor/authoring/{page-envelope:document-id}.xml"/>
                   <map:parameter name="schema" value="{global:basedir}/pubs/{../1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
                   <map:generate src="{global:basedir}/pubs/{../../1}/content/authoring/{page-envelope:document-path}"/>
                   <map:transform src="{global:basedir}/xslt/authoring/edit/oneform.xsl">
@@ -105,31 +105,6 @@
                   <map:parameter name="noStatus" value="true"/>
                   <map:parameter name="redirectUrl" value="{request:requestURI}"/>
                 </map:call>               
-<!--
-                <map:act type="reserved-checkin">
-                  <map:parameter name="backup" value="true"/>
-                  <map:generate src="content/rc/{exception}.xsp" type="serverpages">
-                    <map:parameter name="user" value="{user}"/>
-                    <map:parameter name="filename" value="{filename}"/>
-                    <map:parameter name="checkType" value="{checkType}"/>
-                    <map:parameter name="date" value="{date}"/>
-                    <map:parameter name="message" value="{message}"/>
-                  </map:generate>
-                  <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
-                  <map:serialize/>
-                </map:act>
-
-                <map:act type="workflow">
-                  <map:parameter name="area" value="{page-envelope:area}"/>
-                  <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-                  <map:parameter name="language" value="{page-envelope:document-language}"/>
-                  <map:parameter name="event" value="edit"/>
-                </map:act>                
-                
-                <map:redirect-to uri="{request:requestURI}"/> -->
-<!--                <map:generate src="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
-                <map:serialize/>
-                -->
               </map:act>
               <!-- 
                 Cancel is pressed. Unlock the document. 
