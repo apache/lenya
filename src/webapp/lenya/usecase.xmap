@@ -351,7 +351,7 @@
                 <map:parameter name="parameters" value="save"/>
                 <map:act type="oneformeditorsave">
                   <map:parameter name="file" value="pubs/{../1}/work/oneformeditor/authoring/{../2}.xml"/>
-                  <map:parameter name="schema" value="pubs/{../1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
+                  <map:parameter name="schema" value="fallback://config/doctypes/schemas/{page-envelope:document-type}.rng"/>
                   <map:generate src="pubs/{../../1}/content/authoring/{page-envelope:document-path}"/>
                   <map:transform src="xslt/authoring/edit/oneform.xsl">
                     <map:parameter name="docid" value="{page-envelope:document-id}"/>
@@ -595,7 +595,7 @@
           
           <map:match pattern="xsd" type="step">
             <map:match pattern="*/authoring/**.html">
-              <map:generate src="pubs/{1}/config/doctypes/schemas/{request-param:doctype}.xsd"/>
+              <map:generate src="fallback://config/doctypes/schemas/{request-param:doctype}.xsd"/>
               <map:serialize type="xml"/>
             </map:match>
           </map:match>
