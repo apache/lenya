@@ -69,15 +69,16 @@
   </targets>
 
   <categories>
-    <category name="core" log-level="ERROR">
+    <category name="core" log-level="DEBUG">
       <log-target id-ref="core"/>
       <log-target id-ref="error"/>
+      <category name="store-janitor" log-level="INFO"/>
     </category>
-    <category name="sitemap" log-level="ERROR">
+    <category name="sitemap" log-level="DEBUG">
       <log-target id-ref="sitemap"/>
       <log-target id-ref="error"/>
     </category>
-    <category name="access" log-level="ERROR">
+    <category name="access" log-level="DEBUG">
       <log-target id-ref="access"/>
       <log-target id-ref="error"/>
     </category> 
