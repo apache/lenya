@@ -15,7 +15,7 @@
   
   <page>
     <continuation><jpath:continuation/></continuation>
-    <group><id><jpath:value-of select="user-id"/></id></group>
+    <group><id><jpath:value-of select="group-id"/></id></group>
     
     <xsp:logic>
       java.util.List users = (java.util.List) <jpath:value-of select="users"/>;
