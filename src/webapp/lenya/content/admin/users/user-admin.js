@@ -249,10 +249,10 @@ function add_user(ldap) {
 			}
 			else {
 				user = new Packages.org.apache.lenya.cms.ac.FileUser(configDir, userId, fullName, email, "");
+				user.setPassword(password);
 			}
 			
 			user.setDescription(description);
-			user.setPassword(password);
 			user.save();
 			userManager.add(user);
 			break;
