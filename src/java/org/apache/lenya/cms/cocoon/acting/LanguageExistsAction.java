@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: LanguageExistsAction.java,v 1.4 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: LanguageExistsAction.java,v 1.5 2004/08/17 21:58:49 michi Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -76,7 +76,7 @@ public class LanguageExistsAction extends AbstractAction {
         String language = doc.getLanguage();
 
         if (!doc.existsInAnyLanguage()) {
-            throw new DocumentDoesNotExistException("Document " + doc.getId() + " does not exist");
+            throw new DocumentDoesNotExistException("Document " + doc.getId() + " does not exist. Check sitetree, it might need to be reloaded.");
         }
         List availableLanguages = Arrays.asList(doc.getLanguages());
 
