@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.22 2003/03/13 14:18:44 michi Exp $
+ * $Id: XopusHandlerAction.java,v 1.23 2003/03/17 17:41:57 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,7 +52,6 @@ import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
-//import org.apache.cocoon.components.parser.Parser;
 import org.apache.excalibur.xml.dom.DOMParser;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
