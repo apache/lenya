@@ -20,7 +20,7 @@
     <map:transformer name="xinclude" logger="sitemap.transformer.xinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
     <map:transformer name="i18n" logger="sitemap.transformer.i18n" src="org.apache.cocoon.transformation.I18nTransformer">
       <catalogues default="cmsui">
-        <catalogue id="cmsui" name="cmsui" location="cocoon://i18n-catalogue"/>           
+        <catalogue id="cmsui" name="cmsui" location="cocoon://i18n-catalogue/"/>           
        </catalogues>
        <untranslated-text>untranslated</untranslated-text>
        <cache-at-startup>true</cache-at-startup>
@@ -224,10 +224,9 @@
   <map:pipelines>
      
     <map:pipeline type="noncaching">
-      <!-- FIXME: Why cant I use pattern="i18n-catalogues/**"? Results into an endless loop with StackOverflowError-->
-      <map:match pattern="i18n-catalogue**">
+      <map:match pattern="i18n-catalogue/**">
         <map:generate type="serverpages" src="lenya/resources/i18n/catalogue.xsp">
-        	<map:parameter name="pub-catalogue-location" value="context:/lenya/pubs/{page-envelope:publication-id}/lenya/resources/i18n"/>
+        	<map:parameter name="pub-catalogue-location" value="context:/lenya/pubs/{page-envelope:publication-id}/lenya/resources/i18n/"/>
         	<map:parameter name="catalogue-file" value="{1}"/>
         </map:generate>
         <map:transform type="xinclude"/>
