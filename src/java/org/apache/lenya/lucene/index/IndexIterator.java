@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexIterator.java,v 1.11 2004/04/03 23:26:30 michi Exp $  */
+/* $Id: IndexIterator.java,v 1.12 2004/04/14 13:06:41 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -119,17 +119,25 @@ public class IndexIterator {
      * @param dumpDirectory Directory over which shall be iterated
      */
     public void iterate(File dumpDirectory) {
-        log.debug("Iterating files for index " + getIndex());
+        log.info("Iterating files (" + dumpDirectory + ")");
 
         try {
             reader = IndexReader.open(getIndex());
 
             TermEnum iterator = enumerateUIDs(getReader());
 
-            File[] files = getFiles(dumpDirectory);
+	    // TODO: Should be configurable
+	    boolean sort = false;
 
-            for (int i = 0; i < files.length; i++) {
-                iterateFiles(iterator, files[i], dumpDirectory);
+	    if (sort) {
+                File[] files = getFiles(dumpDirectory);
+
+                for (int i = 0; i < files.length; i++) {
+                    iterateFiles(iterator, files[i], dumpDirectory);
+                }
+            } else {
+                log.debug("Do not sort files ...");
+                traverse(iterator, dumpDirectory, dumpDirectory);
             }
 
             // iterate the rest of stale documents
@@ -246,9 +254,9 @@ public class IndexIterator {
         return url.substring(0, url.lastIndexOf('/')) + " " + format.format(date);
     }
 
-    //-------------------------------------------------------------
-    // Files
-    //-------------------------------------------------------------
+    /**
+     * Get Files and sorts by alphabet?
+     */
     public File[] getFiles(File dumpDirectory) {
         List files = new ArrayList();
         collectFiles(dumpDirectory, files);
@@ -268,7 +276,9 @@ public class IndexIterator {
         File[] fileArray = new File[uids.length];
 
         for (int i = 0; i < uids.length; i++) {
-            fileArray[i] = (File) uidToFile.get(uids[i]);
+            File file = (File) uidToFile.get(uids[i]);
+            log.debug(file);
+            fileArray[i] = file;
         }
 
         return fileArray;
@@ -287,6 +297,23 @@ public class IndexIterator {
             }
         } else {
             files.add(file);
+        }
+    }
+
+    /**
+     * Traverse directory
+     */
+    protected void traverse(TermEnum iterator, File file, File dumpDirectory) throws IOException {
+        if (file.isDirectory()) {
+            log.debug("Apply filter " + getFilter().getClass().getName() + " to: " + file);
+            File[] fileArray = file.listFiles(getFilter());
+
+            for (int i = 0; i < fileArray.length; i++) {
+                traverse(iterator, fileArray[i], dumpDirectory);
+            }
+        } else {
+            log.debug(file);
+            iterateFiles(iterator, file, dumpDirectory);
         }
     }
 }

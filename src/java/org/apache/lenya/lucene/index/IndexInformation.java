@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexInformation.java,v 1.10 2004/04/03 23:26:30 michi Exp $  */
+/* $Id: IndexInformation.java,v 1.11 2004/04/14 13:06:41 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -104,9 +104,9 @@ public class IndexInformation {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get number of files to index
      *
-     * @return DOCUMENT ME!
+     * @return number of files to index
      */
     public int getFileNumber() {
         return files.size();
