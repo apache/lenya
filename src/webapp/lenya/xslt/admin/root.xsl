@@ -15,17 +15,45 @@
   limitations under the License.
 -->
 
-<!-- $Id: root.xsl,v 1.4 2004/03/13 12:42:10 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    >
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  >
+  
+  <xsl:param name="contextprefix"/>
 
-<xsl:include href="../menu/root.xsl"/>
-    
-<xsl:template match="lenya/cmsbody">
-  <xsl:copy-of select="xhtml:html"/>
-</xsl:template>
-    
-</xsl:stylesheet>
+   <xsl:template match="/">
+    <html>
+      <head>
+        <link href="{$contextprefix}/lenya/css/default.css" rel="stylesheet" type="text/css"/>
+      </head>
+
+      <body>
+        <div id="lenya-info-body">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+              <td valign="top" width="80%">
+                <div id="lenya-info-content">
+                  <!-- support both old-style tabs and new-style JX tabs -->
+                  <xsl:choose>
+                    <xsl:when test="/page:page">
+                      <xsl:copy-of select="page:page/node()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:copy-of select="*"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </body>
+    </html>
+  </xsl:template>
+
+</xsl:stylesheet> 

@@ -47,7 +47,7 @@
         <jx:forEach var="user" items="${usecase.getParameter('users')}">
           <tr>
             <td style="vertical-align: middle">
-              <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.userProfile&amp;userId=${user.getId()}"><jx:out value="${user.getId()}"/></a>
+              <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.user&amp;userId=${user.getId()}"><jx:out value="${user.getId()}"/></a>
             </td>
             <td style="vertical-align: middle">
               <jx:out value="${user.getName()}"/>

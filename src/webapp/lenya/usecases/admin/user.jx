@@ -1,0 +1,68 @@
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <page:body>
+    <jx:import uri="admin/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab">
+    <h1><i18n:text>User Profile</i18n:text></h1>
+    
+      <table class="lenya-table-noborder">
+        <tr>
+          <td colspan="2">
+            <jx:import uri="templates/messages.jx"/>
+          </td>
+        </tr>
+        <tr>
+          <td class="lenya-entry-caption"><i18n:text>Name</i18n:text>:</td>
+          <td><jx:out value="${usecase.getParameter('user').getName()}"/></td>
+        </tr>
+        <tr>
+          <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td>
+          <td>
+            <jx:out value="${usecase.getParameter('user').getDescription()}"/>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="lenya-entry-caption"><i18n:text>E-Mail</i18n:text>:</td>
+          <td><jx:out value="${usecase.getParameter('user').getEmail()}"/></td>
+        </tr>
+        
+        <tr>
+          <td class="lenya-entry-caption"><i18n:text>Default Menu Locale</i18n:text>:</td>
+          <td><jx:out value="${usecase.getParameter('user').getDefaultMenuLocale()}"/></td>
+        </tr>
+        
+        <tr>
+          <td class="lenya-entry-caption"><i18n:text>Default Document Locale</i18n:text>:</td>
+          <td><jx:out value="${usecase.getParameter('user').getDefaultDocumentLocale()}"/></td>
+        </tr>
+        
+        <tr>
+          <td/>
+          <td>
+            <form>
+              <input type="hidden" name="lenya.usecase" value="admin.userProfile"/>
+              <input type="hidden" name="userId" value="${usecase.getParameter('user').getId()}"/>
+              <input i18n:attr="value" type="submit" value="Edit Profile"/>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td/>
+          <td>
+            <form>
+              <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+              <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+              <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
+            </form>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </page:body>
+</page:page>

@@ -248,6 +248,11 @@
         <parameter name="tab" value="users"/>
       </view>
     </component-instance>
+    <component-instance name="admin.user" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.User">
+      <view template="admin/user" menu="true">
+        <parameter name="tab" value="users"/>
+      </view>
+    </component-instance>
     <component-instance name="admin.addUser" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddUser">
       <view template="admin/addUser" menu="true">
         <parameter name="tab" value="users"/>
