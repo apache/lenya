@@ -18,6 +18,9 @@
 <document> 
   <header> 
     <title>History</title> 
+    <authors>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+    </authors>
   </header> 
   <body> 
 
@@ -35,7 +38,8 @@ href="ext:nzz">Neue Z&#252;rcher Zeitung</link>.  The name
 Lenya is a combination of the names of his two sons Levi and Vanya.
 <br />&#160;
 </p>
-
+<p>In the spring of 2003, Wyona donated Lenya to the Apache Software Foundation, where
+    Lenya was incubated and became a Top Level Project in September 2004.</p>
 
   </body>
 </document>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: navigation.xml,v 1.1 2004/07/01 23:59:24 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC
     "-//APACHE//DTD Documentation V1.1//EN"
@@ -27,7 +27,7 @@
     <title>The Navigation Framework</title>
     <version major="0" minor="1">Initial version</version>
     <authors>
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/>
+          <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors> 
     <notice></notice> 
     <abstract>Proposal for a standard navigation framework.</abstract> 

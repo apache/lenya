@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index.xml,v 1.1 2004/07/01 23:59:24 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -25,7 +25,7 @@
     <version/>
     <type/>
     <authors>
-      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors>
   </header>
   <body>

@@ -84,13 +84,13 @@ which will be used to configure the chosen Forrest skin.
 
   <!-- optional group logo
        skin: forrest-site renders it at the top-left corner -->
-  <group-name>Apache Cocoon</group-name>
+<!--  <group-name>Apache Cocoon</group-name>
   <group-description>
   	The Apache Cocoon Project is the open source community project developing Apache Cocoon
   	and Cocoon-based application frameworks.
   </group-description>
   <group-url>http://cocoon.apache.org</group-url>
-  <group-logo>images/cocoon-project-logo-big.png</group-logo>
+  <group-logo>images/cocoon-project-logo-big.png</group-logo>-->
  <!-- Alternative static image:
   <group-logo>images/group-logo.gif</group-logo> -->
 
@@ -100,7 +100,7 @@ which will be used to configure the chosen Forrest skin.
   <host-logo></host-logo>
 
   <!-- relative url of a favicon file, normally favicon.ico -->
-  <favicon-url></favicon-url>
+  <favicon-url>favicon.ico</favicon-url>
 
   <!-- The following are used to construct a copyright statement -->
   <year>2002-2004</year>
@@ -118,7 +118,7 @@ which will be used to configure the chosen Forrest skin.
   -->
   <trail>
     <link1 name="apache" href="http://www.apache.org/"/>
-    <link2 name="cocoon" href="http://cocoon.apache.org/"/>
+    <link2 name="" href=""/>
     <link3 name="" href=""/>
   </trail>
 
@@ -141,7 +141,7 @@ which will be used to configure the chosen Forrest skin.
     <a href="@href">{@to}</a>
     -->
   <feedback to="lenya-dev@cocoon.apache.org"
-    href="lenya-dev@cocoon.apache.org?subject=Feedback&#160;" >
+    href="mailto:lenya-dev@cocoon.apache.org?subject=Feedback&#160;for&#160;" >
     Send feedback about the website to:
   </feedback>
   <!--

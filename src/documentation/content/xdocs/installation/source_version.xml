@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: source_version.xml,v 1.2 2004/07/22 20:07:17 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -26,96 +26,15 @@
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
-      <person name="Jan Prill" email="JanPrill@blauton.de"/> 
-      <person name="Andreas Hartmann" email="andreas@apache.org"/> 
-      <person name="Gregor J. Rothfuss" email="gregor@apache.org"/> 
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors> 
 </header> 
 <body> 
 
-<section><title>Example directory structure</title>
-
-<p>If you're new to all this, it is recommended to use the following directory
-structure:</p>
-
-<source>
-your_home (or c:\ on Windows, NOT My Documents)
-    /src
-        /cocoon-lenya           $LENYA_HOME
-        /cocoon-2.1             $COCOON_HOME
-            /build
-                /webapp         $COCOON_WEBAPP
-    /build
-        /tomcat-4.1.24          $TOMCAT_HOME
-        /ant-1.6.1
-</source>
-
-</section>
-
-<section><title>Installation</title>
+<section><title>Standalone Installation (using the built-in Jetty)</title>
 <ol>
-
   <li>
     <strong>Get the Java SDK</strong> (see <link href="prerequisites.html">Prerequisites</link>)
-    <p/>
-  </li>
-  <li>
-    <strong>Get Apache Tomcat</strong> (see <link href="prerequisites.html">Prerequisites</link>)
-    <p/>
-  </li>
-  <li>
-    <p>
-    <strong>Install Tomcat</strong>
-    </p>
-    <p>
-    See <link href="http://jakarta.apache.org/tomcat/tomcat-4.1-doc/RUNNING.txt">Running The Tomcat 4.0 Servlet/JSP Container</link>
-    </p>
-    <p>
-    <strong>MS Windows:</strong><br/>
-    Basically this is setting the <code>JAVA_HOME</code> environment variable and
-    double-clicking on tomcat-4.1.24.exe. Decide to run Tomcat as a Windows NT/2000/XP-Service.</p>
-   <warning>Make sure you do not install at a location with spaces in the path</warning>
-  </li>
-  <li>
-    <p>
-    <strong>Check if Tomcat is running</strong>
-    </p>
-    <p>
-    <link href="http://localhost:8080">http://localhost:8080</link>.
-    </p>
-  </li>
-  <li>
-    <p>
-    <strong>Stop the Tomcat service</strong>
-    </p>
-    <p>
-    <strong>MS Windows:</strong><br/>
-    If you don't know how, try <em>Start > Help > Services</em>.
-    </p>
-  </li>
-  <li>
-    <p>
-    <strong>Get Apache Ant</strong> (see <link href="prerequisites.html">Prerequisites</link>)
-    </p>
-  </li>
-  <li>
-    <p>
-    <strong>Install Ant</strong>
-    </p>
-    <p>
-    See section <link href="http://ant.apache.org/manual/install.html">Installing Ant</link> of the Ant Manual
-    </p>
-    <p>
-    <strong>MS Windows</strong><br/>
-    Set a few environment variables, e.g.:
-    </p>
-    <ul>
-      <li><code>JAVA_HOME = C:\Programme\j2sdk1.4.1_01</code></li>
-      <li><code>ANT_HOME = C:\Programme\Apache Group\apache-ant-1.6.1</code></li>
-      <li><code>CATALINA_HOME = C:\build\tomcat-4.1.24</code></li>
-      <li><code>CLASSPATH = .\;C:\Programme\Apache Group\apache-ant-1.6.1\lib</code></li>
-      <li><code>PATH = &lt;snip&gt;;C:\Programme\j2sdk1.4.1_01\bin;C:\Programme\Apache Group\apache-ant-1.6.1\bin</code></li>
-    </ul>
     <p/>
   </li>
   <li>
@@ -123,13 +42,25 @@ your_home (or c:\ on Windows, NOT My Documents)
     <strong>Get Apache Cocoon</strong> (see <link href="prerequisites.html">Prerequisites</link>)
     </p>
   </li>
+  <li>
+    <p>
+    <strong>Get Apache Lenya</strong> (see <link href="download.html">Download Lenya</link>)
+    </p>
+  </li>
     <li>
     <p>
-    If you have downloaded the source version: <strong>Extract Lenya</strong>
-    </p>
-    <p>
-    Extract the downloaded Lenya archive to a directory of your choice.
-    </p>
+    Extract the downloaded Lenya archive to the <code>lenya</code> directory as described below. If you use
+    Subversion, create your Lenya checkout inside the <code>src</code> directory as described below.
+    It is recommended to use the following directory structure for an easier build experience.</p>
+
+<source>
+your_home (or c:\ on Windows, NOT My Documents)
+    /src
+        /lenya                  $LENYA_HOME
+        /cocoon-2.1             $COCOON_HOME
+            /build
+                /webapp         $COCOON_WEBAPP
+</source>
     <p/>
   </li>
   <li>
@@ -161,61 +92,99 @@ $COCOON_HOME > build.bat
 <source>
 $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
 </source>
-    <p>See also <link href="http://cocoon.apache.org/2.1/installing/index.html">Installing Apache Cocoon</link></p>
-    <p/>
   </li>
-  
-
-  
-  <li>
-    <strong>Configure Lenya</strong>
-    <p>
-    Copy <code>$LENYA_HOME/build.properties.sample</code> to
-    <code>$LENYA_HOME/build.properties</code>.
+  <li><p>
+    <strong>Configure Lenya</strong></p>
+    <p>If your Cocoon source tree is set up as described above, you can skip this step.
+        If your Cocoon source tree is not at <code>../cocoon-2.1</code> relative to Lenya, 
+        you need to edit your build properties. To do this, copy <code>$LENYA_HOME/build.properties</code> to
+    <code>$LENYA_HOME/local.build.properties</code>.
     </p>
     <p>
-    Edit <code>build.properties</code>. For the described configuration the following
+    Edit <code>local.build.properties</code>. For the described configuration the following
     settings will work (<strong>MS Windows:</strong> Don't use backslashes "<code>\</code>"
-    for directory separation.). It is important that <code>tomcat.home.dir</code> is an
-    absolute path. The asterisk (*) has to be replaced by the appropriate version number.
-    Replace <code>$TOMCAT_HOME</code> by your tomcat installation directory.
+    for directory separation.)
     </p>
     <ul>
-      <li><code>cocoon.webapp.dir=$COCOON_HOME/build/webapp</code></li>
-      <li><code>pubs.root.dirs=src/webapp/lenya/pubs</code></li>
+      <li><code>cocoon.src.dir=$COCOON_HOME</code></li>
       <li><code>tomcat.home.dir=$TOMCAT_HOME</code></li>
     </ul>
     <p/>
   </li>
-  <li>
-    <strong>Build Lenya</strong>
-<source>
-$LENYA_HOME > ant install
-</source>
+  <li><p>
+    <strong>Build Lenya</strong></p>
+        <p>
+ Execute <code>build.bat</code> or <code>build.sh</code> in your Lenya source directory, depending
+ on your platform.</p>
   </li>
+ <li>
+    <p>
+    <strong>Start Lenya</strong></p>
+        <p>
+ Execute <code>lenya.bat</code> or <code>lenya.sh servlet</code> in your Lenya source directory, depending
+ on your platform.</p>
+ </li>
   <li>
-  <p>
-    <strong>Restart the Tomcat service</strong>
+    <p>
+    <strong>Test the installation</strong>
     </p>
     <p>
-<strong>MS Windows:</strong><br/>
-<em>Start > All Programs > Apache Tomcat > Stop Tomcat</em><br/>
-<em>Start > All Programs > Apache Tomcat > Start Tomcat</em>
-</p>
-<p>
-or
-</p>
-<source>
-$TOMCAT_HOME\bin > shutdown.bat
-$TOMCAT_HOME\bin > startup.bat
-</source>
-<p>
-<strong>Unix:</strong>
-</p>
-<source>
-$TOMCAT_HOME/bin > ./shutdown.sh
-$TOMCAT_HOME/bin > ./startup.sh
-</source>
+    <link href="http://localhost:8888">http://localhost:8888</link>
+    </p>
+  </li>
+</ol>
+</section>
+<section><title>Installation with Apache Tomcat</title>
+    <p>Installing Lenya with Tomcat is mostly the same procedure. Follow Steps 1-6, then do the steps below.</p>
+    <ol>
+      <li><p>
+    <strong>get Apache Tomcat</strong> (see <link href="prerequisites.html">Prerequisites</link>)
+    </p>
+  </li>
+  <li>
+    <p>
+    <strong>Install Apache Tomcat</strong>
+    </p>
+    <p>
+    See <link href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/setup.html">Tomcat 5.0 Setup</link>
+    </p>
+    <p>
+    <strong>MS Windows:</strong><br/>
+    Basically this is setting the <code>JAVA_HOME</code> environment variable and
+    running the Tomcat installer. Decide to run Tomcat as a Windows NT/2000/XP-Service.</p>
+   <warning>Make sure you do not install at a location with spaces in the path</warning>
+  </li>
+  <li><p>
+    <strong>Configure Lenya</strong></p>
+    <p>To install Lenya with Tomcat, you need to edit your build properties. To do this, 
+        copy <code>$LENYA_HOME/build.properties</code> to
+    <code>$LENYA_HOME/local.build.properties</code>.
+    </p>
+    <p>
+    Edit <code>local.build.properties</code>. For the described configuration the following
+    settings will work (<strong>MS Windows:</strong> Don't use backslashes "<code>\</code>"
+    for directory separation.) It is important that <code>tomcat.home.dir</code> is an
+    absolute path. Replace <code>$TOMCAT_HOME</code> by your Tomcat installation directory. 
+    If your Cocoon source directory is not at <code>../cocoon-2.1</code> relative to Lenya,
+    then change the <code>cocoon.webapp.dir</code> and <code>cocoon.src.dir</code> properties.
+    </p>
+    <ul>
+      <li><code>cocoon.src.dir=$COCOON_HOME</code></li>
+      <li><code>tomcat.home.dir=$TOMCAT_HOME</code></li>
+    </ul>
+    <p/>
+  </li>
+  <li><p>
+    <strong>Build Lenya</strong></p>
+        <p>
+ Execute <code>ant install</code> in your Lenya source directory.
+ </p>
+  </li>
+  <li><p>
+    <strong>Restart Tomcat</strong></p>
+        <p>
+ Restart Tomcat to load the Lenya webapp.
+ </p>
   </li>
   <li>
     <p>
@@ -225,7 +194,7 @@ $TOMCAT_HOME/bin > ./startup.sh
     <link href="http://localhost:8080/lenya">http://localhost:8080/lenya</link>
     </p>
   </li>
-</ol>
+    </ol>
 </section>
 </body>
 </document>

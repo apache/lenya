@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: mod_proxy.xml,v 1.2 2004/07/12 03:08:51 michi Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -26,7 +26,7 @@
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
-      <person name="Michael Wechner" email="michi@apache.org"/> 
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors> 
 </header> 
 <body> 

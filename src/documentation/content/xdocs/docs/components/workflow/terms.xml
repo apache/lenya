@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: terms.xml,v 1.1 2004/07/01 23:59:23 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -26,7 +26,7 @@
     <version>0.1</version> 
     <type>Overview document</type> 
     <authors>
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors> 
 </header> 
 <body> 

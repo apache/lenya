@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: release.xml,v 1.2 2004/08/29 22:41:07 michi Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document>
@@ -24,25 +24,12 @@
 		<version/>
 		<type/>
 		<authors>
-			<person name="Thorsten Scherler" email="thorsten@apache.org"/>
+          <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
 		</authors>
 	</header>
 	<body>
 <p>
 The Apache Lenya development community is very proud to announce the 1.2 undergoing incubation release of Apache Lenya after one year of development. 
-</p>
-<p>
-Apache Lenya is an effort undergoing 
-<link href="http://incubator.apache.org/">incubation</link>
- at the 
-<link href="ext:asf">Apache Software Foundation</link>.
-Incubation is required of all newly accepted projects until a further 
-review indicates that the infrastructure, communications, and 
-decision making process have stabilized in a manner consistent 
-with other successful ASF projects. While incubation status is 
-not necessarily a reflection of the completeness or stability of 
-the code, it does indicate that the project has yet to be fully endorsed by the ASF.
-
 </p>
 <p>
 Apache Lenya is an Open-Source Content Management System written in

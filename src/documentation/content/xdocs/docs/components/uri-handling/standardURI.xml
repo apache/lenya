@@ -15,15 +15,15 @@
   limitations under the License.
 -->
 
-<!-- $Id: standardURI.xml,v 1.1 2004/07/01 23:59:22 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document> 
   <header> 
     <title>URI Scheme</title>
     <version major="0" minor="2">Version 0.2</version>
-    <authors><person name="Christian Egli" email="christian.egli@wyona.org"/>
-      <person name="Felix Maeder" email="felix.maeder@wyona.com"/>
+    <authors>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors> 
     <abstract>Proposal for a standardization of URIs which are used
       for CMS functionality. </abstract> 

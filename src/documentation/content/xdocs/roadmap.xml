@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: roadmap.xml,v 1.1 2004/07/01 23:59:23 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -25,7 +25,7 @@
     <version/>
     <type/>
     <authors>
-      <person name="Gregor J. Rothfuss" email="gregor@apache.org"/>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors>
   </header>
   <body>
@@ -46,7 +46,8 @@
 The Lenya roadmap is determined by the Lenya positioning diagram. It specifies the priorities
 and orientation, and shows areas for futher development. The 1.0 release marks the point
 where Lenya is donated to the Apache foundation. Subsequent releases are under the Apache
-umbrella. Items in bold type mark completed items.<br /><br />
+umbrella. Items in bold type mark completed items. This roadmap was created in Spring 2003 and may be out
+    of date.<br /><br />
 <img src="images/live/cms-positioning.png" alt=""/><br /><br />
 
 The positioning diagram defines 8 areas, with a relative weight of 1-7. The current Lenya code base is
@@ -320,7 +321,7 @@ used for bug fixes, e.g. 1.0.2.
 </ul>
 
 </section></section>
-<p>$Id: roadmap.xml,v 1.1 2004/07/01 23:59:23 thorsten Exp $</p>
+<p>$Id$</p>
   </body>
 </document>
 

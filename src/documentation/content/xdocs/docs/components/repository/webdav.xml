@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webdav.xml,v 1.1 2004/07/01 23:59:25 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -26,58 +26,10 @@
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
-      <person name="Michael Wechner" email="michi@apache.org"/> 
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors> 
 </header> 
 <body> 
-
-<section>
-<title>Apache 1</title>
-<p>
-Download the Apache Web Server and WebDAV module source code from the Apache website, e.g. <code>apache_1.3.24.tar.gz</code> and <code>mod_dav-1.0.3-1.3.6.tar.gz</code>.
-Configure and compile mod_dav:
-</p>
-<source>
-<![CDATA[
-wget http://www.webdav.org/mod_dav/mod_dav-1.0.3-1.3.6.tar.gz
-cd /usr/local/src/mod_dav-1.0.3-1.3.6
-./configure --with-apache=/usr/local/src/apache_1.3.24
-make
-make install
-cd /usr/local/src/apache_1.3.24
-find . -name "*dav*" -print
-./configure --prefix=/usr/local/apache --activate-module=src/modules/dav/libdav.a
-(./configure --prefix=/usr/local/apache --enable-module=proxy --activate-module=src/modules/dav/libdav.a)
-make
-su
-make install
-/usr/local/apache/bin/httpd -l
-]]>
-</source>
-
-<p>
-You need to reconfigure <code>httpd.conf</code>, e.g.:
-</p>
-<source>
-<![CDATA[
-DAVLockDB /usr/local/apache/logs/DavLock
-<Directory "/usr/local/build/apache/htdocs">
-Dav On
-]]>
-</source>
-
-<p>
-To see the files open "Konqueror" and type <code>webdav://127.0.0.1:8080</code>.
-</p>
-
-<p>
-More info on <code>mod_dav</code> can be found at
-</p>
-<ul>
-<li><link href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</link></li>
-<li><link href="http://www.ibiblio.org/pub/Linux/docs/HOWTO/other-formats/html_single/Apache-WebDAV-LDAP-HOWTO.html">Apache and DAV with LDAP and SSL</link></li>
-</ul>
-</section>
 
 <section>
 <title>Apache 2</title>
