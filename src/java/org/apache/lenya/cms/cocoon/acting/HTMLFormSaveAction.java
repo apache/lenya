@@ -65,9 +65,12 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
+import org.apache.log4j.Category;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import org.xmldb.common.xml.queries.XObject;
 import org.xmldb.common.xml.queries.XPathQuery;
 import org.xmldb.common.xml.queries.XPathQueryFactory;
@@ -76,7 +79,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.42 2004/02/21 22:33:53 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.43 2004/02/22 00:10:39 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when 
  * namespaces are not declared within the root element. Unfortunately the XSLTs 
@@ -93,8 +96,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 public class HTMLFormSaveAction
     extends AbstractConfigurableAction
     implements ThreadSafe {
-    org.apache.log4j.Category log =
-        org.apache.log4j.Category.getInstance(HTMLFormSaveAction.class);
+    Category log = Category.getInstance(HTMLFormSaveAction.class);
 
     class XUpdateAttributes {
         public String xupdateAttrExpr = "";
@@ -301,8 +303,8 @@ public Map act(
                     }
                 }
 
-                /*  Uncomment this for debugging. Lame i know..
-                 *
+                //  Uncomment this for debugging
+                /*
                                     java.io.StringWriter writer = new java.io.StringWriter();
                                     org.apache.xml.serialize.OutputFormat OutFormat = new org.apache.xml.serialize.OutputFormat("xml", "UTF-8", true);
                                     org.apache.xml.serialize.XMLSerializer serializer = new org.apache.xml.serialize.XMLSerializer(writer, OutFormat);
@@ -310,12 +312,12 @@ public Map act(
                                     log.error(".act(): XUpdate Result: \n"+writer.toString());
                 */
 
-                DocumentHelper.writeDocument(document, file);
 
                 // validate against relax ng after the updates
                 if (schema.isFile()) {
+                    DocumentHelper.writeDocument(document, new File(file.getCanonicalPath() + ".validate"));
                     String message =
-                        validateDocument(schema, file, unnumberTagsXSL);
+                        validateDocument(schema, new File(file.getCanonicalPath() + ".validate"), unnumberTagsXSL);
                     if (message != null) {
                         log.error("RELAX NG Validation failed: " + message);
                         HashMap hmap = new HashMap();
@@ -327,6 +329,8 @@ public Map act(
                 } else {
                     log.warn("No such schema: " + schema.getAbsolutePath());
                 }
+
+                DocumentHelper.writeDocument(document, file);
 
                 // check to see if we save and exit
                 if (request.getParameter("save") != null) {
@@ -607,12 +611,12 @@ private String validateDocument(
         t.transform(
             new StreamSource(file),
             new StreamResult(
-                new File(file.getAbsolutePath() + ".validate")));
+                new File(file.getAbsolutePath() + ".unnumber")));
 
         // Validate
         return RelaxNG.validate(
             schema,
-            new File(file.getAbsolutePath() + ".validate"));
+            new File(file.getAbsolutePath() + ".unnumber"));
     } catch (Exception e) {
         log.error(e);
         return "" + e;

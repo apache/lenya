@@ -14,10 +14,13 @@ import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 
+import org.apache.log4j.Category;
+
 /**
  * Validate XML Document with RELAX NG Schema
  */
 public class RelaxNG {
+    static Category log = Category.getInstance(RelaxNG.class);
 
     /**
      *
@@ -53,9 +56,10 @@ public class RelaxNG {
         ValidationDriver driver = new ValidationDriver(properties.toPropertyMap(), schemaReader);
         if (driver.loadSchema(in)) {
             if (driver.validate(ValidationDriver.uriOrFileInputSource(xml.getAbsolutePath()))) {
-                System.out.println("" + error);
+                log.debug("" + error);
                 return null;
             } else {
+                log.error("" + error);
                 return "" + error;
             }
         } else {
