@@ -18,7 +18,8 @@
 
   <map:resources>
     <map:resource name="skin-read">
-      <map:read src="skins/{forrest:skin-docs}/{path}" mime-type="{mime-type}" />
+<!--      <map:read src="skins/{forrest:skin-docs}/{path}" mime-type="{mime-type}" />-->
+      <map:read src="skins/{forrest:skin}/{path}" mime-type="{mime-type}" />
     </map:resource>
   </map:resources>
 
