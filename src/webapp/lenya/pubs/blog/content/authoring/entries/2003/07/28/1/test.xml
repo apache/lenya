@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unizh:content-document xmlns="http://www.w3.org/1999/xhtml" xmlns:lenya="http://apache.org/cocoon/lenya/document/1.0" xmlns:dc="http://dc.org/2003/" xmlns:unizh="http://unizh.ch/2003/">
+        <!-- the root element indicates the doctype -->
+        <lenya:meta>
+                <dc:title>Dokument- bzw. Seitentitel</dc:title>
+                <dc:description>Abstract</dc:description>
+                <dc:creator>Autor der Dokuments</dc:creator>
+                <dc:subject>Keywords</dc:subject>
+                <dc:publisher>Universität Zürich</dc:publisher>
+                <dc:date>
+                        <dc:created>Creation date</dc:created>
+                        <dc:issued>First published date</dc:issued>
+                </dc:date>
+                <dc:language>de</dc:language>
+                <dc:rights>Universität Zürich</dc:rights>
+        </lenya:meta>
+        <unizh:highlights>
+                <unizh:highlight>
+                        <unizh:highlight-title>Title of the highlight (link allowed)</unizh:highlight-title>
+                        <p>The text of the highlight.</p>
+                        <p>Styles and links are allowed.</p>
+                </unizh:highlight>
+        </unizh:highlights>
+        <body>
+                <unizh:parenttitle/>
+ <!--           <h1>Headline 1</h1> wird durch dc:title eingefuellt -->
+                <anchor/>
+                <p> Paragraph</p>
+                <h2>Lenya is using BXENG (headline 2)</h2>
+                <p>Different <b>text style</b>s can be used: <b>bold</b> or <i>italic</i> or
+                <small>small</small></p>
+                <p>There is also an element <attention>attdddention"</attention>.</p>
+                <p>Links can be set to <a href="http://www.unizh.ch/">external resources</a>
+                as well as to <a href="/studium/mobilitaet/sokrates.html">internal
+                pages</a>.</p>
+                <p>There are also markups: <attention>warning</attention> and cite</p>
+                 <lala src="http://www.unizh.ch/img_uni/unilogo.gif" alt="Logo der Universität Zürich">
+                        <lenya:caption>Caption</lenya:caption>
+                        <lenya:producer>Author</lenya:producer>
+                </lala>
+                <lenya:asset src="anmeldeformular.pdf" mime-type="application/pdf">
+                        <lenya:asset-title>Anmeldeformular für den Sommerkurs</lenya:asset-title>
+                </lenya:asset>
+                <lenya:asset src="briefvorlage.doc" mime-type="application/msword">
+                        <lenya:asset-title>Briefvorlage</lenya:asset-title>
+                </lenya:asset>
+                <h2>Tablessss</h2>
+                <table class="basic">
+                        <caption>Table Title</caption>
+                        <col/>
+                        <col align="center"/>
+                        <col align="right"/>
+                        <tr align="right">
+                                <td>x</td>
+                                <td>y</td>
+                                <td>z</td>
+                        </tr>
+                        <tr align="center">
+                                <td>xx</td>
+                                <td>yy</td>
+                                <td>zz</td>
+                        </tr>
+                </table>
+                <h2>Lists</h2>
+                <h3>Unordered List</h3>
+                <ul class="simple">
+                        <li>This is an unordered list</li>
+                        <li>The xml follows the xhtml standard</li>
+                </ul>
+                <h3>Unordered List</h3>
+                <ol>
+                        <li>This is an ordered list</li>
+                        <li>The xml follows the xhtml standard</li>
+                </ol>
+                <index abstracts="true"/>
+        </body>
+</unizh:content-document>

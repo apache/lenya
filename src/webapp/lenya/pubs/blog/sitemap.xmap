@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.3 2003/08/10 17:39:32 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.4 2003/08/15 09:54:03 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -47,6 +47,17 @@
         <!-- FIXME: can also contain other errors than "not published yet" -->
         <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
         <map:serialize type="html"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <!-- Entries BX Editor -->
+    <map:pipeline>
+      <map:match pattern="*/entries/*/*/*/*/index-bxeng.xml">
+        <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/test.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:handle-errors type="500">
+        <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>
 
