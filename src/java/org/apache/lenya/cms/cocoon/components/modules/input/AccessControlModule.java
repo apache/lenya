@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.10 2003/11/13 16:09:11 andreas Exp $
+$Id: AccessControlModule.java,v 1.11 2003/12/01 16:05:59 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,19 +70,23 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
+import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Machine;
+import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.DefaultAccessController;
+import org.apache.lenya.ac.impl.PolicyAuthorizer;
 
 /**
+ * Input module for access control attributes.
  * 
  * @author egli
- * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class AccessControlModule extends AbstractInputModule implements Serviceable {
 
@@ -90,6 +94,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     public static final String USER_NAME = "user-name";
     public static final String USER_EMAIL = "user-email";
     public static final String IP_ADDRESS = "ip-address";
+    public static final String ROLE_IDS = "role-ids";
 
     public static final String USER_MANAGER = "user-manager";
     public static final String GROUP_MANAGER = "group-manager";
@@ -105,6 +110,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             USER_ID,
             USER_NAME,
             USER_EMAIL,
+            ROLE_IDS,
             USER_MANAGER,
             GROUP_MANAGER,
             ROLE_MANAGER,
@@ -121,10 +127,10 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         Session session = request.getSession();
         Object value = null;
 
-		if (!Arrays.asList(PARAMETER_NAMES).contains(name)) {
-			throw new ConfigurationException("The attribute [" + name + "] is not supported!");
-		}
-		
+        if (!Arrays.asList(PARAMETER_NAMES).contains(name)) {
+            throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+        }
+
         if (session != null) {
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if (identity != null) {
@@ -147,6 +153,22 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                     Machine machine = identity.getMachine();
                     if (machine != null) {
                         value = machine.getIp();
+                    }
+                } else if (name.equals(ROLE_IDS)) {
+                    try {
+                        Role[] roles = PolicyAuthorizer.getRoles(request);
+                        String roleIds = "";
+                        for (int i = 0; i < roles.length; i++) {
+                            if (i > 0) {
+                                roleIds += ",";
+                            }
+                            roleIds += roles[i].getId();
+                        }
+                        value = roleIds;
+                    } catch (AccessControlException e) {
+                        throw new ConfigurationException(
+                            "Obtaining value for attribute [" + name + "] failed: ",
+                            e);
                     }
                 }
             }
