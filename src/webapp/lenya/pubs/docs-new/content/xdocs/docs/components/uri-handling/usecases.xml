@@ -44,8 +44,8 @@
   <!-- confirmation screen -->
   <map:match type="step" pattern="showscreen">
     <map:generate type="serverpages"
-        src="content/publishing/publish-screen-usecase.xsp"/>
-    <map:transform src="xslt/publishing/screen.xsl"/>
+        src="content/publishing/publish-screen.xsp"/>
+    <map:transform src="xslt/publishing/publish-screen.xsl"/>
     <map:serialize/>
   </map:match>
 
@@ -88,45 +88,27 @@
         <th>Comment</th>
       </tr>
        <tr>
-        <td>Add Child</td>
-        <td>add-child</td>
-        <td>showscreen</td>
-        <td>Confirm to add a child document to the current node in the site tree.</td>
-      </tr>
-       <tr>
-        <td></td>
-        <td></td>
-        <td>add-child</td>
-        <td></td>
-      </tr>
-       <tr>
-        <td>Add Sibling</td>
-        <td>add-sibling</td>
-        <td>showscreen</td>
-        <td>Confirm to add a sibling document to the current node in the site tree.</td>
-      </tr>
-       <tr>
         <td>Reject Approval</td>
-        <td>approval-reject</td>
+        <td>reject</td>
         <td>showscreen</td>
         <td>Confirm to reject a document from approval.</td>
       </tr>
        <tr>
         <td></td>
         <td></td>
-        <td>approval-reject</td>
+        <td>reject</td>
         <td></td>
       </tr>
        <tr>
         <td>Submit for Approval</td>
-        <td>approval-submit</td>
+        <td>submit</td>
         <td>showscreen</td>
         <td>Confirm to submit a document to approval.</td>
       </tr>
        <tr>
         <td></td>
         <td></td>
-        <td>approval-submit</td>
+        <td>submit</td>
         <td></td>
       </tr>
        <tr>
@@ -139,12 +121,6 @@
         <td></td>
         <td></td>
         <td>archive</td>
-        <td></td>
-      </tr>
-       <tr>
-        <td></td>
-        <td></td>
-        <td>add-sibling</td>
         <td></td>
       </tr>
       <tr>
@@ -237,30 +213,6 @@
         <td>logout</td>
         <td>showscreen</td>
         <td>Confirm the logout</td>
-      </tr>
-       <tr>
-        <td>Move Down</td>
-        <td>move-down</td>
-        <td>showscreen</td>
-        <td>Confirm to move a document downwards in the site tree.</td>
-      </tr>
-       <tr>
-        <td></td>
-        <td></td>
-        <td>move-down</td>
-        <td></td>
-      </tr>
-       <tr>
-        <td>Move Up</td>
-        <td>move-up</td>
-        <td>showscreen</td>
-        <td>Confirm to move a document upwards in the site tree.</td>
-      </tr>
-       <tr>
-        <td></td>
-        <td></td>
-        <td>move-up</td>
-        <td></td>
       </tr>
        <tr>
         <td>Paste</td>

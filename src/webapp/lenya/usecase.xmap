@@ -947,64 +947,6 @@
         
         <!-- Info area use cases start here -->
         
-        <map:match pattern="add-child" type="usecase">
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/add-child.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/add-child.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          <map:match pattern="add-child" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
-          </map:match>
-        </map:match>
-        
-
-        
-        <map:match pattern="add-sibling" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/add-sibling.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/add-sibling.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="add-sibling" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
-          </map:match>
-          
-        </map:match>
-        
-        
-        <map:match pattern="approval-reject" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/approval-reject.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/approval-reject.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="approval-reject" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
-          </map:match>
-          
-        </map:match>
-        
-        
-        <map:match pattern="approval-submit" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/approval-submit.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/approval-submit.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="approval-submit" type="step">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
-          </map:match>
-          
-        </map:match>
-        
-        
         <map:match pattern="archive" type="usecase">
           
           <map:match pattern="showscreen" type="step">
