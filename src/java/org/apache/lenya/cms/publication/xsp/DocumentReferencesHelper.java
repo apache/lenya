@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.9 2003/10/30 15:21:33 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.10 2003/10/31 15:26:59 egli Exp $
 <License>
 
  ============================================================================
@@ -63,6 +63,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.cocoon.ProcessingException;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
@@ -73,13 +75,14 @@ import org.apache.lenya.cms.publication.PathToDocumentIdMapper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
+import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.search.Grep;
 
 /**
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class DocumentReferencesHelper {
 
@@ -160,19 +163,21 @@ public class DocumentReferencesHelper {
      * Find a list of document-ids which have references to the current
      * document.
      * 
-     * @return an <code>array</code> of document-ids if there are references, 
+     * @return an <code>array</code> of documents if there are references, 
      * an empty <code>array</code> otherwise 
      * 
      * @throws ProcessingException if the search for references failed.
      */
-    public String[] getReferences(String area) throws ProcessingException {
+    public Document[] getReferences(String area) throws ProcessingException {
 
-        ArrayList documentIds = new ArrayList();
+        ArrayList documents = new ArrayList();
         Publication publication = pageEnvelope.getPublication();
         DocumentIdToPathMapper mapper = publication.getPathMapper();
         if (mapper instanceof PathToDocumentIdMapper) {
             PathToDocumentIdMapper fileMapper = (PathToDocumentIdMapper)mapper;
             String documentId = null;
+            String language = null;
+            DocumentBuilder builder = publication.getDocumentBuilder();
             File[] inconsistentFiles;
             try {
                 inconsistentFiles =
@@ -186,70 +191,83 @@ public class DocumentReferencesHelper {
                             publication,
                             area,
                             inconsistentFiles[i]);
-                    documentIds.add(documentId);
+                    language = fileMapper.getLanguage(inconsistentFiles[i]);
+                    if (language == null) {
+                        language = "";
+                    }
+                    String url =
+                        builder.buildCanonicalUrl(
+                            publication,
+                            area,
+                            documentId,
+                            language);
+                    documents.add(builder.buildDocument(publication, url));
                 }
             } catch (IOException e) {
                 throw new ProcessingException(e);
             } catch (DocumentDoesNotExistException e) {
                 throw new ProcessingException(e);
+            } catch (DocumentBuildException e) {
+                throw new ProcessingException(e);
             }
         }
-        return (String[])documentIds.toArray(new String[documentIds.size()]);
-    }
-
-    /**
-     * Build an URL given the current publication and prefix and an area 
-     * and a document-id.
-     * 
-     * @param area the area of the document for which we're requesting the URL
-     * @param documentId the document-id of the document for which we're requesting the URL
-     * 
-     * @return the canonical URL of the document-id in the given area in the 
-     * current publication and context.
-     */
-    public String getURL(String area, String documentId) {
-        Publication pub = pageEnvelope.getPublication();
-		DocumentBuilder builder = pub.getDocumentBuilder();
-        String prefix = pageEnvelope.getContext();
-
-        return prefix + builder.buildCanonicalUrl(pub, area, documentId);
+        return (Document[])documents.toArray(new Document[documents.size()]);
     }
 
     /**
      * Find all internal references in the current document to documents which have
      * not been published yet.
      * 
-     * @return an <code>array</code> of document-ids of references from the 
-     * current document to documents which have not been published yet.
+     * @return an <code>array</code> of <code>Document</code> of references 
+     * from the current document to documents which have not been published yet.
      *
      * @throws ProcessingException if the current document cannot be opened.
      */
-    public String[] getInternalReferences() throws ProcessingException {
+    public Document[] getInternalReferences() throws ProcessingException {
         ArrayList unpublishedReferences = new ArrayList();
         SiteTree sitetree;
         Pattern internalLinkPattern = getInternalLinkPattern();
+        Publication publication = pageEnvelope.getPublication();
+        DocumentBuilder builder = publication.getDocumentBuilder();
         try {
-            sitetree =
-                pageEnvelope.getPublication().getSiteTree(
-                    Publication.LIVE_AREA);
+            sitetree = publication.getSiteTree(Publication.LIVE_AREA);
             String[] internalLinks =
                 Grep.findPattern(
                     pageEnvelope.getDocument().getFile(),
                     internalLinkPattern,
                     1);
+            String[] internalLinksLanguages =
+                Grep.findPattern(
+                    pageEnvelope.getDocument().getFile(),
+                    internalLinkPattern,
+                    2);
+
             for (int i = 0; i < internalLinks.length; i++) {
                 String docId = internalLinks[i];
-                if (sitetree.getNode(docId) == null) {
-                    // the docId has not been published
-                    unpublishedReferences.add(docId);
+                // trim the leading '_'
+                String language = internalLinksLanguages[i].substring(1);
+                SiteTreeNode documentNode = sitetree.getNode(docId);
+                if (documentNode == null
+                    || documentNode.getLabel(language) == null) {
+                    // the docId has not been published for the given language
+                    String url =
+                        builder.buildCanonicalUrl(
+                            publication,
+                            Publication.AUTHORING_AREA,
+                            docId,
+                            language);
+                    unpublishedReferences.add(
+                        builder.buildDocument(publication, url));
                 }
             }
         } catch (SiteTreeException e) {
             throw new ProcessingException(e);
         } catch (IOException e) {
             throw new ProcessingException(e);
+        } catch (DocumentBuildException e) {
+            throw new ProcessingException(e);
         }
-        return (String[])unpublishedReferences.toArray(
-            new String[unpublishedReferences.size()]);
+        return (Document[])unpublishedReferences.toArray(
+            new Document[unpublishedReferences.size()]);
     }
 }
