@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.6 2003/07/25 16:44:25 edith Exp $
+$Id: DefaultSiteTreeTest.java,v 1.7 2003/08/27 14:05:23 egli Exp $
 <License>
 
  ============================================================================
@@ -234,8 +234,6 @@ public class DefaultSiteTreeTest extends TestCase {
     	
     	siteTree.addNode("/hi", labels1, null, null, false);
 
-		Label label3 = new Label("Ha", "en");
-		Label label4 = new Label("He", "en");
 		Label[] labels2 = { label1, label2};
 
 		siteTree.addNode("/hi/ho", labels2, null, null, false);

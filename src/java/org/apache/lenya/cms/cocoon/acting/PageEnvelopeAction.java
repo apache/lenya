@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeAction.java,v 1.12 2003/07/30 15:03:25 gregor Exp $
+$Id: PageEnvelopeAction.java,v 1.13 2003/08/27 14:03:35 egli Exp $
 <License>
 
  ============================================================================
@@ -56,9 +56,6 @@ $Id: PageEnvelopeAction.java,v 1.12 2003/07/30 15:03:25 gregor Exp $
 package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.cocoon.acting.AbstractAction;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
@@ -90,7 +87,6 @@ public class PageEnvelopeAction extends AbstractAction {
         org.apache.cocoon.environment.SourceResolver resolver, java.util.Map objectModel,
         String str, org.apache.avalon.framework.parameters.Parameters parameters)
         throws java.lang.Exception {
-        Request request = ObjectModelHelper.getRequest(objectModel);
         PageEnvelope envelope = null;
 
         try {

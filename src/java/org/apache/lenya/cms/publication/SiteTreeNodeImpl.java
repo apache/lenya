@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.14 2003/08/25 17:42:08 edith Exp $
+$Id: SiteTreeNodeImpl.java,v 1.15 2003/08/27 14:04:37 egli Exp $
 <License>
 
  ============================================================================
@@ -73,8 +73,8 @@ import java.util.List;
  * 
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
- * @author $Author: edith $
- * @version $Revision: 1.14 $
+ * @author $Author: egli $
+ * @version $Revision: 1.15 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -178,7 +178,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         NodeList children = node.getChildNodes();
 
         for (int i = 0; i < children.getLength(); i++) {
-            NamedNodeMap attributes = children.item(i).getAttributes();
             Node child = children.item(i);
 
             if ((child.getNodeType() == Node.ELEMENT_NODE)
@@ -260,7 +259,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
             NodeList children = node.getChildNodes();
 
             for (int i = 0; i < children.getLength(); i++) {
-                NamedNodeMap attributes = children.item(i).getAttributes();
                 Node child = children.item(i);
 
                 if ((child.getNodeType() == Node.ELEMENT_NODE)
