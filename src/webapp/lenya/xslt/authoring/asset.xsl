@@ -143,7 +143,7 @@
                   </i18n:param>
                 </i18n:translate>:
               </td>
-              <td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
+              <td><input class="lenya-form-element" type="file" name="properties.asset.data" onchange="imagepreview(this)"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
             </tr>
             <tr><td>&#160;</td></tr>
             <tr>
