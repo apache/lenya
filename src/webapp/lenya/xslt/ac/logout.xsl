@@ -10,6 +10,8 @@
 <xsl:output version="1.0" indent="yes"/>
 
 <xsl:param name="publication_name"/>
+<xsl:param name="contextprefix"/>
+
 <xsl:variable name="copyright">copyright &#169; 2003-2004 Apache Software Foundation</xsl:variable>
 
 <xsl:template match="/">
@@ -44,6 +46,12 @@ LOGOUT from the <xsl:call-template name="pubname" /> Publication
   
 <xsl:apply-templates select="referer"/>
 <xsl:apply-templates select="no_referer"/>
+
+  <div class="lenya-box">
+    <div class="lenya-box-body">
+      <a href="{$contextprefix}/{$publication_name}/authoring/index.html">Login to Authoring Area</a>
+    </div>
+  </div>
 
   <div class="lenya-box">
     <div class="lenya-box-title">Your history</div>

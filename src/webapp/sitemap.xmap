@@ -239,6 +239,7 @@
         <map:generate type="serverpages" src="lenya/content/ac/logout.xsp"/>
         <map:transform src="lenya/xslt/ac/logout.xsl">
           <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
           <map:call resource="style-cms-page"/>
       </map:match>
