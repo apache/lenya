@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: History.java,v 1.21 2004/04/13 22:04:35 joerg Exp $  */
+/* $Id: History.java,v 1.22 2004/04/21 12:07:36 andreas Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -82,10 +82,11 @@ public abstract class History implements WorkflowListener {
 
             Element historyElement = helper.getDocument().getDocumentElement();
             historyElement.setAttribute(WORKFLOW_ATTRIBUTE, workflowId);
-            
-            Element initialVersionElement = createInitialVersionElement(helper, situation, workflowId);
+
+            Element initialVersionElement =
+                createInitialVersionElement(helper, situation, workflowId);
             historyElement.appendChild(initialVersionElement);
-            
+
             DocumentHelper.writeDocument(helper.getDocument(), file);
         } catch (Exception e) {
             throw new WorkflowException(e);
@@ -147,7 +148,10 @@ public abstract class History implements WorkflowListener {
     public WorkflowInstanceImpl getInstance() throws WorkflowException {
         if (this.instance == null) {
             if (!isInitialized()) {
-                throw new WorkflowException("The workflow history has not been initialized!");
+                throw new WorkflowException(
+                    "The workflow history has not been initialized: The file ["
+                        + getHistoryFile()
+                        + "] is missing.");
             }
 
             WorkflowInstanceImpl instance = createInstance();
@@ -201,15 +205,17 @@ public abstract class History implements WorkflowListener {
      */
     protected Element createInitialVersionElement(
         NamespaceHelper helper,
-        Situation situation, String workflowId) throws WorkflowException {
+        Situation situation,
+        String workflowId)
+        throws WorkflowException {
         Element versionElement = createVersionElement(helper, situation);
-        
+
         WorkflowInstanceImpl instance = createInstance();
         instance.setWorkflow(workflowId);
-        
+
         StateImpl initialState = (StateImpl) instance.getWorkflow().getInitialState();
         versionElement.setAttribute(STATE_ATTRIBUTE, initialState.getId());
-        
+
         return versionElement;
     }
 
@@ -231,7 +237,7 @@ public abstract class History implements WorkflowListener {
         versionElement.setAttribute(EVENT_ATTRIBUTE, event.getName());
         return versionElement;
     }
-    
+
     /**
      * Creates a version element based on a situation.
      * @param helper The namespace helper of the history document.
@@ -394,14 +400,14 @@ public abstract class History implements WorkflowListener {
             if (directory.exists()
                 && directory.isDirectory()
                 && directory.listFiles().length == 0) {
-                directory.delete();    
-                }
-            
+                directory.delete();
+            }
+
         } catch (IOException e) {
             throw new WorkflowException(e);
         }
     }
-    
+
     /**
      * Restores a version from an XML element.
      * @param helper The namespace helper.
@@ -409,11 +415,12 @@ public abstract class History implements WorkflowListener {
      * @return A version.
      * @throws WorkflowException when something went wrong.
      */
-    protected Version restoreVersion(NamespaceHelper helper, Element element) throws WorkflowException {
+    protected Version restoreVersion(NamespaceHelper helper, Element element)
+        throws WorkflowException {
         if (!element.getLocalName().equals(VERSION_ELEMENT)) {
             throw new WorkflowException("Invalid history XML!");
         }
-        
+
         Event event = null;
         String eventId = element.getAttribute(EVENT_ATTRIBUTE);
         if (eventId != null && !"".equals(eventId)) {
@@ -422,11 +429,11 @@ public abstract class History implements WorkflowListener {
 
         String stateId = element.getAttribute(STATE_ATTRIBUTE);
         State state = getInstance().getWorkflowImpl().getState(stateId);
-        
+
         Version version = new Version(event, state);
         return version;
     }
-    
+
     /**
      * Returns the versions of this history.
      * @return An array of versions.
@@ -437,7 +444,8 @@ public abstract class History implements WorkflowListener {
 
         NamespaceHelper helper = getNamespaceHelper();
         Element documentElement = helper.getDocument().getDocumentElement();
-        Element[] versionElements = getNamespaceHelper().getChildren(documentElement, VERSION_ELEMENT);
+        Element[] versionElements =
+            getNamespaceHelper().getChildren(documentElement, VERSION_ELEMENT);
 
         for (int i = 0; i < versionElements.length; i++) {
             Version version = restoreVersion(helper, versionElements[i]);
@@ -445,7 +453,7 @@ public abstract class History implements WorkflowListener {
         }
         return (Version[]) versions.toArray(new Version[versions.size()]);
     }
-    
+
     /**
      * Deletes the history.
      * @throws WorkflowException when something went wrong.
@@ -455,13 +463,13 @@ public abstract class History implements WorkflowListener {
         if (!isInitialized()) {
             throw new WorkflowException("The workflow history is not initialized!");
         }
-        
+
         boolean deleted = getHistoryFile().delete();
-        
+
         if (!deleted) {
             throw new WorkflowException("The workflow history could not be deleted!");
         }
-        
+
     }
 
 }
