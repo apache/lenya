@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!-- $Id: config.xml,v 1.17 2003/12/02 13:20:58 andreas Exp $ -->
+<!-- $Id: config.xml,v 1.18 2003/12/04 12:57:27 andreas Exp $ -->
 <config>
     <files>
         <input>
@@ -66,7 +66,7 @@
         -->
 
         <button name="sub" col="4" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
-        <button name="super" col="5" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
+        <button name="sup" col="5" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
         <button name="link" col="0" row="5" action="InsertLink"/>
         <button name="create_table" col="2" row="5" action="InsertTable"/>
         <button name="Unordered_List" col="3" row="2" action="UnorderedList"/>
