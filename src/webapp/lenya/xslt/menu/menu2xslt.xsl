@@ -45,7 +45,7 @@
     <html>
       <head>
         <xso:call-template name="title"/>
-        <script src="{$contextprefix}/lenya/menu/menu.js" type="text/javascript"> </script>
+        <script src="{$contextprefix}/lenya/menu/menu.js" type="text/javascript">&#160;</script>
         <link href="{$contextprefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
         <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
       </head>
@@ -72,6 +72,12 @@
   
   </xsl:if>
 
+    <xso:template match="xhtml:script">
+        <xso:copy>
+           <xso:apply-templates select="@*|node()"/>
+           <xso:if test="not(.//text())"><xso:text>&#160;</xso:text></xso:if>
+        </xso:copy>
+    </xso:template>
 
   <xso:template match="@*|node()">
     <xso:copy>
