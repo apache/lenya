@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cocoon-xconf.xsl,v 1.44 2004/04/22 10:01:31 gregor Exp $ -->
+<!-- $Id: cocoon-xconf.xsl,v 1.44.2.1 2004/05/16 10:45:33 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -102,6 +102,21 @@
     <component-instance name="date-i18n" logger="core.modules.input" class="org.apache.cocoon.components.modules.input.DateInputModule">
       <format>yyyy-M-dd HH:mm:ss Z</format>
     </component-instance>       
+
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match="source-factories">
+     
+  <xsl:copy>
+    <xsl:copy-of select="@*"/>
+    <xsl:apply-templates/>
+    
+    <component-instance
+        class="org.apache.lenya.cms.cocoon.components.source.impl.LenyaSourceFactory"
+        logger="lenya.source"
+        name="lenya"
+        scheme="context:"/>
 
   </xsl:copy>
 </xsl:template>
