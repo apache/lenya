@@ -15,7 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: generic.xsp 155806 2005-03-01 17:55:42Z andreas $ -->
+
+<!--+
+    | This XSP builds that standard CMS menu
+    | It moved here from $PUB_HOME/config/menus/generic.xsp
+    +-->
 
 <xsp:page 
     language="java" 
@@ -132,8 +137,8 @@
       
       <menu i18n:attr="name" name="Workflow">
         <block>
-          <item uc:usecase="workflow.submit" href="?"><i18n:text>Submit</i18n:text></item>
-          <item uc:usecase="workflow.reject" href="?"><i18n:text>Reject</i18n:text></item>
+          <item uc:usecase="workflow.submit" wf:event="submit" href="?"><i18n:text>Submit</i18n:text></item>
+          <item uc:usecase="workflow.reject" wf:event="reject" href="?"><i18n:text>Reject</i18n:text></item>
           <item uc:usecase="workflow.publish" href="?"><i18n:text>Publish</i18n:text></item>
           <item uc:usecase="workflow.deactivate" href="?"><i18n:text>Deactivate</i18n:text></item>
        </block>

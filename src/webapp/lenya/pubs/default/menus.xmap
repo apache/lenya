@@ -39,14 +39,16 @@
       </map:match>
       
       <!-- document type: links -->
+      <!--
       <map:match type="doctype" pattern="links">
         <map:generate type="serverpages" src="config/menus/links.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
+      -->
       
       <!-- all other document types: xhtml, ... -->
       <map:match pattern="**">
-        <map:generate type="serverpages" src="fallback://config/menus/generic.xsp"/>
+        <map:generate type="serverpages" src="fallback://lenya/cmsmenus.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       
