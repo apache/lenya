@@ -77,7 +77,7 @@
 
      <map:match pattern="body-**.xml">
        <map:generate src="cocoon:/{1}.xml"/>
-       <map:transform src="../../../../documentation/stylesheets/document2html.xsl"/>
+       <map:transform src="xslt/document2html.xsl"/>
        <map:serialize/>
      </map:match>
 
