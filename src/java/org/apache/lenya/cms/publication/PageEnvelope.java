@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.38 2003/08/11 14:46:28 gregor Exp $
+$Id: PageEnvelope.java,v 1.39 2003/08/12 13:32:25 egli Exp $
 <License>
 
  ============================================================================
@@ -79,6 +79,7 @@ public class PageEnvelope {
 	public static final String DEFAULT_LANGUAGE = "default-language";
     public static final String DOCUMENT_ID = "document-id";
     public static final String DOCUMENT_URL = "document-url";
+    public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     public static final String DOCUMENT_FILE = "document-file";
     public static final String DOCUMENT_PATH = "document-path";
     public static final String DOCUMENT_LANGUAGE = "document-language";
@@ -90,6 +91,7 @@ public class PageEnvelope {
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
 	public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+
     private String context;
 
     /**
@@ -261,6 +263,7 @@ public class PageEnvelope {
             PageEnvelope.PUBLICATION,
             PageEnvelope.DOCUMENT_ID,
             PageEnvelope.DOCUMENT_URL,
+            PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
             PageEnvelope.DOCUMENT_PATH,
 			PageEnvelope.DEFAULT_LANGUAGE,
             PageEnvelope.DOCUMENT_LANGUAGE,
