@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  $Id: cmsui.xml,v 1.22 2004/02/18 18:08:16 roku Exp $
+  $Id: cmsui.xml,v 1.23 2004/02/18 19:26:09 roku Exp $
   
   @author Rolf Kulemann (roku at apache.org)
   
@@ -147,4 +147,13 @@ c
   <message key="Change Password">Change Password</message>
   <message key="Edit Group Affiliation">Edit Group Affiliation</message>
   
+    <!-- IP Range Administration -->
+  <message key="IP Range">IP&#160;Range</message>
+  <message key="IP Range ID">IP&#160;Range&#160;ID</message>
+  <message key="Network Address">Network&#160;Address</message>
+  <message key="Subnet Mask">Subnet&#160;Mask</message>
+  <message key="IP Range Administration">IP&#160;Range&#160;Administration</message>
+  <message key="Add IP Range">Add&#160;IP&#160;Range</message>
+  <message key="IP Range Profile">IP&#160;Range&#160;Profile</message>
+ 
 </catalogue>

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  $Id: ipranges.xsl,v 1.2 2004/02/18 19:26:08 roku Exp $
+-->
+
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
     
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
+  <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
   
   
   <xsl:template match="/">
@@ -17,7 +23,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>IP Range Administration</page:title>
+      <page:title><i18n:text>IP Range Administration</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates/>
       </page:body>
@@ -31,9 +37,9 @@
     </div>
     <table cellspacing="0" class="lenya-table">
       <tr>
-        <th>IP range ID</th>
-        <th>Name</th>
-        <th>Groups</th>
+        <th><i18n:text>IP Range ID</i18n:text></th>
+        <th><i18n:text>Name</i18n:text></th>
+        <th><i18n:text>Groups</i18n:text></th>
         <th></th>
       </tr>
       <xsl:apply-templates select="iprange">
@@ -55,7 +61,7 @@
       <td style="vertical-align: middle">
         <form method="GET" action="ipranges/lenya.usecase.delete_iprange">
           <input name="iprange-id" type="hidden" value="{id}"/>
-          <input type="submit" value="Delete"/>
+          <input i18n:attr="value" type="submit" value="Delete"/>
         </form>
       </td>
     </tr>
@@ -78,7 +84,7 @@
   
   <xsl:template name="add-iprange">
     <form method="GET" action="ipranges/lenya.usecase.add_iprange">
-      <input type="submit" value="Add IP Range"/>
+      <input i18n:attr="value" type="submit" value="Add IP Range"/>
     </form>
   </xsl:template>
   

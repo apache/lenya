@@ -88,19 +88,21 @@ function iprange_change_profile(iprangeId, newRange) {
 		
 	    while (true) {
 	    
-	    	var url;
+	    	var url, pageTitle;
 	    	if (newRange == true) {
 	    		url = "ipranges/profile.xml";
+	    		pageTitle = "Add IP Range";
 	    	}
 	    	else {
 	    		url = "ipranges/" + iprangeId + "/profile.xml";
+	    		pageTitle = "Edit IP Range";	    		
 	    	}
-	    
+	        
 		    cocoon.sendPageAndWait(url, {
 		    	"iprange-id" : iprangeId,
 		    	"name" : name,
 		    	"description" : description,
-		    	"page-title" : "Edit IP Range",
+		    	"page-title" : pageTitle,
 		    	"net" : java.util.Arrays.asList(net),
 		    	"net-errors" : java.util.Arrays.asList(netErrors),
 		    	"mask" : java.util.Arrays.asList(mask),
@@ -213,7 +215,7 @@ function iprange_delete_iprange() {
 		
 		while (showPage) {
 			cocoon.sendPageAndWait("ipranges/confirm-delete-common.xml", {
-				"type" : "IP range",
+				"type" : "IP Range",
 				"id" : ipRangeId,
 				"name" : name
 			});

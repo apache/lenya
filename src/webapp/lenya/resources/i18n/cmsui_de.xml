@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.25 2004/02/18 18:08:16 roku Exp $
+   $Id: cmsui_de.xml,v 1.26 2004/02/18 19:26:09 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -128,7 +128,7 @@
   <message key="IP Ranges">IP&#160;Regeln</message>
   <message key="Edit Profile">Profil&#160;&#228;ndern</message>
   <message key="Edit Members">Mitglieder&#160;bearbeiten</message>
-  <message key="Group Administration">Gruppenverwaltung</message>
+  <message key="Group Administration">Gruppenadministration</message>
   <message key="Add Group">Gruppe hinzuf&#252;gen</message>
   <message key="Group Data">Gruppendetails</message>
   
@@ -139,13 +139,22 @@
   <message key="LDAP ID">LDAP&#160;ID</message>
   <message key="Confirm password">Passwort&#160;best&#228;tigen</message>
   <message key="Add User">Benutzer hinzuf&#252;gen</message>
-  <message key="User Administration">Benutzerverwaltung</message>
+  <message key="User Administration">Benutzeradministration</message>
   <message key="User Details">Benutzerdetails</message>
   <message key="All Groups">Alle Gruppen</message>
   <message key="User Groups">Benutzergruppen</message>
   <message key="Group Affiliation">Gruppenmitgliedschaften</message>
   <message key="Change Password">Passwort &#228;ndern</message>
   <message key="Edit Group Affiliation">Mitgliedschaften &#228;ndern</message>
+  
+    <!-- IP Range Administration -->
+  <message key="IP Range">IP&#160;Bereich</message>
+  <message key="IP Range ID">IP&#160;Bereichs-ID</message>
+  <message key="Network Address">IP&#160;Adresse</message>
+  <message key="Subnet Mask">Netzwerkmaske</message>
+  <message key="IP Range Administration">IP Administration</message>
+  <message key="Add IP Range">IP Bereich&#160;hinzuf&#252;gen</message>
+  <message key="IP Range Profile">IP Bereichsprofil</message>
   
 </catalogue>
 

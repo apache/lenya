@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  $Id: profile.xsl,v 1.3 2004/02/18 19:26:08 roku Exp $
+-->
+
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
     
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
+  <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
   
   
   <xsl:template match="/">
@@ -17,7 +23,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title><xsl:value-of select="title"/></page:title>
+      <page:title><i18n:text><xsl:value-of select="title"/></i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="iprange"/>
       </page:body>
@@ -32,7 +38,7 @@
     <td valign="top">
     
     <div class="lenya-box">
-      <div class="lenya-box-title">IP Range</div>
+      <div class="lenya-box-title"><i18n:text>IP Range Profile</i18n:text></div>
       <div class="lenya-box-body">
         
         <form method="GET" action="{/page/continuation}.continuation">
@@ -42,7 +48,7 @@
             
             <tr>
               
-              <td class="lenya-entry-caption">IP&#160;range&#160;ID</td>
+              <td class="lenya-entry-caption"><i18n:text>IP Range ID</i18n:text></td>
               <td>
                  <xsl:choose>
                    <xsl:when test="@new = 'true'">
@@ -55,13 +61,13 @@
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Name</td>
+              <td class="lenya-entry-caption"><i18n:text>Name</i18n:text></td>
               <td>
                 <input class="lenya-form-element" name="name" type="text" value="{name}"/>
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Description</td>
+              <td class="lenya-entry-caption"><i18n:text>Description</i18n:text></td>
               <td>
                 <input class="lenya-form-element" name="description" type="text" value="{description}"/>
               </td>
@@ -82,13 +88,13 @@
             </SCRIPT>
 -->            
             <tr>
-            	<td class="lenya-entry-caption">Network&#160;Address</td>
+            	<td class="lenya-entry-caption"><i18n:text>Network Address</i18n:text></td>
             	<td>
             		<xsl:apply-templates select="net/number"/>
               </td>
             </tr>
             <tr>
-            	<td class="lenya-entry-caption">Subnet&#160;Mask</td>
+            	<td class="lenya-entry-caption"><i18n:text>Subnet Mask</i18n:text></td>
             	<td>
             		<xsl:apply-templates select="mask/number"/>
               </td>
@@ -96,9 +102,9 @@
             <tr>
               <td/>
               <td>
-                <input name="submit" type="submit" value="Submit"/>
+                <input i18n:attr="value"  name="submit" type="submit" value="Save"/>
                 &#160;
-                <input name="cancel" type="submit" value="Cancel"/>
+                <input i18n:attr="value" name="cancel" type="submit" value="Cancel"/>
               </td>
             </tr>
           </table>
