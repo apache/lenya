@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.200 2004/04/04 08:31:30 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.201 2004/04/04 08:32:52 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -432,7 +432,7 @@
           </map:match>
 
           <!-- 
-               Epoz uses PUT to transmit the edited file for save.
+               Kupu uses PUT to transmit the edited file for save.
                The problem is, Kupu removes namespace information. 
                That means we can not use the StreamGenerator, because 
                it complains about an unbound element.			
