@@ -38,6 +38,9 @@
               <cvs href="subversion.html" label="Subversion Access"/>
               <install href="source_version.html" label="Installation Instructions"/>
           </installation>
+          <concepts href="concepts/" label="Concepts">
+            <usecase-framework href="usecase-framework/" label="Usecase Framework"/>
+          </concepts>
           <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
       </docu1.4>
   <!--    <documentation href="docs/" label="Documentation" tab="docs">
@@ -179,6 +182,7 @@
     <images href="images/">
         <live href="live/">
             <navigation.img href="navigation.png"/>
+            <usecase-framework-architecture.img href="usecase-framework-architecture.png"/>
         </live>
     </images>
     <external-refs>

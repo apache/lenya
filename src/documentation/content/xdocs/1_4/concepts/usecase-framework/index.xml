@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
+<document> 
+  <header> 
+    <title>The Usecase Framework</title> 
+  </header>
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+      <p>
+        The <em>usecase framework</em> in Lenya 1.4 is a simple framework to implement usecases using JX templates and Java.
+        This approach is an "85% solution". It enables the user to implement a big range of common usecases.
+      </p>
+      <note>
+        Some special complex usecases might require a custom flowscript, in this case you can't use this framework.
+      </note>
+    </section>
+    
+    <section>
+      <title>Directory Structure</title>
+      
+      <section>
+        <title>The Lenya Core</title>
+<source xml:space="preserve">
+$LENYA_WEBAPP
+  /lenya/usecases                     usecase-related files
+                 /usecase.xmap        usecase dispatching sitemap
+                 /usecases.js         flowscript for usecase control flow
+                 /admin               Lenya admin usecases
+                       /addUser.jx    JX templates for usecase views
+                 ...                  more Lenya core usecases
+</source>
+      </section>
+      
+       <section>
+        <title>Your Publication</title>
+<source xml:space="preserve">
+$PUB_HOME
+  /lenya/usecases                     usecase-related files
+                 /editHeadline.jx     JX templates for usecase views
+  /java/src/...                       usecase handler classes
+</source>
+      </section>
+      
+    </section>
+    
+    
+    <section>
+      <title>Architecture</title>
+      <p>
+        A usecase request - denoted by the request parameter <em>lenya.usecase</em> - is dispatched by <code>$LENYA_WEBAPP/lenya/usecases/usecase.xmap</code>.
+        All usecases are handled by a single flowscript <code>$LENYA_WEBAPP/lenya/usecases/usecases.js</code>. This keeps javascript maintenance costs at a minimum.
+      </p>
+      <p>
+        The flowscript <code>usecases.js</code> determines the usecase handler class using the <code>org.apache.lenya.cms.usecase.UsecaseResolver</code>.
+        All business code operations are delegated to the usecase handler class.
+      </p>
+      <figure src="site:usecase-framework-architecture.img" alt="Usecase framework architecture"/>
+
+    </section>
+    
+    <section>
+      <title>The Contract Between Flowscript And Usecase Handler</title>
+      <p>
+        The usecase handler class has to implement the interface <code>org.apache.lenya.cms.usecase.Usecase</code>.
+        The methods of this interface are called in a certain order when the usecase is invoked:
+      </p>
+      <ol>
+        <li><code>setup(String sourceUrl, Situation situation);</code> Initializes the handler.</li>
+        <li><code>isInteractive()</code> Asks is the usecase is interactive, i.e. if a confirmation screen should be presented to the user.</li>
+        <li><code>checkPreconditions()</code> This allows the handler to check if the usecase may be invoked in this situation.</li>
+      </ol>
+    </section>
+    
+    <section>
+      <title>Implementing a Custom Usecase</title>
+      
+      <section>
+        <title>Prerequisites</title>
+        <ol>
+          <li>Choose a name to identify the usecase, e.g. editHeadline. It is possible to group usecases
+              using "." as delimiter, for instance <em>article.editHeadline</em>.
+          </li>
+        </ol>
+      </section>
+      
+      <section>
+        <title>Add a Menu Item</title>
+        <note>
+          This step is necessary if you want to call the usecase from the Lenya menubar.
+        </note>
+        <ol>
+          <li>Add the corresponding menu item:
+            <source xml:space="preserve"><![CDATA[<item uc:usecase="article.editHeadline">Edit Headline</item>]]></source>
+          </li>
+        </ol>
+      </section>
+      
+      <section>
+        <title>Implement the Usecase Handler Class</title>
+        <ol>
+          <li>Choose a name for your business logic class, e.g. <code>org.myproject.lenya.usecases.EditHeadline</code>.</li>
+          <li>The class must implement the interface <code>org.apache.lenya.cms.usecase.Usecase</code>.</li>
+          <li>
+            To simplify development, you can extend one of the following classes:
+            <ul>
+              <li><code>org.apache.lenya.cms.usecase.AbstractUsecase</code></li>
+              <li><code>org.apache.lenya.cms.usecase.DocumentUsecase</code> (only for usecases invoked on document pages)</li>
+              <li><code>org.apache.lenya.cms.usecase.SiteUsecase</code></li>
+            </ul>
+            They have built-in support for the unit-of-work pattern (which will evolve into
+            an ACID transaction someday) as well as functionality specific to the area they are
+            supposed to be used with, e.g. the site area.
+          </li>
+          <li>
+            Add the usecase handler class declaration to an XPatch file, e.g. <code>$PUB_HOME/config/usecases.xconf</code>:
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'article.editHeadline']">
+    <component-instance name="article.editHeadline"
+                        logger="lenya.usecases.editHeadline"
+                        class="org.myproject.lenya.usecases.EditHeadline"/>
+  </xconf>]]></source>
+          </li>
+        </ol>
+      </section>
+      
+      <section>
+        <title>Implement the View</title>
+        <ol>
+          <li>The view for a usecase is implemented using a JX template.</li>
+          <li>
+            The output of the view has to be a Lenya page:
+<source xml:space="preserve"><![CDATA[  <page:page
+    xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+    >
+  
+    <page:title><i18n:text>Edit Headline</i18n:text></page:title>
+    <page:body>
+    
+      <form>
+        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+        <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+
+        ...
+
+      </form>
+
+    </page:body>
+  </page:page>]]></source>
+          </li>
+          <li>Take care of adding the hidden <em>lenya.usecase</em> and <em>lenya.continuation</em> fields as shown above.</li>
+          <li>The template has to be located at <code><![CDATA[$PUB_HOME/lenya/usecases/<usecase>.jx]]></code>
+            (replace . with /), for instance
+          </li>
+        </ol>
+      </section>
+      
+    </section>
+    
+    <section>
+      <title>Overriding Core Usecases in Publications</title>
+      
+      <section>
+        <title>Overriding Usecase Handler Classes</title>
+      
+        <p>
+          The usecase resolver, which is responsible for obtaining the handler class for a usecase,
+          looks first if the current publication overrides the core usecase handler.
+          This can be done by declaring a usecase called <code><![CDATA[<pub-id>/<usecase-name>]]></code>,
+          for instance <code>mypub/admin.addUser</code>. To implement a core usecase using a custom
+          handler class, you need to
+        </p>
+        <ol>
+          <li>Implement the handler class and put it in <code>$PUB_HOME/java/src</code>.
+          In most cases, you will extend the core usecase handler class to inherit the basic functionality.</li>
+          <li>
+            Declare it in an <em>xpatch</em> file, for instance <code>$PUB_HOME/config/usecases.xconf</code>:
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'mypub/admin.addUser']">
+  <component-instance name="mypub/admin.addUser"
+                      logger="lenya.usecases.editHeadline"
+                      class="org.myproject.lenya.usecases.AddUser"/>
+</xconf>]]></source>
+          </li>
+        </ol>
+        <p>
+          Now, when the usecase is invoked from inside the publication mypub, the custom
+          handler class will be used.
+        </p>
+      </section>
+      
+      <section>
+        <title>Overriding JX Templates</title>
+        <p>
+          Overriding the JX template of a usecase follows the
+          <link href="../publication-templating/index.html">publication templating</link> principle.
+          You just have to put a JX template with the same name in <code>$PUB_HOME/lenya/usecases</code>,
+          for instance <code>$PUB_HOME/lenya/usecases/admin/addUser.jx</code>.
+        </p>
+      </section>
+      
+    </section>
+    
+  </body>
+</document>
