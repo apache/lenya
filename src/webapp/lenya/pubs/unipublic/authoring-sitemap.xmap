@@ -5,7 +5,12 @@
   <!-- =========================== Components ================================ -->
 
   <map:components>
+<!--
     <map:generators default="file"/>
+-->
+    <map:generators default="file">
+      <map:generator  name="servletproxy" src="org.wyona.cms.cocoon.generation.ServletProxyGenerator"/>
+    </map:generators>                                                                                                                       
     <map:transformers default="xslt">
       <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
         <publication type="unipublic"/>
@@ -25,7 +30,7 @@
         <backupDirectory href="docs/publication/rcbak"/>
       </map:action>
 <!--
-      <map:action name="revision-controller" src="org.wyona.cms.cocoon.acting.RevisionControllerAction" logger="sitemap.action.revision-controller">
+      <map:action name="rollback" src="org.wyona.cms.cocoon.acting.RollbackAction">
         <rcmlDirectory href="docs/publication/rcml"/>
         <backupDirectory href="docs/publication/rcbak"/>
       </map:action>
@@ -76,6 +81,21 @@
   <!-- =========================== Pipelines ================================ -->
 
   <map:pipelines>
+    <!-- Rollback -->
+    <map:pipeline>
+      <map:match pattern="rollback/*/*/*/*/index.xml">
+        <map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
+          <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/> 
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
+          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+        </map:generate>
+        <map:transform src="../../stylesheets/cms/Page/rollback.xsl"/>
+        <map:serialize type="html"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    <!-- /Rollback -->
 
     <!-- Bitflux -->
     <map:pipeline>
