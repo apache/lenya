@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: page2xhtml.xsl,v 1.18 2004/08/24 12:12:25 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -42,6 +42,7 @@
   <html>
     <head>
       <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
+      <meta content="Apache Lenya" name="generator"/>
       <title><xsl:value-of select="//lenya:meta/dc:title"/></title>
     </head>	
     <body>
