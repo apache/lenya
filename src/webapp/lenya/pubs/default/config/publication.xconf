@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xconf,v 1.10 2004/07/22 13:44:53 andreas Exp $ -->
+<!-- $Id$ -->
 
 <publication>
   <languages>
@@ -26,7 +26,10 @@
   <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
   <breadcrumb-prefix/>
   
-  <!--
+  <!-- 
+       For information about these settings, read 
+       http://lenya.apache.org/docs/1_2_x/components/deployment/proxying.html
+
   <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
   <proxy area="live" ssl="false" url="http://www.host.com/default"/>
   <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
