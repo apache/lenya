@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.33 2003/07/23 13:21:11 gregor Exp $
+$Id: PageEnvelope.java,v 1.34 2003/07/25 15:22:10 gregor Exp $
 <License>
 
  ============================================================================
@@ -86,6 +86,7 @@ public class PageEnvelope {
     public static final String DOCUMENT_FILE = "document-file";
     public static final String DOCUMENT_PATH = "document-path";
     public static final String DOCUMENT_LANGUAGE = "document-language";
+	public static final String DOCUMENT_ABSTRACT = "document-abstract";
     public static final String DOCUMENT_DC_TITLE = "document-dc-title";
     public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
     public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
@@ -248,6 +249,14 @@ public class PageEnvelope {
         return getDocument().getArea();
     }
 
+	/**
+	 * Returns the abstract.
+	 * @return a <code>String</code> value
+	 */
+	public String getDocumentAbstract() {
+			return getDocument().getAbstract();
+	}
+
     /**
      * Returns the document-id.
      * @return a <code>String</code> value
@@ -287,7 +296,7 @@ public class PageEnvelope {
 	 * Returns the DC title for a document
 	 * @return a <code>String<code> value
 	 */
-	public String getDocumentDCTitle()  throws PageEnvelopeException {
+	public String getDocumentDCTitle() throws PageEnvelopeException {
 		try {
 			return getDocument().getDublinCore().getTitle();
 		} catch (PublicationException e) {
@@ -299,7 +308,7 @@ public class PageEnvelope {
 	 * Returns the DC subject for a document
 	 * @return a <code>String<code> value
 	 */
-	public String getDocumentDCSubject()  throws PageEnvelopeException {
+	public String getDocumentDCSubject() throws PageEnvelopeException {
 		try {
 			return getDocument().getDublinCore().getSubject();
 		} catch (PublicationException e) {
@@ -311,7 +320,7 @@ public class PageEnvelope {
 	 * Returns the DC creator for a document
 	 * @return a <code>String<code> value
 	 */
-	public String getDocumentDCCreator()  throws PageEnvelopeException {
+	public String getDocumentDCCreator() throws PageEnvelopeException {
 		try {
 			return getDocument().getDublinCore().getCreator();
 		} catch (PublicationException e) {
@@ -323,7 +332,7 @@ public class PageEnvelope {
 	 * Returns the DC description for a document
 	 * @return a <code>String<code> value
 	 */
-	public String getDocumentDCDescription()  throws PageEnvelopeException {
+	public String getDocumentDCDescription() throws PageEnvelopeException {
 		try {
 			return getDocument().getDublinCore().getDescription();
 		} catch (PublicationException e) {
@@ -335,7 +344,7 @@ public class PageEnvelope {
 	 * Returns the DC rights for a document
 	 * @return a <code>String<code> value
 	 */
-	public String getDocumentDCRights()  throws PageEnvelopeException {
+	public String getDocumentDCRights() throws PageEnvelopeException {
 		try {
 			return getDocument().getDublinCore().getRights();
 		} catch (PublicationException e) {
@@ -364,6 +373,7 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_URL,
             PageEnvelope.DOCUMENT_PATH,
             PageEnvelope.DOCUMENT_LANGUAGE,
+			PageEnvelope.DOCUMENT_ABSTRACT,
             PageEnvelope.DOCUMENT_DC_TITLE,
             PageEnvelope.DOCUMENT_DC_CREATOR,
             PageEnvelope.DOCUMENT_DC_SUBJECT,

@@ -31,7 +31,7 @@
 <lenya-info:info>
   <lenya-info:overview>
         <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
-		<lenya-info:abstract></lenya-info:abstract>
+		<lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-abstract"/></lenya-info:abstract>
   		<lenya-info:status></lenya-info:status>
         <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
    		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>

@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.15 2003/07/23 19:16:56 andreas Exp $
+$Id: PageEnvelopeModule.java,v 1.16 2003/07/25 15:22:11 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,8 +61,6 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PublicationException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -132,6 +130,8 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 value = envelope.getDocumentFile();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
                 value = envelope.getDocument().getLanguage();
+			} else if (name.equals(PageEnvelope.DOCUMENT_ABSTRACT)) {
+				value = envelope.getDocument().getAbstract();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
                 value = envelope.getDocument().getDublinCore().getTitle();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {

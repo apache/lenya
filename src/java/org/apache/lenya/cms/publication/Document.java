@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.10 2003/07/23 13:21:11 gregor Exp $
+$Id: Document.java,v 1.11 2003/07/25 15:22:10 gregor Exp $
 <License>
 
  ============================================================================
@@ -102,6 +102,12 @@ public interface Document {
      * @return A string denoting the language.
      */
     String getLanguage();
+
+	/**
+	 * Returns the abstract of this document.
+	 * @return A string denoting the abstract.
+	 */
+	String getAbstract();
 
 	/**
 	 * Returns the date of the last modification of this document.

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.15 2003/07/24 18:39:24 gregor Exp $
+$Id: DefaultDocument.java,v 1.16 2003/07/25 15:22:10 gregor Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,9 @@ $Id: DefaultDocument.java,v 1.15 2003/07/24 18:39:24 gregor Exp $
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import org.apache.lenya.xml.DocumentHelper;
+
+import org.w3c.dom.NodeList;
 
 import java.util.Date;
 
@@ -68,7 +71,10 @@ public class DefaultDocument implements Document {
 	private String id;
 	private Publication publication;
 	private DublinCore dublincore;
+	private NodeList nodelist;
 	
+	private static final String PAGEENVELOPE_NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
+
     /**
      * Creates a new instance of DefaultDocument.
      * @param publication The publication the document belongs to.
@@ -122,6 +128,29 @@ public class DefaultDocument implements Document {
 	 */
 	public Date getLastModified() {
 		return new Date(getFile().lastModified());
+	}
+
+	private String getPageEnvelopeNode(String node) {
+		String string;
+			try {
+				nodelist = DocumentHelper.readDocument(getFile()).getElementsByTagNameNS(PAGEENVELOPE_NAMESPACE, node);
+				try {
+					string = nodelist.item(0).getFirstChild().getNodeValue();
+				} catch (Exception e) {
+								string = "";
+				}
+			} catch (Exception e) {
+				string = e.toString();
+			}
+			
+			return string;
+		}
+
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getLastModified()
+	 */
+	public String getAbstract() {
+		return getPageEnvelopeNode("abstract");
 	}
 
 	/**
