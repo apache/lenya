@@ -71,6 +71,7 @@
 </table>
   </form>
 
+  <xsl:apply-templates select="search/exception"/>
   <xsl:apply-templates select="results"/>
 </body>
 </html>
@@ -78,7 +79,6 @@
 
 <xsl:template match="results">
   <h3>Results (Publication <xsl:value-of select="../search/publication-id"/>)</h3>
-  <xsl:apply-templates select="../search/exception"/>
   <xsl:choose>
     <xsl:when test="hits">
 <p>
@@ -104,11 +104,11 @@
 
 <xsl:template match="hit">
 <tr>
-  <td><xsl:value-of select="@pos"/></td>
+  <td valign="top"><xsl:value-of select="@pos"/></td>
 <!--
   <td><xsl:value-of select="position()"/></td>
 -->
-  <td><xsl:value-of select="score/@percent"/>%</td>
+  <td valign="top"><xsl:value-of select="score/@percent"/>%</td>
   <xsl:choose>
     <xsl:when test="path">
       <td>File: <xsl:value-of select="path"/></td>
@@ -143,7 +143,11 @@
 </xsl:template>
 
 <xsl:template match="excerpt">
-...&#160;<xsl:value-of select="."/>&#160;...
+...&#160;<xsl:apply-templates/>&#160;...
+</xsl:template>
+
+<xsl:template match="word">
+<b><xsl:value-of select="."/></b>
 </xsl:template>
 
 <xsl:template match="no-excerpt">

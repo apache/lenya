@@ -44,7 +44,7 @@ public class ReTokenizeFile{
  *
  */
   public String reTokenize(File file) throws Exception{
-    System.out.println("ReTokenizeFile.reTokenize(File): Re-tokenize "+file);
+    //System.out.println("ReTokenizeFile.reTokenize(File): Re-tokenize "+file);
     TokenStream ts=new StandardAnalyzer().tokenStream(new HTMLParser(file).getReader());
 
     Token token=null;
@@ -57,12 +57,12 @@ public class ReTokenizeFile{
 /**
  *
  */
-  public String getExcerpt(File file,String[] words) throws Exception{
+  public String getExcerpt(File file,String[] words) throws FileNotFoundException, IOException{
     if(file.getName().substring(file.getName().length()-4).equals(".pdf")){
       file=new File(file.getAbsolutePath()+".txt");
       }
 
-    System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Get excerpt from "+file);
+    //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Get excerpt from "+file);
 
     java.io.Reader reader=new HTMLParser(file).getReader();
     char[] chars=new char[1024];
@@ -92,7 +92,7 @@ public class ReTokenizeFile{
     for(int i=0;i<words.length;i++){
       index=html.toLowerCase().indexOf(words[i].toLowerCase());
       if(index >= 0){
-        System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Word matched: "+words[i]);
+        //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Word matched: "+words[i]);
 
         int offset=100;
         int start=index-offset;
@@ -104,7 +104,22 @@ public class ReTokenizeFile{
         }
       }
 
-    System.out.println("ReTokenizeFile.getExcerpt(File,String[]): No word matches: "+index);
+    //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): No word matches: "+index);
     return null;
+    }
+/**
+ *
+ */
+  public String emphasizeAsXML(String string,String[] words){
+    String emphasizedString="... Hello <word>World</word>! ...";
+    for(int i=0;i<words.length;i++){
+      int index=string.toLowerCase().indexOf(words[i].toLowerCase());
+      if(index >= 0){
+        emphasizedString=string.substring(0,index)+"<word>"+words[i]+"</word>"+string.substring(index+words[i].length());
+        }
+      }
+
+    return "<excerpt>"+emphasizedString+"</excerpt>";
+    //return "<excerpt>... hallo <word>Levi</word>. Wie sp&auml;t ist es? Gute ...</excerpt>";
     }
   }
