@@ -11,8 +11,7 @@
     
     <xsp:include>org.apache.lucene.analysis.Analyzer</xsp:include>
     <xsp:include>org.apache.lucene.analysis.standard.StandardAnalyzer</xsp:include>
-    <xsp:include>org.apache.lucene.store.*</xsp:include>
-    <xsp:include>org.apache.lucene.document.*</xsp:include>
+    <xsp:include>org.apache.lucene.document.Document</xsp:include>
     <xsp:include>org.apache.lucene.queryParser.QueryParser</xsp:include>
     <xsp:include>org.apache.lucene.queryParser.MultiFieldQueryParser</xsp:include>
     <xsp:include>org.apache.lucene.search.Hits</xsp:include>
@@ -20,8 +19,10 @@
     <xsp:include>org.apache.lucene.search.IndexSearcher</xsp:include>
     <xsp:include>org.apache.lucene.search.Query</xsp:include>
     
-    <xsp:include>java.util.*</xsp:include>
-    <xsp:include>java.io.*</xsp:include>
+    <xsp:include>java.io.FileNotFoundException</xsp:include>
+    <xsp:include>java.util.Enumeration</xsp:include>
+    <xsp:include>java.util.StringTokenizer</xsp:include>
+    <xsp:include>java.util.Vector</xsp:include>
 
     <xsp:include>org.apache.lenya.lucene.ReTokenizeFile</xsp:include>
     <xsp:include>org.apache.lenya.lucene.Publication</xsp:include>
@@ -54,11 +55,14 @@
       try{
         Searcher searcher=new IndexSearcher(indexDir.getAbsolutePath());
         Analyzer l_analyzer=new StandardAnalyzer();
-        QueryParser l_queryParser = new QueryParser(field,l_analyzer);
-        //MultiFieldQueryParser l_queryParser = new MultiFieldQueryParser("contents", l_analyzer);
+
+        QueryParser l_queryParser = new QueryParser(field,l_analyzer); // Single field
+        //MultiFieldQueryParser l_queryParser = new MultiFieldQueryParser(fields[0], l_analyzer); // Multiple fields
+
         l_queryParser.setOperator(QueryParser.DEFAULT_OPERATOR_AND);
-        Query l_query = l_queryParser.parse(query_string);
-        //Query l_query = l_queryParser.parse(query_string,fields,l_analyzer);
+
+        Query l_query = l_queryParser.parse(query_string); // Single field
+        //Query l_query = l_queryParser.parse(query_string,fields,l_analyzer); // Multiple fields
 
         hits=searcher.search(l_query);
         if(hits != null){
@@ -143,49 +147,55 @@
         end=new Integer(endString).intValue();
         }
 
-      String fields_para = request.getParameter(publication_id + ".fields");
-      if (fields_para == null) { // all indices have the same fields
-          fields_para = request.getParameter("dummy-index-id.fields");
-      }
-
-      if (fields_para != null) {
-          field = fields_para;
-          fields = new String[1];
-          fields[0] = field;
-      }
-
-
-/*
-      if(fields_para.equals("title")){
-        fields=new String[1];
-        fields[0]="title";
-
-        field="title";
-        }
-      if(fields_para.equals("license")){
-        fields=new String[1];
-        fields[0]="license";
-
-        field="license";
-        }
-      else{
-        fields=new String[2];
-        fields[0]="contents";
-        fields[1]="title";
-
-        field="contents";
-        }
-*/
-
-
-
-      // Set index and excerpt dir
+      // Find the number of the selected publication
       int whichPublication=0;
       for (int i = 0;i &lt; pubs.length;i++) {
           if (pubs[i].id.equals(publication_id)) {
               whichPublication = i;
           }
       }
+
+
+
+
+
+      // Get all search fields
+      Vector myFields = new Vector();
+      Enumeration parameterNames = request.getParameterNames();
+      while(parameterNames.hasMoreElements()){
+          String parameterName=(String)parameterNames.nextElement();
+          String value=request.getParameter(parameterName);
+
+          if (parameterName.indexOf(".fields") > 0) { // looking for field parameters
+              StringTokenizer st = new StringTokenizer(parameterName, ".");
+              int length = st.countTokens();
+              String fieldPublicationId = st.nextToken();
+	      if (fieldPublicationId.equals(publication_id) || fieldPublicationId.equals("dummy-index-id")) {
+	          st.nextToken(); // Ignore "fields" token
+                  if (length == 2) { // radio or select
+                      myFields.addElement(value);
+                  } else if (length == 3) { // checkbox
+                      myFields.addElement(st.nextToken());
+                  } else {
+                      // something is wrong
+                  }
+              }
+          }
+      }
+
+      if (myFields.size() > 0) {
+          field = (String)myFields.elementAt(0);
+          fields = new String[myFields.size()];
+          for (int i = 0; i &lt; myFields.size(); i++) {
+              fields[i] = (String)myFields.elementAt(i);
+          }
+      }
+
+
+
+
+
+      // Set index and excerpt dir
       String param_index_dir=pubs[whichPublication].indexDir;
       if(param_index_dir.charAt(0) == '/'){
         indexDir=new File(param_index_dir);
@@ -236,7 +246,7 @@
 <!-- Search Results -->
       <search>
         <xsp:logic>
-          java.util.Enumeration para_names=request.getParameterNames();
+          Enumeration para_names=request.getParameterNames();
           if(para_names.hasMoreElements()){
             <request-parameters>
               <xsp:logic>
@@ -293,7 +303,13 @@
               }
             <start><xsp:expr>start</xsp:expr></start>
             <end><xsp:expr>end</xsp:expr></end>
-            <fields><field><xsp:expr>fields_para</xsp:expr></field></fields>
+            <fields>
+              <xsp:logic>
+              for (int i = 0; i &lt; fields.length; i++) {
+                <field><xsp:expr>fields[i]</xsp:expr></field>
+              }
+              </xsp:logic>
+            </fields>
 
       try{
         Analyzer ll_analyzer=new StandardAnalyzer();
