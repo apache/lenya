@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.14 2003/07/23 13:21:21 gregor Exp $
+$Id: WorkflowFactory.java,v 1.15 2003/07/29 14:24:13 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,7 +57,6 @@ package org.apache.lenya.cms.workflow;
 
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.publication.Document;
@@ -152,9 +151,8 @@ public class WorkflowFactory {
      */
     public Situation buildSituation(Map objectModel) throws WorkflowException {
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession(true);
 
-        List roleList = (List) request.getSession().getAttribute(Role.class.getName());
+        List roleList = (List) request.getAttribute(Role.class.getName());
 
         if (roleList == null) {
             throw new WorkflowException("Request does not contain roles!");
