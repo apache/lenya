@@ -85,4 +85,11 @@ public interface IPRange extends Accreditable, Item, Groupable {
      * @return A boolean value.
      */
     boolean contains(Machine machine);
+
+    /**
+     * Save the IP range.
+     * @throws AccessControlException if the save failed
+     */
+    void save() throws AccessControlException;
+    
 }
