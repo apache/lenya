@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Mulitilingual Document handling</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Christian Egli" email="egli@apache.org"/>
+    </authors>
+  </header>
+
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+
+      <p>Mulitilingual Document handling deals with documents of
+      different languages. This affects virtually every part of Lenya,
+      namely many aspects of work flow such as creation, publication,
+      deactivation, deletion. It also affects access control, meta
+      data, etc.</p>
+
+      <p>The multilingual capabilities are not a mandatory feature of
+      Lenya. You can easily create monolingual publication by simply
+      replacing a few properties in
+      <code>publication.xconf</code>.</p>
+
+      <p>The multilingual capabilities are deeply ingrained in the
+      core of Lenya and as such a conceptual overview has to delve
+      into many areas of Lenya. The main parts of the multilingual
+      capabilities are as follows:</p>
+
+      <dl>
+	<dt>Site tree</dt>
+	<dd>The <link href="../publication/siteTree.html">site
+	tree</link> contains information about documents. It has been
+	expanded to also contain information about different language
+	versions of the same document. Different language versions of
+	the same document share the same
+	<code>document-id</code>.</dd>
+
+	<dt>Default language</dt> 
+	<dd>A publication has a default language. This is the language
+	in which the document is created. However it is not
+	necessarily the case that there is always a document version
+	in the default language as the user is allowed to remove any
+	language version even the one for the default language.<br/>
+	If you specify an URL without a language suffix you are
+	redirected to the default language document.</dd>
+
+	<dt>publication.xconf</dt>
+	<dd>This is where the available languages and the default
+	language are specified.</dd>
+
+	<dt>page-envelope</dt> 
+	<dd>The <link
+	href="../publication/pageenvelopemodule.html">page
+	envelope</link> exports document specific information such as
+	document-id via an input module. Naturally language specific
+	information for the current document is also available via the
+	page envelope.
+	</dd>
+
+	<dt>Redirection</dt>
+	<dd>If you request a document <code>foo.html</code> in a
+	multilingual publication you will internally be redirected to
+	<code>foo_en.html</code> if "en" is the default language.</dd>
+
+	<dt>Special cases</dt>
+	<dd>Some special care has to be taken when removing language
+	versions. The current implementation does not allow the user
+	to remove all language versions of a document. There always
+	has to be at least one language version.
+	</dd>
+      </dl>
+
+
+    </section>
+
+    <section>
+      <title>Implementation</title>
+
+      <p></p>
+
+      <section>
+	<title>Site tree</title>
+
+	<p>The site tree contains nodes for each document. Each node
+	can contain multiple <code>label</code> nodes for each
+	language version of the document.</p>
+
+	<source><![CDATA[
+<node id="doctypes">
+	<label xml:lang="de">Dokumenttypen</label>
+	<label xml:lang="en">Document types</label>
+	<node id="1column">
+		<label xml:lang="de">1 Spalte</label>
+	</node>
+</node>
+]]></source>
+
+	<p>The classe <code>SiteTree</code> and
+	<code>SiteTreeNode</code> provide interfaces to the nodes and
+	the corresponding label nodes.</p>
+
+      </section>
+
+      <section>
+	<title>publication.xconf</title>
+
+	<p>The <code>languages</code> node in
+	<code>publication.xconf</code> defines the languages that are
+	available for this publication and also defines the default language.</p>
+	<source><![CDATA[
+<languages>
+  <language default="true">de</language>
+  <language>en</language>
+</languages>
+]]></source>
+
+	<p>This information is available via the
+	<code>Publication</code> class
+	(<code>getDefaultLanguage()</code> and
+	<code>getLanguages()</code> methods).</p>
+      </section>
+
+      <section>
+	<title>page-envelope</title>
+
+	<p>The <link
+	href="../publication/pageenvelopemodule.html">page-envelope
+	input module</link> exports language related information,
+	namely <code>default-language</code>,
+	<code>document-label</code>, <code>document-language</code>,
+	<code>document-languages</code> and
+	<code>document-languages-csv</code>.</p>
+      </section>
+
+      <section>
+	<title>Redirection</title>
+
+	<p>The <code>DefaultDocumentBuilder</code> which implements the
+	<code>DocumentBuilder</code> interface, takes care of
+	redirecting language agnostic URLs (such as
+	<code>foo.html</code>) to language aware links
+	(<code>foo_en.html</code>), i.e. language agnostic links are
+	redirected to the language aware link with the default language.</p>
+      </section>
+
+      <section>
+	<title>Addition and removal</title>
+
+	<p>More language versions are added with the "Create new
+	language version" screen. Existing language versions can be
+	removed with the "Remove Language" screen. These screens are
+	generated by <code>create-language.xsp</code>,
+	<code>create-language.xsl</code>, <code>removelabel.xsp</code>
+	and <code>removelabel.xsl</code>.</p>
+
+	<p>The creation of a new language version is done via the
+	<code>create-language</code> target which uses the
+	<code>InsertLabelTask</code> ant task to insert a label in the
+	site tree.</p>
+
+	<p>The removal of a language version is done via the
+	<code>remove-language</code> target, which uses the
+	<code>RemoveLabelTask</code> ant task (which removes the label
+	from the site tree).</p>
+      </section>
+    </section>
+
+    <section>
+      <title>Involved classes, XSPs and XSLTs</title>
+
+      <p>The following classes, XSPs and XSLTs are involved in
+      multilingual document handling:</p>
+      <dl>
+	<dt>org.apache.lenya.cms.publication.SiteTree and org.apache.lenya.cms.publication.SiteTreeNode</dt>
+	<dd>These interfaces provide acces to the label nodes.</dd>
+	<dt>org.apache.lenya.cms.publication.Publication</dt>
+	<dd>Provides access to the default language and to all
+	available languages.</dd>
+	<dt>org.apache.lenya.cms.publication.PageEnvelope</dt>
+	<dd>Exports language related information such as
+	<code>default-language</code>, <code>document-language</code>,
+	etc.</dd>
+	<dt>org.apache.lenya.cms.publication.DefaultDocumentBuilder</dt>
+	<dd>Builds a document with the given language. The default
+	implementation also takes care of redirecting
+	<code>foo.html</code> to <code>foo_en.html</code>.</dd>
+<!-- 	FIXME: move this to the core -->
+	<dt>$publication-id/lenya/content/authoring/create-language.xsp,
+	$publication-id/lenya/xslt/authoring/create-language.xsl
+	</dt>
+	<dd>Generate the "Create new language version" screen.</dd>
+	<dt>src/webapp/lenya/content/authoring/removelabel.xsp, src/webapp/lenya/xslt/authoring/removelabel.xsl
+	</dt>
+	<dd>Generate the "Remove Language" screen.</dd>
+	<dt>org.apache.lenya.cms.ant.InsertLabelTask</dt>
+	<dd>Ant task to add a label to the site tree.</dd>
+	<dt>org.apache.lenya.cms.ant.RemoveLabelTask</dt>
+	<dd>Ant task to remove a label from the site tree.</dd>
+	<dt>$publication-id/config/tasks/targets.xml</dt>
+	<dd>Defines the <code>create-language</code> and the
+	<code>remove-language</code> target which
+	handle the addition and removal of language versions of a document.</dd>  
+      </dl>
+    </section>
+  </body>
+</document>
