@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<project default="main" basedir=".">
+
+<path id="classpath">
+  <fileset dir="src/cocoon/WEB-INF/lib">
+    <include name="*.jar"/>
+  </fileset>
+</path>
+
+<target name="main" description="Says Hi" depends="crawl, index">
+  <echo>Hi</echo>
+</target>
+
+<target name="init">
+  <echo message="Init"/>
+  <property name="crawl.classpath" value="build/wyona-cms/classes:src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar"/>
+<!--
+  <path id="">
+  </path>
+-->
+</target>
+
+<target name="crawl" description="Crawl" depends="init">
+  <echo>Crawl: CLASSPATH=${classpath}</echo>
+<!--
+  <echo>Crawl: CLASSPATH=${crawl.classpath}</echo>
+-->
+<!--
+  <index/>
+-->
+</target>
+
+<target name="index" description="Index">
+  <echo>Index</echo>
+</target>
+
+<taskdef name="index" classname="org.wyona.search.crawler.IterativeHTMLCrawler">
+  <classpath>
+    <fileset dir="./" includes="build/wyona-cms/classes"/>
+  </classpath>
+</taskdef>
+</project>
