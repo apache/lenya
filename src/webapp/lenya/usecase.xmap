@@ -644,6 +644,7 @@
           
           <map:match pattern="copy" type="step">
             <map:act type="session-propagator">
+              <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
               <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
               <map:parameter name="org.apache.lenya.cms.info.firstarea" value="{request-param:area}"/>
               <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
@@ -750,9 +751,20 @@
           </map:match>
           
           <map:match pattern="paste" type="step">
-            <map:act type="session-propagator">
-              <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
-            </map:act>
+            <map:select type="request-parameter">
+              <map:parameter name="parameter-name" value="task-id"/>  
+              <map:when test="moveDocument">
+                <map:act type="session-propagator">
+                  <map:parameter name="org.apache.lenya.cms.info.firstdocid" value=""/>
+                  <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
+                </map:act>
+              </map:when>
+              <map:otherwise>
+                <map:act type="session-propagator">
+                  <map:parameter name="org.apache.lenya.cms.info.cutdocumentid" value=""/>
+                </map:act>
+              </map:otherwise>
+            </map:select>
             <map:act type="task">
               <map:redirect-to session="true" uri="{request:requestURI}"/>
             </map:act>
