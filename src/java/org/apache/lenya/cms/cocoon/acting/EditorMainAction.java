@@ -1,5 +1,5 @@
 /*
-$Id: EditorMainAction.java,v 1.22 2003/07/23 13:21:30 gregor Exp $
+$Id: EditorMainAction.java,v 1.23 2003/11/13 13:18:44 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,7 +77,6 @@ import org.xml.sax.SAXException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.CharArrayReader;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -87,7 +86,7 @@ import java.util.Map;
 
 
 /**
- * $Id: EditorMainAction.java,v 1.22 2003/07/23 13:21:30 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.23 2003/11/13 13:18:44 andreas Exp $
  *
  * @author Martin L?thi
  * @version 2002.01.22
@@ -257,9 +256,6 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
 
                 getLogger().debug("**** tempfile=" + tempFile);
                 getLogger().debug("**** editfile=" + editFile);
-
-                File tf = new File(tempFile);
-                boolean success = new File(tf.getParent()).mkdirs();
 
                 // get the Document and copy it to the temporary file
                 Source source = resolver.resolveURI("cocoon:/" + request.getSitemapURI() + ".temp");
