@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:lenya="http://lenya.org/2003/publication"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    >
 
 <xsl:template match="/">
 <html>
@@ -11,13 +15,13 @@
 <body>
   <h1>Lenya - Content Management System</h1>
   
-  <xsl:apply-templates select="/lenya/publications"/>
-  <xsl:apply-templates select="/lenya/xhtml/body"/>
+  <xsl:apply-templates select="/lenya:lenya/lenya:publications"/>
+  <xsl:copy-of select="/lenya:lenya/xhtml:xhtml/xhtml:body"/>
 </body>
 </html>
 </xsl:template>
 
-<xsl:template match="publications" xmlns:lenya="http://lenya.org/2003/publication">
+<xsl:template match="lenya:publications">
 <h2>Publications</h2>
 <!--
 <p>
@@ -27,14 +31,11 @@ efficiently its own publication. The <a href="docs/tutorial/index.html">tutorial
 </p>
 -->
 <ol>
-<xsl:for-each select="publication">
-  <li><a href="{@pid}/introduction.html"><xsl:apply-templates select="lenya:publication/lenya:name"/></a></li>
+<xsl:for-each select="lenya:publication">
+  <li><a href="{@pid}/introduction.html">
+  <xsl:apply-templates select="lenya:publication/lenya:name"/></a></li>
 </xsl:for-each>
 </ol>
-</xsl:template>
-
-<xsl:template match="body">
-  <xsl:copy-of select="*"/>
 </xsl:template>
 
 </xsl:stylesheet>
