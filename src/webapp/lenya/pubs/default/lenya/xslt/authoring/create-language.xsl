@@ -22,34 +22,40 @@
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns="http://www.w3.org/1999/xhtml">
-  
+
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
-  
+
   <xsl:param name="lenya.usecase" select="'create-language'"/>
   <xsl:param name="contextprefix"/>
-  
+
   <xsl:template match="/">
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
-      <page:title><i18n:text>Create new language version</i18n:text></page:title>
+      <page:title>
+        <i18n:text>Create new language version</i18n:text>
+      </page:title>
       <page:body>
         <xsl:apply-templates/>
       </page:body>
     </page:page>
   </xsl:template>
-  
+
   <xsl:template match="parent-child">
-    
+
     <xsl:apply-templates select="exception"/>
-    
+
     <xsl:if test="count(//dc:language) = 0">
       <div class="lenya-box">
-        <div class="lenya-box-title"><i18n:text>New language for existing Document</i18n:text></div>
-        <div class="lenya-box-body">  
+        <div class="lenya-box-title">
+          <i18n:text>New language for existing Document</i18n:text>
+        </div>
+        <div class="lenya-box-body">
           <form method="GET" action="{/parent-child/referer}">
             <table class="lenya-table-noborder">
               <tr>
                 <td>
-                  <p><i18n:text key="default.createdoc.info.all-language-versions-exists"/></p>
+                  <p>
+                    <i18n:text key="default.createdoc.info.all-language-versions-exists"/>
+                  </p>
                 </td>
               </tr>
               <tr>
@@ -65,23 +71,25 @@
 
     <xsl:if test="not(exception) and count(//dc:language) &gt; 0">
       <div class="lenya-box">
-        <div class="lenya-box-title"><i18n:text>New language for existing Document</i18n:text></div>
-        <div class="lenya-box-body">  
-        <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
-        <script Language="JavaScript">
+        <div class="lenya-box-title">
+          <i18n:text>New language for existing Document</i18n:text>
+        </div>
+        <div class="lenya-box-body">
+          <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
+          <script Language="JavaScript">
 function validateForm(theForm)
 {
-	if (!validRequired(theForm["properties.create.child-name"],"Navigation Title"))
-		return false;
+  if (!validRequired(theForm["properties.create.child-name"],"Navigation Title"))
+    return false;
 
-	if (!validRequired(theForm["properties.create.title"],"Document Title"))
-		return false;
-	
-	return true;
+  if (!validRequired(theForm["properties.create.title"],"Document Title"))
+    return false;
+  
+  return true;
 }
-</script>
-          <form method="GET" 
-            action="{/parent-child/referer}" onsubmit="return validateForm(this)">
+          </script>
+          <form method="GET"
+              action="{/parent-child/referer}" onsubmit="return validateForm(this)">
             <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
             <input type="hidden" name="lenya.step" value="create"/>
             <input type="hidden" name="properties.create.document-id" value="{/parent-child/document-id}"/>
@@ -90,31 +98,68 @@ function validateForm(theForm)
             <input type="hidden" name="properties.create.ipaddress" value="{/parent-child/ip-address}"/>
             <table class="lenya-table-noborder">
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Document ID</i18n:text>:</td><td><xsl:value-of select="/parent-child/document-id"/></td>
+                <td class="lenya-form-caption">
+                  <i18n:text>Document ID</i18n:text>:</td>
+                <td>
+                  <xsl:value-of select="/parent-child/document-id"/>
+                </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Navigation Title</i18n:text>*:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
+                <td class="lenya-form-caption">
+                  <i18n:text>Navigation Title</i18n:text>*:</td>
+                <td>
+                  <input class="lenya-form-element" type="text" name="properties.create.child-name"/>
+                </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Language</i18n:text>:</td><td><select class="lenya-form-element"  name="properties.create.new.language"><xsl:apply-templates select="dc:languages"/></select></td>
+                <td class="lenya-form-caption">
+                  <i18n:text>Language</i18n:text>:</td>
+                <td>
+                  <select class="lenya-form-element" name="properties.create.new.language">
+                    <xsl:apply-templates select="dc:languages"/>
+                  </select>
+                </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Creator</i18n:text>:</td><td><input class="lenya-form-element" type="hidden" name="properties.create.creator" value="{/parent-child/dc:creator}"/><xsl:value-of select="/parent-child/dc:creator"/></td>
+                <td class="lenya-form-caption">
+                  <i18n:text>Creator</i18n:text>:</td>
+                <td>
+                  <input class="lenya-form-element" type="hidden" name="properties.create.creator" value="{/parent-child/dc:creator}"/>
+                  <xsl:value-of select="/parent-child/dc:creator"/>
+                </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Subject</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.subject"/></td>
+                <td class="lenya-form-caption">
+                  <i18n:text>Subject</i18n:text>:</td>
+                <td>
+                  <input class="lenya-form-element" type="text" name="properties.create.subject"/>
+                </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Publisher</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.publisher" value="{/parent-child/dc:publisher}"/></td>
+                <td class="lenya-form-caption">
+                  <i18n:text>Publisher</i18n:text>:</td>
+                <td>
+                  <input class="lenya-form-element" type="text" name="properties.create.publisher" value="{/parent-child/dc:publisher}"/>
+                </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Date</i18n:text>:</td><td><input class="lenya-form-element" type="hidden" name="properties.create.date" value="{/parent-child/dc:date}"/><xsl:value-of select="/parent-child/dc:date"/></td>
+                <td class="lenya-form-caption">
+                  <i18n:text>Date</i18n:text>:</td>
+                <td>
+                  <input class="lenya-form-element" type="hidden" name="properties.create.date" value="{/parent-child/dc:date}"/>
+                  <xsl:value-of select="/parent-child/dc:date"/>
+                </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Rights</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.create.rights" value="{/parent-child/dc:rights}"/></td>
+                <td class="lenya-form-caption">
+                  <i18n:text>Rights</i18n:text>:</td>
+                <td>
+                  <input class="lenya-form-element" type="text" name="properties.create.rights" value="{/parent-child/dc:rights}"/>
+                </td>
               </tr>
               <tr>
-                <td>* <i18n:text>required fields</i18n:text></td>
+                <td>* <i18n:text>required fields</i18n:text>
+                </td>
               </tr>
               <tr>
                 <td/>
@@ -129,24 +174,37 @@ function validateForm(theForm)
       </div>
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template match="dc:languages">
     <xsl:for-each select="dc:language">
-      <option><xsl:value-of select="."/></option>
+      <option>
+        <xsl:value-of select="."/>
+      </option>
     </xsl:for-each>
   </xsl:template>
 
 
   <xsl:template match="exception">
-    <font color="red"><i18n:text>EXCEPTION</i18n:text></font><br />
-    <a href="{../referer}"><i18n:text>Back</i18n:text></a><br />
-    <p><i18n:text>Please check the following possible causes of the exception</i18n:text>
+    <font color="red">
+      <i18n:text>EXCEPTION</i18n:text>
+    </font>
+    <br />
+    <a href="{../referer}">
+      <i18n:text>Back</i18n:text>
+    </a>
+    <br />
+    <p>
+      <i18n:text>Please check the following possible causes of the exception</i18n:text>
       <ol>
-	<li><i18n:text key="exception.cause.createdoc.whitespace-in-id"/></li>
-	<li><i18n:text key="exception.cause.createdoc.id-in-use"/></li>
+        <li>
+          <i18n:text key="exception.cause.createdoc.whitespace-in-id"/>
+        </li>
+        <li>
+          <i18n:text key="exception.cause.createdoc.id-in-use"/>
+        </li>
       </ol>
     </p>
   </xsl:template>
   
-  
+
 </xsl:stylesheet>  
