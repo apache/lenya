@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminDeleteAction.java,v 1.1 2003/06/06 13:55:44 egli Exp $
+ * $Id: UserAdminDeleteAction.java,v 1.2 2003/06/06 17:47:30 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -87,7 +87,7 @@ public class UserAdminDeleteAction
 		Request request = ObjectModelHelper.getRequest(objectModel);
 		PageEnvelope envelope = null;
 		try {
-			envelope = new PageEnvelope(resolver, request);
+			envelope = new PageEnvelope(objectModel);
 		} catch (Exception e) {
 			getLogger().error(e.getMessage(), e);
 			return null;

@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminModifyAction.java,v 1.2 2003/06/06 17:23:45 egli Exp $
+ * $Id: UserAdminModifyAction.java,v 1.3 2003/06/06 17:47:05 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -89,7 +89,7 @@ public class UserAdminModifyAction
 		Request request = ObjectModelHelper.getRequest(objectModel);
 		PageEnvelope envelope = null;
 		try {
-			envelope = new PageEnvelope(resolver, request);
+			envelope = new PageEnvelope(objectModel);
 		} catch (Exception e) {
 			getLogger().error(e.getMessage(), e);
 			return null;

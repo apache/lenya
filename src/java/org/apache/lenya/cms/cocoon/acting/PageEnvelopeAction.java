@@ -32,7 +32,7 @@ public class PageEnvelopeAction
         Request request = ObjectModelHelper.getRequest(objectModel);
         PageEnvelope envelope = null; 
         try {
-          envelope = new PageEnvelope(resolver, request);
+          envelope = new PageEnvelope(objectModel);
         }
         catch (Exception e) {
           getLogger().error(e.getMessage(), e);
