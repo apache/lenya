@@ -24,6 +24,7 @@
 
 <h2>Contents</h2>
 <ol>
+  <li><a href="#preamble">Preamble</a></li>
   <li><a href="#introduction">Introduction</a></li>
   <li><a href="#publications">Sample Publications</a></li>
   <li><a href="#tutorial">Tutorial</a></li>
@@ -38,6 +39,18 @@
   </li>
   <li><a href="welcome">Cocoon2</a> (without SVG and FOP)</li>
 </ol>
+
+<a name="preamble"></a>
+<h2>Preamble</h2>
+<p>
+Wyona CMS is the refactored version of XPS (Extensible Publishing System).
+XPS is currently used by Switzerland's most famous newspaper Neue Z&#252;rcher Zeitung
+for their interactive edition <a href="http://www.nzz.ch">NZZ Online</a>. The system
+is being used 7 days a week and 24 hours a day by editors and automatic processes (i.e. nightly
+generation of the online version of the print edition). It is up and running since October 2, 2000.
+XPS was Open Source from the beginning (Apache license). Concerning the know-how within the system, it
+should have become a killer CMS (at least for newspapers), but we made two crucial mistakes: Bad Documentation and a bad installer. We hopefully do a better job this time.
+</p>
 
 <a name="introduction"></a>
 <h2>Introduction</h2>
@@ -74,6 +87,11 @@ Thank you very much for your suggestions and contributions.
 
 <a name="publications"></a>
 <h2>Sample Publications</h2>
+<p>
+We are working on a catalog of sample publications. The idea is that an
+"integrator" can pull out an appropriate publication and reuse it for
+building efficiently its own publication. The <a href="#tutorial">tutorial</a> describes how to do that.
+</p>
 <ol>
   <li><b>Newspaper:</b> <a href="nwt/index.html">New Wyona Times</a></li>
   <li><b>Magazine:</b> <a href="tia/index.html">The Information Architect</a></li>
@@ -81,19 +99,31 @@ Thank you very much for your suggestions and contributions.
   <li><b>Newswire:</b> <a href="http://www.slashdot.org/slashdot.xml">Slashdot</a></li>
   <li><b>Open Source Project:</b> <a href="http://www.wyona.org">wyona.org</a></li>
   <li><b>Conference:</b> <a href="http://conference.wyona.org">First Annual Open Source Content Management Systems Conference</a></li>
-  <li><b>Documentation:</b> Wyona CMS (<a href="http://www.docbook.org">DocBook</a>)</li>
+  <li><b>Documentation:</b> <a href="#docs">Wyona CMS</a> (<a href="http://www.docbook.org">DocBook</a>)</li>
   <li><b>Department:</b> <a href="ethz-mat/index.html">Materials Science</a> (Original Website: <a href="http://mat.ethz.ch">http://mat.ethz.ch</a>, NOTE: The Department of Materials Science does not use Wyona CMS yet)</li>
 </ol>
 
 <a name="tutorial"></a>
 <h2>Tutorial</h2>
 <ol>
+  <li>Copy Approriate Sample Publication
+      <br>(for instance: <code>cp -r wyona/cms/pubs/ethz-mat wyona/cms/pubs/my-pub</code>)</li>
+  <li>Configure sitemap.xmap 
+      <br>(for instance: replace ethz-mat by my-pub)</li>
+  <li>Set Prefix for Stylesheets: wyona/cms/pubs/my-pub/stylesheets/Configuration/read.xsl
+      <br>(for instance: replace ethz-mat by my-pub)</li>
+  <li>Start modifying the XML, XSLT and protected-sitemap.xmap</li>
+</ol>
+<!--
+<ol>
   <li>HTML</li>
   <li>XML</li>
   <li>XSLT</li>
   <li>Sitemap</li>
 </ol>
+-->
 
+<a name="docs"></a>
 <h2>Documentation</h2>
 <a name="userguide"></a>
 <h3>User's Guide</h3>
@@ -149,7 +179,8 @@ Thank you very much for your suggestions and contributions.
       <li>Editing Content
         <ol>
           <li>Wyona's HTML Form Editor</li>
-          <li>Q42's Xopus</li>
+          <li><a href="http://www.q42.nl/products/xopus/">Q42's Xopus</a> (IE5.5)</li>
+          <li><a href="http://www.bitflux.ch">bitflux's Editor</a> (Netscape6.2)</li>
           <li><a href="http://www.realobjects.de">RealObjects edit-on Pro</a></li>
         </ol>
       </li>
@@ -174,7 +205,7 @@ Thank you very much for your suggestions and contributions.
   <li>Event Handling</li>
   <li>Services
     <ol>
-      <li>Spell Checking</li>
+      <li><a href="http://www.canoo.ch/online/germanspellingchecker.html">Spell Checking</a></li>
       <li>Related Content</li>
       <li>Babel Fish</li>
       <li>Highlighting and Linking (Companies, Persons, etc.)</li>
