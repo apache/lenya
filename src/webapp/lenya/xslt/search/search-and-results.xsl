@@ -48,6 +48,23 @@
       </option>
     </select>
 </td></tr>
+<tr><td>
+    Fields
+    <select name="fields">
+      <option value="all">
+        <xsl:if test="search/fields='all'">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        Contents (Title or Body)
+      </option>
+      <option value="title">
+        <xsl:if test="search/fields='title'">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        Title
+      </option>
+    </select>
+</td></tr>
 <tr><td align="right">
     <input type="submit" name="find" value="Search"/>
 </td></tr>
