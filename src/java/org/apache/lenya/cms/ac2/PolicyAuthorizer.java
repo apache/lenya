@@ -1,5 +1,5 @@
 /*
-$Id: PolicyAuthorizer.java,v 1.10 2003/07/23 13:21:23 gregor Exp $
+$Id: PolicyAuthorizer.java,v 1.11 2003/07/29 14:26:13 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,10 +55,14 @@ $Id: PolicyAuthorizer.java,v 1.10 2003/07/23 13:21:23 gregor Exp $
 */
 package org.apache.lenya.cms.ac2;
 
+import java.util.Iterator;
+
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.IPRange;
+import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac.Role;
 
 /**
@@ -90,8 +94,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         boolean authorized;
 
         if (identity.belongsTo(accreditableManager)) {
-            authorized =
-                authorizePolicy(accreditableManager, policyManager, identity, request);
+            authorized = authorizePolicy(accreditableManager, policyManager, identity, request);
         } else {
             getLogger().debug(
                 "Identity ["
@@ -129,6 +132,14 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         }
 
         String url = requestUri.substring(context.length());
+
+        Machine machine = identity.getMachine();
+        for (Iterator i = accreditableManager.getIPRangeManager().getIPRanges(); i.hasNext(); ) {
+            IPRange range = (IPRange) i.next();
+            if (range.contains(machine)) {
+                machine.addIPRange(range);
+            }
+        }
 
         Policy policy = policyManager.getPolicy(accreditableManager, url);
         Role[] roles = policy.getRoles(identity);
