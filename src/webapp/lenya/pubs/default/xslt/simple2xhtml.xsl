@@ -29,12 +29,24 @@
 </xsl:template>
 
 <!-- XHTML-like tags -->
-<!--<xsl:template match="simple:p | simple:thead |simple:tbody | simple:tfoot">-->
-<xsl:template match="simple:p | simple:thead | simple:tfoot">
+<!--<xsl:template match="simple:thead |simple:tbody | simple:tfoot">-->
+<xsl:template match="simple:thead | simple:tfoot">
   <xsl:element name="{local-name()}">
     <xsl:attribute name="class">simple</xsl:attribute>
     <xsl:apply-templates/>
   </xsl:element>
+</xsl:template>
+<!-- /XHTML-like tags -->
+
+<xsl:template match="simple:p">
+  <xsl:element name="{local-name()}">
+    <xsl:attribute name="class">simple</xsl:attribute>
+    <xsl:apply-templates/>
+  </xsl:element>
+    <!-- FIXME: uncomment the following to get image upload red dots between paragraphs -->
+<!--   <a href="?lenya.usecase=upload&amp;lenya.step=showscreen&amp;xpath=/simple-document/body/p[{count(preceding-sibling::simple:p)+1}]"> -->
+<!--     <img src="/lenya/lenya/images/util/reddot.gif" alt="Upload Image" border="0"/> -->
+<!--   </a> -->
 </xsl:template>
 <!-- /XHTML-like tags -->
 
