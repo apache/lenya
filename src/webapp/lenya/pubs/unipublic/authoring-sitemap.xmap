@@ -533,9 +533,11 @@
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
+
+
 			<!-- Edit with Xopus2 -->
-<!--
 			<map:match pattern="xopus2/*/*/*/*/index.html">
+<!--
 				<map:act type="reserved-checkout">
 					<map:parameter name="filename" value="content/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 					<map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
@@ -546,6 +548,7 @@
 					<map:transform src="../../xslt/rc/rco-exception.xsl"/>
 					<map:serialize type="html"/>
 				</map:act>
+-->
 				<map:aggregate element="lenya">
 					<map:part src="cocoon:/menus/{1}/{2}/{3}/{4}/article.xml"/>
 					<map:part src="cocoon:/{1}/{2}/{3}/{4}/index.xml" element="cmsbody"/>
@@ -558,7 +561,11 @@
 				</map:transform>
 				<map:serialize type="html"/>
 			</map:match>
--->
+
+
+
+
+
 			<!-- select dossier screen -->
 			<map:match pattern="selectDossierScreen">
 				<map:act type="request">
