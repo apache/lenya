@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: crawl_and_index.xml,v 1.39 2004/06/04 08:48:07 michi Exp $ -->
+<!-- $Id: crawl_and_index.xml,v 1.40 2004/07/29 05:56:16 michi Exp $ -->
 
 <project default="main" basedir=".">
 
@@ -35,9 +35,10 @@
 
   <!-- Dummy arguments -->
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
-  <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
-  <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene"/>
-  <property name="index.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene/index/live/index"/>
+  <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/config/search/lucene-cmfsMatrix.xconf"/>
+  <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/oscom/content/live/matrix"/>
+  <property name="file" value="src/webapp/lenya/pubs/oscom/content/live/matrix/lenya.xml"/>
+  <property name="index.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene/index/index-cmfsMatrix"/>
   <property name="search.term" value="Lenya"/>
   <!-- /Dummy arguments -->
 
@@ -104,6 +105,24 @@
     <classpath refid="class.path"/>
   </java>
   <echo>INFO: Index has been created</echo>
+</target>
+
+<target name="indexOneDocument" description="Index one document. Usage: -Dlucene.xconf=/foo/bar/lucene.xconf -Dfile=/foo/bar/document" depends="init">
+  <echo>INFO: Index one document</echo>
+
+  <echo>INFO: Show configuration</echo>
+  <java classname="org.apache.lenya.lucene.IndexConfiguration">
+    <arg value="${lucene.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+
+  <echo>INFO: Update index for ${file}</echo>
+  <java classname="org.apache.lenya.lucene.index.Index">
+    <arg value="${lucene.xconf}"/>
+    <arg value="${file}"/>
+    <classpath refid="class.path"/>
+  </java>
+  <echo>INFO: Document has been indexed</echo>
 </target>
 
 
