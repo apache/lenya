@@ -340,8 +340,8 @@
               </map:transform>
               <map:transform type="write-source"/>
               <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
-              <!-- FIXME: CDATA is also being modified by replace-predifined-entities.xsl, which actually shouldn't -->
-              <map:transform src="xslt/authoring/edit/replace-predifined-entities.xsl"/>
+              <!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
+              <map:transform src="xslt/authoring/edit/replace-predefined-entities.xsl"/>
               <map:transform src="pubs/{1}/lenya/xslt/formeditor/{request-param:form}.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="form" value="{request-param:form}"/>
@@ -419,8 +419,8 @@
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
               <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-              <!-- FIXME: CDATA is also being modified by replace-predifined-entities.xsl, which actually shouldn't -->
-              <map:transform src="xslt/authoring/edit/replace-predifined-entities.xsl"/>
+              <!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
+              <map:transform src="xslt/authoring/edit/replace-predefined-entities.xsl"/>
               <map:transform src="xslt/authoring/edit/oneform.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
               </map:transform>
