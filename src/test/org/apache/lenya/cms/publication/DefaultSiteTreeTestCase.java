@@ -8,7 +8,7 @@ import junit.textui.TestRunner;
 /**
  * A test case testing org.apache.lenya.cms.publishing.DefaultSiteTree
  *
- * @version CVS $Id: DefaultSiteTreeTestCase.java,v 1.2 2003/05/30 15:00:02 andreas Exp $
+ * @version CVS $Id: DefaultSiteTreeTestCase.java,v 1.3 2003/06/13 09:04:36 egli Exp $
  */
 public final class DefaultSiteTreeTestCase extends TestCase {
     private DefaultSiteTree sitetree;
@@ -53,10 +53,9 @@ public final class DefaultSiteTreeTestCase extends TestCase {
         try {
             sitetree.addNode("/tutorial", "foo", labels);
         } catch (SiteTreeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace(System.err);
         }
-        // read the new sitetree and assert that it contains the new node
+        // TODO read the new sitetree and assert that it contains the new node
 
     }
 }
