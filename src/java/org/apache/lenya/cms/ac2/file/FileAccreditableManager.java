@@ -1,5 +1,5 @@
 /*
-$Id: FileAccreditableManager.java,v 1.2 2003/07/11 13:24:37 andreas Exp $
+$Id: FileAccreditableManager.java,v 1.3 2003/07/14 18:05:03 andreas Exp $
 <License>
 
  ============================================================================
@@ -103,8 +103,6 @@ public class FileAccreditableManager
     }
 
     private File configurationDirectory;
-    protected static final String POLICY_PATH = "policies";
-    protected static final String ACCREDITABLE_PATH = "passwd";
 
     /**
      * Returns the configuration directory.
@@ -114,15 +112,27 @@ public class FileAccreditableManager
     public File getConfigurationDirectory() throws AccessControlException {
 
         if (configurationDirectory == null) {
-            Source source;
+            Source source = null;
+            SourceResolver resolver = null;
             File directory;
             try {
                 getLogger().debug("Configuration directory Path: " + configurationDirectoryPath);
-                source = getResolver().resolveURI(configurationDirectoryPath);
+                
+                resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
+                source = resolver.resolveURI(configurationDirectoryPath);
+                
                 getLogger().debug("Configuration directory URI: " + source.getURI());
                 directory = new File(new URI(source.getURI()));
             } catch (Exception e) {
                 throw new AccessControlException(e);
+            }
+            finally {
+                if (resolver != null) {
+                    if (source != null) {
+                        resolver.release(source);
+                    }
+                    getManager().release(resolver);
+                }
             }
             setConfigurationDirectory(directory);
         }
@@ -131,34 +141,24 @@ public class FileAccreditableManager
     }
 
     /**
-     * Returns the directory where accreditables are configured.
-     * @return A file.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected File getAccreditableConfigurationDirectory()
-        throws AccessControlException {
-        return new File(getConfigurationDirectory(), ACCREDITABLE_PATH);
-    }
-
-    /**
      * @see org.apache.lenya.cms.ac2.AccreditableManager#getUserManager()
      */
     public UserManager getUserManager() throws AccessControlException {
-        return UserManager.instance(getAccreditableConfigurationDirectory());
+        return UserManager.instance(getConfigurationDirectory());
     }
 
     /**
      * @see org.apache.lenya.cms.ac2.AccreditableManager#getGroupManager()
      */
     public GroupManager getGroupManager() throws AccessControlException {
-        return GroupManager.instance(getAccreditableConfigurationDirectory());
+        return GroupManager.instance(getConfigurationDirectory());
     }
 
     /**
      * @see org.apache.lenya.cms.ac2.AccreditableManager#getRoleManager()
      */
     public RoleManager getRoleManager() throws AccessControlException {
-        return RoleManager.instance(getAccreditableConfigurationDirectory());
+        return RoleManager.instance(getConfigurationDirectory());
     }
 
     protected static final String DIRECTORY = "directory";
@@ -174,19 +174,20 @@ public class FileAccreditableManager
         }
     }
 
-    private String configurationDirectoryPath = "config/ac";
+    private String configurationDirectoryPath;
 
     /**
      * Sets the configuration directory.
      * @param file The configuration directory.
      */
-    public void setConfigurationDirectory(File file) {
-        assert(file != null) && file.isDirectory();
+    public void setConfigurationDirectory(File file) throws AccessControlException {
+        if (file == null || !file.isDirectory()) {
+            throw new AccessControlException("Configuration directory [" + file + "] does not exist!");
+        }
         configurationDirectory = file;
     }
 
     private ServiceManager manager;
-    private SourceResolver resolver;
 
     /**
      * Set the global component manager.
@@ -196,8 +197,6 @@ public class FileAccreditableManager
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
-        this.resolver =
-            (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
     }
 
     /**
@@ -206,14 +205,6 @@ public class FileAccreditableManager
      */
     protected ServiceManager getManager() {
         return manager;
-    }
-
-    /**
-     * Returns the source resolver.
-     * @return A source resolver.
-     */
-    protected SourceResolver getResolver() {
-        return resolver;
     }
 
 }
