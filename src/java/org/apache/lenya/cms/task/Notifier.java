@@ -1,5 +1,5 @@
 /*
-$Id: Notifier.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
+$Id: Notifier.java,v 1.3 2003/08/29 11:49:36 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,9 +73,8 @@ public class Notifier extends ParameterWrapper {
 
     private static Category log = Category.getInstance(Notifier.class);
 
-    public static final String NOTIFICATION_PREFIX = "notification";
-    public static final String MAIL_TARGET = "mail";
-    public static final String MAIL_PREFIX = "mail";
+    public static final String PREFIX = "notification";
+    public static final String TARGET = "notification";
 
     public static final String PARAMETER_TO = "tolist";
 
@@ -110,7 +109,7 @@ public class Notifier extends ParameterWrapper {
 
             Parameters params = new Parameters();
 
-            params.setParameter(AntTask.TARGET, MAIL_TARGET);
+            params.setParameter(AntTask.TARGET, TARGET);
 
             String[] keys =
                 {
@@ -121,10 +120,10 @@ public class Notifier extends ParameterWrapper {
                     Task.PARAMETER_SERVLET_CONTEXT };
 
             for (int i = 0; i < keys.length; i++) {
-                params.setParameter(keys[i], (String) taskParameters.get(keys[i]));
+                params.setParameter(keys[i], taskParameters.get(keys[i]));
             }
 
-            NamespaceMap mailMap = new NamespaceMap(MAIL_PREFIX);
+            NamespaceMap mailMap = new NamespaceMap(PREFIX);
             mailMap.putAll(getMap());
             NamespaceMap propertiesMap = new NamespaceMap(AntTask.PROPERTIES_PREFIX);
             propertiesMap.putAll(mailMap.getPrefixedMap());
@@ -141,7 +140,7 @@ public class Notifier extends ParameterWrapper {
                 throw new ExecutionException(e);
             }
             log.info("    Executing notification target ...");
-            task.execute((String) taskParameters.get(Task.PARAMETER_SERVLET_CONTEXT));
+            task.execute(taskParameters.get(Task.PARAMETER_SERVLET_CONTEXT));
             log.info("    Notification target executed.");
         }
     }
@@ -158,7 +157,7 @@ public class Notifier extends ParameterWrapper {
      * @see org.apache.lenya.cms.task.ParameterWrapper#getPrefix()
      */
     public String getPrefix() {
-        return NOTIFICATION_PREFIX;
+        return PREFIX;
     }
 
     /**
