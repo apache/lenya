@@ -21,11 +21,20 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 
 /**
- * 
- * Extends AbstractUsecase with document helper methods
+ * <p>
+ * Extends AbstractUsecase with document helper methods.
+ * </p>
+ * <p>
+ * Some parameters are initialized by default:
+ * </p>
+ * <ul>
+ * <li><code>document</code> - the document</li>
+ * </ul>
  */
 public class DocumentUsecase extends WorkflowUsecase {
 
+    protected static final String DOCUMENT = "document";
+    
     /**
      * Ctor.
      */
@@ -33,6 +42,9 @@ public class DocumentUsecase extends WorkflowUsecase {
         super();
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
+     */
     protected void doInitialize() {
         super.doInitialize();
         try {
@@ -120,4 +132,12 @@ public class DocumentUsecase extends WorkflowUsecase {
         triggerWorkflow(event, getSourceDocument());
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     */
+    protected void initParameters() {
+        super.initParameters();
+        
+        setParameter(DOCUMENT, getSourceDocument());
+    }
 }
