@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.5 2003/06/14 18:53:37 gregor Exp $
+ $Id: rename.xsl,v 1.6 2003/07/03 11:53:37 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -12,7 +12,12 @@
    >
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
-  
+
+  <xsl:variable name="request-uri"><xsl:value-of select="/info/request-uri"/></xsl:variable>
+  <xsl:variable name="first-document-id"><xsl:value-of select="/info/first-document-id"/></xsl:variable>
+  <xsl:variable name="last-id"><xsl:value-of select="/info/last-id"/></xsl:variable>
+  <xsl:variable name="task-id"><xsl:value-of select="/info/task-id"/></xsl:variable>
+
   <xsl:template match="/">
     <xsl:apply-templates/>
   </xsl:template>
@@ -31,17 +36,20 @@
     <div class="lenya-box">
       <div class="lenya-box-title">Rename Document</div>
       <div class="lenya-box-body">
-    <form method="post">
-      <xsl:attribute name="action"></xsl:attribute>
-      <p>
-	Rename <xsl:value-of select="document-id"/> to 
-      </p>
-      <input type="text" class="lenya-form-element" name="name" value=""/>
-      <input type="submit" class="lenya-form-element" value="Rename"/>
-      <input type="submit" class="lenya-form-element" value="Cancel"/>
-    </form>
+        <form method="get">
+          <xsl:attribute name="action"></xsl:attribute>
+          <p>
+          <input type="hidden" name="properties.node.firstdocumentid" value="{$first-document-id}"/>
+          <input type="hidden" name="task-id" value="{$task-id}"/>
+          <input type="hidden" name="lenya.usecase" value="rename"/>
+          <input type="hidden" name="lenya.step" value="rename"/>
+	      Rename <xsl:value-of select="last-id"/> to 
+          </p>
+          <input type="text" class="lenya-form-element" name="properties.node.secdocumentid" value=""/>
+          <input type="submit" class="lenya-form-element" value="Rename"/>
+           &#160;&#160;&#160;<input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+        </form>
       </div>
     </div>
   </xsl:template>
-  
 </xsl:stylesheet>
