@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.7 2004/03/24 13:39:40 roku Exp $ -->
+<!-- $Id: asset.xsl,v 1.8 2004/03/24 14:32:31 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -66,7 +66,7 @@ function check(fileinput) {
      }
   }
    // file does not have one of the accepted extensions.
-   alert("You tried to upload a file with an invalid extension. Valid extensions are:\n\n<xsl:value-of select="$extensions"/>");
+   alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n<xsl:value-of select="$extensions"/></i18n:param></i18n:translate>");
    return false;
 }
 </script>
@@ -84,16 +84,12 @@ function check(fileinput) {
 	    <xsl:if test="$error = 'true'">
 	      <tr>
 		<td colspan="2" class="lenya-form-caption">
-		  <span	class="lenya-form-message-error">The file name
-		  of the file you are trying to upload either has no
-		  extension, or contains characters which are not
-		  allowed, such as spaces or umlauts. 
-		  </span>
+		  <span class="lenya-form-message-error"><i18n key="filename-format-exception"/></span>
 		</td>
 	      </tr>
 	    </xsl:if>
 	    <tr>
-	      <td class="lenya-form-caption"><i18n:text>Select File</i18n:text>:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
+	      <td class="lenya-form-caption"><i18n:text>Select File</i18n:text>:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <tr>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.52 2004/03/24 13:39:40 roku Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.53 2004/03/24 14:32:31 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
@@ -74,7 +74,9 @@
   <message key="Select File">Datei w&#228;hlen</message>
   <message key="Insert">Einf&#252;gen</message>
   <message key="Insert File">Datei einf&#252;gen</message>
-  
+  <message key="upload-with-invalid-extension">Es d&#252;rfen nur Dateien mit folgenden Endungen hochgeladen werden{0}</message>
+  <message key="filename-format-exception">Der Name der gew&#228;hlten Datei enth&#228;lt Umlaute, Leerzeichen, unerlaubte Zeichen oder besitzt keine g&#252;ltige Endung.</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
