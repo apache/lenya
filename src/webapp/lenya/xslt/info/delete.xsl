@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: delete.xsl,v 1.13 2004/02/25 12:52:54 roku Exp $
+ $Id: delete.xsl,v 1.14 2004/02/27 10:35:18 egli Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -12,7 +12,7 @@
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
   
-  <xsl:param name="lenya.event"/>
+  <xsl:param name="lenya.event" select="'delete'"/>
   
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
