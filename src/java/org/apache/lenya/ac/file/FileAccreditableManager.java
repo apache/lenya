@@ -236,28 +236,33 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeGroupManager()
      */
     protected GroupManager initializeGroupManager() throws AccessControlException {
-        return FileGroupManager.instance(getConfigurationDirectory());
+        FileGroupManager manager = FileGroupManager.instance(getConfigurationDirectory(), getLogger());
+        return manager;
     }
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeIPRangeManager()
      */
     protected IPRangeManager initializeIPRangeManager() throws AccessControlException {
-        return FileIPRangeManager.instance(getConfigurationDirectory());
+        FileIPRangeManager manager = FileIPRangeManager.instance(getConfigurationDirectory(), getLogger());
+        return manager;
     }
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeRoleManager()
      */
     protected RoleManager initializeRoleManager() throws AccessControlException {
-        return FileRoleManager.instance(getConfigurationDirectory());
+        FileRoleManager manager = FileRoleManager.instance(getConfigurationDirectory(), getLogger());
+        return manager;
     }
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeUserManager()
      */
     protected UserManager initializeUserManager() throws AccessControlException {
-        return FileUserManager.instance(getConfigurationDirectory(), getUserTypes());
+        FileUserManager manager = FileUserManager.instance(getConfigurationDirectory(),
+                getUserTypes(), getLogger());
+        return manager;
     }
 
 }

@@ -53,7 +53,7 @@ import org.apache.lenya.ac.PolicyManager;
 
 /**
  * Default access controller implementation.
- * @version $Id: DefaultAccessController.java,v 1.9 2004/08/16 16:34:06 andreas Exp $
+ * @version $Id$
  */
 public class DefaultAccessController extends AbstractLogEnabled implements AccessController,
         Configurable, Serviceable, Disposable, ItemManagerListener {
@@ -388,6 +388,8 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         Session session = request.getSession(true);
         if (!hasValidIdentity(session)) {
             Identity identity = new Identity();
+            identity.enableLogging(getLogger());
+            identity.initialize();
             String remoteAddress = request.getRemoteAddr();
             String clientAddress = request.getHeader("x-forwarded-for");
 

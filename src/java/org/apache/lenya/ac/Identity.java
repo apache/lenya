@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Identity.java,v 1.4 2004/08/16 08:02:38 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac;
 
@@ -23,21 +23,25 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Session;
-import org.apache.log4j.Category;
 
 /**
  * Identity object. Used to store the authenticated accreditables in the session.
  */
-public class Identity implements Identifiable {
+public class Identity extends AbstractLogEnabled implements Identifiable {
     private Set identifiables = new HashSet();
-    
-    private static final Category log = Category.getInstance(Identity.class);
-    
+
     /**
      * Ctor.
      */
     public Identity() {
+    }
+    
+    /**
+     * Initializes this identity.
+     */
+    public void initialize() {
         addIdentifiable(World.getInstance());
     }
 
@@ -57,11 +61,11 @@ public class Identity implements Identifiable {
         assert identifiable != null;
         assert identifiable != this;
         assert !identifiables.contains(identifiable);
-        
-        if (log.isDebugEnabled()) {
-            log.debug("Adding identifiable: [" + identifiable + "]");
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Adding identifiable: [" + identifiable + "]");
         }
-        
+
         identifiables.add(identifiable);
     }
 
@@ -95,7 +99,7 @@ public class Identity implements Identifiable {
 
         return string;
     }
-    
+
     /**
      * Checks if this identity belongs to a certain accreditable manager.
      * @param manager The accreditable manager to check for.
@@ -104,9 +108,9 @@ public class Identity implements Identifiable {
      * @throws AccessControlException if an error occurs
      */
     public boolean belongsTo(AccreditableManager manager) throws AccessControlException {
-        
+
         boolean belongs = true;
-        
+
         Identifiable identifiables[] = getIdentifiables();
         int i = 0;
         while (belongs && i < identifiables.length) {
@@ -117,7 +121,7 @@ public class Identity implements Identifiable {
             }
             i++;
         }
-        
+
         return belongs;
     }
 
@@ -136,7 +140,7 @@ public class Identity implements Identifiable {
             i++;
         }
         return user;
-     }
+    }
 
     /**
      * Returns the machine of this identity.
@@ -153,34 +157,34 @@ public class Identity implements Identifiable {
             i++;
         }
         return machine;
-     }
-     
-     /**
-      * Checks if this identity contains a certain identifiable.
-      * @param identifiable The identifiable to look for.
-      * @return A boolean value.
-      */
-     public boolean contains(Identifiable identifiable) {
-         return identifiables.contains(identifiable);
-     }
-     
-     /**
-      * Fetches the identity from a session.
-      * @param session The session.
-      * @return An identity.
-      */
-     public static Identity getIdentity(Session session) {
-         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-         return identity;
-     }
-     
-     /**
-      * Removes a certain identifiable from the idenity.
-      * @param identifiable An identifiable.
-      */
-     public void removeIdentifiable(Identifiable identifiable) {
-         assert identifiables.contains(identifiable);
-         identifiables.remove(identifiable);
-     }
+    }
+
+    /**
+     * Checks if this identity contains a certain identifiable.
+     * @param identifiable The identifiable to look for.
+     * @return A boolean value.
+     */
+    public boolean contains(Identifiable identifiable) {
+        return identifiables.contains(identifiable);
+    }
+
+    /**
+     * Fetches the identity from a session.
+     * @param session The session.
+     * @return An identity.
+     */
+    public static Identity getIdentity(Session session) {
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        return identity;
+    }
+
+    /**
+     * Removes a certain identifiable from the idenity.
+     * @param identifiable An identifiable.
+     */
+    public void removeIdentifiable(Identifiable identifiable) {
+        assert identifiables.contains(identifiable);
+        identifiables.remove(identifiable);
+    }
 
 }

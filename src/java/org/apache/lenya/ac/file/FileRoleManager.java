@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Role;
@@ -28,34 +29,33 @@ import org.apache.lenya.ac.RoleManager;
 
 /**
  * File-based role manager implementation.
- * @version $Id: FileRoleManager.java,v 1.4 2004/08/16 15:59:51 andreas Exp $
+ * @version $Id$
  */
 public final class FileRoleManager extends FileItemManager implements RoleManager {
     protected static final String SUFFIX = ".rml";
     private static Map instances = new HashMap();
 
     /**
-     * Return the <code>RoleManager</code> for this configuration directory.
-     * The <code>RoleManager</code> is a singleton.
-     *
-     * @param configurationDirectory the directory for which the RoleManager is requested.
-     * @throws AccessControlException if the <code>RoleManager<code> could not be instantiated
+     * Return the <code>RoleManager</code> for this configuration directory. The
+     * <code>RoleManager</code> is a singleton.
      */
-    protected FileRoleManager(File configurationDirectory)
-        throws AccessControlException {
-        super(configurationDirectory);
+    protected FileRoleManager() {
     }
 
     /**
      * Returns the role manager for this configuration directory.
      * @param configurationDirectory The configuration directory.
+     * @param logger The logger.
      * @return A role manager.
      * @throws AccessControlException when something went wrong.
      */
-    public static FileRoleManager instance(File configurationDirectory)
-        throws AccessControlException {
+    public static FileRoleManager instance(File configurationDirectory, Logger logger)
+            throws AccessControlException {
         if (!instances.containsKey(configurationDirectory)) {
-            instances.put(configurationDirectory, new FileRoleManager(configurationDirectory));
+            FileRoleManager manager = new FileRoleManager();
+            manager.enableLogging(logger);
+            manager.configure(configurationDirectory);
+            instances.put(configurationDirectory, manager);
         }
 
         return (FileRoleManager) instances.get(configurationDirectory);
@@ -63,7 +63,7 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
 
     /**
      * Get the role for the given ID.
-     *
+     * 
      * @param roleId The name of the role requested.
      * @return a <code>Role</code> or null if no role with the given name found
      */
@@ -80,7 +80,7 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
 
     /**
      * Get all roles
-     *
+     * 
      * @return an array of roles.
      */
     public Role[] getRoles() {
@@ -94,7 +94,7 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
 
     /**
      * Add a role
-     *
+     * 
      * @param role The role to add.
      * @throws AccessControlException if an error occurs.
      */
@@ -104,7 +104,7 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
 
     /**
      * Remove a role
-     *
+     * 
      * @param role The role to remove.
      * @throws AccessControlException if an error occurs.
      */

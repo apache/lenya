@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileGroupManager.java,v 1.4 2004/08/16 15:59:51 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 
@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.GroupManager;
@@ -36,29 +37,30 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
     private static Map instances = new HashMap();
 
     /**
-     * Create a GroupManager
-     *
-     * @param configurationDirectory for which the GroupManager is to be created
-     * @throws AccessControlException if no GroupManager could be instanciated
+     * Ctor.
      */
-    private FileGroupManager(File configurationDirectory) throws AccessControlException {
-        super(configurationDirectory);
+    private FileGroupManager() {
+        super();
     }
-
+    
     /**
      * Return the <code>GroupManager</code> for the given publication.
      * The <code>GroupManager</code> is a singleton.
      *
      * @param configurationDirectory for which the GroupManager is requested
+     * @param logger The logger.
      * @return a <code>GroupManager</code>
      * @throws AccessControlException if no GroupManager could be instanciated
      */
-    public static FileGroupManager instance(File configurationDirectory)
+    public static FileGroupManager instance(File configurationDirectory, Logger logger)
         throws AccessControlException {
         assert configurationDirectory != null;
 
         if (!instances.containsKey(configurationDirectory)) {
-            instances.put(configurationDirectory, new FileGroupManager(configurationDirectory));
+            FileGroupManager manager = new FileGroupManager();
+            manager.enableLogging(logger);
+            manager.configure(configurationDirectory);
+            instances.put(configurationDirectory, manager);
         }
 
         return (FileGroupManager) instances.get(configurationDirectory);

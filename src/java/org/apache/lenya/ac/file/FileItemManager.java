@@ -33,42 +33,48 @@ import java.util.Set;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.impl.ItemConfiguration;
-import org.apache.log4j.Category;
 
 /**
  * Abstract superclass for classes that manage items loaded from configuration files.
  */
-public abstract class FileItemManager {
-    private static final Category log = Category.getInstance(FileItemManager.class);
+public abstract class FileItemManager extends AbstractLogEnabled {
 
-    protected static final String PATH = "config" + File.separator + "ac" + File.separator + "passwd";
-    
+    protected static final String PATH = "config" + File.separator + "ac" + File.separator
+            + "passwd";
+
     private Map items = new HashMap();
     private File configurationDirectory;
     private DirectoryChangeNotifier notifier;
 
     /**
-     * Create a new ItemManager
-     *
+     * Create a new ItemManager.
+     */
+    protected FileItemManager() {
+    }
+
+    /**
+     * Configures the item manager.
      * @param configurationDirectory where the items are fetched from
      * @throws AccessControlException if the item manager cannot be instantiated
      */
-    protected FileItemManager(File configurationDirectory) throws AccessControlException {
+    public void configure(File configurationDirectory) throws AccessControlException {
         assert configurationDirectory != null;
 
         if (!configurationDirectory.exists() || !configurationDirectory.isDirectory()) {
-            throw new AccessControlException(
-                "The directory [" + configurationDirectory.getAbsolutePath() + "] does not exist!");
+            throw new AccessControlException("The directory ["
+                    + configurationDirectory.getAbsolutePath() + "] does not exist!");
         }
 
         this.configurationDirectory = configurationDirectory;
-        notifier = new DirectoryChangeNotifier(configurationDirectory, getFileFilter());
+        this.notifier = new DirectoryChangeNotifier(configurationDirectory, getFileFilter());
+        this.notifier.enableLogging(getLogger());
         loadItems();
     }
 
@@ -87,8 +93,8 @@ public abstract class FileItemManager {
 
         if (changed) {
 
-            if (log.isDebugEnabled()) {
-                log.debug("Item configuration has changed - reloading.");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Item configuration has changed - reloading.");
             }
 
             File[] addedFiles = notifier.getAddedFiles();
@@ -145,16 +151,14 @@ public abstract class FileItemManager {
         if (item == null) {
             try {
                 item = (Item) Class.forName(klass).newInstance();
+                item.enableLogging(getLogger());
             } catch (Exception e) {
-                String errorMsg =
-                    "Exception when trying to instanciate: "
-                        + klass
-                        + " with exception: "
-                        + e.fillInStackTrace();
+                String errorMsg = "Exception when trying to instanciate: " + klass
+                        + " with exception: " + e.fillInStackTrace();
 
                 // an exception occured when trying to instanciate
                 // a user.
-                log.error(errorMsg);
+                getLogger().error(errorMsg);
                 throw new AccessControlException(errorMsg, e);
             }
             item.setConfigurationDirectory(configurationDirectory);
@@ -183,12 +187,12 @@ public abstract class FileItemManager {
             assert file.exists();
             config = builder.buildFromFile(file);
         } catch (Exception e) {
-            String errorMsg =
-                "Exception when reading the configuration from file: " + file.getName();
+            String errorMsg = "Exception when reading the configuration from file: "
+                    + file.getName();
 
             // an exception occured when trying to read the configuration
             // from the identity file.
-            log.error(errorMsg);
+            getLogger().error(errorMsg);
             throw new AccessControlException(errorMsg, e);
         }
         return config;
@@ -213,7 +217,7 @@ public abstract class FileItemManager {
 
     /**
      * get all items
-     *
+     * 
      * @return an array of items
      */
     public Item[] getItems() {
@@ -227,15 +231,15 @@ public abstract class FileItemManager {
 
     /**
      * Add an Item to this manager
-     *
+     * 
      * @param item to be added
      * @throws AccessControlException when the notification threw this exception.
      */
     public void add(Item item) throws AccessControlException {
         assert item != null;
         items.put(item.getId(), item);
-        if (log.isDebugEnabled()) {
-            log.debug("Item [" + item + "] added.");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Item [" + item + "] added.");
         }
         notifyAdded(item);
     }
@@ -247,8 +251,8 @@ public abstract class FileItemManager {
      */
     public void remove(Item item) throws AccessControlException {
         items.remove(item.getId());
-        if (log.isDebugEnabled()) {
-            log.debug("Item [" + item + "] removed.");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Item [" + item + "] removed.");
         }
         notifyRemoved(item);
     }
@@ -261,8 +265,8 @@ public abstract class FileItemManager {
     public void update(Item newItem) throws AccessControlException {
         items.remove(newItem.getId());
         items.put(newItem.getId(), newItem);
-        if (log.isDebugEnabled()) {
-            log.debug("Item [" + newItem + "] updated.");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Item [" + newItem + "] updated.");
         }
     }
 
@@ -282,7 +286,7 @@ public abstract class FileItemManager {
 
     /**
      * Get the directory where the items are located.
-     *
+     * 
      * @return a <code>File</code>
      */
     public File getConfigurationDirectory() {
@@ -316,7 +320,9 @@ public abstract class FileItemManager {
      * @param listener An item manager listener.
      */
     public void addItemManagerListener(ItemManagerListener listener) {
-        log.debug("Adding listener: [" + listener + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Adding listener: [" + listener + "]");
+        }
         if (!itemManagerListeners.contains(listener)) {
             itemManagerListeners.add(listener);
         }
@@ -327,7 +333,9 @@ public abstract class FileItemManager {
      * @param listener An item manager listener.
      */
     public void removeItemManagerListener(ItemManagerListener listener) {
-        log.debug("Removing listener: [" + listener + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Removing listener: [" + listener + "]");
+        }
         itemManagerListeners.remove(listener);
     }
 
@@ -337,7 +345,9 @@ public abstract class FileItemManager {
      * @throws AccessControlException if an error occurs.
      */
     protected void notifyAdded(Item item) throws AccessControlException {
-        log.debug("Item was added: [" + item + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Item was added: [" + item + "]");
+        }
         List clone = new ArrayList(itemManagerListeners);
         for (Iterator i = clone.iterator(); i.hasNext();) {
             ItemManagerListener listener = (ItemManagerListener) i.next();
@@ -351,11 +361,15 @@ public abstract class FileItemManager {
      * @throws AccessControlException if an error occurs.
      */
     protected void notifyRemoved(Item item) throws AccessControlException {
-        log.debug("Item was removed: [" + item + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Item was removed: [" + item + "]");
+        }
         List clone = new ArrayList(itemManagerListeners);
         for (Iterator i = clone.iterator(); i.hasNext();) {
             ItemManagerListener listener = (ItemManagerListener) i.next();
-            log.debug("Notifying listener: [" + listener + "]");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Notifying listener: [" + listener + "]");
+            }
             listener.itemRemoved(item);
         }
     }
@@ -363,7 +377,7 @@ public abstract class FileItemManager {
     /**
      * Helper class to observe a directory for changes.
      */
-    public static class DirectoryChangeNotifier {
+    public static class DirectoryChangeNotifier extends AbstractLogEnabled {
 
         /**
          * Ctor.
@@ -378,14 +392,14 @@ public abstract class FileItemManager {
         private File directory;
         private FileFilter filter;
         private Map canonicalPath2LastModified = new HashMap();
-        private static final Category log = Category.getInstance(DirectoryChangeNotifier.class);
 
         private Set addedFiles = new HashSet();
         private Set removedFiles = new HashSet();
         private Set changedFiles = new HashSet();
 
         /**
-         * Checks if the directory has changed (a new file was added, a file was removed, a file has changed).
+         * Checks if the directory has changed (a new file was added, a file was removed, a file has
+         * changed).
          * @return A boolean value.
          * @throws IOException when something went wrong.
          */
@@ -406,8 +420,8 @@ public abstract class FileItemManager {
                 if (!canonicalPath2LastModified.containsKey(canonicalPath)) {
                     addedFiles.add(new File(canonicalPath));
 
-                    if (log.isDebugEnabled()) {
-                        log.debug("New file: [" + canonicalPath + "]");
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("New file: [" + canonicalPath + "]");
                     }
 
                 } else {
@@ -415,8 +429,8 @@ public abstract class FileItemManager {
                     long lastModified = lastModifiedObject.longValue();
                     if (lastModified < files[i].lastModified()) {
                         changedFiles.add(files[i]);
-                        if (log.isDebugEnabled()) {
-                            log.debug("File has changed: [" + canonicalPath + "]");
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug("File has changed: [" + canonicalPath + "]");
                         }
                     }
                 }
@@ -430,8 +444,8 @@ public abstract class FileItemManager {
                 if (!newPathSet.contains(oldPaths[i])) {
                     removedFiles.add(new File(oldPaths[i]));
                     canonicalPath2LastModified.remove(oldPaths[i]);
-                    if (log.isDebugEnabled()) {
-                        log.debug("File removed: [" + oldPaths[i] + "]");
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("File removed: [" + oldPaths[i] + "]");
                     }
                 }
             }

@@ -15,10 +15,11 @@
  *
  */
 
-/* $Id: AbstractRole.java,v 1.3 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.Role;
 
 
@@ -26,6 +27,7 @@ import org.apache.lenya.ac.Role;
  * A Role embodies the privilege to do certain things.
  */
 public abstract class AbstractRole extends AbstractItem implements Role {
+    
     /**
      * Creates a new instance of Role.
      */
@@ -35,8 +37,9 @@ public abstract class AbstractRole extends AbstractItem implements Role {
     /**
      * Creates a new instance of Role.
      * @param name The role name.
+     * @param logger The logger.
      */
-    public AbstractRole(String name) {
+    public AbstractRole(String name, Logger logger) {
         assert name != null;
         setName(name);
     }

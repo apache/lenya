@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractGroup.java,v 1.4 2004/08/16 16:34:06 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
@@ -32,6 +32,7 @@ import org.apache.lenya.ac.Groupable;
  * A group is a set of {@link Groupable}s.
  */
 public abstract class AbstractGroup extends AbstractItem implements Accreditable, Group {
+    
     /**
      * Creates a new group.
      */

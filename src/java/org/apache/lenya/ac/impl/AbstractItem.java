@@ -17,14 +17,15 @@
 
 package org.apache.lenya.ac.impl;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.ac.Item;
 
 /**
  * Abstract superclass for all access control objects that can be managed by an
  * {@link org.apache.lenya.ac.ItemManager}. It is only used for code reuse.
- * @version $Id: AbstractItem.java,v 1.3 2004/08/16 16:34:06 andreas Exp $
+ * @version $Id$
  */
-public abstract class AbstractItem implements Item {
+public abstract class AbstractItem extends AbstractLogEnabled implements Item {
 
     private String id;
     private String description = "";

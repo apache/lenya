@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.User;
@@ -42,13 +43,11 @@ public class FileUserManager extends FileItemManager implements UserManager {
     /**
      * Create a UserManager
      * 
-     * @param configurationDirectory for which the UserManager should be instanciated.
      * @param userTypes The supported user types.
      * @throws AccessControlException if the UserManager could not be instantiated.
      */
-    protected FileUserManager(File configurationDirectory, UserType[] userTypes)
+    private FileUserManager(UserType[] userTypes)
             throws AccessControlException {
-        super(configurationDirectory);
         this.userTypes = new HashSet(Arrays.asList(userTypes));
     }
 
@@ -57,10 +56,11 @@ public class FileUserManager extends FileItemManager implements UserManager {
      * 
      * @param configurationDirectory a directory
      * @param userTypes The supported user types.
+     * @param logger The logger.
      * @return an <code>UserManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileUserManager instance(File configurationDirectory, UserType[] userTypes)
+    public static FileUserManager instance(File configurationDirectory, UserType[] userTypes, Logger logger)
             throws AccessControlException {
 
         assert configurationDirectory != null;
@@ -70,8 +70,10 @@ public class FileUserManager extends FileItemManager implements UserManager {
         }
 
         if (!instances.containsKey(configurationDirectory)) {
-            instances.put(configurationDirectory, new FileUserManager(configurationDirectory,
-                    userTypes));
+            FileUserManager manager = new FileUserManager(userTypes);
+            manager.enableLogging(logger);
+            manager.configure(configurationDirectory);
+            instances.put(configurationDirectory, manager);
         }
 
         return (FileUserManager) instances.get(configurationDirectory);

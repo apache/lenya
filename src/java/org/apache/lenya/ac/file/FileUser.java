@@ -28,15 +28,12 @@ import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.impl.AbstractUser;
 import org.apache.lenya.ac.impl.ItemConfiguration;
-import org.apache.log4j.Category;
 
 /**
  * File-based user implementation.
  * @version $Id$
  */
 public class FileUser extends AbstractUser implements Item {
-    
-    private Category log = Category.getInstance(FileUser.class);
 
     protected static final String ID = "identity";
     protected static final String EMAIL = "email";
@@ -53,7 +50,7 @@ public class FileUser extends AbstractUser implements Item {
 
     /**
      * Create a FileUser
-     *
+     * 
      * @param configurationDirectory where the user will be attached to
      * @param id the user id
      * @param fullName the full name of the user
@@ -61,14 +58,14 @@ public class FileUser extends AbstractUser implements Item {
      * @param password the users password
      */
     public FileUser(File configurationDirectory, String id, String fullName, String email,
-        String password) {
+            String password) {
         super(id, fullName, email, password);
         setConfigurationDirectory(configurationDirectory);
     }
 
     /**
      * Configure this FileUser.
-     *
+     * 
      * @param config where the user details are specified
      * @throws ConfigurationException if the necessary details aren't specified in the config
      */
@@ -86,11 +83,11 @@ public class FileUser extends AbstractUser implements Item {
             FileGroupManager manager = null;
 
             try {
-                manager = FileGroupManager.instance(configurationDirectory);
+                manager = FileGroupManager.instance(configurationDirectory, getLogger());
             } catch (AccessControlException e) {
                 throw new ConfigurationException(
-                    "Exception when trying to fetch GroupManager for directory: [" +
-                    configurationDirectory + "]", e);
+                        "Exception when trying to fetch GroupManager for directory: ["
+                                + configurationDirectory + "]", e);
             }
 
             for (int i = 0; i < groups.length; i++) {
@@ -98,9 +95,10 @@ public class FileUser extends AbstractUser implements Item {
                 Group group = manager.getGroup(groupId);
 
                 if (group == null) {
-                    throw new ConfigurationException("Couldn't find Group for group name [" + groupId + "]");
+                    throw new ConfigurationException("Couldn't find Group for group name ["
+                            + groupId + "]");
                 }
-                
+
                 if (!group.contains(this)) {
                     group.add(this);
                 }
@@ -108,16 +106,13 @@ public class FileUser extends AbstractUser implements Item {
             }
         } else {
             // strange, it should have groups
-            log.error("User " + getId() +
-                " doesn't seem to have any groups");
+            getLogger().error("User " + getId() + " doesn't seem to have any groups");
         }
     }
 
-
     /**
-     * Create a configuration from the current user details. Can
-     * be used for saving.
-     *
+     * Create a configuration from the current user details. Can be used for saving.
+     * 
      * @return a <code>Configuration</code>
      */
     protected Configuration createConfiguration() {
@@ -173,7 +168,7 @@ public class FileUser extends AbstractUser implements Item {
         super.delete();
         getFile().delete();
     }
-    
+
     /**
      * Returns the configuration file.
      * @return A file object.
@@ -201,5 +196,5 @@ public class FileUser extends AbstractUser implements Item {
         assert (configurationDirectory != null) && configurationDirectory.isDirectory();
         this.configurationDirectory = configurationDirectory;
     }
-    
+
 }

@@ -20,18 +20,16 @@ package org.apache.lenya.ac.impl;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Password;
 import org.apache.lenya.ac.User;
-import org.apache.log4j.Category;
 
 /**
  * Abstract user implementation.
- * @version $Id: AbstractUser.java,v 1.4 2004/08/16 16:34:06 andreas Exp $
+ * @version $Id$
  */
 public abstract class AbstractUser extends AbstractGroupable implements User {
 
-    private static Category log = Category.getInstance(AbstractUser.class);
     private String email;
     private String encryptedPassword;
-    
+
     /**
      * Creates a new User.
      */
@@ -39,13 +37,13 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
-         * Create a User instance
-         *
-         * @param id the user id
-         * @param fullName the full name of the user
-         * @param email the users email address
-         * @param password the users password
-         */
+     * Create a User instance
+     * 
+     * @param id the user id
+     * @param fullName the full name of the user
+     * @param email the users email address
+     * @param password the users password
+     */
     public AbstractUser(String id, String fullName, String email, String password) {
         setId(id);
         setName(fullName);
@@ -55,7 +53,7 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
 
     /**
      * Get the email address
-     *
+     * 
      * @return a <code>String</code>
      */
     public String getEmail() {
@@ -64,7 +62,7 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
 
     /**
      * Get the full name
-     *
+     * 
      * @return a <code>String</code>
      * @deprecated has been superceded by getName()
      */
@@ -74,7 +72,7 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
 
     /**
      * Set the email address
-     *
+     * 
      * @param email the new email address
      */
     public void setEmail(String email) {
@@ -83,7 +81,7 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
 
     /**
      * Set the full name
-     *
+     * 
      * @param name the new full name
      * @deprecated has been superceded by setName(String)
      */
@@ -92,7 +90,7 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
-    * Sets the password.
+     * Sets the password.
      * @param plainTextPassword The plain text passwrod.
      */
     public void setPassword(String plainTextPassword) {
@@ -100,10 +98,9 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
-     * This method can be used for subclasses to set the password without it
-     * being encrypted again. Some subclass might have knowledge of the encrypted
-     * password and needs to be able to set it.
-     *
+     * This method can be used for subclasses to set the password without it being encrypted again.
+     * Some subclass might have knowledge of the encrypted password and needs to be able to set it.
+     * 
      * @param encryptedPassword the encrypted password
      */
     protected void setEncryptedPassword(String encryptedPassword) {
@@ -112,7 +109,7 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
 
     /**
      * Get the encrypted password
-     *
+     * 
      * @return the encrypted password
      */
     protected String getEncryptedPassword() {
@@ -121,14 +118,14 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
 
     /**
      * Save the user
-     *
+     * 
      * @throws AccessControlException if the save failed
      */
     public abstract void save() throws AccessControlException;
 
     /**
      * Delete a user
-     *
+     * 
      * @throws AccessControlException if the delete failed
      */
     public void delete() throws AccessControlException {
@@ -136,19 +133,18 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
-     * Authenticate a user. This is done by encrypting
-     * the given password and comparing this to the
+     * Authenticate a user. This is done by encrypting the given password and comparing this to the
      * encryptedPassword.
-     *
+     * 
      * @param password to authenticate with
      * @return true if the given password matches the password for this user
      */
     public boolean authenticate(String password) {
-        log.debug("Password: " + password);
-        log.debug("pw encypted: " + Password.encrypt(password));
-        log.debug("orig encrypted pw: " + this.encryptedPassword);
+        getLogger().debug("LDAP Password: " + password);
+        getLogger().debug("LDAP pw encypted: " + Password.encrypt(password));
+        getLogger().debug("LDAP orig encrypted pw: " + this.encryptedPassword);
 
         return this.encryptedPassword.equals(Password.encrypt(password));
     }
-    
+
 }

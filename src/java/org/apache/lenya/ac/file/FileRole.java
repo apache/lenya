@@ -33,12 +33,12 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  * @version $Id$
  */
 public class FileRole extends AbstractRole implements Item {
-    
+
     /**
-    * Creates a new file role.
-    * @param configurationDirectory The configuration directory.
-    * @param id The role ID.
-    */
+     * Creates a new file role.
+     * @param configurationDirectory The configuration directory.
+     * @param id The role ID.
+     */
     public FileRole(File configurationDirectory, String id) {
         setId(id);
         setConfigurationDirectory(configurationDirectory);
@@ -54,7 +54,7 @@ public class FileRole extends AbstractRole implements Item {
 
     /**
      * Configure this instance of <code>FileRole</code>
-     *
+     * 
      * @param config containing the role details
      * @throws ConfigurationException if the <code>FileRole</code> could not be configured
      */
@@ -64,7 +64,7 @@ public class FileRole extends AbstractRole implements Item {
 
     /**
      * Save the role
-     *
+     * 
      * @throws AccessControlException if the save fails
      */
     public void save() throws AccessControlException {
@@ -82,7 +82,7 @@ public class FileRole extends AbstractRole implements Item {
 
     /**
      * Create a configuration containing the role details
-     *
+     * 
      * @return a <code>Configuration</code>
      */
     private Configuration createConfiguration() {

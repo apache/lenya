@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Item.java,v 1.3 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac;
 
@@ -23,12 +23,13 @@ import java.io.File;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.logger.LogEnabled;
 
 
 /**
  * An item can be initialized from a configuration.
  */
-public interface Item {
+public interface Item extends LogEnabled {
     
     /**
      * Returns the ID.

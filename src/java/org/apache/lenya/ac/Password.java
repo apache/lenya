@@ -15,39 +15,17 @@
  *
  */
 
-/* $Id: Password.java,v 1.4 2004/08/16 16:21:22 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac;
 
 import java.security.MessageDigest;
-
-import org.apache.log4j.Category;
 
 /**
  * Encrypt plain text password
  * Example: "message digest" becomes "f96b697d7cb7938d525a2f31aaf161d0" (hexadecimal notation (32 characters))
  */
 public class Password {
-    private static Category log = Category.getInstance(Password.class);
-
-    /**
-     * CLI
-     *
-     * @param args plain text password
-     */
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Usage: plain-text-password");
-
-            return;
-        }
-
-        try {
-            System.out.println(Password.encrypt(args[0]));
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-    }
 
     /**
      * Encrypt plain text password
@@ -69,7 +47,7 @@ public class Password {
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (java.security.NoSuchAlgorithmException e) {
-            log.error(e);
+            throw new RuntimeException(e);
         }
         return stringify(md.digest(plain.getBytes()));
     }

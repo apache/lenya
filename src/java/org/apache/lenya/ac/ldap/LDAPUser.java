@@ -35,7 +35,6 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.file.FileUser;
-import org.apache.log4j.Category;
 
 import com.sun.jndi.ldap.LdapCtxFactory;
 
@@ -45,7 +44,6 @@ import com.sun.jndi.ldap.LdapCtxFactory;
  */
 public class LDAPUser extends FileUser {
     private static Properties defaultProperties = null;
-    private static Category log = Category.getInstance(LDAPUser.class);
 
     protected static final String LDAP_ID = "ldapid";
     private static String PROVIDER_URL = "provider-url";
@@ -74,7 +72,7 @@ public class LDAPUser extends FileUser {
     }
 
     /**
-     * Create an LDAPUser
+     * Create an LDAPUser.
      * 
      * @param configurationDirectory where the user will be attached to
      * @param id user id of LDAPUser
@@ -226,8 +224,8 @@ public class LDAPUser extends FileUser {
                 + defaultProperties.getProperty(PARTIAL_USER_DN);
         Context ctx = null;
 
-        if (log.isDebugEnabled()) {
-            log.debug("Authenticating with principal [" + principal + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Authenticating with principal [" + principal + "]");
         }
 
         boolean authenticated = false;
@@ -236,15 +234,15 @@ public class LDAPUser extends FileUser {
             ctx = bind(principal, password);
             authenticated = true;
             close(ctx);
-            if (log.isDebugEnabled()) {
-                log.debug("Context closed.");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Context closed.");
             }
         } catch (NamingException e) {
             // log this failure
             // StringWriter writer = new StringWriter();
             // e.printStackTrace(new PrintWriter(writer));
-            if (log.isInfoEnabled()) {
-                log.info("Bind for user " + principal + " to Ldap server failed: ", e);
+            if (getLogger().isInfoEnabled()) {
+                getLogger().info("Bind for user " + principal + " to Ldap server failed: ", e);
             }
         }
 
@@ -298,7 +296,7 @@ public class LDAPUser extends FileUser {
      */
     private LdapContext bind(String principal, String credentials) throws NamingException {
 
-        log.info("Binding principal: [" + principal + "]");
+        getLogger().info("Binding principal: [" + principal + "]");
 
         Hashtable env = new Hashtable();
 
@@ -316,7 +314,7 @@ public class LDAPUser extends FileUser {
 
         LdapContext ctx = new InitialLdapContext(env, null);
 
-        log.info("Finished binding principal.");
+        getLogger().info("Finished binding principal.");
 
         return ctx;
     }

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIPRange.java,v 1.7 2004/08/16 16:34:06 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
@@ -28,7 +28,6 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.net.InetAddressUtil;
-import org.apache.log4j.Category;
 
 /**
  * <p>
@@ -62,14 +61,9 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * when setting these. (Once the above problems have been fixed. ;-)
      *  - Especially for IPv6 it would be nice to have the possibility to specify the netmask as the
      * number of bits (as in "::1/128" or "127.0.0.1/24").
-     *  - I think, that logging should probably work the "Cocoon-Way", as explained in
-     * <http://wiki.cocoondev.org/Wiki.jsp?page=JavaLogging>, rather than using
-     * org.apache.log4j.Category. (But I may be wrong. ;-)
      * 
      * FIXME II (from the previous version): why are we in the business of implementing IP ranges??
      */
-
-    private static final Category log = Category.getInstance(AbstractIPRange.class);
 
     /**
      * Initializes the the IP range with the local host (127.0.0.1/24 for IPv4, ::1/128 for IPv6).
@@ -104,10 +98,6 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * @param id The IP range ID.
      */
     public AbstractIPRange(String id) {
-        /*
-         * FIXME? by zisch@dals.ch: Is it safe not to call the default constructor and just leave
-         * the IPRange uninitialized!?
-         */
         setId(id);
     }
 
@@ -246,8 +236,8 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
          * 
          * FIXME: This "algorithm" is rather unelegant. There should be a better way to do it! ;-)
          */
-        if (log.isDebugEnabled()) {
-            log.debug("CHECK_NETMASK: check " + addr2string(mask));
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("CHECK_NETMASK: check " + addr2string(mask));
         }
         int i = 0;
         CHECK_NETMASK: while (i < mask.length) {
@@ -255,8 +245,8 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
             /* the initial byte(s) must be 255: */
             if (b != 0xff) {
                 /* first byte != 255, test all possibilities: */
-                if (log.isDebugEnabled()) {
-                    log.debug("CHECK_NETMASK: first byte != 255: idx: " + (i - 1)
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("CHECK_NETMASK: first byte != 255: idx: " + (i - 1)
                             + ", mask[idx]: 0x" + b);
                 }
                 /* check if 0: */
@@ -264,7 +254,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
                     break CHECK_NETMASK;
                 }
                 for (int tst = 0xfe; tst != 0; tst = (tst << 1) & 0xff) {
-                    log.debug("CHECK_NETMASK: tst == 0x" + Integer.toHexString(tst));
+                    getLogger().debug("CHECK_NETMASK: tst == 0x" + Integer.toHexString(tst));
                     if (b == tst) {
                         break CHECK_NETMASK;
                     }
@@ -349,7 +339,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
          * the localhost (see the javdoc comment above)? (I'm not a TCP/IP-guru, so I'm not sure
          * about this. ;-)
          */
-        log.debug("Checking IP range: [" + getId() + "]");
+        getLogger().debug("Checking IP range: [" + getId() + "]");
         return InetAddressUtil.contains(networkAddress, subnetMask, machine.getAddress());
     }
 

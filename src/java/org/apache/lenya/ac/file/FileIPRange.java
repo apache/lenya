@@ -20,133 +20,131 @@
 package org.apache.lenya.ac.file;
 
 import java.io.File;
+import java.net.InetAddress;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.impl.AbstractIPRange;
 import org.apache.lenya.ac.impl.ItemConfiguration;
+import org.apache.lenya.net.InetAddressUtil;
 
 /**
  * IP range that is stored in a file.
  */
 public class FileIPRange extends AbstractIPRange {
 
-	/**
-	 * Main method.
-	 * 
-	 * @param args
-	 *            The command-line arguments.
-	 * @deprecated This should bemoved to a JUnit test.
-	 */
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			System.out.println(
-				"Usage: network, netmask, ip (e.g. 192.168.0.64 255.255.255.240 192.168.0.70)");
-			return;
-		}
-		IPRange ipr = new FileIPRange();
-		try {
-			ipr.setNetworkAddress(args[0]);
-			ipr.setSubnetMask(args[1]);
-			if (ipr.contains(new Machine(args[2]))) {
-				System.out.println("true");
-			} else {
-				System.out.println("false");
-			}
-		} catch (Exception e) {
-			System.err.println(e);
-		}
-	}
+    /**
+     * Main method.
+     * 
+     * @param args The command-line arguments.
+     * @deprecated This should bemoved to a JUnit test.
+     */
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out
+                    .println("Usage: network, netmask, ip (e.g. 192.168.0.64 255.255.255.240 192.168.0.70)");
+            return;
+        }
+        try {
+            InetAddress networkAddress = InetAddress.getByName(args[0]);
+            InetAddress subnetMask = InetAddress.getByName(args[1]);
+            Machine machine = new Machine(args[2]);
 
-	/**
-	 * Ctor.
-	 */
-	public FileIPRange() {
-	}
+            if (InetAddressUtil.contains(networkAddress, subnetMask, machine.getAddress())) {
+                System.out.println("true");
+            } else {
+                System.out.println("false");
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
 
-	/**
-	 * Ctor.
-	 * 
-	 * @param configurationDirectory
-	 *            The configuration directory.
-	 * @param id
-	 *            The IP range ID.
-	 */
-	public FileIPRange(File configurationDirectory, String id) {
-		super(id);
-		setConfigurationDirectory(configurationDirectory);
-	}
+    /**
+     * Ctor.
+     */
+    public FileIPRange() {
+    }
 
-	/**
-	 * @see org.apache.lenya.ac.impl.AbstractIPRange#save()
-	 */
-	public void save() throws AccessControlException {
-		DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
-		Configuration config = createConfiguration();
+    /**
+     * Ctor.
+     * 
+     * @param configurationDirectory The configuration directory.
+     * @param id The IP range ID.
+     */
+    public FileIPRange(File configurationDirectory, String id) {
+        setConfigurationDirectory(configurationDirectory);
+    }
 
-		try {
-			serializer.serializeToFile(getFile(), config);
-		} catch (Exception e) {
-			throw new AccessControlException(e);
-		}
-	}
+    /**
+     * @see org.apache.lenya.ac.impl.AbstractIPRange#save()
+     */
+    public void save() throws AccessControlException {
+        DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
+        Configuration config = createConfiguration();
 
-	/**
-	 * Returns the configuration file.
-	 * 
-	 * @return A file object.
-	 */
-	protected File getFile() {
-		File xmlPath = getConfigurationDirectory();
-		File xmlFile = new File(xmlPath, getId() + FileIPRangeManager.SUFFIX);
-		return xmlFile;
-	}
+        try {
+            serializer.serializeToFile(getFile(), config);
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        }
+    }
 
-	/**
-	 * @see org.apache.lenya.ac.Item#configure(org.apache.avalon.framework.configuration.Configuration)
-	 */
-	public void configure(Configuration config) throws ConfigurationException {
-		new ItemConfiguration().configure(this, config);
+    /**
+     * Returns the configuration file.
+     * 
+     * @return A file object.
+     */
+    protected File getFile() {
+        File xmlPath = getConfigurationDirectory();
+        File xmlFile = new File(xmlPath, getId() + FileIPRangeManager.SUFFIX);
+        return xmlFile;
+    }
 
-		String networkAddress = config.getChild(ELEMENT_NETWORK_ADDRESS).getValue();
-		String subnetMask = config.getChild(ELEMENT_SUBNET_MASK).getValue();
+    /**
+     * @see org.apache.lenya.ac.Item#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration config) throws ConfigurationException {
+        new ItemConfiguration().configure(this, config);
 
-		try {
-			setNetworkAddress(networkAddress);
-			setSubnetMask(subnetMask);
-		} catch (AccessControlException e) {
-			throw new ConfigurationException("Configuring IP range [" + getId() + "] failed: ", e);
-		}
+        String networkAddress = config.getChild(ELEMENT_NETWORK_ADDRESS).getValue();
+        String subnetMask = config.getChild(ELEMENT_SUBNET_MASK).getValue();
 
-	}
+        try {
+            setNetworkAddress(networkAddress);
+            setSubnetMask(subnetMask);
+        } catch (AccessControlException e) {
+            throw new ConfigurationException("Configuring IP range [" + getId() + "] failed: ", e);
+        }
 
-	protected static final String IP_RANGE = "ip-range";
-	protected static final String ELEMENT_NETWORK_ADDRESS = "network-address";
-	protected static final String ELEMENT_SUBNET_MASK = "subnet-mask";
+    }
 
-	/**
-	 * Create a configuration from the current user details. Can be used for saving.
-	 * 
-	 * @return a <code>Configuration</code>
-	 */
-	protected Configuration createConfiguration() {
-		DefaultConfiguration config = new DefaultConfiguration(IP_RANGE);
-		new ItemConfiguration().save(this, config);
+    protected static final String IP_RANGE = "ip-range";
+    protected static final String ELEMENT_NETWORK_ADDRESS = "network-address";
+    protected static final String ELEMENT_SUBNET_MASK = "subnet-mask";
 
-		DefaultConfiguration networkAddressConfig =
-			new DefaultConfiguration(ELEMENT_NETWORK_ADDRESS);
-		networkAddressConfig.setValue(getNetworkAddress().getHostAddress());
-		config.addChild(networkAddressConfig);
+    /**
+     * Create a configuration from the current user details. Can be used for saving.
+     * 
+     * @return a <code>Configuration</code>
+     */
+    protected Configuration createConfiguration() {
+        DefaultConfiguration config = new DefaultConfiguration(IP_RANGE);
+        new ItemConfiguration().save(this, config);
 
-		DefaultConfiguration subnetMaskConfig = new DefaultConfiguration(ELEMENT_SUBNET_MASK);
-		subnetMaskConfig.setValue(getSubnetMask().getHostAddress());
-		config.addChild(subnetMaskConfig);
+        DefaultConfiguration networkAddressConfig = new DefaultConfiguration(
+                ELEMENT_NETWORK_ADDRESS);
+        networkAddressConfig.setValue(getNetworkAddress().getHostAddress());
+        config.addChild(networkAddressConfig);
 
-		return config;
-	}
+        DefaultConfiguration subnetMaskConfig = new DefaultConfiguration(ELEMENT_SUBNET_MASK);
+        subnetMaskConfig.setValue(getSubnetMask().getHostAddress());
+        config.addChild(subnetMaskConfig);
+
+        return config;
+    }
 }
