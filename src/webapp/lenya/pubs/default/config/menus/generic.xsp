@@ -23,9 +23,9 @@
       
       <menu label="File" name="File">
         <block>
-          <item uc:step="showscreen" uc:usecase="create-workflow">
+          <item uc:step="showscreen" uc:usecase="create">
             <xsp:attribute name="href">?doctype=simple</xsp:attribute>New Document (simple)</item>
-          <item uc:step="showscreen" uc:usecase="create-workflow">
+          <item uc:step="showscreen" uc:usecase="create">
             <xsp:attribute name="href">?doctype=xhtml</xsp:attribute>New Document (xhtml)</item>
         </block>
         <block>
