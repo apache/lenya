@@ -55,6 +55,10 @@
       <li><code>endorsed.tar.gz</code></li>
     </ul>
     from <a href="http://www.wyona.org/lenya">http://www.wyona.org/lenya</a>.
+    <p>
+    <strong>Note:</strong> The current CVS version of Lenya works only with Cocoon Milestone 1
+    and newer versions (<a href="http://xml.apache.org/cocoon/mirror.cgi">Cocooon download page</a>).
+    </p>
   </li>
   <li>
     Extract <code>cocoon-2.1-build-*.tar.gz</code> to a directory of your choice

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Prerequisites</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<p>
+The following list describes the setup that is tested and recommended.
+Several items, e.g. the servlet container, may be replaced by other products.
+</p>
+<ul>
+  <li>
+    <p>
+    <strong>Java 2 Platform, Standard Edition</strong> (recommended: J2SE 1.4.2 Beta)<br/>
+    <a href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>
+    </p>
+  </li>
+  
+  <li>
+    <p>
+    <strong>Apache Tomcat</strong> for JDK 1.4 (recommended: 4.1.24)<br/>
+    <a href="http://jakarta.apache.org/builds/jakarta-tomcat-4.0/release/v4.1.24/bin/">Tomcat release builds</a><br/>
+    Pick one of the <code>jakarta-tomcat-4.1.24-LE-jdk14</code> files!
+    </p>
+  </li>
+  
+  <li>
+    <p>
+    <strong>Apache Ant</strong> (recommended: 1.5.3)<br/>
+    <a href="http://www.apache.org/dist/ant/">Ant main distribution directory</a>
+    </p>
+  </li>
+  
+  <li>
+    <p>
+    <strong>Apache Cocoon</strong> (recommended: Cocoon 2.1 M1 for the CVS version of Lenya)<br/>
+    <a href="http://xml.apache.org/cocoon/mirror.cgi">Cocoon download page</a>
+    </p>
+  </li>
+  
+</ul>
+
+</body>
+</document>

@@ -3,21 +3,21 @@
 
 <document>
   <header>
-    <title>Installation</title>
+    <title>Installing Lenya</title>
     <version/>
     <type/>
     <authors>
-      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/>
     </authors>
   </header>
   <body>
   
-  <section><title>Source Version</title>
     <ul>
-      <li><link href="source_version.html">MS Windows</link></li>
+      <li><link href="prerequisites.html">Prerequisites</link></li>
+      <li><link href="source_version.html">Source Version (MS Windows)</link></li>
+      <li><link href="cvs.html">Getting Lenya from CVS</link></li>
     </ul>
     
-  </section>  
   
   </body>
 </document>
