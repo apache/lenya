@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.13 2003/03/17 16:18:29 edith Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.14 2003/03/18 16:35:56 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -8,11 +8,24 @@
 
   <map:components>
 
-    <map:generators default="file"/>
-    <map:transformers default="xslt"/>
+    <map:generators default="file">
+      <map:generator name="servletproxy" src="org.lenya.cms.cocoon.generation.ProxyGenerator"/>
+    </map:generators>
+    <map:transformers default="xslt">
+      <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
+        <publication type="unipublic"/>
+      </map:transformer>
+    </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
-    <map:matchers default="wildcard"/>
+    <map:matchers default="wildcard">
+      <map:matcher name="usecase" logger="sitemap.matcher.usecase" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>usecase</parameter-name>
+      </map:matcher>
+      <map:matcher name="step" logger="sitemap.matcher.step" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>step</parameter-name>
+      </map:matcher>
+    </map:matchers>
     <map:actions>
       <map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
         <authenticator type="unipublic"/>

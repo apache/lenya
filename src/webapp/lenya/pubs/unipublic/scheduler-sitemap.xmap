@@ -3,20 +3,13 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
-    <map:generators default="file">
-      <map:generator  name="request" src="org.apache.cocoon.generation.RequestGenerator"/>
-      <map:generator  name="servletproxy" src="org.lenya.cms.cocoon.generation.ProxyGenerator"/>
-    </map:generators>
+    <map:generators default="file"/>
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-    <map:actions>
-      <map:action name="request-parameter" src="org.apache.cocoon.acting.RequestParamAction"/>
-    </map:actions>
-    <map:selectors>
-      <map:selector name="parameter" src="org.apache.cocoon.selection.ParameterSelectorFactory"/>
-    </map:selectors>
+    <map:actions/>
+    <map:selectors/>
    </map:components>
 
   <map:resources/>

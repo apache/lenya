@@ -20,10 +20,6 @@
 </map:actions>
 </map:components>
 
-
-
-
-
 	<map:pipelines>
 		<!-- Called from config.xml  -->
 		<!-- Used for Bitflux specific pre- and post-processing of the xml (for all doctypes)  -->

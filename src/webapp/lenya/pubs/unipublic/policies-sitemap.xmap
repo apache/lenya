@@ -5,12 +5,7 @@
  <map:components>
    <map:generators default="file"/>
    <map:serializers default="xml"/>
-   <map:matchers default="wildcard">
-      <map:matcher name="usecase"     logger="sitemap.matcher.usecase"
-                src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
-        <parameter-name>usecase</parameter-name>
-      </map:matcher>
-   </map:matchers>
+   <map:matchers default="wildcard"/>
  </map:components>
 
  <map:pipelines>
