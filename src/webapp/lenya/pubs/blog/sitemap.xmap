@@ -1,16 +1,30 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.9 2003/08/19 17:06:53 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.10 2003/08/21 18:52:07 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components/>
+  <map:components>
+    <map:generators default="file">
+      <map:generator label="content" logger="sitemap.generator.stream" name="stream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.cocoon.generation.StreamGenerator"/>
+    </map:generators>
+    <map:selectors default="browser">
+      <map:selector logger="sitemap.selector.request-method" name="request-metod" src="org.apache.cocoon.selection.RequestMethodSelector"/>
+    </map:selectors>
+  </map:components>
 
   <map:views/>
 
   <map:resources/>
 
   <map:pipelines>
+
+    <!-- CSS, path independent (mod_proxy) -->
+    <map:pipeline>
+      <map:match pattern="**/css/styles.css">
+        <map:read src="resources/css/styles.css" mime-type="text/css"/>
+      </map:match>
+    </map:pipeline>
   
     <!-- Redirects -->
     <map:pipeline>
@@ -77,17 +91,33 @@
 -->
         <map:serialize type="xml"/>
       </map:match>
-      <!-- GET and PUT -->
+    </map:pipeline>
+    <!-- GET and PUT -->
+    <map:pipeline type="noncaching"> <!-- Caching Info: http://cocoon.apache.org/2.1/userdocs/concepts/caching.html -->
       <map:match pattern="*/entries/*/*/*/*/index-bxeng.xml">
-        <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+        <map:select type="request-metod">
+          <map:when test="PUT">
+            <map:generate type="stream"/>
+            <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+          </map:when>
+          <map:otherwise> <!-- GET -->
+            <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+          </map:otherwise>
+        </map:select>
         <map:serialize type="xml"/>
       </map:match>
+    </map:pipeline>
+    <!-- /GET and PUT -->
+    <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/entry-bxeng.xsl">
         <map:generate src="xslt/entry/bxeng.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/entries/*/*/*/*/entry-bxeng.css">
-        <map:read src="resources/misc/bxeng/entry.css" mime-type="text/html"/>
+        <map:read src="resources/misc/bxeng/entry.css" mime-type="text/css"/>
       </map:match>
       <map:handle-errors type="500">
         <map:serialize type="xml"/>
