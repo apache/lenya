@@ -9,8 +9,9 @@
 </xsl:template>                                                                                                                             
 
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
-<feed xmlns:xlink="http://www.w3.org/2002/XLink">
-  <description xlink:href="feeds/all/index.xml#xpointer(/feed/title)xpointer(/feed/subtitle)xpointer(/feed/link)xpointer(/feed/modified)" xlink:show="embed"/>
+<atom:feed xmlns:atom="http://purl.org/atom/ns#" xmlns:xlink="http://www.w3.org/2002/XLink">
+  <description xlink:href="feeds/all/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)xpointer(/atom:feed/atom:link)xpointer(/atom:feed/atom:modified)" xlink:show="embed"/>
+
   <xsl:variable name="month"><xsl:value-of select="@name"/></xsl:variable>
   <xsl:for-each select="dir:directory">
     <xsl:variable name="day"><xsl:value-of select="@name"/></xsl:variable>
@@ -19,7 +20,7 @@
       <entry xlink:href="entries/{$year}/{$month}/{$day}/{$entryid}/index.xml" xlink:show="embed"/>
     </xsl:for-each>
   </xsl:for-each>
-</feed>
+</atom:feed>
 </xsl:template>
 
 </xsl:stylesheet>
