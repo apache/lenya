@@ -63,14 +63,17 @@
       class="org.apache.cocoon.components.modules.input.RealPathModule"
       logger="core.modules.input" name="realpath"/>
       
-    <component-instance logger="sitemap.modules.input" name="page-envelope"
+    <component-instance logger="sitemap.modules.input.page-envelope" name="page-envelope"
         class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>
 
-    <component-instance logger="core.modules.input" name="access-control"
+    <component-instance logger="core.modules.input.access-control" name="access-control"
         class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
     
-    <component-instance logger="core.modules.input" name="workflow"
+    <component-instance logger="core.modules.input.workflow" name="workflow"
         class="org.apache.lenya.cms.cocoon.components.modules.input.WorkflowModule"/>
+        
+    <component-instance logger="core.modules.input.sitetree" name="sitetree"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.SitetreeModule"/>
         
   </xsl:copy>
 </xsl:template>
