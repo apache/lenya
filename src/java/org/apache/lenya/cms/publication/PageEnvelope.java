@@ -36,6 +36,7 @@ public class PageEnvelope {
     public static final String AREA = "area";
     public static final String DOCUMENT_ID = "document-id";
     public static final String DOCUMENT_URL = "document-url";
+    public static final String DOCUMENT_PATH = "document-path";
 
     private Publication publication;
     private RCEnvironment rcEnvironment;
@@ -43,6 +44,7 @@ public class PageEnvelope {
     private String area;
     private String documentId;
     private String documentUrl;
+    private String documentPath;
 
     /**
      * Creates a new instance of PageEnvelope from a sitemap inside a publication.
@@ -75,6 +77,9 @@ public class PageEnvelope {
             documentUrl = publicationURI.substring(("/" + area).length());
             documentId = computeDocumentId(documentUrl);
             
+			DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
+			documentPath = mapper.computeDocumentPath(publication, area, documentId);
+            
             rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
         }
         catch (Exception e) {
@@ -87,7 +92,7 @@ public class PageEnvelope {
         }
     }
     
-    protected String createExceptionMessage(Request request) {
+	protected String createExceptionMessage(Request request) {
         return "Resolving page envelope failed:"
                     + "\n  URI: " + request.getRequestURI()
                     + "\n  Context: " + getContext()
@@ -234,16 +239,25 @@ public class PageEnvelope {
         return documentUrl;
     }
 
+	/**
+	 * Returns the document-path.
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentPath() {
+		return documentPath;
+	}
+	
     /**
      * The names of the page envelope parameters.
      */
-    public static final String[] PARAMETER_NAMES =
-        {
-            PageEnvelope.AREA,
-            PageEnvelope.CONTEXT,
-            PageEnvelope.PUBLICATION_ID,
-            PageEnvelope.PUBLICATION,
-            PageEnvelope.DOCUMENT_ID,
-            PageEnvelope.DOCUMENT_URL };
+	public static final String[] PARAMETER_NAMES =
+		{
+			PageEnvelope.AREA,
+			PageEnvelope.CONTEXT,
+			PageEnvelope.PUBLICATION_ID,
+			PageEnvelope.PUBLICATION,
+			PageEnvelope.DOCUMENT_ID,
+			PageEnvelope.DOCUMENT_URL,
+			PageEnvelope.DOCUMENT_PATH };
 
 }

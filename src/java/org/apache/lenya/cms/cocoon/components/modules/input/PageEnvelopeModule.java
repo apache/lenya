@@ -60,7 +60,9 @@ public class PageEnvelopeModule
             value = envelope.getDocumentId();
         } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
             value = envelope.getDocumentURL();
-        }
+        } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
+        	value = envelope.getDocumentPath();
+		}
         
         return value;
     }
