@@ -15,55 +15,6 @@
 */
 
 //
-// Modify a group.
-//
-function groupChangeProfile() {
-
-	resolve();
-	try {
-	
-	    var redirectUri = getRequestUri();
-        var groupId = getAccreditableId();
-        
-	    var groupManager = getAccreditableManager().getGroupManager();
-	    var group = groupManager.getGroup(groupId);
-		var name = group.getName();
-		var description = group.getDescription();
-		
-		// at the moment the loop is executed only once (no form validation)
-		
-	    while (true) {
-		    cocoon.sendPageAndWait("groups/profile.xml", {
-		    	"group-id" : groupId,
-		    	"name" : name,
-		    	"description" : description,
-		    	"page-title" : "Edit Group"
-		    });
-		    
-		    if (cocoon.request.get("cancel")) {
-		    	break;
-		    }
-		    
-		    if (cocoon.request.get("submit")) {
-			    name = cocoon.request.get("name");
-		       	group.setName(name);
-		       	description = cocoon.request.get("description");
-		       	group.setDescription(description);
-		   		group.save();
-		    	break;
-		    }
-	
-	    }
-	    
-	   	cocoon.redirectTo(redirectUri);
-   	}
-   	finally {
-	   	release();
-   	}
-}
-
-
-//
 // Change the members of a group.
 //
 function groupChangeMembers() {
