@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultCreator.java,v 1.27 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id: DefaultCreator.java,v 1.28 2004/03/02 16:43:58 michi Exp $  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -148,7 +148,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
         File sampleFile = new File(doctypeSample);
         if (!sampleFile.exists()) {
-            log.error("No such sample file: " + sampleFile);
+            log.error("No such sample file: " + sampleFile + " Have you configured the sample within doctypes.xconf?");
             throw new FileNotFoundException("" + sampleFile);
         }
 
