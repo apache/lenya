@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsp:page language="java"
           xmlns:xsp="http://apache.org/xsp"
-          xmlns:xsp-request="http://apache.org/xsp/request/2.0">
+          xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+          xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+          xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+          >
 
   <xsp:structure>
    <xsp:include>org.apache.avalon.framework.context.ContextException</xsp:include>
@@ -68,7 +71,7 @@
       }
       
       String baseURL = <xsp-request:get-parameter name="baseURL" />;
-      String publication_id = <xsp-request:get-parameter name="publication-id" />;
+      String publication_id = <input:get-attribute module="page-envelope" name="publication-id" as="string"/>;
       if (baseURL != null &amp;&amp; baseURL.length() > 0 &amp;&amp; publication_id != null &amp;&amp; publication_id.length() > 0) {
         createIndex(baseURL, create, publication_id);
         indexHasBeenCreated=true;
@@ -78,49 +81,29 @@
           "http://" + 
           <xsp-request:get-server-name/> +
           ":" + <xsp-request:get-server-port/> +
-          <xsp-request:get-context-path/> + "/" + "oscom/index.html";
+          <xsp-request:get-context-path/> + "/" + <input:get-attribute module="page-envelope" name="publication-id" as="string"/> + "/index.html";
       }
     </xsp:logic>
     <content>
+    <page:page>
+      <page:title>Search</page:title>
+      <page:body>
+    <div class="lenya-box">
+      <div class="lenya-box-title">Create a search index</div>
+      <div class="lenya-box-body">
       <xsp:logic>
         if(indexHasBeenCreated){
           <xsp:content><index_has_been_created/><h3>Index has been created for Publication <xsp:expr>publication_id</xsp:expr></h3></xsp:content>
           }  
       </xsp:logic>
-      <h1>Create a Lucene search index</h1>
-      <para>
         This process might take some time (follow the tail of your logfiles
         to see the indexer in progress).
-        <ul>
-          <li>LuceneCocoonIndexer.ROLE <xsp:expr>LuceneCocoonIndexer.ROLE</xsp:expr>
-          </li>
-          <li>context-path <xsp-request:get-context-path/>
-          </li>
-          <li>baseURL <xsp:expr>baseURL</xsp:expr>
-          </li>
-          <li>create <xsp:expr>String.valueOf(createParam)</xsp:expr>,
-            <xsp:expr>String.valueOf( create )</xsp:expr>
-          </li>
-          <li>get-uri <xsp-request:get-uri/>
-          </li>
-          <li>get-sitemap-uri <xsp-request:get-sitemap-uri/>
-          </li>
-        </ul>
-
-        <form action="create">
-        <table>
-          <tr>
-            <td>Publication ID</td>
-            <td>
-              <input type="radio" name="publication-id" value="oscom"><xsp:attribute name="checked"/></input>OSCOM
-              <input type="radio" name="publication-id" value="forum"/>Lenya News
-              <input type="radio" name="publication-id" value="unipublic"/>unipublic
-            </td>
-          </tr>
+        <form action="">
+        <table class="lenya-table-noborder">
           <tr>
             <td>BaseURL</td>
             <td>
-              <input type="text" name="baseURL" size="60">
+              <input type="text" name="baseURL" size="60" class="lenya-form-element">
                 <xsp:attribute name="value"><xsp:expr>baseURL</xsp:expr></xsp:attribute>
               </input>
             </td>
@@ -140,8 +123,10 @@
           </tr>
         </table>
         </form>
-
-      </para>
+      </div>
+    </div>
+      </page:body>
+    </page:page>
     </content>
   </page>
 

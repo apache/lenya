@@ -20,7 +20,13 @@
     <map:script src="content/admin/ipranges/iprange-admin.js"/>
   </map:flow>
   
-  <map:resources>
+    <map:resources>
+      <map:resource name="style-cms-page">
+      <map:transform src="xslt/admin/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize type="xhtml"/>
+    </map:resource>
     
     <map:resource name="fallback-generation">
       <map:select type="resource-exists">
@@ -135,6 +141,15 @@
         <map:serialize type="html"/>
       </map:match>
       
+      <!-- ============================================================ -->
+      <!-- Lucene Page -->
+      <!-- ============================================================ -->
+      
+      <map:match pattern="internal/lucene.html">
+        <map:generate type="serverpages" src="content/search/create-index.xsp"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+
       <!-- ============================================================ -->
       <!-- Common Admin Pages -->
       <!-- ============================================================ -->

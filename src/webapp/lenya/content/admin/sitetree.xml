@@ -40,6 +40,11 @@
     <label xml:lang="de">Delete Trash</label>
   </node>
 
+  <node id="lucene" href="lucene.html">
+    <label xml:lang="en">Search</label>
+    <label xml:lang="de">Search</label>
+  </node>
+
   <node id="status" href="status.html">
     <label xml:lang="en">Cocoon and Server Status</label>
     <label xml:lang="de">Cocoon and Server Status</label>

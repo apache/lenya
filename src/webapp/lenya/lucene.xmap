@@ -9,6 +9,15 @@
       <map:serialize type="xml"/>
     </map:view>
   </map:views>
+  
+    <map:resources>
+      <map:resource name="style-cms-page">
+      <map:transform src="xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize type="xhtml"/>
+    </map:resource>
+</map:resources>  
 
   <map:pipelines>
 
@@ -42,25 +51,6 @@
         <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>
-
-
-    <!-- Lucene web based administration -->
-    <!-- Create Search Index -->
-<!--
-    <map:pipeline>
-      <map:match pattern="create">
-        <map:generate type="serverpages" src="content/search/create-index.xsp"/>
-        <map:transform src="xslt/search/dynamic-page2html.xsl">
-          <map:parameter name="view-source" value="lucene/create-index.xsp"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:match>
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
-    </map:pipeline>
--->
-    <!-- /Create Search Index -->
-  </map:pipelines>
+   </map:pipelines>
 
 </map:sitemap>
