@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<dossier>
+
+<teaser>
+  <text>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</text>
+  <image href="teaser.jpg"/>
+  <color>#9dc0d0</color>
+</teaser>
+
+<title>Kommunizierendes Gehirn</title>
+
+<lead>Das Thema Kommunikation und Gehirn steht im Zentrum der 5. BrainFair.</lead>
+
+<articles>
+  <article channel="magazin" section="gesundheit" year="2002" dir="0465"/>
+  <article channel="magazin" section="recht" year="2002" dir="0413"/>
+</articles>
+
+<related-content>
+  <block>
+    <title>Links</title>
+    <item>
+      <a href="http://www.brainfair.ch">Die Brainfair-Website</a>
+    </item>
+    <item>
+      <a href="http://www.expo.02.ch">EXPO.02</a>
+    </item>
+  </block>
+</related-content>
+</dossier>
