@@ -62,7 +62,9 @@ public class Assets extends SiteUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
-        validate();
+        if (getParameter("delete") == null) {
+            validate();
+        }
     }
 
     /**
@@ -107,6 +109,27 @@ public class Assets extends SiteUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
+
+        if (getParameter("delete") == null) {
+            addAsset();
+        } else {
+            deleteAsset();
+        }
+    }
+
+    /**
+     * Deletes an asset.
+     * @throws Exception if an error occurs.
+     */
+    protected void deleteAsset() throws Exception {
+        String assetName = getParameterAsString("delete");
+        this.resourcesManager.deleteResource(assetName);
+    }
+
+    /**
+     * Adds an asset.
+     */
+    protected void addAsset() {
         String title = getParameterAsString("title");
         String creator = getParameterAsString("creator");
         String rights = getParameterAsString("rights");
