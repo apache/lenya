@@ -16,7 +16,10 @@
 					<td bgcolor="#666666" height="1"><img src="{$img-unipub}/spacer.gif" alt="top" width="40" height="1" border="0" /></td>
 				</tr>
 				<tr>
-					<td><font size="1">&#169; Universit&#228;t Z&#252;rich,&#160;<xsl:value-of select="$footer_date" />,&#160;<a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum.html">Impressum</a></font></td>
+					<td><font size="1">&#169; Universit&#228;t Z&#252;rich,&#160;<!--
+				           --><xsl:if test="$footer_date"><xsl:value-of select="$footer_date" />,&#160;</xsl:if><!--
+					   --><a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum.html">Impressum</a></font>
+					</td>
 				</tr>
 			</table>
 		<!--ENDE FUSSTEIL-->
