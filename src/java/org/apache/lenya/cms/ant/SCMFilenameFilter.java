@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SCMFilenameFilter.java,v 1.1 2004/06/01 15:28:52 michi Exp $  */
+/* $Id: SCMFilenameFilter.java,v 1.2 2004/06/01 15:37:05 andreas Exp $  */
 
 package org.apache.lenya.cms.ant;
 
@@ -33,7 +33,6 @@ public class SCMFilenameFilter implements FilenameFilter {
      *
      */
     public SCMFilenameFilter(String excludes) {
-        //System.out.println("SCMFilenameFilter: " + excludes);
         this.excludes = excludes.split(",");
     }
 
