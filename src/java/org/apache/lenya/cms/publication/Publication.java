@@ -70,9 +70,10 @@ public class Publication {
     public static final String AUTHORING_AREA = "authoring";
     public static final String LIVE_AREA = "live";
     public static final String INFO_AREA = "info";
+    public static final String ADMIN_AREA = "admin";
     
-    private final static String[] areas = {
-        AUTHORING_AREA, LIVE_AREA, INFO_AREA
+    private static final String[] areas = {
+        AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA
     };
 
     /** Creates a new instance of Publication */
