@@ -1,5 +1,5 @@
 /*
- * $Id: RoleManagerTest.java,v 1.1 2003/06/03 13:52:12 egli Exp $
+ * $Id: RoleManagerTest.java,v 1.2 2003/06/11 12:02:39 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -128,7 +128,7 @@ public class RoleManagerTest extends TestCase {
 	 */
 	final public void testRemoveRole() {
 		Publication pub = getPublication();
-		String name = "test";
+		String name = "test2";
 		Role role = new Role(name);
 		RoleManager manager = null;
 		try {
