@@ -52,7 +52,7 @@
     </copy>
     <delete dir="${dist.bin.dir}/tools/anttasks"/>
     
-	<!-- Make executable -->
+     <!-- Make executable -->
     <chmod file="${dist.bin.dir}/*.sh" perm="ugo+rx"/>
   </target>
 

@@ -60,21 +60,25 @@
   <target name="build-custom-tasks" depends="init">
     <echo>INFO: Building Custom Tasks</echo>
 
-    <mkdir dir="${build.dir}/tools/anttasks"/>
-    <javac srcdir="src/java"
-           destdir="${build.dir}/tools/anttasks"
+    <echo>INFO: Copy java source files from ${java.dir} to ${build.src}</echo>
+    <copy todir="${build.src}-tools" filtering="on">
+      <fileset dir="${java.dir}" includes="org/apache/lenya/cms/ant/CopyJavaSourcesTask.java, org/apache/lenya/cms/ant/BulkCopyTask.java, org/apache/lenya/cms/ant/CopyTask.java, org/apache/lenya/cms/ant/TwoTuple.java, org/apache/lenya/cms/ant/SCMFilenameFilter.java, org/apache/lenya/cms/ant/JavaFilenameFilter.java"/>
+    </copy>
+
+    <mkdir dir="${build.dir}/${tools.tasks.dest}"/>
+    <javac srcdir="${build.src}-tools"
+           destdir="${build.dir}/${tools.tasks.dest}"
            debug="${debug}"
            optimize="{optimize}"
            deprecation="${deprecation}"
            target="${target.vm}"
            nowarn="${nowarn}"
-           includes="org/apache/lenya/cms/ant/**"
            classpathref="classpath"
            source="${target.vm}"/>
 
-    <taskdef name="copyJavaSources" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
-    <taskdef name="bulkCopy" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
-    <taskdef name="copyPubs"        classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyTask"/>
+    <taskdef name="copyJavaSources" classpath="${build.dir}/${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="bulkCopy" classpath="${build.dir}/${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
+    <taskdef name="copyPubs"        classpath="${build.dir}/${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${cocoon.src.dir}/tools/anttasks"/>
   </target>
 
@@ -146,7 +150,7 @@
 
     <!-- patch lucene -->
     <available file="${src.webapp.dir}/WEB-INF/lib/lucene-1.4.1.jar" type="file" property="lenya.lucene.patch.exists"/>
-    <echo>${src.webapp.dir}/WEB-INF/lib/lucene**.jar</echo>
+    <echo>INFO: Check if Lucene shall be patched: ${src.webapp.dir}/WEB-INF/lib/lucene**.jar</echo>
     <antcall target="patch-lucene"/>
     <antcall target="do-not-patch-lucene"/>
 
@@ -161,7 +165,10 @@
   <!-- copy the bulk of the cocoon webapp to our destination        -->
   <!-- ============================================================ -->
   <target name="prepare" depends="prepare-cocoon">
+    <echo>INFO: Create build directory ${build.dir}</echo>
     <mkdir dir="${build.dir}"/>
+
+    <echo>INFO: Create webapp directory ${build.webapp}</echo>
     <mkdir dir="${build.webapp}"/>
   </target>
 

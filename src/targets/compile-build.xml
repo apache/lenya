@@ -26,8 +26,7 @@
   <!-- ============================================================ -->
   <!-- The main compilation target                                  -->
   <!-- ============================================================ -->
-  <target name="compile" depends="prepare-src"
-          description="Compile the sources">
+  <target name="compile" depends="prepare-src" description="Compile the sources">
     <mkdir dir="${build.dest}"/>
     <javac srcdir="${build.src}"
            destdir="${build.dest}"
@@ -47,8 +46,7 @@
   <!-- ============================================================ -->
   <!-- The compilation target with deprecation on -->
   <!-- ============================================================ -->
-  <target name="deprecation" depends="prepare-src"
-          description="Compile the sources with deprecation messages">
+  <target name="deprecation" depends="prepare-src" description="Compile the sources with deprecation messages">
     <delete dir="${build.dest}"/>
     <mkdir dir="${build.dest}"/>
     <javac srcdir="${build.src}"
