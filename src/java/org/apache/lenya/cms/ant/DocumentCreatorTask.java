@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreatorTask.java,v 1.5 2003/07/30 15:30:43 egli Exp $
+$Id: DocumentCreatorTask.java,v 1.6 2003/08/07 16:48:05 egli Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,7 @@ public class DocumentCreatorTask extends PublicationTask {
     private String childName;
     private String childType;
     private String documentType;
-    private String treeFile;
+    private String area;
     private String authoringPath;
     private String language;
 
@@ -90,7 +90,7 @@ public class DocumentCreatorTask extends PublicationTask {
             creator.create(
                 getPublication(),
                 new File(getPublication().getDirectory(), getAuthoringPath()),
-                getTreeFile(),
+                getArea(),
                 getParentId(),
                 getChildId(),
                 getChildName(),
@@ -219,17 +219,6 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * Get the tree file
-     * 
-     * @return the path to the tree file
-     */
-    public String getTreeFile() {
-        assertString(treeFile);
-
-        return treeFile;
-    }
-
-    /**
      * Set the authoring path
      * 
      * @param string the authoring path
@@ -239,15 +228,6 @@ public class DocumentCreatorTask extends PublicationTask {
         authoringPath = string;
     }
 
-    /**
-     * Set the tree file
-     * 
-     * @param string the path to the tree file
-     */
-    public void setTreeFile(String string) {
-        assertString(string);
-        treeFile = string;
-    }
     /**
      * Get the language
      * 
@@ -264,6 +244,24 @@ public class DocumentCreatorTask extends PublicationTask {
      */
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    /**
+     * Get the area.
+     * 
+     * @return the area
+     */
+    public String getArea() {
+        return area;
+    }
+
+    /**
+     * Set the area.
+     * 
+     * @param area the area
+     */
+    public void setArea(String area) {
+        this.area = area;
     }
 
 }

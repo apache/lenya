@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreator.java,v 1.4 2003/07/30 15:30:06 egli Exp $
+$Id: DocumentCreator.java,v 1.5 2003/08/07 16:48:05 egli Exp $
 <License>
 
  ============================================================================
@@ -76,7 +76,7 @@ public class DocumentCreator {
      *
      * @param publication DOCUMENT ME!
      * @param authoringDirectory DOCUMENT ME!
-     * @param treeFileName DOCUMENT ME!
+     * @param area the area
      * @param parentId DOCUMENT ME!
      * @param childId DOCUMENT ME!
      * @param childName DOCUMENT ME!
@@ -89,7 +89,7 @@ public class DocumentCreator {
     public void create(
         Publication publication,
         File authoringDirectory,
-        String treeFileName,
+        String area,
         String parentId,
         String childId,
         String childName,
@@ -133,8 +133,7 @@ public class DocumentCreator {
         DefaultSiteTree siteTree;
 
         try {
-            siteTree =
-                new DefaultSiteTree(new File(authoringDirectory, treeFileName));
+            siteTree = publication.getSiteTree(area);
         } catch (Exception e) {
             throw new CreatorException(e);
         }
