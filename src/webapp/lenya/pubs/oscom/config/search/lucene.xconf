@@ -6,6 +6,6 @@
   <update-index type="incremental"/>
 -->
 
-  <index-dir src="../resources/search/lucene/index-cambridge"/>
+  <index-dir src="../resources/search/lucene/index"/>
   <htdocs-dump-dir src="/home/michiii/oscom_htdocs_dump"/>
 </lucene>
