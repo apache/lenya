@@ -26,7 +26,10 @@
   </xsl:template>
   
   <xsl:template match="user">
-    <form method="post">
+    <form method="post" action="">
+      <input type="hidden" name="lenya.usecase" value="user-add"/>
+      <input type="hidden" name="lenya.step" value="add"/>
+
       <xsl:attribute name="action"></xsl:attribute>
       <table>
 	<tr>
@@ -42,7 +45,7 @@
 	<tr>
 	  <td>Full Name</td>
 	  <td>
-	    <input type="text" name="fullName">
+	    <input type="text" name="fullname">
 	      <xsl:attribute name="value">
 		<xsl:value-of select="fullName"/>
 	      </xsl:attribute>

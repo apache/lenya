@@ -27,6 +27,8 @@
   
   <xsl:template match="user">
     <form method="post">
+      <input type="hidden" name="lenya.usecase" value="user-modify"/>
+      <input type="hidden" name="lenya.step" value="modify"/>
       <xsl:attribute name="action"></xsl:attribute>
       <table>
 	<tr>
