@@ -1,5 +1,5 @@
 /*
-$Id: CopyTask.java,v 1.5 2003/07/08 16:10:36 egli Exp $
+$Id: CopyTask.java,v 1.6 2003/07/15 13:08:31 egli Exp $
 <License>
 
  ============================================================================
@@ -103,16 +103,20 @@ public class CopyTask extends Task {
         System.out.println("Copying " + numberOfFilesCopied + " files to " + toDir);
     }
 
-    /**
-     *
-     */
+	/**
+	 * 
+	 * 
+	 * @param pubsRootDirs
+	 */
     public void setPubsRootDirs(Path pubsRootDirs) {
         this.pubsRootDirs = pubsRootDirs;
     }
 
-    /**
-     *
-     */
+	/**
+	 * 
+	 * 
+	 * @param toDir
+	 */
     public void setToDir(Path toDir) {
         this.toDir = toDir;
     }
