@@ -169,6 +169,7 @@ public class AntTaskTest extends TestCase {
 
         Parameters parameters = getTaskParameters();
         parameters.setParameter(AntTask.PARAMETER_PUBLICATION_ID, publication.getId());
+        parameters.setParameter(AntTask.PARAMETER_CONTEXT_PREFIX, "/lenya");
         parameters.setParameter(AntTask.PARAMETER_SERVLET_CONTEXT,
             publication.getServletContext().getCanonicalPath());
         parameters.setParameter(AntTask.TARGET, getTarget());
