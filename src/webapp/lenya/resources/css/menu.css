@@ -100,7 +100,7 @@ table.lenya-menubar-menu img {border:0px}
 	background-position: 0% 50%;
 }
 
-.menuBg .mI:hover {
+.menuBg a.mI:hover {
 	background:#FFFFFF;
 	color: black;
 }
