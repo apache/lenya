@@ -26,15 +26,15 @@
 
   ;General
   Var product_name
-  Name "Apache Lenya 1.2.1"
-  OutFile "apache-lenya-1.2.1-bin.exe"
+  Name "Apache Lenya 1.2.2"
+  OutFile "apache-lenya-1.2.2-bin.exe"
   
   CRCCheck on
   SetCompress force
   SetDatablockOptimize on
 
   ;Folder selection page
-  InstallDir "C:\apache-lenya-1.2.1"
+  InstallDir "C:\apache-lenya-1.2.2"
   
 ;--------------------------------
 ;Interface Settings
@@ -60,10 +60,10 @@
 ;--------------------------------
 ;Installer Sections
 
-Section "Apache Lenya 1.2.1" SecDummy
+Section "Apache Lenya 1.2.2" SecDummy
 
   Call findJavaPath
-  StrCpy $product_name "Apache Lenya 1.2.1"
+  StrCpy $product_name "Apache Lenya 1.2.2"
   SetOutPath $INSTDIR
   
   SetOutPath $INSTDIR\build\lenya\webapp
@@ -128,7 +128,7 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-  RMDir /r "$SMPROGRAMS\Apache Lenya 1.2.1"
+  RMDir /r "$SMPROGRAMS\Apache Lenya 1.2.2"
   RMDir /r "$INSTDIR"
 
 SectionEnd
