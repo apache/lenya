@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: form-layout.xsl,v 1.18 2004/04/27 21:38:39 michi Exp $ -->
+<!-- $Id: form-layout.xsl,v 1.19 2004/06/29 09:36:10 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -24,6 +24,7 @@
 
 <xsl:param name="contextPrefix" select="'/lenya'"/>
 <xsl:param name="edit" select="'No node selected yet'"/>
+<xsl:param name="wfevent" select="'null'"/>
 
 <xsl:variable name="imagesPath"><xsl:value-of select="$contextPrefix"/>/lenya/images/editor</xsl:variable>
 
@@ -51,6 +52,17 @@
     <td class="lenya-entry-caption">Node:</td>
     <td><xsl:value-of select="$edit"/></td>
   </tr>
+  <tr>
+    <td class="lenya-entry-caption">Workflow Event:</td>
+  <xsl:choose>
+  <xsl:when test="$wfevent = '' or $wfevent = 'null'">
+    <td>No workflow event specified</td>
+  </xsl:when>
+  <xsl:otherwise>
+    <td><xsl:value-of select="$wfevent"/></td>
+  </xsl:otherwise>
+  </xsl:choose>
+  </tr>
 
   <xsl:if test="message">
     <tr>
@@ -71,6 +83,14 @@
 </div>
 
 <form method="post" action="?lenya.usecase=edit&amp;lenya.step=close&amp;form={ftype}">
+  <xsl:choose>
+    <xsl:when test="$wfevent = '' or $wfevent = 'null'">
+      <xsl:comment>No workflow event</xsl:comment>
+    </xsl:when>
+    <xsl:otherwise>
+      <input type="hidden" name="lenya.event" value="{$wfevent}"/>
+    </xsl:otherwise>
+  </xsl:choose>
   
 <div class="lenya-box">
   <div class="lenya-box-title" style="text-align: right">

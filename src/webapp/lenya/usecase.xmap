@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.214 2004/06/28 08:34:38 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.215 2004/06/29 09:36:10 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -613,6 +613,7 @@
               </map:transform>
               <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
                 <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
+                <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
               </map:transform>
               <map:call resource="style-cms-page"/>
 
@@ -639,6 +640,7 @@
                 <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
                   <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
                   <map:parameter name="edit" value="{editSelect}"/>
+                  <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
                 </map:transform>
                 <map:call resource="style-cms-page"/>
               </map:act>
@@ -658,7 +660,7 @@
                   <map:parameter name="area" value="{page-envelope:area}"/>
                   <map:parameter name="document-id" value="{page-envelope:document-id}"/>
                   <map:parameter name="language" value="{page-envelope:document-language}"/>
-                  <map:parameter name="event" value="edit"/>
+                  <map:parameter name="event" value="{request-param:lenya.event}"/>
                 </map:act>
 
                 <map:transform src="xslt/authoring/edit/redirect-to.xsl">
