@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.48 2003/04/01 15:28:00 edith Exp $
+   @version CVS $Id: build.xml,v 1.49 2003/04/02 12:37:00 andreas Exp $
 
 -->
 
@@ -251,6 +251,24 @@
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
+
+    <!-- copy forrest libraries -->
+    <echo>Copy forrest libraries</echo>
+    <copy todir="${build.webapp}/WEB-INF/lib" filtering="off">
+      <fileset dir="src/webapp/lenya/pubs/docs-new/WEB-INF/lib">
+      </fileset>
+    </copy>
+    
+    <!-- copy forrest libraries -->
+    <!--
+    <echo>Install forrest publication</echo>
+    <mkdir dir="${build.webapp}/lenya/pubs/forrest"/>
+    <copy todir="${build.webapp}/lenya/pubs/forrest" filtering="off">
+      <fileset dir="${src.forrest.dir}">
+        <exclude name="WEB-INF"/>
+      </fileset>
+    </copy>
+    -->
     
     <!-- patch cocoon.xconf -->
     <echo>INFO: patching cocoon.xconf with XSLT stylesheet</echo>
@@ -259,6 +277,7 @@
         out="${build.webapp}/WEB-INF/cocoon.xconf"
         style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
         >
+      <param name="forrest-publication" expression="${install.dir}/lenya/pubs/docs-new"/>
       <outputproperty name="indent" value="yes"/>
     </xslt>
     
@@ -314,6 +333,7 @@
         <exclude name="log4j-properties.xsl"/>
       </fileset>
     </copy>
+    
     <echo>INFO: Copy java source files from ${pubs.root.dirs} to ${build.src}</echo>
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/src" builddir="${build.src}" />
   </target>
@@ -481,6 +501,13 @@
         <exclude name="servlet.jar"/>
       </fileset>
     </copy>
+
+    <!--    
+    <echo>INFO: Copy publication libraries from ${pubs.root.dirs}/WEB-INF/lib to ${build.webapp}/WEB-INF/lib</echo>
+    <copy todir="${build.webapp}/WEB-INF/lib">
+      <fileset dir="${pubs.root.dirs}/WEB-INF">
+    </copy>
+    -->
 
   </target>
 
