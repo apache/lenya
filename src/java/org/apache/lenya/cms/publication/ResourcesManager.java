@@ -1,5 +1,5 @@
 /*
-$Id: ResourcesManager.java,v 1.4 2003/08/27 16:37:25 egli Exp $
+$Id: ResourcesManager.java,v 1.5 2003/09/11 08:56:52 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,7 +65,7 @@ import java.io.FileFilter;
  */
 public class ResourcesManager {
 
-    private File resourcesPath = null;
+    private Document document;
 
     public static final String RESOURCES_PREFIX = "resources";
     public static final String RESOURCES_META_SUFFIX = ".meta";
@@ -76,14 +76,16 @@ public class ResourcesManager {
      * @param document the document for which the resources are managed
      */
     public ResourcesManager(Document document) {
-        File publicationPath = document.getPublication().getDirectory();
-        resourcesPath =
-            new File(
-                publicationPath,
-                RESOURCES_PREFIX
-                    + File.separator
-                    + document.getArea()
-                    + document.getId().replace('/', File.separatorChar));
+        this.document = document;
+    }
+
+    /**
+     * Get the path to the resources.
+     * 
+     * @return the path to the resources
+     */
+    public String getPathFromPublication() {
+        return RESOURCES_PREFIX + "/" + document.getArea() + document.getId();
     }
 
     /**
@@ -92,6 +94,9 @@ public class ResourcesManager {
      * @return the path to the resources
      */
     public File getPath() {
+        File publicationPath = document.getPublication().getDirectory();
+        File resourcesPath =
+            new File(publicationPath, getPathFromPublication().replace('/', File.separatorChar));
         return resourcesPath;
     }
 
@@ -109,21 +114,21 @@ public class ResourcesManager {
                 return file.isFile() && !file.getName().endsWith(RESOURCES_META_SUFFIX);
             }
         };
-        return resourcesPath.listFiles(filter);
+        return getPath().listFiles(filter);
     }
-    
+
     /**
      * Get the meta data for all resources for the associated document.
      * 
      * @return all meta data files for the resources for the associated document.
      */
     public File[] getMetaFiles() {
-		FileFilter filter = new FileFilter() {
-			
-			public boolean accept(File file) {
-				return file.isFile() && file.getName().endsWith(RESOURCES_META_SUFFIX);
-			}
-		};
-		return resourcesPath.listFiles(filter);
+        FileFilter filter = new FileFilter() {
+
+            public boolean accept(File file) {
+                return file.isFile() && file.getName().endsWith(RESOURCES_META_SUFFIX);
+            }
+        };
+        return getPath().listFiles(filter);
     }
 }
