@@ -330,14 +330,14 @@ public class FilePolicyManager implements PolicyManager {
             id = ((User) accreditable).getId();
         } else if (accreditable instanceof Group) {
             localName = GROUP_ELEMENT;
-            id = ((Group) accreditable).getName();
+            id = ((Group) accreditable).getId();
         } else if (accreditable instanceof World) {
             localName = WORLD_ELEMENT;
         } else if (accreditable instanceof Machine) {
             localName = MACHINE_ELEMENT;
             id = ((Machine) accreditable).getIp();
         }
-
+        
         if (localName == null) {
             throw new AccessControlException("Could not save accreditable [" + accreditable + "]");
         }

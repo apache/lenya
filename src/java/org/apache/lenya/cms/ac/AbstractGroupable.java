@@ -104,25 +104,4 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
         }
     }
     
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
-    public boolean equals(Object otherObject) {
-        boolean equals = false;
-
-        if (getClass().isInstance(otherObject)) {
-            AbstractItem otherManageable = (AbstractItem) otherObject;
-            equals = getId().equals(otherManageable.getId());
-        }
-
-        return equals;
-    }
-
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    public int hashCode() {
-        return getId().hashCode();
-    }
-
 }

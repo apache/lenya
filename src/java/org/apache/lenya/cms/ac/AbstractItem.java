@@ -1,5 +1,5 @@
 /*
-$Id: AbstractItem.java,v 1.1 2003/07/07 09:44:48 andreas Exp $
+$Id: AbstractItem.java,v 1.2 2003/07/07 10:05:09 andreas Exp $
 <License>
 
  ============================================================================
@@ -144,4 +144,25 @@ public abstract class AbstractItem implements Item {
         return id != null && id.matches("\\w+");
     }
     
+    /**
+     * @see java.lang.Object#equals(Object)
+     */
+    public boolean equals(Object otherObject) {
+        boolean equals = false;
+
+        if (getClass().isInstance(otherObject)) {
+            AbstractItem otherManageable = (AbstractItem) otherObject;
+            equals = getId().equals(otherManageable.getId());
+        }
+
+        return equals;
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() {
+        return getId().hashCode();
+    }
+
 }
