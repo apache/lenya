@@ -6,22 +6,6 @@
         Purpose of the stylesheet follows.
 */
 
-/* tabs */
-
-#tabs {
-    font-family: Verdana, Arial, sans-serif;
-    font-size: 80%;
-    border-bottom: solid 5px #AAAAFF;
-    margin-bottom: 10px;
-}
-
-#tabs a {
-    text-decoration: none;
-}
-
-.tab { padding-left: .5em; padding-right: .5em; background-color: #CCCCFF; color: black; }
-.tab-selected { padding-left: .5em; padding-right: .5em; background-color: #AAAAFF; font-weight: bold; color: black;}
-
 /* menu */
 
 #menu {
@@ -36,116 +20,40 @@
     text-decoration: underline;
 }
 
-.menublock-1 {
+#menu .menublock-1 {
     padding: 5px 0px 5px 20px;
     list-style: none;
 }
 
-.menublock-selected-1 {
+#menu .menublock-selected-1 {
     padding: 5px 0px 5px 20px;
     list-style: none;
 }
 
-.menublock-1 a { color: #909090; background-color: transparent;}
-.menublock-1 a:visited { }
+#menu .menublock-1 a { color: #909090; background-color: transparent;}
+#menu .menublock-1 a:visited { }
 
-.menublock-1 .menublock-2 { display: none; }
+#menu .menublock-1 .menublock-2 { display: none; }
 
-.menublock-selected-1 .menuitem-1 { font-weight: bold; }
+#menu .menublock-selected-1 .menuitem-1 { font-weight: bold; }
 
-.menuitem-1 {
+#menu .menuitem-1 {
     padding: 0px;
     margin: 3px 0px;
     border-bottom: solid 1px #DDDCCF;
 }
 
-.menuitem-2 { padding-left: 20px; padding-top: 2px; padding-bottom: 2px; font-size: 70%; }
-.menuitem-2 a { color: #9090C0; background-color: transparent;}
-.menuitem-3 { padding-left: 30px; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; font-size: 60%; }
+#menu .menuitem-2 { padding-left: 20px; padding-top: 2px; padding-bottom: 2px; font-size: 70%; }
+#menu .menuitem-2 a { color: #9090C0; background-color: transparent;}
+#menu .menuitem-3 { padding-left: 30px; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; font-size: 60%; }
 
-.menuitem-selected-1 {
+#menu .menuitem-selected-1 {
 	font-weight: bold;
     padding: 0px;
     margin: 3px 0px;
     border-bottom: solid 1px #DDDCCF;
 }
 
-.menuitem-selected-2 { padding-left: 20px; margin-top: 2px; margin-bottom: 2px; font-size: 70%; }
-.menuitem-selected-3 { padding-left: 30px; font-size: 60%; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; }
+#menu .menuitem-selected-2 { padding-left: 20px; margin-top: 2px; margin-bottom: 2px; font-size: 70%; }
+#menu .menuitem-selected-3 { padding-left: 30px; font-size: 60%; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; }
 
-/* breadcrumb */
-
-#breadcrumb {
-    color: black;
-    background-color: #E0E0E0;
-    padding: .3em;
-    margin-left: 10px;
-    font-family: Verdana, Arial, sans-serif;
-    font-size: 80%;
-}
-
-/* body */
-
-#body {
-    border: none;
-    padding: 1em;
-    margin-left: 10px;
-    font-family: Verdana, Arial, sans-serif;
-}
-
-#main {
-/*
-    float: left;
-    width: 80%;
-*/
-}
-
-h1 { font-size: 140%; }
-h2 { font-size: 100%; }
-h3 { font-size: 80%; }
-p { font-size: 80%; }
-li { font-size: 80%; }
-
-.crossheading { font-weight: bold; font-size: 110%; }
-
-table.simple {
-    border-collapse: collapse;
-/*
-    background-color: #909090;
-    border-color: #909090;
-*/
-    width: auto;
-}
-
-td.simple {
-    font-size: 80%;
-    padding: 3px;
-    background-color: White;
-    border: solid 1px Navy;
-    vertical-align: top;
-    color: black;
-}
-
-img.simple {
-}
-
-.project-logo {
-    padding: 10px;
-    text-align: center;
-}
-
-.media {
-    text-align: center;
-    padding: 10px;
-}
-
-.caption {
-    padding: 5px;
-    text-align: center;
-    font-style: italic;
-    font-size: 80%;
-}
-
-.abstract {
-    font-weight: bold;
-}
