@@ -4,14 +4,20 @@
 
 
   <map:components>
-    <map:generators default="file"/>
+    <map:generators default="file">
+      <!-- FIXME: Change this as soon as better view handling is implemented (the file generator from the root sitemap has label content and data) -->
+      <map:generator name="file-nolabel" logger="oscom.sitemap.generator.file" src="org.apache.cocoon.generation.FileGenerator" pool-max="32" pool-min="16" pool-grow="4"/>
+      <map:generator name="directory-nolabel" logger="forum.sitemap.generator.directory" src="org.apache.cocoon.generation.DirectoryGenerator"/>
+    </map:generators>
     <map:transformers default="xslt">
       <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
         <publication type="forum"/>
       </map:transformer>
     </map:transformers>
     <map:readers default="resource"/>
-    <map:serializers default="html"/>
+    <map:serializers default="html">
+      <map:serializer name="links" src="org.apache.cocoon.serialization.LinkSerializer"/>
+    </map:serializers>
     <map:matchers default="wildcard"/>
     <map:actions/>
     <map:selectors/>
@@ -26,6 +32,10 @@
 
     <map:view name="content" from-label="content">
       <map:serialize type="xml"/>
+    </map:view>
+
+    <map:view name="links" from-position="last">
+      <map:serialize type="links"/>
     </map:view>
   </map:views>
 
@@ -44,7 +54,7 @@
 <!-- /General Wyona -->
 
       <map:match pattern="index.xml">
-        <map:generate type="directory" src="docs/publication/live/articles/">
+        <map:generate type="directory-nolabel" src="docs/publication/live/articles/">
           <map:parameter name="depth" value="1"/>
         </map:generate>
         <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl">
@@ -59,8 +69,8 @@
         <map:redirect-to uri="index.html"/>
       </map:match>
       <map:match pattern="index.html">
-        <map:generate src="cocoon:/index.xml" label="content"/>
-        <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
+        <map:generate type="file-nolabel" src="cocoon:/index.xml" label="content"/>
+        <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl" label="content"/>
         <map:serialize type="html"/>
       </map:match>
 
@@ -79,7 +89,7 @@
         <map:redirect-to uri="index.html"/>
       </map:match>
       <map:match pattern="articles/*/index.html">
-        <map:generate src="cocoon:/articles/{1}/index.xml"/>
+        <map:generate src="cocoon:/articles/{1}/index.xml" label="content"/>
         <map:transform src="stylesheets/publication/Page/Article/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
