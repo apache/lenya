@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: web-xml.xsl,v 1.7 2004/03/13 14:29:20 gregor Exp $ -->
+<!-- $Id: web-xml.xsl,v 1.8 2004/04/15 12:14:53 roku Exp $ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -63,6 +63,15 @@
       <url-pattern>/servlet/QuartzSchedulerServlet</url-pattern>
     </servlet-mapping>
     <xsl:comment>/Scheduler</xsl:comment>
+  </xsl:template>
+
+  <xsl:template match="/web-app/servlet[position() = 1]/init-param[position() = 1]">
+    <xsl:copy-of select="."/>
+    <!-- The following param is commented out by default in web.xml-->
+ 		<init-param>
+      <param-name>form-encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
   </xsl:template>
 
   <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'enable-uploads']">
