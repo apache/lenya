@@ -19,10 +19,6 @@
         <docs href="content/authoring"/>
         <doctypes href="config/doctypes/"/>
       </map:action>
-      <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
-        <rcmlDirectory href="content/rcml"/>
-        <backupDirectory href="content/rcbak"/>
-      </map:action>
     </map:actions>
     <map:selectors default="browser"/>
   </map:components>
