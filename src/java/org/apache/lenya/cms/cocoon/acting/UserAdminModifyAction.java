@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminModifyAction.java,v 1.3 2003/06/06 17:47:05 andreas Exp $
+ * $Id: UserAdminModifyAction.java,v 1.4 2003/06/06 17:59:23 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -63,8 +63,8 @@ import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.GroupManager;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac.UserManager;
-import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * @author egli
@@ -87,16 +87,9 @@ public class UserAdminModifyAction
 		throws Exception {
 
 		Request request = ObjectModelHelper.getRequest(objectModel);
-		PageEnvelope envelope = null;
-		try {
-			envelope = new PageEnvelope(objectModel);
-		} catch (Exception e) {
-			getLogger().error(e.getMessage(), e);
-			return null;
-		}
-		Map emptyMap = Collections.EMPTY_MAP;
+		Publication publication = PublicationFactory.getPublication(objectModel);
 
-		Publication publication = envelope.getPublication();
+		Map emptyMap = Collections.EMPTY_MAP;
 
 		String userId = request.getParameter(USER_ID);
 		String fullName = request.getParameter(FULL_NAME);
