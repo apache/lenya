@@ -10,6 +10,7 @@
   
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.GroupManager</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
     <xsp:include>java.util.Iterator</xsp:include>
@@ -21,21 +22,23 @@
       Publication pub = 
         (Publication)<input:get-attribute module="page-envelope" name="publication"/>;
 
-      UserManager userManager = null;  
+      UserManager userManager = null;
+      GroupManager groupManager = null;
       try {
         userManager = UserManager.instance(pub);
+	groupManager = GroupManager.instance(pub);
       } catch (Exception e) {
-        throw new ProcessingException("Exception when instantiating a UserManager", e);
+        throw new ProcessingException("Exception when instantiating a UserManager or GroupManager", e);
       }
       User user = userManager.getUser(userId);
     </xsp:logic>
     <user>
       <id><xsp:expr>user.getId()</xsp:expr></id>
-      <fullName><xsp:expr>user.getFullName()</xsp:expr></fullName>
+      <fullname><xsp:expr>user.getFullName()</xsp:expr></fullname>
       <email><xsp:expr>user.getEmail()</xsp:expr></email>
       <groups>
 	<xsp:logic>
-	  for (Iterator groups = user.getGroups(); groups.hasNext();) {
+	  for (Iterator groups = groupManager.getGroups(); groups.hasNext();) {
 	    Group group = (Group) groups.next();
 	    <xsp:content><group><xsp:expr>group.getName()</xsp:expr></group></xsp:content>
 	  }
