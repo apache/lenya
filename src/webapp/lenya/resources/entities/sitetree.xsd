@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : sitetree.xsd
+    Created on : 11. April 2003, 14:33
+    Author     : andreas
+    Description:
+        Purpose of XML Schema document follows.
+-->
+
+<!DOCTYPE schema PUBLIC
+    "-//W3C//DTD XMLSCHEMA 200102//EN"
+    "http://www.w3.org/2001/XMLSchema.dtd">
+
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.lenya.org/2003/sitetree"
+    xmlns="http://www.lenya.org/2003/sitetree"
+    elementFormDefault="qualified"
+    >
+
+  <xs:element name="site">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="node"
+            minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="node">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="node"
+            minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="href" type="xs:string"/>
+      <xs:attribute name="label" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+ </xs:schema>
