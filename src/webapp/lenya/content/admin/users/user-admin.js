@@ -130,12 +130,15 @@ function userChangePassword(checkPassword) {
 			    if (checkPassword && !user.authenticate(oldPassword)) {
 			    	message = "You entered a wrong password.";
 			    }
-	            else if (password.length() == 0) {
-			    	message = "New password cannot be empty.";
-			    }
 	            else if (!newPassword.equals(confirmPassword)) {
 			    	message = "New password and confirmed password are not equal.";
 			    }
+	            else if (password.length() < 6) {
+    	            message = "The password must be at least six characters long.";
+	            }    
+	            else if (!password.matches(".*\\d.*")) {
+    	        message = "The password must contain at least one number.";
+	            }
 			    else {
 		        	user.setPassword(newPassword);
 		    		user.save();
