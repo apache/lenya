@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://dc.org/2003/" xmlns:dc="http://dc.org/2003/">
+  <xs:element name="title" type="xs:string"/>
+  <xs:element name="creator">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="subject">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="description">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="publisher">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="contributor">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="date" type="xs:string"/>
+  <xs:element name="type">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="format">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="identifier">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="source">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="language">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="relation">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="coverage">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="rights">
+    <xs:complexType/>
+  </xs:element>
+</xs:schema>

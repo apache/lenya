@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:lenya="http://lenya.org/2003/">
+  <xs:import namespace="http://lenya.org/2003/" schemaLocation="lenya.xsd"/>
+  <xs:element name="simple-document">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lenya:meta"/>
+        <xs:element ref="lenya:header"/>
+        <xs:element ref="body"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="body">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="subtitle"/>
+        <xs:element ref="crossheading"/>
+        <xs:element ref="p"/>
+        <xs:element ref="informaltable"/>
+        <xs:element ref="itemizedlist"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="subtitle">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="crossheading">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="p">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="informaltable">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tgroup"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tgroup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tbody"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tbody">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="row"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="row">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="entry"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="entry">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="itemizedlist">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="listitem"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="listitem">
+    <xs:complexType/>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://lenya.org/2003/" xmlns:dc="http://dc.org/2003/" xmlns:lenya="http://lenya.org/2003/">
+  <xs:import namespace="http://dc.org/2003/" schemaLocation="dc.xsd"/>
+  <xs:element name="meta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dc:title"/>
+        <xs:element ref="dc:creator"/>
+        <xs:element ref="dc:subject"/>
+        <xs:element ref="dc:description"/>
+        <xs:element ref="dc:publisher"/>
+        <xs:element ref="dc:contributor"/>
+        <xs:element ref="dc:date"/>
+        <xs:element ref="dc:type"/>
+        <xs:element ref="dc:format"/>
+        <xs:element ref="dc:identifier"/>
+        <xs:element ref="dc:source"/>
+        <xs:element ref="dc:language"/>
+        <xs:element ref="dc:relation"/>
+        <xs:element ref="dc:coverage"/>
+        <xs:element ref="dc:rights"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="header">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lenya:page-title"/>
+        <xs:element ref="lenya:abstract"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="page-title" type="xs:string"/>
+  <xs:element name="abstract" type="xs:string"/>
+</xs:schema>
