@@ -134,6 +134,10 @@ For all other inquiries please use OSCOM's <a href="/Mailing%20lists/">mailing l
 <a class="nnbr" target="_blank" href="http://www.boomtchak.net/rubrique.php3?id_rubrique=48">Boomtchak CMS Outils</a>
 </div>
 
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.hartman-communicatie.nl/extra/tools.htm">Hartman Communicatie</a>
+</div>
+
 </td>
   </tr>
  </table>
