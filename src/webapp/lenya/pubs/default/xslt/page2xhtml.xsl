@@ -13,6 +13,7 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:page="http://www.lenya.org/2003/page"
+    exclude-result-prefixes="page xhtml"
     >
     
 <xsl:param name="root"/>
