@@ -1,5 +1,5 @@
 /*
-$Id: AssetUploadAction.java,v 1.5 2003/10/15 10:35:27 egli Exp $
+$Id: UploadAction.java,v 1.1 2003/10/21 15:05:32 gregor Exp $
 <License>
 
  ============================================================================
@@ -65,6 +65,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.servlet.multipart.Part;
 
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.xml.DocumentHelper;
@@ -87,19 +88,24 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
 /**
- * The class <code>AssetUploadAction</code> implements an action that allows for
- * asset upload. An asset upload consists of a file upload plus a file creation
+ * The class <code>UploadAction</code> implements an action that allows for
+ * asset and content upload. An upload consists of a file upload plus optionally a file creation
  * for the meta data of the asset.
  *
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
  */
-public class AssetUploadAction extends AbstractConfigurableAction {
+public class UploadAction extends AbstractConfigurableAction {
+	
+	private Document document;
+	private PageEnvelope pageEnvelope;
 
     public static final String UPLOADASSET_PARAM_NAME = "properties.asset.data";
     public static final String UPLOADASSET_PARAM_PREFIX = "properties.asset.";
 
-    public static final String UPLOADASSET_RETURN_FILESIZE = "mime-type";
-    public static final String UPLOADASSET_RETURN_MIMETYPE = "file-size";
+    public static final String UPLOADASSET_RETURN_FILESIZE = "file-size";
+    public static final String UPLOADASSET_RETURN_MIMETYPE = "mime-type";
+
+	public static final String CONTENT_PREFIX = "content";
 
     public static String FILE_NAME_REGEXP = "[-a-zA-Z0-9_.]+";
 
@@ -124,8 +130,8 @@ public class AssetUploadAction extends AbstractConfigurableAction {
 
     /**
      * Retrieve the file from the request and store it in the
-     * corresponding resources directory, create a meta file and
-     * insert an image tag in the requesting document.
+     * corresponding directory, optionally create a meta file and
+     * optionally insert an image tag in the requesting document.
      *
      * @param redirector a <code>Redirector</code> value
      * @param resolver a <code>SourceResolver</code> value
@@ -151,16 +157,19 @@ public class AssetUploadAction extends AbstractConfigurableAction {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
-        PageEnvelope pageEnvelope =
+        pageEnvelope =
             PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        
+        document = pageEnvelope.getDocument();
 
         byte[] buf = new byte[4096];
+        File assetFile;
 
         for (Enumeration enum = request.getParameterNames();
             enum.hasMoreElements();
             ) {
             String param = (String)enum.nextElement();
-            getLogger().debug(
+            getLogger().info(
                 param
                     + ": "
                     + request.getParameter(param)
@@ -168,6 +177,13 @@ public class AssetUploadAction extends AbstractConfigurableAction {
                     + request.get(param)
                     + "]");
         }
+        
+        // determine if the upload is an asset or a content upload
+        String uploadType = request.getParameter("uploadtype");
+
+		if (uploadType == null) {
+			uploadType = "asset";
+		}
 
         // optional parameters for the meta file which contains dublin
         // core information.
@@ -189,7 +205,7 @@ public class AssetUploadAction extends AbstractConfigurableAction {
 
         while (iter.hasNext()) {
             String paramName = (String)iter.next();
-            getLogger().debug(
+            getLogger().info(
                 paramName + ": " + dublinCoreParams.get(paramName));
         }
 
@@ -214,16 +230,30 @@ public class AssetUploadAction extends AbstractConfigurableAction {
 
         // FIXME: write fileSize into dc meta data
 
-        ResourcesManager resourcesMgr =
-            new ResourcesManager(pageEnvelope.getDocument());
-        File assetFile = new File(resourcesMgr.getPath(), part.getFileName());
+        if (uploadType.equals("asset")) {
+        	ResourcesManager resourcesMgr =
+            	new ResourcesManager(document);
+        	    assetFile = new File(resourcesMgr.getPath(), part.getFileName());
 
-        if (!resourcesMgr.getPath().exists()) {
-            resourcesMgr.getPath().mkdirs();
+        	if (!resourcesMgr.getPath().exists()) {
+            	resourcesMgr.getPath().mkdirs();
+        	}
+
+	        // create an extra file containing the meta description for
+			// the asset.
+			File metaDataFile =
+				new File(resourcesMgr.getPath(), fileName + ".meta");
+			createMetaData(metaDataFile, dublinCoreParams);
+
+        } 
+        // must be a content upload then
+        else {
+			assetFile = new File(document.getPublication().getDirectory()+getPathFromPublication().replace('/', File.separatorChar), part.getFileName());
+            getLogger().info("assetFile: "+assetFile);
         }
-
-        assetFile.createNewFile();
-
+        
+		assetFile.createNewFile();
+        
         FileOutputStream out = new FileOutputStream(assetFile);
         InputStream in = part.getInputStream();
         int read = in.read(buf);
@@ -233,14 +263,17 @@ public class AssetUploadAction extends AbstractConfigurableAction {
             read = in.read(buf);
         }
 
-        // create an extra file containing the meta description for
-        // the image.
-        File metaDataFile =
-            new File(resourcesMgr.getPath(), fileName + ".meta");
-        createMetaData(metaDataFile, dublinCoreParams);
-
         return Collections.unmodifiableMap(results);
     }
+
+	/**
+	 * Get the path to the resources.
+	 * 
+	 * @return the path to the resources
+	 */
+	private String getPathFromPublication() {
+		return File.separatorChar + CONTENT_PREFIX + File.separatorChar + document.getArea() + document.getId() + File.separatorChar;
+	}
 
     /**
      * Create the meta data file given the dublin core parameters.

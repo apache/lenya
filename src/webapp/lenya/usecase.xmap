@@ -11,7 +11,7 @@
     <map:matchers default="wildcard"/>
     <map:actions>
       <map:action name="save" logger="sitemap.action.save" src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
-      <map:action name="asset-upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.AssetUploadAction" />
+      <map:action name="upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.UploadAction" />
       <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
     </map:actions>
 
@@ -398,23 +398,17 @@
         <map:match pattern="upload" type="usecase">
 
           <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
-            <map:transform src="xslt/authoring/upload-image.xsl"/>
-            <map:serialize/>
-          </map:match>
-
-          <map:match type="step" pattern="showteaserscreen">
-            <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
-            <map:transform src="xslt/authoring/upload-teaserimage.xsl"/>
-            <map:serialize/>
-          </map:match>
+            <map:generate src="content/authoring/asset.xsp" type="serverpages"/>
+            <map:transform src="xslt/authoring/upload-content.xsl"/>
+            <map:call resource="style-cms-page"/>
+           </map:match>
 
           <map:match type="step" pattern="upload">
-            <map:act type="file-upload">
+            <map:act type="upload">
               <map:redirect-to uri="{request:requestURI}"/>
             </map:act>
-            <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
-            <map:transform src="xslt/authoring/upload-image.xsl"/>
+            <map:generate type="serverpages" src="content/authoring/asset.xsp"/>
+            <map:transform src="xslt/authoring/upload-content.xsl"/>
             <map:serialize/>
           </map:match>
         </map:match>
@@ -432,7 +426,7 @@
           </map:match>
 
           <map:match pattern="upload" type="step">
-            <map:act type="asset-upload">
+            <map:act type="upload">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
               <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-assets&amp;lenya.step=showscreen&amp;lenya.area={request-param:lenya.area}"/>
             </map:act>
@@ -452,7 +446,7 @@
           </map:match>
 
           <map:match pattern="upload-and-insert" type="step">
-            <map:act type="asset-upload">
+            <map:act type="upload">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
               <map:act type="task">
                 <map:parameter name="task-id" value="{request-param:task-id}"/>
