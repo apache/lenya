@@ -724,6 +724,14 @@
         <map:serialize/>
       </map:match>
       
+      <!-- Resources -->
+      <map:match pattern="*/**">
+        <map:act type="resource-exists">
+          <map:parameter name="url" value="lenya/pubs/{1}/resources/{2}"/>
+          <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
+        </map:act>
+      </map:match>
+      
       <!-- Enter the actual publication -->
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
