@@ -10,9 +10,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.Transition;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowException;
 
 /**
  *
@@ -21,7 +23,7 @@ import org.apache.lenya.workflow.Workflow;
 public class WorkflowImpl implements Workflow {
 
     /** Creates a new instance of WorkflowImpl */
-    protected WorkflowImpl(State initialState) {
+    protected WorkflowImpl(StateImpl initialState) {
         this.initialState = initialState;
         addState(initialState);
     }
@@ -38,9 +40,9 @@ public class WorkflowImpl implements Workflow {
 
     private Set transitions = new HashSet();
     private Map states = new HashMap();
-    
-    private void addState(State state) {
-        states.put(((StateImpl) state).getId(), state);
+
+    private void addState(StateImpl state) {
+        states.put(state.getId(), state);
     }
 
     /**
@@ -54,8 +56,7 @@ public class WorkflowImpl implements Workflow {
     }
 
     protected TransitionImpl[] getTransitions() {
-        return (TransitionImpl[]) transitions.toArray(
-            new TransitionImpl[transitions.size()]);
+        return (TransitionImpl[]) transitions.toArray(new TransitionImpl[transitions.size()]);
     }
 
     /** Returns the destination state of a transition.
@@ -81,8 +82,7 @@ public class WorkflowImpl implements Workflow {
                 leavingTransitions.add(transitions[i]);
             }
         }
-        return (Transition[]) leavingTransitions.toArray(
-            new Transition[leavingTransitions.size()]);
+        return (Transition[]) leavingTransitions.toArray(new Transition[leavingTransitions.size()]);
     }
 
     /**
@@ -93,13 +93,49 @@ public class WorkflowImpl implements Workflow {
     protected boolean containsState(State state) {
         return states.containsValue(state);
     }
-    
-    protected State[] getStates() {
-        return (State[]) states.values().toArray(new State[states.size()]);
+
+    protected StateImpl[] getStates() {
+        return (StateImpl[]) states.values().toArray(new StateImpl[states.size()]);
     }
-    
-    protected State getState(String name) {
-        return (State) states.get(name); 
+
+    protected StateImpl getState(String name) throws WorkflowException {
+        if (!states.containsKey(name)) {
+            throw new WorkflowException("Workflow does not contain the state '" + name + "'!");
+        }
+        return (StateImpl) states.get(name);
     }
-    
+
+    private Map events = new HashMap();
+
+    protected void addEvent(EventImpl event) {
+        assert event != null;
+        events.put(event.getName(), event);
+    }
+
+    public EventImpl getEvent(String name) throws WorkflowException {
+        if (!events.containsKey(name)) {
+            throw new WorkflowException("Workflow does not contain the event '" + name + "'!");
+        }
+        return (EventImpl) events.get(name);
+    }
+
+    private Map variables = new HashMap();
+
+    protected void addVariable(BooleanVariableImpl variable) {
+        assert variable != null;
+        variables.put(variable.getName(), variable);
+    }
+
+    public BooleanVariableImpl getVariable(String name) throws WorkflowException {
+        if (!variables.containsKey(name)) {
+            throw new WorkflowException("Workflow does not contain the variable '" + name + "'!");
+        }
+        return (BooleanVariableImpl) variables.get(name);
+    }
+
+    protected BooleanVariableImpl[] getVariables() {
+        return (BooleanVariableImpl[]) variables.values().toArray(
+            new BooleanVariableImpl[variables.size()]);
+    }
+
 }
