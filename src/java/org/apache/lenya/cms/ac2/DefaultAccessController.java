@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.4 2003/07/15 12:24:51 egli Exp $
+$Id: DefaultAccessController.java,v 1.5 2003/07/15 13:57:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -95,64 +95,65 @@ public class DefaultAccessController
 
     private ServiceSelector policyManagerSelector;
     private PolicyManager policyManager;
+    
+    private Authenticator authenticator;
 
     /**
      * @see org.apache.lenya.cms.ac2.AccessController#authenticate(org.apache.cocoon.environment.Request)
      */
-    public boolean authenticate(Request request) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean authenticate(Request request) throws AccessControlException {
+
+        assert request != null;
+        boolean authenticated = getAuthenticator().authenticate(getAccreditableManager(), request);
+
+        return authenticated;
     }
 
     /**
      * @see org.apache.lenya.cms.ac2.AccessController#authorize(org.apache.cocoon.environment.Request)
      */
-    public boolean authorize(Request request)
-        throws AccessControlException {
+    public boolean authorize(Request request) throws AccessControlException {
 
         assert request != null;
 
         boolean authorized = false;
 
-        if (request != null) {
+        Session session = request.getSession(true);
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
 
-            Session session = request.getSession(true);
-            Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Trying to authorize identity: " + identity);
+        }
 
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Trying to authorize identity: " + identity);
-            }
+        if (identity != null && hasAuthorizers()) {
+            Authorizer[] authorizers = getAuthorizers();
+            int i = 0;
+            authorized = true;
 
-            if (identity != null && hasAuthorizers()) {
-                Authorizer[] authorizers = getAuthorizers();
-                int i = 0;
-                authorized = true;
+            while ((i < authorizers.length) && authorized) {
 
-                while ((i < authorizers.length) && authorized) {
+                authorized =
+                    authorized
+                        && authorizers[i].authorize(
+                            accreditableManager,
+                            policyManager,
+                            identity,
+                            request);
 
-                    authorized =
-                        authorized
-                            && authorizers[i].authorize(
-                                accreditableManager,
-                                policyManager,
-                                identity,
-                                request);
-
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug(
-                            "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
-                    }
-
-                    i++;
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug(
+                        "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
                 }
+
+                i++;
             }
         }
 
         return authorized;
     }
-    
+
     private boolean isInitialized = false;
-    
+
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
@@ -164,6 +165,7 @@ public class DefaultAccessController
                 setupAccreditableManager(conf);
                 setupAuthorizers(conf);
                 setupPolicyManager(conf);
+                setupAuthenticator();
                 isInitialized = true;
             }
 
@@ -180,9 +182,14 @@ public class DefaultAccessController
     /**
      * Creates the accreditable manager. 
      * @param configuration The access controller configuration.
+<<<<<<< DefaultAccessController.java
+     * @throws ConfigurationException when the configuration failed.
+     * @throws ServiceException when something went wrong.
+=======
      * 
      * @throws ServiceException if an error occurs
      * @throws ConfigurationException if an error occurs
+>>>>>>> 1.4
      */
     protected void setupAccreditableManager(Configuration configuration)
         throws ConfigurationException, ServiceException {
@@ -201,9 +208,8 @@ public class DefaultAccessController
     /**
      * Creates the authorizers. 
      * @param configuration The access controller configuration.
-     * 
-     * @throws ServiceException if an error occurs
-     * @throws ConfigurationException if an error occurs
+     * @throws ConfigurationException when the configuration failed.
+     * @throws ServiceException when something went wrong.
      */
     protected void setupAuthorizers(Configuration configuration)
         throws ServiceException, ConfigurationException {
@@ -221,9 +227,8 @@ public class DefaultAccessController
     /**
      * Creates the policy manager. 
      * @param configuration The access controller configuration.
-     * 
-     * @throws ServiceException if an error occurs
-     * @throws ConfigurationException if an error occurs
+     * @throws ConfigurationException when the configuration failed.
+     * @throws ServiceException when something went wrong.
      */
     protected void setupPolicyManager(Configuration configuration)
         throws ServiceException, ConfigurationException {
@@ -232,6 +237,14 @@ public class DefaultAccessController
         policyManagerSelector = (ServiceSelector) manager.lookup(PolicyManager.ROLE + "Selector");
         policyManager = (PolicyManager) policyManagerSelector.select(policyManagerType);
         getLogger().debug("Policy manager type: [" + policyManagerType + "]");
+    }
+    
+    /**
+     * Sets up the authenticator.
+     * @throws ServiceException when something went wrong.
+     */
+    protected void setupAuthenticator() throws ServiceException {
+        authenticator = (Authenticator) manager.lookup(Authenticator.ROLE);
     }
 
     private ServiceManager manager;
@@ -295,6 +308,10 @@ public class DefaultAccessController
             }
             getManager().release(authorizerSelector);
         }
+        
+        if (authenticator != null) {
+            getManager().release(authenticator);
+        }
     }
 
     /**
@@ -312,6 +329,14 @@ public class DefaultAccessController
      */
     protected PolicyManager getPolicyManager() {
         return policyManager;
+    }
+
+    /**
+     * Returns the authenticator.
+     * @return The authenticator.
+     */
+    public Authenticator getAuthenticator() {
+        return authenticator;
     }
 
 }
