@@ -69,6 +69,7 @@ of Cocoon. In most cases it's one of the two possible exceptions:
 <ol>
   <li>The id is not allowed to have whitespaces</li>
   <li>The id is already in use</li>
+  <li>UnknownHostException (maybe a namespace or dtd cannot be looked up)</li>
 </ol>
 Exception handling will be improved in the near future.
 </p>
