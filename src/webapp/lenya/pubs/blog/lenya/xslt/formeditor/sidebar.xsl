@@ -25,10 +25,10 @@
   <td><input type="text" name="&lt;xupdate:update select=&quot;/sidebar/block/title[@tagID='{title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="title" /></xsl:attribute></input></td>
 </tr>
 <tr>
-  <td>&#160;</td><td valign="top">Content</td><td><pre><xsl:copy-of select="content/@*|content/node()" /></pre></td>
 <!--
-  <td>&#160;</td><td valign="top">Content</td><td><textarea name="&lt;xupdate:update select=&quot;/sidebar/block/content[@tagID='{content/@tagID}']&quot;&gt;" cols="40" rows="3"><xsl:apply-templates select="content/node()" mode="mixed" /></textarea></td>
+  <td>&#160;</td><td valign="top">Content</td><td><pre><xsl:copy-of select="content/@*|content/node()" /></pre></td>
 -->
+  <td>&#160;</td><td valign="top">Content</td><td><textarea name="&lt;xupdate:update select=&quot;/sidebar/block/content[@tagID='{content/@tagID}']&quot;&gt;" cols="40" rows="3"><xsl:apply-templates select="content/node()" mode="mixed" /></textarea></td>
 </tr>
 </xsl:template>
 
@@ -42,7 +42,7 @@
 <xsl:template match="content//*" mode="mixed">
 <xsl:copy>
 <xsl:copy-of select="@*[local-name()!='tagID']"/>
-<xsl:apply-templates select="node()"/>
+<xsl:apply-templates select="node()" mode="mixed"/>
 </xsl:copy>
 </xsl:template>
  
