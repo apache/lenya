@@ -623,14 +623,15 @@
           <map:parameter name="number-of-pubs" value="1"/>
           <map:parameter name="pub0-id" value="{1}"/>
           <map:parameter name="pub0-name" value="{1}"/>
-          <map:parameter name="pub0-index-dir" value="lenya/pubs/{1}/resources/search/lucene/index"/>
-          <map:parameter name="pub0-excerpt-dir" value="lenya/pubs/{1}/resources/search/lucene/htdocs_dump"/>
+          <map:parameter name="pub0-index-dir" value="lenya/pubs/{1}/work/search/lucene/index/index"/>
+          <map:parameter name="pub0-excerpt-dir" value="lenya/pubs/{1}/work/search/lucene/htdocs_dump"/>
           <map:parameter name="pub0-prefix" value=""/>
         </map:generate>
         <map:transform src="lenya/xslt/search/sort.xsl"/>
         
         <map:act type="resource-exists" src="lenya/pubs/{1}/lenya/xslt/search/search-and-results.xsl">
-          <map:transform src="lenya/pubs/{1}/lenya/xslt/search/search-and-results.xsl"/>
+          <map:transform src="lenya/pubs/{../1}/lenya/xslt/search/search-and-results.xsl"/>
+          <map:serialize type="html"/>
         </map:act>
         <map:transform src="lenya/xslt/search/search-and-results.xsl"/>
         <map:serialize type="html"/>
