@@ -13,7 +13,7 @@
     <xsp:include>org.apache.lenya.xml.DOMParserFactory</xsp:include>
   </xsp:structure>                                                                                                                          
 
-  <rc:backup xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0">
+  <rc:backup xmlns:rc="http://www.lenya.org/2002/rc">
 
     <!-- Import Lenya Page Envelope -->
 
@@ -26,8 +26,7 @@
       String rootDir=publication.getEnvironment().getPublicationPath();
       String servletContextPath = publication.getServletContext().getCanonicalPath();
 
-      String filename = publication.getEnvironment().getAuthoringPath() + "/" +docId;    
- 
+      String filename = publication.CONTENT_PATH +"/"+ <input:get-attribute module="page-envelope" as="string" name="area"/> +"/"+ <input:get-attribute module="page-envelope" as="string" name="document-path"/>;    
       RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
       String rcmlDirectory = rcEnvironment.getRCMLDirectory();
       rcmlDirectory=rootDir+rcmlDirectory;
@@ -36,6 +35,7 @@
 
       RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
       String backupFilename = rc.getBackupFilename(new Long(rollbackTime).longValue(), filename);
+
       DOMParserFactory dpf=new DOMParserFactory();
       org.w3c.dom.Document doc=null;
       try {

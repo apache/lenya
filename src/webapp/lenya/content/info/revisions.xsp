@@ -59,6 +59,7 @@
       }
             
     </xsp:logic>
+      <lenya-info:documentid><xsp:expr>docId</xsp:expr></lenya-info:documentid>
     	<xsp:expr>rootE</xsp:expr>
    </rc:revisions>
 </lenya-info:info>
