@@ -4,9 +4,6 @@
   <xsl:template match="/">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-      <title>Authoring</title>
-      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-      <title>unipublic -</title>
       <link href="/wyona-cms/unipublic/unipublic.css" rel="stylesheet" type="text/css"/>
       <link href="/wyona-cms/unipublic/unipublic.mac.css" type="text/css" rel="stylesheet"/>
       <base href="/"/>
