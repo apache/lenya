@@ -17,7 +17,7 @@
 
 <!-- $Id$ -->
 
-<catalogue xml:lang="de">
+<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- common used words -->
   <message key="Save">Speichern</message>
@@ -136,8 +136,12 @@
   <message key="User Documentation">Benutzerdokumentation</message>
   <message key="About Apache Lenya">Über Apache Lenya</message>
   <message key="Apache Lenya Homepage">Apache Lenya Startseite</message>
-  <message key="Edit with Kupu">Bearbeiten mit Kupu</message>
-  <message key="Edit with BXE">Bearbeiten mit BXE</message>
+  <message key="Edit with Kupu">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(Kupu)
+  </message>
+  <message key="Edit with BXE">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(BXE)
+  </message>
   <message key="Edit with one Form">Bearbeiten mit Formulareditor</message>
   <message key="Edit with Forms">Bearbeiten mit Formwizard</message>
   <message key="Edit Metadata">Metadata bearbeiten</message>
