@@ -47,8 +47,8 @@
             <map:part src="cocoon:/menus/sdfdsafs.xml"/>
             <map:part src="cocoon:/{1}.xhtml" element="cmsbody"/>
           </map:aggregate>
-          <!--<map:transform src="xslt/document/authoring/main.xsl"/>-->
-          <map:serialize type="xml"/>
+          <map:transform src="xslt/authoring-main.xsl"/>
+          <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
 
