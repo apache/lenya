@@ -9,9 +9,6 @@
         <publisher class="org.apache.lenya.cms.publishing.DefaultFilePublisher"/>
       </parameters>
     </job>
-    <job type="hello_world" class="org.apache.lenya.cms.scheduler.HelloWorldJob">
-      <title>Print a String</title>
-    </job>
   </jobs>
   
   <triggers>

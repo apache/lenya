@@ -1,5 +1,5 @@
 /*
-$Id: TestProxyGeneratorServlet.java,v 1.10 2003/07/23 13:21:47 gregor Exp $
+$Id: TestProxyGeneratorServlet.java,v 1.1 2003/12/09 16:56:33 gregor Exp $
 <License>
 
  ============================================================================

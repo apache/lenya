@@ -32,7 +32,7 @@
 		Each <em>AccessController</em> component needs a type that is attached to the
 		<code>role</code> attribute, separated with a slash (/). This allows you to choose an
 		<em>AccessController</em> in your publication in combination with the
-		<em>Publication<link href="accesscontrollerresolvers.html">AccessControllerResolver</link></em>.
+		Publication<link href="accesscontrollerresolvers.html">AccessControllerResolver</link>.
 		The following example shows the declaration of an <em>AccessController</em> with
 		the type <em>bypassable</em>:
 	</p>

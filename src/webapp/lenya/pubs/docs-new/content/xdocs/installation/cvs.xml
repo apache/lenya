@@ -13,19 +13,6 @@
 </header> 
 <body> 
 
-<!--
-<section>
-<title>CVS at Wyona</title>
-
-<p>
-The CVS command line for the Wyona CVS server:
-</p>
-<source>
-cvs -d :pserver:anonymous@cvs.wyona.org:/usr/local/repositories checkout lenya
-</source>
-</section>
--->
-
 <section>
 <title>CVS for the public</title>
 <p>

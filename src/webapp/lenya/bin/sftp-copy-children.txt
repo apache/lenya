@@ -1,5 +1,5 @@
 cd public_html/children
-lcd /home/wcms/michi/htdocs/children
+lcd ~/htdocs/children
 lls -R
 mput *
 quit

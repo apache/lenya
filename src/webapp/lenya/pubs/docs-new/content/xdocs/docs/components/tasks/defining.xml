@@ -35,12 +35,6 @@ A typical task configuration file looks like follows:
       <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
     </task>
   </task>
-
-  <!-- print message -->
-  <task id="hello-world" class="org.lenya.cms.task.HelloWorldTask">
-    <label>Print Message</label>
-  </task>
-
 </tasks>
 
 ]]></source>
@@ -74,7 +68,7 @@ the request and session objects:</p>
 <ul>
   <li>
     <code>Task.PARAMETER_SERVLET_CONTEXT</code> - the path of the servlet context<br/>
-    <code>/home/user_id/build/jakarta-tomcat/webapps/lenyacms</code>
+    <code>/home/user_id/build/jakarta-tomcat/webapps/lenya</code>
   </li>
   <li>
     <code>Task.PARAMETER_SERVER_URI</code> - the server URI<br/>

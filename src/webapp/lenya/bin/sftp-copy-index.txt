@@ -1,6 +1,6 @@
 cd public_html
 ls
-lcd /home/wcms/michi/htdocs
+lcd ~/htdocs
 lls -R
 put index.html
 quit

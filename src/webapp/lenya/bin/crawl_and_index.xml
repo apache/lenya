@@ -15,8 +15,7 @@
   <echo message="INFO: Init"/>
 
   <property name="lenya.dir" value="../../../.."/>
-
-
+  
   <!-- Dummy arguments -->
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
   <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
@@ -65,7 +64,7 @@
     <classpath refid="class.path"/>
   </java>
 
-  <exec executable="/home/username/src/cocoon-lenya/src/webapp/lenya/bin/crawl_and_index.sh">
+  <exec executable="${lenya.dir}/lenya/bin/crawl_and_index.sh">
     <arg value="index"/>
     <arg value="${lucene.xconf}"/>
     <arg value="${debug}"/>

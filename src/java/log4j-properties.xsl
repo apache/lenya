@@ -52,7 +52,6 @@ log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c.%M():%L %x - %m%
 
 #log4j.category.org.apache.lenya.cms.cocoon.transformation.IncludeTransformer=DEBUG
 #log4j.category.org.apache.lenya.cms.pubs.forum.NewArticleCreator=DEBUG
-#log4j.category.org.apache.lenya.cms.scheduler.HelloWorldJob=DEBUG
 </xsl:template>
 
 </xsl:stylesheet> 

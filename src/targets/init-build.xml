@@ -101,7 +101,7 @@
 <!-- FIXME: 2.1.2 does not include jing-20030619.jar -->
 <!--
     <copy todir="${build.webapp}/WEB-INF/lib">
-      <fileset dir="/home/username/src/cocoon-2.1.x/tools/lib">
+      <fileset dir="../cocoon-2.1/tools/lib">
         <include name="jing-20030619.jar"/>
       </fileset>
     </copy>

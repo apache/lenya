@@ -17,8 +17,6 @@ USERNAME=$USER
 
 HOSTNAME=127.0.0.1
 
-SFTP_CMD=/usr/bin/sftp
-
 #########################################################
 # FUNCTIONS
 #########################################################
@@ -102,7 +100,7 @@ createDirectory(){
   echo "mkdir $NAME" >> $MKDIR_BATCH_FILE
   echo "quit" >> $MKDIR_BATCH_FILE
 
-  $SFTP_CMD -b $MKDIR_BATCH_FILE $USERNAME@$HOSTNAME
+  sftp -b $MKDIR_BATCH_FILE $USERNAME@$HOSTNAME
   ##rm $MKDIR_BATCH_FILE
   }
 
@@ -162,5 +160,5 @@ CURRENT_DIRECTORY=$SOURCE_DIRECTORY
 browseDirectory $CURRENT_DIRECTORY $SOURCE_DIRECTORY $DESTINATION_DIRECTORY
 echo "quit" >> $PUT_BATCH_FILE
 
-$SFTP_CMD -b $PUT_BATCH_FILE $USERNAME@$HOSTNAME
+sftp -b $PUT_BATCH_FILE $USERNAME@$HOSTNAME
 ##rm $PUT_BATCH_FILE
