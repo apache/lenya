@@ -7,7 +7,7 @@
       <branch relURI="source_version.html" doctype="XDoc" menuName="Source Version" />
     </branch>
     <branch relURI="" doctype="XDoc" menuName="Getting Started (How-to's)">
-      <branch relURI="" doctype="XDoc"
+      <branch relURI="howtos/" doctype="XDoc"
       menuName="Customizing the default publication">
         <branch relURI="" doctype="XDoc" menuName="Change the look" />
       </branch>
@@ -122,14 +122,13 @@
       <branch relURI="" doctype="XDoc" menuName="Navigation" />
       <branch relURI="" doctype="XDoc" menuName="Search Engine (Lucene)" />
     </branch>
-    <branch relURI="" doctype="XDoc" menuName="Deployment and Administration">
+    <branch relURI="administration/" doctype="XDoc" menuName="Deployment and Administration">
       <branch relURI="" doctype="XDoc" menuName="Server architecture" />
       <branch relURI="" doctype="XDoc" menuName="Performance" />
       <branch relURI="" doctype="XDoc" menuName="Testing" />
     </branch>
-    <branch relURI="" doctype="XDoc"
-    menuName="Proposals / Requests for Comment (RFC)" />
-    <branch relURI="" doctype="XDoc" menuName="Related Topics">
+    <branch relURI="proposals/" doctype="XDoc" menuName="Proposals / Requests for Comment (RFC)" />
+    <branch relURI="related/" doctype="XDoc" menuName="Related Topics">
       <branch relURI="" doctype="XDoc" menuName="Application Integration" />
       <branch relURI="" doctype="XDoc" menuName="Interesting editors" />
       <branch relURI="" doctype="XDoc" menuName="Testing tools" />

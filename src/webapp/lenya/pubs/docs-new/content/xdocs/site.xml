@@ -7,7 +7,7 @@
       <node-5 href="source_version.html" label="Source Version"/>
     </node-2>
     <node-6 label="Getting Started (How-to's)">
-      <node-7 label="Customizing the default publication">
+      <node-7 href="howtos/" label="Customizing the default publication">
         <node-8 label="Change the look"/>
       </node-7>
       <node-9 label="Creating your own publication">
@@ -108,13 +108,13 @@
       <node-87 label="Navigation"/>
       <node-88 label="Search Engine (Lucene)"/>
     </node-50>
-    <node-89 label="Deployment and Administration">
+    <node-89 href="administration/" label="Deployment and Administration">
       <node-90 label="Server architecture"/>
       <node-91 label="Performance"/>
       <node-92 label="Testing"/>
     </node-89>
-    <node-93 label="Proposals / Requests for Comment (RFC)"/>
-    <node-94 label="Related Topics">
+    <node-93 href="proposals/" label="Proposals / Requests for Comment (RFC)"/>
+    <node-94 href="related/" label="Related Topics">
       <node-95 label="Application Integration"/>
       <node-96 label="Interesting editors"/>
       <node-97 label="Testing tools"/>

@@ -13,8 +13,14 @@
   -->
 
 
-  <tab label="User Guide" href="user-guide.html"/>
-  <tab label="Admin Guide" href="administrator-guide.html"/>
-  <tab label="Integrator Guide" href="integrator-guide.html"/>
-  <tab label="Developer Guide" href="developer-guide.html"/>
+  <tab label="Home" dir=""/>
+  <tab label="Installation" dir="installation"/>
+  <tab label="How-To's" dir="howtos"/>
+  <tab label="Concepts" dir="concepts"/>
+  <tab label="Components" dir="components"/>
+  <tab label="Admin" dir="administration"/>
+  <!--
+  <tab label="Proposals" dir="proposals"/>
+  <tab label="Related Topics" dir="related"/>
+  -->
 </tabs>
