@@ -65,7 +65,10 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
    <td>&#160;</td>
    <td>&#160;</td>
    <td>&#160;</td>
+   <td><font size="-1"><xsl:value-of select="license/license_name"/></font></td>
+<!--
    <td><font size="-1"><a><xsl:apply-templates select="license/license_url"/><xsl:value-of select="license/license_name"/></a></font></td>
+-->
   </tr>
 </xsl:template>
 
