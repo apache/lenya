@@ -108,8 +108,9 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             //log.debug("HTTP method: "+submitMethod);
             }
 
-          // Forward "InputStream", Parameters, QueryString to Servlet
           URL url=createURL(request);
+          
+          // Forward "InputStream", Parameters, QueryString to Servlet
           //log.debug(".generate(): Remote URL: "+url);
           org.apache.commons.httpclient.HttpMethod httpMethod=null;
           if(submitMethod.equals("POST")){
@@ -162,16 +163,32 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
           // Send request to servlet
           httpMethod.setRequestHeader("Content-type","text/plain");
           httpMethod.setPath(url.getPath());
-          httpClient.startSession(url);
+
+          // FIXME
+          
+          for (Enumeration e = request.getHeaderNames(); e.hasMoreElements(); ) {
+              String name = (String) e.nextElement();
+              httpMethod.addRequestHeader(name, request.getHeader(name));
+          }
+          
+          httpClient.startSession(url.getHost(), url.getPort());
+          // /FIXME
           
         log.debug(
             "\n----------------------------------------------------------------" +
             "\n- Starting session at URI: " + url +
+            "\n- Host:                    " + url.getHost() +
+            "\n- Port:                    " + url.getPort() +
             "\n----------------------------------------------------------------");
-    
+          
+          int result = httpClient.executeMethod(httpMethod);
+          
+        log.debug(
+            "\n----------------------------------------------------------------" +
+            "\n- Result:                    " + result +
+            "\n----------------------------------------------------------------");
           
           
-          httpClient.executeMethod(httpMethod);
           byte[] sresponse=httpMethod.getResponseBody();
           //log.warn(".generate(): Response from remote server: "+new String(sresponse));
           httpClient.endSession();
@@ -227,10 +244,15 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
     catch(MalformedURLException e){
       //log.warn(".createURL(): "+e);
       url=new URL("http://127.0.0.1:"+request.getServerPort()+this.src);
+      
+      //FIXME
+      //url=new URL("http://192.168.0.219:"+request.getServerPort()+this.src);
       log.debug(".createURL(): Add localhost and port: "+url);
       }
     return url;
     }
+  
+  
 /**
  *
  */
