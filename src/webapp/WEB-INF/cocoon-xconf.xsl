@@ -107,8 +107,7 @@
       |     <parameter name="verbosity" value="2"/>
       +-->
   <entity-resolver class="org.apache.cocoon.components.resolver.ResolverImpl" logger="core.resolver">
-    <parameter name="catalog" value="/lenya/pubs/forrest/resources/schema/catalog.xcat"/>
-    <parameter name="local-catalog" value="{$forrest-publication}/resources/schema/catalog.xcat"/>
+    <parameter name="catalog" value="{$forrest-publication}/resources/schema/catalog.xcat"/>
     <parameter name="verbosity" value="1"/>
   </entity-resolver>
 

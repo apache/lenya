@@ -110,7 +110,7 @@
         out="${build.webapp}/WEB-INF/cocoon.xconf"
         style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
         >
-      <param name="forrest-publication" expression="${install.dir}/lenya/pubs/docs-new"/>
+      <param name="forrest-publication" expression="/lenya/pubs/docs-new"/>
       <param name="hsqldb-server-port" expression="${hsqldb-server.port}"/>
       <outputproperty name="indent" value="yes"/>
     </xslt>
