@@ -22,69 +22,100 @@
   </div>
 </xsl:template>
 
-
-<xsl:template match="simple:p">
-  <p>
+<!-- XHTML-like tags -->
+<!--<xsl:template match="simple:p | simple:thead |simple:tbody | simple:tfoot">-->
+<xsl:template match="simple:p | simple:thead | simple:tfoot">
+  <xsl:element name="{local-name()}">
+    <xsl:attribute name="class">simple</xsl:attribute>
     <xsl:apply-templates/>
-  </p>
+  </xsl:element>
 </xsl:template>
+<!-- /XHTML-like tags -->
 
-
-<xsl:template match="simple:crossheading">
-  <p>
-    <xsl:apply-templates/>
-  </p>
-</xsl:template>
-
+<!-- tables -->
 
 <xsl:template match="simple:informaltable">
-  <table>
-    <xsl:apply-templates select="@*|node()"/>
+  <table class="simple" border="0" cellspacing="1">
+    <xsl:apply-templates/>
   </table>
 </xsl:template>
 
+<xsl:template match="simple:tgroup">
+  <xsl:apply-templates/>
+</xsl:template>
 
 <xsl:template match="simple:row">
   <tr>
-    <xsl:apply-templates select="@*|node()"/>
+    <xsl:apply-templates/>
   </tr>
 </xsl:template>
 
-
 <xsl:template match="simple:entry">
-  <td><xsl:apply-templates/></td>
+  <td class="simple"><xsl:apply-templates/></td>
 </xsl:template>
 
+<!-- /tables -->
+
+<!-- lists -->
+
+<xsl:template match="simple:itemizedlist">
+  <ul><xsl:apply-templates/></ul>
+</xsl:template>
+
+<xsl:template match="simple:listitem">
+  <li><xsl:apply-templates/></li>
+</xsl:template>
+
+<!-- /lists -->
+
+<!-- headlines -->
 
 <xsl:template match="simple:subtitle">
   <h1><xsl:apply-templates/></h1>
 </xsl:template>
 
-
-<xsl:template match="simple:listitem">
-  <ul><xsl:apply-templates/></ul>
+<xsl:template match="simple:crossheading">
+  <div class="crossheading">
+    <xsl:apply-templates/>
+  </div>
 </xsl:template>
 
-
-<xsl:template match="simple:itemizedlist">
-  <li><xsl:apply-templates/></li>
+<xsl:template match="simple:*[starts-with(local-name(), 'hl')]">
+  <xsl:element name="h{substring(local-name(), 3)}">
+    <xsl:apply-templates/>
+  </xsl:element>
 </xsl:template>
 
+<!-- /headlines -->
 
-<xsl:template match="simple:tbody">
-  <xsl:apply-templates select="@*|node()"/>
+
+<!-- media -->
+<xsl:template match="simple:media[@media-type = 'image']">
+  <div class="media">
+    <p>
+    <img class="simple"
+        src="{simple:media-reference/@source}"
+        alt="{simple:media-reference/@alternate-text}"/>
+    </p>
+    <xsl:apply-templates select="simple:caption"/>
+  </div>
+</xsl:template>
+<!-- /media -->
+
+<xsl:template match="simple:caption">
+  <div class="caption">
+    <xsl:apply-templates/>
+  </div>
 </xsl:template>
 
-
-<xsl:template match="simple:tgroup">
-  <xsl:apply-templates select="@*|node()"/>
+<!-- links -->
+<xsl:template match="simple:ulink">
+  <a href="{@url}"><xsl:apply-templates/></a>
 </xsl:template>
+<!-- /link -->
 
-
-<xsl:template match="@*|node()" priority="-1">
-  <xsl:copy>
-    <xsl:apply-templates select="@*|node()"/>
-  </xsl:copy>
+<xsl:template match="text()">
+  <xsl:copy/>
 </xsl:template>
 
 

@@ -35,4 +35,8 @@
       <label>Simple Doctype</label>
     </node>
   </node>
+  
+  <node id="simple-document">
+    <label>Simple Doctype Example</label>
+  </node>
 </site>

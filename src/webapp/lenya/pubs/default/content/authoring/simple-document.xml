@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<simple-document xmlns:lenya="http://lenya.org/2003/" xmlns:dc="http://dc.org/2003/" xmlns="http://www.lenya.org/2003/simple-document">
-	<!-- the root element indicates the doctype -->
-	<lenya:meta>
-		<dc:title>The Simple Document Doctype</dc:title>
-		<dc:creator>Andreas Hartmann,Felix Maeder</dc:creator>
-		<dc:subject/>
-		<dc:description/>
-		<dc:publisher/>
-		<dc:contributor/>
-		<dc:date>First published date</dc:date>
-		<dc:type/>
-		<dc:format/>
-		<dc:identifier/>
-		<dc:source/>
-		<dc:language/>
-		<dc:relation/>
-		<dc:coverage/>
-		<dc:rights/>
-	</lenya:meta>
-	<lenya:header>
-		<lenya:document-title>The Simple Document Doctype</lenya:document-title>
-		<lenya:abstract>Abstract that can be used on an overview
-    page</lenya:abstract>
-	</lenya:header>
-	<body>
-		<subtitle>The subtitle element is optional.</subtitle>
-		<p>
-    This is a page using the simple document doctype which describes the elements of this doctype.
-    </p>
-		<p>There can be a lot of standard text paragraphs (p) in a document.</p>
-		<hl2>Headline 2</hl2>
-		<p>A Headline 2 is inserted to structure the text and to make it better readable.
-    </p>
-		<p>Different text styles as <bold>bold</bold> or <emphasize>italic ("emphasize") can be used as well.</emphasize>
-		</p>
-		<p>Of course, there are also links that can be set, e.g. to the website of a very promising content management system: <ulink url="http://www.lenya.org">Apache Lenya</ulink>
-		</p>
-		<media media-type="image">
-			<media-reference alternate-text="Lenya Logo" source="lenya.gif"/>
-			<caption>Images can be placed between paragraphs, lists, tables, etc. They can be uploaded by clicking on one of the red dots.</caption>
-		</media>
-		<hl2>Tables</hl2>
-		<informaltable>
-			<tgroup>
-				<tbody>
-					<row>
-						<entry>A table contains different rows.</entry>
-						<entry>Every row is divided into several cells (element "entry").</entry>
-					</row>
-					<row>
-						<entry>Text styles as <bold>bold</bold> and <emphasize>italic</emphasize> can also be used in tables.</entry>
-						<entry>
-							<ulink url="http://www.wyona.com">Links</ulink>
-are allowed as well.</entry>
-					</row>
-				</tbody>
-			</tgroup>
-		</informaltable>
-		<p>Paragraphs, headlines 2, tables, itemized lists, and images are all on the same level and can be mixed at will.</p>
-		<itemizedlist>
-			<listitem>This is an itemized list</listitem>
-			<listitem>It is composed of several list items (<emphasize>listitem</emphasize>).</listitem>
-			<listitem>And this is the most important item.</listitem>
-			<listitem>Why not have a <ulink url="http://www.apache.org">reference</ulink>
-within a list?</listitem>
-		</itemizedlist>
-	</body>
+<simple-document xmlns="http://www.lenya.org/2003/simple-document" xmlns:dc="http://dc.org/2003/" xmlns:lenya="http://lenya.org/2003/">
+    <!-- the root element indicates the doctype -->
+    <lenya:meta>
+        <dc:title>The Simple Document Doctype</dc:title>
+        <dc:creator>Andreas Hartmann,Felix Maeder</dc:creator>
+        <dc:subject/>
+        <dc:description/>
+        <dc:publisher/>
+        <dc:contributor/>
+        <dc:date>First published date</dc:date>
+        <dc:type/>
+        <dc:format/>
+        <dc:identifier/>
+        <dc:source/>
+        <dc:language/>
+        <dc:relation/>
+        <dc:coverage/>
+        <dc:rights/>
+    </lenya:meta>
+    <lenya:header>
+        <lenya:document-title>The Simple Document Doctype</lenya:document-title>
+        <lenya:abstract>Abstract that can be used on an overview page</lenya:abstract>
+    </lenya:header>
+    <body>
+        <subtitle>The subtitle element is optional.</subtitle>
+        <p> This is a page using the simple document doctype which describes the elements of this
+            doctype. </p>
+        <p>There can be a lot of standard text paragraphs (p) in a document.</p>
+        <hl2>Headline 2</hl2>
+        <p>A Headline 2 is inserted to structure the text and to make it better readable. </p>
+        <p>Different text styles as <bold>bold</bold> or <emphasize>italic (&quot;emphasize&quot;)
+                can be used as well.</emphasize>
+        </p>
+        <p>Of course, there are also links that can be set, e.g. to the website of a very promising
+            content management system: <ulink url="http://www.lenya.org">Apache Lenya</ulink>
+        </p>
+        <media media-type="image">
+            <media-reference alternate-text="Lenya Logo" source="../images/project-logo.png"/>
+            <caption>Images can be placed between paragraphs, lists, tables, etc. They can be
+                uploaded by clicking on one of the red dots.</caption>
+        </media>
+        <hl2>Tables</hl2>
+        <informaltable>
+            <tgroup>
+                <tbody>
+                    <row>
+                        <entry>A table contains different rows.</entry>
+                        <entry>Every row is divided into several cells (element &quot;entry&quot;).</entry>
+                    </row>
+                    <row>
+                        <entry>Text styles as <bold>bold</bold> and <emphasize>italic</emphasize>
+                            can also be used in tables.</entry>
+                        <entry>
+                            <ulink url="http://www.wyona.com">Links</ulink> are allowed as well.</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <p>Paragraphs, headlines 2, tables, itemized lists, and images are all on the same level and
+            can be mixed at will.</p>
+        <itemizedlist>
+            <listitem>This is an itemized list</listitem>
+            <listitem>It is composed of several list items (<emphasize>listitem</emphasize>).</listitem>
+            <listitem>And this is the most important item.</listitem>
+            <listitem>Why not have a <ulink url="http://www.apache.org">reference</ulink> within a list?</listitem>
+        </itemizedlist>
+    </body>
 </simple-document>

@@ -6,11 +6,14 @@
         Purpose of the stylesheet follows.
 */
 
-root { }
-
 /* tabs */
 
-#tabs { font-family: Verdana, Arial, Sans-serif; font-size: 80%; border-bottom: solid 5px #AAAAFF;}
+#tabs {
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 80%;
+    border-bottom: solid 5px #AAAAFF;
+    margin-bottom: 10px;
+}
 
 #tabs a {
     text-decoration: none;
@@ -22,12 +25,12 @@ root { }
 /* menu */
 
 #menu {
-/*    border: dotted 1px Navy; */
+/*
     float: left;
     width: 20%;
+*/
     font-family: Verdana, Arial, Sans-serif;
     background-color: #EEEEEE;
-    margin-top: 10px;
 }
 
 #menu a {
@@ -60,16 +63,70 @@ root { }
 
 /* breadcrumb */
 
-#breadcrumb { background-color: #E0E0E0; padding: .3em; font-family: Verdana, Arial, Sans-serif; font-size: 80%; }
+#breadcrumb {
+    background-color: #E0E0E0;
+    padding: .3em;
+    margin-left: 10px;
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 80%;
+}
 
 /* body */
 
-#body { float: left; border: none; padding: 1em; font-family: Verdana, Arial, Sans-serif; }
+#body {
+    border: none;
+    padding: 1em;
+    margin-left: 10px;
+    font-family: Verdana, Arial, Sans-serif;
+}
 
-#main { float: left; width: 70%; margin: 10px; border: none; }
+#main {
+/*
+    float: left;
+    width: 80%;
+*/
+}
 
 h1 { font-size: 140%; }
 h2 { font-size: 100%; }
 h3 { font-size: 80%; }
 p { font-size: 80%; }
 li { font-size: 80%; }
+
+.crossheading { font-weight: bold; font-size: 110%; }
+
+table.simple {
+    border-collapse: collapse;
+/*
+    background-color: #909090;
+    border-color: #909090;
+*/
+    width: auto;
+}
+
+td.simple {
+    padding: 3px;
+    background-color: White;
+    border: solid 1px Navy;
+    vertical-align: top;
+}
+
+img.simple {
+}
+
+.project-logo {
+    padding: 10px;
+    text-align: center;
+}
+
+.media {
+    text-align: center;
+    padding: 10px;
+}
+
+.caption {
+    padding: 5px;
+    text-align: center;
+    font-style: italic;
+    font-size: 80%;
+}

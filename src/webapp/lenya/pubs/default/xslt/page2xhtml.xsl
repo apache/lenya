@@ -26,15 +26,23 @@
       <link rel="stylesheet" href="{$root}/css/page.css" mime-type="text/css"/>
     </head>	
     <body>
-      <div style="text-align: center">
-        <img src="{$root}/images/project-logo.gif"/>
+      <div class="project-logo">
+        <img src="{$root}/images/project-logo.png"/>
       </div>
       <xsl:apply-templates select="xhtml:div[@id = 'tabs']"/>
-      <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
-      <div id="main">
-        <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
-        <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
-      </div>
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td valign="top">
+            <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
+          </td>
+          <td valign="top">
+            <div id="main">
+              <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
+              <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
+            </div>
+          </td>
+        </tr>
+      </table>
     </body>
   </html>
   </xsl:copy>
