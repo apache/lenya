@@ -177,6 +177,7 @@ public class AntTaskTest extends TestCase {
 
 	/**
 	 * Override this method to prepare your test.
+     * @throws Exception
 	 */
 	protected void prepareTest() throws Exception {
 		System.out.println("prepare");
@@ -184,6 +185,7 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Override this method to add your test evaluation code.
+     * @throws Exception
      */
     protected void evaluateTest() throws Exception {
         System.out.println("evaluate");
@@ -195,7 +197,7 @@ public class AntTaskTest extends TestCase {
     protected void setUp() throws Exception {
         if (PublicationHelper.getPublication() == null) {
             String args[] = {
-                "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya",
+                "/home/edith/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya",
                 "test"
             };
             PublicationHelper.extractPublicationArguments(args);
