@@ -17,67 +17,128 @@
   font-size: x-large;
   font-weight: bold;
   display: block;
-  /*border: 1pt solid red;*/
+/*  border: 1pt solid red;*/
 }
 
 .subtitle {
   font-size: large;
   font-weight: bold;
   display: block;
-  /*border: 1pt solid red;*/
+/*  border: 1pt solid red; */
 }
 
+
+.summary:before {
+  background-color:   lightgray; 
+  color: black;
+  content: "Summary:  "
+}
 .summary {
   font-size: large;
   font-style: italic;
   display: block;
-  /*border: 1pt solid red;*/
+/* border: 1pt solid blue; */
 }
 
+
+.content:before {
+  background-color:   lightgray; 
+  color: black;
+  content: "Content:  "
+}
 .content {
-  padding: 10pt;
+  padding: 5pt;
   display: block;
-  /*border: 1pt solid red;*/
+/*  border: 1pt solid yellow; */
 }
 
+.author:before {
+  background-color:   lightgray; 
+  color: black;
+  content: "Author:  "
+
+}
 .author {
   padding: 5pt;
   display: block;
   /*border: 1pt solid green;*/
 }
 
+.contributor:before {
+  background-color:   lightgray; 
+  color: black;
+  content: "Contributor:  ";
+
+}
 .contributor {
   padding: 5pt;
   display: block;
   /*border: 1pt solid blue;*/
 }
 
+
+.created:before {
+  background-color:   lightgray;
+  color: black;
+  content: "Created:  "
+
+}
 .created {
   padding: 5pt;
   display: block;
   /*border: 1pt solid blue;*/
 }
 
+
+.issued:before {
+  background-color:   lightgray;
+  color: black;
+  content: "Issued:  "
+
+}
 .issued {
   padding: 5pt;
   display: block;
   /*border: 1pt solid blue;*/
 }
 
+
+.modified:before {
+  background-color:   lightgray;
+  color: black;
+  content: "Last Modified:  "
+
+}
 .modified {
   padding: 5pt;
   display: block;
   /*border: 1pt solid blue;*/
 }
 
+
+.link:before {
+  background-color:   lightgray; 
+  color: black;
+  content: "Link:  ";
+}
 .link {
   padding: 5pt;
   display: block;
   /*border: 1pt solid blue;*/
 }
 
+.id:before {
+  background-color:   lightgray; 
+  color: black;
+  content: "Entry ID:  ";
+}
 .id {
   padding: 5pt;
   display: block;
   /*border: 1pt solid blue;*/
+}
+
+.p {
+  padding: 5pt;
+  display: block;
 }
