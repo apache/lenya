@@ -108,7 +108,8 @@
               <td/>
               <td>
 				        <form method="GET">
-				          <input type="hidden" name="lenya.usecase" value="userChangeGroups"/>
+				          <input type="hidden" name="lenya.usecase" value="admin.userGroups"/>
+				          <input type="hidden" name="userId" value="{normalize-space(id)}"/>
 				          <input i18n:attr="value" type="submit" value="Edit Group Affiliation"/>
 				        </form>
               </td>
@@ -153,7 +154,9 @@
               <td class="lenya-entry-caption"><i18n:text>User</i18n:text>:</td>
               <td>
 				        <form method="GET">
-				          <input type="hidden" name="lenya.usecase" value="userChangePasswordUser"/>
+				          <input type="hidden" name="lenya.usecase" value="admin.changePassword"/>
+				          <input type="hidden" name="checkPassword" value="true"/>
+				          <input type="hidden" name="userId" value="{normalize-space(id)}"/>
 				          <input i18n:attr="value" type="submit" value="Change Password"/>
 				        </form>
 				      </td>
@@ -162,7 +165,9 @@
               <td class="lenya-entry-caption"><i18n:text>Admin</i18n:text>:</td>
               <td>
 				        <form method="GET">
-				          <input type="hidden" name="lenya.usecase" value="userChangePasswordAdmin"/>
+				          <input type="hidden" name="lenya.usecase" value="admin.changePassword"/>
+				          <input type="hidden" name="checkPassword" value="false"/>
+				          <input type="hidden" name="userId" value="{normalize-space(id)}"/>
 				          <input i18n:attr="value" type="submit" value="Change Password"/>
 				        </form>
               </td>
