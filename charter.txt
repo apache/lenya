@@ -1,7 +1,7 @@
 The Apache Lenya Project is the open source community project developing 
 Apache Lenya and Lenya-based content management solutions. 
 With strong foundations in XML-based server-side web application frameworks, 
-the Apache Cocoon Project consists of a group of people that share common values 
+the Apache Lenya Project consists of a group of people that share common values 
 on collaboration-intensive and community-based quality open source development. 
 The Apache Lenya Project is proud to share these values with its parent organization: 
 The Apache Software Foundation.
