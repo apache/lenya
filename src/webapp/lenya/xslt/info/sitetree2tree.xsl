@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.5 2003/07/01 13:55:51 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.6 2003/07/01 15:16:07 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -11,6 +11,7 @@
 <xsl:output omit-xml-declaration="yes" encoding = "iso-8859-1" />    
 
 <xsl:template match="/*[local-name()='site']">
+    <xsl:param name="parentPath"/>
 // You can find instructions for this file at http://www.treeview.net
 
 //Environment variables are usually set at the top of this file.
@@ -23,20 +24,15 @@ PERSERVESTATE = 0
 HIGHLIGHT = 1
 
 foldersTree = gFld("<b>Site</b>", "/?lenya.usecase=info&amp;lenya.step=showscreen")
-	<xsl:choose><xsl:when test="local-name(parent::*)='node'">
 		<xsl:apply-templates select="*[local-name()='node']">
             <xsl:with-param name="parentPath"><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/></xsl:with-param>
 		</xsl:apply-templates>
-	</xsl:when>
-	<xsl:otherwise>
-		<xsl:apply-templates select="*[local-name()='node']">
-            <xsl:with-param name="parentPath">/<xsl:value-of select="@id"/></xsl:with-param>
-            </xsl:apply-templates>
-	</xsl:otherwise></xsl:choose>
 
 //Set this string if Treeview and other configuration files may also be loaded in the same session
 foldersTree.treeID = "t2" 
 </xsl:template>    
+
+
     
 <xsl:template match="*[local-name()='node']">
     <xsl:param name="parentPath"/>
