@@ -18,38 +18,54 @@ This sitemap creates default navigation components.
   </map:components>
   <!-- =========================== Pipelines ================================ -->
   
-  <map:pipelines>
-  
-    <map:pipeline>
+  <map:resources>
     
-    <!-- load sitetree -->
-    <map:match pattern="*/*/sitetree.xml">
-      <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
-      <map:serialize type="xml"/>
-    </map:match>
-  
-    <!-- pattern: <pub-id>/<area>/<nav-element>/<path>.xml -->
-    <map:match pattern="*/*/*/**.xml">
+    <map:resource name="fallback-transformation">
     
-      <!-- load sitetree -->
-      <!--<map:generate src="cocoon:/{1}/{2}/sitetree.xml"/>-->
-      <!-- src="pubs/{publication-id}/content/{area}/sitetree.xml" -->
-      <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
-      
-      <!-- use publication-specific presentation if available -->
+      <!-- use publication-specific navigation schema if available -->
       <map:act type="resource-exists">
-        <map:parameter name="url" value="pubs/{1}/xslt/lenya/navigation/{3}.xsl"/>
-        <map:transform src="pubs/{../1}/xslt/lenya/navigation/{../3}.xsl">
-          <map:parameter name="path" value="{../4}"/>
+        <map:parameter name="url" value="pubs/{publication-id}/xslt/lenya/navigation/{stylesheet}.xsl"/>
+        <map:transform src="pubs/{../publication-id}/xslt/lenya/navigation/{../stylesheet}.xsl">
+          <map:parameter name="url" value="{../url}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:act>
       
-      <!-- use default presentation -->
-      <map:transform src="xslt/navigation/{3}.xsl">
-        <map:parameter name="path" value="{4}"/>
+      <!-- use default navigation schema -->
+      <map:transform src="xslt/navigation/{stylesheet}.xsl">
+        <map:parameter name="url" value="{url}"/>
       </map:transform>
       <map:serialize type="xml"/>
+      
+    </map:resource>
+  
+  </map:resources>
+  
+  <map:pipelines>
+  
+    <map:pipeline>
+    
+    <!-- sitetree -->
+    <!-- pattern: {pub-id}/{area}/sitetree/{url}.xml -->
+    <map:match pattern="*/*/sitetree/**.xml">
+      <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
+      <map:call resource="fallback-transformation">
+        <map:parameter name="publication-id" value="{1}"/>
+        <map:parameter name="url" value="{3}"/>
+        <map:parameter name="stylesheet" value="sitetree2nav"/>
+      </map:call>
+    </map:match>
+
+    
+    <!-- navigation element -->  
+    <!-- pattern: {pub-id}/{area}/{nav-element}/{url}.xml -->
+    <map:match pattern="*/*/*/**.xml">
+      <map:generate src="cocoon:/{1}/{2}/sitetree/{4}.xml"/>
+      <map:call resource="fallback-transformation">
+        <map:parameter name="publication-id" value="{1}"/>
+        <map:parameter name="url" value="{4}"/>
+        <map:parameter name="stylesheet" value="{3}"/>
+      </map:call>
     </map:match>
     
     </map:pipeline>
