@@ -49,9 +49,6 @@ import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuildException;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.workflow.Event;
@@ -101,22 +98,12 @@ public class WorkflowTest extends TestCase {
 
         Publication publication = PublicationFactory.getPublication(publicationId, servletContextPath);
 
-        DocumentTypeBuilder builder = new DocumentTypeBuilder();
-        DocumentType documentType = null;
-        Exception exception = null;
-        try {
-            documentType = builder.buildDocumentType(documentTypeName, publication);
-        } catch (DocumentTypeBuildException e) {
-            exception = e;
-            e.printStackTrace(System.err);
-        }
-        assertNull(exception);
         
         WorkflowInstance instance = null;
         Document document = new DefaultDocument(publication,  "index");
         
         WorkflowFactory factory = WorkflowFactory.newInstance();
-
+        Exception exception = null;
         try {
             instance = factory.buildInstance(document);
         } catch (WorkflowException e) {
