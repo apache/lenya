@@ -80,7 +80,10 @@ public class InsertDossierTask
                 newDossierElement.setAttributeValue("id", dossierId);
                 Element dossiersElement = (Element) dossiersDocument.selectSingleNode("/dossiers"); 
                 List children = dossiersElement.elements();
-                children.add(0, newDossierElement);
+                if (children.size() > 0)
+                  children.add(0, newDossierElement);
+                else
+                  children.add(newDossierElement);
             }
 
             // write the headlines
