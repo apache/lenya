@@ -7,6 +7,8 @@
 </xsl:template>                                                                                                                             
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
 <oscom>
+  <navigation xlink:href="navigation.xml" xlink:show="embed"/>
+
   <xsl:for-each select="dir:file">
     <project xlink:href="matrix/{@name}" xlink:show="embed"/>
   </xsl:for-each>

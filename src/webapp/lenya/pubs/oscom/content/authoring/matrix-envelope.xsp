@@ -12,6 +12,8 @@
   String projectid=parameters.getParameter("projectid","null");
 </xsp:logic>
 
+<navigation xlink:href="navigation.xml" xlink:show="embed" xmlns:xlink="http://www.w3c.org/2002/xmlns/xlink"/>
+
 <body xlink:show="embed" xmlns:xlink="http://www.w3c.org/2002/xmlns/xlink"><xsp:attribute name="href" prefix="xlink" uri="http://www.w3.org/2002/XLink">matrix/<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute></body>
 </oscom>
 

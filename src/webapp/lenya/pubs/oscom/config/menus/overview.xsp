@@ -65,7 +65,8 @@
 
     <menu name="Debug" label="Debug">
       <block>
-        <item href="index.xml">XML</item>
+        <item href="index.xml">Frameworks&#160;and&#160;Systems</item>
+        <item href="overview.xml">Body</item>
       </block>
     </menu>
   </menus>

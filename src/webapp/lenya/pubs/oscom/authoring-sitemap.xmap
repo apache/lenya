@@ -34,84 +34,111 @@
   <!-- =========================== Pipelines ================================ -->
 
   <map:pipelines>
-    <!-- Rollback -->
-                <map:pipeline>
-                        <map:match type="usecase" pattern="rollback">
-                                <map:match type="step" pattern="view">
-                                        <map:generate type="serverpages" src="../../content/rc/view.xsp">
-                                        </map:generate>
-                                        <map:serialize type="xml"/>
-                                </map:match>
-                        </map:match>
-                </map:pipeline>
 
-    <!-- /Rollback -->
-
+    <!-- Menus -->
     <map:pipeline>
-
-      <!-- Menus -->
-      <map:match pattern="authoring/menus/matrix/*.xml">
-        <map:generate type="serverpages" src="config/menus/matrix.xsp">
-          <map:parameter name="projectid" value="{1}"/>
-        </map:generate>
-        <map:transform type="usecasemenu"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/overview.xml">
-        <map:generate type="serverpages" src="config/menus/overview.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
       <map:match pattern="authoring/menus/**.xml">
         <map:generate type="serverpages" src="config/menus/generic.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
+    </map:pipeline>
+    <!-- /Menus -->
 
+
+   <map:pipeline>
+     <!-- XML Navigation -->
+     <map:match pattern="authoring/**navigation.xml">
+       <map:generate src="content/authoring/{1}navigation.xml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <!-- XML Home -->
+     <map:match pattern="authoring/home.xml">
+       <map:generate src="content/authoring/home.xml"/>
+       <map:serialize type="xml"/>
+     </map:match>
    </map:pipeline>
 
-<!-- Matrix -->
-  <map:pipeline>
-    <!-- Overview (sorted by frameworks and cms) -->
-    <map:match pattern="authoring/matrix/index.xml">
-      <map:generate type="directory" src="content/authoring/matrix/"/>
-      <map:transform src="xslt/matrix/xinclude.xsl"/>
-<!--
-      <map:transform type="xinclude"/>
--->
-      <map:transform type="xlink">
-        <map:parameter name="href" value="content/authoring/overview_dummy.xml"/>
-      </map:transform>
-      <map:serialize type="xml"/>
-    </map:match>
-    <!-- /Overview -->
 
-    <!-- Project -->
-    <map:match pattern="authoring/matrix/body-*.xml">
-      <map:generate src="content/authoring/matrix/{1}.xml"/>
-      <map:serialize type="xml"/>
-    </map:match>
 
-    <map:match pattern="authoring/matrix/*.xml">
-      <map:aggregate element="lenya">
-        <map:part src="cocoon:/authoring/menus/matrix/{1}.xml"/>
-        <map:part src="cocoon:/authoring/matrix/{1}-envelope.xsp" element="cmsbody"/>
-      </map:aggregate>
-      <map:transform type="xlink">
-        <map:parameter name="href" value="content/authoring/dummy.xml"/>
-      </map:transform>
-<!--
-      <map:transform type="xinclude"/>
--->
-      <map:serialize type="xml"/>
-    </map:match>
 
-    <map:match pattern="authoring/matrix/*-envelope.xsp">
-      <map:generate type="serverpages" src="content/authoring/matrix-envelope.xsp">
-        <map:parameter name="projectid" value="{1}"/>
-      </map:generate>
-      <map:serialize type="xml"/>
-    </map:match>
-    <!-- /Project -->
-  </map:pipeline>
+
+
+
+
+
+
+<!-- Matrix Overview (sorted by frameworks and cms) -->
+    <map:pipeline>
+      <map:match pattern="authoring/matrix/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+      <map:match pattern="authoring/matrix/index.html">
+        <map:generate src="cocoon:/authoring/matrix/overview.xml"/>
+        <map:transform src="xslt/overview/authoring/main.xsl"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/authoring/matrix/overview.xml"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="authoring/matrix/overview.xml">
+        <map:aggregate element="lenya">
+          <map:part src="cocoon:/authoring/matrix/index.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="authoring/matrix/index.xml">
+        <map:generate type="directory" src="content/authoring/matrix/"/>
+        <map:transform src="xslt/matrix/xinclude.xsl"/>
+        <!--<map:transform type="xinclude"/>-->
+        <map:transform type="xlink">
+          <map:parameter name="href" value="content/authoring/overview_dummy.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+<!-- /Matrix Overview (sorted by frameworks and cms) -->
+
+
+<!-- Project Entry -->
+    <map:pipeline>
+      <map:match pattern="authoring/matrix/*.html">
+        <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
+        <map:transform src="xslt/matrix/authoring/main.xsl"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/authoring/matrix/{1}.xml"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- FIXME: just for debugging -->
+      <map:match pattern="authoring/matrix/body-*.xml">
+        <map:generate src="content/authoring/matrix/{1}.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <!-- /FIXME: just for debugging -->
+
+      <map:match pattern="authoring/matrix/*.xml">
+        <map:aggregate element="lenya">
+          <map:part src="cocoon:/authoring/matrix/{1}-envelope.xsp" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="content/authoring/dummy.xml"/>
+        </map:transform>
+        <!--<map:transform type="xinclude"/>-->
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="authoring/matrix/*-envelope.xsp">
+        <map:generate type="serverpages" src="content/authoring/matrix-envelope.xsp">
+          <map:parameter name="projectid" value="{1}"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+<!-- /Project Entry -->
+
+
+
+
+
+
 
   <!-- Create New CMS Project -->
   <map:pipeline>
@@ -128,17 +155,9 @@
     </map:match>
   </map:pipeline>
   <!-- /Create New CMS Project -->
-<!-- /Matrix -->
 
-   <map:pipeline>
-      <map:match pattern="authoring/overview.xml">
-        <map:aggregate element="lenya">
-          <map:part src="cocoon:/authoring/menus/overview.xml"/>
-          <map:part src="cocoon:/authoring/matrix/index.xml" element="cmsbody"/>
-        </map:aggregate>
-        <map:serialize type="xml"/>
-      </map:match>
-  </map:pipeline>
+
+
 
   <map:pipeline>
       <!-- XML -->
@@ -147,9 +166,7 @@
           <map:part src="cocoon:/authoring/menus/{1}.xml"/>
           <map:part src="content/authoring/{1}.xml" element="cmsbody"/>
         </map:aggregate>
-<!--
-        <map:transform type="xinclude"/>
--->
+        <!--<map:transform type="xinclude"/>-->
         <map:transform type="xlink">
           <map:parameter name="href" value="content/authoring/{1}.xml"/>
         </map:transform>
@@ -165,44 +182,6 @@
         <map:redirect-to uri="matrix/index.html"/>
       </map:match>
 
-      <!-- Edit Matrix Project with Xopus2 -->
-      <map:match pattern="authoring/xopus2/matrix/*.html">
-          <map:act type="reserved-checkout">
-            <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
-              <map:parameter name="user" value="{user}"/>
-              <map:parameter name="filename" value="{filename}"/>
-              <map:parameter name="message" value="{message}"/>
-              <map:parameter name="date" value="{date}"/>
-            </map:generate>
-            <map:serialize type="xml"/>
-          </map:act>
-
-        <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
-        <map:transform src="xslt/matrix/authoring/main_xopus.xsl">
-          <map:parameter name="projectid" value="{1}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <!-- CM/F Overview -->
-      <map:match pattern="authoring/matrix/">
-        <map:redirect-to uri="index.html"/>
-      </map:match>
-      <map:match pattern="authoring/matrix/index.html">
-        <map:generate src="cocoon:/authoring/overview.xml"/>
-        <map:transform src="xslt/overview/authoring/main.xsl"/>
-        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/authoring/overview.xml"/>
-        <map:serialize type="html"/>
-      </map:match>
-      <!-- /CM/F Overview -->
-
-      <!-- Matrix Project -->
-      <map:match pattern="authoring/matrix/*.html">
-        <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
-        <map:transform src="xslt/matrix/authoring/main.xsl"/>
-        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/authoring/matrix/{1}.xml"/>
-        <map:serialize type="html"/>
-      </map:match>
 
       <!-- Generic (XHTML) -->
       <map:match pattern="authoring/**.html">
