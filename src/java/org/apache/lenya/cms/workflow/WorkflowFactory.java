@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.20 2003/08/25 09:54:58 andreas Exp $
+$Id: WorkflowFactory.java,v 1.21 2003/08/25 20:47:35 edith Exp $
 <License>
 
  ============================================================================
@@ -114,7 +114,7 @@ public class WorkflowFactory {
      * @param newDocument The new document.
      * @throws WorkflowException when something went wrong.
      */
-    public void moveHistory(Document oldDocument, Document newDocument) throws WorkflowException {
+    public static void moveHistory(Document oldDocument, Document newDocument) throws WorkflowException {
         assert oldDocument != null;
         new CMSHistory(oldDocument).move(newDocument);
     }
