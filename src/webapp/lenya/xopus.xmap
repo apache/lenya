@@ -28,6 +28,15 @@
     </map:pipeline>
 
     <map:pipeline>
+      <map:match pattern="**.html">
+        <map:read src="resources/cms/misc/xopus/{1}.html" mime-type="text/html"/>
+      </map:match>
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <map:pipeline>
       <map:match pattern="**.xml">
         <map:generate src="resources/cms/misc/xopus/{1}.xml"/>
         <map:serialize type="xml"/>
