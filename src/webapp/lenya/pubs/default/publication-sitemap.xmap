@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.66 2004/02/14 17:34:02 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.67 2004/03/08 14:14:20 egli Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -81,6 +81,7 @@
           <map:part src="cocoon://navigation/{2}/{3}/breadcrumb/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/tabs/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/menu/{5}.xml"/>
+          <map:part src="cocoon://navigation/{2}/{3}/search/{5}.xml"/>
           <map:part src="cocoon:/lenya-document-{1}/{3}/{4}/{page-envelope:document-path}"/>
         </map:aggregate>
         <map:transform src="xslt/page2xhtml.xsl">
