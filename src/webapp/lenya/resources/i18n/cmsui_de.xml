@@ -188,6 +188,7 @@
   <message key="Change Password">Passwort ändern</message>
   <message key="Old Password">Bestehendes Passwort</message>
   <message key="New Password">Neues Passwort</message>
+  <message key="Confirm Password">Passwort bestätigen</message>
   <message key="Edit Group Affiliation">Mitgliedschaften ändern</message>
   
   <!-- IP Range Administration -->
