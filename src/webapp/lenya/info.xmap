@@ -52,7 +52,7 @@
         </map:aggregate>
 	    <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree">
 	       <map:parameter name="chosenlanguage" value="{2}"/>
-           <map:parameter name="defaultlanguage" value="en"/> 
+           <map:parameter name="defaultlanguage" value="de"/> 
         </map:transform>
 	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
            <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
