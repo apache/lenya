@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.51 2004/01/18 19:09:34 gregor Exp $
+ $Id: info.xsl,v 1.52 2004/02/11 14:00:26 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -165,6 +165,7 @@
         <th></th>
       </tr>
       <xsl:for-each select="lenya-info:asset">
+        <xsl:sort select="dc:title"/>
         <tr>
           <td><xsl:value-of select="dc:title"/></td>
           <td align="right"><xsl:value-of select="dc:extent"/> kB</td>
