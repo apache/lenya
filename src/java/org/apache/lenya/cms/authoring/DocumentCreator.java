@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DocumentCreator.java,v 1.3 2003/07/15 13:45:15 egli Exp $
 <License>
 
  ============================================================================
@@ -70,8 +70,6 @@ import java.util.Collections;
 /**
  * @author andreas
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class DocumentCreator {
     /**
@@ -85,12 +83,13 @@ public class DocumentCreator {
      * @param childName DOCUMENT ME!
      * @param childTypeString DOCUMENT ME!
      * @param documentTypeName DOCUMENT ME!
+     * @param language the language of the document to be created.
      *
      * @throws CreatorException DOCUMENT ME!
      */
     public void create(Publication publication, File authoringDirectory, String treeFileName,
         String parentId, String childId, String childName, String childTypeString,
-        String documentTypeName) throws CreatorException {
+        String documentTypeName, String language) throws CreatorException {
         short childType;
 
         if (childTypeString.equals("branch")) {
@@ -125,7 +124,7 @@ public class DocumentCreator {
         }
 
         Label[] labels = new Label[1];
-        labels[0] = new Label(childName, null);
+        labels[0] = new Label(childName, language);
 
         try {
             siteTree.addNode(parentId, creator.generateTreeId(childId, childType), labels);
