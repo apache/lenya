@@ -8,8 +8,8 @@
 
 <xsl:variable name="oriName">
 <xsl:choose>
-        <xsl:when test="@bx_originalname">
-		<xsl:value-of select="@bx_originalname"/>
+        <xsl:when test="@bxe_originalname">
+		<xsl:value-of select="@bxe_originalname"/>
         </xsl:when>
         <xsl:otherwise>
                 <xsl:value-of select="name()"/>
@@ -20,7 +20,7 @@
 <xsl:text>
 </xsl:text><xsl:value-of select="$indent"/><xsl:element name="{$oriName}">
 	   <xsl:for-each select="@*">
-	            <xsl:if test="not(name() = 'bx_originalname') and not(name() = 'style') and not(name() = 'internalid') and not(name() = 'id' and ../@internalid)">
+	            <xsl:if test="not(name() = 'bxe_originalname') and not(name() = 'style') and not(name() = 'bxe_internalid') and not(name() = 'id' and ../@bxe_internalid)">
 					<xsl:copy/>
                  </xsl:if>
 		</xsl:for-each>

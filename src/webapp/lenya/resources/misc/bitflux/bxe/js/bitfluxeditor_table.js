@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_table.js,v 1.1 2002/09/13 20:26:50 michicms Exp $
+// $Id: bitfluxeditor_table.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
 
 var mouseX =0;
 var mouseY = 0;
@@ -21,18 +21,18 @@ document.addEventListener("mousemove",BX_mousetrack,true);
 function BX_table_insert(e)
 {
     var output = "";
-		BX_popup_start("Create Table",100,90);
+		BX_popup_start("Create Table",0,90);
 
     if (BX_range)
     {
 
-        output = "<form action='javascript:BX_table_newtable();' name='tabelle'><table class=\"usualBlackTd\"><tr>";
-        output += "<td >Columns</td><td ><input value='2' size=\"3\" name=\"cols\"></td>\n";
+        output = "<form action='javascript:BX_table_newtable();' id='bxe_tabelle' name='tabelle'><table class=\"usual\"><tr>";
+        output += "<td >Columns</td><td ><input value='2' size=\"3\" name=\"cols\" /></td>\n";
         output += "</tr><tr>\n";
-        output += "<td>Rows</td><td ><input value='2' size=\"3\" name=\"rows\"></td>\n";
+        output += "<td>Rows</td><td ><input value='2' size=\"3\" name=\"rows\" /></td>\n";
         output += "</tr><tr>\n";
         output += "<td colspan='2' align='right'>\n";
-        output += "<input type='submit' class=\"usualBlackTd\" value='create'> </td>";
+        output += "<input type='submit' class=\"usual\" value='create' /> </td>";
         output += "</tr></table></form>";
 		BX_popup_addHtml(output);
 
@@ -40,7 +40,7 @@ function BX_table_insert(e)
     else
     {
 
-        output = "<span class='usualBlackTd'>Nothing selected, please select the point, where you want the table inserted</span>";
+        output = "<span class='usual'>Nothing selected, please select the point, where you want the table inserted</span>";
 		BX_popup_addHtml(output);
 
     }
@@ -58,26 +58,26 @@ function BX_table_newtable()
 		return;
 	}
 	
-	var TRows = document.forms["tabelle"].rows.value;
-	var TCols = document.forms["tabelle"].cols.value;
+	var TRows = document.getElementById("bxe_tabelle").rows.value;
+	var TCols = document.getElementById("bxe_tabelle").cols.value;
 	BX_popup_hide();
-	var table = BX_xml.createElementNS("http://www.w3.org/1999/xhtml","informaltable");
+	var table = BX_xml.doc.createElementNS("http://www.w3.org/1999/xhtml","informaltable");
 	BX_node_insertID(table);
-    var tgroup = BX_xml.createElementNS("http://www.w3.org/1999/xhtml","tgroup");
+    var tgroup = BX_xml.doc.createElementNS("http://www.w3.org/1999/xhtml","tgroup");
 	BX_node_insertID(tgroup);
-    var tbody = BX_xml.createElementNS("http://www.w3.org/1999/xhtml","tbody");
+    var tbody = BX_xml.doc.createElementNS("http://www.w3.org/1999/xhtml","tbody");
 	BX_node_insertID(tbody);
     tgroup.appendChild(tbody);
     table.appendChild(tgroup);
     for (var i  = 0; i < TRows; i++)
     {
-        var trElement = BX_xml.createElementNS("http://www.w3.org/1999/xhtml","row");
+        var trElement = BX_xml.doc.createElementNS("http://www.w3.org/1999/xhtml","row");
 		BX_node_insertID(trElement);
         for (var j  = 0; j < TCols; j++)
         {
-            var tdElement = BX_xml.createElementNS("http://www.w3.org/1999/xhtml","entry");
+            var tdElement = BX_xml.doc.createElementNS("http://www.w3.org/1999/xhtml","entry");
 			 BX_node_insertID(tdElement);
-            var textNode = BX_xml.createTextNode("#");
+            var textNode = BX_xml.doc.createTextNode("#");
             tdElement.appendChild(textNode);
             trElement.appendChild(tdElement)
         }
@@ -98,7 +98,7 @@ function BX_table_insert_row_or_col(roworcol)
 {
 	if(BX_popup.style.visibility== 'visible')
     {
-		if (document.forms["tabelle"].ch[0].checked)
+		if (document.getElementById("bxe_tabelle").ch[0].checked)
         {
         	BX_table_insert_row();
 		}
@@ -124,11 +124,11 @@ function BX_table_insert_row_or_col(roworcol)
     }
     BX_popup_start("Add Row or Col",110,90);
     var output = "";
-    output += "<form action='javascript:BX_table_insert_row_or_col();' name='tabelle'><table class=\"usualBlackTd\"><tr>";
-    output += "<td ><input name='ch' type='radio' value='row' checked></td><td >add row</td>\n";
-    output += "</tr><tr><td ><input name='ch' type='radio' value='col'></td><td >add col</td>\n";
+    output += "<form action='javascript:BX_table_insert_row_or_col();' id='bxe_tabelle' name='tabelle'><table class=\"usual\"><tr>";
+    output += "<td ><input name='ch' type='radio' value='row' checked='checked' /></td><td >add row</td>\n";
+    output += "</tr><tr><td ><input name='ch' type='radio' value='col' /></td><td >add col</td>\n";
 
-    output += "</tr></tr><td colspan='2'><input type='submit' class=\"usualBlackTd\" value='add'> </td>";
+    output += "</tr><tr><td colspan='2'><input type='submit' class=\"usual\" value='add' /> </td>";
     output += "</tr></table></form>";
 
 	BX_popup_addHtml(output);
@@ -142,13 +142,13 @@ function BX_table_insert_row()
     var row = cell.parentNode;
     var tbody = row.parentNode;
 
-    var newRow = BX_xml.createElementNS("http://www.w3.org/1999/xhtml","row");
+    var newRow = BX_xml.doc.createElementNS("http://www.w3.org/1999/xhtml","row");
     BX_node_insertID(newRow);
     for (var i = 0; i < row.childNodes.length; i++)
     {
-        var newCell = BX_xml.createElementNS("http://www.w3.org/1999/xhtml","entry");
+        var newCell = BX_xml.doc.createElementNS("http://www.w3.org/1999/xhtml","entry");
 	BX_node_insertID(newCell);
-        var textNode = BX_xml.createTextNode("#");
+        var textNode = BX_xml.doc.createTextNode("#");
         newCell.appendChild(textNode);
         newRow.appendChild(newCell);
     }
@@ -190,9 +190,9 @@ function BX_table_insert_col()
     {
         if (tbody.childNodes[i].nodeName.toLowerCase() == "row")
         {
-            var newCell = BX_xml.createElementNS("http://www.w3.org/1999/xhtml","entry");
+            var newCell = BX_xml.doc.createElementNS("http://www.w3.org/1999/xhtml","entry");
 			BX_node_insertID(newCell);
-            var textNode = BX_xml.createTextNode("#");
+            var textNode = BX_xml.doc.createTextNode("#");
             newCell.appendChild(textNode);
             var oldCell = tbody.childNodes[i].childNodes[cellPos];
             tbody.childNodes[i].replaceChild(newCell,oldCell);

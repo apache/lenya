@@ -43,9 +43,8 @@
 <!-- Template for attributes not handled elsewhere -->
 <xsl:template match="@*"><span id="t"><xsl:text> </xsl:text><xsl:value-of select="name(.)"/></span><span id="m">="</span><B><xsl:value-of select="."/></B><span id="m">"</span></xsl:template>
 
-<!-- Template for attributes in the xmlns or xml namespace
+<!-- Template for attributes in the xmlns or xml namespace-->
 <xsl:template match="@xmlns:*|@xmlns|@xml:*"><span id="ns"> <xsl:value-of select="name(.)"/></span><span id="m">="</span><B id="ns"><xsl:value-of select="."/></B><span id="m">"</span></xsl:template>
--->
 
 <!-- Template for text nodes -->
 <xsl:template match="text()">
@@ -102,7 +101,12 @@
 <!-- Template for elements with element children -->
 <xsl:template match="*[*]">
   <div id="e">
-  <div id="c" style="margin-left:1em;text-indent:-2em"><a href="#" onclick="return false" onfocus="h()" id="b">-</a> <span id="m">&lt;</span><span id="t"><xsl:value-of select="name(.)"/></span><xsl:apply-templates select="@*"/><span id="m">&gt;</span></div>
+  <div id="c" style="margin-left:1em;text-indent:-2em"><a href="#" onclick="return false" onfocus="h()" id="b">-</a> <span id="m">&lt;</span><span id="t"><xsl:value-of select="name(.)"/>
+<!--  <xsl:if test="namespace-uri()">
+  	xmlns="<xsl:value-of select="namespace-uri()"/>"
+	</xsl:if>-->
+  
+  </span><xsl:apply-templates select="@*"/><span id="m">&gt;</span></div>
   <div><xsl:apply-templates/>
   <div><span id="b">&#160;</span><span id="m">&lt;/</span><span id="t"><xsl:value-of select="name(.)"/></span><span id="m">&gt;</span></div>
   </div></div>

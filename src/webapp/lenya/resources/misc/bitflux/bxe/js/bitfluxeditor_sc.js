@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_sc.js,v 1.1 2002/09/13 20:26:50 michicms Exp $
+// $Id: bitfluxeditor_sc.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
 
 function BX_sc_popup ()
 {

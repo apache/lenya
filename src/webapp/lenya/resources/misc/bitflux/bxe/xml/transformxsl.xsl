@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: transformxsl.xsl,v 1.1 2002/09/13 20:26:51 michicms Exp $ -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >
+<!-- $Id: transformxsl.xsl,v 1.2 2002/10/24 14:41:18 felixcms Exp $ -->
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+
+xmlns:xhtml="http://www.w3.org/1999/xhtml"
+
+>
 <xsl:output method="xml" encoding="iso-8859-1" />
 
 
@@ -9,17 +13,37 @@
 	<xsl:apply-templates/>
 
 </xsl:template>
-
-<xsl:template match="*">
-    <xsl:copy>
+<xsl:template match="img|A|a|font|br|ul|li|ol|table|tr|td|hr|form|input|textarea|select|option|span|embed|i|b|h1|h2|h3|h4|h5|h6|pre|code|p|sub|sup|br|center">
+    <xsl:element name="xhtml:{name()}">
         <xsl:for-each select="@*">
             <xsl:copy/>
         </xsl:for-each>
             <xsl:apply-templates/>
 
-    </xsl:copy>
+    </xsl:element>
 </xsl:template>
 
+<xsl:template match="*">
+    <xsl:element name="{name()}">
+
+        <xsl:for-each select="@*">
+            <xsl:copy/>
+        </xsl:for-each>
+            <xsl:apply-templates/>
+
+	  </xsl:element>
+</xsl:template>
+
+<xsl:template match="xsl:element|xsl:output|xsl:template|xsl:for-each|xsl:copy">
+    <xsl:copy>
+
+        <xsl:for-each select="@*">
+            <xsl:copy/>
+        </xsl:for-each>
+            <xsl:apply-templates/>
+
+	  </xsl:copy>
+</xsl:template>
 
 <xsl:template match="xsl:apply-templates|xsl:value-of">
 <!-- mozilla under windows does not correctly apply templates in generated xsl-documents
@@ -52,15 +76,17 @@ so we translate this to
 <!-- this lines produce:
 		<name() name="bitfluxspan" onmousedown="BX_focusSpan(this);" class="border">			-->
 
-	<xsl:element name="{name()}">
+	<xsl:copy>
+    	
            <xsl:for-each select="@*">
             	<xsl:copy/>
            </xsl:for-each>
-		<xsl:attribute name="oncontextmenu">BX_RangeCaptureOnContextMenu(event.target);event.preventDefault();</xsl:attribute>
+
     	<xsl:attribute name="name">bitfluxspan</xsl:attribute>
+
 <!--      	<xsl:attribute name="nodename">{name()}</xsl:attribute>        -->
-		<xsl:attribute name="onmousedown">BX_focusSpan(this);</xsl:attribute>
-	   	<xsl:attribute name="style">border-width: thin; border-style: dotted; border-color: #CCCCCC;</xsl:attribute>       
+
+<!--	   	<xsl:attribute name="style">border-width: thin; border-style: dotted; border-color: #CCCCCC;</xsl:attribute>       -->
 <!-- this line produce:
 <xsl:attribute name="id" ><xsl:call-template name="generateID"><xsl:with-param name="selectNode" select="..ID.."></xsl:call-template></xsl:attribute>
 -->
@@ -87,7 +113,8 @@ so we translate this to
 	</xsl:text>
 	
 	<xsl:apply-templates/>
-</xsl:element>
+
+</xsl:copy>
 
 </xsl:template>
 
@@ -129,8 +156,8 @@ so we translate this to
         <xsl:for-each select="@*">
             <xsl:copy/>
         </xsl:for-each>
-        <xsl:attribute name="xmlns:xsl">http://www.w3.org/1999/XSL/Transform</xsl:attribute>
-        <xsl:attribute name="xmlns">http://wwlallow.w3.org/1999/html</xsl:attribute>
+        <xsl:attribute name="xmlns:xhtml">http://www.w3.org/1999/xhtml</xsl:attribute>		
+     <!--   <xsl:attribute name="xmlns">http://wwlallow.w3.org/1999/html</xsl:attribute>-->
         <xsl:apply-templates/>
 
 <!--
@@ -182,4 +209,6 @@ the following lines mean :
 
 </xsl:template>
 
+
 </xsl:stylesheet>
+

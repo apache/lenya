@@ -11,13 +11,13 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor.js,v 1.1 2002/09/13 20:26:49 michicms Exp $
+// $Id: bitfluxeditor.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
 
 //document.writeln('<script type="text/javascript" language="javascript" src="./RangePatch.js"></script>');
 /*********************************
  * Global Vars                   *
  *********************************/
-
+BX_debugging = true;
 /**
 * This variable holds the xslt processor
 *
@@ -62,7 +62,7 @@ var BX_xslViewSource;
 */
 
 
-var BX_transformLocation =  document.getElementById("transformLocation");
+var BX_transformLocation ;
 /**
 * to be documentated
 */
@@ -70,7 +70,6 @@ var BX_transformLocation =  document.getElementById("transformLocation");
 /**
 * count the loaded xmlfiles
 */
-var BX_xmldone = 0;
 var BX_xml_done = 0;
 
 var BX_clipboard;
@@ -82,96 +81,106 @@ var BX_update_buttons = false;
 var BX_opa_node = null;
 var BX_opa_node_prop = null;
 var BX_notEditable = true;
-
+var BX_no_events = false;
 
 try {
-var BX_parser = new DOMParser();
-var BX_ser = new XMLSerializer();
+	var BX_parser = new DOMParser();
+	var BX_ser = new XMLSerializer();
 }
 catch(e) {}
-var BX_URLParams = new Array();
 var BX_elements = new Array();
 var BX_buttonbar;
-var BX_xmltransformfile;
-var BX_xsltransformfile;
-var BX_xmltransformbackfile;
 
 BX_js_files = new Array();
-
+BX_js_files.push("./bxe/js/widgets.js");
 BX_js_files.push("./bxe/js/bitfluxeditor_core.js");
 BX_js_files.push("./bxe/js/bitfluxeditor_load.js");
+BX_js_files.push("./bxe/js/bitfluxeditor_popup.js");
+BX_js_files.push("./bxe/js/xmldoc.js");
+BX_js_files.push("./bxe/js/clipboard.js");
+BX_js_files.push("./bxe/js/copy.js");
+BX_js_files.push("./bxe/js/undo.js");
+BX_js_files.push("./bxe/js/td/http.js");
 
 /****************************************
  * Initialization stuff                 *
  ****************************************/
 
-function BX_load(config_file)
-{
-	try {
-		if (navigator.appName != "Netscape" )
-		{
-	    	BX_config_setLoadMessage("You need Mozilla or Netscape 7 for this Editor. Get it from <a href='http://mozilla.org'>http://mozilla.org</a>");	
-			return false;
-		}
-		if (navigator.productSub >= 20020826)
-		{
-			BX_mozilla_version = 1.1;
-		}
-		else if (navigator.productSub >= 20020523)	{
-			BX_mozilla_version = 1.0;
-		}
-		else {
-	    	BX_config_setLoadMessage("You're Mozilla seems to be not recent enough. You need at least Mozilla 1.0 or Netscape 7. Get it from <a href='http://mozilla.org'>http://mozilla.org</a>");
-			return false;
-		}
-	
-	    BX_config = document.implementation.createDocument("","",null);
-	    BX_config_setLoadMessage("Loading Bitflux Editor files....");
+function BX_load(config_file,fromUrl) {
 
-    	BX_config.onload = BX_config_loaded;  // set the callback when we are done loading
-	    BX_config.load(config_file);
+		text = "Loading Bitflux Editor files....";
+
+ 		BX_innerHTML(document.getElementById("bxe_area"),"<br/><img hspace='5' width='314' height='34' src='./bxe/img/bxe_logo.png'/><br/><span style='font-family: Arial; padding: 5px; background-color: #ffffff'>"+text.replace(/\n/g,"<br/><br/>")+"</span>");
+
+	    var head = document.getElementsByTagName("head")[0];
+		// first load the core js files
+	
+		for (var i=0; i < BX_js_files.length; i++)
+    	{
+    	    var scr = document.createElementNS("http://www.w3.org/1999/xhtml","script");
+
+	        scr.setAttribute("src",BX_js_files[i]);
+        	scr.setAttribute("language","JavaScript");
+	        if (i == BX_js_files.length - 1)
+    	    {
+        	    scr.setAttribute('onload', 'try{BX_load2("'+config_file+'",'+fromUrl+')} catch(e) { alert(e)}');
+       		}			
+    	    head.appendChild(scr);
+	    }
+}
+
+function BX_load2(config_file,fromUrl) {
+//stage 2, after all core js files are loaded...
+
+	BXEui = new BXE_widget();
+
+	try {
+		BXEui.lm = BXEui.newObject("loadMessage");
+	    BXEui.lm.set("Loading Bitflux Editor files....");
+
+		BXE = new BXE_main();	
+		
+		//create loader
+		BXE_loader = new BXE_TransportDriver();
+	
+		if (fromUrl) {
+			config_file = BXE.urlParams[config_file];
+		}
+		BX_config = new BXE_XmlDocument();
+		BX_config.filename = config_file;
+	    BX_config.load(BX_config_loaded);
 	}
 	catch(e)
 	{
-		BX_init_alert(e);
+		BXEui.newObject("initAlert",e);
 	}
-}
 
+}
+	
 function BX_config_loaded()
 {
 	try {
     if (! BX_alert_checkParserError(BX_config))
     {
-        BX_config_setLoadMessage("Config file had errors...");
-
+        BXEui.lm.set("Config file had errors...");
         return false;
     }
 
-    BX_config_createURLParams();
 
     var head = document.getElementsByTagName("head")[0];
-	// first load the core js files
-	
-	for (var i=0; i < BX_js_files.length; i++)
-    {
-        var scr = document.createElement("script");
-        scr.setAttribute("src",BX_js_files[i]);
-        scr.setAttribute("language","JavaScript");
-        head.appendChild(scr);
-    }
 
 	// then load js files from config.xml
     var scripts = BX_config_getContentMultiple("/config/files/scripts/file");
     for (var i=0; i < scripts.length; i++)
     {
-        var scr = document.createElement("script");
+        var scr = document.createElementNS("http://www.w3.org/1999/xhtml","script");
         scr.setAttribute("src",scripts[i]);
         scr.setAttribute("language","JavaScript");
         //		scr.setAttribute('defer', 'true');
         // do the init, after the last script has loaded
         if (i == scripts.length - 1)
         {
-            scr.setAttribute('onload', 'try{BX_init()} catch(e) { BX_init_alert(e)}');
+            scr.setAttribute('onload', 'try{BX_init()} catch(e) { BXEui.newObject("initAlert",e)}');
         }
         head.appendChild(scr);
     }
@@ -180,44 +189,41 @@ function BX_config_loaded()
     var css = BX_config_getContentMultiple("/config/files/css/file");
     for (var i=0; i < css.length; i++)
     {
-        var scr = document.createElement("link");
+		if (document.contentType == "text/xml")	{
+			scr = document.createProcessingInstruction("xml-stylesheet",'href="'+css[i]+'" type="text/css"');
+			document.insertBefore(scr,document.documentElement);
+
+		
+		}
+		else {
+        var scr = document.createElementNS("http://www.w3.org/1999/xhtml","link");
         scr.setAttribute("href",css[i]);
         scr.setAttribute("rel","stylesheet");
         //		scr.setAttribute('defer', 'true');
         // do the init, after the last script has loaded
+		
         head.appendChild(scr);
+		}
     }
 
 	}
 	catch(e)
 	{
-		BX_init_alert(e);
+		BXEui.newObject("initAlert",e);
 	}
 
 }
 
-function BX_config_createURLParams()
-{
-
-    var params = window.location.search.substring(1,window.location.search.length).split("&");
-    var i = 0;
-    for (var param in params)
-    {
-        var p = params[param].split("=");
-        BX_URLParams[p[0]] = p[1];
-    }
-}
-
 function BX_config_getContent(xpath)
 {
-    var result = BX_config.evaluate(xpath, BX_config, null, 0, null);
+    var result = BX_config.doc.evaluate(xpath, BX_config.doc, null, 0, null);
     node = result.iterateNext();
     return BX_config_translateUrl(node);
 }
 
 function BX_config_getContentMultiple(xpath)
 {
-    var result = BX_config.evaluate(xpath, BX_config, null, 0, null);
+    var result = BX_config.doc.evaluate(xpath, BX_config.doc, null, 0, null);
     var node;
     var resultArray = new Array();
     var i = 0;
@@ -230,15 +236,23 @@ function BX_config_getContentMultiple(xpath)
 
 }
 
-function BX_config_setLoadMessage(text)
+function BX_config_getContentMultipleAssoc(xpath,param)
 {
-    document.getElementsByTagName("body")[0].innerHTML = "<span style='font-family: Arial; padding: 5px; background-color: #ffffff'>"+text+"</span>";
+    var result = BX_config.doc.evaluate(xpath, BX_config.doc, null, 0, null);
+    var node;
+    var resultArray = new Array();
+    while (node = result.iterateNext())
+    {
+	        resultArray[node.getAttribute(param)] = BX_config_translateUrl(node);
+    }
+    return resultArray;
+
 }
 
 function BX_alert_checkParserError(docu)
 {
 
-    if(docu.documentElement.nodeName=="parsererror")
+    if(docu.documentElement && docu.documentElement.nodeName=="parsererror")
     {
         var alerttext = "Parse Error: \n \n";
         alerttext += docu.documentElement.firstChild.data +"\n\n";
@@ -267,7 +281,7 @@ function BX_config_translateUrl(node)
 
     if (node.getAttribute("isParam") == "true")
     {
-        url = BX_URLParams[node.firstChild.data];
+        url = BXE.urlParams[node.firstChild.data];
     }
     else
     {
@@ -280,28 +294,124 @@ function BX_config_translateUrl(node)
     return url;
 }
 
-function BX_init_alert(e)
-{
-	    var mes = "ERROR in initialising Bitflux Editor:\n"+e.message +"\n";
-        try
-        {
-            mes += "In File: " + e.filename +"\n";
-        }
-        catch (e)
-        {
-            mes += "In File: " + e.fileName +"\n";
-        }
-        try
-        {
-            mes += "Linenumber: " + e.lineNumber + "\n";
-        }
-        catch(e) {}
-        
-        mes += "Type: " + e.name + "\n";
-        mes += "Stack:" + e.stack + "\n";
-		BX_config_setLoadMessage(mes.replace(/\n/g,"<br /><br />"));
 
-		alert(mes);
+
+function BX_debug(object)
+{
+    var win = window.open("","debug");
+	bla = "";
+    for (b in object)
+    {
+
+        bla += b;
+        try {
+
+            bla +=  ": "+object.eval(b) ;
+        }
+        catch(e)
+        {
+            bla += ": NOT EVALED";
+        };
+        bla += "\n";
+    }
+    win.document.innerHTML = "";
+
+    win.document.writeln("<pre>");
+    win.document.writeln(bla);
+    win.document.writeln("<hr>");
 }
 
+
+function BX_innerHTML (element,html,append)
+{
+	if (html) {
+		html = '<root xmlns="http://www.w3.org/1999/xhtml">'+html+"</root>";
+		docfrag = BX_parser.parseFromString(html,"text/xml");
+	}
+	
+	if (!append)
+	{
+		var len = element.childNodes.length;
+
+		for (var i = 0; i < len ; i++)
+		{
+			element.removeChild(element.firstChild);
+		}
+	}
+	if (html) {	
+		var len = docfrag.documentElement.childNodes.length;
+		for (var i = 0; i < len; i++)
+		{
+			element.appendChild(docfrag.documentElement.firstChild);
+		}
+	}
+
+}
+
+function BXE_main() {
+	
+	this.browser = new BXE_browser();
+	//create url params
+	this.urlParams = Array;
+    var params = window.location.search.substring(1,window.location.search.length).split("&");
+    var i = 0;
+    for (var param in params)
+    {
+        var p = params[param].split("=");
+        this.urlParams[p[0]] = p[1];
+    }
+}
+
+
+function BXE_browser() {
+
+	this.isMozilla = false;
+	this.isMSIE = false;
+	this.isLinux = false;
+	this.isMac = false;
+	this.isWindows = false;
+
+	this.mozillaVersion = 0;
+	this.mozillaRvVersion = 0;
+	
+	try {
+		if (navigator.userAgent.indexOf("Opera") >= 0) {
+
+			alert ("\nBitflux Editor does not work with Opera. You need Mozilla or Netscape 7 for this Editor.");
+			return false;
+		}
+		
+		if (navigator.appName != "Netscape" ) {
+	    	BXEui.lm.set("\nYou need Mozilla or Netscape 7 for this Editor. Get it from <a href='http://mozilla.org'>http://mozilla.org</a>");	
+			return false;
+		}
+		try {
+			this.mozillaRvVersion = navigator.userAgent.match(/rv:([[0-9\.]*)/)[1];
+		}
+		catch (e) {
+			this.mozillaRvVersion = 0;
+		}
+		if (navigator.productSub >= 20020910 && this.mozillaRvVersion > 1.1) { // Mozilla 1.2a 
+			this.mozillaVersion = 1.2;
+			alert("\nMozilla 1.2a together with the new Type ahead feature, does not work correctly with the Editor.\n The issue is known (Bugzilla #167786) and should be solved in the next days.\n Use Mozilla 1.0 or 1.1 for the time being or turn off Type Ahead Find with:\nuser_pref (\"accessibility.typeaheadfind\", false);\n Nevertheless, you will be sent to the editor in an instant");
+		}
+
+		if (navigator.productSub >= 20020826 && this.mozillaRvVersion  >= 1.0) {
+			this.mozillaVersion  = 1.1;
+		}
+		else if (navigator.productSub >= 20020523)	{
+			this.mozillaVersion  = 1.0;
+		}
+		else {
+	    	BXEui.lm.set("\nYou're Mozilla seems to be not recent enough. You need at least Mozilla 1.0 or Netscape 7. Get it from <a href='http://mozilla.org'>http://mozilla.org</a>");
+			return false;
+		}
+	}
+	catch(e) {
+		BXEui.newObject("initAlert",e);
+	}
+	
+}
+
+// for whatever reason, jsdoc needs this line
 

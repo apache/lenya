@@ -1,31 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Bitflux Editor</title>
-<script type="text/javascript" language="JavaScript" src="./bxe/js/bitfluxeditor.js">
+<script type="text/javascript" language="JavaScript" src="bxe/js/bitfluxeditor.js">
+//<![CDATA[
 <!--
 // +----------------------------------------------------------------------+
 // | Bitflux Editor                                                       |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2001,2002 bitflux GmbH                                 |
+// | Copyright (c) 2001,2002 Bitflux GmbH                                 |
 // +----------------------------------------------------------------------+
-// | This program is subject to the bitflux-editor-license.               |
-// | You are not allowed to redistribute or use it without our approval.  |
-// | Fore more information, contact us at editor@bitflux.ch               |
+// | This software is published under the terms of the Apache Software    |
+// | License a copy of which has been included with this distribution in  |
+// | the LICENSE file and is available through the web at                 |
+// | http://bitflux.ch/editor/license.html                                |
 // +----------------------------------------------------------------------+
-// | Author: Christian Stocker chregu@bitflux.ch                        |
+// | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: index.html,v 1.1 2002/09/13 20:26:49 michicms Exp $
+// $Id: index.html,v 1.2 2002/10/24 14:41:16 felixcms Exp $
 // 
 -->
+//]]>
 </script>
 </head>
-<body onload="BX_load('./inc/config.xml');">
-<!--
-<body onload="BX_load('./inc/config.xml');" background="/wyona-cms/unipublic/img_unipublic/bg.gif">
--->
+<body id="bxe_area" onload="BX_load('./inc/config.xml');" >
 <!-- everything here will be replaced -->
+<noscript>
+<span style='font-family: Arial; padding: 5px; background-color: #ffffff'>
+You need JavaScript enabled. Otherwise nothing at all works here
+:)</span></noscript>
 </body>
 </html>
 

@@ -1,130 +1,3 @@
-wbody {
-	background-color : #FFFFFF;
-	margin-top : 0px;
-	margin-left : 0px;
-	margin-right : 6px;
-  	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size : 12px;    
-	margin-bottom: 100px;
-
-}
-h2 {
-	font-size : 16px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: Black;
-}
-
-.greenH2 {
-	font-size : 16px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: bold;
-	color: #00FF00;
-}
-
-.redH2 {
-	font-size : 16px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: bold;
-	color: #FF0000;
-}
-
-h3 {
-	font-size : 14px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: White;
-}
-.blackH3 {
-	font-size : 14px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: Black;
-}
-
-.redH3 {
-	font-size : 14px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: #FF0000;
-}
-
-.redboldH3 {
-	font-size : 14px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: bold;
-	color: #FF0000;
-}
-
-.darkRedBoldH3 {
-	font-size : 14px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: bold;
-	color: #770000;
-}
-
-h4 {
-	font-size : 12px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: Black;
-}
-
-.redH4{
-	font-size : 12px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: Red;
-}
-
-h5 {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: #49669e;
-}
-
-.blackH5 {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: #000000;
-}
-
-
-.whiteH5 {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: #ffffff;
-}
-a:link.whiteH5 {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: #ffffff;
-}
-a:visited.whiteH5 {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: #ffffff;
-}
 .tagBelow, a:link:not([class]) {
 	font-size : 11px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -133,59 +6,7 @@ a:visited.whiteH5 {
 	color: black;
 }
 
-a:visited:not([class]) {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: #003366;
-}
-a:active:not([class]) {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: #CC66FF;
-}
-
-input {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-}
-option {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-}
-textarea {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-}
-
-
-.mediumTitle {
-	font-size : 12px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: black;
-	text-align : left;
-	vertical-align : top;
-}
-
-.usualTd {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	font-weight: normal;
-	color: white;
-	text-align : left;
-	vertical-align : top;
-}
-
-.usualBlackTd {
+.usual {
 	font-size : 11px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-style: normal;
@@ -194,158 +15,40 @@ textarea {
 	text-align : left;
 }
 
-
-input.whiteH5      {
-             font-family:      Verdana, Arial, Helvetica, sans-serif;
-             font-size:        11px;
-//             font-weight:      bolder;
-             color:            #000000;
-             width:            500px;
-             //background-color: #FFE066;
-//             background-color: #ffffff;
-             }
-
-textarea.whiteH5      {
-             font-family:      Verdana, Arial, Helvetica, sans-serif;
-             font-size:        11px;
-
-             color:            #000000;
-             width:            500px;
-
-             background-color: #fFFFFF;
-             }
-select.whiteH5      {
-             font-family:      Verdana, Arial, Helvetica, sans-serif;
-             font-size:        11px;
-  //           font-weight:      bolder;
-  //           letter-spacing:   -1px;
-             color:            #000000;
-             width:            470px;
-  //           border-color:     #666666;
-             //background-color: #FFE066;
-             background-color: #ffffff;
-             }
-
-select 	{
-             font-family:      Verdana, Arial, Helvetica, sans-serif;
-             font-size:        11px;
-      //       font-weight:      bolder;
-    //         letter-spacing:   -1px;
-             width:            500px;
-    //         border-color:     #666666;
-             //background-color: #FFE066;
-             background-color: #ffffff;
-             }
-
-select.length280 	{
-             	font-size : 11px;
-				font-family: Verdana, Arial, Helvetica, sans-serif;
-				font-style: normal;
-				font-weight: normal;
-             	width: 280px;
-             background-color: #ffffff;
-             }
-			 
-select.wysiwyg, select.wysiwygShaded 	{
-             	font-size : 10px;
-				font-family: Verdana, Arial, Helvetica, sans-serif;
-				font-style: normal;
-				font-weight: bold;
-             	width: 150px;
-				height: 20px;
-                color: #000000;
-             background-color: #ffffff;
-             }
-
-select.wysiwygShaded {               	color: #b4b4b4;}
-
-
-
-select.chooser 	{
-             	font-size : 11px;
-				font-family: Verdana, Arial, Helvetica, sans-serif;
-				font-style: normal;
-				font-weight: normal;
-             	width: 350px;
-    //         border-color:     #666666;
-             //background-color: #FFE066;
-             background-color: #ffffff;
-             }
-
-
-input.whiteH5checkBox      {
-             font-family:      Verdana, Arial, Helvetica, sans-serif;
-             font-size:        11px;
-             letter-spacing:   -1px;
-
-
-
-             }
-/*das folgende ist fürs neue layout */
-
-.titlebalken, .titlelinks {
-	font-size : 12px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	color: #FFFFFF;
-    background-color: #00cc00;
-}
-a.titlebalken {
-	
-	color: #FFFFFF;
-	font-size : 11px;
-    
-}
-
-.titlelinks {
-	
-	color: #000000;
-	font-size : 11px;
-    
-}
-
-.titlebalkenGross {
-	font-size : 18px;
-	font-weight: bold;
-}
-
-.navigationsbalken {
-	font-size : 11px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-style: normal;
-	color: black;
-    background-color: #daf7d9;
-}
-
-select.navigationsbalken 	{
-    width:            200px;
-    background-color: #ffffff;
-}
-
-.chooser {
-    background-color: #ffffff;
-  	font-size : 12px;
-}
 
 .popup {
     position:absolute;
     font-family: Arial, Helvetica, sans-serif;
+	margin-right:1px;
+	margin-bottom:1px;
+	border:1px solid  #555555;
+	background-color: #cccccc;
     padding: 0px 0px 3px 0px;
-    border-color: #FFFFFF;
-    border-style: outset;
-    border-width: 2px;
-    z-index: 200;
+	
+	/* opacity is nice, but eats a lot of cpu-resources
+	-moz-opacity: 1;
+	*/
 
-    visibility: hidden;
-    background-color: #CCCCCC;
-    layer-background-color: #CCCCCC;
 }
 
+.popupTitle {
+
+	background-color: #999999; 
+	color: #000000;
+    padding: 1px 0px 1px 0px;
+	font-family: Arial, Helvetica, sans-serif; 
+    font-size: 12px; 
+
+
+}
 .popupline {  
 	font-family: Arial, Helvetica, sans-serif; 
     font-size: 12px; 
     text-decoration: none; 
     color: #000000;
+	display: block;
+	padding-right: 5px;
+	padding-top: 1px;
 }
 
 a:hover.popupline {
@@ -363,17 +66,49 @@ div:hover.popupline {
 	color: #009900;
     text-decoration: blink;
     font-weight: normal;
-    
-    }
+}
 
-body
-{	
-	margin-bottom: 100px;
-    }
+#transformlocation
+{
+	position: absolute;
+	top:65px; 
+	left: 0px; 
+	z-index: 1;
+}
 
-[name="bitfluxspan"] { min-height: 20px; min-width: 20px;}
+#BX_buttonbar {
+	height: 65px; 
+	position: fixed; 
+	background-color: #b4b4b4; 
+	z-index: 2; 
+}
+
+#BX_infobar {
+	visibility: hidden; 
+	top: 400px; 
+	height: 45px; 
+	width: 500px; 
+	position: fixed; 
+	background-color: #b4b4b4; 
+	z-index: 5; 
+}
+
+[name="bitfluxspan"] { 
+min-height: 20px; min-width: 20px; 
+	padding-right: 10px; 
+	border-width: thin; 
+	border-style: dotted; 
+	border-color: #CCCCCC; 
+}
+
 span[name="bitfluxspan"] { padding-right: 10px; }
-[contentEditable="true"] { padding-right: 10px; border-width: thin; border-style: dotted; border-color: #CCCCCC;}
+
+
+[bxe_hasfocus="true"] { 
+	border-color: #000000; 
+	border-width: thin; 
+	border-style: dotted;
+}
 
 .clipboardtext {
     COLOR: #000000;
@@ -387,4 +122,28 @@ span[name="bitfluxspan"] { padding-right: 10px; }
   	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size : 10px;    
 	margin-top: 5px;
+}
+
+a:visited:not([class]) {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #003366;
+}
+a:active:not([class]) {
+	font-size : 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color: #CC66FF;
+}
+
+*[bxe_mark="true"]
+{
+	background: #aaaaaa;
+}
+
+body {
+margin: 0px;
 }

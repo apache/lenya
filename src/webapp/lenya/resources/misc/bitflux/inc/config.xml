@@ -8,6 +8,7 @@
 		<option name="BX_xsl_params">0</option>
 		<option name="BX_para_element">'p'</option>
 		<option name="BX_mixedCaseAttributes">1</option>		
+		<option name="BX_backurl" isParam="true">url-back</option>				
 
 	</options>
 	<files>
@@ -47,11 +48,18 @@
 			<file>./bxe/js/bitfluxeditor_table.js</file>
 			<file>./bxe/js/bitfluxeditor_sc.js</file>
 			<file>./bxe/js/bitfluxcms.js</file>
-			<file>./bxe/js/http.js</file>
-			<file>./bxe/js/wyona.js</file>
+			<file>./bxe/js/td/http.js</file>
+			<file>./bxe/js/td/wyona.js</file>
 
 		</scripts>
 		<transform>
+			<includes>
+				<file name="BX_xmltransformfile">/wyona-cms/unipublic/bitflux/stylesheets/bitflux-include.xsl</file>
+				<file name="BX_xmltransformbackfile">/wyona-cms/unipublic/bitflux/stylesheets/bitflux-back-include.xsl</file>				
+			</includes>
+			<parameters>
+				<param name="BX_xmltransformfile" xsltParamName="url-back" isParam="true">url-back</param>				
+			</parameters>
 			<!-- the following shouldn't have to be changed -->
 			<file name="BX_xmltransformfile">./bxe/xml/transformxml.xsl</file>
 			<file name="BX_xsltransformfile">./bxe/xml/transformxsl.xsl</file>
@@ -125,7 +133,7 @@
 
 				 <button type="graph" width="4" name="trennelement_unten"/>
 
-				 <button type="register" name="preview" width="65" height="30" title="Save + Preview" options="optNonclickable" callback="BX_preview()" />
+				 <button type="register" name="save_exit" width="77" height="30" title="Save + Exit" options="optCallback" callback="BX_submit(1)" />
 				 <button type="register" name="save" width="46" height="30" title="Save" 
 options="optCallback" callback="BX_submit()" />
 <!--				 <button type="register" name="save" width="46" height="30" title="Save" 

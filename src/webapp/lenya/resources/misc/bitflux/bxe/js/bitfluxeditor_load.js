@@ -11,60 +11,95 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_load.js,v 1.1 2002/09/13 20:26:50 michicms Exp $
+// $Id: bitfluxeditor_load.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
 
+/**
+ * @file
+ * This file implements the TransportDriver Factory Class
+ *
+ */
 
 //the following to functions are for doing a transport independent interface
 // now it's only http, but xmlrpc and more should be possible.
 
-function BX_load_document(filename,method)
+/**
+ * TransportDriver Factory Methode
+ * @ctor
+ */
+function BXE_TransportDriver()
 {
-		if (method)
-		{
-			try {
-				return eval("BX_"+method+"_load('"+filename+"');");
-			}
-			catch(e) {
-				BX_init_alert(e);
-			}
-		}
-		else
-		{
-			return BX_http_load(filename);
-		}
-}
+	this.methods = new Array;
+	this.xmldone = 0;	
 
-function BX_save_document(filename,method)
-{
-		if (method)
-		{
-			try {
-				return eval("BX_"+method+"_save('"+filename+"');");
-			}
-			catch(e) {
-				BX_init_alert(e);
-			}
+	function load(filename,method,callback) {
+		if (!method)	{
+			method = "http";
 		}
-		else
-		{
-			return BX_http_save(filename);
+		if (! this.methods[method]) {
+			this.methods[method] = eval( "new BXE_TransportDriver_" + method + "(this)");
 		}
-}
-      
-       
-function BX_xmlloaded()
-{
-    BX_xmldone++;
-	//we need all 5 xml documents (xmltransformback, xmltransform, xsltransform, xml and xsl) 
-	// then we can start the transformation
-    if (BX_xmldone > 4)
-    {
-		BX_transformDoc();
+		
+		try {
+				return this.methods[method].load(filename,callback);
+			}
+		catch(e) {
+				BXEui.newObject("initAlert",e);
+		}
+		
 	}
+	BXE_TransportDriver.prototype.load = load;
+	
+	function save(filename,method,options)
+    {
+		if (!method) {
+			method = "http";
+		}
+		if (! this.methods[method]) {
+			this.methods[method] = eval( "new BXE_TransportDriver_" + method + "(this)");
+		}
+		
+		try {
+			return this.methods[method].save(filename,options);
+		}
+		catch(e) {
+			BXEui.newObject("initAlert",e);
+		}
+    }
+	BXE_TransportDriver.prototype.save = save;
+	
+	function xmlloaded(e)
+	{
+		if (!e.currentTarget.documentElement ){ 
+			alert ("The document "+e.currentTarget.baseURI + " seems not to be a valid XML document. Most probably it couldn't be found or you didn't set the mime-type for it to text/xml in your webserver configuration");
+			return false;
+		}
+		e.currentTarget.loader.xmldone++;
+
+	
+	//we need all 5 xml documents (xmltransformback, xmltransform, xsltransform, xml. xsl and xsd) 
+	// then we can start the transformation
+	    if (e.currentTarget.loader.xmldone > 5)
+    	{
+			BX_transformDoc();
+			window.defaultStatus = null;
+		}
+		else {
+			window.defaultStatus = e.currentTarget.loader.xmldone + " of 6 documents loaded";
+		}
+	}
+	BXE_TransportDriver.prototype.xmlloaded = xmlloaded;
+}      
+       
+function BX_submit(options) {
+
+	BXE_loader.save(BX_posturl.filename,BX_posturl.method,options);
 }
 
 
-function BX_submit()
-{
-	BX_save_document(BX_posturl,BX_posturl_method);
-}
+function BX_xmlTRBack_loaded (e) {
+	/* include includes*/
+	BX_xmlTRBack.includeXsltIncludes();
+	BXE_loader.xmlloaded(e);
+}			
+
+// for whatever reason, jsdoc needs this line

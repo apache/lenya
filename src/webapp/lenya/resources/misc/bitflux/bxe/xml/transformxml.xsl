@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: transformxml.xsl,v 1.1 2002/09/13 20:26:51 michicms Exp $ -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<!-- $Id: transformxml.xsl,v 1.2 2002/10/24 14:41:18 felixcms Exp $ -->
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:xhtml="http://www.w3.org/1999/xhtml">
 <xsl:output method="xml" encoding="iso-8859-1"/>
 <!--<xsl:include href="../../xml/transformxml.xsl"/>-->
 <xsl:template match="/">
@@ -8,37 +9,18 @@
 
 </xsl:template>
 
-<!--<xsl:template match="*/text()">
-        <xsl:value-of select="normalize-space(."/>
-</xsl:template>-->
-
 <xsl:template match="*">
-<xsl:element name="{translate(name(),'ABCDEFGHIJKLMNOPQRSTUVXYZ','abcdefghijklmnopqrstuvwxyz')}">
+<!-- <xsl:element name="{translate(name(),'ABCDEFGHIJKLMNOPQRSTUVXYZ','abcdefghijklmnopqrstuvwxyz')}">-->
+<xsl:copy>
 <!--<xsl:element name="{name()}">-->
         <xsl:for-each select="@*">
             <xsl:copy/>
         </xsl:for-each>
         <xsl:call-template name="generateID"/>
         <xsl:apply-templates />
-    </xsl:element>
-</xsl:template>
-
-<xsl:template match="media-reference">
-        <!-- this is usz/bitflux cms related... maybe we should include it from another dir (wysiwyg_config)-->
-
-    <xsl:copy>
-        <xsl:for-each select="@*">
-            <xsl:copy/>
-        </xsl:for-each>
-
-        <xsl:call-template name="generateID"/>
-        <img src="{@source}">
-        	<xsl:attribute name="temporaryelement" >yes</xsl:attribute>            
-            </img>        
-        <xsl:apply-templates />
     </xsl:copy>
-
 </xsl:template>
+
 
 <xsl:template name="generateID">
 	<xsl:choose>
@@ -46,11 +28,12 @@
         </xsl:when>
 		<xsl:otherwise>
         	<xsl:attribute name="id" ><xsl:value-of select="generate-id()"/></xsl:attribute>
-        	<xsl:attribute name="internalid" >yes</xsl:attribute>            
+        	<xsl:attribute name="bxe_internalid" >yes</xsl:attribute>            
         </xsl:otherwise>
 </xsl:choose>
-<xsl:attribute name="bx_originalname"><xsl:value-of select="name()"/></xsl:attribute>
-
+<!--
+<xsl:attribute name="bxe_originalname"><xsl:value-of select="name()"/></xsl:attribute>
+-->
 </xsl:template>        
 
 <!-- listitem crashes mozilla, if we delete such a node... replace it bxlistitem 

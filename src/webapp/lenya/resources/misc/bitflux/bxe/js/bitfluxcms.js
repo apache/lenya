@@ -11,14 +11,17 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxcms.js,v 1.1 2002/09/13 20:26:49 michicms Exp $
+// $Id: bitfluxcms.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
 var BX_id_counter = 0;
 var BX_wysiwyg_loaded = 0;
 
 function alertXML()
 {
-	BX_xml_source= BX_getResultXML();
-	var BX_source_window = window.open(BX_root_dir+"showsource/index.html","_blank","");
+
+//alert(BX_ser.serializeToString(BX_xml));
+	BX_xml.doc = BX_getResultXML();
+	BX_xml.showXml();
+
 }
 
 
@@ -69,8 +72,3 @@ function BX_popup_titel()
 
 }
 
-function BX_image_popup ()
-{
-
-    window.open("./"+BX_root_dir+"/insertpicture/html/insertimage.php?ID="+BX_DocumentID,"sc",'toolbar=no,width=550,height=550,scrollbars=no,resizable=yes','articleinfo_keywordset');
-}
