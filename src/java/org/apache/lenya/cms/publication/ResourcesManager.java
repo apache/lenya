@@ -15,12 +15,14 @@
  *
  */
 
-/* $Id: ResourcesManager.java,v 1.10 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id: ResourcesManager.java,v 1.11 2004/08/07 18:46:37 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.io.FileFilter;
+
+import org.apache.lenya.util.FileUtil;
 
 /**
  * Manager for resources of a CMS document.
@@ -30,6 +32,7 @@ public class ResourcesManager {
     private Document document;
 
     public static final String RESOURCES_PREFIX = "resources";
+
     public static final String RESOURCES_META_SUFFIX = ".meta";
 
     /**
@@ -57,8 +60,8 @@ public class ResourcesManager {
      */
     public File getPath() {
         File publicationPath = document.getPublication().getDirectory();
-        File resourcesPath =
-            new File(publicationPath, getPathFromPublication().replace('/', File.separatorChar));
+        File resourcesPath = new File(publicationPath, getPathFromPublication().replace('/',
+                File.separatorChar));
         return resourcesPath;
     }
 
@@ -76,7 +79,7 @@ public class ResourcesManager {
                 return file.isFile() && !file.getName().endsWith(RESOURCES_META_SUFFIX);
             }
         };
-        
+
         return getFiles(filter);
     }
 
@@ -90,7 +93,7 @@ public class ResourcesManager {
         if (getPath().isDirectory()) {
             files = getPath().listFiles(filter);
         }
-        
+
         return files;
     }
 
@@ -108,24 +111,25 @@ public class ResourcesManager {
         };
         return getFiles(filter);
     }
-    
+
     /**
      * Deletes all resources.
      */
     public void deleteResources() {
-        
+
+        File stopDirectory = new File(document.getPublication().getDirectory(), RESOURCES_PREFIX);
+
         File[] resources = getResources();
-        File[] metas = getMetaFiles();
         for (int i = 0; i < resources.length; i++) {
             resources[i].delete();
+            FileUtil.deleteParentDirs(resources[i], stopDirectory);
         }
+
+        File[] metas = getMetaFiles();
         for (int i = 0; i < metas.length; i++) {
             metas[i].delete();
-        }
-        File directory = getPath();
-        if (directory.isDirectory() && directory.listFiles().length == 0) {
-            directory.delete();
+            FileUtil.deleteParentDirs(metas[i], stopDirectory);
         }
     }
-    
+
 }
