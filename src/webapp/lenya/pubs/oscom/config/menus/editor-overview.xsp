@@ -52,7 +52,7 @@
       </separator>
       <block>
         <item href="../../search/lucene?publication-id=oscom">Search&#160;within&#160;this&#160;Publication</item>
-        <item href="../../search-oscom/lucene?publication-id=oscom">Search&#160;within&#160;this&#160;Publication&#160;2</item>
+        <item href="../../osearch-live/lucene?publication-id=oscom">Search&#160;within&#160;this&#160;Publication&#160;2</item>
         <item>Index&#160;this&#160;Publication</item>
       </block>
     </menu>
