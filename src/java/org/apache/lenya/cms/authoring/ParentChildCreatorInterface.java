@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorInterface.java,v 1.2 2003/02/27 15:59:35 egli Exp $
+ * $Id: ParentChildCreatorInterface.java,v 1.3 2003/03/03 18:49:30 egli Exp $
 
  * The Apache Software License
  *
@@ -104,13 +104,13 @@ public interface ParentChildCreatorInterface {
     String generateTreeId(String childId, short childType) throws Exception;
 
     /**
-     * Describe <code>create</code> method here.
+     * Create a new document.
      *
-     * @param samplesDir a <code>File</code> value
-     * @param parentDir a <code>File</code> value
-     * @param childId a <code>String</code> value
-     * @param childType a <code>short</code> value
-     * @param childName a <code>String</code> value
+     * @param samplesDir the directory where the template file is located.
+     * @param parentDir in which directory the document is to be created.
+     * @param childId the document id of the new document
+     * @param childType the type of the new document.
+     * @param childName the name of the new document.
      * @exception Exception if an error occurs
      */
     void create(File samplesDir, File parentDir,
