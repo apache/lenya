@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: acknowledgements.xml,v 1.1 2004/07/30 22:50:28 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -29,16 +29,14 @@
 <section>
 <title>Active Committers</title>
 <ul>
-<li><strong>Michael Wechner</strong> (michi at apache.org)</li>
-<li><strong>Andreas Hartmann</strong> (andreas at apache.org)</li>
-<li><strong>Christian Egli</strong> (egli at apache.org)</li>
 <li><strong>Edith Chevrier</strong> (edith at apache.org)</li>
-<li><strong>Giacomo Pati</strong> (giacomo at apache.org)</li>
-<li><strong>Gregor J. Rothfuss</strong> (gregor at apache.org)</li>
-<li><strong>J&#252;rgen Bigalke</strong></li>
-<li><strong>Rolf Kulemann</strong> (roku at apache.org)</li>
-<li><strong>Thorsten Scherler</strong> (thorsten at apache.org)</li>
 <li><strong>Dale Christ</strong> (bigdog at apache.org)</li>
+<li><strong>Christian Egli</strong> (egli at apache.org)</li>
+<li><strong>Andreas Hartmann</strong> (andreas at apache.org)</li>
+<li><strong>Rolf Kulemann</strong> (roku at apache.org)</li>
+<li><strong>Gregor J. Rothfuss</strong> (gregor at apache.org)</li>
+<li><strong>Thorsten Scherler</strong> (thorsten at apache.org)</li>
+<li><strong>Michael Wechner</strong> (michi at apache.org)</li>
 </ul>
 </section>
 
@@ -46,8 +44,10 @@
 <section>
 <title>Inactive Committers</title>
 <ul>
+<li><strong>J&#252;rgen Bigalke</strong></li>
 <li><strong>Memo Birgi</strong></li>
 <li><strong>Rene Niedermowe</strong></li>
+<li><strong>Giacomo Pati</strong> (giacomo at apache.org)</li>
 <li><strong>Marc Liyanage</strong></li>
 <li><strong>Alexander McLintock</strong></li>
 </ul>
