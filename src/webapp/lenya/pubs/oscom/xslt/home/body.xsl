@@ -26,16 +26,13 @@
 
 
 <xsl:template name="html-title">
-OSCOM - Open Source Content Management
+Home - OSCOM - Open Source Content Management
 </xsl:template>
 
 <xsl:template name="admin-url">
-Apache Lenya
-<!--
 <xsl:param name="prefix"/>
-<a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/matrix/index.html</xsl:attribute>Lenya
+<a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/index.html</xsl:attribute>Apache Lenya
 </a>
--->
 </xsl:template>
 
 

@@ -421,7 +421,7 @@ OSCOM - Open Source Content Management
 
 <xsl:template name="admin-url">
 <xsl:param name="prefix"/>
-<a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/matrix/index.html</xsl:attribute>Lenya</a>
+<a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/matrix/index.html</xsl:attribute>Apache Lenya</a>
 </xsl:template>
 -->
 

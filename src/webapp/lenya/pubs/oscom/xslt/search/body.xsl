@@ -10,7 +10,7 @@ Search
 
 <xsl:template name="admin-url">
 <xsl:param name="prefix"/>
-<span class="breadcrumb">Lenya</span>
+<span class="breadcrumb">Apache Lenya</span>
 </xsl:template>
 
 <xsl:template name="body">
