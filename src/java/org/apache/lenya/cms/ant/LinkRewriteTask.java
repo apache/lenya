@@ -45,6 +45,8 @@ import org.xml.sax.SAXException;
  * after a document has changed its document-id. It finds all relevant documents
  * which have a link to the document that changed its document-id and changes this
  * link with the help of an xslt.
+ * 
+ * @deprecated Use o.a.l.cms.site.usecases.LinkRewriter instead (see bug #29861).
  */
 public class LinkRewriteTask extends PublicationTask {
 
