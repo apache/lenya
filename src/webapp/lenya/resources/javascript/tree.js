@@ -101,26 +101,20 @@ function initializeFolder(level, lastNode, leftSide)
   } 
 } 
  
-function setLanguageTabs(url) 
-{
-   // rewrite the links of the language tabs when a node is clicked
-   area = url.substring(url.indexOf('lenya.area=')+11, url.length);
-   urlhead = url.substring(0, url.indexOf(area)); // strip usecase   
-   urltail = url.substring(url.indexOf(area)+area.length, url.indexOf('_')); // strip usecase
-   url = urlhead +'info'+ urltail;
-   getElById('en').href = url+'_en.html?lenya.language=en&lenya.area='+area;
-   getElById('de').href = url+'_de.html?lenya.language=de&lenya.area='+area;
-   getElById('de').href = url+'_de.html?lenya.language=de&lenya.area='+area;
-}
-
 function setAreaTabs(url) 
 {
    // rewrite the links of the language tabs when a node is clicked
+   var authoringTab = getElById('authoring-tab');
+   var liveTab = getElById('live-tab');
+
+   // make sure the area tabs are there (they are not in the link popup, for instance)
+   if (authoringTab != null && liveTab != null) {
    area = url.substring(url.indexOf('lenya.area=')+11, url.length);
    urlhead = url.substring(0, url.indexOf(area)); // strip usecase   
    urltail = url.substring(url.indexOf(area)+area.length, url.indexOf('?')); // strip usecase
-   getElById('authoring-tab').href = urlhead +'authoring'+ urltail;
-   getElById('live-tab').href = urlhead +'live'+ urltail;
+	   authoringTab.href = urlhead +'authoring'+ urltail;
+	   liveTab.href = urlhead +'live'+ urltail;
+	}
 }
 
 
@@ -616,7 +610,6 @@ function clickOnFolder(folderId)
 
     if (isLinked(clicked.hreference)) {
         highlightObjLink(clicked);
-        setLanguageTabs(clicked.hreference);
         setAreaTabs(clicked.hreference);
     }
 } 
@@ -654,7 +647,6 @@ function clickOnLink(clickedId, target, windowName) {
     highlightObjLink(findObj(clickedId));
     if (isLinked(target)) {
         window.open(target,windowName);
-        setLanguageTabs(target);
         setAreaTabs(target);
     }
 }
