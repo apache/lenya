@@ -55,7 +55,7 @@
     </tr>
   </table>
   <font face="verdana" size="-2">
-  copyright &#169; 2002 oscom.org
+  copyright &#169; 2002 oscom.org&#160;&#160;&#160;&#160;&#160;&#160;Please contact <a href="mailto:abuse@oscom.org">abuse@oscom.org</a> to address spam or abuse complaints
   </font>
 </body>
 <span status="200"/>
