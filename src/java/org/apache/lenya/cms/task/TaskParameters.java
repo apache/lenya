@@ -1,5 +1,5 @@
 /*
-$Id: Task.java,v 1.16 2003/08/25 15:40:55 andreas Exp $
+$Id: TaskParameters.java,v 1.1 2003/08/25 15:40:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,63 +55,81 @@ $Id: Task.java,v 1.16 2003/08/25 15:40:55 andreas Exp $
 */
 package org.apache.lenya.cms.task;
 
-import org.apache.avalon.framework.parameters.Parameterizable;
+import java.util.Map;
+
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.log4j.Category;
 
 /**
- * A Task is a command that can be executed. <br/
- * > When a Task is executed from a TaskAction or initialized from a TaskJob, the default
- * parameters are provided. <strong>This is not a contract!</strong>
+ * @author andreas
  *
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public interface Task extends Parameterizable {
-    
-    String NAMESPACE = "http://apache.org/cocoon/lenya/task/1.0";
-    String DEFAULT_PREFIX = "task";
+public class TaskParameters extends ParameterWrapper {
+    private static Category log = Category.getInstance(TaskParameters.class);
+
+    public static final String[] REQUIRED_KEYS =
+        {
+            Task.PARAMETER_SERVLET_CONTEXT,
+            Task.PARAMETER_SERVER_URI,
+            Task.PARAMETER_SERVER_PORT,
+            Task.PARAMETER_CONTEXT_PREFIX,
+            Task.PARAMETER_PUBLICATION_ID };
 
     /**
-     * The path of the servlet
-     * context:<br/><code>/home/user_id/build/jakarta-tomcat/webapps/lenyacms</code>
+     * Ctor.
+     * @param prefixedParameters The prefixed parameters .
      */
-    String PARAMETER_SERVLET_CONTEXT = "servlet-context";
+    public TaskParameters(Map prefixedParameters) {
+        super(prefixedParameters);
+    }
+
+    public static final String PREFIX = "task";
 
     /**
-     * The server
-     * URI:<br/><code><strong>http://www.yourhost.com</strong>:8080/lenya/publication/index.html</code>
+     * @see org.apache.lenya.cms.task.ParameterWrapper#getPrefix()
      */
-    String PARAMETER_SERVER_URI = "server-uri";
+    public String getPrefix() {
+        return PREFIX;
+    }
 
     /**
-     * The server
-     * port:<br/><code>http://www.yourhost.com:<strong>8080</strong>/lenya/publication/index.html</code>
+     * @see org.apache.lenya.cms.task.ParameterWrapper#getRequiredKeys()
      */
-    String PARAMETER_SERVER_PORT = "server-port";
+    protected String[] getRequiredKeys() {
+        return REQUIRED_KEYS;
+    }
 
     /**
-     * The part of the URI that precedes the publication
-     * ID:<br/><code>http://www.yourhost.com:8080<strong>/lenya/</strong>publication/index.html</code>
+     * Returns the publication.
+     * @return A publication.
+     * @throws ExecutionException when something went wrong.
      */
-    String PARAMETER_CONTEXT_PREFIX = "context-prefix";
+    public Publication getPublication() throws ExecutionException {
+        Publication publication;
+        try {
+            publication =
+                PublicationFactory.getPublication(
+                    (String) get(Task.PARAMETER_PUBLICATION_ID),
+                    (String) get(Task.PARAMETER_SERVLET_CONTEXT));
+        } catch (PublicationException e) {
+            throw new ExecutionException(e);
+        }
+        return publication;
+    }
 
     /**
-     * The publication
-     * ID:<br/><code>http://www.yourhost.com:8080/lenya/<strong>publication</strong>/index.html</code>
+     * Sets the publication.
+     * @param publication A publication.
      */
-    String PARAMETER_PUBLICATION_ID = "publication-id";
+    public void setPublication(Publication publication) {
+        put(Task.PARAMETER_PUBLICATION_ID, publication.getId());
+        put(
+            Task.PARAMETER_SERVLET_CONTEXT,
+            publication.getServletContext().getAbsolutePath());
+    }
 
-    /**
-     * Execute the task. All parameters must have been set with parameterize().
-     * 
-     * @param servletContextPath the servlet-context
-     * 
-     * @throws ExecutionException if the execution fails
-     */
-    void execute(String servletContextPath) throws ExecutionException;
-
-    /**
-     * Set the label that is used to identify the task.
-     * 
-     * @param label the label
-     */
-    void setLabel(String label);
 }

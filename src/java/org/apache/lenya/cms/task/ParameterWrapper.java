@@ -1,5 +1,5 @@
 /*
-$Id: TaskWrapperParameters.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
+$Id: ParameterWrapper.java,v 1.1 2003/08/25 15:40:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,12 @@ $Id: TaskWrapperParameters.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
 */
 package org.apache.lenya.cms.task;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.lenya.util.NamespaceMap;
 import org.apache.log4j.Category;
 
 /**
@@ -64,70 +69,106 @@ import org.apache.log4j.Category;
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class TaskWrapperParameters extends ParameterWrapper {
-
-    private static Category log = Category.getInstance(TaskWrapperParameters.class);
-
-    public static final String TASK_ID = "task-id";
-    public static final String WEBAPP_URL = "webapp-url";
-
-    protected static final String[] REQUIRED_KEYS = { TASK_ID, WEBAPP_URL };
-
-    public static final String PREFIX = "wrapper";
+public abstract class ParameterWrapper {
+    
+    private static Category log = Category.getInstance(ParameterWrapper.class);
+    private NamespaceMap parameters;
+    
+    /**
+     * Returns the un-prefixed parameters.
+     * @return A map.
+     */
+    public Map getMap() {
+        return parameters.getMap();
+    }
 
     /**
      * Ctor.
-     * @param parameters The parameter map to use.
+     * @param prefixedParameters The prefixed parameters to wrap.
      */
-    public TaskWrapperParameters(Map parameters) {
-        super(parameters);
+    public ParameterWrapper(Map prefixedParameters) {
+        parameters = new NamespaceMap(prefixedParameters, getPrefix());
     }
-
+    
+    /**
+     * Returns the namespace prefix.
+     * @return A string.
+     */
+    public abstract String getPrefix();
+    
+    /**
+     * Adds a key-value pair. If the value is null, no pair is added.
+     * @param key The key.
+     * @param value The value.
+     */
+    public void put(String key, String value) {
+        if (value != null) {
+            log.debug("Setting parameter: [" + key + "] = [" + value + "]");
+            parameters.put(key, value);
+        }
+        else {
+            log.debug("Not setting parameter: [" + key + "] = [" + value + "]");
+        }
+    }
+    
+    /**
+     * Returns the value for a key.
+     * @param key The key.
+     * @return The value.
+     */
+    public String get(String key) {
+        return (String) parameters.get(key);
+    }
+    
     /**
      * Returns the required keys.
      * @return A string array.
      */
-    public String[] getRequiredKeys() {
-        return REQUIRED_KEYS;
+    protected abstract String[] getRequiredKeys();
+    
+    /**
+     * Checks if this parameters object contains all necessary parameters.
+     * @return A boolean value.
+     */
+    public boolean isComplete() {
+        boolean complete = true;
+        Map parameterMap = getMap();
+        String[] requiredKeys = getRequiredKeys();
+        int i = 0;
+        while (complete && i < requiredKeys.length) {
+            log.debug("Checking parameter: [" + requiredKeys[i] + "]");
+            complete = complete && parameterMap.containsKey(requiredKeys[i]);
+            log.debug("OK: [" + complete + "]");
+            i++;
+        }
+        return complete;
     }
 
     /**
-     * Returns the task ID.
-     * @return A string.
+     * Returns the missing parameters parameters.
+     * @return A string array.
      */
-    public String getTaskId() {
-        return get(TASK_ID);
+    public String[] getMissingKeys() {
+        String[] requiredKeys = getRequiredKeys();
+        Map parameterMap = getMap();
+        List keyList = new ArrayList();
+        for (int i = 0; i < requiredKeys.length; i++) {
+            if (!parameterMap.containsKey(requiredKeys[i])) {
+                keyList.add(requiredKeys[i]);
+            }
+        }
+        return (String[]) keyList.toArray(new String[keyList.size()]);
     }
-
+    
     /**
-     * Returns the webapp URL.
-     * @return A string.
+     * Parameterizes this wrapper with un-prefixed parameters.
+     * @param parameters A parameters object.
      */
-    public String getWebappUrl() {
-        return get(WEBAPP_URL);
-    }
-
-    /**
-     * Sets the webapp URL.
-     * @param url A url.
-     */
-    public void setWebappUrl(String url) {
-        put(WEBAPP_URL, url);
-    }
-
-    /**
-     * Sets the task ID.
-     * @param taskId A string.
-     */
-    public void setTaskId(String taskId) {
-        put(TASK_ID, taskId);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.task.ParameterWrapper#getPrefix()
-     */
-    public String getPrefix() {
-        return PREFIX;
+    public void parameterize(Parameters parameters) {
+        String[] keys = parameters.getNames();
+        for (int i = 0; i < keys.length; i++) {
+            put(keys[i], parameters.getParameter(keys[i], null));
+        }
     }
     
 }

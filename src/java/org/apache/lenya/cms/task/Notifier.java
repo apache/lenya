@@ -1,5 +1,5 @@
 /*
-$Id: Notifier.java,v 1.1 2003/08/25 09:52:40 andreas Exp $
+$Id: Notifier.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,7 @@ import org.apache.log4j.Category;
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class Notifier {
+public class Notifier extends ParameterWrapper {
 
     private static Category log = Category.getInstance(Notifier.class);
 
@@ -79,35 +79,33 @@ public class Notifier {
 
     public static final String PARAMETER_TO = "tolist";
 
-    private Parameters taskWrapperParameters;
     private TaskManager taskManager;
 
     /**
      * Ctor.
      * @param taskManager The task manager.
-     * @param taskWrapperParameters The task wrapper parameters.
+     * @param parameters The task wrapper parameters.
      */
-    public Notifier(TaskManager taskManager, Parameters taskWrapperParameters) {
-        this.taskWrapperParameters = taskWrapperParameters;
+    public Notifier(TaskManager taskManager, Map parameters) {
+        super(parameters);
         this.taskManager = taskManager;
     }
 
     /**
      * Sends the notification message.
+     * @param taskParameters The task parameters.
      * @throws ExecutionException when something went wrong.
      */
-    public void sendNotification() throws ExecutionException {
+    public void sendNotification(TaskParameters taskParameters) throws ExecutionException {
 
-        Map map = Parameters.toProperties(taskWrapperParameters);
-        NamespaceMap notificationParameters = new NamespaceMap(map, NOTIFICATION_PREFIX);
-
-        if (notificationParameters.getMap().isEmpty()) {
-            log.info("Not sending notification");
-        } else {
+        if (getMap().isEmpty()) {
+            log.info("Not sending notification: no parameters provided.");
+        } else if ("".equals(get(PARAMETER_TO).trim())) {
+            log.info("Not sending notification: empty notification.tolist parameter.");
+        }
+        else {
             log.info("Sending notification");
-
-            NamespaceMap taskParameters = new NamespaceMap(map, TaskWrapperParameters.TASK_PREFIX);
-
+            
             Task task = taskManager.getTask(TaskManager.ANT_TASK);
 
             Parameters params = new Parameters();
@@ -127,7 +125,7 @@ public class Notifier {
             }
 
             NamespaceMap mailMap = new NamespaceMap(MAIL_PREFIX);
-            mailMap.putAll(notificationParameters.getMap());
+            mailMap.putAll(getMap());
             NamespaceMap propertiesMap = new NamespaceMap(AntTask.PROPERTIES_PREFIX);
             propertiesMap.putAll(mailMap.getPrefixedMap());
 
@@ -154,6 +152,21 @@ public class Notifier {
      */
     protected TaskManager getTaskManager() {
         return taskManager;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.task.ParameterWrapper#getPrefix()
+     */
+    public String getPrefix() {
+        return NOTIFICATION_PREFIX;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.task.ParameterWrapper#getRequiredKeys()
+     */
+    protected String[] getRequiredKeys() {
+        String[] requiredKeys = { };
+        return requiredKeys;
     }
 
 }

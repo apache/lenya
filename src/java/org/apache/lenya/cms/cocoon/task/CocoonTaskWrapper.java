@@ -1,5 +1,5 @@
 /*
-$Id: CocoonTaskWrapper.java,v 1.1 2003/08/25 09:52:40 andreas Exp $
+$Id: CocoonTaskWrapper.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: CocoonTaskWrapper.java,v 1.1 2003/08/25 09:52:40 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.task;
 
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -73,6 +71,7 @@ import org.apache.lenya.cms.task.DefaultTaskWrapper;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Notifier;
 import org.apache.lenya.cms.task.TaskWrapperParameters;
+import org.apache.lenya.cms.task.WorkflowInvoker;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Category;
@@ -84,7 +83,7 @@ import org.apache.log4j.Category;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class CocoonTaskWrapper extends DefaultTaskWrapper {
-    
+
     private static Category log = Category.getInstance(CocoonTaskWrapper.class);
 
     /**
@@ -106,6 +105,7 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
         setNotifying(request);
 
         Parameters taskParameters = extractTaskParameters(parameters, publication, request);
+        getTaskParameters().parameterize(taskParameters);
 
         String taskId = request.getParameter(TaskWrapperParameters.TASK_ID);
         taskId = parameters.getParameter(TaskWrapperParameters.TASK_ID, taskId);
@@ -113,16 +113,18 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
         String webappUrl = ServletHelper.getWebappURI(request);
         initialize(taskId, publication, webappUrl, taskParameters);
 
-        String eventName = request.getParameter(TaskWrapperParameters.EVENT);
-
-        Identity identity = Identity.getIdentity(request.getSession(false));
-        Role[] roles;
-        try {
-            roles = PolicyAuthorizer.getRoles(request);
-        } catch (AccessControlException e) {
-            throw new ExecutionException(e);
+        String eventName = (String) request.getParameter(WorkflowInvoker.EVENT_REQUEST_PARAMETER);
+        if (eventName != null) {
+            Identity identity = Identity.getIdentity(request.getSession(false));
+            Role[] roles;
+            try {
+                roles = PolicyAuthorizer.getRoles(request);
+            } catch (AccessControlException e) {
+                throw new ExecutionException(e);
+            }
+            setWorkflowAware(eventName, identity, roles);
         }
-        setWorkflowAware(eventName, identity, roles);
+
     }
 
     /**
@@ -130,16 +132,10 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
      * @param request The request.
      */
     protected void setNotifying(Request request) {
-        
-        log.debug("Initializing Notification");
-        
-        Map requestParameters = new HashMap();
-        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
-            String key = (String) e.nextElement();
-            requestParameters.put(key, request.getParameter(key));
-            log.debug("Request parameter: [" + key + "] = [" + request.getParameter(key) + "]");
-        }
 
+        log.debug("Initializing Notification");
+
+        Map requestParameters = ServletHelper.getParameterMap(request);
         NamespaceMap notificationMap =
             new NamespaceMap(requestParameters, Notifier.NOTIFICATION_PREFIX);
 
@@ -149,6 +145,11 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
                 NamespaceMap.getFullName(Notifier.NOTIFICATION_PREFIX, Notifier.PARAMETER_TO);
             String toString = "";
             String[] toValues = request.getParameterValues(toKey);
+
+            if (toValues == null) {
+                throw new IllegalStateException("You must specify at least one [notification.tolist] request parameter!");
+            }
+
             for (int i = 0; i < toValues.length; i++) {
                 if (i > 0) {
                     toString += ",";

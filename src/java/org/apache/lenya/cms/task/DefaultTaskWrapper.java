@@ -1,5 +1,5 @@
 /*
-$Id: DefaultTaskWrapper.java,v 1.1 2003/08/25 09:52:40 andreas Exp $
+$Id: DefaultTaskWrapper.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,21 +56,17 @@ $Id: DefaultTaskWrapper.java,v 1.1 2003/08/25 09:52:40 andreas Exp $
 package org.apache.lenya.cms.task;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.util.NamespaceMap;
-import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Category;
 import org.w3c.dom.Element;
@@ -84,24 +80,32 @@ import org.w3c.dom.Element;
 public class DefaultTaskWrapper implements TaskWrapper {
     
     private static Category log = Category.getInstance(DefaultTaskWrapper.class);
-    
+
+    private Map parameters = new HashMap();
+    private TaskWrapperParameters wrapperParameters = new TaskWrapperParameters(parameters);
+    private WorkflowInvoker workflowInvoker = null;
+    private TaskParameters taskParameters = new TaskParameters(parameters);
+
     /**
      * Default ctor for subclasses.
      */
     protected DefaultTaskWrapper() {
     }
-    
+
     /**
      * Ctor to be called when all task wrapper parameters are known.
-     * @param parameters The parameters.
+     * @param parameters The prefixed parameters.
      */
     public DefaultTaskWrapper(Map parameters) {
         log.debug("Creating");
-        for (Iterator i = parameters.keySet().iterator(); i.hasNext(); ) {
-            String key = (String) i.next();
-            String value = (String) parameters.get(key);
-            log.debug("Setting task parameter: [" + key + "] = [" + value + "]");
-            getParams().putForced(key, value);
+        this.parameters.putAll(parameters);
+        
+        if (log.isDebugEnabled()) {
+            for (Iterator i = parameters.keySet().iterator(); i.hasNext();) {
+                String key = (String) i.next();
+                String value = (String) parameters.get(key);
+                log.debug("Setting parameter: [" + key + "] = [" + value + "]");
+            }
         }
     }
 
@@ -131,15 +135,15 @@ public class DefaultTaskWrapper implements TaskWrapper {
         Parameters parameters)
         throws ExecutionException {
         log.debug("Initializing");
-            
-        getParams().setPublication(publication);
-        getParams().setWebappUrl(webappUrl);
+
+        getTaskParameters().setPublication(publication);
+        getWrapperParameters().setWebappUrl(webappUrl);
 
         if (taskId == null) {
             throw new ExecutionException("No task id provided!");
         }
-        getParams().setTaskId(taskId);
-        getParams().setTaskParameters(parameters);
+        getWrapperParameters().setTaskId(taskId);
+        getTaskParameters().parameterize(parameters);
     }
 
     /**
@@ -149,7 +153,10 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param request A request.
      * @return A parameters object.
      */
-    protected Parameters extractTaskParameters(Parameters parameters, Publication publication, Request request) {
+    protected Parameters extractTaskParameters(
+        Parameters parameters,
+        Publication publication,
+        Request request) {
         Parameters taskParameters = new Parameters();
         taskParameters.setParameter(
             Task.PARAMETER_SERVLET_CONTEXT,
@@ -180,8 +187,6 @@ public class DefaultTaskWrapper implements TaskWrapper {
         return taskParameters;
     }
 
-    private TaskWrapperParameters parameters = new TaskWrapperParameters();
-
     /**
      * Enables workflow transition invocation.
      * @param eventName The event name.
@@ -189,9 +194,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param roles The roles of the identity.
      */
     public void setWorkflowAware(String eventName, Identity identity, Role[] roles) {
-        parameters.put(TaskWrapperParameters.EVENT, eventName);
-        parameters.setRoles(roles);
-        parameters.setIdentity(identity);
+        this.workflowInvoker = new WorkflowInvoker(getParameterMap(), eventName, identity, roles);
     }
 
     /**
@@ -200,14 +203,14 @@ public class DefaultTaskWrapper implements TaskWrapper {
      */
     public void execute() throws ExecutionException {
 
-        String taskId = getParams().getTaskId();
+        String taskId = getWrapperParameters().getTaskId();
         log.debug("-----------------------------------");
         log.debug(" Executing task [" + taskId + "]");
         log.debug("-----------------------------------");
-        
-        if (!parameters.isComplete()) {
-            
-            String[] missingKeys = getParams().getMissingKeys();
+
+        if (!wrapperParameters.isComplete()) {
+
+            String[] missingKeys = getWrapperParameters().getMissingKeys();
             String keyString = "";
             for (int i = 0; i < missingKeys.length; i++) {
                 if (i > 0) {
@@ -219,61 +222,37 @@ public class DefaultTaskWrapper implements TaskWrapper {
         }
 
         TaskManager manager;
+
+        Publication publication = getTaskParameters().getPublication();
+
+        if (workflowInvoker != null) {
+            workflowInvoker.setup(publication, getWrapperParameters().getWebappUrl());
+        }
+
+        Task task;
         try {
-
-            Publication publication = getParams().getPublication();
-
-            boolean doTransition = false;
-            WorkflowFactory factory = null;
-            Document document = null;
-
-            if (!getParams().getEventName().equals("")) {
-                // check for workflow instance first (task can initialize the workflow history)
-                factory = WorkflowFactory.newInstance();
-                document =
-                    DefaultDocumentBuilder.getInstance().buildDocument(
-                        publication,
-                        getParams().getWebappUrl());
-                doTransition = factory.hasWorkflow(document);
-            }
-
             manager = new TaskManager(publication.getDirectory().getAbsolutePath());
-            Task task = manager.getTask(taskId);
-            task.parameterize(getParams().getTaskParameters());
-
-            //FIXME The new workflow is set before the end of the transition because the document id
-            // and so the document are sometimes changing during the transition (ex archiving , ...) 
-            if (doTransition) {
-
-                WorkflowInstance instance = factory.buildInstance(document);
-                Situation situation =
-                    factory.buildSituation(
-                        getParams().getRoleIDs(),
-                        getParams().getUserId(),
-                        getParams().getMachineIp());
-
-                Event event = null;
-                Event[] events = instance.getExecutableEvents(situation);
-
-                for (int i = 0; i < events.length; i++) {
-                    if (events[i].getName().equals(getParams().getEventName())) {
-                        event = events[i];
-                    }
-                }
-
-                assert event != null;
-                instance.invoke(situation, event);
-            }
-
-            task.execute(publication.getServletContext().getAbsolutePath());
-
-            Notifier notifier = new Notifier(manager, getParameters());
-            notifier.sendNotification();
+            task = manager.getTask(taskId);
             
+            Properties properties = new Properties();
+            properties.putAll(getTaskParameters().getMap());
+            Parameters parameters = Parameters.fromProperties(properties);
+            
+            task.parameterize(parameters);
         } catch (Exception e) {
             throw new ExecutionException(e);
         }
-        
+
+        //FIXME The new workflow is set before the end of the transition because the document id
+        // and so the document are sometimes changing during the transition (ex archiving , ...) 
+        if (workflowInvoker != null) {
+            workflowInvoker.invokeTransition();
+        }
+
+        task.execute(publication.getServletContext().getAbsolutePath());
+
+        Notifier notifier = new Notifier(manager, getParameterMap());
+        notifier.sendNotification(getTaskParameters());
 
     }
 
@@ -281,8 +260,16 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * Returns the task wrapper parameters.
      * @return A task wrapper parameters object.
      */
-    protected TaskWrapperParameters getParams() {
-        return parameters;
+    protected TaskWrapperParameters getWrapperParameters() {
+        return wrapperParameters;
+    }
+    
+    /**
+     * Returns the task parameters.
+     * @return A task parameters object.
+     */
+    protected TaskParameters getTaskParameters() {
+        return taskParameters;
     }
 
     protected static final String ELEMENT_TASK = "task";
@@ -301,11 +288,11 @@ public class DefaultTaskWrapper implements TaskWrapper {
             new NamespaceHelper(Task.NAMESPACE, Task.DEFAULT_PREFIX, document);
         Element element = taskHelper.createElement(ELEMENT_TASK);
 
-        String[] keys = getParams().getKeys();
-        for (int i = 0; i < keys.length; i++) {
+        for (Iterator i = getParameterMap().keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
             Element parameterElement = taskHelper.createElement(ELEMENT_PARAMETER);
-            parameterElement.setAttribute(ATTRIBUTE_NAME, keys[i]);
-            parameterElement.setAttribute(ATTRIBUTE_VALUE, getParams().get(keys[i]));
+            parameterElement.setAttribute(ATTRIBUTE_NAME, key);
+            parameterElement.setAttribute(ATTRIBUTE_VALUE, (String) getParameterMap().get(key));
         }
 
         return element;
@@ -325,25 +312,36 @@ public class DefaultTaskWrapper implements TaskWrapper {
         for (int i = 0; i < parameterElements.length; i++) {
             String key = parameterElements[i].getAttribute(ATTRIBUTE_NAME);
             String value = parameterElements[i].getAttribute(ATTRIBUTE_VALUE);
-            getParams().put(key, value);
+            getWrapperParameters().put(key, value);
         }
     }
-    
+
     /**
-     * Returns the task wrapper parameters.
+     * Returns all prefixed parameters.
      * @return A parameter object.
      */
     public Parameters getParameters() {
-        return getParams().getParameters();
+        Properties properties = new Properties();
+        properties.putAll(getParameterMap());
+        Parameters params = Parameters.fromProperties(properties);
+        return params;
     }
-    
+
+    /**
+     * Returns all prefixed parameters.
+     * @return A map.
+     */
+    public Map getParameterMap() {
+        return parameters;
+    }
+
     /**
      * Sets the notification parameters.
      * @param notificationParameters The notification parameters.
      */
     protected void setNotifying(NamespaceMap notificationParameters) {
         log.info("Enabling notification");
-        getParams().putAll(notificationParameters.getPrefixedMap());
+        getParameterMap().putAll(notificationParameters.getPrefixedMap());
     }
-    
+
 }
