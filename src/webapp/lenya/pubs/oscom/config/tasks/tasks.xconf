@@ -29,5 +29,10 @@
     <label>Print Message into Log</label>
     <parameter name="text" value="Hello OSCOM"/>
   </task>
+  
+  <task id="command-line" class="org.wyona.cms.task.CommandLineTask">
+    <label>Command Line</label>
+    <parameter name="command" value="ls"/>
+  </task>
 
 </tasks>
