@@ -110,11 +110,16 @@
 
   <xsl:apply-templates select="*[local-name() != 'entity-resolver']"/>
 
-  <component logger="lenya.ac"
+  <component logger="lenya.ac.accesscontroller"
       class="org.apache.lenya.cms.ac2.file.FileAccessController"
       role="org.apache.lenya.cms.ac2.AccessController/unicms">
     <parameter name="directory" value="context:///lenya/pubs/unizh/config/ac"/>
   </component>
+
+  <authorizers>
+    <component-instance class="org.apache.lenya.cms.ac2.PolicyAuthorizer" logger="lenya.ac.authorizer" name="policy"/>
+    <component-instance class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer" logger="lenya.ac.authorizer" name="workflow"/>
+  </authorizers>
 
   </xsl:copy>
 </xsl:template>
