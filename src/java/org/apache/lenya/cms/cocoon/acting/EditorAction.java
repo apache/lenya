@@ -26,9 +26,9 @@ import org.w3c.dom.Document;
 import org.wyona.util.Stack;
 
 /**
- * @author Michael Wechner
- * @created 2001.11.18
- * @version 2001.12.28
+ * @author Martin Lüthi
+ * @created 2002.01.20
+ * @version 2002.01.27
  */
 public class EditorAction extends AbstractComplementaryConfigurableAction implements Configurable{
 /**
@@ -38,12 +38,12 @@ public class EditorAction extends AbstractComplementaryConfigurableAction implem
     super.configure(conf);
     }
 /**
- *
+ * At this time, the action does nothing more than provide the tempfilename to
+ * the sitmap
  */
   public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
     // Get request object
     Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
-    getLogger().error("********* here i am Editor *****************************************");
 
     if(request == null){
       getLogger().error ("No request object");
@@ -58,50 +58,25 @@ public class EditorAction extends AbstractComplementaryConfigurableAction implem
 
     String tempfile=(String)session.getAttribute("org.wyona.cms.editor.HTMLForm.tempFile");
     getLogger().error("**** tempfile="+tempfile);
+
     if (tempfile!=null){
-      Enumeration reqparams=request.getParameterNames();                                                  
-      String newparams="?";
-      while (reqparams.hasMoreElements()) {                        
-        String param=(String)reqparams.nextElement();
-        String[] values=request.getParameterValues(param);
-        if (values!=null) for (int i=0; i<values.length; i++) {
-          getLogger().error("parameter: " +param+" : "+values[i]);
-          newparams=newparams+param+"="+values[i]+"&";
-        }
-      }
-      getLogger().error("**** new parameter: " +newparams);
-
-//       String request_uri=request.getRequestURI();
-//       String thisContext=request_uri.substring(0,request_uri.lastIndexOf("/formedit"));
-//       if (thisContext.startsWith("/cocoon/")){
-//         thisContext=thisContext.substring(8);
+//       Enumeration reqparams=request.getParameterNames();                                                  
+//       String newparams="?";
+//       while (reqparams.hasMoreElements()) {                        
+//         String param=(String)reqparams.nextElement();
+//         String[] values=request.getParameterValues(param);
+//         if (values!=null) for (int i=0; i<values.length; i++) {
+//           getLogger().error("parameter: " +param+" : "+values[i]);
+//           newparams=newparams+param+"="+values[i]+"&";
+//         }
 //       }
-//       getLogger().error("**** request part="+thisContext);
-
-      // get the Document and write it to the temporary file
-//       String url="http://127.0.0.1:"+request.getServerPort()+"/cocoon/"+thisContext+"/dorequest"+newparams;
-//       getLogger().error("**** URI="+url);
-//       org.dom4j.Document temp = new org.dom4j.io.SAXReader().read(url);
-//       java.io.FileWriter tempWriter=new java.io.FileWriter(tempfile);
-//       temp.write(tempWriter);
-//       tempWriter.close();
+//       getLogger().error("**** new parameter: " +newparams);
 
       HashMap actionMap=new HashMap();
       actionMap.put("tempFile",tempfile);
       return actionMap;
     }
-
     return null;
-    }
-/**
- *
- */
-  private org.dom4j.Document getXMLwithIDs(Request request) throws Exception{
-    String url="http://127.0.0.1:"+request.getServerPort()+request.getRequestURI()+".temp";
-    getLogger().error(url);
-    //DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
-    //DocumentBuilder db=dbf.newDocumentBuilder();
-    return new org.dom4j.io.SAXReader().read(url);
-    //return db.parse(new URL(url).openStream());
   }
 }
+
