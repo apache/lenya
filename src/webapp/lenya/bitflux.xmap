@@ -16,8 +16,8 @@
     </map:matchers>
     <map:actions>
       <map:action name="reserved-checkout" src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
-        <rcmlDirectory href="pubs/unipublic/docs/publication/rcml"/>
-        <backupDirectory href="pubs/unipublic/docs/publication/rcbak"/>
+        <rcmlDirectory href="pubs/unipublic/content/rcml"/>
+        <backupDirectory href="pubs/unipublic/content/rcbak"/>
       </map:action>
     </map:actions>
     <map:selectors/>
@@ -32,13 +32,13 @@
         <map:match type="bitflux" pattern="/lenya/*/bitflux/**">
 <!--
         <map:act type="reserved-checkout">
-          <map:parameter name="filename" value="pubs/{1}/docs/publication/authoring/{2}"/>
-          <map:generate type="serverpages" src="docs/cms/rc/{exception}.xsp">
+          <map:parameter name="filename" value="pubs/{1}/content/authoring/{2}"/>
+          <map:generate type="serverpages" src="content/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
             <map:parameter name="filename" value="{filename}"/>
             <map:parameter name="date" value="{date}"/>
           </map:generate>
-          <map:transform src="stylesheets/cms/rc/rco-exception.xsl"/>
+          <map:transform src="xslt/rc/rco-exception.xsl"/>
           <map:serialize type="html"/>
         </map:act>
 -->

@@ -36,10 +36,10 @@ the live area. These two paths are set within the sitemap:
 
 <map:actions>
   <map:action name="" src="">
-    <authoring href="docs/publication/authoring/"/>
-    <live href="docs/publication/live/"/>
-    <tree-authoring href="docs/publication/authoring/tree.xml"/>
-    <tree-live href="docs/publication/live/tree.xml"/>
+    <authoring href="content/authoring/"/>
+    <live href="content/live/"/>
+    <tree-authoring href="content/authoring/tree.xml"/>
+    <tree-live href="content/live/tree.xml"/>
   </map:action>
 </map:actions>
 

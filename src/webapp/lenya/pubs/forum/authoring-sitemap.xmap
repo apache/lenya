@@ -20,18 +20,18 @@
       </map:action>
 <!--
       <map:action name="publisher" src="org.lenya.cms.cocoon.acting.PublisherAction">
-        <authoring href="docs/publication/authoring/"/>
-        <live href="docs/publication/live/"/>
-        <tree-authoring href="docs/publication/authoring/tree.xml"/>
-        <tree-live href="docs/publication/live/tree.xml"/>
-        <export-directory prefix="resources/publication/export/pending"/>
+        <authoring href="content/authoring/"/>
+        <live href="content/live/"/>
+        <tree-authoring href="content/authoring/tree.xml"/>
+        <tree-live href="content/live/tree.xml"/>
+        <export-directory prefix="resources/export/pending"/>
         <export-url-prefix substitute="s/\/lenya\/forum/\/news/g"/>
       </map:action>
 -->
       <map:action name="parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
-        <tree-authoring href="docs/publication/authoring/tree.xml"/>
-        <docs href="docs/publication/authoring"/>
-        <doctypes href="docs/publication/doctypes/"/>
+        <tree-authoring href="content/authoring/tree.xml"/>
+        <docs href="content/authoring"/>
+        <doctypes href="content/doctypes/"/>
       </map:action>
     </map:actions>
     <map:selectors default="browser">
@@ -68,7 +68,7 @@
      <!-- Publisher -->
       <map:match pattern="lenya/publishScreen*">
         <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
-        <map:transform src="../../stylesheets/cms/publishing/main.xsl"/>
+        <map:transform src="../../xslt/publishing/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="lenya/publish*">
@@ -82,9 +82,9 @@
      <!-- ParentChild Content Creator: New Article -->
       <map:match pattern="lenya/ParentChildScreenNewArticle*">
         <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
-        <map:transform src="stylesheets/cms/parent-child-new-article.xsl"/>
+        <map:transform src="lenya/xslt/authoring/parent-child-new-article.xsl"/>
 <!--
-        <map:transform src="../../stylesheets/cms/authoring/parent-child.xsl"/>
+        <map:transform src="../../xslt/authoring/parent-child.xsl"/>
 -->
         <map:serialize type="html"/>
       </map:match>
@@ -100,11 +100,11 @@
 
     <map:pipeline>
       <map:match pattern="menus/front.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/front.xsp"/>
+        <map:generate type="serverpages" src="content/menus/front.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="menus/article*.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/article.xsp">
+        <map:generate type="serverpages" src="content/menus/article.xsp">
           <map:parameter name="articleid" value="{1}"/>
         </map:generate>
         <map:serialize type="xml"/>
@@ -119,7 +119,7 @@
       </map:match>
 
       <map:match pattern="index.xml">
-        <map:generate type="directory" src="docs/publication/authoring/articles/">
+        <map:generate type="directory" src="content/authoring/articles/">
           <map:parameter name="depth" value="1"/>
         </map:generate>
         <map:transform src="xslt/Front/xinclude.xsl">
@@ -188,19 +188,19 @@
 
 
       <map:match pattern="**.xml">
-        <map:generate src="docs/publication/authoring/{1}.xml"/>
+        <map:generate src="content/authoring/{1}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
 
     <map:pipeline>
       <map:match pattern="images/**.gif">
-        <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+        <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
       <map:match pattern="images/**.jpg">
-        <map:read src="resources/publication/images/live/{1}.jpg" mime-type="images/jpeg">
+        <map:read src="resources/images/live/{1}.jpg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>

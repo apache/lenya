@@ -12,22 +12,22 @@
    <map:pipeline>
      <map:match pattern="authoring/index.rss.acml">
 <!--
-       <map:generate src="docs/publication/access-control/policies/root.acml"/>
+       <map:generate src="content/ac/policies/root.acml"/>
 -->
-       <map:generate src="docs/publication/access-control/policies/public.acml"/>
+       <map:generate src="content/ac/policies/public.acml"/>
        <map:serialize type="xml"/>
      </map:match>
 
      <map:match pattern="authoring/**">
-       <map:generate src="docs/publication/access-control/policies/root.acml"/>
+       <map:generate src="content/ac/policies/root.acml"/>
 <!--
-       <map:generate src="docs/publication/access-control/policies/public.acml"/>
+       <map:generate src="content/ac/policies/public.acml"/>
 -->
        <map:serialize type="xml"/>
      </map:match>
 
      <map:match pattern="**">
-       <map:generate src="docs/publication/access-control/policies/public.acml"/>
+       <map:generate src="content/ac/policies/public.acml"/>
        <map:serialize type="xml"/>
      </map:match>
    </map:pipeline>

@@ -121,7 +121,7 @@ Rem: <ul>
 
       <map:match pattern="rco/*/*/*/*/index.xml">
         <map:act type="reserved-checkout">
-          <map:parameter name="filename" value="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="filename" value="content/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
             <map:parameter name="filename" value="{filename}"/>
@@ -129,7 +129,7 @@ Rem: <ul>
           </map:generate>
           <map:serialize type="xml"/>
         </map:act>
-        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:generate src="content/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -147,8 +147,8 @@ Rem: <ul>
  
      <map:actions>
       <map:action name="reserved-checkout" src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
-         <rcmlDirectory href="docs/publication/rcml"/>
-         <backupDirectory href="docs/publication/rcbak"/>
+         <rcmlDirectory href="content/rcml"/>
+         <backupDirectory href="content/rcbak"/>
        </map:action>
      </map:actions>
   
@@ -232,8 +232,8 @@ send the following XML:
     <map:actions>
      ...
       <map:action name="rollback" src="org.lenya.cms.cocoon.acting.RollbackAction">
-        <rcmlDirectory href="docs/publication/rcml"/>
-        <backupDirectory href="docs/publication/rcbak"/>
+        <rcmlDirectory href="content/rcml"/>
+        <backupDirectory href="content/rcbak"/>
       </map:action>                                                                                                                         
      ...
     </map:actions>
@@ -247,7 +247,7 @@ send the following XML:
 
       <map:match pattern="rollback/*/*/*/*/index.xml">
         <map:act type="rollback">
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="filename" value="content/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:redirect-to uri="{location}" session="true"/>
         </map:act>
       </map:match>                                                                                                                          
@@ -260,15 +260,15 @@ send the following XML:
       <map:match pattern="revision/*/*/*/*/index.xml">
         <map:generate type="serverpages" src="../../docs/cms/rc/versions-screen.xsp">
           <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/lenya/lenya/pubs/unipublic"/>
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
-          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
-          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+          <map:parameter name="filename" value="content/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="rcmlDirectory" value="content/rcml"/>
+          <map:parameter name="backupDirectory" value="content/rcbak"/>
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
           <map:parameter name="articleId" value="{4}"/>
         </map:generate>
-        <map:transform src="../../stylesheets/cms/rc/rollback.xsl"/>
+        <map:transform src="../../xslt/rc/rollback.xsl"/>
         <map:serialize type="html"/>
       </map:match>                                                                                                                            
 
@@ -280,9 +280,9 @@ send the following XML:
       <map:match pattern="view/*/*/*/*/index.xml">
         <map:generate type="serverpages" src="../../docs/cms/rc/view.xsp">
           <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/lenya/lenya/pubs/unipublic"/>
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
-          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
-          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+          <map:parameter name="filename" value="content/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="rcmlDirectory" value="content/rcml"/>
+          <map:parameter name="backupDirectory" value="content/rcbak"/>
         </map:generate>
           <map:transform src="xslt/Article/Authoring/toArticle.xsl"/>
           <map:transform src="xslt/Article/Authoring/main.xsl">

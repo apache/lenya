@@ -14,7 +14,7 @@
   <map:pipelines>
     <map:pipeline>
       <map:match pattern="introduction.html">
-        <map:read src="resources/publication/html/introduction.html" mime-type="text/html"/>
+        <map:read src="resources/html/introduction.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>    
 

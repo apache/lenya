@@ -15,7 +15,7 @@
     </NewsManagement>
     <NewsComponent EquivalentsList="no">
       <AdministrativeMetadata>
-        <SystemIdentifier>http://www.unipublic.unizh.ch/docs/publication/live/CHANNEL/SECTION/articles/YEAR/ARTICLE_ID/index.xml</SystemIdentifier>
+        <SystemIdentifier>http://www.unipublic.unizh.ch/content/live/CHANNEL/SECTION/articles/YEAR/ARTICLE_ID/index.xml</SystemIdentifier>
       </AdministrativeMetadata>
       <ContentItem>
         <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">

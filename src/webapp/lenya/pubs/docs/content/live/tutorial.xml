@@ -69,7 +69,7 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 <map:resources>
   <map:resource name="login">
     <map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
-    <map:transform src="../../stylesheets/cms/ac/login.xsl">
+    <map:transform src="../../xslt/ac/login.xsl">
       <map:parameter name="publication_name" value="MY-PUB"/>
       <map:parameter name="publication_id" value="MY-PUB"/>
       <map:parameter name="lenya_path" value="lenya/pubs/MY-PUB/docs/standard/t01/" />
@@ -82,8 +82,8 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 <code><![CDATA[
 
 <map:match pattern="logout">
-  <map:generate type="serverpages" src="../../docs/cms/access-control/invalidate.xsp"/>
-  <map:transform src="../../stylesheets/cms/ac/logout.xsl">
+  <map:generate type="serverpages" src="../../docs/cms/ac/invalidate.xsp"/>
+  <map:transform src="../../xslt/ac/logout.xsl">
     <map:parameter name="publication_name" value="MY-PUB"/>
   </map:transform>
   <map:serialize/>
@@ -146,7 +146,7 @@ to do
 </p>
 <p>
 export PATH=/usr/local/jdk1.3.1/bin:$PATH <br/>
-java -classpath WYONACMS/build/lenya/classes:WYONACMS/build/lenya/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar org.lenya.util.TidyCommandLine
+java -classpath LENYACMS/build/lenya/classes:LENYACMS/build/lenya/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar org.lenya.util.TidyCommandLine
 </p>
 </section>
 </section>

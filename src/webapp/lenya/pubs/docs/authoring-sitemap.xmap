@@ -25,7 +25,7 @@
 
     <map:pipeline>
       <map:match pattern="menus/**.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/generic.xsp">
+        <map:generate type="serverpages" src="content/menus/generic.xsp">
           <map:parameter name="pageid" value="{1}"/>
         </map:generate>
         <map:serialize type="xml"/>

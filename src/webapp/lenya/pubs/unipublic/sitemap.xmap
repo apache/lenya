@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.10 2003/03/04 19:48:52 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.11 2003/03/04 21:46:29 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -36,7 +36,7 @@
     <map:resource name="login">
       <map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
 
-      <map:transform src="../../stylesheets/cms/ac/login.xsl">
+      <map:transform src="../../xslt/ac/login.xsl">
         <map:parameter name="publication_name" value="Unipublic"/>
         <map:parameter name="publication_id" value="unipublic"/>
       </map:transform>
@@ -53,31 +53,31 @@
     <!-- Documentation -->
     <map:pipeline>
       <map:match pattern="introduction.html">
-        <map:read src="resources/publication/html/documentation/index.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/index.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="article.html">
-        <map:read src="resources/publication/html/documentation/article.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/article.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="section.html">
-        <map:read src="resources/publication/html/documentation/section.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/section.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="frontpage.html">
-        <map:read src="resources/publication/html/documentation/frontpage.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/frontpage.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="dossier.html">
-        <map:read src="resources/publication/html/documentation/dossier.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/dossier.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="dossiers.html">
-        <map:read src="resources/publication/html/documentation/dossiers.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/dossiers.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="xmlArchitecture.html">
-        <map:read src="resources/publication/html/documentation/xmlArchitecture.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/xmlArchitecture.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="xsltModularisation.html">
-        <map:read src="resources/publication/html/documentation/xsltModularisation.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/xsltModularisation.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="todo.html">
-        <map:read src="resources/publication/html/documentation/todo.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/todo.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>
 
@@ -116,7 +116,7 @@
       </map:match>
 
           <map:match pattern="passwd/*.iml">
-            <map:generate src="docs/publication/access-control/passwd/{1}.iml"/>
+            <map:generate src="content/ac/passwd/{1}.iml"/>
             <map:serialize type="xml"/>
           </map:match>
 
@@ -144,7 +144,7 @@
           
           <map:match pattern="logout">
             <map:generate type="serverpages" src="../../docs/cms/ac/logout.xsp"/>
-            <map:transform src="../../stylesheets/cms/ac/logout.xsl">
+            <map:transform src="../../xslt/ac/logout.xsl">
               <map:parameter name="publication_name" value="Unipublic"/>
             </map:transform>
             <map:serialize/>

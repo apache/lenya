@@ -22,8 +22,8 @@
     <!-- Create Search Index -->
     <map:pipeline>
       <map:match pattern="create">
-        <map:generate type="serverpages" src="docs/cms/search/create-index.xsp"/>
-        <map:transform src="stylesheets/cms/search/dynamic-page2html.xsl">
+        <map:generate type="serverpages" src="content/search/create-index.xsp"/>
+        <map:transform src="xslt/search/dynamic-page2html.xsl">
           <map:parameter name="view-source" value="lucene/create-index.xsp"/>
         </map:transform>
         <map:serialize type="html"/>
@@ -39,13 +39,13 @@
     <!-- Search and Result Screen -->
     <map:pipeline>
       <map:match pattern="search">
-        <map:generate type="serverpages" src="docs/cms/search/search-and-results.xsp" label="xml"/>
+        <map:generate type="serverpages" src="content/search/search-and-results.xsp" label="xml"/>
 <!--
-        <map:transform src="stylesheets/cms/search/dynamic-page2html.xsl">
+        <map:transform src="xslt/search/dynamic-page2html.xsl">
           <map:parameter name="view-source" value="lucene/search-index.xsp"/>
         </map:transform>
 -->
-        <map:transform src="stylesheets/cms/search/search-and-results.xsl"/>
+        <map:transform src="xslt/search/search-and-results.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors>

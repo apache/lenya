@@ -54,7 +54,7 @@
 <!-- /General Wyona -->
 
       <map:match pattern="index.xml">
-        <map:generate type="directory-nolabel" src="docs/publication/live/articles/">
+        <map:generate type="directory-nolabel" src="content/live/articles/">
           <map:parameter name="depth" value="1"/>
         </map:generate>
         <map:transform src="xslt/Front/xinclude.xsl">
@@ -70,7 +70,7 @@
       </map:match>
       <map:match pattern="index.html">
         <map:generate type="file-nolabel" src="cocoon:/index.xml" label="content"/>
-        <map:transform src="xslt/Front/Live/main.xsl" label="content"/>
+        <map:transform src="xslt/Front/live/main.xsl" label="content"/>
         <map:serialize type="html"/>
       </map:match>
 
@@ -81,7 +81,7 @@
       </map:match>
 
       <map:match pattern="**.xml">
-        <map:generate src="docs/publication/live/{1}.xml"/>
+        <map:generate src="content/live/{1}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -90,12 +90,12 @@
       </map:match>
       <map:match pattern="articles/*/index.html">
         <map:generate src="cocoon:/articles/{1}/index.xml" label="content"/>
-        <map:transform src="xslt/Article/Live/main.xsl"/>
+        <map:transform src="xslt/Article/live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <map:handle-errors>
-        <map:transform src="../../stylesheets/cms/exception/not_published_yet.xsl"/>
+        <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
 
@@ -104,12 +104,12 @@
     <map:pipeline>
 
       <map:match pattern="images/**.gif">
-        <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+        <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
       <map:match pattern="images/**.jpg">
-        <map:read src="resources/publication/images/live/{1}.jpg" mime-type="images/jpeg">
+        <map:read src="resources/images/live/{1}.jpg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>

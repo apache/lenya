@@ -6,8 +6,8 @@
     <label>Publish and Export</label>
     <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher">
 <!--
-      <parameter name="live-path" value="docs/publication/live"/>
-      <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>
+      <parameter name="live-path" value="content/live"/>
+      <parameter name="tree-live-path" value="content/live/tree.xml"/>
 -->
     </task>
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>

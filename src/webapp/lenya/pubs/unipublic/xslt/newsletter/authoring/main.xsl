@@ -12,7 +12,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
-<xsl:include href="../../../../../../../stylesheets/cms/menu/root.xsl"/>
+<xsl:include href="../../../../../../../xslt/menu/root.xsl"/>
 
 <xsl:template match="cmsbody">
   <xsl:apply-templates/>

@@ -8,7 +8,7 @@
 
 <target name="init">
   <echo message="INFO: Init"/>
-  <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/docs/publication/crawler.xconf"/>
+  <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/content/crawler.xconf"/>
   <property name="lenya.src.dir" value="/home/michiii/src/lenyacms"/>
 
   <path id="class.path">
@@ -39,7 +39,7 @@
   <echo>INFO: Crawl (${crawler.xconf})</echo>
 
   <java classname="org.lenya.search.crawler.IterativeHTMLCrawler">
-    <arg value="src/webapp/lenya/pubs/oscom/docs/publication/crawler.xconf"/>
+    <arg value="src/webapp/lenya/pubs/oscom/content/crawler.xconf"/>
     <classpath refid="class.path"/>
   </java>
 </target>

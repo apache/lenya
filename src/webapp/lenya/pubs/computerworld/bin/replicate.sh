@@ -20,7 +20,7 @@ PUBLICATION_DIR=$CONTEXT/lenya/pubs
 PUBLICATION_ID_1=computerworld
 
 # location of HTML docs for replication
-EXPORT_DIR_1=$PUBLICATION_DIR/computerworld/resources/publication/export
+EXPORT_DIR_1=$PUBLICATION_DIR/computerworld/resources/export
 PENDING_DIR_1=$EXPORT_DIR_1/pending/lenya/computerworld
 REPLICATION_DIR_1=$EXPORT_DIR_1/replication
 
@@ -32,15 +32,15 @@ RH=192.168.98.238
 RDOCS_1=/usr/local/apache/htdocs
 
 # location of XML docs for replication
-REPLICATION_DIR_2=$PUBLICATION_DIR/computerworld/docs/publication/replication/pending
+REPLICATION_DIR_2=$PUBLICATION_DIR/computerworld/content/replication/pending
 
 # XML docs for Cocoon
 # copy to same location for now.
-RDOCS_2=/home/lenya/build/jakarta-tomcat-4.0.6/webapps/lenya/lenya/pubs/computerworld/docs/publication/live
+RDOCS_2=/home/lenya/build/jakarta-tomcat-4.0.6/webapps/lenya/lenya/pubs/computerworld/content/live
 
 # pictures for Cocoon
 # copy to same location for now.
-RDOCS_3=/home/lenya/build/jakarta-tomcat-4.0.6/webapps/lenya/lenya/pubs/computerworld/resources/publication/images/live
+RDOCS_3=/home/lenya/build/jakarta-tomcat-4.0.6/webapps/lenya/lenya/pubs/computerworld/resources/images/live
 
 ###########################################
 #                MAIN                     #

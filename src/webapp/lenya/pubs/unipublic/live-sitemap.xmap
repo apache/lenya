@@ -42,32 +42,32 @@
     <!-- Samples -->
     <map:pipeline>
       <map:match pattern="mirror/img_unipublic/*.gif">
-        <map:read src="resources/publication/images/live/img_unipublic/{1}.gif" mime-type="images/gif">
+        <map:read src="resources/images/live/img_unipublic/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
 
       <map:match pattern="mirror/*.css">
-        <map:read src="resources/publication/styles/live/{1}.css" mime-type="text/css">
+        <map:read src="resources/css/live/{1}.css" mime-type="text/css">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
 
       <map:match pattern="mirror/**.html">
-        <map:read src="resources/publication/html/live/{1}.html" mime-type="text/html"/>
+        <map:read src="resources/html/live/{1}.html" mime-type="text/html"/>
       </map:match>
       <map:match pattern="mirror/*/*/">
         <map:redirect-to uri="2002/index.html" session="true"/>
       </map:match>
       <map:match pattern="mirror/**">
-        <map:read src="resources/publication/html/live/{1}/index.html" mime-type="text/html"/>
+        <map:read src="resources/html/live/{1}/index.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>
 
     <!-- Live -->
     <map:pipeline>
       <map:match pattern="*.css">
-        <map:read src="resources/publication/styles/live/{1}.css" mime-type="text/css">
+        <map:read src="resources/css/live/{1}.css" mime-type="text/css">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
@@ -81,17 +81,17 @@
 <!-- /General Wyona -->
 
       <map:match pattern="*/*.gif">
-        <map:read src="resources/publication/images/live/{1}/{2}.gif" mime-type="images/gif">
+        <map:read src="resources/images/live/{1}/{2}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
          </map:read>
        </map:match>
       <map:match pattern="**/*.gif">
-        <map:read src="resources/publication/images/live/{1}/{2}.gif" mime-type="images/gif">
+        <map:read src="resources/images/live/{1}/{2}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
          </map:read>
        </map:match>
       <map:match pattern="**/*.jpg">
-        <map:read src="resources/publication/images/live/{1}/{2}.jpg" mime-type="images/jpeg">
+        <map:read src="resources/images/live/{1}/{2}.jpg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
          </map:read>
       </map:match>
@@ -102,25 +102,25 @@
       </map:match>
       <map:match pattern="index.html">
         <map:generate src="cocoon:/index.xml" label="content"/> 
-        <map:transform src="xslt/Front/Live/main.xsl">
+        <map:transform src="xslt/Front/live/main.xsl">
           <map:parameter name="year" value="2002"/>
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
 
       <map:match pattern="headlines.xml">
-        <map:generate src="docs/publication/live/frontpage/headlines.xml"/>
+        <map:generate src="content/live/frontpage/headlines.xml"/>
         <map:transform src="xslt/Front/xinclude.xsl"/>
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/frontpage/headlines.xml"/>
+          <map:parameter name="href" value="content/live/frontpage/headlines.xml"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="index.xml">
-        <map:generate type="file-nolabel" src="docs/publication/live/frontpage/index.xml"/>
+        <map:generate type="file-nolabel" src="content/live/frontpage/index.xml"/>
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/frontpage/index.xml"/>
+          <map:parameter name="href" value="content/live/frontpage/index.xml"/>
         </map:transform>
 <!--
         <map:transform type="xinclude"/>
@@ -129,10 +129,10 @@
       </map:match>
 
       <map:match pattern="dossier.xml">
-        <map:generate src="docs/publication/live/frontpage/dossier.xml"/>
+        <map:generate src="content/live/frontpage/dossier.xml"/>
         <map:transform src="xslt/Front/xinclude_dossiers.xsl" />
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/frontpage/dossier.xml"/>
+          <map:parameter name="href" value="content/live/frontpage/dossier.xml"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
@@ -160,10 +160,10 @@
       </map:match>
 
       <map:match pattern="dossiers/*/content.xml">
-        <map:generate type="directory" src="docs/publication/live/dossiers/{1}"/>
+        <map:generate type="directory" src="content/live/dossiers/{1}"/>
         <map:transform src="xslt/Dossiers/xinclude.xsl" />
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/dossiers/{1}/index.xml"/>
+          <map:parameter name="href" value="content/live/dossiers/{1}/index.xml"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
@@ -178,7 +178,7 @@
 
       <map:match pattern="dossiers/*/index.html">
         <map:generate src="cocoon:/dossiers/{1}/index.xml" />
-        <map:transform src="xslt/Dossiers/Live/main.xsl">
+        <map:transform src="xslt/Dossiers/live/main.xsl">
           <map:parameter name="year" value="{1}"/>
         </map:transform>
         <map:serialize type="html"/>
@@ -190,10 +190,10 @@
 
       <!-- Dossier -->
       <map:match pattern="dossiers/*/*/content.xml">
-        <map:generate src="docs/publication/live/dossiers/{1}/{2}/index.xml"/>
+        <map:generate src="content/live/dossiers/{1}/{2}/index.xml"/>
         <map:transform src="xslt/Dossier/xinclude.xsl" />
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/dossiers/{1}/{2}/index.xml"/>
+          <map:parameter name="href" value="content/live/dossiers/{1}/{2}/index.xml"/>
         </map:transform>
         <map:transform src="xslt/Section/Authoring/sort.xsl"/>
         <map:serialize type="xml"/>
@@ -205,7 +205,7 @@
 
       <map:match pattern="dossiers/*/*/index.html">
         <map:generate src="cocoon:/dossiers/{1}/{2}/content.xml" />
-        <map:transform src="xslt/Dossier/Live/main.xsl" />
+        <map:transform src="xslt/Dossier/live/main.xsl" />
         <map:serialize type="html"/>
       </map:match>
 
@@ -221,7 +221,7 @@
 
       <!-- Section -->
       <map:match pattern="*/*/*/navigation.xml">
-        <map:generate src="docs/publication/live/navigation.xml"/>
+        <map:generate src="content/live/navigation.xml"/>
         <map:transform src="xslt/Section/navigationLogic.xsl"> 
           <map:parameter name="section" value="{2}"/>
         </map:transform>
@@ -233,34 +233,34 @@
       </map:match>
 
       <map:match pattern="*/*/*/articles.xml">
-        <map:generate type="directory" src="docs/publication/live/{1}/{2}/{3}"/>
+        <map:generate type="directory" src="content/live/{1}/{2}/{3}"/>
         <map:transform src="xslt/Section/xinclude.xsl">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
         </map:transform>
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/{1}/{2}/sections/{3}/index.xml"/>
+          <map:parameter name="href" value="content/live/{1}/{2}/sections/{3}/index.xml"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="*/*/*/index.xml">
 <!--
-        <map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>
+        <map:generate src="content/live/{1}/{2}/sections/index{3}.xml"/>
 -->
-        <map:generate type="serverpages" src="docs/publication/live/section.xsp">
+        <map:generate type="serverpages" src="content/live/section.xsp">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
         </map:generate>
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/section.xsp"/>
+          <map:parameter name="href" value="content/live/section.xsp"/>
         </map:transform>
 <!--
         <map:transform type="xinclude"/>
 -->
-        <map:transform src="xslt/Section/Live/sort.xsl"/>
+        <map:transform src="xslt/Section/live/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -278,7 +278,7 @@
 
       <map:match pattern="*/*/*/index.html">
         <map:generate src="cocoon:/{1}/{2}/{3}/index.xml"/>
-        <map:transform src="xslt/Section/Live/main.xsl">
+        <map:transform src="xslt/Section/live/main.xsl">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
@@ -290,7 +290,7 @@
       <!-- Article -->
     <map:pipeline>
       <map:match pattern="*/*/*/*/index.xml">
-        <map:generate src="docs/publication/live/{1}/{2}/{3}/{4}/index.xml"/>
+        <map:generate src="content/live/{1}/{2}/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -302,7 +302,7 @@
 <!--
     <map:pipeline>
       <map:match pattern="*/*/*/*/article.xml">
-        <map:generate type="serverpages" src="docs/publication/live/article.xsp">
+        <map:generate type="serverpages" src="content/live/article.xsp">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
@@ -322,22 +322,22 @@
 
       <map:match pattern="*/*/*/*/index.html">
 <!--
-        <map:generate src="docs/publication/live/{1}/{2}/{3}/{4}/index.xml"/>
+        <map:generate src="content/live/{1}/{2}/{3}/{4}/index.xml"/>
         <map:generate src="cocoon:/{1}/{2}/{3}/{4}/article.xml"/>
 -->
         <map:generate src="cocoon:/{1}/{2}/{3}/{4}/index.xml"/>
         <map:transform src="xslt/Article/xinclude.xsl" />
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/{1}/{2}/{3}/{4}/index.xml"/>
+          <map:parameter name="href" value="content/live/{1}/{2}/{3}/{4}/index.xml"/>
         </map:transform>
-        <map:transform src="xslt/Article/Live/main.xsl">
+        <map:transform src="xslt/Article/live/main.xsl">
           <map:parameter name="section" value="{2}"/>
         </map:transform>                                                                                                                
         <map:serialize type="html"/>
       </map:match>
 
       <map:handle-errors>
-        <map:transform src="../../stylesheets/cms/exception/not_published_yet.xsl"/>
+        <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
@@ -346,7 +346,7 @@
 
       <!-- XML -->
       <map:match pattern="**.xml">
-        <map:generate src="docs/publication/live/{1}.xml"/>
+        <map:generate src="content/live/{1}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

@@ -3,7 +3,7 @@
 
 <xsl:param name="files"/>
 
-	<xsl:include href="../../../../../../stylesheets/cms/menu/root.xsl"/>
+	<xsl:include href="../../../../../../xslt/menu/root.xsl"/>
 	
 	<xsl:template match="lenya/cmsbody">
 		<xsl:apply-templates/>

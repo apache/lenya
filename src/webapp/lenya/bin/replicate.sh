@@ -20,7 +20,7 @@ SFTP_BATCH=$CONTEXT/lenya/bin/copy-recursive.sh
 #
 
 PUBLICATION_ID_1=unipublic
-EXPORT_DIR_1=$PUBLICATION_DIR/unipublic/resources/publication/export
+EXPORT_DIR_1=$PUBLICATION_DIR/unipublic/resources/export
 PENDING_DIR_1=$EXPORT_DIR_1/pending/lenya/unipublic
 REPLICATION_DIR_1=$EXPORT_DIR_1/replication
 RU_1_1=michiii
@@ -33,7 +33,7 @@ RDOCS_1_2=/usr/local/apache/htdocs_unipublic
 
 
 PUBLICATION_ID_2=oscom
-EXPORT_DIR_2=$PUBLICATION_DIR/oscom/resources/publication/export
+EXPORT_DIR_2=$PUBLICATION_DIR/oscom/resources/export
 PENDING_DIR_2=$EXPORT_DIR_2/pending/lenya/oscom
 REPLICATION_DIR_2=$EXPORT_DIR_2/replication
 RU_2_1=michiii
@@ -46,7 +46,7 @@ RDOCS_2_2=/usr/local/apache/htdocs_oscom
 
 
 PUBLICATION_ID_3=forum
-EXPORT_DIR_3=$PUBLICATION_DIR/forum/resources/publication/export
+EXPORT_DIR_3=$PUBLICATION_DIR/forum/resources/export
 PENDING_DIR_3=$EXPORT_DIR_3/pending/lenya/forum
 REPLICATION_DIR_3=$EXPORT_DIR_3/replication
 RU_3_1=michi

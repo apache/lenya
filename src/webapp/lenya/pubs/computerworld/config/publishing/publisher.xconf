@@ -10,18 +10,18 @@
 
 <publication>
   <authoring>
-    <documents href="docs/publication/authoring"/>
-    <tree href="docs/publication/authoring/tree.xml"/>
+    <documents href="content/authoring"/>
+    <tree href="content/authoring/tree.xml"/>
   </authoring>
   <live>
-    <documents href="docs/publication/live"/>
-    <tree href="docs/publication/live/tree.xml"/>
+    <documents href="content/live"/>
+    <tree href="content/live/tree.xml"/>
   </live>
   <replication>
-    <pending-documents href="docs/publication/replication/pending"/>
+    <pending-documents href="content/replication/pending"/>
   </replication>
   <export>
-    <destination href="resources/publication/export/pending"/>
+    <destination href="resources/export/pending"/>
     <substitution regexp="s/\/lenya\/computerworld//g"/>
   </export>
 </publication>

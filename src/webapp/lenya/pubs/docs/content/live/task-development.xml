@@ -35,7 +35,7 @@ Typical tasks are
 <section><title>Defining Tasks</title>
 <p>
 All tasks to be used in a publication must be declared in the file
-<code>[publication-directory]/docs/publication/tasks.xconf</code>.
+<code>[publication-directory]/content/tasks.xconf</code>.
 A typical task configuration file looks like follows:
 </p>
 <source><![CDATA[
@@ -47,11 +47,11 @@ A typical task configuration file looks like follows:
   <task id="publish">
     <label>Publish</label>
     <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher">
-      <parameter name="live-path" value="docs/publication/live"/>
-      <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>
+      <parameter name="live-path" value="content/live"/>
+      <parameter name="tree-live-path" value="content/live/tree.xml"/>
     </task>
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter">
-      <parameter name="export-path" value="resources/publication/export/pending"/>
+      <parameter name="export-path" value="resources/export/pending"/>
       <parameter name="substitute-regexp" value="s/\/lenya\/your-publication//g"/>
     </task>
   </task>
@@ -141,7 +141,7 @@ a parameter selection mechanism, e. g. using namespace prefixes.
 Every document type can support a set of tasks. The labels of these tasks
 are displayed on the scheduler screen of a document of this type.
 To assign a task to a document type, you have to edit the file
-<code>[publication-directory]/docs/publication/doctypes/doctypes.xconf</code>:
+<code>[publication-directory]/content/doctypes/doctypes.xconf</code>:
 </p>
 <source><![CDATA[
 

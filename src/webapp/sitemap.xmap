@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.42 2003/03/04 19:49:11 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.43 2003/03/04 21:46:32 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -109,14 +109,14 @@
           <map:parameter name="number-of-pubs" value="1"/>
           <map:parameter name="pub0-id" value="{1}"/>
           <map:parameter name="pub0-name" value="{1}"/>
-          <map:parameter name="pub0-index-dir" value="lenya/pubs/{1}/resources/publication/search/lucene/index"/>
-          <map:parameter name="pub0-excerpt-dir" value="lenya/pubs/{1}/resources/publication/search/lucene/htdocs_dump"/>
+          <map:parameter name="pub0-index-dir" value="lenya/pubs/{1}/resources/search/lucene/index"/>
+          <map:parameter name="pub0-excerpt-dir" value="lenya/pubs/{1}/resources/search/lucene/htdocs_dump"/>
           <map:parameter name="pub0-prefix" value=""/>
         </map:generate>
         <map:transform src="lenya/xslt/search/sort.xsl"/>
-        <map:transform src="lenya/pubs/{1}/stylesheets/cms/search-and-results.xsl"/>
+        <map:transform src="lenya/pubs/{1}/lenya/xslt/search/search-and-results.xsl"/>
         <!--
-          <map:transform src="lenya/xslt/Search/search-and-results.xsl"/>
+          <map:transform src="lenya/xslt/search/search-and-results.xsl"/>
 -->
 
         <map:serialize type="html"/>

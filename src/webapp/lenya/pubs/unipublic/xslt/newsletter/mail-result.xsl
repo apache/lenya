@@ -13,7 +13,7 @@
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
     xmlns:mail="http://cxa/cocoon/sendmail">
 
-<xsl:include href="../../../../../../stylesheets/cms/util/page-util.xsl"/>
+<xsl:include href="../../../../../../xslt/util/page-util.xsl"/>
     
 <xsl:param name="context-prefix"/>
 

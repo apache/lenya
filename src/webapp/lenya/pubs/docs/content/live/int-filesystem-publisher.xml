@@ -28,7 +28,7 @@ or for instance http-upload.
 
    <section><title>Customizing the Menu</title>
      <p>
-Normally the "Menus" can be found at docs/publication/menus
+Normally the "Menus" can be found at content/menus
      </p>
    </section>
                                                                                                                                             
@@ -41,10 +41,10 @@ Normally the "Menus" can be found at docs/publication/menus
 
 <map:actions>
   <map:action name="publisher" src="org.lenya.cms.cocoon.acting.PublisherAction">
-    <authoring href="docs/publication/authoring/"/>
-    <live href="docs/publication/live/"/>
-    <tree-authoring href="docs/publication/authoring/tree.xml"/>
-    <tree-live href="docs/publication/live/tree.xml"/>
+    <authoring href="content/authoring/"/>
+    <live href="content/live/"/>
+    <tree-authoring href="content/authoring/tree.xml"/>
+    <tree-live href="content/live/tree.xml"/>
   </map:action>
 </map:actions>
 
@@ -55,7 +55,7 @@ Normally the "Menus" can be found at docs/publication/menus
 
      <map:match pattern="authoring/lenya/publishScreen*">
        <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
-       <map:transform src="../../stylesheets/cms/publishing/main.xsl"/>
+       <map:transform src="../../xslt/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>                                                                                                                           
 
@@ -79,7 +79,7 @@ Normally the "Menus" can be found at docs/publication/menus
    
    <section><title>Customizing the Publish Screen</title>
      <p>
-Copy the generic XSLT: ../../stylesheets/cms/Publish/main.xsl " into the publication's stylesheet directory "stylesheets/cms/Publish/....xsl ". Don't forget to change the sitemap appropriately. 
+Copy the generic XSLT: ../../xslt/publishing/main.xsl " into the publication's stylesheet directory "lenya/xslt/publishing/....xsl ". Don't forget to change the sitemap appropriately. 
      </p>
    </section>
                                                                                                                                             
@@ -92,10 +92,10 @@ the live area. These two paths are set within the sitemap:
 
 <map:actions>
   <map:action name="" src="">
-    <authoring href="docs/publication/authoring/"/>
-    <live href="docs/publication/live/"/>
-    <tree-authoring href="docs/publication/authoring/tree.xml"/>
-    <tree-live href="docs/publication/live/tree.xml"/>
+    <authoring href="content/authoring/"/>
+    <live href="content/live/"/>
+    <tree-authoring href="content/authoring/tree.xml"/>
+    <tree-live href="content/live/tree.xml"/>
   </map:action>
 </map:actions>
 

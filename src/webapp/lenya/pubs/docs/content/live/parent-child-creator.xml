@@ -22,7 +22,7 @@ The Parent-Child Creator is a concrete implementation of the ResourceCreator pat
 
    <section><title>Customizing the Menu</title> 
      <p>
-Normally the "Menus" can be found at <em>docs/publication/menus</em>.
+Normally the "Menus" can be found at <em>content/menus</em>.
      </p>  
    </section>
 
@@ -32,9 +32,9 @@ Normally the "Menus" can be found at <em>docs/publication/menus</em>.
            <code><![CDATA[
 
 <map:action name="parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
-  <tree-authoring href="docs/publication/authoring/tree.xml"/>
-  <docs href="docs/publication/authoring"/>
-  <doctypes href="docs/publication/doctypes/"/>
+  <tree-authoring href="content/authoring/tree.xml"/>
+  <docs href="content/authoring"/>
+  <doctypes href="content/doctypes/"/>
 </map:action>
 
            ]]></code>
@@ -45,7 +45,7 @@ Normally the "Menus" can be found at <em>docs/publication/menus</em>.
 <map:pipeline>
   <map:match pattern="lenya/ParentChildScreenNewArticle*">
     <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
-    <map:transform src="../../stylesheets/cms/authoring/parent-child.xsl"/>
+    <map:transform src="../../xslt/authoring/parent-child.xsl"/>
     <map:serialize type="html"/>
   </map:match>
 </map:pipeline>
@@ -71,7 +71,7 @@ Normally the "Menus" can be found at <em>docs/publication/menus</em>.
 
    <section><title>Customizing the Create Screen</title> 
      <p>
-Copy the generic XSLT "../../stylesheets/cms/parent-child.xsl" into the publication's stylesheet directory "stylesheets/cms/parent-child-new-article.xsl". Don't forget to change the sitemap appropriately. The following parameters have to exist: parentid (generated via XSP), childid (not-empty String, no whitespace), childname (non-empty String), childtype (leaf or branch), doctype (e.g. Article). Exp:
+Copy the generic XSLT "../../xslt/authoring/parent-child.xsl" into the publication's stylesheet directory "lenya/xslt/authoring/parent-child-new-article.xsl". Don't forget to change the sitemap appropriately. The following parameters have to exist: parentid (generated via XSP), childid (not-empty String, no whitespace), childname (non-empty String), childtype (leaf or branch), doctype (e.g. Article). Exp:
      </p>  
 <source><![CDATA[
 <form>
@@ -100,7 +100,7 @@ Copy the generic XSLT "../../stylesheets/cms/parent-child.xsl" into the publicat
    <section><title>Configuration</title> 
      <ol>
        <li> doctypes.xconf
-         The different doctypes are configured in a file doctypes.xconf: WYONA_CMS/src/webapp/lenya/pubs/*publication*/docs/publication/doctypes/doctypes.xconf. Given are their children and their creator. 
+         The different doctypes are configured in a file doctypes.xconf: LENYA_CMS/src/webapp/lenya/pubs/*publication*/content/doctypes/doctypes.xconf. Given are their children and their creator. 
            <code><![CDATA[
 
 <?xml version="1.0"?>

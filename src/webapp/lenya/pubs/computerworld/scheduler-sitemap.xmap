@@ -22,12 +22,12 @@
 		<map:pipeline internal-only="false">
 			<!-- load document types -->
 			<map:match pattern="document-types">
-				<map:generate src="docs/publication/doctypes/doctypes.xconf"/>
+				<map:generate src="content/doctypes/doctypes.xconf"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<!-- load task list -->
 			<map:match pattern="tasks">
-				<map:generate src="docs/publication/tasks.xconf"/>
+				<map:generate src="content/tasks.xconf"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<!-- create the current date -->
@@ -38,7 +38,7 @@
 			<!-- create the current job snapshot -->
 			<map:match pattern="scheduler-servlet">
 				<map:generate type="servletproxy" src="/lenya/servlet/QuartzSchedulerServlet"/>
-				<map:transform src="../../stylesheets/cms/scheduler/sort.xsl"/>
+				<map:transform src="../../xslt/scheduler/sort.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 		</map:pipeline>
@@ -51,9 +51,9 @@
 					<map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
 					<map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
 				</map:aggregate>
-				<map:transform src="../../stylesheets/cms/scheduler/filter.xsl"/>
-				<map:transform src="../../stylesheets/cms/scheduler/filterTasks.xsl"/>
-				<map:transform src="../../stylesheets/cms/scheduler/admin-document.xsl"/>
+				<map:transform src="../../xslt/scheduler/filter.xsl"/>
+				<map:transform src="../../xslt/scheduler/filterTasks.xsl"/>
+				<map:transform src="../../xslt/scheduler/admin-document.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- Admin interface -->
@@ -64,9 +64,9 @@
 					<map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
 					<map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
 				</map:aggregate>
-				<map:transform src="../../stylesheets/cms/scheduler/filter.xsl"/>
-				<map:transform src="../../stylesheets/cms/scheduler/filterTasks.xsl"/>
-				<map:transform src="../../stylesheets/cms/scheduler/admin-publication.xsl"/>
+				<map:transform src="../../xslt/scheduler/filter.xsl"/>
+				<map:transform src="../../xslt/scheduler/filterTasks.xsl"/>
+				<map:transform src="../../xslt/scheduler/admin-publication.xsl"/>
 				<map:serialize type="html"/>
 			</map:match>
 		</map:pipeline>

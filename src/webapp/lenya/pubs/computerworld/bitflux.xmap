@@ -24,12 +24,12 @@
 		<!-- =========================== Actions ================================ -->
 		<map:actions>
 			<map:action name="xopushandler" src="org.lenya.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.xopus-handler">
-				<xml href="docs/publication/authoring"/>
+				<xml href="content/authoring"/>
 				<xsl href="stylesheets/publication"/>
-				<xsd href="docs/publication/doctypes/schemas"/>
+				<xsd href="content/doctypes/schemas"/>
 				<temp href="temp"/>
-				<rcmlDirectory href="docs/publication/rcml"/>
-				<backupDirectory href="docs/publication/rcbak"/>
+				<rcmlDirectory href="content/rcml"/>
+				<backupDirectory href="content/rcbak"/>
 			</map:action>
 		</map:actions>
 	</map:components>
@@ -51,7 +51,7 @@
 		<!-- Article -->
 		<map:pipeline>
 			<map:match pattern="news/**.xml">
-				<map:generate src="docs/publication/authoring/news/{1}.xml"/>
+				<map:generate src="content/authoring/news/{1}.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/article.xsl">
@@ -59,76 +59,76 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/article.xsd">
-				<map:read src="docs/publication/doctypes/schemas/article.xsd" mime-type="text/xml"/>
+				<map:read src="content/doctypes/schemas/article.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/article.css">
-				<map:read src="resources/publication/styles/authoring/article-bitflux.css" mime-type="text/css"/>
+				<map:read src="resources/css/authoring/article-bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
 		<!-- Small Preview -->
 		<map:pipeline>
 			<map:match pattern="small-preview.xml">
-				<map:generate src="docs/publication/authoring/small-preview.xml"/>
+				<map:generate src="content/authoring/small-preview.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/small-preview.xsl">
-				<map:generate src="docs/publication/authoring/index.html"/>
+				<map:generate src="content/authoring/index.html"/>
 				<map:transform src="xslt/Authoring/small-preview-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/small-preview.xsd">
-				<map:read src="docs/publication/doctypes/schemas/small-preview.xsd" mime-type="text/xml"/>
+				<map:read src="content/doctypes/schemas/small-preview.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/small-preview.css">
-				<map:read src="resources/publication/styles/authoring/small-preview-bitflux.css" mime-type="text/css"/>
+				<map:read src="resources/css/authoring/small-preview-bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
 		<!-- Frontpage: Preview -->
 		<map:pipeline>
 			<map:match pattern="preview.xml">
-				<map:generate src="docs/publication/authoring/preview.xml"/>
+				<map:generate src="content/authoring/preview.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/preview.xsl">
 				<!--
 				<map:generate src="http://127.0.0.1:7080/lenya/computerworld/index.html?cocoon-view=content"/>
 				-->
-				<map:generate src="docs/publication/live/index.html"/>
+				<map:generate src="content/live/index.html"/>
 				<map:transform src="xslt/Authoring/preview-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/preview.xsd">
-				<map:read src="docs/publication/doctypes/schemas/preview.xsd" mime-type="text/xml"/>
+				<map:read src="content/doctypes/schemas/preview.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/preview.css">
-				<map:read src="resources/publication/styles/authoring/preview-bitflux.css" mime-type="text/css"/>
+				<map:read src="resources/css/authoring/preview-bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
 		<!-- Frontpage: Headlines -->
 		<map:pipeline>
 			<map:match pattern="headlines.xml">
-				<map:generate src="docs/publication/authoring/headlines.xml"/>
+				<map:generate src="content/authoring/headlines.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/headlines.xsl">
 				<!--
 				<map:generate src="http://127.0.0.1:7080/lenya/computerworld/index.html?cocoon-view=content"/>
 				-->
-				<map:generate src="docs/publication/live/index.html"/>
+				<map:generate src="content/live/index.html"/>
 				<map:transform src="xslt/Authoring/headlines-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/headlines.xsd">
-				<map:read src="docs/publication/doctypes/schemas/headlines.xsd" mime-type="text/xml"/>
+				<map:read src="content/doctypes/schemas/headlines.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/headlines.css">
-				<map:read src="resources/publication/styles/authoring/headlines-bitflux.css" mime-type="text/css"/>
+				<map:read src="resources/css/authoring/headlines-bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
 		<!-- Generic -->
 		<map:pipeline>
 			<map:match pattern="css/bitflux.css">
-				<map:read src="resources/publication/styles/authoring/bitflux.css" mime-type="text/css"/>
+				<map:read src="resources/css/authoring/bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
 		<!-- /GET -->
@@ -137,7 +137,7 @@
 			<map:match pattern="save/*/*">
 				<map:act type="xopushandler">
 					<map:parameter name="save-filename" value="{1}/{2}"/>
-					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
+					<map:generate src="lenya/content/bitflux/response.xml"/>
 					<map:serialize type="xml"/>
 				</map:act>
 				<map:generate src="xopus_error.xml"/>
@@ -146,7 +146,7 @@
 			<map:match pattern="save/*">
 				<map:act type="xopushandler">
 					<map:parameter name="save-filename" value="{1}"/>
-					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
+					<map:generate src="lenya/content/bitflux/response.xml"/>
 					<map:serialize type="xml"/>
 				</map:act>
 				<map:generate src="xopus_error.xml"/>

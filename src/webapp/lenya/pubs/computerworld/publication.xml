@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.5 2003/03/04 19:45:09 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.6 2003/03/04 21:44:16 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>Computerworld</lenya:name>
@@ -19,7 +19,7 @@ Changing of URIs to root
 ------------------------
 - src/lenyacms/src/webapp/lenya/pubs/computerworld/live-sitemap.xmap
 Comment out all image transform stylesheets:
-<map:transform src="xslt/Live/images.xsl" label="content"/>
+<map:transform src="xslt/live/images.xsl" label="content"/>
 
 - src/lenyacms/src/webapp/lenya/pubs/computerworld/xslt/navigation.xsl 
 Change to the following line:

@@ -21,17 +21,17 @@
    <!-- Images -->
    <map:pipeline>
      <map:match pattern="images/**.gif">
-       <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+       <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
          <map:parameter name="expires" value="2000000000"/>
        </map:read>
      </map:match>
      <map:match pattern="**/*.png">
-       <map:read src="resources/publication/images/live/{2}.png" mime-type="images/png">
+       <map:read src="resources/images/live/{2}.png" mime-type="images/png">
          <map:parameter name="expires" value="2000000000"/>
        </map:read>
      </map:match>
      <map:match pattern="xdocs/images/**.gif">
-       <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+       <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
          <map:parameter name="expires" value="2000000000"/>
        </map:read>
      </map:match>
@@ -44,7 +44,7 @@
        <map:redirect-to uri="index.html"/>
        -->
        <map:aggregate element="site">
-         <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
+         <map:part src="content/live/navigation.xml" label="navigation"/>
          <map:part src="cocoon:/tree.xml"/>
        </map:aggregate>
        <map:transform src="xslt/toc-main.xsl"/>
@@ -53,7 +53,7 @@
      </map:match>
      <map:match pattern="index.html">
        <map:aggregate element="site">
-         <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
+         <map:part src="content/live/navigation.xml" label="navigation"/>
          <map:part src="cocoon:/tree.xml"/>
        </map:aggregate>
        <map:transform src="xslt/toc-main.xsl"/>
@@ -83,7 +83,7 @@
 
      <map:match pattern="xdocs/*.html">
        <map:aggregate element="site">
-         <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
+         <map:part src="content/live/navigation.xml" label="navigation"/>
          <map:part src="cocoon:/body-{1}.xml" label="content"/>
        </map:aggregate>
        <map:transform src="xslt/xdoc-main.xsl"/>
@@ -109,7 +109,7 @@
 
    <map:pipeline>
      <map:match pattern="**.xml">
-       <map:generate src="docs/publication/live/{1}.xml"/>
+       <map:generate src="content/live/{1}.xml"/>
        <map:serialize type="xml"/>
      </map:match>
    </map:pipeline>
@@ -118,13 +118,13 @@
    <!-- HTML -->
    <map:pipeline>
      <map:match pattern="js-index.html">
-       <map:read src="resources/publication/html/toc.html" mime-type="text/html"/>
+       <map:read src="resources/html/toc.html" mime-type="text/html"/>
      </map:match>
      <map:match pattern="*.js">
-       <map:read src="resources/publication/html/{1}.js" mime-type="text/js"/>
+       <map:read src="resources/html/{1}.js" mime-type="text/js"/>
      </map:match>
      <map:match pattern="welcome.html">
-       <map:read src="resources/publication/html/welcome.html" mime-type="text/html"/>
+       <map:read src="resources/html/welcome.html" mime-type="text/html"/>
      </map:match>
      <map:match pattern="previous-index.html">
        <map:read src="resources/html/index.html" mime-type="text/html"/>
