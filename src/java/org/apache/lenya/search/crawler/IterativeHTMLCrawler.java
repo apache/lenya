@@ -28,13 +28,17 @@ public class IterativeHTMLCrawler{
  *
  */
   public static void main(String[] args){
-    if(args.length != 4){
-      System.err.println("Usage: IterativeHTMLCrawler startURL scope url_list_file html_dump_directory (http://127.0.0.1:8080/index.html http://127.0.0.1:8080/ /home/wyona/url_list.txt /home/wyona/html_dump)");
+    if(args.length != 1){
+    //if(args.length != 4){
+      System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
+      //System.err.println("Usage: IterativeHTMLCrawler startURL scope url_list_file html_dump_directory (http://127.0.0.1:8080/index.html http://127.0.0.1:8080/ /home/wyona/url_list.txt /home/wyona/html_dump)");
       return;
       }
  
     try{
-      new IterativeHTMLCrawler(args[2],args[3]).crawl(new URL(args[0]),args[1]);
+      CrawlerEnvironment ce=new CrawlerEnvironment(args[0]);
+      new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),ce.resolvePath(ce.getHTDocsDumpDir())).crawl(new URL(ce.getBaseURL()),ce.getScopeURL());
+      //new IterativeHTMLCrawler(args[2],args[3]).crawl(new URL(args[0]),args[1]);
       }
     catch(MalformedURLException e){
       System.err.println(e);
