@@ -10,6 +10,10 @@
 
 <xsl:template match="lenya:publication">
 <html>
+<head>
+  <title>Lenya CMS Publication: <xsl:value-of select="lenya:name"/></title>
+  <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
+</head>
 <body>
 <table>
 <tr>

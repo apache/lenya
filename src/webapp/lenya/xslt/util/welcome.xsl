@@ -4,6 +4,10 @@
 
 <xsl:template match="/">
 <html>
+<head>
+  <title>Welcome to Lenya CMS</title>
+  <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
+</head>
 <body>
   <h1>Lenya - Content Management System</h1>
   
