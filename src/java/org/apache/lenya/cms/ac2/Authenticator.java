@@ -1,5 +1,5 @@
 /*
-$Id: Authenticator.java,v 1.1 2003/07/15 13:50:15 andreas Exp $
+$Id: Authenticator.java,v 1.2 2003/07/15 14:01:17 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,12 +61,20 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.ac.AccessControlException;
 
 /**
+ * An authenticator.
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public interface Authenticator extends Component {
 
     String ROLE = Authenticator.class.getName();
 
+    /**
+     * Authenticates a request.
+     * @param accreditableManager The accreditable manager to use.
+     * @param request The request.
+     * @return <code>true</code> if the request is authenticated, <code>false</code> otherwise.
+     * @throws AccessControlException when something went wrong.
+     */
     boolean authenticate(AccreditableManager accreditableManager, Request request)
         throws AccessControlException;
 }

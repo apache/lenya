@@ -189,6 +189,11 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
     private Event[] events;
 
+    /**
+     * Returns if the events contain a specific event.
+     * @param eventName The name of the event to check for.
+     * @return A boolean value.
+     */
     protected boolean containsEvent(String eventName) {
         boolean result = false;
 
@@ -202,21 +207,24 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     }
 
     /**
-     * @return
+     * Returns if the current document has a workflow.
+     * @return A boolean value.
      */
     protected boolean hasWorkflow() {
         return hasWorkflow;
     }
 
     /**
-     * @param b
+     * Sets if the current document has a workflow.
+     * @param hasWorkflow A boolean value.
      */
-    public void setHasWorkflow(boolean b) {
-        hasWorkflow = b;
+    public void setHasWorkflow(boolean hasWorkflow) {
+        this.hasWorkflow = hasWorkflow;
     }
 
     /**
-     * @param instance
+     * Sets the workflow instance for the current request.
+     * @param instance A workflow instance.
      */
     public void setInstance(WorkflowInstance instance) {
         this.instance = instance;
