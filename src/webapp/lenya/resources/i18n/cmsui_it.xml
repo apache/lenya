@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   
-  $Id: cmsui_it.xml,v 1.2 2004/05/01 19:40:00 roku Exp $ 
+  $Id$ 
   @translators Giampaolo Trapasso  <trapo at trapo dot it>
 -->
 
@@ -92,7 +92,7 @@
 	<message key="Password">Password</message>
 	<message key="Username">Nome utente</message>
 	<message key="Authentication failed">Autenticazione fallita</message>
-	<message key="try-user-lenya">Prova utente {0} e password {1}</message>
+	<message key="try-user-lenya">Prova utente {0} e password {1} (editore) o utente {2} e password {3} (revisore)</message>
 	<!-- logout screen -->
 	<message key="logout-from-pub">LOGOUT dalla Pubblicazione {0}</message>
 	<message key="Your History">Le tue modifiche</message>

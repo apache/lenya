@@ -99,7 +99,7 @@
   <message key="Password">Mot de passe</message>
   <message key="Username">Utilisateur</message>
   <message key="Authentication failed">L'authentification a échoué</message>
-  <message key="try-user-lenya">Essayez l'utilisateur {0} et le mot de passe {1}</message>
+  <message key="try-user-lenya">Essayez l'utilisateur {0} et le mot de passe {1} (éditeur) ou l'utilisateur {2} et le mot de passe {3} (réviseur)</message>
 
   <!-- logout screen -->
   <message key="logout-from-pub">DECONNEXION de la publication {0}</message>

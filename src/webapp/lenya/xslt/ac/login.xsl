@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: login.xsl,v 1.20 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id$ -->
     
 <xsl:stylesheet version="1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"      
@@ -63,6 +63,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <i18n:translate>
         <i18n:text i18n:key="try-user-lenya" />
         <i18n:param>"lenya"</i18n:param>
+        <i18n:param>"levi"</i18n:param>
+        <i18n:param>"alice"</i18n:param>
         <i18n:param>"levi"</i18n:param>
       </i18n:translate>
     </p>
