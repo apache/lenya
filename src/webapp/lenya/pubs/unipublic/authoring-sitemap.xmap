@@ -15,7 +15,15 @@
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-    <map:actions/>
+    <map:actions>
+      <map:action name="revision-controller" src="org.wyona.cms.cocoon.acting.RevisionControllerAction" logger="sitemap.action.revision-controller">
+<!--
+        <authenticator type="unipublic"/>
+        <policies>unipublic/policies/</policies>
+        <public>login-screen|do-login|switch-user|logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
+-->
+      </map:action>
+    </map:actions>
     <map:selectors/>
   </map:components>
 
@@ -192,6 +200,27 @@
       </map:match>
 
       <!-- Article -->
+      <map:match pattern="rc/*/*/*/*/index.xml">
+        <map:act type="revision-controller">
+          <map:generate src="docs/publication/live/{../1}/{../2}/articles/{../3}/{../4}/index.xml"/>
+          <map:serialize type="xml"/>
+        </map:act>
+        <map:generate src="cocoon:/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+<!--
+      <map:match pattern="rc/**">
+        <map:act type="revision-controller">
+          <map:match pattern="*/*/*/*/index.xml">
+            <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+            <map:serialize type="xml"/>
+          </map:match>
+        </map:act>
+        <map:generate src="docs/publication/live/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+-->
+
       <map:match pattern="*/*/*/*/index.xml">
         <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
