@@ -15,14 +15,14 @@
  *
  */
 
-/* $Id: Accreditable.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id: Accreditable.java,v 1.3 2004/08/16 08:02:38 andreas Exp $  */
 
 package org.apache.lenya.ac;
 
 
 /**
  * An Accreditable can be accredited with roles on a certain URI
- * using a {@link Credential}.
+ * using a {@link org.apache.lenya.ac.impl.Credential}.
  */
 public interface Accreditable {
     /**
