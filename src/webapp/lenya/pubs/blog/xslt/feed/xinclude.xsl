@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xinclude.xsl,v 1.6 2004/04/20 14:02:47 michi Exp $ -->
+<!-- $Id: xinclude.xsl,v 1.7 2004/05/26 08:13:45 egli Exp $ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -25,7 +25,7 @@
   <xsl:apply-templates select="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0"/>
 </xsl:template>                                                                                                                             
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
-<feed xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/atom/ns#" version="0.2" xml:lang="en">
+<feed xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/atom/ns#" version="0.3" xml:lang="en">
   <description xlink:href="feeds/{$feedid}/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)xpointer(/atom:feed/atom:link)xpointer(/atom:feed/atom:modified)" xlink:show="replace"/>
 
   <xsl:for-each select="dir:directory">
