@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.3 2003/07/23 13:21:28 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.4 2003/10/09 13:38:20 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
   <lenya:name>Default Publication</lenya:name>
@@ -20,4 +20,7 @@
       <li><a href="authoring/index.html">Editor`s View</a> (Authoring)</li>
     </ol>
   </lenya:readme>
+  <lenya:tests>
+    <lenya:test>Search: <a href="search-authoring/lucene">Authoring</a>, <a href="search-live/lucene">Live</a></lenya:test>
+  </lenya:tests>
 </lenya:publication>
