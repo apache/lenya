@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.37 2003/09/04 15:31:27 andreas Exp $
+ $Id: info.xsl,v 1.38 2003/09/04 15:37:05 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -82,8 +82,8 @@
    <table class="lenya-table-noborder">
    <tr><td class="lenya-entry-caption">Title:</td><td><xsl:value-of select="dc:title"/></td></tr>
    <tr><td class="lenya-entry-caption">Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
-   <tr><td class="lenya-entry-caption">Workflow State:</td><td><xsl:value-of select="lenya-info:workflow-state"/></td></tr>
-   <tr><td class="lenya-entry-caption">Live:</td><td><xsl:value-of select="lenya-info:is-live"/></td></tr>
+   <tr><td class="lenya-entry-caption">Workflow State:</td><td><xsl:apply-templates select="lenya-info:workflow-state"/></td></tr>
+   <tr><td class="lenya-entry-caption">Live:</td><td><xsl:apply-templates select="lenya-info:is-live"/></td></tr>
    <!--
    <tr><td class="lenya-entry-caption">Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
    -->
@@ -99,6 +99,24 @@
   </xsl:when>
   <xsl:otherwise>No overview available.</xsl:otherwise>
   </xsl:choose>
+</xsl:template>
+
+
+<xsl:template match="lenya-info:workflow-state">
+	<xsl:call-template name="overview-workflow"/>
+</xsl:template>
+
+
+<xsl:template match="lenya-info:is-live">
+	<xsl:call-template name="overview-workflow"/>
+</xsl:template>
+
+
+<xsl:template name="overview-workflow">
+	<xsl:choose>
+		<xsl:when test="normalize-space(.) != ''"><xsl:value-of select="normalize-space(.)"/></xsl:when>
+		<xsl:otherwise><span style="color: #999999;">[no workflow]</span></xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 
