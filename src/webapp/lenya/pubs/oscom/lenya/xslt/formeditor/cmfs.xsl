@@ -14,7 +14,7 @@
 <!-- FIXME: The project "lenya" throws an exception because of the description within the log file -->
 <tr>
   <td>&#160;</td><td valign="top">Description</td>
-  <td><textarea name="&lt;xupdate:update select=&quot;/system/description[@tagID='{description/@tagID}']&quot;&gt;&lt;![CDATA[" cols="40" rows="5"><xsl:value-of select="description" /></textarea></td>
+  <td><textarea name="&lt;xupdate:update select=&quot;/system/description[@tagID='{description/@tagID}']&quot;&gt;" cols="40" rows="5"><xsl:apply-templates select="description" mode="mixed"/></textarea></td>
 </tr>
 <xsl:if test="not(features)">
 <tr>
@@ -41,6 +41,19 @@
   <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-after select=&quot;/system/features/feature[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;feature&quot;&gt;&lt;title&gt;New Title&lt;/title&gt;&lt;description&gt;New Description&lt;/description&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;" value="LENYA"/></td>
   <td colspan="2">Feature</td>
 </tr>
+</xsl:template>
+
+
+
+<!-- Copy mixed content -->
+
+
+
+<xsl:template match="description//*" mode="mixed">
+<xsl:copy>
+<xsl:copy-of select="@*[local-name()!='tagID']"/>
+<xsl:apply-templates select="node()"/>
+</xsl:copy>
 </xsl:template>
  
 </xsl:stylesheet>  
