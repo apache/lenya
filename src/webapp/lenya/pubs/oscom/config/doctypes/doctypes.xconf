@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<doctypes>
+<doc type="Home">
+  <children>
+    <doc type="Generic"/>
+  </children>
+  <tasks>
+    <task id="publish"/>
+  </tasks>
+</doc>
+
+<doc type="Generic">
+  <tasks>
+    <task id="hello-world"/>
+    <task id="publish"/>
+  </tasks>
+</doc>
+</doctypes>
