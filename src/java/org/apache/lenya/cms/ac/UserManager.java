@@ -1,5 +1,5 @@
 /*
- * $Id: UserManager.java,v 1.1 2003/05/30 09:38:59 egli Exp $
+ * $Id: UserManager.java,v 1.2 2003/05/30 10:47:26 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,10 +51,10 @@ package org.apache.lenya.cms.ac;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
@@ -74,9 +74,10 @@ public class UserManager {
 
 	private static HashMap instances = new HashMap();
 	
-	protected List users = null;
+	protected Set users = null;
 
-	private UserManager(Publication publication) {
+	private UserManager(Publication publication)
+		throws AccessControlException {
 
 		File identityDir = new File(publication.getDirectory(), IDENTITY_PATH);
 		if (!identityDir.exists() || !identityDir.isDirectory()) {
@@ -88,41 +89,43 @@ public class UserManager {
 				return (pathname.getName().endsWith(".iml"));
 			}
 		});
-		users = new ArrayList();
+		users = new HashSet();
 		Configuration config = null;
 		for (int i = 0; i < userFiles.length; i++) {
 			DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 			try {
 				config = builder.buildFromFile(userFiles[i]);
 			} catch (Exception e) {
-				log.error(
-					// an exception occured when trying to read the configuration
-					// from the identity file. Log and continue without
-					// this user.
+				String errorMsg =
 					"Exception when reading the configuration from file: "
-						+ userFiles[i].getName());
-				continue;
+						+ userFiles[i].getName();
+				// an exception occured when trying to read the configuration
+				// from the identity file.
+				log.error(errorMsg);
+				throw new AccessControlException(errorMsg, e);
 			}
 			String klass = config.getValue(FileUser.CLASS_ATTRIBUTE);
 			User user = null;
 			try {
 				user = (User) Class.forName(klass).newInstance();
 			} catch (Exception e) {
-				// an exception occured when trying to instanciate
-				// a user. Log an continue without this user.
-				log.error(
+				String errorMsg =
 					"Exception when trying to instanciate: "
 						+ klass
 						+ " with exception: "
-						+ e.getMessage());
-				continue;
+						+ e.getMessage();
+				// an exception occured when trying to instanciate
+				// a user.
+				log.error(errorMsg);
+				throw new AccessControlException(errorMsg, e);
 			}
 			user.configure(config);
 			users.add(user);
 		}
 	}
 
-	public UserManager instance(Publication publication) {
+	public UserManager instance(Publication publication)
+		throws AccessControlException {
 		if (!instances.containsKey(publication))
 			instances.put(publication, new UserManager(publication));
 		return (UserManager) instances.get(publication);
@@ -130,5 +133,25 @@ public class UserManager {
 	
 	public Iterator getUsers() {
 		return users.iterator();
+	}
+	
+	public void add(User user) {
+		users.add(user);
+	}
+	
+	public void remove(User user) {
+		users.remove(user);
+	}
+
+	public User getUser(String userId) {
+		User user = null;
+		Iterator iter = getUsers();
+		while (iter.hasNext()) {
+			User element = (User)iter.next();
+			if (element.getId().equals(userId)) {
+				user = element;
+			}
+		}
+		return user;
 	}
 }
