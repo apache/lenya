@@ -22,19 +22,22 @@
     
 <xsl:namespace-alias stylesheet-prefix="xso" result-prefix="xsl"/>
 
-<xsl:param name="document-url"/>
-<xsl:param name="area"/>
-<xsl:param name="context-prefix"/>
-<xsl:param name="publication-id"/>
+<xsl:param name="publicationid"/>
+<xsl:param name="documenturl"/>
+<xsl:param name="contextpath"/>
 
 
 <xsl:template match="/">
+  
+  <xsl:variable name="scheduler-url"
+      select="concat($contextpath, '/', $publicationid, '/info-authoring', $documenturl)"/>
+  
   <xso:stylesheet exclude-result-prefixes="sch">
   	
     <xso:template match="sch:scheduler-form">
 			<div class="lenya-box">
 				<div class="lenya-box-title">Scheduler&#160;
-					<a href="?lenya.usecase=schedule&amp;lenya.step=showscreen">[Scheduler Admin]</a>
+					<a href="{$scheduler-url}?lenya.usecase=info-scheduler&amp;lenya.step=showscreen">[Scheduler Admin]</a>
 				</div>
 				<div class="lenya-box-body">
 					<xsl:apply-templates select="sch:scheduler/sch:job-group"/>
