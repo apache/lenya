@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
 public class PageEnvelope {
     
     public static final String PUBLICATION_ID = "publication-id";
-    public static final String CONTEXT = "context";
+    public static final String CONTEXT = "context-prefix";
     public static final String STAGE = "stage";
     
     private Publication publication;

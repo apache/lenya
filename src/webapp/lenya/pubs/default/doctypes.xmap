@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: doctypes.xmap,v 1.1 2003/04/16 13:27:50 egli Exp $ -->
+<!-- CVS: $Id: doctypes.xmap,v 1.2 2003/04/16 13:54:55 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -28,17 +28,17 @@
   <map:pipelines>
 
     <map:pipeline>
-      <!-- pattern="{stage}/article/{path}.html" -->
+      <!-- pattern="{stage}/article/{document-id}.html" -->
       <map:match pattern="*/article/**.html">
         <map:act type="page-envelope">
           <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page">
-	    <!-- /navigation/{publication-id}/{stage}/tabs/{path}.html.xml -->
+	    <!-- /navigation/{publication-id}/{stage}/tabs/{document-id}.html.xml -->
             <map:part src="cocoon://navigation/{publication-id}/{stage}/tabs/{../2}.html.xml"/>
             <map:part src="cocoon://navigation/{publication-id}/{stage}/menu/{../2}.html.xml"/>
             <map:part src="content/{stage}/{../2}.xml"/>
           </map:aggregate>
           <map:transform src="xslt/page2xhtml.xsl">
-            <map:parameter name="root" value="{context}/{publication-id}/"/>
+            <map:parameter name="root" value="{context-prefix}/{publication-id}/"/>
           </map:transform>
         </map:act>
         <map:serialize type="xml"/>
