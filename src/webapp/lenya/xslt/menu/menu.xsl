@@ -44,7 +44,15 @@
             </xsl:choose>
           </xsl:variable>
           
-          <a id="info-tab" href="{url-info/context-prefix}/{url-info/publication-id}/info-{url-info/area}{$document-url}?lenya.usecase=info-overview&amp;lenya.step=showscreen">
+          <xsl:variable name="info-area">
+          	<xsl:text>info-</xsl:text>
+          	<xsl:choose>
+          		<xsl:when test="url-info/area = 'admin'">authoring</xsl:when>
+          		<xsl:otherwise><xsl:value-of select="url-info/area"/></xsl:otherwise>
+          	</xsl:choose>
+          </xsl:variable>
+          
+          <a id="info-tab" href="{url-info/context-prefix}/{url-info/publication-id}/{$info-area}{$document-url}?lenya.usecase=info-overview&amp;lenya.step=showscreen">
             <xsl:choose><xsl:when test="$infoarea = 'true'">
                 <img border="0" src="/lenya/lenya/menu/images/info_active.gif" />
               </xsl:when><xsl:otherwise>
