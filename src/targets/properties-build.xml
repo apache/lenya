@@ -63,6 +63,15 @@
   <!-- The original, unmodified and expanded cocoon.war file upon which we base our package -->
   <property name="src.cocoon.dir" value="../../build/cocoon/build/webapp"/>
 
+  <!-- Default publications dir -->
+  <property name="pubs.root.dirs" value="src/webapp/lenya/pubs"/>
+
+  <!-- Tomcat webapps dir -->
+  <property name="install.dir" value="../../build/tomcat/webapps/lenya"/>
+
+  <!-- Tomcat cache dir -->
+  <property name="cache.dir" value="../../build/tomcat/work/Standalone/localhost/lenya"/>
+
   <!--
   The files that should be copied into the dist
   directory and packed up as tar.gz file, along with the .war file
