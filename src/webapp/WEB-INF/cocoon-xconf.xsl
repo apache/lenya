@@ -236,22 +236,21 @@
       role="org.apache.lenya.cms.usecase.UnitOfWorkImpl"/>
       
   <usecases>
-    <component-instance name="ac.login" logger="lenya.ac" class="org.apache.lenya.cms.ac.Login"/>
-    <component-instance name="ac.logout" logger="lenya.ac" class="org.apache.lenya.cms.ac.Logout"/>
-    <component-instance name="admin.addUser" logger="lenya.admin" class="org.apache.lenya.cms.admin.AddUser"/>
-    <component-instance name="admin.userProfile" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserProfile"/>
-    <component-instance name="admin.changePassword" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserPassword"/>
-    <component-instance name="admin.userGroups" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserGroups"/>
-    <component-instance name="authoring.create" logger="lenya.authoring" class="org.apache.lenya.cms.authoring.Create"/>
-    <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.AccessControl"/>
-    <component-instance name="tab.acAuthoring" logger="lenya.site" class="org.apache.lenya.cms.ac.AccessControl"/>
-    <component-instance name="tab.acLive" logger="lenya.site" class="org.apache.lenya.cms.ac.AccessControl"/>
-    <component-instance name="tab.acTrash" logger="lenya.site" class="org.apache.lenya.cms.ac.AccessControl"/>
-    <component-instance name="tab.assets" logger="lenya.site" class="org.apache.lenya.cms.site.Assets"/>
-    <component-instance name="tab.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.Metadata"/>
-    <component-instance name="tab.overview" logger="lenya.site" class="org.apache.lenya.cms.site.Overview"/>
+    <component-instance name="ac.login" logger="lenya.ac" class="org.apache.lenya.cms.ac.usecases.Login"/>
+    <component-instance name="ac.logout" logger="lenya.ac" class="org.apache.lenya.cms.ac.usecases.Logout"/>
+    <component-instance name="admin.addUser" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddUser"/>
+    <component-instance name="admin.userProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserProfile"/>
+    <component-instance name="admin.changePassword" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserPassword"/>
+    <component-instance name="admin.userGroups" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserGroups"/>
+    <component-instance name="authoring.create" logger="lenya.authoring" class="org.apache.lenya.cms.site.usecases.Create"/>
+    <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>
+    <component-instance name="tab.acAuthoring" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>
+    <component-instance name="tab.acLive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>
+    <component-instance name="tab.acTrash" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl"/>
+    <component-instance name="tab.assets" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Assets"/>
+    <component-instance name="tab.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.usecases.Metadata"/>
+    <component-instance name="tab.overview" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Overview"/>
   </usecases>
-      
 
   </xsl:copy>
 
