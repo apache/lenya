@@ -15,15 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: webdav.xmap,v 1.10 2004/05/12 13:04:45 gregor Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components>
-    <map:selectors default="browser">
-      <map:selector logger="sitemap.selector.request-method" name="request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
-    </map:selectors>
-  </map:components>
+  <map:components/>
 
   <map:views/>
 

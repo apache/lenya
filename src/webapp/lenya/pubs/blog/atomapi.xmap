@@ -15,16 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: atomapi.xmap,v 1.9 2004/03/19 10:21:35 gregor Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components>
-    <map:selectors default="browser">
-      <map:selector logger="sitemap.selector.request-method" name="request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
-      <map:selector logger="sitemap.selector.request-parameter" name="request-parameter" src="org.apache.cocoon.selection.RequestParameterSelector"/>
-    </map:selectors>
-  </map:components>
+  <map:components/>
 
   <map:views/>
 
