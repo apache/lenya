@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: SitemapPolicyManager.java,v 1.4 2004/04/28 12:46:37 andreas Exp $  */
-
 package org.apache.lenya.cms.ac;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -34,15 +32,18 @@ import org.apache.lenya.ac.impl.PolicyBuilder;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 
-public class SitemapPolicyManager
-    extends AbstractLogEnabled
-    implements PolicyManager, Serviceable {
+/**
+ * Policy manager based on Cocoon sitemaps.
+ * @version $Id: SitemapPolicyManager.java,v 1.5 2004/08/16 16:42:31 andreas Exp $
+ */
+public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyManager, Serviceable {
 
     /**
-     * @see org.apache.lenya.ac.PolicyManager#getPolicy(org.apache.lenya.ac.AccreditableManager, java.lang.String)
+     * @see org.apache.lenya.ac.PolicyManager#getPolicy(org.apache.lenya.ac.AccreditableManager,
+     *      java.lang.String)
      */
     public Policy getPolicy(AccreditableManager accreditableManager, String url)
-        throws AccessControlException {
+            throws AccessControlException {
 
         url = url.substring(1);
 
@@ -96,16 +97,20 @@ public class SitemapPolicyManager
         return manager;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
+    /**
+     * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager,
+     *      org.apache.lenya.ac.Accreditable)
      */
-    public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
+    public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable)
+            throws AccessControlException {
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
+    /**
+     * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager,
+     *      org.apache.lenya.ac.Accreditable)
      */
-    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
+    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable)
+            throws AccessControlException {
     }
 
 }

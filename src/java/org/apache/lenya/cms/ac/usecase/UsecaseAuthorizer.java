@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: UsecaseAuthorizer.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
-
 package org.apache.lenya.cms.ac.usecase;
 
 import java.util.Arrays;
@@ -41,6 +39,10 @@ import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
+/**
+ * Authorizer for usecases.
+ * @version $Id: UsecaseAuthorizer.java,v 1.4 2004/08/16 16:42:32 andreas Exp $
+ */
 public class UsecaseAuthorizer
     extends AbstractLogEnabled
     implements Authorizer, Serviceable, Disposable, Parameterizable {
@@ -75,10 +77,8 @@ public class UsecaseAuthorizer
     }
 
     /**
-	 * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.lenya.ac.AccreditableManager,
-	 *      org.apache.lenya.ac.PolicyManager, org.apache.lenya.ac.Identity,
-	 *      org.apache.cocoon.environment.Request)
-	 */
+     * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
+     */
     public boolean authorize(Request request) throws AccessControlException {
 
         String usecase = request.getParameter(USECASE_PARAMETER);
@@ -158,22 +158,6 @@ public class UsecaseAuthorizer
         }
         return authorized;
     }
-
-    /**
-	 * Authorizes a usecase.
-	 * 
-	 * @param url The webapp URL.
-	 * @param usecase The usecase ID to authorize.
-	 * @param roles The roles of the current identity.
-	 * @return A boolean value.
-	 * @throws AccessControlException when something went wrong. public boolean
-	 *             authorizeUsecase(String url, String usecase, Request request) throws
-	 *             AccessControlException {
-	 * 
-	 * Role[] roles = PolicyAuthorizer.getRoles(request); Publication publication =
-	 * PublicationFactory.getPublication(resolver, request); return authorizeUsecase(url, usecase,
-	 * roles, publication); }
-	 */
 
     private ServiceManager manager;
 

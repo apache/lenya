@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowAuthorizer.java,v 1.4 2004/03/08 16:48:21 gregor Exp $  */
+/* $Id: WorkflowAuthorizer.java,v 1.5 2004/08/16 16:42:32 andreas Exp $  */
 
 package org.apache.lenya.cms.ac.workflow;
 
@@ -46,8 +46,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 	protected static final String EVENT_PARAMETER = "lenya.event";
 
 	/**
-	 * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.lenya.ac.Identity,
-	 *      org.apache.cocoon.environment.Request)
+	 * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request)
 	 */
 	public boolean authorize(Request request) throws AccessControlException {
 

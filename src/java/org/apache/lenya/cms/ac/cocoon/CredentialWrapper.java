@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: CredentialWrapper.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
-
 package org.apache.lenya.cms.ac.cocoon;
 
 import org.apache.lenya.ac.Accreditable;
@@ -26,6 +24,10 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 
+/**
+ * Wrapper class for credentials.
+ * @version $Id: CredentialWrapper.java,v 1.3 2004/08/16 16:42:31 andreas Exp $
+ */
 public class CredentialWrapper {
 
     /**
@@ -61,7 +63,7 @@ public class CredentialWrapper {
     }
 
     /**
-     * Returns the accreditable type ({@link #USER}, {@link GROUP}, or {@link IPRANGE})
+     * Returns the accreditable type ({@link #USER}, {@link #GROUP}, or {@link #IPRANGE})
      * @return A string.
      */
     public String getType() {
