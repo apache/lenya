@@ -9,8 +9,6 @@
   <title>Newsletter-Titel</title>
   <abstract>Das ist ein Beispiel-Newsletter.</abstract>
   <articles>
-    <article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
-    <article channel="magazin" section="geist" year="2002" dir="0470"/>
   </articles>
   <footer>------------------------------------------------------------<br/>
 unipublic - das Online-Magazin der Universität Zürich<br/>
