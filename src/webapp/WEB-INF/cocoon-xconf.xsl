@@ -291,6 +291,27 @@
   <parameter name="freememory" value="10000000"/>
 </xsl:template>
 
+
+<!-- JDBC store for scheduler -->
+<xsl:template match="component[@role = 'org.apache.cocoon.components.cron.JobScheduler']/store">
+  <store type="tx" delegate="org.quartz.impl.jdbcjobstore.StdJDBCDelegate">
+    <datasource provider="excalibur">LenyaScheduler</datasource>
+  </store>
+</xsl:template>
+
+
+<xsl:template match="datasources">
+  <xsl:copy>
+    <jdbc logger="core.datasources.lenya.scheduler" name="LenyaScheduler">
+      <pool-controller max="10" min="5"/>
+      <dburl>jdbc:hsqldb:hsql://localhost:9002</dburl>
+      <user>sa</user>
+      <password/>
+    </jdbc>
+  </xsl:copy>
+</xsl:template>
+
+
 <xsl:template match="@*|node()">
   <xsl:copy>
     <xsl:apply-templates select="@*|node()"/>
