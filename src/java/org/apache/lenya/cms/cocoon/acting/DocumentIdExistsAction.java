@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentIdExistsAction.java,v 1.3 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -43,7 +43,7 @@ public class DocumentIdExistsAction extends AbstractAction {
 
     /**
      * Check if there is a doument in the site tree with the given
-     * document-id.
+     * document-id and area [optional].
      * 
      * If yes return an empty map, if not return null.
      * 
@@ -54,14 +54,16 @@ public class DocumentIdExistsAction extends AbstractAction {
      * @param parameters a <code>Parameters</code> value
      *
      * @return an empty <code>Map</code> if there is a document 
-     * with the given document-id, null otherwiese
+     * with the given document-id and area [optional, default is
+     * the authoring area], null otherwiese
      *
-     * @exception DocumentDoesNotExistException if there is no document with the specified document-id.
      * @exception PageEnvelopeException if the PageEnvelope could not be created.
-     * @exception DocumentException if the language information could not be fetched from the document.
+     * @exception SiteTreeException if the site tree can  not be accessed.
+     * @exception ParameterException if the parameters can not be accessed.
      */
 
     public static final String DOCUMENT_ID_PARAMETER_NAME = "document-id";
+    public static final String AREA_PARAMETER_NAME="area";
 
     public Map act(
         Redirector redirector,
@@ -69,24 +71,25 @@ public class DocumentIdExistsAction extends AbstractAction {
         Map objectModel,
         String source,
         Parameters parameters)
-        throws PageEnvelopeException, SiteTreeException, ParameterException {
+        throws PageEnvelopeException, SiteTreeException, ParameterException{
 
+        if (!parameters.isParameter(DOCUMENT_ID_PARAMETER_NAME))
+            return null;
         String documentId = parameters.getParameter(DOCUMENT_ID_PARAMETER_NAME);
 
-        if (documentId == null) {
-            return null;
-        }
+        /* Use authoring area as default area for backward compatibility. */
+        String area = parameters.getParameter(AREA_PARAMETER_NAME, Publication.AUTHORING_AREA);
 
         PageEnvelope pageEnvelope =
             PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
 
         SiteTree siteTree =
-            pageEnvelope.getPublication().getSiteTree(
-                Publication.AUTHORING_AREA);
+            pageEnvelope.getPublication().getSiteTree(area);
 
-        if (siteTree.getNode(documentId) == null) {
+        if (siteTree.getNode(documentId) != null) {
             return Collections.EMPTY_MAP;
+        } else {
+            return null;
         }
-        return null;
     }
 }
