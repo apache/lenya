@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+  
+  <xsp:structure>
+    <xsp:include>org.apache.avalon.framework.parameters.ParameterException</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.GroupManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.AccessController</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.file.FileAccessController</xsp:include>
+    <xsp:include>java.io.File</xsp:include>
+    <xsp:include>java.util.Arrays</xsp:include>
+    <xsp:include>java.util.Iterator</xsp:include>
+  </xsp:structure>
+
+  <page>
+    <xsp:logic>
+      
+      String userId;
+      try {
+          userId = parameters.getParameter("user-id");
+      }
+      catch (ParameterException e) {
+          throw new ProcessingException(e);
+      }
+      Publication pub = 
+        (Publication)<input:get-attribute module="page-envelope" name="publication"/>;
+
+        File configDir = new File(pub.getDirectory(), "config" + File.separator + "ac");
+        AccessController controller = new FileAccessController(configDir);
+
+        UserManager userManager = null;  
+        GroupManager groupManager = null;
+        try {
+            userManager = controller.getUserManager();
+            groupManager = controller.getGroupManager();
+        } catch (Exception e) {
+            throw new ProcessingException("Exception when instantiating a UserManager or GroupManager", e);
+				}
+				
+        User user = userManager.getUser(userId);
+        
+        if (user != null) {
+    </xsp:logic>
+    <user>
+      <id><xsp:expr>user.getId()</xsp:expr></id>
+      <fullname><xsp:expr>user.getFullName()</xsp:expr></fullname>
+      <email><xsp:expr>user.getEmail()</xsp:expr></email>
+      <groups>
+        <xsp:logic>
+            Group groups[] = user.getGroups();
+            for (int i = 0; i &lt; groups.length; i++) {
+                <xsp:content>
+                  <group><xsp:expr>groups[i].getName()</xsp:expr></group>
+                </xsp:content>
+            }
+        </xsp:logic>
+      </groups>
+    </user>
+    
+    <xsp:logic>
+        }
+        else {
+            <message type="error">The user <strong><xsp:expr>userId</xsp:expr></strong> does not exist!</message>
+        }
+    </xsp:logic>
+    
+  </page>
+  
+</xsp:page>

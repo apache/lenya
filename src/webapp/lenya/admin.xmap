@@ -14,9 +14,20 @@
 
   <map:flow language="JavaScript">
     <map:script src="content/ac/passwd.js"/>
+    <map:script src="content/ac/user-admin.js"/>
   </map:flow>
 
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform src="xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize/>
+    </map:resource>
+  </map:resources>
+    
   <map:pipelines>
+    
     <!-- Menus -->
     <map:pipeline>
       <map:match pattern="menus/admin.xml">
@@ -25,7 +36,66 @@
       </map:match>
     </map:pipeline>
 
+    <!-- =================================================================== -->
+    <!-- FlowScript continuations -->
+    <!-- =================================================================== -->
+    
     <map:pipeline>
+      <map:match pattern="**/*.continuation">
+        <map:call continuation="{2}"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- =================================================================== -->
+    <!-- FlowScript pages -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+      
+      <map:match pattern="lenya.usecase.change_*/*.html">
+        <map:generate src="content/ac/user-{2}.xsp" type="serverpages"/>
+        <map:transform src="xslt/ac/user-{2}.xsl"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+      
+      <map:match pattern="redirect.html">
+        <map:generate src="content/ac/redirect.xsp" type="serverpages"/>
+        <map:transform src="xslt/ac/redirect.xsl"/>
+        <map:serialize/>
+      </map:match>
+      
+    </map:pipeline>
+    
+    <map:pipeline>
+      
+	    <!-- ============================================================ -->
+	    <!-- UserAdmin -->
+	    <!-- ============================================================ -->
+	    
+	    <map:match pattern="users.html">
+        <map:generate src="content/ac/user-admin.xsp" type="serverpages"/>
+        <map:transform src="xslt/ac/user-admin.xsl"/>
+        <map:call resource="style-cms-page"/>
+	    </map:match>
+	    
+	    <map:match pattern="users/*/index.html">
+        <map:generate src="content/ac/user-overview.xsp" type="serverpages">
+          <map:parameter name="user-id" value="{1}"/>
+        </map:generate>
+        <map:transform src="xslt/ac/user-overview.xsl"/>
+        <map:call resource="style-cms-page"/>
+	    </map:match>
+          
+	    <map:match pattern="users/*/lenya.usecase.*">
+	      <map:call function="user_{2}">
+	        <map:parameter name="userId" value="{1}"/>
+	      </map:call>
+	    </map:match>
+          
+	    <!-- ============================================================ -->
+	    <!-- Passwd -->
+	    <!-- ============================================================ -->
+	    
       <map:match pattern="passwd/continuation-*">
         <map:call continuation="{1}"/>
       </map:match>
@@ -52,15 +122,53 @@
    </map:match>
    </map:pipeline>
 
+    <!-- =================================================================== -->
+    <!-- Admin Navigation -->
+    <!-- =================================================================== -->
+    
     <map:pipeline>
+      <map:match pattern="internal/admin-navigation.xml">
+        <map:generate src="content/admin/navigation.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    
+    <!-- =================================================================== -->
+    <!-- Aggregated Pages -->
+    <!-- =================================================================== -->
+    <!--
+    <map:pipeline>
+      <map:match pattern="**">
+        <map:aggregate>
+          <map:part src="cocoon:/internal/{1}"/>
+          <map:part src="cocoon:/internal/admin-navigation.xml"/>
+        </map:aggregate>
+        <map:transform/>
+        <map:serialize/>
+      </map:match>
+    </map:pipeline>
+    -->
+    
+    <map:pipeline>
+<!--      
+      <map:match pattern="**.html">
+        <map:aggregate element="lenya" label="aggregate">
+          <map:part src="cocoon:/menus/admin.xml"/>
+          <map:part element="cmsbody" src="cocoon:/internal/{1}.html"/>
+				</map:aggregate>
+				<map:transform src="xslt/admin/root.xsl" label="content" />
+				<map:serialize type="html"/>
+      </map:match>
+-->      
       <map:match pattern="**">
         <map:aggregate element="lenya" label="aggregate">
           <map:part src="cocoon:/menus/admin.xml"/>
           <map:part element="cmsbody" src="resources/html/index.html"/>
-	</map:aggregate>
-	<map:transform src="xslt/admin/root.xsl" label="content" />
-	<map:serialize type="html"/>
+				</map:aggregate>
+				<map:transform src="xslt/admin/root.xsl" label="content" />
+				<map:serialize type="html"/>
       </map:match>
+      
     </map:pipeline>
     
     

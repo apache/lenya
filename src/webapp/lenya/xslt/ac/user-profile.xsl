@@ -19,7 +19,6 @@
     <page:page>
       <page:title>Edit User</page:title>
       <page:body>
-        <xsl:apply-templates select="body"/>
         <xsl:apply-templates select="user"/>
       </page:body>
     </page:page>
@@ -37,35 +36,48 @@
       <div class="lenya-box-body">
         
         <form method="GET" action="{/page/continuation}.continuation">
-          <input type="hidden" name="lenya.usecase" value="user-admin"/>
-          <input type="hidden" name="user-id" value="{id}"/>
           <table class="lenya-table-noborder">
             
-            <xsl:apply-templates select="/page/message[@area = 'profile']"/>
-              
             <tr>
+              
               <td class="lenya-entry-caption">User&#160;ID</td>
-              <td><xsl:value-of select="id"/></td>
+              <td>
+                 <xsl:value-of select="id"/>
+              </td>
             </tr>
             <tr>
               <td class="lenya-entry-caption">Full&#160;Name</td>
-              <td><xsl:value-of select="fullname"/></td>
+              <td>
+                <input class="lenya-form-element" name="fullname" type="text">
+                  <xsl:attribute name="value">
+                    <xsl:value-of select="fullname"/>
+                  </xsl:attribute>
+                </input>
+              </td>
             </tr>
             <tr>
               <td class="lenya-entry-caption">E-Mail</td>
-              <td><xsl:value-of select="email"/></td>
+              <td>
+                <input class="lenya-form-element" name="email" type="text">
+                  <xsl:attribute name="value">
+                    <xsl:value-of select="email"/>
+                  </xsl:attribute>
+                </input>
+              </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Groups</td>
+              <td/>
               <td>
-                <xsl:apply-templates select="groups"/>
+                <input name="submit" type="submit" value="Submit"/>
+                &#160;
+                <input name="cancel" type="submit" value="Cancel"/>
               </td>
             </tr>
           </table>
         </form>
       </div>
     </div>
-            
+    
     </td>
     </tr>
     </table>

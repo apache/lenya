@@ -32,7 +32,7 @@
         <th>User ID</th>
         <th>Full Name</th>
         <th>Groups</th>
-        <th colspan="2">Actions</th>
+        <th></th>
       </tr>
       <xsl:apply-templates select="user"/>
     </table>
@@ -42,26 +42,14 @@
   <xsl:template match="user">
     <tr>
       <td style="vertical-align: middle">
-        <xsl:value-of select="id"/>
+        <a href="users/{id}/index.html"><xsl:value-of select="id"/></a>
       </td>
       <td style="vertical-align: middle">
         <xsl:value-of select="fullName"/>
       </td>
       <xsl:apply-templates select="groups"/>
       <td style="vertical-align: middle">
-        <form method="GET">
-          <input name="lenya.usecase" type="hidden" value="user-modify"/>
-          <input name="lenya.step" type="hidden" value="showscreen"/>
-          <input name="user-id" type="hidden">
-            <xsl:attribute name="value">
-              <xsl:value-of select="id"/>
-            </xsl:attribute>
-          </input>
-          <input type="submit" value="Edit"/>
-        </form>
-      </td>
-      <td style="vertical-align: middle">
-        <form method="GET">
+        <form method="GET" action="index">
           <input name="lenya.usecase" type="hidden" value="user-delete"/>
           <input name="lenya.step" type="hidden" value="showscreen"/>
           <input name="user-id" type="hidden">

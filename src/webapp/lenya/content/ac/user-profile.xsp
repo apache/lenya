@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+  
+  <page>
+    <continuation><jpath:continuation/></continuation>
+    <user>
+      <id><jpath:value-of select="user-id"/></id>
+      <fullname><jpath:value-of select="fullname"/></fullname>
+      <email><jpath:value-of select="email"/></email>
+    </user>
+  </page>
+  
+</xsp:page>

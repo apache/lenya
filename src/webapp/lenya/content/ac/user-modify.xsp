@@ -6,6 +6,7 @@
   xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
   >
   
   <xsp:structure>
@@ -13,38 +14,68 @@
     <xsp:include>org.apache.lenya.cms.ac.GroupManager</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.AccessController</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.file.FileAccessController</xsp:include>
+    <xsp:include>java.io.File</xsp:include>
+    <xsp:include>java.util.Arrays</xsp:include>
     <xsp:include>java.util.Iterator</xsp:include>
   </xsp:structure>
 
   <page>
+    <continuation><jpath:continuation/></continuation>
     <xsp:logic>
+
+      <message type="error" area="profile"><jpath:value-of select="error-message-profile"/></message>
+      <message type="error" area="password"><jpath:value-of select="error-message-password"/></message>
+      <message type="success" area="profile"><jpath:value-of select="success-message-profile"/></message>
+      <message type="success" area="password"><jpath:value-of select="success-message-password"/></message>
+      
       String userId = <xsp-request:get-parameter name="user-id"/>;
       Publication pub = 
         (Publication)<input:get-attribute module="page-envelope" name="publication"/>;
 
-      UserManager userManager = null;
-      GroupManager groupManager = null;
-      try {
-        userManager = UserManager.instance(pub);
-	groupManager = GroupManager.instance(pub);
-      } catch (Exception e) {
-        throw new ProcessingException("Exception when instantiating a UserManager or GroupManager", e);
-      }
-      User user = userManager.getUser(userId);
+        File configDir = new File(pub.getDirectory(), "config" + File.separator + "ac");
+        AccessController controller = new FileAccessController(configDir);
+
+        UserManager userManager = null;  
+        GroupManager groupManager = null;
+        try {
+            userManager = controller.getUserManager();
+            groupManager = controller.getGroupManager();
+        } catch (Exception e) {
+            throw new ProcessingException("Exception when instantiating a UserManager or GroupManager", e);
+				}
+				
+        User user = userManager.getUser(userId);
     </xsp:logic>
     <user>
-      <id><xsp:expr>user.getId()</xsp:expr></id>
-      <fullname><xsp:expr>user.getFullName()</xsp:expr></fullname>
-      <email><xsp:expr>user.getEmail()</xsp:expr></email>
+      <id><jpath:value-of select="user-id"/></id>
+      <fullname><jpath:value-of select="fullname"/></fullname>
+      <email><jpath:value-of select="email"/></email>
+      <password><jpath:value-of select="password"/></password>
+      <confirm-password><jpath:value-of select="confirm-password"/></confirm-password>
       <groups>
-	<xsp:logic>
-	  for (Iterator groups = groupManager.getGroups(); groups.hasNext();) {
-	    Group group = (Group) groups.next();
-	    <xsp:content><group><xsp:expr>group.getName()</xsp:expr></group></xsp:content>
-	  }
-	</xsp:logic>
+        <xsp:logic>
+            Group groups[] = user.getGroups();
+            for (int i = 0; i &lt; groups.length; i++) {
+                <xsp:content>
+                  <group><xsp:expr>groups[i].getName()</xsp:expr></group>
+                </xsp:content>
+            }
+        </xsp:logic>
       </groups>
     </user>
+    <groups>
+      <xsp:logic>
+        List userGroups = Arrays.asList(groups);
+        for (Iterator allGroups = groupManager.getGroups(); allGroups.hasNext();) {
+            Group group = (Group) allGroups.next();
+            if (!userGroups.contains(group)) {
+                <xsp:content><group><xsp:expr>group.getName()</xsp:expr></group></xsp:content>
+	          }
+        }
+      </xsp:logic>
+    </groups>
   </page>
   
 </xsp:page>
