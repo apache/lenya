@@ -27,7 +27,6 @@ import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
-import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
@@ -38,7 +37,6 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.file.FileUser;
-import org.apache.log4j.Category;
 
 import com.sun.jndi.ldap.LdapCtxFactory;
 
@@ -48,7 +46,6 @@ import com.sun.jndi.ldap.LdapCtxFactory;
  */
 public class LDAPUser extends FileUser {
     private static Properties defaultProperties = null;
-    private static Category log = Category.getInstance(LDAPUser.class);
 
     public static final String LDAP_ID = "ldapid";
     private static String LDAP_PROPERTIES_FILE = "ldap.properties"; 
@@ -128,8 +125,8 @@ public class LDAPUser extends FileUser {
      */
     public boolean existsUser(String ldapId) throws AccessControlException {
 
-	if (log.isDebugEnabled())
-	    log.debug("existsUser() checking id " + ldapId);
+	if (getLogger().isDebugEnabled())
+	    getLogger().debug("existsUser() checking id " + ldapId);
 
         boolean exists = false;
 
@@ -140,8 +137,8 @@ public class LDAPUser extends FileUser {
 	    exists = (entry != null);
 
         } catch (Exception e) {
-	    if (log.isDebugEnabled())
-		log.debug("existsUser() for id " + ldapId + " got exception: " + e);
+	    if (getLogger().isDebugEnabled())
+            getLogger().debug("existsUser() for id " + ldapId + " got exception: " + e);
             throw new AccessControlException("Exception during search: ", e);
         } 
 
@@ -165,8 +162,8 @@ public class LDAPUser extends FileUser {
     protected void initialize() throws ConfigurationException {
         DirContext context = null;
         try {
-	    if (log.isDebugEnabled())
-		log.debug("initialize() getting entry ...");
+	    if (getLogger().isDebugEnabled())
+            getLogger().debug("initialize() getting entry ...");
 
 	    SearchResult entry = getDirectoryEntry(ldapId);
 	    StringBuffer name = new StringBuffer();
@@ -176,8 +173,8 @@ public class LDAPUser extends FileUser {
 		String usrNameAttr = 
 		    defaultProperties.getProperty(USR_NAME_ATTR_PROP, USR_NAME_ATTR_DEFAULT);
 
-		if (log.isDebugEnabled())
-		    log.debug("initialize() got entry, going to look for attribute " + usrNameAttr + " in entry, which is: " + entry);
+		if (getLogger().isDebugEnabled())
+		    getLogger().debug("initialize() got entry, going to look for attribute " + usrNameAttr + " in entry, which is: " + entry);
 		
 		Attributes attributes = entry.getAttributes();
 		if (attributes != null) {
@@ -190,8 +187,8 @@ public class LDAPUser extends FileUser {
 		}
 	    }
 	    ldapName = name.toString();
-	    if (log.isDebugEnabled())
-		log.debug("initialize() set name to " + ldapName);
+	    if (getLogger().isDebugEnabled())
+            getLogger().debug("initialize() set name to " + ldapName);
 
         } catch (Exception e) {
             throw new ConfigurationException("Could not read properties", e);
@@ -257,27 +254,27 @@ public class LDAPUser extends FileUser {
         try {
 	    principal = getPrincipal();
 	    
-	    if (log.isDebugEnabled())
-		log.debug("Authenticating with principal [" + principal + "]");
+	    if (getLogger().isDebugEnabled())
+            getLogger().debug("Authenticating with principal [" + principal + "]");
 
             ctx = bind(principal, password,
 		       defaultProperties.getProperty(USR_AUTH_TYPE_PROP, 
 						     USR_AUTH_TYPE_DEFAULT));
             authenticated = true;
             close(ctx);
-            if (log.isDebugEnabled()) {
-                log.debug("Context closed.");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Context closed.");
             }
         } catch (IOException e) {
-	    log.warn("authenticate handling IOException, check your setup: " + e);
+            getLogger().warn("authenticate handling IOException, check your setup: " + e);
         } catch (AuthenticationException e) {
-	    log.info("authenticate failed for principal " + principal + ", exception " + e);
+            getLogger().info("authenticate failed for principal " + principal + ", exception " + e);
         } catch (NamingException e) {
             // log this failure
             // StringWriter writer = new StringWriter();
             // e.printStackTrace(new PrintWriter(writer));
-            if (log.isInfoEnabled()) {
-                log.info("Bind for user " + principal + " to Ldap server failed: ", e);
+            if (getLogger().isInfoEnabled()) {
+                getLogger().info("Bind for user " + principal + " to Ldap server failed: ", e);
             }
         }
 
@@ -334,7 +331,7 @@ public class LDAPUser extends FileUser {
     private DirContext bind(String principal, String credentials,
 			    String authMethod) throws NamingException {
 
-        log.info("Binding principal: [" + principal + "]");
+        getLogger().info("Binding principal: [" + principal + "]");
 
         Hashtable env = new Hashtable();
 
@@ -354,7 +351,7 @@ public class LDAPUser extends FileUser {
 
         DirContext ctx = new InitialLdapContext(env, null);
 
-        log.info("Finished binding principal.");
+        getLogger().info("Finished binding principal.");
 
         return ctx;
     }
@@ -447,8 +444,8 @@ public class LDAPUser extends FileUser {
 		    defaultProperties.getProperty(USR_BRANCH_PROP, USR_BRANCH_DEFAULT);
 	    }
 	
-	    if (log.isDebugEnabled())
-		log.debug("searching object " + objectName + " filtering with " + searchFilter + ", recursive search ? " + recursiveSearch);
+	    if (getLogger().isDebugEnabled())
+		getLogger().debug("searching object " + objectName + " filtering with " + searchFilter + ", recursive search ? " + recursiveSearch);
 
 	    results = context.search(objectName, searchFilter, scope);
 
@@ -460,18 +457,18 @@ public class LDAPUser extends FileUser {
 	    // side-effects, such as unexpected exceptions.
 // 		try {
 // 		    if (results.hasMore()) {
-// 			log.warn("Found more than one entry in the directory for user " + userId + ". You probably should deactivate recursive searches. The first entry was used as a work-around.");
+// 			getLogger().warn("Found more than one entry in the directory for user " + userId + ". You probably should deactivate recursive searches. The first entry was used as a work-around.");
 // 		    }
 // 		}
 // 		catch (javax.naming.PartialResultException e) {
-// 		    if (log.isDebugEnabled())
-// 			log.debug("Catching and ignoring PartialResultException, as this means LDAP server does not support our sanity check");
+// 		    if (getLogger().isDebugEnabled())
+// 			getLogger().debug("Catching and ignoring PartialResultException, as this means LDAP server does not support our sanity check");
 // 		}
 
 	}
         catch (NamingException e) {
-	    if (log.isDebugEnabled())
-		log.debug("NamingException caught when searching on objectName = " + objectName + " and searchFilter=" + searchFilter + ", this exception will be propagated: " + e);
+	    if (getLogger().isDebugEnabled())
+		getLogger().debug("NamingException caught when searching on objectName = " + objectName + " and searchFilter=" + searchFilter + ", this exception will be propagated: " + e);
             throw e;
         } 
 	finally {
@@ -480,7 +477,7 @@ public class LDAPUser extends FileUser {
                     close(context);
                 }
             } catch (NamingException e) {
-		log.warn("this should not happen: exception closing context " + e);
+		getLogger().warn("this should not happen: exception closing context " + e);
             }
         }
 	return result;
@@ -555,12 +552,12 @@ public class LDAPUser extends FileUser {
 	}
 	else {
 	    // try for backwards compatibility of ldap properties
-	    log.warn("getPrincipal() read a deprecated format in ldap properties, please update");
+	    getLogger().warn("getPrincipal() read a deprecated format in ldap properties, please update");
 	    principal.append(defaultProperties.getProperty(PARTIAL_USER_DN_PROP));
 	}
 
-	if (log.isDebugEnabled())
-	    log.debug("getPrincipal() returning " + principal.toString());
+	if (getLogger().isDebugEnabled())
+	    getLogger().debug("getPrincipal() returning " + principal.toString());
 
 	return principal.toString();
     }
