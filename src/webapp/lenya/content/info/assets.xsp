@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: assets.xsp,v 1.9 2004/08/22 22:50:41 roku Exp $ -->
+<!-- $Id: assets.xsp,v 1.10 2004/08/25 10:15:34 andreas Exp $ -->
 
 <xsp:page 
   language="java" 
@@ -44,6 +44,8 @@
       File[] resources = resourceMgr.getResources();
     </xsp:logic>
     <lenya-info:assets>
+      <lenya-info:request-uri><request:get-uri/></lenya-info:request-uri>
+      <lenya-info:area><input:get-attribute module="page-envelope" name="area"/></lenya-info:area>
       <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
       <lenya-info:documentnodeid><input:get-attribute module="page-envelope" name="document-node-id"/></lenya-info:documentnodeid>
       <lenya-info:date><input:get-attribute module="date" name="currentDate"/></lenya-info:date>
