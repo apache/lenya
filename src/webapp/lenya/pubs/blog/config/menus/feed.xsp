@@ -51,7 +51,7 @@
         <item uc:usecase="publish" href="../../sidebar.html?sources=sidebar.xml&amp;uris=feeds/all/index.html&amp;lenya.step=showscreen">Publish Sidebar</item>
       </block>
       <block>
-        <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
+        <item><xsp:attribute name="href">?lenya.usecase=ac.logout</xsp:attribute>Logout</item>
       </block>
     </menu>
  

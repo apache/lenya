@@ -76,7 +76,7 @@
       </block>
       -->
       <block>
-        <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
+        <item><xsp:attribute name="href">?lenya.usecase=ac.logout</xsp:attribute>Logout</item>
       </block>
     </menu>
 
