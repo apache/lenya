@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URLPolicy.java,v 1.6 2004/04/28 12:52:35 andreas Exp $  */
+/* $Id: URLPolicy.java,v 1.7 2004/04/28 16:19:09 andreas Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -70,7 +70,7 @@ public class URLPolicy implements Policy {
 
     protected static final String[] VISITOR_ROLES = { "visitor", "visit" };
     protected static final String[] ADMINISTRATOR_ROLES = { "administrator", "admin", "organize" };
-    protected static final String[] AUTHOR_ROLES = { "author" };
+    protected static final String[] AUTHOR_ROLES = { "author", "edit" };
 
     /**
      * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
