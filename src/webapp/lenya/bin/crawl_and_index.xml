@@ -2,42 +2,60 @@
 
 <project default="main" basedir=".">
 
-<path id="classpath">
-  <fileset dir="src/cocoon/WEB-INF/lib">
-    <include name="*.jar"/>
-  </fileset>
-</path>
-
 <target name="main" description="Says Hi" depends="crawl, index">
   <echo>Hi</echo>
 </target>
 
 <target name="init">
-  <echo message="Init"/>
-  <property name="crawl.classpath" value="build/wyona-cms/classes:src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar"/>
+  <echo message="INFO: Init"/>
+  <property name="crawler.xconf" value="src/webapp/wyona/cms/pubs/oscom/docs/publication/crawler.xconf"/>
+  <property name="wyona.src.dir" value="/home/michiii/src/wyonacms"/>
+
+  <path id="class.path">
+    <pathelement path="${wyona.src.dir}/build/wyona-cms/classes"/>
+    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar"/>
+    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/avalon-excalibur-20020402.jar"/>
+
+    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/xml-apis.jar"/>
 <!--
-  <path id="">
-  </path>
+    <pathelement path="/home/michiii/build/jakarta-ant-1.4.1/lib/crimson.jar"/>
 -->
+<!--
+    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/xercesImpl-2.0.0.jar"/>
+-->
+<!--
+    <pathelement path="/home/michiii/build/jakarta-ant-1.5.1/lib/xml-apis.jar"/>
+    <pathelement path="/home/michiii/build/jakarta-ant-1.5.1/lib/xercesImpl.jar"/>
+-->
+
+    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/jtidy-04aug2000r7-dev.jar"/>
+    <pathelement path="${wyona.src.dir}/lib/log4j-1.2.3.jar"/>
+    <pathelement path="${wyona.src.dir}/src/java"/>
+    <pathelement path="${wyona.src.dir}/lib/websphinx.jar"/>
+  </path>
 </target>
 
 <target name="crawl" description="Crawl" depends="init">
-  <echo>Crawl: CLASSPATH=${classpath}</echo>
-<!--
-  <echo>Crawl: CLASSPATH=${crawl.classpath}</echo>
--->
+  <echo>INFO: Crawl (${crawler.xconf})</echo>
+
+  <java classname="org.wyona.search.crawler.IterativeHTMLCrawler">
+    <arg value="src/webapp/wyona/cms/pubs/oscom/docs/publication/crawler.xconf"/>
+    <classpath refid="class.path"/>
+  </java>
+</target>
+
+<target name="index" description="Index">
+  <echo>INFO: Index</echo>
 <!--
   <index/>
 -->
 </target>
 
-<target name="index" description="Index">
-  <echo>Index</echo>
-</target>
-
+<!--
 <taskdef name="index" classname="org.wyona.search.crawler.IterativeHTMLCrawler">
   <classpath>
     <fileset dir="./" includes="build/wyona-cms/classes"/>
   </classpath>
 </taskdef>
+-->
 </project>
