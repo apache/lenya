@@ -53,8 +53,8 @@
 
     <menu name="Help" label="Help">
       <block>
-	  <item><xsp:attribute name="href">http://cocoon.apache.org/lenya/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
-	  <item href="http://wiki.apache.org/cocoon-lenya/"><i18n:text>Wiki</i18n:text></item>
+	  <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
+	  <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
       </block>
       <block>
 	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
