@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: addMetaData.xsl,v 1.3 2004/03/13 12:53:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -70,10 +70,10 @@
     </dc:publisher>
   </xsl:template>  
 
-  <xsl:template match="dcterms:created[$date!='']">
-    <dcterms:created>
+  <xsl:template match="dc:date[$date!='']">
+    <dc:date>
       <xsl:value-of select="$date"/>
-    </dcterms:created>
+    </dc:date>
   </xsl:template>  
 
   <xsl:template match="dc:rights[$rights!='']">
