@@ -1,5 +1,5 @@
 /*
- * $Id: CrawlerConfiguration.java,v 1.1 2003/03/18 15:06:22 michi Exp $
+ * $Id: CrawlerConfiguration.java,v 1.2 2003/03/24 15:56:59 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -158,12 +158,6 @@ public class CrawlerConfiguration {
         user_agent = du.getElementValue(root, new XPath("user-agent"));
         uri_list = du.getAttributeValue(root, new XPath("uri-list/@src"));
         htdocs_dump_dir = du.getAttributeValue(root, new XPath("htdocs-dump-dir/@src"));
-/*
-        scope_url = configuration.getChild("scope-url").getAttribute("href");
-        user_agent = configuration.getChild("user-agent").getValue(null);
-        uri_list = configuration.getChild("uri-list").getAttribute("src");
-        htdocs_dump_dir = configuration.getChild("htdocs-dump-dir").getAttribute("src");
-*/
     }
 
     /**

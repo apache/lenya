@@ -1,5 +1,5 @@
 /*
- * $Id: IterativeHTMLCrawler.java,v 1.13 2003/03/18 15:06:22 michi Exp $
+ * $Id: IterativeHTMLCrawler.java,v 1.14 2003/03/24 16:01:16 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -65,7 +65,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class IterativeHTMLCrawler {
     java.util.Vector urlsToCrawl;
@@ -105,7 +105,6 @@ public class IterativeHTMLCrawler {
 
         try {
             CrawlerConfiguration ce = new CrawlerConfiguration(args[0]);
-            //CrawlerEnvironment ce = new CrawlerEnvironment(args[0]);
             new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),
                 ce.resolvePath(ce.getHTDocsDumpDir()), ce.getUserAgent()).crawl(new URL(
                     ce.getBaseURL()), ce.getScopeURL());

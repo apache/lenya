@@ -40,7 +40,6 @@ public class Index {
                 return;
             }
             
-            //IndexEnvironment ie = new IndexEnvironment(argv[0]);
             IndexConfiguration ie = new IndexConfiguration(argv[0]);
             index = ie.resolvePath(ie.getIndexDir());
             root = new File(ie.resolvePath(ie.getHTDocsDumpDir()));
