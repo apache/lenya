@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.228 2004/08/11 08:10:05 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.229 2004/08/11 08:12:13 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -319,13 +319,13 @@
                 <map:parameter name="task-id" value="create"/>
                 <map:redirect-to uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}:{request-param:properties.create.language}}"/>
               </map:act>
-              <map:call resource="cms-screen">
-                <map:parameter name="publication-id" value="{../../1}"/>
-                <map:parameter name="serverpage" value="authoring/create.xsp"/>
-                <map:parameter name="stylesheet" value="authoring/create.xsl"/>
-              </map:call>
-              </map:act>
-              <map:redirect-to uri="{request:requestURI}?doctype={request-param:properties.create.doctype}&amp;lenya.usecase=create&amp;lenya.step=showscreen&amp;status=duplicate-id"/>
+              <map:generate type="serverpages" src="{fallback:content/authoring/create.xsp}"/>
+              <map:transform src="{fallback:xslt/authoring/create.xsl}">
+                <map:parameter name="use-request-parameters" value="true"/>
+              </map:transform>
+              <map:call resource="style-cms-page"/>
+            </map:act>
+            <map:redirect-to uri="{request:requestURI}?doctype={request-param:properties.create.doctype}&amp;lenya.usecase=create&amp;lenya.step=showscreen&amp;status=duplicate-id"/>
           </map:match>
           
         </map:match>
