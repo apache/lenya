@@ -5,6 +5,7 @@
     xmlns:xsp="http://apache.org/xsp"
     xmlns:xsp-request="http://apache.org/xsp/request/2.0"
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
     xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
@@ -51,16 +52,16 @@
     </xsp:logic>
     
     <menus>
-      <menu name="File" label="File">
+      <menu i18n:attr="name" name="File" label="File">
 	<block>
 	  
 	  <xsp:logic>
 	    {
         if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
-          <item>New Document</item>
+          <item><i18n:text>New document</i18n:text></item>
         }
         else {
-          <item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml">New Document</item>
+          <item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml"><i18n:text>New document</i18n:text></item>
         }
 	    }
 	  </xsp:logic>
@@ -72,12 +73,12 @@
             &amp;&amp; Publication.AUTHORING_AREA.equals(area)
 	          ) {
           <xsp:content>
-            <item uc:usecase="create-language" uc:step="showscreen" href="?">New language version</item>
+            <item uc:usecase="create-language" uc:step="showscreen" href="?"><i18n:text>New language version</i18n:text></item>
           </xsp:content>
 	      }
 	      else {
           <xsp:content>
-            <item>New language version</item>
+            <item><i18n:text>New language version</i18n:text></item>
           </xsp:content>
 	      }
 	    
@@ -87,22 +88,22 @@
 	          &amp;&amp; availableLanguages.length &gt; 1
 	          ) {
 	        <xsp:content>
-	          <item uc:usecase="removelabel" uc:step="showscreen" href="?">Remove language version</item>
+	          <item uc:usecase="removelabel" uc:step="showscreen" href="?"><i18n:text>Remove language version</i18n:text></item>
 	        </xsp:content>
 	      } else {
 	        <xsp:content>
-	          <item>Remove language version</item>
+	          <item><i18n:text>Remove language version</i18n:text></item>
 	        </xsp:content>
 	      } 
 	    }
 	  </xsp:logic>
 	</block>
 	<block>
-	  <item uc:usecase="logout" href="?">Logout</item>
+	  <item uc:usecase="logout" href="?"><i18n:text>Logout</i18n:text></item>
 	</block>
       </menu>
       
-      <menu name="Edit" label="Search">
+      <menu i18n:attr="name" name="Edit" label="Search">
         
         <block info="false">
           <item wf:event="edit" uc:usecase="epoz" uc:step="open" href="?">Edit&#160;with&#160;Epoz</item>
@@ -127,19 +128,19 @@
               &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
               &amp;&amp; !"/index".equals(docId)) {
-            <item uc:usecase="cut" uc:step="showscreen" href="?">Cut</item>
+            <item uc:usecase="cut" uc:step="showscreen" href="?"><i18n:text>Cut</i18n:text></item>
           }
           else {
-            <item>Cut</item>
+            <item><i18n:text>Cut</i18n:text></item>
           }
         
           if (isDocument
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
               &amp;&amp; !"/index".equals(docId)) {
-            <item uc:usecase="copy" uc:step="showscreen" href="?">Copy</item>
+            <item uc:usecase="copy" uc:step="showscreen" href="?"><i18n:text>Copy</i18n:text></item>
           }
           else {
-            <item>Copy</item>
+            <item><i18n:text>Copy</i18n:text></item>
           }
         
         	String clipboard = (String) <input:get-attribute module="session-attr" as="object" name="org.apache.lenya.cms.info.firstdocid"/> + "/";
@@ -150,10 +151,10 @@
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
               &amp;&amp; !currentDocumentId.startsWith(clipboard)
               &amp;&amp; !"/index".equals(docId)) {
-		        <item uc:usecase="paste" uc:step="showscreen" href="?">Paste</item>
+		        <item uc:usecase="paste" uc:step="showscreen" href="?"><i18n:text>Paste</i18n:text></item>
         	}
         	else {
-		        <item>Paste</item>
+		        <item><i18n:text>Paste</i18n:text></item>
         	}
         }
         </xsp:logic>
@@ -183,12 +184,12 @@
               &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
               &amp;&amp; !"/index".equals(<input:get-attribute module="sitetree" as="string" name="document-id"/>)) {
-            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=up</xsp:attribute>Move Up</item>
-            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=down</xsp:attribute>Move Down</item>
+            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=up</xsp:attribute><i18n:text>Move up</i18n:text></item>
+            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=down</xsp:attribute><i18n:text>Move down</i18n:text></item>
           }
           else {
-            <item>Move Up</item>
-            <item>Move Down</item>
+            <item><i18n:text>Move up</i18n:text></item>
+            <item><i18n:text>Move down</i18n:text></item>
           }
         </xsp:logic>
       </block>
@@ -199,12 +200,12 @@
        	
        	  if (isDocument &amp;&amp;
        	    !"/index".equals(<input:get-attribute module="page-envelope" as="string" name="document-id"/>)) {
-            <item wf:event="delete" uc:usecase="delete" uc:step="showscreen" href="?">Delete</item>
-            <item wf:event="archive" uc:usecase="archive" uc:step="showscreen" href="?">Archive</item>
+            <item wf:event="delete" uc:usecase="delete" uc:step="showscreen" href="?"><i18n:text>Delete</i18n:text></item>
+            <item wf:event="archive" uc:usecase="archive" uc:step="showscreen" href="?"><i18n:text>Archive</i18n:text></item>
        	  }
        	  else {
-            <item>Delete</item>
-            <item>Archive</item>
+            <item><i18n:text>Delete</i18n:text></item>
+            <item><i18n:text>Archive</i18n:text></item>
        	  }
        	
         	if (isDocument &amp;&amp; (area.equals(Publication.TRASH_AREA) || area.equals(Publication.ARCHIVE_AREA))) {
@@ -220,42 +221,42 @@
 	
       </menu>
       
-      <menu name="Workflow" label="Help">
+      <menu i18n:attr="name" name="Workflow" label="Help">
 	<block>
 	  <xsp:logic>
       {
         if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
-          <item uc:usecase="submit" uc:step="showscreen" wf:event="submit" href="?">Submit</item>
-          <item uc:usecase="reject" uc:step="showscreen" wf:event="reject" href="?">Reject</item>
-          <item uc:usecase="publish" uc:step="showscreen" wf:event="publish"><xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;sources=<xsp:expr>xmlSource</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
-          <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?task-id=deactivateDocument">Deactivate</item>
-          <item uc:usecase="schedule" uc:step="showscreen" href="?">Schedule</item>
+          <item uc:usecase="submit" uc:step="showscreen" wf:event="submit" href="?"><i18n:text>Submit</i18n:text></item>
+          <item uc:usecase="reject" uc:step="showscreen" wf:event="reject" href="?"><i18n:text>Reject</i18n:text></item>
+          <item uc:usecase="publish" uc:step="showscreen" wf:event="publish"><xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;sources=<xsp:expr>xmlSource</xsp:expr>&amp;task-id=publish</xsp:attribute><i18n:text>Publish</i18n:text></item>
+          <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?task-id=deactivateDocument"><i18n:text>Deactivate</i18n:text></item>
+          <item uc:usecase="schedule" uc:step="showscreen" href="?"><i18n:text>Schedule</i18n:text></item>
         }
         else {
-          <item>Submit</item>
-          <item>Reject</item>
-          <item>Publish</item>
-          <item>Deactivate</item>
-          <item>Schedule</item>
+          <item><i18n:text>Submit</i18n:text></item>
+          <item><i18n:text>Reject</i18n:text></item>
+          <item><i18n:text>Publish</i18n:text></item>
+          <item><i18n:text>Deactivate</i18n:text></item>
+          <item><i18n:text>Schedule</i18n:text></item>
         }
       }
 	  </xsp:logic>
 	</block>
       </menu>
 
-      <menu name="Help" label="Debug">
+      <menu i18n:attr="name" name="Help" label="Debug">
 	<block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>User Documentation</item>
-	  <item>System Documentation</item>
-	  <item>Support</item>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute><i18n:text>User documentation</i18n:text></item>
+	  <item><i18n:text>System documentation</i18n:text></item>
+	  <item><i18n:text>Support</i18n:text></item>
 	</block>
   <block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute>About&#160;Apache&#160;Lenya</item>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya homepage</i18n:text></item>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
 	</block>
 
         <block>
-          <item uc:usecase="view-logs" uc:step="overview" href="?">View Task Logs</item>
+          <item uc:usecase="view-logs" uc:step="overview" href="?"><i18n:text>View task logs</i18n:text></item>
 	</block>
       </menu>
     </menus>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-$Id: cmsui.xml,v 1.8 2004/02/14 08:09:15 roku Exp $
+$Id: cmsui.xml,v 1.9 2004/02/14 10:16:22 roku Exp $
 <License>
 
  ============================================================================
@@ -88,4 +88,32 @@ $Id: cmsui.xml,v 1.8 2004/02/14 08:09:15 roku Exp $
   <!-- reject screen -->
   <message key="Reject">Reject</message>
   <message key="reject-doc?">Do you want to reject the document {0}?</message>
+  
+  <!-- cms menu -->
+  <message key="New document">New Document</message>
+  <message key="New language version">New language version</message>
+  <message key="Remove language version">Remove language version</message>
+  <message key="File">File</message>  
+  <message key="Edit">Edit</message>
+  <message key="Workflow">Workflow</message>
+  <message key="Deactivate">Deactivate</message>
+  <message key="Schedule">Schedule</message>
+  <message key="Copy">Copy</message>  
+  <message key="Paste">Paste</message>
+  <message key="Cut">Cut</message>
+  <message key="Help">Help</message>
+  <message key="Debug">Debug</message>
+  <message key="Delete">Delete</message>
+  <message key="Archive">Archive</message>
+  <message key="Restore">Restore</message>
+  <message key="Move up">Move up</message>
+  <message key="Move down">Move down</message>
+  <message key="Logout">Logout</message>
+  <message key="View task logs">View task logs</message>
+  <message key="Support">Support</message>
+  <message key="System documentation">System documentation</message>
+  <message key="User documentation">User documentation</message>
+  <message key="About Apache Lenya">About Apache Lenya</message>
+  <message key="Apache Lenya homepage">Apache Lenya homepage</message>
+
 </catalogue>
