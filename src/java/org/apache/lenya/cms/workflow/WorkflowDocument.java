@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowDocument.java,v 1.7 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: WorkflowDocument.java,v 1.8 2004/05/21 12:27:04 andreas Exp $  */
 
 package org.apache.lenya.cms.workflow;
 
@@ -71,6 +71,7 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
      */
     protected WorkflowImpl getWorkflow(String workflowName)
         throws WorkflowException {
+        assert workflowName != null && !"".equals(workflowName);
         WorkflowImpl workflow = (WorkflowImpl) WorkflowFactory.buildWorkflow(document.getPublication(),
                 workflowName);
 
