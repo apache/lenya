@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.217 2004/07/20 13:51:13 edith Exp $ -->
+<!-- $Id: usecase.xmap,v 1.218 2004/07/25 11:05:03 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -321,12 +321,7 @@
               <map:parameter name="document-id" value="{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}"/>
               <map:act type="task">
                 <map:parameter name="task-id" value="create"/>
-                <map:generate type="serverpages" src="{fallback:content/util/redirect-document.xsp}">
-                  <map:parameter name="document-id" value="{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}"/>
-                  <map:parameter name="language" value="{request-param:properties.create.language}"/>
-                </map:generate>
-                <map:transform src="{fallback:xslt/util/redirect-document.xsl}"/>
-                <map:serialize/>
+                <map:redirect-to uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}:{request-param:properties.create.language}}"/>
               </map:act>
               <map:call resource="cms-screen">
                 <map:parameter name="publication-id" value="{../../1}"/>
