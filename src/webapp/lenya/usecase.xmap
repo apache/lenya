@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.199 2004/03/30 11:52:49 michi Exp $ -->
+<!-- $Id: usecase.xmap,v 1.200 2004/04/04 08:31:30 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -423,11 +423,11 @@
 
           <map:match pattern="content" type="step">
             <map:match pattern="*/authoring/**.html">
-	      <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+              <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
               <map:transform src="resources/kupu/apache-lenya/kupucontent-xhtml.xsl">
                 <map:parameter name="css" value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
               </map:transform>
-	      <map:serialize type="xhtml"/>
+              <map:serialize type="xhtml"/>
             </map:match>
           </map:match>
 
