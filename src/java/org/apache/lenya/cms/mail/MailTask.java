@@ -120,10 +120,13 @@ public class MailTask
                     Node child = children.item(i);
                     if (child.getNodeType() == Node.ELEMENT_NODE) {
                         Element element = (Element) child;
-                        Text text = (Text) element.getChildNodes().item(0);
-                        String key = element.getLocalName();
-                        if (Arrays.asList(keys).contains(key)) {
-                            taskParameters.setParameter(key, text.getNodeValue());
+                        if (element.getChildNodes().getLength() > 0 &&
+                            element.getChildNodes().item(0) instanceof Text) {
+                            Text text = (Text) element.getChildNodes().item(0);
+                            String key = element.getLocalName();
+                            if (Arrays.asList(keys).contains(key)) {
+                                taskParameters.setParameter(key, text.getNodeValue());
+                            }
                         }
                     }
                 }
