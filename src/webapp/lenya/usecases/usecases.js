@@ -8,7 +8,6 @@ function passRequestParameters(flowHelper, usecase) {
 			&& !name.equals("submit")) {
 			
 			var value = flowHelper.getRequest(cocoon).get(name);
-			Packages.java.lang.System.out.println("name: " + name + "  value: " + value.getClass());
 			
 			var string = new Packages.java.lang.String();
 			if (string.getClass().isInstance(value)) {
@@ -37,9 +36,12 @@ function executeUsecase() {
 	var ready = false;
 	var success = false;
 	
+	var usecaseView = new Packages.java.lang.String(usecaseName).replace('.', '/');
+	Packages.java.lang.System.out.println(usecaseView);
+	
 	while (!ready) {
 	
-		cocoon.sendPageAndWait("view/" + usecaseName, {
+		cocoon.sendPageAndWait("view/" + usecaseView, {
 		    "usecase" : usecase
 		});
 		

@@ -45,7 +45,7 @@
         <map:serialize/>
       </map:match>
       
-      <map:match pattern="view/*">
+      <map:match pattern="view/**">
         <map:generate type="jx" src="{1}.jx"/>
         <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>
