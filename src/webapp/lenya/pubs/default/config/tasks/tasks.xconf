@@ -53,17 +53,6 @@
     <label>Deactivate</label>
   </task>
 
-
-  <task id="create" class="org.apache.lenya.cms.task.AntTask">
-    <label>Create</label>
-    <parameter name="target" value="create"/>
-  </task>
-
-  <task id="create-language" class="org.apache.lenya.cms.task.AntTask">
-    <label>CreateLanguage</label>
-    <parameter name="target" value="create-language"/>
-  </task>
-
   <task id="remove-language" class="org.apache.lenya.cms.task.AntTask">
     <label>RemoveLanguage</label>
     <parameter name="target" value="remove-language"/>
