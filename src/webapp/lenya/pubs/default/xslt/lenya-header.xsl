@@ -10,7 +10,7 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:lenya=" http://apache.org/cocoon/lenya/page-envelope/1.0"
+    xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
     xmlns="http://www.w3.org/1999/xhtml"
     exclude-result-prefixes="lenya"
     >

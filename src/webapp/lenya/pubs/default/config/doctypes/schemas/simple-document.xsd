@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:bxe="http://bitfluxeditor.org/schema/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:s="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:lenya=" http://apache.org/cocoon/lenya/page-envelope/1.0">
-  <xs:import namespace=" http://apache.org/cocoon/lenya/page-envelope/1.0" schemaLocation="lenya.xsd"/>
+<xs:schema xmlns:bxe="http://bitfluxeditor.org/schema/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:s="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+  <xs:import namespace="http://apache.org/cocoon/lenya/page-envelope/1.0" schemaLocation="lenya.xsd"/>
   <xs:element name="simple-document">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Simple Document</xs:documentation>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <simple-document
-  xmlns:lenya=" http://apache.org/cocoon/lenya/page-envelope/1.0"
+  xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
   xmlns:dc="http://dc.org/2003/"
   xmlns="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0"
   >
