@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.29 2002/12/31 17:07:24 michicms Exp $
+   @version CVS $Id: build.xml,v 1.30 2003/01/09 01:11:44 michicms Exp $
 
 -->
 
@@ -210,13 +210,22 @@
   <target name="prepare-cocoon" depends="init,check-tools-lib,prepare-tools-lib">
     <echo>INFO: exclude: sitemap.xmap</echo>
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo>
+    <echo>INFO: exclude: WEB-INF/lib/lucene-1.2-rc2.jar</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${src.cocoon.dir}">
         <exclude name="sitemap.xmap"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
+        <exclude name="WEB-INF/lib/lucene-1.2-rc2.jar"/>
         <!--<exclude name="**/logkit.xconf"/>-->
         <exclude name="**/javac.jar"/>
+      </fileset>
+    </copy>
+    <!-- patch lucene -->
+    <echo message="INFO: Patch Lucene"/>
+    <copy todir="${build.webapp}" filtering="off">
+      <fileset dir="${src.webapp.dir}">
+        <include name="WEB-INF/lib/lucene-1.3-dev1.jar"/>
       </fileset>
     </copy>
   </target>
