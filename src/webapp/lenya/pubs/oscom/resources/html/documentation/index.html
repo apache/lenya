@@ -39,5 +39,45 @@ Content Management.
   <li>The <a href="xsltModularisation.html"> XSLT Modularisation </a> shows the structure of the xslts.</li>
 -->
 </ol>
+
+<h3>Deployment</h3>
+<ol>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/tasks.xconf
+    <ol>
+      <li><code>&lt;parameter name="command" value="PATH_TO_WGET_RSS_SCRIPT"/&gt;</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/bin/wget-rss.sh
+    <ol>
+      <li><code>PORT=TOMCAT_PORT</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/scheduler/jobs.xml
+    <ol>
+      <li>Remove comments from "Download RSS" and "Export OSCOM"</li>
+      <li><code>&lt;parameter name="servlet-context" value="PATH_TO_CONTEXT"/&gt;</code></li>
+      <li><code>&lt;parameter name="expression" value="CRON_EXPRESSION"/&gt;</code></li>
+      <li><code>&lt;parameter name="server-port" value="TOMCAT_PORT"/&gt;</code></li>
+      <li><code>&lt;parameter name="server-uri" value="RESOLVED_HOSTNAME_OR_IP"/&gt;</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/bin/replicate.sh
+    <ol>
+      <li><code>PUBLICATION_DIR=PATH_TO_PUBLICATIONS_DIR</code></li>
+      <li><code>PENDING_DIR_2=PATH_TO_PENDING_DIR_AND_PREFIX</code></li>
+      <li><code>RDOCS_2_1=PATH_TO_REMOTE_DOCS_DIR</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/live/navigation.xml
+    <ol>
+      <li>Remove temporary entries</li>
+    </ol>
+  </li>
+  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/live/index.xml
+    <ol>
+      <li>Remove temporary entries</li>
+    </ol>
+  </li>
+</ol>
 </body>
 </html>
