@@ -19,7 +19,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
 
 <xsl:template match="/">
@@ -28,18 +28,18 @@
 
 <xsl:template match="bxe">
 <html>
-<xsl:apply-templates select="html/head"/>
-<xsl:copy-of select="html/body"/>
+<xsl:apply-templates select="xhtml:html/xhtml:head"/>
+<xsl:copy-of select="xhtml:html/xhtml:body"/>
 </html>
 </xsl:template>
 
-<xsl:template match="head">
-<head>
+<xsl:template match="xhtml:head">
+<xhtml:head>
 <xsl:for-each select="/bxe/namespaces/xmlns">
   <meta name="bxeNS" content="{.}"/>
 </xsl:for-each>
 <xsl:copy-of select="@*|node()"/>
-</head>
+</xhtml:head>
 </xsl:template>
  
 </xsl:stylesheet>  
