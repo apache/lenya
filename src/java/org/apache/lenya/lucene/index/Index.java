@@ -1,5 +1,4 @@
 /*
-$Id: Index.java,v 1.12 2004/02/17 10:07:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,14 +65,14 @@ import org.w3c.dom.Document;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @version $Id: Index.java,v 1.13 2004/02/19 13:18:45 michi Exp $
  */
 public class Index {
     /**
-     * DOCUMENT ME!
+     * Command line interface
      *
-     * @param argv DOCUMENT ME!
+     * @param argv Lucene Index Configuration
      */
     public static void main(String[] argv) {
         try {
@@ -127,9 +126,9 @@ public class Index {
             indexer.configure(du.getElement(config.getDocumentElement(), new XPath("indexer")), argv[0]);
 
             if (create) {
-                indexer.createIndex(root, index);
+                indexer.createIndex(root, new File(index));
             } else {
-                indexer.updateIndex(root, index);
+                indexer.updateIndex(root, new File(index));
             }
 
             Date end = new Date();

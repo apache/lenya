@@ -61,6 +61,7 @@ import java.util.Arrays;
 
 import org.apache.log4j.Category;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
@@ -75,7 +76,7 @@ import org.w3c.dom.Element;
  *
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: AbstractIndexer.java,v 1.11 2004/02/17 10:07:12 andreas Exp $
+ * @version $Id: AbstractIndexer.java,v 1.12 2004/02/19 13:18:45 michi Exp $
  */
 public abstract class AbstractIndexer implements Indexer {
     
@@ -85,7 +86,9 @@ public abstract class AbstractIndexer implements Indexer {
     private Element indexer;
     private String configFileName;
 
-    /** Creates a new instance of AbstractIndexer */
+    /**
+     * Creates a new instance of AbstractIndexer
+     */
     public AbstractIndexer() {
     }
 
@@ -126,7 +129,7 @@ public abstract class AbstractIndexer implements Indexer {
      *   <li>new documents, to be indexed.</li>
      * </ol>
      */
-    public void updateIndex(File dumpDirectory, String index)
+    public void updateIndex(File dumpDirectory, File index)
         throws Exception {
         deleteStaleDocuments(dumpDirectory, index);
         doIndex(dumpDirectory, index, false);
@@ -135,24 +138,25 @@ public abstract class AbstractIndexer implements Indexer {
     /**
      * Creates a new index.
      */
-    public void createIndex(File dumpDirectory, String index)
+    public void createIndex(File dumpDirectory, File index)
         throws Exception {
         doIndex(dumpDirectory, index, true);
     }
 
     /**
-     * DOCUMENT ME!
+     * Index files
      *
-     * @param dumpDirectory DOCUMENT ME!
-     * @param index DOCUMENT ME!
-     * @param create DOCUMENT ME!
+     * @param dumpDirectory Directory where the files to be indexed are located
+     * @param index Directory where the index shall be located
+     * @param create <b>true</b> means the index will be created from scratch, <b>false</b> means it will be indexed incrementally
      */
-    public void doIndex(File dumpDirectory, String index, boolean create) {
+    public void doIndex(File dumpDirectory, File index, boolean create) {
         try {
-            IndexWriter writer = new IndexWriter(index, new StandardAnalyzer(), create);
+            //IndexWriter writer = new IndexWriter(index.getAbsolutePath(), new GermanAnalyzer(), create);
+            IndexWriter writer = new IndexWriter(index.getAbsolutePath(), new StandardAnalyzer(), create);
             writer.maxFieldLength = 1000000;
 
-            IndexInformation info = new IndexInformation(index, dumpDirectory, getFilter(indexer, configFileName), create);
+            IndexInformation info = new IndexInformation(index.getAbsolutePath(), dumpDirectory, getFilter(indexer, configFileName), create);
 
             IndexHandler handler;
 
@@ -162,7 +166,7 @@ public abstract class AbstractIndexer implements Indexer {
                 handler = new UpdateIndexHandler(dumpDirectory, info, writer);
             }
 
-            IndexIterator iterator = new IndexIterator(index, getFilter(indexer, configFileName));
+            IndexIterator iterator = new IndexIterator(index.getAbsolutePath(), getFilter(indexer, configFileName));
             iterator.addHandler(handler);
             iterator.iterate(dumpDirectory);
 
@@ -176,11 +180,11 @@ public abstract class AbstractIndexer implements Indexer {
     /**
      * Delete the stale documents.
      */
-    protected void deleteStaleDocuments(File dumpDirectory, String index)
+    protected void deleteStaleDocuments(File dumpDirectory, File index)
         throws Exception {
         log.debug("Deleting stale documents");
 
-        IndexIterator iterator = new IndexIterator(index, getFilter(indexer, configFileName));
+        IndexIterator iterator = new IndexIterator(index.getAbsolutePath(), getFilter(indexer, configFileName));
         iterator.addHandler(new DeleteHandler());
         iterator.iterate(dumpDirectory);
         log.debug("Deleting stale documents finished");
@@ -267,7 +271,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.11 $
+     * @version $Revision: 1.12 $
      */
     public class IndexHandler extends AbstractIndexIteratorHandler {
         /**
@@ -312,15 +316,14 @@ public abstract class AbstractIndexer implements Indexer {
             }
 
             info.increase();
-            log.debug(info.printProgress());
+            log.info(info.printProgress());
         }
     }
 
     /**
      * DOCUMENT ME!
      *
-     * @author $author$
-     * @version $Revision: 1.11 $
+     * @author Andreas Hartmann
      */
     public class CreateIndexHandler extends IndexHandler {
         /**
@@ -346,7 +349,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.11 $
+     * @version $Revision: 1.12 $
      */
     public class UpdateIndexHandler extends IndexHandler {
         /**

@@ -59,7 +59,7 @@ import org.w3c.dom.Element;
 
 /**
  * @author Andreas Hartmann
- * @version $Id: DefaultIndexer.java,v 1.7 2003/12/02 22:24:57 michi Exp $
+ * @version $Id: DefaultIndexer.java,v 1.8 2004/02/19 13:18:45 michi Exp $
  */
 public class DefaultIndexer extends AbstractIndexer {
 
@@ -71,7 +71,7 @@ public class DefaultIndexer extends AbstractIndexer {
 
     /**
      * @param indexer Indexer
-     * @param configFileName Licene Configuration File
+     * @param configFileName Lucene Configuration File
      *
      * @return DefaultDocumentCreator
      *

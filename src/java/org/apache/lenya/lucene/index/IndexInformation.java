@@ -1,5 +1,4 @@
 /*
-$Id: IndexInformation.java,v 1.7 2004/02/17 10:07:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,7 +72,8 @@ import org.apache.lucene.index.Term;
 
 /**
  * 
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @author Andreas Hartmann
+ * @version $Id: IndexInformation.java,v 1.8 2004/02/19 13:18:45 michi Exp $
  */
 public class IndexInformation {
     
@@ -165,9 +165,9 @@ public class IndexInformation {
     }
 
     /**
-     * DOCUMENT ME!
+     * Generate string which tells about the indexing progress
      *
-     * @return DOCUMENT ME!
+     * @return indexing progress
      */
     public String printProgress() {
         double percent = (double) currentFile / (double) getFileNumber();
@@ -209,7 +209,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.7 $
+     * @version $Revision: 1.8 $
      */
     public class CreateHandler extends AbstractIndexIteratorHandler {
         /** Handles a file.
@@ -224,7 +224,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.7 $
+     * @version $Revision: 1.8 $
      */
     public class UpdateHandler extends AbstractIndexIteratorHandler {
         /** Handles a new document.

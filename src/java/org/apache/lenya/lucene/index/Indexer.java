@@ -62,7 +62,7 @@ import org.w3c.dom.Element;
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: Indexer.java,v 1.8 2004/02/02 02:50:38 stefano Exp $
+ * @version $Id: Indexer.java,v 1.9 2004/02/19 13:18:45 michi Exp $
  */
 public interface Indexer {
     /**
@@ -73,12 +73,12 @@ public interface Indexer {
     /**
      * Indexes the contents of a directory.
      */
-    void createIndex(File dumpDirectory, String index)
+    void createIndex(File dumpDirectory, File index)
         throws Exception;
 
     /**
      * Indexes the contents of a directory.
      */
-    void updateIndex(File dumpDirectory, String index)
+    void updateIndex(File dumpDirectory, File index)
         throws Exception;
 }
