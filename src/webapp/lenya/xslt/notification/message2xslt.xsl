@@ -104,7 +104,7 @@
 	</xslt:template>
  
 </xsl:template>
-    
+
 
 <xsl:template match="not:body">
 	<xsl:apply-templates select="node()"/>
