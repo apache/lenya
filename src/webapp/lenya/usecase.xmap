@@ -503,7 +503,8 @@
             </map:act>
             <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
             <map:transform src="xslt/authoring/edit/oneform.xsl">
-              <map:parameter name="docid" value="{page-envelope:document-path}"/>
+              <map:parameter name="docid" value="{page-envelope:document-id}"/>
+              <map:parameter name="language" value="{page-envelope:document-language}"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
@@ -518,6 +519,8 @@
             <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
             <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
             <map:transform src="xslt/authoring/edit/oneform.xsl">
+              <map:parameter name="docid" value="{page-envelope:document-id}"/>
+              <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="message" value="{message}"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
