@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentHelper.java,v 1.27 2004/07/16 10:15:41 andreas Exp $  */
+/* $Id: DocumentHelper.java,v 1.28 2004/07/16 14:50:16 andreas Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -250,7 +250,7 @@ public class DocumentHelper {
      * 
      * @throws ParserConfigurationException if an error occurs
      * 
-     * @see DOMImplementation.createDocumentType(String, String, String)
+     * @see org.w3c.dom.DOMImplementation#createDocumentType(java.lang.String, java.lang.String, java.lang.String)
      */
     public DocumentType createDocumentType(String qualifiedName, String publicId, String systemId)
         throws ParserConfigurationException {
@@ -362,6 +362,24 @@ public class DocumentHelper {
         }
 
         return buffer.toString();
+    }
+
+    /**
+     * Replaces all child nodes of an element by a single text node.
+     * 
+     * @param element The element.
+     * @param text The text to insert.
+     */
+    public static void setSimpleElementText(Element element, String text) {
+        NodeList children = element.getChildNodes();
+
+        for (int i = 0; i < children.getLength(); i++) {
+            Node child = children.item(i);
+            element.removeChild(child);
+        }
+        
+        Node textNode = element.getOwnerDocument().createTextNode(text);
+        element.appendChild(textNode);
     }
 
 
