@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.11 2003/09/11 13:24:35 egli Exp $
+ $Id: rename.xsl,v 1.12 2003/09/23 13:53:14 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -12,6 +12,7 @@
   
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
   <xsl:variable name="source-document-id"><xsl:value-of select="/page/info/source-document-id"/></xsl:variable>
+  <xsl:variable name="ref-document-id"><xsl:value-of select="/page/info/ref-document-id"/></xsl:variable>
   <xsl:variable name="destination-id"><xsl:value-of select="/page/info/destination-id"/></xsl:variable>
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
@@ -67,6 +68,7 @@
     <input type="hidden" name="{$prefix}properties.node.firstdocumentid" value="{$source-document-id}"/>
     <input type="hidden" name="{$prefix}properties.firstarea" value="{$area}"/>
     <input type="hidden" name="{$prefix}properties.secarea" value="{$area}"/>
+    <input type="hidden" name="{$prefix}properties.node.refdocumentid" value="{$ref-document-id}"/>
   </xsl:template>
 
 </xsl:stylesheet>

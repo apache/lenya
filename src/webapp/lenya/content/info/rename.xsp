@@ -7,11 +7,22 @@
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   >
 
+<xsp:structure>
+  <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
+</xsp:structure>
+
 <page>
   <info>
+    <xsp:logic>
+        Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+        SiteTreeNode node = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="authoring-node"/>;
+        String refDocumentId = node.getNextSiblingDocumentId(); 
+    </xsp:logic>
     <request-uri><xsp-request:get-uri/></request-uri>
     <destination-id><input:get-attribute module="page-envelope" as="string" name="document-node-id"/></destination-id>
     <source-document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></source-document-id>
+    <ref-document-id><xsp:expr>refDocumentId</xsp:expr></ref-document-id>
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
     <task-id>renameDocument</task-id>
   </info>
