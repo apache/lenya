@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NewsML>
+			<NewsItem>
+				<Identification>
+					<NewsIdentifier>
+						<RevisionId PreviousRevision="1" Update="N">2</RevisionId>
+					</NewsIdentifier>
+				</Identification>
+				<NewsComponent EquivalentsList="no">
+					<ContentItem>
+						<DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+							<nitf>
+								<head>
+									<hedline>
+										<hl1>Teaser Titel</hl1>
+										<dossier>Dossier</dossier>
+										<abstract>Teaser Lead</abstract>
+									</hedline>
+								</head>
+								<body>
+									<body.head>
+										<dateline>
+											<story.date millis="1035496800000" norm="25.9.2002"/>
+										</dateline>
+										<hedline>
+											<hl1>«Die Theologie soll dem Leben dienen»</hl1>
+										</hedline>
+										<byline>Autor</byline>
+										<abstract>«Leben: Verständnis, Wissenschaft, Technik». Dieses Thema wurde am XI. Europäischen Kongress für Theologie Mitte September an der Universität Zürich erörtert. Susanne Heine, Stellvertretende Vorsitzende der Europäischen Wissenschaftlichen Gesellschaft für Theologie, der Veranstalterin des Kongresses, und Professorin für Praktische Theologie und Religionspsychologie an der Universität Wien gibt Auskunft über die Verknüpfung von Theologie und Lebenswissenschaften.</abstract>
+									</body.head>
+									<body.content>
+										<block>
+											<p>Paragraph</p>
+										</block>
+										<block>
+											<hl2>Welchen Beitrag kann die Theologie an diesen Diskurs leisten? </hl2>
+											<p>Paragraph</p>
+											<p>Paragraph</p>
+										</block>
+									</body.content>
+									<body.end>
+										<tagline>Thomas Gull ist Redaktor des «unireports» und freier Journalist  </tagline>
+									</body.end>
+								</body>
+							</nitf>
+						</DataContent>
+					</ContentItem>
+				</NewsComponent>
+				<NewsManagement>
+					<RevisionDate day="25" month="9" year="2002"/>
+					<PublishDate day="25" hour="10" millis="1035496800000" minute="52" month="9" year="2002"/>
+				</NewsManagement>
+			</NewsItem>
+		</NewsML>

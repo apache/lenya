@@ -35,7 +35,7 @@
       <NewsLines>
         <HeadLine>Im Traum spricht er am meisten mit mir</HeadLine>
         <ByLine>Von Adrian Ritter</ByLine>
-         <DateLine year="2002" month="04" day="07"/>
+         <DateLine year="2002" month="10" day="4"/>
         <CreditLine>Universit&#228;t Z&#252;rich </CreditLine>
         <CopyrightLine>&#169;Universit&#228;t Z&#252;rich</CopyrightLine>
       </NewsLines>
@@ -73,7 +73,7 @@
             <body>
               <body.head>
                 <dateline>
-                  <story.date millis="1022104800000" norm="23.05.2002"/>
+                  <story.date millis="1020981600000" norm="10.4.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>&#171;Die Geschichte ist nie zu Ende geschrieben&#187;</hl1>
