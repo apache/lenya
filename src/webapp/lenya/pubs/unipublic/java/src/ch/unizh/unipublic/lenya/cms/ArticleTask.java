@@ -30,6 +30,7 @@ import java.util.StringTokenizer;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Date;
+import java.util.List;
 
 import org.dom4j.DocumentHelper;
 import org.dom4j.Document;
@@ -41,6 +42,8 @@ import org.dom4j.io.OutputFormat;
 import org.wyona.xml.DOM4JUtil;
 import org.wyona.util.DateUtil;
 import org.apache.log4j.Category;
+import org.dom4j.DocumentFactory;
+import org.dom4j.XPath;
 import org.wyona.cms.publishing.DefaultFilePublisher;
 import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.task.AbstractTask;
@@ -84,11 +87,33 @@ public class ArticleTask
      */
     private void addToHeadlines(String docId, String domainPath) throws Exception{
 
+        File articleFile = new File(domainPath + docId);
+        log.debug("\nArticle file: " + articleFile.getPath());
+        
+        Document articleDocument = new SAXReader().read(articleFile);
+        
+        String headlinePath =
+            "/NewsML" +
+            "/NewsItem" +
+            "/NewsComponent" +
+            "/ContentItem" +
+            "/DataContent" +
+            "/nitf" +
+            "/body" +
+            "/body.head" +
+            "/hedline" +
+            "/hl1";
+        
+        DocumentFactory factory = DocumentFactory.getInstance();
+        XPath headlineXPath = factory.createXPath(headlinePath);
+        List nodes = headlineXPath.selectNodes(articleDocument, headlineXPath);
+        Element headlineElement = (Element) nodes.get(0);
+        String title = headlineElement.getText();
+        
         //article's  channel, section, year, dir. FIXME: should be readen from the article, but now:
         StringTokenizer st=new StringTokenizer(docId,"/");
         String channel=st.nextToken();
         String section=st.nextToken();
-//        String articles=st.nextToken();
         String year=st.nextToken();
         String dir=st.nextToken();
 
@@ -103,14 +128,17 @@ public class ArticleTask
         DOM4JUtil du = new DOM4JUtil();
 
         Element newArticleE=(Element)doc.selectSingleNode("/Articles/Article[@dir='"+dir+"'][@section='"+section+"']"); 
+        
         if (newArticleE != null) {
-          log.info("the article  "+dir+" is already on the frontpage"); 
+          log.info("the article  "+dir+" is already on the frontpage");
+          newArticleE.setText(title);
         } else {
           newArticleE = documentHelper.createElement("Article");
           newArticleE.addAttribute("channel", channel);
           newArticleE.addAttribute("section", section);
           newArticleE.addAttribute("year", year);
-          newArticleE.addAttribute("dir", dir);                                                                                                   
+          newArticleE.addAttribute("dir", dir);
+          newArticleE.setText(title);
           Element articleE=(Element)doc.selectSingleNode("/Articles/Article[1]"); 
           du.insertElementBefore(articleE, newArticleE);
         }
