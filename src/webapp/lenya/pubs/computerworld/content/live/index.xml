@@ -19,9 +19,7 @@
 				<table border="0" cellpadding="0" cellspacing="0" width="742">
 					<!-- VERTICAL DARKBROWN BOTTOM-LINE TABLE BEGINS HERE -->
 					<tr>
-						<td colspan="9" width="742" height="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td colspan="9" width="742" height="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 					</tr>
 					<!-- VERTICAL DARKBROWN BOTTOM-LINE TABLE BEGINS HERE -->
 					<tr>
@@ -29,9 +27,7 @@
 							<!-- BANNER AND COMPUTERWORLD LOGO TABLE BEGINS HERE -->
 							<table border="0" cellpadding="0" cellspacing="0">
 								<tr>
-									<td width="1" height="115" bgcolor="#ABAAA5" style="background-image:url(/img/layout/dbrown1x1.gif)">
-										<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-									</td>
+									<td width="1" height="115" bgcolor="#ABAAA5" style="background-image:url(/img/layout/dbrown1x1.gif)"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 									<td width="740" height="115" align="left" valign="top">
 										<!-- BANNER TABLE BEGINS HERE -->
 										<table border="0" cellpadding="0" cellspacing="0" width="740">
@@ -49,23 +45,17 @@
 										<!-- COMPUTERWORLD LOGO, SEARCH AND DATE TABLE BEGINS HERE -->
 										<table border="0" cellpadding="0" cellspacing="0" width="740">
 											<tr>
-												<td height="11">
-													<img border="0" src="/img/layout/trans1x1.gif" width="1" height="11" />
-												</td>
+												<td height="11"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="11" /></td>
 											</tr>
 											<tr>
 												<td />
 											</tr>
 											<tr>
-												<td valign="bottom" height="41" style="background-image:url(/img/layout/trans1x1.gif)">
-													<img border="0" src="/img/layout/cw-logo.gif" width="300" height="41" alt="Computerworld" />
-												</td>
+												<td valign="bottom" height="41" style="background-image:url(/img/layout/trans1x1.gif)"><img border="0" src="/img/layout/cw-logo.gif" width="300" height="41" alt="Computerworld" /></td>
 												<td align="right" valign="middle" height="41" style="background-image:url(/img/layout/trans1x1.gif)">&#160;</td>
 											</tr>
 											<tr>
-												<td align="left" valign="middle" height="18" style="background-image:url(/img/layout/trans1x1.gif)">
-													<img border="0" src="/img/layout/cw-desc.gif" width="300" height="11" alt="" />
-												</td>
+												<td align="left" valign="middle" height="18" style="background-image:url(/img/layout/trans1x1.gif)"><img border="0" src="/img/layout/cw-desc.gif" width="300" height="11" alt="" /></td>
 												<td align="right" valign="middle" height="18" style="background-image:url(/img/layout/trans1x1.gif)">
 													<span class="txt-s-black" id="today">Montag, 9. Dezember 2002&#160;</span>
 												</td>
@@ -73,31 +63,23 @@
 										</table>
 										<!-- COMPUTERWORLD LOGO, SEARCH AND DATE TABLE ENDS HERE -->
 									</td>
-									<td width="1" height="115" bgcolor="#ABAAA5" style="background-image:url(/img/layout/dbrown1x1.gif)">
-										<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-									</td>
+									<td width="1" height="115" bgcolor="#ABAAA5" style="background-image:url(/img/layout/dbrown1x1.gif)"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 								</tr>
 							</table>
 							<!-- BANNER AND COMPUTERWORLD LOGO TABLE ENDS HERE -->
 						</td>
 					</tr>
 					<tr>
-						<td colspan="9" width="742" height="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td colspan="9" width="742" height="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 					</tr>
 					<tr>
-						<td width="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td width="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 						<td width="140" valign="top" bgcolor="#EFEFE7">
 							<!-- LEFT NAVIGATION TABLE BEGINS HERE -->
 							<span id="navigation" bxe-editable="navigation" />
 							<table border="0" cellpadding="0" cellspacing="0" width="140">
 								<tr>
-									<td colspan="2">
-										<img border="0" src="/img/layout/trans1x1.gif" width="1" height="10" />
-									</td>
+									<td colspan="2"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="10" /></td>
 								</tr>
 								<!-- AKTUELL NAVPOINT =======================================================-->
 								<tr>
@@ -110,12 +92,8 @@
 							</table>
 							<!-- LEFT NAVIGATION TABLE ENDS HERE -->
 						</td>
-						<td width="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
-						<td width="5">
-							<img border="0" src="/img/layout/trans1x1.gif" width="5" height="1" />
-						</td>
+						<td width="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
+						<td width="5"><img border="0" src="/img/layout/trans1x1.gif" width="5" height="1" /></td>
 						<!-- CONTENT TABLE BEGINS HERE -->
 						<td width="440" valign="top">
 							<!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
@@ -125,9 +103,7 @@
 							<!-- NEWS TABLE BEGINS HERE -->
 							<table border="0" cellpadding="0" cellspacing="0" width="440">
 								<tr>
-									<td height="20" colspan="2">
-										<img src="/img/layout/trans1x1.gif" width="1" height="20" />
-									</td>
+									<td height="20" colspan="2"><img src="/img/layout/trans1x1.gif" width="1" height="20" /></td>
 								</tr>
 								<tr bgcolor="#000000">
 									<td colspan="2" height="21" valign="middle">
@@ -146,14 +122,10 @@ today</span>
 							<!-- COPYRIGHT ALL RIGHTS TABLE BEGINS HERE -->
 							<table border="0" cellpadding="0" cellspacing="0" width="440">
 								<tr>
-									<td height="30">
-										<img src="/img/layout/trans1x1.gif" width="1" height="30" />
-									</td>
+									<td height="30"><img src="/img/layout/trans1x1.gif" width="1" height="30" /></td>
 								</tr>
 								<tr>
-									<td height="1">
-										<img src="/img/layout/linecontent440x1.gif" width="440" height="1" />
-									</td>
+									<td height="1"><img src="/img/layout/linecontent440x1.gif" width="440" height="1" /></td>
 								</tr>
 								<tr>
 									<td height="25">
@@ -163,25 +135,17 @@ vorbehalten.</span>
 									</td>
 								</tr>
 								<tr>
-									<td height="1">
-										<img src="/img/layout/linecontent440x1.gif" width="440" height="1" />
-									</td>
+									<td height="1"><img src="/img/layout/linecontent440x1.gif" width="440" height="1" /></td>
 								</tr>
 								<tr>
-									<td height="15">
-										<img src="/img/layout/trans1x1.gif" width="1" height="15" />
-									</td>
+									<td height="15"><img src="/img/layout/trans1x1.gif" width="1" height="15" /></td>
 								</tr>
 							</table>
 							<!-- COPYRIGHT ALL RIGHTS TABLE ENDS HERE -->
 						</td>
 						<!-- CONTENT TABLE ENDS HERE -->
-						<td width="5">
-							<img border="0" src="/img/layout/trans1x1.gif" width="5" height="1" />
-						</td>
-						<td width="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td width="5"><img border="0" src="/img/layout/trans1x1.gif" width="5" height="1" /></td>
+						<td width="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 						<td width="148" valign="top" bgcolor="#EFEFE7">
 							<!-- RIGHT NAVIGATION TABLE BEGINS HERE -->
 							<!-- SKYSCRAPER BANNER BEGINS HERE -->
@@ -194,33 +158,23 @@ vorbehalten.</span>
 							<!-- SKYSCRAPER BANNER ENDS HERE -->
 							<!-- RIGHT NAVIGATION TABLE ENDS HERE -->
 						</td>
-						<td width="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td width="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 					</tr>
 					<!-- VERTICAL DARKBROWN BOTTOM-LINE TABLE BEGINS HERE -->
 					<tr>
-						<td colspan="9" width="742" height="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td colspan="9" width="742" height="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 					</tr>
 					<!-- VERTICAL DARKBROWN BOTTOM-LINE TABLE BEGINS HERE -->
 					<tr>
 						<!-- BOTTOM TABLE BEGINS HERE -->
-						<td width="1" height="70" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td width="1" height="70" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 						<td width="140" bgcolor="#EFEFE7" align="center" valign="middle">
 							<a href="http://www.idg.ch/" target="_blank">
 								<img border="0" src="/img/layout/idg-logo.gif" width="60" height="21" alt="IDG" />
 							</a>
 						</td>
-						<td width="1" bgcolor="#EFEFE7">
-							<img border="0" src="/img/layout/trans1x1.gif" width="1" height="1" />
-						</td>
-						<td width="5" bgcolor="#EFEFE7">
-							<img border="0" src="/img/layout/trans1x1.gif" width="1" height="1" />
-						</td>
+						<td width="1" bgcolor="#EFEFE7"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
+						<td width="5" bgcolor="#EFEFE7"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
 						<td width="440" valign="middle" bgcolor="#EFEFE7">
 							<table width="440">
 								<tr>
@@ -238,25 +192,15 @@ International Data Group</span>
 								</tr>
 							</table>
 						</td>
-						<td width="5" bgcolor="#EFEFE7">
-							<img border="0" src="/img/layout/trans1x1.gif" width="1" height="1" />
-						</td>
-						<td width="1" bgcolor="#EFEFE7">
-							<img border="0" src="/img/layout/trans1x1.gif" width="1" height="1" />
-						</td>
-						<td width="148" bgcolor="#EFEFE7">
-							<img border="0" src="/img/layout/trans1x1.gif" width="148" height="1" />
-						</td>
-						<td width="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td width="5" bgcolor="#EFEFE7"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
+						<td width="1" bgcolor="#EFEFE7"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
+						<td width="148" bgcolor="#EFEFE7"><img border="0" src="/img/layout/trans1x1.gif" width="148" height="1" /></td>
+						<td width="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 						<!-- BOTTOM TABLE ENDS HERE -->
 					</tr>
 					<!-- VERTICAL DARKBROWN BOTTOM-LINE TABLE BEGINS HERE -->
 					<tr>
-						<td colspan="9" width="742" height="1" bgcolor="#ABAAA5">
-							<img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" />
-						</td>
+						<td colspan="9" width="742" height="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 					</tr>
 					<!-- VERTICAL DARKBROWN BOTTOM-LINE TABLE BEGINS HERE -->
 				</table>

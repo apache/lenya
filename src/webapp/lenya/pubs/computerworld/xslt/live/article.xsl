@@ -30,7 +30,9 @@
 
 			<tr>
 				<td width="440" align="left" valign="top" colspan="2"><span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
-        	<span class="txt-m-black"> <xsl:apply-templates select="body"/>
+        	<span class="txt-m-black">   <xsl:for-each select="body/p">
+  <xsl:apply-templates/>
+</xsl:for-each>
           &#160;<a href="../impressum/" class="txt-m-red">(gis)</a></span></td>
 			</tr>
 
@@ -46,4 +48,5 @@
 			<tr><td width="440" height="3" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>
 		</table>
   </xsl:template>
+    
 </xsl:stylesheet>

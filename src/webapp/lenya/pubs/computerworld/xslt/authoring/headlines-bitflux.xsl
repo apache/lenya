@@ -15,20 +15,13 @@
 
 <!-- Replaces the html code of the editable section by the bitflux specific code -->
 <xsl:template match="*[@bxe-editable='headlines']">
-	<preview contentEditable="true">
-                <xslout:for-each select="Articles">
+	<Articles contentEditable="true">
+                <xslout:for-each select=".">
   			<xslout:apply-templates/>
+  			<br />
                 </xslout:for-each>
-	</preview>
+	</Articles>
 </xsl:template>
-
-<xsl:template match="Articles">
-	<table border="0" cellpadding="2" cellspacing="0" bgcolor="#CCCCFF">
-		<span bxe-editable="Articles">
-		</span>
-	</table>
-</xsl:template>
-
 
 <!-- Adds the stylesheet specific elements -->
 <xsl:template match="/">
