@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLFormSaveAction.java,v 1.46 2004/04/26 14:57:24 michi Exp $  */
+/* $Id: HTMLFormSaveAction.java,v 1.47 2004/04/26 15:46:15 gregor Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -623,7 +623,7 @@ private String validateDocument(
         log.debug("Namespaces: " + namespaces);
 
 	if (namespaces == null) {
-            log.error("No additional namespaces");
+            log.debug("No additional namespaces");
             return xupdateModifications;
         }
 
