@@ -46,7 +46,7 @@
            deprecation="${deprecation}"
            target="${target.vm}"
            nowarn="${nowarn}"
-           includes="org/lenya/cms/ant/**"
+           includes="org/apache/lenya/cms/ant/**"
            classpathref="classpath"
            source="1.4"/>
 
