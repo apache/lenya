@@ -16,7 +16,7 @@
         <live href="docs/publication/live/"/>
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
-        <export-directory prefix="resources/publication/export"/>
+        <export-directory prefix="resources/publication/export/pending"/>
         <export-substitute-uri pattern="/wyona-cms/oscom/" substitution="/"/>
 <!--
         <replication-queue href="resources/cms/replication-queue"/>
@@ -94,8 +94,16 @@
         <map:generate type="serverpages" src="docs/publication/menus/home.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
+      <map:match pattern="authoring/menus/weekly-column-page.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/weekly-column.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
       <map:match pattern="authoring/menus/board.xml">
         <map:generate type="serverpages" src="docs/publication/menus/board.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="authoring/menus/news.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/news.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/mailing-lists.xml">
@@ -123,6 +131,12 @@
       <!-- XML Home -->
       <map:match pattern="authoring/home.xml">
         <map:generate src="docs/publication/authoring/home.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- XML Weekly Column -->
+      <map:match pattern="authoring/weekly-column-body.xml">
+        <map:generate src="docs/publication/authoring/weekly-column-body.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -168,7 +182,7 @@
         <map:serialize type="html"/>
       </map:match>
 
-      <!-- Edit with Xopus2 -->
+      <!-- Edit Home with Xopus2 -->
       <map:match pattern="authoring/xopus2/index.html">
         <map:generate src="cocoon:/authoring/index.xml"/>
         <map:select>
@@ -179,6 +193,20 @@
             <map:transform src="stylesheets/publication/Page/Home/Authoring/main_xopus2.xsl"/>
           </map:otherwise>
         </map:select>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Edit News with Xopus2 -->
+      <map:match pattern="authoring/xopus2/news.html">
+        <map:generate src="cocoon:/authoring/news.xml"/>
+          <map:transform src="stylesheets/publication/Page/News/Authoring/main_xopus2.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Edit Weekly Column with Xopus2 -->
+      <map:match pattern="authoring/xopus2/weekly-column.html">
+        <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
+          <map:transform src="stylesheets/publication/Page/WeeklyColumn/Authoring/main_xopus2.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
@@ -212,6 +240,20 @@
       <map:match pattern="authoring/board.html">
         <map:generate src="cocoon:/authoring/board.xml"/>
         <map:transform src="stylesheets/publication/Page/Board/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- News -->
+      <map:match pattern="authoring/news.html">
+        <map:generate src="cocoon:/authoring/news.xml"/>
+        <map:transform src="stylesheets/publication/Page/News/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Weekly Column -->
+      <map:match pattern="authoring/weekly-column.html">
+        <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
+        <map:transform src="stylesheets/publication/Page/WeeklyColumn/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 

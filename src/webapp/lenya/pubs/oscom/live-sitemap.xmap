@@ -165,6 +165,13 @@
         <map:serialize type="html"/>
       </map:match>
 
+      <!-- Weekly Column -->
+      <map:match pattern="weekly-column.html">
+        <map:generate src="cocoon:/live/weekly-column-page.xml"/>
+        <map:transform src="stylesheets/publication/Page/WeeklyColumn/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
       <!-- Mailing Lists -->
       <map:match pattern="live/mailing-lists.html">
         <map:generate src="cocoon:/live/mailing-lists.xml"/>

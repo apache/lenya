@@ -21,4 +21,7 @@
 <leaf name="Mailing Lists" href="mailing-lists.html"/>
 <leaf name="CVS" href="http://cvs.oscom.org"/>
 <leaf name="Board" href="board.html"/>
+<!--
+<leaf name="Tom's Weekly Column" href="weekly-column.html"/>
+-->
 </oscom:navigation>
