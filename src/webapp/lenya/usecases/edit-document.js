@@ -15,7 +15,7 @@
  *
  */
 
-importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
+importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelperImpl);
 importClass(Packages.org.apache.excalibur.source.SourceResolver);
 importClass(Packages.org.apache.lenya.cms.cocoon.source.SourceUtil);
 
@@ -38,7 +38,7 @@ importClass(Packages.org.apache.lenya.cms.cocoon.source.SourceUtil);
  */
 function editDocument() {
     try {
-        var flowHelper = new FlowHelper();
+        var flowHelper = new FlowHelperImpl();
         var resolver = cocoon.getComponent(SourceResolver.ROLE);
         var dstUri = flowHelper.getPageEnvelope(cocoon).getDocument().getSourceURI();
         
