@@ -23,6 +23,10 @@
         <xsl:otherwise>
 
           <tr>
+            <td><img height="19" width="100" src="{$img-unipub}/1.gif"/></td>
+          </tr>
+
+          <tr>
             <td align="right"><img height="21" width="103" src="{$img-unipub}/t_camp.gif" border="0" alt="campus"/></td>
           </tr>
 
@@ -38,22 +42,24 @@
       </xsl:choose>
     </xsl:for-each>
 
-<xsl:call-template name="Dossiers"/>
-<!--<xsl:apply-templates select="Dossiers"/>-->
+<xsl:apply-templates select="../Dossiers"/>
 
 </table>
 </xsl:template>
 
-<!--<xsl:template match="Dossiers"  xmlns:xi="http://www.w3.org/2001/XInclude">-->
-<xsl:template name="Dossiers">
-<tr>
-<td><a href="dossiers/2002/"><img src="{$unipublic}/img/dossiers.gif" width="120" height="21" border="0"/></a></td>
-</tr>
+<xsl:template match="Dossiers" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <tr>
+    <td><img height="19" width="100" src="{$img-unipub}/1.gif"/></td>
+  </tr>
+  <tr>
+    <td><a href="{Dossier/@href}"><img src="{$unipublic}/img/dossiers.gif" width="120" height="21" border="0"/></a></td>
+  </tr>
 
-<tr>
-<td class="tsr-text"><span class="tsr-title"><a href="dossiers/2002/brainfair/">BrainFair 2002</a></span><br />
- Hirn im Focus</td>
-</tr>
+  <tr>
+    <td class="tsr-text"><span class="tsr-title"><a href="{Dossier/@href}{Dossier/Title/@href}">
+      <xsl:value-of select="Dossier/Title"/></a></span><br />
+      <xsl:value-of select="Dossier/Teaser"/></td>
+  </tr>
 </xsl:template>
 
 </xsl:stylesheet>

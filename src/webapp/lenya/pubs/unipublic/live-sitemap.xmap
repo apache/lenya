@@ -100,9 +100,32 @@
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
+<!--
+      <map:match pattern="dossier.xml">
+        <map:generate src="docs/publication/live/frontpage/dossier.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
 
       <map:match pattern="navigation.xml">
         <map:generate src="docs/publication/live/navigation.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+-->
+
+      <map:match pattern="one">
+        <map:generate src="docs/publication/live/navigation.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="two">
+        <map:generate src="docs/publication/live/frontpage/dossier.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="navigation.xml">
+        <map:aggregate element="FirstColumn">
+          <map:part src="cocoon:/one"/>
+          <map:part src="cocoon:/two"/>
+        </map:aggregate>
         <map:serialize type="xml"/>
       </map:match>
 

@@ -124,8 +124,8 @@ function aboWindow() {
 <br />
  
 <xsl:for-each select="/Page/Content/MainColumn/Articles/Article">
-<xsl:if test="position()>=3">
 <xsl:variable name="section"><xsl:value-of select="@section"/></xsl:variable>
+<xsl:if test="position()>=3">
 
 <table border="0" cellpadding="0" cellspacing="0" width="316">
 <tr>
