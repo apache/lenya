@@ -1,21 +1,21 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Copyright 1999-2004 The Apache Software Foundation
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *  
  */
 
-/* $Id: ProxyGenerator.java,v 1.22 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id: ProxyGenerator.java,v 1.23 2004/06/28 12:20:56 andreas Exp $ */
 
 package org.apache.lenya.cms.cocoon.generation;
 
@@ -44,36 +44,30 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator
-    implements Parameterizable {
+public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements
+        Parameterizable {
     private static Category log = Category.getInstance(ProxyGenerator.class);
 
     // The URI of the namespace of this generator
     private String URI = "http://apache.org/cocoon/lenya/proxygenerator/1.0";
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param parameters DOCUMENT ME!
-     *
-     * @throws ParameterException DOCUMENT ME!
+     * No parameters implemented.
+     * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
      */
     public void parameterize(Parameters parameters) throws ParameterException {
-        //super.parameterize(parameters);
     }
 
     /**
-     * Generate XML data.
-     *
-     * @throws SAXException DOCUMENT ME!
+     * @see org.apache.cocoon.generation.Generator#generate()
      */
     public void generate() throws SAXException {
         Request request = (Request) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
 
-        log.debug("\n----------------------------------------------------------------" +
-            "\n- Request: (" + request.getClass().getName() + ") at port " +
-            request.getServerPort() +
-            "\n----------------------------------------------------------------");
+        log.debug("\n----------------------------------------------------------------"
+                + "\n- Request: (" + request.getClass().getName() + ") at port "
+                + request.getServerPort()
+                + "\n----------------------------------------------------------------");
 
         String submitMethod = request.getMethod();
 
@@ -121,7 +115,8 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
                 for (int i = 0; i < cookies.length; i++) {
                     boolean secure = false; // http: false, https: true
                     transferedCookies[i] = new org.apache.commons.httpclient.Cookie(url.getHost(),
-                            cookies[i].getName(), cookies[i].getValue(), url.getFile(), null, secure);
+                            cookies[i].getName(), cookies[i].getValue(), url.getFile(), null,
+                            secure);
                 }
             }
 
@@ -145,19 +140,19 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
                 String name = (String) e.nextElement();
                 httpMethod.addRequestHeader(name, request.getHeader(name));
             }
-            HostConfiguration hostConfiguration  = new HostConfiguration();
+            HostConfiguration hostConfiguration = new HostConfiguration();
             hostConfiguration.setHost(url.getHost(), url.getPort());
 
-             log.debug("\n----------------------------------------------------------------" +
-                "\n- Starting session at URI: " + url + "\n- Host:                    " +
-                url.getHost() + "\n- Port:                    " + url.getPort() +
-                "\n----------------------------------------------------------------");
+            log.debug("\n----------------------------------------------------------------"
+                    + "\n- Starting session at URI: " + url + "\n- Host:                    "
+                    + url.getHost() + "\n- Port:                    " + url.getPort()
+                    + "\n----------------------------------------------------------------");
 
             int result = httpClient.executeMethod(hostConfiguration, httpMethod);
 
-            log.debug("\n----------------------------------------------------------------" +
-                "\n- Result:                    " + result +
-                "\n----------------------------------------------------------------");
+            log.debug("\n----------------------------------------------------------------"
+                    + "\n- Result:                    " + result
+                    + "\n----------------------------------------------------------------");
 
             byte[] sresponse = httpMethod.getResponseBody();
 
@@ -167,17 +162,11 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             InputSource input = new InputSource(new ByteArrayInputStream(sresponse));
             parser = (SAXParser) this.manager.lookup(SAXParser.ROLE);
             parser.parse(input, this.xmlConsumer);
+        } catch (SAXException e) {
+            throw e;
         } catch (Exception e) {
-            this.contentHandler.startDocument();
-
-            AttributesImpl attr = new AttributesImpl();
-            this.start("servletproxygenerator", attr);
-            this.data(".generate(): " + e);
-            this.end("servletproxygenerator");
-            this.contentHandler.endDocument();
-
-            //log.error(e);
-            e.printStackTrace();
+            getLogger().error("Generation failed: ", e);
+            throw new SAXException(e);
         } finally {
             this.manager.release((Component) parser);
         }
@@ -185,11 +174,11 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
     /**
      * Log input stream for debugging
-     *
+     * 
      * @param in an <code>InputStream</code> value
-     *
+     * 
      * @return an <code>InputStream</code> value
-     *
+     * 
      * @exception Exception if an error occurs
      */
     private InputStream intercept(InputStream in) throws Exception {
@@ -222,8 +211,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
         attr.addAttribute("", name, name, "CDATA", value);
     }
 
-    private void start(String name, AttributesImpl attr)
-        throws SAXException {
+    private void start(String name, AttributesImpl attr) throws SAXException {
         super.contentHandler.startElement(URI, name, name, attr);
         attr.clear();
     }
