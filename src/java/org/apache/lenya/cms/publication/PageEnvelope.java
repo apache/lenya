@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.45 2003/08/27 16:57:51 egli Exp $
+$Id: PageEnvelope.java,v 1.46 2003/08/31 13:03:23 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,6 +59,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.util.ServletHelper;
 
 import java.util.Map;
 
@@ -73,16 +74,16 @@ public class PageEnvelope {
     public static final String PUBLICATION = "publication";
     public static final String CONTEXT = "context-prefix";
     public static final String AREA = "area";
-	public static final String DEFAULT_LANGUAGE = "default-language";
+    public static final String DEFAULT_LANGUAGE = "default-language";
     public static final String DOCUMENT = "document";
-    public static final String DOCUMENT_ID = "document-id";    
+    public static final String DOCUMENT_ID = "document-id";
     public static final String DOCUMENT_URL = "document-url";
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     public static final String DOCUMENT_FILE = "document-file";
     public static final String DOCUMENT_PATH = "document-path";
     public static final String DOCUMENT_EXTENSION = "document-extension";
     public static final String DOCUMENT_LANGUAGE = "document-language";
-	public static final String DOCUMENT_LANGUAGES = "document-languages";
+    public static final String DOCUMENT_LANGUAGES = "document-languages";
     public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
     public static final String DOCUMENT_DC_TITLE = "document-dc-title";
     public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
@@ -92,8 +93,8 @@ public class PageEnvelope {
     public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
-	public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
-    
+    public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
     public static final String DEFAULT_PREFIX = "lenya";
 
@@ -112,8 +113,7 @@ public class PageEnvelope {
      * @exception PageEnvelopeException if an error occurs
      * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
      */
-    public PageEnvelope(Publication publication, Request request)
-        throws PageEnvelopeException {
+    public PageEnvelope(Publication publication, Request request) throws PageEnvelopeException {
         init(publication, request);
     }
 
@@ -166,20 +166,17 @@ public class PageEnvelope {
     throws PageEnvelopeException {
         assert publication != null;
         assert request != null;
-
+		String webappURI;
         try {
-            String requestURI = request.getRequestURI();
-            context = request.getContextPath();
-
-            if (context == null) {
-                context = "";
-            }
-
-            String webappURI = requestURI.substring(context.length());
+        	
+        	context = request.getContextPath();
+        	if (context == null) {
+        		context = "";
+        	}
+        	
+            webappURI = ServletHelper.getWebappURI(request);
             Document document =
-                DefaultDocumentBuilder.getInstance().buildDocument(
-                    publication,
-                    webappURI);
+                DefaultDocumentBuilder.getInstance().buildDocument(publication, webappURI);
             setDocument(document);
 
         } catch (Exception e) {
@@ -187,15 +184,9 @@ public class PageEnvelope {
         }
 
         // plausibility check
-        if (!request
-            .getRequestURI()
+        if (!webappURI
             .startsWith(
-                getContext()
-                    + "/"
-                    + getPublication().getId()
-                    + "/"
-                    + document.getArea()
-                    + document.getId())) {
+                "/" + getPublication().getId() + "/" + document.getArea() + document.getId())) {
             throw new PageEnvelopeException(createExceptionMessage(request));
         }
     }
@@ -233,8 +224,7 @@ public class PageEnvelope {
      * @deprecated We should detach the RC environment from the page envelope.
      */
     public RCEnvironment getRCEnvironment() {
-        return RCEnvironment.getInstance(
-            getPublication().getServletContext().getAbsolutePath());
+        return RCEnvironment.getInstance(getPublication().getServletContext().getAbsolutePath());
     }
 
     /**
@@ -245,7 +235,6 @@ public class PageEnvelope {
         return context;
     }
 
-
     /**
      * Returns the document-path.
      * @return a <code>File<code> value
@@ -253,7 +242,7 @@ public class PageEnvelope {
     public String getDocumentPath() {
 
         return getPublication().getPathMapper().getPath(
-		    getDocument().getId(),
+            getDocument().getId(),
             getDocument().getLanguage());
     }
 
@@ -263,28 +252,28 @@ public class PageEnvelope {
     public static final String[] PARAMETER_NAMES =
         {
             PageEnvelope.AREA,
-                PageEnvelope.CONTEXT,
-                PageEnvelope.PUBLICATION_ID,
-                PageEnvelope.PUBLICATION,
-                PageEnvelope.DOCUMENT,
-                PageEnvelope.DOCUMENT_ID,
-                PageEnvelope.DOCUMENT_URL,
-                PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
-                PageEnvelope.DOCUMENT_PATH,
-                PageEnvelope.DOCUMENT_EXTENSION,
-                PageEnvelope.DEFAULT_LANGUAGE,
-                PageEnvelope.DOCUMENT_LANGUAGE,
-                PageEnvelope.DOCUMENT_LANGUAGES,
-                PageEnvelope.DOCUMENT_LANGUAGES_CSV,
-                PageEnvelope.DOCUMENT_DC_TITLE,
-                PageEnvelope.DOCUMENT_DC_CREATOR,
-                PageEnvelope.DOCUMENT_DC_PUBLISHER,
-                PageEnvelope.DOCUMENT_DC_SUBJECT,
-                PageEnvelope.DOCUMENT_DC_DATE_CREATED,
-                PageEnvelope.DOCUMENT_DC_DESCRIPTION,
-                PageEnvelope.DOCUMENT_DC_RIGHTS,
-                PageEnvelope.DOCUMENT_LASTMODIFIED,
-                PageEnvelope.BREADCRUMB_PREFIX };
+            PageEnvelope.CONTEXT,
+            PageEnvelope.PUBLICATION_ID,
+            PageEnvelope.PUBLICATION,
+            PageEnvelope.DOCUMENT,
+            PageEnvelope.DOCUMENT_ID,
+            PageEnvelope.DOCUMENT_URL,
+            PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
+            PageEnvelope.DOCUMENT_PATH,
+            PageEnvelope.DOCUMENT_EXTENSION,
+            PageEnvelope.DEFAULT_LANGUAGE,
+            PageEnvelope.DOCUMENT_LANGUAGE,
+            PageEnvelope.DOCUMENT_LANGUAGES,
+            PageEnvelope.DOCUMENT_LANGUAGES_CSV,
+            PageEnvelope.DOCUMENT_DC_TITLE,
+            PageEnvelope.DOCUMENT_DC_CREATOR,
+            PageEnvelope.DOCUMENT_DC_PUBLISHER,
+            PageEnvelope.DOCUMENT_DC_SUBJECT,
+            PageEnvelope.DOCUMENT_DC_DATE_CREATED,
+            PageEnvelope.DOCUMENT_DC_DESCRIPTION,
+            PageEnvelope.DOCUMENT_DC_RIGHTS,
+            PageEnvelope.DOCUMENT_LASTMODIFIED,
+            PageEnvelope.BREADCRUMB_PREFIX };
 
     /**
      * @param string The context.
