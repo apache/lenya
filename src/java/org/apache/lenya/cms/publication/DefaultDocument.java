@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.11 2003/07/15 09:24:22 gregor Exp $
+$Id: DefaultDocument.java,v 1.12 2003/07/15 12:19:17 egli Exp $
 <License>
 
  ============================================================================
@@ -56,9 +56,6 @@ $Id: DefaultDocument.java,v 1.11 2003/07/15 09:24:22 gregor Exp $
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-
-
-import org.apache.log4j.Category;
 
 /**
  * A typical CMS document.

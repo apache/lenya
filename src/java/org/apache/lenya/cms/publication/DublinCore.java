@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.1 2003/07/15 09:24:22 gregor Exp $
+$Id: DublinCore.java,v 1.2 2003/07/15 12:19:17 egli Exp $
 <License>
 
  ============================================================================
@@ -58,20 +58,6 @@ package org.apache.lenya.cms.publication;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 
 import java.io.File;
-import java.util.Arrays;
-
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-
-import org.apache.xpath.XPathAPI;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 /**
  * A publication.
