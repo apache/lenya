@@ -1,14 +1,32 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  
-<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<!--
+ $Id: create.xsl,v 1.2 2004/02/06 19:23:35 gregor Exp $
+ -->
 
-<xsl:import href="../../../xslt/authoring/parent-child.xsl"/>
-  
-  <xsl:template match="parent-child">
-    <h1>New Entry</h1>
+ <xsl:stylesheet version="1.0"
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:session="http://www.apache.org/xsp/session/2.0"
+   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+   >
     
+  <xsl:template match="/">
+    <page:page>
+      <page:title>New Entry</page:title>
+      <page:body>
+    <div class="lenya-box">
+      <div class="lenya-box-title">New Entry</div>
+      <div class="lenya-box-body">
+       <xsl:apply-templates select="parent-child"/>
+      </div>
+    </div>
+      </page:body>
+    </page:page>
+  </xsl:template>
+
+
+  <xsl:template match="parent-child">
     <xsl:apply-templates select="exception"/>
     
     <xsl:if test="not(exception)">
@@ -21,29 +39,12 @@
 	  <input type="hidden" name="doctype" value="{/parent-child/doctype}"/>
 	  <input type="hidden" name="childname" value="Levi"/>
 	  <table>
-<!--
-	    <tr>
-	      <td>parentid:</td><td><xsl:value-of select="/parent-child/parentid"/></td>
-	    </tr>
-	    <tr>
-	      <td>childtype:</td><td><xsl:value-of select="/parent-child/childtype"/></td>
-	    </tr>
-	    <tr>
-	      <td>doctype:</td><td><xsl:value-of select="/parent-child/doctype"/></td>
-	    </tr>
--->
 	    <tr>
 	      <td>id:</td><td><input type="text" name="childid"/></td>
 	    </tr>
 	    <tr>
 	      <td>title:</td><td><input type="text" name="title"/></td>
 	    </tr>
-<!--
-	    <tr>
-	      <td>tree node name:</td><td>My Node Name</td>
-	      <td>tree node name:</td><td><input type="text" name="childname"/></td>
-	    </tr>
--->
 	  </table>
 	  <input type="submit" value="Create"/>&#160;&#160;&#160;
 	  <input type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel"/>
