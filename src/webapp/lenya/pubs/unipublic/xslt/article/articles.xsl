@@ -109,6 +109,10 @@
 
 <!--  General Text Templates  -->
 
+<xsl:template match="br">
+  <br/>
+</xsl:template>
+
 <xsl:template match="bold">
   <b><xsl:apply-templates/></b>
 </xsl:template>
