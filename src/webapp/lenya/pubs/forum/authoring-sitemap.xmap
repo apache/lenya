@@ -20,8 +20,8 @@
         <live href="docs/publication/live/"/>
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
-        <export-directory prefix="resources/publication/export"/>
-        <export-url-prefix substitute="s/\/wyona-cms\/forum//g"/>
+        <export-directory prefix="resources/publication/export/pending"/>
+        <export-url-prefix substitute="s/\/wyona-cms\/forum/\/news/g"/>
 <!--
         <export-substitute-uri pattern="/wyona-cms/forum/" substitution="/"/>
 -->

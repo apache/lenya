@@ -14,7 +14,7 @@
   <live_uri>/index.html</live_uri>
 
   <menus>
-    <menu name="File">
+    <menu name="File" label="File">
       <block>
 <!--
         <item>Edit</item>
@@ -22,9 +22,9 @@
 -->
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/ParentChildScreenNewArticle?parentid=/</xsp:attribute>New&#160;Article</item>
       </block>
-      <block>
+      <separator>
         <item>-----------</item>
-      </block>
+      </separator>
       <block>
         <item>Passwd</item>
 <!--
@@ -38,34 +38,34 @@
       </block>
     </menu>
 
-    <menu name="Search">
+    <menu name="Search" label="Search">
       <block>
         <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
         <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
       </block>
     </menu>
 
-    <menu name="Help">
+    <menu name="Help" label="Help">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html</xsp:attribute>About&#160;this&#160;Publication</item>
       </block>
-      <block>
+      <separator>
         <item>----------------------</item>
-      </block>
+      </separator>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
       </block>
-      <block>
+      <separator>
         <item>----------------------</item>
-      </block>
+      </separator>
       <block>
         <item href="http://www.wyona.org">About&#160;Wyona</item>
       </block>
     </menu>
 
-    <menu name="Debug">
+    <menu name="Debug" label="Debug">
       <block>
         <item href="front.xml">View&#160;XML</item>
       </block>
