@@ -5,10 +5,12 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template name="body">
+<!--
   <a href="conferences/berkeley2002/index.html"><img src="{$images}/banner.gif" border="0"/></a>
 <br />
   <font face="verdana"><b>SAVE $100 - <a href="conferences/berkeley2002/registration_fees.html">Early-bird registration</a> till August 31th</b></font>
 <br />&#160;<br />
+-->
 
   <div id_xopus="about_and_features" xml_xopus="index.xml" xsl_xopus="Page/Home/Authoring/xopus.xsl" xsd_xopus="home.xsd">
   <xsl:apply-templates select="about"/>
