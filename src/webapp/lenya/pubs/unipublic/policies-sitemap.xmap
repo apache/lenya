@@ -14,7 +14,9 @@
        <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
        <map:serialize type="xml"/>
      </map:match>
+   </map:pipeline>
 
+   <map:pipeline>
      <map:match pattern="**">
        <map:generate src="docs/publication/access-control/policies/public.acml"/>
        <map:serialize type="xml"/>
