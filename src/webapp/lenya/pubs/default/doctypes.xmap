@@ -33,6 +33,7 @@
   <map:pipelines>
 
     <map:pipeline>
+      <!-- View Revision? -->
       <map:match pattern="*/*/*/**.xml">
         <map:match type="step" pattern="view-revision">
           <map:generate type="serverpages" src="../../content/rc/view.xsp">
