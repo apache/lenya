@@ -58,9 +58,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.lenya.util.XPSFileOutputStream;
-import org.apache.lenya.xml.DOMParserFactory;
-import org.apache.lenya.xml.DOMWriter;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XPointerFactory;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
@@ -74,7 +76,7 @@ import org.w3c.dom.Node;
  * @author Michael Wechner
  * @author Marc Liyanage
  * @author Edith Chevrier
- * @version $Id: RCML.java,v 1.21 2004/02/02 02:50:36 stefano Exp $
+ * @version $Id: RCML.java,v 1.22 2004/02/10 11:37:17 andreas Exp $
  */
 public class RCML {
     private static Category log = Category.getInstance(RCML.class);
@@ -137,20 +139,15 @@ public class RCML {
 
             write();
         } else {
-            DOMParserFactory dpf = new DOMParserFactory();
-            document = dpf.getDocument(rcmlFile.getAbsolutePath());
+            document = DocumentHelper.readDocument(rcmlFile);
         }
     }
 
     /**
      * initialise the RCML-document. Delete all entries
      */
-    public void initDocument() {
-        DOMParserFactory dpf = new DOMParserFactory();
-        document = dpf.getDocument(); 
-
-        Element root = dpf.newElementNode(document, "XPSRevisionControl");
-        document.appendChild(root);
+    public void initDocument() throws ParserConfigurationException {
+        document = DocumentHelper.createDocument(null, "XPSRevisionControl", null); 
     }
 
     /**
@@ -172,10 +169,7 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public void write() throws IOException, Exception {
-        XPSFileOutputStream xpsfos = new XPSFileOutputStream(rcmlFile.getAbsolutePath());
-        new DOMWriter(xpsfos).print(this.document);
-        xpsfos.close();
-
+        DocumentHelper.writeDocument(document, rcmlFile);
         clearDirty();
     }
 
@@ -192,20 +186,18 @@ public class RCML {
      */
     public void checkOutIn(short type, String identity, long time, boolean backup)
         throws IOException, Exception {
-        DOMParserFactory dpf = new DOMParserFactory();
-
-        Element identityElement = dpf.newElementNode(document, "Identity");
-        identityElement.appendChild(dpf.newTextNode(document, identity));
-
-        Element timeElement = dpf.newElementNode(document, "Time");
-        timeElement.appendChild(dpf.newTextNode(document, "" + time));
+            
+        NamespaceHelper helper = new NamespaceHelper(null, "", document);
+            
+        Element identityElement = helper.createElement("Identity", identity);
+        Element timeElement = helper.createElement("Time", "" + time);
 
         Element checkOutElement = null;
 
         if (type == co) {
-            checkOutElement = dpf.newElementNode(document, "CheckOut");
+            checkOutElement = helper.createElement("CheckOut");
         } else if (type == ci) {
-            checkOutElement = dpf.newElementNode(document, "CheckIn");
+            checkOutElement = helper.createElement("CheckIn");
         } else {
             log.error("ERROR: " + this.getClass().getName() + ".checkOutIn(): No such type");
 
@@ -216,12 +208,11 @@ public class RCML {
         checkOutElement.appendChild(timeElement);
 
 		if (backup) {
-			Element backupElement = dpf.newElementNode(document, "Backup");
+			Element backupElement = helper.createElement("Backup");
 			checkOutElement.appendChild(backupElement);
 		}
 
         Element root = document.getDocumentElement();
-		root.insertBefore(dpf.newTextNode(document, "\n"), root.getFirstChild());
         root.insertBefore(checkOutElement, root.getFirstChild());
 
         setDirty();
@@ -386,7 +377,8 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public org.w3c.dom.Document getDOMDocumentClone() throws Exception {
-        Document documentClone = new DOMParserFactory().getDocument();
+        Document documentClone = DocumentHelper.createDocument(null, "dummy", null);
+        documentClone.removeChild(documentClone.getDocumentElement());
         documentClone.appendChild(documentClone.importNode(document.getDocumentElement(), true));
 
         return documentClone;
