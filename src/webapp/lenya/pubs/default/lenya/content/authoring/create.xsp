@@ -40,7 +40,7 @@
     <doctype><xsp:expr><xsp-request:get-parameter name="doctype"/></xsp:expr></doctype>
     <default-language><xsp:expr>pub.getDefaultLanguage()</xsp:expr></default-language>
 
-    <dc:creator><input:get-attribute module="access-control" as="string" name="user-id"/></dc:creator>
+    <dc:creator><input:get-attribute module="access-control" as="string" name="user-name"/></dc:creator>
     <dc:subject></dc:subject>
     <dc:publisher>Universität Zürich</dc:publisher>
     <dc:date></dc:date>
