@@ -12,10 +12,10 @@
     <Channel name="campus">
       <Sections>
         <Section id="uni-news">Uni-News</Section>
-        <Section id="portrait">Portraits</Section>
-        <Section id="lorbeer">Lorbeeren</Section>
-        <Section id="beruf">Berufungen</Section>
-        <Section id="publik">Publikationen</Section>
+        <Section id="portraits">Portraits</Section>
+        <Section id="lorbeeren">Lorbeeren</Section>
+        <Section id="berufungen">Berufungen</Section>
+        <Section id="publikationen">Publikationen</Section>
       </Sections>
     </Channel>
   </Channels>
