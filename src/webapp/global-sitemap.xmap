@@ -104,7 +104,7 @@
       | The "xslt" transformer is an example of a component with additional
       | configuration.
       +-->
-  <map:transformers default="xalan">
+  <map:transformers default="xslt">
 
     <map:transformer name="xlink" src="org.apache.lenya.cms.cocoon.transformation.IncludeTransformer">
       <publication type=""/>
