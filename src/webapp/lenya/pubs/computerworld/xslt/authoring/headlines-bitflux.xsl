@@ -16,7 +16,7 @@
 <!-- Replaces the html code of the editable section by the bitflux specific code -->
 <xsl:template match="*[@bxe-editable='headlines']">
 	<articles contentEditable="true">
-                <xslout:for-each select=".">
+                <xslout:for-each select="articles">
   			<xslout:apply-templates/>
                 </xslout:for-each>
 	</articles>
