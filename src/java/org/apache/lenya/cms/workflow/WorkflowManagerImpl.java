@@ -39,7 +39,8 @@ import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
  * 
  * @version $Id:$
  */
-public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowManager, Serviceable, Poolable {
+public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowManager,
+        Serviceable, Poolable {
 
     /**
      * @see org.apache.lenya.cms.workflow.WorkflowManager#invoke(org.apache.lenya.cms.publication.Document,
@@ -59,7 +60,7 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
                             + "] in the situation [" + situation + "]");
                 }
                 engine.invoke(document, workflow, situation, event);
-                
+
                 ((DefaultDocument) document).getHistory().save();
             }
         } catch (ServiceException e) {
@@ -172,12 +173,12 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             if (resolver.hasWorkflow(source)) {
-                
+
                 sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                
+
                 String sourceUri = ((DefaultDocument) source).getHistorySourceURI();
                 sourceHistory = sourceResolver.resolveURI(sourceUri);
-                
+
                 if (sourceHistory.exists()) {
                     String targetUri = ((DefaultDocument) target).getHistorySourceURI();
                     targetHistory = sourceResolver.resolveURI(targetUri);
@@ -225,7 +226,9 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
                 sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 String uri = ((DefaultDocument) sourceDocument).getHistorySourceURI();
                 historySource = sourceResolver.resolveURI(uri);
-                ((ModifiableSource) historySource).delete();
+                if (historySource.exists()) {
+                    ((ModifiableSource) historySource).delete();
+                }
             }
         } catch (Exception e) {
             throw new WorkflowException(e);
