@@ -9,6 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.StringTokenizer;
 
+import websphinx.RobotExclusion;
+
 /**
  *
  */
@@ -25,6 +27,8 @@ public class IterativeHTMLCrawler{
   //private java.util.Stack linkQueue;
   //private java.util.TreeSet links;
   private String[] scopeURL;
+
+  private RobotExclusion robot;
 /**
  *
  */
@@ -37,7 +41,7 @@ public class IterativeHTMLCrawler{
  
     try{
       CrawlerEnvironment ce=new CrawlerEnvironment(args[0]);
-      new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),ce.resolvePath(ce.getHTDocsDumpDir())).crawl(new URL(ce.getBaseURL()),ce.getScopeURL());
+      new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),ce.resolvePath(ce.getHTDocsDumpDir()),ce.getUserAgent()).crawl(new URL(ce.getBaseURL()),ce.getScopeURL());
       }
     catch(MalformedURLException e){
       System.err.println(e);
@@ -46,9 +50,11 @@ public class IterativeHTMLCrawler{
 /**
  *
  */
-  public IterativeHTMLCrawler(String url_list_file,String html_dump_directory){
+  public IterativeHTMLCrawler(String url_list_file,String html_dump_directory,String userAgent){
     this.url_list_file=url_list_file;
     this.html_dump_directory=html_dump_directory;
+
+    robot=new RobotExclusion(userAgent);
     }
 /**
  * 
@@ -125,10 +131,15 @@ public class IterativeHTMLCrawler{
     URL url=new URL(parseHREF(urlCandidate,urlCandidate.toLowerCase(),currentURLPath)); //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
 
     if(filterURL(urlCandidate,currentURLPath,urlsToCrawlLowerCase)){
-      urlsToCrawl.add(url);
-      urlsToCrawlLowerCase.add(url.toString().toLowerCase());
-      System.out.println(".addURL(): INFO: URL added: "+url); 
-      return url;
+      if(!robot.disallowed(url)){
+        urlsToCrawl.add(url);
+        urlsToCrawlLowerCase.add(url.toString().toLowerCase());
+        System.out.println(".addURL(): INFO: URL added: "+url); 
+        return url;
+        }
+      else{
+        System.out.println(".addURL(): INFO: Disallowed by robots.txt: "+urlCandidate);
+        }
       }
 
     System.out.println(".addURL(): INFO: URL not added: "+urlCandidate);
@@ -230,7 +241,7 @@ public class IterativeHTMLCrawler{
  *
  */
   public boolean filterURL(String url,String currentURLPath,java.util.TreeSet links){
-    //System.out.println(".filterURL(): DEBUG: Filtering URL: "+url+" ("+currentURLPath+")");
+    System.out.println(".filterURL(): DEBUG: Filtering URL: "+url+" ("+currentURLPath+")");
 
     String urlLowCase = url.toLowerCase();
 

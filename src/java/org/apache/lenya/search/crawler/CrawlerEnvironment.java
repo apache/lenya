@@ -17,6 +17,7 @@ public class CrawlerEnvironment implements Configurable{
   private String configurationFilePath;
 
   private String base_url;
+  private String user_agent;
   private String scope_url;
   private String uri_list;
   private String htdocs_dump_dir;
@@ -54,6 +55,9 @@ public class CrawlerEnvironment implements Configurable{
       parameter=ce.getScopeURL();
       System.out.println(parameter);
 
+      parameter=ce.getUserAgent();
+      System.out.println(parameter);
+
       parameter=ce.getURIList();
       System.out.println(parameter);
       System.out.println(ce.resolvePath(parameter));
@@ -85,6 +89,7 @@ public class CrawlerEnvironment implements Configurable{
   public void configure(Configuration configuration) throws ConfigurationException{
     base_url=configuration.getChild("base-url").getAttribute("href");
     scope_url=configuration.getChild("scope-url").getAttribute("href");
+    user_agent=configuration.getChild("user-agent").getValue(null);
     uri_list=configuration.getChild("uri-list").getAttribute("src");
     htdocs_dump_dir=configuration.getChild("htdocs-dump-dir").getAttribute("src");
     }
@@ -101,6 +106,13 @@ public class CrawlerEnvironment implements Configurable{
   public String getScopeURL(){
     log.debug(".getScopeURL(): "+scope_url);
     return scope_url;
+    }
+/**
+ *
+ */
+  public String getUserAgent(){
+    log.debug(".getUserAgent(): "+user_agent);
+    return user_agent;
     }
 /**
  *

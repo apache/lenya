@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 
 <crawler>
-  <base-url href="http://127.0.0.1:48080/wyona-cms/oscom/matrix/index.html"/>
-  <scope-url href="http://127.0.0.1:48080/wyona-cms/oscom/matrix/"/>
+  <base-url href="http://www.wyona.org/index.html"/>
+  <scope-url href="http://www.wyona.org/"/>
+  <user-agent>wyona</user-agent>
   <uri-list src="../../resources/publication/search/lucene/uris.txt"/>
   <htdocs-dump-dir src="../../resources/publication/search/lucene/htdocs_dump"/>
 </crawler>

@@ -23,10 +23,10 @@
 <!--
         <item href="/wyona-cms/bitfluxeditor/weekly-column.html?url-xml=/wyona-cms/oscom/bitflux/home.xml&amp;url-xslt=/wyona-cms/oscom/bitflux/home.xsl&amp;url-xsd=/wyona-cms/oscom/bitflux/home.xsd&amp;url-css=/wyona-cms/oscom/bitflux/home.css&amp;url-post=/wyona-cms/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
 -->
-        <item>Publish</item>
 <!--
-        <item href="wyona/publishScreen?docid=/wyona-cms/oscom/matrix/index.html&amp;docids=/overview-body.xml">Publish</item>
+        <item>Publish</item>
 -->
+        <item href="../wyona/publishAllCMSProjectsScreen">Publish</item>
       </block>
       <separator>
         <item>-----------------</item>

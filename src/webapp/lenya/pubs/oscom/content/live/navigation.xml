@@ -2,20 +2,21 @@
 
 <oscom_navigation xmlns:oscom="http://www.oscom.org/2002/oscom">
 <leaf name="Home" href="index.html"/>
-<branch name="Conferences">
-  <leaf name="Zurich" href="http://www.oscom.org/conferences/zurich2002/"/>
+<branch name="Conferences" href="http://www.oscom.org/conferences/">
+<!--
+  <leaf name="Tokyo"/>
+-->
+  <leaf name="Cambridge/Boston" href="conferences/cambridge2003/index.html"/>
   <branch name="Berkeley" href="conferences/berkeley2002/index.html">
   </branch>
-  <leaf name="Cambridge/Boston"/>
-  <leaf name="Tokyo"/>
+  <leaf name="Zurich" href="http://www.oscom.org/conferences/zurich2002/"/>
 </branch>
-<leaf name="CMF/S&#160;Overview" href="matrix/index.html"/>
+<leaf name="CMS&#160;Overview" href="matrix/index.html"/>
 <leaf name="Editor&#160;Overview" href="editor-matrix/index.html"/>
 <leaf name="Search&#160;Engine&#160;Overview" href="http://www.searchtools.com/tools/tools.html"/>
 <!--
 <leaf name="Glossary" href="glossary.html"/>
 -->
-<leaf name="Glossary"/>
 <leaf name="Interop" href="interop.html"/>
 <leaf name="Mailing Lists" href="mailing-lists.html"/>
 <leaf name="CVS" href="http://cvs.oscom.org"/>
