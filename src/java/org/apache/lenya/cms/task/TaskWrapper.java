@@ -1,5 +1,5 @@
 /*
-$Id: TaskWrapper.java,v 1.1 2003/08/25 09:52:40 andreas Exp $
+$Id: TaskWrapper.java,v 1.2 2003/08/25 09:59:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,10 +60,10 @@ import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * A TaskWrapper encapsulates all information that is needed to execute a
+ * certain task, including e.g. workflow and notification parameters.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public interface TaskWrapper {
     
