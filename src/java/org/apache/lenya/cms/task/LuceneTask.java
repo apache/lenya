@@ -1,4 +1,4 @@
-/* $Id: LuceneTask.java,v 1.1 2004/07/29 05:49:24 michi Exp $  */
+/* $Id: LuceneTask.java,v 1.2 2004/08/02 00:19:42 michi Exp $  */
 
 package org.apache.lenya.cms.task;
 
@@ -22,16 +22,16 @@ public class LuceneTask extends AbstractTask {
             log.debug("Servlet context path: " + servletContextPath);
 
             String publicationId = getParameters().getParameter("publication-id");
-            log.error("Publication ID: " + publicationId);
+            log.debug("Publication ID: " + publicationId);
 
             String files = getParameters().getParameter("properties.files2index");
-            log.error("Files 2 index: " + files);
+            log.debug("Files 2 index: " + files);
 
             String luceneConfig = getParameters().getParameter("config");
             log.debug("Lucene configuration: " + luceneConfig);
 
             String luceneConfigAbsolutePath = servletContextPath + File.separator + "lenya" + File.separator + "pubs" + File.separator + publicationId  + File.separator + luceneConfig;
-            log.error("Lucene configuration: " + luceneConfigAbsolutePath);
+            log.debug("Lucene configuration: " + luceneConfigAbsolutePath);
 
             Indexer indexer = Index.getIndexer(luceneConfigAbsolutePath);
 	    indexer.indexDocument(new File(files));
