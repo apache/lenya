@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-$Id: xhtml2xhtml.xsl,v 1.4 2004/02/09 16:42:39 gregor Exp $
+$Id: xhtml2xhtml.xsl,v 1.5 2004/02/27 17:14:45 gregor Exp $
 -->
 
 <xsl:stylesheet version="1.0"
@@ -66,6 +66,68 @@ $Id: xhtml2xhtml.xsl,v 1.4 2004/02/09 16:42:39 gregor Exp $
         (<xsl:value-of select="format-number($extent div 1024, '#.#')"/>KB)
     </div>
   </xsl:template>
+  
+    <xsl:template match="xhtml:object" priority="3">
+      <xsl:when test="@href != ''">
+        <a href="{@href}">
+          <img border="0">
+            <xsl:attribute name="src">
+              <xsl:value-of select="$nodeid"/>/<xsl:value-of select="@data"/>
+            </xsl:attribute>
+            <xsl:attribute name="alt">
+              <!-- the overwritten title (stored in @name) has precedence over dc:title -->
+              <xsl:choose>
+                <xsl:when test="@name != ''">
+                  <xsl:value-of select="@name"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="dc:metadata/dc:title"/>                    
+                </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+             <xsl:if test="string(@height)">
+              <xsl:attribute name="height">
+                <xsl:value-of select="@height"/>
+              </xsl:attribute>
+            </xsl:if> 
+            <xsl:if test="string(@width)">
+              <xsl:attribute name="width">
+                <xsl:value-of select="@width"/>
+              </xsl:attribute>
+            </xsl:if>         
+          </img>
+        </a>
+      </xsl:when>
+      <xsl:otherwise>
+        <img border="0">
+          <xsl:attribute name="src">
+            <xsl:value-of select="$nodeid"/>/<xsl:value-of select="@data"/>
+          </xsl:attribute>
+          <xsl:attribute name="alt">
+              <!-- the overwritten title (stored in @name) has precedence over dc:title -->
+              <xsl:choose>
+                <xsl:when test="@name != ''">
+                  <xsl:value-of select="@name"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="dc:metadata/dc:title"/>                    
+                </xsl:otherwise>
+                </xsl:choose>
+          </xsl:attribute>
+          <xsl:if test="string(@height)">
+              <xsl:attribute name="height">
+                <xsl:value-of select="@height"/>
+              </xsl:attribute>
+        </xsl:if> 
+        <xsl:if test="string(@width)">
+              <xsl:attribute name="width">
+                <xsl:value-of select="@width"/>
+              </xsl:attribute>
+        </xsl:if>         
+        </img>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>  
 
   <xsl:template match="dc:metadata"/>
   
