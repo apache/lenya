@@ -23,11 +23,25 @@
 
     <map:resource name="style-cms-page">
       <map:transform src="xslt/util/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:serialize/>
     </map:resource>
 
+    <map:resource name="style-error-page">
+      <map:transform src="xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:select type="parameter">
+        <map:parameter name="statusCode" value="{statusCode}"/>
+        <map:when test="">
+          <map:serialize/>
+        </map:when>
+        <map:otherwise>
+          <map:serialize status-code="{statusCode}"/>
+        </map:otherwise>
+      </map:select>
+    </map:resource>
   </map:resources>
 
   <map:pipelines>
@@ -133,6 +147,7 @@
         <map:serialize type="xml"/>
         
       </map:match>
+      
     </map:pipeline>
     
     <!-- tabs -->
@@ -266,6 +281,22 @@
         <map:redirect-to uri="{request:requestURI}?lenya.usecase=info-overview&amp;lenya.step=showscreen" session="true"/>
         
       </map:match>
+      
+      <map:handle-errors type="500">
+        <map:select type="exception">
+          <map:when test="document-does-not-exist">
+            <map:transform src="xslt/exception/document-does-not-exist.xsl">
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            </map:transform>
+            <map:call resource="style-error-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+      
     </map:pipeline>
     
   </map:pipelines>
