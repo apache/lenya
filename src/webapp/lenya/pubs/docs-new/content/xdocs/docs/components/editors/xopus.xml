@@ -36,12 +36,47 @@ src/webapp/lenya/resources/misc/xopus/index.html
 
 <section>
 <title>Saving via POST</title>
-<p>To enable saving via POST, one needs to modify</p>
+<p>To enable saving via POST, one needs to modify <code>$XOPUS/xopusPlugins/datadriver.js</code> as follows</p>
 <source>
 <![CDATA[
-$XOPUS/xopusPlugins/datadriver.js
+    // Save data START
+    alert('Save XML via POST');
+    var result = Application.sendXML(doc, 'POST', name);
+
+    switch (result.status)
+    {
+      case 200:
+        //OK
+        var resultXML = result.responseXML;
+        alert('XML saved');
+        return;
+      case -1:
+        alert('Error while saving ' + name + ':\n\n' + result.responseText);
+        break;
+      default:
+        alert('Server responded not ok while saving ' + name + ':\n\nstatus:' + result.status + '\nmessage: ' + resul
+t.responseText);
+    }
+    // Save data END
 ]]>
 </source>
+whereas the text of the alerts might be replaced by something else.
+</section>
+
+<section>
+<title>Exit Xopus</title>
+<p>To exit Xopus one needs to modify <code>$XOPUS/xopusPlugins/cmsdriver.js</code> as follows</p>
+<source>
+<![CDATA[
+  getExitURL: function(path)
+  {
+    exitURL = path.substring(0, path.indexOf('?'));
+    alert('Exit to: ' + exitURL)
+    return exitURL;
+  },
+]]>
+</source>
+whereas the text of the alert might be replaced by something else.
 </section>
 </body>
 </document>
