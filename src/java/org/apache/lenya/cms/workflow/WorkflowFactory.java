@@ -154,7 +154,7 @@ public class WorkflowFactory {
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession(true);
 
-        List roleList = (List) request.getAttribute(Role.class.getName());
+        List roleList = (List) request.getSession().getAttribute(Role.class.getName());
 
         if (roleList == null) {
             throw new WorkflowException("Request does not contain roles!");

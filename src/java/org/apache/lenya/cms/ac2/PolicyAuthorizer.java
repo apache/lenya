@@ -55,6 +55,7 @@ $Id
 */
 package org.apache.lenya.cms.ac2;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
@@ -67,7 +68,8 @@ import org.apache.lenya.cms.publication.Publication;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class PolicyAuthorizer implements Authorizer {
+public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
+    
     /**
      * Creates a new policy authorizer.
      */
@@ -75,7 +77,6 @@ public class PolicyAuthorizer implements Authorizer {
     }
 
     /**
-     * Template method, override {@link #setup(Map)} to setup your authorizer.
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, java.lang.String, java.util.Map)
      */
     public boolean authorize(
@@ -85,6 +86,9 @@ public class PolicyAuthorizer implements Authorizer {
         Publication publication,
         Request request)
         throws AccessControlException {
+            
+        getLogger().debug("Authorizing identity: " + identity);
+            
         String requestUri = request.getRequestURI();
         String context = request.getContextPath();
 
@@ -97,8 +101,12 @@ public class PolicyAuthorizer implements Authorizer {
         Policy policy =
             policyManager.getPolicy(accessController, publication, url);
         Role[] roles = policy.getRoles(identity);
+        
+        boolean authorized = roles.length > 0; 
 
-        return roles.length > 0;
+        getLogger().debug("Authorized: " + authorized);
+            
+        return authorized;
     }
 
 }

@@ -55,6 +55,7 @@ $Id
 */
 package org.apache.lenya.cms.ac2;
 
+import org.apache.avalon.framework.component.Component;
 import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
@@ -66,7 +67,7 @@ import org.apache.lenya.cms.publication.Publication;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface Authorizer {
+public interface Authorizer extends Component {
 
     /**
      * Authorizes an identity at a URL.

@@ -56,6 +56,7 @@ $Id
 package org.apache.lenya.cms.ac2.workflow;
 
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
@@ -115,14 +116,15 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
             throw new AccessControlException(e);
         }
 
+        Policy policy = policyManager.getPolicy(accessController, publication, url);
+        Role[] roles = policy.getRoles(identity);
+        saveRoles(request.getSession(), roles);
+        
         try {
+            
             WorkflowFactory factory = WorkflowFactory.newInstance();
-
             if (factory.hasWorkflow(document)) {
                 WorkflowInstance instance = factory.buildInstance(document);
-                Policy policy = policyManager.getPolicy(accessController, publication, url);
-                Role[] roles = policy.getRoles(identity);
-                saveRoles(request, roles);
 
                 if (event != null) {
                     authorized = false;
@@ -151,8 +153,14 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
      * Saves the roles of the current identity to the request.
      * @param request The request.
      * @param roles The roles.
+     * TODO: change session to request
      */
-    protected void saveRoles(Request request, Role[] roles) {
-        request.setAttribute(Role.class.getName(), Arrays.asList(roles));
+    protected void saveRoles(Session session, Role[] roles) {
+        String rolesString = "";
+        for (int i = 0; i < roles.length; i++) {
+            rolesString += " " + roles[i];
+        }
+        getLogger().debug("Adding roles [" + rolesString + " ] to session [" + session + "]");
+        session.setAttribute(Role.class.getName(), Arrays.asList(roles));
     }
 }
