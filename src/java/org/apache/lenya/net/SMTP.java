@@ -1,5 +1,5 @@
 /*
- * $Id: SMTP.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: SMTP.java,v 1.3 2003/02/13 19:47:13 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -385,10 +385,11 @@ public class SMTP {
         int nlines = 0;
 
         try {
-            DataInputStream in = new DataInputStream(new FileInputStream(filename));
+            
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
 
             while (in.available() != 0) {
-                string = in.readLine();
+                string = reader.readLine();
                 nlines++;
             }
 
@@ -412,10 +413,10 @@ public class SMTP {
         int nlines = 0;
 
         try {
-            DataInputStream in = new DataInputStream(new FileInputStream(filename));
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
 
             while (in.available() != 0) {
-                string[nlines] = in.readLine();
+                string[nlines] = reader.readLine();
                 nlines++;
             }
 

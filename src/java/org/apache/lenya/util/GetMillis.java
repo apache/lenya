@@ -1,5 +1,5 @@
 /*
- * $Id: GetMillis.java,v 1.2 2003/02/07 12:14:24 ah Exp $
+ * $Id: GetMillis.java,v 1.3 2003/02/13 19:43:07 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,6 +44,7 @@
 package org.wyona.util;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -77,8 +78,10 @@ public class GetMillis {
      * @return DOCUMENT ME!
      */
     public String getMillis(String year, String month, String day) {
-        return "" +
-        new Date(new Integer(year).intValue() - 1900, new Integer(month).intValue(),
-            new Integer(day).intValue()).getTime();
+        return Long.toString(new GregorianCalendar(
+                        new Integer(year).intValue(),
+                        new Integer(month).intValue(),
+                        new Integer(day).intValue())
+                    .getTime().getTime());
     }
 }
