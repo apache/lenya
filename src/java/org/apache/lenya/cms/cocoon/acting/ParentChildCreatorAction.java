@@ -180,7 +180,12 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     // Transaction should actually be finished here!
 
     // Create actual document
-    creator.create(new File(absoluteDoctypesPath+"samples"),new File(sitemapParentPath+docsPath+parentid),childid,childType);
+    try{
+      creator.create(new File(absoluteDoctypesPath+"samples"),new File(sitemapParentPath+docsPath+parentid),childid,childType);
+      }
+    catch(Exception e){
+      getLogger().error(".act(): Creator throwed exception: "+e);
+      }
 
     // Redirect to referer
     if(7 > 1){

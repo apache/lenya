@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="editor">
+  <id/>
+  <editor email="sample@sample.org">editor</editor>
+  <system_name/>
+  <description>
+Sample
+  </description>
+  <main_url>http://www.sample.org</main_url>
+  <license>
+    <license_name>Apache Software License</license_name>
+    <license_url>http://xopus.org/index.jsp?menu=licensing</license_url>
+  </license>
+</system>

@@ -257,10 +257,10 @@
   <map:pipeline>
     <map:match pattern="authoring/editor-matrix/ParentChildScreenNewEditor*">
       <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+      <map:transform src="stylesheets/cms/parent-child-new-editor-project.xsl"/>
 <!--
-      <map:transform src="stylesheets/cms/Page/parent-child-new-article.xsl"/>
--->
       <map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
+-->
       <map:serialize type="html"/>
     </map:match>
     <map:match pattern="authoring/editor-matrix/create*">
