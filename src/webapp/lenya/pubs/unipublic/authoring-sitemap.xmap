@@ -97,9 +97,28 @@
           <map:redirect-to uri="{parent_uri}" session="true"/>
         </map:act>
         <map:redirect-to uri="publishScreen?status=failed" session="true"/>
-      </map:match>                                                                                                                          
+      </map:match>
     </map:pipeline>
     <!-- /Publisher  -->
+
+    <!-- ParentChild Content Creator: New Article -->
+    <map:pipeline>
+      <map:match pattern="wyona/ParentChildScreenNewArticle*">
+        <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+        <map:transform src="stylesheets/cms/Page/parent-child-new-article.xsl"/>
+<!--
+        <map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
+-->
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="wyona/create*">
+        <map:act type="parent-child">
+          <map:redirect-to uri="{parent_uri}" session="true"/>
+        </map:act>
+        <map:redirect-to uri="ParentChildScreenNewArticle?status=failed" session="true"/>
+      </map:match>
+    </map:pipeline>
+    <!-- /ParentChild Content Creator: New Article -->
 
     <!-- Authoring -->
     <!-- Menus -->

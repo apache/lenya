@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<!-- CAUTION: this tree is handcrafted -->
+<tree>
+  <branch relURI="" doctype="Front" menuName="Home">
+    <branch relURI="magazin" doctype="Channel" menuName="Magazin">
+      <branch relURI="gesundheit" doctype="Section" menuName="Gesundheit">
+        <branch relURI="2002" doctype="Year" menuName="2002"/>
+      </branch>
+    </branch>
+    <branch relURI="channel" doctype="Channel" menuName="Magazin">
+      <branch relURI="section" doctype="Section" menuName="Gesundheit">
+        <branch relURI="year" doctype="Year" menuName="2002"/>
+      </branch>
+    </branch>
+  </branch>
+</tree>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<doctypes>
+<doc type="Section">
+  <children>
+    <doc type="Article"/>
+  </children>
+</doc>
+
+<doc type="Article">
+<!--
+  <creator src="org.wyona.cms.authoring.DefaultParentChildCreator"/>
+-->
+  <creator src="ch.unizh.unipublic.wyona.cms.authoring.NewArticleCreator"/>
+</doc>
+</doctypes>
