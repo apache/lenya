@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article>
+<meta>
+  <id>2008</id>
+  <editor>michiii</editor>
+  <author>michael</author>
+  <date>
+    <year>2003</year>
+    <month name="January">1</month>
+    <day name="Friday">24</day>
+    <hour>01</hour>
+    <minute>52</minute>
+  </date>
+  <category/>
+</meta>
+<head>
+  <title>Revision Controller has been integrated</title>
+</head>
+<body>
+<p>
+We finally integrated the Revision Controller, which is capable of
+reserved check-in/out and rollbacks, where the rollback length can
+be configured.
+</p>
+
+<p>
+This Revision Controller is just a temporary solution, because
+we will integrate Apache Slide within the near future and
+replace our Revison Controller by Slide's version control.
+</p>
+</body>
+<comments/>
+</article>
