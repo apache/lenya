@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.9 2003/04/24 13:53:13 gregor Exp $
+ * $Id: Configuration.java,v 1.10 2003/04/24 14:11:28 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -58,7 +58,7 @@ import java.util.Properties;
  */
 public class Configuration {
     static Category log = Category.getInstance(Configuration.class);
-    public static final String DEFAULT_CONFIGURATION_FILE = "org/lenya/net/conf.properties";
+    public static final String DEFAULT_CONFIGURATION_FILE = "org/apache/lenya/net/conf.properties";
     public static final String DEFAULT_CONFIGURATION_KEY = "lenya.configuration";
     public static final String OVERRIDE_DEFAULT_CONFIGURATION_KEY = "override.lenya.configuration";
     public String configurationPath = null;
@@ -76,7 +76,7 @@ public class Configuration {
     /**
      * http://www.artima.com/java/answers/Mar2001/messages/164.html export
      * CLASSPATH=/home/lenya/src/xps/build/properties:... java
-     * -Doverride.lenya.configuration=org/lenya/altconf.properties org.apache.lenya.net.Configuration
+     * -Doverride.lenya.configuration=org/apache/lenya/altconf.properties org.apache.lenya.net.Configuration
      *
      * @param args DOCUMENT ME!
      */

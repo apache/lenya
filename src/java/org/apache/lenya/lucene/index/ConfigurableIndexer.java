@@ -86,7 +86,7 @@ public class ConfigurableIndexer
         return null;
     }
     
-    public static final String CONFIGURATION_CREATOR_STYLESHEET = "org/lenya/lucene/index/configuration2xslt.xsl";
+    public static final String CONFIGURATION_CREATOR_STYLESHEET = "org/apache/lenya/lucene/index/configuration2xslt.xsl";
     
     /**
      * Converts the configuration file to an XSLT stylesheet and returns a reader that reads this stylesheet.

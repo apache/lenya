@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.9 2003/04/24 13:53:14 gregor Exp $
+ * $Id: Configuration.java,v 1.10 2003/04/24 14:11:28 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -58,7 +58,7 @@ import java.util.Properties;
  */
 public class Configuration {
     static Category log = Category.getInstance(Configuration.class);
-    public static final String DEFAULT_CONFIGURATION_FILE = "org/lenya/xml/xpsconf.properties";
+    public static final String DEFAULT_CONFIGURATION_FILE = "org/apache/lenya/xml/xpsconf.properties";
     public static final String DEFAULT_CONFIGURATION_KEY = "xps.configuration";
     public static final String OVERRIDE_DEFAULT_CONFIGURATION_KEY = "override.xps.configuration";
     public String cacheFolder = null;
@@ -106,7 +106,7 @@ public class Configuration {
     /**
      * http://www.artima.com/java/answers/Mar2001/messages/164.html export
      * CLASSPATH=/home/lenya/src/xps/build/properties:... java
-     * -Doverride.xps.configuration=org/lenya/xps/altconf.properties org.apache.lenya.xps.Configuration
+     * -Doverride.xps.configuration=org/apache/lenya/xps/altconf.properties org.apache.lenya.xps.Configuration
      *
      * @param args DOCUMENT ME!
      */
