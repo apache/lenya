@@ -1,5 +1,5 @@
 <!--
-	$Id: drawing.mod,v 1.1 2003/03/31 13:53:47 egli Exp $
+	$Id: drawing.mod,v 1.2 2003/03/31 17:08:23 egli Exp $
 
    The Contents of this file are made available subject to the terms of
    either of the following licenses
@@ -544,28 +544,28 @@
 
 
 <!-- text boxes -->
-<!ELEMENT draw:text-box (office:events?,draw:image-map?,
-		%sectionText;)>
-<!ATTLIST draw:text-box %draw-style-name;>
-<!ATTLIST draw:text-box %draw-transform; >
-<!ATTLIST draw:text-box draw:name %string; #IMPLIED>
-<!ATTLIST draw:text-box draw:chain-next-name %string; #IMPLIED>
+<!-- <!ELEMENT draw:text-box (office:events?,draw:image-map?, -->
+<!-- 		%sectionText;)> -->
+<!-- <!ATTLIST draw:text-box %draw-style-name;> -->
+<!-- <!ATTLIST draw:text-box %draw-transform; > -->
+<!-- <!ATTLIST draw:text-box draw:name %string; #IMPLIED> -->
+<!-- <!ATTLIST draw:text-box draw:chain-next-name %string; #IMPLIED> -->
 
-<!ATTLIST draw:text-box %text-anchor;>
-<!ATTLIST draw:text-box %draw-position;>
-<!ATTLIST draw:text-box %draw-end-position; >
-<!ATTLIST draw:text-box %table-background; >
-<!ATTLIST draw:text-box svg:width %lengthOrPercentage; #IMPLIED>
-<!ATTLIST draw:text-box svg:height %lengthOrPercentage; #IMPLIED>
-<!ATTLIST draw:text-box style:rel-width %percentage; #IMPLIED>
-<!ATTLIST draw:text-box style:rel-height %percentage; #IMPLIED>
-<!ATTLIST draw:text-box fo:min-height %lengthOrPercentage; #IMPLIED>
-<!ATTLIST draw:text-box %zindex;>
-<!ATTLIST draw:text-box %presentation-class; >
-<!ATTLIST draw:text-box %draw-transform; >
-<!ATTLIST draw:text-box draw:id %draw-shape-id;>
-<!ATTLIST draw:text-box draw:layer %layerName; #IMPLIED>
-<!ATTLIST draw:text-box draw:corner-radius %nonNegativeLength; #IMPLIED>
+<!-- <!ATTLIST draw:text-box %text-anchor;> -->
+<!-- <!ATTLIST draw:text-box %draw-position;> -->
+<!-- <!ATTLIST draw:text-box %draw-end-position; > -->
+<!-- <!ATTLIST draw:text-box %table-background; > -->
+<!-- <!ATTLIST draw:text-box svg:width %lengthOrPercentage; #IMPLIED> -->
+<!-- <!ATTLIST draw:text-box svg:height %lengthOrPercentage; #IMPLIED> -->
+<!-- <!ATTLIST draw:text-box style:rel-width %percentage; #IMPLIED> -->
+<!-- <!ATTLIST draw:text-box style:rel-height %percentage; #IMPLIED> -->
+<!-- <!ATTLIST draw:text-box fo:min-height %lengthOrPercentage; #IMPLIED> -->
+<!-- <!ATTLIST draw:text-box %zindex;> -->
+<!-- <!ATTLIST draw:text-box %presentation-class; > -->
+<!-- <!ATTLIST draw:text-box %draw-transform; > -->
+<!-- <!ATTLIST draw:text-box draw:id %draw-shape-id;> -->
+<!-- <!ATTLIST draw:text-box draw:layer %layerName; #IMPLIED> -->
+<!-- <!ATTLIST draw:text-box draw:corner-radius %nonNegativeLength; #IMPLIED> -->
 
 <!-- image -->
 <!ELEMENT draw:image (office:binary-data?,office:events?,draw:image-map?,svg:desc?,(draw:contour-polygon|draw:contour-path)?)>
