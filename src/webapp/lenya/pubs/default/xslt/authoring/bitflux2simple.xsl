@@ -14,12 +14,12 @@
 
 
 <!-- Replaces the html code of the editable section by the bitflux specific code -->
-<xsl:template match="preview">
-	<preview contentEditable="true">
+<xsl:template match="body">
+	<body contentEditable="true">
                 <xslout:for-each select="preview">
   			<xslout:apply-templates/>
                 </xslout:for-each>
-	</preview>
+	</body>
 </xsl:template>
 
 <xsl:template name="preview-bxe">
@@ -35,14 +35,6 @@
         <xsl:apply-templates/>
       </xsl:for-each>
     </title>
-  </xsl:template>
-
-  <xsl:template match="body">
-    <body contentEditable="true">
-      <xsl:for-each select=".">
-        <xsl:apply-templates/>
-      </xsl:for-each>
-    </body>
   </xsl:template>
 
 

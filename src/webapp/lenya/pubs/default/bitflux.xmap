@@ -45,10 +45,10 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/simple.xsd">
-				<map:read src="config/doctypes/schemas/simple.xsd" mime-type="text/xml"/>
+				<map:read src="config/doctypes/schemas/simple-document.xsd" mime-type="text/xml"/>
 			</map:match>
 			<map:match pattern="css/simple.css">
-				<map:read src="resources/css/authoring/simple-bitflux.css" mime-type="text/css"/>
+				<map:read src="resources/css/simple.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
 		<!-- Generic -->
