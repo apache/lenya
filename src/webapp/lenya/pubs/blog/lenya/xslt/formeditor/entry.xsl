@@ -17,7 +17,7 @@
 
 <xsl:if test="not(echo:summary)">
 <tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-after select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:summary&quot; namespace=&quot;http://example.com/newformat#&quot;&gt;New summary&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;" value="LENYA"/></td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-after select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:summary&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;New summary&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;" value="LENYA"/></td>
   <td colspan="2">Summary</td>
 </tr>
 </xsl:if>
@@ -26,7 +26,7 @@
 <xsl:apply-templates select="echo:content"/>
 
 <tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://example.com/newformat#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
   <td colspan="2">Content (text/plain)</td>
 </tr>
 </xsl:template>
@@ -41,7 +41,7 @@
 
 <xsl:template match="echo:content[@type='text/plain']">
 <tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://example.com/newformat#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;" value="LENYA"/></td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;" value="LENYA"/></td>
   <td colspan="2">Content (text/plain)</td>
 </tr>
 <tr>

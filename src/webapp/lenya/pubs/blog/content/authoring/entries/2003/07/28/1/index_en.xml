@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<entry xmlns="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
+<entry xmlns="http://purl.org/atom/ns#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
 
   <lenya:meta xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:title>My First Entry</dc:title>

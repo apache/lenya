@@ -2,7 +2,7 @@
 
 <namespaces>
 
-<xmlns>echo=http://example.com/newformat#</xmlns>
+<xmlns>echo=http://purl.org/atom/ns#</xmlns>
 <xmlns>ent=http://www.purl.org/NET/ENT/1.0/</xmlns>
 
 </namespaces>

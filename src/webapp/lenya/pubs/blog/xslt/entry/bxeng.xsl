@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: bxeng.xsl,v 1.2 2003/08/22 22:24:48 michi Exp $ -->
+<!-- $Id: bxeng.xsl,v 1.3 2003/09/10 18:55:08 gregor Exp $ -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
- xmlns:echo="http://example.com/newformat#"
+ xmlns:echo="http://purl.org/atom/ns#"
 >
 <xsl:output method="xml" encoding="iso-8859-1" />
 

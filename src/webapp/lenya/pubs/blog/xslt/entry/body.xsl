@@ -2,7 +2,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:echo="http://example.com/newformat#"
+  xmlns:echo="http://purl.org/atom/ns#"
   xmlns:ent="http://www.purl.org/NET/ENT/1.0/"
 >
 
