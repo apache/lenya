@@ -3,6 +3,7 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:param name="section" select="'default_value'"/>
+<xsl:param name="authoring"/>
 
 <xsl:template match="text()">
 <xsl:value-of select="."/>
@@ -57,13 +58,18 @@
 </xsl:template>
 
 <xsl:template match="block">
-  <xsl:apply-templates select="p | media"/>
+  <xsl:apply-templates select="p | media">
+    <xsl:with-param name="block-position" select="position()"/>
+  </xsl:apply-templates>
 </xsl:template>
 
 <xsl:template match="p">
-<p>
-  <a href="uploadImage?xpath=/article/body/p[{position()}]">Upload Image</a>
-</p>
+  <xsl:param name="block-position"/>
+  <xsl:if test="$authoring">
+    <p>
+    <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;xpath=/article/body/block[{$block-position}]/p[{position()}]">Upload Image</a>
+    </p>
+  </xsl:if>
   <p>
     <xsl:if test="not(preceding-sibling::p)">
       <xsl:apply-templates select="../hl2" mode="block"/>

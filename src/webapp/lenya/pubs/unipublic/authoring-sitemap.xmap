@@ -19,7 +19,18 @@
     </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
-    <map:matchers default="wildcard"/>
+
+    <map:matchers default="wildcard">
+      <map:matcher name="usecase"     logger="sitemap.matcher.usecase"
+                src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>usecase</parameter-name>
+      </map:matcher>
+      <map:matcher name="step"     logger="sitemap.matcher.step"
+                src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>step</parameter-name>
+      </map:matcher>
+    </map:matchers>
+
     <map:actions>
       <map:action name="reserved-checkout" src="org.wyona.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
         <rcmlDirectory href="docs/publication/rcml"/>
@@ -362,15 +373,16 @@
         <map:serialize type="xml"/>
       </map:match>
 
-
-      <map:match pattern="*/*/*/*/uploadImage.xml">
-        <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="*/*/*/*/uploadImage">
-        <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
-        <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
-        <map:serialize type="html"/>
+      <map:match type="usecase" pattern="uploadimage">
+        <map:match type="step" pattern="showxml">
+          <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+          <map:serialize type="xml"/>
+	</map:match>
+	<map:match type="step" pattern="showscreen">
+          <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+          <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
+          <map:serialize type="html"/>
+	</map:match>
       </map:match>
 
       <map:match pattern="*/*/*/*/index.xml">
@@ -401,6 +413,7 @@
           <map:when test="explorer">
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
               <map:parameter name="section" value="{2}"/>
+              <map:parameter name="authoring" value="true"/>
             </map:transform>
 <!--
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
@@ -412,6 +425,7 @@
 -->
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
               <map:parameter name="section" value="{2}"/>
+              <map:parameter name="authoring" value="true"/>
             </map:transform>
           </map:otherwise>
         </map:select>
