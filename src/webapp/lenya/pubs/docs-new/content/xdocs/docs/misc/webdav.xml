@@ -169,5 +169,122 @@ Enter within your browser "http://127.0.0.1:3333/lenya/index.html"
 </source>
 </section>
 
+<section>
+<title>PROPFIND</title>
+<p>
+The WebDAV client will first send a PROPFIND with Depth = 0. Depending on the response (collection or resource)
+the WebDAV client will send another PROPFIND with Depth = 1 (collection) or a GET (resource).
+</p>
+
+<p>
+Collection:
+</p>
+
+<source>
+<![CDATA[
+Request
+=======
+
+PROPFIND /lenya/blog/authoring/entries/2003/08/24/peanuts/ HTTP/1.1
+Pragma: no-cache
+Cache-control: no-cache
+Accept: text/*, image/jpeg, image/png, image/*, */*
+Accept-Encoding: x-gzip, gzip, identity
+Accept-Charset: iso-8859-1, utf-8;q=0.5, *;q=0.5
+Accept-Language: en
+Host: 127.0.0.1
+Depth: 0
+
+
+
+Response
+========
+
+HTTP/1.1 207 Multi-Status
+X-Cocoon-Version: 2.1
+Set-Cookie: JSESSIONID=320E3B1395B867B5BC42B5FC93457C36; Path=/lenya
+Content-Type: text/xml
+Transfer-Encoding: chunked
+Date: Mon, 25 Aug 2003 14:27:12 GMT
+Server: Apache Coyote/1.0
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<D:multistatus xmlns:D="DAV:">
+
+<D:response xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/">
+<D:href>/lenya/blog/authoring/entries/2003/08/24/peanuts/</D:href>
+<D:propstat>
+<D:prop>
+<lp1:resourcetype><D:collection/></lp1:resourcetype>
+<D:getcontenttype>httpd/unix-directory</D:getcontenttype>
+</D:prop>
+<D:status>HTTP/1.1 200 OK</D:status>
+</D:propstat>
+</D:response>
+
+</D:multistatus>
+
+
+
+Request
+=======
+
+PROPFIND /lenya/blog/authoring/entries/2003/08/24/peanuts/ HTTP/1.1
+Pragma: no-cache
+Cache-control: no-cache
+Accept: text/*, image/jpeg, image/png, image/*, */*
+Accept-Encoding: x-gzip, gzip, identity
+Accept-Charset: iso-8859-1, utf-8;q=0.5, *;q=0.5
+Accept-Language: en
+Host: 127.0.0.1
+Depth: 1
+
+
+
+Response
+========
+
+HTTP/1.1 207 Multi-Status
+X-Cocoon-Version: 2.1
+Set-Cookie: JSESSIONID=5A87A774B7B29D04DEDBDECC54477E5B; Path=/lenya
+Content-Type: text/xml
+Transfer-Encoding: chunked
+Date: Mon, 25 Aug 2003 14:27:12 GMT
+Server: Apache Coyote/1.0
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<D:multistatus xmlns:D="DAV:">
+
+<D:response xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/">
+<D:href>/lenya/blog/webdav/entries/2003/08/24/peanuts/index.html</D:href>
+<D:propstat>
+<D:prop>
+<lp1:resourcetype/>
+<D:getcontenttype>text/html</D:getcontenttype>
+</D:prop>
+<D:status>HTTP/1.1 200 OK</D:status>
+</D:propstat>
+</D:response>
+
+<D:response xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/">
+<D:href>/lenya/blog/webdav/entries/2003/08/24/peanuts/charlie.xml</D:href>
+<D:propstat>
+<D:prop>
+<lp1:resourcetype/>
+<lp1:creationdate>2003-07-21T13:04:23Z</lp1:creationdate>
+<lp1:getcontentlength>3845</lp1:getcontentlength>
+<D:getcontenttype>text/xml</D:getcontenttype>
+</D:prop>
+<D:status>HTTP/1.1 200 OK</D:status>
+</D:propstat>
+</D:response>
+
+</D:multistatus>
+]]>
+</source>
+</section>
+
 </body>
 </document>

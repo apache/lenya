@@ -1,17 +1,12 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.14 2003/08/22 14:55:10 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.15 2003/08/25 20:55:17 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
-<!--
-    <map:generators default="file">
-      <map:generator label="content" logger="sitemap.generator.stream" name="stream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.cocoon.generation.StreamGenerator"/>
-    </map:generators>
--->
     <map:selectors default="browser">
-      <map:selector logger="sitemap.selector.request-method" name="request-metod" src="org.apache.cocoon.selection.RequestMethodSelector"/>
+      <map:selector logger="sitemap.selector.request-method" name="request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
     </map:selectors>
   </map:components>
 
@@ -97,7 +92,7 @@
     <!-- GET and PUT -->
     <map:pipeline type="noncaching"> <!-- Caching Info: http://cocoon.apache.org/2.1/userdocs/concepts/caching.html -->
       <map:match pattern="*/entries/*/*/*/*/index-bxeng.xml">
-        <map:select type="request-metod">
+        <map:select type="request-method">
           <map:when test="PUT">
             <map:generate type="stream"/>
             <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
@@ -126,6 +121,34 @@
       <map:handle-errors type="500"/>
     </map:pipeline>
     <!-- /BX Editor: Entries -->
+
+    <!-- WebDAV -->
+    <map:pipeline type="noncaching">
+      <map:match pattern="*/entries/**/propfind-depth-*.xml">
+        <map:generate type="directory" src="content/{1}/entries/{2}/"/>
+        <map:transform src="../../xslt/util/propfind.xsl">
+          <map:parameter name="depth" value="{3}"/>
+        </map:transform>
+        <map:serialize type="xml" status-code="207"/>
+      </map:match>
+      <map:match pattern="*/entries/**/">
+        <map:select type="request-method">
+          <map:when test="PROPFIND">
+            <map:generate type="directory" src="content/{1}/entries/{2}/"/>
+            <map:transform src="../../xslt/util/propfind.xsl">
+              <map:parameter name="depth" value="{request-header:Depth}"/>
+            </map:transform>
+            <map:serialize type="xml" status-code="207"/>
+          </map:when>
+          <map:otherwise> <!-- GET -->
+            <map:generate type="directory" src="content/{1}/entries/{2}/"/>
+            <map:serialize type="xml"/>
+          </map:otherwise>
+        </map:select>
+      </map:match>
+      <map:handle-errors type="500"/>
+    </map:pipeline>
+    <!-- WebDAV -->
 
     <!-- Feeds -->
     <map:pipeline>
