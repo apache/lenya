@@ -48,7 +48,7 @@ public class EditorTempfileAction extends AbstractComplementaryConfigurableActio
     if(request == null){
       getLogger().error ("No request object");
       return null;
-      }
+    }
     // Get session
     Session session=request.getSession(true);
     if(session == null){
