@@ -1,5 +1,4 @@
 /*
-$Id: XPSAssembler.java,v 1.14 2003/08/11 16:03:05 michi Exp $
 <License>
 
  ============================================================================
@@ -56,7 +55,6 @@ $Id: XPSAssembler.java,v 1.14 2003/08/11 16:03:05 michi Exp $
 package org.apache.lenya.xml;
 
 
-//import org.apache.lenya.xml.*;
 import org.apache.lenya.net.*;
 
 import org.apache.log4j.Category;
@@ -71,10 +69,10 @@ import java.util.*;
 
 
 /**
- * DOCUMENT ME!
+ * XLink/XInclude Processor (Nesting, Caching, Java, Exceptions)
  *
  * @author Michael Wechner
- * @version 2002.5.28 XLink Processor (Nesting, Caching, Java)
+ * @version $Id: XPSAssembler.java,v 1.15 2003/08/13 16:24:12 michi Exp $
  */
 public class XPSAssembler implements XPSInclude {
     static Category log = Category.getInstance(XPSAssembler.class);
@@ -435,8 +433,7 @@ public class XPSAssembler implements XPSInclude {
                 NodeList nl = processXLink(xlink, (Element) orgChild, currentInfo);
 
                 for (int i = 0; i < nl.getLength(); i++) {
-                    newChildren.addElement(dpf.cloneNode(newParent.getOwnerDocument(), nl.item(i),
-                            true));
+                    newChildren.addElement(dpf.cloneNode(newParent.getOwnerDocument(), nl.item(i), true));
                 }
             }
 
@@ -456,8 +453,7 @@ public class XPSAssembler implements XPSInclude {
         }
 
         case Node.CDATA_SECTION_NODE: {
-            //newChildren.addElement(dpf.newCommentNode(newParent.getOwnerDocument(), "CDATA not implemented yet."));
-            newChildren.addElement(dpf.newTextNode(newParent.getOwnerDocument(), "CDATA not implemented yet."));
+            newChildren.addElement(dpf.newCDATASection(newParent.getOwnerDocument(), orgChild.getNodeValue()));
 
             break;
         }

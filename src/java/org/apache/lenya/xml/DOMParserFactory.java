@@ -1,5 +1,4 @@
 /*
-$Id: DOMParserFactory.java,v 1.14 2003/07/23 13:21:29 gregor Exp $
 <License>
 
  ============================================================================
@@ -69,10 +68,10 @@ import java.util.Properties;
 
 
 /**
- * DOCUMENT ME!
+ * Utility class for creating DOM documents
  *
  * @author Michael Wechner
- * @version 1.9.11
+ * @version $Id: DOMParserFactory.java,v 1.15 2003/08/13 16:24:12 michi Exp $
  * @deprecated replaced by DocumentHelper
  */
 public class DOMParserFactory {
@@ -219,6 +218,18 @@ public class DOMParserFactory {
     }
 
     /**
+     * CDATA
+     *
+     * @param document DOM document
+     * @param data Text
+     *
+     * @return CDATASection
+     */
+    public CDATASection newCDATASection(Document document, String data) {
+        return parser.newCDATASection(document, data);
+    }
+
+    /**
      * DOCUMENT ME!
      *
      * @param document DOCUMENT ME!
@@ -266,6 +277,14 @@ public class DOMParserFactory {
             break;
         }
 
+        case Node.CDATA_SECTION_NODE: {
+            CDATASection cdata = newCDATASection(document, original.getNodeValue());
+
+            node = cdata;
+
+            break;
+        }
+
         case Node.COMMENT_NODE: {
             Comment comment = newCommentNode(document, original.getNodeValue());
 
@@ -275,6 +294,7 @@ public class DOMParserFactory {
         }
 
         default:
+            log.warn(".cloneNode(): Node type not implemented: " + nodeType);
             break;
         }
 

@@ -1,5 +1,4 @@
 /*
-$Id: XercesParser.java,v 1.12 2003/07/23 13:21:26 gregor Exp $
 <License>
 
  ============================================================================
@@ -68,11 +67,10 @@ import java.io.*;
 
 
 /**
- * DOCUMENT ME!
+ * Xerces Parser Implementation
  *
- * @author Michael Wechner, lenya
- * @version 0.5.5
- * @deprecated replaced by DocumentHelper
+ * @author Michael Wechner
+ * @version $Id: XercesParser.java,v 1.13 2003/08/13 16:24:12 michi Exp $
  */
 public class XercesParser implements Parser {
     /**
@@ -198,6 +196,18 @@ public class XercesParser implements Parser {
      */
     public Text newTextNode(Document document, String data) {
         return new TextImpl((DocumentImpl) document, data);
+    }
+
+    /**
+     * CDATA
+     *
+     * @param document DOM Document
+     * @param data Text
+     *
+     * @return CDATASection
+     */
+    public CDATASection newCDATASection(Document document, String data) {
+        return new CDATASectionImpl((DocumentImpl) document, data);
     }
 
     /**

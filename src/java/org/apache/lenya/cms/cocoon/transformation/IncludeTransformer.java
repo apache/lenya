@@ -1,5 +1,4 @@
 /*
-$Id: IncludeTransformer.java,v 1.14 2003/07/04 17:45:00 egli Exp $
 <License>
 
  ============================================================================
@@ -68,10 +67,10 @@ import org.w3c.dom.Document;
 
 
 /**
- * DOCUMENT ME!
+ * Wrapper for XLink/XInclude Processor
  *
  * @author Michael Wechner
- * @version 2002.5.30
+ * @version $Id: IncludeTransformer.java,v 1.15 2003/08/13 16:24:11 michi Exp $
  */
 public class IncludeTransformer extends AbstractDOMTransformer implements Configurable {
     private String domain = "127.0.0.1";
@@ -135,7 +134,7 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
                     sitemapPath + sitemap_uri, cocoon_base_request);
             }
         } catch (Exception e) {
-            getLogger().error(".transform(): " + e);
+            getLogger().error(".transform(): " + e, e);
         }
 
         return doc;
