@@ -32,6 +32,9 @@
   </target>
   
   <target name="replicate" depends="init" description="Replicate data">
+    <mkdir dir="${pending.dir}"/>
+    <mkdir dir="${delete.dir}"/>
+
     <pathconvert 
         property="pending-files.exist"
         pathsep="/"
