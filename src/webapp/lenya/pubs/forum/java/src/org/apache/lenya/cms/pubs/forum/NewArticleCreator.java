@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.10 2003/02/26 13:07:51 egli Exp $
+ * $Id: NewArticleCreator.java,v 1.11 2003/02/27 15:59:34 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,8 +45,6 @@ package org.wyona.cms.pubs.forum;
 
 import org.apache.log4j.Category;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
 import org.w3c.dom.Document;
 
 import org.wyona.cms.authoring.DefaultBranchCreator;
@@ -59,6 +57,7 @@ import java.io.File;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Map;
 
 
 /**
@@ -99,7 +98,7 @@ public class NewArticleCreator extends DefaultBranchCreator {
 
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,
-				 Parameters parameters)
+				 Map parameters)
 	throws Exception {
 
         DOMUtil du = new DOMUtil();
@@ -113,7 +112,7 @@ public class NewArticleCreator extends DefaultBranchCreator {
 
         // Replace editor
         du.setElementValue(doc, "/article/meta/editor",
-			   parameters.getParameter("editor"));
+			   (String) parameters.get("editor"));
 
         Calendar cal = new GregorianCalendar();
 

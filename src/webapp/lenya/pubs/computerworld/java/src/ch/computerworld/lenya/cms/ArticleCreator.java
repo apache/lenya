@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleCreator.java,v 1.7 2003/02/26 16:24:53 egli Exp $
+ * $Id: ArticleCreator.java,v 1.8 2003/02/27 15:59:34 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,12 +45,12 @@ package ch.computerworld.wyona.cms;
 
 import org.apache.log4j.Category;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
 import org.w3c.dom.Document;
 
 import org.wyona.cms.authoring.DefaultLeafCreator;
 import org.wyona.xml.DOMUtil;
+
+import java.util.Map;
 
 /**
  * DOCUMENT ME!
@@ -67,7 +67,7 @@ public class ArticleCreator extends DefaultLeafCreator {
 
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,
-				 Parameters parameters)
+				 Map parameters)
 	throws Exception {
 
         DOMUtil du = new DOMUtil();

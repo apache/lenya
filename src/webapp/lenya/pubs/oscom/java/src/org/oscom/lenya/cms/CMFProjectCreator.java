@@ -1,5 +1,5 @@
 /*
- * $Id: CMFProjectCreator.java,v 1.3 2003/02/26 13:07:51 egli Exp $
+ * $Id: CMFProjectCreator.java,v 1.4 2003/02/27 15:59:34 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,9 +43,9 @@
  */
 package org.oscom.wyona.cms;
 
-import org.apache.log4j.Category;
+import java.util.Map;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 
@@ -67,7 +67,7 @@ public class CMFProjectCreator extends DefaultLeafCreator {
 
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,
-				 Parameters parameters)
+				 Map parameters)
 	throws Exception {
 
         DOMUtil du = new DOMUtil();

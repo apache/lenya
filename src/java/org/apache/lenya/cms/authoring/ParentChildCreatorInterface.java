@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorInterface.java,v 1.1 2003/02/26 10:09:36 egli Exp $
+ * $Id: ParentChildCreatorInterface.java,v 1.2 2003/02/27 15:59:35 egli Exp $
 
  * The Apache Software License
  *
@@ -44,9 +44,9 @@
 package org.wyona.cms.authoring;
 
 import java.io.File;
+import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.parameters.Parameters;
 /**
  * DOCUMENT ME!
  *
@@ -115,6 +115,6 @@ public interface ParentChildCreatorInterface {
      */
     void create(File samplesDir, File parentDir,
 		String childId, short childType, String childName,
-		Parameters parameters)
+		Map parameters)
 	throws Exception;
 }

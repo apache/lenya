@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.10 2003/02/26 16:26:42 egli Exp $
+ * $Id: DefaultCreator.java,v 1.11 2003/02/27 15:59:35 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,7 +45,6 @@ package org.wyona.cms.authoring;
 
 import org.w3c.dom.Document;
 
-import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.configuration.Configuration;
 
 import org.apache.log4j.Category;
@@ -56,6 +55,7 @@ import org.wyona.xml.DOMWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.Map;
 
 /**
  * DOCUMENT ME!
@@ -144,7 +144,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
      */
     public void create(File samplesDir, File parentDir,
 		       String childId, short childType, String childName,
-		       Parameters parameters)
+		       Map parameters)
         throws Exception {
 
         // Set filenames
@@ -195,13 +195,13 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,
-				 Parameters parameters) 
+				 Map parameters) 
     	throws Exception {
     }
 
     protected void transformMetaXML (Document doc,
 				     String childId, short childType, String childName,
-				     Parameters parameters) 
+				     Map parameters) 
     	throws Exception {
     }
 

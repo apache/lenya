@@ -1,5 +1,5 @@
 /*
- * $Id: EditorProjectCreator.java,v 1.4 2003/02/27 10:48:59 michi Exp $
+ * $Id: EditorProjectCreator.java,v 1.5 2003/02/27 15:59:34 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,9 +43,9 @@
  */
 package org.oscom.wyona.cms;
 
-import org.apache.log4j.Category;
+import java.util.Map;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 
@@ -67,7 +67,7 @@ public class EditorProjectCreator extends DefaultLeafCreator {
 
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,
-				 Parameters parameters)
+				 Map parameters)
 	throws Exception {
 
         DOMUtil du = new DOMUtil();
@@ -80,8 +80,8 @@ public class EditorProjectCreator extends DefaultLeafCreator {
 		  du.getElementValue(doc.getDocumentElement(), 
 				     new org.wyona.xml.XPath("system_name")));
 
-        log.debug(".transformXML(): "+parameters.getNames());
-        log.debug(".transformXML(): "+parameters.getParameter("project_name"));
-        log.debug(".transformXML(): "+parameters.getParameter("project_home_url"));
+        log.debug(".transformXML(): " + parameters.keySet());
+        log.debug(".transformXML(): " + parameters.get("project_name"));
+        log.debug(".transformXML(): " + parameters.get("project_home_url"));
     }
 }

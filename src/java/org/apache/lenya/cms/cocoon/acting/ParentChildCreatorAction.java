@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.21 2003/02/26 10:15:12 egli Exp $
+ * $Id: ParentChildCreatorAction.java,v 1.22 2003/02/27 15:59:34 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,12 +43,28 @@
  */
 package org.wyona.cms.cocoon.acting;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 
+import org.apache.cocoon.ProcessingException;
+
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
+
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
@@ -59,22 +75,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.XPath;
-
 import org.dom4j.io.SAXReader;
 
 import org.wyona.cms.authoring.ParentChildCreatorInterface;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
@@ -254,9 +257,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         if (doc.selectSingleNode(newChildXPath + "[@relURI='" +
                     creator.generateTreeId(childid, childType) + "']") != null) {
             getLogger().error("Exception: XPath exists: " + newChildXPath + "[@relURI='" +
-                creator.generateTreeId(childid, childType) + "']");
+			      creator.generateTreeId(childid, childType) + "']");
             getLogger().error("No child added");
-
+	    
             return null;
         }
 
@@ -274,12 +277,55 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
         // Transaction should actually be finished here!
         // Create actual document
-        try {
+
+	// grab all the parameters from session, request params and
+	// sitemap params
+	HashMap allParameters = new HashMap();
+	String[] names = parameters.getNames();
+	
+	for( int i = 0; i < names.length; i++ ) {
+	    String name = names[ i ];
+	    String value = null;
+	    try {
+		value = parameters.getParameter( name );
+	    } catch (ParameterException pe) {
+		value = null;
+	    }
+	    
+	    allParameters.put(name, value);
+	}
+	
+	Enumeration requestParameters = request.getParameterNames();
+	while (requestParameters.hasMoreElements()) {
+	    String requestParameterName = (String) requestParameters.nextElement();
+	    if (allParameters.containsKey(requestParameterName)) {
+		// we do not allow name clashes
+		throw new ProcessingException("Name clash in request parameter " +
+					      "and sitemap parameter: " +
+					      requestParameterName);
+	    }
+	    allParameters.put(requestParameterName,
+			      request.getParameter(requestParameterName));
+	}
+	
+	Enumeration sessionAttributeNames = session.getAttributeNames();
+	while (sessionAttributeNames.hasMoreElements()) {
+	    String sessionAttributeName = (String) sessionAttributeNames.nextElement();
+	    if (allParameters.containsKey(sessionAttributeName)) {
+		// we do not allow name clashes
+		throw new ProcessingException("Name clash in session attribute " +
+					      "and request parameter or sitemap parameter: " +
+					      sessionAttributeName);
+	    }
+	    allParameters.put(sessionAttributeName, session.getAttribute(sessionAttributeName));
+	}
+	
+	try {
             creator.create(new File(absoluteDoctypesPath + "samples"),
 			   new File(sitemapParentPath + docsPath + parentid),
-			   childid, childType, childname, parameters);
+			   childid, childType, childname, allParameters);
         } catch (Exception e) {
-            getLogger().error(".act(): Creator throwed exception: " + e);
+            getLogger().error(".act(): Creator threw exception: " + e);
         }
 
         // Redirect to referer
