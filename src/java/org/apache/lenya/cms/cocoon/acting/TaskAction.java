@@ -172,6 +172,12 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
             taskParameters.setParameter(name, request.getParameter(name));
         }
 
+        String[] parameterNames = parameters.getNames();
+		// set parameters using the request parameters
+		for (int i = 0; i < parameterNames.length; i++) {
+			taskParameters.setParameter(parameterNames[i], parameters.getParameter(parameterNames[i]));
+		}
+
         //------------------------------------------------------------
         // execute task
         //------------------------------------------------------------
