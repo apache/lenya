@@ -1,5 +1,5 @@
 /*
-$Id: RoleCondition.java,v 1.7 2003/09/02 13:17:22 andreas Exp $
+$Id: RoleCondition.java,v 1.8 2003/09/21 13:45:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,9 @@ $Id: RoleCondition.java,v 1.7 2003/09/02 13:17:22 andreas Exp $
 */
 package org.apache.lenya.cms.workflow;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
@@ -67,6 +70,22 @@ import org.apache.lenya.workflow.impl.AbstractCondition;
  */
 public class RoleCondition extends AbstractCondition {
     
+    private Set roleIds = new HashSet();
+    
+    protected static final String SEPARATOR = ",";
+    
+    /**
+     * @see org.apache.lenya.workflow.Condition#setExpression(java.lang.String)
+     */
+    public void setExpression(String expression) throws WorkflowException {
+        super.setExpression(expression);
+        
+        String[] roles = expression.split(SEPARATOR);
+        for (int i = 0; i < roles.length; i++) {
+            roleIds.add(roles[i].trim());
+        }
+    }
+
     /**
      * Returns if the condition is complied in a certain situation.
      * The condition is complied when the current user has the
@@ -80,7 +99,7 @@ public class RoleCondition extends AbstractCondition {
         boolean complied = false;
 
         for (int i = 0; i < roles.length; i++) {
-            if (getExpression().equals(roles[i])) {
+            if (roleIds.contains(roles[i])) {
                 complied = true;
             }
         }
