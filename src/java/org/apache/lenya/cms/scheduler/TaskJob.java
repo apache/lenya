@@ -60,7 +60,6 @@ $Id
  */
 package org.apache.lenya.cms.scheduler;
 
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 
@@ -80,9 +79,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,6 +95,14 @@ public class TaskJob extends ServletJob {
     public static final String TASK_PREFIX = "task";
     private static Category log = Category.getInstance(TaskJob.class);
 
+	/**
+	 * Get the parameters.
+	 * 
+	 * @param servletContextPath ther servlet-context
+	 * @param request the request
+	 * 
+	 * @return the parameters
+	 */
     protected Parameters getParameters(String servletContextPath, HttpServletRequest request) {
         String taskId = request.getParameter(JobDataMapWrapper.getFullName(TASK_PREFIX, TASK_ID));
 
@@ -200,9 +204,10 @@ public class TaskJob extends ServletJob {
         String contextPath = map.get(Task.PARAMETER_SERVLET_CONTEXT);
         String publicationId = map.get(Task.PARAMETER_PUBLICATION_ID);
 
-        Publication publication = PublicationFactory.getPublication(publicationId, contextPath);
+        Publication publication;
         TaskManager manager;
         try {
+        	publication = PublicationFactory.getPublication(publicationId, contextPath);
             manager = new TaskManager(publication.getDirectory().getAbsolutePath());
         } catch (Exception e) {
             throw new JobExecutionException(e, false);
@@ -286,6 +291,7 @@ public class TaskJob extends ServletJob {
      * DOCUMENT ME!
      *
      * @param jobDetail DOCUMENT ME!
+     * @param helper namespace helper
      *
      * @return DOCUMENT ME!
      */

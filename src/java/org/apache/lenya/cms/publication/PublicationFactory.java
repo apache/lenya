@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.9 2003/07/15 13:48:34 andreas Exp $
+$Id: PublicationFactory.java,v 1.10 2003/07/15 14:46:07 egli Exp $
 <License>
 
  ============================================================================
@@ -75,10 +75,10 @@ public final class PublicationFactory {
      * Create a new <code>PublicationFactory</code>.
      * 
      */
-    private PublicationFactory() {
-    }
+    private PublicationFactory() {}
 
-    private static Category log = Category.getInstance(PublicationFactory.class);
+    private static Category log =
+        Category.getInstance(PublicationFactory.class);
     private static Map idToPublication = new HashMap();
 
     /**
@@ -89,8 +89,12 @@ public final class PublicationFactory {
      * @param objectModel The object model of the Cocoon component.
      * 
      * @return a <code>Publication</code>
+     * 
+     * @throws PublicationException if there was a problem creating the publication.
      */
-    public static Publication getPublication(Map objectModel) {
+    public static Publication getPublication(Map objectModel)
+        throws PublicationException {
+        	
         assert objectModel != null;
         Request request = ObjectModelHelper.getRequest(objectModel);
         Context context = ObjectModelHelper.getContext(objectModel);
@@ -105,15 +109,21 @@ public final class PublicationFactory {
      * @param servletContextPath the servlet context path of the publication
      *
      * @return a <code>Publication</code>
+     * 
+     * @throws PublicationException if there was a problem creating the publication.
      */
-    public static Publication getPublication(String id, String servletContextPath) {
+    public static Publication getPublication(
+        String id,
+        String servletContextPath)
+        throws PublicationException {
+
         assert id != null;
         assert servletContextPath != null;
 
         Publication publication;
 
         if (idToPublication.containsKey(id)) {
-            publication = (Publication) idToPublication.get(id);
+            publication = (Publication)idToPublication.get(id);
         } else {
             publication = new Publication(id, servletContextPath);
             idToPublication.put(id, publication);
@@ -129,16 +139,22 @@ public final class PublicationFactory {
      * 
      * @param request A request.
      * @param context A context.
+     * 
      * @return A publication.
+     * 
+     * @throws PublicationException if there was a problem creating the publication.
      */
-    public static Publication getPublication(Request request, Context context) {
+    public static Publication getPublication(Request request, Context context)
+        throws PublicationException {
+
         String contextPath = request.getContextPath();
 
         if (contextPath == null) {
             contextPath = "";
         }
 
-        String webappUri = request.getRequestURI().substring(contextPath.length());
+        String webappUri =
+            request.getRequestURI().substring(contextPath.length());
 
         String publicationId = webappUri.split("/")[1];
         assert !"".equals(publicationId);
@@ -162,10 +178,9 @@ public final class PublicationFactory {
                 new File(servletContext, Publication.PUBLICATION_PREFIX + File.separator + id);
             if (publicationDirectory.isDirectory()) {
                 exists = true;
-            }
+}
         }
         return exists;
-
     }
 
 }

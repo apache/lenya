@@ -1,5 +1,5 @@
 /*
-$Id: PublicationAccessControllerResolver.java,v 1.2 2003/07/15 13:50:15 andreas Exp $
+$Id: PublicationAccessControllerResolver.java,v 1.3 2003/07/15 14:46:09 egli Exp $
 <License>
 
  ============================================================================
@@ -69,6 +69,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
@@ -99,7 +100,7 @@ public class PublicationAccessControllerResolver
         throws AccessControlException {
 
         assert webappUrl.startsWith("/");
-        
+
         getLogger().debug("Resolving controller for URL [" + webappUrl + "]");
 
         AccessController controller = null;
@@ -134,15 +135,22 @@ public class PublicationAccessControllerResolver
                 .existsPublication(publicationId, contextDir.getAbsolutePath())) {
                 
                 getLogger().debug("Publication [" + publicationId + "] exists.");
-                Publication publication =
-                    PublicationFactory.getPublication(publicationId, contextDir.getAbsolutePath());
+                Publication publication;
+                try {
+                    publication =
+                        PublicationFactory.getPublication(
+                            publicationId,
+                            contextDir.getAbsolutePath());
+                } catch (PublicationException e) {
+					throw new AccessControlException(e);
+                }
 
                 String publicationUrl = webappUrl.substring(("/" + publicationId).length());
                 controller = resolveAccessController(publication, publicationUrl);
             }
             else {
                 getLogger().debug("Publication [" + publicationId + "] does not exist.");
-            }
+        }
         }
 
         return controller;
@@ -164,22 +172,22 @@ public class PublicationAccessControllerResolver
         File configurationFile = new File(publication.getDirectory(), CONFIGURATION_FILE);
 
         if (configurationFile.isFile()) {
-            try {
-                Configuration configuration =
-                    new DefaultConfigurationBuilder().buildFromFile(configurationFile);
-                String type = configuration.getAttribute(TYPE_ATTRIBUTE);
+        try {
+            Configuration configuration =
+                new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+            String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
-                boolean authorized;
-                accessController =
-                    (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
+            boolean authorized;
+            accessController =
+                (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
 
-                if (accessController instanceof Configurable) {
-                    ((Configurable) accessController).configure(configuration);
-                }
-
-            } catch (Exception e) {
-                throw new AccessControlException(e);
+            if (accessController instanceof Configurable) {
+                ((Configurable) accessController).configure(configuration);
             }
+
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        }
         }
 
         return accessController;

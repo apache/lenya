@@ -59,10 +59,10 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 import java.io.File;
-
 
 /**
  * @author egli
@@ -105,12 +105,17 @@ public class LDAPUserTest extends AccessControlTest {
      * get a publication
      *
      * @return a <code>Publication</code>
+     * 
+     * @throws PublicationException if an error occurs
      */
-    final public Publication getPublication() {
+    final public Publication getPublication() throws PublicationException {
         String publicationId = "default";
-        String servletContextPath = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
+        String servletContextPath =
+            "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
 
-        return PublicationFactory.getPublication(publicationId, servletContextPath);
+        return PublicationFactory.getPublication(
+            publicationId,
+            servletContextPath);
     }
 
     /**
@@ -122,7 +127,10 @@ public class LDAPUserTest extends AccessControlTest {
      * @throws AccessControlException if the creating or the saving fails
     * @throws ConfigurationException if the creating or the saving fails
      */
-    final public void createAndSaveUser(String userName, String email, String ldapId)
+    final public void createAndSaveUser(
+        String userName,
+        String email,
+        String ldapId)
         throws AccessControlException, ConfigurationException {
         String editorGroupName = "editorGroup";
         String adminGroupName = "adminGroup";
@@ -166,10 +174,11 @@ public class LDAPUserTest extends AccessControlTest {
      * @return an <code>LDAPUser</code>
      * @throws AccessControlException of the loading fails
      */
-    final public LDAPUser loadUser(String userName) throws AccessControlException {
+    final public LDAPUser loadUser(String userName)
+        throws AccessControlException {
         UserManager manager = UserManager.instance(getConfigurationDirectory());
 
-        return (LDAPUser) manager.getUser(userName);
+        return (LDAPUser)manager.getUser(userName);
     }
 
     //    final public void testGetFullName() throws AccessControlException {
@@ -204,7 +213,8 @@ public class LDAPUserTest extends AccessControlTest {
      * @throws AccessControlException if the test fails
     * @throws ConfigurationException if the creating or the saving fails
      */
-    final public void testGetLdapId() throws ConfigurationException, AccessControlException {
+    final public void testGetLdapId()
+        throws ConfigurationException, AccessControlException {
         String userName = "felix";
         String ldapId = "m400032";
         createAndSaveUser(userName, "felix@wyona.com", ldapId);
@@ -221,7 +231,8 @@ public class LDAPUserTest extends AccessControlTest {
      * @throws AccessControlException if the test fails
     * @throws ConfigurationException if the creating or the saving fails
      */
-    final public void testSetLdapId() throws ConfigurationException, AccessControlException {
+    final public void testSetLdapId()
+        throws ConfigurationException, AccessControlException {
         String userName = "felix";
         String newLdapId = "foo";
         createAndSaveUser(userName, "felix@wyona.com", "bar");
@@ -243,7 +254,8 @@ public class LDAPUserTest extends AccessControlTest {
      * @throws AccessControlException if the test fails
     * @throws ConfigurationException if the creating or the saving fails
      */
-    final public void testSave() throws ConfigurationException, AccessControlException {
+    final public void testSave()
+        throws ConfigurationException, AccessControlException {
         String userName = "felix";
         createAndSaveUser(userName, "felix@wyona.com", "m400032");
 

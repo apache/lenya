@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.13 2003/07/14 10:32:05 egli Exp $
+$Id: Publication.java,v 1.14 2003/07/15 14:46:07 egli Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,17 @@ $Id: Publication.java,v 1.13 2003/07/14 10:32:05 egli Exp $
 */
 package org.apache.lenya.cms.publication;
 
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.log4j.Category;
+import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
-
 
 /**
  * A publication.
@@ -67,30 +73,43 @@ import java.util.Arrays;
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class Publication {
+	private static Category log = Category.getInstance(Publication.class);
+
     public static final String AUTHORING_AREA = "authoring";
     public static final String LIVE_AREA = "live";
     public static final String INFO_AREA = "info";
     public static final String ADMIN_AREA = "admin";
-    
-	public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
 
-    private static final String[] areas = {
-        AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA
-    };
+    public static final String PATH_MAPPER = "path-mapper";
+    public static final String LANGUAGES = "languages";
+    public static final String LANGUAGE = "language";
+    public static final String DEFAULT_LANGUAGE_ATTR = "default";
 
-	private String id;
-	private PublishingEnvironment environment;
-	private File servletContext;
-	private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
-	private String defaultLanguage = "hu";
+    public static final String PUBLICATION_PREFIX =
+        "lenya" + File.separator + "pubs";
+
+    private static final String[] areas =
+        { AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA };
+
+    private static final String configFileName = "publication.xconf";
+
+    private String id;
+    private PublishingEnvironment environment;
+    private File servletContext;
+    private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
+    private ArrayList languages = new ArrayList();
+    private String defaultLanguage = null;
 
     /** 
      * Creates a new instance of Publication
      * 
      * @param id the publication id
      * @param servletContextPath the servlet context of this publication
+     * 
+     * @throws PublicationException if there was a problem reading the config file
      */
-    protected Publication(String id, String servletContextPath) {
+    protected Publication(String id, String servletContextPath)
+        throws PublicationException {
         assert id != null;
         this.id = id;
 
@@ -102,6 +121,66 @@ public class Publication {
 
         // FIXME: remove PublishingEnvironment from publication
         environment = new PublishingEnvironment(servletContextPath, id);
+
+        File configFile =
+            new File(
+                servletContext,
+                PUBLICATION_PREFIX
+                    + File.separator
+                    + id
+                    + File.separator
+                    + configFileName);
+        DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+
+        Configuration config;
+        String pathMapperClassName = "";
+        
+        try {
+            config = builder.buildFromFile(configFile);
+            pathMapperClassName = config.getChild(PATH_MAPPER).getValue();
+
+			Class pathMapperClass = Class.forName(pathMapperClassName);
+			mapper = (DocumentIdToPathMapper) pathMapperClass.newInstance();
+			
+
+			Configuration[] languages = config.getChild(LANGUAGES).getChildren();
+			for (int i = 0; i < languages.length; i++) {
+				Configuration languageConfig = languages[i];
+                String language = languageConfig.getValue();
+                this.languages.add(language);
+                if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR) != null) {
+                    defaultLanguage = language;
+                }
+            }
+			
+        } catch (ConfigurationException e) {
+            throw new PublicationException(
+                "Problem with config file: " + configFile.getAbsolutePath(),
+                e);
+        } catch (SAXException e) {
+            throw new PublicationException(
+                "Could not parse config file: " + configFile.getAbsolutePath(),
+                e);
+        } catch (IOException e) {
+//            throw new PublicationException(
+//                "Could not find config file: " + configFile.getAbsolutePath(),
+//                e);
+			log.warn("Could not find config file: " + configFile.getAbsolutePath(), e);
+			defaultLanguage = "en";
+			mapper = new DefaultDocumentIdToPathMapper();
+        } catch (ClassNotFoundException e) {
+			throw new PublicationException(
+				"Cannot instantiate documentToPathMapper: " + pathMapperClassName,
+				e);
+        } catch (InstantiationException e) {
+			throw new PublicationException(
+				"Cannot instantiate documentToPathMapper: " + pathMapperClassName,
+				e);
+        } catch (IllegalAccessException e) {
+			throw new PublicationException(
+				"Cannot instantiate documentToPathMapper: " + pathMapperClassName,
+				e);
+        }
     }
 
     /**
@@ -135,7 +214,9 @@ public class Publication {
      * @return A <code>File</code> object.
      */
     public File getDirectory() {
-        return new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
+        return new File(
+            getServletContext(),
+            PUBLICATION_PREFIX + File.separator + getId());
     }
 
     /**
@@ -156,7 +237,7 @@ public class Publication {
     public DocumentIdToPathMapper getPathMapper() {
         return mapper;
     }
-    
+
     /**
      * Returns if a given string is a valid area name.
      * @param area The area string to test.
@@ -165,7 +246,7 @@ public class Publication {
     public static boolean isValidArea(String area) {
         return area != null && Arrays.asList(areas).contains(area);
     }
-    
+
     /**
      * Get the default language
      * 

@@ -1,5 +1,5 @@
 /*
-$Id: PublicationHelper.java,v 1.4 2003/07/15 14:46:09 egli Exp $
+$Id: PublicationException.java,v 1.1 2003/07/15 14:46:07 egli Exp $
 <License>
 
  ============================================================================
@@ -53,54 +53,50 @@ $Id: PublicationHelper.java,v 1.4 2003/07/15 14:46:09 egli Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms;
-
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
-import java.util.Arrays;
-import java.util.List;
+ 
+package org.apache.lenya.cms.publication;
 
 /**
- * @author andreas
- *
+ * 
+ * @author egli
+ * 
  */
-public class PublicationHelper {
-    /**
-     * Initializes the object with the first parameters from the command line arguments
-     * <code>args</code>. The remainder of the array is returned.
-     * 
-     * @param args The command line arguments of the test.
-     * @return The remainder of the arguments after the publication parameters are extracted.
-     * 
-     */
-    public static String[] extractPublicationArguments(String[] args) {
-        String servletContextPath = args[0];
-        String publicationId = args[1];
-        try {
-            publication =
-                PublicationFactory.getPublication(
-                    publicationId,
-                    servletContextPath);
-        } catch (PublicationException e) {
-            e.printStackTrace();
-        }
-
-        List subList = Arrays.asList(args).subList(2, args.length);
-        String[] remainder =
-            (String[])subList.toArray(new String[subList.size()]);
-
-        return remainder;
-    }
-
-    private static Publication publication;
+public class PublicationException extends Exception {
 
     /**
-     * Returns the publication.
-     * @return A publication object.
+     * Creates a new PublicationException.
+     * 
      */
-    public static Publication getPublication() {
-        return publication;
+    public PublicationException() {
+        super();
     }
+
+    /**
+     * Creates a new PublicationException.
+     * 
+     * @param message the exception message
+     */
+    public PublicationException(String message) {
+        super(message);
+    }
+
+    /**
+     * Creates a new PublicationException.
+     * 
+     * @param message the exception message
+     * @param cause the cause of the exception
+     */
+    public PublicationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Creates a new PublicationException.
+     * 
+     * @param cause the cause of the exception
+     */
+    public PublicationException(Throwable cause) {
+        super(cause);
+    }
+
 }
