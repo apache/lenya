@@ -168,11 +168,11 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * Test getFullName
+     * Test getName
      * 
      * @throws AccessControlException if an error occurs
      */
-    final public void testGetFullName() throws AccessControlException {
+    final public void testGetName() throws AccessControlException {
         String userID = "alice";
         String userName = "Alice Wonderland";
         FileUser user = createAndSaveUser(userID, userName, "alice@wonderland.org", "secret");
