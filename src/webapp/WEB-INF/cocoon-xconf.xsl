@@ -288,6 +288,11 @@
         <parameter name="tab" value="groups"/>
       </view>
     </component-instance>
+    <component-instance name="admin.group" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.Group">
+      <view template="admin/group" menu="true">
+        <parameter name="tab" value="groups"/>
+      </view>
+    </component-instance>
     <component-instance name="admin.groupProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.GroupProfile">
       <view template="admin/groupProfile" menu="true">
         <parameter name="tab" value="groups"/>

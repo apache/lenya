@@ -1,0 +1,45 @@
+/*
+ * Copyright  1999-2004 The Apache Software Foundation
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.lenya.cms.ac.usecases;
+
+/**
+ * Display group information.
+ *
+ * @version $Id:$
+ */
+public class Group extends AccessControlUsecase {
+
+    protected static final String GROUP_ID = "groupId";
+    protected static final String GROUP = "group";
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
+     */
+    public void setParameter(String name, Object value) {
+        super.setParameter(name, value);
+
+        if (name.equals(GROUP_ID)) {
+            String groupId = (String) value;
+            org.apache.lenya.ac.Group group = getGroupManager().getGroup(groupId);
+            if (group == null) {
+                addErrorMessage("The group [" + groupId + "] does not exist.");
+            } else {
+                setParameter(GROUP, group);
+            }
+        }
+    }
+}
