@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: config.xml,v 1.25 2004/05/15 09:48:45 gregor Exp $ -->
+<!-- $Id: config.xml,v 1.26 2004/09/03 12:56:55 andreas Exp $ -->
 
 <config>
     <files>
@@ -102,6 +102,6 @@
         <element name="img" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=bxeng&amp;lenya.step=image-upload-show</element>
         <element name="table" ns="http://www.w3.org/1999/xhtml" type="function">bxe_InsertTableCallback</element>
         <element name="asset" ns="http://apache.org/cocoon/lenya/page-envelope/1.0" type="popup">?lenya.usecase=bxeng&amp;lenya.step=asset-upload-show</element>
-        <element name="a" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=bxeng&amp;lenya.step=link-show</element>
+        <element name="a" ns="http://www.w3.org/1999/xhtml" precheck="bxe_checkIfNotALink" type="popup">?lenya.usecase=bxeng&amp;lenya.step=link-show</element>
     </callbacks>
 </config>
