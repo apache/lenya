@@ -6,6 +6,7 @@
 -->
   <luc:field name="title" type="Text" xpath="/system/system_name"/>
   <luc:field name="contents" type="Text" xpath="/system/description"/>
+  <luc:field name="license" type="Text" xpath="/system/license/license_name"/>
 <!--
   <luc:field name="name" type="Text" xpath="/system/system_name"/>
   <luc:field name="descr" type="UnStored" xpath="/system/description"/>
