@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: workflow2info.xsl,v 1.4 2004/02/25 13:49:23 roku Exp $
+ $Id: workflow2info.xsl,v 1.5 2004/03/08 19:09:31 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -41,7 +41,8 @@
 
 <xsl:template match="wf:version">
 	<tr>
-		<td><i18n:date src-pattern="dd.MM.yyyy HH:mm:ss" pattern="yyyy-M-dd HH:mm:ss"><xsl:value-of select="@date"/></i18n:date></td>
+<!--		<td><i18n:date src-pattern="dd.MM.yyyy HH:mm:ss" pattern="yyyy-M-dd HH:mm:ss"><xsl:value-of select="@date"/></i18n:date></td> -->
+		<td><xsl:value-of select="@date"/></td>
 		<td><xsl:value-of select="@event"/></td>
 		<td><i18n:text><xsl:value-of select="@state"/></i18n:text></td>
 		<td>
