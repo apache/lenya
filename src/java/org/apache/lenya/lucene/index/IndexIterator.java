@@ -80,7 +80,7 @@ import java.util.Map;
 
 /**
  * @author Andreas Hartmann
- * @version $Id: IndexIterator.java,v 1.6 2003/12/09 21:32:49 stefano Exp $
+ * @version $Id: IndexIterator.java,v 1.7 2004/01/09 13:21:34 gregor Exp $
  */
 public class IndexIterator {
     /** Creates a new instance of IndexItertor */
@@ -280,7 +280,7 @@ public class IndexIterator {
      */
     public static String uid2url(String uid) {
         String url = uid.replace('\u0000', '/'); // replace nulls with slashes
-        String timeString = uid.substring(uid.lastIndexOf(" ") + 1);
+        String timeString = uid.substring(uid.lastIndexOf("\u0000") + 1);
         Date date = DateField.stringToDate(timeString);
         DateFormat format = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
 
