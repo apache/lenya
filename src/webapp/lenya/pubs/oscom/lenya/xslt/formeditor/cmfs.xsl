@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmfs.xsl,v 1.12 2004/05/07 23:41:59 michi Exp $ -->
+<!-- $Id: cmfs.xsl,v 1.13 2004/05/08 00:16:55 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -28,6 +28,14 @@
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/system_name[@tagID='{system_name/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="system_name" /></xsl:attribute></input></content>
 </node>
 
+
+<xsl:if test="not(editor)">
+<node name="Editor">
+  <action>
+    <insert name="&lt;xupdate:append select=&quot;/system&quot;&gt;&lt;xupdate:element name=&quot;editor&quot;&gt;&lt;name&gt;editor&lt;/name&gt;&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/>
+  </action>
+</node>
+</xsl:if>
 <xsl:apply-templates select="editor"/>
 
 <node name="Description" select="/system/description[@tagID='{description/@tagID}']">
@@ -80,6 +88,12 @@
 
 
 <xsl:template match="editor">
+<node name="Editor">
+  <action>
+    <delete name="&lt;xupdate:remove select=&quot;/system/editor&quot;/&gt;"/>
+  </action>
+</node>
+
 <node name="Editor Name" select="/system/editor/name[@tagID='{name/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/editor/name[@tagID='{name/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="name" /></xsl:attribute></input></content>
 </node>
@@ -106,9 +120,11 @@
 </node>
 </xsl:when>
 <xsl:otherwise>
-<!--
-Append attribute
--->
+<node name="Editor Homepage">
+  <action>
+    <insert name="&lt;xupdate:append select=&quot;/system/editor&quot;&gt;&lt;xupdate:attribute name=&quot;homepage&quot;&gt;http://www.apache.org/~editor/&lt;/xupdate:attribute&gt;&lt;/xupdate:append&gt;"/>
+  </action>
+</node>
 </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
