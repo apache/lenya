@@ -8,19 +8,8 @@
 		<map:serializers default="html"/>
 		<map:matchers default="wildcard"/>
 		<map:actions>
-                        <map:action name="page-envelope" src="org.apache.lenya.cms.cocoon.acting.PageEnvelopeAction" logger="sitemap.action.page-envelope"/> 
-			<map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout"/>
-			<map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
-			<map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction"/>
 			<!-- dossier selection -->
 			<map:action name="dossier" src="ch.unizh.unipublic.lenya.cms.DossierAction"/>
-
-			<map:action logger="action.upload" name="file-upload" src="org.apache.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
-				<resources-root href="resources/images/live"/>
-				<docs-root href="content/authoring"/>
-				<meta-root href="content/authoring"/>
-				<insert-image-before value="false"/>
-			</map:action>
 		</map:actions>
 		<map:selectors/>
 	</map:components>
