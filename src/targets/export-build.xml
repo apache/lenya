@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: export-build.xml,v 1.5 2004/03/21 18:35:15 gregor Exp $ -->
+<!-- $Id: export-build.xml,v 1.6 2004/05/16 10:45:40 gregor Exp $ -->
 
 <project name="export">
 
@@ -81,7 +81,7 @@
   <classpath>
     <pathelement location="${build.webapp}/WEB-INF/classes"/>
     <fileset dir="${build.webapp}/WEB-INF/lib" includes="*.jar"/>
-    <fileset dir="${tomcat.home.dir}/${tomcat.webapps.dir}/../../common/lib" includes="servlet**.jar"/>
+    <fileset dir="${tomcat.webapps.dir}/../../common/lib" includes="servlet**.jar"/>
   </classpath>
   
     <jvmarg value="-Djava.endorsed.dirs=${build.webapp}/WEB-INF/lib/endorsed${path.separator}${java.endorsed.dirs}"/>
