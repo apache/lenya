@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionController.java,v 1.7 2003/02/07 12:14:12 ah Exp $
+ * $Id: RevisionController.java,v 1.8 2003/02/19 10:10:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,7 +48,6 @@ import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-//import org.wyona.xps.signalling.StatusChangeSignalHandler;
 import org.wyona.util.XPSFileOutputStream;
 
 import java.io.BufferedReader;
@@ -150,34 +149,17 @@ public class RevisionController {
             log.error(e);
             log.error(e.source + "is already check out by " + e.checkOutUsername + " since " +
                 e.checkOutDate);
-
             return;
-        } catch (IOException e) // Cannot create rcml file
-         {
+
+        } catch (IOException e) { // Cannot create rcml file
             log.error(e);
-
             return;
+
         } catch (Exception e) {
             log.error(e);
-
             return;
         }
 
-        /*
-                  BufferedReader buffer=new BufferedReader(in);
-                  String line=null;
-                  try
-                    {
-                    while((line=buffer.readLine()) != null)
-                         {
-                         log.info(line);
-                         }
-                    }
-                  catch(IOException e)
-                    {
-                    log.error(e);
-                    }
-        */
         try {
             rc.reservedCheckIn(destination, identityD, true);
         } catch (FileReservedCheckInException e) {
@@ -185,25 +167,6 @@ public class RevisionController {
         } catch (Exception e) {
             log.error(e);
         }
-
-        /*
-                  if(args.length != 2)
-                    {
-                    log.info("Usage: "+new RevisionController().getClass().getName()+" time destination");
-                    return;
-                    }
-                  long time=new Long(args[0]).longValue();
-                  String destination=args[1];
-                  RevisionController rc=new RevisionController();
-                  try
-                    {
-                    rc.undoCheckIn(time,destination);
-                    }
-                  catch(Exception e)
-                    {
-                    log.error(e);
-                    }
-        */
     }
 
     /**
@@ -260,7 +223,6 @@ public class RevisionController {
 
         RCML rcml = new RCML(rcmlDirectory, rootDir + source);
 
-        //          CheckOutEntry coe = rcml.getLatestCheckOutEntry();
         RCMLEntry entry = rcml.getLatestEntry();
 
         // The same user is allowed to check out repeatedly without
@@ -361,7 +323,6 @@ public class RevisionController {
 
             InputStream in = new FileInputStream(originalFile.getAbsolutePath());
 
-            //OutputStream out=new FileOutputStream(backupFile.getAbsolutePath());
             OutputStream out = new XPSFileOutputStream(backupFile.getAbsolutePath());
             byte[] buffer = new byte[512];
             int length;
@@ -376,60 +337,15 @@ public class RevisionController {
         rcml.checkOutIn(RCML.ci, identity, time);
         rcml.write();
 
-        try {
-            //		  log.debug(this.getClass().getName()+": Send Signal: "+originalFile.getAbsolutePath());
-            //		  StatusChangeSignalHandler.emitSignal("file:"+originalFile.getAbsolutePath(),"reservedCheckIn");
-        } catch (Exception e) {
-            log.error(this.getClass().getName() + ".reservedCheckIn(): " + e);
-        }
-
+	// FIXME: If we reuse the observer pattern as implemented in
+	// xps this would be the place to notify the observers,
+	// e.g. like so:
+// 	StatusChangeSignalHandler.emitSignal("file:" + originalFile.getAbsolutePath(),
+// 					     "reservedCheckIn");
         return time;
     }
 
-    /*
-    public long reservedCheckIn(String destination, String identity, boolean backup)
-                    throws FileReservedCheckInException, Exception {
-
-            RCML rcml = new RCML(rcmlDirectory, rootDir+"/"+destination);
-
-            CheckOutEntry coe=rcml.getLatestCheckOutEntry();
-
-            if(coe != null) {
-
-                    String rcmlIdentity = coe.identity;
-                    if(!rcmlIdentity.equals(identity)) {
-                            throw new FileReservedCheckInException(destination, rcml);
-                    }
-
-
-            }
-
-
-
-
-            File originalFile=new File(rootDir+destination);
-            long time=new Date().getTime();
-            if(backup && originalFile.isFile()) {
-                    File backupFile=new File(backupDir+"/"+time+".bak");
-                    log.info("Backup: copy "+originalFile.getAbsolutePath()+" to "+backupFile.getAbsolutePath());
-                    InputStream in=new FileInputStream(originalFile.getAbsolutePath());
-                    //OutputStream out=new FileOutputStream(backupFile.getAbsolutePath());
-                    OutputStream out=new XPSFileOutputStream(backupFile.getAbsolutePath());
-                    byte[] buffer=new byte[512];
-                    int length;
-                    while((length=in.read(buffer)) != -1) {
-                            out.write(buffer,0,length);
-                    }
-                    out.close();
-            }
-
-            rcml.checkOutIn(RCML.ci, identity, time);
-            rcml.write();
-            return time;
-    }
-    */
     public String getBackupFilename(long time, String filename) {
-        //        	File backupFile=new File(backupDir+"/"+destination+".bak."+time);
         File backup = new File(backupDir + "/" + filename + ".bak." + time);
 
         return backup.getAbsolutePath();
@@ -480,7 +396,6 @@ public class RevisionController {
         //
         FileInputStream in = new FileInputStream(backup.getAbsolutePath());
 
-        //FileOutputStream out = new FileOutputStream(current.getAbsolutePath());
         XPSFileOutputStream out = new XPSFileOutputStream(current.getAbsolutePath());
         byte[] buffer = new byte[512];
         int length;
@@ -521,7 +436,6 @@ public class RevisionController {
 
         FileInputStream in = new FileInputStream(backup.getAbsolutePath());
 
-        //FileOutputStream out=new FileOutputStream(current.getAbsolutePath());
         XPSFileOutputStream out = new XPSFileOutputStream(current.getAbsolutePath());
         byte[] buffer = new byte[512];
         int length;
