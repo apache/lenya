@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.2 2003/05/02 18:07:58 andreas Exp $
+$Id: site2xhtml.xsl,v 1.3 2003/05/05 11:37:05 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -207,6 +207,7 @@ $Id: site2xhtml.xsl,v 1.2 2003/05/02 18:07:58 andreas Exp $
                   <td bgcolor="{$header-color2}"><img src="{$spacer}" alt="" height="1" width="1" /></td>
                 </tr>
 
+                <!--
                 <tr>
                   <td class="bottom-left-thick" rowspan="2" colspan="2"></td>
                   <td bgcolor="{$header-color2}"><img src="{$spacer}" alt="" border="0" width="10" height="10" /></td>
@@ -218,6 +219,7 @@ $Id: site2xhtml.xsl,v 1.2 2003/05/02 18:07:58 andreas Exp $
                 <tr>
                   <td height="5"><img src="{$spacer}" alt="" height="5" width="1" /></td>
                 </tr>                
+                -->
         
                 
               <xsl:if test="$filename = 'index.html' and $config/credits">
@@ -277,9 +279,9 @@ $Id: site2xhtml.xsl,v 1.2 2003/05/02 18:07:58 andreas Exp $
         <xsl:comment>================= end Menu, NavBar, Content ==================</xsl:comment>
 
         <xsl:comment>================= start Footer ==================</xsl:comment>
-        <table border="0" width="100%" cellpadding="0" cellspacing="0" summary="footer">
+        <table style="border-top: solid 1px #8686BD;" border="0" width="100%" cellpadding="5" cellspacing="0" summary="footer">
           <tr>
-            <td bgcolor="{$menu-border}" height="1" colspan="2">
+            <td height="1" colspan="2">
               <img src="{$spacer}" alt="" width="1" height="1" />
               <a href="{$skin-img-dir}/label.gif"/>
               <a href="{$skin-img-dir}/page.gif"/>
@@ -301,7 +303,7 @@ $Id: site2xhtml.xsl,v 1.2 2003/05/02 18:07:58 andreas Exp $
                 </xsl:call-template>
               </div>
             </xsl:if>
-            <td width="90%" align="center" class="copyright" bgcolor="{$header-color2}" colspan="2">
+            <td width="90%" align="center" class="copyright" colspan="2">
               <span class="footnote">Copyright &#169;
                 <xsl:value-of select="$config/year"/>&#160;<xsl:value-of
                   select="$config/vendor"/> All rights reserved.
@@ -309,7 +311,7 @@ $Id: site2xhtml.xsl,v 1.2 2003/05/02 18:07:58 andreas Exp $
                   document.write(" - "+"Last Published: " + document.lastModified);
                   //  -->]]></script></span>
             </td>
-            <td class="logos" bgcolor="{$header-color2}" align="right" nowrap="nowrap">
+            <td class="logos" align="right" nowrap="nowrap">
 
               <xsl:call-template name="compliancy-logos"/>
               <!-- old place where to put credits icons-->
