@@ -138,7 +138,14 @@
       <outputproperty name="indent" value="yes"/>
     </xslt>
 
-    <!-- Copy Entities
+    <!-- patch lucene -->
+    <available file="${src.webapp.dir}/WEB-INF/lib/lucene-1.4.1.jar" type="file" property="lenya.lucene.patch.exists"/>
+    <echo>${src.webapp.dir}/WEB-INF/lib/lucene**.jar</echo>
+    <antcall target="patch-lucene"/>
+    <antcall target="do-not-patch-lucene"/>
+
+    <!-- Copy Entities -->
+    <!--
     <echo>INFO: Copy publication-specific entities to Cocoon catalog</echo>
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="${src.entities.dir}" builddir="${build.webapp}/${build.entities.dir}" />
     -->
@@ -190,5 +197,22 @@
       flatten="true">
       <fileset includes="*/java/lib/*"/>
     </bulkCopy>
+  </target>
+
+
+  <!-- Patch Lucene -->
+  <target name="patch-lucene" if="lenya.lucene.patch.exists">
+    <echo message="INFO: Patch Lucene"/>
+    <delete>
+      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lucene**.jar"/>
+    </delete>
+    <copy todir="${build.webapp}" filtering="off">
+      <fileset dir="${src.webapp.dir}">
+        <include name="WEB-INF/lib/lucene**.jar"/>
+      </fileset>
+    </copy>
+  </target>
+  <target name="do-not-patch-lucene" unless="lenya.lucene.patch.exists">
+    <echo message="INFO: Use Lucene from Cocoon and do not patch it"/>
   </target>
 </project>
