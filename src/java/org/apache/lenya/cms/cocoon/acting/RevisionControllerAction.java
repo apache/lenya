@@ -27,6 +27,8 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
   String rcmlDirectory=null;
   String backupDirectory=null;
   RevisionController rc=null;
+  String username=null;
+  String filename=null;
 /**
  *
  */
@@ -54,7 +56,7 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
 
     // Initialize Revision Controller
     rc=new RevisionController(sitemapParentPath+rcmlDirectory,sitemapParentPath+backupDirectory);
-    getLogger().debug(""+rc);
+    getLogger().debug("revision controller"+rc);
     // /Initialize Revision Controller
 
     // Get request object
@@ -70,43 +72,19 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
       return null;
       }
 
-/*
-    String sitemap_uri=request.getSitemapURI();
-    String request_uri=request.getRequestURI();
-    getLogger().debug(sitemap_uri);
-    getLogger().debug(request_uri);
-*/
     Identity identity=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
-    getLogger().debug(""+identity);
+    getLogger().debug("Identity"+identity);
 
-    HashMap actionMap=new HashMap(); 
-    String filename = sitemapParentPath+parameters.getParameter("filename");
-    String username= null;
+    filename = sitemapParentPath+parameters.getParameter("filename");
+    username= null;
     if(identity != null) {
       username=identity.getUsername();
       }
     else {
       getLogger().warn("No identity yet");
     }                                                                                                                           
+    getLogger().debug("username"+username);
 
-//check out
-    try{
-      rc.reservedCheckOut(filename, username);
-     }
-    catch(FileReservedCheckOutException e){
-      actionMap.put("exception","fileReservedCheckOutException");
-      actionMap.put("filename",filename);
-      actionMap.put("user",e.checkOutUsername);
-      actionMap.put("date",e.checkOutDate);
-      getLogger().warn("Document "+filename+" already checked-out by "+e.checkOutUsername+" since "+e.checkOutDate);
-      return actionMap;
-      }  
-    catch(Exception e){
-      actionMap.put("exception","exception");
-      actionMap.put("filename",filename);
-      getLogger().warn("The document "+filename+" couldn't be checked out");
-      return actionMap; 
-      }
     return null;                                                                                                                 
 
 /*
