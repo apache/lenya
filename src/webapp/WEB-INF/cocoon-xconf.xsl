@@ -20,7 +20,6 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:param name="hsqldb-server-port"/>
 <xsl:param name="xopus-context"/>
 
 <xsl:template match="markup-languages/xsp-language/target-language[@name = 'java']">
@@ -244,15 +243,6 @@
 <xsl:template match="store-janitor/parameter[@name = 'freememory']">
   <parameter name="freememory" value="10000000"/>
 </xsl:template>
-
-<xsl:template match="dburl">
-<dburl>jdbc:hsqldb:hsql://localhost:<xsl:value-of select="$hsqldb-server-port"/></dburl>
-</xsl:template>
-
-<xsl:template match="hsqldb-server/parameter[@name = 'port']">
-  <parameter name="port" value="{$hsqldb-server-port}"/>
-</xsl:template>
-
 
 <xsl:template match="@*|node()">
   <xsl:copy>
