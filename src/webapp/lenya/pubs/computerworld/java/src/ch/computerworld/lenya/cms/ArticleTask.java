@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleTask.java,v 1.5 2003/02/20 13:40:40 gregor Exp $
+ * $Id: ArticleTask.java,v 1.6 2003/02/25 16:35:25 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -213,7 +213,7 @@ public class ArticleTask extends AbstractTask {
 
             newArticleElement.setText(title);
         } else {
-            newArticleElement = documentHelper.createElement(elementName);
+            newArticleElement = DocumentHelper.createElement(elementName);
 
             newArticleElement.addAttribute("id", id);
 
@@ -246,15 +246,15 @@ public class ArticleTask extends AbstractTask {
         //get the date
         Calendar cal = new GregorianCalendar();
 
-        String year = Integer.toString(cal.get(cal.YEAR));
+        String year = Integer.toString(cal.get(Calendar.YEAR));
 
-        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MONTH) + 1));
+        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MONTH) + 1));
 
-        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.DAY_OF_MONTH)));
+        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
 
-        String hour = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.HOUR_OF_DAY)));
+        String hour = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
-        String minute = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MINUTE)));
+        String minute = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MINUTE)));
 
         String millis = getMillis();
 
@@ -272,7 +272,7 @@ public class ArticleTask extends AbstractTask {
 
         DocumentHelper documentHelper = new DocumentHelper();
 
-        dateE = documentHelper.makeElement(doc, "/article/head/dateline/story.date");
+        dateE = DocumentHelper.makeElement(doc, "/article/head/dateline/story.date");
 
         dateE.clearContent();
 
@@ -320,11 +320,11 @@ public class ArticleTask extends AbstractTask {
         //get the date
         Calendar cal = new GregorianCalendar();
 
-        String year = Integer.toString(cal.get(cal.YEAR));
+        String year = Integer.toString(cal.get(Calendar.YEAR));
 
-        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MONTH) + 1));
+        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MONTH) + 1));
 
-        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.DAY_OF_MONTH)));
+        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
 
         //read the article
         Document doc = new SAXReader().read("file:" + filename);
