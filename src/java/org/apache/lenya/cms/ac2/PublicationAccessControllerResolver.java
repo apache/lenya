@@ -1,5 +1,5 @@
 /*
-$Id: PublicationAccessControllerResolver.java,v 1.4 2003/07/17 16:24:19 andreas Exp $
+$Id: PublicationAccessControllerResolver.java,v 1.5 2003/08/11 16:03:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,23 +73,23 @@ import org.apache.lenya.cms.publication.PublicationFactory;
  * 
  * @author andreas
  */
-public class PublicationAccessControllerResolver
-    extends AbstractAccessControllerResolver {
+public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver {
 
     protected static final String CONFIGURATION_FILE =
         "config/ac/ac.xconf".replace('/', File.separatorChar);
     protected static final String TYPE_ATTRIBUTE = "type";
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.lang.String)
+     * @see org.apache.lenya.cms.ac2.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
      */
-    public AccessController resolveAccessController(String webappUrl)
+    public AccessController doResolveAccessController(String webappUrl)
         throws AccessControlException {
+
         return resolveAccessController(webappUrl, "context:///");
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.lang.String)
+     * @see org.apache.lenya.cms.ac2.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
      */
     public AccessController resolveAccessController(String webappUrl, String contextUri)
         throws AccessControlException {
@@ -128,7 +128,7 @@ public class PublicationAccessControllerResolver
 
             if (PublicationFactory
                 .existsPublication(publicationId, contextDir.getAbsolutePath())) {
-                
+
                 getLogger().debug("Publication [" + publicationId + "] exists.");
                 Publication publication;
                 try {
@@ -137,15 +137,14 @@ public class PublicationAccessControllerResolver
                             publicationId,
                             contextDir.getAbsolutePath());
                 } catch (PublicationException e) {
-					throw new AccessControlException(e);
+                    throw new AccessControlException(e);
                 }
 
                 String publicationUrl = webappUrl.substring(("/" + publicationId).length());
                 controller = resolveAccessController(publication, publicationUrl);
-            }
-            else {
+            } else {
                 getLogger().debug("Publication [" + publicationId + "] does not exist.");
-        }
+            }
         }
 
         return controller;
@@ -167,25 +166,26 @@ public class PublicationAccessControllerResolver
         File configurationFile = new File(publication.getDirectory(), CONFIGURATION_FILE);
 
         if (configurationFile.isFile()) {
-        try {
-            Configuration configuration =
-                new DefaultConfigurationBuilder().buildFromFile(configurationFile);
-            String type = configuration.getAttribute(TYPE_ATTRIBUTE);
+            try {
+                Configuration configuration =
+                    new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
-            boolean authorized;
-            accessController =
-                (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
+                boolean authorized;
+                
+                accessController =
+                    (AccessController) getManager().lookup(AccessController.ROLE + "/" + type);
 
-            if (accessController instanceof Configurable) {
-                ((Configurable) accessController).configure(configuration);
+                if (accessController instanceof Configurable) {
+                    ((Configurable) accessController).configure(configuration);
+                }
+
+            } catch (Exception e) {
+                throw new AccessControlException(e);
             }
-
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
         }
 
         return accessController;
     }
-
+    
 }

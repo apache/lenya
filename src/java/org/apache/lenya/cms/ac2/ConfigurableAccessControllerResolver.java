@@ -1,5 +1,5 @@
 /*
-$Id: ConfigurableAccessControllerResolver.java,v 1.1 2003/07/17 16:24:19 andreas Exp $
+$Id: ConfigurableAccessControllerResolver.java,v 1.2 2003/08/11 16:03:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -69,9 +69,9 @@ public class ConfigurableAccessControllerResolver
     implements Configurable {
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.lang.String)
+     * @see org.apache.lenya.cms.ac2.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
      */
-    public AccessController resolveAccessController(String webappUrl)
+    public AccessController doResolveAccessController(String webappUrl)
         throws AccessControlException {
         AccessController accessController = null;
 

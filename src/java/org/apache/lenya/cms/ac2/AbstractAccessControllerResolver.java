@@ -1,5 +1,5 @@
 /*
-$Id: AbstractAccessControllerResolver.java,v 1.1 2003/07/17 16:24:19 andreas Exp $
+$Id: AbstractAccessControllerResolver.java,v 1.2 2003/08/11 16:03:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,13 +60,72 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.util.CacheMap;
 
 /**
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public abstract class AbstractAccessControllerResolver
     extends AbstractLogEnabled
-    implements AccessControllerResolver, Serviceable {
+    implements AccessControllerResolver, Serviceable, ThreadSafe {
+
+    protected static final int CAPACITY = 1000;
+    private CacheMap cache = new CacheMap(CAPACITY);
+
+    /**
+     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.lang.String)
+     */
+    public AccessController resolveAccessController(String webappUrl)
+        throws AccessControlException {
+
+        SourceResolver resolver = null;
+        Source source = null;
+        AccessController controller = null;
+
+        try {
+            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI("context:///");
+            String key = source.getURI() + "_" + webappUrl;
+            getLogger().debug("Access controller cache key: [" + key + "]");
+
+            synchronized (cache) {
+                controller = (AccessController) cache.get(key);
+                if (controller == null) {
+                    getLogger().debug("No access controller in cache.");
+                    controller = doResolveAccessController(webappUrl);
+                    cache.put(key, controller);
+                }
+                else {
+                    getLogger().debug("Getting access controller from cache.");
+                }
+            }
+
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                getManager().release(resolver);
+            }
+        }
+
+        return controller;
+    }
+
+    /**
+     * The actual resolving method.
+     * @param webappUrl The URL within the web application.
+     * @return An access controller.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected abstract AccessController doResolveAccessController(String webappUrl)
+        throws AccessControlException;
 
     /**
      * @see org.apache.lenya.cms.ac2.AccessControllerResolver#release(org.apache.lenya.cms.ac2.AccessController)
@@ -78,11 +137,12 @@ public abstract class AbstractAccessControllerResolver
     }
 
     private ServiceManager manager;
-
+    
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
     public void service(ServiceManager manager) throws ServiceException {
+        getLogger().debug("Servicing [" + getClass().getName() + "]");
         this.manager = manager;
     }
 

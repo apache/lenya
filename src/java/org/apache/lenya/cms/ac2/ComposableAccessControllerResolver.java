@@ -1,5 +1,5 @@
 /*
-$Id: ComposableAccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas Exp $
+$Id: ComposableAccessControllerResolver.java,v 1.4 2003/08/11 16:03:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,14 +55,16 @@ $Id: ComposableAccessControllerResolver.java,v 1.3 2003/07/15 13:50:15 andreas E
 */
 package org.apache.lenya.cms.ac2;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.ac.AccessControlException;
 
 /**
@@ -72,74 +74,88 @@ import org.apache.lenya.cms.ac.AccessControlException;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class ComposableAccessControllerResolver
-    extends AbstractLogEnabled
-    implements AccessControllerResolver, Serviceable, Configurable {
+    extends AbstractAccessControllerResolver
+    implements Configurable, Disposable {
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.util.Map)
+     * @see org.apache.lenya.cms.ac2.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
      */
-    public AccessController resolveAccessController(String url) throws AccessControlException {
-        
+    public AccessController doResolveAccessController(String url) throws AccessControlException {
+
         AccessController controller = null;
-        
+
         try {
-            selector = (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE + "Selector");
             
+            if (selector == null) {
+                selector =
+                    (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE + "Selector");
+            }
+
             String[] types = getResolverTypes();
             int i = 0;
             while (controller == null && i < types.length) {
-                
+
                 getLogger().debug("Trying to resolve AC resolver for type [" + types[i] + "]");
-                AccessControllerResolver resolver = (AccessControllerResolver) selector.select(types[i]);
+                AccessControllerResolver resolver =
+                    (AccessControllerResolver) selector.select(types[i]);
                 controller = resolver.resolveAccessController(url);
+                setResolver(controller, resolver);
                 getLogger().debug("Resolved access controller [" + controller + "]");
                 i++;
             }
-        
+
         } catch (ServiceException e) {
             throw new AccessControlException(e);
         }
-        
+
         return controller;
     }
+
+    private Map controllerToResolver = new HashMap();
 
     /**
      * @see org.apache.lenya.cms.ac2.AccessControllerResolver#release(org.apache.lenya.cms.ac2.AccessController)
      */
     public void release(AccessController controller) {
         assert controller != null;
-        if (selector != null) {
-            if (resolver != null) {
-                resolver.release(controller);
-                selector.release(resolver);
-            }
-            getManager().release(selector);
-        }
-
+        AccessControllerResolver resolver = getResolver(controller);
+        resolver.release(controller);
+        selector.release(resolver);
     }
-    
-    private ServiceManager manager;
 
     /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     * Returns the access controller resolver that was used to resolve a
+     * specific access controller.
+     * @param controller The access controller.
+     * @return An AC resolver.
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    protected AccessControllerResolver getResolver(AccessController controller) {
+        AccessControllerResolver resolver =
+            (AccessControllerResolver) controllerToResolver.get(controller);
+        return resolver;
+    }
+    
+    /**
+     * Sets the access controller resolver that was used to resolve a
+     * specific access controller.
+     * @param controller The access controller.
+     * @param resolver An AC resolver.
+     */
+    protected void setResolver(AccessController controller, AccessControllerResolver resolver) {
+        controllerToResolver.put(controller, resolver);
     }
 
     protected static final String RESOLVER_ELEMENT = "resolver";
     protected static final String TYPE_ATTRIBUTE = "type";
 
     private String[] resolverTypes;
-    private AccessControllerResolver resolver;
     private ServiceSelector selector;
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
-        Configuration[] accessControllerConfigs =
-            configuration.getChildren(RESOLVER_ELEMENT);
+        Configuration[] accessControllerConfigs = configuration.getChildren(RESOLVER_ELEMENT);
         resolverTypes = new String[accessControllerConfigs.length];
         for (int i = 0; i < accessControllerConfigs.length; i++) {
             resolverTypes[i] = accessControllerConfigs[i].getAttribute(TYPE_ATTRIBUTE);
@@ -155,29 +171,12 @@ public class ComposableAccessControllerResolver
     }
 
     /**
-     * Returns the service manager of this Serviceable.
-     * @return A service manager.
+     * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
-    protected ServiceManager getManager() {
-        return manager;
-    }
-
-    /**
-     * Returns the selected access controller resolver.
-     * @return An access controller resolver.
-     */
-    public AccessControllerResolver getResolver() {
-        return resolver;
-    }
-
-    /**
-     * Sets the selected access controller resolver.
-     * @param resolver An access controller resolver.
-     */
-    public void setResolver(AccessControllerResolver resolver) {
-        assert resolver != null;
-        this.resolver = resolver;
+    public void dispose() {
+        if (selector != null) {
+            getManager().release(selector);
+        }
     }
 
 }
-
