@@ -92,7 +92,8 @@
            </DataContent>
           </ContentItem>
        </NewsComponent>
-       <NewsComponent>
+<!--
+       <NewsComponent EquivalentsList="no">
           <ContentItem>
            <DataContent>
             <related-content>
@@ -106,5 +107,6 @@
            </DataContent>
           </ContentItem>
        </NewsComponent>
+-->
     </NewsItem>
 </NewsML>                                                                                                                                   
