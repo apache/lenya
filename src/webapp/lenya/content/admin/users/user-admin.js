@@ -259,7 +259,7 @@ function add_user(ldap) {
 			if (existingUser != null) {
 				message = "This user already exists.";
 			}
-			else if (!password.equals(confirmPassword)) {
+			else if (!ldap && !password.equals(confirmPassword)) {
 	 		   	message = "Password and confirmed password are not equal!";
 			}
 			else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(userId)) {
