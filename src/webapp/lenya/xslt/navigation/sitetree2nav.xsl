@@ -39,7 +39,22 @@
     <xsl:apply-templates/>
   </nav:site>
 
-</xsl:template>    
+</xsl:template>
+
+
+<!--
+Resolves the existing language of a node, preferrably
+the default language.
+-->
+<xsl:template name="resolve-existing-language">
+  <xsl:choose>
+    <xsl:when test="tree:label[lang($chosenlanguage)]"><xsl:value-of select="$chosenlanguage"/></xsl:when>
+    <xsl:when test="tree:label[lang($defaultlanguage)]"><xsl:value-of select="$defaultlanguage"/></xsl:when>
+    <xsl:otherwise><xsl:value-of select="tree:label/@xml:lang"/></xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+
 
 <!--
 Apply nodes recursively
@@ -48,6 +63,10 @@ Apply nodes recursively
 
   <!-- basic url of parent node -->
   <xsl:param name="previous-url" select="''"/>
+  
+  <xsl:variable name="existinglanguage">
+    <xsl:call-template name="resolve-existing-language"/>
+  </xsl:variable>
   
   <nav:node>
   
@@ -68,12 +87,12 @@ Apply nodes recursively
     </xsl:variable>  
     
     <xsl:variable name="language-suffix">
-      <xsl:text>_<xsl:value-of select="$chosenlanguage"/></xsl:text>
+      <xsl:text>_</xsl:text><xsl:value-of select="$existinglanguage"/>
     </xsl:variable>
     
     <xsl:variable name="canonical-language-suffix">
       <xsl:choose>
-        <xsl:when test="not($defaultlanguage = $chosenlanguage)">
+        <xsl:when test="not($defaultlanguage = $existinglanguage)">
           <xsl:value-of select="$language-suffix"/>
         </xsl:when>
         <xsl:otherwise>
@@ -89,7 +108,7 @@ Apply nodes recursively
         <xsl:text>.</xsl:text>
         <xsl:choose>
           <xsl:when test="@suffix">
-            <xsl:text><xsl:value-of select="@suffix"/></xsl:text>
+            <xsl:value-of select="@suffix"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>html</xsl:text>
