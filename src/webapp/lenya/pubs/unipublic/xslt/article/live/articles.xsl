@@ -1,9 +1,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
-<xsl:param name="section" select="'default_value'"/>
 <xsl:param name="documentid"/>
-<xsl:param name="authoring"/>
 
 <xsl:template match="text()">
 <xsl:value-of select="."/>
