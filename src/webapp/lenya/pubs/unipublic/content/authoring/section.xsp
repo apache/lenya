@@ -19,7 +19,7 @@
 
 <Content xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/2002/XLink">
   <FirstColumn>
-    <navigation xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:<xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></navigation>
+    <navigation xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:authoring/<xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></navigation>
 <!--
     <xi:include xml:base="cocoon:"><xsp:attribute name="href"><xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></xi:include>
 -->

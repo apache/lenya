@@ -74,6 +74,7 @@
     <xs:complexType mixed="true">
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="nitf" minOccurs="0" maxOccurs="unbounded"></xs:element>
+          <xs:element ref="related-content" minOccurs="0" maxOccurs="unbounded"></xs:element>
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -82,6 +83,13 @@
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="body" minOccurs="0" maxOccurs="unbounded"></xs:element>
           <xs:element ref="head" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        </xs:choice></xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="related-content">
+    <xs:complexType mixed="true">
+      <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="block" minOccurs="0" maxOccurs="unbounded"></xs:element>
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>

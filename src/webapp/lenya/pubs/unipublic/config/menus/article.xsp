@@ -42,7 +42,7 @@
       </block>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?docid=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.html&amp;docids=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Publish</item>            
-        <item>Schedule</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/servlet/QuartzSchedulerServlet</xsp:attribute>Schedule</item>            
         <item href="index.xml">View&#160;XML</item>
       </block>
       <block>

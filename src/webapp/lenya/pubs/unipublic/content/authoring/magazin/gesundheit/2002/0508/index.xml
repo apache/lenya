@@ -71,7 +71,7 @@
             <body>
               <body.head>
                 <dateline>
-                  <story.date millis="1017957600000" norm="5.4.2002"/>
+                  <story.date millis="1017957600000" norm="25.3.2002"/>
                 </dateline>
                 <hedline>
                   <hl1>&#171;Im Traum spricht er am meisten mit mir&#187;</hl1>
@@ -221,16 +221,43 @@
                <body.end>
                  <tagline>Adrian Ritter ist freischaffender Journalist in Z&#252;rich.</tagline>
                </body.end>
-              </body> 
-             </nitf>
-            </DataContent>
+              </body>
+            </nitf>
+           </DataContent>
           </ContentItem>
        </NewsComponent>
-
        <!--Start related content -->
-
        <NewsComponent EquivalentsList="no" Essential="no">
          <Role FormalName="RelatedContent"/>
+         <ContentItem>
+           <DataContent>
+             <related-content>
+<!--
+               <block>
+                 <title>Artikel</title>
+                 <item>
+                   <a href="http://www.unipublic.unizh.ch">Kommunizierendes Gehirn</a> (unipublic, 15.3.2002)
+                 </item>
+                 <item>
+                   <a href="">Wenn die Sprache verlorengeht</a> (Podiumsgespr&#228;ch zu Hirnverletzungen)
+                 </item>
+               </block>
+               <block>
+                 <title>Links</title>
+                 <item>
+                   Das Podiumsgespr&#228;ch wurde organisiert von der <a href="">Schweizerischen Parkinsonvereinigung</a>
+                 </item>
+                 <item>
+                   <a href="">Neuropsychologisches Institut</a>
+                 </item>
+                 <item>
+                   <a href="">BrainFair 2002</a>
+                 </item>
+               </block>
+-->
+             </related-content>
+           </DataContent>
+         </ContentItem>
          <NewsComponent EquivalentsList="yes" Essential="no">
            <Role FormalName="Artikel"/>
            <NewsComponent EquivalentsList="no" Essential="no">

@@ -67,5 +67,17 @@ Rem: temporarily its only a copy, because we must go ahead !!!. We should define
  </ul>
 </li>
 </ul>
+
+
+<h3>Data Migration: HTML to XML</h3>
+<ol>
+<li>Parse Section</li>
+<li>Download Article</li>
+<li>Tidy: HTML to XHTML</li>
+<li>Add line &lt;?xml version="1.0"?&gt;</li>
+<li>Replace special characters (nbsp=#160, auml=#228, uuml=#252, ouml=#246, Uuml=#220, Auml=#196, laquo=#171, raquo=#187)</li>
+<li>migrate-xhtml2xml.xsl: XHTML to XML</li>
+<li>Hands On!</li>
+</ol>
 </body>
 </html>

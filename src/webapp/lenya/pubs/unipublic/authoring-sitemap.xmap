@@ -5,9 +5,6 @@
   <!-- =========================== Components ================================ -->
 
   <map:components>
-<!--
-    <map:generators default="file"/>
--->
     <map:generators default="file">
       <map:generator  name="servletproxy" src="org.wyona.cms.cocoon.generation.ServletProxyGenerator"/>
     </map:generators>                                                                                                                       
@@ -197,6 +194,11 @@
     </map:pipeline>
     <!-- /ParentChild Content Creator: New Article -->
 
+
+
+
+
+
     <!-- Authoring -->
     <!-- Menus -->
     <map:pipeline>
@@ -255,13 +257,20 @@
          </map:read>
       </map:match>
 
+
+
+
+
+
       <!-- Frontpage -->
       <map:match pattern="">
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
       <map:match pattern="index.html">
         <map:generate src="cocoon:/index.xml"/> 
-        <map:transform src="stylesheets/publication/Page/Front/Authoring/main.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Front/Authoring/main.xsl">
+          <map:parameter name="year" value="2002"/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
 
@@ -284,6 +293,12 @@
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
+
+
+
+
+
+
 
       <!-- Section -->
       <map:match pattern="*/*/*/navigation.xml">
@@ -328,6 +343,7 @@
       <map:match pattern="*/*/*/">
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
+
       <map:match pattern="*/*/*/index.html">
         <map:aggregate element="wyona">
           <map:part src="cocoon:/menus/{1}/{2}/{3}/section.xml"/>
@@ -340,6 +356,11 @@
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
+
+
+
+
+
 
       <!-- Article -->
       <map:match pattern="rco/*/*/*/*/index.xml">
@@ -404,6 +425,12 @@
 
       <map:match pattern="*/*/*/*/index.xml">
         <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="*/*/*/*/index.xhtml">
+        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xhtml"/>
+        <map:transform src="stylesheets/publication/Page/Article/migrate-xhtml2xml.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 

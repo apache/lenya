@@ -22,7 +22,7 @@
       <Section id="{@id}" highlighted="true"><xsl:value-of select="."/></Section>
     </xsl:when>
     <xsl:otherwise>
-      <Section id="{@id}" highlighted="false"><xsl:value-of select="."/></Section>
+      <Section id="{@id}" highlighted="false"><xsl:if test="@href"><xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute></xsl:if><xsl:value-of select="."/></Section>
     </xsl:otherwise>
   </xsl:choose>                                                                                                                 
 </xsl:template>

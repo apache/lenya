@@ -13,9 +13,9 @@
       <Sections>
         <Section id="uni-news" highlighted="false">Uni-News</Section>
         <Section id="portraits" highlighted="false">Portraits</Section>
-        <Section id="lorbeeren" highlighted="false">Lorbeeren</Section>
-        <Section id="berufungen" highlighted="false">Berufungen</Section>
-        <Section id="publikationen" highlighted="false">Publikationen</Section>
+        <Section href="http://www.unipublic.unizh.ch/campus/lorbeeren/" id="lorbeeren" highlighted="false">Lorbeeren</Section>
+        <Section href="http://www.unipublic.unizh.ch/campus/berufungen/" id="berufungen" highlighted="false">Berufungen</Section>
+        <Section href="http://www.unipublic.unizh.ch/campus/publikationen/" id="publikationen" highlighted="false">Publikationen</Section>
       </Sections>
     </Channel>
   </Channels>

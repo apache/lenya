@@ -92,5 +92,19 @@
            </DataContent>
           </ContentItem>
        </NewsComponent>
+       <NewsComponent>
+          <ContentItem>
+           <DataContent>
+            <related-content>
+              <block>
+                <title>Block Title</title>
+                <item>
+                Item: Text and <a href="">Link</a>
+                </item>
+              </block>
+            </related-content>
+           </DataContent>
+          </ContentItem>
+       </NewsComponent>
     </NewsItem>
 </NewsML>                                                                                                                                   

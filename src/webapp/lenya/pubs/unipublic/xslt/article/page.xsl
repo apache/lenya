@@ -36,7 +36,10 @@
             <tr>
               <td valign="top" width="187">
 
+<!--
                 <xsl:apply-templates select="NewsItem" mode="RelatedContents"/>
+-->
+                <xsl:apply-templates select="NewsItem/NewsComponent/ContentItem/DataContent/related-content"/>
 
               </td>
               <xsl:apply-templates select="NewsItem/NewsComponent/ContentItem/DataContent/nitf"/>
