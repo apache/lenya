@@ -31,6 +31,10 @@
     <label>IP Ranges</label>
   </node>
   
+  <node id="content">
+    <label>Content</label>
+  </node>
+
   <node id="status">
     <label>Cocoon and Server Status</label>
   </node>
