@@ -355,6 +355,7 @@
    <map:action logger="sitemap.action.request" name="request" src="org.apache.cocoon.acting.RequestParamAction"/>
    <map:action logger="sitemap.action.form-validator" name="form-validator" src="org.apache.cocoon.acting.FormValidatorAction"/>
    <map:action logger="sitemap.action.session-state" name="session-state" src="org.apache.cocoon.acting.SessionStateAction"/>
+   <map:action logger="sitemap.action.session-propagator" name="session-propagator" src="org.apache.cocoon.acting.SessionPropagatorAction"/>
    <map:action logger="sitemap.action.session-isvalid" name="session-isvalid" src="org.apache.cocoon.acting.SessionIsValidAction"/>
    <map:action logger="sitemap.action.resource-exists" name="resource-exists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
    <map:action logger="sitemap.action.set-header" name="set-header" src="org.apache.cocoon.acting.HttpHeaderAction"/>
