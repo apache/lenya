@@ -38,9 +38,7 @@
     <menu name="File" label="File">
       <block>
         <item uc:usecase="edit" href="?lenya.step=open&amp;form=cmfs">Edit&#160;with&#160;Forms</item>
-<!--
         <item uc:usecase="xopus" href="?lenya.step=open&amp;doctype=cmfs">Edit&#160;with&#160;Xopus</item>
--->
 <!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/matrix/"+projectid+".html"</xsp:expr>?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
 -->
