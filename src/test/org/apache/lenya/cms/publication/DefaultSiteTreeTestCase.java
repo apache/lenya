@@ -65,7 +65,7 @@ import junit.textui.TestRunner;
 /**
  * A test case testing org.apache.lenya.cms.publishing.DefaultSiteTree
  *
- * @version CVS $Id: DefaultSiteTreeTestCase.java,v 1.4 2003/06/30 11:53:52 andreas Exp $
+ * @version CVS $Id: DefaultSiteTreeTestCase.java,v 1.5 2003/07/08 09:30:38 egli Exp $
  */
 public final class DefaultSiteTreeTestCase extends TestCase {
     private DefaultSiteTree sitetree;
@@ -79,9 +79,11 @@ public final class DefaultSiteTreeTestCase extends TestCase {
         TestRunner.run(suite());
     }
 
-    /**
-     *
-     */
+	/**
+	 * Get the suite.
+	 * 
+	 * @return a <code>TestSuite</code>
+	 */
     public static Test suite() {
         TestSuite suite = new TestSuite();
         suite.addTest(new DefaultSiteTreeTestCase("testNodeAddition"));
@@ -89,9 +91,11 @@ public final class DefaultSiteTreeTestCase extends TestCase {
         return suite;
     }
 
-    /**
-     *
-     */
+	/**
+	 * 
+	 * 
+	 * @param test
+	 */
     public DefaultSiteTreeTestCase(String test) {
         super(test);
 
