@@ -7,7 +7,7 @@
 package org.apache.lenya.workflow.impl;
 
 import org.apache.lenya.workflow.Condition;
-import org.apache.lenya.workflow.WorkflowBuildException;
+import org.apache.lenya.workflow.WorkflowException;
 
 /**
  *
@@ -21,7 +21,7 @@ public final class ConditionFactory {
     protected static Condition createCondition(
         String className,
         String expression)
-        throws WorkflowBuildException {
+        throws WorkflowException {
 
         assert className != null;
         assert expression != null;
@@ -32,11 +32,11 @@ public final class ConditionFactory {
             condition = (Condition) clazz.newInstance();
             condition.setExpression(expression);
         } catch (ClassNotFoundException e) {
-            throw new WorkflowBuildException(e);
+            throw new WorkflowException(e);
         } catch (InstantiationException e) {
-            throw new WorkflowBuildException(e);
+            throw new WorkflowException(e);
         } catch (IllegalAccessException e) {
-            throw new WorkflowBuildException(e);
+            throw new WorkflowException(e);
         }
         return condition;
     }
