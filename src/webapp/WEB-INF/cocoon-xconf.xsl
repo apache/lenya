@@ -69,6 +69,9 @@
     <component-instance logger="core.modules.input" name="access-control"
         class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
     
+    <component-instance logger="core.modules.input" name="workflow"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.WorkflowModule"/>
+    
   </xsl:copy>
 </xsl:template>
 
