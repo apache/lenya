@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: archive.jx 123421 2004-12-27 16:02:27Z gregor $ -->
+
+<jx:template name="messages"
+           xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+
+  <ul>
+    
+    <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+      <li>
+        <i18n:text>
+          <jx:out value="${message}"/>
+        </i18n:text>
+      </li>
+    </jx:forEach>
+    
+    <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+      <li>
+        <i18n:text>
+          <jx:out value="${message}"/>
+        </i18n:text>
+      </li>
+    </jx:forEach>
+    
+  </ul>
+
+</jx:template>
