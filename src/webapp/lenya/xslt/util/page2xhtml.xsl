@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: page2xhtml.xsl,v 1.21 2004/04/29 09:14:41 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -32,8 +32,8 @@
   <html>
     <head>
       <title><xsl:value-of select="page:title"/></title>
-      <link rel="stylesheet" type="text/css"
-        href="{$contextprefix}/lenya/css/default.css" title="default css"/>
+      <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" title="default css"/>
+      <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
 <xsl:if test="count(xhtml:script) &gt; 0">
  <script><xsl:value-of select="xhtml:script" /> </script>
 </xsl:if>

@@ -44,6 +44,7 @@
       <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
       <meta content="Apache Lenya" name="generator"/>
       <title><xsl:value-of select="//lenya:meta/dc:title"/></title>
+      <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
     </head>	
     <body>
       <div id="page">
