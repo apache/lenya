@@ -226,7 +226,7 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
 	if (ldap) {
 	    var ldapUser = new LDAPUser();
 	    if (!ldapUser.existsUser(ldapId)) {
-	    	messages.add("This LDAP user ID does not exist.);
+	    	messages.add("This LDAP user ID does not exist.");
 	    }
 	}
 	
