@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IterativeHTMLCrawler.java,v 1.28 2004/07/10 23:18:23 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.search.crawler;
 
@@ -63,11 +63,6 @@ public class IterativeHTMLCrawler {
                 new IterativeHTMLCrawler(new File(args[0])).crawl(new URL(ce.getBaseURL()), ce.getScopeURL());
 	    } else {
                 System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
-/*
-                new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),
-                    ce.resolvePath(ce.getHTDocsDumpDir()), ce.getUserAgent()).crawl(new URL(
-                        ce.getBaseURL()), ce.getScopeURL());
-*/
             }
         } catch (MalformedURLException e) {
             log.error("" + e);
@@ -90,15 +85,14 @@ public class IterativeHTMLCrawler {
 
     /**
      * Creates a new IterativeHTMLCrawler object.
-     *
      * @param config Configuration File
      */
     public IterativeHTMLCrawler(File config) {
         CrawlerConfiguration ce = new CrawlerConfiguration(config.getAbsolutePath());
 
 
-        this.url_list_file = ce.resolvePath(ce.getURIList());
-        this.html_dump_directory = ce.resolvePath(ce.getHTDocsDumpDir());
+        this.url_list_file = ce.getURIList();
+        this.html_dump_directory = ce.getHTDocsDumpDir();
 
         robot = new RobotExclusion(ce.getUserAgent());
 
