@@ -131,10 +131,10 @@ $PUB_HOME
           <li>
             Add the usecase handler class declaration to an XPatch file, e.g. <code>$PUB_HOME/config/usecases.xconf</code>:
 <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'article.editHeadline']">
-    <component-instance name="article.editHeadline"
-                        logger="lenya.usecases.editHeadline"
-                        class="org.myproject.lenya.usecases.EditHeadline"/>
-  </xconf>]]></source>
+  <component-instance name="article.editHeadline"
+                      logger="lenya.usecases.editHeadline"
+                      class="org.myproject.lenya.usecases.EditHeadline"/>
+</xconf>]]></source>
           </li>
         </ol>
       </section>
@@ -145,26 +145,26 @@ $PUB_HOME
           <li>The view for a usecase is implemented using a JX template.</li>
           <li>
             The output of the view has to be a Lenya page:
-<source xml:space="preserve"><![CDATA[  <page:page
-    xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
-    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
-    >
+<source xml:space="preserve"><![CDATA[<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+
+  <page:title><i18n:text>Edit Headline</i18n:text></page:title>
+  <page:body>
   
-    <page:title><i18n:text>Edit Headline</i18n:text></page:title>
-    <page:body>
-    
-      <form>
-        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-        <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+    <form>
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
 
-        ...
+      ...
 
-      </form>
+    </form>
 
-    </page:body>
-  </page:page>]]></source>
+  </page:body>
+</page:page>]]></source>
           </li>
           <li>Take care of adding the hidden <em>lenya.usecase</em> and <em>lenya.continuation</em> fields as shown above.</li>
           <li>The template has to be located at <code><![CDATA[$PUB_HOME/lenya/usecases/<usecase>.jx]]></code>
