@@ -17,16 +17,14 @@
 package org.apache.lenya.cms.ac;
 
 import java.util.Map;
+import java.util.Vector;
 
-import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.admin.AccessControlUsecase;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 
 /**
  * Usecase to log a user out.
@@ -42,26 +40,33 @@ public class Logout extends AccessControlUsecase {
         super();
     }
 
-
     /**
-     * Validates the request parameters.
-     * @throws UsecaseException if an error occurs.
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
-    void validate() throws UsecaseException {
-    }
+    protected void initParameters() {
+        super.initParameters();
+        Map objectModel = ContextHelper.getObjectModel(getContext());
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Session session = request.getSession(false);
 
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
-     */
-    protected void doCheckExecutionConditions() throws Exception {
-        validate();
+        if (session != null) {
+            Vector history = (Vector) session
+                    .getAttribute("org.apache.lenya.cms.cocoon.acting.History");
+            setParameter("history", history.toArray());
+        }
     }
-
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
 
-   }
+        Map objectModel = ContextHelper.getObjectModel(getContext());
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Session session = request.getSession(false);
 
+        if (session != null) {
+            session.removeAttribute(Identity.class.getName());
+        }
+    }
 }
