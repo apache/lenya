@@ -30,9 +30,6 @@
       </element>
       <element name="echo:content">
         <attribute name="type"/>
-        <attribute name="lang">
-          <data type="NCName"/>
-        </attribute>
         <element>
           <name ns="">p</name>
           <oneOrMore>
