@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.3 2003/11/06 10:15:09 andreas Exp $ <License>
+ * $Id: DocumentHelper.java,v 1.4 2003/11/11 16:28:01 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -237,7 +237,7 @@ public class DocumentHelper {
     /**
      * Returns the parent document of a document in the same language.
      * @param document The document.
-     * @return A document or <code>null</code> if the document parameter is the root document.
+     * @return A document or <code>null</code> if the document parameter is a top-level document.
      * @throws DocumentBuildException when the parent document could not be created.
      */
     public static Document getParentDocument(Document document) throws DocumentBuildException {
