@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeAction.java,v 1.13 2003/08/27 14:03:35 egli Exp $
+$Id: PageEnvelopeAction.java,v 1.14 2003/08/28 13:49:08 egli Exp $
 <License>
 
  ============================================================================
@@ -68,6 +68,8 @@ import java.util.Map;
 /**
  *
  * @author  nobby
+ * 
+ * @deprecated use the page-envelope input module instead.
  */
 public class PageEnvelopeAction extends AbstractAction {
     /**
