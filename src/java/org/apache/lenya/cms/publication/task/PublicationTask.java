@@ -1,5 +1,5 @@
 /*
-$Id: PublicationTask.java,v 1.2 2003/11/27 14:01:49 andreas Exp $
+$Id: PublicationTask.java,v 1.3 2003/12/01 16:05:29 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,27 @@ $Id: PublicationTask.java,v 1.2 2003/11/27 14:01:49 andreas Exp $
 */
 package org.apache.lenya.cms.publication.task;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
+import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.workflow.Event;
+import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.log4j.Category;
 
 /**
  * Abstract super class for publication-based tasks.
@@ -67,7 +83,9 @@ import org.apache.lenya.cms.task.Task;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public abstract class PublicationTask extends AbstractTask {
-    
+
+    private static final Category log = Category.getInstance(PublicationTask.class);
+
     private Publication publication;
 
     /**
@@ -87,6 +105,177 @@ public abstract class PublicationTask extends AbstractTask {
             }
         }
         return publication;
+    }
+
+    /**
+     * Copies the resources of a document to another document.
+     * @param sourceDocument The source document.
+     * @param destinationDocument The destination document.
+     * @throws PublicationException when something went wrong.
+     * @throws ExecutionException when something went wrong.
+     * @throws IOException when something went wrong.
+     */
+    protected void copyResources(Document sourceDocument, Document destinationDocument)
+        throws ExecutionException {
+
+        if (log.isDebugEnabled()) {
+            log.debug("Copying resources");
+        }
+
+        ResourcesManager sourceManager = new ResourcesManager(sourceDocument);
+        ResourcesManager destinationManager = new ResourcesManager(destinationDocument);
+
+        List resourcesList = new ArrayList(Arrays.asList(sourceManager.getResources()));
+        resourcesList.addAll(Arrays.asList(sourceManager.getMetaFiles()));
+        File[] resources = (File[]) resourcesList.toArray(new File[resourcesList.size()]);
+        File destinationDirectory = destinationManager.getPath();
+
+        for (int i = 0; i < resources.length; i++) {
+            File destinationResource = new File(destinationDirectory, resources[i].getName());
+
+            if (log.isDebugEnabled()) {
+                log.debug(
+                    "Copy file ["
+                        + resources[i].getAbsolutePath()
+                        + "] to ["
+                        + destinationResource.getAbsolutePath()
+                        + "]");
+            }
+            try {
+                FileUtil.copyFile(resources[i], destinationResource);
+            } catch (IOException e) {
+                throw new ExecutionException(e);
+            }
+        }
+    }
+
+    public static final String PARAMETER_WORKFLOW_EVENT = "workflow-event";
+    public static final String PARAMETER_USER_ID = "user-id";
+    public static final String PARAMETER_IP_ADDRESS = "ip-address";
+    public static final String PARAMETER_ROLE_IDS = "role-ids";
+    public static final String ROLE_SEPARATOR_REGEXP = ",";
+
+    /**
+     * Checks if the workflow event can be invoked on a document.
+     * @param document The document.
+     * @return A boolean value.
+     * @throws ExecutionException when something went wrong.
+     */
+    protected boolean canWorkflowFire(Document document) throws ExecutionException {
+
+        boolean canFire = true;
+
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        if (factory.hasWorkflow(document)) {
+            try {
+                String userId = getParameters().getParameter(PARAMETER_USER_ID);
+                String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
+                SynchronizedWorkflowInstances instance;
+                try {
+                    instance = factory.buildSynchronizedInstance(document);
+                } catch (WorkflowException e) {
+                    throw new ExecutionException(e);
+                }
+                Situation situation = factory.buildSituation(getRoleIDs(), userId, machineIp);
+
+                Event event = getExecutableEvent(instance, situation);
+                
+                if (event == null) {
+                    canFire = false;
+                }
+                
+            }
+            catch (Exception e) {
+                throw new ExecutionException(e);
+            }
+        }
+        return canFire;
+    }
+
+    /**
+     * Invokes the workflow on a document.
+     * @param document The document.
+     * @throws ParameterException when something went wrong.
+     * @throws WorkflowException when something went wrong.
+     */
+    protected void triggerWorkflow(Document document) throws ExecutionException {
+
+        if (log.isDebugEnabled()) {
+            log.debug("Trying to execute workflow on document [" + document.getId() + "].");
+        }
+
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        if (factory.hasWorkflow(document)) {
+            try {
+                String userId = getParameters().getParameter(PARAMETER_USER_ID);
+                String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
+
+                SynchronizedWorkflowInstances instance;
+                try {
+                    instance = factory.buildSynchronizedInstance(document);
+                } catch (WorkflowException e) {
+                    throw new ExecutionException(e);
+                }
+                Situation situation = factory.buildSituation(getRoleIDs(), userId, machineIp);
+
+                Event event = getExecutableEvent(instance, situation);
+
+                assert event != null;
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Invoking event [" + event.getName() + "]");
+                }
+                instance.invoke(situation, event);
+                if (log.isDebugEnabled()) {
+                    log.debug("Invoking transition completed.");
+                }
+            } catch (Exception e) {
+                throw new ExecutionException(e);
+            }
+        } else {
+            if (log.isDebugEnabled()) {
+                log.debug("No workflow associated with document.");
+            }
+        }
+
+    }
+
+    /**
+     * Returns the executable event for the provided {@link #PARAMETER_WORKFLOW_EVENT} parameter.
+     * @param instance The workflow instance.
+     * @param situation The situation.
+     * @return An event.
+     * @throws WorkflowException when something went wrong.
+     * @throws ParameterException when the {@link #PARAMETER_WORKFLOW_EVENT} parameter could not be resolved.
+     */
+    protected Event getExecutableEvent(SynchronizedWorkflowInstances instance, Situation situation)
+        throws WorkflowException, ParameterException {
+
+        String workflowEvent = getParameters().getParameter(PARAMETER_WORKFLOW_EVENT);
+
+        Event event = null;
+        Event[] events = instance.getExecutableEvents(situation);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Resolved executable events.");
+        }
+
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].getName().equals(workflowEvent)) {
+                event = events[i];
+            }
+        }
+        return event;
+    }
+
+    /**
+     * Returns the role IDs.
+     * @return An array of strings.
+     */
+    protected String[] getRoleIDs() throws ParameterException {
+        String rolesString = getParameters().getParameter(PARAMETER_ROLE_IDS);
+        String[] roles = rolesString.split(ROLE_SEPARATOR_REGEXP);
+        return roles;
     }
 
 }

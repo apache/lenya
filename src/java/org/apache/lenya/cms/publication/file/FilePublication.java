@@ -1,5 +1,5 @@
 /*
-$Id: FilePublication.java,v 1.3 2003/11/28 15:52:32 andreas Exp $
+$Id: FilePublication.java,v 1.4 2003/12/01 16:05:29 andreas Exp $
 <License>
 
  ============================================================================
@@ -125,6 +125,18 @@ public class FilePublication extends AbstractPublication {
         Document[] documents = documentSet.getDocuments();
         for (int i = 0; i < documents.length; i++) {
             copyDocumentToArea(documents[i], destinationArea);
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.AbstractPublication#deleteDocumentSource(org.apache.lenya.cms.publication.Document)
+     */
+    protected void deleteDocumentSource(Document document) throws PublicationException {
+        File file = document.getFile();
+        boolean deleted = file.delete();
+        if (!deleted) {
+            throw new PublicationException(
+                "Source file of document [" + document.getId() + "] could not be deleted!");
         }
     }
 

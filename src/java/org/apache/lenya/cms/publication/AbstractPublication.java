@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublication.java,v 1.4 2003/11/28 16:57:16 andreas Exp $
+$Id: AbstractPublication.java,v 1.5 2003/12/01 16:05:29 andreas Exp $
 <License>
 
  ============================================================================
@@ -467,13 +467,74 @@ public abstract class AbstractPublication implements Publication {
     }
 
     /**
-                 * Copies a document source.
-                 * @param sourceDocument The source document.
-                 * @param destinationDocument The destination document.
-                 * @throws PublicationException when something went wrong.
-                 */
+     * Copies a document source.
+     * @param sourceDocument The source document.
+     * @param destinationDocument The destination document.
+     * @throws PublicationException when something went wrong.
+     */
     protected abstract void copyDocumentSource(
         Document sourceDocument,
         Document destinationDocument)
         throws PublicationException;
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#deleteDocument(org.apache.lenya.cms.publication.Document)
+     */
+    public void deleteDocument(Document document) throws PublicationException {
+
+        SiteTree tree;
+        try {
+            tree = getSiteTree(document.getArea());
+        } catch (SiteTreeException e) {
+            throw new PublicationException(e);
+        }
+
+        SiteTreeNode node = tree.getNode(document.getId());
+
+        if (node == null) {
+            throw new PublicationException(
+                "Sitetree node for document [" + document + "] does not exist!");
+        }
+
+        Label label = node.getLabel(document.getLanguage());
+
+        if (label == null) {
+            throw new PublicationException(
+                "Sitetree label for document ["
+                    + document
+                    + "] in language ["
+                    + document.getLanguage()
+                    + "]does not exist!");
+        }
+
+        Label[] labels = node.getLabels();
+        if (labels.length == 1 && node.getChildren().length > 0) {
+            throw new PublicationException(
+                "Cannot delete last language version of document ["
+                    + document
+                    + "] because this node has children.");
+        }
+
+        node.removeLabel(label);
+
+        if (labels.length == 0) {
+            tree.removeNode(document.getId());
+        }
+
+        try {
+            tree.save();
+        } catch (SiteTreeException e) {
+            throw new PublicationException(e);
+        }
+
+        deleteDocumentSource(document);
+    }
+
+    /**
+     * Deletes the source of a document.
+     * @param document The document to delete.
+     * @throws PublicationException when something went wrong.
+     */
+    protected abstract void deleteDocumentSource(Document document) throws PublicationException;
+
 }

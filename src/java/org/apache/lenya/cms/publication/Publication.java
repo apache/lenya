@@ -160,6 +160,13 @@ public interface Publication {
      */
     void copyDocumentSetToArea(DocumentSet documentSet, String destinationArea)
         throws PublicationException;
+        
+    /**
+     * Deletes a document.
+     * @param document The document to delete.
+     * @throws PublicationException when something went wrong.
+     */
+    void deleteDocument(Document document) throws PublicationException;
 
     /**
      * Creates a version of the document object in another area.
