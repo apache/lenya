@@ -39,6 +39,13 @@ function validRequired(formField,fieldLabel)
 		result = false;
 	}
 	
+	if (formField.value.match("[^a-zA-Z0-9_\\-]+"))
+	{
+		alert('Please enter a valid value for the "' + fieldLabel +'" field. A-Z, a-z, 0-9, _ or -');
+		formField.focus();
+		result = false;
+	}
+
 	return result;
 }
 
