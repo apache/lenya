@@ -1,5 +1,5 @@
 /*
- * $Id: Identity.java,v 1.12 2003/06/11 12:16:12 egli Exp $
+ * $Id: Identity.java,v 1.13 2003/06/25 08:57:53 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -67,7 +67,7 @@ import org.apache.lenya.xml.DOMUtil;
  * @version 2003.4.20
  */
 public class Identity {
-    static Category log = Category.getInstance(Identity.class);
+    static private Category log = Category.getInstance(Identity.class);
 
     private static String ROOT = "identity";
     private String username = null;
@@ -112,7 +112,7 @@ public class Identity {
     /**
      * Creates a new Identity object.
      *
-     * @param String filename
+     * @param filename
      *
      * @throws Exception Noch such file
      */
