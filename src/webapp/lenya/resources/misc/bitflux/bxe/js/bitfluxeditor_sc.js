@@ -11,8 +11,15 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_sc.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
+// $Id: bitfluxeditor_sc.js,v 1.3 2002/10/25 10:12:22 felixcms Exp $
 
+/**
+ * @file
+ * Implements the special chars plugin
+ *
+ * we need some kind of plugin-interface. to be defined yet
+ */
+ 
 function BX_sc_popup ()
 {
 

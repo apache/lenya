@@ -11,7 +11,15 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_core.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
+// $Id: bitfluxeditor_core.js,v 1.3 2002/10/25 10:12:21 felixcms Exp $
+
+/**
+ * @file
+ * Implements most of the core functions
+ *
+ * We have to divide all this stuff into more file, it's still a mess here.
+ *
+ */
 
 /**
 * Initializationfunction.
@@ -24,22 +32,22 @@ function BX_init() {
 
     BX_schema_init();
 
-    BX_xmlTR = new BXE_XmlDocument("/config/files/transform/file[@name='BX_xmltransformfile']");
+    BX_xmlTR = new BXE_XsltDocument("/config/files/transform/file[@name='BX_xmltransformfile']");
     BX_xmlTR.includes   = BX_config_getContentMultiple("/config/files/transform/includes/file[@name='BX_xmltransformfile']");
     BX_xmlTR.xsltParams = BX_config_getContentMultipleAssoc("/config/files/transform/parameters/param[@name='BX_xmltransformfile']","xsltParamName");
 
     BX_xslTR  = new BXE_XmlDocument("/config/files/transform/file[@name='BX_xsltransformfile']");
 
-    BX_xmlTRBack = new BXE_XmlDocument("/config/files/transform/file[@name='BX_xmltransformbackfile']");
+    BX_xmlTRBack = new BXE_XsltDocument("/config/files/transform/file[@name='BX_xmltransformbackfile']");
     BX_xmlTRBack.includes = BX_config_getContentMultiple("/config/files/transform/includes/file[@name='BX_xmltransformbackfile']");
 
-    BX_xslViewSource = new BXE_XmlDocument("/config/files/transform/file[@name='BX_xslViewSourceFile']");
+    BX_xslViewSource = new BXE_XsltDocument("/config/files/transform/file[@name='BX_xslViewSourceFile']");
     /* not implemented yet */
     //    var BX_xslViewSourceFile_method = BX_config_getContent("/config/files/transform/file[@name='BX_xslViewSourceFile']/@method");
 
     BX_xml = new BXE_XmlDocument("/config/files/input/file[@name='BX_xmlfile']");
 
-    BX_xsl = new BXE_XmlDocument("/config/files/input/file[@name='BX_xslfile']");
+    BX_xsl = new BXE_XsltDocument("/config/files/input/file[@name='BX_xslfile']");
     BX_xsl.xsltParams = BX_config_getContentMultipleAssoc("/config/files/transform/parameters/param[@name='BX_xslfile']","xsltParamName");
 
     BX_posturl = new BXE_XmlDocument("/config/files/output/file[@name='BX_posturl']");
@@ -47,11 +55,13 @@ function BX_init() {
     var node;
     var options = BX_config_getNodes("/config/options/option");
     while (node = options.iterateNext()) {
+		// don't parse the element BX_root_dir..
+		if (node.getAttribute("name") != "BX_root_dir") {
         if (node.firstChild) {
             var nodeValue = BX_config_translateUrl(node);
             //replace quotes typed in config.xml. can go away later.
             nodeValue = "'" + nodeValue.replace(/^'/,"").replace(/'$/,"") + "'";
-            // the == "'0'" operator should go away later as will, it
+            // the == "'0'" operator should go away later as well, it
             //  should make transitioning easier.
             if (nodeValue == "'false'" || nodeValue == "'0'") {
                 nodeValue = false;
@@ -62,6 +72,7 @@ function BX_init() {
         } else {
             eval(node.getAttribute("name") + " = ''");
         }
+		}
     }
     BX_init_page();
 
@@ -156,6 +167,13 @@ function BX_schema_loaded(e) {
                 case "altmenu":
                     BX_elements[name]["altMenu"] = appinfo_node.firstChild.data;
                     break;
+				case "afteremptylineelement":
+					BX_elements[name]["afterEmptyLineElement"] = appinfo_node.firstChild.data;
+                    break;
+				case "afteremptylineparent":
+					BX_elements[name]["afterEmptyLineParent"] = appinfo_node.firstChild.data;
+                    break;
+
 
                 case "insertafter":
                     insertafter_result = BX_xml_getChildNodesByTagName("bxe:element",appinfo_node,nsResolver);
@@ -323,8 +341,8 @@ var BX_buttons = new Array();
 * @tparam String gif    name of the gif-button, without wt_ and .gif
 * @tparam Number width  width of the button
 * @tparam Number height height of the button
-* @tparam Number id      id
-* @tparam Number title   info title
+* @tparam String id      id
+* @tparam String title   info title
 * @treturn Object button
 */
 function BX_printButton (gif,width,height,id,title) {
@@ -340,7 +358,7 @@ function BX_printButton (gif,width,height,id,title) {
     }
     button.setAttribute("height",height);
     button.setAttribute("width",width);
-    button.setAttribute("src","./"+BX_root_dir+"/img/wt_"+gif+".gif");
+    button.setAttribute("src",BX_root_dir+"/img/wt_"+gif+".gif");
     return button;
 
 }
@@ -361,8 +379,9 @@ function BX_printButton (gif,width,height,id,title) {
 * @tparam String tag    TagName
 * @tparam String gif    name of the gif-button, without wt_ and .gif
 * @tparam Number height height of the button
-* @tparam Number id      name of the button
-* @tparam Number title   info title
+* @tparam Number width  width of the button
+* @tparam String id      name of the button
+* @tparam String title   info title
 * @tparam String tagoptions 
 * @tparam String tagoptions2 
 * @return void
@@ -482,8 +501,6 @@ function BX_focusSpan (w_div,isNode) {
 	    var w_div= BX_find_bitfluxspanNode(w_div.target);
 	}
 
-	BX_dump("BX_focusSpan(" + w_div.nodeName + ")");
-	
     if (!(BX_dotFocus) || BX_dotFocus != w_div) {
 
         w_div.setAttribute("bxe_hasfocus","true");
@@ -577,12 +594,24 @@ function BX_keypress(e) {
             e.stopPropagation();
             break;
         case e.DOM_VK_HOME:
+			if (BX_selection.anchorNode.nodeType == 1) {
+				BX_selection.anchorNode.normalize();
+			} else {
+				BX_selection.anchorNode.parentNode.normalize();
+			}
+
             BX_cursor_moveToStartInNode(BX_selection.anchorNode,false);
             BX_updateButtons();
             e.preventDefault();
             e.stopPropagation();
             break;
         case e.DOM_VK_END:
+			if (BX_selection.anchorNode.nodeType == 1) {
+				BX_selection.anchorNode.normalize();
+			} else {
+				BX_selection.anchorNode.parentNode.normalize();
+			}
+			
             BX_cursor_moveToStartInNode(BX_selection.anchorNode,true);
             BX_updateButtons();
             e.preventDefault();
@@ -616,7 +645,6 @@ function BX_keypress(e) {
     }
 
     if (BX_update_buttons) {
-		BX_dump("window.setTimeout(BX_updateButtonsDelayed()) in BX_keypress()")
         window.setTimeout("BX_updateButtonsDelayed()",10);
     }
 }
@@ -637,7 +665,6 @@ function BX_onkeyup(e) {
 			var _node = window.getSelection().anchorNode;
 			_node.target = _node;
 			BX_focusSpan(_node);
-			BX_dump("window.setTimeout(BX_updateButtonsDelayed()) in BX_onkeyup");
 
         }
         e.preventDefault();
@@ -645,9 +672,6 @@ function BX_onkeyup(e) {
     }
 }
 function BX_updateButtonsDelayed() {
-	if (BX_debugging) {
-		BX_dump("BX_updateButtonsDelayed()");
-	}
 	
     if (BX_update_buttons) {
         BX_get_selection();
@@ -658,17 +682,13 @@ function BX_updateButtonsDelayed() {
 }
 
 function BX_insertContent(content, doNoCollapse) {
-
-    /*    BX_selection.removeAllRanges();*/
-    try {
-        BX_range.deleteContents();
-    } catch(e) {}
-    ;
-
     var StartContainer = BX_range.startContainer;
     var StartPosition = BX_range.startOffset;
 
     if (typeof(content) == "string") {
+		try {
+    	    bla = BX_range.deleteContents();
+	    } catch(e) {}
 
         if (content.length == 1) {
             content = document.createTextNode(content);
@@ -686,18 +706,30 @@ function BX_insertContent(content, doNoCollapse) {
             content = document.createTextNode(content);
         }
         //		BX_range.createContextualFragment(content);
-    }
+    } else {
+		
+		// we have to remove all Ranges before going further
+		// otherwise we have strange selection stuff on the screen
+		// it is only needed, when we insert nodes, so it's only here
+		// (and BX_range.deleteContents is doubled..)
+		// hope this resolves bug #6
+		BX_selection.removeAllRanges();
+		try {
+    	    BX_range.deleteContents();
+	    } catch(e) {}
 
+	}
+	
     var startOffBefore = BX_range.startOffset;
 
     if (StartContainer.nodeType==StartContainer.TEXT_NODE && content.nodeType==content.TEXT_NODE) {
-        StartContainer.insertData(StartPosition, content.nodeValue);
+        StartContainer.insertData(StartPosition, content.nodeValue );
         if (startOffBefore == BX_range.startOffset) {
             BX_range.setEnd(BX_range.endContainer ,BX_range.endOffset +1);
             BX_range.collapse(false);
         }
-    } else // if (StartContainer.nodeType == StartContainer.TEXT_NODE)
-    {
+    } else { // if (StartContainer.nodeType == StartContainer.TEXT_NODE)
+    
 
         var startOffBefore = BX_range.startOffset;
         BX_range.insertNodeBX = InsertNodeAtStartOfRange;
@@ -770,6 +802,8 @@ function BX_key_delete() {
 
         BX_range.setEnd(BX_range.endContainer, BX_range.endOffset+( rightOfSelection.length - stripWS.length) + 1);
     }
+	//maybe using CDATA.deleteData instead of extractContents
+	// see mozilla/dom/public/idl/core/nsIDOMCharacterData.idl
 
     BX_range.extractContents();
     BX_selection.removeAllRanges();
@@ -935,11 +969,11 @@ function BX_add_tag(tag, afterNodeId,splitNode) {
         }
 
     } else {
+
         element.appendChild(frag);
     }
     if (afterNodeId) {
         //    	document.getElementById = BX_getElementById;
-
         var node = document.getElementById(afterNodeId);
         if (!(node)) {
             var node = BX_getElementByIdClean(afterNodeId,document,1);
@@ -955,7 +989,7 @@ function BX_add_tag(tag, afterNodeId,splitNode) {
         //             BX_debug(newNode);
 
     } else {
-        var newNode = BX_insertContent(element);
+          var newNode = BX_insertContent(element);
     }
     //    BX_updateOtherFields ();
 
@@ -973,7 +1007,6 @@ function BX_add_tag(tag, afterNodeId,splitNode) {
 
 
 
-    /*    BX_range_length = BX_range.toString().length;*/
     if (BX_elements[tag]["doTransform"]) {
         //        BX_transform(selectNode);
     }
@@ -983,6 +1016,7 @@ function BX_add_tag(tag, afterNodeId,splitNode) {
     BX_popup.style.visibility = "hidden";
     BX_addEvents();
     BX_scrollToCursor(node);
+
     BX_selection.selectAllChildren(newNode);
 
     BX_update_buttons = true;
@@ -1061,14 +1095,15 @@ function BX_getCurrentNodeName(node) {
 }
 
 function BX_transform(selectNode) {
-    BX_get_selection();
 
+    BX_get_selection();
+	BX_node_clean_bg();
     BX_range.collapse(true);
     var BX_cursor = document.createElementNS("http://www.w3.org/1999/xhtml","span");
     //	BX_cursor.appendChild(document.createTextNode("|"));
     BX_cursor.setAttribute("id","bx_cursor");
     BX_insertContent(BX_cursor);
-    if (BX_mixedCaseAttributes) {
+    if (typeof BX_mixedCaseAttributes != "undefined" && BX_mixedCaseAttributes) {
         BX_xml.doc = BX_getResultXML();
         var xmltransformedback = BX_xml.doc.implementation.createDocument("","",null);
         BX_xsltProcessor.transformDocument( BX_xml.doc, BX_xmlTR.doc, xmltransformedback, null);
@@ -1096,10 +1131,6 @@ function BX_transform(selectNode) {
         BX_range.insertNode(BX_cursor);
 
     }
-
-
-    BX_range_length = BX_range.toString().length;
-    //	BX_range.collapse(true);
 }
 
 /********************
@@ -1124,18 +1155,21 @@ function BX_updateXML() {
         if (allDivs[i].getAttribute("id")) {
 
             var myNodeAttr = BX_xml.doc.getElementById(allDivs[i].getAttribute("id"));
-
             //get all children of this <span> tag and add them to a new element with <formfieldid>
             // later we replace that in the BX_xml.
             if (!(myNodeAttr)) {
                 continue;
             }
+	     try {myNodeAttr.setAttribute("bxe_bitfluxspan","true");}
+		catch (e) {
+	     }
 
             BX_tmp_r1.selectNodeContents(myNodeAttr);
 
             BX_tmp_r1.extractContents();
 
             BX_tmp_r2.selectNodeContents(BX_getElementById(allDivs[i].getAttribute("id"),document));
+			
             if (BX_tmp_r2.toString().length > 0) {
                 BX_tmp_r1.insertNode(BX_tmp_r2.cloneContents());
             }
@@ -1173,6 +1207,7 @@ function BX_RangeCaptureOnMouseUp(e) {
 
         BX_get_selection();
 
+
         if (e.target.nodeName != "#text" && e.target.nodeName != BX_selection.anchorNode.parentNode.nodeName) {
 
             BX_selection.collapse( e.target,0);
@@ -1180,7 +1215,20 @@ function BX_RangeCaptureOnMouseUp(e) {
 
         }
 
-        if (e.which == 1) {
+
+		var bx_span_anchor = BX_find_bitfluxspanNode(BX_selection.anchorNode);
+		var bx_span_offset  = BX_find_bitfluxspanNode(BX_selection.focusNode);
+		if (bx_span_anchor != bx_span_offset) {
+			if (bx_span_anchor.compareTreePosition(bx_span_offset) & document.TREE_POSITION_PRECEDING) {
+				//preceding
+				BX_selection.extend(bx_span_anchor,0);																	
+			} else {
+				BX_selection.extend(bx_span_anchor,bx_span_anchor.childNodes.length);																	
+
+			}
+		}
+
+	    if (e.which == 1) {
             BX_popup.style.top = window.innerHeight + "px";
             BX_popup.style.visibility = "hidden";
         }
@@ -1189,17 +1237,12 @@ function BX_RangeCaptureOnMouseUp(e) {
     };
     BX_updateButtons();
 
-    BX_range_length = 0;
-    BX_range_length = BX_range.toString().length;
-
-
 }
 
-function BX_updateButtons() {
+function BX_updateButtons(again) {
     //    window.defaultStatus = "";
     BX_notEditable = false;
 
-	BX_dump("BX_updateButtons()");
     try {
         var startNode =  BX_range.startContainer;
     } catch(e) {
@@ -1236,9 +1279,9 @@ function BX_updateButtons() {
                     && !(((BX_buttons[button]["options"] & optSplitNode)  && parentNodeName && BX_elements[parentNodeName] && BX_elements[parentNodeName]["allowedElements"].indexOf(button) >= 0))
                ) {
 
-                document.getElementById("but_"+BX_buttons[button]["gif"]).src="./"+BX_root_dir+"/img/wt_"+BX_buttons[button]["gif"]+"_p.gif";
+                document.getElementById("but_"+BX_buttons[button]["gif"]).src=BX_root_dir+"/img/wt_"+BX_buttons[button]["gif"]+"_p.gif";
             } else {
-                document.getElementById("but_"+BX_buttons[button]["gif"]).src="./"+BX_root_dir+"/img/wt_"+BX_buttons[button]["gif"]+"_n.gif";
+                document.getElementById("but_"+BX_buttons[button]["gif"]).src=BX_root_dir+"/img/wt_"+BX_buttons[button]["gif"]+"_n.gif";
             }
         }
     }
@@ -1272,13 +1315,14 @@ function BX_updateButtons() {
             sectionDepth++;
         }
         if (BX_buttons[thisNodeName]) {
-            document.getElementById("but_"+BX_buttons[thisNodeName]["gif"]).src="./"+BX_root_dir+"/img/wt_"+BX_buttons[thisNodeName]["gif"]+"_a.gif";
+            document.getElementById("but_"+BX_buttons[thisNodeName]["gif"]).src=BX_root_dir+"/img/wt_"+BX_buttons[thisNodeName]["gif"]+"_a.gif";
             BX_buttons[thisNodeName]["highlight"] = true;
             //            window.defaultStatus += thisNodeName + " " + BX_buttons[thisNodeName]["gif"];
         }
 
 
     }
+
 	if (!startNode) {
         return false;
     }
@@ -1290,8 +1334,8 @@ function BX_updateButtons() {
         infotext = "Not Editable";
         var editnode = BX_cursor_moveToNextEditable(firstnode);
 
-        if (editnode) {
-            return BX_updateButtons();
+        if (editnode && ! again) {
+            return BX_updateButtons(true);
         }
         document.removeEventListener("keypress",BX_keypress,false);
         document.addEventListener("keypress",BX_onkeyup,false);
@@ -1312,9 +1356,9 @@ function BX_updateButtons() {
     }
     BX_infobar.style.visibility = "visible";
     BX_clearInfoError();
-    if (BX_doSections && sectionDepth > 0) {
-        document.getElementById("but_ebene_"+sectionDepth).src="./"+BX_root_dir+"/img/wt_ebene_"+sectionDepth+"_a.gif";
-    }
+/*    if (BX_doSections && sectionDepth > 0) {
+        document.getElementById("but_ebene_"+sectionDepth).src=BX_root_dir+"/img/wt_ebene_"+sectionDepth+"_a.gif";
+    }*/
 }
 
 function BX_infobar_printAttributes(node) {
@@ -1563,12 +1607,13 @@ function BX_scrollToCursor(node) {
     	
     	BX_insertContent(BX_cursor);
     */
-    if (anchorNode.nodeName == "#text") {
+	
+    if (anchorNode.nodeType == 3) {
+
         var cursorNode = anchorNode.parentNode;
     } else {
         var cursorNode = anchorNode;
     }
-
     try {
         var cursorPos = cursorNode.offsetTop + cursorNode.offsetHeight;
     } catch(e) {
@@ -1683,9 +1728,7 @@ function BX_node_move_up (id) {
 
     BX_opa_node=node.getAttribute("id");
 
-    try {
-        node.setAttribute("bxe_mark","true")
-    } catch(e) {}
+   
 
     while (next != null && (next.nodeName == "#text" || next.childNodes.length == 0)) {
         next = next.previousSibling;
@@ -1696,8 +1739,13 @@ function BX_node_move_up (id) {
     //  BX_range_updateToCursor();
     BX_selection.collapse(anchorNode,anchorOffset);
     BX_undo_save();
+	 try {
+        node.setAttribute("bxe_mark","true")
+    } catch(e) {}
     BX_scrollToCursor();
     BX_update_buttons = true;
+    BX_range = BX_selection.getRangeAt(0);
+   document.addEventListener("keypress",BX_keypress,false);
 }
 
 function BX_node_move_down (id) {
@@ -1712,14 +1760,9 @@ function BX_node_move_down (id) {
 
     BX_node_clean_bg();
 
-    BX_opa_node=node.getAttribute("id");
-    try {
-        node.setAttribute("bxe_mark","true");
-    }
 
     //	try{node.style.borderWidth="thin";}
 
-    catch(e) {}
 
     while (next != null && next.nodeName == "#text") {
         next = next.nextSibling;
@@ -1732,9 +1775,16 @@ function BX_node_move_down (id) {
     //    BX_range_updateToCursor();
     BX_selection.collapse(anchorNode,anchorOffset);
     BX_undo_save();
+    BX_opa_node=node.getAttribute("id");
+    try {
+        node.setAttribute("bxe_mark","true");
+    }
+    catch(e) {}
+
     BX_scrollToCursor();
     BX_update_buttons = true;
-
+    BX_range = BX_selection.getRangeAt(0);
+   document.addEventListener("keypress",BX_keypress,false);
 }
 
 function BX_node_change(node,newNodeName) {
@@ -1823,7 +1873,10 @@ function BX_node_clean_bg() {
     if (BX_opa_node != null) {
 
         var Opa_node = BX_getElementByIdClean(BX_opa_node,document);
+		try {
         Opa_node.removeAttribute("bxe_mark");
+		}
+		catch(e) {};
         BX_opa_node = null;
     }
 }
@@ -2047,7 +2100,6 @@ function BX_source_edit(id, selectNodeContents) {
             }
             //        	BX_xslViewSource.onload = null;  // set the callback when we are done loading
 
-			BX_dump ("window.setTimeout(BX_source_edit) in BX_source_edit");
 			window.setTimeout("BX_source_edit('"+id+"',"+selectNodeContents+")",50);
 			
             return;
@@ -2127,17 +2179,20 @@ function BX_plain() {
 function BX_RangeCaptureOnContextMenu(event) {
 
     var target = event.target;
+
     try {
 
 
-        if (!BX_range) {
+        if (typeof BX_range == "undefined") {
             BX_range = document.createRange( );
             BX_range.selectNode(target);
             BX_range.collapse(false);
         }
         if (BX_elements[target.nodeName] && BX_elements[target.nodeName]["altMenu"] && BX_find_bitfluxspanNode(target)) {
 
-            eval(BX_elements[target.nodeName]["altMenu"]+"(target)");
+            eval(BX_elements[target.nodeName]["altMenu"]+"(target,event)");
+			event.stopPropagation();
+			event.preventDefault();
             return;
         }
 
@@ -2151,11 +2206,12 @@ function BX_RangeCaptureOnContextMenu(event) {
         } else {
             var current_nodename = target.nodeName;
         }
+		var target_id = target.getAttribute("id");
 
         if (BX_elements[current_nodename]) {
-
-            BX_popup_start(BX_elements[current_nodename]["name"],0,0);
-            if (BX_elements[current_nodename]) {
+			var target_fullname = BX_elements[current_nodename]["name"];
+            BX_popup_start(target_fullname,0,0);
+            if (BX_elements[current_nodename]["allowedElements"]) {
 
                 var elements = BX_elements[current_nodename]["allowedElements"].split(" | ");
                 for (var i = 0; i < elements.length; i++) {
@@ -2181,8 +2237,9 @@ function BX_RangeCaptureOnContextMenu(event) {
                 BX_popup_addHr();
                 BX_popup_addLine("Merge " + BX_elements[current_nodename]["name"],"javascript:BX_merge();BX_popup_hide();");
             }
+			BX_popup_addHr();
+
             if (target.getAttribute("name") != "bitfluxspan") {
-                BX_popup_addHr();
 
                 do {
                     if (target.getAttribute("nodename")) {
@@ -2210,7 +2267,22 @@ function BX_RangeCaptureOnContextMenu(event) {
                     target = target.parentNode;
 
                 } while ( target.getAttribute("name")!= "bitfluxspan");
+			BX_popup_addHr();
             }
+
+		    BX_popup_addLine("Copy","javascript:BX_copy_copy();BX_popup_hide()");
+
+		    BX_popup_addLine("Cut/Delete","javascript:BX_copy_extract();BX_popup_hide()");
+							
+		    if (BX_clipboard)
+    		{
+    			BX_popup_addLine("Paste","javascript:BX_copy_paste();BX_popup_hide()");
+
+				if (BX_clipboard.nodeType == 1 || ( BX_clipboard.firstChild && BX_clipboard.firstChild.nodeType == 1)) {
+		    		BX_popup_addLine("Paste after " +target_fullname ,"javascript:BX_copy_pasteID('"+target_id+"');BX_popup_hide()");
+				}
+    		}
+
         } else {
             BX_popup_start("Element " + current_nodename + " not defined",0,0);
         }
@@ -2219,6 +2291,7 @@ function BX_RangeCaptureOnContextMenu(event) {
 
         BX_popup_show();
     } catch(err) {
+
         BX_errorMessage(err);
     };
     BX_updateButtons();
@@ -2250,7 +2323,7 @@ function BX_errorMessage(e) {
             BX_innerHTML(BX_error_window.document,"");
             BX_error_window.document.writeln("<pre>");
             mes += "UserAgent: "+navigator.userAgent +"\n";
-            mes += "bitfluxeditor.js Info: $Revision: 1.2 $  $Name:  $  $Date: 2002/10/24 14:41:17 $ \n";
+            mes += "bitfluxeditor.js Info: $Revision: 1.3 $  $Name:  $  $Date: 2002/10/25 10:12:21 $ \n";
             BX_error_window.document.writeln(mes);
             mes = "\nError Object:\n\n";
             for (var b in e) {
@@ -2275,9 +2348,10 @@ function BX_errorMessage(e) {
 
         BX_innerHTML(BX_infoerror,"ERROR:\n"+e.message +"\n");
         if (BX_infoerror_timeout) {
-            BX_infoerror_timeout.clearTimeout();
+			try {
+            	BX_infoerror_timeout.clearTimeout();
+			} catch(e) {};
         }
-		BX_dump("window.setTimeout(BX_clearInfoError() in BX_error_message");
         BX_infoerror_timeout = window.setTimeout("BX_clearInfoError()",10000);
     }
 }
@@ -2285,7 +2359,7 @@ function BX_errorMessage(e) {
 
 function BX_find_bitfluxspanNode(node ) {
 
-    while(node.nodeName == "#text" || (node.nodeName != "body" && node.getAttribute("name") != "bitfluxspan")) {
+    while(node && node.nodeName == "#text" || (node.nodeName != "body" && node.getAttribute("name") != "bitfluxspan")) {
         node = node.parentNode;
     }
     if (node.getAttribute("name") == "bitfluxspan") {
@@ -2456,7 +2530,11 @@ function BX_noBackspace(e) {
 
 function BX_walker_findNextEditableNode(startnode) {
 
-	BX_dump("BX_walker_findNextEditableNode(" + startnode.nodeName +")");
+	if (startnode.nodeType == 1 && startnode.getAttribute("name") == "bitfluxspan" && startnode.childNodes.length == 0 ) {
+		var newTextNode = startnode.appendChild(document.createTextNode(""));
+		return newTextNode;
+		}
+
     var nodeIt = document.createTreeWalker(document,
                                            NodeFilter.SHOW_TEXT,{
                                            acceptNode : function(node) {
@@ -2524,7 +2602,9 @@ function BX_cursor_moveToStartInNode(node, end) {
 		}
 		
     } else {
-		if ( BX_selection.anchorOffset == node.data.length) {
+
+document.normalize();
+			if (node.nodeType == 1 || BX_selection.anchorOffset == node.data.length) {
     		var nodeIt2 = document.createTreeWalker(node,
                                            NodeFilter.SHOW_TEXT,{
                                            acceptNode : function(node) {
@@ -2545,8 +2625,9 @@ function BX_cursor_moveToStartInNode(node, end) {
 		} 
 		if (BX_find_bitfluxspanNode(node)) {
 	    
-        	BX_selection.collapse(node,node.data.length);
+	        	BX_selection.collapse(node,node.data.length);
 		}
+
     }
 
 
@@ -2733,7 +2814,7 @@ function BX_keypress_enter(e) {
 
                 //if we want a new element after the emptyNode, we create that here,
                 // otherwise we just add PCDATA after the node and do not create a new element
-                if (BX_elements[current_nodename]["afterEmptyLineNewElement"] != "#PCDATA") {
+                if (BX_elements[current_nodename]["afterEmptyLineElement"] != "#PCDATA") {
                     var newReturnElement = BX_xml.doc.createElement(BX_defaultReturnElement);
                     bla = BX_range.createContextualFragment("&#160;");
                     newReturnElement.appendChild(bla);
@@ -2775,7 +2856,6 @@ function BX_keypress_enter(e) {
             BX_node_insertID(newReturnElement);
 
             if (BX_getCurrentNodeName(BX_range.startContainer) == newReturnElement.nodeName) {
-
                 if (BX_range.startContainer.nodeName == "#text" || ( BX_range.startContainer.nextSibling && BX_range.startContainer.nextSibling.nodeName == "#text")) {
                     if (BX_range.startContainer.nodeName != "#text" && BX_range.startContainer.nextSibling.nodeName == "#text") {
                         var parent = BX_range.startContainer;
@@ -2800,7 +2880,8 @@ function BX_keypress_enter(e) {
 
                     var parent = BX_range.startContainer;
                     parent.parentNode.insertBefore(newReturnElement,parent.nextSibling);
-                    BX_selection.collapse(parent.nextSibling,0);
+					BX_selection.selectAllChildren(parent.nextSibling);
+//                   BX_selection.collapse(parent.nextSibling,0);
                 }
 
 

@@ -11,7 +11,14 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_popup.js,v 1.1 2002/10/24 14:44:31 felixcms Exp $
+// $Id: bitfluxeditor_popup.js,v 1.2 2002/10/25 10:12:22 felixcms Exp $
+/**
+ * @file
+ * Implements some Popup functions
+ *
+ * The functions here will go into some Widget Classes.
+ * It's not decided yet, how exactly we do that.
+ */
 
 
 function BX_popup_node(id)
@@ -27,25 +34,31 @@ function BX_popup_node(id)
         BX_popup_start("Element " +node.nodeName,0,0);
     }
 
-
-    if (node.previousSibling)
-    {
+	var prevnode = node;
+	while (prevnode = prevnode.previousSibling) {
+		if (prevnode.nodeType == 1 || (prevnode.nodeType == 3 && /[^\t\n\r\s]/.test(prevnode.data))) { break;}
+	}
+    if (prevnode && ("nodeType" in prevnode) ) {
         BX_popup_addLine("Move up","javascript:BX_node_move_up('"+id+"')");
     }
-    if (node.nextSibling)
-    {
 
+	var prevnode = node;
+	while (prevnode = prevnode.nextSibling) {
+		if (prevnode.nodeType == 1 || (prevnode.nodeType == 3 && /[^\t\n\r\s]/.test(prevnode.data))) { break;}
+	}
+    if (prevnode && ("nodeType" in prevnode) ) {
         BX_popup_addLine("Move down","javascript:BX_node_move_down('"+id+"')");
     }
+	
     BX_popup_addLine("Cut/Delete","javascript:BX_copy_extractID('"+id+"');BX_popup_hide()");
-    //	BX_popup_addLine("Copy","javascript:BX_copy_copyID('"+id+"');BX_popup_hide()");
+    BX_popup_addLine("Copy","javascript:BX_copy_copyID('"+id+"');BX_popup_hide()");
 
-    /*	if (BX_clipboard)
+    if (BX_clipboard)
     	{
     		BX_popup_addLine("Paste","javascript:BX_copy_paste();BX_popup_hide()");
     		BX_popup_addLine("Paste after","javascript:BX_copy_pasteID('"+id+"');BX_popup_hide()");
     	}
-    */
+    
     BX_popup_addLine("Edit Source","javascript:BX_source_edit('"+id+"');");
     if (node.attributes.length > 4) {
         BX_popup_addLine("Edit Attributes","javascript:BX_infobar_printAttributes(BX_getElementByIdClean('"+id+"',document));BX_up();BX_popup_hide();");

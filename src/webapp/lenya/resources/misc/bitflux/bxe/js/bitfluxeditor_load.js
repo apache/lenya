@@ -11,11 +11,11 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_load.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
+// $Id: bitfluxeditor_load.js,v 1.3 2002/10/25 10:12:22 felixcms Exp $
 
 /**
  * @file
- * This file implements the TransportDriver Factory Class
+ * Implements the TransportDriver Factory Class
  *
  */
 

@@ -1,6 +1,14 @@
 /******************************
 * Copy/Paste Stuff            *
 *******************************/
+/**
+ * @file
+ * Implements some copy/paste functions
+ *
+ * The functions here will go into some classes 
+ * To be decided..
+ */
+
 function BX_copy_copy()
 
 {
@@ -72,7 +80,7 @@ function BX_copy_pasteID(id,before)
     BX_id_counter++;
     BX_undo_save();
 
-    BX_range_updateToCursor();
+//    BX_range_updateToCursor();
     BX_updateButtons();
 
 }
@@ -86,6 +94,8 @@ function BX_copy_paste()
     var endO = BX_range.endOffset;
     var startO = BX_range.startOffset;
     */
+	if (! BX_clipboard)
+	{ return ; }
     var cb = BX_clipboard.cloneNode(true);
     /**
     * there's a bug in mozilla (http://bugzilla.mozilla.org/show_bug.cgi?id=76895)
@@ -103,7 +113,8 @@ function BX_copy_paste()
     {
         BX_insertContent(BX_clipboard);
     }
-
+	/* to be fixed, we should not empty the clipboard on paste... */
+	BX_clipboard = null;
     /*	BX_range.setStart(start,startO);
     	BX_range.setEnd(end,endO+1);
         BX_selection.addRange(BX_range);*/

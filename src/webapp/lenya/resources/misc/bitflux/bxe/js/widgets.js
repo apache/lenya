@@ -1,31 +1,56 @@
+// +----------------------------------------------------------------------+
+// | Bitflux Editor                                                       |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 2001,2002 Bitflux GmbH                                 |
+// +----------------------------------------------------------------------+
+// | This software is published under the terms of the Apache Software    |
+// | License a copy of which has been included with this distribution in  |
+// | the LICENSE file and is available through the web at                 |
+// | http://bitflux.ch/editor/license.html                                |
+// +----------------------------------------------------------------------+
+// | Author: Christian Stocker <chregu@bitflux.ch>                        |
+// +----------------------------------------------------------------------+
+//
+// $Id: widgets.js,v 1.2 2002/10/25 10:12:22 felixcms Exp $
+
+/**
+ * @file
+ * Implements some Widget Interfaces.
+ *
+ * It will certainly change
+ *
+ */
+
+
 function BXE_widget() {
-}
 
-BXE_widget.prototype={
-	newObject:function(name,option) {
+	function newObject (name,option) {
 		return eval("new BXE_widget_"+name+"(option)");
-	},
+	}
+	BXE_widget.prototype.newObject = newObject;
 }
-
 
 function BXE_widget_loadMessage() {
-}
 
-BXE_widget_loadMessage.prototype={
-	set:function(text) {
- 		BX_innerHTML(document.getElementById("bxe_area"),"<br/><img hspace='5' width='314' height='34' src='./bxe/img/bxe_logo.png'/><br/><span style='font-family: Arial; padding: 5px; background-color: #ffffff'>"+text.replace(/\n/g,"<br/><br/>")+"</span>");
+	function set(text) {
+	try {
+ 		 BX_innerHTML(document.getElementById("bxe_area"),"<br/><img hspace='5' width='314' height='34' src='"+ BX_root_dir + "img/bxe_logo.png'/><br/><span style='font-family: Arial; padding: 5px; background-color: #ffffff'>"+text.replace(/\n/g,"<br/><br/>")+"</span>"); 
+		
+	} catch (e) {
+		alert(text);
 	}
+	
+	}
+	BXE_widget_loadMessage.prototype.set = set;
 }
 
 function BXE_widget_initAlert(object) {
 	if (object) {
 		this.set(object);
 	}
-}
 
-BXE_widget_initAlert.prototype={
 
-	set:function(e) {
+	function set(e) {
 	    var mes = "ERROR in initialising Bitflux Editor:\n"+e.message +"\n";
         try
         {
@@ -46,6 +71,7 @@ BXE_widget_initAlert.prototype={
 		BXEui.lm.set(mes.replace(/\n/g,"<br /><br />"));
 		alert(mes);
 	}
+	BXE_widget_initAlert.prototype.set = set;
 
 }
 

@@ -11,8 +11,15 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor.js,v 1.2 2002/10/24 14:41:17 felixcms Exp $
+// $Id: bitfluxeditor.js,v 1.3 2002/10/25 10:12:21 felixcms Exp $
 
+/**
+ * @file
+ * The main file
+ *
+ * This file has to be called from your html page and includes
+ *  everything needed
+ */
 //document.writeln('<script type="text/javascript" language="javascript" src="./RangePatch.js"></script>');
 /*********************************
  * Global Vars                   *
@@ -83,43 +90,74 @@ var BX_opa_node_prop = null;
 var BX_notEditable = true;
 var BX_no_events = false;
 
-try {
-	var BX_parser = new DOMParser();
-	var BX_ser = new XMLSerializer();
-}
-catch(e) {}
-var BX_elements = new Array();
+
+var BX_parser; 
+var BX_ser; 
+
+var BX_elements = new Array(); 
 var BX_buttonbar;
 
 BX_js_files = new Array();
-BX_js_files.push("./bxe/js/widgets.js");
-BX_js_files.push("./bxe/js/bitfluxeditor_core.js");
-BX_js_files.push("./bxe/js/bitfluxeditor_load.js");
-BX_js_files.push("./bxe/js/bitfluxeditor_popup.js");
-BX_js_files.push("./bxe/js/xmldoc.js");
-BX_js_files.push("./bxe/js/clipboard.js");
-BX_js_files.push("./bxe/js/copy.js");
-BX_js_files.push("./bxe/js/undo.js");
-BX_js_files.push("./bxe/js/td/http.js");
+BX_js_files.push("js/widgets.js");
+BX_js_files.push("js/bitfluxeditor_core.js");
+BX_js_files.push("js/bitfluxeditor_load.js");
+BX_js_files.push("js/bitfluxeditor_popup.js");
+BX_js_files.push("js/xmldoc.js");
+BX_js_files.push("js/clipboard.js");
+BX_js_files.push("js/copy.js");
+BX_js_files.push("js/undo.js");
+BX_js_files.push("js/td/http.js");
 
 /****************************************
  * Initialization stuff                 *
  ****************************************/
 
-function BX_load(config_file,fromUrl) {
+function BX_checkUnsupportedBrowsers() {
+    		if (navigator.userAgent.indexOf("Opera") >= 0) {
+         
+                        alert ("\nBitflux Editor does not work with Opera. You need Mozilla or Netscape 7 for this Editor.");
+			document.getElementsByTagName("body")[0].innerHTML = ("Bitflux Editor does currently only work on Mozilla or Netscape 7 for this Editor. Get it from <a href='http://mozilla.org'>http://mozilla.org</a>");
+                        return false;
+                }
+        
+                if (navigator.appName != "Netscape" ) {
+                        alert("Bitflux Editor does currently only work on Mozilla or Netscape 7 for this Editor. Get it from http://mozilla.org");
+						document.getElementsByTagName("body")[0].innerHTML = ("Bitflux Editor does currently only work on Mozilla or Netscape 7 for this Editor. Get it from <a href='http://mozilla.org'>http://mozilla.org</a>");
+                        return false;
+                }
+			var MozillaMajorVersion = navigator.userAgent.match(/Mozilla\/([[0-9a-z\.]*)/)[1];
+			if (MozillaMajorVersion < 5) {
+				alert( "You're Mozilla/Netscape seems to be not recent enough. You need at least Mozilla 1.0 or Netscape 7. Get it from http://mozilla.org");
+			}
+
+	return true;
+}
+
+
+function BX_load(config_file,fromUrl,path) {
 
 		text = "Loading Bitflux Editor files....";
 
- 		BX_innerHTML(document.getElementById("bxe_area"),"<br/><img hspace='5' width='314' height='34' src='./bxe/img/bxe_logo.png'/><br/><span style='font-family: Arial; padding: 5px; background-color: #ffffff'>"+text.replace(/\n/g,"<br/><br/>")+"</span>");
+		if (! (BX_checkUnsupportedBrowsers())) {
+			return false;
+		}
+		BX_parser = new DOMParser();
+		BX_ser = new XMLSerializer();		
+		
+		if (!path) {
+			BX_root_dir = "./bxe/";
+		} else {
+			BX_root_dir = path;
+		}
+ 		BX_innerHTML(document.getElementById("bxe_area"),"<br/><img hspace='5' width='314' height='34' src='"+BX_root_dir+"img/bxe_logo.png'/><br/><span style='font-family: Arial; padding: 5px; background-color: #ffffff'>"+text.replace(/\n/g,"<br/><br/>")+"</span>");
 
 	    var head = document.getElementsByTagName("head")[0];
 		// first load the core js files
 	
-		for (var i=0; i < BX_js_files.length; i++)
-    	{
+		for (var i=0; i < BX_js_files.length; i++) {
     	    var scr = document.createElementNS("http://www.w3.org/1999/xhtml","script");
 
-	        scr.setAttribute("src",BX_js_files[i]);
+	        scr.setAttribute("src",BX_root_dir + BX_js_files[i]);
         	scr.setAttribute("language","JavaScript");
 	        if (i == BX_js_files.length - 1)
     	    {
@@ -139,7 +177,7 @@ function BX_load2(config_file,fromUrl) {
 	    BXEui.lm.set("Loading Bitflux Editor files....");
 
 		BXE = new BXE_main();	
-		
+
 		//create loader
 		BXE_loader = new BXE_TransportDriver();
 	
@@ -152,6 +190,7 @@ function BX_load2(config_file,fromUrl) {
 	}
 	catch(e)
 	{
+
 		BXEui.newObject("initAlert",e);
 	}
 
@@ -159,6 +198,7 @@ function BX_load2(config_file,fromUrl) {
 	
 function BX_config_loaded()
 {
+
 	try {
     if (! BX_alert_checkParserError(BX_config))
     {
@@ -287,6 +327,10 @@ function BX_config_translateUrl(node)
     {
         url = node.firstChild.data;
     }
+	
+	//replace {BX_root_dir} with the corresponding value;
+	
+	url = url.replace(/\{BX_root_dir\}/,BX_root_dir);
     if (node.getAttribute("prefix"))
     {
         url = node.getAttribute("prefix") + url;
@@ -324,11 +368,14 @@ function BX_debug(object)
 
 function BX_innerHTML (element,html,append)
 {
+	try  {
 	if (html) {
 		html = '<root xmlns="http://www.w3.org/1999/xhtml">'+html+"</root>";
 		docfrag = BX_parser.parseFromString(html,"text/xml");
 	}
-	
+	} catch (e) {
+		return false;
+	}
 	if (!append)
 	{
 		var len = element.childNodes.length;
@@ -373,30 +420,22 @@ function BXE_browser() {
 
 	this.mozillaVersion = 0;
 	this.mozillaRvVersion = 0;
-	
-	try {
-		if (navigator.userAgent.indexOf("Opera") >= 0) {
-
-			alert ("\nBitflux Editor does not work with Opera. You need Mozilla or Netscape 7 for this Editor.");
-			return false;
-		}
-		
-		if (navigator.appName != "Netscape" ) {
-	    	BXEui.lm.set("\nYou need Mozilla or Netscape 7 for this Editor. Get it from <a href='http://mozilla.org'>http://mozilla.org</a>");	
-			return false;
-		}
 		try {
-			this.mozillaRvVersion = navigator.userAgent.match(/rv:([[0-9\.]*)/)[1];
+			this.mozillaRvVersion = navigator.userAgent.match(/rv:([[0-9a-z\.]*)/)[1];
+			this.mozillaRvVersionInt = parseFloat(this.mozillaRvVersion);
 		}
 		catch (e) {
 			this.mozillaRvVersion = 0;
 		}
-		if (navigator.productSub >= 20020910 && this.mozillaRvVersion > 1.1) { // Mozilla 1.2a 
+		if (navigator.productSub >= 20020910 && this.mozillaRvVersion == "1.2a") { // Mozilla 1.2a 
 			this.mozillaVersion = 1.2;
 			alert("\nMozilla 1.2a together with the new Type ahead feature, does not work correctly with the Editor.\n The issue is known (Bugzilla #167786) and should be solved in the next days.\n Use Mozilla 1.0 or 1.1 for the time being or turn off Type Ahead Find with:\nuser_pref (\"accessibility.typeaheadfind\", false);\n Nevertheless, you will be sent to the editor in an instant");
 		}
+		else if (this.mozillaRvVersionInt >= 1.2) {
+			this.mozillaVersion = 1.2;
+		}
 
-		if (navigator.productSub >= 20020826 && this.mozillaRvVersion  >= 1.0) {
+		else if (navigator.productSub >= 20020826 && this.mozillaRvVersionInt  >= 1.0) {
 			this.mozillaVersion  = 1.1;
 		}
 		else if (navigator.productSub >= 20020523)	{
@@ -406,10 +445,6 @@ function BXE_browser() {
 	    	BXEui.lm.set("\nYou're Mozilla seems to be not recent enough. You need at least Mozilla 1.0 or Netscape 7. Get it from <a href='http://mozilla.org'>http://mozilla.org</a>");
 			return false;
 		}
-	}
-	catch(e) {
-		BXEui.newObject("initAlert",e);
-	}
 	
 }
 

@@ -11,12 +11,16 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_image.js,v 1.1 2002/10/24 14:44:31 felixcms Exp $
+// $Id: bitfluxeditor_image.js,v 1.2 2002/10/25 10:12:22 felixcms Exp $
+/**
+ * @file
+ * Implements the image  plugin
+ *
+ * we need some kind of plugin-interface. to be defined yet
+ */
 
 
-
-function BX_onContextMenuImg(e){
-
+function BX_onContextMenuImg(e,event){
     var xref = e;
     BX_popup_start("Image",0,0);
     BX_popup_addLine("Copy Image","javascript:BX_copy_copyID('"+xref.id+"');BX_popup_hide()");
@@ -33,7 +37,7 @@ function BX_onContextMenuImg(e){
         BX_popup_addLine("Copy Mediagroup","javascript:BX_copy_copyID('"+xref.parentNode.id+"');BX_popup_hide()");
         BX_popup_addLine("Cut Mediagroup","javascript:BX_copy_extractID('"+xref.parentNode.id+"');BX_popup_hide()");
     }
-
+	
     BX_popup_show();
 
 	BX_range.selectNodeContents(xref);

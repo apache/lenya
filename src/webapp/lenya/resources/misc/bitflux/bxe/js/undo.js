@@ -1,3 +1,25 @@
+// +----------------------------------------------------------------------+
+// | Bitflux Editor                                                       |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 2001,2002 Bitflux GmbH                                 |
+// +----------------------------------------------------------------------+
+// | This software is published under the terms of the Apache Software    |
+// | License a copy of which has been included with this distribution in  |
+// | the LICENSE file and is available through the web at                 |
+// | http://bitflux.ch/editor/license.html                                |
+// +----------------------------------------------------------------------+
+// | Author: Christian Stocker <chregu@bitflux.ch>                        |
+// +----------------------------------------------------------------------+
+//
+// $Id: undo.js,v 1.2 2002/10/25 10:12:22 felixcms Exp $
+/**
+ * @file
+ * Implements some undo/redo functions
+ *
+ * The functions here will go into a undo class.
+ * It's not decided yet, how exactly we do that.
+ */
+ 
 /**************************
 * Undo Stuff              *
 ***************************/
