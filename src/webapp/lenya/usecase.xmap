@@ -269,7 +269,15 @@
               <map:parameter name="document-id" value="{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}"/>
               <map:act type="task">
                 <map:parameter name="task-id" value="create"/>
-                <map:redirect-to uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}:{request-param:properties.create.language}}"/>
+                <map:select type="parameter">
+                  <map:parameter name="parameter-selector-test" value="{request-param:properties.create.parent-id}"/>
+                  <map:when test="/">
+                    <map:redirect-to uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}{request-param:properties.create.child-id}:{request-param:properties.create.language}}"/>
+                  </map:when>
+                  <map:otherwise>
+                    <map:redirect-to uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}:{request-param:properties.create.language}}"/>
+                  </map:otherwise>
+                </map:select>
               </map:act>
               <map:generate type="serverpages" src="{fallback:content/authoring/create.xsp}"/>
               <map:transform src="{fallback:xslt/authoring/create.xsl}">
