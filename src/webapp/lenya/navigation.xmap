@@ -9,16 +9,7 @@ This sitemap creates default navigation components.
 
   <map:components>
     <map:generators default="file"/>
-    <map:transformers default="xslt">
-    <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
-        <catalogues default="cmsui">
-          <catalogue id="cmsui" name="cmsui" location="resources/i18n"/>           
-         </catalogues>
-         <untranslated-text>untranslated</untranslated-text>
-         <!-- cache-at-startup should be true in non development/debug mode -->
-       <cache-at-startup>false</cache-at-startup>
-      </map:transformer>
-          </map:transformers>
+    <map:transformers default="xslt"/>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
