@@ -10,41 +10,60 @@
 
 <xsl:template match="echo:entry">
 <tr>
-  <td>&#160;</td><td>Title</td><td><input type="text" name="element./echo:entry/echo:title[{echo:title/@tagID}]" size="40"><xsl:attribute name="value"><xsl:value-of select="echo:title" /></xsl:attribute></input></td>
+  <td>&#160;</td>
+  <td>Title</td>
+  <td><input type="text" name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="echo:title" /></xsl:attribute></input></td>
 </tr>
 
 <xsl:if test="not(echo:subtitle)">
 <tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./echo:entry/echo:title[{echo:title/@tagID}]element./echo:entry/echo:subtitle"/></td><td colspan="2">Subtitle</td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-after select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:subtitle&quot; namespace=&quot;http://example.com/newformat#&quot;&gt;New subtitle&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;" value="LENYA"/></td>
+  <td colspan="2">Subtitle</td>
 </tr>
 </xsl:if>
 
 <xsl:if test="not(echo:summary)">
 <tr>
-<td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./echo:entry/echo:title[{echo:title/@tagID}]element./echo:entry/echo:summary"/></td><td colspan="2">Summary</td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-after select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:summary&quot; namespace=&quot;http://example.com/newformat#&quot;&gt;New summary&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;" value="LENYA"/></td>
+  <td colspan="2">Summary</td>
 </tr>
 </xsl:if>
 
 <xsl:apply-templates select="echo:subtitle"/>
 <xsl:apply-templates select="echo:summary"/>
 <xsl:apply-templates select="echo:content"/>
+
+<tr>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:append select=&quot;/echo:entry&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://example.com/newformat#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;" value="LENYA"/></td>
+  <td colspan="2">Content (text/plain)</td>
+</tr>
 </xsl:template>
 
 <xsl:template match="echo:subtitle">
 <tr>
-  <td><input type="image" src="/lenya/lenya/images/delete.gif" name="delete" value="element./echo:entry/echo:subtitle[{@tagID}]"/></td><td>Subtitle</td><td><input type="text" name="element./echo:entry/echo:subtitle[{@tagID}]" size="40"><xsl:attribute name="value"><xsl:value-of select="." /></xsl:attribute></input></td>
+  <td><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:subtitle[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
+  <td>Subtitle</td>
+  <td><input type="text" name="&lt;xupdate:update select=&quot;/echo:entry/echo:subtitle[@tagID='{@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="." /></xsl:attribute></input></td>
 </tr>
 </xsl:template>
 
 <xsl:template match="echo:summary">
 <tr>
-  <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="delete" value="element./echo:entry/echo:summary[{@tagID}]"/></td><td valign="top">Summary</td><td><textarea name="element./echo:entry/echo:summary[{@tagID}]" cols="40" rows="5"><xsl:value-of select="." /></textarea></td>
+  <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
+  <td valign="top">Summary</td>
+  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5"><xsl:value-of select="." /></textarea></td>
 </tr>
 </xsl:template>
 
 <xsl:template match="echo:content[@type='text/plain']">
 <tr>
-  <td>&#160;</td><td valign="top">Content (text/plain)</td><td><textarea name="element./echo:entry/echo:content[{@tagID}]" cols="40" rows="5"><xsl:value-of select="."/></textarea></td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://example.com/newformat#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/plain&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;" value="LENYA"/></td>
+  <td colspan="2">Content (text/plain)</td>
+</tr>
+<tr>
+  <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
+  <td valign="top">Content (text/plain)</td>
+  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5"><xsl:value-of select="."/></textarea></td>
 </tr>
 </xsl:template>
 

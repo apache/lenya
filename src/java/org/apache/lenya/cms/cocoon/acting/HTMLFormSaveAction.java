@@ -66,9 +66,10 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.13 2003/09/03 12:04:53 egli Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.14 2003/09/03 17:50:22 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
+    org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HTMLFormSaveAction.class);
 
     /**
      * Describe <code>configure</code> method here.
@@ -100,53 +101,79 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
-        getLogger().error(".act(): File: " + file.getAbsolutePath());
-
         if(request.getParameter("cancel") != null) {
-            getLogger().error(".act(): Cancel editing");
+            getLogger().info(".act(): Cancel editing");
             return null;
         } else {
             if(file.isFile()) {
-                getLogger().error(".act(): Save modifications to " + file.getAbsolutePath());
+                getLogger().debug(".act(): Save modifications to " + file.getAbsolutePath());
 
                 try {
-                    Document document = DocumentHelper.readDocument(file);
+                    //Document document = DocumentHelper.readDocument(file);
+
+                    Document document = null;
+                    javax.xml.parsers.DocumentBuilderFactory parserFactory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+                    parserFactory.setValidating(false);
+                    parserFactory.setNamespaceAware(true);
+                    parserFactory.setIgnoringElementContentWhitespace(true);
+                    javax.xml.parsers.DocumentBuilder builder = parserFactory.newDocumentBuilder();
+                    document = builder.parse(file.getAbsolutePath());
+                    System.setProperty("org.xmldb.common.xml.queries.XPathQueryFactory", "org.xmldb.common.xml.queries.xalan2.XPathQueryFactoryImpl");
+
+                    org.xmldb.common.xml.queries.XPathQuery xpath = org.xmldb.common.xml.queries.XPathQueryFactory.newInstance().newXPathQuery();
+
+                    org.xmldb.common.xml.queries.XUpdateQuery xq = new org.xmldb.xupdate.lexus.XUpdateQueryImpl();
 
                     Enumeration params = request.getParameterNames();
                     while (params.hasMoreElements()) {
-                        String name = (String) params.nextElement();
-                        getLogger().debug(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
-                        if (name.indexOf("element.") == 0) { // Update Element
-                            String xpath = name.substring(8, name.indexOf("["));
-                            String tagID = name.substring(name.indexOf("[") + 1, name.indexOf("]"));
-                            xpath = xpath + "[@tagID=\"" + tagID + "\"]";
-                            getLogger().error(".act() Update Element: XPath: " + xpath);
-                            setNodeValue(document, request.getParameter(name), xpath);
-                        } else if (name.equals("insert")) { // Insert Element
-                            getLogger().error(".act(): Insert Element: " + request.getParameter("insert"));
-                            String value = request.getParameter("insert");
-                            String xpathSibling = value.substring(8, value.indexOf("["));
-                            String tagID = value.substring(value.indexOf("[") + 1, value.indexOf("]"));
-                            xpathSibling = xpathSibling + "[@tagID=\"" + tagID + "\"]";
-                            String xpathElement = value.substring(value.indexOf("element.") + 8);
-                            getLogger().error(".act() Sibling: XPath: " + xpathSibling);
-                            getLogger().error(".act() Insert Element: XPath: " + xpathElement);
-                            // FIXME: insert-after and insert-before remains to be implemented
-                            // FIXME: insert parents and required children (see XUpdate)
-                            new org.apache.lenya.xml.DOMUtil().addElement(document, xpathElement, "My text");
-                        } else if (name.equals("delete")) { // Delete Element
-                            String value = request.getParameter("delete");
-                            String xpath = value.substring(8, value.indexOf("["));
-                            String tagID = value.substring(value.indexOf("[") + 1, value.indexOf("]"));
-                            xpath = xpath + "[@tagID=\"" + tagID + "\"]";
-                            getLogger().error(".act() Delete Element: XPath: " + xpath);
-                            //DOMUtil.deleteElement(document, xpath);
-                            Node node = DOMUtil.getSingleNode(document.getDocumentElement(), xpath);
-                            Node parent = node.getParentNode();
-                            parent.removeChild(node);
-                        }
-                    }
+                        String pname = (String) params.nextElement();
+      
+                        getLogger().debug(".act(): Parameter: " + pname + " (" + request.getParameter(pname)  + ")");
 
+                        if (pname.indexOf("<xupdate:") == 0) {
+                            String select = pname.substring(pname.indexOf("select") + 8);
+                            select = select.substring(0, select.indexOf("\""));
+                            log.error(".act() Select Node: " + select);
+
+                            // Check if node exists
+                            xpath.setQString(select);
+                            org.xmldb.common.xml.queries.XObject result = xpath.execute(document);
+                            org.w3c.dom.NodeList selectionNodeList = result.nodeset();
+                            if (selectionNodeList.getLength() == 0) {
+                                log.error(".act(): Node does not exist (might have been deleted during update): " + select);
+                            } else {
+
+                        if (pname.indexOf("xupdate:update") > 0) {
+                            log.error(".act() Update Node: " + pname + request.getParameter(pname) + "</xupdate:update>");
+                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + request.getParameter(pname) + "</xupdate:update></xupdate:modifications>");
+                            xq.execute(document);
+                        } else if (pname.indexOf("xupdate:append") > 0 && pname.endsWith(">")) { // no .x and .y from input type="image"
+                            log.error(".act() Append Node: " + pname);
+                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>");
+                            xq.execute(document);
+                        } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">")) { // no .x and .y from input type="image"
+                            log.error(".act() Insert-Before Node: " + pname);
+                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>");
+                            xq.execute(document);
+                        } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">")) { // no .x and .y from input type="image"
+                            log.error(".act() Insert-After Node: " + pname);
+                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>");
+                            xq.execute(document);
+                        } else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>")) { // no .x and .y from input type="image"
+                            log.error(".act() Remove Node: " + pname);
+                            xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>");
+                            xq.execute(document);
+                        }
+                            } // Check select
+                    } // Check <xupdate:
+                    } // while
+/*
+                    java.io.StringWriter writer = new java.io.StringWriter();
+                    org.apache.xml.serialize.OutputFormat OutFormat = new org.apache.xml.serialize.OutputFormat("xml", "UTF-8", true);
+                    org.apache.xml.serialize.XMLSerializer serializer = new org.apache.xml.serialize.XMLSerializer(writer, OutFormat);
+                    serializer.asDOMSerializer().serialize((Document) document);
+                    log.error(".act(): XUpdate Result: \n"+writer.toString());
+*/
                     DocumentHelper.writeDocument(document, file);
 
                     if(request.getParameter("save") != null) {
