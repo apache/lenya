@@ -75,7 +75,7 @@ table.lenya-menubar-menu img {border:0px}
 	
 /*	border: 1px solid #FFFFFF; */
 
-  background-image: url('<contextprefix/>/lenya/menu/images/bottombg.gif');
+  background-image: url('<context-prefix/>/lenya/menu/images/bottombg.gif');
 	background-position: 0%;
 	color: black;
 }
