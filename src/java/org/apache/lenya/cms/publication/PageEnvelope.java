@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.48 2003/09/04 17:04:01 andreas Exp $
+$Id: PageEnvelope.java,v 1.49 2003/09/12 10:07:31 egli Exp $
 <License>
 
  ============================================================================
@@ -77,21 +77,26 @@ public class PageEnvelope {
     public static final String DEFAULT_LANGUAGE = "default-language";
     public static final String DOCUMENT = "document";
     public static final String DOCUMENT_ID = "document-id";
-	public static final String DOCUMENT_NODE_ID = "document-node-id";    
+    public static final String DOCUMENT_NODE_ID = "document-node-id";
+    public static final String DOCUMENT_LABEL = "document-label";
     public static final String DOCUMENT_URL = "document-url";
-    public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
+    public static final String DOCUMENT_URL_WITHOUT_LANGUAGE =
+        "document-url-without-language";
     public static final String DOCUMENT_FILE = "document-file";
     public static final String DOCUMENT_PATH = "document-path";
     public static final String DOCUMENT_EXTENSION = "document-extension";
     public static final String DOCUMENT_LANGUAGE = "document-language";
     public static final String DOCUMENT_LANGUAGES = "document-languages";
-    public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
+    public static final String DOCUMENT_LANGUAGES_CSV =
+        "document-languages-csv";
     public static final String DOCUMENT_DC_TITLE = "document-dc-title";
     public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
     public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
     public static final String DOCUMENT_DC_PUBLISHER = "document-dc-publisher";
-    public static final String DOCUMENT_DC_DATE_CREATED = "document-dc-date-created";
-    public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
+    public static final String DOCUMENT_DC_DATE_CREATED =
+        "document-dc-date-created";
+    public static final String DOCUMENT_DC_DESCRIPTION =
+        "document-dc-description";
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
@@ -261,6 +266,7 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT,
             PageEnvelope.DOCUMENT_ID,
             PageEnvelope.DOCUMENT_NODE_ID,
+            PageEnvelope.DOCUMENT_LABEL,
             PageEnvelope.DOCUMENT_URL,
             PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
             PageEnvelope.DOCUMENT_PATH,
