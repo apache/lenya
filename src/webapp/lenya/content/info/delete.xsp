@@ -3,12 +3,16 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
-  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
->
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:xsp-session="http://apache.org/xsp/session/2.0"
+  create-session="true">
 
-<info>
-  <document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></document-id>
-</info>
+<page>
+  <info>
+    <request-uri><xsp-request:get-uri/></request-uri>
+    <document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/></document-id>
+    <task-id>deleteDocument</task-id>
+  </info>
+</page>
 
 </xsp:page>
