@@ -15,7 +15,7 @@
  *  
  */
 
-/* $Id: DefaultAccessController.java,v 1.7 2004/07/13 08:14:12 andreas Exp $ */
+/* $Id: DefaultAccessController.java,v 1.8 2004/07/22 21:27:57 andreas Exp $ */
 
 package org.apache.lenya.ac.impl;
 
@@ -439,7 +439,9 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getLogger().debug("Item was added: [" + item + "]");
             getLogger().debug("Notifying policy manager");
         }
-        getPolicyManager().accreditableAdded(getAccreditableManager(), (Accreditable) item);
+        if (item instanceof Accreditable) {
+            getPolicyManager().accreditableAdded(getAccreditableManager(), (Accreditable) item);
+        }
     }
 
     /**
