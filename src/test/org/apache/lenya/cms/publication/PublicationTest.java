@@ -62,7 +62,7 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
-
+import org.apache.lenya.cms.publication.file.FilePublicationTest;
 
 /**
  * @author andreas
@@ -88,9 +88,8 @@ public class PublicationTest extends TestCase {
         TestRunner.run(getSuite());
     }
 
-    protected static final Class[] classes = {
-        DefaultDocumentTest.class, DefaultDocumentBuilderTest.class
-    };
+    protected static final Class[] classes =
+        { FilePublicationTest.class, DefaultDocumentTest.class, DefaultDocumentBuilderTest.class };
 
     /**
      * Creates a test suite.
@@ -113,4 +112,5 @@ public class PublicationTest extends TestCase {
             PublicationHelper.extractPublicationArguments(args);
         }
     }
+
 }
