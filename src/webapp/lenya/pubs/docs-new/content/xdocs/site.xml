@@ -7,6 +7,7 @@
 		<node-h href="acknowledgements.html" label="Credits"/>
 		<node-i href="license.html" label="License"/>
 		<node-zz href="../community/live-sites.html" label="Live Sites"/>
+		<node-i href="related-projects.html" label="Related Projects"/>
 	</project-information>
 	<installation href="installation/" label="Installation">
 		<install-overview href="index.html" label="Overview"/>
@@ -135,7 +136,6 @@
 		<irc href="irc.html" label="IRC"/>
 		<meetings href="meetings.html" label="Meetings and Sprints"/>
 		<live-sites href="live-sites.html" label="Live Sites"/>
-		<node-i href="related-projects.html" label="Related Projects"/>
 		<website-update href="website-update.html" label="Website Update"/>
 	</community>
 </site>
