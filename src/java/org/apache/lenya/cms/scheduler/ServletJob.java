@@ -1,5 +1,5 @@
 /*
-$Id: ServletJob.java,v 1.13 2003/08/18 17:13:40 andreas Exp $
+$Id: ServletJob.java,v 1.14 2003/08/29 11:35:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,9 @@ $Id: ServletJob.java,v 1.13 2003/08/18 17:13:40 andreas Exp $
 */
 package org.apache.lenya.cms.scheduler;
 
+import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.log4j.Category;
 
 import org.quartz.Job;
 import org.quartz.JobDataMap;
@@ -71,6 +73,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class ServletJob implements Job {
 
+    private static Category log = Category.getInstance(ServletJob.class);
+
     /**
      * Creates the job data from an HTTP request.
      * @param servletContextPath The servlet context path.
@@ -78,19 +82,40 @@ public abstract class ServletJob implements Job {
      * @return A job data map.
      * @throws SchedulerException when something went wrong.
      */
-    public abstract JobDataMap createJobData(String servletContextPath, HttpServletRequest request)
-        throws SchedulerException;
+    public JobDataMap createJobData(String servletContextPath, HttpServletRequest request)
+        throws SchedulerException {
+        JobDataMap map = new JobDataMap();
+        String key = NamespaceMap.getFullName(LoadQuartzServlet.PREFIX, PARAMETER_DOCUMENT_URL);
+        String documentUrl = request.getParameter(key);
+        if (documentUrl == null) {
+            throw new SchedulerException("Document URL must not be null!");
+        }
+        map.put(key, documentUrl);
+        return map;
+    }
 
     /**
      * Loads the job data from an XML element.
      * @param element An XML element.
-     * @param servletContext The servlet context path.
      * @param jobGroup The job group the job belongs to.
+     * @param servletContextPath The servlet context path.
      * @return A job detail object.
      * @throws SchedulerException when something went wrong.
      */
-    public abstract JobDetail load(Element element, String servletContext, String jobGroup)
-        throws SchedulerException;
+    public JobDetail load(Element element, String jobGroup, String servletContextPath)
+        throws SchedulerException {
+        String jobId = element.getAttribute(ATTRIBUTE_ID);
+        JobDetail jobDetail = new JobDetail(jobId, jobGroup, getClass());
+        return jobDetail;
+
+    }
+
+    public static final String ELEMENT_JOB = "job";
+    public static final String ATTRIBUTE_ID = "id";
+    public static final String ATTRIBUTE_CLASS = "class";
+    public static final String ATTRIBUTE_DOCUMENT_URL = "url";
+    public static final String ATTRIBUTE_SERVLET_CONTEXT = "servletcontext";
+    public static final String PARAMETER_DOCUMENT_URL = "document-url";
 
     /**
      * Saves the job data to an XML element.
@@ -99,6 +124,18 @@ public abstract class ServletJob implements Job {
      * @return An XML element.
      * @throws SchedulerException when something went wrong.
      */
-    public abstract Element save(NamespaceHelper helper, JobDetail jobDetail)
-        throws SchedulerException;
+    public Element save(NamespaceHelper helper, JobDetail jobDetail) throws SchedulerException {
+        log.debug("Saving job");
+
+        Element jobElement = helper.createElement(ELEMENT_JOB);
+        jobElement.setAttribute(ATTRIBUTE_ID, jobDetail.getName());
+        jobElement.setAttribute(ATTRIBUTE_CLASS, getClass().getName());
+
+        JobDataMap map = jobDetail.getJobDataMap();
+        NamespaceMap wrapper = new NamespaceMap(map, LoadQuartzServlet.PREFIX);
+        String documentUrl = (String) wrapper.get(PARAMETER_DOCUMENT_URL);
+
+        jobElement.setAttribute(ATTRIBUTE_DOCUMENT_URL, documentUrl);
+        return jobElement;
+    }
 }

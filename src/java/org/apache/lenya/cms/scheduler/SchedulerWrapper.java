@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.19 2003/08/28 10:14:29 andreas Exp $
+$Id: SchedulerWrapper.java,v 1.20 2003/08/29 11:35:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
-import org.apache.lenya.cms.task.TaskWrapperParameters;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 
@@ -101,7 +100,6 @@ public class SchedulerWrapper {
     private static Category log = Category.getInstance(SchedulerWrapper.class);
     public static final String JOB_PREFIX = "job";
     public static final String JOB_ID = "id";
-    public static final String JOB_CLASS = "class";
     private static int jobId = 0;
     public static final String JOB_GROUP_ELEMENT = "job-group";
     public static final String TRIGGERS_ELEMENT = "triggers";
@@ -186,35 +184,17 @@ public class SchedulerWrapper {
     }
 
     /**
-     * Adds a job to the scheduler.
-     * @param jobGroup The job group.
-     * @param startTime The start time.
-     * @param request The request to obtain the parameters from.
-     * @throws SchedulerException when something went wrong.
-     */
-    protected void addJob(String jobGroup, Date startTime, HttpServletRequest request)
-        throws SchedulerException {
-        addJob("-", jobGroup, startTime, request);
-    }
-
-    /**
      * Adds a job.
-     * @param documentUri The document URI to schedule the job for.
      * @param jobGroup The job group.
      * @param startTime The start time.
      * @param request The request to obtain the parameters from.
      * @throws SchedulerException when something went wrong.
      */
     protected void addJob(
-        String documentUri,
         String jobGroup,
         Date startTime,
         HttpServletRequest request)
         throws SchedulerException {
-
-        if (documentUri == null) {
-            throw new SchedulerException("Document URI must not be null!");
-        }
 
         if (jobGroup == null) {
             throw new SchedulerException("Job group must not be null!");
@@ -229,14 +209,9 @@ public class SchedulerWrapper {
 
             ServletJob job = ServletJobFactory.createJob(jobClass);
             JobDataMap map = job.createJobData(getServletContextPath(), request);
-            JobDataMapWrapper mapWrapper = new JobDataMapWrapper(map, JOB_PREFIX);
 
             String uniqueJobId = getNextJobId();
             log.debug("Job ID: [" + uniqueJobId + "]");
-
-            mapWrapper.put(JOB_ID, uniqueJobId);
-            mapWrapper.put(JOB_CLASS, jobClass.getName());
-            mapWrapper.put(TaskWrapperParameters.WEBAPP_URL, documentUri);
 
             JobDetail jobDetail = new JobDetail(uniqueJobId, jobGroup, jobClass);
             jobDetail.setJobDataMap(map);
@@ -512,7 +487,7 @@ public class SchedulerWrapper {
     }
 
     /**
-     * Return an xml description of all scheduled jobs for the given documentID.
+     * Return an xml description of all scheduled jobs for the given job group.
      *
      * @param jobGroup a<code>PrintWriter</code> value
      * @return DOCUMENT ME!
@@ -597,25 +572,14 @@ public class SchedulerWrapper {
      * @param jobGroup The job group the job belongs to.
      */
     protected void restoreJob(Element jobElement, String jobGroup) {
-        log.debug("\n Restoring job ");
-
-        String className = null;
+        log.debug("Restoring job ");
 
         NamespaceHelper helper = getNamespaceHelper();
-        Element[] parameterElements = helper.getChildren(jobElement, "parameter");
-
-        for (int i = 0; i < parameterElements.length; i++) {
-            String key = parameterElements[i].getAttribute("name");
-
-            if ((key).equals(JOB_CLASS)) {
-                className = parameterElements[i].getAttribute("value");
-            }
-        }
 
         try {
-            Class cl = Class.forName(className);
-            ServletJob job = (ServletJob) cl.newInstance();
-            JobDetail jobDetail = job.load(jobElement, getServletContextPath(), jobGroup);
+            String jobClassName = jobElement.getAttribute(ServletJob.ATTRIBUTE_CLASS);
+            ServletJob job = ServletJobFactory.createJob(jobClassName);
+            JobDetail jobDetail = job.load(jobElement, jobGroup, getServletContextPath());
 
             Element triggerElement = helper.getFirstChild(jobElement, "trigger");
 
