@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: root.xsl,v 1.1 2003/06/05 11:36:36 gregor Exp $
+ $Id: root.xsl,v 1.2 2003/06/06 15:29:47 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -58,9 +58,9 @@ of SECTION 3 with the pieces of the head section that are needed for your site  
      Corporate users or any others that want to remove the link should check 
 	 the online FAQ for instructions on how to obtain a version without the link -->
 <!-- Removing this link will make the script stop from working -->
-<table border=0><tr><td><a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">Javascript Tree Menu</a></td></table>
+<table border="0"><tr><td><a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">Javascript Tree Menu</a></td></tr></table>
 
-<span class=TreeviewSpanArea>
+<span class="TreeviewSpanArea">
 <script>initializeDocument()</script>
 </span>
 
