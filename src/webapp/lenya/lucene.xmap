@@ -2,13 +2,19 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
- <map:components/>
+  <map:components/>
 
- <map:pipelines>
+  <map:views>
+    <map:view name="xml" from-label="xml">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+
+  <map:pipelines>
 
     <map:pipeline>
       <map:match pattern="*/search-*/lucene">
-        <map:generate type="serverpages" src="content/search/search-and-results.xsp">
+        <map:generate type="serverpages" src="content/search/search-and-results.xsp" label="xml">
           <map:parameter name="max-hits-per-page" value="3"/>
           <map:parameter name="max-pages" value="7"/>
           <map:parameter name="number-of-pubs" value="1"/>
@@ -36,13 +42,22 @@
 
 
     <!-- Lucene web based administration -->
+    <!-- Create Search Index -->
 <!--
     <map:pipeline>
-      <map:match pattern="lucene/**">
-        <map:mount uri-prefix="lucene" src="lucene.xmap" check-reload="true" reload-method="synchron"/>
+      <map:match pattern="create">
+        <map:generate type="serverpages" src="content/search/create-index.xsp"/>
+        <map:transform src="xslt/search/dynamic-page2html.xsl">
+          <map:parameter name="view-source" value="lucene/create-index.xsp"/>
+        </map:transform>
+        <map:serialize type="html"/>
       </map:match>
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
     </map:pipeline>
 -->
- </map:pipelines>
+    <!-- /Create Search Index -->
+  </map:pipelines>
 
 </map:sitemap>
