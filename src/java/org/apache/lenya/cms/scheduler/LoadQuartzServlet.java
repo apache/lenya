@@ -28,7 +28,7 @@ import org.quartz.utils.*;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.3 2002/10/06 23:36:39 michicms Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.4 2002/10/07 23:30:36 michicms Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -36,8 +36,15 @@ public class LoadQuartzServlet extends HttpServlet {
 
     private static SchedulerXMLAdaptor sched = null;
 
+    private ServletContext servletContext;
+    private String servletContextPath;
+
     public void init(ServletConfig config) throws ServletException{
 	super.init(config);
+
+        this.servletContext=config.getServletContext();
+        this.servletContextPath = this.servletContext.getRealPath("/");
+	log.fatal(".init(): Servlet Context Path: "+this.servletContextPath);
 	
 	try {
  	    log.info("Working?...");
