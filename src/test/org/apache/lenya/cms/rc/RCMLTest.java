@@ -1,5 +1,5 @@
 /*
-$Id: RCMLTest.java,v 1.3 2003/08/04 09:25:06 egli Exp $
+$Id: RCMLTest.java,v 1.4 2004/01/06 08:15:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -105,7 +105,7 @@ public class RCMLTest extends TestCase {
 
 		try {
 			RCML rcml = new RCML(args[0], args[1], args[2]);
-			rcml.checkOutIn(RCML.co, "michi", new Date().getTime());
+			rcml.checkOutIn(RCML.co, "michi", new Date().getTime(), false);
 
 			new DOMWriter(new PrintWriter(System.out)).print(this.document);
 
