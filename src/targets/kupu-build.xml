@@ -20,9 +20,9 @@
     Kupu targets
   </description>
 
-  <target name="kupu" description="Generate Kupu files">
+  <target name="kupu" depends="webapp" description="Build Kupu">
 
-    <echo message="Generating Kupu files"/>
+    <echo message="Build Kupu"/>
 
     <exec dir="${build.webapp}/lenya/resources/kupu" executable="make" failonerror="true" failifexecutionfails="false"/>
     <exec dir="${build.webapp}/lenya/resources/kupu" executable="make.bat" failonerror="true" failifexecutionfails="false"/>

@@ -173,8 +173,7 @@
     <copy todir="${build.webapp}/legal">
       <fileset dir="legal"/>
     </copy>
-
-    <antcall target="kupu"/>
+    
   </target>
 
   <!--
