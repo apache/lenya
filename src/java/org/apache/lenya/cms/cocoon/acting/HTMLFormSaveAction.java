@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLFormSaveAction.java,v 1.45 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: HTMLFormSaveAction.java,v 1.46 2004/04/26 14:57:24 michi Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -124,12 +124,12 @@ public Map act(
     Request request = ObjectModelHelper.getRequest(objectModel);
 
     if (request.getParameter("cancel") != null) {
-        getLogger().warn(".act(): Editing has been canceled");
+        log.warn(".act(): Editing has been canceled");
         file.delete();
         return null;
     } else {
         if (file.isFile()) {
-            getLogger().debug(
+            log.debug(
                 ".act(): Save modifications to " + file.getAbsolutePath());
 
             try {
@@ -260,19 +260,28 @@ public Map act(
                                         pname.substring(
                                             0,
                                             pname.length() - 2));
+                            } else if (pname.endsWith(">.y")) {
+                                log.debug("Don't handle this: " + pname);
+                            } else {
+                                log.debug("Don't handle this either: " + pname);
+                            }
+
+                            // Get hidden namespaces
+                            String namespaces = request.getParameter("namespaces");
+
+                            // Add XML declaration
+			    // NOTE: select/option is generating parameter which should be considered as null
+                            if (xupdateModifications != null) {
+                                xupdateModifications = "<?xml version=\"1.0\"?>" + addHiddenNamespaces(namespaces, xupdateModifications);
                             }
 
                             // now run the assembled xupdate query
                             if (xupdateModifications != null) {
-                                log.debug(
-                                    ".act(): MODIFICATIONS: "
-                                        + xupdateModifications);
+                                log.debug("Execute XUpdate Modifications: " + xupdateModifications);
                                 xq.setQString(xupdateModifications);
                                 xq.execute(document);
                             } else {
-                                log.debug(
-                                    ".act(): Parameter did not match any xupdate command: "
-                                        + pname);
+                                log.debug("Parameter did not match any xupdate command: " + pname);
                             }
                         }
                     }
@@ -309,7 +318,7 @@ public Map act(
 
                 // check to see if we save and exit
                 if (request.getParameter("save") != null) {
-                    getLogger().info(".act(): Save");
+                    log.info(".act(): Save");
                     return null;
                 } else {
                     /* We don't exit 
@@ -321,14 +330,12 @@ public Map act(
                     return hmap;
                 }
             } catch (NullPointerException e) {
-                getLogger().error(".act(): NullPointerException", e);
+                log.error("NullPointerException", e);
                 HashMap hmap = new HashMap();
                 hmap.put("message", "NullPointerException");
                 return hmap;
             } catch (Exception e) {
-                getLogger().error(
-                    ".act(): Exception: " + e.getMessage(),
-                    e);
+                log.error( "Exception: " + e.getMessage(), e);
                 HashMap hmap = new HashMap();
                 if (e.getMessage() != null) {
                     hmap.put("message", e.getMessage());
@@ -340,8 +347,7 @@ public Map act(
                 return hmap;
             }
         } else {
-            getLogger().error(
-                ".act(): No such file: " + file.getAbsolutePath());
+            log.error("No such file: " + file.getAbsolutePath());
             HashMap hmap = new HashMap();
             hmap.put("message", "No such file: " + file.getAbsolutePath());
             return hmap;
@@ -447,7 +453,7 @@ private String update(
 
         String xupdateUpdate =
             pname + request.getParameter(pname) + "</xupdate:update>";
-        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
+        return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
             + xupdateUpdate
             + "</xupdate:modifications>";
         /* And deal with mixed content here..
@@ -510,7 +516,7 @@ private String update(
             ".update(): Update Node (update tagID attribute): "
                 + xupdateUpdateAttribute);
 
-        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
+        return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
             + xupdateInsertAfter
             + xupdateRemove
             + xupdateUpdateAttribute
@@ -526,7 +532,7 @@ private String update(
 private String updateCDATA(Request request, String pname, boolean parent) {
     String xupdateUpdate =
         pname + request.getParameter(pname) + "]]></xupdate:update>";
-    return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
+    return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
         + xupdateUpdate
         + "</xupdate:modifications>";
 }
@@ -536,7 +542,7 @@ private String updateCDATA(Request request, String pname, boolean parent) {
  */
 private String append(String pname) {
     log.debug(".append() APPEND Node: " + pname);
-    return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
+    return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
         + pname
         + "</xupdate:modifications>";
 }
@@ -546,7 +552,7 @@ private String append(String pname) {
  */
 private String insertBefore(String pname) {
     log.debug(".insertBefore() INSERT-BEFORE Node: " + pname);
-    return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
+    return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
         + pname
         + "</xupdate:modifications>";
 }
@@ -556,7 +562,7 @@ private String insertBefore(String pname) {
  */
 private String insertAfter(String pname) {
     log.debug(".insertAfter() INSERT-AFTER Node: " + pname);
-    return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
+    return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
         + pname
         + "</xupdate:modifications>";
 }
@@ -566,7 +572,7 @@ private String insertAfter(String pname) {
  */
 private String remove(String pname) {
     log.debug(".remove() REMOVE Node: " + pname);
-    return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
+    return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
         + pname
         + "</xupdate:modifications>";
 }
@@ -608,5 +614,30 @@ private String validateDocument(
         xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent.indexOf("<") + 1);
         xmlSnippetWithoutParent = StringUtils.reverse(xmlSnippetWithoutParent);
         return xmlSnippetWithoutParent;
+    }
+
+    /**
+     * Add namespaces to xupdate
+     */
+    private String addHiddenNamespaces(String namespaces, String xupdateModifications) {
+        log.debug("Namespaces: " + namespaces);
+
+	if (namespaces == null) {
+            log.error("No additional namespaces");
+            return xupdateModifications;
+        }
+
+        String[] namespace = namespaces.split(" ");
+        String ns = "";
+        for (int i = 0; i < namespace.length; i++) {
+            if ((ns.indexOf(namespace[i]) < 0) && (xupdateModifications.indexOf(namespace[i]) < 0)) {
+                ns = ns + " " + namespace[i];
+            } else {
+                log.debug("Redundant namespace: " + namespace[i]);
+            }
+        }
+
+        int endOfFirstNode = xupdateModifications.indexOf(">");
+        return xupdateModifications.substring(0, endOfFirstNode) + " " + ns + xupdateModifications.substring(endOfFirstNode);
     }
 }

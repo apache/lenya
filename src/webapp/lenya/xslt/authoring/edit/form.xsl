@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: form.xsl,v 1.13 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id: form.xsl,v 1.14 2004/04/26 14:57:25 michi Exp $ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >
     <xsl:param name="docid"/>
@@ -33,6 +33,4 @@
         </form>
     </xsl:template>
     
-    <!-- NOTE: Mixed content is currently being handled by copy-mixed-content.xsl, which is being called by form-layout.xsl -->
-
 </xsl:stylesheet>

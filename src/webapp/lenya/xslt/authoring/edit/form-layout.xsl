@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: form-layout.xsl,v 1.16 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id: form-layout.xsl,v 1.17 2004/04/26 14:57:25 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -145,6 +145,8 @@
 <xsl:template match="content">
 <xsl:choose>
 <xsl:when test="$edit = ../@select">
+  <!-- TODO: what about "input" field ... -->
+  <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates select="textarea" mode="namespaces" /></xsl:attribute></input>
   <xsl:apply-templates select="textarea"/>
   <xsl:copy-of select="input"/>
 </xsl:when>

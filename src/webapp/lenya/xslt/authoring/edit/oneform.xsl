@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: oneform.xsl,v 1.13 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id: oneform.xsl,v 1.14 2004/04/26 14:57:25 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -27,7 +27,12 @@
   <xsl:param name="docid" />
   <xsl:param name="language" />
   <xsl:param name="message" />
+
+
+  <xsl:include href="copy-mixed-content.xsl" />
   
+
+
   <xsl:template match="/">
     <page:page>
       <page:title>Edit Document</page:title>
@@ -82,8 +87,8 @@
         </div>
         <div class="lenya-box">
           <div class="lenya-box-body">
-            <form method="post"
-	      action="?lenya.usecase=1formedit&amp;lenya.step=close">
+            <form method="post" action="?lenya.usecase=1formedit&amp;lenya.step=close">
+	      <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates mode="namespaces" /></xsl:attribute></input>
               <table border="0">
                 <tr>
                   <td align="right">
@@ -111,5 +116,4 @@
       </page:body>
     </page:page>
   </xsl:template>
-  <xsl:include href="copy-mixed-content.xsl" />
 </xsl:stylesheet>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.204 2004/04/24 21:20:50 gregor Exp $ -->
+<!-- $Id: usecase.xmap,v 1.205 2004/04/26 14:57:24 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -43,6 +43,8 @@
 	src="org.apache.cocoon.acting.RequestParameterExistsAction" />
       <map:action name="save" logger="sitemap.action.save" 
 	src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
+      <map:action name="oneformeditorsave" logger="sitemap.action.oneformeditormsave" 
+	src="org.apache.lenya.cms.cocoon.acting.OneFormEditorSaveAction" />
       <map:action name="upload" logger="sitemap.action.upload" 
 	src="org.apache.lenya.cms.cocoon.acting.UploadAction" />
       <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" 
@@ -525,34 +527,37 @@
           </map:match>
         </map:match>
 	
-      <map:match pattern="close" type="step">
-        <map:match pattern="*/authoring/**.html">
-          <map:generate type="stream">
-            <map:parameter name="form-name" value="content"/>
-          </map:generate>
-          <map:act type="validate">
-            <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
-            <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
+        <map:match pattern="close" type="step">
+          <map:match pattern="*/authoring/**.html">
+            <map:act type="oneformeditorsave">
+              <map:parameter name="file" value="pubs/{1}/work/oneformeditor/authoring/{2}.xml"/>
+              <map:parameter name="encoding" value="ISO-8859-1"/>
+              <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
 
-            <map:transform src="xslt/authoring/edit/oneform.xsl">
-              <map:parameter name="docid" value="{page-envelope:document-id}"/>
-              <map:parameter name="language" value="{page-envelope:document-language}"/>
-              <map:parameter name="message" value="{message}"/>
-            </map:transform>
-            <map:call resource="style-cms-page"/>
-          </map:act>
-          <!-- Save: Overwrite original file  -->
+              <map:generate src="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
+              <map:transform src="xslt/authoring/edit/oneform.xsl">
+                <map:parameter name="docid" value="{page-envelope:document-id}"/>
+                <map:parameter name="language" value="{page-envelope:document-language}"/>
+                <map:parameter name="message" value="{message}"/>
+              </map:transform>
+              <map:call resource="style-cms-page"/>
+            </map:act>
+            <map:generate src="pubs/{1}/work/oneformeditor/authoring/{2}.xml"/>
 
-          <map:act type="request-parameter-exists">
-            <map:parameter name="parameters" value="save"/>
-            <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
-            <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-              <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
-            </map:transform>
-            <map:transform type="write-source"/>
-            <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-              <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
-            </map:transform>
+
+            <!-- Validation succeeded -->
+            <!-- Save: Overwrite original file  -->
+            <map:act type="request-parameter-exists">
+              <map:parameter name="parameters" value="save"/>
+
+              <!--<map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>-->
+              <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+                <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
+              </map:transform>
+              <map:transform type="write-source"/>
+              <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+                <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
+              </map:transform>
             <map:act type="workflow">
               <map:parameter name="area" value="{page-envelope:area}"/>
               <map:parameter name="document-id" value="{page-envelope:document-id}"/>
@@ -565,13 +570,12 @@
             <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false"/>
           </map:transform>
           <map:serialize type="html" />
-	    </map:match>
-	  </map:match>
-    </map:match>
-      
-    <!-- ************************************************************** -->
-    <!-- ********  /HTML One Form Editor ****************************** -->
-    <!-- ************************************************************** -->
+          </map:match>
+        </map:match>
+      </map:match>
+      <!-- ************************************************************** -->
+      <!-- ********  /HTML One Form Editor ****************************** -->
+      <!-- ************************************************************** -->
     
         <!-- ************************************************************** -->
         <!-- ** HTML Form Editor                                         ** -->
