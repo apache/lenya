@@ -165,8 +165,15 @@
 
       <!-- Home -->
       <map:match pattern="*/">
-        <map:redirect-to uri="index.html"/>
+        <map:redirect-to uri="matrix/index.html"/>
+        <!--<map:redirect-to uri="index.html"/>-->
       </map:match>
+
+      <!-- FIXME: ... -->
+      <map:match pattern="*/index.html">
+        <map:redirect-to uri="matrix/index.html"/>
+      </map:match>
+      <!-- /Home -->
 
       <!-- Generic (XHTML) -->
       <map:match pattern="*/**.html">
