@@ -56,7 +56,10 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -73,7 +76,8 @@ import org.xml.sax.SAXException;
  * This class uses the dublin core specification from 2003-03-04.
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
- * @version $Id: DublinCoreImpl.java,v 1.5 2004/02/02 02:50:39 stefano Exp $
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: DublinCoreImpl.java,v 1.6 2004/02/02 17:33:16 andreas Exp $
  */
 public class DublinCoreImpl implements DublinCore {
     private Document cmsdocument;
@@ -81,29 +85,14 @@ public class DublinCoreImpl implements DublinCore {
 
     private Map elements = new HashMap();
     private Map terms = new HashMap();
-    
+
     private static final String META = "meta";
 
     // Dublin Core Elements
 
     private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
     private static final String DC_PREFIX = "dc";
-
-    private static final String ELEMENT_TITLE = "title";
-    private static final String ELEMENT_CREATOR = "creator";
-    private static final String ELEMENT_SUBJECT = "subject";
-    private static final String ELEMENT_DESCRIPTION = "description";
-    private static final String ELEMENT_PUBLISHER = "publisher";
-    private static final String ELEMENT_CONTRIBUTOR = "contributor";
-    private static final String ELEMENT_DATE = "date";
-    private static final String ELEMENT_TYPE = "type";
-    private static final String ELEMENT_FORMAT = "format";
-    private static final String ELEMENT_IDENTIFIER = "identifier";
-    private static final String ELEMENT_SOURCE = "source";
-    private static final String ELEMENT_LANGUAGE = "language";
-    private static final String ELEMENT_RELATION = "relation";
-    private static final String ELEMENT_COVERAGE = "coverage";
-    private static final String ELEMENT_RIGHTS = "rights";
+    private static final String ELEMENT_VALUE = "value";
 
     private static final String[] ELEMENTS =
         {
@@ -127,40 +116,6 @@ public class DublinCoreImpl implements DublinCore {
 
     private static final String DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
     private static final String DCTERMS_PREFIX = "dcterms";
-
-    private static final String TERM_AUDIENCE = "audience";
-    private static final String TERM_ALTERNATIVE = "alternative";
-    private static final String TERM_TABLEOFCONTENTS = "tableOfContents";
-    private static final String TERM_ABSTRACT = "abstract";
-    private static final String TERM_CREATED = "created";
-    private static final String TERM_VALID = "valid";
-    private static final String TERM_AVAILABLE = "available";
-    private static final String TERM_ISSUED = "issued";
-    private static final String TERM_MODIFIED = "modified";
-    private static final String TERM_EXTENT = "extent";
-    private static final String TERM_MEDIUM = "medium";
-    private static final String TERM_ISVERSIONOF = "isVersionOf";
-    private static final String TERM_HASVERSION = "hasVersion";
-    private static final String TERM_ISREPLACEDBY = "isReplacedBy";
-    private static final String TERM_REPLACES = "replaces";
-    private static final String TERM_ISREQUIREDBY = "isRequiredBy";
-    private static final String TERM_REQUIRES = "requires";
-    private static final String TERM_ISPARTOF = "isPartOf";
-    private static final String TERM_HASPART = "hasPart";
-    private static final String TERM_ISREFERENCEDBY = "isReferencedBy";
-    private static final String TERM_REFERENCES = "references";
-    private static final String TERM_ISFORMATOF = "isFormatOf";
-    private static final String TERM_HASFORMAT = "hasFormat";
-    private static final String TERM_CONFORMSTO = "conformsTo";
-    private static final String TERM_SPATIAL = "spatial";
-    private static final String TERM_TEMPORAL = "temporal";
-    private static final String TERM_MEDIATOR = "mediator";
-    private static final String TERM_DATEACCEPTED = "dateAccepted";
-    private static final String TERM_DATECOPYRIGHTED = "dateCopyrighted";
-    private static final String TERM_DATESUBMITTED = "dateSubmitted";
-    private static final String TERM_EDUCATIONLEVEL = "educationLevel";
-    private static final String TERM_ACCESSRIGHTS = "accessRights";
-    private static final String TERM_BIBLIOGRAPHICCITATION = "bibliographicCitation";
 
     private static final String[] TERMS =
         {
@@ -211,8 +166,8 @@ public class DublinCoreImpl implements DublinCore {
         infofile =
             cmsdocument.getPublication().getPathMapper().getFile(
                 cmsdocument.getPublication(),
-		        cmsdocument.getArea(),
-		        cmsdocument.getId(),
+                cmsdocument.getArea(),
+                cmsdocument.getId(),
                 cmsdocument.getLanguage());
 
         org.w3c.dom.Document doc = null;
@@ -225,7 +180,7 @@ public class DublinCoreImpl implements DublinCore {
         } catch (IOException e) {
             throw new DocumentException(e);
         }
-            
+
         // FIXME: what if "lenya:meta" element doesn't exist yet? Currently a NullPointerException will be thrown!
         Element metaElement = getMetaElement(doc);
 
@@ -240,8 +195,19 @@ public class DublinCoreImpl implements DublinCore {
             for (int i = 0; i < elementNames.length; i++) {
                 Element child = helper.getFirstChild(metaElement, elementNames[i]);
                 if (child != null) {
-                    String value = DocumentHelper.getSimpleElementText(child);
-                    maps[type].put(elementNames[i], value);
+                    String[] values;
+                    Element[] valueElements = helper.getChildren(child, ELEMENT_VALUE);
+                    if (valueElements.length > 0) {
+                        values = new String[valueElements.length];
+                        for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
+                            values[valueIndex] =
+                                DocumentHelper.getSimpleElementText(valueElements[valueIndex]);
+                        }
+                    } else {
+                        values = new String[1];
+                        values[0] = DocumentHelper.getSimpleElementText(child).trim();
+                    }
+                    maps[type].put(elementNames[i], values);
                 }
             }
         }
@@ -263,7 +229,7 @@ public class DublinCoreImpl implements DublinCore {
         } catch (IOException e) {
             throw new DocumentException(e);
         }
-        
+
         Element metaElement = getMetaElement(doc);
 
         String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
@@ -279,10 +245,17 @@ public class DublinCoreImpl implements DublinCore {
                 if (element != null) {
                     metaElement.removeChild(element);
                 }
-                String value = (String) maps[type].get(elementNames[i]);
-                if (value != null && !"".equals(value.trim())) {
-                    element = helper.createElement(elementNames[i], value);
+                String[] values = (String[]) maps[type].get(elementNames[i]);
+                if (values != null && values.length > 0) {
+
+                    element = helper.createElement(elementNames[i]);
                     metaElement.appendChild(element);
+
+                    for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
+                        Element valueElement =
+                            helper.createElement(ELEMENT_VALUE, values[valueIndex]);
+                        element.appendChild(valueElement);
+                    }
                 }
             }
         }
@@ -313,6 +286,20 @@ public class DublinCoreImpl implements DublinCore {
     }
 
     /**
+     * Returns the first value for a certain key.
+     * @param key The key.
+     * @return A string.
+     */
+    public String getFirstValue(String key) {
+        String value = null;
+        String[] values = (String[]) elements.get(key);
+        if (values != null && values.length > 0) {
+            value = values[0];
+        }
+        return value;
+    }
+
+    /**
      * Get the creator
      * 
      * @return the creator
@@ -320,7 +307,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getCreator() throws DocumentException {
-        return (String) elements.get(ELEMENT_CREATOR);
+        return getFirstValue(ELEMENT_CREATOR);
     }
 
     /**
@@ -329,7 +316,12 @@ public class DublinCoreImpl implements DublinCore {
      * @param creator the Creator
      */
     public void setCreator(String creator) {
-        elements.put(ELEMENT_CREATOR, creator);
+        try {
+            addValue(ELEMENT_CREATOR, creator);
+        }
+        catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -340,7 +332,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getTitle() throws DocumentException {
-        return (String) elements.get(ELEMENT_TITLE);
+        return getFirstValue(ELEMENT_TITLE);
     }
 
     /**
@@ -349,7 +341,11 @@ public class DublinCoreImpl implements DublinCore {
      * @param title the title
      */
     public void setTitle(String title) {
-        elements.put(ELEMENT_TITLE, title);
+        try {
+            addValue(ELEMENT_TITLE, title);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -360,7 +356,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getDescription() throws DocumentException {
-        return (String) elements.get(ELEMENT_DESCRIPTION);
+        return getFirstValue(ELEMENT_DESCRIPTION);
     }
 
     /**
@@ -369,7 +365,11 @@ public class DublinCoreImpl implements DublinCore {
      * @param description the description
      */
     public void setDescription(String description) {
-        elements.put(ELEMENT_DESCRIPTION, description);
+        try {
+            addValue(ELEMENT_DESCRIPTION, description);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -380,7 +380,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getIdentifier() throws DocumentException {
-        return (String) elements.get(ELEMENT_IDENTIFIER);
+        return getFirstValue(ELEMENT_IDENTIFIER);
     }
 
     /**
@@ -389,7 +389,11 @@ public class DublinCoreImpl implements DublinCore {
      * @param identifier the identifier
      */
     public void setIdentifier(String identifier) {
-        elements.put(ELEMENT_IDENTIFIER, identifier);
+        try {
+            addValue(ELEMENT_IDENTIFIER, identifier);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -400,7 +404,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getSubject() throws DocumentException {
-        return (String) elements.get(ELEMENT_SUBJECT);
+        return getFirstValue(ELEMENT_SUBJECT);
     }
 
     /**
@@ -409,7 +413,11 @@ public class DublinCoreImpl implements DublinCore {
      * @param subject the subject
      */
     public void setSubject(String subject) {
-        elements.put(ELEMENT_SUBJECT, subject);
+        try {
+            addValue(ELEMENT_SUBJECT, subject);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -420,7 +428,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getPublisher() throws DocumentException {
-        return (String) elements.get(ELEMENT_PUBLISHER);
+        return getFirstValue(ELEMENT_PUBLISHER);
     }
 
     /**
@@ -429,7 +437,11 @@ public class DublinCoreImpl implements DublinCore {
      * @param publisher the publisher
      */
     public void setPublisher(String publisher) {
-        elements.put(ELEMENT_PUBLISHER, publisher);
+        try {
+            addValue(ELEMENT_PUBLISHER, publisher);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -440,7 +452,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getDateIssued() throws DocumentException {
-        return (String) terms.get(TERM_ISSUED);
+        return getFirstValue(TERM_ISSUED);
     }
 
     /**
@@ -449,7 +461,11 @@ public class DublinCoreImpl implements DublinCore {
      * @param dateIssued the date of issue
      */
     public void setDateIssued(String dateIssued) {
-        terms.put(TERM_ISSUED, dateIssued);
+        try {
+            addValue(TERM_ISSUED, dateIssued);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -460,7 +476,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getDateCreated() throws DocumentException {
-        return (String) terms.get(TERM_CREATED);
+        return getFirstValue(TERM_CREATED);
     }
 
     /**
@@ -469,7 +485,11 @@ public class DublinCoreImpl implements DublinCore {
      * @param dateCreated the date of creation
      */
     public void setDateCreated(String dateCreated) {
-        terms.put(TERM_CREATED, dateCreated);
+        try {
+            addValue(TERM_CREATED, dateCreated);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -480,7 +500,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getRights() throws DocumentException {
-        return (String) elements.get(ELEMENT_RIGHTS);
+        return getFirstValue(ELEMENT_RIGHTS);
     }
 
     /**
@@ -489,7 +509,11 @@ public class DublinCoreImpl implements DublinCore {
      * @param rights the rights
      */
     public void setRights(String rights) {
-        elements.put(ELEMENT_RIGHTS, rights);
+        try {
+            addValue(ELEMENT_RIGHTS, rights);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -500,7 +524,7 @@ public class DublinCoreImpl implements DublinCore {
      * @throws DocumentException if an error occurs
      */
     public String getIsReferencedBy() throws DocumentException {
-        return (String) terms.get(TERM_ISREFERENCEDBY);
+        return getFirstValue(TERM_ISREFERENCEDBY);
     }
 
     /**
@@ -509,6 +533,106 @@ public class DublinCoreImpl implements DublinCore {
      * @param isReferencedBy isReferencedBy
      */
     public void setIsReferencedBy(String isReferencedBy) {
-        terms.put(TERM_ISREFERENCEDBY, isReferencedBy);
+        try {
+            addValue(TERM_ISREFERENCEDBY, isReferencedBy);
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
+
+    /**
+     * Returns the element or term values, resp.,  for a certain key.
+     * @param key The key.
+     * @return An array of strings.
+     */
+    protected String[] getElementOrTerm(String key) throws DocumentException {
+        String[] values;
+        
+        List elementList = Arrays.asList(ELEMENTS);
+        List termList = Arrays.asList(TERMS);
+        if (elementList.contains(key)) {
+            values = (String[]) elements.get(key);
+        } else if (termList.contains(key)) {
+            values = (String[]) terms.get(key);
+        } else {
+            throw new DocumentException(
+                "The key [" + key + "] does not refer to a dublin core element or term!");
+        }
+        if (values == null) {
+            values = new String[0];
+        }
+        return values;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#getValues(java.lang.String)
+     */
+    public String[] getValues(String key) throws DocumentException {
+        return getElementOrTerm(key);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#addValue(java.lang.String, java.lang.String)
+     */
+    public void addValue(String key, String value) throws DocumentException {
+        String[] existingValues = getElementOrTerm(key);
+        List list = new ArrayList(Arrays.asList(existingValues));
+        list.add(value);
+        String[] newValues = (String[]) list.toArray(new String[list.size()]);
+
+        List elementList = Arrays.asList(ELEMENTS);
+        List termList = Arrays.asList(TERMS);
+        if (elementList.contains(key)) {
+            elements.put(key, newValues);
+        } else if (termList.contains(key)) {
+            terms.put(key, newValues);
+        } else {
+            throw new DocumentException(
+                "The key [" + key + "] does not refer to a dublin core element or term!");
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#removeValue(java.lang.String, java.lang.String)
+     */
+    public void removeValue(String key, String value) throws DocumentException {
+        String[] existingValues = getElementOrTerm(key);
+        List list = new ArrayList(Arrays.asList(existingValues));
+
+        if (!list.contains(value)) {
+            throw new DocumentException(
+                "The key [" + key + "] does not contain the value [" + value + "]!");
+        }
+
+        list.remove(value);
+        String[] newValues = (String[]) list.toArray(new String[list.size()]);
+
+        List elementList = Arrays.asList(ELEMENTS);
+        List termList = Arrays.asList(TERMS);
+        if (elementList.contains(key)) {
+            elements.put(key, newValues);
+        } else if (termList.contains(key)) {
+            terms.put(key, newValues);
+        } else {
+            throw new DocumentException(
+                "The key [" + key + "] does not refer to a dublin core element or term!");
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#removeAllValues(java.lang.String)
+     */
+    public void removeAllValues(String key) throws DocumentException {
+        List elementList = Arrays.asList(ELEMENTS);
+        List termList = Arrays.asList(TERMS);
+        if (elementList.contains(key)) {
+            elements.put(key, new String[0]);
+        } else if (termList.contains(key)) {
+            terms.put(key, new String[0]);
+        } else {
+            throw new DocumentException(
+                "The key [" + key + "] does not refer to a dublin core element or term!");
+        }
+    }
+
 }

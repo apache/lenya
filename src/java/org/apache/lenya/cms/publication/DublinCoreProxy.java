@@ -59,7 +59,7 @@ package org.apache.lenya.cms.publication;
  * only read from file when it is actually requested.
  *
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
- * @version $Id: DublinCoreProxy.java,v 1.4 2004/01/07 10:18:46 michi Exp $
+ * @version $Id: DublinCoreProxy.java,v 1.5 2004/02/02 17:33:16 andreas Exp $
  */
 public class DublinCoreProxy implements DublinCore {
 
@@ -87,7 +87,7 @@ public class DublinCoreProxy implements DublinCore {
         }
         return dcCore;
     }
-    
+
     /**
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DublinCore#getCreator()
@@ -254,6 +254,42 @@ public class DublinCoreProxy implements DublinCore {
      */
     public void save() throws DocumentException {
         instance().save();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#getValues(java.lang.String)
+     */
+    public String[] getValues(String key) throws DocumentException {
+        return instance().getValues(key);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#getFirstValue(java.lang.String)
+     */
+    public String getFirstValue(String key) throws DocumentException {
+        return instance().getFirstValue(key);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#addValue(java.lang.String, java.lang.String)
+     */
+    public void addValue(String key, String value) throws DocumentException {
+        instance().addValue(key, value);
+
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#removeValue(java.lang.String, java.lang.String)
+     */
+    public void removeValue(String key, String value) throws DocumentException {
+        instance().removeValue(key, value);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#removeAllValues(java.lang.String)
+     */
+    public void removeAllValues(String key) throws DocumentException {
+        instance().removeAllValues(key);
     }
 
 }
