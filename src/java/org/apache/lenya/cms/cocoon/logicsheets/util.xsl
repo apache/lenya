@@ -82,7 +82,7 @@
 	<servlet_context_path><xsp:expr>xspUtilServletContextPath</xsp:expr></servlet_context_path>
       </xsp:content>
 
-    Session xsp_lenya_session = request.getSession(false);
+    Session xsp_lenya_session = request.getSession(true);
     Identity xsp_lenya_id = null;
     org.apache.lenya.cms.ac2.Identity xsp_lenya_id_two = null;
     if (xsp_lenya_session != null) {
