@@ -24,7 +24,7 @@
     
 	<div id="lenya-menubar">
 	  
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="menu">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="lenya-menubar-menu">
       <tr>
         <td background="{$image-prefix}/frame-bg_oben.gif" width="13" height="4">
           <img src="{$image-prefix}/frame-bg_oben.gif" width="13" height="4" /></td>
@@ -40,7 +40,7 @@
         <td rowspan="2" valign="bottom" align="right" background="/lenya/lenya/menu/images/grau-bg.gif">
           <img src="{$image-prefix}/blau_anfang_oben.gif" />
         </td>
-        <td background="{$image-prefix}/grau-bg2.gif">
+        <td background="{$image-prefix}/grau-bg2.gif" nowrap="nowrap">
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">admin</xsl:with-param>
           </xsl:call-template>
