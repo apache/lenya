@@ -147,7 +147,7 @@
   <message key="Edit Metadata">Metadata bearbeiten</message>
   <message key="Edit Navigation Title">Navigationstitel bearbeiten</message>
   <message key="Rename URL">URL&#160;umbenennen</message>
-  <message key="Change node visiblity">Sichtbarkeit in Navigation ändern</message>
+  <message key="Change node visibility">Sichtbarkeit in Navigation ändern</message>
 
   <!-- cms tabs -->
   <message key="Server Time">Serverzeit</message>  
