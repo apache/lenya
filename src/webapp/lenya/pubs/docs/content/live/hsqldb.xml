@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document> 
+  <header> 
+	 <title>HSQL Database</title>
+	 <version>0.1</version> 
+	 <type>Overview document</type> 
+	 <authors>
+           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
+	 </authors> 
+  </header> 
+  <body> 
+   	<s1 title="HSQL Database"> 
+
+   		<s2 title="Introduction"> 
+    		<p>
+		HSQLDB is a relational database engine written in Java, with a JDBC driver, supporting 
+		a subset of ANSI-92 SQL. It offers a small (about 100k), fast database engine which offers 
+		both in memory and disk based tables. This product includes Hypersonic SQL.
+		The project is currently hosted at <a href="http://sourceforge.net/projects/hsqldb">Sourceforge</a>.
+		The database is shipped with Cocoon (WEB-INF/lib/hsqldb-1.61.jar) and automatically started on port 9002 (default).
+    		</p>
+   		</s2>
+
+   		<s2 title="Tutorial"> 
+    		<p>
+		<a href="http://www.mycgiserver.com/~buman/tutorial.html">Buman</a> (Link: http://www.mycgiserver.com/~buman/tutorial.html)
+    		</p>
+   		</s2>
+
+   		<s2 title="Configuration"> 
+    		<p>
+		The database connection can be configured within WEB-INF/cocoon.xconf and WEB-INF/web.xml
+    		</p>
+   		</s2>
+
+   		<s2 title="Data"> 
+    		<p>
+		Cocoon keeps the Database Data at WEB-INF/db/
+    		</p>
+   		</s2>
+
+   		<s2 title="Dump the Database"> 
+    		<p>
+		You can dump the database by using the class org.hsqldb.util.DatabaseManager (don't forget to
+		set the CLASSPATH: WEB-INF/lib/hsqldb-1.61.jar):
+		<source>
+		java org.hsqldb.util.DatabaseManager
+		</source>
+		The default connection parameters are:
+		<source>
+		Type: HSQL Database Engine In-Memory
+		Driver: org.hsqldb.jdbcDriver
+		URL: jdbc:hsqldb:hsql://localhost:9002
+		User: sa
+		Password:
+		</source>
+		You can dump the database by executing the SQL query:
+		<source>
+		SCRIPT `hsqldb-dump.txt`
+		</source>
+		the database will be dumped into the file hsqldb-dump.txt located
+		relative to the directory from where you started the DatabaseManager.
+		</p>
+   		</s2>
+
+   		<s2 title="Insert data into the Database"> 
+		<p>
+		To insert data quickly into HSQLDB you can also use the DatabaseManager as mentioned above.
+		You can also modify the file WEB-INF/db/cocoondb.script directly, but then you have
+		to restart HSQLDB respectively Cocoon to see modifications.
+		</p>
+    		<p>
+		Create new table:
+		<source>
+		CREATE TABLE related_projects (id INTEGER PRIMARY KEY,name VARCHAR(128))
+		</source>
+    		</p>
+
+    		<p>
+		Insert into table:
+		<source>
+		INSERT INTO related_projects VALUES (1,'Cocoon')
+		</source>
+    		</p>
+
+    		<p>
+		Select from table:
+		<source>
+		SELECT * FROM related_projects
+		</source>
+    		</p>
+   		</s2>
+   
+   	</s1>
+
+   	<s1 title="ESQL"> 
+
+   		<s2 title="Mixed Content"> 
+    		<p>
+		You can retrieve "mixed content" (e.g. XHTML) from a table field by using the statement esql:get-xml, but
+		you have to take care that the "mixed content" is well-formed XML, which means you
+		have two possibilites. Either
+		<source>
+		<![CDATA[
+ESQL command:
+<esql:get-xml column="description"/>
+
+Content of table field "description":
+'<description><organization href="http://www.oscom.org">OSCOM</organization> is dedicated to Open Source Content Management</description>'
+		]]>
+		</source>
+		or
+		<source>
+		<![CDATA[
+ESQL command:
+<esql:get-xml column="description" root="description"/>
+
+Content of table field "description":
+'<organization href="http://www.oscom.org">OSCOM</organization> is dedicated to Open Source Content Management'
+		]]>
+		</source>
+		The result in both cases will be
+		<source>
+		<![CDATA[
+<description><organization href="http://www.oscom.org">OSCOM</organization> is dedicated to Open Source Content Management</description>
+		]]>
+		</source>
+    		</p>
+   		</s2>
+   	</s1>
+  </body>
+</document>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Creating/Importing Content (Resource)</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Introduction">
+<p>
+There are many different ways to create respectively import content into 
+a Content Management System. You can upload an image, you can create a document
+based on some form input or you can create a document by copying a sample document.
+The following use cases shall illustrate some possible situations in more detail.
+The goal is to develop a generic API for resource creation.
+</p>
+    </s1>
+    <s1 title="Use Cases">
+      <s2 title="Create Article (New Wyona Times)">
+        <ol>
+          <li>Go to the section page (e.g. International Section)</li>
+          <li>Click in the File Menu on "New Article"</li>
+          <li>Confirm by clicking ok on the "Create new article" screen</li>
+          <li>Sample article with all required elements will be copied onto 
+a new article, where identifier has been created automatically based on the current date</li>
+          <li>Author/Editor will be redirected to newly created Article</li>
+          <li>The system inserts in the background the newly created article at 
+the top of the refered section page</li>
+        </ol>
+      </s2>
+      <s2 title="Create Article (unipublic)">
+        <ol>
+          <li>Go to the section page (e.g. Gesundheit)</li>
+          <li>Click in the File Menu on "New Article"</li>
+          <li>On the "Create new article" screen enter an identifier (based on Filemaker ID)</li>
+          <li>Sample article with all required elements will be copied onto a new article with the identifier entered by the editor</li>
+          <li>The system inserts the newly created article at the top of the refered section page</li>
+          <li>Author/Editor will be redirected back to the refered section page</li>
+        </ol>
+      </s2>
+      <s2 title="Upload Image (unipublic)">
+        <ol>
+          <li>Go to the article page</li>
+          <li>Click on a "new image" icon for instance between two paragraphs</li>
+          <li>On the "Upload new image" screen click on "browse" in order to select an
+image from your local harddisk. Enter a filename as name for the image on the server. Click "upload image".</li>
+          <li>The system stores the image "beside" the refered article and creates a meta file (XML) for the
+image with fields such as "Creation Date", User", "Filename", "Mime-Type", etc.</li>
+          <li>The system inserts an XInclude into the article (for instance between two paragraphs) referencing the meta file</li>
+          <li>The user will be redirected to the refered article</li>
+        </ol>
+      </s2>
+      <s2 title="Submit Story (Wyona News and Comments)">
+        <ol>
+          <li>Click on "Submit Story" in the main navigation on the left hand side. You
+will be redirected to a form.</li>
+          <li>Complete the form (e.g. title, lead, text, category, etc.).</li>
+          <li>Submit the form and you will be redirected to a preview</li>
+          <li>Confirm the Preview or edit the form once again.</li>
+          <li>After confirming the preview, the User/Author will be redirected to a "Thank you" screen.</li>
+          <li>The systems adds the new story to the list of submitted stories (submissions list) and
+notifies the appropriate editors via email.</li>
+        </ol>
+      </s2>
+    </s1>
+    <s1 title="Related Information">
+        <p>
+	<fork href="http://jakarta.apache.org/slide/javadoc/org/apache/slide/content/ContentImpl.html" target="_blank">ContentImpl: Implementation of the Slide content interface</fork><br />
+	<fork href="http://dev.zope.org/Wikis/DevSite/Projects/ComponentArchitecture/CreateEmptyFile" target="_blank">Zope: CreateEmptyFile</fork><br />
+	<fork href="http://dev.zope.org/Wikis/DevSite/Projects/ComponentArchitecture/CreateFileFromFormInput" target="_blank">Zope: CreateFileFromFormInput</fork><br />
+	</p>
+    </s1>
+  </body>
+</document>
+

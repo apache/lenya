@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : tasks-publishingtask.xml
+    Created on : November 13, 2002, 5:43 PM
+    Author     : ah
+    Description:
+        Purpose of the document follows.
+-->
+
+<document> 
+
+<header> 
+    <title>The StaticHTMLExporter Task</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<s1 title="The StaticHTMLExporter Task"> 
+<p>
+The StaticHTMLExporter is a task that downloads HTML pages from a server and
+saves them as HTML files. It needs the following
+parameters:
+</p>
+<ul>
+ <li><code><strong>server-uri</strong></code>: the server uri, e. g. <code>http://authoring.yourdomain.com</code></li>
+ <li><code><strong>server-port</strong></code>: the server port, e. g. 8080</li>
+ <li><code><strong>publication-id</strong></code>: the publication id</li>
+ <li><code><strong>export-path-prefix</strong></code>: the path to save the files to</li>
+ <li><code><strong>uris</strong></code>: a comma-separated list of uris to download (without server + port)</li>
+ <li><code><strong>substitute-regexp</strong></code>: a regular expression to substitute a part of the path</li>
+</ul>
+<p>
+Usually, the path information is read
+from the <code>[publication-directory]/docs/publication/publication.xconf</code> file:
+</p>
+<source>
+<![CDATA[
+<publication>
+  ...
+  <export>
+    <destination href="resources/publication/export/pending"/>
+    <substitution regexp="s/\/wyona-cms\/unipublic//g"/>
+  </export>
+</publication>
+]]>
+</source>
+
+<p>
+You can override the paths in the task configuration file <code>tasks.xconf</code>,
+e. g. to use several publishers to publish into different directories:
+</p>
+
+<source>
+<![CDATA[
+<tasks>
+
+  <task id="export-pending" class="org.wyona.cms.publishing.StaticHTMLExporter">
+    <parameter name="export-path" value="resources/publication/export/pending"/>
+    <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
+  </task>
+
+  <task id="export-backup" class="org.wyona.cms.publishing.StaticHTMLExporter">
+    <parameter name="export-path" value="resources/publication/backup"/>
+    <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
+  </task>
+
+</tasks>
+]]>
+</source>
+
+</s1>
+</body>
+</document>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document> 
+  <header> 
+	 <title>Parent-Child Creator</title>
+	 <version>0.1</version> 
+	 <type>Overview document</type> 
+	 <authors>
+           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
+           <person name="Edith Chevrier" email="edith.chevrier@wyona.org"/>
+	 </authors> 
+  </header> 
+  <body> 
+   <s1 title="Parent-Child Creator"> 
+
+   <s2 title="Introduction"> 
+    <p>
+The Parent-Child Creator is a concrete implementation of the ResourceCreator pattern.
+    </p>
+   </s2>
+
+   <s2 title="Customizing the Menu"> 
+     <p>
+Normally the "Menus" can be found at <i>docs/publication/menus</i>.
+     </p>  
+   </s2>
+
+   <s2 title="Sitemap"> 
+     <p>
+     </p>  
+     <ol>
+       <li>Definition of Action:
+         <p>
+           <source>
+<![CDATA[
+<map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
+  <tree-authoring href="docs/publication/authoring/tree.xml"/>
+  <docs href="docs/publication/authoring"/>
+  <doctypes href="docs/publication/doctypes/"/>
+</map:action>
+]]>
+           </source>
+         </p>
+       </li> 
+       <li>"Create-Screen":
+         <p>
+           <source>
+<![CDATA[
+<map:pipeline>
+  <map:match pattern="wyona/ParentChildScreenNewArticle*">
+    <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+    <map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
+    <map:serialize type="html"/>
+  </map:match>
+</map:pipeline>
+]]>
+           </source>                                                                                                                        
+         </p>
+       </li>
+       <li>"Create-Action":
+         <p>
+           <source>
+<![CDATA[
+<map:pipeline>
+  <map:match pattern="wyona/create*">
+    <map:act type="parent-child">
+      <map:redirect-to uri="{parent_uri}" session="true"/>
+    </map:act>
+    <map:redirect-to uri="ParentChildScreenNewArticle?status=failed" session="true"/>
+  </map:match>
+</map:pipeline>
+]]>
+           </source>
+         </p>
+       </li>
+     </ol> 
+   </s2>
+
+   <s2 title="Customizing the Create Screen"> 
+     <p>
+Copy the generic XSLT "../../stylesheets/cms/Page/parent-child.xsl" into the publication's stylesheet directory "stylesheets/cms/Page/parent-child-new-article.xsl". Don't forget to change the sitemap appropriately. The following parameters have to exist: parentid (generated via XSP), childid (not-empty String, no whitespace), childname (non-empty String), childtype (leaf or branch), doctype (e.g. Article). Exp:
+     </p>  
+         <p>
+<form>
+ <table>
+ <tr><td>parent:</td><td>Hidden</td></tr>
+ <tr><td>id:</td><td><input type="text" name="id"/></td></tr>
+ <tr><td>name:</td><td><input type="text" name="name"/></td></tr>
+ <tr><td>Child Type:</td><td><input type="radio" name="childtype" value="branch"/>Branch
+ <input type="radio" name="childtype" value="leaf"/>Leaf</td></tr>
+ <tr><td>doctype:</td>
+     <td>
+       <select name="doctype" size="2">
+         <option value="generic">Generic (XHTML)</option>
+         <option value="member">Member</option>
+       </select>
+     </td>
+ </tr>
+</table>
+</form>
+         </p>                                                                                                                               
+<p>
+      <source>
+      <figure src="images/parent-child-image.png" alt="" align="left"/>
+      </source>
+</p>
+   </s2>
+
+   <s2 title="Configuration"> 
+     <ol>
+       <li> doctypes.xconf
+         <p>
+         The different doctypes are configured in a file doctypes.xconf: WYONA_CMS/src/webapp/wyona/cms/pubs/*publication*/docs/publication/doctypes/doctypes.xconf. Given are their children and their creator. 
+         </p>  
+         <p>
+           <source>
+<![CDATA[
+<?xml version="1.0"?>
+
+<doctypes>
+<doc type="Section">
+  <children>
+    <doc type="Article"/>
+  </children>
+</doc>
+
+<doc type="Article">
+  <creator src="org.wyona.cms.pubs.forum.NewArticleCreator"/>
+  <children>
+    <doc type="Comment"/>
+  </children>
+</doc>
+</doctypes>
+]]>
+           </source>
+         </p>
+       </li>
+     </ol>   
+   </s2>
+
+   <s2 title="Tree: tree.xml"> 
+     <p>
+The document tree.xml has to exist and the branches as well! Please see definition of Action.
+     </p>  
+         <p>
+           <source>
+<![CDATA[
+<?xml version="1.0"?>
+
+<!-- CAUTION: this tree is handcrafted -->
+<tree>
+  <branch relURI="" doctype="Front" menuName="Home">
+    <branch relURI="magazin" doctype="Channel" menuName="Magazin">
+      <branch relURI="gesundheit" doctype="Section" menuName="Gesundheit">
+        <branch relURI="2002" doctype="Year" menuName="2002"/>
+      </branch>
+    </branch>
+    <branch relURI="channel" doctype="Channel" menuName="Magazin">
+      <branch relURI="section" doctype="Section" menuName="Gesundheit">
+        <branch relURI="year" doctype="Year" menuName="2002"/>
+      </branch>
+    </branch>
+  </branch>
+</tree>
+]]>
+           </source>
+         </p>
+   </s2>
+
+   <s2 title="Extend Java Class AbstractParentChildCreator"> 
+     <p>
+Finally the Java class AbstractParentChildCreator has to be extended.
+     </p>  
+         <p>
+           <source>
+<![CDATA[
+package ch.unizh.unipublic.wyona.cms.authoring;
+    
+import java.io.File;
+
+import org.wyona.cms.authoring.AbstractParentChildCreator;
+
+import org.apache.log4j.Category;
+
+/**
+ * @author Michael Wechner
+ * @version 2002.7.2
+ */
+public class NewArticleCreator extends AbstractParentChildCreator{
+  static Category log=Category.getInstance(NewArticleCreator.class);
+/**
+ *
+ */
+  public short getChildType(short childType) throws Exception{
+    return childType;
+    }
+/**
+ *
+ */
+  public String generateTreeId(String childId,short childType) throws Exception{
+    return childId;
+    }
+/**
+ *
+ */
+  public void create(File samplesDir,File parentDir,String childId,short childType) throws Exception{
+    log.warn("NewArticleCreator.create() has been called.");
+    }
+  }
+]]>
+           </source>
+         </p>
+   </s2>
+
+   <s2 title="Sample: sample.xml">
+     <p>
+When the child is created, the systems takes a sample of the appropriate doctype and makes a copy of that sample, such that the user has a starting point for editing.
+     </p>
+     <p> 
+       <source>
+<![CDATA[
+<?xml version="1.0"?>
+ 
+<article>
+   <meta>
+     <id/>
+   </meta>
+   <head>
+     <title>Sample Title</title>
+   </head>
+   <body>
+   <p>
+   Sample Person writes:
+   <quotation>Sample Quotation ...</quotation>
+   Sample Text ...
+   </p>
+   </body>
+   <comments/>
+</article>                                                                                                                                  
+]]>
+       </source>
+     </p>
+   </s2>
+
+      <s2 title="Bread-Crumb Path">
+<p>
+You can now easily extract 
+a bread-crumb path and the siblings from the tree. More details can be found within 
+the publication "Materials Science" (ethz-mat).
+</p>
+<p>
+        <source>
+          <![CDATA[
+<?xml version="1.0"?>
+
+<parentchild relURI="g06" doctype="Group" name="Polymer Chemistry">
+
+  <parents>
+    <parent relURI="" doctype="Department" name="Department"/>
+  </parents>
+
+  <children>
+    <child type="branch" relURI="members" doctype="Members" name="Members"/>
+    <child type="leaf" relURI="research" doctype="Generic" name="Research"/>
+    <child type="leaf" relURI="positions" doctype="Generic" name="Open Positions"/>
+    <child type="leaf" relURI="related" doctype="Generic" name="Related Topics"/>
+  </children>
+</parentchild>
+          ]]>
+        </source>
+</p>
+      </s2>
+
+   </s1>
+  </body>
+</document>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Workflow</title>
+    <version>2002.11.29</version>
+    <type></type>
+    <authors>
+      <person name="Andreas Hartmann" email="ah@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+  
+<s1 title="Useful Links">
+
+<s2 title="Articles">
+<ul>
+  <li><link href="http://xml.coverpages.org/wf-xml.html">XML Cover-Pages: XML-Based Workflow and Process Management Standards: XPDL, Wf-XML</link></li>
+</ul>
+</s2>
+
+<s2 title="Workflow Frameworks">
+<ul>
+  <li><link href="http://werkflow.werken.com">Werkflow</link></li>
+</ul>
+</s2>
+
+</s1>
+
+</body>
+</document>
+
+

@@ -1,0 +1,81 @@
+<html>
+<body>
+
+<h1>Apache as Proxy</h1>
+
+<h2>DNS Configuration</h2>
+<p>
+<code>chlorine.wyona.org.         IN A 194.191.122.217</code><br>
+<code>calcium.wyona.org.         IN A 194.191.122.220</code><br>
+<code>ethz-mat.wyona.com.             IN CNAME        chlorine.wyona.com</code><br>
+<code>unipublic.wyona.com.             IN CNAME        calcium.wyona.com</code><br>
+</p>
+
+<h2>Build Apache with mod_proxy (or plus mod_rewrite)</h2>
+<p>
+<code>./configure --prefix=/usr/local/apache --enable-module=proxy</code><br>
+(<code>./configure --prefix=/usr/local/apache --enable-module=proxy --enable-module=rewrite</code>)
+</p>
+
+<h2>More than one IP (not really necessary)</h2>
+<p>
+<b>Add IP:</b><br>
+<code>ifconfig eth0:0 194.191.122.217 broadcast 194.191.122.223 netmask 255.255.255.240 up</code><br>
+<b>Add another IP:</b><br>
+<code>ifconfig eth0:1 194.191.122.219 broadcast 194.191.122.223 netmask 255.255.255.240 up</code><br>
+<b>Check Configuration:</b><br>
+<code>ifconfig</code><br>
+<code>ping 194.191.122.217</code><br>
+<code>ping 194.191.122.219</code><br>
+<b>Remove IP:</b><br>
+<code>ifconfig eth0:0 down</code><br>
+<code>ifconfig eth0:0- 0</code><br>
+<b>Remove another IP:</b><br>
+<code>ifconfig eth0:1 down</code><br>
+<code>ifconfig eth0:1- 0</code><br>
+<b>Check Configuration:</b><br>
+<code>ifconfig</code><br>
+<code>ping 194.191.122.217</code><br>
+<code>ping 194.191.122.219</code><br>
+</p>
+
+<h2>Apache configuration httpd.conf</h2>
+<p>
+<pre>
+NameVirtualHost 194.191.122.220
+#NameVirtualHost *
+
+#
+# VirtualHost example:
+# Almost any Apache directive may go into a VirtualHost container.
+# The first VirtualHost section is used for requests without a known
+# server name.
+&lt;VirtualHost 194.191.122.220&gt;
+  ServerName calcium.wyona.org
+  DocumentRoot /usr/local/apache/htdocs
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 194.191.122.217&gt;
+  ServerName ethz-mat.wyona.org
+  ProxyPass / http://194.191.122.220:8080/wyona-cms/ethz-mat/
+  ProxyPassReverse / http://194.191.122.220:8080/wyona-cms/ethz-mat/
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 194.191.122.220&gt;
+  ServerName unipublic.wyona.org
+  ProxyPass / http://194.191.122.220:8080/wyona-cms/oscom/live/index.html
+  ProxyPassReverse / http://194.191.122.220:8080/wyona-cms/oscom/live/index.html
+&lt;/VirtualHost&gt;
+</pre>
+</p>
+
+<h2>Wyona Configuration</h2>
+<p>
+<code>org/wyona/cms/cocoon/acting/AbstractAuthorizerAction.java</code><br>
+<code>stylesheets/wyona/cms/ac/login-screen.xsl</code><br>
+</p>
+
+<h2>Related Content</h2>
+<p>
+<a href="http://www.themorgue.org/linux/vhosts">Serving Zope Virtual Hosts using Apache</a><br>
+</p>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : tasks-publishingtask.xml
+    Created on : November 13, 2002, 5:43 PM
+    Author     : ah
+    Description:
+        Purpose of the document follows.
+-->
+
+<document> 
+
+<header> 
+    <title>The MailTask</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<s1 title="The MailTask"> 
+<p>
+A <code>MailTask</code> sends an e-mail. The parameters, such as recipient
+address, subject, and body, can either be provided as a task parameter or
+extracted from an XML document. The following parameters must be provided:
+<ul>
+  <li><code><strong>server</strong></code>: the SMTP server URI</li>
+  <li><code><strong>from</strong></code>: you@yourhost.com</li>
+  <li><code><strong>to</strong></code>: friend@mail.com</li>
+  <li><code><strong>cc</strong></code>: other-friends@mail.com</li>
+  <li><code><strong>subject</strong></code>: Hello World!</li>
+  <li><code><strong>body</strong></code>: How are you?</li>
+</ul>
+</p>
+
+<s2 title="Getting the mail data from an XML source">
+<p>
+Additionally, you can pass a <code>uri</code> parameter to the <code>MailTask</code>:
+<ul>
+  <li><code><strong>uri</strong></code>: the URI to get the XML file from</li>
+</ul>
+If this parameter is present, the task tries to fetch an XML document from the URI.
+If the parameter <code>uri</code> starts with a <code>http://</code> or <code>ftp://</code>
+prefix, the absolute URI is used. If not, the URI is interpreted as relative to the
+local publication.
+</p>
+<p>
+A complete XML document could look like this:
+</p>
+<source>
+<![CDATA[
+<mail:mail xmlns:mail="http://www.wyona.org/2002/mail">
+  <mail:server>mail.yourhost.com</mail:server>
+  <mail:from>you@yourhost.com</mail:from>
+  <mail:to>friend@mail.com</mail:to>
+  <mail:cc>other-friends@mail.com</mail:cc>
+  <mail:subject>Hello Friends!</mail:subject>
+  <mail:body>How are you?</mail:body>
+</mail:mail>
+]]>
+</source>
+<p>
+All child elements of <code>&lt;mail:mail&gt;</code> are optional.
+If the <code>uri</code> task parameter is provided, the XML
+document is fetched from the URI and the parameters are extracted.
+</p>
+<p>
+Task parameters have a higher priority than elements of the document. This makes it
+possible to access one complete XML file from different <code>MailTask</code>s and override
+the recepient address or other values.
+</p>
+</s2>
+</s1>
+
+<s1 title="Declaring and Using the MailTask">
+<p>
+In <code>tasks.xconf</code>, a typical mail task looks like follows:
+</p>
+<source>
+<![CDATA[
+  <task id="send-newsletter" class="org.wyona.cms.mail.MailTask">
+    <label>Send Newsletter</label>
+    <parameter name="server" value="mail.wyona.net"/>
+    <parameter name="from" value="info@wyona.org"/>
+    <parameter name="to" value="newsletter-subscribers@wyona.org"/>
+    <parameter name="uri" value="/authoring/newsletter/mail.xml"/>
+  </task>
+]]>
+</source>
+<p>
+The actual newsletter is received from the URI that is interpreted
+relativly to the publication URI. The task can be invoked in a sitemap pipeline:
+</p>
+<source>
+<![CDATA[
+  <map:action name="task" src="org.wyona.cms.cocoon.acting.TaskAction"/>
+  
+  ...
+  
+  <map:match pattern="newsletter/send">
+    <map:act type="task">
+      <map:parameter name="task-id" value="send-newsletter"/>
+      <map:redirect-to uri="report-success.html" session="true"/>
+    </map:act>
+    <map:redirect-to uri="report-failure.html" session="true"/>
+  </map:match>
+]]>
+</source>
+</s1>
+
+</body>
+</document>

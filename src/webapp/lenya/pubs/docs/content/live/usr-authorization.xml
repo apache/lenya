@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Authorization and Authentication</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="" email=""/>
+      <person name="" email=""/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Authorization and Authentication">
+      <anchor id="login"/> 
+      <s2 title="Logging In">
+        <p>
+	  To log in, just enter your username and password. The CMS will check
+          your personal details and give you access based on the role you are
+          assigned. (Note: for the prototype, you can try usr="wyona" and pwd="levi",
+          without the quotes)
+	</p>
+      </s2>
+      <anchor id="switch"/> 
+      <s2 title="Switching Users">
+        <p>
+	  To be documented soon
+	</p>
+      </s2>
+      <anchor id="logout"/> 
+      <s2 title="Logging Out">
+        <p>
+ 	  To be documented soon
+	</p>
+      </s2>
+      <anchor id="chgpwd"/> 
+      <s2 title="Changing Password">
+        <p>
+	  To be documented soon
+	</p>
+      </s2>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </s1>
+  </body>
+</document>

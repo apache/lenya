@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<wyona.org:navigation xmlns:wyona.org="http://www.wyona.org/2002/wyona.org">
+<leaf name="Home" href="index.html"/>
+<!--
+<leaf name="Demo" href="demo/index.html"/>
+-->
+<branch name="Download" href="download/index.html">
+<!--
+  <leaf name="Snapshots" href="download/snapshots.html"/>
+  <leaf name="CVS" href="download/cvs.html"/>
+-->
+</branch>
+<branch name="Documentation" href="docs/index.html">
+  <leaf name="User" href="docs/index.html#user-guide"/>
+  <leaf name="Administrator" href="docs/index.html#administrator-guide"/>
+  <leaf name="Integrator" href="docs/index.html#integrator-guide"/>
+  <leaf name="Developer" href="docs/index.html#developer-guide"/>
+  <leaf name="Javadoc" href="docs/index.html#javadoc"/>
+</branch>
+<leaf name="Mailing Lists" href="mailing-lists.html"/>
+<leaf name="Credits" href="acknowledgements.html"/>
+<leaf name="License" href="license.html"/>
+<!--
+<branch name="Association">
+  <leaf name="Members" href="association/members.html"/>
+  <leaf name="Board" href="association/board.html"/>
+  <leaf name="Bylaws" href="association/bylaws.html"/>
+</branch>
+-->
+<branch name="Related Projects" href="related-projects/index.html">
+<!--
+  <leaf name="Cocoon" href="http://xml.apache.org/cocoon/"/>
+  <leaf name="Maverick" href="http://mav.sourceforge.net"/>
+  <leaf name="OSCOM" href="http://www.oscom.org"/>
+-->
+</branch>
+</wyona.org:navigation>

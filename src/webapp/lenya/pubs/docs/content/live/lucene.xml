@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Lucene</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+<s1 title="Index">
+<p>...</p>
+</s1>
+<s1 title="Search">
+<s2 title="Standard">
+<source>
+<![CDATA[
+org.apache.lucene.search.Searcher searcher=new org.apache.lucene.search.IndexSearcher("index");
+org.apache.lucene.analysis.Analyzer analyzer=new org.apache.lucene.analysis.standard.StandardAnalyzer();
+
+org.apache.lucene.search.Query query = QueryParser.parse(query_string, "contents", analyzer);
+
+org.apache.lucene.search.Hits hits=searcher.search(query);
+]]>
+</source>
+</s2>
+
+<s2 title="Cocoon">
+<source>
+<![CDATA[
+LuceneCocoonSearcher searcher=new org.apache.cocoon.components.search.SimpleLuceneCocoonSearcherImpl();
+searcher.setDirectory("index");
+searcher.setAnalyzer(new org.apache.lucene.analysis.standard.StandardAnalyzer());
+
+org.apache.lucene.search.Hits hits=searcher.search(query_string,LuceneXMLIndexer.BODY_FIELD);
+]]>
+</source>
+</s2>
+</s1>
+
+<s1 title="Usage">
+
+<s2 title="Crawling HTDOCS">
+<p>
+<code>java -cp build/wyona-cms/classes org.wyona.search.crawler.IterativeHTMLCrawler</code>
+</p>
+</s2>
+
+
+<s2 title="Indexing HTML within the Filesystem">
+<p>
+<code>java -cp lucene-1.2-rc2.jar:classes org.wyona.lucene.IndexHTML -create -index lucene-index-oscom-matrix /usr/local/apache/htdocs_oscom</code>
+</p>
+</s2>
+
+<s2 title="Indexing Files within the Filesystem">
+<p>
+<code>java -cp lucene-1.2-rc2.jar:classes org.wyona.lucene.IndexFiles /usr/local/apache/htdocs_oscom lucene-index-oscom-matrix</code>
+</p>
+</s2>
+
+<s2 title="Indexing HTML via HTTP (Crawling)">
+<p>
+<ol>
+  <li>LARM</li>
+  <li>i2a.WebSearch (Configuration: WEB-INF/conf/websearch.xml: seed, scope, indexURI)</li>
+</ol>
+</p>
+</s2>
+</s1>
+  </body>
+</document>
+

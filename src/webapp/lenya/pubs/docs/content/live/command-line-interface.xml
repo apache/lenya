@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document> 
+  <header> 
+	 <title>Command Line Interface</title>
+	 <version>0.1</version> 
+	 <type>Overview document</type> 
+	 <authors>
+           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
+	 </authors> 
+  </header> 
+  <body> 
+   <s1 title="org.apache.cocoon.Main"> 
+
+   <s2 title="Usage"> 
+<p>
+Get the Usage by running
+</p>
+    <p>
+<source>
+<![CDATA[
+java org.apache.cocoon.Main --help
+]]>
+</source>
+    </p>
+   </s2>
+
+   </s1>
+  </body>
+</document>

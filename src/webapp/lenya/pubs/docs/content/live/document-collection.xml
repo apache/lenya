@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Document Collection Creator</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="" email=""/>
+      <person name="" email=""/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Document Collection Creator">
+      <s2 title="">
+        <p>
+Examples:<br />
+Magazine Issue (Cover, Columns, Articles, Preview, Contents)<br />
+Dossier (Overview, Chapter, Articles)
+        </p>
+      </s2>
+    </s1>
+  </body>
+</document>

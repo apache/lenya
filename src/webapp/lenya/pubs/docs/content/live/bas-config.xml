@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document> 
+  <header> 
+    <title>Wyona Concepts</title>
+    <version></version> 
+    <type></type> 
+    <authors>
+      <person name="" email=""/> 
+      <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
+    </authors> 
+  </header> 
+  <body>
+
+    <s1 title="Configuration and Customization">
+
+<p>
+  All configuration files have their own living spaces both in the generic 
+  Wyona-CMS directory and the specific publication directory. All configuration
+  information that is not supplied explicitly in the publication directory is
+  inherited from the CMS directory, where default behaviour is defined.
+</p>
+
+    </s1>
+
+    </body>
+
+    </document>

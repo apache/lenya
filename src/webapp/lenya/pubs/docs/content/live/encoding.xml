@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Encoding</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="JAVA_OPTS">
+<p>
+You might want to set the encoding within <code>$CATALINA_HOME/bin/startup.sh</code>:
+<br /><br />
+<code>export JAVA_OPTS=-Dfile.encoding=ISO-8859-1</code>
+</p>
+    </s1>
+  </body>
+</document>
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Parent-Child Content Creator</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="" email=""/>
+      <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Parent-Child Content Creator">
+      <s2 title="Use-Cases">
+        <ol>
+          <li>Create</li>
+          <li>Delete</li>
+          <li>Move</li>
+        </ol>
+      </s2>
+      <s2 title="Create: Input Fields">
+      
+      <source>
+      <figure src="images/parent-child-image.png" alt="" align="left"/>
+      </source>
+      </s2>
+      
+      
+      
+      <s2 title="Doctype Sample/Template (Based on Doctype Schema)">
+<p> When the child is created, the systems takes a sample of the
+appropriate doctype and makes a copy of that sample, such that
+the user has a starting point for editing.
+
+<!-- <h3>Bread Crumb</h3> -->
+<!-- /Department/Physical Chemistry/Members/Linus Pauling -->
+</p>    
+    </s2>
+      <s2 title="Sitemap XML">
+        <source>
+          <![CDATA[
+<?xml version="1.0"?>
+
+<tree>
+  <branch relURI="" doctype="Department" menuName="Department">
+    <branch relURI="g06" doctype="Group" menuName="Polymer Chemistry">
+      <branch relURI="members" doctype="Members" menuName="Members">
+        <leaf relURI="m01" doctype="Member" menuName="Liese Meitner"/>
+        <leaf relURI="m02" doctype="Member" menuName="Linus Pauling"/>
+      </branch>
+      <leaf relURI="research" doctype="Generic" menuName="Research"/>
+      <leaf relURI="positions" doctype="Generic" menuName="Open Positions"/>
+      <leaf relURI="related" doctype="Generic" menuName="Related Topics"/>
+    </branch>
+    <branch relURI="g07" doctype="Group" menuName="Polymer Physics">
+      <branch relURI="members" doctype="Members" menuName="Members">
+        <leaf relURI="m01" doctype="Member" menuName="Nils Bohr"/>
+        <leaf relURI="m02" doctype="Member" menuName="Werner Heisenberg"/>
+      </branch>
+      <leaf relURI="research" doctype="Generic" menuName="Research" URL="http://www.ethz.ch"/>
+      <leaf relURI="positions" doctype="Generic" menuName="Open Positions"/>
+      <leaf relURI="related" doctype="Generic" menuName="Related Topics"/>
+    </branch>
+  </branch>
+</tree>
+          ]]>
+        </source>
+      </s2>									       
+      <s2 title="Parent-Child XML">
+        <source>
+          <![CDATA[
+<?xml version="1.0"?>
+
+<parentchild relURI="g06" doctype="Group" name="Polymer Chemistry">
+
+  <parents>
+    <parent relURI="" doctype="Department" name="Department"/>
+  </parents>
+
+  <children>
+    <child type="branch" relURI="members" doctype="Members" name="Members"/>
+    <child type="leaf" relURI="research" doctype="Generic" name="Research"/>
+    <child type="leaf" relURI="positions" doctype="Generic" name="Open Positions"/>
+    <child type="leaf" relURI="related" doctype="Generic" name="Related Topics"/>
+  </children>
+</parentchild>
+          ]]>
+        </source>
+      </s2>									       
+      <s2 title="Related Resources">
+        <p>
+	<fork href="http://www.xmldb.org" target=" ">XMLDB</fork><br />
+        <fork href="http://archive.covalent.net/xml/cocoon-users/2001/09/0294/DBAdderTest.java" target="_blank">Action Example</fork><br />
+        <fork href="http://www.xmldb.org" target="_blank">org.apache.cocoon.generation.XMLDBGenerator</fork><br />
+        <fork href="http://www.xmldb.org/xupdate/xupdate-wd.html" target="_blank">XUpdate</fork><br />
+        <fork href="http://www.dbxml.org" target="_blank">XIndice (dbXML)</fork><br />
+	</p>
+      </s2>
+    </s1>
+  </body>
+</document>
+

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : tasks-publishingtask.xml
+    Created on : November 13, 2002, 5:43 PM
+    Author     : ah
+    Description:
+        Purpose of the document follows.
+-->
+
+<document> 
+
+<header> 
+    <title>Working with XML</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<s1 title="Working with XML Documents"> 
+
+<p>
+The XML utility classes are:
+</p>
+
+<p>
+<source>
+<![CDATA[
+import org.wyona.xml.DocumentHelper;
+import org.wyona.xml.NamespaceHelper;
+]]>
+</source>
+</p>
+
+<s2 title="Creating a Document">
+<p>
+Use the following code to create a document with a given
+document element. A xmlns:svg="http://www.w3.org/2000/svg" attribute
+is added to the document element.
+</p>
+<p>
+<source>
+<![CDATA[
+Document document = DocumentHelper.createDocument(
+    "http://www.w3.org/2000/svg",
+    "svg:svg",
+    null);     // no document type
+]]>
+</source>
+</p>
+</s2>
+
+
+<s2 title="Reading a document from a file">
+<p>
+<source>
+<![CDATA[
+File file = ...;
+Document document = DocumentHelper.readDocument(file);
+]]>
+</source>
+</p>
+</s2>
+
+<s2 title="Writing a document from a file">
+<p>
+Use the following code to write a document to a
+file. The INDENT output property of the transformer is
+set to "yes".
+</p>
+<p>
+<source>
+<![CDATA[
+Document document = ...;
+File file = ...;
+DocumentHelper.writeDocument(document, file);
+]]>
+</source>
+</p>
+</s2>
+
+</s1>
+
+<s1 title="Working with Namespaces">
+
+<s2 title="Creating a NamespaceHelper">
+<p>
+Create a namespace helper with a new document:
+</p>
+
+<p>
+<source>
+<![CDATA[
+NamespaceHelper helper = new NamespaceHelper(
+    "http://www.w3.org/2000/svg",    // namespace URI
+    "svg",                           // prefix
+    "svg");                          // local name of document element
+]]>
+</source>
+</p>
+
+<p>
+Create a namespace helper for an existing document:
+</p>
+
+<p>
+<source>
+<![CDATA[
+Document document = ...;
+NamespaceHelper helper = new NamespaceHelper(
+    "http://www.w3.org/2000/svg",    // namespace URI
+    "svg",                           // prefix
+    document);                       // document
+]]>
+</source>
+</p>
+</s2>
+
+<s2 title="Creating Elements">
+
+<p>
+Create an empty element:
+</p>
+
+<p>
+<source>
+<![CDATA[
+// create <svg:ellipse> element
+Element element = helper.createElement("ellipse");
+]]>
+</source>
+</p>
+
+<p>
+Create an element containing a text node:
+</p>
+
+<p>
+<source>
+<![CDATA[
+// create <svg:text>Hello World!</svg:text> element
+Element element = helper.createElement("text", "Hello World!");
+]]>
+</source>
+</p>
+</s2>
+
+</s1>
+
+</body>
+</document>

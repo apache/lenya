@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Slide</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Things I learned">
+<p>
+<ol>
+<li>cp Java Transaction API library <link href="http://java.sun.com/products/jta/">jta.jar</link> to src/xml-cocoon2/lib/local</li>
+<li>sh build.sh -Dinclude.webapp.libs=yes -Dinclude.scratchpad.libs=yes webapp</li>
+<li>http://127.0.0.1:8080/cocoon/samples/slide/</li>
+<li>The directory, where the files will be saved (in the case of the FileContentStore) can be configured within <code>webapps/cocoon/samples/slide/slide.xconf</code> (<code>/slide/definition/store/contentstore/parameter/@rootpath</code>)</li>
+<li>Set "resetBeforeStarting" to false!</li>
+<li>Note that by default the MemoryDescriptorsStore is used for everything except for the content, which means that if you restart Tomcat, then everything seems to have vanished</li>
+</ol>
+</p>
+<p>
+<ol>
+<li>user, password and role has to be set within conf/tomcat-users.xml in order to use slide-admin (also see <link href="int-tomcat.html">Tomcat Access Controlling</link>)</li>
+</ol>
+</p>
+    </s1>
+
+<s1 title="Questions I have">
+<p>
+<ol>
+  <li>Why is there two times revisiondescriptorstore within slide.xconf?</li>
+</ol>
+</p>
+</s1>
+  </body>
+</document>
+

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document> 
+  <header> 
+	 <title>Revision Controller</title>
+	 <version>0.1</version> 
+	 <type>Overview document</type> 
+	 <authors>
+           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
+           <person name="Edith Chevrier" email="edith.chevrier@wyona.org"/>
+	 </authors> 
+  </header> 
+  <body> 
+   <s1 title="Revision Controller"> 
+
+   <s2 title="What is the Revision Controller?"> 
+    <p>
+The Revision Controller controls the check-in and check-out of the different documents (reserved check-in/check-out) and manages their different versions.
+    </p>
+    <p>
+An already checked out document cannot be checked out by someone other. An exception is sent, which tells who has already checked out this document and since when.
+    </p>
+    <p>
+When a document is checked-in, the old version of the document can be copied (backup).
+    </p>
+   </s2>
+   
+   <s2 title ="RCML-file">
+    <p>
+The different check-in/check-out of a file are memorised in an xml file (RCML-file) created by the class org.wyona.xps.rc.RCML:
+    </p>
+<source>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+
+<XPSRevisionControl>
+<CheckIn><Identity>wyona</Identity><Time>1023102128815</Time></CheckIn>
+<CheckOut><Identity>wyona</Identity><Time>1023102128780</Time></CheckOut>
+<CheckOut><Identity>wyona</Identity><Time>1023102125300</Time></CheckOut>
+<CheckOut><Identity>wyona</Identity><Time>1023102121346</Time></CheckOut>
+<CheckIn><Identity>wyona</Identity><Time>1023102110381</Time></CheckIn>
+<CheckOut><Identity>wyona</Identity><Time>1023102110349</Time></CheckOut>
+<CheckIn><Identity>System</Identity><Time>1023102073728</Time></CheckIn>
+<CheckOut><Identity>wyona</Identity><Time>1023102073695</Time></CheckOut>
+<CheckOut><Identity>wyona</Identity><Time>1023102012990</Time></CheckOut>
+<CheckOut><Identity>wyona</Identity><Time>1023102010354</Time></CheckOut>
+<CheckIn><Identity>System</Identity><Time>1022569908000</Time></CheckIn>
+</XPSRevisionControl>
+]]>                                                                                                                                         
+</source>
+    <p>
+The RCML-file are located in a preconfigured directory, the RCML-directory. The RCML-file of a specified article with "path" and "filename" is : RCML-directory+path+filename+.rcml  
+    </p>
+   </s2>
+
+   <s2 title="Backup">
+    <p>
+The backup are located in a preconfigured directory, the BACKUP-directory. The backup of a specified article with "path" and "filename" is : BACKUP-directory+filename+filename+.bak.time 
+    </p>
+   </s2>  
+   
+   <s2 title="Revision Controller">
+     <p>The functionality of the revision controller is managed by the java class org.wyona.cms.rc.RevisionController:
+     </p>
+     <ul>
+       <li>to check out a file call the method reservedCheckOut(String source, String identity), where source is the filename of the file and identity, the user. <br/>
+Rem: The same user is allowed to check out repeatedly without having to check back in first.     
+       </li>
+       <li>to check in a file call the method reservedCheckIn(String destination, String identity, boolean backup), where the destination is the filename of the file, the identity, the user and backup, a boolean to make a backup copy. <br/>
+Rem: <ul>
+      <li>the same user may check in a document repeatedly</li>
+      <li>an already checked out document cannot be checked out by someone other</li>
+      <li>it exists an user "System", who can override evry checkin</li> 
+     </ul> 
+       </li>
+       <li>to roll back to an old version call the method rollback(String destination, String identity, boolean backupFlag, long time), where destination is the filename of the file, the identity is the user, the backupFlag is a boolean to make a backup copy of the current version and the time is the time point of the desired old version.
+       </li>
+     </ul> 
+   </s2>
+   <s2 title="Revision-Controller Action">
+     <p>A specified URL will call an action, which in turn calls the Revision Controller. We defined two different actions, one for the checkin (the reserved-checkin-action) and one for the checkout (the reserved-checkout-action). Both actions inherite from org.wyona.cms.cocoon.acting.RevisionControllerAction.java
+     </p>
+   </s2> 
+</s1>
+<s1 title= "Check Out">
+   <s2 title="Reserved-Checkout Action">
+     <p>
+     The check out of a file can be activated by a specified URL, which call the reserved-checkout action. 
+     </p>
+     <ul>
+       <li>The action to check out a file is the java class java.org.wyona.cms.cocoon.acting.ReservedCheckoutAction</li>
+       <li>It calls the Revision Controller, the java class org.wyona.cms.rc.RevisionController and send the different exceptions. See also Exception Handling</li>
+       <li>The configuration of the needed parameters (RCML-directory and the BACKUP-directory) is made in the sitemap. See also Configuration</li>
+       <li>The value of the user is got from the session</li>
+       <li>The reference to the action is made in the authoring-sitemap.xmap. See also Sitemap</li>
+     </ul>
+   </s2>
+
+   <s2 title="Sitemap">
+     <p>
+      The authoring-sitemap.xmap treated of the check out of document in Authoring.
+     </p>
+     <ul>
+       <li>reference to the action : 
+         <p>    
+<source>
+<![CDATA[
+<map:components>
+    ...
+    <map:actions>
+      <map:action name="reserved-checkout" src="org.wyona.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+      </map:action>
+    </map:actions>
+    ...
+</map:components>
+]]>
+</source>
+         </p> 
+       </li>
+       <li>call the action for a check out in the pipeline : 
+         <p>
+           <source>
+<![CDATA[
+      <map:match pattern="rco/*/*/*/*/index.xml">
+        <map:act type="reserved-checkout">
+          <map:parameter name="filename" value="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+            <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="date" value="{date}"/>
+          </map:generate>
+          <map:serialize type="xml"/>
+        </map:act>
+        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+]]>
+           </source>
+         </p>
+       </li>                                                                                                                               
+     </ul> 
+   </s2>
+
+   <s2 title="Configuration">
+     <p>
+     </p>
+     <ul>
+       <li>The configuration of the RCML-directory and the BACKUP-directory is made in the sitemap. The desired parameters are given in the definition of the reerved-checkout-action: 
+         <p>
+           <source>
+ <![CDATA[
+     <map:actions>
+      <map:action name="reserved-checkout" src="org.wyona.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+         <rcmlDirectory href="docs/publication/rcml"/>
+         <backupDirectory href="docs/publication/rcbak"/>
+       </map:action>
+     </map:actions>
+ ]]> 
+          </source>
+        </p>        
+Their values are red by the ReservedCheckoutAction, who give them to the RevisionController. 
+       </li>
+     </ul>                                                                                                                                  
+   </s2>                                                                                                                                    
+
+<a name="exception"></a>
+    <s2 title="Exception Handling (XML)">
+     <p>
+     </p>
+     <ul>
+       <li> 
+If a document is checked-out already then the Reserved-Checkout-Action will 
+send the following XML:
+         <p>
+           <source>
+<![CDATA[
+<rc:exception>
+  <rc:file-reserved-checkout-exception>
+    <rc:filename><xsp:expr>filename</xsp:expr></rc:filename>
+    <rc:user><xsp:expr>user</xsp:expr></rc:user>
+    <rc:date><xsp:expr>date</xsp:expr></rc:date>                                                                                            
+  </rc:file-reserved-checkout-exception>
+</rc:exception>
+]]>
+           </source>
+         </p>
+       </li>
+       <li>
+If another exception occurs (ex: the file to check out doesn't exist,...) then the Reserved-Checkout-Action will
+send the following XML: 
+         <p>
+           <source>
+<![CDATA[ 
+<rc:exception>
+  <rc:exception>
+    <rc:filename><xsp:expr>filename</xsp:expr></rc:filename>
+  </rc:exception>                                                                                                                           
+</rc:exception>
+]]>
+           </source>
+         </p>  
+       </li>
+     </ul>
+   </s2>
+</s1>
+<s1 title="Check In">
+   <s2 title="Check In Action">
+     <p>
+     The check in of a file can be activated by a specified URL call through the reserved-checkin-action.
+     </p>
+     <ul>
+       <li>The action for the reserved check in is src/java/org/wyona/cms/cocoon/acting/ReservedCheckinAction.java</li>
+       <li>It calls the Revision Controller, the java class org.wyona.cms.rc.RevisionController and send the different exceptions. See also
+Exception Handling</li>
+       <li>The configuration of the needed parameters (RCML-directory and the BACKUP-directory) is made in the sitemap. See also Configuration</li>
+       <li>The value of the user is got from the session</li>
+       <li>The reference to the action is made in the authoring-sitemap.xmap. See also Sitemap</li>
+     </ul>
+   </s2>
+ 
+   <s2 title="Sitemap">
+     <p>
+      The authoring-sitemap.xmap treated of the check in of document in Authoring.
+     </p>
+     <ul>
+       <li>reference to the action :
+         <p>
+<source>
+<![CDATA[
+<map:components>
+    ...
+    <map:actions>
+      <map:action name="reserved-checkin" src="org.wyona.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin">
+        <rcmlDirectory href="docs/publication/rcml"/>
+        <backupDirectory href="docs/publication/rcbak"/>                                                                                    
+      </map:action>
+    </map:actions>
+    ...
+</map:components>
+]]>
+</source>
+         </p>
+       </li>
+       <li>call the action for a check in in the pipeline :
+         <p>
+           <source>
+<![CDATA[
+      <map:match pattern="rci/*/*/*/*/index.xml">
+        <map:act type="reserved-checkin">
+          <map:parameter name="filename" value="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+            <map:parameter name="exception" value="{exception}"/>                                                                           
+            <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="checkType" value="{checkType}"/>                                                                           
+            <map:parameter name="date" value="{date}"/>
+          </map:generate>
+          <map:serialize type="xml"/>
+        </map:act>
+        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+]]>
+           </source>
+         </p>
+       </li>
+     </ul>
+   </s2>                                                                                                                                    
+   <s2 title="Configuration">
+     <p>
+     </p>
+     <ul>
+       <li>The configuration of the RCML-directory and the BACKUP-directory is made in the sitemap. The desired parameters are given in the
+definition of the revision-control action:
+         <p>
+           <source>
+ <![CDATA[
+     <map:actions>
+       <map:action name="reserved-checkin" src="org.wyona.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin">
+         <rcmlDirectory href="docs/publication/rcml"/>
+         <backupDirectory href="docs/publication/rcbak"/>
+       </map:action>
+     </map:actions>
+ ]]>
+          </source>
+        </p>
+Their values are red by the ReservedCheckinAction, who give them to the RevisionController.
+       </li>
+     </ul>
+   </s2>
+ 
+<a name="exception"></a>
+    <s2 title="Exception Handling (XML)">
+     <p>
+     </p>
+     <ul>  
+       <li>If the document couldn't be checked in because it was already checked out by someone other or it was already checked in by someone other then the Check-In-Action will send the following XML:
+         <p>
+           <source>
+<![CDATA[
+<rc:exception>
+  <rc:file-reserved-checkin-exception>
+    <rc:exception><xsp:expr>exception</xsp:expr></rc:exception>
+    <rc:filename><xsp:expr>filename</xsp:expr></rc:filename>
+    <rc:checkType><xsp:expr>checkType</xsp:expr></rc:checkType>
+    <rc:user><xsp:expr>user</xsp:expr></rc:user>
+    <rc:date><xsp:expr>date</xsp:expr></rc:date>                                                                                            
+  </rc:file-reserved-checkin-exception>
+</rc:exception>
+]]>
+           </source>
+         </p>
+       </li>
+       <li>If another exception occurs (ex: the file to check in doesn't exist,...) then the Check-In-Action will
+send the following XML:
+         <p>
+           <source>
+<![CDATA[
+<rc:exception>
+  <rc:exception>
+    <rc:filename><xsp:expr>filename</xsp:expr></rc:filename>
+  </rc:exception>
+</rc:exception>
+]]>
+           </source>
+         </p>                                                                                                                               
+       </li>
+     </ul>
+   </s2>
+   </s1>
+   <s1 title= "Rollback">
+     <p> The rollback of a file can be called with a specified URL. The list of the different backup versions will appear on the rollback screen. We can view it or call the rollback to a specified version.
+     <ul>
+      <li>The rollback-screen and the view of the document are generated by serverpages: 
+        <ul>
+         <li>the docs/cms/revision-control/versions-screen.xsp for the screen</li>
+         <li>and the docs/cms/revision-control/view.xsp for the view</li>
+        </ul> 
+       </li>
+      <li>The rollback to the an old version si controlled by the rollback action org.wyona.cms.cocoon.acting.RollbackAction</li>
+     </ul> 
+     </p>
+   <s2 title="versions-screen.xsp">
+         <p> This serverpage include in the XML document for the screen the rcml document.
+         </p>
+   </s2>
+   <s2 title="view.xsp">
+         <p>
+          This serverpage include in the "View" XML document the XML of desired version
+         </p>
+   </s2>
+   <s2 title="org.wyona.cms.cocoon.acting.RollbackAction">
+     <p>
+      This action inherite from org.wyona.cms.cocoon.acting.RevisionController. It called the Revision Controller to execute the rollback
+     </p>
+   </s2>
+   <s2 title="Sitemap">
+     <p>
+       The authoring-sitemap.xmap treated of the rollback of document in Authoring. 
+     </p>
+     <ul>
+       <li>reference to the action for the rollback
+         <p>
+<source>
+<![CDATA[
+  <map:components> 
+   ...
+    <map:actions>
+     ...
+      <map:action name="rollback" src="org.wyona.cms.cocoon.acting.RollbackAction">
+        <rcmlDirectory href="docs/publication/rcml"/>
+        <backupDirectory href="docs/publication/rcbak"/>
+      </map:action>                                                                                                                         
+     ...
+    </map:actions>
+   ... 
+  </map:components> 
+]]>
+</source>
+         </p>
+       </li>
+       <li>call the action for a rollback in the pipeline
+         <p>
+<source>
+<![CDATA[
+      <map:match pattern="rollback/*/*/*/*/index.xml">
+        <map:act type="rollback">
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:redirect-to uri="{location}" session="true"/>
+        </map:act>
+      </map:match>                                                                                                                          
+]]>
+</source>
+         </p>                                                                                                                                 
+       </li>
+       <li>generation of the rollback-sreen document
+         <p>
+<source>
+<![CDATA[
+      <map:match pattern="revision/*/*/*/*/index.xml">
+        <map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
+          <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/>
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
+          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+          <map:parameter name="channel" value="{1}"/>
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="year" value="{3}"/>
+          <map:parameter name="articleId" value="{4}"/>
+        </map:generate>
+        <map:transform src="../../stylesheets/cms/Page/rollback.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>                                                                                                                            
+]]>
+</source>
+         </p>                                                                                                                                 
+       </li>
+       <li>generation of the view document
+
+         <p>
+<source>
+<![CDATA[
+      <map:match pattern="view/*/*/*/*/index.xml">
+        <map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
+          <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/>
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
+          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+        </map:generate>
+          <map:transform src="stylesheets/publication/Page/Article/Authoring/toArticle.xsl"/>
+          <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
+             <map:parameter name="section" value="{2}"/>
+          </map:transform>
+          <map:serialize type="html"/>
+      </map:match>                                                                                                                          
+]]>
+</source>
+         </p>                                                                                                                                        </li> 
+     </ul>
+   </s2>
+   <s2 title="Configuration">
+     <p>
+      The configuration of the RCML-directory and the BACKUP-directory are made in the sitemap. The desired parameters are given in the definition of the rollback-action and in the call of the serverpages: look above
+     </p>                                                                                                                                     
+   </s2>                                                                                                                                      
+   </s1>                                                                                                                                      
+</body>
+</document>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title></title>
+    <version>2002.01.03</version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+      <person name="" email=""/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Access Controller: Authorization and Authentication">
+	<anchor id="create_edit_user"/>
+       	<s2 title="Creating and Editing Users (Command Line)">
+	<p>
+	Creating and editing users on the command line depends on
+	the concrete authenticator used by the publication. You can find
+	out which authenticator is used by taking a look at the sitemaps of
+	the publication. The default authenticator is currently the IML-Authenticator.
+	</p>
+
+		<s3 title="IML-Authenticator">
+		<p>
+		"IML" stands for Identity Markup Language. Each user is defined by an IML-file.
+		For example, the user "wyona" is defined by the file "wyona.iml". The IML-files are
+		normally located at MY_PUB/docs/wyona/cms/ac/passwd, where MY_PUB is not the string
+		"MY_PUB", but rather the filesystem path under which "My Publication" is located, for instance
+		"wyona/cms/pubs/ethz-mat". To create a new user, just copy an existing one. The new user
+		will have the same password as the one you have copied. To create a new MD5 encrypted password
+		you can use the Java class <code>org.wyona.cms.ac.Password</code>, which is using 
+		the Java class <code>org.w3c.tools.crypt.Md5</code> (The classes can be found at WEB-INF/classes).
+		</p>
+		</s3>
+
+		<s3 title="RDB-Authenticator">
+		<p>
+		Not implemented yet.
+		</p>
+		</s3>
+
+		<s3 title="LDAP-Authenticator">
+		<p>
+		Not implemented yet.
+		</p>
+		</s3>
+	</s2>
+
+	<anchor id="edit_policies"/>
+	<s2 title="Editing Authorization Policies (Command Line)">
+	<p>
+	Creating and editing policies/permissions on the command line depends on
+	the concrete authorizer used by the publication. You can find
+	out which authorizer is used by taking a look at the sitemaps of
+	the publication. The default authorizer is currently the PML-Authorizer.
+	</p>
+
+		<s3 title="PML-Authorizer">
+		<p>
+		"PML" stands for "Policy Markup Language". The PML-Authorizer is matching each HTTP-request
+		with an action (i.e. read, write, publish, etc.) and a policy (permissions). The rules for matching are
+		defined by the sitemap "policies-sitemap.xmap". This sitemap is normally located in 
+		the "root" directory (MY_PUB) of each publication. The policies themselves can normally be found
+		at <code>MY_PUB/docs/wyona/cms/ac/policies</code>.
+		</p>
+		</s3>
+		<s3 title="XACML-Authorizer">
+		<p>
+		Not implemented yet. 
+		More information on XACML can be found <fork href="http://www.oasis-open.org/committees/xacml/">here</fork>.
+		</p>
+		</s3>
+	</s2>
+    </s1>
+  </body>
+</document>

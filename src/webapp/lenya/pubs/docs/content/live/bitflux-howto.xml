@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<header>
+		<title>Bitflux Editor How-To</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Felix Maeder" email="felix.maeder@wyona.org"/>
+		</authors>
+	</header>
+	<body>
+		<s1 title="How to make a document editable with Bitflux Editor">
+			<p>The following files are needed by bitflux. They are loaded when bitflux starts up.</p>
+			<ul>
+				<li>XML: data</li>
+				<li>XSLT: presentation</li>
+				<li>XSD: schema</li>
+				<li>CSS: presentation</li>
+			</ul>
+			<anchor id="01"/>
+			<s2 title="1. Adapting the sitemap (bitflux.xmap)">
+				<p>First thing is to add matchers for all files that are loaded by Bitflux to the corresponding sitemap (e.g. bitflux.xmap).</p>
+				<source><![CDATA[
+<!-- Frontpage: Webperls -->
+<map:pipeline>
+	<!-- This is the xml that will be edited with bitflux -->
+        <map:match pattern="webperls.xml">
+                <map:generate src="docs/publication/authoring/frontpage/webperls.xml"/>
+                <map:serialize type="xml"/>
+        </map:match>
+        <map:match pattern="stylesheets/webperls.xsl">
+                <map:generate src="cocoon://unipublic/authoring/index.xhtml"/>
+                <map:transform src="stylesheets/publication/Page/Front/Authoring/webperls-bitflux.xsl"/>
+                <map:serialize type="xml"/>
+        </map:match>
+        <map:match pattern="schemas/webperls.xsd">
+                <map:read src="docs/publication/doctypes/schemas/webperls-bitflux.xsd" mime-type="text/xml"/>
+        </map:match>
+        <map:match pattern="css/webperls.css">
+                <map:read src="resources/publication/styles/front-bitflux.css" mime-type="text/css"/>
+        </map:match>
+</map:pipeline>
+ ]]></source>
+				<p>You also have to add a section to bitflux.xmap that matches the post request that is sent to the server by bitflux for saving the document. It basically indicates where the xml file is saved.</p>
+				<source><![CDATA[
+<!-- Post -->
+<map:pipeline>
+	<!-- Save Frontpage -->
+<map:match pattern="save/*">
+	<map:act type="xopushandler">
+		<!-- Location where the xml file that is sent by bitflux has to be saved -->
+		<map:parameter name="save-filename" value="frontpage/{1}"/>
+		<!-- The server will tell the editor that the file was saved successfully. 
+			The editor has to do the redirection. 
+		       This xml is sent to bitflux after saving -->
+		<map:generate src="docs/cms/bitflux_response_ok.xml"/>
+		<map:serialize type="xml"/>
+	</map:act>
+	<map:generate src="xopus_error.xml"/>
+	<map:serialize type="xml"/>
+</map:match>
+<!-- Error handling -->
+<map:handle-errors>
+	<map:transform src="context://stylesheets/system/error2html.xsl"/>
+	<map:serialize status-code="500"/>
+</map:handle-errors>
+</map:pipeline>
+<!-- /POST -->
+]]></source>
+			</s2>
+			<anchor id="02"/>
+			<s2 title="2. Creating the XSLT">
+				<p>The XSLT that is used by bitflux needs to be in a certain form in order to specify what can be edited through bitflux. So you have to provide a bitflux-specific XSLT. The easiest way to achieve this is to build the XSLT dynamically.    </p>
+				<source><![CDATA[
+<map:match pattern="stylesheets/webperls.xsl">
+	<map:generate src="cocoon://unipublic/authoring/index.xhtml"/>
+	<map:transform src="stylesheets/publication/Page/Front/Authoring/webperls-bitflux.xsl"/>
+	<map:serialize type="xml"/>
+</map:match>
+]]></source>
+				<p>The generator get the xhtml of the entire page through the cocoon protocol.</p>
+				<p>The transform stylesheet converts the xhtml to a stylesheet (i.e. adds the xsl:stylesheet element etc.) and replaces the sections that should be editable with the bitflux specific code:</p>
+				<source><![CDATA[
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                              xmlns:xslout="Can be anything, doesn't matter">
+<xsl:output type="xml"/>
+<xsl:namespace-alias stylesheet-prefix="xslout" result-prefix="xsl"/>
+
+<!-- Copies everything else to the result tree  -->
+<xsl:template match="@* | node()">
+  <xsl:copy>
+    <xsl:apply-templates select="@* | node()"/>
+  </xsl:copy>
+</xsl:template>
+
+<!-- Replaces the html code of the editable section by the bitflux specific code -->
+<xsl:template match="*[@bxe-editable='true']">
+	<webperls contentEditable="true">
+                <xslout:for-each select="webperls">
+  			<xslout:apply-templates/>
+                </xslout:for-each>
+	</webperls>
+</xsl:template>
+
+<!-- Adds the stylesheet specific elements -->
+<xsl:template match="/">
+  <xslout:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+    <xslout:output type="xml"/>
+    <xslout:template match="/">
+      <xsl:apply-templates/>
+    </xslout:template>
+
+	<!-- Template used by Bitfluxeditor to make things editable -->
+        <xslout:template match="*">
+                <xslout:copy>
+                        <xslout:for-each select="@*">
+                                <xslout:copy/>
+                        </xslout:for-each>
+                        <xslout:apply-templates select="node()"/>
+                </xslout:copy>
+        </xslout:template>
+
+  </xslout:stylesheet>
+</xsl:template>
+</xsl:stylesheet>
+]]></source>
+				<p>In order to indicate what part should be editable you can add an attribute to the respective xhtml element (in this example: bxe-editable="true"). The above stylesheet then replaces this element with the xml element that can be edited at that position.</p>
+				<p>The attribute "bxe-editable" has to be added in the XSLT that renders the page. This could look something like that:</p>
+				<source><![CDATA[
+<xsl:template match="webperls">
+	<table border="0" cellpadding="2" cellspacing="0" bgcolor="#CCCCFF">
+		<span bxe-editable="webperlen">
+		<snip>Here goes the xslt/xhtml code that displays this part of the page.</snip>
+		</span>
+	</table>
+</xsl:template>
+]]></source>
+			</s2>
+			<anchor id="03"/>
+			<s2 title="3. Creating the XSD">
+				<p>The XSD is bitflux-specific and quite simple (e.g. minOccurs and maxOccurs are not supported). It tells the editor where which elements can be inserted and deleted. Have a look at the examples! A simple element definition could look like this:</p>
+				<source><![CDATA[
+<xs:element name="title" type="xs:string">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Title</xs:documentation>
+		<xs:appinfo>
+			<bxe:name>Title</bxe:name>
+			<bxe:noaddparas>1</bxe:noaddparas>
+			<bxe:requiredattributes>href</bxe:requiredattributes>
+			<!-- The CDATA-code is inserted when the users presses the "return" key -->
+			<bxe:returnelement><![CDATA[<Byline>Byline</Byline>] ]></bxe:returnelement> 
+		</xs:appinfo>
+	</xs:annotation>
+</xs:element>
+]]></source>
+				<p>A complex element definiton could look like this:</p>
+				<source><![CDATA[
+<xs:element name="webperl">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Webperl</xs:documentation>
+		<xs:appinfo>
+			<bxe:name>Webperl</bxe:name>
+			<bxe:returnelement>none</bxe:returnelement>
+			<!-- This element can be inserted after the element "webperl" -->
+			<bxe:insertafter>
+				<bxe:element>webperl</bxe:element>
+			</bxe:insertafter>
+			<!-- The CDATA-code is inserted as well when this element is added -->
+			<bxe:addalso>
+				<![CDATA[<title href="http://www.unizh.ch">Title</title>] ]>
+			</bxe:addalso>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:complexType>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="title"/>
+			<xs:element ref="byline"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:element>
+]]></source>
+				<p>The xml that is represented by the sample xsd above look like this:</p>
+				<source><![CDATA[
+<webperls>
+	<webperl>
+		<title>Some Title</title>
+		<byline>Some Byline</byline>
+	</webperl>
+	<webperl>
+		<title>Some Title</title>
+		<byline>Some Byline</byline>
+	</webperl>
+</webperls>
+]]></source>
+				<p>Because neither the bitflux-xsd nor the css is "context-sensitive" (head/title, document/title, block/title are treated all the same) it is strongly recommended to use unique element names (e.g. "headline", "title", "subtitle", "block_title"). It is also advisable to use only lower-case element names due to a strange behavior of Mozilla with respect to cases.</p>
+			</s2>
+			<anchor id="04"/>
+			<s2 title="4. Creating the CSS">
+				<p>In the CSS you define how the xml elements that are editable are displayed in the editor: You assign a style to every xml element. That's because it is the xml itself that is displayed and edited in the browser (and not html), and the styles define the look of the element.</p>
+				<source><![CDATA[
+title, byline {
+	font-size: 11px;
+	font-family: Geneva, Verdana, Helvetica, Arial, Swiss; 
+}
+title, byline {
+	display: block;
+	margin: 1.33em 0;
+}
+]]></source>
+			</s2>
+			<anchor id="05"/>
+			<s2 title="5. Adding an entry to the menu">
+				<p>Now you only have to add an entry to the menu bar an you are done! This is done in the corresponding xsp file that generates the menu of the page: e.g. src/webapp/wyona/cms/pubs/unipublic/docs/publication/menus/front.xsp</p>
+				<source><![CDATA[
+<item>
+        <xsp:attribute name="href">
+                <xsp:expr>
+                "/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/webperls.xml
+                &amp;url-xslt="+bitflux_prefix+"/stylesheets/webperls.xsl
+                &amp;url-xsd="+bitflux_prefix+"/schemas/webperls.xsd
+                &amp;url-css="+bitflux_prefix+"/css/webperls.css
+                &amp;url-post="+bitflux_prefix+"/save/webperls.xml
+                &amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"
+                </xsp:expr>
+        </xsp:attribute>
+        Edit&#160;Webperls
+</item>
+]]></source>
+				<p>The "url-back" parameter indicates the URL that is loaded after the user leaves the bitflux editor (by pressing "save and exit").</p>
+			</s2>
+		</s1>
+	</body>
+</document>

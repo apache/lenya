@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document> 
+  <header> 
+	 <title>Tomcat</title>
+	 <version>0.1</version> 
+	 <type>Overview document</type> 
+	 <authors>
+           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
+	 </authors> 
+  </header> 
+  <body> 
+   <s1 title="Access Controlling"> 
+
+   <s2 title="/webapps/ROOT/WEB-INF/web.xml"> 
+<p>
+Add security-constraint
+</p>
+    <p>
+<source>
+<![CDATA[
+<web-app>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Xopus</web-resource-name>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>xopus</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>Xopus</realm-name>
+  </login-config>
+</web-app>
+]]>
+</source>
+    </p>
+   </s2>
+
+   <s2 title="/conf/tomcat-users.xml">
+    <p>
+    Add user, role, password
+    </p>
+    <p>
+<source>
+<![CDATA[
+<tomcat-users>
+  <user name="tomcat" password="tomcat" roles="tomcat" />
+  <user name="role1"  password="tomcat" roles="role1"  />
+  <user name="both"   password="tomcat" roles="tomcat,role1" />
+  <user name="wyona"  password="levi"   roles="xopus" />
+</tomcat-users>
+]]>
+</source>
+    </p>
+   </s2>
+
+   <s2 title="Stop and Start Tomcat">
+    <p>
+    shutdown.sh/startup.sh
+    </p>
+   </s2>
+
+   <s2 title="More Information">
+    <p>
+<fork href="http://www.onjava.com/pub/a/onjava/2001/07/24/tomcat.html">Info Tomcat</fork>
+    </p>
+   </s2>
+
+   </s1>
+  </body>
+</document>

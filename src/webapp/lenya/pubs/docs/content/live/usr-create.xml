@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Creating Content</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="" email=""/>
+      <person name="" email=""/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Creating Content">
+        <p>
+	  To be documented soon
+	  <anchor>#pc</anchor>
+	  <anchor>#dc</anchor>
+	</p>
+    </s1>
+  </body>
+</document>

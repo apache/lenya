@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document> 
+  <header> 
+    <title>Scheduler</title>
+    <version>0.3</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
+      <person name="Christian Egli" email="christian.egli@wyona.org"/>
+    </authors> 
+  </header> 
+  <body> 
+    <s1 title="The Scheduler"> 
+      
+      <s2 title="What is the Scheduler good for?"> 
+	<p>
+	  If you want to publish an article at some specific time,
+	  then you can tell the scheduler to execute the publication
+	  process at this specific time.
+	</p>
+      </s2>
+      
+      <s2 title="User Interface"> 
+	<p>
+	  To schedule a task for a specific page, click in the Menu
+	  "File" on the item "Schedule".  Then you should see the
+	  following screen:
+	</p>
+	
+	<figure src="images/scheduler-user-screen.gif" alt=""/>
+
+      </s2>
+      
+      <s2 title="Administrator Interface"> 
+	<p>
+	  If you want to see all scheduled tasks for a specific
+	  publication, then you have to click on the tab
+	  "Administrator" to the enter the Wyona Administrator.  There
+	  you can click on "Scheduler" to see all currently scheduled
+	  tasks.
+     </p>
+	
+	<figure src="images/scheduler-administrator-screen.gif" alt=""/>
+	
+      </s2>
+      
+      <s2 title="Existing Schedulers?"> 
+	<ul>
+	  <li><link href="http://www.part.net/quartz.html">Quartz</link></li>
+	  <li><link href="http://jcrontab.sourceforge.net/help.shtml">Jcrontab</link></li>
+	</ul>
+      </s2>
+      
+      <s2 title="Scheduling Markup Language">
+	<p>
+	  There are many ways to define a Scheduling Markup Language
+	</p>
+	<source>
+	  <![CDATA[
+<sch:scheduler>
+
+<sch:triggers>
+  <sch:trigger name="date" src="org.wyona.cms.scheduler.DateTrigger"/>
+  <sch:trigger name="modified" src="org.wyona.cms.scheduler.ContentModifiedTrigger"/>
+</sch:triggers>
+
+<sch:actions>
+  <sch:action name="publish" src="org.wyona.cms.scheduler.PublishAction"/>
+  <sch:action name="email" src="org.wyona.cms.scheduler.EMailAction"/>
+</sch:actions>
+
+<sch:publication name="nwt">
+<sch:tasks>
+  <sch:task action-type="publish">
+    <sch:trigger type="date">
+      <sch:parameter name="year" value="2002"/>
+      <sch:parameter name="month" value="6"/>
+      <sch:parameter name="day" value="14"/>
+      <sch:parameter name="hour" value="13"/>
+      <sch:parameter name="minute" value="47"/>
+    </sch:trigger>
+    <sch:parameter name="docid" value="articles/2002/6/13/article97HKI79"/>
+  </sch:task>
+</sch:tasks>
+</sch:publication>
+</sch:scheduler>
+]]>
+	</source>
+      </s2>
+      
+      <s2 title="Java API"> 
+	<ul>
+	  <li><link href="http://quartz.sourceforge.net/javadoc/index.html">Quartz</link></li>
+	  <li><link href="http://jcrontab.sourceforge.net/doc/index.html">Jcrontab</link></li>
+	</ul>
+      </s2>
+      
+      <s2 title="Extra Library"> 
+	<ul>
+	  <li>lib/commons-dbcp.jar</li>
+	</ul>
+      </s2>
+      
+      <s2 title="Configuration: web.xml">
+	<p>
+	  In order to initialize the serlet at startup, one has to modify
+	  the file web.xml as follows:
+	</p>
+	<source>
+<![CDATA[
+   <!-- Scheduler -->
+   <servlet>
+     <servlet-name>LoadServlet</servlet-name>
+     <servlet-class>org.quartz.web.LoadQuartzServlet</servlet-class>
+     <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet-mapping>
+     <servlet-name>LoadServlet</servlet-name>
+     <url-pattern>/load</url-pattern>
+   </servlet-mapping>
+   <!-- /Scheduler -->
+]]>
+	</source>
+	<p>
+	  This allows you to call the servlet by either
+	  http://localhost:8080/wyona-cms/servlet/LoadServlet or
+	  http://localhost:8080/wyona-cms/load
+	</p>
+      </s2>
+      <s2 title="Status">
+	<p>
+	  The following things need to be done:
+	  <ul>
+	    <li><code>PublishJob</code> needs to be integrated with
+	    the Wyona publishing framework.</li>
+	    <li>The document id has to be passed to the servlet when
+	    calling it from any document.</li>
+	    <li>Move everything from scratchpad into proper
+	    locations.</li>
+	    <li>Make sure the state of the scheduler is saved when the
+	    servlet engine goes down and is read in when it comes up.</li>
+	  </ul>
+	</p>
+      </s2>
+      <s2 title="Design">
+	<p>
+	  The design of the scheduler is pretty much given due to the
+	  implementation of the quarz scheduler. See also the
+	  following diagram:
+	  <figure src="images/schedulerClassDiagram.png" alt="Class Diagram for Scheduler"/>
+	</p>
+      </s2>
+    </s1>
+
+    <s1 title="Jobs"> 
+      <s2 title="HelloWorldJob">
+	<p>
+...
+	</p>
+      </s2>
+    </s1> 
+
+    <s1 title="Triggers"> 
+      <s2 title="DateTrigger">
+	<p>
+...
+	</p>
+      </s2>
+
+      <s2 title="CronTrigger">
+	<p>
+...
+	</p>
+      </s2>
+    </s1> 
+  </body>
+</document>

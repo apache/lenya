@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Tutorial</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+<s1 title="Introduction">
+<p>
+At the moment there seem to be two possibilities to
+use Wyona. You can either copy a sample publication from
+the Wyona distribution which has a similar information
+architecture as the one you have in mind for yourself, or
+you might have an existing Cocoon based publication, which
+you want to make content manageable, which means documents respectively
+pages shall basically be editable and publishable.
+</p>
+</s1>
+
+<s1 title="Customizing a sample publication">
+<s2 title="Sample publications">
+<p>
+The following sample publications currently exist:
+<ol>
+  <li>UNIPUBLIC (University of Zurich)</li>
+  <li>Department of Materials Science (Swiss Federal Institute of Technology)</li>
+</ol>
+</p>
+</s2>
+<s2 title="Copy sample publication">
+<p>
+</p>
+<p>
+In following let <b>ethz-mat</b> be the source and <b>MY-PUB</b> the name of the new publication
+</p>
+<ol>
+<li>Copy: cp -r wyona/cms/pubs/ethz-mat wyona/cms/pubs/MY-PUB</li>
+<li>Rename the ethz/mat subdirectories for your purpose<br />
+     for instance: ethz-mat/docs/ethz/mat ==> MY-PUB/docs/standard/t01 <br />
+     and: ethz-mat/stylesheets/ethz/mat ==> MY-PUB/stylesheets/standard/t01
+</li>
+<li>
+Configure MY-PUB/sitemap.xmap<br />
+Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
+<p>
+<source>
+<![CDATA[
+<map:components>
+ ...
+ <map:actions>
+   <map:action name="authorizer" src="org.wyona.cms.cocoon.acting.PMLAuthorizerAction"
+                                               logger="sitemap.action.pml-authorizer">
+      <authenticator type="MY-PUB"/>
+      <policies>MY-PUB/policies/</policies>
+      <public>login-screen|do-login|switch-user|logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
+   </map:action>
+   <map:action name="authenticator" src="org.wyona.cms.cocoon.acting.IMLAuthenticatorAction"
+                                                  logger="sitemap.action.iml-authenticator">
+      <type>MY-PUB</type>
+      <passwd>MY-PUB/passwd/</passwd>
+   </map:action>
+ </map:actions>
+</map:components>
+...
+<map:resources>
+  <map:resource name="login">
+    <map:generate type="serverpages" src="../../docs/cms/access-control/identify.xsp"/>
+    <map:transform src="../../stylesheets/cms/Page/Login/main.xsl">
+      <map:parameter name="publication_name" value="MY-PUB"/>
+      <map:parameter name="publication_id" value="MY-PUB"/>
+      <map:parameter name="wyona_path" value="wyona/cms/pubs/MY-PUB/docs/standard/t01/" />
+    </map:transform>
+    <map:serialize type="html"/>
+  </map:resource>
+</map:resources>
+]]>
+</source>
+<source>
+<![CDATA[
+<map:match pattern="logout">
+  <map:generate type="serverpages" src="../../docs/cms/access-control/invalidate.xsp"/>
+  <map:transform src="../../stylesheets/cms/Page/Logout/main.xsl">
+    <map:parameter name="publication_name" value="MY-PUB"/>
+  </map:transform>
+  <map:serialize/>
+</map:match>
+]]>
+</source>
+</p>
+</li>
+<li>
+Set Name of Publication: wyona/cms/pubs/MY-PUB/stylesheets/wyona/cms/conf/conf.xsl
+(e.g. 'MY Publication')
+<p>
+<source>
+<![CDATA[
+<?xml version="1.0"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+ <xsl:include href="../../../Configuration/read.xsl"/>
+ <xsl:variable name="publication">MY Publication</xsl:variable>
+ <xsl:variable name="copyright">copyright &#169; 2002 wyona.org</xsl:variable>
+</xsl:stylesheet>
+]]>
+</source>
+</p>
+</li>
+<li>
+Moreover, replace ethz-mat by MY-PUB in following files:<br />
+i)   webapp/wyona/cms/docs/cms/menus/live.xsp<br />
+ii)  webapp/wyona/cms/pubs/MY-PUB/docs/cms/menus/live.xsp<br />
+iii) webapp/wyona/cms/pubs/MY-PUB/stylesheets/standard/t01/Configuration/read.xsl<br />
+iv)  webapp/wyona/cms/pubs/MY-PUB/stylesheets/Configuration/read.xsl<br />
+v)   webapp/wyona/cms/pubs/MY-PUB/stylesheets/wyona/cms/edit/Page/root.xsl
+</li>
+</ol>
+</s2>
+<s2 title="Adding copied publication to root sitemap">
+<p>
+</p>
+<p>
+File: webapp/sitemap.xmap
+</p>
+<p>
+<source>
+<![CDATA[
+<map:match pattern="MY-PUB/**">
+   <map:mount uri-prefix="MY-PUB" src="wyona/cms/pubs/MY-PUB/sitemap.xmap"
+                                 check-reload="true" reload-method="synchron"/>
+</map:match>
+]]>
+</source>
+</p>
+</s2>
+</s1>
+<s1 title="Adding CM functionalities to an existing publication">
+<s2 title="Creating Authoring and Live area">
+<p>
+</p>
+<p>
+to do
+</p>
+</s2>
+</s1>
+<s1 title="Import content">
+<s2 title="Create XSLT from HTML with JTidy">
+<p>
+</p>
+<p>
+export PATH=/usr/local/jdk1.3.1/bin:$PATH <br />
+java -classpath WYONACMS/build/wyona-cms/classes:WYONACMS/build/wyona-cms/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar org.wyona.util.TidyCommandLine
+</p>
+</s2>
+</s1>
+<s1 title="Regard following items">
+<s2 title="Modify EditorMainAction if the html-editor is used">
+<p>
+</p>
+<p>
+Modify 'wyonaPath'in the java-class org.wyona.cms.cocoon.acting.EditorMainAction<br />
+     for instance: String wyonaPath="wyona/cms/pubs/MY-PUB/docs/standard/t01/";<br />
+     and recompile.
+</p>
+
+</s2>
+</s1>
+</body>
+</document>
+

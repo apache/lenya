@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>CocoBlog</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Introduction">
+<p>
+CocoBlog has been created by Ugo Cei.
+</p>
+    </s1>
+    <s1 title="Installing CocoBlog">
+      <s2 title="CVS">
+<p>Login:</p>
+<ul>
+<li>cvs -d:pserver:anonymous@cvs.cocoblog.sourceforge.net:/cvsroot/cocoblog login</li>
+<li>password: empty password, just hit return</li>
+</ul>
+
+<p>Checkout:</p>
+<ul>
+<li>cvs -z3 -d:pserver:anonymous@cvs.cocoblog.sourceforge.net:/cvsroot/cocoblog co cocoon-cocoblog</li>
+</ul>
+
+<p>Update:</p>
+<ul>
+<li>cvs -z3 -d:pserver:anonymous@cvs.cocoblog.sourceforge.net:/cvsroot/cocoblog -q update -d</li>
+</ul>
+      </s2>
+
+      <s2 title="Compiling/Building and Installing">
+<ul>
+<li>export JAVA_HOME=/usr/local/jdk1.3.1</li>
+<li>export ANT_HOME=/usr/local/jakarta-ant-1.4.1</li>
+<li>export PATH=/usr/local/jakarta-ant-1.4.1/bin:$PATH</li>
+<li>ant -Dwebapp.dir=/usr/local/jakarta-tomcat-4.0.4-b3/webapps/cocoon</li>
+</ul>
+      </s2>
+
+
+
+      <s2 title="Fix HSQLDB bug">
+<ul>
+<li>cp ~/src/cocoon-cocobloglib/excalibur-datasource-1.0.jar /usr/local/jakarta-tomcat-4.0.4-b3/webapps/cocoon/WEB-INF/lib/excalibur-datasource-vm12-20020820.jar</li>
+</ul>
+      </s2>
+
+
+      <s2 title="Populate Database">
+<ul>
+<li>
+/usr/local/jdk1.3.1/bin/java -cp ~/src/cocoon-cocoblog/lib/hsqldb-1.7.0.jar org.hsqldb.util.DatabaseManagerSwing
+</li>
+<li>URL = jdbc:hsqldb:hsql://localhost:9002</li>
+</ul>
+      </s2>
+    </s1>
+
+
+
+    <s1 title="Use CocoBlog">
+      <s2 title="Homepage">
+<p>
+<link href="http://127.0.0.1:8080/cocoon/blog/">http://127.0.0.1:8080/cocoon/blog/docs</link>
+</p>
+      </s2>
+    </s1>
+  </body>
+</document>
+

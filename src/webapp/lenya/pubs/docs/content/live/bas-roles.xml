@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document> 
+  <header> 
+    <title>Wyona Concepts</title>
+    <version></version> 
+    <type></type> 
+    <authors>
+      <person name="" email=""/> 
+      <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
+    </authors> 
+  </header> 
+  <body>
+
+
+    <s1 title="Roles of the Wyona Users"> 
+
+<p>
+  All users of the Wyona-CMS have roles assigned to their usernames. These roles 
+  are the basis of the authorization scheme used throughout the application. The roles
+  and their respective authorizations are totally customizable through an
+  administration panel.
+</p>
+<p>
+  All roles belong to one of these main groups:</p>
+<ol>
+  <li><jump href="bas-roles.html" anchor="roles_admin">Administrators</jump></li>
+  <li><jump href="bas-roles.html" anchor="roles_author">Authors</jump></li>
+  <li><jump href="bas-roles.html" anchor="roles_designer">Designers</jump></li>
+  <li><jump href="bas-roles.html" anchor="roles_publisher">Publishers</jump></li>
+</ol>
+
+<anchor id="roles_admin"/>
+<s2 title="Administrators">
+<p align="justify">
+  Administrators are responsible for:
+  <ul>
+    <li>Maintaining users and their profiles (e.g. assigned roles)</li>
+    <li>Maintaining the site/publication description</li>
+    <li>Maintaining page descriptions</li>
+    <li>Configuring the Wyona-CMS:</li>
+    <ul>
+      <li>Assigning editors to edit tasks</li>
+      <li>...</li>
+    </ul>
+  </ul>
+</p>
+<p align="justify">
+  For most/all of these tasks, specific configuration pages are provided
+  whithin the Wyona-CMS's <i>Administration Block</i> to shield the 
+  administrator from the internals of xml/xsl technologies and the
+  Cocoon environment.
+</p>
+</s2>
+
+<anchor id="roles_author"/>
+<s2 title="Authors">
+<p>
+  Authors are the users responsible for content creation and management, they use
+  the specific editors to maintain the content in a controlled and consistant way.
+  Typically, authors are never confronted with design choices and/or xml/xsl documents, 
+  they only work whithin the Wyona-CMS environment, i.e. a www-browser. The content
+  is first placed in a staging context, waiting for a <a href="#roles_publisher">
+  publisher</a> to publish it so that it can be viewed by external viewers of
+  the publication.
+</p>
+</s2>
+<anchor id="roles_designer"/>
+<s2 title="Designers">
+<p>
+  Designers are users responsible for maintaining the layout and style of the
+  publication. Typically, they work directly with the xsl and css files
+  used to transform the publication for presentation (e.g. in a browser), as
+  well as the required graphic files. All these files are located in a separate
+  branch of the application tree for convenience (see also 
+  <a href="#directories">Directory structure</a> below). To simplify the 
+  designer's work, a <i>"publication explorer"</i> could be provided, that helps
+  to navigate the publishing tree (by reading sitedef.xml) and to identify the content
+  files and their structure (by reading the page descriptor files), and that 
+  can be linked to any xml/xsl-editor.
+</p>
+</s2>
+
+<anchor id="roles_publisher"/>
+<s2 title="Publishers">
+<p align="justify">
+  Publishers are users that have permission to add staged content to the live
+  publication. This role group is primarily introduced for workflow management
+  purposes. In practice, publisher roles will be combined with author roles to 
+  model the workflow of the content management environment, allowing for reviewing
+  and editing activities.
+</p>
+
+</s2>
+    </s1>
+
+  </body>
+</document>

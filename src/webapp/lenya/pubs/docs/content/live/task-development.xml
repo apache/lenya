@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : task-development.xml
+    Created on : November 13, 2002, 4:25 PM
+    Author     : ah
+    Description:
+        Purpose of the document follows.
+-->
+
+<document> 
+
+<header> 
+    <title>Tasks</title>
+    <version>0.1</version> 
+    <type>Overview document</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<s1 title="The Task Concept"> 
+<p>
+In Wyona CMS, a <strong>task</strong> is used to implement a process
+which can be invoked by the user. Tasks are triggered
+from the sitemap using a <link href=""><code>TaskAction</code></link>
+or scheduled using a <link href=""><code>TaskJob</code></link>.
+</p>
+<p>
+Typical tasks are
+</p>
+<ul>
+  <li>publishing a page,</li>
+  <li>exporting a page to a live server,</li>
+  <li>manipulating a file,</li>
+  <li>sending an e-mail, or</li>
+  <li>creating a backup of your site.</li>
+</ul>
+</s1>
+
+<s1 title="Defining Tasks">
+<p>
+All tasks to be used in a publication must be declared in the file
+<code>[publication-directory]/docs/publication/tasks.xconf</code>.
+A typical task configuration file looks like follows:
+</p>
+<source>
+<![CDATA[
+<?xml version="1.0"?>
+<tasks>
+
+  <!-- publish page -->
+  <task id="publish">
+    <label>Publish</label>
+    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher">
+      <parameter name="live-path" value="docs/publication/live"/>
+      <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>
+    </task>
+    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter">
+      <parameter name="export-path" value="resources/publication/export/pending"/>
+      <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
+    </task>
+  </task>
+
+  <!-- print message -->
+  <task id="hello-world" class="org.wyona.cms.task.HelloWorldTask">
+    <label>Print Message</label>
+  </task>
+
+</tasks>
+]]>
+</source>
+<p>
+Every task must have a unique <code>id</code> attribute. This identifier is
+used to address the task from the sitemap.
+Every top-level task must have a child element <code>&lt;label&gt;</code>. The
+content of this element is used, e. g., by the scheduler to let the user choose
+a task from a list. The actual implementation of a task is identified using the
+<code>class</code> attribute.
+</p>
+
+<s2 title="Parameters">
+<p>
+Usually, a task needs some parameters to be executed properly.
+There are two possibilities to pass parameters to a task:
+<ol>
+  <li>
+    You can define all parameters or a subset of them in the <code>tasks.xconf</code> file.
+  </li>
+  <li>
+    The remainig parameters can be handled to the <code>TaskAction</code> or the
+    <code>TaskJob</code> that executes the task. Request parameters always have a higher
+    priority than parameters from the <code>tasks.xconf</code> file.
+  </li>
+</ol>
+</p>
+
+<p>
+To simplifiy the passing of parameters to tasks, the <code>TaskAction</code> and
+<code>TaskJob</code> objects create some default parameters based on
+the request and session objects:
+<ul>
+  <li>
+    <code>Task.PARAMETER_SERVLET_CONTEXT</code> - the path of the servlet context<br/>
+    <code>/home/user_id/build/jakarta-tomcat/webapps/wyonacms</code>
+  </li>
+  <li>
+    <code>Task.PARAMETER_SERVER_URI</code> - the server URI<br/>
+    <code><strong>http://www.yourhost.com</strong>:8080/wyona-cms/publication/index.html</code>
+  </li>
+  <li>
+    <code>Task.PARAMETER_SERVER_PORT</code> - the server port<br/>
+    <code>http://www.yourhost.com:<strong>8080</strong>/wyona-cms/publication/index.html</code>
+  </li>
+  <li>
+    <code>Task.PARAMETER_CONTEXT_PREFIX</code> - the part of the URI that precedes the publication ID<br/>
+    <code>http://www.yourhost.com:8080<strong>/wyona-cms/</strong>publication/index.html</code>
+  </li>
+  <li>
+    <code>Task.PARAMETER_PUBLICATION_ID</code> - the publication ID<br/>
+    <code>http://www.yourhost.com:8080/wyona-cms/<strong>publication</strong>/index.html</code>
+  </li>
+</ul>
+
+</p>
+
+</s2>
+
+<s2 title="Task Sequences">
+<p>
+Tasks can be nested using so-called <em>task sequences</em>. Sub-tasks of other
+tasks don't need to have <code>&lt;label&gt;</code> elements because they can't
+be addressed independently. Whenever a task sequence is executed, all sub-tasks
+are executed in the same order as they are declared.
+</p>
+<p>
+When you group tasks, the enclosing <code>&lt;task&gt;</code> element does not
+need a <code>&lt;class&gt;</code> attribute. If you omit it, the <code>TaskSequence</code>
+class is used as default. If you want to implement your own task grouping
+mechanism using a subclass of <code>TaskSequence</code>, you can append a
+class attribute.
+</p>
+<p>
+All parameters that are passed to a TaskSequence are forwarded to all tasks
+in the sequence. By creating a subclass of <code>TaskSequence</code> you could implement
+a parameter selection mechanism, e. g. using namespace prefixes.
+</p>
+</s2>
+
+<s2 title="Assigning Tasks to Document Types">
+<p>
+Every document type can support a set of tasks. The labels of these tasks
+are displayed on the scheduler screen of a document of this type.
+To assign a task to a document type, you have to edit the file
+<code>[publication-directory]/docs/publication/doctypes/doctypes.xconf</code>:
+</p>
+<source>
+<![CDATA[
+<doctypes>
+  <doc type="Simple-Document">
+    <tasks>
+      <task id="publish"/>
+      <task id="backup"/>
+      ...
+    </tasks>
+  </doc>
+  ...
+</doctypes>
+]]>
+</source>
+<p>
+You can associate every task with an arbitrary number of document types.
+</p>
+
+</s2>
+
+</s1>
+
+<s1 title="The TaskAction: Triggering a Task from the Sitemap">
+
+<p>
+To invoke a task from a sitemap pipeline, you use a <code>TaskAction</code>. The
+task ID is handled to the action by a <code>task</code> parameter:
+</p>
+
+<source>
+<![CDATA[
+<map:components>
+  ...
+  <map:actions>
+    <map:action name="publisher"
+                src="org.wyona.cms.cocoon.acting.TaskAction">
+      <task id="publish"/>
+    </map:action>
+  </map:actions>
+  ...
+</map:components>
+]]>
+</source>
+<p>
+The <code>TaskAction</code> collects the request parameters and forwards them
+to the task.
+</p>
+<source>
+<![CDATA[
+<map:match pattern="wyona/publish*">
+  <map:act type="publisher">
+    <map:redirect-to uri="{parent_uri}" session="true"/>
+  </map:act>
+  <map:redirect-to uri="publishScreen?status=failed" session="true"/>
+</map:match>
+]]>
+</source>
+
+<p>
+You can also pass the task ID as a <code>task-id</code> parameter directly in the pipeline:
+</p>
+
+<source>
+<![CDATA[
+
+<map:actions>
+  <map:action name="task" src="org.wyona.cms.cocoon.acting.TaskAction"/>
+</map:actions>
+
+...
+
+<map:match pattern="wyona/publish*">
+  <map:act type="task">
+    <map:parameter name="task-id" value="publish-article"/>
+    <map:redirect-to uri="{parent_uri}" session="true"/>
+  </map:act>
+  <map:redirect-to uri="publishScreen?status=failed" session="true"/>
+</map:match>
+]]>
+</source>
+
+</s1>
+
+<s1 title="Scheduling a Task">
+<p>
+See section <strong>Scheduler</strong>.
+</p>
+</s1>
+
+<s1 title="Developing Your Own Tasks">
+
+<p>
+Every task must implement the <code>org.wyona.cms.task.Task</code> interface.
+</p>
+<p>
+The easiest way to develop your own task is to extend the <code>AbstractTask</code> class.
+Its <code>parameterize()</code> method simply replaces old parameter values with new
+ones. All you have to do is implementing the <code>execute(String contextPath)</code>
+method.
+</p>
+<p>
+You may wonder why we pass the <code>contextPath</code> as a method parameter
+since we already pass it as a task parameter. This ensures that the task is always
+able to access the Wyona CMS directory, even if it is not created by a <code>TaskAction</code>
+or a <code>TaskJob</code>. Furthermore, if you enter a task in the <code>jobs.xml</code>
+file manually, you won't have to provide a hard-coded <code>servlet-context</code> parameter.
+</p>
+<p>
+<strong>This feature may be subject to changes. If you have any suggestions to improve
+the task implementation, just contact me (Andreas Hartmann) at
+<link href="mailto:ah@wyona.org">ah@wyona.org</link>.</strong>
+</p>
+</s1>
+
+</body>
+</document>

@@ -1,0 +1,146 @@
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Basic concepts of the Wyona-CMS</title>
+    <style type="text/css">
+      <!--
+        a {
+            color: #0066FF;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #669999;
+            text-decoration: none;
+        }
+      -->
+    </style>
+</head>
+
+<body bgcolor="#ffffff">
+<font face="verdana">
+
+<h1>Basic concepts of the Wyona-CMS</h1>
+
+<h2>Contents</h2>
+<ol>
+  <li><a href="#roles">Roles</a></li>
+  <li><a href="#config">Configuration and Customization</a></li>
+  <li><a href="#editing">Making content editable</a></li>
+</ol>
+
+<a name="roles"></a>
+<h3>Roles of the Wyona users</h3>
+<p align="justify">
+  All users of the Wyona-CMS have roles assigned to their usernames. These roles 
+  are the basis of the authorization scheme used throughout the application. The roles
+  and their respective authorizations are totally customizable through an
+  administration panel.
+</p>
+<p align="justify">
+  All roles belong to one of these main groups:</p>
+<ol>
+  <li><a href="#roles_admin">Administrators</a></li>
+  <li><a href="#roles_author">Authors</a></li>
+  <li><a href="#roles_designer">Designers</a></li>
+  <li><a href="#roles_publisher">Publishers</a></li>
+</ol>
+
+<a name="roles_admin"></a>
+<h4>Administrators</h4>
+<p align="justify">
+  Administrators are responsible for:
+  <ul>
+    <li>Maintaining users and their profiles (e.g. assigned roles)</li>
+    <li>Maintaining the site/publication description</li>
+    <li>Maintaining page descriptions</li>
+    <li>Configuring the Wyona-CMS:</li>
+    <ul>
+      <li>Assigning editors to edit tasks</li>
+      <li>...</li>
+    </ul>
+  </ul>
+</p>
+<p align="justify">
+  For most/all of these tasks, specific configuration pages are provided
+  whithin the Wyona-CMS's <i>Administration Block</i> to shield the 
+  administrator from the internals of xml/xsl technologies and the
+  Cocoon environment.
+</p>
+
+<a name="roles_author"></a>
+<h4>Authors</h4>
+<p align="justify">
+  Authors are the users responsible for content creation and management, they use
+  the specific editors to maintain the content in a controlled and consistant way.
+  Typically, authors are never confronted with design choices and/or xml/xsl documents, 
+  they only work whithin the Wyona-CMS environment, i.e. a www-browser. The content
+  is first placed in a staging context, waiting for a <a href="#roles_publisher">
+  publisher</a> to publish it so that it can be viewed by external viewers of
+  the publication.
+</p>
+
+<a name="roles_designer"></a>
+<h4>Designers</h4>
+<p align="justify">
+  Designers are users responsible for maintaining the layout and style of the
+  publication. Typically, they work directly with the xsl and css files
+  used to transform the publication for presentation (e.g. in a browser), as
+  well as the required graphic files. All these files are located in a separate
+  branch of the application tree for convenience (see also 
+  <a href="#directories">Directory structure</a> below). To simplify the 
+  designer's work, a <i>"publication explorer"</i> could be provided, that helps
+  to navigate the publishing tree (by reading sitedef.xml) and to identify the content
+  files and their structure (by reading the page descriptor files), and that 
+  can be linked to any xml/xsl-editor.
+</p>
+
+<a name="roles_publisher"></a>
+<h4>Publishers</h4>
+<p align="justify">
+  Publishers are users that have permission to add staged content to the live
+  publication. This role group is primarily introduced for workflow management
+  purposes. In practice, publisher roles will be combined with author roles to 
+  model the workflow of the content management environment, allowing for reviewing
+  and editing activities.
+</p>
+
+<a name="config"></a>
+<h3>Configuration and Customization</h3>
+<p align="justify">
+  All configuration files have their own living spaces both in the generic 
+  Wyona-CMS directory and the specific publication directory. All configuration
+  information that is not supplied explicitly in the publication directory is
+  inherited from the CMS directory, where default behaviour is defined.
+</p>
+
+<a name="editing"></a>
+<h3>Making content editable</h3>
+<p align="justify">To edit the content managed by the CMS, several types and brands
+of editors can (and will) be used. The best way to provide editor connectivity would be 
+to provide an "editor socket", where different editors can plug in. This socket should
+be generic and as standardized as possible. One way to do this would be to provide
+an interface based on the MVC design: the content to be edited is presented to the editor
+as a triplet of xml, xsl and xsd data, representing content, style and structure, respectively.
+Some more details:</p>
+<ul>
+  <li><b>Content (XML):</b> This is the content to be edited, and could be an XML, XSL or 
+  XSD content, depending on the role of the editor; e.g. the designer, that needs to edit XSL
+  content, will call an editor to edit a stylesheet, and the contents of the stylesheet to be edited
+  are sent to this editor as the Content (or XML) part of the call. As all of XML, XSL and XSD files
+  are actually XML files, this is straightforward.</li>
+  <li><b>Style (XSL):</b> This stylesheet will provide information for the representaion of the content
+  in the <b>editor</b>. If the content to be edited is an XML file, this stylesheet might be
+  very similar or even identical to the stylesheet used for "normal" representation of this content,
+  but, in principle, could be something totally different, a stylesheet prepared only for editing purposes,
+  that represents the content of the first file in a way to the editor, that makes most sense for it's
+  editing. An example: if the file (content, the first file in the triplet) to be edited was a 
+  stylesheet itself, this stylesheet (style, the second file in the triplet) could be used to group
+  and highlight stylesheet elements visually, to make editing them easier.</li>
+  <li><b>Structure (XSD):</b> This file is a schema, providing information about the structure of the
+  content to be edited to the editor, so that the edited contents can be validated.</li>
+</ul>
+
+</font>
+</body>
+</html>

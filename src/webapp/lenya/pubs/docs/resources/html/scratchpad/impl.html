@@ -1,0 +1,120 @@
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Implementation Details of the Wyona-CMS</title>
+    <style type="text/css">
+      <!--
+        a {
+            color: #0066FF;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #669999;
+            text-decoration: none;
+        }
+      -->
+    </style>
+</head>
+
+<body bgcolor="#ffffff">
+<font face="verdana">
+
+<h1>Implementation Details of the Wyona-CMS</h1>
+
+<h2>Contents</h2>
+<ol>
+  <li><a href="#directories">Directory structure</a></li>
+</ol>
+
+<a name="directories"></a>
+<h3>Directory Structure</h3>
+<p align="justify">
+  The directory structure of the Wyona-CMS has to facilitate the needs of specific
+  user groups at different stages:
+  <ol>
+    <li>Developpers of the Wyona-CMS</li>
+    <li>Users of the Wyona-CMS, including</li>
+    <ol>
+      <li>Administrators</li>
+      <li>Authors</li>
+      <li>Designers</li>
+      <li>Publishers</li>
+    </ol>
+  </ol>
+</p>
+<p align="justify">
+  A temptative directory tree is provided here as a basis for further discussion:
+  <ul>
+    <li><b>cms</b> (the generic CMS framework, i.e. Wyona-CMS)</li>
+    <ul>
+      <li><b>src</b></li>
+      <ul>
+        <li>This directory contains all files pertaining to the content management
+        system itself, independent of any instance (i.e. the pubs directories).</li>
+      </ul>
+      <li><b>config</b> (default configuration, to be overridden by the files of 
+      each actual publication)</li>
+      <ul>
+        <li>users.xml (users and their roles)</li>
+        <li>roles.xml (authorization management for roles)</li>
+        <li>sitedef.xml (site structure management, like tree.xml)</li>
+        <li><b>pages</b> (contains descriptor files for each page)</li>
+        <ul>
+          <li>pd000001.xml</li>
+          <li>pd000002.xml</li>
+          <li>...</li>
+        </ul>
+      </ul>
+    </ul>
+    <li><b>pubs</b> (the actual publications)</li>
+    <ul>
+      <li><b>pub00001</b> (a specific publication - similar to a virtual host)</li>
+      <ul>
+        <li><b>config</b> (all configuration files, they override the defaults 
+        in the cms directory)</li>
+        <ul>
+          <li>users.xml (users and their roles)</li>
+          <li>roles.xml (authorization management for roles)</li>
+          <li>sitedef.xml (site structure management, like tree.xml)</li>
+          <li><b>pages</b> (contains descriptor files for each page)</li>
+          <ul>
+            <li>pd000001.xml</li>
+            <li>pd000002.xml</li>
+            <li>...</li>
+          </ul>
+        </ul>
+        <li><b>content</b></li>
+        <ul>
+          <li><b>staging</b></li>
+          <ul>
+            <li>URI-tree according to sitedef.xml ...</li>
+          </ul>
+          <li><b>live</b></li>
+          <ul>
+            <li>URI-tree according to sitedef.xml ...</li>
+          </ul>
+        </ul>
+        <li><b>design</b></li>
+        <ul>
+          <li><b>staging</b></li>
+          <ul>
+            <li>URI-tree according to sitedef.xml ...</li>
+          </ul>
+          <li><b>live</b></li>
+          <ul>
+            <li>URI-tree according to sitedef.xml ...</li>
+          </ul>
+        </ul>
+      </ul>
+      <li><b>pub00002</b> (another specific publication - similar to a virtual host)</li>
+      <ul>
+        <li><b>...</b></li>
+      </ul>
+    </ul>
+  </ul>
+</p>
+
+</font>
+</body>
+</html>

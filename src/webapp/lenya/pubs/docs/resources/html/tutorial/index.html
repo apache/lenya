@@ -1,0 +1,65 @@
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>WYONA - Content Management System</title>
+    <style type="text/css">
+      <!--
+        a {
+            color: #0066FF;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #669999;
+            text-decoration: none;
+        }
+      -->
+    </style>
+</head>
+
+<body bgcolor="#ffffff">
+<font face="verdana">
+
+<h1>Tutorial</h1>
+
+<ol>
+  <li>Copy Approriate Sample Publication
+      <br>(for instance: <code>cp -r wyona/cms/pubs/ethz-mat wyona/cms/pubs/my-pub</code>)</li>
+  <li>Configure sitemap.xmap 
+      <br>(for instance: replace ethz-mat by my-pub)</li>
+  <li>Mount sitemap.xmap from the root sitemap.xmap which is located within the wyona-cms directory
+      <br>
+      <code>
+     &lt;map:match pattern="my-pub/**"&gt;<br>
+       &lt;map:mount uri-prefix="my-pub" src="wyona/cms/pubs/my-pub/sitemap.xmap" check-reload="true" reload-method="synchron"/&gt;<br>
+     &lt;/map:match&gt;
+      </code>
+  </li>
+  <li>Set Prefix for Stylesheets: wyona/cms/pubs/my-pub/stylesheets/Configuration/read.xsl
+      <br>(for instance: replace ethz-mat by my-pub)</li>
+  <li>Set Name of Publication: wyona/cms/pubs/my-pub/stylesheets/wyona/cms/conf/conf.xsl
+      <br>(for instance: replace "Materials Science" by "My Publication")</li>
+  <li>Start modifying the XML, XSLT and the various sitemaps
+    <ol>
+      <li>Create XSLT from HTML with JTidy:
+        <br><code>export PATH=/usr/local/jdk1.3.1/bin:$PATH</code>
+        <br><code>java&#160;-classpath&#160;WYONACMS/build/wyona-cms/classes:WYONACMS/build/wyona-cms/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar&#160;org.wyona.util.TidyCommandLine</code>
+      </li>
+    </ol>
+  </li>
+</ol>
+<!--
+<ol>
+  <li>HTML</li>
+  <li>XML</li>
+  <li>XSLT</li>
+  <li>Sitemap</li>
+</ol>
+-->
+<pre>
+
+</pre>
+
+</font>
+</body>
+</html>

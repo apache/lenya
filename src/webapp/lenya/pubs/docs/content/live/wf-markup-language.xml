@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Workflow</title>
+    <version>2002.11.29</version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+      <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Workflow Markup Language">
+<p>
+The workflow of each "file" is described within a corresponding <link href="cm-markup-language.html">"CMML-File"</link>.
+The various workflows are defined by the following configuration file:
+</p>
+      <s2 title="workflow.xconf">
+        <source>
+          <![CDATA[
+<?xml version"1.0"?>
+<wf>
+
+  <states>
+    <state id="authoring" comment="Authoring">
+    <state id="proof-reading" comment="Proof Reading">
+    <state id="ready to publish" comment="Ready to publish">
+    <state id="live" comment="Live">
+    <state id="archived" comment="Archived">
+  </states>
+
+ <workflows default="standard-article>
+  <workflow id="standard-article">
+    <state id="authoring">
+      <state id="proof-reading" action="">
+    </state>
+    <state id="proof-reading">
+      <state id="authoring" action="">
+      <state id="ready-to-publish" action="">
+    </state>
+    <state id="ready-to-publish">
+      <state id="authoring" action="">
+      <state id="proof-reading" action="">
+      <state id="live" action="">
+    </state>
+    <state id="live">
+      <state id="authoring" action="">
+      <state id="proof-reading" action="">
+      <state id="archived" action="">
+    </state>
+    <state id="archived">
+      <state id="authoring" action="">
+      <state id="proof-reading" action="">
+    </state>
+  </workflow>
+
+  <workflow id="headline">
+    <state id="authoring">
+      <state id="proof-reading" action="">
+    </state>
+    <state id="proof-reading">
+      <state id="authoring" action="">
+      <state id="ready-to-publish" action="">
+    </state>
+    <state id="ready-to-publish">
+      <state id="authoring" action="">
+      <state id="proof-reading" action="">
+      <state id="live" action="">
+    </state>
+    <state id="live">
+      <state id="authoring" action="">
+      <state id="proof-reading" action="">
+      <state id="archived" action="">
+    </state>
+    <state id="archived">
+      <state id="authoring" action="">
+      <state id="proof-reading" action="">
+    </state>
+  </workflow>
+ </workflows>
+
+ 
+  <assign-workflow>
+    <match pattern="*headline*">
+      <workflow id="headline"/>
+    </match>
+    <match pattern="*article*">
+      <workflow/>
+    </match>
+<!--
+    <match pattern="*">
+      <workflow/>
+    </match>
+-->
+  </assign-workflow>
+
+</wf>
+	  ]]>
+        </source>
+      </s2>									       
+    </s1>
+
+<s1 title="Related Links">
+<ol>
+  <li><link href="http://www.wfmc.org/standards/docs.htm">WfMC</link></li>
+  <li><link href="http://www.openflow.it/wwwopenflow/EN/Overview/wfmc_html">WfMC within Zope</link></li>
+  <li><link href="http://www.opensymphony.com/osworkflow/">OSWorkflow</link></li>
+  <li><link href="http://werkflow.werken.com/">werkflow</link></li>
+</ol>
+</s1>
+  </body>
+</document>
+
+

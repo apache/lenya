@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Architecture</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="The Big Picture">
+<s2 title="Overview">
+<p>
+The roles of each component (Cocoon, Slide, Wyona) are described below the overview.
+</p>
+
+<p>
+NOTE: Slide is not used so far, but is intended to be used.
+</p>
+        <source>
+          <![CDATA[
+
+
++-----------------------------------------+
+|            CLIENT                       |
+|       (HTTP, WebDAV, Other)             |
++-----------------------------------------+
+     /|\                   /|\
+      |                     |
+     \|/                    |
++---------+---+             |
+| COCOON  |   |             |
+|   +-----+   |             |
+|   |  WYONA  |             |
++---+---------+             |
+ /|\     /|\                |
+  |       |                 |
+  |      \|/               \|/
+  |   +-----------------+--------------+----+
+  |   |  SLIDE          |WebDAV Servlet|    |
+  |   |  (CM API)       +--------------+    |
+  |   +-------------------------------------+
+  |                    /|\
+  |                     |
+ \|/                   \|/
++-------------------------------------------+
+|            DATA STORES                    |
+|                                           |
+|  +----------+  +----+  +------+  +-----+  |
+|  |Filesystem|  |JDBC|  |XML:DB|  |Other|  |
+|  +----------+  +----+  +------+  +-----+  |
++-------------------------------------------+
+
+
+	  ]]>
+        </source>
+</s2>
+
+<s2 title="What is the role of Cocoon">
+<p>
+At the moment Cocoon is used as XML Publishing Framework. Cocoon's "pipeline processor"
+controls the interaction between XML and XSLT and provides a mechanismn to map requests to pipelines.
+More information can be found at the Cocoon <link href="http://xml.apache.org/cocoon/">website</link>.
+</p>
+</s2>
+
+<s2 title="What is the role of Slide">
+<p>
+Slide provides a Content Management Framework based on a Java API, which
+is similar to <link href="http://www.jcp.org/jsr/detail/170.jsp">JSR 170</link>.
+It can be used as a Data Abstraction Layer accessing various types of content repositories.
+Slide has implemented a WebDAV servlet which iteracts with Slide's CM API.
+More information can be found at the Slide <link href="http://jakarta.apache.org/slide/">website</link>.
+</p>
+</s2>
+
+<s2 title="What is the role of Wyona">
+<p>
+Wyona had it's own "Pipeline and XInclude Processor" when it was started in autumn 1999.
+In the meantime Cocoon and Slide have emerged and developed into powerful frameworks.
+Wyona started to integrate Cocoon's pipeline processor at the end of 2001.
+In order to base Wyona on a generic Content Management API we are currently discussing
+how to integrate Slide.
+Beside the features of Cocoon and Slide,
+there are still many features needed to provide a usable Content Management System.
+Wyona is providing the following additional features:
+<ol>
+<li>Authoring/Staging user interfaces for authors and editors</li>
+<li>Administrator interface (User/Group/Policies management, Monitoring, etc.)</li>
+<li>Resource/Content Creator implementations</li>
+<li>Editor interfaces for not WebDAV enabled editors such Xopus and Bitflux</li>
+<li>Rudimentary HTML Form Editor as fallback</li>
+<li>Scheduler</li>
+<li>Workflow Manager</li>
+<li>Framework for Publications</li>
+<li>Dependency Manager</li>
+<li>Notifier/Dispatcher/Subscriber pattern (Event Monitoring, JMS!)</li>
+<li>Publisher/Replicator</li>
+<li>Access Controlling (Wyona and Cocoon and Slide have each it's own Access Controller!)</li>
+<li>etc.</li>
+</ol>
+</p>
+</s2>
+    </s1>
+  </body>
+</document>
+

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<header>
+		<title>Bitflux Editor</title>
+		<version/>
+		<type/>
+		<authors>
+			<person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+		</authors>
+	</header>
+	<body>
+		<s1 title="Introduction">
+			<p>
+Bitflux Editor has been developed originally by Christian Stocker and Roger Fischer
+from <link href="http://www.bitflux.ch">Bitflux GmbH</link>.
+The project is hosted at <link href="http://www.bitfluxeditor.org">http://www.bitfluxeditor.org</link>.
+</p>
+		</s1>
+		<s1 title="Download via CVS">
+			<p>Bitflux Editor is included in the Wyona cvs. So you don't need to download it separately. If you want to be sure to use the latest version, you can get it from the Bitflux cvs:</p>
+			<source><![CDATA[
+cvs -d :pserver:anonymous@bitflux.ch:/var/lib/cvs/editor login
+Return
+cvs -d :pserver:anonymous@bitflux.ch:/var/lib/cvs/editor co example
+    ]]></source>
+		</s1>
+		<s1 title="Browser Requirements">
+			<s2 title="Mozilla">
+				<p>
+You need at least Mozilla 1.0. If your Build ID is too old, then hope still exist
+by editing the javascript bxe/js/bitfluxeditor.js (navigator.productSub &lt;= 20020523, BX_mozilla_version).
+</p>
+			</s2>
+		</s1>
+		<s1 title="Open/Edit and Save">
+			<s2 title="Getting Data from Server">
+				<source><![CDATA[
+http://hostname:port/wyona-cms/bitfluxeditor/index.html
+?url-xml=/wyona-cms/unipublic/bitflux/magazin/gesundheit/2002/0508
+&url-xslt=/wyona-cms/unipublic/bitflux/stylesheets/article.xsl
+&url-xsd=/wyona-cms/unipublic/bitflux/doctypes/schemas/article.xsd
+&url-css=/wyona-cms/unipublic/bitflux/css/article.css     
+&url-post=/wyona-cms/unipublic/bitflux/save/magazin/gesundheit/2002/0508
+	  ]]></source>
+				<p>
+The parameters can be configured within the file inc/config.xml
+</p>
+				<source><![CDATA[
+<imput>
+<file name="BX_xmlfile" method="http" isParam="true">url-xml</file>
+<file name="BX_xslfile" isParam="true">url-xslt</file>
+<file name="BX_schemafile" isParam="true">url-xsd</file>
+</input>
+
+<css><file isParam="true">url-css</file></css>
+
+<output><file name="BX_posturl" method="wyona" isParam="true">url-post</file></output>
+	  ]]></source>
+				<p>
+Beware that the MIME-TYPE for the schema file (xsd) is set properly by the server to text/xml.
+Wyona does that for you already, but in case you serve it via Apache you have to update Apache's config.
+</p>
+			</s2>
+			<s2 title="Posting Data to Server">
+				<p>
+To save the document the BitfluxAction is used. It is nearly the same as the
+XopusAction. The only difference is that the filename for saving is passed to
+the action as parameter. Although you could actually set the filename within
+the javascript bxe/js/wyona.js (BX_DocumentID) and then use the XopusAction.
+</p>
+			</s2>
+		</s1>
+	</body>
+</document>

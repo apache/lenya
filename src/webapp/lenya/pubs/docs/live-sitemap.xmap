@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+ <map:components>
+  <map:generators default="file"/>
+  <map:transformers default="xslt"/>
+  <map:readers default="resource"/>
+  <map:serializers default="html"/>
+  <map:matchers default="wildcard"/>
+ </map:components>
+
+ <map:views>
+   <map:view name="xhtml4wyona" from-position="last">
+     <map:serialize type="xml"/>
+   </map:view>
+ </map:views>
+
+ <map:pipelines>
+
+   <!-- Images -->
+   <map:pipeline>
+     <map:match pattern="images/**.gif">
+       <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+         <map:parameter name="expires" value="2000000000"/>
+       </map:read>
+     </map:match>
+     <map:match pattern="**/*.png">
+       <map:read src="resources/publication/images/live/{2}.png" mime-type="images/png">
+         <map:parameter name="expires" value="2000000000"/>
+       </map:read>
+     </map:match>
+     <map:match pattern="xdocs/images/**.gif">
+       <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+         <map:parameter name="expires" value="2000000000"/>
+       </map:read>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="">
+       <!-- problems arise when using mod_proxy together with redirect -->
+       <!--
+       <map:redirect-to uri="index.html"/>
+       -->
+       <map:aggregate element="site">
+         <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
+         <map:part src="cocoon:/tree.xml"/>
+       </map:aggregate>
+       <map:transform src="stylesheets/publication/Page/toc-main.xsl"/>
+       <map:transform src="stylesheets/publication/Page/url_rewrite.xsl"/>
+       <map:serialize/>
+     </map:match>
+     <map:match pattern="index.html">
+       <map:aggregate element="site">
+         <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
+         <map:part src="cocoon:/tree.xml"/>
+       </map:aggregate>
+       <map:transform src="stylesheets/publication/Page/toc-main.xsl"/>
+       <map:transform src="stylesheets/publication/Page/url_rewrite.xsl"/>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="inhalt.txt">
+       <map:generate src="cocoon:/tree.xml"/>
+       <map:transform src="stylesheets/publication/Page/tree2js.xsl"/>
+       <map:transform src="stylesheets/publication/Page/tree2js_2.xsl"/>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="content_list.txt">
+       <map:generate src="cocoon:/tree.xml"/>
+       <map:transform src="stylesheets/publication/Page/tree2js.xsl"/>
+       <map:transform src="stylesheets/publication/Page/tree2ls.xsl"/>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="body-**.xml">
+       <map:generate src="cocoon:/{1}.xml"/>
+       <map:transform src="../../../../documentation/stylesheets/document2html.xsl"/>
+       <map:serialize/>
+     </map:match>
+
+     <map:match pattern="xdocs/*.html">
+       <map:aggregate element="site">
+         <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
+         <map:part src="cocoon:/body-{1}.xml" label="content"/>
+       </map:aggregate>
+       <map:transform src="stylesheets/publication/Page/xdoc-main.xsl"/>
+       <map:transform src="stylesheets/publication/Page/url_rewrite.xsl"/>
+       <map:serialize type="html"/>
+     </map:match>
+
+<!--
+     <map:match pattern="actions.html">
+       <map:aggregate element="site">
+         <map:part src="cocoon:/body-actions.xml" label="content"/>
+         <map:part src="cocoon:/{1}/book-{1}/{2}.xml"/>
+         <map:part src="cocoon:/body-{1}/{2}.xml" label="content"/>
+       </map:aggregate>
+       <map:transform src="../../../../documentation/stylesheets/site2xhtml.xsl">
+         <map:parameter name="use-request-parameters" value="true"/>
+         <map:parameter name="header" value="graphics/{2}-header.jpg"/>
+       </map:transform>
+       <map:serialize type="html"/>
+     </map:match>
+-->
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="**.xml">
+       <map:generate src="docs/publication/live/{1}.xml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+
+   <!-- HTML -->
+   <map:pipeline>
+     <map:match pattern="js-index.html">
+       <map:read src="resources/publication/html/toc.html" mime-type="text/html"/>
+     </map:match>
+     <map:match pattern="*.js">
+       <map:read src="resources/publication/html/{1}.js" mime-type="text/js"/>
+     </map:match>
+     <map:match pattern="welcome.html">
+       <map:read src="resources/publication/html/welcome.html" mime-type="text/html"/>
+     </map:match>
+     <map:match pattern="previous-index.html">
+       <map:read src="resources/html/index.html" mime-type="text/html"/>
+     </map:match>
+     <map:match pattern="**.html">
+       <map:read src="resources/html/{1}.html" mime-type="text/html"/>
+     </map:match>
+
+     <map:match pattern="images/**.gif">
+       <map:read src="../../resources/cms/images/util/pixel.gif" mime-type="images/gif"/>
+<!--
+       <map:read src="resources/images/{1}.gif" mime-type="images/gif"/>
+-->
+     </map:match>
+   </map:pipeline>
+ </map:pipelines>
+</map:sitemap>

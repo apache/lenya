@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <header>
+    <title>Strange Effects</title>
+    <version></version>
+    <type></type>
+    <authors>
+      <person name="" email=""/>
+      <person name="" email=""/>
+    </authors>
+  </header>
+  <body>
+    <s1 title="Some Strange Effects and their Workarounds">
+      <anchor>#redirect</anchor> 
+      <s2 title="Redirect Problems with IE5 on Mac">
+        <p>If you experience redirection problems while using the IE5 browser on a
+           Mac, please try deleting the browser cache and history.
+	</p>
+      </s2>
+    </s1>
+  </body>
+</document>
+

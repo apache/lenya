@@ -1,0 +1,227 @@
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Documentation (WYONA - Content Management System)</title>
+    <style type="text/css">
+      <!--
+        a {
+            color: #0066FF;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #669999;
+            text-decoration: none;
+        }
+      -->
+    </style>
+</head>
+
+<body bgcolor="#ffffff">
+<font face="verdana">
+
+<h1>Documentation</h1>
+
+<h2>Contents</h2>
+  <ol>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="user-guide/index.html">User's Guide</a></li>
+    <li><a href="#adminguide">Administrator's Guide</a></li>
+    <li><a href="#integratorguide">Integrator's Guide (and Deployment Guide)</a></li>
+    <li><a href="#devguide">Developer's Guide</a></li>
+    <li><a href="#javadoc">Javadoc</a></li>
+  </ol>
+
+<a name="intro"></a>
+<h3>Introduction</h3>
+<p align="justify">
+  As the Wyona CMS is currently in the process of refactoring to be embedded into
+  the open source xml publishing framework <a href="http://xml.apache.org/cocoon" 
+  target="_self">Cocoon</a>, this documentation is also somewhat <i>in flux</i>. 
+  The main part of this documentation describes the CMS as it is currently 
+  implemented, allowing for users and developpers to experiment with it. At the 
+  same time, discussions on the details of the cocoon-implementation is ongoing.
+  This discussion mainly takes place on the 
+  <a href="http://www.wyona.org/mailing-list.html" 
+  target="_self">Wyona mailing list</a>, where everybody is invited to 
+  participate. A digest of these discussions and concepts is available in a
+  dedicated <a href="scratchpad/index.html">scratchpad area</a>.
+  The idea is that while documenting the
+  systems current state, we also make notes about what the overall concepts 
+  are, and where the development efforts are heading.
+</p>
+<p align="justify">
+  To communicate your wishes and/or comments, ask questions, or even 
+  actively participate in the development of the Wyona CMS, check out 
+  the <a href="http://www.wyona.org/mailing-list.html" 
+  target="_self">Wyona mailing list</a>. The mailing list provides
+  an alternative way to get information which is not included here, as most 
+  of the Wyona developpers are routinely monitoring it.
+</p>
+<p align="justify">
+  The official Wyona homepage is <a href="http://www.wyona.org" 
+  target="_self">www.wyona.org</a>.
+</p>
+
+<a href="user-guide/index.html"><h3>User's Guide</h3></a>
+
+<a name="adminguide"></a>
+<h3>Administrator's Guide</h3>
+<ol>
+  <li><a href="administrator-guide/ac/index.html">Authorization and Authentication</a>
+    <ol>
+      <li>Creating and Editing Users (Browser Interface)</li>
+      <li><a href="administrator-guide/ac/index.html#create_edit_user">Creating and Editing Users (Command Line)</a></li>
+      <li>Creating and Editing Authorization Policies (Browser Interface)</li>
+      <li><a href="administrator-guide/ac/index.html#edit_policies">Creating and Editing Authorization Policies (Command Line)</a></li>
+      <li>Creating and Editing Groups/Roles</li>
+    </ol>
+  </li>
+</ol>
+<a name="integratorguide"></a>
+<h3>Integrator's Guide (and Deployment Guide)</h3>
+<ol>
+  <li><a href="tutorial/index.html">Creating a new Publication</a></li>
+  <li>Creating a new Page/Document
+    <ol>
+      <li>The definition of a Page</li>
+      <li>The definition of a Document</li>
+      <li>The various parts of a Page</li>
+      <li><a href="developer-guide/authoring/publish/filesystem-publisher.html">Making a Page publishable</a></li>
+      <li><a href="developer-guide/authoring/publish/filesystem-publisher.html">Making a Document publishable</a></li>
+      <li>Making a Document editable
+        <ol>
+          <li><a href="integrator-guide/document/edit/htmlformeditor.html">With the HTML Form Editor</a></li>
+          <li><a href="developer-guide/authoring/edit/xopus.html#hookers">With Q42's Xopus</a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>Authorization and Authentication
+    <ol>
+      <li>Customizing Login- and Logout-Screen</li>
+      <li>Replace Default by Alternative Authenticator</li>
+      <li>Replace Default by Alternative Authorizer</li>
+    </ol>
+  </li>
+  <li>Menus
+    <ol>
+      <li>Non-Collaborative (Authoring, Live)</li>
+      <li>Collaborative (Authoring, Staging, Live)</li>
+    </ol>
+  </li>
+  <li>Server Architecture
+    <ol>
+      <li>One Server System (Authoring and Live on one machine)</li>
+      <li>Two Server System (One Authoring and one Live)</li>
+      <li>Three Server System (One Authoring and two or more Live)</li>
+      <li>Four Server System (Two Authoring and two or more Live)</li>
+    </ol>
+  </li>
+  <li>Virtual Servers (mandantenfaehig)
+    <ol>
+      <li><a href="integrator-guide/virtual-server/proxy-apache.html">Apache as Proxy</a></li>
+    </ol>
+  </li>
+  <li>Change Management</li>
+  <li><a href="integrator-guide/performance/index.html">Performance</a></li>
+  <li>Scalability</li>
+  <li><a href="http://developer.netscape.com/docs/manuals/browser/sidebar/">My sidebar</a></li>
+  <li><a href="xdocs/hsqldb.html">HSQL Database</a></li>
+  <li>Servlet Engines
+    <ol>
+      <li><a href="xdocs/tomcat.html">Tomcat</a></li>
+    </ol>
+  </li>
+</ol>
+<a name="devguide"></a>
+<h3>Developer's Guide</h3>
+<ol>
+  <li>Strange Effects
+    <ol>
+      <li>XSLT (Xalan) Problems with IBMJava2-13: Use another JDK (jdk1.3.1)</li>
+    </ol>
+  </li>
+  <li><a href="http://xml.apache.org/cocoon/">Pipeline Processor: Cocoon</a></li>
+  <li><a href="developer-guide/ac/index.html">Authorization and Authentication</a>
+    <ol>
+      <li>Abstract Authenticator</li>
+      <li>Abstract Authorizer</li>
+      <li>Concrete Authenticator</li>
+      <li>Concrete Authorizer</li>
+      <li>Default Authenticator: IMLAuthenticator</li>
+      <li>Default Authorizer: PMLAuthorizer</li>
+    </ol>
+  </li>
+<!--
+  <li><a href="xdocs/access-controller.html">Authorization and Authentication</a> (xdoc)
+  </li>
+-->
+  <li>Authoring
+    <ol>
+      <li>Creating Content
+        <ol>
+          <li><a href="developer-guide/authoring/create/parent-child.html">Parent-Child</a></li>
+          <li><a href="xdocs/parent-child-creator.html">Parent-Child</a></li> (xdoc)
+          <li><a href="developer-guide/authoring/create/document-collection.html">Document Collection</a></li>
+        </ol>
+      </li>
+      <li>Importing Content
+        <ol>
+          <li>HTTP Upload</li>
+          <li>Text</li>
+          <li>Multimedia (Image, Audio, Video)</li>
+        </ol>
+      </li>
+      <li>Editing Content
+        <ol>
+          <li><a href="developer-guide/authoring/edit/html-form-editor.html">Wyona's HTML Form Editor</a></li>
+          <li><a href="developer-guide/authoring/edit/xopus.html">Q42's Xopus</a> (IE5.5 or later)</li>
+          <li><a href="developer-guide/authoring/edit/bitflux.html">bitflux's Editor</a> (Netscape6.2)</li>
+          <li><a href="developer-guide/authoring/edit/editonpro.html">RealObjects edit-on Pro</a></li>
+          <li><a href="http://xmlwebgui.sourceforge.net">XML Web GUI</a></li>
+          <li><a href="http://sourceforge.net/projects/xsdheditor/">XS DHTML Editor</a></li>
+        </ol>
+      </li>
+      <li>Dependency Manager</li>
+    </ol>
+  </li>
+  <li><a href="developer-guide/cm/index.html">Content Management Markup Language</a></li>
+<!--
+  <li><a href="developer-guide/rc/index.html">Revision Controlling</a></li>
+-->
+  <li><a href="xdocs/revision-controller.html">Revision Controlling</a> (xdoc)</li>
+  <li><a href="developer-guide/wf/index.html">Workflow Management</a></li>
+  <li>Publishing
+    <ol>
+      <li><a href="xdocs/filesystem-publisher.html">Filesystem Publisher</a> (xdoc)</li>
+      <li><a href="xdocs/command-line-interface.html">Command Line Interface</a> (xdoc)</li>
+    </ol>
+  </li>
+  <li>Replication</li>
+  <li>Event Handling</li>
+  <li>Services
+    <ol>
+      <li><a href="http://www.canoo.ch/online/germanspellingchecker.html">Spell Checking</a></li>
+      <li>Related Content</li>
+      <li>Babel Fish</li>
+      <li>Highlighting and Linking (Companies, Persons, etc.)</li>
+      <li>Location and Showtime (Movies)</li>
+    </ol>
+  </li>
+  <li>Data Abstraction Layer</li>
+  <li>Syndication/Aggregation</li>
+  <li>Monitoring</li>
+  <li><a href="xdocs/scheduler.html">Scheduler</a></li>
+  <li>Testing: <a href="http://webtest.canoo.com/webtest/manual/WebTestHome.html">WebTest</a>, <a href="http://sourceforge.net/projects/aft/">Anteater</a>, <a href="http://jakarta.apache.org/commons/latka/index.html">Latka</a>, <a href="http://htmlunit.sourceforge.net">HtmlUnit</a>, <a href="http://sourceforge.net/projects/httpunit">HttpUnit</a></li>
+  <li><a href="xdocs/servlet-proxy-generator.html">Servlet Proxy Generator</a></li>
+  <li><a href="../scratchpad/">Scratchpad</a></li>
+</ol>
+<a name="javadoc"></a>
+<h3>Javadoc</h3>
+Click <a href="javadoc/index.html">here</a> to view Javadoc of Wyona CMS.
+<br><br><a href="http://java.sun.com/j2se/javadoc/index.html">Javadoc Tool Home Page</a>
+
+</font>
+</body>
+</html>
