@@ -20,7 +20,7 @@ Several items, e.g. the servlet container, may be replaced by other products.
 <ul>
   <li>
     <p>
-    <strong>Java 2 Platform, Standard Edition</strong> (recommended: J2SE 1.4.2 Beta)<br/>
+    <strong>Java 2 Platform, Standard Edition</strong> (recommended: J2SE 1.4.2)<br/>
     <link href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</link>
     </p>
   </li>
@@ -42,8 +42,14 @@ Several items, e.g. the servlet container, may be replaced by other products.
   
   <li>
     <p>
-    <strong>Apache Cocoon</strong> (recommended: Cocoon 2.1 or later)<br/>
+    <strong>Apache Cocoon</strong> (recommended: Cocoon 2.1.2 or later)<br/>
     <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>
+    </p>
+  </li>
+  
+  <li>
+    <p>
+    <strong>Endorsed Libraries</strong> (recommended: Xalan 2.5.0 Xerces 2.5.0)<br/>
     </p>
   </li>
 </ul>
