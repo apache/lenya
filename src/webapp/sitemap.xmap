@@ -59,6 +59,9 @@
       <encoding>ISO-8859-1</encoding>
     </map:serializer>
     <map:serializer logger="sitemap.serializer.text" mime-type="text/plain" name="text" src="org.apache.cocoon.serialization.TextSerializer"/>
+    <map:serializer logger="sitemap.serializer.text-iso-8859-1" mime-type="text/plain" name="text-iso-8859-1" src="org.apache.cocoon.serialization.TextSerializer">
+      <encoding>ISO-8859-1</encoding>
+    </map:serializer>
   </map:serializers>
 
   <map:readers default="resource">
