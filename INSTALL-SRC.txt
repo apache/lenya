@@ -1,5 +1,36 @@
-*********************************************************************************
 
-WARNING: This file is DEPRECATED and should definitely be updated.
 
-*********************************************************************************
+   +---------------------------+
+   |    INSTALL FROM SOURCE    |
+   +---------------------------+
+
+
+
+1) Set your JAVA_HOME, ANT_HOME and PATH environment, e.g.
+
+   [unix] 
+   export JAVA_HOME=/usr/local/j2sdk1.4.2
+   export ANT_HOME=/usr/local/jakarta-ant-1.5.1
+   export PATH=$ANT_HOME/bin:$PATH
+
+
+2) Copy "build.properties.sample" to "build.properties"
+
+3) Edit build.properties:
+
+   The most important parameter to update is "src.cocoon.dir", which tells
+   where the Cocoon webapp directory is located (first you need to build Cocoon).
+
+   If you want to run Lenya on Tomcat then you should update the following
+   parameters: "install.dir" and "cache.dir"
+
+4) Build Lenya by typing
+
+   ant install
+
+5) Start up Tomcat, e.g.
+
+   [unix]
+   /usr/local/jakarta-tomcat-4.1.24-LE-jdk14/bin/startup.sh
+
+6) Open http://localhost:8080/lenya/ with your browser
