@@ -29,7 +29,6 @@ import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.Cocoon;
 import org.apache.cocoon.components.CocoonComponentManager;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.cron.ConfigurableCronJob;
@@ -220,7 +219,7 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
                 identity.addIdentifiable(machine);
             }
 
-            controller.authorize(request, getSourceURL());
+            controller.authorize(request);
 
         } finally {
             if (selector != null) {
