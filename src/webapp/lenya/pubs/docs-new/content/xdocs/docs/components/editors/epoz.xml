@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Epoz</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>Download</title>
+<p>Download Epoz with Subversion:</p>
+<source>
+<![CDATA[
+svn co http://codespeak.net/svn/epoz/trunk/epoz
+]]>
+</source>
+</section>
+</body>
+</document>
