@@ -162,13 +162,18 @@
       </map:match>
 
       <map:match pattern="dossiers/*/index.xml">
-        <map:generate src="cocoon:/dossiers/{1}/content.xml" />
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon:/tree.xml"/>
+          <map:part src="cocoon:/dossiers/{1}/content.xml"/>
+        </map:aggregate>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="dossiers/*/index.html">
         <map:generate src="cocoon:/dossiers/{1}/index.xml" />
-        <map:transform src="stylesheets/publication/Page/Dossiers/Live/main.xsl" />
+        <map:transform src="stylesheets/publication/Page/Dossiers/Live/main.xsl">
+          <map:parameter name="year" value="{1}"/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
 

@@ -7,9 +7,6 @@
   xmlns:up="http://www.unipublic.unizh.ch/2002/up"
 >
 
-<!--
-<up:Page xmlns:up="http://www.unipublic.unizh.ch/2002/up">
--->
 <Page>
  <xsp:logic>
   String channel=parameters.getParameter("channel","null");
@@ -20,24 +17,13 @@
 <Content xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/2002/XLink">
   <FirstColumn>
     <navigation xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:authoring/<xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></navigation>
-<!--
-    <xi:include xml:base="cocoon:"><xsp:attribute name="href"><xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></xi:include>
--->
     <dossier xlink:href="cocoon:authoring/dossier.xml" xlink:show="embed"/>
-<!--
-    <xi:include href="frontpage/dossier.xml" xml:base="cocoon:"/>
--->
   </FirstColumn>
   <MainColumn>
+    <nav_years xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:authoring/tree.xml</xsp:attribute></nav_years>
     <articles xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:authoring/<xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/articles.xml</xsp:attribute></articles>
-<!--
-    <xi:include xml:base="cocoon:"><xsp:attribute name="href"><xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/articles.xml</xsp:attribute></xi:include>
--->
   </MainColumn>
 </Content>
 </Page>
-<!--
-</up:Page>
--->
 
 </xsp:page>

@@ -3,24 +3,19 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
-<xsl:variable name="sectiontext"><xsl:apply-templates select="/up:Page/Content/MainColumn/section" mode="section-name"/></xsl:variable>
-
 <xsl:param name="channel"/>
 <xsl:param name="section"/>
-<xsl:param name="year"/>                                                                                                                    
-
-<!--
-<xsl:template match="up:Page">
--->
+<xsl:param name="year"/>                                                                                                   
 
 <xsl:template match="Page">
   <xsl:apply-templates select="Content"/>
 </xsl:template>
 
 <xsl:template match="Content">
+<xsl:variable name="sectiontext"><xsl:value-of select="FirstColumn/MainNavigation/Channels/Channel/Sections/Section[@highlighted='true']"/></xsl:variable>     
 <html>
 <head>
-<title>unipublic - <xsl:value-of select="$sectiontext"/> (<xsl:value-of select="MainColumn/section/@type"/>)</title>
+<title>unipublic - <xsl:value-of select="$sectiontext"/></title>
 
 <xsl:call-template name="styles"/>
 
@@ -37,9 +32,19 @@
 
 <tr>
 <td width="135" height="21" align="right" valign="top"><img src="{$img-unipub}/t_magazin.gif" border="0" alt="Magazin"/></td>
+<!-- Section title -->
 <td colspan="2" width="450" height="21" valign="bottom"><img src="{$img-unipub}/r_{MainColumn/section/@type}.gif" border="0" 
 alt="{$sectiontext}"/>
-<img alt="2002" src="{$img-unipub}/jahr/2002_ein.gif" height="13" width="39" border="0" />
+
+<!-- Drawing dynamic sub-navigation for the years 2002 and after (according to tree.xml) -->
+<xsl:for-each select="MainColumn/tree/branch/branch/branch[@relURI=$section]/branch">
+	<xsl:choose>
+		<xsl:when test="@relURI=$year"><img alt="{@relURI}" src="{$img-unipub}/jahr/{@relURI}_ein.gif" height="13" width="39" border="0" /></xsl:when>
+		<xsl:otherwise><a href="../{@relURI}/"><img alt="{@relURI}" src="{$img-unipub}/jahr/{@relURI}_aus.gif" height="13" width="39" border="0" /></a></xsl:otherwise>
+	</xsl:choose>
+</xsl:for-each>
+
+<!-- Static years 1999-2001  -->
 <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2001/"><img alt="2001" src="{$img-unipub}/jahr/2001_aus.gif" height="13" width="39" border="0" /></a>
 <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2000/"><img alt="2000" src="{$img-unipub}/jahr/2000_aus.gif" height="13" width="39" border="0" /></a>
 <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/1999/"><img alt="1999" src="{$img-unipub}/jahr/1999_aus.gif" height="13" width="39" border="0" /></a>

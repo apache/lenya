@@ -3,6 +3,8 @@
 
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
+<xsl:param name="year"/>
+
 <xsl:template match="dossierlist">
   <html>
     <head>
@@ -20,8 +22,13 @@
             <tr>
               <td align="right" width="186"/>
               <td width="399">
-                <img height="13" width="39" src="{$img-unipub}/jahr/2002_ein.gif" alt="2002" border="0"/>
-                <!-- <img height="13" width="39" src="../../img/jahr/2001_aus.gif" alt="2001" border="0"/> -->
+		<!-- Drawing dynamic sub-navigation for the years 2002 and after (according to tree.xml) -->
+		<xsl:for-each select="../tree/branch/branch[@relURI='dossiers']/branch">
+			<xsl:choose>
+				<xsl:when test="@relURI=$year"><img alt="{@relURI}" src="{$img-unipub}/jahr/{@relURI}_ein.gif" height="13" 	width="39" 	border="0" /></xsl:when>
+				<xsl:otherwise><a href="../{@relURI}/"><img alt="{@relURI}" src="{$img-unipub}/jahr/{@relURI}_aus.gif" height="13" 		width="39" border="0" /></a></xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
               </td>
             </tr>
 
