@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
 <document>
   <header>
@@ -11,8 +11,8 @@
     </authors>
   </header>
   <body>
-<section>
+
 <p>Here you will find information on how to interact with, and become a member of the Apache Lenya community.</p>
-</section>
+
   </body>
 </document>

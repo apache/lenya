@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
 <document>
   <header>
@@ -11,9 +11,7 @@
     </authors>
   </header>
   <body>
-<section>
 <p>In getting started with Lenya, one must learn not only a number of concepts, but a number of 
 details as well. The Concepts section will explain concepts such as the sitemap, publications, and tasks.</p>
-</section>
   </body>
 </document>
