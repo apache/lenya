@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultDocumentIdToPathMapper.java,v 1.19 2004/01/07 16:59:20 egli Exp $ <License>
+ * $Id: DefaultDocumentIdToPathMapper.java,v 1.20 2004/01/07 18:15:50 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -105,26 +105,37 @@ public class DefaultDocumentIdToPathMapper
     }
 
     /**
-	 * Returns the document ID for a certain file.
-	 * 
-	 * @param publication The publication.
-	 * @param area The area.
-	 * @param file The file representing the document.
-	 * @throws DocumentDoesNotExistException when the document referenced by the file does not
-	 *             exist.
-	 */
-    public String getDocumentId(Publication publication, String area, File file)
+     * Returns the document ID for a certain file.
+     * 
+     * @param publication The publication.
+     * @param area The area.
+     * @param file The file representing the document.
+     * @throws DocumentDoesNotExistException when the document
+     * referenced by the file does not exist.
+     */
+    public String getDocumentId(
+        Publication publication,
+        String area,
+        File file)
         throws DocumentDoesNotExistException {
 
         String fileName = file.getAbsolutePath();
-        String contentDirName = publication.getContentDirectory(area).getAbsolutePath();
+        String contentDirName =
+            publication.getContentDirectory(area).getAbsolutePath();
         if (fileName.startsWith(contentDirName)) {
             // trim everything up to the documentId
-            String relativeFileName = fileName.substring(contentDirName.length());
+            String relativeFileName =
+                fileName.substring(contentDirName.length());
             // trim everything after the documentId
-            return relativeFileName.substring(0, relativeFileName.lastIndexOf(File.separator));
+            relativeFileName =
+                relativeFileName.substring(
+                    0,
+                    relativeFileName.lastIndexOf(File.separator));
+            // and replace the os specific separator by '/'
+            return relativeFileName.replace(File.separatorChar, '/');
         } else {
-            throw new DocumentDoesNotExistException("No document associated with file" + fileName);
+            throw new DocumentDoesNotExistException(
+                "No document associated with file" + fileName);
         }
     }
     
