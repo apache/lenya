@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreatorTask.java,v 1.3 2003/07/08 16:13:20 egli Exp $
+$Id: DocumentCreatorTask.java,v 1.4 2003/07/15 14:11:10 egli Exp $
 <License>
 
  ============================================================================
@@ -77,6 +77,7 @@ public class DocumentCreatorTask extends PublicationTask {
     private String documentType;
     private String treeFile;
     private String authoringPath;
+    private String language;
 
 	/**
 	 *  (non-Javadoc)
@@ -89,7 +90,7 @@ public class DocumentCreatorTask extends PublicationTask {
         try {
             creator.create(getPublication(),
                 new File(getPublication().getDirectory(), getAuthoringPath()), getTreeFile(),
-                getParentId(), getChildId(), getChildName(), getChildType(), documentType);
+                getParentId(), getChildId(), getChildName(), getChildType(), documentType, getLanguage());
         } catch (CreatorException e) {
             throw new BuildException(e);
         }
@@ -241,4 +242,22 @@ public class DocumentCreatorTask extends PublicationTask {
         assertString(string);
         treeFile = string;
     }
+    /**
+     * Get the language
+     * 
+     * @return the language
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * Set the language
+     * 
+     * @param language the language
+     */
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
 }

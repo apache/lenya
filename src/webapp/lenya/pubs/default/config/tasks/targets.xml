@@ -84,7 +84,7 @@
   <echo>and insert it in tree ${pub.dir}/${live.dir}/${sitetree}</echo>
 
   <publishtree 
-      documentid= "${publish.documentid}" 
+      documentid= "${publish.documentid}"
       language= "${publish.language}"
       absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${sitetree}"
       absolutetreelivepath = "${pub.dir}/${live.dir}/${sitetree}" 
@@ -109,7 +109,8 @@
   <property name="create.child-name" value=""/>
   <property name="create.child-type" value=""/>
   <property name="create.doctype" value=""/>
-    
+  <property name="create.language" value=""/>
+      
   <taskdef name="create" classname="org.apache.lenya.cms.ant.DocumentCreatorTask"/>
   <create
       parentid="${create.parent-id}"
@@ -118,6 +119,7 @@
       childtype="${create.child-type}"
       authoringpath="${authoring.dir}"
       documenttype="${create.doctype}"
+      language="${create.language}"
       treefile="${sitetree}"/>
       
   <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>

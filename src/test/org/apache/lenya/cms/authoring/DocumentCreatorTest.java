@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DocumentCreatorTest.java,v 1.4 2003/07/15 14:11:10 egli Exp $
 <License>
 
  ============================================================================
@@ -123,7 +123,7 @@ public class DocumentCreatorTest extends TestCase {
         File authoringDirectory = new File(publication.getDirectory(), AUTHORING_DIR);
 
         creator.create(publication, authoringDirectory, TREE_FILE, PARENT_ID, CHILD_ID, CHILD_NAME,
-            CHILD_TYPE, DOCUMENT_TYPE);
+            CHILD_TYPE, DOCUMENT_TYPE, DOCUMENT_LANGUAGE);
 
         File documentFile = new File(authoringDirectory, CREATED_FILE);
         assertTrue(documentFile.exists());
@@ -135,7 +135,7 @@ public class DocumentCreatorTest extends TestCase {
         SiteTreeNode node = sitetree.getNode(PARENT_ID + "/" + CHILD_ID);
         assertNotNull(node);
         System.out.println("Sitetree node was created: " + node.getId() + " (label: " +
-            node.getLabel("de") + ")");
+            node.getLabel(DOCUMENT_LANGUAGE) + ")");
     }
 
     protected static final String AUTHORING_DIR = "content" + File.separator + "authoring";
@@ -146,6 +146,7 @@ public class DocumentCreatorTest extends TestCase {
     protected static final String CHILD_TYPE = "leaf";
     protected static final String DOCUMENT_TYPE = "simple";
     protected static final String CREATED_FILE = "tutorial/test-document/index.xml";
+    protected static final String DOCUMENT_LANGUAGE = "en";
 
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {

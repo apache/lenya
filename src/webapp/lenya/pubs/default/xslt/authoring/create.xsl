@@ -29,6 +29,7 @@
 	  <input type="hidden" name="lenya.step" value="create"/>
 	  <input type="hidden" name="childtype" value="branch"/>
 	  <input type="hidden" name="doctype" value="{/parent-child/doctype}"/>
+	  <input type="hidden" name="language" value="{/parent-child/default-language}"/>
 	  <table>
 	    <tr>
 	      <td>parentid:</td><td>hidden value="<xsl:value-of select="/parent-child/parentid"/>"</td>

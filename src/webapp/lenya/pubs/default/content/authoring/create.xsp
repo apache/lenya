@@ -7,6 +7,10 @@
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   >
   
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+  </xsp:structure>
+
   <parent-child>
     
     <xsp:logic>
@@ -25,12 +29,15 @@
       if ((status != null) &amp;&amp; (status.equals("failed"))) {
         <xsp:content><exception/></xsp:content>
       }
+
+      Publication pub = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
+      
     </xsp:logic>
 
     <parentid><xsp:expr>parentId</xsp:expr></parentid>
     <referer><xsp-request:get-uri/></referer>
     <doctype><xsp:expr><xsp-request:get-parameter name="doctype"/></xsp:expr></doctype>
- 
+    <default-language><xsp:expr>pub.getDefaultLanguage()</xsp:expr></default-language>
   </parent-child>
   
 </xsp:page>
