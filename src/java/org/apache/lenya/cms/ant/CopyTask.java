@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: CopyTask.java,v 1.5 2003/07/08 16:10:36 egli Exp $
 <License>
 
  ============================================================================
@@ -71,9 +71,9 @@ public class CopyTask extends Task {
     private Path pubsRootDirs;
     private Path toDir;
 
-    /**
-     *
-     */
+	/** (non-Javadoc)
+	 * @see org.apache.tools.ant.Task#execute()
+	 */
     public void execute() throws BuildException {
         int numberOfDirectoriesCreated = 0;
         int numberOfFilesCopied = 0;

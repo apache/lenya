@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: JavaFilenameFilter.java,v 1.4 2003/07/08 16:11:22 egli Exp $
 <License>
 
  ============================================================================
@@ -65,9 +65,11 @@ import java.util.StringTokenizer;
  * @author Michael Wechner
  */
 public class JavaFilenameFilter implements FilenameFilter {
-    /**
-     *
-     */
+
+	/**
+	 *  (non-Javadoc)
+	 * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
+	 */
     public boolean accept(File dir, String name) {
         if (new File(dir, name).isFile()) {
             //System.out.println("JavaFilenameFilter.accept(): " + getExtension(name));
@@ -81,9 +83,12 @@ public class JavaFilenameFilter implements FilenameFilter {
         }
     }
 
-    /**
-     *
-     */
+	/**
+	 * Get the extension
+	 * 
+	 * @param filename the file name from which the extension is extracted
+	 * @return the extension
+	 */
     static public String getExtension(String filename) {
         StringTokenizer st = new StringTokenizer(filename, ".");
         st.nextToken();

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PublicationTask.java,v 1.6 2003/07/08 16:12:37 egli Exp $
 <License>
 
  ============================================================================
@@ -78,6 +78,8 @@ public abstract class PublicationTask extends Task {
 
     /**
      * Returns the publication directory.
+     * 
+     * @return a the path to the publication directory as a <code>File</code>
      */
     protected File getPublicationDirectory() {
         return new File(getProject().getProperty(AntTask.PUBLICATION_DIRECTORY));
@@ -85,6 +87,8 @@ public abstract class PublicationTask extends Task {
 
     /**
      * Returns the publication ID.
+     * 
+     * @return the publication-id
      */
     protected String getPublicationId() {
         return getProject().getProperty(AntTask.PUBLICATION_ID);
@@ -92,11 +96,20 @@ public abstract class PublicationTask extends Task {
 
     /**
      * Returns the servlet context (e.g., <code>tomcat/webapp/lenya</code>)
+     * 
+     * @return the servlet-context
      */
     protected File getServletContext() {
         return new File(getProject().getProperty(AntTask.SERVLET_CONTEXT_PATH));
     }
 
+	/**
+	 * Get the publication
+	 * 
+	 * @return the publication
+	 *  
+	 * @throws BuildException if the publication could not be found
+	 */
     protected Publication getPublication() throws BuildException {
         try {
             return PublicationFactory.getPublication(getPublicationId(),
@@ -106,6 +119,11 @@ public abstract class PublicationTask extends Task {
         }
     }
 
+	/**
+	 * Utility method for assertion that a string is != null and != ""
+	 * 
+	 * @param string the string to check
+	 */
     protected void assertString(String string) {
         assert (string != null) && !string.equals("");
     }

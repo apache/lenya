@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DocumentCreatorTask.java,v 1.3 2003/07/08 16:13:20 egli Exp $
 <License>
 
  ============================================================================
@@ -78,9 +78,10 @@ public class DocumentCreatorTask extends PublicationTask {
     private String treeFile;
     private String authoringPath;
 
-    /* (non-Javadoc)
-     * @see org.apache.tools.ant.Task#execute()
-     */
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.tools.ant.Task#execute()
+	 */
     public void execute() throws BuildException {
         DocumentCreator creator = new DocumentCreator();
 
@@ -94,9 +95,11 @@ public class DocumentCreatorTask extends PublicationTask {
         }
     }
 
-    /**
-     * @return
-     */
+	/**
+	 * Get the child type
+	 * 
+	 * @return the child type
+	 */
     public String getChildType() {
         assertString(childType);
 
@@ -104,7 +107,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @return
+     * Get the document type
+     * 
+     * @return the document type
      */
     public String getDocumentType() {
         assertString(documentType);
@@ -113,7 +118,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @return
+     * Get the parent id
+     * 
+     * @return the parent id
      */
     public String getParentId() {
         assertString(parentId);
@@ -122,7 +129,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the child type
+     * 
+     * @param string the child type
      */
     public void setChildType(String string) {
         assertString(string);
@@ -130,7 +139,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the document type
+     * 
+     * @param string the document type
      */
     public void setDocumentType(String string) {
         assertString(string);
@@ -138,7 +149,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the parent id
+     * 
+     * @param string the parent id
      */
     public void setParentId(String string) {
         assertString(string);
@@ -146,7 +159,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @return
+     * Get the child id
+     * 
+     * @return the child id
      */
     public String getChildId() {
         assertString(childId);
@@ -155,7 +170,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @return
+     * Get the child name
+     *  
+     * @return the child name
      */
     public String getChildName() {
         assertString(childName);
@@ -164,7 +181,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the child id
+     * 
+     * @param string the child id
      */
     public void setChildId(String string) {
         assertString(string);
@@ -172,7 +191,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the child name
+     * 
+     * @param string the child name
      */
     public void setChildName(String string) {
         assertString(string);
@@ -180,7 +201,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @return
+     * Get the authoring path
+     * 
+     * @return the authoring path
      */
     public String getAuthoringPath() {
         assertString(authoringPath);
@@ -189,7 +212,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @return
+     * Get the tree file
+     * 
+     * @return the path to the tree file
      */
     public String getTreeFile() {
         assertString(treeFile);
@@ -198,7 +223,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the authoring path
+     * 
+     * @param string the authoring path
      */
     public void setAuthoringPath(String string) {
         assertString(string);
@@ -206,7 +233,9 @@ public class DocumentCreatorTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the tree file
+     * 
+     * @param string the path to the tree file
      */
     public void setTreeFile(String string) {
         assertString(string);

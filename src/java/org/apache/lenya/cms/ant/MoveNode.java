@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: MoveNode.java,v 1.3 2003/07/08 16:12:01 egli Exp $
 <License>
 
  ============================================================================
@@ -74,10 +74,13 @@ public class MoveNode extends TwoNodesTask {
     }
 
     /**
-     * move a node in a tree
+     * Move a node in a tree.
+     * 
      * @param firstdocumentid : id of the moved document
      * @param secdocumentid : id of the new document
      * @param absolutetreepath : absolute path of the tree
+     * 
+     * @throws SiteTreeException if the manipulation failed
      */
     public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutetreepath)
         throws SiteTreeException {
