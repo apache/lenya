@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.38 2004/02/25 20:25:18 roku Exp $
+   $Id: cmsui.xml,v 1.39 2004/02/25 20:42:39 roku Exp $
    
 -->
 
@@ -198,6 +198,7 @@ c
   <message key="check the log files">check the log files</message>
   <message key="Task">Task</message>
   <message key="Day">Day</message>
+  <message key="Time">Time</message>
       <!-- Deactivate and delete -->
   <message key="docs-have-links-to-doc">The following documents have links to this document</message>
   <message key="Deactivate Document">Deactivate Document</message>
