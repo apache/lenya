@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowModule.java,v 1.3 2003/09/17 16:03:43 andreas Exp $
+$Id: WorkflowModule.java,v 1.4 2003/10/16 21:50:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -91,6 +91,7 @@ public class WorkflowModule extends AbstractInputModule {
 
         Object value = null;
 
+		
         try {
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
             Document document = envelope.getDocument();
@@ -100,7 +101,8 @@ public class WorkflowModule extends AbstractInputModule {
                 WorkflowInstance instance = factory.buildInstance(document);
                 if (name.equals(STATE)) {
                     value = instance.getCurrentState().toString();
-                } else if (name.startsWith(VARIABLE_PREFIX)) {
+                }
+                else if (name.startsWith(VARIABLE_PREFIX)) {
                     String variableName = name.substring(VARIABLE_PREFIX.length());
                     String[] variableNames = instance.getWorkflow().getVariableNames();
                     if (Arrays.asList(variableNames).contains(variableName)) {
@@ -110,7 +112,12 @@ public class WorkflowModule extends AbstractInputModule {
                 else if (name.equals(HISTORY_PATH)) {
                     value = ((CMSHistory) WorkflowFactory.getHistory(document)).getHistoryPath();
                 }
+				else {
+					throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+				}
             }
+		} catch (ConfigurationException e) {
+			throw e;
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute failed: ", e);
         }

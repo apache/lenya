@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.8 2003/09/01 17:02:11 andreas Exp $
+$Id: AccessControlModule.java,v 1.9 2003/10/16 21:46:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -121,6 +121,10 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         Session session = request.getSession();
         Object value = null;
 
+		if (!Arrays.asList(PARAMETER_NAMES).contains(name)) {
+			throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+		}
+		
         if (session != null) {
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if (identity != null) {
