@@ -191,7 +191,7 @@
         </map:aggregate>
 
         <map:transform src="../../xslt/navigation/sitetree2nav.xsl" label="navtree">
-          <map:parameter name="chosenlanguage" value="de"/>
+          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
         </map:transform>
 
