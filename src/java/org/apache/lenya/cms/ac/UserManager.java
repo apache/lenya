@@ -1,5 +1,5 @@
 /*
- * $Id: UserManager.java,v 1.3 2003/06/02 09:21:51 egli Exp $
+ * $Id: UserManager.java,v 1.4 2003/06/02 17:17:37 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,7 +49,11 @@
 
 package org.apache.lenya.cms.ac;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
@@ -62,17 +66,21 @@ import org.apache.log4j.Category;
 public class UserManager extends ItemManager {
 	static Category log = Category.getInstance(UserManager.class);
 
-	protected static final String SUFFIX = "iml";
-		
+	protected static final String SUFFIX = ".iml";
+
+	private static Map instances = new HashMap(); 
+
 	private UserManager(Publication publication)
 		throws AccessControlException {
-		
+
 		super(publication);
 	}
 
-	public static ItemManager instance(Publication publication)
+	public static UserManager instance(Publication publication)
 		throws AccessControlException {
-		return UserManager.instance(publication);
+		if (!instances.containsKey(publication))
+			instances.put(publication, new UserManager(publication));
+		return (UserManager) instances.get(publication);
 	}
 
 	public Iterator getUsers() {
@@ -98,4 +106,18 @@ public class UserManager extends ItemManager {
 		}
 		return user;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.lenya.cms.ac.ItemManager#getFileFilter()
+	 */
+	protected FileFilter getFileFilter() {
+		FileFilter filter = new FileFilter() {
+
+			public boolean accept(File pathname) {
+				return (pathname.getName().endsWith(SUFFIX));
+			}
+		};
+		return filter;
+	}
+
 }

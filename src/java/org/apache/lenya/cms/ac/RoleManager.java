@@ -1,5 +1,5 @@
 /*
- * $Id: GroupManager.java,v 1.2 2003/06/02 17:17:37 egli Exp $
+ * $Id: RoleManager.java,v 1.1 2003/06/02 17:17:37 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -63,10 +63,10 @@ import org.apache.log4j.Category;
  * 
  * 
  */
-public class GroupManager extends ItemManager {
-	static Category log = Category.getInstance(GroupManager.class);
+public class RoleManager extends ItemManager {
+	private static Category log = Category.getInstance(RoleManager.class);
 
-	protected static final String SUFFIX = ".gml";
+	protected static final String SUFFIX = ".rml";
 
 	private static Map instances = new HashMap();
 
@@ -74,44 +74,45 @@ public class GroupManager extends ItemManager {
 	 * @param publication
 	 * @throws AccessControlException
 	 */
-	private GroupManager(Publication publication)
+	private RoleManager(Publication publication)
 		throws AccessControlException {
 		super(publication);
 	}
 
 
-	public static GroupManager instance(Publication publication)
+	public static RoleManager instance(Publication publication)
 		throws AccessControlException {
 		if (!instances.containsKey(publication))
-			instances.put(publication, new GroupManager(publication));
-		return (GroupManager) instances.get(publication);
+			instances.put(publication, new RoleManager(publication));
+		return (RoleManager) instances.get(publication);
 	}
 
-	public Iterator getGroups() {
+	public Iterator getRoles() {
 		return super.getItems();
 	}
 
-	public void add(Group group) {
-		super.add(group);
+	public void add(Role role) {
+		super.add(role);
 	}
 
-	public void remove(Group group) {
-		super.remove(group);
+	public void remove(Role role) {
+		super.remove(role);
 	}
 
-	public Group getGroup(String groupName) {
-		Group group = null;
-		Iterator iter = getGroups();
+	public Role getRole(String roleName) {
+		Role role = null;
+		Iterator iter = getRoles();
 		while (iter.hasNext()) {
-			Group element = (Group) iter.next();
-			if (element.getName().equals(groupName)) {
-				group = element;
+			Role element = (Role) iter.next();
+			if (element.getName().equals(roleName)) {
+				role = element;
 			}
 		}
-		return group;
+		return role;
 	}
 	
-	/* (non-Javadoc)
+
+   /* (non-Javadoc)
 	 * @see org.apache.lenya.cms.ac.ItemManager#getFileFilter()
 	 */
 	protected FileFilter getFileFilter() {

@@ -1,5 +1,5 @@
 /*
- * $Id: ItemManager.java,v 1.1 2003/06/02 09:21:51 egli Exp $
+ * $Id: ItemManager.java,v 1.2 2003/06/02 17:17:37 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,7 +52,6 @@ package org.apache.lenya.cms.ac;
 import java.io.File;
 import java.io.FileFilter;
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -68,31 +67,25 @@ import org.apache.log4j.Category;
  * 
  * 
  */
-public class ItemManager {
+public abstract class ItemManager {
 	static Category log = Category.getInstance(ItemManager.class);
 
 	private static final String PATH =
 		"config" + File.separator + "ac" + File.separator + "passwd";
 
-	protected static final String SUFFIX = null;
-
-	private static HashMap instances = new HashMap();
-
-	protected Set items = null;
+	private Set items = null;
+	private Publication publication = null;
 
 	protected ItemManager(Publication publication)
 		throws AccessControlException {
 
+		this.publication = publication;
+		
 		File groupDir = new File(publication.getDirectory(), PATH);
 		if (!groupDir.exists() || !groupDir.isDirectory()) {
 			//			throw new Execption();
 		}
-		File[] itemFiles = groupDir.listFiles(new FileFilter() {
-
-			public boolean accept(File pathname) {
-				return (pathname.getName().endsWith(SUFFIX));
-			}
-		});
+		File[] itemFiles = groupDir.listFiles(getFileFilter());
 		items = new HashSet();
 		Configuration config = null;
 		for (int i = 0; i < itemFiles.length; i++) {
@@ -138,12 +131,6 @@ public class ItemManager {
 		}
 	}
 
-	public static ItemManager instance(Publication publication)
-		throws AccessControlException {
-		if (!instances.containsKey(publication))
-			instances.put(publication, new ItemManager(publication));
-		return (UserManager) instances.get(publication);
-	}
 
 	public Iterator getItems() {
 		return items.iterator();
@@ -156,4 +143,18 @@ public class ItemManager {
 	public void remove(Object item) {
 		items.remove(item);
 	}
+	
+	public File getPath() {
+		return new File(publication.getDirectory(), PATH);
+	}
+	
+	protected abstract FileFilter getFileFilter();
+	
+	/**
+	 * @return
+	 */
+	public Publication getPublication() {
+		return publication;
+	}
+
 }
