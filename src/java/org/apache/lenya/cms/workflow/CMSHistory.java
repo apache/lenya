@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.10 2003/08/15 13:11:59 andreas Exp $
+$Id: CMSHistory.java,v 1.11 2003/08/20 18:53:46 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,6 +65,7 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.History;
 import org.apache.lenya.workflow.impl.StateImpl;
+import org.apache.lenya.workflow.impl.Version;
 import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 import org.apache.lenya.xml.NamespaceHelper;
 
@@ -220,4 +221,20 @@ public class CMSHistory extends History {
         move(getHistoryFile(newDocument));
         setDocument(newDocument);
     }
+
+    /**
+     * @see org.apache.lenya.workflow.impl.History#restoreVersion(NamespaceHelper, org.w3c.dom.Element)
+     */
+    protected Version restoreVersion(NamespaceHelper helper, Element element) throws WorkflowException {
+        Version version = super.restoreVersion(helper, element);
+        CMSVersion cmsVersion = new CMSVersion(version.getEvent(), version.getState());
+        
+        Element identityElement = helper.getFirstChild(element, IDENTITY_ELEMENT);
+        Element userElement = helper.getFirstChild(identityElement, USER_ELEMENT);
+        String userId = userElement.getAttribute(ID_ATTRIBUTE);
+        cmsVersion.setUserId(userId);
+        
+        return cmsVersion;
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.10 2003/08/15 13:13:28 andreas Exp $
+$Id: History.java,v 1.11 2003/08/20 18:53:46 andreas Exp $
 <License>
 
  ============================================================================
@@ -78,7 +78,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.transform.TransformerException;
 
@@ -93,7 +95,6 @@ public abstract class History implements WorkflowListener {
     public static final String HISTORY_ELEMENT = "history";
     public static final String VERSION_ELEMENT = "version";
     public static final String STATE_ATTRIBUTE = "state";
-    public static final String USER_ATTRIBUTE = "user";
     public static final String EVENT_ATTRIBUTE = "event";
     public static final String VARIABLE_ELEMENT = "variable";
     public static final String NAME_ATTRIBUTE = "name";
@@ -116,7 +117,7 @@ public abstract class History implements WorkflowListener {
 
             Element historyElement = helper.getDocument().getDocumentElement();
             historyElement.setAttribute(WORKFLOW_ATTRIBUTE, workflowId);
-
+            
             DocumentHelper.writeDocument(helper.getDocument(), file);
         } catch (Exception e) {
             throw new WorkflowException(e);
@@ -391,6 +392,45 @@ public abstract class History implements WorkflowListener {
         } catch (IOException e) {
             throw new WorkflowException(e);
         }
+    }
+    
+    /**
+     * Restores a version from an XML element.
+     * @param helper The namespace helper.
+     * @param element An XML element.
+     * @return A version.
+     * @throws WorkflowException when something went wrong.
+     */
+    protected Version restoreVersion(NamespaceHelper helper, Element element) throws WorkflowException {
+        assert element.getLocalName().equals(VERSION_ELEMENT);
+        
+        String eventId = element.getAttribute(EVENT_ATTRIBUTE);
+        Event event = getInstance().getWorkflowImpl().getEvent(eventId);
+
+        String stateId = element.getAttribute(STATE_ATTRIBUTE);
+        State state = getInstance().getWorkflowImpl().getState(stateId);
+        
+        Version version = new Version(event, state);
+        return version;
+    }
+    
+    /**
+     * Returns the versions of this history.
+     * @return An array of versions.
+     * @throws WorkflowException when something went wrong.
+     */
+    public Version[] getVersions() throws WorkflowException {
+        List versions = new ArrayList();
+
+        NamespaceHelper helper = getNamespaceHelper();
+        Element documentElement = helper.getDocument().getDocumentElement();
+        Element[] versionElements = getNamespaceHelper().getChildren(documentElement, VERSION_ELEMENT);
+
+        for (int i = 0; i < versionElements.length; i++) {
+            Version version = restoreVersion(helper, versionElements[i]);
+            versions.add(version);
+        }
+        return (Version[]) versions.toArray(new Version[versions.size()]);
     }
 
 }
