@@ -4,6 +4,7 @@
   <fullname>Levi Vanya</fullname>
   <email>levi.vanya@wyona.org</email>
   <password type="md5">8e07dafd13495561db9063ebe4db4b27</password>
+  <comment>none</comment>
   <groups>
     <group>administrator</group>
     <group>useradministrator</group>
