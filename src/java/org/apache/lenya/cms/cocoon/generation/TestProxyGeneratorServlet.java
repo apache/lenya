@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Enumeration;
 
-import org.apache.log4j.Category;
+//import org.apache.log4j.Category;
 
 /**
  * @author Michael Wechner
@@ -20,7 +20,7 @@ import org.apache.log4j.Category;
  * @version 2002.8.27
  */
 public class TestProxyGeneratorServlet extends HttpServlet {
-  static Category log=Category.getInstance(TestProxyGeneratorServlet.class);
+  //static Category log=Category.getInstance(TestProxyGeneratorServlet.class);
 /**
  *
  */
@@ -31,7 +31,7 @@ public class TestProxyGeneratorServlet extends HttpServlet {
  *
  */
   public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-    log.debug("GET");
+    //log.debug("GET");
     response.setContentType("text/xml");
     PrintWriter writer = response.getWriter();
     writer.print("<?xml version=\"1.0\"?>");
@@ -48,7 +48,7 @@ public class TestProxyGeneratorServlet extends HttpServlet {
  *
  */
   public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-    log.debug("POST");
+    //log.debug("POST");
     response.setContentType("text/xml");
     PrintWriter writer = response.getWriter();
     writer.print("<?xml version=\"1.0\"?>");
@@ -131,7 +131,6 @@ public class TestProxyGeneratorServlet extends HttpServlet {
     Cookie[] cookies=request.getCookies();
     if(cookies != null){
       if(cookies.length > 0){
-        log.warn(cookies.length+" cookies exist");
         sb.append("<cookies>");
         for(int i=0;i<cookies.length;i++){
           sb.append("<cookie>");

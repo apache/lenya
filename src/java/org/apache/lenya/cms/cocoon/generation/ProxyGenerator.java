@@ -18,7 +18,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 import org.xml.sax.InputSource;
 
-import org.apache.log4j.Category;
+//import org.apache.log4j.Category;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -38,11 +38,11 @@ import java.util.Map;
  * @version 2002.8.27
  */
 public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements Parameterizable {
-  static Category log=Category.getInstance(ProxyGenerator.class);
+  //static Category log=Category.getInstance(ProxyGenerator.class);
   protected String src;
 
   // The URI of the namespace of this generator
-  private String URI="http://www.wyona.org/wyona-cms/servletproxygenerator/1.0";
+  private String URI="http://www.wyona.org/wyona-cms/proxygenerator/1.0";
 /**
  *
  */
@@ -55,11 +55,11 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
   public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par) throws ProcessingException, SAXException, IOException{
     super.setup(resolver, objectModel, src, par);
     try{
-      log.debug(".setup(): "+src);
+      //log.debug(".setup(): "+src);
       this.src=src;
       }
     catch(Exception e){
-      log.error(e);
+      //log.error(e);
       }
     }
 /**
@@ -73,21 +73,21 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
         Parser parser = null;
         try{
-          // Debug
+          // DEBUG
           if(submitMethod.equals("POST")){
             java.io.InputStream is=intercept(httpRequest.getInputStream());
-            log.debug("HTTP method: "+submitMethod);
+            //log.debug("HTTP method: "+submitMethod);
             }
           else if(submitMethod.equals("GET")){
-            log.debug("HTTP method: "+submitMethod);
+            //log.debug("HTTP method: "+submitMethod);
             }
           else{
-            log.debug("HTTP method: "+submitMethod);
+            //log.debug("HTTP method: "+submitMethod);
             }
 
           // Forward "InputStream", Parameters, QueryString to Servlet
           URL url=createURL(httpRequest);
-          log.debug(".generate(): Remote URL: "+url);
+          //log.debug(".generate(): Remote URL: "+url);
           org.apache.commons.httpclient.HttpMethod httpMethod=null;
           if(submitMethod.equals("POST")){
             httpMethod=new PostMethod();
@@ -111,10 +111,10 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
           if(cookies != null){
           transferedCookies=new org.apache.commons.httpclient.Cookie[cookies.length];
           for(int i=0;i<cookies.length;i++){
-            log.warn(".generate(): Original COOKIE: "+cookies[i].getPath()+" "+cookies[i].getName()+" "+cookies[i].getDomain()+" "+cookies[i].getValue());
+            //log.warn(".generate(): Original COOKIE: "+cookies[i].getPath()+" "+cookies[i].getName()+" "+cookies[i].getDomain()+" "+cookies[i].getValue());
             boolean secure=false; // http: false, https: true
             transferedCookies[i]=new org.apache.commons.httpclient.Cookie(url.getHost(),cookies[i].getName(),cookies[i].getValue(),url.getFile(),null,secure);
-            log.warn(".generate(): Copied COOKIE: "+transferedCookies[i]);
+            //log.warn(".generate(): Copied COOKIE: "+transferedCookies[i]);
             }
             }
 
@@ -127,11 +127,14 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             httpState.addCookies(transferedCookies);
             httpClient.setState(httpState);
             }
-          // Debug cookies
+
+          // DEBUG cookies
+/*
           org.apache.commons.httpclient.Cookie[] tcookies=httpClient.getState().getCookies();
           for(int i=0;i<tcookies.length;i++){
             log.warn(".generate(): Transfered COOKIE: "+tcookies[i]);
             }
+*/
 
           // Send request to servlet
           httpMethod.setRequestHeader("Content-type","text/plain");
@@ -139,7 +142,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
           httpClient.startSession(url);
           httpClient.executeMethod(httpMethod);
           byte[] sresponse=httpMethod.getResponseBody();
-          log.warn(".generate(): Response from remote server: "+new String(sresponse));
+          //log.warn(".generate(): Response from remote server: "+new String(sresponse));
           httpClient.endSession();
 
 
@@ -156,7 +159,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
           this.end("servletproxygenerator");
           this.contentHandler.endDocument();
 
-          log.error(e);
+          //log.error(e);
           e.printStackTrace();
           }
         finally{
@@ -177,7 +180,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
     while((bytes_read=in.read(buffer)) != -1){
       bufferOut.write(buffer,0,bytes_read);
     }
-    log.warn("Intercepted Input Stream:\n\n"+bufferOut.toString());
+    //log.warn("Intercepted Input Stream:\n\n"+bufferOut.toString());
     return new ByteArrayInputStream(bufferOut.toByteArray());
     }
 /**
@@ -189,7 +192,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
       url=new URL(this.src);
       }
     catch(MalformedURLException e){
-      log.warn(".createURL(): "+e);
+      //log.warn(".createURL(): "+e);
       url=new URL("http://127.0.0.1:"+request.getServerPort()+this.src);
       }
     return url;
