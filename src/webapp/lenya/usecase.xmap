@@ -288,9 +288,13 @@
           </map:match>
           
           <map:match pattern="create" type="step">
-            <map:act type="task">
-              <map:parameter name="task-id" value="create-language"/>
-              <map:redirect-to uri="{request:requestURI}"/>
+            <map:act src="{request:requestURI}" type="uriparametrizer">
+              <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
+              <map:act type="task">
+                <map:parameter name="task-id" value="create-language"/>
+                <map:parameter name="properties.create.doctype" value="{doctype}"/>
+                <map:redirect-to uri="{request:requestURI}"/>
+              </map:act>
             </map:act>
           </map:match>
 
