@@ -1,5 +1,5 @@
 /*
- * $Id: XercesParser.java,v 1.2 2003/02/07 12:14:25 ah Exp $
+ * $Id: XercesParser.java,v 1.3 2003/02/13 19:10:17 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -131,6 +131,23 @@ public class XercesParser implements Parser {
     public Document getDocument(InputStream is) throws Exception {
         DOMParser parser = new DOMParser();
         org.xml.sax.InputSource in = new org.xml.sax.InputSource(is);
+        parser.parse(in);
+
+        return parser.getDocument();
+    }
+
+    /**
+     * Creates a document from a reader.
+     *
+     * @param is DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public Document getDocument(Reader reader) throws Exception {
+        DOMParser parser = new DOMParser();
+        org.xml.sax.InputSource in = new org.xml.sax.InputSource(reader);
         parser.parse(in);
 
         return parser.getDocument();

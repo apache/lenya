@@ -1,5 +1,5 @@
 /*
- * $Id: DOMParserFactory.java,v 1.4 2003/02/07 12:14:25 ah Exp $
+ * $Id: DOMParserFactory.java,v 1.5 2003/02/13 19:10:17 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -144,9 +144,6 @@ public class DOMParserFactory {
         */
     }
 
-    /**
-     *
-     */
     public Document getDocument(String filename) throws FileNotFoundException, Exception {
         File file = new File(filename);
 
@@ -170,6 +167,18 @@ public class DOMParserFactory {
     public Document getDocument(InputStream inputStream)
         throws Exception {
         return parser.getDocument(inputStream);
+    }
+
+    /**
+     * Create a document from a reader.
+     *
+     * @param inputStream DOCUMENT ME!
+     * @return DOCUMENT ME!
+     * @throws Exception DOCUMENT ME!
+     */
+    public Document getDocument(Reader reader)
+        throws Exception {
+        return parser.getDocument(reader);
     }
 
     /**

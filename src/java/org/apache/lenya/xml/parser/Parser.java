@@ -1,5 +1,5 @@
 /*
- * $Id: Parser.java,v 1.2 2003/02/07 12:14:25 ah Exp $
+ * $Id: Parser.java,v 1.3 2003/02/13 19:10:17 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -65,6 +65,18 @@ public interface Parser {
      * @throws Exception DOCUMENT ME!
      */
     Document getDocument(String filename) throws Exception;
+
+    /**
+     * DOCUMENT ME!
+     *
+     * Create a document from a reader.
+     * @param is DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    Document getDocument(Reader reader) throws Exception;
 
     /**
      * DOCUMENT ME!

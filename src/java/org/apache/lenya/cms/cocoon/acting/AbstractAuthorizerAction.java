@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthorizerAction.java,v 1.5 2003/02/07 12:14:08 ah Exp $
+ * $Id: AbstractAuthorizerAction.java,v 1.6 2003/02/13 19:10:41 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,13 +69,14 @@ import org.wyona.util.Stack;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: AbstractAuthorizerAction.java,v 1.5 2003/02/07 12:14:08 ah Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.6 2003/02/13 19:10:41 andreas Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
@@ -142,7 +143,7 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
         // Get request object
-        Request req = (Request) objectModel.get(Constants.REQUEST_OBJECT);
+        Request req = (Request) ObjectModelHelper.getRequest(objectModel);
 
         if (req == null) {
             getLogger().error("No request object");
