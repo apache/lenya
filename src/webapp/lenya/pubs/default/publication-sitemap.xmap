@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.60 2003/10/31 19:01:29 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.61 2003/11/04 10:23:12 andreas Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -28,8 +28,8 @@
     
     <map:pipeline>
       <!-- pattern="{area}/simple/{document-path}" -->
-      <map:match pattern="lenya-document/*/*/**.xml">
-        <map:mount check-reload="true" reload-method="synchron" src="doctypes.xmap" uri-prefix="lenya-document/"/>
+      <map:match pattern="lenya-document-*/*/*/**.xml">
+        <map:mount check-reload="true" reload-method="synchron" src="doctypes.xmap" uri-prefix="lenya-document-"/>
       </map:match>
     </map:pipeline>
 
@@ -56,17 +56,17 @@
     the navigational elements (breadcrumb, tabs, menu) with the actual
     content of the document. -->
     <map:pipeline>
-      <!-- /lenyabody/{publication-id}/{area}/{doctype}/{url} -->
-      <map:match pattern="lenyabody/*/*/*/**">
+      <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{url} -->
+      <map:match pattern="lenyabody-*/*/*/*/**">
         <map:aggregate element="cmsbody">
-          <map:part src="cocoon://navigation/{1}/{2}/breadcrumb/{4}.xml"/>
-          <map:part src="cocoon://navigation/{1}/{2}/tabs/{4}.xml"/>
-          <map:part src="cocoon://navigation/{1}/{2}/menu/{4}.xml"/>
-          <map:part src="cocoon:/lenya-document/{2}/{3}/{page-envelope:document-path}"/>
+          <map:part src="cocoon://navigation/{2}/{3}/breadcrumb/{5}.xml"/>
+          <map:part src="cocoon://navigation/{2}/{3}/tabs/{5}.xml"/>
+          <map:part src="cocoon://navigation/{2}/{3}/menu/{5}.xml"/>
+          <map:part src="cocoon:/lenya-document-{1}/{3}/{4}/{page-envelope:document-path}"/>
         </map:aggregate>
         <map:transform src="xslt/page2xhtml.xsl">
-          <map:parameter name="root" value="{page-envelope:context-prefix}/{1}/{2}"/>
-          <map:parameter name="url" value="{4}"/>
+          <map:parameter name="root" value="{page-envelope:context-prefix}/{2}/{3}"/>
+          <map:parameter name="url" value="{5}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
@@ -78,12 +78,12 @@
     the lenya body, the actual document. -->
     <map:pipeline>
       <map:match pattern="**.bxe.html">
-        <map:generate src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+        <map:generate src="cocoon:/lenyabody-edit/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
         <map:serialize type="xml"/>
       </map:match>
       
       <map:match pattern="**.html">
-        <map:generate src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+        <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}.xml"/>
         <map:serialize type="html"/>
       </map:match>

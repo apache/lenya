@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- $Id: lenya-header.xsl,v 1.5 2003/11/04 10:10:01 andreas Exp $ -->
+<!-- $Id: lenya-header.xsl,v 1.6 2003/11/04 10:23:12 andreas Exp $ -->
 <!-- RKUPATCH -->
 
 <xsl:stylesheet version="1.0"
@@ -13,7 +13,12 @@
 <xsl:template match="dc:*[not(node())]"/>
 
 <xsl:template match="dc:title">
-  <h1 bxe_xpath="/simple:simple-document/lenya:meta/dc:title"><xsl:apply-templates/></h1>
+  <h1>
+    <xsl:if test="$rendertype = 'edit'">
+      <xsl:attribute name="bxe_xpath">/simple:simple-document/lenya:meta/dc:title</xsl:attribute>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </h1>
 </xsl:template>
 
 <xsl:template match="dc:description">

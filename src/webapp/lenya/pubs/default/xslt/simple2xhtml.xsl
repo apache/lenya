@@ -16,6 +16,8 @@
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     exclude-result-prefixes="simple lenya"
     >
+    
+<xsl:param name="rendertype"/>
 
 <xsl:include href="lenya-header.xsl"/>
 
@@ -25,7 +27,10 @@
     <xsl:apply-templates select="simple:simple-document/lenya:meta/dc:title"/>
     <xsl:apply-templates select="simple:simple-document/simple:body/simple:subtitle"/>
     <xsl:apply-templates select="simple:simple-document/lenya:header/lenya:abstract"/>
-    <div bxe_xpath="/simple:simple-document/simple:body">
+    <div>
+      <xsl:if test="$rendertype = 'edit'">
+        <xsl:attribute name="bxe_xpath">/simple:simple-document/simple:body</xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates select="simple:simple-document/simple:body/*[local-name() != 'subtitle']"/>
     </div>
   </div>
