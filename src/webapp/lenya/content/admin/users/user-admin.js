@@ -1,15 +1,11 @@
 
-var accessController = undefined;
-
-function initAccessController() {
-	if (accessController == undefined) {
-
-	    var publication = Packages.org.apache.lenya.cms.publication.PublicationFactory
-	                          .getPublication(cocoon.request, cocoon.context);
-	    var configDir = new java.io.File(publication.getDirectory(),
-	                       "config" + java.io.File.separator + "ac");
-	    accessController = new Packages.org.apache.lenya.cms.ac2.file.FileAccessController(configDir);
-    }
+function getAccessController() {
+    var publication = Packages.org.apache.lenya.cms.publication.PublicationFactory
+                          .getPublication(cocoon.request, cocoon.context);
+    var configDir = new java.io.File(publication.getDirectory(),
+                       "config" + java.io.File.separator + "ac");
+    var accessController = new Packages.org.apache.lenya.cms.ac2.file.FileAccessController(configDir);
+    return accessController;
 }
 
 //
@@ -24,7 +20,7 @@ function userAdmin() {
 //
 function user_change_profile(userId) {
 
-	initAccessController();
+	var accessController = getAccessController();
     var user = accessController.getUserManager().getUser(userId);
 	var fullName = user.getFullName();
 	var email = user.getEmail();
@@ -37,7 +33,8 @@ function user_change_profile(userId) {
 	    	"user-id" : userId,
 	    	"fullname" : fullName,
 	    	"email" : email,
-	    	"description" : description
+	    	"description" : description,
+	    	"page-title" : "Edit Profile"
 	    });
 	    
 	    if (cocoon.request.get("cancel")) {
@@ -71,7 +68,7 @@ function user_change_password_user(userId) {
 
 function user_change_password(checkPassword, userId) {
 
-	initAccessController();
+	var accessController = getAccessController();
     var user = accessController.getUserManager().getUser(userId);
     var oldPassword = "";
     var newPassword = "";
@@ -115,9 +112,11 @@ function user_change_password(checkPassword, userId) {
     
 }
 
-
+//
+// Change the group affiliation of a user.
+//
 function user_change_groups(userId) {
-	initAccessController();
+	var accessController = getAccessController();
     var user = accessController.getUserManager().getUser(userId);
     
     var userGroupArray = user.getGroups();
@@ -168,9 +167,82 @@ function user_change_groups(userId) {
 				var group = iterator.next();
 				group.add(user);
 			}
+			user.save();
 			break;
 		}
 	}
    	sendPage("redirect.html", { "url" : "index.html" });
 }
 
+//
+// Add a user.
+//
+function user_add_user() {
+
+	var accessController = getAccessController();
+	var userId = "";
+	var email = "";
+	var fullName = "";
+	var description = "";
+	var message = "";
+	
+	while (true) {
+		sendPageAndWait("users/lenya.usecase.add_user/profile.xml", {
+			"page-title" : "Add User: Profile",
+			"user-id" : userId,
+	    	"fullname" : fullName,
+	    	"email" : email,
+	    	"description" : description,
+	    	"message" : message,
+	    	"new-user" : true
+		});
+		
+		message = "";
+		userId = cocoon.request.get("user-id");
+		email = cocoon.request.get("email");
+		fullName = cocoon.request.get("fullname");
+		description = cocoon.request.get("description");
+		
+		var existingUser = accessController.getUserManager().getUser(userId);
+		
+		if (existingUser != null) {
+			message = "This user already exists.";
+		}
+		else {
+			var configDir = accessController.getUserManager().getConfigurationDirectory();
+			var user = new Packages.org.apache.lenya.cms.ac.FileUser(configDir, userId, fullName, email, "");
+			user.setDescription(description);
+			user.save();
+			accessController.getUserManager().add(user);
+			break;
+		}
+	}
+   	sendPage("redirect.html", { "url" : "../users.html" });
+}
+
+//
+// Delete user.
+//
+function user_delete_user() {
+
+	var accessController = getAccessController();
+	var userId = cocoon.request.get("user-id");
+	var user = accessController.getUserManager().getUser(userId);
+	var fullName = user.getFullName();
+	var showPage = true;
+	
+	while (showPage) {
+		sendPageAndWait("users/lenya.usecase.delete_user/confirm-delete.xml", {
+			"user-id" : userId,
+			"fullname" : fullName
+		});
+		
+		if (cocoon.request.get("submit")) {
+			accessController.getUserManager().remove(user);
+			user['delete']();
+			showPage = false;
+		}
+	}
+
+   	sendPage("redirect.html", { "url" : "../users.html" });
+}

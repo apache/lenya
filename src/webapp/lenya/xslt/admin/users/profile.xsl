@@ -17,7 +17,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>Edit User</page:title>
+      <page:title><xsl:value-of select="title"/></page:title>
       <page:body>
         <xsl:apply-templates select="user"/>
       </page:body>
@@ -38,41 +38,38 @@
         <form method="GET" action="{/page/continuation}.continuation">
           <table class="lenya-table-noborder">
             
+            <xsl:apply-templates select="message"/>
+            
             <tr>
               
               <td class="lenya-entry-caption">User&#160;ID</td>
               <td>
-                 <xsl:value-of select="id"/>
+                 <xsl:choose>
+                   <xsl:when test="@new = 'true'">
+                     <input class="lenya-form-element" name="user-id" type="text" value="{id}"/>
+                   </xsl:when>
+                   <xsl:otherwise>
+                     <xsl:value-of select="id"/>
+                   </xsl:otherwise>
+                 </xsl:choose>
               </td>
             </tr>
             <tr>
               <td class="lenya-entry-caption">Name</td>
               <td>
-                <input class="lenya-form-element" name="fullname" type="text">
-                  <xsl:attribute name="value">
-                    <xsl:value-of select="fullname"/>
-                  </xsl:attribute>
-                </input>
+                <input class="lenya-form-element" name="fullname" type="text" value="{fullname}"/>
               </td>
             </tr>
             <tr>
               <td class="lenya-entry-caption">E-Mail</td>
               <td>
-                <input class="lenya-form-element" name="email" type="text">
-                  <xsl:attribute name="value">
-                    <xsl:value-of select="email"/>
-                  </xsl:attribute>
-                </input>
+                <input class="lenya-form-element" name="email" type="text" value="{email}"/>
               </td>
             </tr>
             <tr>
               <td class="lenya-entry-caption">Description</td>
               <td>
-                <input class="lenya-form-element" name="description" type="text">
-                  <xsl:attribute name="value">
-                    <xsl:value-of select="description"/>
-                  </xsl:attribute>
-                </input>
+                <input class="lenya-form-element" name="description" type="text" value="{description}"/>
               </td>
             </tr>
             <tr>

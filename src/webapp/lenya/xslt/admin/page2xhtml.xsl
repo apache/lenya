@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: page2xhtml.xsl,v 1.1 2003/07/03 14:43:33 andreas Exp $ -->
+<!-- $Id: page2xhtml.xsl,v 1.2 2003/07/04 13:17:32 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
 	  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -36,7 +36,9 @@
         <xsl:copy-of select="/cmsbody/xhtml:div[@id = 'menu']"/>
       </td>
       <td class="lenya-content">
-        <h2><xsl:apply-templates select="page:title/node()"/></h2>
+        <div style="margin-bottom: 10px">
+          <h1><xsl:apply-templates select="page:title/node()"/></h1>
+        </div>
         <xsl:apply-templates select="page:body/node()"/>
       </td>
     </tr>

@@ -27,29 +27,16 @@
   
   
   <xsl:template match="user">
-    <table class="lenya-table">
-      <tr>
-        <th>Delete User</th>
-      </tr>
-      <tr>
-        <td>
-          <div class="lenya-pad">
-          <form method="GET">
-            <input name="lenya.usecase" type="hidden" value="user-delete"/>
-            <input name="lenya.step" type="hidden" value="delete"/>
-            <input name="user-id" type="hidden">
-              <xsl:attribute name="value">
-                <xsl:value-of select="id"/>
-              </xsl:attribute>
-            </input>
-            <p> Really delete user "<xsl:value-of select="id"/>" (<xsl:value-of select="fullName"/>)? </p>
-            <input type="submit" value="Delete"/>
-            <input type="submit" value="Cancel"/>
+    <div class="lenya-box">
+      <div class="lenya-box-title">Delete User</div>
+      <div class="lenya-box-body">
+          <p> Really delete user <strong><xsl:value-of select="id"/></strong> (<xsl:value-of select="fullname"/>)? </p>
+          <form method="GET" action="{/page/continuation}.continuation">
+            <input type="submit" name="submit" value="Delete"/>
+            <input type="submit" name="cancel" value="Cancel"/>
           </form>
-          </div>
-        </td>
-      </tr>
-    </table>
+      </div>
+    </div>
   </xsl:template>
   
   

@@ -26,6 +26,9 @@
   
   
   <xsl:template match="users">
+    <div style="margin: 10px 0px">
+      <xsl:call-template name="add-user"/>
+    </div>
     <table cellspacing="0" class="lenya-table">
       <tr>
         <th>User ID</th>
@@ -50,14 +53,8 @@
       </td>
       <xsl:apply-templates select="groups"/>
       <td style="vertical-align: middle">
-        <form method="GET" action="index">
-          <input name="lenya.usecase" type="hidden" value="user-delete"/>
-          <input name="lenya.step" type="hidden" value="showscreen"/>
-          <input name="user-id" type="hidden">
-            <xsl:attribute name="value">
-              <xsl:value-of select="id"/>
-            </xsl:attribute>
-          </input>
+        <form method="GET" action="users/lenya.usecase.delete_user">
+          <input name="user-id" type="hidden" value="{id}"/>
           <input type="submit" value="Delete"/>
         </form>
       </td>
@@ -76,6 +73,13 @@
     <xsl:value-of select="."/>
     <xsl:if test="position() != last()">, <xsl:text/>
     </xsl:if>
+  </xsl:template>
+  
+  
+  <xsl:template name="add-user">
+    <form method="GET" action="users/lenya.usecase.add_user">
+      <input type="submit" value="Add User"/>
+    </form>
   </xsl:template>
   
   
