@@ -6,7 +6,41 @@
 <p>
 <ul>
 <li>image author</li>
-<li>article date (first created or revision date?)</li>
+<pre>
+&#60;media&#62;
+  &#60;media-author type=""/&#62;
+&#60;media&#62;
+</pre>
+<li>article date: (first created or revision date?) is "story.date" ok? defines the Date of Story (nitf)</li>
+<li>copyright: how about? (sort of nitf, but not the way it's normally used)</li>
+<pre>
+&#60;body&#62;
+  &#60;copyrite&#62;
+    &#60;copyrite.holder&#62;
+    &#60;copyrite.year&#62;
+  &#60;copyrite&#62;
+&#60;body&#62;
+</pre>
+<li>related content: how about? (UPML)</li>
+<pre>
+&#60;body.content&#62;
+  &#60;/related.contents&#62;
+    &#60;related.content title=""&#62;
+      &#60;link&#62;
+        &#60;link.title href=""&#62;&#60;/link.title&#62;
+        &#60;link.text&#62;&#60;/link.text&#62;
+      &#60;/link&#62;
+    &#60;/related.content&#62;
+  &#60;/related.contents&#62;
+&#60;body.content&#62;
+</pre>
+<li>SectionName for eg. Gesundheit</li>
+<pre>
+&#60;DescriptiveMetadata&#62;
+  &#60;SectionName/&#62;
+&#60;/DescriptiveMetadata&#62;
+</pre>
+</ul>
 </p>
 </body>
 </html>

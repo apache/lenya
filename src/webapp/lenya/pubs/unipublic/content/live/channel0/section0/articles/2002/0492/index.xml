@@ -51,6 +51,7 @@
         </Copyright>
       </RightsMetadata>
       <DescriptiveMetadata>
+        <SectionName>Gesundheit</SectionName>
         <Language FormalName="de"/>
         <SubjectCode>
           <Subject FormalName="International"/>
@@ -73,6 +74,9 @@
             </head>
             <body>
               <body.head>
+                <dateline>
+                  <story.date>3.4.2002</story.date>
+                </dateline>
                 <hedline>
                   <hl1>Im Traum spricht er am meisten mit mir </hl1>
                 </hedline>
@@ -81,6 +85,31 @@
                 </abstract>
               </body.head>
               <body.content>
+              <related.contents>
+                <related.content title="Artikel">
+                  <link>
+                    <link.title href="../0501/">Kommunizierendes Gehirn</link.title>
+                    <link.text>(unipublic, 15.3.2002)</link.text>
+                  </link>
+                  <link>
+                    <link.title href="../0507/">Wenn die Sprache verlorengeht</link.title>
+                    <link.text>(Podiumsgespr&#228;ch zu Hirnverletzungen)</link.text>
+                  </link>
+                </related.content>
+                <related.content title="Link">
+                  <link>
+                    <link.text>Das Podiumsgespr&#228;ch wurde organisiert von der</link.text>
+                    <link.title href="http://www.parkinson.ch">Schweizerischen Parkinsonvereinigung</link.title>
+                  </link>
+                  <link>
+                    <link.title href="http://www.npi.ch">Neuropsychologisches Institut</link.title>
+                  </link>
+                  <link>
+                    <link.title href="http://www.brainfair2002.ch/">BrainFair 2002</link.title>
+                  </link>
+                </related.content>
+              </related.contents>
+
                 <block>
                   <p>
                                		Willi und K&#228;ti Bucher sind seit Jahrzehnten verheiratet und ein eingespieltes Paar. Als
@@ -91,7 +120,7 @@
                                     Mann als denjenigen, den sie geheiratet hatte und an einem anderen Tag komme er
                                     ihr wie ein Fremder vor: &#171;Am meisten spricht er noch mit mir, wenn er tr&#228;umt.&#187;	
                   </p>
-                  <media media-type="image"> A etudier !!!!
+                  <media media-type="image">
                     <media-reference mime-type="image/jpeg" source="parkinson-1.jpg" alternate-text="J&#252;rg Haas" copyright="Adrian Ritter">
                      </media-reference>
                      <media-caption>
@@ -99,6 +128,7 @@
                                     mit Parkinsonpatienten": Radio DRS-Moderator und
                                   Parkinsonbetroffener J&#252;rg Haas  
 		     </media-caption>
+                     <media-author type="Fotos"> Adrian Ritter</media-author>
                   </media>
 
                   <p>
@@ -120,7 +150,7 @@
                                     werden.
                   </p>
                   <p>
-					arkinson-Patienten wie Willi Bucher werden f&#228;lschlicherweise mit
+					Parkinson-Patienten wie Willi Bucher werden f&#228;lschlicherweise mit
                                     Alkoholkonsum in Verbindung gebracht. Es r&#252;hrt daher, dass zu den
                                     Symptomen der Krankheit neben dem oft auftretenden Zittern der
                                     H&#228;nde auch Versteifungen der Muskulatur, verlangsamte
@@ -154,7 +184,7 @@
                                     Mannes anpassen - &#171;eine Herausforderung&#187;. Sie erlebt die
                                     Krankheit des Partners insgesamt als anspruchsvolle Arbeit an sich
                                     selber: &#171;Es ist schon traurig, zu sehen, wie ein Mensch sich
-                                    ver#228;ndert. Als ob er in einem K&#228;fig sitzen w&#252;rde und man die
+                                    ver&#228;ndert. Als ob er in einem K&#228;fig sitzen w&#252;rde und man die
                                     Mauern erst niederreissen m&#252;sste.&#187;
                   </p>
                   <media media-type="image">
@@ -217,6 +247,10 @@
                <body.end>
                  <tagline>Adrian Ritter ist freischaffender Journalist in Z&#252;rich.</tagline>
                </body.end>
+               <copyrite>
+                 <copyrite.holder>Universit&#228;t Z&#252;rich</copyrite.holder>
+                 <copyrite.year>05.04.2002</copyrite.year>
+               </copyrite>
              </body>
              </DataContent>
           </ContentItem>
