@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.29 2003/05/02 15:00:15 michi Exp $
+ * $Id: XopusHandlerAction.java,v 1.30 2003/05/02 15:32:20 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -68,6 +68,8 @@ import org.w3c.dom.Element;
 
 import org.apache.lenya.cms.ac.Identity;
 import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.xml.DOMParserFactory;
+import org.apache.lenya.xml.DOMWriter;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -259,39 +261,18 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
 
         // save to temporary file, if needed
         if ("save".equals(reqType) || "checkin".equals(reqType)) {
-            getLogger().error(".act(): Write to temp file: " + tempFile);
+            getLogger().debug(".act(): Write to temp file: " + tempFile);
             try {
                 Element contentNode = (Element) data.getFirstChild();
-                org.apache.lenya.xml.DOMParserFactory dpf = new org.apache.lenya.xml.DOMParserFactory();
+                DOMParserFactory dpf = new DOMParserFactory();
+
+                // Create a new document, where the actual content starts at the root element, which is the inner part of requestDoc
                 Document contentDocument = dpf.getDocument();
                 contentDocument.appendChild((Element) dpf.cloneNode(contentDocument, contentNode, true));
-                new org.apache.lenya.xml.DOMWriter(new java.io.FileOutputStream(tempFile)).printWithoutFormatting(contentDocument);
-                //new org.apache.lenya.xml.DOMWriter(new java.io.FileOutputStream(tempFile)).printWithoutFormatting(requestDoc);
+                new DOMWriter(new FileOutputStream(tempFile)).printWithoutFormatting(contentDocument);
             } catch (Exception e) {
                 getLogger().error(".act(): Exception during writing to temp file: " + e);
             }
-
-/*
-            //FIXME(): remove hard coding
-            final OutputStream os = new FileOutputStream(tempFile);
-            ComponentSelector selector = (ComponentSelector) super.manager.lookup(Serializer.ROLE +
-                    "Selector");
-
-            //FIXME: remove hardcoding stuff
-            Serializer serializer = (Serializer) selector.select("xml");
-            serializer.setOutputStream(os);
-            serializer.startDocument();
-
-            DOMStreamer domStreamer = new DOMStreamer(serializer);
-            Element contentNode = (Element) data.getFirstChild();
-            domStreamer.stream(contentNode);
-            serializer.endDocument();
-            getLogger().debug("NODE IS: \n" + contentNode.toString());
-            selector.release(serializer);
-            super.manager.release(selector);
-            os.flush();
-            os.close();
-*/
         }
 
         // save to permanent file, if needed
