@@ -368,7 +368,7 @@
           </p>
 
           <p>
-            Execute <code>build install</code> in your Lenya source directory.
+            Execute <code>build</code> in your Lenya source directory.
           </p>
         </li>
 
