@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: users.xsl,v 1.8 2004/03/13 12:42:11 gregor Exp $ -->
+<!-- $Id: users.xsl,v 1.9 2004/04/28 15:00:05 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -65,14 +65,15 @@
   <xsl:template match="user">
     <tr>
       <td style="vertical-align: middle">
-        <a href="users/{id}/index.html"><xsl:value-of select="id"/></a>
+        <a href="users/{id}.html"><xsl:value-of select="id"/></a>
       </td>
       <td style="vertical-align: middle">
         <xsl:value-of select="name"/>
       </td>
       <xsl:apply-templates select="groups"/>
       <td style="vertical-align: middle">
-        <form method="GET" action="users/lenya.usecase.delete_user">
+        <form method="GET">
+          <input type="hidden" name="lenya.usecase" value="userDeleteUser"/>
           <input name="user-id" type="hidden" value="{id}"/>
           <input i18n:attr="value" type="submit" value="Delete"/>
         </form>
@@ -96,7 +97,8 @@
   
   
   <xsl:template name="add-user">
-    <form method="GET" action="users/lenya.usecase.add_user">
+    <form method="GET">
+      <input type="hidden" name="lenya.usecase" value="userAddUser"/>
       <input i18n:attr="value" type="submit" value="Add User"/>
     </form>
   </xsl:template>

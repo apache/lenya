@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: password.xsl,v 1.2 2004/03/13 12:42:11 gregor Exp $ -->
+<!-- $Id: password.xsl,v 1.3 2004/04/28 15:00:05 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -53,7 +53,8 @@
       <div class="lenya-box-title">Change Password</div>
       <div class="lenya-box-body">
         
-        <form method="GET" action="{/page/continuation}.continuation">
+        <form method="GET">
+          <input type="hidden" name="lenya.continuation" value="{/page/continuation}"/>
           <table class="lenya-table-noborder">
             
             <xsl:apply-templates select="message"/>

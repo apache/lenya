@@ -17,8 +17,8 @@
 //
 // Modify an IP range.
 //
-function iprange_change_profile(iprangeId) {
-    iprange_change_profile(iprangeId, false);
+function iprangeChangeProfile() {
+    iprangeChangeProfile(false);
 }
 
 //
@@ -68,10 +68,16 @@ function getIPString(byteArray) {
 //
 // Modify an IP range.
 //
-function iprange_change_profile(iprangeId, newRange) {
+function iprangeChangeProfile(newRange) {
 
 	resolve();
 	try {
+	    
+	    var iprangeId = "";
+	    if (!(newRange == true)) {
+	    	iprangeId = getAccreditableId();
+	    }
+	    var redirectUri = getRequestUri();
 	    var ipRangeManager = getAccreditableManager().getIPRangeManager();
 	    var range;
 	    if (newRange == true) {
@@ -103,17 +109,15 @@ function iprange_change_profile(iprangeId, newRange) {
 		
 	    while (true) {
 	    
-	    	var url, pageTitle;
+	    	var pageTitle;
 	    	if (newRange == true) {
-	    		url = "ipranges/profile.xml";
 	    		pageTitle = "Add IP Range";
 	    	}
 	    	else {
-	    		url = "ipranges/" + iprangeId + "/profile.xml";
 	    		pageTitle = "Edit IP Range";	    		
 	    	}
 	        
-		    cocoon.sendPageAndWait(url, {
+		    cocoon.sendPageAndWait("ipranges/profile.xml", {
 		    	"iprange-id" : iprangeId,
 		    	"name" : name,
 		    	"description" : description,
@@ -193,14 +197,7 @@ function iprange_change_profile(iprangeId, newRange) {
 	
 	    }
 	    
-	    var url;
-	    if (newRange == true) {
-	    	url = "../ipranges.html";
-	    }
-	    else {
-	    	url = "index.html";
-	    }
-	   	cocoon.sendPage("redirect.html", { "url" : url });
+	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
    	}
    	finally {
    		release();
@@ -210,18 +207,18 @@ function iprange_change_profile(iprangeId, newRange) {
 //
 // Add an IP range.
 //
-function iprange_add_iprange() {
-    iprange_change_profile("", true);
+function iprangeAddIPRange() {
+    iprangeChangeProfile(true);
 }
 
 //
 // Delete IP range.
 //
-function iprange_delete_iprange() {
+function iprangeDeleteIPRange() {
 
 	resolve();
 	try {
-
+		var redirectUri = getRequestUri();
 	    var ipRangeManager = getAccreditableManager().getIPRangeManager();
 		var ipRangeId = cocoon.request.get("iprange-id");
 		var range = ipRangeManager.getIPRange(ipRangeId);
@@ -246,7 +243,7 @@ function iprange_delete_iprange() {
 			}
 		}
 	
-	   	cocoon.sendPage("redirect.html", { "url" : "../ipranges.html" });
+	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
    	}
    	finally {
    		release();
@@ -256,7 +253,10 @@ function iprange_delete_iprange() {
 //
 // Change the group affiliation of an IP range.
 //
-function iprange_change_groups(iprangeId) {
+function iprangeChangeGroups() {
+
+	var redirectUri = getRequestUri();
+	var iprangeId = getAccreditableId();
     var range = getAccreditableManager().getIPRangeManager().getIPRange(iprangeId);
     
     var rangeGroupArray = range.getGroups();
@@ -310,6 +310,6 @@ function iprange_change_groups(iprangeId) {
 			break;
 		}
 	}
-   	sendPage("redirect.html", { "url" : "index.html" });
+   	sendPage("redirect.html", { "url" : redirectUri });
 }
 

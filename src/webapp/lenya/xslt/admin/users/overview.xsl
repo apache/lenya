@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: overview.xsl,v 1.9 2004/03/13 12:42:11 gregor Exp $ -->
+<!-- $Id: overview.xsl,v 1.10 2004/04/28 15:00:05 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -77,7 +77,8 @@
             <tr>
               <td/>
               <td>
-				        <form method="GET" action="lenya.usecase.change_profile">
+				        <form method="GET">
+				          <input type="hidden" name="lenya.usecase" value="userChangeProfile"/>
 				          <input i18n:attr="value" type="submit" value="Edit Profile"/>
 				        </form>
               </td>
@@ -105,7 +106,8 @@
             <tr>
               <td/>
               <td>
-				        <form method="GET" action="lenya.usecase.change_groups">
+				        <form method="GET">
+				          <input type="hidden" name="lenya.usecase" value="userChangeGroups"/>
 				          <input i18n:attr="value" type="submit" value="Edit Group Affiliation"/>
 				        </form>
               </td>
@@ -149,7 +151,8 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>User</i18n:text>:</td>
               <td>
-				        <form method="GET" action="lenya.usecase.change_password_user">
+				        <form method="GET">
+				          <input type="hidden" name="lenya.usecase" value="userChangePasswordUser"/>
 				          <input i18n:attr="value" type="submit" value="Change Password"/>
 				        </form>
 				      </td>
@@ -157,7 +160,8 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Admin</i18n:text>:</td>
               <td>
-				        <form method="GET" action="lenya.usecase.change_password_admin">
+				        <form method="GET">
+				          <input type="hidden" name="lenya.usecase" value="userChangePasswordAdmin"/>
 				          <input i18n:attr="value" type="submit" value="Change Password"/>
 				        </form>
               </td>

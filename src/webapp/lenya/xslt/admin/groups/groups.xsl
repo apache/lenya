@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: groups.xsl,v 1.6 2004/03/13 12:42:14 gregor Exp $ -->
+<!-- $Id: groups.xsl,v 1.7 2004/04/28 15:00:08 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -64,18 +64,15 @@
   <xsl:template match="group">
     <tr>
       <td style="vertical-align: middle">
-        <a href="groups/{id}/index.html"><xsl:value-of select="id"/></a>
+        <a href="groups/{id}.html"><xsl:value-of select="id"/></a>
       </td>
       <td style="vertical-align: middle">
         <xsl:value-of select="name"/>
       </td>
       <td style="vertical-align: middle">
-        <form method="GET" action="groups/lenya.usecase.delete_group">
-          <input name="group-id" type="hidden">
-            <xsl:attribute name="value">
-              <xsl:value-of select="id"/>
-            </xsl:attribute>
-          </input>
+        <form method="GET">
+          <input type="hidden" name="lenya.usecase" value="groupDeleteGroup"/>
+          <input name="group-id" type="hidden" value="{id}"/>
           <input i18n:attr="value" type="submit" value="Delete"/>
         </form>
       </td>
@@ -83,7 +80,8 @@
   </xsl:template>
   
   <xsl:template name="add-group">
-    <form method="GET" action="groups/lenya.usecase.add_group">
+    <form method="GET">
+          <input type="hidden" name="lenya.usecase" value="groupAddGroup"/>
       <input i18n:attr="value" type="submit" value="Add Group"/>
     </form>
   </xsl:template>

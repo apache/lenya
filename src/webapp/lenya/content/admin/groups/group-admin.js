@@ -17,11 +17,14 @@
 //
 // Modify a group.
 //
-function group_change_profile(groupId) {
+function groupChangeProfile() {
 
 	resolve();
 	try {
 	
+	    var redirectUri = getRequestUri();
+        var groupId = getAccreditableId();
+        
 	    var groupManager = getAccreditableManager().getGroupManager();
 	    var group = groupManager.getGroup(groupId);
 		var name = group.getName();
@@ -30,7 +33,7 @@ function group_change_profile(groupId) {
 		// at the moment the loop is executed only once (no form validation)
 		
 	    while (true) {
-		    cocoon.sendPageAndWait("groups/" + groupId + "/profile.xml", {
+		    cocoon.sendPageAndWait("groups/profile.xml", {
 		    	"group-id" : groupId,
 		    	"name" : name,
 		    	"description" : description,
@@ -52,7 +55,7 @@ function group_change_profile(groupId) {
 	
 	    }
 	    
-	   	cocoon.sendPage("redirect.html", { "url" : "index.html" });
+	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
    	}
    	finally {
 	   	release();
@@ -63,11 +66,14 @@ function group_change_profile(groupId) {
 //
 // Change the members of a group.
 //
-function group_change_members(groupId) {
+function groupChangeMembers() {
 
 	resolve();
 	try {
 	
+	    var redirectUri = getRequestUri();
+        var groupId = getAccreditableId();
+        
 	    var userManager = getAccreditableManager().getUserManager();
 	    var groupManager = getAccreditableManager().getGroupManager();
 	    var group = groupManager.getGroup(groupId);
@@ -97,7 +103,7 @@ function group_change_members(groupId) {
 	    }
 	    
 	    while (true) {
-		    cocoon.sendPageAndWait("groups/" + groupId + "/members.xml", {
+		    cocoon.sendPageAndWait("groups/members.xml", {
 		    	"group-id" : groupId,
 		    	"users" : otherUsers,
 		    	"group-users" : groupUsers,
@@ -140,7 +146,7 @@ function group_change_members(groupId) {
 				break;
 			}
 		}
-	   	cocoon.sendPage("redirect.html", { "url" : "index.html" });
+	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
    	}
    	finally {
 	   	release();
@@ -150,10 +156,12 @@ function group_change_members(groupId) {
 //
 // Add a group.
 //
-function group_add_group() {
+function groupAddGroup() {
 
 	resolve();
 	try {
+	    var redirectUri = getRequestUri();
+        
 	    var groupManager = getAccreditableManager().getGroupManager();
 		var groupId = "";
 		var name = "";
@@ -196,7 +204,7 @@ function group_add_group() {
 				break;
 			}
 		}
-	   	cocoon.sendPage("redirect.html", { "url" : "../groups.html" });
+	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
    	}
    	finally {
 	   	release();
@@ -206,11 +214,13 @@ function group_add_group() {
 //
 // Delete group.
 //
-function group_delete_group() {
+function groupDeleteGroup() {
 
 	resolve();
 	try {
 	
+	    var redirectUri = getRequestUri();
+        
 	    var groupManager = getAccreditableManager().getGroupManager();
 		var groupId = cocoon.request.get("group-id");
 		var group = groupManager.getGroup(groupId);
@@ -239,7 +249,7 @@ function group_delete_group() {
 			}
 		}
 	
-	   	cocoon.sendPage("redirect.html", { "url" : "../groups.html" });
+	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
    	}
    	finally {
    		release();

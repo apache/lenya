@@ -14,6 +14,21 @@
 * limitations under the License.
 */
 
+function getRequestUri() {
+	var flowHelper = new Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper();
+	var requestUri = flowHelper.getRequestURI(cocoon);
+	return requestUri;
+}
+
+function getAccreditableId() {
+	var flowHelper = new Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper();
+	var requestUri = flowHelper.getRequestURI(cocoon);
+	requestUri = requestUri.substring(0, requestUri.length() - 5);
+	var lastSlashIndex = requestUri.lastIndexOf("/");
+	var id = requestUri.substring(lastSlashIndex + 1);
+	return id;
+}
+
 function getAccreditableManager() {
 	return accreditableManager;
 }

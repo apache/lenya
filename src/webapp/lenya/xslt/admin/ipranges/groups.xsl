@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: groups.xsl,v 1.4 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id: groups.xsl,v 1.5 2004/04/28 15:00:06 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -46,7 +46,8 @@
       <div class="lenya-box-title"><i18n:text>Group Affiliation</i18n:text></div>
       <div class="lenya-box-body">
         
-        <form method="GET" action="{continuation}.continuation">
+        <form method="GET">
+          <input type="hidden" name="lenya.continuation" value="{continuation}"/>
           <input type="hidden" name="iprange-id" value="{id}"/>
           
                 <table class="lenya-table-noborder-nopadding">

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: admin.xmap,v 1.30 2004/04/24 21:20:50 gregor Exp $ -->
+<!-- $Id: admin.xmap,v 1.31 2004/04/28 15:00:07 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -86,17 +86,7 @@
   <map:pipelines>
     
     <!-- =================================================================== -->
-    <!-- FlowScript continuations -->
-    <!-- =================================================================== -->
-    
-    <map:pipeline>
-      <map:match pattern="**/*.continuation">
-        <map:call continuation="{2}"/>
-      </map:match>
-    </map:pipeline>
-
-    <!-- =================================================================== -->
-    <!-- FlowScript pages -->
+    <!-- FlowScript views -->
     <!-- =================================================================== -->
     
     <map:pipeline>
@@ -112,23 +102,28 @@
       </map:match>
       
       <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
-      <!-- pattern: internal/{type}/{id}/{page}.xml -->
-      <!-- pattern: internal/{page}.xml -->
-      <map:match pattern="internal/*/*/*.xml">
-        <map:call resource="fallback-page">
-          <map:parameter name="serverpage" value="{1}/{3}"/>
-          <map:parameter name="stylesheet" value="{1}/{3}"/>
-        </map:call>
-      </map:match>
-      
-      <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
-      <!-- pattern: internal/{type}/{page}.xml -->
       <!-- pattern: internal/{page}.xml -->
       <map:match pattern="internal/**.xml">
         <map:call resource="fallback-page">
           <map:parameter name="serverpage" value="{1}"/>
           <map:parameter name="stylesheet" value="{1}"/>
         </map:call>
+      </map:match>
+      
+      <map:match pattern="**.xml">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml.xml"/>
+          <map:part src="cocoon:/internal/{1}.xml"/>
+        </map:aggregate>
+        <map:transform src="xslt/admin/page2xhtml.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/admin/{1}.xml" label="content"/>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>
+        <map:transform src="xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="html-iso-8859-1"/>
       </map:match>
       
       <map:match pattern="redirect.html">
@@ -139,6 +134,27 @@
       
     </map:pipeline>
     
+    <!-- =================================================================== -->
+    <!-- FlowScript entry points -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+      
+      <!-- continuation -->
+      <map:match type="request-parameter" pattern="lenya.continuation">
+        <map:call continuation="{1}"/>
+      </map:match>
+
+      <!-- usecase entry -->
+      <map:match type="usecase" pattern="*">
+        <map:call function="{1}">
+          <map:parameter name="requestUri" value="{request:requestURI}"/>
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:call>
+      </map:match>
+      
+    </map:pipeline>
+      
     <map:pipeline>
       
       <!-- ============================================================ -->
@@ -198,7 +214,7 @@
 
       <!-- overview page (type = user|group) -->
       <!-- pattern: internal/{type}s/{id}/index.html -->
-      <map:match pattern="internal/*s/*/index.html">
+      <map:match pattern="internal/*s/*.html">
         <map:generate src="content/admin/{1}s/overview.xsp" type="serverpages">
           <map:parameter name="{1}-id" value="{2}"/>
         </map:generate>
@@ -206,25 +222,6 @@
           <map:parameter name="stylesheet" value="{1}s/overview"/>
         </map:call>
         <map:serialize type="xml"/>
-      </map:match>
-      
-      <!-- usecase page (type = user|group) -->
-      <!-- pattern: {type}s/lenya.usecase.{usecase} -->
-      <map:match pattern="*s/lenya.usecase.*">
-        <map:call function="{1}_{2}">
-          <map:parameter name="requestUri" value="{request:requestURI}"/>
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:call>
-      </map:match>
-      
-      <!-- usecase page (type = user|group) -->
-      <!-- pattern: {type}s/{id}/lenya.usecase.{usecase} -->
-      <map:match pattern="*s/*/lenya.usecase.*">
-        <map:call function="{1}_{3}">
-          <map:parameter name="{1}Id" value="{2}"/>
-          <map:parameter name="requestUri" value="{request:requestURI}"/>
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:call>
       </map:match>
       
       <!-- ============================================================ -->
@@ -259,16 +256,16 @@
         <map:aggregate element="cmsbody">
           <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml"/>
           <map:part src="cocoon:/internal/{1}"/>
-        </map:aggregate>                
+        </map:aggregate>
         <map:transform src="xslt/admin/page2xhtml.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/admin/{1}" label="content" />
-        <map:transform type="i18n">      
+        <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>
-        </map:transform>        
+        </map:transform>
         <map:transform src="xslt/util/strip_namespaces.xsl"/>
-          <map:serialize type="html-iso-8859-1"/>
+        <map:serialize type="html-iso-8859-1"/>
       </map:match>
       
     </map:pipeline>
