@@ -56,7 +56,7 @@
       <xsl:apply-templates select="xhtml:div[@id = 'tabs']"/>
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td valign="top" width="230px">
+          <td valign="top" style="width: 230px">
             <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
           </td>
           <td valign="top">
