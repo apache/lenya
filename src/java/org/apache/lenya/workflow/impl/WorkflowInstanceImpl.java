@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowInstanceImpl.java,v 1.14 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: WorkflowInstanceImpl.java,v 1.15 2004/04/13 22:04:35 joerg Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -300,7 +300,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
     }
 
     /**
-     * @see org.apache.lenya.workflow.WorkflowInstance#isSynchronized(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.Event)
+     * @see org.apache.lenya.workflow.WorkflowInstance#isSynchronized(org.apache.lenya.workflow.Event)
      */
     public boolean isSynchronized(Event event) throws WorkflowException {
         Transition nextTransition = getNextTransition(event);

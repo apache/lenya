@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: BooleanVariableImpl.java,v 1.9 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: BooleanVariableImpl.java,v 1.10 2004/04/13 22:04:35 joerg Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -41,7 +41,7 @@ public class BooleanVariableImpl implements BooleanVariable {
     private String name;
 
     /**
-     * @see org.apache.lenya.cms.workflow.BooleanVariable#getName()
+     * @see org.apache.lenya.workflow.BooleanVariable#getName()
      */
     public String getName() {
         return name;

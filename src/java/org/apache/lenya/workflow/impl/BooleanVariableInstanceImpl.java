@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: BooleanVariableInstanceImpl.java,v 1.7 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: BooleanVariableInstanceImpl.java,v 1.8 2004/04/13 22:04:35 joerg Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -33,14 +33,14 @@ public class BooleanVariableInstanceImpl implements BooleanVariableInstance {
     }
 
     /**
-     * @see org.apache.lenya.cms.workflow.BooleanVariableInstance#getValue()
+     * @see org.apache.lenya.workflow.BooleanVariableInstance#getValue()
      */
     public boolean getValue() {
         return value;
     }
 
     /**
-     * @see org.apache.lenya.cms.workflow.BooleanVariableInstance#setValue(boolean)
+     * @see org.apache.lenya.workflow.BooleanVariableInstance#setValue(boolean)
      */
     public void setValue(boolean variableValue) {
         value = variableValue;

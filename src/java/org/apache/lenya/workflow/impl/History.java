@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: History.java,v 1.20 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: History.java,v 1.21 2004/04/13 22:04:35 joerg Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -94,10 +94,6 @@ public abstract class History implements WorkflowListener {
 
     /**
      * Creates a new history object for a workflow instance.
-     * @param instance
-     * @param file
-     * @param x
-     * @throws WorkflowException
      */
     protected History() {
     }

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: EventImpl.java,v 1.9 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: EventImpl.java,v 1.10 2004/04/13 22:04:35 joerg Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -69,7 +69,7 @@ public class EventImpl implements Event {
     }
 
     /**
-     * @see org.apache.lenya.cms.workflow.Event#getName()
+     * @see org.apache.lenya.workflow.Event#getName()
      */
     public String getName() {
         return name;

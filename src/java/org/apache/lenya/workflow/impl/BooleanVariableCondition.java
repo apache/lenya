@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: BooleanVariableCondition.java,v 1.5 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: BooleanVariableCondition.java,v 1.6 2004/04/13 22:04:35 joerg Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -71,7 +71,7 @@ public class BooleanVariableCondition extends AbstractCondition {
     }
 
     /**
-     * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Situation)
+     * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.WorkflowInstance)
      */
     public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
         if (log.isDebugEnabled()) {

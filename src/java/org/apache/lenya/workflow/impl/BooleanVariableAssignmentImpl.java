@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: BooleanVariableAssignmentImpl.java,v 1.7 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: BooleanVariableAssignmentImpl.java,v 1.8 2004/04/13 22:04:35 joerg Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -44,7 +44,7 @@ public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment 
     private boolean value;
 
     /**
-     * @see org.apache.lenya.workflow.BooleanVariableAssignment#execute()
+     * @see org.apache.lenya.workflow.BooleanVariableAssignment#execute(org.apache.lenya.workflow.WorkflowInstance instance)
      */
     public void execute(WorkflowInstance instance) throws WorkflowException {
         WorkflowInstanceImpl impl = (WorkflowInstanceImpl) instance;
