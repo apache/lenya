@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.45 2003/10/03 12:36:01 andreas Exp $
+ $Id: info.xsl,v 1.46 2003/10/08 15:49:22 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -130,6 +130,9 @@
   <xsl:template match="lenya-info:meta">
     <form>
       <table class="lenya-table-noborder">
+	<xsl:if test="lenya-info:exception-user != ''">
+	  <tr><td colspan="2" class="lenya-form-message-error">Could not update the meta data as the document has been checked out by <xsl:value-of select="lenya-info:exception-user"/> since <xsl:value-of select="lenya-info:exception-date"/>.</td></tr>
+	</xsl:if>
         <tr><td class="lenya-entry-caption">Title:</td><td><input type="text" id="dc:title" name="properties.save.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
         <tr><td class="lenya-entry-caption">Creator:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
         <tr><td class="lenya-entry-caption">Subject:</td><td><input type="text" id="dc:subject" name="properties.save.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
