@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 
 /**
  * XmlUtil.java
- * $Id: XmlUtil.java,v 1.1 2002/02/19 13:01:00 memo Exp $
+ * $Id: XmlUtil.java,v 1.2 2002/02/19 13:47:12 memo Exp $
  *
  * Created: Thu Jan 24 18:27:05 2002
  *
@@ -35,30 +35,29 @@ public class XmlUtil {
    */
   public static String check(String xmlFile) {
       
-    String retMsg = new String;
+    String retMsg = "OK";
 
     try {
       SAXParserFactory factory = SAXParserFactory.newInstance();
       SAXParser parser = factory.newSAXParser();
-      //DefaultHandler handler = /* custom handler class */;
-      parser.parse(xmlFile, new MyHandler());
-  } 
-    catch (FactoryConfigurationError e) {
+      // MyHandler handler = new MyHandler();
+      parser.parse(xmlFile, new HandlerBase());
+    } catch (FactoryConfigurationError e) {
       retMsg = "unable to get a document builder factory";
-    } 
-    catch (ParserConfigurationException e) {
+    } catch (ParserConfigurationException e) {
       retMsg = "unable to configure parser";
-    } 
-    catch (SAXException e) {
+    } catch (SAXException e) {
       retMsg = e.toString();
-    } 
-    catch (IOException e) {
+    } catch (IOException e) {
       retMsg = "i/o error";
     }
+    
     return retMsg;
+    
+  }
 
-  class MyHandler extends HandlerBase {
-      retMsg = "OK";
+  public class MyHandler extends HandlerBase {
+  // custom handler 
   }
   
 }// XmlUtil
