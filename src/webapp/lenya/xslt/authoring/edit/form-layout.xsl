@@ -17,8 +17,6 @@
 <page:title>Edit Document</page:title>
 <page:body>
   
-<!--<div style="float: left">-->
-  
 <div class="lenya-box">
   <div class="lenya-box-title">Information</div>
   <div class="lenya-box-body">
@@ -86,8 +84,6 @@
 </ul>
 </div>
 </div>
-
-<!--</div>-->
 
 </page:body>
 </page:page>
