@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReTokenizeFile.java,v 1.21 2004/07/12 09:04:09 michi Exp $  */
+/* $Id: ReTokenizeFile.java,v 1.22 2004/07/12 10:21:37 michi Exp $  */
 
 package org.apache.lenya.lucene;
 
@@ -171,6 +171,25 @@ public class ReTokenizeFile {
             } else {
                 if (!tag) sb.append(string.charAt(i));
             }
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Is being used by search-and-results.xsp. Is this really still necessary?
+     *
+     * @param string content
+     *
+     * @return content without <>&
+     */
+    public String tidy(String string) {
+        StringTokenizer st = new StringTokenizer(string, "<>&");
+
+        StringBuffer sb = new StringBuffer("");
+
+        while (st.hasMoreElements()) {
+            sb.append(st.nextToken());
         }
 
         return sb.toString();
