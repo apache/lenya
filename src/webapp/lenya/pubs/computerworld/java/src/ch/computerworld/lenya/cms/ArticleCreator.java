@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleCreator.java,v 1.4 2003/02/20 13:40:40 gregor Exp $
+ * $Id: ArticleCreator.java,v 1.5 2003/02/26 10:09:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,16 +45,12 @@ package ch.computerworld.wyona.cms;
 
 import org.apache.log4j.Category;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
+import org.apache.avalon.framework.parameters.Parameters;
 
-import org.dom4j.io.SAXReader;
+import org.w3c.dom.Document;
 
-import org.wyona.cms.authoring.AbstractParentChildCreator;
-
-import java.io.File;
-import java.io.FileWriter;
-
+import org.wyona.cms.authoring.DefaultLeafCreator;
+import org.wyona.xml.DOMUtil;
 
 /**
  * DOCUMENT ME!
@@ -62,91 +58,21 @@ import java.io.FileWriter;
  * @author Gregor Rothfuss
  * @version 2003.1.17
  */
-public class ArticleCreator extends AbstractParentChildCreator {
+public class ArticleCreator extends DefaultLeafCreator {
     static Category log = Category.getInstance(ArticleCreator.class);
 
-    /**
-     * Why do we have to overwrite this method?
-     *
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public short getChildType(short childType) throws Exception {
-        return AbstractParentChildCreator.LEAF_NODE;
+    public ArticleCreator() {
+	sampleResourceName = "Article.xml";
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childname DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String getChildName(String childname) throws Exception {
-        return childname;
+    protected void transformXML (Document doc, Parameters parameters)
+	throws Exception {
+
+        DOMUtil du = new DOMUtil();
+        du.setElementValue(doc, "/article/head/title",
+			   parameters.getParameter("id"));
+        du.setElementValue(doc, "/system/system_name",
+			   parameters.getParameter("childName"));
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String generateTreeId(String childId, short childType)
-        throws Exception {
-        return childId;
-    }
-
-    /**
-     * Create the new article
-     *
-     * @param samplesDir DOCUMENT ME!
-     * @param parentDir DOCUMENT ME!
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     * @param childName DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public void create(File samplesDir, File parentDir, String childId, short childType,
-        String childName) throws Exception {
-        // Set filenames
-        String id = generateTreeId(childId, childType);
-        String filename = parentDir + "/" + id + ".xml";
-        String doctypeSample = samplesDir + "/Article.xml";
-
-        // Read sample file
-        log.debug(".create(): Try to read file: " + doctypeSample);
-
-        Document doc = new SAXReader().read("file:" + doctypeSample);
-
-        // Replace name
-        Element ename = (Element) doc.selectSingleNode("/article/head/title");
-
-        if (ename != null) {
-            log.debug(ename.getPath() + " " + ename.getText());
-            ename.addText(childName);
-            log.debug(ename.getPath() + " " + ename.getText());
-        }
-
-        // Write file
-        File parent = new File(new File(filename).getParent());
-
-        if (!parent.exists()) {
-            parent.mkdirs();
-        }
-
-        FileWriter fileWriter = new FileWriter(filename);
-        doc.write(fileWriter);
-        fileWriter.close();
-    }
 }

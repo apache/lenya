@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
+ * $Id: DefaultCreator.java,v 1.7 2003/02/26 10:09:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,145 +43,96 @@
  */
 package org.wyona.cms.authoring;
 
-import org.dom4j.Node;
+import org.w3c.dom.Document;
+
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.configuration.Configuration;
+
+import org.apache.log4j.Category;
+
+import org.wyona.xml.DocumentHelper;
+import org.wyona.xml.DOMWriter;
 
 import java.io.File;
-
+import java.io.FileOutputStream;
+import java.net.URL;
 
 /**
  * DOCUMENT ME!
  *
  * @author <a href="mailto:juergen.bigalke@wyona.org">Juergen Bigalke</a>
  */
-public class DefaultCreator extends DefaultParentChildCreator {
+public class DefaultCreator implements ParentChildCreatorInterface {
+	static Category log = Category.getInstance(DefaultCreator.class);
 
-    private String prefix = null;
-    private String fname = "/index.xml";
-    private String fnameMeta = "/index-meta.xml";
-    private String docNameSample = "generic.xml";
-    private String docNameMeta = "Meta.xml";
+    protected String resourceName;
+    protected String resourceMetaName;
+    protected String sampleResourceName;
+    protected String sampleMetaName;
 
     /**
      * DOCUMENT ME!
      *
      * @param creatorNode DOCUMENT ME!
      */
-    public void init(Node creatorNode) {
-        if (creatorNode == null) {
+    public void init(Configuration conf) {
+        if (conf == null) {
             return;
         }
 
-        String s = creatorNode.valueOf("prefix");
-
-        if ((s != null) && !s.equals("")) {
-            prefix = s;
-        }
-
-        s = creatorNode.valueOf("sample");
-
-        if ((s != null) && !s.equals("")) {
-            docNameSample = s;
-        }
-
-        s = creatorNode.valueOf("sampleMeta");
-
-        if ((s != null) && !s.equals("")) {
-            docNameMeta = s;
-        }
-
-        s = creatorNode.valueOf("index");
-
-        if (s == null) {
-            s = "";
-        }
-
-        fname = s + ".xml";
-        fnameMeta = s + "-meta.xml";
+	resourceName = conf.getChild("resource-name").getValue("index.xml");
+	resourceMetaName = conf.getChild("resource-meta-name").getValue("index-meta.xml");
+	sampleResourceName = conf.getChild("sample-name").getValue("sampleindex.xml");
+	sampleMetaName = conf.getChild("sample-meta-name").getValue("samplemeta.xml");
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public short getChildType(short childType) throws Exception {
-        if ((prefix == null) || !prefix.startsWith("@")) {
-            return AbstractParentChildCreator.BRANCH_NODE;
-        }
+	/**
+	 * Generate a three id.
+	 *
+	 * @param childId a <code>String</code> value
+	 * @param childType a <code>short</code> value
+	 *
+	 * @return a <code>String</code> value
+	 *
+	 * @exception Exception if an error occurs
+	 */
+	public String generateTreeId(String childId, short childType)
+		throws Exception {
+		return childId;
+	}
 
-        return childType;
-    }
+	/**
+	 * Return the child type.
+	 *
+	 * @param childType a <code>short</code> value
+	 *
+	 * @return a <code>short</code> value
+	 *
+	 * @exception Exception if an error occurs
+	 */
+	public short getChildType(short childType) throws Exception {
+		return childType;
+	}
 
-    /**
-     *  evaluate prefix:<br>
-     *   
-     *   &lt;prefix&gt;-   :  &lt;prefix&gt;childId<br>
-     *   -&lt;prefix&gt;   :  childId.&lt;prefix&gt;<br>
-     *   @&lt;prefix&gt;   :  any function (returns @&lt;prefix&gt; if function not implemented)<br>
-     *   /&lt;prefix&gt;/..:  recursive call of evalPrefix<br>
-     */
-    private String evalPrefix(String prefix, String childId) {
-        if (prefix.startsWith("/")) {
-            String s = prefix.substring(1);
-            int i = s.indexOf("/");
+	/**
+	 * Create Child Name for tree entry
+	 *
+	 * @param childname a <code>String</code> value
+	 *
+	 * @return a <code>String</code> for Child Name for tree entry
+	 *
+	 * @exception Exception if an error occurs
+	 */
+	public String getChildName(String childname) throws Exception {
+		if (childname.length() != 0) {
+			return childname;
+		} else {
+			return "abstract_default";
+		}
+	}
+	
 
-            if (i < 0) {
-                return evalPrefix(s, childId);
-            }
-
-            return evalPrefix(s.substring(0, i), childId) + "/" +
-            evalPrefix(s.substring(i), childId);
-
-            // without childid
-        }
-
-        if (prefix.startsWith("@")) {
-            if (prefix.equals("@millis")) {
-                return "" + System.currentTimeMillis();
-            }
-
-            return prefix; // unknown      
-        }
-
-        if (prefix.startsWith("-")) {
-            return childId + "." + prefix.substring(1); //        
-        }
-
-        if (prefix.endsWith("-")) {
-            return prefix.substring(0, prefix.length() - 1) + childId;
-        }
-
-        return prefix;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String generateTreeId(String childId, short childType)
-        throws Exception {
-        if (prefix != null) {
-            return evalPrefix(prefix, childId);
-        }
-
-        if (childType == AbstractParentChildCreator.BRANCH_NODE) {
-            return childId;
-        }
-
-        return childId + ".xml";
-    }
-
-    /**
+   /**
      * DOCUMENT ME!
      *
      * @param samplesDir DOCUMENT ME!
@@ -192,27 +143,69 @@ public class DefaultCreator extends DefaultParentChildCreator {
      * @throws Exception DOCUMENT ME!
      */
     public void create(File samplesDir, File parentDir,
-		       String childId, short childType, String childName)
+		       String childId, short childType, String childName,
+		       Parameters parameters)
         throws Exception {
-        String filename = null;
-        String filenameMeta = null;
 
-        if (prefix == null) {
-            if (childType == AbstractParentChildCreator.BRANCH_NODE) {
-                filename = parentDir + "/" + childId + "/index.xml";
-                filenameMeta = parentDir + "/" + childId + "/index-meta.xml";
-            } else if (childType == AbstractParentChildCreator.LEAF_NODE) {
-                filename = parentDir + "/" + childId + ".xml";
-                filenameMeta = parentDir + "/" + childId + "-meta.xml";
-            }
-        } else {
-            filename = parentDir + "/" + generateTreeId(childId, childType) + fname;
-            filenameMeta = parentDir + "/" + generateTreeId(childId, childType) + fnameMeta;
+        // Set filenames
+	String id = generateTreeId(childId, childType);
+        String filename = getChildFileName(parentDir, id);
+        String filenameMeta = getCildMetaFileName(parentDir, id);
+
+        String doctypeSample = samplesDir + File.pathSeparator + sampleResourceName;
+        String doctypeMeta = samplesDir + File.pathSeparator + sampleMetaName;
+
+	// Read sample file
+        log.debug("Read sample file: " + doctypeSample);
+        Document doc = DocumentHelper.readDocument(new URL("file:" + doctypeSample));
+
+	// transform the xml if needed
+	parameters.setParameter("id", id);
+	parameters.setParameter("childName", childName);
+	transformXML(doc, parameters);
+	// write the document (create the path, i.e. the parent
+        // directory first if needed)
+	File parent = new File(new File(filename).getParent());
+	if (!parent.exists()) {
+            parent.mkdirs();
         }
+	
+        // Write file
+        FileOutputStream out = new FileOutputStream(filename);
+        new DOMWriter(out).printWithoutFormatting(doc);
+        out.close();
 
-        String doctypeSample = samplesDir + "/" + docNameSample; //  "/Group.xml"
-        String doctypeMeta = samplesDir + "/" + docNameMeta; //  Meta.xl
-        copyFile(new File(doctypeSample), new File(filename));
-        copyFile(new File(doctypeMeta), new File(filenameMeta));
+	// now do the same thing for the meta document if the
+	// sampleMetaName is specified
+	if (sampleMetaName != null) {
+	    doc = DocumentHelper.readDocument(new URL("file:" + doctypeMeta));
+
+	    transformMetaXML(doc, parameters);
+	    
+	    parent = new File(new File(filenameMeta).getParent());
+	    if (!parent.exists()) {
+		parent.mkdirs();
+	    }
+	    
+	    out = new FileOutputStream(filenameMeta);
+	    new DOMWriter(out).printWithoutFormatting(doc);
+	    out.close();
+	}
+    }
+
+    protected void transformXML (Document doc, Parameters parameters) 
+    	throws Exception {
+    }
+
+    protected void transformMetaXML (Document doc, Parameters parameters) 
+    	throws Exception {
+    }
+
+    protected String getChildFileName(File parentDir, String childId) {
+		return null;
+    }
+
+    protected String getCildMetaFileName(File parentDir, String childId) {
+        return null;
     }
 }

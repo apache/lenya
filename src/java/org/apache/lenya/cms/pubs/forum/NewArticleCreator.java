@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.7 2003/02/17 13:24:28 egli Exp $
+ * $Id: NewArticleCreator.java,v 1.8 2003/02/26 10:09:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,17 +45,17 @@ package org.wyona.cms.pubs.forum;
 
 import org.apache.log4j.Category;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
+import org.apache.avalon.framework.parameters.Parameters;
 
-import org.dom4j.io.SAXReader;
+import org.w3c.dom.Document;
 
-import org.wyona.cms.authoring.AbstractParentChildCreator;
+import org.wyona.cms.authoring.DefaultBranchCreator;
+
+import org.wyona.xml.DOMUtil;
 
 import org.wyona.util.DateUtil;
 
 import java.io.File;
-import java.io.FileWriter;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -67,33 +67,11 @@ import java.util.GregorianCalendar;
  * @author Michael Wechner
  * @version 2002.11.10
  */
-public class NewArticleCreator extends AbstractParentChildCreator {
+public class NewArticleCreator extends DefaultBranchCreator {
     static Category log = Category.getInstance(NewArticleCreator.class);
 
-    /**
-     * Why do we have to overwrite this method?
-     *
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public short getChildType(short childType) throws Exception {
-        return AbstractParentChildCreator.BRANCH_NODE;
-    }
-
-    /**
-     * Does anybody care?
-     *
-     * @param childname DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String getChildName(String childname) throws Exception {
-        return childname + "levi";
+    public NewArticleCreator() {
+	sampleResourceName = "Article.xml";
     }
 
     /**
@@ -113,85 +91,54 @@ public class NewArticleCreator extends AbstractParentChildCreator {
         return "" + id;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param samplesDir DOCUMENT ME!
-     * @param parentDir DOCUMENT ME!
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     * @param childName DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public void create(File samplesDir, File parentDir, String childId, short childType,
-        String childName) throws Exception {
-        // Set filenames
-        String id = generateTreeId(childId, childType);
-        String filename = parentDir + "/articles/" + id + "/index.xml";
-        String doctypeSample = samplesDir + "/Article.xml";
+    protected String getChildFileName(File parentDir, String childId) {
+        return parentDir + File.pathSeparator + "articles"
+	    + File.pathSeparator + childId
+	    + File.pathSeparator + "index.xml";
+    }
 
-        // Read sample file
-        Document doc = new SAXReader().read("file:" + doctypeSample);
+    protected void transformXML (Document doc, Parameters parameters)
+	throws Exception {
+
+        DOMUtil du = new DOMUtil();
 
         // Replace id
-        Element eid = (Element) doc.selectSingleNode("/article/meta/id");
-        log.error(eid.getPath() + " " + eid.getText());
-
-        eid.addText(id);
-        log.error(eid.getPath() + " " + eid.getText());
+        du.setElementValue(doc, "/article/meta/id",
+			   parameters.getParameter("id"));
+	
+        log.debug("system_name = " +
+		  du.getElementValue(doc.getDocumentElement(), 
+				     new org.wyona.xml.XPath("system_name")));
 
         // Replace editor
-        Element eeditor = (Element) doc.selectSingleNode("/article/meta/editor");
-        log.debug(eeditor.getPath() + " " + eeditor.getText());
-        eeditor.addText("levi");
-        log.debug(eeditor.getPath() + " " + eeditor.getText());
+        du.setElementValue(doc, "/article/meta/editor",
+			   parameters.getParameter("editor"));
 
         Calendar cal = new GregorianCalendar();
 
         // Replace year
-        Element eyear = (Element) doc.selectSingleNode("/article/meta/date/year");
-        log.debug(eyear.getPath() + " " + eyear.getText());
-        eyear.addText(Integer.toString(cal.get(cal.YEAR)));
-        log.debug(eyear.getPath() + " " + eyear.getText());
+        du.setElementValue(doc, "/article/meta/date/year",
+			   Integer.toString(cal.get(Calendar.YEAR)));
 
         // Replace month 
-        Element emonth = (Element) doc.selectSingleNode("/article/meta/date/month");
-        log.debug(emonth.getPath() + " " + emonth.getText());
-
-        int imonth = cal.get(cal.MONTH) + 1;
-        emonth.addText(Integer.toString(imonth));
-        emonth.addAttribute("name", DateUtil.getMonthName(imonth));
-        log.debug(emonth.getPath() + " " + emonth.getText());
+        int month = cal.get(Calendar.MONTH) + 1;
+        du.setElementValue(doc, "/article/meta/date/month",
+			   Integer.toString(month));
+        du.setAttributeValue(doc, "/article/meta/date/month/@name",
+			     DateUtil.getMonthName(month));
 
         // Replace day 
-        Element eday = (Element) doc.selectSingleNode("/article/meta/date/day");
-        log.debug(eday.getPath() + " " + eday.getText());
-        eday.addText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
-        eday.addAttribute("name", DateUtil.getDayName(cal.get(Calendar.DAY_OF_WEEK)));
-        log.debug(eday.getPath() + " " + eday.getText());
+        du.setElementValue(doc, "/article/meta/date/day",
+			   Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+        du.setAttributeValue(doc, "/article/meta/date/day/@name",
+			   DateUtil.getDayName(cal.get(Calendar.DAY_OF_WEEK)));
 
         // Replace hour 
-        Element ehour = (Element) doc.selectSingleNode("/article/meta/date/hour");
-        log.debug(ehour.getPath() + " " + ehour.getText());
-        ehour.addText(DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.HOUR_OF_DAY))));
-        log.debug(ehour.getPath() + " " + ehour.getText());
+        du.setElementValue(doc, "/article/meta/date/hour",
+			   DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.HOUR_OF_DAY))));
 
         // Replace minute 
-        Element eminute = (Element) doc.selectSingleNode("/article/meta/date/minute");
-        log.debug(eminute.getPath() + " " + eminute.getText());
-        eminute.addText(DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MINUTE))));
-        log.debug(eminute.getPath() + " " + eminute.getText());
-
-        // Write file
-        File parent = new File(new File(filename).getParent());
-
-        if (!parent.exists()) {
-            parent.mkdirs();
-        }
-
-        FileWriter fileWriter = new FileWriter(filename);
-        doc.write(fileWriter);
-        fileWriter.close();
+        du.setElementValue(doc, "/article/meta/date/minute",
+			   DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MINUTE))));
     }
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.7 2003/02/20 13:40:40 gregor Exp $
+ * $Id: NewArticleCreator.java,v 1.8 2003/02/26 10:09:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,12 +43,7 @@
  */
 package ch.unizh.unipublic.wyona.cms.authoring;
 
-import org.apache.log4j.Category;
-
-import org.wyona.cms.authoring.AbstractParentChildCreator;
-
-import java.io.File;
-
+import org.wyona.cms.authoring.DefaultBranchCreator;
 
 /**
  * DOCUMENT ME!
@@ -57,59 +52,9 @@ import java.io.File;
  * @author Edith Chevrier
  * @version 2002.7.4
  */
-public class NewArticleCreator extends AbstractParentChildCreator {
-    static Category log = Category.getInstance(NewArticleCreator.class);
+public class NewArticleCreator extends DefaultBranchCreator {
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public short getChildType(short childType) throws Exception {
-        return AbstractParentChildCreator.BRANCH_NODE;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String generateTreeId(String childId, short childType)
-        throws Exception {
-        return childId;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param samplesDir DOCUMENT ME!
-     * @param parentDir DOCUMENT ME!
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     * @param childName DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public void create(File samplesDir, File parentDir, String childId, short childType,
-        String childName) throws Exception {
-        log.debug("NewArticleCreator.create() has been called.");
-
-        //Set filenames
-        String filename = parentDir + "/" + childId + "/" + "index.xml";
-        log.debug("filename : " + filename);
-
-        String doctypeSample = samplesDir + "/Article.xml";
-        log.debug("doctypeSample : " + doctypeSample);
-
-        copyFile(new File(doctypeSample), new File(filename));
+    public NewArticleCreator() {
+	sampleResourceName = "Article.xml";
     }
 }

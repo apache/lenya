@@ -1,5 +1,5 @@
 /*
- * $Id: CMFProjectCreator.java,v 1.5 2003/02/26 10:09:36 egli Exp $
+ * $Id: DefaultBranchCreator.java,v 1.1 2003/02/26 10:09:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,42 +41,42 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.pubs.oscom;
+package org.wyona.cms.authoring;
 
 import org.apache.log4j.Category;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.w3c.dom.Document;
-
-import org.wyona.cms.authoring.DefaultLeafCreator;
-import org.wyona.xml.DOMUtil;
+import java.io.File;
 
 /**
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version 2002.12.29
  */
-public class CMFProjectCreator extends DefaultLeafCreator {
-    static Category log = Category.getInstance(CMFProjectCreator.class);
+public class DefaultBranchCreator extends DefaultCreator {
+    static Category log = Category.getInstance(DefaultBranchCreator.class);
 
-    public CMFProjectCreator() {
-	sampleResourceName = "CMFProject.xml";
+    /**
+     * Return the child type.
+     *
+     * @param childType a <code>short</code> value
+     *
+     * @return a <code>short</code> value
+     *
+     * @exception Exception if an error occurs
+     */
+    public short getChildType(short childType) throws Exception {
+        return BRANCH_NODE;
     }
 
-    protected void transformXML (Document doc, Parameters parameters)
-	throws Exception {
-
-        DOMUtil du = new DOMUtil();
-        du.setElementValue(doc, "/system/id",
-			   parameters.getParameter("id"));
-        du.setElementValue(doc, "/system/system_name",
-			   parameters.getParameter("childName"));
-	
-        log.debug("system_name = " +
-		  du.getElementValue(doc.getDocumentElement(), 
-				     new org.wyona.xml.XPath("system_name")));
+    protected String getChildFileName(File parentDir, String childId) {
+	return parentDir + File.pathSeparator + childId + File.pathSeparator
+	    + "index.xml";
     }
+
+    protected String getCildMetaFileName(File parentDir, String childId) {
+	return parentDir + File.pathSeparator + childId + File.pathSeparator
+	    + "indexmeta.xml";
+    }
+
 
 }
