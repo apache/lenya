@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml-common.xsl,v 1.3 2004/03/13 12:42:18 gregor Exp $ -->
+<!-- $Id: xhtml-common.xsl,v 1.4 2004/03/20 12:28:45 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -37,25 +37,32 @@
   <element name="Table" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:table&quot; {$ns}&gt;&lt;tr&gt;&lt;td&gt;New Table&lt;/td&gt;&lt;/tr&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Unordered List" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:ul&quot; {$ns}&gt;&lt;li&gt;New Unordered List&lt;/li&gt;;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Ordered List" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:ol&quot; {$ns}&gt;&lt;li&gt;New Ordered List&lt;/li&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
+  <element name="Headline 1" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:h1&quot; {$ns}&gt;New Headline 1&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Headline 2" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:h2&quot; {$ns}&gt;New Headline 2&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Headline 3" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:h3&quot; {$ns}&gt;New Headline 3&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Headline 4" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:h4&quot; {$ns}&gt;New Headline 4&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
 </insert-after>
 </xsl:template>
 
-<xsl:template match="xhtml:p" mode="body">
-<node name="Paragraph" select="/*/xhtml:body/xhtml:p[@tagID='{@tagID}']">
-  <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:p[@tagID='{@tagID}']&quot;/&gt;"/></action>
-  <content>
-    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:p[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="30">
-      <xsl:copy-of select="node()"/>
-    </textarea>
-  </content>
-</node>
-
-<xsl:call-template name="insertmenu"><xsl:with-param name="path">/*/xhtml:body/xhtml:p</xsl:with-param></xsl:call-template>
-
-</xsl:template>
+  <xsl:template match="xhtml:p" mode="body">
+    <xsl:choose >
+      <xsl:when test="xhtml:object">
+	<xsl:apply-templates select="xhtml:object" mode="body"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<node name="Paragraph" select="/*/xhtml:body/xhtml:p[@tagID='{@tagID}']">
+	  <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:p[@tagID='{@tagID}']&quot;/&gt;"/></action>
+	  <content>
+	    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:p[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="30">
+	      <xsl:copy-of select="node()"/>
+	    </textarea>
+	  </content>
+	</node>
+	
+	<xsl:call-template name="insertmenu"><xsl:with-param name="path">/*/xhtml:body/xhtml:p</xsl:with-param></xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 <xsl:template match="xhtml:table" mode="body">
 <node name="Table" select="/*/xhtml:body/xhtml:table[@tagID='{@tagID}']">
@@ -99,6 +106,20 @@
 
 </xsl:template>
 
+<xsl:template match="xhtml:h1" mode="body">
+<node name="Headline 1" select="/*/xhtml:body/xhtml:h1[@tagID='{@tagID}']">
+  <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:h1[@tagID='{@tagID}']&quot;/&gt;"/></action>
+  <content>
+    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h1[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="3">
+      <xsl:copy-of select="node()"/>
+    </textarea>
+  </content>
+</node>
+
+<xsl:call-template name="insertmenu"><xsl:with-param name="path">/*/xhtml:body/xhtml:h1</xsl:with-param></xsl:call-template>
+
+</xsl:template>
+    
 <xsl:template match="xhtml:h2" mode="body">
 <node name="Headline 2" select="/*/xhtml:body/xhtml:h2[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:h2[@tagID='{@tagID}']&quot;/&gt;"/></action>
@@ -149,5 +170,39 @@
 <xsl:call-template name="insertmenu"><xsl:with-param name="path">/*/xhtml:body/xhtml:hr</xsl:with-param></xsl:call-template>
 
 </xsl:template>
+
+  <xsl:template match="xhtml:object" mode="body">
+    <node name="Object" select="/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']">
+      <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']&quot;/&gt;"/></action>
+      <content>
+	<input type="text" name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']&quot;&gt;" size="40">
+	  <xsl:attribute name="value">
+	    <xsl:copy-of select="."/>
+	  </xsl:attribute>
+	</input>
+      </content>
+    </node>
+    
+    <xsl:call-template name="insertmenu"><xsl:with-param name="path">/*/xhtml:body</xsl:with-param></xsl:call-template>
+    
+  </xsl:template>
+
+  <xsl:template match="lenya:asset" mode="body">
+    <node name="Asset" select="/*/xhtml:body/lenya:asset[@tagID='{@tagID}']">
+      <action>
+	<delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/lenya:asset[@tagID='{@tagID}']&quot;/&gt;"/>
+      </action>
+      <content>
+	<input type="text" name="&lt;xupdate:update select=&quot;/*/xhtml:body/lenya:asset[@tagID='{@tagID}']&quot;&gt;" size="40">
+	  <xsl:attribute name="value">
+	    <xsl:copy-of select="."/>
+	  </xsl:attribute>
+	</input>
+      </content>
+    </node>
+
+    <xsl:call-template name="insertmenu"><xsl:with-param name="path">/*/xhtml:body</xsl:with-param></xsl:call-template>
+    
+  </xsl:template>
 
 </xsl:stylesheet>  
