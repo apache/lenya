@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.16 2003/04/30 14:18:59 edith Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.17 2003/07/07 15:58:31 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -46,7 +46,7 @@
   <map:pipelines>
     <map:pipeline>
       <map:match pattern="live/**">
-        <map:mount uri-prefix="" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="live" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
       <!-- Xopus Interface -->
@@ -99,7 +99,7 @@
           </map:match>
 
           <map:match pattern="**">
-            <map:mount uri-prefix="" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+            <map:mount uri-prefix="live" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
           </map:match>
 
         </map:act>

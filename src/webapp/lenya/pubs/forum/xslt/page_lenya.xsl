@@ -8,7 +8,7 @@
 <!--
 <xsl:variable name="contextPrefix"><xsl:value-of select="/lenya/menu/context_prefix/."/></xsl:variable>
 -->
-<xsl:variable name="image_path"><xsl:value-of select="$contextPrefix"/>/images</xsl:variable>
+<xsl:variable name="image_path"><xsl:value-of select="$contextPrefix"/>/live/images</xsl:variable>
 
 <xsl:template name="page">
 <html>
