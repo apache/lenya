@@ -32,4 +32,11 @@ public class CMSSituation implements Situation {
         return user;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return "(user: " + user + ")"; 
+    }
+
 }
