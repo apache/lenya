@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: screen.xsl,v 1.3 2004/03/13 12:42:07 gregor Exp $ -->
+<!-- $Id: screen.xsl,v 1.4 2004/04/19 10:17:18 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -27,7 +27,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   >
   
-  <xsl:import href="../../../../../xslt/util/page-util.xsl"/>
+  <xsl:import href="../util/page-util.xsl"/>
 
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
 
