@@ -4,15 +4,18 @@
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-  xmlns:xsp-cookie="http://apache.org/xsp/cookie/2.0">
+  xmlns:xsp-cookie="http://apache.org/xsp/cookie/2.0"
+  xmlns:xsp-session="http://apache.org/xsp/session/2.0"
+  create-session="true">
 
   <xsp:structure>
     <xsp:include>java.util.StringTokenizer</xsp:include>
   </xsp:structure>
 
+<page>
 <info>
   <xsp:logic>
-    String firstdocumentid =<xsp-session:get-attribute name="org.apache.lenya.cms.info.documentid"/>;
+    String firstdocumentid =(String)<xsp-session:get-attribute name="org.apache.lenya.cms.info.documentid"/>;
     String lastid="";
     StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
     int l = st.countTokens();
@@ -27,5 +30,6 @@
   <first-document-id><xsp:expr>firstdocumentid</xsp:expr></first-document-id>
   <task-id>renameDocument</task-id>
 </info>
+</page>
 
 </xsp:page>

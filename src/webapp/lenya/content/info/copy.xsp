@@ -6,6 +6,7 @@
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:xsp-cookie="http://apache.org/xsp/cookie/2.0">
 
+<page>
 <info>
   <xsp:logic>
     String documentid= <xsp-cookie:getValue name="org.apache.lenya.cms.info.targett2"/>;
@@ -15,5 +16,5 @@
   <document-id><xsp:expr>documentid</xsp:expr></document-id>
   <action>copyDocument</action>
 </info>
-
+</page>
 </xsp:page>
