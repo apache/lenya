@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeFactory.java,v 1.7 2003/12/10 10:51:08 andreas Exp $
+$Id: PageEnvelopeFactory.java,v 1.8 2003/12/12 16:00:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,6 @@ $Id: PageEnvelopeFactory.java,v 1.7 2003/12/10 10:51:08 andreas Exp $
 */
 package org.apache.lenya.cms.publication;
 
-import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 
@@ -109,21 +108,4 @@ public class PageEnvelopeFactory {
         return envelope;
     }
     
-    /**
-     * Creates a page envelope using a FOM_Cocoon object.
-     * This method is supposed to be used from a FlowScript.
-     * @param cocoon The FOM_Cocoon object.
-     * @return A page envelope.
-     * @throws PageEnvelopeException when something went wrong.
-     */
-    public PageEnvelope getPageEnvelopeFlow(FOM_Cocoon cocoon) throws PageEnvelopeException {
-        PageEnvelope envelope;
-        try {
-            Publication publication = PublicationFactory.getPublicationFlow(cocoon);
-            envelope = new PageEnvelope(publication, cocoon.getRequest(), true);
-        } catch (Exception e) {
-            throw new PageEnvelopeException(e);
-        }
-        return envelope;
-    }
 }

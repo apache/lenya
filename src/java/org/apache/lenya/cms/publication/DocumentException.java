@@ -1,5 +1,5 @@
 /*
-$Id: DocumentException.java,v 1.1 2003/08/13 09:53:15 egli Exp $
+$Id: DocumentException.java,v 1.2 2003/12/12 16:00:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ package org.apache.lenya.cms.publication;
  * @author egli
  * 
  */
-public class DocumentException extends Exception {
+public class DocumentException extends PublicationException {
 
     /**
      * Creates a new DocumentException
