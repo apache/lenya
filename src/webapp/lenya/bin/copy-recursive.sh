@@ -1,13 +1,29 @@
 #!/bin/sh
 
+
+#########################################################
+# DEFAULT CONFIGURATION
+#########################################################
+
 SOURCE_DIRECTORY=/home/michiii/tmp
 
 DESTINATION_DIRECTORY=/home/michiii/backup
+
+BATCH_FILE=/home/michiii/sftp-batch.txt
+
+USERNAME=michiii
+
+HOSTNAME=127.0.0.1
 
 #########################################################
 # FUNCTIONS
 #########################################################
 
+
+toString(){
+  echo "INFO: .toString(): SourceDirectory: $SOURCE_DIRECTORY"
+  echo "INFO: .toString(): DestinationDirectory: $DESTINATION_DIRECTORY"
+  }
 
 browseDirectory(){
   CURRENT_DIRECTORY=$1
@@ -65,6 +81,13 @@ createDirectory(){
   echo "INFO: .createDirectory(): cd $DPARENT"
   echo "INFO: .createDirectory(): mkdir $NAME"
   echo ""
+
+  ##echo "# Create Directory:" >> $BATCH_FILE
+  echo "lcd $LPARENT" >> $BATCH_FILE
+  echo "cd $DPARENT" >> $BATCH_FILE
+  echo "mkdir $NAME" >> $BATCH_FILE
+  ##echo "#" >> $BATCH_FILE
+  ##echo "#" >> $BATCH_FILE
   }
 
 copyFile(){
@@ -87,6 +110,13 @@ copyFile(){
   echo "INFO: .copyFile(): cd $DPARENT"
   echo "INFO: .copyFile(): put $NAME"
   echo ""
+
+  ##echo "# Copy File:" >> $BATCH_FILE
+  echo "lcd $LPARENT" >> $BATCH_FILE
+  echo "cd $DPARENT" >> $BATCH_FILE
+  echo "put $NAME" >> $BATCH_FILE
+  ##echo "#" >> $BATCH_FILE
+  ##echo "#" >> $BATCH_FILE
   }
 
 
@@ -95,12 +125,24 @@ copyFile(){
 #########################################################
 
 
-#BATCH_FILE=$1
-#if ! [ $BATCH_FILE ];then
-#  echo "Usage: copy-recursive.sh \"SourceDirectory DestinationDirectory\""
-#  exit 0
-#fi
+SOURCE_DIRECTORY=$1
+DESTINATION_DIRECTORY=$2
+BATCH_FILE=$3
+if ! ([ $SOURCE_DIRECTORY ] && [ $DESTINATION_DIRECTORY ] && [ $BATCH_FILE ]);then
+  echo "Usage: copy-recursive.sh \"SourceDirectory DestinationDirectory BatchFile\""
+  exit 0
+fi
 
+toString
+
+echo "pwd" > $BATCH_FILE
+##echo "# BEGIN: Batch File" >> $BATCH_FILE
+##echo "#" >> $BATCH_FILE
+##echo "#" >> $BATCH_FILE
+##echo "open $USERNAME@$HOSTNAME" >> $BATCH_FILE
 
 CURRENT_DIRECTORY=$SOURCE_DIRECTORY
 browseDirectory $CURRENT_DIRECTORY $SOURCE_DIRECTORY $DESTINATION_DIRECTORY
+
+##echo "# END: Batch File" >> $BATCH_FILE
+echo "quit" >> $BATCH_FILE
