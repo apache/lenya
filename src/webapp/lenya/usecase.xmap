@@ -671,7 +671,7 @@
           
           <map:match pattern="archive" type="step">
             <map:act type="task">
-              <map:redirect-to session="true" uri="{request:requestURI}"/>
+              <map:redirect-to session="true" uri="{request:contextPath}/{../../../1}/{../../../2}/"/>
             </map:act>
           </map:match>
           
