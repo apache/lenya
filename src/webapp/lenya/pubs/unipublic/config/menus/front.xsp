@@ -32,7 +32,7 @@
       </separator>
       <block>
         <item>Edit&#160;Dossiers</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/dossier.html&amp;docids=/frontpage/dossier.xml</xsp:attribute>Publish&#160;Dossiers</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=/frontpage/dossier.html&amp;sources=/frontpage/dossier.xml</xsp:attribute>Publish&#160;Dossiers</item>
         <item>Schedule&#160;Dossiers</item>
       </block>
       <separator>
