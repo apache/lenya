@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publication.java,v 1.52 2004/07/26 08:32:31 roku Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -137,6 +137,7 @@ public interface Publication {
      * to share one SSL certificate.
      * 
      * @return the SSL prefix
+     * @deprecated Use the proxy configuration instead.
      */
     String getSSLPrefix();
 
@@ -148,6 +149,7 @@ public interface Publication {
      * the Live mount point to / or something else. An empty mount point disables the feature.
      * 
      * @return the Live mount point
+     * @deprecated Use the proxy configuration instead.
      */
     String getLiveMountPoint();
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CopyTask.java,v 1.9 2004/06/01 15:36:53 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -51,11 +51,11 @@ public class CopyTask extends Task {
 
             if (new File(pubsRootDir, "publication.xml").isFile()) {
                 CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(toDir.toString()),
-                    twoTuple, filter);
+                    twoTuple, filter, this);
             } else {
                 // FIXME: Look for publications defined by the file "publication.xml"
                 CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir),
-                    new File(toDir.toString()), twoTuple, filter);
+                    new File(toDir.toString()), twoTuple, filter, this);
             }
         }
 

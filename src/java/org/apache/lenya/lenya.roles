@@ -74,4 +74,8 @@
         shorthand="uriparameterizer"
         default-class="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerImpl"/>
         
+  <role name="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"
+  	    shorthand="publication-template-manager"
+  	    default-class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"/>
+        
 </role-list>

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractPublication.java,v 1.21 2004/07/22 13:44:16 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -42,35 +42,22 @@ public abstract class AbstractPublication implements Publication {
             INFO_AREA_PREFIX + ARCHIVE_AREA, INFO_AREA_PREFIX + TRASH_AREA };
 
     private String id;
-
     private PublishingEnvironment environment;
-
     private File servletContext;
-
     private DocumentIdToPathMapper mapper = null;
-
     private ArrayList languages = new ArrayList();
-
     private String defaultLanguage = null;
-
     private String breadcrumbprefix = null;
-
     private String sslprefix = null;
-
     private String livemountpoint = null;
-
     private HashMap siteTrees = new HashMap();
-
     private boolean hasSitetree = true;
 
     private static final String ELEMENT_PROXY = "proxy";
-
     private static final String ATTRIBUTE_AREA = "area";
-
     private static final String ATTRIBUTE_URL = "url";
-
     private static final String ATTRIBUTE_SSL = "ssl";
-
+    
     /**
      * Creates a new instance of Publication
      * 
@@ -160,6 +147,7 @@ public abstract class AbstractPublication implements Publication {
                             + "]");
                 }
             }
+
 
         } catch (PublicationException e) {
             throw e;

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CopyPubLibrariesTask.java,v 1.1 2004/06/28 17:41:07 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -28,7 +28,7 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 
 /**
- *
+ *  
  */
 public class CopyPubLibrariesTask extends Task {
     private Path pubsRootDirs;
@@ -36,17 +36,14 @@ public class CopyPubLibrariesTask extends Task {
     private String buildDir;
     private String excludes;
 
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
         /*
-        log("" + pubsRootDirs);
-        log("" + libDir);
-        log("" + buildDir);
-        log("" + excludes);
-        */
-
+         * log("" + pubsRootDirs); log("" + libDir); log("" + buildDir); log("" + excludes);
+         */
 
         int numberOfDirectoriesCreated = 0;
         int numberOfFilesCopied = 0;
@@ -61,14 +58,17 @@ public class CopyPubLibrariesTask extends Task {
 
             if (new File(pubsRootDir, "publication.xml").isFile()) {
                 //log("" + pubsRootDir);
-                CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir + File.separator + libDir), new File(buildDir.toString()), twoTuple, filter);
+                CopyJavaSourcesTask.copyContentOfDir(
+                        new File(pubsRootDir + File.separator + libDir), new File(buildDir),
+                        twoTuple, filter, this);
             } else {
                 log("TODO: Not implemented yet");
                 //log("" + pubsRootDir);
-		/*
-                // FIXME: Look for publications defined by the file "publication.xml"
-                CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir), new File(toDir.toString()), twoTuple, null);
-		*/
+                /*
+                 * // FIXME: Look for publications defined by the file "publication.xml"
+                 * CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir), new
+                 * File(toDir.toString()), twoTuple, null);
+                 */
             }
         }
 
@@ -96,7 +96,7 @@ public class CopyPubLibrariesTask extends Task {
 
     /**
      * Where the publications shall be copied to
-     *
+     * 
      * @param excludes
      */
     public void setBuildDir(String buildDir) {
@@ -105,7 +105,7 @@ public class CopyPubLibrariesTask extends Task {
 
     /**
      * Which filenames shall be excluded
-     *
+     * 
      * @param excludes
      */
     public void setExcludes(String excludes) {

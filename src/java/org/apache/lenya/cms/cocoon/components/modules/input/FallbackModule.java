@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FallbackModule.java,v 1.4 2004/08/11 13:11:31 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -175,8 +175,14 @@ public class FallbackModule extends AbstractPageEnvelopeModule implements Servic
         }
 
         if (resolvedUri == null) {
+            /*
             throw new ConfigurationException("Could not resolve file for path [" + path + "]."
                     + "\nChecked URIs:" + checkedUris);
+            */
+            resolvedUri = baseUris[baseUris.length - 1] + "/" + path;
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("No URI resolved, choosing last defined URI: [" + resolvedUri + "]");
+            }
         }
         else {
             if (getLogger().isDebugEnabled()) {
@@ -223,4 +229,10 @@ public class FallbackModule extends AbstractPageEnvelopeModule implements Servic
         this.manager = manager;
     }
 
+    /**
+     * @return Returns the service manager.
+     */
+    public ServiceManager getServiceManager() {
+        return manager;
+    }
 }
