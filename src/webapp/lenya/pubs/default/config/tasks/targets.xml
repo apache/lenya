@@ -87,4 +87,23 @@
       />
 </target>
 
+<target name="create">
+    
+  <property name="create.parent-id"/>
+  <property name="create.child-id"/>
+  <property name="create.child-name"/>
+  <property name="create.child-type"/>
+  <property name="create.doctype"/>
+    
+  <taskdef name="create" classname="org.apache.lenya.cms.ant.DocumentCreatorTask"/>
+  <create
+      parentid="${create.parent-id}"
+      childid="${create.child-id}"
+      childname="${create.child-name}"
+      childtype="${create.child-type}"
+      docspath="${authoring.dir}"
+      documenttype="${create.doctype}"
+      treeauthoringpath="${authoring.tree}"/>
+</target>
+
 </project>
