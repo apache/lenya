@@ -1,5 +1,5 @@
 /*
- * $Id: FlowHelper.java,v 1.2 2004/01/16 14:51:03 michi Exp $ <License>
+ * $Id: FlowHelper.java,v 1.3 2004/01/16 17:42:16 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -58,6 +58,9 @@ import org.apache.lenya.workflow.Situation;
 
 /**
  * Flowscript utility class.
+ * The FOM_Cocoon object is not passed in the constructor to avoid
+ * errors. This way, not the initial, but the current FOM_Cocoon
+ * object is used by the methods.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
@@ -114,7 +117,7 @@ public class FlowHelper {
         PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
         return factory.getPageEnvelope(cocoon.getObjectModel());
     }
-
+    
     /**
      * Returns the request URI of the current request.
      * @param cocoon The FOM_Cocoon object.
