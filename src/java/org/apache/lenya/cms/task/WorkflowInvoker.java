@@ -1,5 +1,5 @@
 /*
- * $Id: WorkflowInvoker.java,v 1.6 2003/10/21 09:51:55 andreas Exp $ <License>
+ * $Id: WorkflowInvoker.java,v 1.7 2003/10/26 17:29:55 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -72,9 +72,10 @@ public class WorkflowInvoker extends ParameterWrapper {
 	public static final String USER_ID = "user-id";
 	public static final String MACHINE = "machine";
 	public static final String EVENT = "event";
-	public static final String EVENT_REQUEST_PARAMETER = "lenya.event";
 
 	public static final String PREFIX = "workflow";
+
+	public static final String EVENT_REQUEST_PARAMETER = "workflow.event";
 
 	/**
 	 * Ctor.
@@ -232,8 +233,6 @@ public class WorkflowInvoker extends ParameterWrapper {
 	public void invokeTransition() throws ExecutionException {
 		if (doTransition) {
 
-			log.debug("Invoking transition.");
-
 			try {
 				WorkflowFactory factory = WorkflowFactory.newInstance();
 				SynchronizedWorkflowInstances instance =
@@ -244,6 +243,8 @@ public class WorkflowInvoker extends ParameterWrapper {
 				Event event = null;
 				Event[] events = instance.getExecutableEvents(situation);
 
+				log.debug("Resolved executable events.");
+				
 				for (int i = 0; i < events.length; i++) {
 					if (events[i].getName().equals(getEventName())) {
 						event = events[i];
@@ -251,7 +252,10 @@ public class WorkflowInvoker extends ParameterWrapper {
 				}
 
 				assert event != null;
+				
+				log.debug("Invoking transition.");
 				instance.invoke(situation, event);
+				log.debug("Invoking transition completed.");
 
 			} catch (Exception e) {
 				throw new ExecutionException(e);

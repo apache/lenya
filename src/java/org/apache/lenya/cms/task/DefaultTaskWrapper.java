@@ -1,5 +1,5 @@
 /*
-$Id: DefaultTaskWrapper.java,v 1.8 2003/10/22 16:32:55 egli Exp $
+$Id: DefaultTaskWrapper.java,v 1.9 2003/10/26 17:29:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -237,9 +237,9 @@ public class DefaultTaskWrapper implements TaskWrapper {
             throw new ExecutionException("No task id provided!");
         }
 
-        log.debug("-----------------------------------");
-        log.debug(" Executing task [" + taskId + "]");
-        log.debug("-----------------------------------");
+        log.info("===================================");
+        log.info(" Executing task [" + taskId + "]");
+        log.info("-----------------------------------");
 
         if (!wrapperParameters.isComplete()) {
 
@@ -275,15 +275,29 @@ public class DefaultTaskWrapper implements TaskWrapper {
             throw new ExecutionException(e);
         }
 
+		log.debug("-----------------------------------");
+		log.debug(" Triggering workflow");
+		log.debug("-----------------------------------");
+		
         //FIXME The new workflow is set before the end of the transition because the document id
         // and so the document are sometimes changing during the transition (ex archiving , ...) 
         workflowInvoker.invokeTransition();
 
+		log.debug("-----------------------------------");
+		log.debug(" Triggering task");
+		log.debug("-----------------------------------");
+		
         task.execute(publication.getServletContext().getAbsolutePath());
 
+		log.debug("-----------------------------------");
+		log.debug(" Triggering notification");
+		log.debug("-----------------------------------");
         Notifier notifier = new Notifier(manager, getParameters());
         notifier.sendNotification(getTaskParameters());
 
+		log.debug("-----------------------------------");
+		log.debug(" Executing task finished.");
+		log.debug("===================================\n\n");
     }
 
     /**
@@ -317,8 +331,11 @@ public class DefaultTaskWrapper implements TaskWrapper {
         NamespaceHelper taskHelper =
             new NamespaceHelper(Task.NAMESPACE, Task.DEFAULT_PREFIX, document);
         Element element = taskHelper.createElement(ELEMENT_TASK);
+        
+        List keys = new ArrayList(getParameters().keySet());
+        Collections.sort(keys);
 
-        for (Iterator i = getParameters().keySet().iterator(); i.hasNext();) {
+        for (Iterator i = keys.iterator(); i.hasNext();) {
             String key = (String) i.next();
             Element parameterElement = taskHelper.createElement(ELEMENT_PARAMETER);
             parameterElement.setAttribute(ATTRIBUTE_NAME, key);
