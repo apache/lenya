@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.32 2003/10/13 09:07:19 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.33 2003/10/13 10:01:37 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -71,7 +71,7 @@ foldersTree.treeID = "t2"
   		<xsl:value-of select="generate-id(.)"/>
   		= insFld(
   			   <xsl:value-of select="generate-id(..)"/>,
-           gFld("&lt;span style=\"padding: 0px 5px;\"&gt;<xsl:value-of select="$cut-pre"/><xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabels"/><xsl:value-of select="$no-language-post"/><xsl:value-of select="$cut-post"/>&lt;/span&gt;",
+           gFld("&lt;span style=\"padding: 0px 5px;\"&gt;<xsl:value-of select="$cut-pre"/><xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabel"/><xsl:value-of select="$no-language-post"/><xsl:value-of select="$cut-post"/>&lt;/span&gt;",
            "<xsl:value-of select="$link"/>")
       );
     </xsl:when>
@@ -79,7 +79,7 @@ foldersTree.treeID = "t2"
     	insDoc(<xsl:value-of select="generate-id(..)"/>,
     	       gLnk(
     	           "S",
-    	           "&lt;span style=\"padding: 0px 5px;\"&gt;<xsl:value-of select="$cut-pre"/><xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabels"/><xsl:value-of select="$no-language-post"/><xsl:value-of select="$cut-post"/>&lt;/span&gt;",
+    	           "&lt;span style=\"padding: 0px 5px;\"&gt;<xsl:value-of select="$cut-pre"/><xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabel"/><xsl:value-of select="$no-language-post"/><xsl:value-of select="$cut-post"/>&lt;/span&gt;",
     	           "<xsl:value-of select="$link"/>")
       );
       </xsl:otherwise>
@@ -89,13 +89,16 @@ foldersTree.treeID = "t2"
   </xsl:apply-templates>
 </xsl:template>
 
-<xsl:template name="getLabels">
+<xsl:template name="getLabel">
   <xsl:choose>
     <xsl:when test="s:label[lang($chosenlanguage)]">
     	<xsl:value-of select="s:label[lang($chosenlanguage)]"/>
     </xsl:when>
-    <xsl:otherwise>
+    <xsl:when test="s:label[lang($defaultlanguage)]">
     	<xsl:value-of select="s:label[lang($defaultlanguage)]"/>
+    </xsl:when>
+    <xsl:otherwise>
+    	<xsl:value-of select="s:label"/>
     </xsl:otherwise>
   </xsl:choose>	
 </xsl:template>
