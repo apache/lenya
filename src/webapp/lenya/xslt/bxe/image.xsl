@@ -33,6 +33,7 @@
     <xsl:param name="error"/>
 
     <xsl:param name="extensions" select="'gif jpg png'"/>
+    <xsl:param name="contextprefix"/>
 
     <xsl:template match="lenya-info:assets">
         <page:page>
@@ -40,8 +41,12 @@
               <i18n:text key="lenya.imageupload.title"/>
             </page:title>
             <page:body >
+                <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
                 <script> 
                    window.onload = insertCaption
+                   
+                   ext = '<xsl:value-of select="$extensions"/>';
+                   
                    function insertImage(src) { 
                       var nodeid = '<xsl:value-of select="lenya-info:documentnodeid"/>/';
                       var link = document.forms["image"].link.value;
@@ -61,33 +66,13 @@
                     } 
                     focus(); 
                   } 
-                  function check(fileinput) {
-                    var i = 0;
-                    var ext = '<xsl:value-of select="$extensions"/>';
-                    var delimiter = ' '; 
-                    var thefile = fileinput["properties.asset.data"].value; 
-                    var title = fileinput["properties.asset.title"].value;
-                    if (title == "") {
-                     alert("<i18n:translate><i18n:text key="upload-with-missing-title"/></i18n:translate>"); 
-                     return false;
-                    }
-                    var _tempArray = new Array();
-                    _tempArray = ext.split(delimiter);
-                    for(i in _tempArray) { 
-                      if(thefile.indexOf('.' + _tempArray[i]) != -1) { // file has one of the accepted extensions. 
-                           return true; 
-                      } 
-                     } // file does not have one of the accepted extensions. 
-                     alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n<xsl:value-of select="$extensions"/>\n</i18n:param></i18n:translate>"); 
-                     return false;
-                  } 
                 </script>
                 <div class="lenya-box">
                     <div class="lenya-box-title"><i18n:text key="lenya.assetupload.subtitle"/></div>
                     <form name="fileinput" 
                         action="" 
                         method="post" enctype="multipart/form-data" 
-                        onsubmit="return check(fileinput)">
+                        onsubmit="return check_upload(fileinput, ext)">
                         <input type="hidden" name="lenya.usecase" 
                             value="{$lenya.usecase}"/>
                         <input type="hidden" name="lenya.step" 

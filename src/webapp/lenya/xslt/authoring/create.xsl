@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: create.xsl,v 1.8 2004/03/13 14:33:31 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -26,6 +26,7 @@
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
   <xsl:param name="lenya.usecase" select="'create'"/>
+  <xsl:param name="contextprefix"/>
   
   <xsl:template match="/">
 	  <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
@@ -44,35 +45,8 @@
       <div class="lenya-box">
         <div class="lenya-box-title"><i18n:text>New Document</i18n:text></div>
       <div class="lenya-box-body">  
+        <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
         <script Language="JavaScript">
-function validRequired(formField,fieldLabel)
-{
-	var result = true;
-	
-	if (formField.value == "")
-	{
-		alert('<i18n:text key="failmessage.createdoc.required"/>');
-		formField.focus();
-		result = false;
-	}
-	
-	return result;
-}
-
-function validContent(formField,fieldLabel)
-{
-	var result = true;
-	
-	if (formField.value.match("[^a-zA-Z0-9\\-]+"))
-	{
-		alert('<i18n:text key="failmessage.createdoc.invalidformat"/>');
-		formField.focus();
-		result = false;
-	}
-	
-	return result;
-}
-
 function validateForm(theForm)
 {
 	if (!validContent(theForm["properties.create.child-id"],"Document ID"))

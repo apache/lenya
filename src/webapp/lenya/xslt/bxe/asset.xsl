@@ -32,41 +32,20 @@
     
 <xsl:import href="../authoring/asset-upload.xsl"/>
 
+<xsl:param name="contextprefix"/>
 
 <xsl:template name="pre-body">
+  <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
   <script>
-    function insertAsset(src, size, title) {
-    
+    var ext = '<xsl:value-of select="$extensions"/>';
+
+    function insertAsset(src, size, title) {    
       <![CDATA[
       window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'" size="'+size+'" type="">'+title+'</asset>',window.opener.BXE_SELECTION,window.opener.BXE_SPLIT_IF_INLINE);
       ]]>
       window.close();
     }
     
-    function check(fileinput) {
-      var i = 0;
-      var ext = '<xsl:value-of select="$extensions"/>';
-      var delimiter = ' ';
-      var thefile = fileinput["properties.asset.data"].value;
-      var title = fileinput["properties.asset.title"].value;
-      if (title == "") {
-       alert("<i18n:translate><i18n:text key="upload-with-missing-title"/></i18n:translate>"); 
-       return false;
-      }
-      var _tempArray = new Array();
-      _tempArray = ext.split(delimiter);
-      for(i in _tempArray)
-      {
-        if(thefile.indexOf('.' + _tempArray[i]) != -1)
-        {
-         // file has one of the accepted extensions.
-         return true;
-         }
-      }
-       // file does not have one of the accepted extensions.
-       alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n<xsl:value-of select="$extensions"/></i18n:param></i18n:translate>");
-       return false;
-    }
   </script>
 </xsl:template>
 
