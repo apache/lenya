@@ -83,7 +83,7 @@ import org.xml.sax.SAXException;
  * 
  * @author Christian Egli
  * 
- * @version $Id: LinkRewriteTask.java,v 1.3 2003/12/08 13:56:55 andreas Exp $
+ * @version $Id: LinkRewriteTask.java,v 1.4 2003/12/10 17:59:06 edith Exp $
  *
  */
 public class LinkRewriteTask extends PublicationTask {
@@ -249,15 +249,14 @@ public class LinkRewriteTask extends PublicationTask {
 
             Document document = documentBuilder.parse(xmlFiles[i]);
             DOMSource domSource = new DOMSource(document);
-
-            transformer.transform(domSource, new StreamResult(os));
+            
+			StreamResult result = new StreamResult(os);
+            transformer.transform(domSource, result);
+            result.getOutputStream().close();
 
             if (!tmpFile.renameTo(xmlFiles[i])) {
-                throw new IOException(
-                    "Could not move "
-                        + tmpFile.getCanonicalPath()
-                        + " to "
-                        + xmlFiles[i].getCanonicalPath());
+			  FileUtil.copyFile(tmpFile, xmlFiles[i]);
+			  FileUtil.forceDelete(tmpFile);
             }
         }
     }
