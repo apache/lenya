@@ -73,7 +73,7 @@ public class DefaultCreator extends DefaultParentChildCreator {
     if(childType == AbstractParentChildCreator.BRANCH_NODE){
       return childId;
       }
-    return childId+".xhtml";
+    return childId+".xml";
     }
 /**
  *
@@ -83,11 +83,11 @@ public class DefaultCreator extends DefaultParentChildCreator {
     String filenameMeta=null;
     if (prefix==null) {
       if(childType == AbstractParentChildCreator.BRANCH_NODE){
-        filename=parentDir+"/"+childId+"/index.xhtml";
+        filename=parentDir+"/"+childId+"/index.xml";
         filenameMeta=parentDir+"/"+childId+"/index-meta.xml";
         } 
       else if(childType == AbstractParentChildCreator.LEAF_NODE){
-        filename=parentDir+"/"+childId+".xhtml";
+        filename=parentDir+"/"+childId+".xml";
         filenameMeta=parentDir+"/"+childId+"-meta.xml";
         }
     }
