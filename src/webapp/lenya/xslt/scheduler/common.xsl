@@ -20,7 +20,7 @@
 <xsl:template name="scheduler-form">
 	
 	<!-- not yet used -->
-	<xsl:param name="task-label" select=""/>
+	<xsl:param name="task-label" select="''"/>
 	
 	<xsl:variable name="scheduler-data" select="//sch:scheduler-data"/>
 	
