@@ -74,6 +74,7 @@
 
   <publishtree 
       documentid= "${publish.documentid}"
+      language= "${publish.language}"
       absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${authoring.tree}"
       absolutetreelivepath = "${pub.dir}/${live.dir}/${authoring.tree}" 
       />

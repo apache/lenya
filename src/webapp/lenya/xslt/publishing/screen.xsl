@@ -19,6 +19,7 @@
 <xsl:variable name="uris"><xsl:value-of select="/usecase:publish/usecase:uris"/></xsl:variable>
 <xsl:variable name="sources"><xsl:value-of select="/usecase:publish/usecase:sources"/></xsl:variable>
 <xsl:variable name="document-id"><xsl:value-of select="/usecase:publish/usecase:document-id"/></xsl:variable>
+<xsl:variable name="document-language"><xsl:value-of select="/usecase:publish/usecase:document-language"/></xsl:variable>
 <xsl:variable name="task-id"><xsl:value-of select="/usecase:publish/usecase:task-id"/></xsl:variable>
 
 <xsl:template match="/usecase:publish">
@@ -34,6 +35,7 @@
         <input type="hidden" name="lenya.usecase" value="publish"/>
         <input type="hidden" name="lenya.step" value="publish"/>
         <input type="hidden" name="task-id" value="{$task-id}"/>
+        <input type="hidden" name="document-language" value="{$document-language}"/>
         <xsl:call-template name="task-parameters">
           <xsl:with-param name="prefix" select="''"/>
         </xsl:call-template>

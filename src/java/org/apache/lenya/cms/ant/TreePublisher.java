@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TreePublisher.java,v 1.6 2003/07/09 12:59:59 egli Exp $
 <License>
 
  ============================================================================
@@ -56,26 +56,26 @@ $Id
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.DefaultSiteTree;
+import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publishing.PublishingException;
 
 import org.apache.tools.ant.BuildException;
 
-
 /**
- * Ant task to publish the tree, adding a node for  the new published document
- * in the live tree
+ * Ant task to publish the tree, adding a node for the new published
+ * document in the live tree
  */
 public class TreePublisher extends PublicationTask {
     private String documentid;
+    private String language;
     private String absolutetreeauthoringpath;
     private String absolutetreelivepath;
 
     /**
      * Creates a new instance of TreePublisher
      */
-    public TreePublisher() {
-    }
+    public TreePublisher() {}
 
     /**
      * Returns the document id
@@ -93,6 +93,25 @@ public class TreePublisher extends PublicationTask {
      */
     public void setDocumentid(String documentid) {
         this.documentid = documentid;
+    }
+
+    /**
+     * Get the language of the document to be published
+     * 
+     * @return a <code>String</code> containing the ISO string for
+     * this language, e.g. "de", "en"
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * Set the language of the document to be published
+     * 
+     * @param string the ISO string for this language, e.g. "de", "en"
+     */
+    public void setLanguage(String string) {
+        language = string;
     }
 
     /**
@@ -134,32 +153,81 @@ public class TreePublisher extends PublicationTask {
     /**
      * adds a node for the published document in the live tree
      *
-     * @param documentid The id of the published document
-     * @param absolutetreeauthoringpath The path for the tree in authoring
-     * @param absolutetreelivepath The path for the tree in live
+     * @param documentId The id of the published document
+     * @param language the language for which this document is to be published. 
+     * 	Can be null if all languages are to be published.
+     * @param absoluteTreeAuthoringPath The path for the tree in authoring
+     * @param absoluteTreeLivePath The path for the tree in live
      *
-     * @throws PublishingException DOCUMENT ME!
+     * @throws PublishingException if the publication failed.
      */
-    public void publish(String documentid, String absolutetreeauthoringpath,
-        String absolutetreelivepath) throws PublishingException {
+    public void publish(
+        String documentId,
+        String language,
+        String absoluteTreeAuthoringPath,
+        String absoluteTreeLivePath)
+        throws PublishingException {
         DefaultSiteTree authoringTree = null;
         DefaultSiteTree liveTree = null;
 
         try {
-            authoringTree = new DefaultSiteTree(absolutetreeauthoringpath);
-            liveTree = new DefaultSiteTree(absolutetreelivepath);
+            authoringTree = new DefaultSiteTree(absoluteTreeAuthoringPath);
+            liveTree = new DefaultSiteTree(absoluteTreeLivePath);
 
-            SiteTreeNode documentNode = authoringTree.getNode(documentid);
+            SiteTreeNode authoringNode = authoringTree.getNode(documentId);
 
-            if (documentNode != null) {
-                liveTree.addNode(documentNode);
+            if (authoringNode != null) {
+                if (language == null) {
+                    // no language was specified. Simply publish the
+                    // node including all languages.
+                    liveTree.addNode(authoringNode);
+                } else {
+                    // a language was specified. Let's see if this
+                    // node even has an entry for the specified
+                    // language.
+                    Label label = authoringNode.getLabel(language);
+                    if (label != null) {
+                        // check if this node has already been
+                        // published
+                        SiteTreeNode liveNode = liveTree.getNode(documentId);
+                        if (liveNode != null) {
+                            // if the node already exists in the live
+                            // tree simply insert the label in the
+                            // live tree
+                            liveTree.addLabel(documentId, label);
+                        } else {
+                            // if the node doesn't exist, add it and
+                            // add the specified label to it.
+                            Label[] labels = { label };
+                            liveTree.addNode(
+                                documentId,
+                                labels,
+                                authoringNode.getHref(),
+                                authoringNode.getSuffix(),
+                                authoringNode.hasLink());
+                        }
+                    } else {
+                        // the node that we're trying to publish
+                        // doesn't have this language
+                        throw new PublishingException(
+                            "The node "
+                                + documentId
+                                + " doesn't contain a label for language "
+                                + language);
+                    }
+                }
             } else {
-                throw new PublishingException("No node found for the document " + documentid);
+                throw new PublishingException(
+                    "No node found for the document " + documentId);
             }
 
             liveTree.save();
+        } catch (PublishingException e) {
+            throw e;
         } catch (Exception e) {
-            throw new PublishingException("Couldn't publish the tree :" + absolutetreelivepath, e);
+            throw new PublishingException(
+                "Couldn't publish the tree :" + absoluteTreeLivePath,
+                e);
         }
     }
 
@@ -171,10 +239,17 @@ public class TreePublisher extends PublicationTask {
     public void execute() throws BuildException {
         try {
             log("document id: " + getDocumentid());
-            log("Absolute Tree Authoring Path: " + getAbsolutetreeauthoringpath());
+            log("language: " + getLanguage());
+            log(
+                "Absolute Tree Authoring Path: "
+                    + getAbsolutetreeauthoringpath());
             log("Absolute Tree Live Path: " + getAbsolutetreelivepath());
 
-            publish(getDocumentid(), getAbsolutetreeauthoringpath(), getAbsolutetreelivepath());
+            publish(
+                getDocumentid(),
+                getLanguage(),
+                getAbsolutetreeauthoringpath(),
+                getAbsolutetreelivepath());
         } catch (Exception e) {
             throw new BuildException(e);
         }
