@@ -16,6 +16,7 @@
     >
 
 <xsl:param name="url"/>
+<xsl:param name="chosenlanguage"/>
 
 <xsl:template match="nav:site">
 
@@ -53,11 +54,11 @@
 
 
 <xsl:template name="label">
-  <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
+  <a href="{@href}"><xsl:apply-templates select="nav:label[lang($chosenlanguage)]"/></a>
 </xsl:template>
 
 
-<xsl:template match="nav:label">
+<xsl:template match="nav:label[lang($chosenlanguage)]">
   <xsl:apply-templates select="node()"/>
 </xsl:template>
 

@@ -16,6 +16,7 @@
     >
     
 <xsl:param name="url"/>
+<xsl:param name="chosenlanguage"/>
 
 <xsl:template match="nav:site">
   <div id="breadcrumb">
@@ -38,16 +39,16 @@
 <xsl:template name="step">
   <xsl:choose>
     <xsl:when test="substring(@href, (string-length(@href) - string-length($url)) + 1) = $url">
-      <xsl:apply-templates select="nav:label"/>
+      <xsl:apply-templates select="nav:label[lang($chosenlanguage)]"/>
     </xsl:when>
     <xsl:otherwise>
-      <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
+      <a href="{@href}"><xsl:apply-templates select="nav:label[lang($chosenlanguage)]"/></a>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
     
-<xsl:template match="nav:label">
+<xsl:template match="nav:label[lang($chosenlanguage)]">
   <xsl:apply-templates select="node()"/>
 </xsl:template>
 
