@@ -27,6 +27,9 @@ import org.w3c.dom.Element;
 
 /**
  * Implementation of a Collection. In the collection are xlink inserted.
+ * @author <a href="mailto:edith@apache.org">Edith Chevrier</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: XlinkCollection.java,v 1.4 2004/04/13 15:08:59 andreas Exp $
  */
 public class XlinkCollection extends CollectionImpl {
 
@@ -63,16 +66,29 @@ public class XlinkCollection extends CollectionImpl {
     protected Element createDocumentElement(Document document, NamespaceHelper helper)
         throws DocumentException {
         Element element = super.createDocumentElement(document, helper);
-        String path = null;
-        try {
-            path = document.getFile().getCanonicalPath();
-        } catch (IOException e) {
-            log.error("Couldn't found the file path for the document: " + document.getId());
-        }
+        String path = getXlinkHref(document);
         element.setAttributeNS(XLink.XLINK_NAMESPACE, "xlink:href", path);
         element.setAttributeNS(XLink.XLINK_NAMESPACE, "xlink:show", "embed");
 
         return element;
+    }
+
+    /**
+     * Returns the href attribute string for a certain document.
+     * @param document The document.
+     * @return A string.
+     * @throws DocumentException when something went wrong.
+     */
+    protected String getXlinkHref(Document document) throws DocumentException {
+        String path = null;
+        try {
+            path = document.getFile().getCanonicalPath();
+        } catch (IOException e) {
+            throw new DocumentException(
+                "Couldn't found the file path for the document [" + document + "]",
+                e);
+        }
+        return path;
     }
 
     /**
