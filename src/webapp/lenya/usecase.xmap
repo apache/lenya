@@ -63,6 +63,20 @@
       <map:serialize type="html"/>
     </map:resource>
   
+    <map:resource name="usecase-create">
+      <!-- use publication-specific schema if available -->
+      <map:act type="resource-exists" src="pubs/{publication-id}/content/authoring/create.xsp">
+	<map:generate type="serverpages" src="pubs/{../publication-id}/content/authoring/create.xsp"/>
+	<map:transform src="pubs/{../publication-id}/xslt/authoring/create.xsl"/>
+	<map:serialize />
+      </map:act>
+
+      <!-- otherwise use default schema -->
+      <map:generate type="serverpages" src="content/authoring/create.xsp"/>
+      <map:transform src="xslt/authoring/create.xsl"/>
+      <map:serialize />
+    </map:resource>
+
   </map:resources>
   
   <!-- =========================== Pipelines ================================ -->
@@ -224,23 +238,53 @@
       </map:handle-errors>
         
     </map:pipeline>
-    
+
+    <!-- Create -->
+    <map:pipeline>
+      <!-- {publication-id}/{area}/{uri}-->
+      <map:match pattern="*/*/**">
+	
+	<map:match type="usecase" pattern="create">
+	  
+	  <map:match type="step" pattern="showscreen">
+	    <map:call resource="usecase-create">
+	      <map:parameter name="publication-id" value="{../../1}"/>
+	    </map:call>
+	  </map:match>
+	  
+	  <map:match type="step" pattern="create">
+	    <map:act type="default-create">
+	      <!-- if the action suceeds it returns the referer and we -->
+	      <!-- simply redirect to it. -->
+	      <map:redirect-to uri="{request:requestURI}"/>
+	    </map:act>
+	    <!-- otherwise the action could not validate some of the -->
+	    <!-- input and we present the upload form again -->
+	    <map:call resource="usecase-create">
+	      <map:parameter name="publication-id" value="{../../1}"/>
+	    </map:call>
+	  </map:match>
+	  
+	</map:match>
+      </map:match>
+    </map:pipeline>
+
     <!--Rollback-->
     <map:pipeline>
     <!-- {publication-id}/{area}/{uri}-->
     <map:match pattern="*/*/**">
       <map:match type="usecase" pattern="rollback">
+
         <map:match type="step" pattern="showscreen">
           <map:generate type="serverpages" src="content/rc/versions-screen.xsp"/>
           <map:transform src="xslt/rc/rollback.xsl"/>
           <map:serialize type="html"/>
-<!--
-          <map:serialize type="xml"/>
--->
         </map:match>
+
         <map:match type="step" pattern="view">
           <map:mount uri-prefix="{../../1}" src="pubs/{../../1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
+
         <map:match type="step" pattern="rollback">
             <map:act type="rollback">
               <map:redirect-to uri="{location}" session="true"/>

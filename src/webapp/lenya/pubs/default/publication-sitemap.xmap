@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.34 2003/05/20 16:46:14 edith Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.35 2003/05/20 18:22:34 egli Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -34,80 +34,47 @@
       </map:match>
     </map:pipeline>
     
+    <!-- Rollback -->
     <map:pipeline>
-      <map:match type="usecase" pattern="create">
-
-	<map:match type="step" pattern="showscreen">
-	  <!-- use publication-specific schema if available -->
-	  <map:act type="resource-exists" src="content/authoring/create.xsp">
-	    <map:generate type="serverpages" src="content/authoring/create.xsp"/>
-	    <map:transform src="xslt/authoring/create.xsl"/>
-	    <map:serialize />
-	  </map:act>
-	  
-	  <!-- otherwise use default schema -->
-	  <map:generate type="serverpages" src="../../content/authoring/create.xsp"/>
-	  <map:transform src="../../xslt/authoring/create.xsl"/>
-	  <map:serialize />
+      <map:match type="usecase" pattern="rollback">
+	<map:match type="step" pattern="view">
+	  <map:generate type="serverpages" src="../../content/rc/view.xsp">
+	  </map:generate>
+	  <map:serialize type="xml"/>
 	</map:match>
-
-	<map:match type="step" pattern="create">
-	  <map:act type="default-create">
-	    <!-- if the action suceeds it returns the referer and we -->
-	    <!-- simply redirect to it. -->
-	    <map:redirect-to uri="{request:requestURI}"/>
-	  </map:act>
-	  <!-- otherwise the action could not validate some of the -->
-	  <!-- input and we present the upload form again -->
-	    <map:generate type="serverpages" src="content/authoring/create.xsp"/>
-	    <map:transform src="xslt/authoring/create.xsl"/>
-	  <map:serialize />
-	</map:match>
-
       </map:match>
     </map:pipeline>
-
-    <!-- Rollback -->
-                <map:pipeline>
-                        <map:match type="usecase" pattern="rollback">
-                                <map:match type="step" pattern="view">
-                                        <map:generate type="serverpages" src="../../content/rc/view.xsp">
-                                        </map:generate>
-                                        <map:serialize type="xml"/>
-                                </map:match>
-                        </map:match>
-                </map:pipeline>
-                <!-- /Rollback -->
+    <!-- /Rollback -->
 
     <!-- Edit Article with Xopus2 -->
     <map:pipeline>
       <map:match pattern="authoring/xopus2/**.html">
-                                <map:act type="reserved-checkout">
-                                        <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
-                                                <map:parameter name="user" value="{user}"/>
-                                                <map:parameter name="filename" value="{filename}"/>
-                                                <map:parameter name="date" value="{date}"/>
-                                        </map:generate>
-                                        <map:serialize type="xml"/>
-                                </map:act>
-
-      <map:act type="page-envelope">
-	<map:act type="uriparametrizer" src="authoring/{../1}.html">
-          <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
-          <map:parameter name="document-id" value="cocoon://uri-parameter/{publication-id}/document-id"/>
-          <map:aggregate element="lenya" label="aggregation">
-             <map:part src="cocoon:/lenyamenubar/authoring/article.xml"/>
-             <map:part src="content/authoring/{../../1}.xml" element="cmsbody"/>
-          </map:aggregate>         
-       <map:transform src="xslt/authoring/xopus2-{doctype}.xsl">
-        <map:parameter name="articleid" value="{../../1}"/>
-        </map:transform> 
-<map:serialize type="html" />
+	<map:act type="reserved-checkout">
+	  <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
+	    <map:parameter name="user" value="{user}"/>
+	    <map:parameter name="filename" value="{filename}"/>
+	    <map:parameter name="date" value="{date}"/>
+	  </map:generate>
+	  <map:serialize type="xml"/>
 	</map:act>
-      </map:act>
+	
+	<map:act type="page-envelope">
+	  <map:act type="uriparametrizer" src="authoring/{../1}.html">
+	    <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
+	    <map:parameter name="document-id" value="cocoon://uri-parameter/{publication-id}/document-id"/>
+	    <map:aggregate element="lenya" label="aggregation">
+	      <map:part src="cocoon:/lenyamenubar/authoring/article.xml"/>
+	      <map:part src="content/authoring/{../../1}.xml" element="cmsbody"/>
+	    </map:aggregate>         
+	    <map:transform src="xslt/authoring/xopus2-{doctype}.xsl">
+	      <map:parameter name="articleid" value="{../../1}"/>
+	    </map:transform> 
+	    <map:serialize type="html" />
+	  </map:act>
+	</map:act>
       </map:match>
     </map:pipeline>
-
+    
 
     <!-- Menubar -->
     <map:pipeline>

@@ -699,6 +699,11 @@
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
       
+        <!-- Create -->
+        <map:match type="usecase" pattern="create">
+          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+      
       </map:pipeline>
 
 
