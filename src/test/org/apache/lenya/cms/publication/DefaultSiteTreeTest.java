@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.8 2003/08/27 14:45:19 egli Exp $
+$Id: DefaultSiteTreeTest.java,v 1.9 2003/09/23 13:50:40 edith Exp $
 <License>
 
  ============================================================================
@@ -317,7 +317,7 @@ public class DefaultSiteTreeTest extends TestCase {
 		assertNotNull(node);
 		SiteTreeNode parentNode=siteTree.getNode("/foo/lala");
 		assertNotNull(parentNode);
-        siteTree.importSubtree(parentNode,node, "subtree");
+        siteTree.importSubtree(parentNode,node, "subtree", null);
 		siteTree.save();
 		assertNotNull(siteTree.getNode("/foo/lala/subtree"));
 		assertNotNull(siteTree.getNode("/foo/lala/subtree/child"));

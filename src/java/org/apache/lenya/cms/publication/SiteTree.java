@@ -1,5 +1,5 @@
 /*
-$Id: SiteTree.java,v 1.18 2003/09/18 11:50:42 andreas Exp $
+$Id: SiteTree.java,v 1.19 2003/09/23 13:50:40 edith Exp $
 <License>
 
  ============================================================================
@@ -57,8 +57,8 @@ package org.apache.lenya.cms.publication;
 /**
  * DOCUMENT ME!
  *
- * @author $Author: andreas $
- * @version $Revision: 1.18 $
+ * @author $Author: edith $
+ * @version $Revision: 1.19 $
  */
 public interface SiteTree {
 	
@@ -231,10 +231,12 @@ public interface SiteTree {
 	 * @param subtreeRoot The root of the subtree to import.
 	 * @param newParent The node where the subtree shall be inserted.
 	 * @param newid The new id of the inserted subtreeRoot node (to not overwrite
+	 * @param refDocumentId The document-id corresponding to the reference node, before which 
+	 * the subtree should be inserted. If null, the subtree is inserted at the end. 
 	 * in case there is already a node with the same id in the tree).
 	 * @throws SiteTreeException when an error occurs.
 	 */
-	void importSubtree(SiteTreeNode subtreeRoot, SiteTreeNode newParent, String newid) throws SiteTreeException;
+	void importSubtree(SiteTreeNode subtreeRoot, SiteTreeNode newParent, String newid, String refDocumentId) throws SiteTreeException;
 
 	/**
 	 * Save the SiteTree.

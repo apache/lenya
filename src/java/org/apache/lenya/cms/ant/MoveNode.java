@@ -1,5 +1,5 @@
 /*
-$Id: MoveNode.java,v 1.6 2003/08/19 13:11:26 edith Exp $
+$Id: MoveNode.java,v 1.7 2003/09/23 13:50:40 edith Exp $
 <License>
 
  ============================================================================
@@ -69,6 +69,7 @@ import org.apache.lenya.cms.publication.SiteTreeNode;
  * Ant task that moves a node in a tree.
  */
 public class MoveNode extends TwoNodesTask {
+	private String refdocumentid;
 	/**
 	 *
 	 */
@@ -109,7 +110,7 @@ public class MoveNode extends TwoNodesTask {
 		if (node != null) {
 			SiteTreeNode parentNode = sectree.getNode(parentid);
 			if (parentNode != null) {
-				sectree.importSubtree(parentNode, node, newid);
+				sectree.importSubtree(parentNode, node, newid, this.getRefdocumentid());
 			} else {
 				throw new SiteTreeException(
 					"The parent node "
@@ -128,4 +129,20 @@ public class MoveNode extends TwoNodesTask {
 			sectree.save();
 		}
 	}
+	/**
+	 * @return string The document-id corresponding to the reference node, before which 
+	 * the moved node shoul be inserted. If null, the node is inserted at the end. 
+	 */
+	public String getRefdocumentid() {
+		return refdocumentid;
+	}
+
+	/**
+	 * @param string The document-id corresponding to the reference node, before which 
+	 * the moved node shoul be inserted. If null, the node is inserted at the end.
+	 */
+	public void setRefdocumentid(String string) {
+		refdocumentid = string;
+	}
+
 }

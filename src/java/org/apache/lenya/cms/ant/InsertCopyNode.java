@@ -1,5 +1,5 @@
 /*
-$Id: InsertCopyNode.java,v 1.7 2003/08/19 13:11:26 edith Exp $
+$Id: InsertCopyNode.java,v 1.8 2003/09/23 13:50:40 edith Exp $
 <License>
 
  ============================================================================
@@ -109,7 +109,7 @@ public class InsertCopyNode extends TwoNodesTask {
 		if (node != null) {
 			SiteTreeNode parentNode = sectree.getNode(parentid);
 			if (parentNode != null) {
-				sectree.importSubtree(parentNode, node, newid);
+				sectree.importSubtree(parentNode, node, newid, null);
 			} else {
 				throw new SiteTreeException(
 					"The parent node "

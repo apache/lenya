@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.35 2003/09/19 10:56:55 andreas Exp $
+$Id: DefaultSiteTree.java,v 1.36 2003/09/23 13:50:40 edith Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -367,9 +367,13 @@ public class DefaultSiteTree implements SiteTree {
 			}
 
             // Add Node 
-            if (refDocumentId != null){
+            if (refDocumentId != null && !refDocumentId.equals("")){
 	 			Node nextSibling = getNodeInternal(refDocumentId);
-				parentNode.insertBefore(child, nextSibling);
+				if (nextSibling != null) {
+					parentNode.insertBefore(child, nextSibling);
+				} else {
+					parentNode.appendChild(child);
+				}	
             } else {
 				parentNode.appendChild(child);
             }
@@ -547,7 +551,8 @@ public class DefaultSiteTree implements SiteTree {
     public void importSubtree(
         SiteTreeNode newParent,
         SiteTreeNode subtreeRoot,
-        String newid)
+        String newid,
+	    String refDocumentId)
         throws SiteTreeException {
         assert subtreeRoot != null;
         assert newParent != null;
@@ -562,7 +567,8 @@ public class DefaultSiteTree implements SiteTree {
             subtreeRoot.getLabels(),
             subtreeRoot.getHref(),
             subtreeRoot.getSuffix(),
-            subtreeRoot.hasLink());
+            subtreeRoot.hasLink(),
+			refDocumentId);
         newParent = this.getNode(parentId + "/" + id);
         if (newParent == null) {
             throw new SiteTreeException(
@@ -574,7 +580,7 @@ public class DefaultSiteTree implements SiteTree {
             return;
         } else {
             for (int i = 0; i < children.length; i++) {
-                importSubtree(newParent, children[i], children[i].getId());
+                importSubtree(newParent, children[i], children[i].getId(), null);
             }
         }
     }
