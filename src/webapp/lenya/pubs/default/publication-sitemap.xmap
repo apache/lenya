@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.23 2003/05/10 15:43:25 gregor Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.24 2003/05/12 16:17:02 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -21,6 +21,7 @@
   <map:pipelines>
     <!-- Publisher  -->
     <map:pipeline>
+    
 <!--
       <map:match type="usecase" pattern="publish">
         <map:match type="step" pattern="showscreen">
@@ -118,8 +119,8 @@
 
 
     <map:pipeline>
-    <map:match pattern="lenyabody/*/*/*/*">
-          <map:aggregate element="cmsbody">
+      <map:match pattern="lenyabody/*/*/*/*">
+        <map:aggregate element="cmsbody">
 <!--
           <map:aggregate element="body" prefix="page" ns="http://www.lenya.org/2003/page" label="aggregation">
 -->
@@ -129,8 +130,8 @@
             <map:part src="cocoon://navigation/{1}/{2}/menu/{4}.xml"/>
             <map:part src="cocoon://{1}/{2}/{3}/{4}.xml"/>
           </map:aggregate>
-      <map:serialize type="xml"/>
-    </map:match>
+        <map:serialize type="xml"/>
+      </map:match>
     </map:pipeline>
 
     <map:pipeline>
@@ -144,10 +145,12 @@
             <map:part src="cocoon:/lenyabody/{../publication-id}/{../area}/{doctype}/{document-id}"/>
           </map:aggregate>
 
-        <map:transform src="xslt/{doctype}-{../area}.xsl">
+          <map:transform src="xslt/page2xhtml.xsl">
             <map:parameter name="root" value="{../context-prefix}/{../publication-id}"/>
             <map:parameter name="document-id" value="{../area}/{doctype}/{document-id}"/>
           </map:transform> 
+          <map:transform src="xslt/{doctype}-{../area}.xsl"/>
+          
 	</map:act>
       </map:act>
       <map:serialize type="html"/>
