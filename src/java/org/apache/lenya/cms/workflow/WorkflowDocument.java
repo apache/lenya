@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: WorkflowDocument.java,v 1.6 2003/07/09 13:44:52 egli Exp $
 <License>
 
  ============================================================================
@@ -70,6 +70,14 @@ import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class WorkflowDocument extends WorkflowInstanceImpl {
+	
+	/**
+	 * Create a new <code>WorkflowDocument</code>
+	 * 
+	 * @param document the document
+	 * 
+	 * @throws WorkflowException if an error occurs
+	 */
     protected WorkflowDocument(Document document) throws WorkflowException {
         assert document != null;
         this.document = document;
@@ -101,7 +109,7 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
         invoke(situation, event);
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.workflow.impl.WorkflowInstanceImpl#getWorkflow(java.lang.String)
      */
     protected WorkflowImpl getWorkflow(String workflowName)

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: AntTask.java,v 1.16 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -102,6 +102,12 @@ public class AntTask extends AbstractTask {
      * @param target The name of the target to execute.
      * @param arguments A map mapping the command-line arguments to their values.
      * @param properties A map mapping the project properties to their values.
+     * @param servletContextPath The context-path of the servlet
+     * @param publicationId The publication-id
+     * @param publicationDirectory The directory of the publication
+     * @param logFile The file where the log should go to
+     * 
+     * @throws ExecutionException if the execution failed
      */
     public void executeAntTarget(String servletContextPath, String publicationId,
         File publicationDirectory, File buildFile, String target, Map arguments, Map properties,
@@ -155,6 +161,11 @@ public class AntTask extends AbstractTask {
 
     /**
      * Returns the filename of the logfile to write.
+     * 
+     * @param publicationDirectory for which publication the 
+     * filename of the logfile is requested
+     * 
+     * @return the file path for the log file
      */
     protected File getDefaultLogFile(File publicationDirectory) {
         Calendar now = new GregorianCalendar();

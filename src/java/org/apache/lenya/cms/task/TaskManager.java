@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TaskManager.java,v 1.17 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -149,11 +149,13 @@ public class TaskManager implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get the task with a given task-id
      *
-     * @param taskId DOCUMENT ME!
+     * @param taskId the task-id of the requested task
      *
-     * @return DOCUMENT ME!
+     * @return the task
+     * 
+     * @throws ExecutionException if there is no task with the given task-id.
      */
     public Task getTask(String taskId) throws ExecutionException {
         if (!tasks.containsKey(taskId)) {

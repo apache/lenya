@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TaskSequence.java,v 1.13 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -129,11 +129,11 @@ public class TaskSequence extends AbstractTask {
     /**
      * Returns the ID of a specific Task.
      *
-     * @param task DOCUMENT ME!
+     * @param task the specific task for which the task id is requested.
      *
-     * @return DOCUMENT ME!
+     * @return the task id of the given task
      *
-     * @throws IllegalStateException DOCUMENT ME!
+     * @throws ExecutionException if the task could not be found.
      */
     public String getTaskId(Task task) throws ExecutionException {
         String[] taskIds = getTaskManager().getTaskIds();
@@ -151,6 +151,8 @@ public class TaskSequence extends AbstractTask {
      * Executes the tasks.
      *
      * @param path DOCUMENT ME!
+     * 
+     * @throws ExecutionException if the execution fails
      */
     public void execute(String path) throws ExecutionException {
         try {

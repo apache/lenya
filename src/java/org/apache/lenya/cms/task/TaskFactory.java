@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TaskFactory.java,v 1.12 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -67,6 +67,11 @@ import org.apache.log4j.Category;
  * @author ah
  */
 public class TaskFactory {
+	
+	/**
+	 * Create a new instance of <code>TaskFactory</code>
+	 *
+	 */
     protected TaskFactory() {
     }
 

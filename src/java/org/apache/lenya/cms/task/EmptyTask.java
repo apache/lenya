@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: EmptyTask.java,v 1.3 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -59,11 +59,10 @@ package org.apache.lenya.cms.task;
 /**
  * @author andreas
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class EmptyTask extends AbstractTask {
-    /* (non-Javadoc)
+
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
     public void execute(String servletContextPath) throws ExecutionException {

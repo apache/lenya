@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: AbstractTask.java,v 1.12 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -83,6 +83,8 @@ public abstract class AbstractTask implements Task {
      * DOCUMENT ME!
      *
      * @param parameters DOCUMENT ME!
+     * 
+     * @throws ParameterException if the parametrizing fails
      */
     public void parameterize(Parameters parameters) throws ParameterException {
         this.parameters = this.parameters.merge(parameters);

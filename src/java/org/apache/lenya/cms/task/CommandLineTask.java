@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: CommandLineTask.java,v 1.12 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -68,10 +68,11 @@ public class CommandLineTask extends AbstractTask {
     public CommandLineTask() {
     }
 
-    /**
+    /** 
      * Execute the task. All parameters must have been set with parameterize().
-     *
-     * @param path DOCUMENT ME!
+     * 
+     *  (non-Javadoc)
+     * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
     public void execute(String path) throws ExecutionException {
         String command = getParameters().getParameter("command",

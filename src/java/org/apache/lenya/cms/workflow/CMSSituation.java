@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: CMSSituation.java,v 1.5 2003/07/09 13:44:52 egli Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,6 @@ $Id
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.workflow.Situation;
 
 
@@ -65,7 +64,12 @@ import org.apache.lenya.workflow.Situation;
  * @author  andreas
  */
 public class CMSSituation implements Situation {
-    /** Creates a new instance of Situation */
+
+	/**
+	 * Creates a new instance of Situation
+	 * 
+	 * @param roles the roles
+	 */
     protected CMSSituation(Role[] roles) {
         this.roles = roles;
     }
@@ -73,13 +77,15 @@ public class CMSSituation implements Situation {
     private Role[] roles;
 
     /**
-     * @return
+     * Get the roles
+     * 
+     * @return the roles
      */
     public Role[] getRoles() {
         return roles;
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     public String toString() {

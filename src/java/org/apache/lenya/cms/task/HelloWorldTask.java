@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: HelloWorldTask.java,v 1.10 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -75,6 +75,8 @@ public class HelloWorldTask extends AbstractTask {
      * Execute the task. All parameters must have been set with init().
      *
      * @param path DOCUMENT ME!
+     * 
+     * @throws ExecutionException if the exection fails
      */
     public void execute(String path) throws ExecutionException {
     }

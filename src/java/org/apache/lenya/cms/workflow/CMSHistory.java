@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: CMSHistory.java,v 1.5 2003/07/09 13:44:52 egli Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,6 @@ $Id
 */
 package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
@@ -81,6 +80,8 @@ public class CMSHistory extends History {
 
     /**
      * Creates a new CMSHistory object.
+     * 
+     * @param document the document to which the CMSHistory is attached
      */
     protected CMSHistory(Document document) {
         setDocument(document);
@@ -88,7 +89,7 @@ public class CMSHistory extends History {
 
     private Document document;
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.workflow.History#createVersionElement(org.apache.lenya.xml.NamespaceHelper, org.apache.lenya.workflow.impl.StateImpl, org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.Event)
      */
     protected Element createVersionElement(NamespaceHelper helper, StateImpl state,
@@ -103,7 +104,11 @@ public class CMSHistory extends History {
         */
         return element;
     }
-
+	
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
+	 */
     protected File getHistoryFile() {
         String language = getDocument().getLanguage();
         String languageSuffix = "".equals(language) ? "" : ("_" + language);
@@ -119,7 +124,7 @@ public class CMSHistory extends History {
         return historyFile;
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.workflow.impl.History#createInstance()
      */
     protected WorkflowInstanceImpl createInstance() throws WorkflowException {
@@ -127,14 +132,18 @@ public class CMSHistory extends History {
     }
 
     /**
-     * @return
+     * Get the document
+     * 
+     * @return the Document
      */
     public Document getDocument() {
         return document;
     }
 
     /**
-     * @param document
+     * Set the document
+     * 
+     * @param document the document
      */
     public void setDocument(Document document) {
         this.document = document;

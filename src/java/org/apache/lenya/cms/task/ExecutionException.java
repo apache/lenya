@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ExecutionException.java,v 1.9 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -66,17 +66,27 @@ public class ExecutionException extends Exception {
     public ExecutionException() {
     }
 
-    /** Creates a new instance of ExecutionException */
+    /** Creates a new instance of ExecutionException 
+     * 
+     * @param message the exception message 
+     */
     public ExecutionException(String message) {
         super(message);
     }
 
-    /** Creates a new instance of ExecutionException */
+    /** Creates a new instance of ExecutionException 
+     * 
+     * @param message the exception message
+     * @param cause the exception cause
+     */
     public ExecutionException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    /** Creates a new instance of ExecutionException */
+    /** Creates a new instance of ExecutionException
+     * 
+     * @param cause the exception cause
+     */
     public ExecutionException(Throwable cause) {
         super(cause);
     }

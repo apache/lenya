@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Task.java,v 1.13 2003/07/09 13:44:51 egli Exp $
 <License>
 
  ============================================================================
@@ -98,11 +98,17 @@ public interface Task extends Parameterizable {
 
     /**
      * Execute the task. All parameters must have been set with parameterize().
+     * 
+     * @param servletContextPath the servlet-context
+     * 
+     * @throws ExecutionException if the execution fails
      */
     void execute(String servletContextPath) throws ExecutionException;
 
     /**
      * Set the label that is used to identify the task.
+     * 
+     * @param label the label
      */
     void setLabel(String label);
 }
