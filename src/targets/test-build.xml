@@ -1,18 +1,21 @@
 <!-- === Test targets =========================================================== -->
 
+  <property name="test.pub.id" value="test"/>
+  <property name="test.pub.source.id" value="default"/>
+
   <!-- Runs all tests -->
   <target name="test" depends="tests.junit, tests.anteater" description="Runs all tests"/>
   
   <!-- Prepares the test publication -->
   <target name="test.pub.prepare">
     
-    <property name="test.pub.dir" value="${install.dir}/lenya/pubs/test"/>
+    <property name="test.pub.dir" value="${install.dir}/lenya/pubs/${test.pub.id}"/>
     
     <delete dir="${test.pub.dir}"/>
     <mkdir dir="${test.pub.dir}"/>
     
     <copy todir="${test.pub.dir}">
-      <fileset dir="${build.webapp}/lenya/pubs/default"/>
+      <fileset dir="${build.webapp}/lenya/pubs/${test.pub.source.id}"/>
     </copy>
     
   </target>
@@ -73,7 +76,7 @@
     	>
       <jvmarg value="-enableassertions"/>
       <arg value="${install.dir}"/> <!-- servlet context path -->
-      <arg value="test"/> <!-- servlet context path -->
+      <arg value="${test.pub.id}"/> <!-- servlet context path -->
       <classpath refid="classpath"/>
       <classpath>
         <pathelement location="${build.test}" />
@@ -91,7 +94,7 @@
     <java fork="yes" classname="org.apache.lenya.cms.workflow.WorkflowTest">
       <jvmarg value="-enableassertions"/>
       <arg value="${install.dir}"/> <!-- servlet context path -->
-      <arg value="test"/> <!-- publication id -->
+      <arg value="${test.pub.id}"/> <!-- publication id -->
       <arg value="simple"/> <!-- document type -->
       <classpath refid="classpath"/>
       <classpath>
