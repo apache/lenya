@@ -1,5 +1,5 @@
 /*
-$Id: SimpleLinkRewritingTransformer.java,v 1.2 2003/10/22 16:39:18 egli Exp $
+$Id: SimpleLinkRewritingTransformer.java,v 1.3 2003/10/31 10:46:40 egli Exp $
 <License>
 
  ============================================================================
@@ -147,11 +147,17 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
                         if (newAttrs == null)
                             newAttrs = new AttributesImpl(attrs);
 
+                        String languageExtension = "";
+                        if (matcher.group(2) != null) {
+                            languageExtension = matcher.group(2);
+                        }
+
                         String newValue =
                             baseURI
                                 + "/"
                                 + envelope.getDocument().getArea()
                                 + matcher.group(1)
+                                + languageExtension 
                                 + ".html";
                         newAttrs.setValue(i, newValue);
                     }
