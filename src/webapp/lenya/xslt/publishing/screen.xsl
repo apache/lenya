@@ -19,7 +19,7 @@
 <xsl:variable name="uris"><xsl:value-of select="/usecase:publish/usecase:uris"/></xsl:variable>
 <xsl:variable name="sources"><xsl:value-of select="/usecase:publish/usecase:sources"/></xsl:variable>
 <xsl:variable name="document-id"><xsl:value-of select="/usecase:publish/usecase:document-id"/></xsl:variable>
-<xsl:variable name="document-language"><xsl:value-of select="/usecase:publish/usecase:document-language"/></xsl:variable>
+<xsl:variable name="document-language"><xsl:value-of select="/usecase:publish/usecase:language"/></xsl:variable>
 <xsl:variable name="task-id"><xsl:value-of select="/usecase:publish/usecase:task-id"/></xsl:variable>
 
 <xsl:template match="/usecase:publish">
@@ -35,7 +35,6 @@
         <input type="hidden" name="lenya.usecase" value="publish"/>
         <input type="hidden" name="lenya.step" value="publish"/>
         <input type="hidden" name="task-id" value="{$task-id}"/>
-        <input type="hidden" name="document-language" value="{$document-language}"/>
         <xsl:call-template name="task-parameters">
           <xsl:with-param name="prefix" select="''"/>
         </xsl:call-template>
@@ -95,6 +94,7 @@ Or publish later ...
   <input type="hidden" name="{$prefix}properties.publish.sources" value="{$sources}"/>
   <input type="hidden" name="{$prefix}properties.publish.documentid" value="{$document-id}"/>
   <input type="hidden" name="{$prefix}properties.export.uris" value="{$uris}"/>
+  <input type="hidden" name="{$prefix}properties.publish.language" value="{$document-language}"/>
 </xsl:template>
 
 
