@@ -128,6 +128,8 @@
         <map:transform src="fallback://lenya/xslt/info/info.xsl">
           <map:parameter name="tab" value="{2}"/>
           <map:parameter name="area" value="{1}"/>
+      	  <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
           <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="true"/>
         </map:transform>
@@ -140,6 +142,8 @@
         <map:transform src="fallback://lenya/xslt/info/info.xsl">
           <map:parameter name="tab" value="{2}"/>
           <map:parameter name="area" value="{1}"/>
+      	  <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
           <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="true"/>
         </map:transform>
@@ -154,6 +158,8 @@
           <map:transform src="fallback://lenya/xslt/info/info.xsl">
             <map:parameter name="tab" value="{../2}"/>
             <map:parameter name="area" value="{../1}"/>
+        	  <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
             <map:parameter name="documentid" value="{page-envelope:document-id}"/>
             <map:parameter name="languageexists" value="true"/>
           </map:transform>
@@ -293,7 +299,7 @@
         
           <map:call resource="i18n"/>
           <map:transform src="xslt/util/strip_namespaces.xsl"/>        
-          <map:serialize type="html"/>
+          <map:serialize type="xhtml"/>
           
           <!--
           <map:match pattern="update" type="step">
