@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+
+<xsl:include href="../../../../../../../stylesheets/cms/Page/root-dhtml.xsl"/>
 <!--
-                xmlns:up="http://www.unipublic.unizh.ch/2002/up">
--->
 <xsl:include href="../../../../../../../stylesheets/cms/Page/root.xsl"/>
+-->
+
 <xsl:template match="cmsbody">
   <xsl:apply-templates/>
 </xsl:template>
+
 <!--
 <xsl:include href="../../root.xsl"/>
 -->

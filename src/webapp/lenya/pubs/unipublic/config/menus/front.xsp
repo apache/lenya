@@ -13,50 +13,56 @@
   <live_uri>/index.html</live_uri>
 
   <menus>
-    <menu name="File">
+    <menu name="File" label="File">
       <block>
         <item>Edit&#160;Headlines</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/headlines.html&amp;docids=/frontpage/headlines.xml</xsp:attribute>Publish&#160;Headlines</item>
         <item>Schedule&#160;Headlines</item>
       </block>
-      <block>
+      <separator>
         <item>--------------------</item>
-      </block>
+      </separator>
       <block>
         <item>Edit&#160;Webperls</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/webperls.html&amp;docids=/frontpage/webperls.xml</xsp:attribute>Publish&#160;Webperls</item>
         <item>Schedule&#160;Webperls</item>
       </block>
-      <block>
+      <separator>
         <item>--------------------</item>
-      </block>
+      </separator>
       <block>
         <item>Edit&#160;Dossiers</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/dossier.html&amp;docids=/frontpage/dossier.xml</xsp:attribute>Publish&#160;Dossiers</item>
         <item>Schedule&#160;Dossiers</item>
       </block>
-      <block>
+      <separator>
         <item>--------------------</item>
-      </block>
+      </separator>
       <block>
         <item href="index.xml">View&#160;XML</item>
       </block>
-      <block>
+      <separator>
         <item>--------------------</item>
-      </block>
+      </separator>
       <block>
+<!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
+-->
+        <item>Passwd</item>
+        <item>Switch&#160;User</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
-    <menu name="Search">
+
+    <menu name="Search" label="Search">
       <block>
         <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
         <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
       </block>
     </menu>
-    <menu name="Help">
+
+    <menu name="Help" label="Help">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>

@@ -19,13 +19,13 @@
   <live_uri><xsp:expr>"/"+channel+"/"+section+"/"+year+"/index.html"</xsp:expr></live_uri>
 
   <menus>
-    <menu name="File">
+    <menu name="File" label="File">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/wyona/ParentChildScreenNewArticle?parentid=/"+channel+"/"+section+"/articles/"+year</xsp:expr></xsp:attribute>New&#160;Article</item>
       </block>
-      <block>
+      <separator>
         <item>-----------</item>
-      </block>
+      </separator>
       <block>
 <!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
@@ -37,28 +37,28 @@
       </block>
     </menu>
 
-    <menu name="Search">
+    <menu name="Search" label="Search">
       <block>
         <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
         <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
       </block>
     </menu>
 
-    <menu name="Help">
+    <menu name="Help" label="Help">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
       </block>
-      <block>
+      <separator>
         <item>-----------</item>
-      </block>
+      </separator>
       <block>
         <item href="http://www.wyona.org">About&#160;Wyona</item>
       </block>
     </menu>
 
-    <menu name="Debug">
+    <menu name="Debug" label="Debug">
       <block>
         <item href="index.xml">View&#160;XML</item>
         <item href="navigation.xml">View&#160;Navigation</item>

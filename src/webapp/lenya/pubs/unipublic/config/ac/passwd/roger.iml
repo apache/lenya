@@ -6,5 +6,6 @@
 <!--<expire year="2002" month="12" day="31"/>-->
 <groups>
   <group>editor</group>
+  <group>root</group>
 </groups>
 </identity>
