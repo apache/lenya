@@ -649,7 +649,6 @@
       </map:match>
     </map:pipeline>
 
-
     <map:pipeline>
     
       <!-- Lenya GUI -->
@@ -666,6 +665,14 @@
       <map:match pattern="uri-parameter/*/*/*/**">
         <map:mount uri-prefix="uri-parameter/{1}/{2}/" src="lenya/pubs/{1}/parameter-{2}.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
+
+      <!-- Scheduler -->
+      <map:pipeline>
+        <map:match type="usecase" pattern="schedule-page">
+          <map:mount uri-prefix="" src="lenya/scheduler.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+      </map:pipeline>
+
 
       <!-- Publications -->
 <!-- FIXME: Some publications still use "" and "index.html" as live entry point -->
