@@ -365,11 +365,26 @@
    <map:action logger="sitemap.action.source" name="source" src="org.apache.cocoon.acting.SourceMultiAction"/>
 
    <map:action logger="sitemap.action.principal" name="principal" src="org.apache.cocoon.acting.PrincipalMultiAction"/>
+
+
+<!-- =========================== Lenya CMS ================================= -->
+
    <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
         <tree-authoring href="content/authoring/tree.xml"/>
         <docs href="content/authoring"/>
         <doctypes href="content/doctypes/"/>
    </map:action>
+      <map:action name="xopushandler" src="org.lenya.cms.cocoon.acting.XopusHandlerAction" logger="sitemap.action.xopus">
+        <xml href="content/authoring/"/>
+        <xsl href="xslt"/>
+        <xsd href="content"/>
+<!--
+        <xsd href="content/doctypes/schemas"/>
+-->
+        <temp href="temp"/>
+        <rcmlDirectory href="config/rc/rcml"/>
+        <backupDirectory href="content/backup"/>
+      </map:action>
    </map:actions>
 
   <!--+
@@ -560,9 +575,6 @@
         <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
-    <!-- /Welcome to Lenya -->
-
-
 
     <!-- Search with Lucene -->
     <map:pipeline>
