@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreatorTask.java,v 1.4 2003/07/15 14:11:10 egli Exp $
+$Id: DocumentCreatorTask.java,v 1.5 2003/07/30 15:30:43 egli Exp $
 <License>
 
  ============================================================================
@@ -62,7 +62,6 @@ import org.apache.tools.ant.BuildException;
 
 import java.io.File;
 
-
 /**
  * @author andreas
  *
@@ -79,28 +78,35 @@ public class DocumentCreatorTask extends PublicationTask {
     private String authoringPath;
     private String language;
 
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.tools.ant.Task#execute()
-	 */
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.tools.ant.Task#execute()
+     */
     public void execute() throws BuildException {
         DocumentCreator creator = new DocumentCreator();
 
         //        File contentDirectory = new  File(getPublication().getDirectory(), get
         try {
-            creator.create(getPublication(),
-                new File(getPublication().getDirectory(), getAuthoringPath()), getTreeFile(),
-                getParentId(), getChildId(), getChildName(), getChildType(), documentType, getLanguage());
+            creator.create(
+                getPublication(),
+                new File(getPublication().getDirectory(), getAuthoringPath()),
+                getTreeFile(),
+                getParentId(),
+                getChildId(),
+                getChildName(),
+                getChildType(),
+                documentType,
+                getLanguage());
         } catch (CreatorException e) {
             throw new BuildException(e);
         }
     }
 
-	/**
-	 * Get the child type
-	 * 
-	 * @return the child type
-	 */
+    /**
+     * Get the child type
+     * 
+     * @return the child type
+     */
     public String getChildType() {
         assertString(childType);
 
