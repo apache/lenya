@@ -15,10 +15,10 @@
   limitations under the License.
 -->
 
-<!-- $Id: toDoc.xsl,v 1.2 2004/03/13 12:42:18 gregor Exp $ -->
+<!-- $Id: toDoc.xsl,v 1.3 2004/03/24 13:21:24 edith Exp $ -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-                xmlns:rc="http://www.lenya.org/2002/rc" >
+                xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0" >
 
 
 
