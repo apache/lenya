@@ -1,5 +1,5 @@
 /*
-$Id: ComputeCopyDocumentId.java,v 1.5 2003/07/25 16:39:56 edith Exp $
+$Id: ComputeCopyDocumentId.java,v 1.6 2004/01/07 15:22:13 edith Exp $
 <License>
 
  ============================================================================
@@ -89,8 +89,12 @@ public class ComputeCopyDocumentId extends ComputeNewDocumentId {
 		for (int i = 1; i < l; i++) {
 			st.nextToken();
 		}
-
-		secdocumentid = secdocumentid + "/"  + st.nextToken();
+        if (secdocumentid.endsWith("/")) {
+            secdocumentid = secdocumentid + st.nextToken();
+        } else {
+    		secdocumentid = secdocumentid + "/"  + st.nextToken();
+        }
+        
 		return secdocumentid;
 	}
 
