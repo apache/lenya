@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DefaultDocument.java,v 1.9 2003/07/14 16:50:39 gregor Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,21 @@ $Id
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+
+import org.apache.log4j.Category;
+import org.apache.xpath.XPathAPI;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 /**
  * A typical CMS document.
@@ -64,6 +78,9 @@ import java.io.File;
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class DefaultDocument implements Document {
+	private org.w3c.dom.Document domdocument = null;
+	private File infofile = null;
+	
     /**
      * Creates a new instance of DefaultDocument.
      * @param publication The publication the document belongs to.
@@ -196,4 +213,35 @@ public class DefaultDocument implements Document {
 
         return getId() + languageSuffix + extensionSuffix;
     }
+    
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getDCTitle() {
+/*		infofile = getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(),
+		getLanguage());
+		
+		domdocument = DocumentHelper.readDocument(infofile);
+*/
+	}
+
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getDCCreator() { }
+
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getDCSubject() { }
+
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getDCDescription() { }
+	
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+	 */
+	public String getDCRights() { }
 }
