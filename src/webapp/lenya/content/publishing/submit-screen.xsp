@@ -5,6 +5,7 @@
        xmlns:xsp="http://apache.org/xsp"
        xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
        xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
        >
 
 <xsp:structure>
@@ -13,7 +14,8 @@
 </xsp:structure>
 
 <usecase:submit>
-	
+  <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
+  
 	<not:users>
 	<xsp:logic>
 			PolicyHelper helper = new PolicyHelper();
