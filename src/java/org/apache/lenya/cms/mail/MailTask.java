@@ -107,7 +107,7 @@ public class MailTask
                 }
 
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                factory.setValidating(true);
+                factory.setValidating(false);
                 factory.setNamespaceAware(true);
                 factory.setExpandEntityReferences(true);
                 DocumentBuilder builder = factory.newDocumentBuilder();
@@ -166,8 +166,6 @@ public class MailTask
         } catch( Exception ex ) {
         }
 
-                builder.setEntityResolver(new org.apache.cocoon.components.resolver.ResolverImpl());
-                
 // </debug>                
                 
                 
