@@ -159,15 +159,6 @@
     <component-instance name="sitemap"
         class="org.apache.lenya.cms.ac2.sitemap.SitemapPolicyManager"
         logger="lenya.ac.policymanager.sitemap"/>
-    
-    <!--
-    <component-instance class="org.apache.lenya.cms.ac2.file.FilePolicyManager" logger="lenya.ac.policymanager.file" name="file">
-      <parameter name="directory" value="context:///lenya/config/ac/policies"/>
-    </component-instance>
-    <component-instance class="org.apache.lenya.cms.ac2.file.PublicationFilePolicyManager" logger="lenya.ac.policymanager.publication" name="publication-file">
-      <parameter name="directory" value="context:///"/>
-    </component-instance>
-    -->
   </policy-managers>
   
   <component logger="lenya.ac.accesscontroller.bypassable"
@@ -176,41 +167,6 @@
     <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
   </component>
 
-  <!--  
-  <component logger="lenya.ac.accesscontroller.global"
-      class="org.apache.lenya.cms.ac2.BypassableAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/global">
-    <accreditable-manager type="file">
-      <parameter name="directory" value="context:///lenya/config/ac/passwd"/>
-    </accreditable-manager>
-    <policy-manager type="file"/>
-    <authorizer type="policy"/>
-    <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
-  </component>
-  
-  <component logger="lenya.ac.accesscontroller.publicationfile"
-      class="org.apache.lenya.cms.ac2.BypassableAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/publication-file">
-    <accreditable-manager type="file"/>
-    <policy-manager type="publication-file"/>
-    <authorizer type="policy"/>
-    <authorizer type="workflow"/>
-    <authorizer type="usecase"/>
-    <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
-  </component>
-  
-  <component logger="lenya.ac.accesscontroller.sitemap"
-      class="org.apache.lenya.cms.ac2.BypassableAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/sitemap">
-    <accreditable-manager type="file"/>
-    <policy-manager type="sitemap"/>
-    <authorizer type="policy"/>
-    <authorizer type="workflow"/>
-    <authorizer type="usecase"/>
-    <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
-  </component>
-  -->
-  
   <access-controller-resolvers>
     <component-instance name="publication"
         class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
