@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap,v 1.53 2004/03/13 14:34:20 gregor Exp $ -->
+<!-- $Id: global-sitemap.xmap,v 1.54 2004/03/18 15:47:13 gregor Exp $ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -308,15 +308,10 @@
   
     <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
       <exception  name="sax" class="org.xml.sax.SAXException" unroll="true"/>
+      <exception name="resourcenotfound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>
       <exception  class="org.apache.cocoon.ProcessingException" unroll="true"/>
-<!--      <exception name="resourcenotfound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>-->
       <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/> 
     </map:selector>
-
-<!-- FIXME: Latest Cocoon CVS -->
-<!--
-    <map:selector name="auth-media" src="org.apache.cocoon.webapps.session.selection.MediaSelector"/>
--->
 </map:selectors>
 
   <!--+
@@ -594,8 +589,12 @@
       <map:match pattern="*/search-*/lucene">
         <map:mount uri-prefix="" src="lenya/{fallback:lucene.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
-      <map:handle-errors type="500">
-        <map:serialize type="xml"/>
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
     <!-- /Search with Lucene -->
