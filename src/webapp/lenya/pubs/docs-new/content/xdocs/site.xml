@@ -14,13 +14,9 @@
   <installation href="installation/" label="Installation">
     <install-overview href="index.html" label="Overview"/>
     <prerequisites href="prerequisites.html" label="Prerequisites"/>
-    <install-get label="Download Lenya">
-      <cvs href="cvs.html" label="CVS"/>
-      <cvs href="download.html" label="Nightly Snapshots"/>
-    </install-get>
-    <install label="Install Lenya">
-      <node-5 href="source_version.html" label="Source Version"/>
-    </install>
+    <download href="download.html" label="Download"/>
+    <cvs href="cvs.html" label="CVS Access"/>
+    <install href="source_version.html" label="Installation Instructions"/>
   </installation>
   
   <documentation href="docs/" label="Documentation">
