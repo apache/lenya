@@ -49,7 +49,7 @@ public class SiteUsecase extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
     /*TODO make common parameters available to site usecases: area, documentid, languageexists etc
      * may need to take special areas into acccount, such as info-authoring */
-    protected void doInitialize() throws Exception {
+    protected void doInitialize() {
         super.doInitialize();
         doc = getSourceDocument();
         try {

@@ -44,7 +44,7 @@ public class Assets extends SiteUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
      */
-    protected void doInitialize() throws Exception {
+    protected void doInitialize() {
         super.doInitialize();
         resourcesManager = getSourceDocument().getResourcesManager();
     }
