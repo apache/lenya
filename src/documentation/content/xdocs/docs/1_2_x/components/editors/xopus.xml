@@ -85,7 +85,7 @@ t.responseText);
 ]]>
 </source>
 <p>
-whereas the text of the alerts might be replaced by something else.
+You may change the text of the alerts by something else.
 </p>
 </section>
 
@@ -103,7 +103,7 @@ whereas the text of the alerts might be replaced by something else.
 ]]>
 </source>
 <p>
-whereas the text of the alert might be replaced by something else.
+You may replace the text of the alert by something else.
 </p>
 </section>
 
