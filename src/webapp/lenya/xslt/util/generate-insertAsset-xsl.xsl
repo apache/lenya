@@ -23,7 +23,7 @@
   <xsl:namespace-alias stylesheet-prefix="xso" result-prefix="xsl"/>
   
   <xsl:param name="assetXPath"/>
-  <xsl:param name="insertBefore"/>
+  <xsl:param name="insertWhere"/>
 
   <xsl:template match="/">
     <xso:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:unizh="http://unizh.ch/doctypes/common/1.0" exclude-result-prefixes="unizh">
@@ -45,14 +45,20 @@
     <!-- Create a template that matches the assetXPath -->
     <xso:template match="{$assetXPath}">
       <xsl:choose>
-	<xsl:when test="$insertBefore = 'true'">
+	<xsl:when test="$insertWhere = 'before'">
 	  <xsl:copy-of select="*"/>
 	  <xso:copy-of select="."/>
 	</xsl:when>
-	<xsl:otherwise>
+	<xsl:when test="$insertWhere = 'after'">
 	  <xso:copy-of select="."/>
 	  <xsl:copy-of select="*"/>
-	</xsl:otherwise>
+	</xsl:when>
+	<xsl:when test="$insertWhere = 'inside'">
+	  <xso:copy>
+	    <xso:copy-of select="@*|node()"/>
+	    <xsl:copy-of select="*"/>
+	  </xso:copy>
+	</xsl:when>
       </xsl:choose>
     </xso:template>
   </xsl:template>	
