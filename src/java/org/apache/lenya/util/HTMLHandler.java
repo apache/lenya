@@ -26,14 +26,11 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 
-import org.apache.log4j.Logger;
-
 
 /**
  * HTML handler class
  */
 public class HTMLHandler extends ParserCallback {
-    private static final Logger log = Logger.getLogger(HTMLHandler.class);
     private ArrayList img_src;
     private ArrayList img_src_all;
     private ArrayList a_href;
@@ -55,7 +52,6 @@ public class HTMLHandler extends ParserCallback {
 
     /**
      * Handle the start tag
-     *
      * @param tag The tag
      * @param attributes The set of attributes
      * @param pos The position
@@ -76,7 +72,6 @@ public class HTMLHandler extends ParserCallback {
 
     /**
      * Handle a simple tag
-     *
      * @param tag The tag
      * @param attributes The set of attributes
      * @param pos The position
