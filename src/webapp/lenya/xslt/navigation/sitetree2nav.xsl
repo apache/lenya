@@ -83,6 +83,7 @@ Apply nodes recursively
       </xsl:if>
     </xsl:variable>
     
+    <xsl:attribute name="suffix"><xsl:value-of select="$suffix"/></xsl:attribute>
     <xsl:attribute name="basic-url"><xsl:value-of select="$basic-url"/></xsl:attribute>
     <xsl:attribute name="href">
       <xsl:text/>
@@ -101,6 +102,7 @@ Apply nodes recursively
 
 <xsl:template match="tree:label">
   <nav:label>
+  	<xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
   </nav:label>
 </xsl:template>

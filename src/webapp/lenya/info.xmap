@@ -46,6 +46,7 @@
     <map:pipeline>
       <map:match pattern="**lenyasitetree/*">
 	    <map:generate src="pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
+	    <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree"/>
 	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
         <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
         <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>

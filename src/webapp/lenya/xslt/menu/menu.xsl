@@ -29,7 +29,7 @@ src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="4" height="4" /></td>
      <img border="0" src="/lenya/lenya/menu/images/admin_inactive.gif" />
     </xsl:otherwise></xsl:choose>
   </a>
-  <a href="{url-info/context-prefix}/{url-info/publication-id}/info{url-info/document-id}">
+  <a href="{url-info/context-prefix}/{url-info/publication-id}/info{url-info/document-url}">
    <xsl:choose><xsl:when test="url-info/area = 'info'">
     <img border="0" src="/lenya/lenya/menu/images/info_active.gif" />
     </xsl:when><xsl:otherwise>
