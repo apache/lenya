@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReTokenizeFile.java,v 1.19 2004/07/10 23:17:24 andreas Exp $  */
+/* $Id: ReTokenizeFile.java,v 1.20 2004/07/12 03:28:22 michi Exp $  */
 
 package org.apache.lenya.lucene;
 
@@ -40,8 +40,9 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
  * DOCUMENT ME!
  */
 public class ReTokenizeFile {
-    
     private static final Category log = Category.getInstance(ReTokenizeFile.class);
+
+    private int offset = 100;
     
     /**
      * DOCUMENT ME!
@@ -124,7 +125,6 @@ public class ReTokenizeFile {
             index = html.toLowerCase().indexOf(words[i].toLowerCase());
 
             if (index >= 0) {
-                int offset = 100;
                 int start = index - offset;
 
                 if (start < 0) {
@@ -297,5 +297,12 @@ public class ReTokenizeFile {
         inputStream.close();
         inputFile.close();
         return buffer.toString();
+    }
+
+    /**
+     * Set offset
+     */
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }

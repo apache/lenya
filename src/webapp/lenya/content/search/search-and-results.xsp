@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsp,v 1.15 2004/05/13 16:52:46 michi Exp $ -->
+<!-- $Id: search-and-results.xsp,v 1.16 2004/07/12 03:28:22 michi Exp $ -->
 
 <xsp:page language="java"
           xmlns:xsp="http://apache.org/xsp"
@@ -122,6 +122,7 @@
 
     int hitsPerPage;
     int maxPages;
+    int excerptOffset;
     int start;
     int end; 
   </xsp:logic>
@@ -147,10 +148,12 @@
           pubs[i].excerptDir = parameters.getParameter("pub"+i+"-excerpt-dir","@EXCERPT-DIR@");
           pubs[i].prefix = parameters.getParameter("pub"+i+"-prefix","@PREFIX@");
       }
-      String param_hits_per_page=parameters.getParameter("max-hits-per-page","13");
-      hitsPerPage=Integer.parseInt(param_hits_per_page);
-      String param_max_pages=parameters.getParameter("max-pages","5");
-      maxPages=Integer.parseInt(param_max_pages);
+      String param_hits_per_page = parameters.getParameter("max-hits-per-page","13");
+      hitsPerPage = Integer.parseInt(param_hits_per_page);
+      String param_max_pages = parameters.getParameter("max-pages","5");
+      maxPages = Integer.parseInt(param_max_pages);
+      String param_excerpt_offset = parameters.getParameter("excerpt-offset","100");
+      excerptOffset = Integer.parseInt(param_excerpt_offset);
 
 
 
@@ -267,6 +270,7 @@
 
       <hits-per-page><xsp:expr>hitsPerPage</xsp:expr></hits-per-page>
       <max-pages><xsp:expr>maxPages</xsp:expr></max-pages>
+      <excerpt-offset><xsp:expr>excerptOffset</xsp:expr></excerpt-offset>
     </configuration>
 
 <!-- Search Results -->
@@ -441,6 +445,7 @@
                     //String[] words={"funds","bonds"};
                     try{
                       ReTokenizeFile rtf=new ReTokenizeFile();
+                      rtf.setOffset(excerptOffset);
                       String excerpt=rtf.getExcerpt(excerptFile,words);
                       if(excerpt != null){
                         excerpt=rtf.emphasizeAsXML(rtf.tidy(excerpt),words);
