@@ -22,10 +22,9 @@
 <document>
   <header>
     <title>Installation of the Source Version</title>
-    <version>0.1</version>
     <type>Documentation</type>
     <authors>
-      <person name="Lenya community" email="dev@cocoon.apache.org"/>
+      <person name="Lenya community" email="dev@lenya.apache.org"/>
     </authors>
   </header>
 
@@ -42,7 +41,6 @@
         <ol>
             <li>running Lenya standalone using the built-in Jetty servlet container</li>
             <li>using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
-            <!--<li>creating a webapp for Tomcat (and other servlet containers) to be deployed manually on a remote server</li>-->
         </ol>
 
   		<p>
@@ -352,11 +350,12 @@
             <code>$TOMCAT_HOME</code> by your Tomcat installation
             directory.  If your Cocoon source directory is not at
             <code>../cocoon-2.1.6</code> relative to Lenya, then change
-            the <code>cocoon.webapp.dir</code> and
+            the <code>cocoon.webapp.dir</code>, <code>web.app.server</code> and
             <code>cocoon.src.dir</code> properties.
           </p>
 
           <ul>
+            <li><code>web.app.server=Tomcat</code></li>
             <li><code>cocoon.src.dir=$COCOON_HOME</code></li>
             <li><code>tomcat.home.dir=$TOMCAT_HOME</code></li>
           </ul>
