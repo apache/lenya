@@ -25,7 +25,7 @@ import org.apache.lenya.ac.Item;
  * {@link org.apache.lenya.ac.ItemManager}. It is only used for code reuse.
  * @version $Id$
  */
-public abstract class AbstractItem extends AbstractLogEnabled implements Item {
+public abstract class AbstractItem extends AbstractLogEnabled implements Item, Comparable {
 
     private String id;
     private String description = "";
@@ -35,7 +35,7 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item {
      * Ctor.
      */
     public AbstractItem() {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -126,4 +126,13 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item {
         return getId().hashCode();
     }
 
+    /**
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(Object obj) {
+        if (obj instanceof AbstractItem) {
+            return getId().compareTo(((AbstractItem) obj).getId());
+        }
+        return 0;
+    }
 }
