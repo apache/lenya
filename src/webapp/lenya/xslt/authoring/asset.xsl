@@ -96,7 +96,7 @@
 	      </tr>
 	    </xsl:if>
 	    <tr>
-	      <td class="lenya-form-caption">Select File:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/></td>
+	      <td class="lenya-form-caption">Select File:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <tr>
