@@ -17,7 +17,7 @@
 
 <xsl:param name="contextprefix"/>
 
-<xsl:template match="/page:page">
+<xsl:template match="page:page">
   <html>
     <head>
       <title><xsl:value-of select="page:title"/></title>
@@ -47,7 +47,7 @@
             </td>
           </xsl:if>
           <td class="lenya-content">
-            <xsl:copy-of select="page:body/node()[local-name() != 'div' or @class != 'lenya-sidebar']"/>
+            <xsl:copy-of select="page:body/node()[local-name() != 'div' or not(@class = 'lenya-sidebar')]"/>
           </td>
         </tr>
       </table>
@@ -64,6 +64,13 @@
 -->      
     </body>
   </html>
+</xsl:template>
+
+
+<xsl:template match="@*|node()">
+  <xsl:copy>
+    <xsl:apply-templates select="@*|node()"/>
+  </xsl:copy>
 </xsl:template>
 
 
