@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.132 2004/07/20 10:18:17 andreas Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.133 2004/07/30 10:24:09 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -75,7 +75,7 @@
     <map:transformer name="index" logger="lenya.sitemap.transformer.index" src="org.apache.lenya.cms.cocoon.transformation.DocumentIndexTransformer"/>
     <map:transformer name="lexer" logger="sitemap.transformer.lexer" src="org.apache.cocoon.transformation.LexicalTransformer"/>
     <map:transformer name="ldap" src="org.apache.cocoon.transformation.LDAPTransformer"/>
-    <map:transformer name="link-rewrite" logger="lenya.sitemap.transformer.link-rewrite" src="org.apache.lenya.cms.cocoon.transformation.SimpleLinkRewritingTransformer"/>
+    <map:transformer name="link-rewrite" logger="lenya.sitemap.transformer.link-rewrite" src="org.apache.lenya.cms.cocoon.transformation.LinkRewritingTransformer"/>
     <map:transformer name="log" logger="sitemap.transformer.log" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.LogTransformer"/>
     <map:transformer name="jpath" logger="sitemap.transformer.jpath" src="org.apache.cocoon.transformation.JPathTransformer"/>
     <map:transformer name="filter" logger="sitemap.transformer.filter" src="org.apache.cocoon.transformation.FilterTransformer"/>
