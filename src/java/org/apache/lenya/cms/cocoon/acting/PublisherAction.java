@@ -144,7 +144,7 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
 	}
 
     // Export static HTML
-    exportStaticHTML(docid,request.getServerPort(),exportDirectory);
+    ch.unizh.unipublic.wyona.cms.ArticlePublisherAction.exportStaticHTML(docid,request.getServerPort(),exportDirectory,prefixSubstitute);
 	
 	// Get session
 	Session session = request.getSession(true);
@@ -183,7 +183,8 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
 /**
  * Export Static HTML
  */
-  public void exportStaticHTML(String docid,int port,String exportDirectory){
+/*
+  public void exportStaticHTML(String docid,int port,String exportDirectory,String prefixSubstitute){
     try{
       org.wyona.net.WGet wget=new org.wyona.net.WGet();
       getLogger().info("Export directory: "+exportDirectory);
@@ -197,4 +198,5 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
       getLogger().error(""+e);
       }
     }
+*/
   }
