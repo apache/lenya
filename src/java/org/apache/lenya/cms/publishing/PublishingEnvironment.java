@@ -1,5 +1,4 @@
 /*
-$Id: PublishingEnvironment.java,v 1.22 2003/07/23 13:21:09 gregor Exp $
 <License>
 
  ============================================================================
@@ -67,8 +66,9 @@ import java.io.File;
 /**
  * DOCUMENT ME!
  *
- * @author ah
+ * @author Andreas Hartmann
  * @author Michael Wechner
+ * @version $Id: PublishingEnvironment.java,v 1.23 2004/01/13 17:30:30 michi Exp $
  */
 public class PublishingEnvironment implements Configurable {
     private static Category log = Category.getInstance(PublishingEnvironment.class);
@@ -124,9 +124,9 @@ public class PublishingEnvironment implements Configurable {
             configure(configuration);
         } catch (Exception e) {
             log.warn(
-                "Did not load publishing configuration from publication.xconf (file is missing). " +
+                "Did not load publishing configuration from publisher.xconf (No such file or directory: " + configurationFile  + "). " +
                 "That means you can't access all PublishingEnvironment parameters and you should only " +
-                "use the AntTask.");
+                "use the AntTask. But don't panic, this file has been DEPRECATED.");
         }
     }
 
