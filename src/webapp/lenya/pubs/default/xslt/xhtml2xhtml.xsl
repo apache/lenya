@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    Document   : page2xhtml.xsl
-    Created on : 11. April 2003, 11:09
-    Author     : andreas
-    Description:
-        Purpose of transformation follows.
+$Id: xhtml2xhtml.xsl,v 1.3 2004/02/04 20:50:30 gregor Exp $
 -->
 
 <xsl:stylesheet version="1.0"
@@ -15,19 +11,21 @@
     exclude-result-prefixes="xhtml"
     >
 
-        
+<xsl:param name="rendertype" select=""/>
+
 <xsl:template match="/xhtml:html">
-  <div id="body" bxe_xpath="/xhtml:html/xhtml:body">
+  <div id="body">
+    <xsl:if test="$rendertype = 'edit'">
+      <xsl:attribute name="bxe_xpath">/xhtml:html/xhtml:body</xsl:attribute>
+    </xsl:if>
     <xsl:apply-templates select="xhtml:body/node()"/>
   </div>
 </xsl:template>
-
 
 <xsl:template match="@*|node()">
   <xsl:copy>
     <xsl:apply-templates select="@*|node()"/>
   </xsl:copy>
 </xsl:template>
-
 
 </xsl:stylesheet> 
