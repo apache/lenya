@@ -1,3 +1,18 @@
+
+#lenya-menubar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 2;
+}
+
+#lenya-cmsbody {
+	position: absolute;
+	top: 60px;
+	left: 0px;
+	z-index: 1;
+}
+
 table.menu a { color: #3360AA; text-decoration:none; background-color: transparent; }
 table.menu a:hover { color: #FF3333; background-color: transparent; }
 table.menu a:visited { color: #6688AA; background-color: transparent; } 
@@ -6,6 +21,7 @@ table.menu a:visited:hover { color: #FF3333; background-color: transparent; }
 table.menu img {border:0px}
 
 #navTopBG {
+	font-family: verdana, helvetica, sans-serif;
 	height: 22px;
 	background-image: url('/lenya/lenya/menu/images/menu-bg_2.gif'); 
 	background-repeat: repeat-x;
