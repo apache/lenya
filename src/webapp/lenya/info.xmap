@@ -277,6 +277,7 @@
             <map:parameter name="documenturl" value="/{../3}"/>
             <map:parameter name="documentextension" value="{page-envelope:document-extension}"/>
             <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+            <map:parameter name="languages" value="{page-envelope:publication-languages-csv}"/>
           </map:transform>
           
           <map:transform src="cocoon://lenya-page/{../1}/info/default.xml"/>
