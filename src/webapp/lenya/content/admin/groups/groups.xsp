@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.GroupManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.AccessController</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.file.FileAccessController</xsp:include>
+    <xsp:include>java.io.File</xsp:include>
+    <xsp:include>java.util.Iterator</xsp:include>
+  </xsp:structure>
+
+  <page>
+    <groups>
+      <xsp:logic>
+        Publication pub = 
+            (Publication)<input:get-attribute module="page-envelope" name="publication"/>;
+        
+        File configDir = new File(pub.getDirectory(), "config" + File.separator + "ac");
+        AccessController controller = new FileAccessController(configDir);
+
+        GroupManager groupManager = null;  
+        try {
+            groupManager = controller.getGroupManager();
+        } catch (Exception e) {
+            throw new ProcessingException("Exception when instantiating a GroupManager", e);
+				}
+				
+        for (Iterator groups = groupManager.getGroups(); groups.hasNext();) {
+            Group group = (Group) groups.next();
+      </xsp:logic>
+        
+      <group>
+        <id><xsp:expr>group.getName()</xsp:expr></id>
+        <!--
+        <members>
+          <xsp:logic>
+            Groupable members[] = group.getMembers();
+            for (int i = 0; i &lt; members.length; i++) {
+                <xsp:content>
+                  <group><xsp:expr>members[i]</xsp:expr></group>
+                </xsp:content>
+            }
+          </xsp:logic>
+        </members>
+        -->
+      </group>
+      <xsp:logic>
+	}
+      </xsp:logic>
+    </groups>
+  </page>
+  
+</xsp:page>
