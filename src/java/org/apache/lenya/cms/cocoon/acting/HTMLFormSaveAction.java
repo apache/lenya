@@ -62,6 +62,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
@@ -79,7 +80,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.43 2004/02/22 00:10:39 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.44 2004/02/25 16:41:55 egli Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when 
  * namespaces are not declared within the root element. Unfortunately the XSLTs 
@@ -629,9 +630,9 @@ private String validateDocument(
     private String removeParent(String xmlSnippet) {
         String xmlSnippetWithoutParent = xmlSnippet;
         xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent.indexOf(">") + 1);
-        xmlSnippetWithoutParent = org.apache.lenya.util.StringUtil.reverse(xmlSnippetWithoutParent);
+        xmlSnippetWithoutParent = StringUtils.reverse(xmlSnippetWithoutParent);
         xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent.indexOf("<") + 1);
-        xmlSnippetWithoutParent = org.apache.lenya.util.StringUtil.reverse(xmlSnippetWithoutParent);
+        xmlSnippetWithoutParent = StringUtils.reverse(xmlSnippetWithoutParent);
         return xmlSnippetWithoutParent;
     }
 }
