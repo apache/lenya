@@ -34,10 +34,10 @@
 </xsl:template>
 
 <xsl:template match="results">
+  <h3>Results (Publication <xsl:value-of select="../search/publication-id"/>)</h3>
+  <xsl:apply-templates select="../search/exception"/>
   <xsl:choose>
     <xsl:when test="hit">
-      <h3>Results (Publication <xsl:value-of select="../search/publication-id"/>)</h3>
-      <xsl:apply-templates select="../search/exception"/>
       <p>Total Hits: <xsl:value-of select="@total-hits"/></p>
       <table width="90%" cellpadding="4" border="1">
         <tr>
@@ -47,7 +47,7 @@
       </table>
     </xsl:when>
     <xsl:otherwise>
-      <p>Sorry, nothing found!</p>
+      <p>Sorry, <b>nothing</b> found!</p>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
