@@ -1,5 +1,5 @@
 /*
-$Id: PolicyBuilder.java,v 1.6 2003/08/12 15:17:11 andreas Exp $
+$Id: PolicyBuilder.java,v 1.7 2003/08/13 13:11:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,6 +65,8 @@ import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.IPRange;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
+import org.apache.lenya.cms.ac2.cache.BuildException;
+import org.apache.lenya.cms.ac2.cache.InputStreamBuilder;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -73,24 +75,26 @@ import org.w3c.dom.Element;
 /**
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class PolicyBuilder {
+public class PolicyBuilder implements InputStreamBuilder {
 
     /**
      * Ctor.
+     * @param accreditableManager An accreditable manager.
      */
-    protected PolicyBuilder() {
+    public PolicyBuilder(AccreditableManager accreditableManager) {
+        assert accreditableManager != null;
+        this.accreditableManager = accreditableManager;
+    }
+    
+    /**
+     * Returns the accreditable manager.
+     * @return An accreditable manager.
+     */
+    public AccreditableManager getAccreditableManager() {
+        return accreditableManager;
     }
 
-    /**
-     * Returns the PolicyBuilder instance.
-     * @return A policy builder.
-     */
-    public static PolicyBuilder getInstance() {
-        if (instance == null) {
-            instance = new PolicyBuilder();
-        }
-        return instance;
-    }
+    private AccreditableManager accreditableManager;
 
     private static PolicyBuilder instance;
 
@@ -102,15 +106,14 @@ public class PolicyBuilder {
     protected static final String IP_RANGE_ELEMENT = "ip-range";
     protected static final String ID_ATTRIBUTE = "id";
     protected static final String SSL_ATTRIBUTE = "ssl";
-
+    
     /**
      * Builds a policy from an input stream.
-     * @param controller An access controller.
      * @param stream The input stream to read the policy from..
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    public DefaultPolicy buildPolicy(AccreditableManager controller, InputStream stream)
+    public DefaultPolicy buildPolicy(InputStream stream)
         throws AccessControlException {
 
         Document document;
@@ -121,17 +124,16 @@ public class PolicyBuilder {
             throw new AccessControlException(e);
         }
 
-        return buildPolicy(controller, document);
+        return buildPolicy(document);
     }
 
     /**
      * Builds a policy from an XML document.
-     * @param controller An access controller.
      * @param document The XML document.
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    public DefaultPolicy buildPolicy(AccreditableManager controller, Document document)
+    public DefaultPolicy buildPolicy(Document document)
         throws AccessControlException {
 
         DefaultPolicy policy = new DefaultPolicy();
@@ -150,7 +152,7 @@ public class PolicyBuilder {
             Accreditable accreditable = null;
 
             String id = credentialElements[i].getAttribute(ID_ATTRIBUTE);
-            accreditable = getAccreditable(controller, credentialElements[i].getLocalName(), id);
+            accreditable = getAccreditable(credentialElements[i].getLocalName(), id);
 
             Credential credential = new Credential(accreditable);
 
@@ -158,7 +160,7 @@ public class PolicyBuilder {
 
             for (int j = 0; j < roleElements.length; j++) {
                 String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
-                Role role = controller.getRoleManager().getRole(roleId);
+                Role role = getAccreditableManager().getRoleManager().getRole(roleId);
                 credential.addRole(role);
             }
 
@@ -177,27 +179,25 @@ public class PolicyBuilder {
 
     /**
      * Creates an accredtiable for an element.
-     * @param controller An access controller.
      * @param elementName The elment name.
      * @param id The ID of the accreditable.
      * @return An accreditable.
      * @throws AccessControlException when something went wrong.
      */
     protected Accreditable getAccreditable(
-        AccreditableManager controller,
         String elementName,
         String id)
         throws AccessControlException {
         Accreditable accreditable = null;
 
         if (elementName.equals(USER_ELEMENT)) {
-            accreditable = controller.getUserManager().getUser(id);
+            accreditable = getAccreditableManager().getUserManager().getUser(id);
         } else if (elementName.equals(GROUP_ELEMENT)) {
-            accreditable = controller.getGroupManager().getGroup(id);
+            accreditable = getAccreditableManager().getGroupManager().getGroup(id);
         } else if (elementName.equals(WORLD_ELEMENT)) {
             accreditable = World.getInstance();
         } else if (elementName.equals(IP_RANGE_ELEMENT)) {
-            accreditable = controller.getIPRangeManager().getIPRange(id);
+            accreditable = getAccreditableManager().getIPRangeManager().getIPRange(id);
         }
 
         if (accreditable == null) {
@@ -214,7 +214,7 @@ public class PolicyBuilder {
      * @return A DOM document.
      * @throws AccessControlException when something went wrong.
      */
-    public Document savePolicy(DefaultPolicy policy) throws AccessControlException {
+    public static Document savePolicy(DefaultPolicy policy) throws AccessControlException {
         NamespaceHelper helper;
 
         try {
@@ -256,7 +256,7 @@ public class PolicyBuilder {
      * @return An XML element.
      * @throws AccessControlException when something went wrong.
      */
-    protected Element save(Accreditable accreditable, NamespaceHelper helper)
+    protected static Element save(Accreditable accreditable, NamespaceHelper helper)
         throws AccessControlException {
         String localName = null;
         String id = null;
@@ -285,6 +285,19 @@ public class PolicyBuilder {
         }
 
         return element;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.cache.InputStreamBuilder#build(org.apache.excalibur.source.Source)
+     */
+    public Object build(InputStream stream) throws BuildException {
+        Object value = null;
+        try {
+            value = buildPolicy(stream);
+        } catch (AccessControlException e) {
+            throw new BuildException(e);
+        }
+        return value;
     }
 
 }

@@ -1,5 +1,5 @@
 /*
-$Id: SitemapPolicyManager.java,v 1.6 2003/08/05 11:56:02 andreas Exp $
+$Id: SitemapPolicyManager.java,v 1.7 2003/08/13 13:11:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -105,7 +105,7 @@ public class SitemapPolicyManager
             getLogger().debug("Policy URL: " + policyUrl);
             source = resolver.resolveURI("cocoon://" + policyUrl);
             Document document = DocumentHelper.readDocument(source.getInputStream());
-            policy = PolicyBuilder.getInstance().buildPolicy(accreditableManager, document);
+            policy = new PolicyBuilder(accreditableManager).buildPolicy(document);
 
         } catch (Exception e) {
             throw new AccessControlException(e);
