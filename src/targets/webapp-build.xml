@@ -153,7 +153,11 @@
     <copy todir="${tomcat.home.dir}/${tomcat.endorsed.dir}">
       <fileset dir="${build.webapp}/WEB-INF/lib/endorsed"/>
     </copy>
-    <copy file="${build.webapp}/WEB-INF/lib/xercesImpl-2.6.1.jar" todir="${tomcat.home.dir}/${tomcat.endorsed.dir}"/>
+    <copy todir="${tomcat.home.dir}/${tomcat.endorsed.dir}">
+      <fileset dir="${build.webapp}/WEB-INF/lib/">
+        <include name="xercesImpl-*.jar"/>
+      </fileset>
+    </copy>
     <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.home.dir}/${tomcat.endorsed.dir}"/>
   </target>
 
