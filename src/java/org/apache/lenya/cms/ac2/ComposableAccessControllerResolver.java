@@ -1,5 +1,5 @@
 /*
-$Id: AccessController.java,v 1.8 2003/07/14 18:07:01 andreas Exp $
+$Id: ComposableAccessControllerResolver.java,v 1.1 2003/07/14 18:07:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,33 +55,58 @@ $Id: AccessController.java,v 1.8 2003/07/14 18:07:01 andreas Exp $
 */
 package org.apache.lenya.cms.ac2;
 
-import org.apache.avalon.framework.component.Component;
-import org.apache.cocoon.environment.Request;
+import java.util.Map;
+
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.ac.AccessControlException;
 
 /**
- * An access controller allows authenticating and authorizing identities.
- * 
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @author andreas
+ *
+ * To change the template for this generated type comment go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public interface AccessController extends Component {
-
-    String ROLE = AccessController.class.getName();
-
-    /**
-     * Authenticates a request.
-     * @param request A request.
-     * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
-     */
-    boolean authenticate(Request request) throws AccessControlException;
+public class ComposableAccessControllerResolver
+    extends AbstractLogEnabled
+    implements AccessControllerResolver, Serviceable, Configurable {
 
     /**
-     * Authorizes a request inside a publication.
-     * @param request A request.
-     * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
+     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.util.Map)
      */
-    boolean authorize(Request request) throws AccessControlException;
+    public AccessController resolveAccessController(String url)
+        throws AccessControlException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#release(org.apache.lenya.cms.ac2.AccessController)
+     */
+    public void release(AccessController controller) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager arg0) throws ServiceException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration arg0) throws ConfigurationException {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

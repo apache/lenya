@@ -57,7 +57,6 @@ package org.apache.lenya.cms.ac2;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.publication.Publication;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -79,7 +78,6 @@ public class URLPolicy implements Policy {
 	 */
 	public URLPolicy(
 		AccreditableManager controller,
-		Publication publication,
 		String url,
 		PolicyManager manager) {
 		assert url != null;
@@ -88,16 +86,12 @@ public class URLPolicy implements Policy {
 		assert manager != null;
 		policyManager = manager;
 
-		assert publication != null;
-		this.publication = publication;
-
 		assert controller != null;
 		this.controller = controller;
 	}
 
 	private String url;
 	private PolicyManager policyManager;
-	private Publication publication;
 	private AccreditableManager controller;
 
 	/**
@@ -108,17 +102,18 @@ public class URLPolicy implements Policy {
 		Policy urlPolicy =
 			getPolicyManager().buildURLPolicy(
 				getAccessController(),
-				getPublication(),
 				getUrl());
 		addRoles(urlPolicy, identity, roles);
 
-		String url = "";
+		String url = "/";
 		String[] directories = getUrl().split("/");
 
-		for (int i = 0; i < directories.length; i++) {
-			url += (directories[i] + "/");
-			addRoles(identity, url, roles);
-		}
+        if (directories.length > 1) {
+            for (int i = 1; i < directories.length; i++) {
+                url += (directories[i] + "/");
+                addRoles(identity, url, roles);
+            }
+        }
 
 		return (Role[]) roles.toArray(new Role[roles.size()]);
 	}
@@ -135,7 +130,6 @@ public class URLPolicy implements Policy {
 		addRoles(
 			getPolicyManager().buildSubtreePolicy(
 				getAccessController(),
-				getPublication(),
 				url),
 			identity,
 			roles);
@@ -167,14 +161,6 @@ public class URLPolicy implements Policy {
 	 */
 	public PolicyManager getPolicyManager() {
 		return policyManager;
-	}
-	/**
-	 * 
-	 * Returns the publication.
-	 * @return The publication.
-	 */
-	public Publication getPublication() {
-		return publication;
 	}
 
 	/**

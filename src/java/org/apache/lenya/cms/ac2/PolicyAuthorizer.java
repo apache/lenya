@@ -60,7 +60,6 @@ import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author andreas
@@ -83,7 +82,6 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         AccreditableManager accreditableManager,
         PolicyManager policyManager,
         Identity identity,
-        Publication publication,
         Request request)
         throws AccessControlException {
 
@@ -93,7 +91,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
         if (identity.belongsTo(accreditableManager)) {
             authorized =
-                authorizePolicy(accreditableManager, policyManager, identity, publication, request);
+                authorizePolicy(accreditableManager, policyManager, identity, request);
         } else {
             getLogger().debug(
                 "Identity ["
@@ -121,7 +119,6 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         AccreditableManager accreditableManager,
         PolicyManager policyManager,
         Identity identity,
-        Publication publication,
         Request request)
         throws AccessControlException {
 
@@ -134,7 +131,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
         String url = requestUri.substring(context.length());
 
-        Policy policy = policyManager.getPolicy(accreditableManager, publication, url);
+        Policy policy = policyManager.getPolicy(accreditableManager, url);
         Role[] roles = policy.getRoles(identity);
 
         boolean authorized = roles.length > 0;

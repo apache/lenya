@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.2 2003/07/11 13:24:37 andreas Exp $
+$Id: DefaultAccessController.java,v 1.3 2003/07/14 18:07:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -71,7 +71,6 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author andreas
@@ -108,12 +107,11 @@ public class DefaultAccessController
     /**
      * @see org.apache.lenya.cms.ac2.AccessController#authorize(org.apache.cocoon.environment.Request)
      */
-    public boolean authorize(Publication publication, Request request)
+    public boolean authorize(Request request)
         throws AccessControlException {
-            
-        assert publication != null;
+
         assert request != null;
-        
+
         boolean authorized = false;
 
         if (request != null) {
@@ -138,7 +136,6 @@ public class DefaultAccessController
                                 accreditableManager,
                                 policyManager,
                                 identity,
-                                publication,
                                 request);
 
                     if (getLogger().isDebugEnabled()) {
@@ -153,45 +150,79 @@ public class DefaultAccessController
 
         return authorized;
     }
-
+    
+    private boolean isInitialized = false;
+    
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration conf) throws ConfigurationException {
 
         try {
+
+            if (!isInitialized) {
+                setupAccreditableManager(conf);
+                setupAuthorizers(conf);
+                setupPolicyManager(conf);
+                isInitialized = true;
+            }
+
             Configuration accreditableManagerConfiguration =
                 conf.getChild(ACCREDITABLE_MANAGER_ELEMENT);
-            String accreditableManagerType =
-                accreditableManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
-            getLogger().debug("AccreditableManager type: [" + accreditableManagerType + "]");
-            
-            accreditableManagerSelector =
-                (ServiceSelector) manager.lookup(AccreditableManager.ROLE + "Selector");
-            accreditableManager =
-                (AccreditableManager) accreditableManagerSelector.select(accreditableManagerType);
             Parameters parameters = Parameters.fromConfiguration(accreditableManagerConfiguration);
             accreditableManager.parameterize(parameters);
 
-            Configuration[] authorizerConfigurations = conf.getChildren(AUTHORIZER_ELEMENT);
-            authorizerSelector = (ServiceSelector) manager.lookup(Authorizer.ROLE + "Selector");
-
-            for (int i = 0; i < authorizerConfigurations.length; i++) {
-                String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
-                Authorizer authorizer = (Authorizer) authorizerSelector.select(type);
-                authorizers.add(authorizer);
-                getLogger().debug("Adding authorizer [" + type + "]");
-            }
-
-            Configuration policyManagerConfiguration = conf.getChild(POLICY_MANAGER_ELEMENT);
-            String policyManagerType = policyManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
-            policyManagerSelector =
-                (ServiceSelector) manager.lookup(PolicyManager.ROLE + "Selector");
-            policyManager = (PolicyManager) policyManagerSelector.select(policyManagerType);
-            getLogger().debug("Policy manager type: [" + policyManagerType + "]");
         } catch (Exception e) {
             throw new ConfigurationException("Configuration failed: ", e);
         }
+    }
+
+    /**
+     * Creates the accreditable manager. 
+     * @param configuration The access controller configuration.
+     */
+    protected void setupAccreditableManager(Configuration configuration)
+        throws ConfigurationException, ServiceException {
+        Configuration accreditableManagerConfiguration =
+            configuration.getChild(ACCREDITABLE_MANAGER_ELEMENT);
+        String accreditableManagerType =
+            accreditableManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
+        getLogger().debug("AccreditableManager type: [" + accreditableManagerType + "]");
+
+        accreditableManagerSelector =
+            (ServiceSelector) manager.lookup(AccreditableManager.ROLE + "Selector");
+        accreditableManager =
+            (AccreditableManager) accreditableManagerSelector.select(accreditableManagerType);
+    }
+
+    /**
+     * Creates the authorizers. 
+     * @param configuration The access controller configuration.
+     */
+    protected void setupAuthorizers(Configuration configuration)
+        throws ServiceException, ConfigurationException {
+        Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
+        authorizerSelector = (ServiceSelector) manager.lookup(Authorizer.ROLE + "Selector");
+
+        for (int i = 0; i < authorizerConfigurations.length; i++) {
+            String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
+            Authorizer authorizer = (Authorizer) authorizerSelector.select(type);
+            authorizers.add(authorizer);
+            getLogger().debug("Adding authorizer [" + type + "]");
+        }
+    }
+
+    /**
+     * Creates the policy manager. 
+     * @param configuration The access controller configuration.
+     */
+    protected void setupPolicyManager(Configuration configuration)
+        throws ServiceException, ConfigurationException {
+        Configuration policyManagerConfiguration = configuration.getChild(POLICY_MANAGER_ELEMENT);
+        String policyManagerType = policyManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
+        policyManagerSelector = (ServiceSelector) manager.lookup(PolicyManager.ROLE + "Selector");
+        policyManager = (PolicyManager) policyManagerSelector.select(policyManagerType);
+        getLogger().debug("Policy manager type: [" + policyManagerType + "]");
     }
 
     private ServiceManager manager;
@@ -260,9 +291,18 @@ public class DefaultAccessController
     /**
      * Returns the accreditable manager.
      * @return An accreditable manager.
+     * TODO: change to protected when authenticator actions are refactored
      */
     public AccreditableManager getAccreditableManager() {
         return accreditableManager;
+    }
+
+    /**
+     * Returns the policy manager.
+     * @return A policy manager.
+     */
+    protected PolicyManager getPolicyManager() {
+        return policyManager;
     }
 
 }

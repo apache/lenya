@@ -1,5 +1,5 @@
 /*
-$Id: AccessController.java,v 1.8 2003/07/14 18:07:01 andreas Exp $
+$Id: AccessControllerResolver.java,v 1.1 2003/07/14 18:07:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,33 +55,33 @@ $Id: AccessController.java,v 1.8 2003/07/14 18:07:01 andreas Exp $
 */
 package org.apache.lenya.cms.ac2;
 
+import java.util.Map;
+
 import org.apache.avalon.framework.component.Component;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.ac.AccessControlException;
 
 /**
- * An access controller allows authenticating and authorizing identities.
+ * An access controller resolver resolves the appropriate access controller
+ * for a given Cocoon object model.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public interface AccessController extends Component {
-
-    String ROLE = AccessController.class.getName();
-
-    /**
-     * Authenticates a request.
-     * @param request A request.
-     * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
-     */
-    boolean authenticate(Request request) throws AccessControlException;
+public interface AccessControllerResolver extends Component {
+    
+    String ROLE = AccessControllerResolver.class.getName();
 
     /**
-     * Authorizes a request inside a publication.
-     * @param request A request.
-     * @return A boolean value.
+     * Resolves an access controller for a certain object model.
+     * @param webappUrl The URL within the web application (without context prefix).
+     * @return An access controller.
      * @throws AccessControlException when something went wrong.
      */
-    boolean authorize(Request request) throws AccessControlException;
+    AccessController resolveAccessController(String webappUrl) throws AccessControlException;
+    
+    /**
+     * Releases a resolved access controller. 
+     * @param controller The access controller to release.
+     */
+    void release(AccessController controller);
 
 }

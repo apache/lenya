@@ -1,5 +1,5 @@
 /*
-$Id: Authorizer.java,v 1.7 2003/07/14 14:35:34 egli Exp $
+$Id: Authorizer.java,v 1.8 2003/07/14 18:07:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,13 +59,9 @@ import org.apache.avalon.framework.component.Component;
 import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.publication.Publication;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public interface Authorizer extends Component {
     
@@ -76,7 +72,6 @@ public interface Authorizer extends Component {
      * @param accessController The access controller to use.
      * @param policyManager The policy manager to use. 
      * @param identity The identity.
-     * @param publication The publication of the page to be accessed.
      * @param request The request.
      * @return <code>true</code> if the identity is authorized, <code>false</code> otherwise.
      * @throws AccessControlException when something went wrong.
@@ -85,7 +80,6 @@ public interface Authorizer extends Component {
         AccreditableManager accessController,
         PolicyManager policyManager,
         Identity identity,
-        Publication publication,
         Request request)
         throws AccessControlException;
 

@@ -1,5 +1,5 @@
 /*
-$Id: SitemapPolicyManager.java,v 1.2 2003/07/11 13:24:37 andreas Exp $
+$Id: SitemapPolicyManager.java,v 1.3 2003/07/14 18:07:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,45 +77,19 @@ import org.apache.lenya.cms.publication.Publication;
 public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyManager, Serviceable {
 
     /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#buildURLPolicy(org.apache.lenya.cms.ac2.AccreditableManager, org.apache.lenya.cms.publication.Publication, java.lang.String)
+     * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
      */
-    public DefaultPolicy buildURLPolicy(AccreditableManager controller, Publication publication, String url) throws AccessControlException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#buildSubtreePolicy(org.apache.lenya.cms.ac2.AccreditableManager, org.apache.lenya.cms.publication.Publication, java.lang.String)
-     */
-    public DefaultPolicy buildSubtreePolicy(AccreditableManager controller, Publication publication, String url) throws AccessControlException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#saveURLPolicy(org.apache.lenya.cms.publication.Publication, java.lang.String, org.apache.lenya.cms.ac2.DefaultPolicy)
-     */
-    public void saveURLPolicy(Publication publication, String url, DefaultPolicy policy) throws AccessControlException {
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#saveSubtreePolicy(org.apache.lenya.cms.publication.Publication, java.lang.String, org.apache.lenya.cms.ac2.DefaultPolicy)
-     */
-    public void saveSubtreePolicy(Publication publication, String url, DefaultPolicy policy) throws AccessControlException {
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(org.apache.lenya.cms.ac2.AccreditableManager, org.apache.lenya.cms.publication.Publication, java.lang.String)
-     */
-    public Policy getPolicy(AccreditableManager controller, Publication publication, String url) throws AccessControlException {
+    public Policy getPolicy(AccreditableManager controller, String url) throws AccessControlException {
         
         SourceResolver resolver = null;
         Policy policy = null;
         try {
+            /*
             resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
             String policyUrl = publication.getId() + "/policies" + url + ".acml";
             getLogger().debug("Policy URL: " + policyUrl);
             Source source = resolver.resolveURI("cocoon://" + policyUrl);
+            */
         }
         catch (Exception e) {
             throw new AccessControlException(e);
@@ -136,13 +110,48 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
     }
 
 
-
     /**
      * Returns the service manager.
      * @return A service manager.
      */
     public ServiceManager getManager() {
         return manager;
+    }
+
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.ac2.PolicyManager#buildURLPolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
+     */
+    public DefaultPolicy buildURLPolicy(AccreditableManager controller, String url) throws AccessControlException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.ac2.PolicyManager#buildSubtreePolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
+     */
+    public DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url) throws AccessControlException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.ac2.PolicyManager#saveURLPolicy(java.lang.String, org.apache.lenya.cms.ac2.DefaultPolicy)
+     */
+    public void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.ac2.PolicyManager#saveSubtreePolicy(java.lang.String, org.apache.lenya.cms.ac2.DefaultPolicy)
+     */
+    public void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException {
+        // TODO Auto-generated method stub
+        
     }
 
 }
