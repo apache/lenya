@@ -15,19 +15,19 @@
  *
  */
 
-/* @version $Id: Label.java,v 1.10 2004/03/02 15:37:43 michi Exp $ */
+/* @version $Id$ */
 
 package org.apache.lenya.cms.publication;
 
 /**
- * The Label class encapsulates a string label and a associated language.
+ * The Label class encapsulates a string label of an associated language.
  */
 public class Label {
     private String label = null;
     private String language = null;
 
     /**
-     * Creates a new Label object with no language.
+     * Creates a new Label object without language.
      *
      * @param label the actual label
      */
@@ -39,7 +39,7 @@ public class Label {
      * Creates a new Label object.
      *
      * @param label the actual label
-     * @param language the language
+     * @param language the label language
      */
     public Label(String label, String language) {
         this.label = label;
@@ -47,7 +47,7 @@ public class Label {
     }
 
     /**
-     * Get the actual label of the Label object
+     * Get the label.
      *
      * @return the actual label as a String
      */
@@ -56,15 +56,16 @@ public class Label {
     }
 
     /**
-     * Set the actual label of the label object.
+     * Set the label.
      * 
      * @param label The label.
      */
     public void setLabel(String label) {
         this.label = label;
     }
+
     /**
-     * Get the language of this Label object 
+     * Get the label language 
      *
      * @return the language
      */
@@ -72,7 +73,6 @@ public class Label {
     public String getLanguage() {
         return language;
     }
-    
     
     /** (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -103,5 +103,4 @@ public class Label {
     public int hashCode() {
         return getLabel().hashCode() + getLanguage().hashCode();
     }
-
 }
