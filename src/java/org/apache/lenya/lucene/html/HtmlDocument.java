@@ -1,58 +1,22 @@
 /*
-$Id: HtmlDocument.java,v 1.11 2004/02/21 16:54:27 gregor Exp $
-<License>
+ * Copyright  1999-2004 The Apache Software Foundation
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
 
- ============================================================================
-                   The Apache Software License, Version 1.1
- ============================================================================
+/* $Id: HtmlDocument.java,v 1.12 2004/03/01 16:18:15 gregor Exp $  */
 
- Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modifica-
- tion, are permitted provided that the following conditions are met:
-
- 1. Redistributions of  source code must  retain the above copyright  notice,
-    this list of conditions and the following disclaimer.
-
- 2. Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation
-    and/or other materials provided with the distribution.
-
- 3. The end-user documentation included with the redistribution, if any, must
-    include  the following  acknowledgment:  "This product includes  software
-    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
-    Alternately, this  acknowledgment may  appear in the software itself,  if
-    and wherever such third-party acknowledgments normally appear.
-
- 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
-    used to  endorse or promote  products derived from  this software without
-    prior written permission. For written permission, please contact
-    apache@apache.org.
-
- 5. Products  derived from this software may not  be called "Apache", nor may
-    "Apache" appear  in their name,  without prior written permission  of the
-    Apache Software Foundation.
-
- THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
- INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
- APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
- INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
- DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
- OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
- ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
- (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
- THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- This software  consists of voluntary contributions made  by many individuals
- on  behalf of the Apache Software  Foundation and was  originally created by
- Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
- ware Foundation, please see <http://www.apache.org/>.
-
- Lenya includes software developed by the Apache Software Foundation, W3C,
- DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
-</License>
-*/
 package org.apache.lenya.lucene.html;
 
 
@@ -84,29 +48,17 @@ import org.w3c.tidy.Tidy;
  * It does this by using JTidy package. It can take input input from {@link java.io.File} or {@link
  * java.io.InputStream}.
  * </p>
- *
- * @author Erik Hatcher
- * @author Michael Wechner
- * @author Andreas Hartmann
- *
  */
 public class HtmlDocument {
     private Element rawDoc;
     private String luceneTagName = null;
     private String luceneClassValue = null;
 
-    //-------------------------------------------------------------
-    // Constructors
-    //-------------------------------------------------------------
-
     /**
      * Constructs an <code>HtmlDocument</code> from a {@link java.io.File}.
      *
      * @param file the <code>File</code> containing the HTML to parse
-     *
      * @exception IOException if an I/O exception occurs
-     *
-     * @since
      */
     public HtmlDocument(File file) throws IOException {
         Tidy tidy = new Tidy();
@@ -121,10 +73,7 @@ public class HtmlDocument {
      * Constructs an <code>HtmlDocument</code> from an {@link java.io.InputStream}.
      *
      * @param is the <code>InputStream</code> containing the HTML
-     *
      * @exception IOException if I/O exception occurs
-     *
-     * @since
      */
     public HtmlDocument(InputStream is) throws IOException {
         Tidy tidy = new Tidy();
@@ -139,9 +88,7 @@ public class HtmlDocument {
      * Creates a Lucene <code>Document</code> from an {@link java.io.InputStream}.
      *
      * @param is
-     *
      * @return org.apache.lucene.document.Document
-     *
      * @exception IOException
      */
     public static org.apache.lucene.document.Document getDocument(InputStream is)
@@ -155,17 +102,11 @@ public class HtmlDocument {
         return luceneDoc;
     }
 
-    //-------------------------------------------------------------
-    // Public methods
-    //-------------------------------------------------------------
-
     /**
      * Creates a Lucene <code>Document</code> from a {@link java.io.File}.
      *
      * @param file
-     *
      * @return org.apache.lucene.document.Document
-     *
      * @exception IOException
      */
     public static org.apache.lucene.document.Document Document(File file)
@@ -194,10 +135,6 @@ public class HtmlDocument {
 
         return luceneDoc;
     }
-
-    //-------------------------------------------------------------
-    // Private methods
-    //-------------------------------------------------------------
 
     /**
      * Gets the title attribute of the <code>HtmlDocument</code> object.
@@ -239,14 +176,12 @@ public class HtmlDocument {
         //       This means that getLength is always greater than 0
         NodeList metaNL = rawDoc.getElementsByTagName("meta");
 
-        //System.out.println("HtmlDocument.getBody(): Number of META tags: " + metaNL.getLength());
         for (int i = 0; i < metaNL.getLength(); i++) {
             Element metaElement = (Element) metaNL.item(i);
             Attr nameAttr = metaElement.getAttributeNode("name");
             Attr valueAttr = metaElement.getAttributeNode("value");
 
             if ((nameAttr != null) && (valueAttr != null)) {
-                //System.out.println("HtmlDocument.getBody(): <meta name=\"" + nameAttr.getValue()+"\" value=\""+valueAttr.getValue()+"\" />");
                 if (nameAttr.getValue().equals("lucene-tag-name")) {
                     luceneTagName = valueAttr.getValue();
                 }
@@ -269,7 +204,6 @@ public class HtmlDocument {
         NodeList nl = rawDoc.getElementsByTagName("body");
 
         if (nl.getLength() > 0) {
-            //System.out.println("HtmlDocument.getBody(): "+body);
             body = getBodyText(nl.item(0), indexByLucene);
         }
 
@@ -281,7 +215,6 @@ public class HtmlDocument {
      *
      * @param node a DOM Node
      * @param indexByLucene DOCUMENT ME!
-     *
      * @return The bodyText value
      */
     private String getBodyText(Node node, boolean indexByLucene) {
@@ -300,17 +233,13 @@ public class HtmlDocument {
                         Attr attribute = ((Element) child).getAttributeNode("class");
 
                         if (attribute != null) {
-                            //System.out.println("HtmlDocument.getBodyText(): <"+luceneTagName+" class=\""+attribute.getValue()+"!");
                             if (attribute.getValue().equals(luceneClassValue)) {
                                 System.out.println("HtmlDocument.getBodyText(): <" + luceneTagName +
                                     " class=\"" + luceneClassValue + "\"> found!");
                                 index = true;
                             }
 
-                            //System.out.println("HtmlDocument.getBodyText(): <"+luceneTageName+" class!");
                         }
-
-                        //System.out.println("HtmlDocument.getBodyText(): <"+luceneTagName+"!");
                     }
                 }
 
