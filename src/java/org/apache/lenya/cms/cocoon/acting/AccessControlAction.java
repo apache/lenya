@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlAction.java,v 1.9 2004/02/17 10:49:20 andreas Exp $
+$Id: AccessControlAction.java,v 1.10 2004/02/20 08:44:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,9 +59,9 @@ package org.apache.lenya.cms.cocoon.acting;
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.ConfigurableComposerAction;
+import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.acting.ConfigurableServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -73,7 +73,7 @@ import org.apache.lenya.util.ServletHelper;
 /**
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public abstract class AccessControlAction extends ConfigurableComposerAction {
+public abstract class AccessControlAction extends ConfigurableServiceableAction {
 
     private AccessController accessController;
 
@@ -95,7 +95,7 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
         Parameters parameters)
         throws Exception {
 
-        ComponentSelector selector = null;
+        ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
         accessController = null;
 
@@ -105,7 +105,7 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
 
         try {
             selector =
-                (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
                 
             getLogger().debug("Resolving AC resolver for type [" + AccessControllerResolver.DEFAULT_RESOLVER + "]");
             resolver =

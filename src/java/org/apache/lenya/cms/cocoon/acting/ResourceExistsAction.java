@@ -1,5 +1,5 @@
 /*
-$Id: ResourceExistsAction.java,v 1.6 2004/02/02 02:50:37 stefano Exp $
+$Id: ResourceExistsAction.java,v 1.7 2004/02/20 08:44:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.acting.ComposerAction;
+import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.excalibur.source.Source;
@@ -83,9 +83,9 @@ import org.apache.excalibur.source.Source;
  *
  * @author <a href="mailto:balld@apache.org">Donald Ball</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: ResourceExistsAction.java,v 1.6 2004/02/02 02:50:37 stefano Exp $
+ * @version CVS $Id: ResourceExistsAction.java,v 1.7 2004/02/20 08:44:48 andreas Exp $
  */
-public class ResourceExistsAction extends ComposerAction implements ThreadSafe {
+public class ResourceExistsAction extends ServiceableAction implements ThreadSafe {
     /**
      *
      */

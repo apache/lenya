@@ -1,5 +1,5 @@
 /*
-$Id: RequestParamAction.java,v 1.10 2004/02/02 02:50:37 stefano Exp $
+$Id: RequestParamAction.java,v 1.11 2004/02/20 08:44:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,6 +65,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -111,9 +112,9 @@ import org.apache.cocoon.environment.SourceResolver;
  *
  * @author <a href="mailto:Marcus.Crafter@osa.de">Marcus Crafter</a>
  * @author <a href="mailto:tcurdt@dff.st">Torsten Curdt</a>
- * @version CVS $Id: RequestParamAction.java,v 1.10 2004/02/02 02:50:37 stefano Exp $
+ * @version CVS $Id: RequestParamAction.java,v 1.11 2004/02/20 08:44:48 andreas Exp $
  */
-public class RequestParamAction extends org.apache.cocoon.acting.ComposerAction
+public class RequestParamAction extends ServiceableAction
     implements ThreadSafe {
     public final static String MAP_URI = "requestURI";
     public final static String MAP_QUERY = "requestQuery";

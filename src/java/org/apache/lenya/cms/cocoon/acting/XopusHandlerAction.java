@@ -1,5 +1,5 @@
 /*
-$Id: XopusHandlerAction.java,v 1.36 2004/02/02 02:50:37 stefano Exp $
+$Id: XopusHandlerAction.java,v 1.37 2004/02/20 08:44:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,12 +62,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.avalon.framework.component.ComponentException;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.acting.ConfigurableComposerAction;
+import org.apache.cocoon.acting.ConfigurableServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Session;
@@ -94,7 +94,7 @@ import org.xml.sax.SAXException;
  * @author Michael Wechner
  * @version 2003.1.4
  */
-public class XopusHandlerAction extends ConfigurableComposerAction {
+public class XopusHandlerAction extends ConfigurableServiceableAction {
     private String xmlRoot = null;
     private String xslRoot = null;
     private String xsdRoot = null;
@@ -163,7 +163,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         Map objectModel,
         String source,
         Parameters params)
-        throws IOException, ComponentException, SAXException, ProcessingException {
+        throws IOException, SAXException, ProcessingException, ServiceException {
         // Get absolute path of sitemap directory
         Source input_source = resolver.resolveURI("");
         String sitemapPath = input_source.getURI();

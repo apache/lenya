@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlSitetreeTransformer.java,v 1.5 2004/02/18 10:30:41 andreas Exp $
+$Id: AccessControlSitetreeTransformer.java,v 1.6 2004/02/20 08:44:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,10 +59,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.component.ComponentManager;
-import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -94,7 +91,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * with a <code>protected="true"</code> attribute.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.5 2004/02/18 10:30:41 andreas Exp $
+ * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.6 2004/02/20 08:44:48 andreas Exp $
  */
 public class AccessControlSitetreeTransformer
     extends AbstractSAXTransformer
@@ -105,7 +102,6 @@ public class AccessControlSitetreeTransformer
     public static final String PARAMETER_AREA = "area";
 
     private String documentId;
-    private ComponentSelector componentSelector;
     private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
     private AccessControllerResolver acResolver;
@@ -120,7 +116,6 @@ public class AccessControlSitetreeTransformer
         throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, par);
 
-        componentSelector = null;
         serviceSelector = null;
         acResolver = null;
         policyManager = null;
@@ -142,20 +137,12 @@ public class AccessControlSitetreeTransformer
 
             Request request = ObjectModelHelper.getRequest(objectModel);
 
-            Object selector = manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            serviceSelector =
+                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
 
-            if (selector instanceof ComponentSelector) {
-                componentSelector = (ComponentSelector) selector;
-                acResolver =
-                    (AccessControllerResolver) componentSelector.select(
-                        AccessControllerResolver.DEFAULT_RESOLVER);
-            }
-            if (selector instanceof ServiceSelector) {
-                serviceSelector = (ServiceSelector) selector;
-                acResolver =
-                    (AccessControllerResolver) serviceSelector.select(
-                        AccessControllerResolver.DEFAULT_RESOLVER);
-            }
+            acResolver =
+                (AccessControllerResolver) serviceSelector.select(
+                    AccessControllerResolver.DEFAULT_RESOLVER);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Resolved AC resolver [" + acResolver + "]");
@@ -195,18 +182,11 @@ public class AccessControlSitetreeTransformer
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Disposing transformer");
         }
-        Object manager = this.manager;
-        if (componentSelector != null) {
-            if (acResolver != null) {
-                componentSelector.release(acResolver);
-            }
-            ((ComponentManager) manager).release(componentSelector);
-        }
         if (serviceSelector != null) {
             if (acResolver != null) {
                 serviceSelector.release(acResolver);
             }
-            ((ServiceManager) manager).release(serviceSelector);
+            manager.release(serviceSelector);
         }
     }
 
