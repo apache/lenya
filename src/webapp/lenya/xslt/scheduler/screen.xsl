@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: screen.xsl,v 1.5 2004/04/29 14:24:08 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -88,6 +88,8 @@
     <input type="hidden" name="document-id" value="{/usecase:schedule/usecase:document-id}"/>
     <input type="hidden" name="document-language" value="{/usecase:schedule/usecase:document-language}"/>
     <input type="hidden" name="user-id" value="{/usecase:schedule/usecase:user-id}"/>
+    <input type="hidden" name="user-name" value="{/usecase:schedule/usecase:user-name}"/>
+    <input type="hidden" name="user-email" value="{/usecase:schedule/usecase:user-email}"/>
     <input type="hidden" name="ip-address" value="{/usecase:schedule/usecase:ip-address}"/>
     <input type="hidden" name="role-ids" value="{/usecase:schedule/usecase:role-ids}"/>
   </xsl:template>

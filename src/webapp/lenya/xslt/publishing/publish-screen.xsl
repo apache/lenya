@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publish-screen.xsl,v 1.19 2004/07/29 05:50:14 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -70,13 +70,13 @@
                   </td>
                 </tr>
                 <tr>
-                  <td valign="top" class="lenya-entry-caption">Problem:</td>
+                  <td valign="top" class="lenya-entry-caption">Problem(s):</td>
                   <td>
-                    <span class="lenya-form-error">This page cannot be published unless its parent is
-                      published:</span>
-                    <ul>
-                      <li><xsl:apply-templates select="usecase:parent"/></li>
-                    </ul>
+                    <span class="lenya-form-error">This page cannot be published : </span>
+                    <ol>
+                    <xsl:apply-templates select="usecase:message[@id='not-check-out']"/>
+                    <xsl:apply-templates select="usecase:parent"/>
+                    </ol>
                   </td>
                 </tr>
                 <tr>
@@ -93,11 +93,20 @@
     </page:page>
   </xsl:template>
   
-  
   <xsl:template match="usecase:parent">
-    <a href="{@href}"><xsl:value-of select="@id"/> [<xsl:value-of select="@language"/>]</a>
+    <li> 
+    <span class="lenya-form-error">unless its parent is published:</span>
+    <ul>
+      <li><a href="{@href}"><xsl:value-of select="@id"/> [<xsl:value-of select="@language"/>]</a></li>
+    </ul>
+    </li>
   </xsl:template>
         
+  <xsl:template match="usecase:message[@id='not-check-out']">
+    <li>
+      <span class="lenya-form-error">because it is checked out by another user</span>
+    </li>  
+  </xsl:template>
         
   <xsl:template match="/usecase:publish[not(usecase:message)]">
 
@@ -113,6 +122,8 @@
           <input type="hidden" name="document-id" value="{$document-id}"/>
           <input type="hidden" name="document-language" value="{$document-language}"/>
           <input type="hidden" name="user-id" value="{/usecase:publish/usecase:user-id}"/>
+          <input type="hidden" name="user-name" value="{/usecase:publish/usecase:user-name}"/>
+          <input type="hidden" name="user-email" value="{/usecase:publish/usecase:user-email}"/>
           <input type="hidden" name="ip-address" value="{/usecase:publish/usecase:ip-address}"/>
           <input type="hidden" name="role-ids" value="{/usecase:publish/usecase:role-ids}"/>
           <input type="hidden" name="workflow-event" value="publish"/>
@@ -145,7 +156,7 @@
                   </td>
                 </tr>
                 <tr>
-	          <xsl:apply-templates select="referenced-documents"/>
+  	              <xsl:apply-templates select="referenced-documents"/>
                 </tr>
                 <tr>
                   <td/>

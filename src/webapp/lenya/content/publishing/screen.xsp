@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: screen.xsp,v 1.19 2004/07/29 05:50:14 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page
        language="java"
@@ -39,6 +39,8 @@
     <xsp:include>org.apache.lenya.cms.workflow.WorkflowFactory</xsp:include>
     <xsp:include>org.apache.lenya.workflow.impl.History</xsp:include>
     <xsp:include>org.apache.lenya.workflow.impl.Version</xsp:include>
+    <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
+    <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
   </xsp:structure>
 
   <usecase:publish>
@@ -53,6 +55,8 @@
     <usecase:language><input:get-attribute module="page-envelope" name="document-language" as="string"/></usecase:language>
     <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
     <usecase:user-id><input:get-attribute module="access-control" name="user-id" as="string"/></usecase:user-id>
+    <usecase:user-name><input:get-attribute module="access-control" name="user-name" as="string"/></usecase:user-name>
+    <usecase:user-email><input:get-attribute module="access-control" name="user-email" as="string"/></usecase:user-email>
     <usecase:ip-address><input:get-attribute module="access-control" name="ip-address" as="string"/></usecase:ip-address>
     <usecase:role-ids><input:get-attribute module="access-control" name="role-ids" as="string"/></usecase:role-ids>
     <usecase:workflow-event><input:get-attribute module="request-param" name="lenya.event" as="string"/></usecase:workflow-event>
@@ -152,6 +156,29 @@
 	  }
       </xsp:logic>
     
+    <xsp:logic>
+      try {
+        Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
+        String userId = <input:get-attribute module="access-control" name="user-id" as="string"/>;
+  
+        RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
+        String rootDir=publication.getEnvironment().getPublicationPath();
+        String rcmlDirectory = rcEnvironment.getRCMLDirectory();
+        rcmlDirectory=rootDir+rcmlDirectory;
+        String backupDirectory = rcEnvironment.getBackupDirectory();
+        backupDirectory=rootDir+backupDirectory;
+        RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
+
+        Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+        String filename = document.getFile().getCanonicalPath().substring(publication.getDirectory().getCanonicalPath().length());
+        if (!rc.canCheckOut(filename, userId)) {
+          <usecase:message id="not-check-out"/>
+        }
+      }  
+      catch (Exception e) {
+        throw new ProcessingException(e);
+      }
+    </xsp:logic>
   </usecase:publish>
   
 </xsp:page>
