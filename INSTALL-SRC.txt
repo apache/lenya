@@ -28,7 +28,8 @@
   1) Get, install, start, try and stop Tomcat
 
      [unix]  cd /home/wyona/build
-             wget http://jakarta.apache.org/builds/jakarta-tomcat-4.0/nightly/jakarta-tomcat-4.0-20020110.tar.gz
+             wget http://jakarta.apache.org/builds/jakarta-tomcat-4.0/nightly/jakarta-tomcat-4.0-20020110.tar.gz 
+             (take the apropriate tomcat version, this one might not exist anymore)
              tar -xzf jakarta-tomcat-4.0-20020110.tar.gz
              export JAVA_HOME=/usr/local/jdk1.3.1
              export CATALINA_HOME=/home/wyona/build/jakarta-tomcat-4.0
@@ -41,15 +42,21 @@
 
      [unix]  cd /home/wyona/build
              wget http://jakarta.apache.org/builds/jakarta-ant/release/v1.4.1/bin/jakarta-ant-1.4.1-bin.tar.gz
+             (take the apropriate ant version, this one might not exist anymore)
              tar -xzf jakarta-ant-1.4.1-bin.tar.gz
 
 
   3) Get Wyona
 
      [unix]  cd /home/wyona/src
-             wget http://www.wyona.org/builds/wyona-cms-2.0/nightly/src/wyona-cms-2.0-src-200201102354.tar.gz
-             tar -xzf wyona-cms-2.0-src-200201102354.tar.gz
-             cd wyona-cms-2.0-src
+             choose 1) or 2)
+             1) wget http://www.wyona.org/builds/wyona-cms-2.0/nightly/src/wyona-cms-2.0-src-200201102354.tar.gz
+                (take the apropriate wyonacms (src not bin) version, this one might not exist anymore)
+                tar -xzf wyona-cms-2.0-src-200201102354.tar.gz
+                mv wyona-cms-2.0-src wyonacms 
+             2) or get it from the public cvs:
+                cvs -d :pserver:anonwyonacms@194.191.122.220:/repository checkout wyonacms
+             cd wyonacms
              ls
 
 
@@ -58,16 +65,17 @@
 
      [unix]  cd /home/wyona/src
              wget http://cvs.apache.org/snapshots/xml-cocoon2/xml-cocoon2_20020110171938.tar.gz
+             (take the apropriate cocoon version, this one might not exist anymore)
              tar -xzf xml-cocoon2_20020110171938.tar.gz
              cd xml-cocoon2
              export JAVA_HOME=/usr/local/jdk1.3.1
              ./build.sh -Dinclude.webapp.libs=yes webapp
-             cp build/cocoon/cocoon.war ../wyona-cms-2.0-src/.
+             cp build/cocoon/cocoon.war ../wyonacms/.
 
 
   5) Build Wyona
 
-     [unix]  cd /home/wyona/src/wyona-cms-2.0-src
+     [unix]  cd /home/wyona/src/wyonacms
              export JAVA_HOME=/usr/local/jdk1.3.1
              export ANT_HOME=/home/wyona/build/jakarta-ant-1.4.1
              export PATH=/home/wyona/build/jakarta-ant-1.4.1/bin:$PATH
@@ -96,7 +104,7 @@
 
   8) Start Hacking Wyona
 
-     [unix]  cd /home/wyona/src/wyona-cms-2.0-src
+     [unix]  cd /home/wyona/src/wyonacms
              ls src/java
              ls src/webapp
              vi src/webapp/WEB-INF/logkit.xconf   (DEBUG, ERROR)
@@ -127,9 +135,13 @@
       We replaced DEBUG by ERROR
 
 
-  2) Used Default Ports
+  2)  Reconfigure Ports
 
-     8080: Tomcat: server.xml
-     8008: Tomcat(Catalina)-Apache: server.xml
-     8005: Shutdown: server.xml
-     9002: HypersonicSQL DB (http://www.hsqldb.org): cocoon.xconf
+     1) Tomcat port: TOMCAT/conf/server.xml (default: 8080)
+     2) Catalina port: TOMCAT/conf/server.xml (default: 8008)
+     3) Tomcat shutdown port: TOMCAT/conf/server.xml (default: 8005)
+     4) HypersonicSQL DB port(http://www.hsqldb.org): TOMCAT/webapps/wyona-cms/cocoon.xconf (default: 9002)
+
+     NOTE: /usr/local/bin/nmap localhost -p 1-65535
+        (http://www.insecure.org/nmap/index.html)
+        (to find out which ports are used)

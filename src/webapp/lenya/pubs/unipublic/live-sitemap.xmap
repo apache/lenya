@@ -19,7 +19,10 @@
   <map:pipelines>
     <map:pipeline>
       <map:match pattern="introduction.html">
-        <map:read src="resources/publication/html/index.html" mime-type="text/html"/>
+        <map:read src="resources/publication/html/documentation/index.html" mime-type="text/html"/>
+      </map:match>
+      <map:match pattern="xsltModularisation.html">
+        <map:read src="resources/publication/html/documentation/xsltModularisation.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>
 

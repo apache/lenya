@@ -43,3 +43,4 @@
 
   NOTE: /usr/local/bin/nmap localhost -p 1-65535
         (http://www.insecure.org/nmap/index.html)
+        (to find out which ports are used)
