@@ -6,17 +6,16 @@
   <leaf name="Zurich" href="http://www.oscom.org/conferences/zurich2002/"/>
   <branch name="San Francisco" href="conferences/sanfrancisco2002/index.html">
     <leaf name="Program"/>
-    <leaf name="Registration&#160;&#38;&#160;Fees"/>
+    <leaf name="Registration&#160;&#38;&#160;Fees" href="conferences/sanfrancisco2002/registration_fees.html"/>
     <leaf name="Local&#160;Information"/>
     <leaf name="CfP" href="conferences/sanfrancisco2002/cfp.html"/>
-    <leaf name="CfP NEU" href="conferences/sanfrancisco2002/cfpneu.html"/>
-    <leaf name="Contact/OC"/>
+    <leaf name="Contact/OC" href="conferences/sanfrancisco2002/contact.html"/>
   </branch>
   <leaf name="Tokyo"/>
 </branch>
-<leaf name="CMF/S Overview"/>
+<leaf name="CMF/S Overview" href="overview.html"/>
 <leaf name="Editor Overview"/>
-<leaf name="Glossary"/>
+<leaf name="Glossary" href="glossary.html"/>
 <leaf name="Mailing Lists" href="mailing-lists.html"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>

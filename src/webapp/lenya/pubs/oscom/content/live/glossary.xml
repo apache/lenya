@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
-<oscom>
+<oscom xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<xi:include href="navigation.xml"/>
 
 <glossary>
 <term>
@@ -20,7 +22,16 @@
 <term>
 <title>Content Management System</title>
 <description>
-???
+A CMS is designed to manage documents resp. content by human beings and 
+provides features such as: Access Control, Version Control, Workflows, Cross-Media Publishing Engine,
+Separation of Content and Style, Authoring Tools, Search Engine, etc.
+The term content management system, as opposed to document management system, reflects
+the fact that such systems generally allow you to break your documents into
+discrete content fragments, such as examples, procedures, chapters, or sidebars, as
+well as metadata, such as author names, revision dates, rather than having to
+manage each document as a whole. Not only does this simplify such things as how to
+coordinate the work of multiple writers working on the same document, it allows you
+to assemble entirely new documents from existing components. (Source: <a href="http://www.rpbourret.com/xml/XMLAndDatabases.htm#cms">Ronald Bourret</a>)
 </description>
 </term>
 
