@@ -43,7 +43,7 @@
     <dc:creator><input:get-attribute module="access-control" as="string" name="user-name"/></dc:creator>
     <dc:subject></dc:subject>
     <dc:publisher></dc:publisher>
-    <dc:date></dc:date>
+    <dc:date><input:get-attribute module="date" name="currentDate"/></dc:date>
     <dc:rights></dc:rights>
     <dc:language><xsp:expr>pub.getDefaultLanguage()</xsp:expr></dc:language>
 
