@@ -116,6 +116,9 @@
                   </td>
                 </tr>
                 <tr>
+	          <xsl:apply-templates select="referenced-documents"/>
+                </tr>
+                <tr>
                   <td/>
                   <td>
                     <input type="submit" name="lenya.usecase" value="publish"/>
@@ -142,5 +145,16 @@
     </page:page>
   </xsl:template>
 
+  <xsl:template match="referenced-documents">
+    <td class="lenya-entry-caption" valign="top">
+      <span class="lenya-form-message-error">This document has links to the <br/>following unpublished documents:</span>
+    </td>
+    <td valign="top">
+      <xsl:for-each select="referenced-document">
+	<a target="_blank" href="{@href}"><xsl:value-of select="@id"/><xsl:value-of select="."/></a><br/>
+      </xsl:for-each>
+    </td>
+  </xsl:template>
+  
 
 </xsl:stylesheet>  
