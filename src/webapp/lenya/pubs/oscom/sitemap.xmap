@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.31 2003/10/09 13:20:14 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.32 2003/11/10 17:26:08 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -61,59 +61,6 @@
         <map:redirect-to uri="introduction.html"/>
       </map:match>
     </map:pipeline>
-
-
-    <map:pipeline>
-      <map:match pattern="osearch-*/lucene.xml">
-        <map:generate type="serverpages" src="../../content/search/search-and-results.xsp">
-          <map:parameter name="max-hits-per-page" value="5"/>
-          <map:parameter name="max-pages" value="7"/>
-
-          <map:parameter name="number-of-pubs" value="4"/>
-
-          <map:parameter name="pub0-id" value="all"/>
-          <map:parameter name="pub0-name" value="All OSCOM"/>
-          <map:parameter name="pub0-index-dir" value="work/search/lucene/index/index"/>
-          <map:parameter name="pub0-excerpt-dir" value="work/search/lucene/htdocs_dump"/>
-          <map:parameter name="pub0-prefix" value="http:/"/>
-
-          <map:parameter name="pub1-id" value="cambridge"/>
-          <map:parameter name="pub1-name" value="Conference at Cambridge"/>
-          <map:parameter name="pub1-index-dir" value="work/search/lucene/index/index-cambridge"/>
-          <map:parameter name="pub1-excerpt-dir" value="work/search/lucene/htdocs_dump/www.oscom.org/Conferences/Cambridge"/>
-          <map:parameter name="pub1-prefix" value="http://www.oscom.org/Conferences/Cambridge"/>
-
-          <map:parameter name="pub2-id" value="blog"/>
-          <map:parameter name="pub2-name" value="Blog"/>
-          <map:parameter name="pub2-index-dir" value="work/search/lucene/index/index-blog"/>
-          <map:parameter name="pub2-excerpt-dir" value="work/search/lucene/htdocs_dump/blog.oscom.org"/>
-          <map:parameter name="pub2-prefix" value="http://blog.oscom.org"/>
-
-
-          <map:parameter name="pub3-id" value="lists"/>
-          <map:parameter name="pub3-name" value="Mailing Lists"/>
-          <map:parameter name="pub3-index-dir" value="work/search/lucene/index/index-lists"/>
-          <map:parameter name="pub3-excerpt-dir" value="work/search/lucene/htdocs_dump/lists.oscom.org"/>
-          <map:parameter name="pub3-prefix" value="http://lists.oscom.org"/>
-
-        </map:generate>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>    
-
-    <map:pipeline>
-      <map:match pattern="osearch-*/lucene*">
-        <map:aggregate element="oscom" label="xml">
-          <map:part src="content/live/navigation.xml"/>
-          <map:part src="cocoon:/osearch-{1}/lucene.xml{2}"/>
-        </map:aggregate>
-<!--
-        <map:transform src="../../xslt/search/sort.xsl"/>
--->
-        <map:transform src="xslt/search/live/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-    </map:pipeline>    
 
 
     <map:pipeline>
