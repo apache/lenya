@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.17 2003/08/28 10:06:03 andreas Exp $
+$Id: FilePolicyManager.java,v 1.18 2003/10/02 15:29:46 andreas Exp $
 <License>
 
  ============================================================================
@@ -120,7 +120,7 @@ public class FilePolicyManager
 
     private SourceResolver resolver;
     private SourceCache cache;
-    
+
     protected static final String URL_FILENAME = "url-policy.acml";
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
 
@@ -163,12 +163,16 @@ public class FilePolicyManager
         String policyFilename)
         throws AccessControlException {
 
-        getLogger().debug("Building policy for URL [" + url + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Building policy for URL [" + url + "]");
+        }
 
         DefaultPolicy policy = null;
 
         String policyUri = getPolicyURI(url, policyFilename);
-        getLogger().debug("Policy source URI resolved to: " + policyUri);
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Policy source URI resolved to: " + policyUri);
+        }
 
         try {
             PolicyBuilder builder = new PolicyBuilder(controller);
@@ -176,11 +180,12 @@ public class FilePolicyManager
         } catch (CachingException e) {
             throw new AccessControlException(e);
         }
-
-        if (policy != null) {
-            getLogger().debug("Policy found.");
-        } else {
-            getLogger().debug("Using empty Policy.");
+        
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Policy exists: [" + (policy != null) + "]");
+        }
+        
+        if (policy == null) {
             policy = new DefaultPolicy();
         }
         return policy;
@@ -242,10 +247,11 @@ public class FilePolicyManager
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
-        
-        String policyUri = "file://" + getPoliciesDirectory().getAbsolutePath() + "/" + url + "/" + policyFilename;
+
+        String policyUri =
+            "file://" + getPoliciesDirectory().getAbsolutePath() + "/" + url + "/" + policyFilename;
         getLogger().debug("Computing policy URI [" + policyUri + "]");
-        return policyUri; 
+        return policyUri;
     }
 
     /**
