@@ -29,6 +29,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.xml.DocumentHelper;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -82,18 +83,22 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
 
        // Replace id
         Element element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'id']");
-        element.setNodeValue("tag:bob.blog," + year + ":" + month + ":" + day + ":" + childId);
+//        element.setNodeValue("tag:bob.blog," + year + ":" + month + ":" + day + ":" + childId);
 
+        DocumentHelper.setSimpleElementText(element, "tag:bob.blog," + year + ":" + month + ":" + day + ":" + childId);
+        
         // Replace title 
         element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'title']");
-        element.setNodeValue((String)parameters.get("title"));
+//        element.setNodeValue((String)parameters.get("title"));
+        DocumentHelper.setSimpleElementText(element, (String)parameters.get("title"));
         element.setAttribute("rel","alternate");
         element.setAttribute("href","http://bob.blog");
         element.setAttribute("type","text/xml");
 
         // Replace Summary
         element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'summary']");
-        element.setNodeValue("Summary");
+//        element.setNodeValue("Summary");
+        DocumentHelper.setSimpleElementText(element, "Summary");
 
 
         // Replace author
@@ -115,10 +120,10 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         String datestr = datefmt.format(date) + dateofs.substring(0, 3) + ":" + dateofs.substring(3, 5);
 
         element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'created']");
-        element.setNodeValue(datestr);
+        DocumentHelper.setSimpleElementText(element, datestr);
         element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'issued']");
-        element.setNodeValue(datestr);
+        DocumentHelper.setSimpleElementText(element, datestr);
         element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'modified']");
-        element.setNodeValue(datestr);
+        DocumentHelper.setSimpleElementText(element, datestr);
     }
 }
