@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.9 2003/07/28 20:07:07 gregor Exp $
+ $Id: info.xsl,v 1.10 2003/07/29 16:28:02 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -240,7 +240,13 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</td>
-	<td><input type="submit" name="add_credential_{$type}" value="Add"/></td>
+	<td>
+		<input type="submit" name="add_credential_{$type}" value="Add">
+			<xsl:if test="not(//lenya-info:items[@type = $type]/lenya-info:item)">
+				<xsl:attribute name="disabled">disabled</xsl:attribute>
+			</xsl:if>
+		</input>
+	</td>
 	</form>
 </xsl:template>
 
