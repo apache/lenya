@@ -122,11 +122,11 @@
         <map:generate type="directory" src="content/authoring/articles/">
           <map:parameter name="depth" value="1"/>
         </map:generate>
-        <map:transform src="xslt/front//xinclude.xsl">
+        <map:transform src="xslt/front/xinclude.xsl">
           <map:parameter name="view" value="authoring"/>
         </map:transform>
         <map:transform type="xlink"/>
-        <map:transform src="xslt/front//sort.xsl"/>
+        <map:transform src="xslt/front/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -135,7 +135,7 @@
       </map:match>
       <map:match pattern="index.html">
         <map:generate src="cocoon:/front.xml"/>
-        <map:transform src="xslt/front//authoring/main.xsl"/>
+        <map:transform src="xslt/front/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
@@ -145,7 +145,7 @@
         <map:redirect-to uri="../index.rss"/>
 -->
         <map:generate src="cocoon:/index.xml"/>
-        <map:transform src="xslt/front//rdf.xsl"/>
+        <map:transform src="xslt/front/rdf.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
