@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: content.xsl,v 1.2 2003/08/08 08:50:26 gregor Exp $
+ $Id: content.xsl,v 1.3 2003/09/22 17:15:27 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -34,16 +34,16 @@
     <div class="lenya-box">
       <div class="lenya-box-title">Delete the Trash</div>
       <div class="lenya-box-body">
-        <form method="get">
-          <xsl:attribute name="action"></xsl:attribute>
+        <form method="get" action="index.html">
           <input type="hidden" name="lenya.usecase" value="deleteTrash"/>
           <input type="hidden" name="lenya.step" value="deleteTrash"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
           <p>
  	      Do you really want to delete the trash ?
           </p>
-          <input type="submit" class="lenya-form-element" value="Delete trash"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}/../';" value="Cancel"/>
+          <input type="submit" value="Delete trash"/>
+          &#160;
+          <input type="button" onClick="location.href='{$request-uri}/../';" value="Cancel"/>
         </form>
       </div>
     </div>
