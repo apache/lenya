@@ -75,6 +75,14 @@
               <td><xsl:value-of select="description"/></td>
             </tr>
             <tr>
+              <td valign="top" class="lenya-entry-caption"><i18n:text>Default Menu Locale</i18n:text>:</td>
+              <td><xsl:value-of select="default-menu-locale"/></td>
+            </tr>
+            <tr>
+              <td valign="top" class="lenya-entry-caption"><i18n:text>Default Document Locale</i18n:text>:</td>
+              <td><xsl:value-of select="default-document-locale"/></td>
+            </tr>
+            <tr>
               <td/>
               <td>
 				        <form method="GET">

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: overview.xsp,v 1.9 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page
   language="java"
@@ -58,6 +58,8 @@
       <name><xsp:expr>user.getName()</xsp:expr></name>
       <email><xsp:expr>user.getEmail()</xsp:expr></email>
       <description><xsp:expr>user.getDescription()</xsp:expr></description>
+      <default-menu-locale><xsp:expr>user.getDefaultMenuLocale()</xsp:expr></default-menu-locale>
+      <default-document-locale><xsp:expr>user.getDefaultDocumentLocale()</xsp:expr></default-document-locale>
       <groups>
         <xsp:logic>
             Group groups[] = user.getGroups();

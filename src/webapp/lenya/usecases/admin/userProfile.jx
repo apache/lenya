@@ -41,9 +41,20 @@
             <textarea name="description" class="lenya-form-element"><jx:out value="${usecase.getParameter('description')}"/></textarea>
           </td>
         </tr>
+
         <tr>
           <td class="lenya-entry-caption"><i18n:text>E-Mail</i18n:text> *</td>
           <td><input type="text" name="email" class="lenya-form-element" value="${usecase.getParameter('email')}"/></td>
+        </tr>
+        
+        <tr>
+          <td class="lenya-entry-caption"><i18n:text>Default Menu Locale</i18n:text> *</td>
+          <td><input type="text" name="email" class="lenya-form-element" value="${usecase.getParameter('defaultMenuLocale')}"/></td>
+        </tr>
+        
+        <tr>
+          <td class="lenya-entry-caption"><i18n:text>Default Document Locale</i18n:text> *</td>
+          <td><input type="text" name="email" class="lenya-form-element" value="${usecase.getParameter('defaultDocumentLocale')}"/></td>
         </tr>
         
         <tr>
