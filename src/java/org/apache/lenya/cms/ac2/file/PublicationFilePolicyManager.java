@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFilePolicyManager.java,v 1.8 2003/08/15 09:43:53 andreas Exp $
+$Id: PublicationFilePolicyManager.java,v 1.9 2003/09/05 14:39:28 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,7 +65,6 @@ import org.apache.lenya.cms.ac2.DefaultPolicy;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -127,7 +126,7 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
         getLogger().debug("Building URL policy for URL [" + path + "]");
         Policy policy = buildURLPolicy(controller, "/" + publication.getId() + path);
         policies.add(policy);
-        
+
         String[] directories = path.split("/");
 
         path = "/" + publication.getId();
@@ -186,17 +185,21 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
                 document =
                     DefaultDocumentBuilder.getInstance().buildDocument(publication, webappUrl);
             }
-        } catch (DocumentBuildException e) {
+            if (document != null && document.existsInAnyLanguage()) {
+                path = "/" + document.getArea() + document.getId();
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Document exists, using document ID [" + path + "]");
+                }
+            } else {
+                path = webappUrl.substring(("/" + publication.getId()).length());
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Document does not exist, using URL [" + path + "]");
+                }
+            }
+        } catch (Exception e) {
             throw new AccessControlException(e);
         }
 
-        if (document != null && document.getFile().exists()) {
-            path = "/" + document.getArea() + document.getId();
-            getLogger().debug("Document exists, using document ID [" + path + "]");
-        } else {
-            path = webappUrl.substring(("/" + publication.getId()).length());
-            getLogger().debug("Document does not exist, using URL [" + path + "]");
-        }
         return path;
     }
 
