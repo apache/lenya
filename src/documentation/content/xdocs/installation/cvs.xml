@@ -55,11 +55,11 @@ svn co http://svn.apache.org/repos/asf/incubator/lenya/trunk lenya-trunk
   where X is the major version number and Y and Z are the minor version numbers.</p>
   
 <ul>
-  <li></li><a href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/?root=Apache-SVN">Browse the Lenya 
-    code repository</a></li>
+  <li><link href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/?root=Apache-SVN">Browse the Lenya
+    code repository</link></li>
   <li>
-    <a href="http://www.apache.de/dev/version-control.html">ASF documention on source code 
-      repositories</a>
+    <link href="http://www.apache.de/dev/version-control.html">ASF documention on source code 
+      repositories</link>
   </li>
 </ul>
 </section>
