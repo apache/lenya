@@ -11,7 +11,7 @@ function group_add_group() {
 	var message = "";
 	
 	while (true) {
-		sendPageAndWait("groups/lenya.usecase.add_group/profile.xml", {
+		sendPageAndWait("groups/profile.xml", {
 			"page-title" : "Add Group: Profile",
 			"group-id" : groupId,
 	    	"name" : name,
@@ -48,25 +48,25 @@ function group_add_group() {
 function group_delete_group() {
 
 	var accessController = getAccessController();
-	var userId = cocoon.request.get("user-id");
-	var user = accessController.getUserManager().getUser(userId);
-	var fullName = user.getFullName();
+	var groupId = cocoon.request.get("group-id");
+	var group = accessController.getGroupManager().getUser(groupId);
+	var name = group.getName();
 	var showPage = true;
 	
 	while (showPage) {
-		sendPageAndWait("users/lenya.usecase.delete_user/confirm-delete.xml", {
-			"user-id" : userId,
-			"fullname" : fullName
+		sendPageAndWait("groups/confirm-delete.xml", {
+			"group-id" : groupId,
+			"name" : name
 		});
 		
 		if (cocoon.request.get("submit")) {
-			accessController.getUserManager().remove(user);
-			user['delete']();
+			accessController.getGroupManager().remove(group);
+			group['delete']();
 			showPage = false;
 		}
 	}
 
-   	sendPage("redirect.html", { "url" : "../users.html" });
+   	sendPage("redirect.html", { "url" : "../groups.html" });
 }
 
 //
@@ -82,7 +82,7 @@ function group_change_profile(groupId) {
 	// at the moment the loop is executed only once (no form validation)
 	
     while (true) {
-	    sendPageAndWait("groups/lenya.usecase.change_profile/profile.xml", {
+	    sendPageAndWait("groups/profile.xml", {
 	    	"group-id" : groupId,
 	    	"name" : name,
 	    	"description" : description,
@@ -141,7 +141,7 @@ function group_change_members(groupId) {
     }
     
     while (true) {
-	    sendPageAndWait("groups/lenya.usecase.change_members/members.xml", {
+	    sendPageAndWait("groups/members.xml", {
 	    	"group-id" : groupId,
 	    	"users" : otherUsers,
 	    	"group-users" : groupUsers,
@@ -185,5 +185,52 @@ function group_change_members(groupId) {
 		}
 	}
    	sendPage("redirect.html", { "url" : "index.html" });
+}
+
+//
+// Add a group.
+//
+function group_add_group() {
+
+	var accessController = getAccessController();
+	var groupId = "";
+	var name = "";
+	var description = "";
+	var message = "";
+	
+	while (true) {
+		sendPageAndWait("groups/profile.xml", {
+			"page-title" : "Add Group",
+			"group-id" : groupId,
+	    	"name" : name,
+	    	"description" : description,
+	    	"message" : message,
+	    	"new-group" : true
+		});
+		
+	    if (cocoon.request.get("cancel")) {
+	    	break;
+	    }
+	    
+		message = "";
+		groupId = cocoon.request.get("group-id");
+		name = cocoon.request.get("name");
+		description = cocoon.request.get("description");
+		
+		var existingGroup = accessController.getGroupManager().getGroup(groupId);
+		if (existingGroup != null) {
+			message = "This group already exists.";
+		}
+		else {
+			var configDir = accessController.getGroupManager().getConfigurationDirectory();
+			var group = new Packages.org.apache.lenya.cms.ac.FileGroup(configDir, groupId);
+			group.setName(name);
+			group.setDescription(description);
+			group.save();
+			accessController.getGroupManager().add(group);
+			break;
+		}
+	}
+   	sendPage("redirect.html", { "url" : "../groups.html" });
 }
 

@@ -26,6 +26,9 @@
   
   
   <xsl:template match="groups">
+    <div style="margin: 10px 0px">
+      <xsl:call-template name="add-group"/>
+    </div>
     <table cellspacing="0" class="lenya-table">
       <tr>
         <th>Group ID</th>
@@ -60,6 +63,12 @@
         </form>
       </td>
     </tr>
+  </xsl:template>
+  
+  <xsl:template name="add-group">
+    <form method="GET" action="groups/lenya.usecase.add_group">
+      <input type="submit" value="Add Group"/>
+    </form>
   </xsl:template>
   
   

@@ -46,10 +46,10 @@
     <map:pipeline>
       
       <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
-      <!-- pattern: internal/{type}/lenya.usecase.{usecase}/{page}.xml -->
-      <map:match pattern="internal/*/lenya.usecase.*/*.xml">
-        <map:generate src="content/admin/{1}/{3}.xsp" type="serverpages"/>
-        <map:transform src="xslt/admin/{1}/{3}.xsl"/>
+      <!-- pattern: internal/{type}/{page}.xml -->
+      <map:match pattern="internal/*/*.xml">
+        <map:generate src="content/admin/{1}/{2}.xsp" type="serverpages"/>
+        <map:transform src="xslt/admin/{1}/{2}.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       

@@ -13,7 +13,7 @@ function user_change_profile(userId) {
 	// at the moment the loop is executed only once (no form validation)
 	
     while (true) {
-	    sendPageAndWait("users/lenya.usecase.change_profile/profile.xml", {
+	    sendPageAndWait("users/profile.xml", {
 	    	"user-id" : userId,
 	    	"fullname" : fullName,
 	    	"email" : email,
@@ -60,7 +60,7 @@ function user_change_password(checkPassword, userId) {
     var message = "";
     
     while (true) {
-	    sendPageAndWait("users/lenya.usecase.change_password/password.xml", {
+	    sendPageAndWait("users/password.xml", {
 	    	"user-id" : userId,
 	    	"new-password" : newPassword,
 	    	"confirm-password" : confirmPassword,
@@ -116,7 +116,7 @@ function user_change_groups(userId) {
     }
     
     while (true) {
-	    sendPageAndWait("users/lenya.usecase.change_groups/groups.xml", {
+	    sendPageAndWait("users/groups.xml", {
 	    	"user-id" : userId,
 	    	"groups" : groups,
 	    	"user-groups" : userGroups
@@ -171,7 +171,7 @@ function user_add_user() {
 	var message = "";
 	
 	while (true) {
-		sendPageAndWait("users/lenya.usecase.add_user/profile.xml", {
+		sendPageAndWait("users/profile.xml", {
 			"page-title" : "Add User: Profile",
 			"user-id" : userId,
 	    	"fullname" : fullName,
@@ -181,6 +181,10 @@ function user_add_user() {
 	    	"new-user" : true
 		});
 		
+	    if (cocoon.request.get("cancel")) {
+	    	break;
+	    }
+	    
 		message = "";
 		userId = cocoon.request.get("user-id");
 		email = cocoon.request.get("email");
@@ -216,7 +220,7 @@ function user_delete_user() {
 	var showPage = true;
 	
 	while (showPage) {
-		sendPageAndWait("users/lenya.usecase.delete_user/confirm-delete.xml", {
+		sendPageAndWait("users/confirm-delete.xml", {
 			"user-id" : userId,
 			"fullname" : fullName
 		});
