@@ -1,5 +1,5 @@
 /*
- * $Id: CopyTask.java,v 1.2 2003/04/24 13:52:37 gregor Exp $
+ * $Id: CopyTask.java,v 1.3 2003/05/19 10:10:16 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,7 +69,12 @@ public class CopyTask extends Task {
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
             //System.out.println("CopyTask.execute(): " + pubsRootDir);
-            CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(toDir.toString()), twoTuple, null);
+            if(new File(pubsRootDir, "publication.xml").isFile()) {
+                CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(toDir.toString()), twoTuple, null);
+            } else {
+                // FIXME: Look for publications defined by the file "publication.xml"
+                CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir), new File(toDir.toString()), twoTuple, null);
+            }
         }
 
         numberOfDirectoriesCreated = twoTuple.x;
