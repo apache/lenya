@@ -56,6 +56,8 @@ package org.apache.lenya.cms.rc;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -68,25 +70,34 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-
 /**
  * Handle with the RCML file
  *
  * @author Michael Wechner
  * @author Marc Liyanage
  * @author Edith Chevrier
- * @version $Id: RCML.java,v 1.23 2004/02/10 11:37:36 andreas Exp $
+ * @version $Id: RCML.java,v 1.24 2004/02/10 15:32:19 andreas Exp $
  */
 public class RCML {
     private static Category log = Category.getInstance(RCML.class);
-    
+
     public static final short co = 0;
     public static final short ci = 1;
-    
+
     private File rcmlFile;
     private Document document = null;
     private boolean dirty = false;
     private int maximalNumberOfEntries = 5;
+
+    private static Map ELEMENTS = new HashMap();
+    protected static final String ELEMENT_CHECKIN = "CheckIn";
+    protected static final String ELEMENT_CHECKOUT = "CheckOut";
+    protected static final String ELEMENT_BACKUP = "Backup";
+
+    {
+        ELEMENTS.put(new Short(ci), ELEMENT_CHECKIN);
+        ELEMENTS.put(new Short(co), ELEMENT_CHECKOUT);
+    }
 
     /**
      * Creates a new RCML object.
@@ -110,15 +121,14 @@ public class RCML {
      *
      * @throws Exception if an error occurs
      */
-    public RCML(String rcmlDirectory, String filename, String rootDirectory)
-        throws Exception {
+    public RCML(String rcmlDirectory, String filename, String rootDirectory) throws Exception {
         this();
-        rcmlFile = new File(rcmlDirectory , filename + ".rcml");
-     
+        rcmlFile = new File(rcmlDirectory, filename + ".rcml");
+
         if (!rcmlFile.isFile()) {
             // The rcml file does not yet exist, so we create it now...
             //
-            File dataFile = new File(rootDirectory , filename);
+            File dataFile = new File(rootDirectory, filename);
             long lastModified = 0;
 
             if (dataFile.isFile()) {
@@ -127,10 +137,10 @@ public class RCML {
 
             initDocument();
 
-			// Create a "fake" checkin entry so it looks like the
-			// system checked the document in. We use the filesystem
-			// modification date as checkin time.
-			//
+            // Create a "fake" checkin entry so it looks like the
+            // system checked the document in. We use the filesystem
+            // modification date as checkin time.
+            //
             checkOutIn(RCML.ci, RevisionController.systemUsername, lastModified, false);
 
             File parent = new File(rcmlFile.getParent());
@@ -146,7 +156,7 @@ public class RCML {
      * initialise the RCML-document. Delete all entries
      */
     public void initDocument() throws ParserConfigurationException {
-        document = DocumentHelper.createDocument(null, "XPSRevisionControl", null); 
+        document = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
     }
 
     /**
@@ -185,31 +195,27 @@ public class RCML {
      */
     public void checkOutIn(short type, String identity, long time, boolean backup)
         throws IOException, Exception {
-            
+
+        if (type != co && type != ci) {
+            throw new IllegalArgumentException(
+                "ERROR: " + this.getClass().getName() + ".checkOutIn(): No such type");
+        }
+
         NamespaceHelper helper = new NamespaceHelper(null, "", document);
-            
+
         Element identityElement = helper.createElement("Identity", identity);
         Element timeElement = helper.createElement("Time", "" + time);
 
-        Element checkOutElement = null;
-
-        if (type == co) {
-            checkOutElement = helper.createElement("CheckOut");
-        } else if (type == ci) {
-            checkOutElement = helper.createElement("CheckIn");
-        } else {
-            log.error("ERROR: " + this.getClass().getName() + ".checkOutIn(): No such type");
-
-            return;
-        }
+        String elementName = (String) ELEMENTS.get(new Short(type));
+        Element checkOutElement = helper.createElement(elementName);
 
         checkOutElement.appendChild(identityElement);
         checkOutElement.appendChild(timeElement);
 
-		if (backup) {
-			Element backupElement = helper.createElement("Backup");
-			checkOutElement.appendChild(backupElement);
-		}
+        if (backup) {
+            Element backupElement = helper.createElement(ELEMENT_BACKUP);
+            checkOutElement.appendChild(backupElement);
+        }
 
         Element root = document.getDocumentElement();
         root.insertBefore(checkOutElement, root.getFirstChild());
@@ -246,7 +252,9 @@ public class RCML {
     public CheckOutEntry getLatestCheckOutEntry() throws Exception {
         XPointerFactory xpf = new XPointerFactory();
 
-        Vector firstCheckOut = xpf.select(document.getDocumentElement(),
+        Vector firstCheckOut =
+            xpf.select(
+                document.getDocumentElement(),
                 "xpointer(/XPSRevisionControl/CheckOut[1]/Identity)xpointer(/XPSRevisionControl/CheckOut[1]/Time)");
 
         if (firstCheckOut.size() == 0) {
@@ -271,7 +279,9 @@ public class RCML {
     public CheckInEntry getLatestCheckInEntry() throws Exception {
         XPointerFactory xpf = new XPointerFactory();
 
-        Vector firstCheckIn = xpf.select(document.getDocumentElement(),
+        Vector firstCheckIn =
+            xpf.select(
+                document.getDocumentElement(),
                 "xpointer(/XPSRevisionControl/CheckIn[1]/Identity)xpointer(/XPSRevisionControl/CheckIn[1]/Time)");
 
         if (firstCheckIn.size() == 0) {
@@ -322,15 +332,17 @@ public class RCML {
     public Vector getEntries() throws Exception {
         XPointerFactory xpf = new XPointerFactory();
 
-        Vector entries = xpf.select(document.getDocumentElement(),
+        Vector entries =
+            xpf.select(
+                document.getDocumentElement(),
                 "xpointer(/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn)");
         Vector RCMLEntries = new Vector();
 
         for (int i = 0; i < entries.size(); i++) {
             Element elem = (Element) entries.get(i);
             String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
-            String identity = elem.getElementsByTagName("Identity").item(0).getFirstChild()
-                                  .getNodeValue();
+            String identity =
+                elem.getElementsByTagName("Identity").item(0).getFirstChild().getNodeValue();
 
             if (elem.getTagName().equals("CheckOut")) {
                 RCMLEntries.add(new CheckOutEntry(identity, new Long(time).longValue()));
@@ -353,14 +365,17 @@ public class RCML {
     public void pruneEntries(String backupDir) throws Exception {
         XPointerFactory xpf = new XPointerFactory();
 
-        Vector entries = xpf.select(document.getDocumentElement(),
+        Vector entries =
+            xpf.select(
+                document.getDocumentElement(),
                 "xpointer(/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn)");
 
         for (int i = maximalNumberOfEntries; i < entries.size(); i++) {
             Element current = (Element) entries.get(i);
 
             // remove the backup file associated with this entry
-            String time = current.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
+            String time =
+                current.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
             File backupFile = new File(backupDir + "/" + time + ".bak");
             backupFile.delete();
             // remove the entry from the list
@@ -392,16 +407,16 @@ public class RCML {
         return dirty;
     }
 
-	/**
-	 * Set the value dirty to true
-	 */
+    /**
+     * Set the value dirty to true
+     */
     protected void setDirty() {
         dirty = true;
     }
 
-	/**
-	 * Set the value dirty to false
-	 */
+    /**
+     * Set the value dirty to false
+     */
     protected void clearDirty() {
         dirty = false;
     }

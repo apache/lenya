@@ -65,12 +65,11 @@ import java.util.Date;
 import org.apache.lenya.util.XPSFileOutputStream;
 import org.apache.log4j.Category;
 
-
 /**
  * Controller for the reserved check-in, check-out, the backup versions and the rollback 
  *
  * @author Michael Wechner
- * @version $Id: RevisionController.java,v 1.25 2003/12/18 17:01:18 edith Exp $
+ * @version $Id: RevisionController.java,v 1.26 2004/02/10 15:32:19 andreas Exp $
  */
 public class RevisionController {
     private static Category log = Category.getInstance(RevisionController.class);
@@ -83,7 +82,7 @@ public class RevisionController {
     //   username as identity parameter to reservedCheckIn()
     //
     public static final String systemUsername = "System";
-    
+
     private String rcmlDir = null;
     private String rootDir = null;
     private String backupDir = null;
@@ -95,9 +94,11 @@ public class RevisionController {
     public RevisionController() {
         Configuration conf = new Configuration();
         rcmlDir = conf.getRcmlDirectory();
-        if (!new File(rcmlDir).exists()) log.error("No such directory: " + rcmlDir);
+        if (!new File(rcmlDir).exists())
+            log.error("No such directory: " + rcmlDir);
         backupDir = conf.getBackupDirectory();
-        if (!new File(backupDir).exists()) log.error("No such directory: " + backupDir);
+        if (!new File(backupDir).exists())
+            log.error("No such directory: " + backupDir);
         rootDir = "conf.rootDirectory";
     }
 
@@ -154,19 +155,16 @@ public class RevisionController {
      * @param source The filename of the file to check out
      * @param identity The identity of the user
      * @return File File to check out
-	 * @throws FileReservedCheckOutException if the document is already checked out by another
-     *            user
-     * @throws FileNotFoundException if an error occurs
-	 * @throws IOException if an error occurs
-	 * @throws Exception if an error occurs
-	 */
-    public File reservedCheckOut(String source, String identity)
-        throws FileNotFoundException, FileReservedCheckOutException, IOException, Exception {
+     * @throws Exception if an error occurs
+     */
+    public File reservedCheckOut(String source, String identity) throws Exception {
+        
         File file = new File(rootDir + source);
-
+        /*
         if (!file.isFile()) {
             throw new FileNotFoundException(file.getAbsolutePath());
         }
+        */
 
         RCML rcml = new RCML(rcmlDir, source, rootDir);
 
@@ -175,19 +173,48 @@ public class RevisionController {
         // The same user is allowed to check out repeatedly without
         // having to check back in first.
         //
-		if (entry != null) {
-		  log.debug("entry: " + entry);
-          log.debug("entry.type:" + entry.getType());
-          log.debug("entry.identity" + entry.getIdentity());
-		}  
+        if (entry != null) {
+            log.debug("entry: " + entry);
+            log.debug("entry.type:" + entry.getType());
+            log.debug("entry.identity" + entry.getIdentity());
+        }
 
-        if ((entry != null) && (entry.getType() != RCML.ci) && !entry.getIdentity().equals(identity)) {
+        if ((entry != null)
+            && (entry.getType() != RCML.ci)
+            && !entry.getIdentity().equals(identity)) {
             throw new FileReservedCheckOutException(rootDir + source, rcml);
         }
 
         rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false);
 
         return file;
+    }
+
+    /**
+     * Checks if a source can be checked out.
+     * @param source The source.
+     * @param identity The identity who requests checking out.
+     * @return A boolean value.
+     * @throws Exception when something went wrong.
+     */
+    public boolean canCheckOut(String source, String identity) throws Exception {
+        RCML rcml = new RCML(rcmlDir, source, rootDir);
+
+        RCMLEntry entry = rcml.getLatestEntry();
+
+        // The same user is allowed to check out repeatedly without
+        // having to check back in first.
+        //
+        if (entry != null) {
+            log.debug("entry: " + entry);
+            log.debug("entry.type:" + entry.getType());
+            log.debug("entry.identity" + entry.getIdentity());
+        }
+
+        boolean checkedOutByOther =
+            entry != null && entry.getType() != RCML.ci && !entry.getIdentity().equals(identity);
+
+        return !checkedOutByOther;
     }
 
     /**
@@ -256,19 +283,22 @@ public class RevisionController {
             }
         }
 
-        File originalFile = new File(rootDir , destination);
+        File originalFile = new File(rootDir, destination);
         long time = new Date().getTime();
 
         if (backup && originalFile.isFile()) {
-            File backupFile = new File(backupDir , destination + ".bak." + time);
+            File backupFile = new File(backupDir, destination + ".bak." + time);
             File parent = new File(backupFile.getParent());
 
             if (!parent.isDirectory()) {
                 parent.mkdirs();
             }
 
-            log.info("Backup: copy " + originalFile.getAbsolutePath() + " to " +
-                backupFile.getAbsolutePath());
+            log.info(
+                "Backup: copy "
+                    + originalFile.getAbsolutePath()
+                    + " to "
+                    + backupFile.getAbsolutePath());
 
             InputStream in = new FileInputStream(originalFile.getAbsolutePath());
 
@@ -304,7 +334,7 @@ public class RevisionController {
      * @return String The absolute path of the backup version
      */
     public String getBackupFilename(long time, String filename) {
-        File backup = new File(backupDir , filename + ".bak." + time);
+        File backup = new File(backupDir, filename + ".bak." + time);
 
         return backup.getAbsolutePath();
     }
@@ -325,12 +355,15 @@ public class RevisionController {
      * @exception Exception if another problem occurs
      */
     public long rollback(String destination, String identity, boolean backupFlag, long time)
-        throws FileReservedCheckInException, FileReservedCheckOutException, FileNotFoundException, 
+        throws
+            FileReservedCheckInException,
+            FileReservedCheckOutException,
+            FileNotFoundException,
             Exception {
         // Make sure the old version exists
         //
-        File backup = new File(backupDir , destination + ".bak." + time);
-        File current = new File(rootDir , destination);
+        File backup = new File(backupDir, destination + ".bak." + time);
+        File current = new File(rootDir, destination);
 
         if (!backup.isFile()) {
             throw new FileNotFoundException(backup.getAbsolutePath());
@@ -358,12 +391,11 @@ public class RevisionController {
 
         out.close();
 
-		// Try to check back in, this might cause
-		// a backup of the current version to be created if
-		// desired by the user.
-		//
-		long newtime = reservedCheckIn(destination, identity, backupFlag);
-
+        // Try to check back in, this might cause
+        // a backup of the current version to be created if
+        // desired by the user.
+        //
+        long newtime = reservedCheckIn(destination, identity, backupFlag);
 
         return newtime;
     }
@@ -377,8 +409,7 @@ public class RevisionController {
      * @exception Exception FileNotFoundException if the back  version or the current version
      *            couldn't be found
      */
-    public void undoCheckIn(long time, String destination)
-        throws Exception {
+    public void undoCheckIn(long time, String destination) throws Exception {
         File backup = new File(backupDir + "/" + destination + ".bak." + time);
         File current = new File(rootDir + destination);
 
