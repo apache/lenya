@@ -89,7 +89,7 @@
       xsp_lenya_id_two = (org.apache.lenya.cms.ac2.Identity)xsp_lenya_session.getAttribute("org.apache.lenya.cms.ac2.Identity");
       if (xsp_lenya_id != null) {
         <xsp:content><current_username><xsp:expr>xsp_lenya_id.getUsername()</xsp:expr></current_username></xsp:content>
-      } else if (xsp_lenya_id_two != null) {
+      } else if (xsp_lenya_id_two != null &amp;&amp; xsp_lenya_id_two.getUser() != null) {
         <xsp:content><current_username><xsp:expr>xsp_lenya_id_two.getUser().getId()</xsp:expr></current_username></xsp:content>
       } else {
         <xsp:content><no_username_yet/></xsp:content>
