@@ -7,15 +7,10 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
-import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.SourceResolver;
-import org.apache.excalibur.source.Source;
-import org.xml.sax.SAXException;
 
 import org.apache.log4j.Category;
 
@@ -38,13 +33,8 @@ public class PageEnvelope {
     public static final String DOCUMENT_URL = "document-url";
     public static final String DOCUMENT_PATH = "document-path";
 
-    private Publication publication;
     private RCEnvironment rcEnvironment;
     private String context;
-    private String area;
-    private String documentId;
-    private String documentUrl;
-    private File documentPath;
 
     /**
      * Constructor.
@@ -57,9 +47,6 @@ public class PageEnvelope {
      * @param publication The publication the page belongs to.
      * @param request The request that calls the page.
      * @exception PageEnvelopeException if an error occurs
-     * @exception ProcessingException if an error occurs
-     * @exception SAXException if an error occurs
-     * @exception IOException if an error occurs
      * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
      */
     public PageEnvelope(Publication publication, Request request) throws PageEnvelopeException {
@@ -68,7 +55,6 @@ public class PageEnvelope {
         assert request != null;
 
         try {
-            this.publication = publication;
             String requestURI = request.getRequestURI();
             context = request.getContextPath();
             if (context == null) {
@@ -76,19 +62,13 @@ public class PageEnvelope {
             }
 
             String webappURI = requestURI.substring(context.length());
-            String publicationURI = webappURI.substring(("/" + publication.getId()).length());
-
-            area = publicationURI.split("/")[1];
-
-            documentUrl = publicationURI.substring(("/" + area).length());
-            documentId = computeDocumentId(documentUrl);
-
-            DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
-            documentPath = mapper.getFile(publication, area, documentId, "de");
+            Document document =
+                DefaultDocumentBuilder.getInstance().buildDocument(publication, webappURI);
+            setDocument(document);
 
             rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
         } catch (Exception e) {
-            throw new PageEnvelopeException(createExceptionMessage(request), e);
+            throw new PageEnvelopeException(e);
         }
 
         // plausibility check
@@ -105,6 +85,11 @@ public class PageEnvelope {
         }
     }
 
+    /**
+     * Creates the message to report when creating the envelope failed.
+     * @param request The request.
+     * @return A string.
+     */
     protected String createExceptionMessage(Request request) {
         return "Resolving page envelope failed:"
             + "\n  URI: "
@@ -130,7 +115,7 @@ public class PageEnvelope {
             PublicationFactory.getPublication(objectModel),
             ObjectModelHelper.getRequest(objectModel));
     }
-    
+
     /**
      * Creates a page envelope from an object model.
      * @param objectModel The object model.
@@ -138,81 +123,9 @@ public class PageEnvelope {
      * protected constructor that is not deprecated.
      * @throws PageEnvelopeException when something went wrong.
      */
-    protected PageEnvelope(Map objectModel, boolean createdByFactory) throws PageEnvelopeException {
+    protected PageEnvelope(Map objectModel, boolean createdByFactory)
+        throws PageEnvelopeException {
         this(objectModel);
-    }
-
-    /**
-     * Creates a new instance of PageEnvelope
-     * @param resolver a <code>SourceResolver</code> value
-     * @param request a <code>Request</code> value
-     * @exception PageEnvelopeException if an error occurs
-     * @exception ProcessingException if an error occurs
-     * @exception SAXException if an error occurs
-     * @exception IOException if an error occurs
-     * @deprecated This constructor does not work outside a publication directory. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
-     */
-    public PageEnvelope(SourceResolver resolver, Request request)
-        throws PageEnvelopeException, ProcessingException, SAXException, IOException {
-        Source inputSource = resolver.resolveURI("");
-        String publicationUri = inputSource.getURI();
-        String directories[] = publicationUri.split("/");
-        //FIXME: what if no publicationId is specified?
-        String publicationId = directories[directories.length - 1];
-        String path = null;
-        if (publicationUri.indexOf("/lenya/pubs/" + publicationId) >= 0) {
-            path =
-                publicationUri.substring(0, publicationUri.indexOf("/lenya/pubs/" + publicationId));
-        } else {
-            throw new PageEnvelopeException(
-                "Cannot find the publication because no "
-                    + "publicationId specified in URI : "
-                    + publicationUri);
-        }
-        // apparently on windows the path will be something like
-        // "file://foo/bar/baz" where as on *nix it will be
-        // "file:/foo/bar/baz". The following hack will transparently
-        // take care of this.
-        path = path.replaceAll("file://", "/");
-        path = path.replaceAll("file:", "");
-        path = path.replace('/', File.separatorChar);
-
-        // compute area
-        String requestURI = request.getRequestURI();
-        log.debug("requestURI: " + requestURI);
-        directories = requestURI.split("/");
-        area = directories[3];
-
-        documentId = computeDocumentId(requestURI);
-        publication = new Publication(publicationId, path);
-        rcEnvironment = new RCEnvironment(path);
-        context = request.getContextPath();
-    }
-
-    /**
-     * <code>computeDocumentId</code> contains some heuristicts derive
-     * a document-id from a given requestURI. The basic assumption is
-     * that an URL consists of
-     * http:/<context-prefix>/<publication-id>/<area>/<document-id>.*. So
-     * to figure out the document-id we simply need to trim the parts
-     * before and including "area" and after and including '.'
-     *
-     * @param requestURI a <code>String</code> value
-     * @return a <code>String</code> value
-     */
-    protected String computeDocumentId(String documentURL) {
-        // the computation of the document id is based on the
-        // assumption that and URI matches of the following pattern:
-        // <publication-id>/<area><document-id>.*
-        // where document-id can be /foo/bar/baz
-
-        // remove the suffix from the last element
-        int startOfSuffix = documentURL.lastIndexOf('.');
-        if (startOfSuffix > -1) {
-            documentURL = documentURL.substring(0, startOfSuffix);
-        }
-
-        return documentURL;
     }
 
     /**
@@ -220,7 +133,7 @@ public class PageEnvelope {
      * @return a <code>Publication</code> value
      */
     public Publication getPublication() {
-        return publication;
+        return getDocument().getPublication();
     }
 
     /**
@@ -244,7 +157,7 @@ public class PageEnvelope {
      * @return a <code>String</code> value
      */
     public String getArea() {
-        return area;
+        return getDocument().getArea();
     }
 
     /**
@@ -252,7 +165,7 @@ public class PageEnvelope {
      * @return a <code>String</code> value
      */
     public String getDocumentId() {
-        return documentId;
+        return getDocument().getId();
     }
 
     /**
@@ -260,7 +173,7 @@ public class PageEnvelope {
      * @return a <code>String</code> value
      */
     public String getDocumentURL() {
-        return documentUrl;
+        return getDocument().getDocumentUrl();
     }
 
     /**
@@ -268,7 +181,7 @@ public class PageEnvelope {
      * @return a <code>String<code> value
      */
     public File getDocumentPath() {
-        return documentPath;
+        return getDocument().getFile();
     }
 
     /**
@@ -285,13 +198,6 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_PATH };
 
     /**
-     * @param string The area.
-     */
-    protected void setArea(String string) {
-        area = string;
-    }
-
-    /**
      * @param string The context.
      */
     protected void setContext(String string) {
@@ -299,38 +205,29 @@ public class PageEnvelope {
     }
 
     /**
-     * @param string The document ID.
-     */
-    protected void setDocumentId(String string) {
-        documentId = string;
-    }
-
-    /**
-     * @param file The document path.
-     */
-    protected void setDocumentPath(File file) {
-        documentPath = file;
-    }
-
-    /**
-     * @param string The document URL.
-     */
-    protected void setDocumentUrl(String string) {
-        documentUrl = string;
-    }
-
-    /**
-     * @param publication The publication.
-     */
-    protected void setPublication(Publication publication) {
-        this.publication = publication;
-    }
-
-    /**
      * @param environment The revision control environment.
+     * @deprecated We should detach the RC environment from the page envelope.
      */
     protected void setRcEnvironment(RCEnvironment environment) {
         rcEnvironment = environment;
+    }
+
+    private Document document;
+
+    /**
+     * Returns the document.
+     * @return A document
+     */
+    public Document getDocument() {
+        return document;
+    }
+
+    /**
+     * Sets the document.
+     * @param document A document.
+     */
+    public void setDocument(Document document) {
+        this.document = document;
     }
 
 }
