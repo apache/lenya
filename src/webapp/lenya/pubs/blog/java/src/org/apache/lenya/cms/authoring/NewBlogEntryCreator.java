@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: NewBlogEntryCreator.java,v 1.6 2004/05/11 07:38:44 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -75,7 +75,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
      *
      */
     protected void transformXML(Document doc, String childId, short childType, String childName, Map parameters) throws Exception {
-        log.error(".transformXML(): " + childId);
+        log.debug(".transformXML(): " + childId);
         DOMUtil du = new DOMUtil();
 
         // Replace id
