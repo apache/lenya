@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <cocoon version="2.0">
-<!--<cocoon version="2.0" user-roles="foo/bar/my.roles">-->
 
 <!-- ================ Apache Cocoon configuration file ================== -->
 <!-- Please refer to the online documentation for full descriptions.
@@ -453,14 +452,6 @@
     For production environment, it is advisable to set the reload-method to
     asynchron and for more safety the check-reload to no.
   -->
-  <!--<sitemap file="sitemap.xmap" reload-method="asynchron" check-reload="yes"/>-->
   <sitemap file="sitemap.xmap" reload-method="synchron" check-reload="yes"/>
-
-<!--
-  <component role="org.wyona.cms.cocoon.components.authenticater.Authenticator"
-            class="org.wyona.cms.cocoon.components.authenticater.IMLAuthenticator">
-    <parameter name="file" value="foo/bar/iml.xml"/>
-  </component>
--->
 
 </cocoon>
