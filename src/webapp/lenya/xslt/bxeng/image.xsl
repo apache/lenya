@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: image.xsl,v 1.4 2004/03/10 11:46:10 gregor Exp $
+ $Id: image.xsl,v 1.5 2004/03/10 13:41:33 gregor Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0" 
@@ -15,8 +15,9 @@
     <xsl:param name="lenya.step"/>
     <xsl:variable name="noimages"/>
     <xsl:param name="error"/>
-    <xsl:param name="extensions" 
-        select="'doc,dot,rtf,txt,asc,ascii,xls,xlw,xlt,ppt,pot,gif,jpg,png,tif,eps,pct,mu3,kar,mid,smf,mp3,swa,mpg,mpv,mp4,mov,bin,sea,hqx,sit,zip,jmx,jcl,qz,jbc,jmt,cfg'"/>
+
+    <xsl:param name="extensions" select="'doc dot rtf txt asc ascii xls xlw xlt ppt pot gif jpg png tif eps pct m3u kar mid smf mp3 swa mpg mpv mp4 mov bin sea hqx sit zip jmx jcl qz jbc jmt cfg pdf'"/>
+
     <xsl:template match="lenya-info:assets">
         <page:page>
             <page:title>Insert Image</page:title>
@@ -43,7 +44,7 @@
                   function check(fileinput) {
                     var i = 0;
                     var ext = '<xsl:value-of select="$extensions"/>';
-                    var delimiter = ','; 
+                    var delimiter = ' '; 
                     var thefile = fileinput["properties.asset.data"].value; 
                     var _tempArray = new Array();
                     _tempArray = ext.split(delimiter);
@@ -52,7 +53,7 @@
                            return true; 
                       } 
                      } // file does not have one of the accepted extensions. 
-                     alert("You tried to upload a file with an invalid extension. Valid extensions are <xsl:value-of select="$extensions"/>"); 
+                     alert("You tried to upload a file with an invalid extension. Valid extensions are:\n\n<xsl:value-of select="$extensions"/>"); 
                      return false;
                   } 
                 </script>

@@ -2,9 +2,13 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
-  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
+  xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
   exclude-result-prefixes="lenya-info wf rc dc usecase"
   >
   
@@ -20,7 +24,7 @@
 
   <xsl:param name="error"/>
 
-  <xsl:param name="extensions" select="'doc,dot,rtf,txt,asc,ascii,xls,xlw,xlt,ppt,pot,gif,jpg,png,tif,eps,pct,m3u,kar,mid,smf,mp3,swa,mpg,mpv,mp4,mov,bin,sea,hqx,sit,zip,jmx,jcl,qz,jbc,jmt,cfg,pdf'"/>
+  <xsl:param name="extensions" select="'doc dot rtf txt asc ascii xls xlw xlt ppt pot gif jpg png tif eps pct m3u kar mid smf mp3 swa mpg mpv mp4 mov bin sea hqx sit zip jmx jcl qz jbc jmt cfg pdf'"/>
 
   <xsl:template match="/">
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
@@ -82,7 +86,7 @@ function validContent(formField,fieldLabel)
 function check(fileinput) {
   var i = 0;
   var ext = '<xsl:value-of select="$extensions"/>';
-  var delimiter = ',';
+  var delimiter = ' ';
   var thefile = fileinput["properties.asset.data"].value;
   var _tempArray = new Array();
   _tempArray = ext.split(delimiter);
@@ -96,7 +100,7 @@ function check(fileinput) {
      }
   }
    // file does not have one of the accepted extensions.
-   alert("You tried to upload a file with an invalid extension. Valid extensions are <xsl:value-of select="$extensions"/>");
+   alert("You tried to upload a file with an invalid extension. Valid extensions are:\n\n<xsl:value-of select="$extensions"/>");
    return false;
 }
 </script>  

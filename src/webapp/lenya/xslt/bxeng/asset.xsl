@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: asset.xsl,v 1.4 2004/02/14 16:26:33 gregor Exp $
+ $Id: asset.xsl,v 1.5 2004/03/10 13:41:33 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -22,7 +22,7 @@
   
   <xsl:param name="error"/>
 
-  <xsl:param name="extensions" select="'pdf,doc,dot,rtf,txt,asc,ascii,xls,xlw,xlt,ppt,pot,gif,jpg,png,tif,eps,pct,m3u,kar,mid,smf,mp3,swa,mpg,mpv,mp4,mov,bin,sea,hqx,sit,zip,jmx,jcl,qz,jbc,jmt,cfg'"/>
+  <xsl:param name="extensions" select="'doc dot rtf txt asc ascii xls xlw xlt ppt pot gif jpg png tif eps pct m3u kar mid smf mp3 swa mpg mpv mp4 mov bin sea hqx sit zip jmx jcl qz jbc jmt cfg pdf'"/>
 
   <xsl:template match="lenya-info:assets">
     <page:page>
@@ -39,7 +39,7 @@ function insertAsset(src, size) {
 function check(fileinput) {
   var i = 0;
   var ext = '<xsl:value-of select="$extensions"/>';
-  var delimiter = ',';
+  var delimiter = ' ';
   var thefile = fileinput["properties.asset.data"].value;
   var _tempArray = new Array();
   _tempArray = ext.split(delimiter);
@@ -52,7 +52,7 @@ function check(fileinput) {
      }
   }
    // file does not have one of the accepted extensions.
-   alert("You tried to upload a file with an invalid extension. Valid extensions are <xsl:value-of select="$extensions"/>");
+   alert("You tried to upload a file with an invalid extension. Valid extensions are:\n\n<xsl:value-of select="$extensions"/>");
    return false;
 }
 </script>
