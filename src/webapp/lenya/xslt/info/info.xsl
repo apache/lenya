@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.63 2004/04/03 17:10:38 roku Exp $ -->
+<!-- $Id: info.xsl,v 1.64 2004/04/03 20:06:18 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -419,7 +419,7 @@
 <xsl:template match="lenya-info:item">
   <option value="{@id}">
     <xsl:variable name="name" select="normalize-space(.)"/>
-    <xsl:value-of select="@id"/>&#160;
+    <i18n:text><xsl:value-of select="@id"/></i18n:text>&#160;
     <xsl:if test="$name != ''"><em>(<xsl:value-of select="$name"/>)</em></xsl:if>
   </option>
 </xsl:template>
