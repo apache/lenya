@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<NewsML>
+    <Catalog Href="http://nzz.wyona.com/newsml/catalog.xml"/>
+    <NewsEnvelope>
+        <TransmissionId>1004500635628</TransmissionId>
+        <DateAndTime>20011031T0457+0100</DateAndTime>
+        <SentFrom>
+            <Party FormalName="NZZ"/>
+        </SentFrom>
+        <SentTo>
+            <Party FormalName="IHT"/>
+        </SentTo>
+    </NewsEnvelope>
+    <NewsItem>
+        <Identification>
+            <NewsIdentifier>
+                <ProviderId>nzz.ch</ProviderId>
+                <DateId>20011031</DateId>
+                <NewsItemId>al-article7RAUR</NewsItemId>
+                <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
+                <PublicIdentifier>urn:newsml:nzz.ch:20011031:al-article7RAUR:1N</PublicIdentifier>
+            </NewsIdentifier>
+        </Identification>
+        <NewsManagement>
+            <FirstCreated>20011031T0130+0100</FirstCreated>
+            <ThisRevisionCreated>20011031T0130+0100</ThisRevisionCreated>
+        </NewsManagement>
+        <NewsComponent EquivalentsList="no">
+            <Role FormalName="TEXT"/>
+            <NewsLines>
+                <HeadLine>Erfolgreiche Machtworte Schröders
+</HeadLine>
+                <ByLine>eg. Berlin, 30. Oktober
+</ByLine>
+                <CreditLine>
+                    <Origin Href="http://nzz.wyona.com/newml/creditline.xml"/>
+                </CreditLine>
+                <CopyrightLine>
+                    <Origin Href="http://nzz.wyona.com/newsml/copyrightline.xml"/>
+                </CopyrightLine>
+            </NewsLines>
+            <AdministrativeMetadata>
+                <SystemIdentifier>http://nzz.wyona.com/newsml/2001/10/31/al/article7RAUR.xml</SystemIdentifier>
+            </AdministrativeMetadata>
+            <RightsMetadata>
+                <Copyright>
+                    <CopyrightHolder>
+                        <Origin Href="http://nzz.wyona.com/newsml/copyrightholder.xml"/>
+                    </CopyrightHolder>
+                </Copyright>
+            </RightsMetadata>
+            <DescriptiveMetadata>
+                <Language FormalName="de"/>
+                <SubjectCode>
+                    <Subject FormalName="
+International
+"/>
+                </SubjectCode>
+            </DescriptiveMetadata>
+            <ContentItem>
+                <MediaType FormalName="Text"/>
+                <MimeType FormalName="text/vnd.IPTC.NITF"/>
+                <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf">
+                    <head/>
+                    <body>
+                        <body.head>
+                            <hedline>
+                                <hl1>Erfolgreiche Machtworte Schröders
+</hl1>
+                                <hl2>Die Berliner SPD gibt der PDS einen Korb
+</hl2>
+                            </hedline>
+                            <byline>eg. Berlin, 30. Oktober
+</byline>
+                            <abstract>Seit der Berliner Landtagswahl wird so heftig wie schon lange nicht mehr über den 
+Umgang mit der PDS gestritten. Die Berliner SPD lehnte auf Druck von Bundeskanzler Schröder Koalitionsgespräche mit den Postkommunisten ab. Die Unionsparteien 
+denken hingegen über einen unverkrampfteren Umgang mit der PDS nach.
+</abstract>
+                        </body.head>
+                        <body.content>
+<block>
+                                <p>Räsoniert der deutsche Kanzler Schröder über 
+parteipolitische Konstellationen, pflegt er von 
+den vielen Optionen der SPD zu reden. Von der 
+sich im Land Berlin aufdrängenden Option einer 
+Koalition mit der PDS will Schröder neuerdings 
+jedoch überhaupt nichts mehr wissen, was er 
+gleich in einer ganzen Reihe öffentlicher Äusserungen deutlich gemacht hat. Angesichts dieses 
+unverhohlenen Drucks hatte der sozialdemokratische Landesvorstand in der Hauptstadt kaum 
+eine andere Wahl, als sich (wie kurz berichtet) 
+gegen ein Bündnis mit der PDS auszusprechen. 
+Die Berliner SPD entschied sich damit offiziell 
+für die Aufnahme von Koalitionsverhandlungen 
+mit den Liberalen und den Grünen, obwohl eine 
+sogenannte Ampelkoalition nur über eine knappe 
+Mehrheit im Abgeordnetenhaus verfügt.</p>
+                            </block>
+<block>
+                                <hl2>Die Gemeinsamkeit der Funktionäre
+</hl2>
+                                <p>Schröder nimmt jedoch auf die Unwägbarkeiten einer Dreierallianz keine Rücksicht und stellt 
+die bundespolitischen Implikationen in den Vordergrund. Die PDS ist in Zeiten, in denen Sicherheitsfragen eine besondere Rolle spielen, kein geeigneter Bündnispartner, da sich die Partei sicherheitspolitisch isoliert hat. Ausserdem wäre eine 
+funktionierende Ampelkoalition ein geeigneter 
+Test für den Fall, dass nach der nächsten Bundestagswahl weder ein rot-grünes noch ein sozialliberales Bündnis eine Mehrheit im Bundestag besässe. Diesen Überlegungen beugten sich die Berliner Sozialdemokraten, obwohl ein nicht geringer 
+Teil von ihnen eigentlich ein rot-rotes Bündnis 
+bevorzugt. Die Funktionärsmilieus in beiden Parteien sind sich ähnlich. Mit der in landespolitischen Fragen eher moderaten PDS liessen sich 
+überdies wohl leichter Kompromisse erzielen als 
+mit der FDP und den Grünen. Die auf Bundesebene schon fast austauschbar gewordenen Kleinparteien pflegen in Berlin noch traditionelle Animositäten. Ferner sind vor allem die Grünen 
+wegen ihrer internen Probleme schwierige Verbündete.</p>
+                                <p>Seit dem Bruch der Grossen Koalition in Berlin 
+und den daher nötig gewordenen Neuwahlen ist 
+die längere Zeit unspektakulär agierende PDS 
+wieder in aller Munde. Eine Partei, die in Berlin 
+unter den allerdings sehr spezifischen Bedingungen der einstigen DDR-Hauptstadt fast jede 
+zweite Stimme errungen und bei kommunistischen Altkadern wie jungen Protestwählern 
+Resonanz gefunden hat, lässt sich nicht einfach 
+ignorieren. Die PDS hat seit der Wiedervereinigung kontinuierlich an Zustimmung gewonnen; sie weist heute angesichts des breiten Spektrums ihrer Wähler Elemente einer Volkspartei 
+auf. Auch die CDU ist zu der Einschätzung 
+gelangt, dass sie die Nachfolgeorganisation der 
+SED nicht allein mit historischen Argumenten 
+kategorisch ablehnen kann, sondern zu einer 
+pragmatischeren Form der Auseinandersetzung 
+finden muss.</p>
+                            </block>
+                            <block>
+                                <hl2>Ignorierter Ostberliner Wählerwille?
+</hl2>
+                                <p>Gleich drei Christlichdemokraten - der thüringische Ministerpräsident Vogel, der Fraktionsvorsitzende Merz und Generalsekretär Meyer - plädierten in den letzten Tagen für einen unverkrampfteren Umgang mit der PDS. Dahinter 
+steht jedoch auch ein gegen die Sozialdemokraten 
+gerichtetes Kalkül. So empfahl der CSU-Politiker 
+Glos, die Postkommunisten durch eine Regierungsbeteiligung in Berlin zu entzaubern. Liesse 
+sich die SPD auf diesen Ratschlag ein, könnte die 
+Union Schröder als einen Heuchler vorführen, 
+der über die Solidarität mit Amerika redet und 
+mit der PDS paktiert. Der Pseudopazifismus der 
+Partei nach den Terroranschlägen und die Beachtung, welche die Landespolitik der deutschen 
+Hauptstadt in der übrigen Bundesrepublik findet, 
+konterkarieren die Strategie der PDS: Honeckers 
+Erben versuchen, Bundes- und Landespolitik 
+strikt zu trennen. Im Bundestag betreiben sie 
+Fundamentalopposition, in den Ländern sind sie 
+hingegen kompromissbereit und zu jedem realpolitischen Bündnis willens. Schröder kam diese 
+kalkulierte Schizophrenie bis zum 11. September 
+zupass, weil er die PDS als Koalitionspartner in 
+den neuen Ländern salonfähig machen wollte.</p>
+                                <p>Auf die jüngste Zurückweisung durch die 
+Sozialdemokraten reagierte die PDS mit dem 
+Vorwurf, der Wille der Ostberliner Wähler werde 
+ignoriert. Die PDS bildet also keine Ausnahme 
+von der Regel, wonach Parteien mit diesem in der 
+parlamentarischen Demokratie wenig stichhaltigen Argument ihrem Ärger Luft machen, wenn 
+sich gute Wahlergebnisse nicht in einer Regierungsbeteiligung niederschlagen. Ferner behaupteten die Postkommunisten, durch ihre Nichtberücksichtigung werde das Zusammenwachsen von 
+Ost und West erschwert. Deutsche Parteien neigen zur Selbstüberschätzung - unter den Kriterien, die über das Gelingen der «inneren 
+Einheit» entscheiden, kommt dem Schicksal einer 
+einzelnen politischen Gruppierung eher geringe 
+Bedeutung zu. Andernfalls müsste man auch um 
+den Zusammenhalt der Bundesrepublik fürchten, 
+da in Bayern seit Jahrzehnten eine Partei regiert, 
+die im Rest der Republik nicht einmal zu Wahlen 
+antritt.</p>
+                                <p>Auch wenn die PDS das Gegenteil behauptet, 
+weil sie ihre Existenz nicht unwesentlich dem 
+Hochspielen der noch vorhandenen Gegensätze 
+verdankt, ist Berlin ein Beispiel, wie gut sich die 
+beiden Teilgesellschaften arrangiert haben. Die 
+eminenten Probleme der Stadt resultieren nicht 
+aus den Interessenunterschieden von Ost und 
+West, sondern aus dem Umstand, dass beide 
+Stadthälften im vergangenen Jahrzehnt einträchtig über ihre Verhältnisse gelebt haben.</p>
+                            </block>
+
+
+</body.content>
+                    </body>
+                </DataContent>
+            </ContentItem>
+        </NewsComponent>
+    </NewsItem>
+</NewsML>
