@@ -9,7 +9,7 @@
 <xsl:import href="../../../../../xslt/authoring/edit/form.xsl"/>
 
 <xsl:template match="echo:entry">
-<node name="Title">
+<node name="Title" select="/echo:entry/echo:title[@tagID='{echo:title/@tagID}']">
 <!-- FIXME: In the case of text input field, < and > need to be replaced by &lt; and &gt;
   <content><input type="text" name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:apply-templates select="echo:title/node()" mode="mixed"/></xsl:attribute></input></content>
 -->
@@ -36,7 +36,7 @@
 </xsl:template>
 
 <xsl:template match="echo:summary">
-<node name="Summary">
+<node name="Summary" select="/echo:entry/echo:summary[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
     <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">
@@ -62,7 +62,7 @@
 <node name="Content (text/xhtml)">
   <action><insert name="&lt;xupdate:insert-before select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;echo:content&quot; namespace=&quot;http://purl.org/atom/ns#&quot;&gt;&lt;xupdate:attribute name=&quot;type&quot;&gt;text/xhtml&lt;/xupdate:attribute&gt;New content&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;"/></action>
 </node>
-<node name="Content (text/xhtml)">
+<node name="Content (text/xhtml)" select="/echo:entry/echo:content[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
     <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">

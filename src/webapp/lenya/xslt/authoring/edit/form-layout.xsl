@@ -4,11 +4,14 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
 
+<xsl:param name="edit" select="'No node selected yet'"/>
+
 <xsl:template match="form">
 <html>
 <body>
 <p>
 Edit Document <b><xsl:value-of select="docid"/></b> (Form: <xsl:value-of select="ftype"/>)
+<br />Edit Node: <b><xsl:value-of select="$edit"/></b>
 </p>
 
 <xsl:if test="message">
@@ -45,7 +48,7 @@ Edit Document <b><xsl:value-of select="docid"/></b> (Form: <xsl:value-of select=
 
 <xsl:template match="node">
 <tr>
-  <td valign="top"><xsl:apply-templates select="action"/><xsl:if test="not(action)">&#160;</xsl:if></td>
+  <td valign="top"><xsl:apply-templates select="action"/><xsl:if test="not(action)">&#160;</xsl:if><xsl:apply-templates select="@select"/></td>
   <xsl:choose>
     <xsl:when test="content">
       <td valign="top"><xsl:apply-templates select="@name"/></td>
@@ -64,14 +67,34 @@ Edit Document <b><xsl:value-of select="docid"/></b> (Form: <xsl:value-of select=
 
 <xsl:template match="content">
 <xsl:copy-of select="node()"/>
+<!--
+<xsl:choose>
+<xsl:when test="$edit = ../@select">
+<xsl:copy-of select="node()"/>
+</xsl:when>
+<xsl:otherwise>
+<p>
+<xsl:value-of select="input/@value"/>
+<xsl:copy-of select="textarea/node()"/>
+</p>
+</xsl:otherwise>
+</xsl:choose>
+-->
 </xsl:template>
 
 <xsl:template match="insert">
 <input type="image" src="/lenya/lenya/images/insert.gif" name="{@name}" value="LENYA"/>
 </xsl:template>
 
-
 <xsl:template match="delete">
 <input type="image" src="/lenya/lenya/images/delete.gif" name="{@name}" value="true"/>
 </xsl:template>
+
+<xsl:template match="@select">
+<input type="image" src="/lenya/lenya/images/util/reddot.gif" name="edit" value="{.}"/>
+<!--
+<input type="image" src="/lenya/lenya/images/util/reddot.gif" name="edit" value="&lt;lenya:edit select=&quot;{.}&quot;/&gt;"/>
+-->
+</xsl:template>
+
 </xsl:stylesheet>  
