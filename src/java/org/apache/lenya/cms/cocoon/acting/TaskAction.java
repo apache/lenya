@@ -28,7 +28,7 @@ public class TaskAction
     
     static Category log = Category.getInstance(TaskAction.class);
   
-    private String taskId;
+    private String taskId = null;
     
     public String getTaskId() {
         return taskId;
@@ -40,11 +40,12 @@ public class TaskAction
     public void configure(Configuration configuration) throws ConfigurationException{
         super.configure(configuration);
         
-        taskId = configuration.getChild("task").getAttribute(TaskManager.TASK_ID_ATTRIBUTE);
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("CONFIGURATION:\ntask id = " +
-                              taskId);
+        if (configuration.getChild("task") != null) {
+            taskId = configuration.getChild("task").getAttribute(TaskManager.TASK_ID_ATTRIBUTE);
+            log.debug("CONFIGURATION:\ntask id = " + taskId);
         }
+        else
+            log.debug("CONFIGURATION:\nNo task id provided");
     } 
     
     public java.util.Map act(
@@ -91,6 +92,11 @@ public class TaskAction
 	    getLogger().error ("No request object");
 	    return null;
 	}
+        
+        taskId = parameters.getParameter("task-id", taskId);
+        
+        if (taskId == null)
+            log.error("No task id provided! ", new IllegalStateException());
 	
         //------------------------------------------------------------
         // prepare default parameters
@@ -114,7 +120,10 @@ public class TaskAction
         // execute task
         //------------------------------------------------------------
         
-        log.debug("Executing task '" + getTaskId() + "'");
+        log.debug(
+                "\n-------------------------------------------------" +
+                "\n- Executing task '" + getTaskId() + "'" +
+                "\n-------------------------------------------------");
         
         TaskManager manager = new TaskManager(publicationPath);
         Task task = manager.getTask(getTaskId());
