@@ -8,9 +8,7 @@
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-    <map:actions>
-      <map:action name="request" src="org.apache.lenya.cms.cocoon.acting.RequestParamAction"/>
-    </map:actions>
+    <map:actions/>
     <map:selectors default="browser"/>
   </map:components>
 
@@ -73,7 +71,7 @@
       <map:match pattern="**.xhtml">
         <map:act type="request">
           <map:parameter name="parameters" value="true"/>
-          <map:generate src="http://127.0.0.1:{serverPort}{context}/docs-new/{../1}.html?cocoon-view=xhtml4lenya"/>
+          <map:generate src="http://127.0.0.1:{request:serverPort}{context}/docs-new/{../1}.html?cocoon-view=xhtml4lenya"/>
           <map:serialize type="xml"/>
         </map:act>
       </map:match>
