@@ -18,15 +18,13 @@
  *
  */
 
-/* $Id: configuration2xslt.xsl,v 1.6 2004/05/16 21:48:58 michi Exp $  */
+/* $Id: configuration2xslt.xsl,v 1.7 2004/05/16 23:20:21 michi Exp $  */
 -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xsl-out="http://apache.org/cocoon/lenya/alias"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format"
     xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     >
 
 <xsl:namespace-alias stylesheet-prefix="xsl-out" result-prefix="xsl"/>    
@@ -35,7 +33,7 @@
 <xsl:output method="xml" indent="yes" encoding="ISO-8859-1" />
     
 <xsl:template match="luc:document">
-  <xsl-out:stylesheet version="1.0" xmlns:ex="http://www.eurexchange.com/2002/markup">
+  <xsl-out:stylesheet version="1.0">
   
     <xsl-out:param name="filename"/>
     
@@ -47,6 +45,9 @@
       
         <xsl:for-each select="luc:field">
           <luc:field name="{@name}" type="{@type}">
+            <xsl:for-each select="namespace">
+              <xsl:attribute name="{@prefix}:dummy" namespace="{.}"/>
+            </xsl:for-each>
             <xsl:apply-templates select="@xpath"/>
             <xsl:apply-templates select="xpath"/>
           </luc:field>
