@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0"?>
 
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns="http://www.w3.org/1999/xhtml"
 	>
  
-<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes"/>
 
 <xsl:template match="/">
 <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
@@ -23,7 +23,9 @@
 
 <xsl:if test="not(exception)">
 <p>
-<form action="create">
+<form action="{/parent-child/referer}">
+<input type="hidden" name="lenya.usecase" value="create"/>
+<input type="hidden" name="lenya.step" value="create"/>
 <input type="hidden" name="parentid" value="{/parent-child/parentid}"/>
 <input type="hidden" name="childname" value="Title"/>
 <input type="hidden" name="childtype" value="branch"/>
