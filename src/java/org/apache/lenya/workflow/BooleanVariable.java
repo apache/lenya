@@ -16,4 +16,10 @@ public interface BooleanVariable {
      * Returns the name of this variable.
      */
     String getName();
+    
+    /**
+     * Returns the initial value of this variable.
+     * @return A boolean value.
+     */
+    boolean getInitialValue();
 }

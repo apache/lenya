@@ -15,9 +15,11 @@ import org.apache.lenya.workflow.BooleanVariable;
 public class BooleanVariableImpl implements BooleanVariable {
 
     /** Creates a new instance of BooleanVariableImpl */
-    protected BooleanVariableImpl(String variableName) {
+    protected BooleanVariableImpl(String variableName, boolean initialValue) {
     	assert variableName != null;
     	name = variableName;
+        
+        this.initialValue = initialValue;
     }
 
     private String name;
@@ -27,6 +29,15 @@ public class BooleanVariableImpl implements BooleanVariable {
      */
     public String getName() {
         return name;
+    }
+    
+    private boolean initialValue;
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.workflow.BooleanVariable#getInitialValue()
+     */
+    public boolean getInitialValue() {
+        return initialValue;
     }
 
 }
