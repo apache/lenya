@@ -8,7 +8,7 @@
 <xsl:template match="cmsbody">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/lenya/blog/lenya/css/styles.css" title="default css"/>
+<link rel="stylesheet" type="text/css" href="css/styles.css" title="default css"/>
 <title>
   <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/> - <xsl:value-of select="feed/subtitle"/><xsl:value-of select="feed/echo:subtitle"/>
 </title>
