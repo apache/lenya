@@ -19,11 +19,8 @@
 
 package org.apache.lenya.cms.usecase;
 
-import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
@@ -49,11 +46,15 @@ public class WorkflowUsecase extends AbstractUsecase {
      */
     protected void doInitialize() {
         super.doInitialize();
-        Map objectModel = ContextHelper.getObjectModel(getContext());
+        WorkflowResolver resolver = null;
         try {
-            this.situation = WorkflowHelper.buildSituation(objectModel);
-        } catch (WorkflowException e) {
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+            this.situation = resolver.getSituation();
+        } catch (ServiceException e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            this.manager.release(resolver);
         }
     }
 
