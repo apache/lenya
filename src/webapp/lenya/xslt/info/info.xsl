@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.60 2004/04/02 13:22:32 roku Exp $ -->
+<!-- $Id: info.xsl,v 1.61 2004/04/02 13:55:09 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -264,7 +264,7 @@
               <td>
                 <xsl:element name="a">
                   <xsl:if test="$area = 'authoring'"><xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute></xsl:if>
-                  <i18n:text>Rollback to this Version</i18n:text>
+                  <i18n:text>Rollback to this version</i18n:text>
                 </xsl:element>
               </td>
               <td>
