@@ -1,5 +1,5 @@
 /*
- * $Id: NamespaceHelper.java,v 1.10 2003/04/24 13:53:14 gregor Exp $
+ * $Id: NamespaceHelper.java,v 1.11 2003/05/07 16:45:37 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -144,7 +144,11 @@ public class NamespaceHelper {
      * @return The qualified name, i.e. prefix:localName.
      */
     public String getQualifiedName(String localName) {
-        return getPrefix() + ":" + localName;
+	if (getPrefix().equals("")) {
+	    return localName;
+	} else {
+	    return getPrefix() + ":" + localName;
+	}
     }
 
     /**
