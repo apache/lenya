@@ -109,15 +109,11 @@
 	    <xsl:for-each select="types/type">
 	      <td>
 	        <form method="GET">
-              <input type="hidden" name="lenya.usecase">
-		        <xsl:attribute name="value"><xsl:value-of
-		          select="@create-use-case"/></xsl:attribute>
-		      </input>
-              <input i18n:attr="value" type="submit">
-		        <xsl:attribute name="value"><xsl:value-of
-		          select="normalize-space(.)"/></xsl:attribute>
-		      </input>
-            </form>
+            <input type="hidden" name="lenya.usecase" value="addUser"/>
+            <input type="hidden" name="className" value="{@class-name}"/>
+            <input type="hidden" name="userType" value="{normalize-space(.)}"/>
+            <input i18n:attr="value" type="submit" value="{normalize-space(.)}"/>
+          </form>
 	      </td>
 	    </xsl:for-each>
       </tr>
