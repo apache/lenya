@@ -147,6 +147,14 @@
         <include name="**/*"/>
       </fileset>
     </copy>
+  	
+  	<!-- Replace version placeholder with build version -->
+  	<replace dir="${build.webapp}">
+	  <include name="**/publication.xml"/>
+  	  <include name="**/introduction.xml"/>
+  	  <include name="**/about.xml"/>
+  	  <replacefilter token="@lenya.version@" value="${version}"/>
+  	</replace>
 
   	<condition property="servlet.engine.tomcat">
       <equals arg1="${web.app.server}" arg2="Tomcat"/>

@@ -101,6 +101,14 @@
         <exclude name="dist/**"/>
       </fileset>
     </copy>
+  	
+  	<!-- Replace version placeholder with build version -->
+  	<replace dir="${dist.src.dir}">
+	  <include name="**/publication.xml"/>
+  	  <include name="**/introduction.xml"/>
+  	  <include name="**/about.xml"/>
+  	  <replacefilter token="@lenya.version@" value="${version}"/>
+  	</replace>
   </target>
 
   <target name="dist-src" depends="prepare-dist-src" description="Builds a regular tar ball containing the sources for developers">
