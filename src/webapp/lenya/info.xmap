@@ -65,7 +65,7 @@
     
     <!-- usecases -->
     <!-- Sitetree Javascript array -->
-    <map:pipeline>
+    <map:pipeline type="noncaching">
       
       <!-- {publication-id}/{area}/sitetree.xml -->
       <map:match pattern="*/*/sitetree.xml">
