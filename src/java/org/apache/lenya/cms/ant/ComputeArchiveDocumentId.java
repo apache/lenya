@@ -1,5 +1,5 @@
 /*
-$Id: ComputeArchiveDocumentId.java,v 1.2 2003/08/28 14:08:12 egli Exp $
+$Id: ComputeArchiveDocumentId.java,v 1.3 2004/02/21 16:53:14 gregor Exp $
 <License>
 
  ============================================================================
@@ -87,7 +87,7 @@ public class ComputeArchiveDocumentId extends ComputeNewDocumentId {
 		for (int i = 0; i < l-1; i++) {
 			st.nextToken();
 		}
-		secdocumentid = "/" + st.nextToken();;
+		secdocumentid = "/" + st.nextToken();
 		return secdocumentid;
 	}
 

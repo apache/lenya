@@ -68,7 +68,7 @@ import java.io.Reader;
  * HTML Parser
  *
  * @author Michael Wechner
- * @version $Id: HTMLParser.java,v 1.12 2004/02/02 02:50:38 stefano Exp $
+ * @version $Id: HTMLParser.java,v 1.13 2004/02/21 16:53:14 gregor Exp $
  */
 public class HTMLParser implements HTMLParserConstants {
     public static int SUMMARY_LENGTH = 200;
@@ -93,7 +93,6 @@ public class HTMLParser implements HTMLParserConstants {
     private Token jj_lastpos;
     private int jj_la;
     public boolean lookingAhead = false;
-    private boolean jj_semLA;
     private int jj_gen;
     final private int[] jj_la1 = new int[13];
     final private int[] jj_la1_0 = {
@@ -245,8 +244,6 @@ public class HTMLParser implements HTMLParserConstants {
                     break;
                 }
 
-                //System.out.println("HTMLParser().getSummary(): Current length: "+summary.length());
-                //System.out.println("HTMLParser().getSummary(): wait(10)");
                 wait(10);
 
                 elapsedMillis = elapsedMillis + 10;
@@ -265,7 +262,6 @@ public class HTMLParser implements HTMLParserConstants {
         String tit = getTitle();
 
         if (sum.startsWith(tit)) {
-            //return sum.substring(tit.length());
             return sum;
         } else {
             return sum;
@@ -292,7 +288,6 @@ public class HTMLParser implements HTMLParserConstants {
     }
 
     void addToSummary(String text) {
-        //System.out.println("HTMLParser.addToSummary(): Current length: "+summary.length()+" ("+text+")");
         if (summary.length() < SUMMARY_LENGTH) {
             summary.append(text);
 
@@ -305,7 +300,6 @@ public class HTMLParser implements HTMLParserConstants {
     }
 
     void addToTitle(String text) {
-        //System.out.println("HTMLParser.addToTitle(): Current length: "+title.length()+" ("+text+")");
         title.append(text);
     }
 
@@ -315,7 +309,6 @@ public class HTMLParser implements HTMLParserConstants {
         }
 
         if (inTitle) {
-            //title.append(text);
             addToTitle(text);
         } else {
             addToSummary(text);
@@ -342,7 +335,6 @@ public class HTMLParser implements HTMLParserConstants {
 
         if (!afterSpace) {
             if (inTitle) {
-                //title.append(" ");
                 addToTitle(" ");
             } else {
                 addToSummary(" ");
@@ -374,7 +366,6 @@ label_1:
             case Entity:
             case Space:
             case Punct:
-                ;
 
                 break;
 
@@ -466,7 +457,6 @@ label_2:
         while (true) {
             switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
             case ArgName:
-                ;
 
                 break;
 
@@ -496,14 +486,12 @@ label_2:
 
                 default:
                     jj_la1[3] = jj_gen;
-                    ;
                 }
 
                 break;
 
             default:
                 jj_la1[4] = jj_gen;
-                ;
             }
         }
 
@@ -612,7 +600,6 @@ label_3:
             case ArgValue:
             case ArgQuote1:
             case ArgQuote2:
-                ;
 
                 break;
 
@@ -669,7 +656,6 @@ label_4:
             while (true) {
                 switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
                 case CommentText1:
-                    ;
 
                     break;
 
@@ -692,7 +678,6 @@ label_5:
             while (true) {
                 switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
                 case CommentText2:
-                    ;
 
                     break;
 
@@ -1110,13 +1095,4 @@ label_5:
         int arg;
         JJCalls next;
     }
-
-    //    void handleException(Exception e) {
-    //      System.out.println(e.toString());  // print the error message
-    //      System.out.println("Skipping...");
-    //      Token t;
-    //      do {
-    //        t = getNextToken();
-    //      } while (t.kind != TagEnd);
-    //    }
 }
