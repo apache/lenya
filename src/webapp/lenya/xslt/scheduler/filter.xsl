@@ -19,7 +19,7 @@
   
   
 <!-- remove other publications -->
-<xsl:template match="sch:publication[@name != $publication-id]">
+<xsl:template match="sch:job-group[@name != $publication-id]">
 </xsl:template>
 
     

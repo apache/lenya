@@ -62,7 +62,6 @@
       <table class="lenya-table" border="0" cellpadding="0" cellspacing="0">
 
         <tr>
-          <th><strong>Edit existing jobs</strong></th>
           <th>Task</th>
           <th>Day</th>
           <th>Time</th>
@@ -70,11 +69,11 @@
           <th>&#160;</th>
         </tr>
 
-        <xsl:if test="not(sch:publication/sch:jobs/sch:job)">
+        <xsl:if test="not(sch:job-group/sch:jobs/sch:job)">
         <tr><td colspan="6">No active jobs.</td></tr>
         </xsl:if>
         
-        <xsl:apply-templates select="sch:publication/sch:jobs/sch:job"/>
+        <xsl:apply-templates select="sch:job-group/sch:jobs/sch:job"/>
 
       </table>
     </page:body>
@@ -87,21 +86,20 @@
 <xsl:template match="sch:job">
   <tr>
     <form method="GET">
-
-      <td>
-        &#160;
+			<td>
         <!-- hidden input fields for parameters -->
         <input type="hidden" name="lenya.usecase" value="schedule"/>
         <input type="hidden" name="lenya.step" value="showscreen"/>
         
         <xsl:apply-templates select="sch:parameter"/>
-      </td>
-      <td>
-        <xsl:call-template name="tasks">
-          <xsl:with-param name="current-task-id"
-              select="sch:task/sch:parameter[@name='id']/@value"/>
-        </xsl:call-template>
-      </td>
+        
+				<xsl:variable name="current-task-id"
+					select="sch:task/sch:parameter[@name='id']/@value"/>
+				<input type="hidden" name="task.id" value="{$current-task-id}"/>
+				<xsl:value-of
+					select="/sch:scheduler/sch:tasks/sch:task[@id = $current-task-id]/label"
+					/>
+			</td>
       <xsl:choose>
         <xsl:when test="sch:trigger">
           <xsl:apply-templates select="sch:trigger"/>
@@ -110,9 +108,7 @@
           </td>
         </xsl:when>
         <xsl:otherwise>
-          <td colspan="2">
-            <p>The job date has expired.</p>
-          </td>
+          <td colspan="2">The job date has expired.</td>
           <td>&#160;</td>
         </xsl:otherwise>
       </xsl:choose>
@@ -150,8 +146,8 @@
   <xsl:template match="sch:trigger">
     <td>
       <font size="2"> 
-        <xsl:apply-templates select="sch:parameter[@name='day']"/>
-        <xsl:apply-templates select="sch:parameter[@name='month']"/>
+        <xsl:apply-templates select="sch:parameter[@name='day']"/>&#160;
+        <xsl:apply-templates select="sch:parameter[@name='month']"/>&#160;
         <xsl:apply-templates select="sch:parameter[@name='year']"/>
       </font>
     </td>
@@ -219,26 +215,5 @@
 <font color="red">EXCEPTION: <xsl:value-of select="@type"/></font> (check the log files)
 </xsl:template>
 
-  <!-- ============================================================= -->
-  <!-- Create ComboBox entries for all available tasks -->
-  <!-- ============================================================= -->
-  <xsl:template name="tasks">
-    <xsl:param name="current-task-id"/>
-      <select name="task.id">
-      <!--
-        <xsl:attribute name="selected">
-          <xsl:value-of select="/sch:scheduler/sch:tasks/sch:task[@id = $current-task-id]/@label"/>
-        </xsl:attribute>
-        -->
-        <xsl:for-each select="/sch:scheduler/sch:tasks/sch:task">
-          <option value="{@id}">
-            <xsl:if test="@id = $current-task-id">
-              <xsl:attribute name="selected"/>
-            </xsl:if>
-            <xsl:value-of select="label"/>
-          </option>
-        </xsl:for-each>
-      </select>
-  </xsl:template>
 
 </xsl:stylesheet> 

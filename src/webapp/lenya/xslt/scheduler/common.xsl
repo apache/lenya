@@ -20,13 +20,17 @@
 <xsl:template name="scheduler-form">
 	
 	<xsl:param name="task-id"/>
-	<xsl:variable name="date" select="//sch:current-date"/>
+	
+	<xsl:variable name="scheduler-data" select="//sch:scheduler-data"/>
 	
 	<form method="GET">
 		
 		<input type="hidden" name="lenya.usecase" value="schedule"/>
 		<input type="hidden" name="lenya.step" value="add"/>
 		<input type="hidden" name="task.id" value="{$task-id}"/>
+		<input type="hidden" name="publication-id" value="{normalize-space($scheduler-data/sch:publication-id)}"/>
+		<input type="hidden" name="document-url" value="{normalize-space($scheduler-data/sch:document-url)}"/>
+		
 		<xsl:call-template name="task-parameters"/>
 		
 		<table class="lenya-table" border="0" cellpadding="0"
@@ -42,20 +46,20 @@
 					<select name="trigger.startDay">
 						<xsl:call-template name="generateSelectionNames">
 							<xsl:with-param name="currentValue" select="1"/>
-							<xsl:with-param name="selectedValue" select="$date/sch:day"/>
+							<xsl:with-param name="selectedValue" select="$scheduler-data/sch:day"/>
 							<xsl:with-param name="maxValue" select="31"/>
 						</xsl:call-template>
 					</select>&#160;
 					<select name="trigger.startMonth">
 						<xsl:call-template name="generateSelectionNames">
 							<xsl:with-param name="currentValue" select="1"/>
-							<xsl:with-param name="selectedValue" select="$date/sch:month"/>
+							<xsl:with-param name="selectedValue" select="$scheduler-data/sch:month"/>
 							<xsl:with-param name="maxValue" select="12"/>
 						</xsl:call-template>
 					</select>&#160;
 					<select name="trigger.startYear">
 						<xsl:variable name="year">
-							<xsl:value-of select="$date/sch:year"/>
+							<xsl:value-of select="$scheduler-data/sch:year"/>
 						</xsl:variable>
 						<xsl:call-template name="generateSelectionNames">
 							<xsl:with-param name="currentValue" select="$year"/>
@@ -66,15 +70,15 @@
 				</td>
 				<td>
 					<input name="trigger.startHour" type="text" size="2" maxlength="2">
-					  <xsl:attribute name="value"><xsl:value-of select="format-number($date/sch:hour, '00')"/></xsl:attribute>
+					  <xsl:attribute name="value"><xsl:value-of select="format-number($scheduler-data/sch:hour, '00')"/></xsl:attribute>
 					</input>
 					:
 					<input name="trigger.startMin" type="text" size="2" maxlength="2"> 
-					  <xsl:attribute name="value"><xsl:value-of select="format-number($date/sch:minute, '00')"/></xsl:attribute>
+					  <xsl:attribute name="value"><xsl:value-of select="format-number($scheduler-data/sch:minute, '00')"/></xsl:attribute>
 					</input>
 				</td>
 				<td>
-					<input type="submit" name="Action" value="Add"/>
+					<input type="submit" name="action" value="Add"/>
 				</td>
 			</tr>
 		</table>

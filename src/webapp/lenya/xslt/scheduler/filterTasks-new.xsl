@@ -27,11 +27,8 @@
 
   <xsl:template match="sch:scheduler/sch:tasks"/>
 
-  <xsl:template match="* | @*">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:apply-templates/>
-    </xsl:copy>
+  <xsl:template match="@*|node()">
+    <xsl:copy><xsl:apply-templates select="@*|node()"/></xsl:copy>
   </xsl:template>
   
 </xsl:stylesheet>
