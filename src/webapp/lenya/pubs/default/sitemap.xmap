@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.5 2003/04/16 13:27:17 egli Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.6 2003/04/16 14:01:26 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -31,7 +31,7 @@
     <map:resource name="login">
       <map:generate type="serverpages" src="../../content/ac/login.xsp"/>
       <map:transform src="../../xslt/ac/login.xsl">
-        <map:parameter name="publication_name" value="Default Publicatoin"/>
+        <map:parameter name="publication_name" value="Default Publication"/>
         <map:parameter name="publication_id" value="default"/>
       </map:transform>
       <map:serialize type="html"/>
