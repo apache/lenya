@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: properties-build.xml,v 1.21 2004/06/28 11:36:05 roku Exp $ -->
+<!-- $Id: properties-build.xml,v 1.22 2004/06/28 16:24:36 roku Exp $ -->
 
 <project name="properties">
 
@@ -168,9 +168,6 @@
     <fileset dir="${build.webapp}/WEB-INF/lib">
       <include name="*.jar"/>
     </fileset>
-    <fileset dir="${pubs.root.dirs}">
-      <include name="*/java/lib/*.jar"/>
-    </fileset>
-    <!--<pathelement path="${java.class.path}/"/>-->
   </path>
+  
 </project>
