@@ -22,7 +22,7 @@
         
 <xsl:template match="/">
   <div id="body">
-    <h1 bxe_xpath="/simple:simple-document/lenya:meta/dc:title"><xsl:apply-templates select="simple:simple-document/lenya:meta/dc:title"/></h1>
+    <xsl:apply-templates select="simple:simple-document/lenya:meta/dc:title"/>
     <xsl:apply-templates select="simple:simple-document/simple:body/simple:subtitle"/>
     <xsl:apply-templates select="simple:simple-document/lenya:header/lenya:abstract"/>
     <div bxe_xpath="/simple:simple-document/simple:body">
