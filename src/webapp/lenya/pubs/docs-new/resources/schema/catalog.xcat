@@ -183,4 +183,10 @@
 <public publicId="-//OASIS//DTD Simplified DocBook RefEntry XML V1.0//EN"
         uri="sdocbook/1.0/sdocbookref.dtd"/>
 
+<!-- ...................................................................... -->
+<!-- XHTML ................................................................ -->
+
+<public publicId="-//W3C//DTD XHTML 1.0 Strict//EN"
+        uri="xhtml1-20020801/DTD/xhtml1-strict.dtd"/>
+
 </catalog>

@@ -187,3 +187,10 @@ PUBLIC "-//OASIS//DTD Simplified DocBook RefEntry XML V1.0//EN"
        "docbook/1.0/sdocbookref.dtd"
 
   -- ...................................................................... --
+
+
+  -- ...................................................................... --
+  -- XHTML driver file .................................................... --
+
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+       "xhtml1-20020801/DTD/xhtml1-strict.dtd"
