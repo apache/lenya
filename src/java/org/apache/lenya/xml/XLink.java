@@ -1,5 +1,5 @@
 /*
-$Id: XLink.java,v 1.9 2004/02/19 17:24:42 andreas Exp $
+$Id: XLink.java,v 1.10 2004/02/19 17:49:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,7 @@ $Id: XLink.java,v 1.9 2004/02/19 17:24:42 andreas Exp $
 */
 package org.apache.lenya.xml;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -94,21 +95,19 @@ public class XLink {
 
         name = element.getNodeName();
 
-        NamedNodeMap attributes = element.getAttributes();
-
-        for (int i = 0; i < attributes.getLength(); i++) {
-            Node attribute = attributes.item(i);
-
-            if (attribute.getNamespaceURI().equals(XLINK_NAMESPACE)) {
-                if (attribute.getLocalName().equals(ATTRIBUTE_HREF)) {
-                    href = attribute.getNodeValue();
-                } else if (attribute.getLocalName().equals(ATTRIBUTE_TYPE)) {
-                    type = attribute.getNodeValue();
-                } else if (attribute.getLocalName().equals(ATTRIBUTE_SHOW)) {
-                    show = attribute.getNodeValue();
-                }
-            }
+        Attr hrefAttribute = element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_HREF);
+        if (hrefAttribute != null) {
+            href = hrefAttribute.getNodeValue();
         }
+        Attr typeAttribute = element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_TYPE);
+        if (typeAttribute != null) {
+            type = typeAttribute.getNodeValue();
+        }
+        Attr showAttribute = element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_SHOW);
+        if (showAttribute != null) {
+            show = showAttribute.getNodeValue();
+        }
+
     }
 
     /**
