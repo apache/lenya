@@ -51,10 +51,6 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
-import org.apache.lenya.cms.ac.FileUser;
-import org.apache.lenya.cms.ac.Group;
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -77,6 +73,7 @@ import org.xml.sax.helpers.AttributesImpl;
 public class WorkflowMenuTransformer
     extends AbstractSAXTransformer {
     
+    public static final String MENU_ELEMENT = "menu";
     public static final String ITEM_ELEMENT = "item";
     public static final String EVENT_ATTRIBUTE = "event";
 
@@ -85,9 +82,9 @@ public class WorkflowMenuTransformer
      */
     public void startElement(String uri, String localName, String raw, Attributes attr)
         throws SAXException {
-        
+            
         boolean passed = true;
-        if (localName.equals(ITEM_ELEMENT)) {
+        if (hasWorkflow() && localName.equals(ITEM_ELEMENT)) {
             String event = attr.getValue(EVENT_ATTRIBUTE);
             
             // filter item if command not allowed 
@@ -112,6 +109,18 @@ public class WorkflowMenuTransformer
         if (passed) {
             super.startElement(uri, localName, raw, attr);
         }
+        
+        if (hasWorkflow() && localName.equals(MENU_ELEMENT)) {
+            String prefix = "";
+            if (raw.indexOf(":") != -1) {
+                prefix = raw.substring(0, raw.indexOf(":")) + ":";
+            }
+            super.startElement(uri, "workflow-state", prefix + "workflow-state", new AttributesImpl());
+            char characters[] = instance.getCurrentState().toString().toCharArray();
+            super.characters(characters, 0, characters.length);
+            super.endElement(uri, "workflow-state", prefix + "workflow-state");
+        }
+        
     }
     
     /* (non-Javadoc)
@@ -130,28 +139,33 @@ public class WorkflowMenuTransformer
             throw new ProcessingException(e);
         }
       
-        Group group = new Group("test-group");
-        group.addRole(new Role("editor"));
-      
-        User user = new FileUser(publication, "testuser");
-        user.addGroup(group);
-        
         Document document = new DefaultDocument(publication, envelope.getDocumentId());
-        
         WorkflowFactory factory = WorkflowFactory.newInstance();
-        WorkflowInstance instance = null;
-        Situation situation = null;
+        
+        setHasWorkflow(factory.hasWorkflow(document));
+        if (hasWorkflow()) {
+            
+            Situation situation = null;
+            
+            try {
+                setInstance(factory.buildInstance(document));
+                situation = factory.buildSituation(objectModel);
+            }
+            catch (Exception e) {
+                throw new ProcessingException(e);
+            }
       
-        try {
-            instance = factory.buildInstance(document);
-            situation = factory.buildSituation(user);
+            this.events = getInstance().getExecutableEvents(situation);
         }
-        catch (Exception e) {
-            throw new ProcessingException(e);
-        }
       
-        this.events = instance.getExecutableEvents(situation);
-      
+    }
+    
+    private boolean hasWorkflow;
+    
+    private WorkflowInstance instance;
+    
+    protected WorkflowInstance getInstance() {
+        return instance;
     }
     
     private Event events[];
@@ -164,6 +178,27 @@ public class WorkflowMenuTransformer
             }
         }
         return result;
+    }
+
+    /**
+     * @return
+     */
+    protected boolean hasWorkflow() {
+        return hasWorkflow;
+    }
+
+    /**
+     * @param b
+     */
+    public void setHasWorkflow(boolean b) {
+        hasWorkflow = b;
+    }
+
+    /**
+     * @param instance
+     */
+    public void setInstance(WorkflowInstance instance) {
+        this.instance = instance;
     }
 
 }
