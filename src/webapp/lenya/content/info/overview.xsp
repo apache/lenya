@@ -27,6 +27,12 @@
   		<lenya-info:status></lenya-info:status>
         <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
     <xsp:logic>
+    	
+      String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
+      Session session = request.getSession(true);
+      session.setAttribute("org.apache.lenya.cms.info.target", docId);
+      session.setAttribute("org.apache.lenya.cms.info.area", request.getParameter("lenya.area"));
+    	
       String[] documentlanguages = (String[])<input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
       StringBuffer str = new StringBuffer();
       for (int i = 0; i &lt; documentlanguages.length; i++) {

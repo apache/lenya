@@ -26,9 +26,6 @@
   <rc:revisions>
    <xsp:logic>
     String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
-    Session session=request.getSession(true);
-    session.setAttribute("org.apache.lenya.cms.info.target",docId);
-    session.setAttribute("org.apache.lenya.cms.info.area", request.getParameter("lenya.area"));
     Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
 
       String rootDir=publication.getEnvironment().getPublicationPath();
