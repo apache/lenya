@@ -42,7 +42,8 @@
   <li><code>svn co https://svn.apache.org/repos/asf/lenya/site/ lenya.apache.org</code> ->This is our deployed website tree (it is the svn-root for our website)</li>
   <li><link href="ext:forrest.install">Install Forrest 0.6</link> (Note that you need to use 0.6, other version do not work)</li>
   <li><code>go to the root of lenya/docu</code></li>
-  <li><code>forrest</code></li>
+  <li><code>forrest</code> (Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
+    can be ignored. If the site looks ok to you, and there were no validation errors, go for it.)</li>
   <li>Create and copy the Javadoc (<code>build javadocs</code>, Copy from <code>build/webapp/site/apidocs</code> to <code>lenya/site/apidocs/1.2</code>)</li>
   <li>Add, remove, commit to <code>lenya/site</code></li>
 </ul>
