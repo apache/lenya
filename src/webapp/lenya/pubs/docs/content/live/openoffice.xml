@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<document> 
+  <header> 
+    <title>OpenOffice Documents with Lenya</title>
+    <version major="0" minor="1">Initial version</version>
+    <authors>
+      <person name="Christian Egli" email="christian.egli@wyona.org"/>
+    </authors> 
+    <notice></notice> 
+    <abstract>This document describes the integration of Openoffice with Lenya
+CMS</abstract> 
+  </header> 
+  <body> 
+
+    <section>
+      <title>Goals</title>
+
+      <p>This document describes the integration of Openoffice with Lenya
+	CMS. The integration is guided by the following goals:</p>
+
+      <ul>
+	<li>Use OpenOffice as a content editor for static web
+	pages</li>
+
+	<li>Migrate OpenOffice document to a custom xml format</li>
+      </ul>
+    </section>
+
+    <section>
+      <title>Prerequisites</title>
+
+      <p>In order to seamlessly integrate Openoffice into the
+publication process of Lenya/Cocoon the following prerequisites need
+to be met:</p>
+
+      <section>
+	<title>OpenOffice DTD</title>
+
+	<p>The DTDs for the OpenOffice documents has to be available
+on the system.</p>
+
+	<p>It's best to get them directly from your OpenOffice
+installation. They are located in the share directory of your
+installation. Copy the dtd's into your Lenya installation, e.g. as
+follows:</p>
+
+	<source>cp ~/Office/share/dtd/* ~/build/jakarta-tomcat-4.1.18-LE-jdk14/webapps/lenya/lenya/resources/dtd/openoffice/</source>
+	
+	<fixme author="ce">The DTDs should probably go into
+	/usr/share/sgml/openoffice/*</fixme>
+
+	<note>There's a bug in the xml parser. As a workaround we uncomment
+	  all the <code>draw:text-box</code> stuff.</note>
+      </section>
+
+      <section>
+	<title>XML Catalog</title>
+
+	<p>In order for Lenya/Cocoon to find the DTDs you need to setup an XML
+catalog as follows:</p>
+
+	<source>
+xmlcatalog --noout --create openoffice.cat
+xmlcatalog --noout --add "public" \
+  "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" 
+  "file:///home/slide/build/jakarta-tomcat-4.1.18-LE-jdk14/webapps/lenya/lenya/resources/dtd/openoffice/officedocument/1_0/office.dtd" \
+  openoffice.cat
+	</source>
+
+	<p>Alternatively you can simply use the attached catalog.</p>
+
+	<p>Store this newly created catalog and edit CatalogManager.properties to
+make sure Cocoon finds this catalog and hence the OpenOffice DTDs.</p>
+
+	<p>Add the location of the OpenOffice catalog to Cocoon's
+CatalogManager.properties (which can be found in
+<code>~/build/jakarta-tomcat-4.1.18-LE-jdk14/webapps/lenya/WEB-INF/classes/CatalogManager.properties</code>)
+by adding the following lines to this file:</p>
+
+	<source>
+#catalogs=/path/to/local/catalog
+catalogs=/home/slide/build/jakarta-tomcat-4.1.18-LE-jdk14/webapps/lenya/lenya/resources/dtd/openoffice/catalog.xml
+	</source>
+
+      </section>
+
+      <section>
+	<title>OpenOffice2HTML XSTL</title>
+
+	<p>In order to render the OpenOffice xml as html we need XSLT stylesheets
+to provide the necessary transformations.</p>
+
+	<p>A very good XSLT which is fairly complete can be fetched
+	  from zope.org (<link
+	  href="http://www.zope.org/Members/philikon/ZooDocument">http://www.zope.org/Members/philikon/ZooDocument</link>).</p>
+
+      </section>
+
+      <section>
+	<title>Slide</title>
+
+	<p>Slide is an Apache project which offers amongst other things a a
+WebDAV access module (implemented as a servlet). This will allow us to
+deploy the OpenOffice documents directly via WebDAV.</p>
+
+	<p>For a very basic installation the following changes need to be applied
+to a file named Domain.xml in the Slide webapp directory:</p>
+
+	<ul>
+	  <li>Change permissions</li>
+	  <li>ContentStore: set to parent dir of OpenOffice dir</li>
+	  <li>Replace folder "files" by OpenOffice dir name</li>
+	</ul>
+
+      </section>
+
+    </section>
+
+    <section>
+      <title>Pipelines</title>
+
+      <p>In order for Lenya/Cocoon to be able to read the content of the
+OpenOffice document, a set of pipelines need to be set up.</p>
+
+      <section>
+	<title>Read the zip/jar file</title>
+	
+	<p>To read the OpenOffice documents we need to setup a simple reader
+	  which as follows:</p>
+	
+	<source>
+&lt;map:match pattern="**.sxw"&gt;
+  &lt;map:read src="content/{1}.sxw"/&gt;
+&lt;/map:match&gt;
+	</source>
+      </section>
+ 
+      <section>
+	<title>Unpack zip file and transform the OO xml to xhtml</title>
+
+	<p>OpenOffice documents are actually a zip file containing xml files for
+content and style plus other additional files such as jpg etc.</p>
+
+	<p>Zip is the same file format as jar. JDK supports jar unpacking
+natively with the jar protocol. The pipeline to read a jar file looks
+as follows:</p>
+
+	<source>
+&lt;map:match pattern="**.oo"&gt;
+  &lt;map:generate src="jar:http://localhost:38080/lenya/computerworld/authoring/{1}.sxw!/content.xml"/&gt;
+  &lt;map:transform src="../../xslt/openoffice/ooo2html.xsl"/&gt;
+  &lt;map:serialize/&gt;
+&lt;/map:match&gt;
+	</source>
+      </section>
+
+      <section>
+	<title>Aggregate with navigation</title>
+
+	<p>Additionaly we want to embed the OpenOffice document in the usual
+navigation, header and footer. The following is fairly specific to the
+Computerworld publication but can easily be adapted:</p>
+
+	<source>
+&lt;map:match pattern="**.html"&gt;
+  &lt;map:aggregate element="lenya"&gt;
+    &lt;map:part src="cocoon:/menus/static/{1}.html"/&gt;
+    &lt;map:part element="cmsbody" src="content/authoring/wrapper.html"/&gt;
+    &lt;map:part src="cocoon:/{1}.oo" element="wrapper"/&gt;
+    &lt;map:part src="content/authoring/small-preview.xml"/&gt;
+    &lt;map:part src="content/authoring/sitetree.xml"/&gt;
+    &lt;map:part src="cocoon:/today"/&gt;
+  &lt;/map:aggregate&gt;
+
+  &lt;map:transform src="xslt/authoring/wrapper.xsl"&gt;
+    &lt;map:parameter name="id" value="/{1}"/&gt;
+    &lt;map:parameter name="authoring" value="true"/&gt;
+  &lt;/map:transform&gt;
+  &lt;map:transform src="xslt/authoring/images.xsl"/&gt;
+  &lt;map:serialize type="html"/&gt;
+&lt;/map:match&gt;
+	</source>
+
+      </section>
+    </section>
+
+    <section>
+      <title>Problems</title>
+      <ul>
+	<li>Caching prevents an update OO file (zip file) from being
+	displayed.</li>
+
+	<li>If you restart tomcat (slide) you lose the NodeContentStore so that
+  WebDAV loses the nodes (documents and folders).</li>
+
+	<li>xml parser cannot handle openoffice dtd's due to a parser bug</li>
+      </ul>
+    </section>
+
+    <section>
+      <title>To do's</title>
+      <ul>
+	<li>Set permissions in tomcat/slide: authorization and autorisation</li>
+	<li>Complete and improve OpenOffice2Html xslt (images, tables, etc.)</li>
+	<li> Add pipelines for other files in zip like images</li>
+	<li> Integration slide and lenya</li>
+      </ul>
+    </section>
+    
+  </body> 
+  <footer> 
+    <legal>© 200 wyona.org</legal> 
+  </footer>
+</document>

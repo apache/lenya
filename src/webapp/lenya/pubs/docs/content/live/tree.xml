@@ -229,6 +229,7 @@
     <branch relURI="concepts" doctype="Guide" menuName="Concepts for Review">
       <leaf relURI="standardURI.html" doctype="XDoc" menuName="URI Scheme"/>
       <leaf relURI="pageEnvelope.html" doctype="XDoc" menuName="Page Envelope"/>
+      <leaf relURI="openoffice.html" doctype="XDoc" menuName="OpenOffice Integration"/>
     </branch>
   </branch>
 </tree>
