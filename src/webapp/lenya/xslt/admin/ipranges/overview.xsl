@@ -71,6 +71,16 @@
       </div>
     </div>
     
+    <xsl:call-template name="group-box"/>
+            
+    </td>
+    </tr>
+    </table>
+    
+  </xsl:template>
+  
+  
+  <xsl:template name="group-box">
     <div class="lenya-box">
       <div class="lenya-box-title">Group Affiliation</div>
       <div class="lenya-box-body">
@@ -94,11 +104,6 @@
           </table>
       </div>
     </div>
-            
-    </td>
-    </tr>
-    </table>
-    
   </xsl:template>
   
   
