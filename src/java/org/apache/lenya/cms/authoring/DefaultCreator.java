@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.8 2003/02/26 11:15:22 michi Exp $
+ * $Id: DefaultCreator.java,v 1.9 2003/02/26 13:07:52 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -160,9 +160,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         Document doc = DocumentHelper.readDocument(new URL("file:" + doctypeSample));
 
 	// transform the xml if needed
-	parameters.setParameter("id", id);
-	parameters.setParameter("childName", childName);
-	transformXML(doc, parameters);
+	transformXML(doc, id, childType, childName, parameters);
 	// write the document (create the path, i.e. the parent
         // directory first if needed)
 	File parent = new File(new File(filename).getParent());
@@ -180,7 +178,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 	if (sampleMetaName != null) {
 	    doc = DocumentHelper.readDocument(new URL("file:" + doctypeMeta));
 
-	    transformMetaXML(doc, parameters);
+	    transformMetaXML(doc, id, childType, childName, parameters);
 	    
 	    parent = new File(new File(filenameMeta).getParent());
 	    if (!parent.exists()) {
@@ -193,11 +191,15 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 	}
     }
 
-    protected void transformXML (Document doc, Parameters parameters) 
+    protected void transformXML (Document doc,
+				 String childId, short childType, String childName,
+				 Parameters parameters) 
     	throws Exception {
     }
 
-    protected void transformMetaXML (Document doc, Parameters parameters) 
+    protected void transformMetaXML (Document doc,
+				     String childId, short childType, String childName,
+				     Parameters parameters) 
     	throws Exception {
     }
 

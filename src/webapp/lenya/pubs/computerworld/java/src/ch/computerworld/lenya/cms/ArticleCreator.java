@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleCreator.java,v 1.5 2003/02/26 10:09:36 egli Exp $
+ * $Id: ArticleCreator.java,v 1.6 2003/02/26 13:07:52 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -65,14 +65,14 @@ public class ArticleCreator extends DefaultLeafCreator {
 	sampleResourceName = "Article.xml";
     }
 
-    protected void transformXML (Document doc, Parameters parameters)
+    protected void transformXML (Document doc,
+				 String childId, short childType, String childName,
+				 Parameters parameters)
 	throws Exception {
 
         DOMUtil du = new DOMUtil();
-        du.setElementValue(doc, "/article/head/title",
-			   parameters.getParameter("id"));
-        du.setElementValue(doc, "/system/system_name",
-			   parameters.getParameter("childName"));
+        du.setElementValue(doc, "/article/head/title", childId);
+        du.setElementValue(doc, "/system/system_name", childName);
     }
 
 }

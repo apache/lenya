@@ -1,5 +1,5 @@
 /*
- * $Id: CMSProjectCreator.java,v 1.2 2003/02/26 11:15:22 michi Exp $
+ * $Id: CMSProjectCreator.java,v 1.3 2003/02/26 13:07:51 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -65,14 +65,14 @@ public class CMSProjectCreator extends DefaultLeafCreator {
 	sampleResourceName = "CMSProject.xml";
     }
 
-    protected void transformXML (Document doc, Parameters parameters)
+    protected void transformXML (Document doc,
+				 String childId, short childType, String childName,
+				 Parameters parameters)
 	throws Exception {
 
         DOMUtil du = new DOMUtil();
-        du.setElementValue(doc, "/system/id",
-			   parameters.getParameter("id"));
-        du.setElementValue(doc, "/system/system_name",
-			   parameters.getParameter("childName"));
+        du.setElementValue(doc, "/system/id", childId);
+        du.setElementValue(doc, "/system/system_name", childName);
 	
         log.debug("system_name = " +
 		  du.getElementValue(doc.getDocumentElement(), 
