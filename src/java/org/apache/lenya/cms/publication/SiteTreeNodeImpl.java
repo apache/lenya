@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTreeNodeImpl.java,v 1.6 2003/05/30 20:57:59 andreas Exp $
+ * $Id: SiteTreeNodeImpl.java,v 1.7 2003/06/13 08:24:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -54,124 +54,131 @@ import org.w3c.dom.NamedNodeMap;
 
 import org.apache.lenya.xml.DocumentHelper;
 
-public class SiteTreeNodeImpl 
-    implements SiteTreeNode {
-    private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
+public class SiteTreeNodeImpl implements SiteTreeNode {
+	private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
 
-    public static final String ID_ATTRIBUTE_NAME = "id";
-    public static final String HREF_ATTRIBUTE_NAME = "href";
-    public static final String SUFFIX_ATTRIBUTE_NAME = "suffix";
-    public static final String LINK_ATTRIBUTE_NAME = "link";
-    public static final String LANGUAGE_ATTRIBUTE_NAME = "xml:lang";
+	public static final String ID_ATTRIBUTE_NAME = "id";
+	public static final String HREF_ATTRIBUTE_NAME = "href";
+	public static final String SUFFIX_ATTRIBUTE_NAME = "suffix";
+	public static final String LINK_ATTRIBUTE_NAME = "link";
+	public static final String LANGUAGE_ATTRIBUTE_NAME = "xml:lang";
 
-    public static final String NODE_NAME = "node";
-    public static final String LABEL_NAME = "label";
+	public static final String NODE_NAME = "node";
+	public static final String LABEL_NAME = "label";
 
-    private Node node = null;
+	private Node node = null;
 
-    public SiteTreeNodeImpl(Node node) {
- 	this.node = node;
-    }
-
-    public String getParentId() {
-	Node parent = node.getParentNode();
-        if (parent == null) {
-          return "/";
-        }
-        NamedNodeMap attributes = parent.getAttributes();
-        if (attributes == null) {  
-          return "/";
-        }
-        Node idAttribute = attributes.getNamedItem(ID_ATTRIBUTE_NAME);
-        if (idAttribute == null) {
-          return "/";
-        }
-        return idAttribute.getNodeValue();
-    }
-
-    public String getAbsoluteParentId() {
-	String absoluteId = "";
-	Node parent = node.getParentNode();
-	NamedNodeMap attributes = null;
-	Node idAttribute = null;
-	
-	while (parent != null) {
-	    attributes = parent.getAttributes();
-	    if (attributes == null) {
-		break;
-	    }
-	    idAttribute = attributes.getNamedItem(ID_ATTRIBUTE_NAME);
-	    if (idAttribute == null) {
-		break;
-	    }
-	    absoluteId = "/" + idAttribute.getNodeValue() + absoluteId;
-	    parent = parent.getParentNode();
+	public SiteTreeNodeImpl(Node node) {
+		this.node = node;
 	}
-	return absoluteId;
-    }
 
-    public String getId() {
-	return node.getAttributes().getNamedItem(ID_ATTRIBUTE_NAME).getNodeValue();
-    }
-
-    public Label[] getLabels() {
-	ArrayList labels = new ArrayList();
-
-	NodeList children = node.getChildNodes();
-	for (int i = 0; i < children.getLength(); i++) {
-	    NamedNodeMap attributes = children.item(i).getAttributes();
-	    Node child = children.item(i);
-	    if (child.getNodeType() == Node.ELEMENT_NODE &&
-		child.getNodeName().equals(LABEL_NAME)) {
-
-		String labelName = DocumentHelper.getSimpleElementText((Element)child);
-		String labelLanguage = null;
-		Node languageAttribute = child.getAttributes().getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
-		if (languageAttribute != null) {
-		    labelLanguage = languageAttribute.getNodeValue();
+	public String getParentId() {
+		Node parent = node.getParentNode();
+		if (parent == null) {
+			return "/";
 		}
-		labels.add(new Label(labelName, labelLanguage));
-	    }
+		NamedNodeMap attributes = parent.getAttributes();
+		if (attributes == null) {
+			return "/";
+		}
+		Node idAttribute = attributes.getNamedItem(ID_ATTRIBUTE_NAME);
+		if (idAttribute == null) {
+			return "/";
+		}
+		return idAttribute.getNodeValue();
 	}
-	return (Label[])labels.toArray(new Label[labels.size()]);
-    }
 
-    public Label getLabel(String xmlLanguage) {
-	Label label = null;
-	Label[] labels = getLabels();
-	for (int i = 0; i < labels.length; i++) {
-	    if (labels[i].getLanguage().equals(xmlLanguage)) {
-		label = labels[i];
-		break;
-	    }
-	}
-	return label;
-    }
+	public String getAbsoluteParentId() {
+		String absoluteId = "";
+		Node parent = node.getParentNode();
+		NamedNodeMap attributes = null;
+		Node idAttribute = null;
 
-    public String getHref() {
-	Node attribute = node.getAttributes().getNamedItem(HREF_ATTRIBUTE_NAME);
-	if (attribute != null) {
-	    return attribute.getNodeValue();
-	} else {
-	    return null;
+		while (parent != null) {
+			attributes = parent.getAttributes();
+			if (attributes == null) {
+				break;
+			}
+			idAttribute = attributes.getNamedItem(ID_ATTRIBUTE_NAME);
+			if (idAttribute == null) {
+				break;
+			}
+			absoluteId = "/" + idAttribute.getNodeValue() + absoluteId;
+			parent = parent.getParentNode();
+		}
+		return absoluteId;
 	}
-    }
 
-    public String getSuffix() {
-	Node attribute = node.getAttributes().getNamedItem(SUFFIX_ATTRIBUTE_NAME);
-	if (attribute != null) {
-	    return attribute.getNodeValue();
-	} else {
-	    return null;
+	public String getId() {
+		return node
+			.getAttributes()
+			.getNamedItem(ID_ATTRIBUTE_NAME)
+			.getNodeValue();
 	}
-    }
 
-    public boolean hasLink() {
-	Node attribute = node.getAttributes().getNamedItem(LINK_ATTRIBUTE_NAME);
-	if (attribute != null) {
-	    return attribute.getNodeValue().equals("true");
-	} else {
-	    return false;
+	public Label[] getLabels() {
+		ArrayList labels = new ArrayList();
+
+		NodeList children = node.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			NamedNodeMap attributes = children.item(i).getAttributes();
+			Node child = children.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE
+				&& child.getNodeName().equals(LABEL_NAME)) {
+
+				String labelName =
+					DocumentHelper.getSimpleElementText((Element) child);
+				String labelLanguage = null;
+				Node languageAttribute =
+					child.getAttributes().getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
+				if (languageAttribute != null) {
+					labelLanguage = languageAttribute.getNodeValue();
+				}
+				labels.add(new Label(labelName, labelLanguage));
+			}
+		}
+		return (Label[]) labels.toArray(new Label[labels.size()]);
 	}
-    }
+
+	public Label getLabel(String xmlLanguage) {
+		Label label = null;
+		Label[] labels = getLabels();
+		String language = null;
+		for (int i = 0; i < labels.length; i++) {
+			language = labels[i].getLanguage();
+			if ((language != null) && (language.equals(xmlLanguage))) {
+				label = labels[i];
+				break;
+			}
+		}
+		return label;
+	}
+
+	public String getHref() {
+		Node attribute = node.getAttributes().getNamedItem(HREF_ATTRIBUTE_NAME);
+		if (attribute != null) {
+			return attribute.getNodeValue();
+		} else {
+			return null;
+		}
+	}
+
+	public String getSuffix() {
+		Node attribute =
+			node.getAttributes().getNamedItem(SUFFIX_ATTRIBUTE_NAME);
+		if (attribute != null) {
+			return attribute.getNodeValue();
+		} else {
+			return null;
+		}
+	}
+
+	public boolean hasLink() {
+		Node attribute = node.getAttributes().getNamedItem(LINK_ATTRIBUTE_NAME);
+		if (attribute != null) {
+			return attribute.getNodeValue().equals("true");
+		} else {
+			return false;
+		}
+	}
 }
