@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <identity id="roger" class="org.apache.lenya.cms.ac.FileUser">
-<password type="md5">8e07dafd13495561db9063ebe4db4b27</password>
-<comment>Roger Stupf</comment>
-<!--<expire year="2002" month="12" day="31"/>-->
-<groups>
-  <group>editor</group>
-  <group>root</group>
-</groups>
+  <fullname>Roger Stupf</fullname>
+  <email>roger.stupf@unizh.ch</email>
+  <password type="md5">8e07dafd13495561db9063ebe4db4b27</password>
+  <groups>
+    <group>editor</group>
+    <group>root</group>
+  </groups>
 </identity>
