@@ -43,7 +43,7 @@ name="publication"/></publication>
       </block>
       <block>
         <item uc:usecase="edit" href="../../sidebar.html?lenya.step=open&amp;form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
-        <item uc:usecase="publish" href="../../sidebar.html?sources=sidebar.xml&amp;uris=sidebar.html&amp;lenya.step=showscreen">Publish Sidebar</item>
+        <item uc:usecase="publish" href="../../sidebar.html?sources=sidebar.xml&amp;uris=feeds/all/index.html&amp;lenya.step=showscreen">Publish Sidebar</item>
       </block>
       <block>
         <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
