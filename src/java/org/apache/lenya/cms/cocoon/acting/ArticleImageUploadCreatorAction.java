@@ -196,7 +196,7 @@ public class ArticleImageUploadCreatorAction
 	    // insert <media> tags at the location sepecified by the
 	    // cpath in the original document (the referer)
 	    insertMediaTag(requestingDocumentName, imageXPath,
-			   imagePathName, dublinCoreParams);
+			   fileName, dublinCoreParams);
 	    
 	} else if (obj instanceof String) {
 	    getLogger().debug("Skipping parameter: " + (String)obj);
@@ -228,9 +228,11 @@ public class ArticleImageUploadCreatorAction
 	    root.addElement(tagName).addText(tagValue);
 	}
 
-	FileWriter out = new FileWriter(metaDataFilePathName);
-	document.write(out);
-	out.close();
+	OutputStream out =
+	    new BufferedOutputStream(new FileOutputStream(metaDataFilePathName));
+	XMLWriter writer = new XMLWriter(out, OutputFormat.createPrettyPrint());
+	writer.write(document);
+	writer.close();
     }
 
     /**
@@ -284,25 +286,15 @@ public class ArticleImageUploadCreatorAction
 	Element parent = node.getParent();
 	List list = parent.content();
 	
-	// insert the tag after the imageXPath
-	list.add(parent.indexOf(node) + 1, mediaTag);
+	// insert the tag before the imageXPath
+	list.add(parent.indexOf(node), mediaTag);
 
 	// write it back to the file
-/*
-	FileWriter out = new FileWriter(requestingDocumentName);
-	document.write(out);
-	out.close();
-*/
-OutputFormat format = OutputFormat.createPrettyPrint();
-    try {
-      XMLWriter writer = new XMLWriter(
-                         new BufferedOutputStream(
-                         new FileOutputStream(requestingDocumentName)), format);
-      writer.write(document);
-      writer.close();
-    } catch (Exception e) {
-      getLogger().debug(""+e);
-    }
+	OutputStream out =
+	    new BufferedOutputStream(new FileOutputStream(requestingDocumentName));
+	XMLWriter writer = new XMLWriter(out, OutputFormat.createPrettyPrint());
+	writer.write(document);
+	writer.close();
     }
 }
 
