@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.19 2003/09/18 13:14:38 andreas Exp $
+$Id: SiteTreeNodeImpl.java,v 1.20 2003/09/18 16:25:26 andreas Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,7 @@ import java.util.List;
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
  * @author $Author: andreas $
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -162,10 +162,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         if (node == node.getOwnerDocument().getDocumentElement()) {
             return "";
         }
-        return node
-            .getAttributes()
-            .getNamedItem(ID_ATTRIBUTE_NAME)
-            .getNodeValue();
+        return node.getAttributes().getNamedItem(ID_ATTRIBUTE_NAME).getNodeValue();
     }
 
     /**
@@ -182,8 +179,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
             if ((child.getNodeType() == Node.ELEMENT_NODE)
                 && child.getNodeName().equals(LABEL_NAME)) {
-                String labelName =
-                    DocumentHelper.getSimpleElementText((Element)child);
+                String labelName = DocumentHelper.getSimpleElementText((Element) child);
                 String labelLanguage = null;
                 Node languageAttribute =
                     child.getAttributes().getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
@@ -196,7 +192,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
             }
         }
 
-        return (Label[])labels.toArray(new Label[labels.size()]);
+        return (Label[]) labels.toArray(new Label[labels.size()]);
     }
 
     /**
@@ -211,8 +207,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         for (int i = 0; i < labels.length; i++) {
             language = labels[i].getLanguage();
 
-            if ((((xmlLanguage == null) || (xmlLanguage.equals("")))
-                && (language == null))
+            if ((((xmlLanguage == null) || (xmlLanguage.equals(""))) && (language == null))
                 || ((language != null) && (language.equals(xmlLanguage)))) {
                 label = labels[i];
 
@@ -231,19 +226,10 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         if (getLabel(label.getLanguage()) == null) {
             // only add the label if there is no label with the same language yet.
 
-            NamespaceHelper helper =
-                new NamespaceHelper(
-                    DefaultSiteTree.NAMESPACE_URI,
-                    "",
-                    node.getOwnerDocument());
-            Element labelElem =
-                helper.createElement(
-                    SiteTreeNodeImpl.LABEL_NAME,
-                    label.getLabel());
+            NamespaceHelper helper = getNamespaceHelper();
+            Element labelElem = helper.createElement(SiteTreeNodeImpl.LABEL_NAME, label.getLabel());
 
-            labelElem.setAttribute(
-                SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME,
-                label.getLanguage());
+            labelElem.setAttribute(SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME, label.getLanguage());
 
             node.appendChild(labelElem);
         }
@@ -264,16 +250,13 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
                 if ((child.getNodeType() == Node.ELEMENT_NODE)
                     && child.getNodeName().equals(LABEL_NAME)
-                    && child.getFirstChild().getNodeValue().equals(
-                        label.getLabel())) {
+                    && child.getFirstChild().getNodeValue().equals(label.getLabel())) {
 
                     Node languageAttribute =
-                        child.getAttributes().getNamedItem(
-                            LANGUAGE_ATTRIBUTE_NAME);
+                        child.getAttributes().getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
 
                     if (languageAttribute != null
-                        && languageAttribute.getNodeValue().equals(
-                            label.getLanguage())) {
+                        && languageAttribute.getNodeValue().equals(label.getLanguage())) {
                         node.removeChild(child);
                         break;
                     }
@@ -301,8 +284,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getSuffix()
      */
     public String getSuffix() {
-        Node attribute =
-            node.getAttributes().getNamedItem(SUFFIX_ATTRIBUTE_NAME);
+        Node attribute = node.getAttributes().getNamedItem(SUFFIX_ATTRIBUTE_NAME);
 
         if (attribute != null) {
             return attribute.getNodeValue();
@@ -331,21 +313,15 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     public SiteTreeNode[] getChildren() {
         List childElements = new ArrayList();
 
-        NamespaceHelper helper =
-            new NamespaceHelper(
-                DefaultSiteTree.NAMESPACE_URI,
-                "",
-                node.getOwnerDocument());
-        Element[] elements =
-            helper.getChildren((Element)node, SiteTreeNodeImpl.NODE_NAME);
+        NamespaceHelper helper = getNamespaceHelper();
+        Element[] elements = helper.getChildren((Element) node, SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
             childElements.add(newNode);
         }
 
-        return (SiteTreeNode[])childElements.toArray(
-            new SiteTreeNode[childElements.size()]);
+        return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
     }
 
     /**
@@ -354,45 +330,33 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
      */
     public SiteTreeNode[] removeChildren() {
         List childElements = new ArrayList();
-        NamespaceHelper helper =
-            new NamespaceHelper(
-                DefaultSiteTree.NAMESPACE_URI,
-                "",
-                node.getOwnerDocument());
-        Element[] elements =
-            helper.getChildren((Element)node, SiteTreeNodeImpl.NODE_NAME);
+        NamespaceHelper helper = getNamespaceHelper();
+        Element[] elements = helper.getChildren((Element) node, SiteTreeNodeImpl.NODE_NAME);
         for (int i = 0; i < elements.length; i++) {
             node.removeChild(elements[i]);
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
             childElements.add(newNode);
         }
-        return (SiteTreeNode[])childElements.toArray(
-            new SiteTreeNode[childElements.size()]);
+        return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
     }
 
-	/**
-	 * (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#getChildren()
-	 */
-	public SiteTreeNode[] getNextSiblings() {
-		List siblingElements = new ArrayList();
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#getChildren()
+     */
+    public SiteTreeNode[] getNextSiblings() {
+        List siblingElements = new ArrayList();
 
-		NamespaceHelper helper =
-			new NamespaceHelper(
-				DefaultSiteTree.NAMESPACE_URI,
-				"",
-				node.getOwnerDocument());
-		Element[] elements =
-			helper.getNextSiblings((Element)node, SiteTreeNodeImpl.NODE_NAME);
+        NamespaceHelper helper = getNamespaceHelper();
+        Element[] elements = helper.getNextSiblings((Element) node, SiteTreeNodeImpl.NODE_NAME);
 
-		for (int i = 0; i < elements.length; i++) {
-			SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
-			siblingElements.add(newNode);
-		}
+        for (int i = 0; i < elements.length; i++) {
+            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            siblingElements.add(newNode);
+        }
 
-		return (SiteTreeNode[])siblingElements.toArray(
-			new SiteTreeNode[siblingElements.size()]);
-	}
+        return (SiteTreeNode[]) siblingElements.toArray(new SiteTreeNode[siblingElements.size()]);
+    }
     /**
      * (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#accept(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
@@ -405,8 +369,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
      * (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#acceptSubtree(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
      */
-    public void acceptSubtree(SiteTreeNodeVisitor visitor)
-        throws DocumentException {
+    public void acceptSubtree(SiteTreeNodeVisitor visitor) throws DocumentException {
         this.accept(visitor);
         SiteTreeNode[] children = this.getChildren();
         if (children == null) {
@@ -436,13 +399,52 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     public SiteTreeNode[] getChildren(String language) {
         SiteTreeNode[] children = getChildren();
         List languageChildren = new ArrayList();
-        
+
         for (int i = 0; i < children.length; i++) {
             if (children[i].getLabel(language) != null) {
                 languageChildren.add(children[i]);
             }
         }
-        
+
         return (SiteTreeNode[]) languageChildren.toArray(new SiteTreeNode[languageChildren.size()]);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#getParent()
+     */
+    public SiteTreeNode getParent() {
+        SiteTreeNode parent = null;
+
+        Node parentNode = node.getParentNode();
+        if (parentNode.getNodeType() == Node.ELEMENT_NODE
+            && parentNode.getLocalName().equals(NODE_NAME)) {
+            parent = new SiteTreeNodeImpl(parentNode);
+        }
+
+        return parent;
+    }
+
+    /**
+     * Returns the namespace helper of the sitetree XML document.
+     * @return A namespace helper.
+     */
+    protected NamespaceHelper getNamespaceHelper() {
+        NamespaceHelper helper =
+            new NamespaceHelper(DefaultSiteTree.NAMESPACE_URI, "", node.getOwnerDocument());
+        return helper;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#getParent(java.lang.String)
+     */
+    public SiteTreeNode getParent(String language) {
+        SiteTreeNode parent = getParent();
+
+        Label label = parent.getLabel(language);
+        if (label == null) {
+            parent = null;
+        }
+
+        return parent;
     }
 }

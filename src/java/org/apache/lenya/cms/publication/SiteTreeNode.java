@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.13 2003/09/18 13:14:38 andreas Exp $
+$Id: SiteTreeNode.java,v 1.14 2003/09/18 16:25:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ package org.apache.lenya.cms.publication;
  * delegates everything to the Node.
  *
  * @author $Author: andreas $
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public interface SiteTreeNode {
 
@@ -71,6 +71,19 @@ public interface SiteTreeNode {
      * @return the parent-id.
      */
     String getParentId();
+    
+    /**
+     * Returns the parent node of this node.
+     * @return A sitetree node.
+     */
+    SiteTreeNode getParent();
+
+    /**
+     * Returns the parent node of this node or null if the parent has no label for the given language.
+     * @param language A language string.
+     * @return A sitetree node.
+     */
+    SiteTreeNode getParent(String language);
 
     /**
      * Get the absolute parent-id of this node.
