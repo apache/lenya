@@ -330,7 +330,9 @@
    <map:selector logger="sitemap.selector.host" name="host" src="org.apache.cocoon.selection.HostSelector"/>
   
 
+<!--
     <map:selector name="auth-media" src="org.apache.cocoon.webapps.authentication.selection.MediaSelector"/>
+-->
 </map:selectors>
 
   <!--+
@@ -405,6 +407,7 @@
         <docs href="content/authoring"/>
         <doctypes href="config/doctypes/"/>
       </map:action>
+      <map:action logger="sitemap.action.multipart" name="multipart" src="org.apache.lenya.cms.cocoon.acting.MultipartHttpServletRequestAction"/>
    </map:actions>
 
   <!--+
@@ -709,13 +712,42 @@
 
       <!-- Edit XHTML with Midas -->
       <map:pipeline>
+        <map:match pattern="default/authoring/sugus">
+          <map:act type="multipart">
+            <map:read src="lenya/resources/misc/midas/midas.html" mime-type="text/html"/>
+          </map:act>
+          <map:read src="lenya/resources/misc/midas/midas_files/content.html" mime-type="text/html"/>
+        </map:match>
+
         <map:match type="usecase" pattern="midas">
-          <map:read src="lenya/resources/misc/midas/midas.html" mime-type="text/html"/>
+          <map:match type="step" pattern="open">
+            <map:generate src="lenya/pubs/default/content/authoring/tutorial/index.xml"/>
+            <map:transform src="lenya/resources/misc/midas/midas.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+<!--
+          <map:match type="step" pattern="save">
+            <map:act type="multipart">
+              <map:read src="lenya/resources/misc/midas/midas.html" mime-type="text/html"/>
+            </map:act>
+            <map:read src="lenya/resources/misc/midas/midas_files/content.html" mime-type="text/html"/>
+          </map:match>
+-->
+        </map:match>
+        <map:match pattern="**/midas_content/**">
+          <map:generate src="lenya/pubs/default/content/authoring/tutorial/index.xml"/>
+          <map:transform src="lenya/resources/misc/midas/remove_dtd.xsl"/>
+          <map:serialize type="html"/>
         </map:match>
         <map:match pattern="**/midas_files/**">
           <map:read src="lenya/resources/misc/midas/midas_files/{2}"/>
         </map:match>
+
+        <map:handle-errors type="500">
+          <map:serialize type="xml"/>
+        </map:handle-errors>
       </map:pipeline>
+      <!-- /Edit XHTML with Midas -->
 
 
       <!-- Publications -->
