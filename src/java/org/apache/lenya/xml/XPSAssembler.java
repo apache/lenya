@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XPSAssembler.java,v 1.22 2004/03/24 22:11:41 michi Exp $  */
+/* $Id: XPSAssembler.java,v 1.23 2004/04/20 13:37:02 michi Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -439,7 +439,7 @@ public class XPSAssembler implements XPSInclude {
     }
 
     /**
-     * DOCUMENT ME!
+     * Process XLink
      *
      * @param xlink DOCUMENT ME!
      * @param orgChild DOCUMENT ME!
@@ -450,7 +450,9 @@ public class XPSAssembler implements XPSInclude {
     public NodeList processXLink(XLink xlink, Element orgChild, XPSSourceInformation currentInfo) {
         NodeList nl = null;
 
-        if (!xlink.show.equals("embed")) {
+        // NOTE: if no show attribute is specified, then the value will be set to "undefined"
+        if (!(xlink.show.equals("embed") || xlink.show.equals("enclose") || xlink.show.equals("replace"))) {
+            log.warn("No such value of attribute \"show\" implemented: " + xlink.show);
             nl = noNodesReturnedFromXLink(xlink);
         } else {
             Vector args = new Vector();
@@ -483,24 +485,31 @@ public class XPSAssembler implements XPSInclude {
                     Document xlinkedDocument = firstChild.getOwnerDocument();
                     Element dummyRoot = dpf.newElementNode(xlinkedDocument, "DummyRoot");
 
-                    if (conf.INCLUDE.equals("replace")) {
-                        for (int i = 0; i < newChildren.size(); i++) {
-                            dummyRoot.appendChild((Node) newChildren.elementAt(i));
-                        }
-                    } else if (conf.INCLUDE.equals("embed")) {
-                        dummyRoot.appendChild(xlink.getXLink(xlinkedDocument, dpf));
+                    if (xlink.show.equals("embed")) {
+                    //if (conf.INCLUDE.equals("embed")) {
+                        // WARNING: embed was actually meant to also include the actual xlink, but
+			//          it was never really implemented and hence led to the misinterpretation of replace
+			//          Therefore we treat it the same as replace
+                        //dummyRoot.appendChild(xlink.getXLink(xlinkedDocument, dpf));
 
                         for (int i = 0; i < newChildren.size(); i++) {
                             dummyRoot.appendChild((Node) newChildren.elementAt(i));
                         }
-                    } else if (conf.INCLUDE.equals("enclose")) {
+		    } else if (xlink.show.equals("replace")) {
+		    //} else if (conf.INCLUDE.equals("replace")) {
+                        for (int i = 0; i < newChildren.size(); i++) {
+                            dummyRoot.appendChild((Node) newChildren.elementAt(i));
+                        }
+                    } else if (xlink.show.equals("enclose")) {
+                    //} else if (conf.INCLUDE.equals("enclose")) {
                         Element xlinkCopy = xlink.getXLink(xlinkedDocument, dpf);
 
                         for (int i = 0; i < newChildren.size(); i++) {
                             xlinkCopy.appendChild((Node) newChildren.elementAt(i));
                         }
-
                         dummyRoot.appendChild(xlinkCopy);
+                    } else {
+                        log.warn("No such attribute \"show\" or such value of attribute \"show\" implemented");
                     }
 
                     nl = dummyRoot.getChildNodes();
