@@ -1,5 +1,5 @@
 /*
-$Id: TriggerHelper.java,v 1.15 2003/08/18 12:33:26 andreas Exp $
+$Id: TriggerHelper.java,v 1.16 2003/08/28 10:12:35 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,7 @@ $Id: TriggerHelper.java,v 1.15 2003/08/18 12:33:26 andreas Exp $
 package org.apache.lenya.cms.scheduler.xml;
 
 import org.apache.lenya.cms.scheduler.SchedulerWrapper;
+import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
 
 import org.apache.log4j.Category;
@@ -66,6 +67,7 @@ import org.quartz.Trigger;
 
 import org.w3c.dom.Element;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 import java.util.Calendar;
@@ -98,6 +100,7 @@ public final class TriggerHelper {
     public static final String REPEATED = "repeated";
     public static final String CRON_EXPRESSION = "expression";
     private static int id = 0;
+    public static final String PREFIX = "trigger";
 
     /**
      * Creates a trigger from an XML element.
@@ -260,4 +263,51 @@ public final class TriggerHelper {
 
         return triggerElement;
     }
+    
+    /**
+     * Extracts the date from the scheduler parameters.
+     * @param schedulerParameters The scheduler parameters.
+     * @return A date.
+     * @throws IOException when something went wrong.
+     */
+    public static Date getDate(NamespaceMap schedulerParameters) throws IOException {
+        NamespaceMap triggerParameters =
+            new NamespaceMap(schedulerParameters.getMap(), PREFIX);
+        String startDay = (String) triggerParameters.get(DAY);
+        String startMonth = (String) triggerParameters.get(MONTH);
+        String startYear = (String) triggerParameters.get(YEAR);
+        String startHour = (String) triggerParameters.get(HOUR);
+        String startMin = (String) triggerParameters.get(MINUTE);
+
+        Date startTime = null;
+
+        try {
+            // Month value is 0-based
+            startTime =
+                new GregorianCalendar(
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth) - 1,
+                    Integer.parseInt(startDay),
+                    Integer.parseInt(startHour),
+                    Integer.parseInt(startMin))
+                    .getTime();
+        } catch (NumberFormatException e) {
+            log.error(
+                "NumberFormatException with parameters "
+                    + "startYear, startMonth, startDay, startHour, startMin: "
+                    + startDay
+                    + ", "
+                    + startMonth
+                    + ", "
+                    + startDay
+                    + ", "
+                    + startHour
+                    + ", "
+                    + startMin,
+                e);
+            throw new IOException("Parsing scheduling date/time failed!");
+        }
+        return startTime;
+    }
+
 }
