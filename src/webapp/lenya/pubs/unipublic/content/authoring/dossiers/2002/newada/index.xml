@@ -11,8 +11,8 @@
 <lead>Universit&#228;t und ETH Z&#252;rich sind an der Expo.02 mit Ada pr&#228;sent. Auf der Arteplage im Neuenburgersee...</lead>
 
 <articles>
-  <article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
-  <article channel="magazin" section="geist" year="2002" dir="0470"/>
+  <article channel="magazin" section="gesundheit" year="2002" id="0508"/>
+  <article channel="magazin" section="geist" year="2002" id="0470"/>
 </articles>
 
 <related-content>

@@ -14,8 +14,8 @@
 
 
 <articles>
-  <article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
-  <article channel="magazin" section="geist" year="2002" dir="0470"/>
+  <article channel="magazin" section="gesundheit" year="2002" id="0508"/>
+  <article channel="magazin" section="geist" year="2002" id="0470"/>
 </articles>
 
 <related-content>

@@ -2,13 +2,12 @@
 <newsletter>
   <email>
     <to>foo@foobar.org</to>
-    <cc></cc>
+    <cc/>
     <subject>Newsletter 1/2003</subject>
   </email>
   <title>Newsletter Title</title>
   <abstract>This is the lead for the newsletter.</abstract>
-  <Articles>
-  </Articles>
+  <articles/>
   <footer>------------------------------------------------------------<br type="softreturn"/>
 unipublic - das Online-Magazin der Universität Zürich<br type="softreturn"/>
 http://www.unipublic.unizh.ch<br type="softreturn"/>

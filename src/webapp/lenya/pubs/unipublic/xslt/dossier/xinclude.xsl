@@ -11,8 +11,8 @@
 <xsl:template match="articles">
   <articles xmlns:xlink="http://www.w3.org/2002/XLink" xmlns:xi="http://www.w3.org/2001/XInclude">
     <xsl:for-each select="article">
-      <article href="{@channel}/{@section}/{@year}/{@dir}">
-	<head xlink:show="embed" xlink:href="../../../{@channel}/{@section}/{@year}/{@dir}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head)" />
+      <article href="{@channel}/{@section}/{@year}/{@id}">
+	<head xlink:show="embed" xlink:href="../../../{@channel}/{@section}/{@year}/{@id}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head)" />
       </article>
     </xsl:for-each>
   </articles>

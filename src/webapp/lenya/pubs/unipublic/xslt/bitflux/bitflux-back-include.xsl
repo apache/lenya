@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-
-  <xsl:template match="Article|article">
-    <Article channel="{@channel}" section="{@section}" year="{@year}" dir="{@foo}">
-      <xsl:value-of select="."/>
-    </Article>
-  </xsl:template>
+<!-- Stylesheet which Bitflux uses to convert elements back to the original state before saving them -->
 
   <xsl:template match="rcblock">
 	  <xsl:element name="block">

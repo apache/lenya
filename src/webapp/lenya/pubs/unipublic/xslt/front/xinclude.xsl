@@ -9,14 +9,8 @@
 <xsl:template match="Articles"  xmlns:xi="http://www.w3.org/2001/XInclude">
  <Articles xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/2000/XLink">
     <xsl:for-each select="Article">
-      <Article href="{@channel}/{@section}/{@year}/{@dir}" section="{@section}" channel="{@channel}">
-<!--
-        <head xlink:show="embed" xlink:href="docs/publication/authoring/{@channel}/{@section}/{@year}/{@dir}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head)"/>
--->
-        <head xlink:show="embed" xlink:href="../{@channel}/{@section}/{@year}/{@dir}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head)"/>
-<!--
-        <xi:include xml:base="cocoon:" href="{@channel}/{@section}/{@year}/{@dir}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head)"/>
--->
+      <Article href="{@channel}/{@section}/{@year}/{@id}" section="{@section}" channel="{@channel}">
+        <head xlink:show="embed" xlink:href="../{@channel}/{@section}/{@year}/{@id}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head)"/>
       </Article>
     </xsl:for-each>
   </Articles>

@@ -2,12 +2,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
-
-<xsl:template match="Article">
-  <Article channel="{@channel}" section="{@section}" year="{@year}" foo="{@dir}">
-    <xsl:value-of select="."/>
-  </Article>
-</xsl:template>
+<!-- Stylesheet which Bitflux uses to convert elements after loading the xml
+     Is necessary in cases where you have multiple elements with the same name
+     because Bitflux can only handle elements with unique names
+-->
 
 <!-- Because there are two elements "block" in body and in related-content -->
   <xsl:template match="related-content/block">

@@ -59,11 +59,11 @@
         <xslout:apply-templates/>
       </xslout:for-each>
     </abstract>
-    <Articles contentEditable="true">
-            <xslout:for-each select="newsletter/Articles">
+    <articles contentEditable="true">
+            <xslout:for-each select="newsletter/articles">
               <xslout:apply-templates/>
             </xslout:for-each>
-    </Articles>
+    </articles>
     <br/><br/>
      <footer contentEditable="true">
             <xslout:for-each select="newsletter/footer">
