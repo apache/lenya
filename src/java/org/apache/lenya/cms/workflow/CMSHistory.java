@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.12 2003/08/25 09:54:58 andreas Exp $
+$Id: CMSHistory.java,v 1.13 2003/08/25 20:47:04 edith Exp $
 <License>
 
  ============================================================================
@@ -165,7 +165,7 @@ public class CMSHistory extends History {
         File historyDirectory = new File(document.getPublication().getDirectory(), HISTORY_PATH);
         DocumentIdToPathMapper pathMapper = document.getPublication().getPathMapper();
         String documentPath = pathMapper.getPath(document.getId(), document.getLanguage()); 
-        File historyFile = new File(historyDirectory, documentPath);
+        File historyFile = new File(historyDirectory, document.getArea() + File.separator + documentPath);
         return historyFile;
     }
 
