@@ -1,5 +1,5 @@
 /*
-$Id: NamespaceHelper.java,v 1.13 2003/07/23 13:21:29 gregor Exp $
+$Id: NamespaceHelper.java,v 1.14 2003/08/06 08:29:07 egli Exp $
 <License>
 
  ============================================================================
@@ -105,6 +105,8 @@ public class NamespaceHelper {
      * @param localName The local name of the document element.
      * @param namespaceUri The namespace URI.
      * @param prefix The namespace prefix.
+     * 
+     * @throws ParserConfigurationException if an error occured
      */
     public NamespaceHelper(String namespaceUri, String prefix, String localName)
         throws ParserConfigurationException {
@@ -116,7 +118,8 @@ public class NamespaceHelper {
 
     /**
      * Sets the document of this NamespaceHelper.
-     * @param document
+     * 
+     * @param document the document
      */
     protected void setDocument(Document document) {
         this.document = document;
@@ -207,6 +210,8 @@ public class NamespaceHelper {
      * of this NamespaceHelper.
      *
      * @param element The parent element.
+     * 
+     * @return the children.
      */
     public Element[] getChildren(Element element) {
         return DocumentHelper.getChildren(element, getNamespaceURI());
@@ -218,6 +223,8 @@ public class NamespaceHelper {
      *
      * @param element The parent element.
      * @param localName The local name of the children to return.
+     * 
+     * @return the children.
      */
     public Element[] getChildren(Element element, String localName) {
         return DocumentHelper.getChildren(element, getNamespaceURI(), localName);
@@ -229,6 +236,8 @@ public class NamespaceHelper {
      *
      * @param element The parent element.
      * @param localName The local name of the children to return.
+     * 
+     * @return the first child.
      */
     public Element getFirstChild(Element element, String localName) {
         return DocumentHelper.getFirstChild(element, getNamespaceURI(), localName);

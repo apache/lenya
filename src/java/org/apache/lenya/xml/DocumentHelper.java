@@ -1,5 +1,5 @@
 /*
-$Id: DocumentHelper.java,v 1.17 2003/07/23 13:21:28 gregor Exp $
+$Id: DocumentHelper.java,v 1.18 2003/08/06 08:28:26 egli Exp $
 <License>
 
  ============================================================================
@@ -98,7 +98,7 @@ public class DocumentHelper {
      * Creates a non-validating and namespace-aware DocumentBuilder.
      *
      * @return A new DocumentBuilder object.
-     * @throws ParserConfigurationException
+     * @throws ParserConfigurationException if an error occurs
      */
     public static DocumentBuilder createBuilder() throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -116,7 +116,10 @@ public class DocumentHelper {
      * @param documentType The type of document to be created or null. When doctype is not null,
      *        its Node.ownerDocument attribute is set to the document being created.
      * @return A new Document object.
-     * @throws DOMException
+     * 
+     * @throws DOMException if an error occurs
+     * @throws ParserConfigurationException if an error occurs
+     * 
      * @see org.w3c.dom.DOMImplementation#createDocument(String, String, DocumentType)
      */
     public static Document createDocument(String namespaceUri, String qualifiedName,
@@ -142,9 +145,10 @@ public class DocumentHelper {
      * Reads a document from a file.
      * @return A document.
      * @param file The file to load the document from.
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * 
+     * @throws ParserConfigurationException if an error occurs
+     * @throws SAXException if an error occurs
+     * @throws IOException if an error occurs
      */
     public static Document readDocument(File file)
         throws ParserConfigurationException, SAXException, IOException {
@@ -156,9 +160,10 @@ public class DocumentHelper {
      * Reads a document from a URL.
      * @return A document.
      * @param url The URL to load the document from.
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * 
+     * @throws ParserConfigurationException if an error occurs
+     * @throws SAXException if an error occurs
+     * @throws IOException if an error occurs
      */
     public static Document readDocument(URL url)
         throws ParserConfigurationException, SAXException, IOException {
@@ -170,9 +175,10 @@ public class DocumentHelper {
      * Reads a document from a URI.
      * @return A document.
      * @param uri The URI to load the document from.
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * 
+     * @throws ParserConfigurationException if an error occurs
+     * @throws SAXException if an error occurs
+     * @throws IOException if an error occurs
      */
     public static Document readDocument(URI uri)
         throws ParserConfigurationException, SAXException, IOException {
@@ -184,9 +190,10 @@ public class DocumentHelper {
      * Reads a document from an input stream.
      * @return A document.
      * @param stream The input stream to load the document from.
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * 
+     * @throws ParserConfigurationException if an error occurs
+     * @throws SAXException if an error occurs
+     * @throws IOException if an error occurs
      */
     public static Document readDocument(InputStream stream)
         throws ParserConfigurationException, SAXException, IOException {
@@ -194,13 +201,15 @@ public class DocumentHelper {
         return builder.parse(stream);
     }
 
-    /** Writes a document to a file. A new file is created if it does not exist.
+    /** 
+     * Writes a document to a file. A new file is created if it does not exist.
      *
      * @param document The document to save.
      * @param file The file to save the document to.
-     * @throws IOException
-     * @throws TransformerConfigurationException
-     * @throws TransformerException
+     * 
+     * @throws IOException if an error occurs
+     * @throws TransformerConfigurationException if an error occurs
+     * @throws TransformerException if an error occurs
      */
     public static void writeDocument(Document document, File file)
         throws TransformerConfigurationException, TransformerException, IOException {
@@ -211,13 +220,15 @@ public class DocumentHelper {
         getTransformer(document.getDoctype()).transform(source, result);
     }
 
-    /** Writes a document to a writer.
+    /** 
+     * Writes a document to a writer.
      *
      * @param document The document to write.
      * @param writer The writer to write the document to.
-     * @throws IOException
-     * @throws TransformerConfigurationException
-     * @throws TransformerException
+     * 
+     * @throws IOException if an error occurs
+     * @throws TransformerConfigurationException if an error occurs
+     * @throws TransformerException if an error occurs
      */
     public static void writeDocument(Document document, Writer writer)
         throws TransformerConfigurationException, TransformerException, IOException {
@@ -226,6 +237,14 @@ public class DocumentHelper {
         getTransformer(document.getDoctype()).transform(source, result);
     }
 
+	/**
+	 * Get the tranformer.
+	 * 
+	 * @param documentType the document type
+	 * @return a transformer
+	 * 
+	 * @throws TransformerConfigurationException if an error occurs
+	 */
     protected static Transformer getTransformer(DocumentType documentType)
         throws TransformerConfigurationException {
         TransformerFactory factory = TransformerFactory.newInstance();
@@ -243,10 +262,15 @@ public class DocumentHelper {
 
     /**
      * Creates a document type.
+     * 
      * @param qualifiedName The qualified name of the document type.
      * @param publicId The public identifier.
      * @param systemId The system identifier.
-     * @return
+     * 
+     * @return the document type
+     * 
+     * @throws ParserConfigurationException if an error occurs
+     * 
      * @see DOMImplementation.createDocumentType(String, String, String)
      */
     public DocumentType createDocumentType(String qualifiedName, String publicId, String systemId)
@@ -270,10 +294,11 @@ public class DocumentHelper {
     /**
      * Returns the first child element of an element that belongs to a certain namespace
      * and has a certain local name or <code>null</code> if none exists.
+     * 
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
-     * @return The child elements.
      * @param localName The local name of the children.
+     * 
      * @return The child element or <code>null</code> if none exists.
      */
     public static Element getFirstChild(Element element, String namespaceUri, String localName) {
@@ -288,8 +313,10 @@ public class DocumentHelper {
 
     /**
      * Returns all child elements of an element that belong to a certain namespace.
+     * 
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
+     * 
      * @return The child elements.
      */
     public static Element[] getChildren(Element element, String namespaceUri) {
@@ -299,11 +326,12 @@ public class DocumentHelper {
     /**
      * Returns all child elements of an element that belong to a certain namespace
      * and have a certain local name.
+     * 
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
-     * @return The child elements.
      * @param localName The local name of the children.
-     * @return The children.
+     * 
+     * @return The child elements.
      */
     public static Element[] getChildren(Element element, String namespaceUri, String localName) {
         List childElements = new ArrayList();
