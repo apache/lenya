@@ -385,6 +385,8 @@ public abstract class History implements WorkflowListener {
             destinationChannel = destinationStream.getChannel();
 
             destinationChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+            sourceStream.close();
+            destinationStream.close();
             File directory = historyFile.getParentFile();
             boolean deleted = historyFile.delete();
             if (!deleted) {
