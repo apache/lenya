@@ -564,6 +564,34 @@
         <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
+    <!-- /Welcome to Lenya -->
+
+
+    <!-- Search with Lucene -->
+    <map:pipeline>
+      <map:match pattern="lucene/**">
+        <map:mount uri-prefix="lucene" src="lenya/lucene.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      <map:match pattern="*/search/lucene">
+        <map:generate type="serverpages" src="lenya/content/search/search-and-results.xsp">
+          <map:parameter name="max-hits-per-page" value="3"/>
+          <map:parameter name="max-pages" value="7"/>
+          <map:parameter name="number-of-pubs" value="1"/>
+          <map:parameter name="pub0-id" value="{1}"/>
+          <map:parameter name="pub0-name" value="{1}"/>
+          <map:parameter name="pub0-index-dir" value="lenya/pubs/{1}/resources/search/lucene/index"/>
+          <map:parameter name="pub0-excerpt-dir" value="lenya/pubs/{1}/resources/search/lucene/htdocs_dump"/>
+          <map:parameter name="pub0-prefix" value=""/>
+        </map:generate>
+        <map:transform src="lenya/xslt/search/sort.xsl"/>
+        <map:transform src="lenya/pubs/{1}/lenya/xslt/search/search-and-results.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+    <!-- /Search with Lucene -->
 
 
 
@@ -601,46 +629,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-  <!-- Cocoon documentation pipeline -->
-  <map:pipeline>
-    <!-- Redirection to documentation sites -->
-    <map:match pattern="">
-      <map:redirect-to uri="documents/index"/>
-    </map:match>
-
-    <map:match pattern="documents/index">
-      <map:redirect-to uri="index.html"/>
-      <!--
-        You may direct a client to a more appropriate URI by the above
-        command. The above results in a redirect response to the
-        client. By redirecting to a ressource it would be handled by
-        cocoon internally.
-
-        Since pipelines work on a first match basis, the above wins the
-        request although the match below would match as well.
-      -->
-    </map:match>
-    <map:match pattern="documents/**">
-      <map:mount check-reload="yes" src="documentation/" uri-prefix="documents"/>
-    </map:match>
-  </map:pipeline>
-
-  <!-- pipeline mounting samples sitemaps -->
-  <map:pipeline>
-    <!-- mount everything else -->
-    <map:match pattern="*/**">
-      <map:mount check-reload="yes" src="{1}/" uri-prefix="{1}"/>
-    </map:match>   
-  </map:pipeline>
 
  </map:pipelines>
 
