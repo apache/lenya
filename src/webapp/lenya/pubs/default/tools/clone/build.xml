@@ -30,7 +30,7 @@
     <fail unless="build.dir.exists" message="INFO: Apache Lenya needs first to be built by executing build.sh resp. build.bat"/>
 
     <echo>Copy files from ${default.build.dir} to ${clone.build.dir}</echo>
-    <copy todir="${clone.build.dir}">
+    <copy todir="${clone.build.dir}" overwrite="true">
       <fileset dir="${default.build.dir}"/>
     </copy>
 
