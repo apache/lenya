@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    $Id: log4j-properties.xsl,v 1.10 2004/02/21 13:07:46 egli Exp $
+    $Id: log4j-properties.xsl,v 1.11 2004/03/01 05:35:17 michi Exp $
     Description: Create log4j.properties file
 -->
 
@@ -48,7 +48,8 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c.%M():%L %x - %m%n
 
 #log4j.category.org.apache.lenya.cms.cocoon.transformation.IncludeTransformer=DEBUG
-#log4j.category.org.apache.lenya.lucene.index.Indexer=INFO
+log4j.category.org.apache.lenya.lucene.index.Indexer=INFO
+log4j.category.org.apache.lenya.search.crawler.IterativeHTMLCrawler=INFO
 </xsl:template>
 
 </xsl:stylesheet> 
