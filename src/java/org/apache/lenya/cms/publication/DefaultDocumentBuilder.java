@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.12 2003/08/20 15:05:11 edith Exp $
+$Id: DefaultDocumentBuilder.java,v 1.13 2003/08/21 10:30:02 egli Exp $
 <License>
 
  ============================================================================
@@ -223,18 +223,16 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 		return url;
 	}
 
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
-	 */
-	public String buildCanonicalUrl(Publication publication, String area, String documentid){
-		String url = 
-			"/"
-				+ publication.getId()
-				+ "/"
-				+ area
-				+ documentid
-				+ ".html";
-		return url;
-	}
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+     */
+    public String buildCanonicalUrl(
+        Publication publication,
+        String area,
+        String documentid) {
+        String url =
+            "/" + publication.getId() + "/" + area + documentid + ".html";
+        return url;
+    }
 }
