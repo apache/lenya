@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-    Document   : tabs.xsl
+    Document   : breadcrumb.xsl
     Created on : 10. April 2003, 17:26
     Author     : andreas
-    Description:
-        Purpose of transformation follows.
+    Description: Purpose of transformation follows.
 -->
 
 <xsl:stylesheet version="1.0"
