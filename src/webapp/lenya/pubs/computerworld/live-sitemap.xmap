@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.12 2003/02/03 14:05:47 gregorcms Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.13 2003/02/04 00:51:11 michicms Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -24,7 +24,12 @@
 		<map:matchers default="wildcard">
 			<map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>
 		</map:matchers>
+  <map:actions>
+    <map:action logger="sitemap.action.resource-exists" name="resource-exists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
+  </map:actions>
 	</map:components>
+
+
 	<!-- =========================== Views ================================ -->
 	<map:views>
 		<map:view name="output" from-label="gregor">
@@ -34,6 +39,27 @@
 			<map:serialize type="xml"/>
 		</map:view>
 	</map:views>
+
+
+	<!-- =========================== Resources ================================ -->
+
+<map:resources>
+  <map:resource name="404">
+	<map:aggregate element="wyona" label="gregor">
+	<map:part element="cmsbody" src="docs/publication/live/wrapper.html"/>
+	<map:part src="docs/publication/live/error.html" element="wrapper"/>
+	<map:part src="docs/publication/live/small-preview.xml"/>
+	<map:part src="docs/publication/live/sitetree.xml"/>
+	<map:part src="cocoon:/today"/>
+  </map:aggregate>
+	<map:transform src="stylesheets/publication/Page/Live/wrapper.xsl">
+	<map:parameter name="id" value="/error.html"/>
+	</map:transform>
+		<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
+	<map:serialize type="html"/>
+  </map:resource>
+</map:resources>
+
 	<!-- =========================== Pipelines ================================ -->
 	<map:pipelines>
 		<map:pipeline>
@@ -57,11 +83,17 @@
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
+
+
+
 			<!-- Detail Article view -->
 			<map:match pattern="news/**.html">
+<map:act type="resource-exists">
+  <map:parameter name="url" value="docs/publication/live/news/{1}.xml"/>
+
 				<map:aggregate element="wyona" label="gregor">
 					<map:part element="cmsbody" src="docs/publication/live/index.html"/>
-					<map:part src="docs/publication/live/news/{1}.xml"/>
+					<map:part src="docs/publication/live/news/{../1}.xml"/>
 					<map:part src="docs/publication/live/small-preview.xml"/>
 					<map:part src="docs/publication/live/sitetree.xml"/>
 					<map:part src="cocoon:/selected-headlines"/>
@@ -73,7 +105,18 @@
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
+</map:act>
+<map:call resource="404"/>
+<!--
+<map:generate src="cocoon:/404.xml"/>
+<map:transform src="stylesheets/publication/Page/404.xsl" label="content"/>
+<map:serialize type="xml"/>
+-->
 			</map:match>
+
+
+
+
 			<!-- Include only articles specified in headlines.xml -->
 			<map:match pattern="selected-headlines">
 				<map:generate src="docs/publication/live/headlines.xml"/>
@@ -162,25 +205,62 @@
 			<map:match pattern="img/categories/**.*">
 				<map:read mime-type="image/{2}" src="resources/publication/images/live/categories/{1}.{2}"/>
 			</map:match>
+
+
+      <map:match pattern="404.xml">
+        <map:aggregate element="wyona" label="gregor">
+          <map:part element="cmsbody" src="docs/publication/live/wrapper.html"/>
+          <map:part src="docs/publication/live/error.html" element="wrapper"/>
+          <map:part src="docs/publication/live/small-preview.xml"/>
+          <map:part src="docs/publication/live/sitetree.xml"/>
+          <map:part src="cocoon:/today"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+
+
+
+
+
 			<!-- Fallback matcher (for wraping files) -->
 			<map:match pattern="**">
+<map:act type="resource-exists">
+  <map:parameter name="url" value="docs/publication/live/news/{1}"/>
 				<map:aggregate element="wyona" label="gregor">
 					<map:part element="cmsbody" src="docs/publication/live/wrapper.html"/>
-					<map:part src="docs/publication/live/{1}" element="wrapper"/>
+					<map:part src="docs/publication/live/{../1}" element="wrapper"/>
 					<map:part src="docs/publication/live/small-preview.xml"/>
 					<map:part src="docs/publication/live/sitetree.xml"/>
 					<map:part src="cocoon:/today"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Live/wrapper.xsl">
-					<map:parameter name="id" value="/{1}"/>
+					<map:parameter name="id" value="/{../1}"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
-				<map:serialize type="html"/>
+				<map:serialize type="xml"/>
+</map:act>
+<map:call resource="404"/>
+<!--
+<map:generate src="cocoon:/404.xml"/>
+<map:transform src="stylesheets/publication/Page/404.xsl" label="content"/>
+<map:serialize type="xml"/>
+-->
 			</map:match>
 			
+
+
+
+
+
+
+
+
 				<!-- Error handling -->
-		
 			<map:handle-errors>
+<!--
+				<map:transform src="stylesheets/publication/Page/404.xsl" label="content"/>
+-->
+<!--
 				<map:aggregate element="wyona" label="gregor">
 					<map:part element="cmsbody" src="docs/publication/live/wrapper.html"/>
 					<map:part src="docs/publication/live/error.html" element="wrapper"/>
@@ -188,11 +268,15 @@
 					<map:part src="docs/publication/live/sitetree.xml"/>
 					<map:part src="cocoon:/today"/>
 				</map:aggregate>
+-->
+
+<!--
 				<map:transform src="stylesheets/publication/Page/Live/wrapper.xsl">
 					<map:parameter name="id" value="/error.html"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
-				<map:serialize type="html"/>
+-->
+				<map:serialize type="xml"/>
 </map:handle-errors>
 		</map:pipeline>
 	</map:pipelines>
