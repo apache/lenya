@@ -34,6 +34,11 @@ item {
 	display: block;
 }
 
+p {
+	display: block;
+}
+
+
 media, related-content,  tagline, dossier, hl1, abstract, byline {
 	display: block;
 	margin: 0em 0;

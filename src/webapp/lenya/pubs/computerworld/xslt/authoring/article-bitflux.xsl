@@ -384,7 +384,21 @@ height="30"><span class="txt-l-black"><b><xsl:apply-templates select="/article/h
 
 
 <tr>
-<td valign="top" align="left" width="440" colspan="2"><span
+<td valign="top" align="left" width="440" colspan="2">          
+<div align="left">
+          <table border="0" cellpadding="0" cellspacing="0" align="left">
+						<tr>
+							<td width="140" height="148" valign="top" align="left"><img border="0" src="/img/news/{head/media/media-reference/@source}" align="left" height="148" width="140"/></td>
+							<td width="3" valign="top" align="left" rowspan="4"><img src="/img/layout/trans1x1.gif" width="3" height="1"/></td>
+						</tr>
+						<tr><td width="140" height="3" valign="top" align="left" style="background-image:url(/img/layout/lines/linecontent440x3.gif)"><img src="/img/layout/trans1x1.gif" width="1" height="3"/></td></tr>
+						<tr bgcolor="#EFEFE7">
+							<td width="140" height="25" valign="middle" align="left"><span class="txt-s-black"><xsl:apply-templates select="head/media/media-caption"/></span></td>
+						</tr>
+						<tr bgcolor="#EFEFE7"><td width="140" height="3" valign="top" align="left" style="background-image:url(/img/layout/lines/linecontent440x3.gif)"><img src="/img/layout/trans1x1.gif" width="1" height="3"/></td></tr>
+					</table>
+          </div>
+<span
 class="txt-m-black-bold"><xsl:apply-templates select="/article/head/abstract"/></span> <br />
  <span class="txt-m-black"><xsl:apply-templates select="/article/body"/></span>
 &#160;<a class="txt-m-red"
@@ -605,5 +619,23 @@ border="0" /> </td>
       </xsl:for-each>
     </abstract>
   </xsl:template>
+
+ <xsl:template match="media-caption">
+    <media-caption contentEditable="true">
+      <xsl:for-each select=".">
+        <xsl:apply-templates/>
+      </xsl:for-each>
+    </media-caption>
+  </xsl:template>
+  
+  <xsl:template match="*">
+        <xsl:copy>
+            <xsl:for-each select="@*">
+                <xsl:copy/>
+            </xsl:for-each>
+            <xsl:apply-templates select="node()"/>
+        </xsl:copy>
+</xsl:template>
+
 
 </xsl:stylesheet>

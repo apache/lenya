@@ -21,6 +21,7 @@
 	</xsl:choose>
 -->
 	
+	<xsl:include href="../today.xsl"/>
 	<xsl:include href="navigation.xsl"/>
 	<xsl:include href="small-preview.xsl"/>
 	<xsl:include href="headlines.xsl"/>

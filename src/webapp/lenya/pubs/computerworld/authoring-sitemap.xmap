@@ -260,6 +260,7 @@
 					<map:part src="docs/publication/authoring/small-preview.xml"/>
 					<map:part src="docs/publication/authoring/sitetree.xml"/>
 					<map:part src="cocoon:/selected-headlines"/>
+					<map:part src="cocoon:/today"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Authoring/main.xsl" label="content">
 					<map:parameter name="id" value="/index.html"/>
@@ -305,6 +306,12 @@
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
+		<!-- Generate todays date  -->
+			<map:match pattern="today">
+				<map:generate type="serverpages" src="docs/publication/today.xsp"/>
+				<map:serialize type="html"/>
+			</map:match>
+
 		</map:pipeline>
 		<!-- Article -->
 		<!-- Checkout -->
@@ -348,36 +355,9 @@
 				<map:generate src="docs/publication/authoring/{1}"/>
 				<map:serialize type="xml"/>
 			</map:match>
-			<map:match pattern="*/index.xhtml">
-				<map:generate src="docs/publication/authoring/{1}/index.xhtml"/>
-				<map:transform src="stylesheets/publication/Page/Article/migrate-xhtml2xml.xsl"/>
-				<map:serialize type="xml"/>
-			</map:match>
-			<!--  Not needed    -->
-			<map:match pattern="*/*/*/*/">
-				<map:redirect-to uri="index.html" session="true"/>
-			</map:match>
 		</map:pipeline>
 		<!-- Article Main -->
 		<map:pipeline>
-		<!--
-			<map:match pattern="*/index.html">
-				<map:aggregate element="wyona">
-					<map:part src="cocoon:/menus/{1}/article.xml"/>
-					<map:part src="cocoon:/{1}/index.xml" element="cmsbody"/>
-				</map:aggregate>
-				<map:transform src="stylesheets/publication/Page/Article/xinclude.xsl"/>
-				<map:transform type="xlink">
-					<map:parameter name="href" value="docs/publication/authoring/{1}/index.xml"/>
-				</map:transform>
-				<map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
-					<map:parameter name="documentid" value="{1}//index.xml"/>
-					<map:parameter name="authoring" value="true"/>
-				</map:transform>
-				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl"/>
-				<map:serialize type="html"/>
-			</map:match> 
-			-->
 			<!-- Detail Article view -->
 			<map:match pattern="news/**.html">
 				<map:aggregate element="wyona" label="gregor">
@@ -387,21 +367,14 @@
 					<map:part src="docs/publication/authoring/small-preview.xml"/>
 					<map:part src="docs/publication/authoring/sitetree.xml"/>
 					<map:part src="cocoon:/selected-headlines"/>
+					<map:part src="cocoon:/today"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Authoring/article.xsl">
 					<map:parameter name="id" value="/news/"/>
 					<map:parameter name="documentid" value="news/{1}.xml"/>
 				</map:transform>
+				<map:transform src="stylesheets/publication/Page/today.xsl"/>
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
-				<map:serialize type="html"/>
-			</map:match>
-			<!-- All Articles view -->
-			<map:match pattern="overview.html">
-				<map:aggregate element="wyona" label="gregor">
-					<map:part src="cocoon:/menus/front.xml"/>
-					<map:part elemcent="cmsbody" src="cocoon:/all-headlines"/>
-				</map:aggregate>
-				<map:transform src="stylesheets/publication/Page/Authoring/overview.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
 		</map:pipeline>
