@@ -78,7 +78,7 @@
   <map:pipelines>
     
     <map:pipeline>
-      <map:match pattern="addUser" type="usecase">
+      <map:match pattern="admin.addUser" type="usecase">
         <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
       <map:match pattern="userProfile" type="usecase">
