@@ -116,7 +116,7 @@
 	      <td/>
 	      <td>
 		<input type="submit" value="Submit"/>&#160;
-		<input type="button" onClick="location.href='{/usecase:asset/referer}';" value="Cancel"/>
+		<input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}';" value="Cancel"/>
 	      </td>
 	    </tr>
 	  </table>
@@ -177,7 +177,7 @@
 		  <td/>
 		  <td>
 		    <input type="submit" value="Submit"/>&#160;
-		    <input type="button" onClick="location.href='{/usecase:asset/referer}';" value="Cancel"/>
+		    <input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}';" value="Cancel"/>
 		  </td>
 		</tr>
 	      </table>
