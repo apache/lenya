@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: image.xsl,v 1.6 2004/03/13 13:09:51 gregor Exp $ -->
+<!-- $Id: image.xsl,v 1.7 2004/03/31 17:40:11 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0" 
@@ -164,27 +164,19 @@
                                                 test="contains(dc:title, 'jpg') or contains(dc:title, 'gif')">
                                                 <tr>
                                                     <td 
-                                                        class="lenya-form-caption">
+                                                        colspan="2">
                                                         <xsl:value-of 
                                                             select="dc:title"/>
                                                     </td>
-                                                    <td 
-                                                        class="lenya-form-caption">
-                                                        <xsl:value-of 
-                                                            select="dc:relation"/>
-                                                    </td>
-                                                    <td 
-                                                        class="lenya-form-caption">
+                                                    <td>
                                                          <xsl:value-of 
                                                         select="dc:extent"/> 
                                                         kB</td>
-                                                    <td 
-                                                        class="lenya-form-caption">
+                                                    <td>
                                                         <xsl:value-of 
                                                             select="dc:date"/>
                                                     </td>
-                                                    <td 
-                                                        class="lenya-form-caption">
+                                                    <td>
                                                         <a 
                                                             href="javascript:insertImage('{dc:title}');">
                                                              Insert</a>

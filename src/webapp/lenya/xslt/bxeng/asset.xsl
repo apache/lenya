@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.8 2004/03/24 14:32:31 roku Exp $ -->
+<!-- $Id: asset.xsl,v 1.9 2004/03/31 17:40:11 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -117,18 +117,18 @@ function check(fileinput) {
 <form name="assetlibrary" action="">
 <table class="lenya-table-noborder">
 <xsl:if test="not(lenya-info:asset)">
-<tr><td colspan="4" class="lenya-form-caption"><i18n:text>No assets available</i18n:text></td></tr>
+<tr><td colspan="5" class="lenya-form-caption"><i18n:text>No assets available</i18n:text></td></tr>
 </xsl:if>
 	    <tr>
 	      <td class="lenya-form-caption" colspan="2"><i18n:text>Title</i18n:text>:</td><td colspan="2"><input class="lenya-form-element" type="text" name="title"/></td>
 	    </tr>
-	    <tr><td colspan="4">&#160;</td></tr>
+	    <tr><td colspan="5">&#160;</td></tr>
 <xsl:for-each select="lenya-info:asset">
 <tr>
-<td class="lenya-form-caption"><xsl:value-of select="dc:title"/></td>
-<td class="lenya-form-caption"><xsl:value-of select="dc:extent"/> KB</td>
-<td class="lenya-form-caption"><xsl:value-of select="dc:date"/></td>
-<td class="lenya-form-caption"><a href="javascript:insertAsset('{dc:title}','{dc:extent}');"><i18n:text>Insert</i18n:text></a></td>
+<td colspan="2"><xsl:value-of select="dc:title"/></td>
+<td><xsl:value-of select="dc:extent"/> KB</td>
+<td><xsl:value-of select="dc:date"/></td>
+<td><a href="javascript:insertAsset('{dc:title}','{dc:extent}');"><i18n:text>Insert</i18n:text></a></td>
 </tr>
 </xsl:for-each>
     </table>
