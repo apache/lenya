@@ -2,13 +2,13 @@
 %клмн
 4 0 obj
 << /Type /Info
-/Producer (FOP 0.20.4) >>
+/Producer (FOP 0.20.5) >>
 endobj
 5 0 obj
-<< /Length 488 /Filter [ /ASCII85Decode /FlateDecode ]
+<< /Length 475 /Filter [ /ASCII85Decode /FlateDecode ]
  >>
 stream
-GarW7bAP0N&4Q?mMHRdtj(BE+W(NmY88X457GC6:c9m2:3h_AEY7j9>,SV]4Y<?OdGar>sjspp8?iio[8H6dCJHA[kk+N@\=s++55m5:1^*[Wl\uIC:.Ekm2RFOl4n(_Gpe5b=meK7=g#C:4FG=3<f*:PIuHZA$1.P"H*GJ^9#b$+%l(BP$e!I93LN%L,dU":X$a%0ZV?+#$'&h&)pUB8o#>M>fp(_a!?h'qZi``'LhNSC0+CU2OU=m?0,PoJo2WB\/6cuXefOnA_s07[.mE?L\>_f0Gi*.S]W3>&$l2i/^r_AP8q*A*IZZn>`;a\f^N8u:&qX5@j9p\*TnHNb;tM38F*'#[TN_+]G]OBWOm'n(J80uYj`(AjC5au,WJ9jn6S]9!U4L%P:?_2U+(b_FJBSsn\.=%1e&e2NT@bnqU?AmX7a8a.O-*7N-(Djn=#VqP'MI>cOfkL^0sHae)Ni;F9l[7^IuSTf,Si<7'q~>
+GarVKbAP0N&A7ljp.,_(I`-5HKW8"OK[c;Y4g[A*i&i8UW!PojI5_JNY)4E?m'12H]Y!cggb0q/J20Z9_Ra)D(_hW*_[dtYRL:U_#a-3U9U<]*<F$U4?n-8OVj"LE\BSc,X1H:!01_[]nT`FS"[f8&-ng2<ZXYYhXA$mi!Uh?cCL]jp%6V.oa"_Tuk],>('t`Qs!C#Te>t#?jJK!aYg<l$uS'<['X2[N]`iTd'"BQ^=]piftep2?'lI6bu9ZT.1o#'2q&0>m2.Y1&Gj_/00U+8537V%EH,Gj?%/+Q<pad$]N(n]ee]]YO!RS-\rX\Rcc9E3]rqK]kWBn[;ilGfc!?k)1LL\h7i=\g*f=9aE?93N1a:-Nhf!,'oWMhFP-cCC&^7t:_*BKS-KZ`T+jF[D]eEOQU?M(&YnTVV5.cLtu7moN6?Sl4ktMlo-Uf4XBr[b`;'#/$qEk$[P:fm#s_"aX^n_u~>
 endstream
 endobj
 6 0 obj
@@ -28,34 +28,39 @@ endobj
 8 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 278.652 588.379 299.304 576.379 ]
+/Rect [ 191.652 596.541 212.304 584.541 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
-/A << /URI (http://www.oscom.org/Conferences/Sprints/)
+/A << /URI (http://oscom.org/events/sprints/)
 /S /URI >>
 /H /I
 >>
 endobj
 11 0 obj
 <<
- /Title (\376\377\0\115\0\145\0\145\0\164\0\151\0\156\0\147\0\163\0\40\0\141\0\156\0\144\0\40\0\123\0\160\0\162\0\151\0\156\0\164\0\163)
+ /Title (\376\377\0\61\0\40\0\123\0\160\0\162\0\151\0\156\0\164\0\163)
  /Parent 9 0 R
- /First 13 0 R
- /Last 13 0 R
- /Count -1
  /A 10 0 R
 >> endobj
-13 0 obj
-<<
- /Title (\376\377\0\61\0\40\0\123\0\160\0\162\0\151\0\156\0\164\0\163)
- /Parent 11 0 R
- /A 12 0 R
->> endobj
-14 0 obj
+12 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F3
 /BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding >>
+endobj
+13 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F5
+/BaseFont /Times-Roman
+/Encoding /WinAnsiEncoding >>
+endobj
+14 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F1
+/BaseFont /Helvetica
 /Encoding /WinAnsiEncoding >>
 endobj
 15 0 obj
@@ -68,22 +73,8 @@ endobj
 16 0 obj
 << /Type /Font
 /Subtype /Type1
-/Name /F1
-/BaseFont /Helvetica
-/Encoding /WinAnsiEncoding >>
-endobj
-17 0 obj
-<< /Type /Font
-/Subtype /Type1
 /Name /F7
 /BaseFont /Times-Bold
-/Encoding /WinAnsiEncoding >>
-endobj
-18 0 obj
-<< /Type /Font
-/Subtype /Type1
-/Name /F5
-/BaseFont /Times-Roman
 /Encoding /WinAnsiEncoding >>
 endobj
 1 0 obj
@@ -100,7 +91,7 @@ endobj
 endobj
 3 0 obj
 << 
-/Font << /F3 14 0 R /F2 15 0 R /F1 16 0 R /F7 17 0 R /F5 18 0 R >> 
+/Font << /F3 12 0 R /F5 13 0 R /F1 14 0 R /F2 15 0 R /F7 16 0 R >> 
 /ProcSet [ /PDF /ImageC /Text ] >> 
 endobj
 9 0 obj
@@ -111,42 +102,34 @@ endobj
 10 0 obj
 <<
 /S /GoTo
-/D [6 0 R /XYZ 85.0 689.0 null]
->>
-endobj
-12 0 obj
-<<
-/S /GoTo
-/D [6 0 R /XYZ 85.0 619.875 null]
+/D [6 0 R /XYZ -5.0 625.875 null]
 >>
 endobj
 xref
-0 19
+0 17
 0000000000 65535 f 
-0000001890 00000 n 
-0000001948 00000 n 
-0000002039 00000 n 
+0000001642 00000 n 
+0000001700 00000 n 
+0000001791 00000 n 
 0000000015 00000 n 
 0000000071 00000 n 
-0000000650 00000 n 
-0000000770 00000 n 
-0000000795 00000 n 
-0000002162 00000 n 
-0000002212 00000 n 
-0000000989 00000 n 
-0000002275 00000 n 
-0000001214 00000 n 
-0000001334 00000 n 
-0000001447 00000 n 
-0000001563 00000 n 
-0000001671 00000 n 
-0000001780 00000 n 
+0000000637 00000 n 
+0000000757 00000 n 
+0000000782 00000 n 
+0000001914 00000 n 
+0000001964 00000 n 
+0000000967 00000 n 
+0000001086 00000 n 
+0000001199 00000 n 
+0000001309 00000 n 
+0000001417 00000 n 
+0000001533 00000 n 
 trailer
 <<
-/Size 19
+/Size 17
 /Root 2 0 R
 /Info 4 0 R
 >>
 startxref
-2340
+2029
 %%EOF

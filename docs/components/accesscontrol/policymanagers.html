@@ -1,155 +1,146 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
 <title>Policies and Policy Managers</title>
 <link type="text/css" href="../../../skin/page.css" rel="stylesheet">
+<link type="text/css" href="../../../skin/forrest.css" rel="stylesheet">
+<script src="../../../skin/fontsize.js" language="javascript" type="text/javascript"></script><script src="../../../skin/menu.js" language="javascript" type="text/javascript"></script>
 </head>
-<body text="#000000" bgcolor="#FFFFFF">
-<!--================= start Banner ==================-->
-<table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="header">
 <tr>
-<!--================= start Group Logo ==================-->
-<td valign="bottom" bgcolor="#FFFFFF">
+<td>
 <div class="headerlogo">
-<a href="http://cocoon.apache.org"><img border="0" class="logoImage" alt="Apache Cocoon" src="../../../images/cocoon-project-logo-big.png"></a>
+<a href="http://cocoon.apache.org"><img class="logoImage" alt="Apache Cocoon" src="../../../images/cocoon-project-logo-big.png"></a>
 </div>
-<span class="textheader">Apache Cocoon</span>
-<!--================= start Tabs ==================-->
-<div class="tab">
-<table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td width="10" valign="bottom">
-<div class="tab-separator">
-<img alt="" width="10" src="../../../skin/images/spacer.gif"></div>
-</td><td valign="bottom" class="tab">
-<div class="tab-separator">
-<table cellspacing="0" cellpadding="0" border="0">
-<tr>
-<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
-<div class="tab-not-selected-shadow">
-<div class="tab-not-selected">
-<a href="../../../project/index.html"><font face="Arial, Helvetica, Sans-serif">Project Information</font></a>
+</td><td align="center">
+<div class="headerlogo">
+<a href="http://cocoon.apache.org/lenya"><img class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png"></a>
 </div>
-</div>
-</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</td><td valign="top" rowspan="2" align="right" class="search"></td><td height="10" width="10" align="right"><span class="textheader">Lenya</span></td>
 </tr>
 <tr>
-<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
-<div class="tab-not-selected-shadow-left">
-<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
-</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
-<div class="tab-not-selected-shadow-right">
-<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+<td class="tabstrip" colspan="4">
+<table border="0" cellpadding="0" cellspacing="0" class="tab">
+<tr>
+<td class="tab pre-separator"></td><td>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td class="tab unselected top-left"></td><td class="tab unselected"><a class="base-not-selected" href="../../../project/index.html">Project Information</a></td><td class="tab unselected top-right"></td>
+</tr>
+<tr>
+<td class="spacer" colspan="3"></td>
+</tr>
+</table>
+</td><td class="tab separator"></td><td>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td class="tab unselected top-left"></td><td class="tab unselected"><a class="base-not-selected" href="../../../installation/index.html">Installation</a></td><td class="tab unselected top-right"></td>
+</tr>
+<tr>
+<td class="spacer" colspan="3"></td>
+</tr>
+</table>
+</td><td class="tab separator"></td><td class="tab selected top-left"></td><td class="tab selected"><a class="base-selected" href="../../../docs/index.html">Documentation</a></td><td class="tab selected top-right"></td><td class="tab separator"></td><td>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td class="tab unselected top-left"></td><td class="tab unselected"><a class="base-not-selected" href="../../../community/index.html">Community</a></td><td class="tab unselected top-right"></td>
+</tr>
+<tr>
+<td class="spacer" colspan="3"></td>
+</tr>
+</table>
 </td>
 </tr>
 </table>
-</div>
-</td><td valign="bottom" class="tab">
-<div class="tab-separator">
-<table cellspacing="0" cellpadding="0" border="0">
-<tr>
-<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
-<div class="tab-not-selected-shadow">
-<div class="tab-not-selected">
-<a href="../../../installation/index.html"><font face="Arial, Helvetica, Sans-serif">Installation</font></a>
-</div>
-</div>
-</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</td>
 </tr>
 <tr>
-<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
-<div class="tab-not-selected-shadow-left">
-<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
-</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
-<div class="tab-not-selected-shadow-right">
-<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
-</td>
+<td class="level2tabstrip" colspan="2"></td><td class="datenote level2tabstrip" colspan="2"><script type="text/javascript" language="JavaScript"><!--
+              document.write("Published: " + document.lastModified);
+              //  --></script></td>
 </tr>
 </table>
-</div>
-</td><td style="background-image: url(../../../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
-<div class="tab-selected">
-<a href="../../index.html"><font color="#000000">Documentation</font></a>
-</div>
-</td><td style="background-image: url(../../../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-right-selected.png"></td><td valign="bottom" class="tab">
-<div class="tab-separator">
-<table cellspacing="0" cellpadding="0" border="0">
-<tr>
-<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
-<div class="tab-not-selected-shadow">
-<div class="tab-not-selected">
-<a href="../../../community/index.html"><font face="Arial, Helvetica, Sans-serif">Community</font></a>
-</div>
-</div>
-</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
-</tr>
-<tr>
-<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
-<div class="tab-not-selected-shadow-left">
-<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
-</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
-<div class="tab-not-selected-shadow-right">
-<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
-</td>
-</tr>
-</table>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<!--================= end Tabs ==================-->
-</td>
-<!--================= end Group Logo ==================-->
-<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
-<div style="padding: 10px" class="headerlogo">
-<a href="http://cocoon.apache.org/lenya"><img border="0" class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png"></a>
-</div>
-<div class="tab-separator"></div>
-</td>
-<!--================= end Project Logo ==================-->
-</tr>
-</table>
-<!--================= end Banner ==================-->
-<div class="tab-bar">
-<img alt="" height="5" src="../../../skin/images/spacer.gif"></div>
-<!--================= start Menu, NavBar, Content ==================-->
-<table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td valign="top">
-<table summary="menu" border="0" cellspacing="0" cellpadding="0">
+<table class="menuarea" cellspacing="0" cellpadding="0">
 <tr>
-<!--================= start left top NavBar ==================-->
-<!--================= end left top NavBar ==================-->
-<td valign="top">
-<div class="tab-subbar">
-<img width="10" height="5" alt="" src="../../../skin/images/spacer.gif"></div>
-</td><td valign="top">
-<!--================= start Menu items ==================-->
+<td width="6px" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" class="leftpagemargin">
+<tr>
+<td class="subborder trail">&nbsp;</td>
+</tr>
+</table>
+</td><td class="dialog">
 <div class="menu">
-<div class="menutitle"></div>
-<div class="menuitemgroup">
-<div class="menutitle">Integrator/Dev Guide</div>
-<div class="menuitemgroup">
-<div class="menutitle">Components</div>
-<div class="menuitemgroup">
-<div class="menutitle">Access&nbsp;Control</div>
-<div class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1')" id="menu_1.1Title" class="menutitle">Project Information</div>
+<div id="menu_1.1" class="menuitemgroup">
 <div class="menuitem">
-<a href="terms.html">Basic Terms</a>
+<a href="../../../project/roadmap.html">Roadmap</a>
 </div>
 <div class="menuitem">
-<a href="accesscontrollers.html">Access&nbsp;Controllers</a>
+<a href="../../../project/../community/mailing-lists.html">Mailing Lists</a>
 </div>
 <div class="menuitem">
-<a href="accesscontrollerresolvers.html">Access Controller Resolvers</a>
+<a href="../../../project/acknowledgements.html">Credits</a>
 </div>
 <div class="menuitem">
-<a href="authenticators.html">Authenticators</a>
+<a href="../../../project/license.html">License</a>
 </div>
 <div class="menuitem">
-<a href="authorizers.html">Authorizers</a>
+<a href="../../../project/../community/live-sites.html">Live Sites</a>
+</div>
+<div class="menuitem">
+<a href="../../../project/related-projects.html">Related Projects</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.2')" id="menu_1.2Title" class="menutitle">Installation</div>
+<div id="menu_1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../installation/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../installation/prerequisites.html">Prerequisites</a>
+</div>
+<div class="menuitem">
+<a href="../../../installation/download.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../../installation/cvs.html">CVS Access</a>
+</div>
+<div class="menuitem">
+<a href="../../../installation/source_version.html">Installation Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.3')" id="menu_selected_1.3Title" class="menutitle">Documentation</div>
+<div id="menu_selected_1.3" class="selectedmenuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.3.1')" id="menu_selected_1.3.1Title" class="menutitle">Integrator/Dev Guide</div>
+<div id="menu_selected_1.3.1" class="selectedmenuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.3.1.1')" id="menu_selected_1.3.1.1Title" class="menutitle">Components</div>
+<div id="menu_selected_1.3.1.1" class="selectedmenuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/resource-types/">Resource&nbsp;Types</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.3.1.1.2')" id="menu_selected_1.3.1.1.2Title" class="menutitle">Access&nbsp;Control</div>
+<div id="menu_selected_1.3.1.1.2" class="selectedmenuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/accesscontrol/terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/accesscontrol/authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/accesscontrol/authorizers.html">Authorizers</a>
 </div>
 <div class="menupage">
 <div class="menupagetitle">Policies and Policy&nbsp;Managers</div>
@@ -161,72 +152,328 @@
 <a href="#Policy+Managers">Policy Managers</a>
 </div>
 <div class="menupageitem">
-<a href="#Inheriting+Policy+Manager">Inheriting Policy Manager</a>
+<a title="Inheriting Policy Manager" href="#Inheriting+Policy+Manager">Inheriting Policy M...</a>
 </div>
 <div class="menupageitem">
-<a href="#File+Policy+Manager">File Policy Manager</a>
+<a title="File Policy Manager" href="#File+Policy+Manager">File Policy Manager...</a>
 </div>
 <div class="menupageitem">
-<a href="#Document+Policy+Manager+Wrapper">Document Policy Manager Wrapper</a>
+<a title="Document Policy Manager Wrapper" href="#Document+Policy+Manager+Wrapper">Document Policy Man...</a>
 </div>
 <div class="menupageitem">
-<a href="#Sitemap+Policy+Manager">Sitemap Policy Manager</a>
+<a title="Sitemap Policy Manager" href="#Sitemap+Policy+Manager">Sitemap Policy Mana...</a>
 </div>
 </div>
 </div>
 <div class="menuitem">
-<a href="accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+<a href="../../../docs/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
 </div>
 <div class="menuitem">
-<a href="faq.html">FAQ</a>
+<a href="../../../docs/components/accesscontrol/ssl.html">SSL Encryption</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/accesscontrol/faq.html">FAQ</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.3')" id="menu_1.3.1.1.3Title" class="menutitle">Deployment</div>
+<div id="menu_1.3.1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/deployment/mod_proxy.html">mod_proxy</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.4')" id="menu_1.3.1.1.4Title" class="menutitle">Editors</div>
+<div id="menu_1.3.1.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/editors/htmlform.html">HTML Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/editors/1form.html">HTML One Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/editors/bxeng.html">Bitflux Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/editors/kupu.html">Kupu</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/editors/xopus.html">Xopus</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.5')" id="menu_1.3.1.1.5Title" class="menutitle">Layout</div>
+<div id="menu_1.3.1.1.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/layout/navigation.html">Navigation</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/layout/xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/layout/static-resources.html">Serving static resources</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/layout/lenya-menubar.html">Lenya Menubar</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.6')" id="menu_1.3.1.1.6Title" class="menutitle">Publication</div>
+<div id="menu_1.3.1.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/publication/siteTree.html">Site tree</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.7')" id="menu_1.3.1.1.7Title" class="menutitle">Revision Control</div>
+<div id="menu_1.3.1.1.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/revisioncontrol/rcml.html">RCML</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/revisioncontrol/checkin.html">Check In</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/revisioncontrol/checkout.html">Check Out</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/revisioncontrol/version.html">Revisions</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/revisioncontrol/rollback.html">Rollback</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.8')" id="menu_1.3.1.1.8Title" class="menutitle">Repository</div>
+<div id="menu_1.3.1.1.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/repository/webdav.html">WebDAV Servers</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.9')" id="menu_1.3.1.1.9Title" class="menutitle">Search</div>
+<div id="menu_1.3.1.1.9" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/search/lucene.html">Searching with Lucene</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.10')" id="menu_1.3.1.1.10Title" class="menutitle">URI Handling</div>
+<div id="menu_1.3.1.1.10" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/uri-handling/standardURI.html">URI Scheme</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/uri-handling/usecases.html">Usecases</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.11')" id="menu_1.3.1.1.11Title" class="menutitle">Asset Management</div>
+<div id="menu_1.3.1.1.11" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/asset-management/management.html">Asset Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.12')" id="menu_1.3.1.1.12Title" class="menutitle">Link Management</div>
+<div id="menu_1.3.1.1.12" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/link-management/link-management.html">Link Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.13')" id="menu_1.3.1.1.13Title" class="menutitle">Meta Data</div>
+<div id="menu_1.3.1.1.13" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/metadata/metadata.html">Meta Data Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.14')" id="menu_1.3.1.1.14Title" class="menutitle">Multilingual Documents</div>
+<div id="menu_1.3.1.1.14" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.15')" id="menu_1.3.1.1.15Title" class="menutitle">Tasks</div>
+<div id="menu_1.3.1.1.15" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/tasks/taskaction.html">The TaskAction</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.15.5')" id="menu_1.3.1.1.15.5Title" class="menutitle">Included tasks</div>
+<div id="menu_1.3.1.1.15.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.16')" id="menu_1.3.1.1.16Title" class="menutitle">Workflow</div>
+<div id="menu_1.3.1.1.16" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/workflow/terms.html">Terms</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/workflow/state-machine.html">The State Machine</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/workflow/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/workflow/implementation.html">Implementation</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.1.17')" id="menu_1.3.1.1.17Title" class="menutitle">Site Management</div>
+<div id="menu_1.3.1.1.17" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/archive.html">Archive</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/copy.html">Copy</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/deactivate.html">Deactivate</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/delete.html">Delete</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/deletetrash.html">Delete the trash</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/move.html">Move</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/rename.html">Rename</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/components/sitemanagement/restore.html">Restore</a>
 </div>
 </div>
 </div>
+<div onclick="SwitchMenu('menu_1.3.1.2')" id="menu_1.3.1.2Title" class="menutitle">Specifications</div>
+<div id="menu_1.3.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/specs/namespaces.html">Namespaces</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3.1.3')" id="menu_1.3.1.3Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.3.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/misc/coding-guidelines.html">Coding Guidelines</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/misc/unittests.html">Unit Tests</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/misc/xinclude-processor.html">XInclude Processor</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../docs/../apidocs/index.html">API (Javadoc)</a>
 </div>
 </div>
 </div>
-<!--================= end Menu items ==================-->
-</td><td valign="top">
-<div class="tab-subbar">&nbsp;&nbsp;</div>
+<div onclick="SwitchMenu('menu_1.4')" id="menu_1.4Title" class="menutitle">Community</div>
+<div id="menu_1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">CVS Web</a>
+</div>
+<div class="menuitem">
+<a href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Lenya&short_desc=&short_desc_type=allwordssubstr&long_desc=&long_desc_type=allwordssubstr&bug_file_loc=&bug_file_loc_type=allwordssubstr&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&order=%27Importance%27">Bug Tracker</a>
+</div>
+<div class="menuitem">
+<a href="../../../community/mailing-lists.html">Mailing Lists</a>
+</div>
+<div class="menuitem">
+<a href="../../../community/irc.html">IRC</a>
+</div>
+<div class="menuitem">
+<a href="../../../community/meetings.html">Meetings and Sprints</a>
+</div>
+<div class="menuitem">
+<a href="../../../community/live-sites.html">Live Sites</a>
+</div>
+<div class="menuitem">
+<a href="../../../community/website-update.html">Website Update</a>
+</div>
+</div>
+</div>
 </td>
 </tr>
 <tr>
-<td></td><td height="5"><img alt="" width="150" height="1" src="../../../skin/images/spacer.gif"></td><td></td>
+<td></td><td>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td class="border bottom-left"></td><td class="border bottomborder"></td><td class="border bottom-right"></td>
 </tr>
 </table>
-</td><td valign="top" width="100%">
-<table summary="content" width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td valign="top" colspan="3">
-<div class="tab-subbar">&nbsp;&nbsp;</div>
 </td>
 </tr>
-<!--================= start Content==================-->
 <tr>
-<td align="left" width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td><td align="left" width="100%">
+<td colspan="2" height="10"></td>
+</tr>
+</table>
+</td><td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td class="subborder trail">
+	         &nbsp;<a href="http://www.apache.org/">apache</a> &gt; <a href="http://xml.apache.org/">xml.apache</a><script src="../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>&nbsp;
+	      </td><td nowrap="true" align="right" class="subborder trail">
+	        Font size: 
+	          &nbsp;<input value="Reset" class="resetfont" title="Reset text" onclick="ndeSetTextSize('reset'); return false;" type="button">      
+	          &nbsp;<input value="-a" class="smallerfont" title="Shrink text" onclick="ndeSetTextSize('decr'); return false;" type="button">
+	          &nbsp;<input value="+a" class="biggerfont" title="Enlarge text" onclick="ndeSetTextSize('incr'); return false;" type="button"></td>
+</tr>
+<tr>
+<td colspan="2" align="left">
 <div class="content">
-<table cellspacing="0" cellpadding="0" class="title">
+<table class="title">
 <tr>
 <td valign="middle">
 <h1>Policies and Policy Managers</h1>
-</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="policymanagers.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" border="0"><br>
-          PDF</a></td>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="policymanagers.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a></td>
 </tr>
 </table>
     
 
-<a name="N101C9"></a><a name="Policies"></a>
-<h3>Policies</h3>
-<div style="margin-left: 0 ; border: 2px">
+<a name="N10019"></a><a name="Policies"></a>
+<h3 class="h3">Policies</h3>
+<div class="section">
+
 <p>
   A <span class="codefrag">Policy</span> assigns <span class="codefrag">Role</span>s to <span class="codefrag">Accreditable</span>s.
 </p>
+
 <p>
   There is a common policy definition XML schema which is handled by the
   <span class="codefrag">PolicyBuilder</span>. It can be used together with the
   <span class="codefrag">FilePolicyManager</span> and the <span class="codefrag">SitemapPolicyManager</span>.
 </p>
+
 <p>Here is an example of a policy definition:</p>
+
 <pre class="code">
 &lt;policy xmlns="http://apache.org/cocoon/lenya/ac/1.0"&gt;
 
@@ -249,24 +496,31 @@
 
 &lt;/policy&gt; 
 </pre>
+
 </div>
 	
 
-<a name="N101EF"></a><a name="Policy+Managers"></a>
-<h3>Policy Managers</h3>
-<div style="margin-left: 0 ; border: 2px">
+<a name="N1003F"></a><a name="Policy+Managers"></a>
+<h3 class="h3">Policy Managers</h3>
+<div class="section">
+	
+	
 <p>A <em>PolicyManager</em> is used to resolve the policy for a certain URL.
 	Lenya ships with the following <em>PolicyManager</em>s:</p>
+
 </div>
 	
 	
-<a name="N101FF"></a><a name="Inheriting+Policy+Manager"></a>
-<h3>Inheriting Policy Manager</h3>
-<div style="margin-left: 0 ; border: 2px">
+<a name="N1004F"></a><a name="Inheriting+Policy+Manager"></a>
+<h3 class="h3">Inheriting Policy Manager</h3>
+<div class="section">
+		
+		
 <p>This is an abstract base class. It merges the policies
 		  of all steps in the URL. For each
 			URL, a <em>url policy</em> and a <em>subtree policy</em> can be defined.
 			The <em>InheritingPolicyManager</em> adds the credentials of</p>
+		
 <ul>
 			
 <li>the subtree policies for all parent directories of the requested page,</li>
@@ -276,8 +530,10 @@
 <li>the url policy of the requested page.</li>
 		
 </ul>
+		
 <p>For instance, if the URL is <span class="codefrag">/lenya/news/index.html</span>, the
 			following policies are merged:</p>
+		
 <ul>
 			
 <li>subtree policy of <span class="codefrag">/</span>
@@ -296,47 +552,63 @@
 </li>
 		
 </ul>
+	
 </div>
 	
 	
-<a name="N10240"></a><a name="File+Policy+Manager"></a>
-<h3>File Policy Manager</h3>
-<div style="margin-left: 0 ; border: 2px">
+<a name="N10090"></a><a name="File+Policy+Manager"></a>
+<h3 class="h3">File Policy Manager</h3>
+<div class="section">
+		
+		
 <p>The <em>FilePolicyManager</em> is an <em>InheritingPolicyManager</em>.
 		The policies are defined by policy files that are arranged as a
 		directory tree that reflects the URI space, e.g.:
 			</p>
+
 <pre class="code">/subtree-policy.acml
 /lenya/subtree-policy.acml
 /lenya/news/index.html/subtree-policy.acml
 /lenya/news/index.html/url-policy.acml</pre>
+			
 <p>If a certain policy file does not exist (like /lenya/news in the above example), an empty policy is used instead.</p>
+			
+			
 <p>The <em>FilePolicyManager</em> needs a <span class="codefrag">directory</span> parameter
 			which contains a URL pointing to the policies directory:</p>
+
+
 <pre class="code">&lt;policy-manager type="file"&gt;
   &lt;parameter name="directory"
       value="context:///lenya/pubs/mypub/config/ac/policies"/&gt;
 &lt;/policy-manager&gt;</pre>
+
+	
 </div>
 	
 	
-<a name="N10266"></a><a name="Document+Policy+Manager+Wrapper"></a>
-<h3>Document Policy Manager Wrapper</h3>
-<div style="margin-left: 0 ; border: 2px">
+<a name="N100B6"></a><a name="Document+Policy+Manager+Wrapper"></a>
+<h3 class="h3">Document Policy Manager Wrapper</h3>
+<div class="section">
+		
+		
 <p>This <em>InheritingPolicyManager</em> subclass is used together with another
   		<em>InheritingPolicyManager.</em>
 		  It is able to apply a single policy to all versions of a document
 		  (languages, print version, ...). E.&nbsp;g., if you define
 		</p>
+		
 <ul>
 <li>
 <span class="codefrag">/foo/bar/subtree-policy.xml</span>
 </li>
 </ul>
+		
 <p>
 		  and you use the <em>DefaultDocumentBuilder</em>,
 		  this policy is applied to the URLs
 		</p>
+		
 <ul>
 		  
 <li>
@@ -354,46 +626,63 @@
 <li>...</li>
 		
 </ul>
+		
+		
 <p>To configure the <em>DefaultDocumentBuilder</em>, just put the
 		declaration of the wrapped <em>PolicyManager</em> inside the
 		<em>DefaultDocumentBuilder</em> declaration:</p>
+		
+
 <pre class="code">&lt;policy-manager type="document"&gt;
   &lt;policy-manager type="file"&gt;
     &lt;parameter name="directory"
         value="context:///lenya/pubs/mypub/config/ac/policies"/&gt;
   &lt;/policy-manager&gt;
 &lt;/policy-manager&gt;</pre>
+	
 </div>
 	
 	
-<a name="N102A4"></a><a name="Sitemap+Policy+Manager"></a>
-<h3>Sitemap Policy Manager</h3>
-<div style="margin-left: 0 ; border: 2px">
+<a name="N100F4"></a><a name="Sitemap+Policy+Manager"></a>
+<h3 class="h3">Sitemap Policy Manager</h3>
+<div class="section">
+		
+		
 <p>The <em>SitemapPolicyManager</em> uses the policy sitemap to resolve the policy
 			for a certain URL. For this purpose it sends a request of the form
     </p>
+	  
 <pre class="code">cocoon://{publication-id}/policies{url}.acml
 
 Example:
 cocoon://mypub/policies/authoring/foo/bar_de.html.acml
 </pre>
+	  
 <p>
 			which is processed by <span class="codefrag">global-sitemap.xmap</span> and forwarded
 			to <span class="codefrag">lenya/pubs/{publication-id}/policies-sitemap.xmap</span>.
 			The request is supposed to return a valid policy XML document.
 	</p>
+	
 <p>The configuration of the <em>SitemapPolicyManager</em> is very simple:</p>
+	
+
 <pre class="code">&lt;policy-manager type="sitemap"/&gt;</pre>
+	
 </div>
 		
   
+<p align="right">
+<font size="-2">by&nbsp;Andreas Hartmann</font>
+</p>
 </div>
-</td><td width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td>
+</td>
 </tr>
-<!--================= end Content==================-->
 </table>
 </td>
 </tr>
+</table>
+<table>
 <tr>
 <td>
 <br>
@@ -401,23 +690,17 @@ cocoon://mypub/policies/authoring/foo/bar_de.html.acml
 </td>
 </tr>
 </table>
-<!--================= end Menu, NavBar, Content ==================-->
-<!--================= start Footer ==================-->
-<div class="footer">
-<table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
+<table class="footer">
 <tr>
-<td colspan="2" height="1"><img height="1" width="1" alt="" src="../../../skin/images/spacer.gif"><a href="../../../skin/images/label.gif"></a><a href="../../../skin/images/page.gif"></a><a href="../../../skin/images/chapter.gif"></a><a href="../../../skin/images/chapter_open.gif"></a><a href="../../../skin/images/current.gif"></a></td>
-</tr>
-<tr>
-<td colspan="2" class="copyright" align="center" width="90%"><span class="footnote">Copyright &copy;
-                2002-2003&nbsp;The Apache Software Foundation. All rights reserved.
-                <br>
+<td colspan="2" align="center" width="90%"><span class="footnote">
+                Copyright &copy; 2002-2003&nbsp;
+                The Apache Software Foundation.
+            All rights reserved.
+            <br>
 <script type="text/javascript" language="JavaScript"><!--
-                  document.write(" - "+"Last Published: " + document.lastModified);
-                  //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img width="88" height="31" alt="Valid HTML 4.01!" src="../../../skin/images/valid-html401.png" class="logoImage" border="0"></a><a href="http://jigsaw.w3.org/css-validator/"><img width="88" height="31" alt="Valid CSS!" src="../../../skin/images/vcss.png" class="logoImage" border="0"></a></td>
+              document.write(" - "+"Last Published: " + document.lastModified);
+              //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img border="0" width="88" height="31" alt="Valid HTML 4.01!" src="../../../skin/images/valid-html401.png" class="logoImage"></a><a href="http://jigsaw.w3.org/css-validator/"><img border="0" width="88" height="31" alt="Valid CSS!" src="../../../skin/images/vcss.png" class="logoImage"></a></td>
 </tr>
 </table>
-</div>
-<!--================= end Footer ==================-->
 </body>
 </html>

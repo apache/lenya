@@ -2,13 +2,13 @@
 %клмн
 4 0 obj
 << /Type /Info
-/Producer (FOP 0.20.4) >>
+/Producer (FOP 0.20.5) >>
 endobj
 5 0 obj
-<< /Length 456 /Filter [ /ASCII85Decode /FlateDecode ]
+<< /Length 446 /Filter [ /ASCII85Decode /FlateDecode ]
  >>
 stream
-Gas2FbAP0N&4Q?hMHRdtf?_B<6<.!-doL#2G2Xbp7"p;_!93J54MVGY.T/$nG`Ju1mjnbdjpWY.(m8H\Rnjr1a9)Lr4p9lB(NPI:-m@9Za(UU<FLGNmANkhTNMQM;;Q`^CmUlr8OM"[P!CAm?J0uU.7.Q@na3aHJLcEKA6(:68O04[Hl$fDNqLW;jh]`Ge#j[b)TA9@Ob`#Raf6C>nhPd`m!$`WF/L%#>(3)hiB<;V5[,oYpY,>MbYX@3N"(N$;f%[75S)3D:/ujKB.feN?@[(4S3_e?+F#&Ru$H(gBlM!Lh_/Gfp<Z]'hM?NEL&k5iNdBF&9K3<6pMIV6If&,tdb-a$s>XVGI4pOm3L^Pk[KJOPZOEO"@;')e*aV=QNG,S1d][0K6l,:<'(WM_an8t^/J%_eHohcU11U$L`VAdL;2n!&)74Z/HOjQ7[<1S<[r;icp^hN~>
+Gas1[9lkn?'YO#fhQ\,Lbm,D2e4uQ005X3sD%A'`A?'#>lM0fe^m\qRLRF5Tlt5.%4&(@^)$^p$JTMKcmZdqYMLYc5O'O=_.75/qOKRR8AtCSs^0R"(0nM-DZ2K-Hgbr0Wk6TofIC.-2/@/FOjW_O'`o/%1O?2s]:7GOgpC>=2CqJ7uH]mHO>Z##?.6eaK3&pc1b)KG]"!3\@f;biGH4jod>>QRW$;(OhMB-&GpdOiXVVLmHH?$?=+[_2UEGVN'Nnij"/aG3.(ORBgZg^:jE2:`CpJMW6'V4jbq#>a\I.\0A4E,jL5h,B31''k^,'XEkl(?G##q#R0b\'phf5#\Q`2nT`KZ-Vg$SGh8(r-dFTQ+%O%]1eCXV6"j_@$YpKT5B9^!J@ECF:'dq<*%:B_TYoaK46!\a"L#*c8<*LYdOt)l"@A9V$N)qZa]Q]C#~>
 endstream
 endobj
 6 0 obj
@@ -21,24 +21,29 @@ endobj
 endobj
 9 0 obj
 <<
- /Title (\376\377\0\123\0\143\0\150\0\145\0\144\0\165\0\154\0\151\0\156\0\147\0\40\0\141\0\40\0\124\0\141\0\163\0\153)
+ /Title (\376\377\0\61\0\40\0\123\0\143\0\150\0\145\0\144\0\165\0\154\0\151\0\156\0\147\0\40\0\141\0\40\0\124\0\141\0\163\0\153)
  /Parent 7 0 R
- /First 11 0 R
- /Last 11 0 R
- /Count -1
  /A 8 0 R
 >> endobj
-11 0 obj
-<<
- /Title (\376\377\0\61\0\40\0\123\0\143\0\150\0\145\0\144\0\165\0\154\0\151\0\156\0\147\0\40\0\141\0\40\0\124\0\141\0\163\0\153)
- /Parent 9 0 R
- /A 10 0 R
->> endobj
-12 0 obj
+10 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F3
 /BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding >>
+endobj
+11 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F5
+/BaseFont /Times-Roman
+/Encoding /WinAnsiEncoding >>
+endobj
+12 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F1
+/BaseFont /Helvetica
 /Encoding /WinAnsiEncoding >>
 endobj
 13 0 obj
@@ -51,22 +56,8 @@ endobj
 14 0 obj
 << /Type /Font
 /Subtype /Type1
-/Name /F1
-/BaseFont /Helvetica
-/Encoding /WinAnsiEncoding >>
-endobj
-15 0 obj
-<< /Type /Font
-/Subtype /Type1
 /Name /F7
 /BaseFont /Times-Bold
-/Encoding /WinAnsiEncoding >>
-endobj
-16 0 obj
-<< /Type /Font
-/Subtype /Type1
-/Name /F5
-/BaseFont /Times-Roman
 /Encoding /WinAnsiEncoding >>
 endobj
 1 0 obj
@@ -83,7 +74,7 @@ endobj
 endobj
 3 0 obj
 << 
-/Font << /F3 12 0 R /F2 13 0 R /F1 14 0 R /F7 15 0 R /F5 16 0 R >> 
+/Font << /F3 10 0 R /F5 11 0 R /F1 12 0 R /F2 13 0 R /F7 14 0 R >> 
 /ProcSet [ /PDF /ImageC /Text ] >> 
 endobj
 7 0 obj
@@ -94,40 +85,32 @@ endobj
 8 0 obj
 <<
 /S /GoTo
-/D [6 0 R /XYZ 85.0 689.0 null]
->>
-endobj
-10 0 obj
-<<
-/S /GoTo
-/D [6 0 R /XYZ 85.0 606.375 null]
+/D [6 0 R /XYZ -5.0 612.375 null]
 >>
 endobj
 xref
-0 17
+0 15
 0000000000 65535 f 
-0000001662 00000 n 
-0000001720 00000 n 
-0000001811 00000 n 
+0000001445 00000 n 
+0000001503 00000 n 
+0000001594 00000 n 
 0000000015 00000 n 
 0000000071 00000 n 
-0000000618 00000 n 
-0000001934 00000 n 
-0000001982 00000 n 
-0000000724 00000 n 
-0000002044 00000 n 
-0000000929 00000 n 
-0000001106 00000 n 
-0000001219 00000 n 
-0000001335 00000 n 
-0000001443 00000 n 
-0000001552 00000 n 
+0000000608 00000 n 
+0000001717 00000 n 
+0000001765 00000 n 
+0000000714 00000 n 
+0000000889 00000 n 
+0000001002 00000 n 
+0000001112 00000 n 
+0000001220 00000 n 
+0000001336 00000 n 
 trailer
 <<
-/Size 17
+/Size 15
 /Root 2 0 R
 /Info 4 0 R
 >>
 startxref
-2109
+1829
 %%EOF
