@@ -33,7 +33,7 @@
              noindex="true"
              windowtitle="${Name} API - Version ${version}"
              doctitle="${Name}"
-             bottom="Copyright &#169; ${year} Wyona. All Rights Reserved."
+             bottom="Copyright &#169; ${year} Apache Software Foundation. All Rights Reserved."
              stylesheetfile="${resource.dir}/javadoc.css"
              source="1.4">
       <classpath refid="classpath"/>
