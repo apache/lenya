@@ -44,7 +44,6 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -61,12 +60,10 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.lenya.cms.workflow.CommandFilter;
-import org.apache.lenya.cms.workflow.CommandFilterImpl;
-import org.apache.lenya.cms.workflow.WorkflowFactoryImpl;
+import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -91,10 +88,10 @@ public class WorkflowMenuTransformer
         
         boolean passed = true;
         if (localName.equals(ITEM_ELEMENT)) {
-            String command = attr.getValue(EVENT_ATTRIBUTE);
+            String event = attr.getValue(EVENT_ATTRIBUTE);
             
             // filter item if command not allowed 
-            if (command != null && !containsCommand(command)) {
+            if (event != null && !containsEvent(event)) {
                 passed = false;
                 AttributesImpl attributes = new AttributesImpl(attr);
                 int hrefIndex = attributes.getIndex("href");
@@ -133,27 +130,32 @@ public class WorkflowMenuTransformer
         
         Document document = new DefaultDocument(publication, envelope.getDocumentId());
         
-        WorkflowFactory factory = WorkflowFactoryImpl.newInstance(document, user);
+        WorkflowFactory factory = WorkflowFactory.newInstance();
         WorkflowInstance instance = null;
         Situation situation = null;
       
         try {
-            instance = factory.buildInstance();
-            situation = factory.buildSituation();
+            instance = factory.buildInstance(document);
+            situation = factory.buildSituation(user);
         }
         catch (Exception e) {
             throw new ProcessingException(e);
         }
       
-        CommandFilter filter = new CommandFilterImpl();
-        this.commands = filter.getExecutableCommands(instance, situation);
+        this.events = instance.getExecutableEvents(situation);
       
     }
     
-    private String commands[];
+    private Event events[];
     
-    protected boolean containsCommand(String command) {
-        return Arrays.asList(commands).contains(command);
+    protected boolean containsEvent(String eventName) {
+        boolean result = false;
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].getName().equals(eventName)) {
+                result = true;
+            }
+        }
+        return result;
     }
 
 }
