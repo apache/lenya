@@ -5,12 +5,11 @@
   xmlns:xsp="http://apache.org/xsp"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-  xmlns:xsp-session="http://apache.org/xsp/session/2.0"
-  create-session="true">
+  >
 
   <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DublinCoreHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.SiteTree</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
     <xsp:include>java.io.IOException</xsp:include>
@@ -19,41 +18,40 @@
 <page>
 <info>
    <xsp:logic>
-    Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
-    String documentid = (String) <xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/> ;
-    String area = (String) <xsp-session:get-attribute name="org.apache.lenya.cms.info.area"/>;
+    Publication publication = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
+    String documentId = (String) <input:get-attribute module="page-envelope" as="object" name="document-id"/>;
+    String area = (String) <input:get-attribute module="page-envelope" as="object" name="area"/>;
     String identifier = null;      
-	SiteTreeNode parentNode = null;
+    SiteTreeNode parentNode = null;
 
     try {
-    	identifier = DublinCoreHelper.getDCIdentifier(publication, area, documentid);
+    	identifier = DublinCoreHelper.getDCIdentifier(publication, area, documentId);
     } catch (Exception e) {
         <exception><xsp:expr>e.toString()</xsp:expr></exception>
     }                                                                                                                                    
 
     if (identifier == null) {
-        <exception>the identifier is null</exception>
+        <exception>The identifier is null.</exception>
     }     
 
-	String parentid = identifier.substring(0, identifier.length()-documentid.length());
+    String parentId = identifier.substring(0, identifier.length() - documentId.length());
     try {
-		SiteTree sectree = publication.getSiteTree(Publication.AUTHORING_AREA);
-		parentNode = sectree.getNode(parentid);
+        SiteTree sectree = publication.getSiteTree(Publication.AUTHORING_AREA);
+        parentNode = sectree.getNode(parentId);
     } catch (Exception e) {
         <exception><xsp:expr>e.toString()</xsp:expr></exception>
     }                                                                                                                                    
-	if (parentNode == null) {
- 		<exception> 
- 		the original parent <xsp:expr>parentid</xsp:expr> doesn't exist anymore
- 		</exception>
+    
+    if (parentNode == null) {
+        <exception>The original parent <xsp:expr>parentId</xsp:expr> doesn't exist anymore.</exception>
     } else {
-	   <document-id><xsp:expr>documentid</xsp:expr></document-id>
-       <dest-document-id><xsp:expr>parentid</xsp:expr></dest-document-id> 
-	   <area><xsp:expr>area</xsp:expr></area>
-	   <task-id>restoreDocument</task-id>
+       <document-id><xsp:expr>documentId</xsp:expr></document-id>
+       <dest-document-id><xsp:expr>parentId</xsp:expr></dest-document-id> 
+       <area><xsp:expr>area</xsp:expr></area>
+       <task-id>restoreDocument</task-id>
     }
-	   <request-uri><xsp-request:get-uri/></request-uri>
-   </xsp:logic>
+    <request-uri><xsp-request:get-uri/></request-uri>
+  </xsp:logic>
 </info>
 </page>
 </xsp:page>

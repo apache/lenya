@@ -3,18 +3,16 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-  xmlns:xsp-session="http://apache.org/xsp/session/2.0"
-  create-session="true">
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  >
 
 <page>
 <info>
   <request-uri><xsp-request:get-uri/></request-uri>
-  <document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/></document-id>
-  <area><xsp-session:get-attribute name="org.apache.lenya.cms.info.area"/></area>
+    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
+    <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
   <task-id>archiveDocument</task-id>
-  <wf:event><xsp-request:get-attribute name="wf:event"/></wf:event>
 </info>
 </page>
 </xsp:page>

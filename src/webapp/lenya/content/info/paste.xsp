@@ -5,14 +5,15 @@
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:xsp-session="http://apache.org/xsp/session/2.0"
-  create-session="true">
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  >
   
 <page>
   <info>
     <first-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.firstdocid"/></first-document-id>
-    <sec-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/></sec-document-id>
+    <sec-document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></sec-document-id>
     <first-area><xsp-session:get-attribute name="org.apache.lenya.cms.info.firstarea"/></first-area>
-    <sec-area><xsp-session:get-attribute name="org.apache.lenya.cms.info.area"/></sec-area>
+    <sec-area><input:get-attribute module="page-envelope" as="string" name="area"/></sec-area>
     <doctype><xsp-session:get-attribute name="org.apache.lenya.cms.info.documentType"/></doctype>
     <task-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.action"/></task-id>
     <request-uri><xsp-request:get-uri/></request-uri>

@@ -4,13 +4,13 @@
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-  xmlns:xsp-session="http://apache.org/xsp/session/2.0"
-  create-session="true">
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  >
 
 <page>
   <info>
     <request-uri><xsp-request:get-uri/></request-uri>
-    <document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/></document-id>
+    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
     <task-id>deactivateDocument</task-id>
   </info>
 </page>
