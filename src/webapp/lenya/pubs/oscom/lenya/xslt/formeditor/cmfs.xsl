@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmfs.xsl,v 1.14 2004/05/08 09:02:45 michi Exp $ -->
+<!-- $Id: cmfs.xsl,v 1.15 2004/08/02 00:25:50 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -68,6 +68,15 @@
 </node>
 </xsl:if>
 <xsl:apply-templates select="programming-language"/>
+
+
+
+<xsl:if test="not(demo)">
+<node name="Demo">
+  <action><insert name="&lt;xupdate:insert-after select=&quot;/system/license&quot;&gt;&lt;xupdate:element name=&quot;demo&quot;&gt;&lt;xupdate:attribute name=&quot;href&quot;&gt;http://demo.lenya.org&lt;/xupdate:attribute&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/></action>
+</node>
+</xsl:if>
+<xsl:apply-templates select="demo"/>
 
 
 <xsl:if test="not(related-info)">
@@ -147,6 +156,18 @@
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/programming-language[@tagID='{@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="." /></xsl:attribute></input></content>
 </node>
 </xsl:template>
+
+
+
+<xsl:template match="demo">
+<node name="Demo" select="/system/demo[@tagID='{@tagID}']/@href">
+  <content>
+    <input type="text" name="&lt;xupdate:update select=&quot;/system/demo[@tagID='{@tagID}']/@href&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="@href" /></xsl:attribute></input>
+  </content>
+</node>
+</xsl:template>
+
+
 
 <xsl:template match="related-info">
 <node name="Related Information">

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lenya.xml,v 1.13 2004/07/27 16:33:13 michi Exp $ -->
+<!-- $Id: lenya.xml,v 1.14 2004/08/02 00:25:50 michi Exp $ -->
     
 <system type="cms">
   <id>lenya</id>
@@ -34,6 +34,7 @@ Lenya supports browser based inline WYSIWYG editors, such as Xopus, Bitflux and 
     <license_url>http://cocoon.apache.org/lenya/project/license.html</license_url>
   </license>
   <programming-language>Java</programming-language>
+  <demo href="http://www.lenya.org"/>
   <related-info>
     <info-item>
       <title>OSDIR.com</title>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.16 2004/05/08 09:25:38 michi Exp $ -->
+<!-- $Id: body.xsl,v 1.17 2004/08/02 00:25:50 michi Exp $ -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
@@ -59,6 +59,7 @@ No such type: <xsl:value-of select="@type"/>
    <li><b>Home:</b><xsl:text> </xsl:text><a href="{main_url}" target="_blank"><xsl:apply-templates select="main_url"/></a></li>
    <li><xsl:apply-templates select="license"/></li>
    <xsl:apply-templates select="programming-language"/>
+   <xsl:apply-templates select="demo"/>
  </ul>
  <xsl:apply-templates select="related-info" />
  <xsl:apply-templates select="features" />
@@ -71,6 +72,10 @@ No such type: <xsl:value-of select="@type"/>
 
 <xsl:template match="programming-language">
  <li><b>Programming Language:</b><xsl:text> </xsl:text><xsl:value-of select="."/></li>
+</xsl:template>
+
+<xsl:template match="demo">
+ <li><b>Demo:</b><xsl:text> </xsl:text><a href="{@href}"><xsl:value-of select="@href"/></a></li>
 </xsl:template>
 
 <xsl:template match="description">
