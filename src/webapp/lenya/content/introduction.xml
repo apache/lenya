@@ -3,49 +3,31 @@
 <div xmlns="http://www.w3.org/1999/xhtml" class="lenya-frontpage">
 <h2><a name="preamble" />Preamble</h2>
 <p>
-Lenya CMS is the refactored version of XPS (Extensible Publishing System).
-XPS is currently used by Switzerland's most famous newspaper Neue Z&#252;rcher Zeitung
+Apache Lenya is the refactored version of XPS (Extensible Publishing System).
+XPS is being used by Switzerland's most famous newspaper Neue Z&#252;rcher Zeitung
 for their interactive edition <a href="http://www.nzz.ch">NZZ Online</a>. The system
 is being used 7 days a week and 24 hours a day by editors and automatic processes (i.e. nightly
-generation of the online version of the print edition). It is up and running since October 2, 2000.
-XPS was Open Source from the beginning (Apache license). Concerning the know-how within the system, it
-should have become a killer CMS (at least for newspapers), but we made two crucial mistakes: Bad Documentation and a bad installer. We hopefully do a better job this time.
-</p>
+generation of the online version from the print edition). It is up and running since October 2, 2000.
+XPS was Open Source from the beginning (Apache license).</p>
 
 <h2><a name="introduction" />Introduction</h2>
 <p>
-Lenya CMS is an <a href="http://www.opensource.org">Open-Source</a>
-Content Management and Publishing System written in 100% pure Java. It
-is based on open standards such as <a
-href="http://www.w3c.org/XML/">XML</a> and <a
-href="http://www.w3c.org/TR/xslt">XSLT</a>. One of its core
-components is the pipeline processor <a
-href="http://xml.apache.org/cocoon/">Cocoon</a> from the <a
-href="http://www.apache.org">Apache Software Foundation</a>.
+Apache Lenya is a Java-based <a href="http://www.opensource.org">Open-Source</a>
+Content Management System. It
+is based on open standards such as <a href="http://www.w3c.org/XML/">XML</a> and <a href="http://www.w3c.org/TR/xslt">XSLT</a>. One of its core
+components is <a href="http://cocoon.apache.org">Cocoon</a> from the
+<a href="http://www.apache.org">Apache Software Foundation</a>.
 </p>
-
+		
 <p>
-Lenya is actually just an interpreter of various XMLs, not just
-user's data, such as for instance articles, press-releases or addresses,
-but also regarding functionalities, such as for instance
-access controlling (IML and PML resp. <a href="http://www.oasis-open.org/committees/xacml/">XACML</a>), revision controlling (RCML)
-or workflow management (WFML). The concept is similar to the one of a
-"HTML Browser". You should be able to switch the Content Management System
-at any time. The network is the CMS.
+Lenya supports inline WYSIWYG editing. Your site editors do
+not have to learn XML. This is possible thanks to the support
+of XML, XSLT and XML Schema on the client side.
+An adminstration interface allows advanced users to
+monitor the CMS, and perform configuration tasks.
 </p>
-
+		
 <p>
-Lenya supports inline WYSIWYG editing, which means users (editors) do
-not have to learn (or see) XML. This is possible thanks to the support
-of XML, XSLT and XML Schema on the client side, such is the case
-for certain browsers (Netscape 6.2 or IE 5.5).
-But there also exists the "Lenya Administrator" for the more
-advanced user, where the CMS can be monitored, XML can be edited
-directly or authentication and authorization can be managed.
-</p>
-
-<p>
-You are very welcome to participate in the <a href="http://www.lenya.org">Lenya CMS project</a>.
+You are very welcome to participate in the <a href="http://cocoon.apache.org/lenya">Lenya project</a>.
 Thank you very much for your suggestions and contributions.
-</p>
-</div>
+</p></div>
