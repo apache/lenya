@@ -435,7 +435,35 @@
           </li>
         </ul>
       </li>
+         <li>
+           <p>
+            <strong>Clear Tomcat work directory</strong>
+          </p>
 
+          <p>
+            Tomcat's work cache may not be consistent with your newly installed
+            Lenya.  This can lead to any number of errors and exceptions.  To
+            prevent this, clear the work directory by executing
+            <code>build.bat</code> or <code>build.sh</code> in your Lenya source
+            directory, depending on your platform.
+          </p>
+
+          <p>
+            <strong>MS Windows</strong>
+          </p>
+
+          <source>
+            $LENYA_HOME > build.bat reset
+          </source>
+
+          <p>
+            <strong>Unix</strong>
+          </p>
+
+          <source>
+            $LENYA_HOME > ./build.sh reset
+          </source>
+        </li>
         <li>
           <p>
             <strong>Restart Tomcat</strong>
