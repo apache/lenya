@@ -55,6 +55,9 @@ public class DublinCoreImpl {
     private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
     private static final String DC_PREFIX = "dc";
 
+    /**
+     * The dublin core elements.
+     */
     public static final String[] ELEMENTS =
         {
             DublinCore.ELEMENT_TITLE,
@@ -73,11 +76,12 @@ public class DublinCoreImpl {
             DublinCore.ELEMENT_COVERAGE,
             DublinCore.ELEMENT_RIGHTS };
 
-    // Dublin Core Terms
-
     private static final String DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
     private static final String DCTERMS_PREFIX = "dcterms";
 
+    /**
+     * The dublin core terms.
+     */
     public static final String[] TERMS =
         {
             DublinCore.TERM_AUDIENCE,
@@ -230,6 +234,7 @@ public class DublinCoreImpl {
      * Returns the Lenya meta data element.
      * @param doc The XML document.
      * @return A DOM element.
+     * @throws DocumentException if an error occurs.
      */
     protected Element getMetaElement(org.w3c.dom.Document doc) throws DocumentException {
         NamespaceHelper namespaceHelper =
@@ -254,6 +259,7 @@ public class DublinCoreImpl {
      * Returns the first value for a certain key.
      * @param key The key.
      * @return A string.
+     * @throws DocumentException if an error occurs.
      */
     public String getFirstValue(String key) throws DocumentException {
         String value = null;
@@ -268,6 +274,7 @@ public class DublinCoreImpl {
      * Returns the element or term values, resp.,  for a certain key.
      * @param key The key.
      * @return An array of strings.
+     * @throws DocumentException if an error occurs.
      */
     protected String[] getElementOrTerm(String key) throws DocumentException {
         String[] values;
@@ -289,14 +296,22 @@ public class DublinCoreImpl {
     }
 
     /**
-     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#getValues(java.lang.String)
+     * Returns all values for a certain key.
+     * @param key The key.
+     * @return An array of strings.
+     * @throws DocumentException if an error occurs.
+     * @see DublinCore#getValues(String)
      */
     public String[] getValues(String key) throws DocumentException {
         return getElementOrTerm(key);
     }
 
     /**
-     * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#addValue(java.lang.String, java.lang.String)
+     * Adds a value for a certain key.
+     * @param key The key.
+     * @param value The value.
+     * @throws DocumentException if an error occurs.
+     * @see DublinCore#addValue(String, String)
      */
     public void addValue(String key, String value) throws DocumentException {
         String[] existingValues = getElementOrTerm(key);
