@@ -71,24 +71,30 @@ public class WorkflowException extends Exception {
     }
 
     /**
-     * @param arg0
+     * Create a WorkflowException.
+     * 
+     * @param message The message.
      */
-    public WorkflowException(String arg0) {
-        super(arg0);
+    public WorkflowException(String message) {
+        super(message);
     }
 
     /**
-     * @param arg0
-     * @param arg1
+     * Create a WorkflowException.
+     * 
+     * @param message The message.
+     * @param cause The cause.
      */
-    public WorkflowException(String arg0, Throwable arg1) {
-        super(arg0, arg1);
+    public WorkflowException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     /**
-     * @param arg0
+     * Create a WorkflowException.
+     * 
+     * @param cause The cause.
      */
-    public WorkflowException(Throwable arg0) {
-        super(arg0);
+    public WorkflowException(Throwable cause) {
+        super(cause);
     }
 }

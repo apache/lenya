@@ -1,5 +1,5 @@
 /*
-$Id: SiteTree.java,v 1.13 2003/07/10 17:23:24 edith Exp $
+$Id: SiteTree.java,v 1.14 2003/07/14 10:32:05 egli Exp $
 <License>
 
  ============================================================================
@@ -58,8 +58,8 @@ package org.apache.lenya.cms.publication;
 /**
  * DOCUMENT ME!
  *
- * @author $Author: edith $
- * @version $Revision: 1.13 $
+ * @author $Author: egli $
+ * @version $Revision: 1.14 $
  */
 public interface SiteTree {
 	
@@ -157,15 +157,16 @@ public interface SiteTree {
     SiteTreeNode getNode(String documentId);
 
 	/**
-	 * Move up the node amongst its siblings. 
-	 * @param documentid. The document id of the node.
+	 * Move up the node amongst its siblings.
+	 * 
+	 * @param documentid The document id of the node.
 	 * @throws SiteTreeException if the moving failed.
 	 */
 	void moveUp(String documentid) throws SiteTreeException;
 
 	/**
 	 * Move down the node amongst its siblings. 
-	 * @param documentid. The document id of the node.
+	 * @param documentid The document id of the node.
 	 * @throws SiteTreeException if the moving failed.
 	 */
 	void moveDown(String documentid) throws SiteTreeException;

@@ -84,7 +84,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -360,8 +360,9 @@ public class DefaultSiteTree implements SiteTree {
     }
 
 	/**
-	 * Move up the node amongst its siblings. 
-	 * @param documentid. The document id for the node.
+	 * Move up the node amongst its siblings.
+	 * 
+	 * @param documentid The document id for the node.
 	 * @throws SiteTreeException if the moving failed.
 	 */
 	public void moveUp(String documentid)
@@ -391,8 +392,9 @@ public class DefaultSiteTree implements SiteTree {
 	}
 
 	/**
-	 * Move down the node amongst its siblings. 
-	 * @param documentid. The document id for the node.
+	 * Move down the node amongst its siblings.
+	 * 
+	 * @param documentid The document id for the node.
 	 * @throws SiteTreeException if the moving failed.
 	 */
 	public void moveDown(String documentid)

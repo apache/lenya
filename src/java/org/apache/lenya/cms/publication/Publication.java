@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Publication.java,v 1.13 2003/07/14 10:32:05 egli Exp $
 <License>
 
  ============================================================================
@@ -72,9 +72,17 @@ public class Publication {
     public static final String INFO_AREA = "info";
     public static final String ADMIN_AREA = "admin";
     
+	public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
+
     private static final String[] areas = {
         AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA
     };
+
+	private String id;
+	private PublishingEnvironment environment;
+	private File servletContext;
+	private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
+	private String defaultLanguage = "hu";
 
     /** 
      * Creates a new instance of Publication
@@ -96,8 +104,6 @@ public class Publication {
         environment = new PublishingEnvironment(servletContextPath, id);
     }
 
-    private String id;
-
     /**
      * Returns the publication ID.
      * @return A string value.
@@ -105,8 +111,6 @@ public class Publication {
     public String getId() {
         return id;
     }
-
-    private PublishingEnvironment environment;
 
     /**
      * Returns the publishing environment of this publication.
@@ -117,8 +121,6 @@ public class Publication {
         return environment;
     }
 
-    private File servletContext;
-
     /**
      * Returns the servlet context this publication belongs to
      * (usually, the <code>webapps/lenya</code> directory).
@@ -128,8 +130,6 @@ public class Publication {
         return servletContext;
     }
 
-    public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
-
     /**
      * Returns the publication directory.
      * @return A <code>File</code> object.
@@ -137,8 +137,6 @@ public class Publication {
     public File getDirectory() {
         return new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
     }
-
-    private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
 
     /**
      * DOCUMENT ME!
@@ -167,4 +165,23 @@ public class Publication {
     public static boolean isValidArea(String area) {
         return area != null && Arrays.asList(areas).contains(area);
     }
+    
+    /**
+     * Get the default language
+     * 
+     * @return the default language
+     */
+    public String getDefaultLanguage() {
+        return defaultLanguage;
+    }
+
+    /**
+     * Set the default language
+     * 
+     * @param language the default language
+     */
+    public void setDefaultLanguage(String language) {
+        defaultLanguage = language;
+    }
+
 }

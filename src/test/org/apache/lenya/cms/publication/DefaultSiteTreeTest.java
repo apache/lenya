@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.4 2003/07/10 17:25:46 edith Exp $
+$Id: DefaultSiteTreeTest.java,v 1.5 2003/07/14 10:30:54 egli Exp $
 <License>
 
  ============================================================================
@@ -262,16 +262,27 @@ public class DefaultSiteTreeTest extends TestCase {
     final public void testSave() {
         //TODO Implement save().
     }
+    
 	/**
-	 * Test removeNode
+	 * Test moving a node up
 	 * 
 	 * @throws SiteTreeException if an error occurs
+	 * @throws IOException if an error occurs
+	 * @throws TransformerException if an error occurs
 	 */
 	final public void testMoveUp() throws SiteTreeException, IOException, TransformerException {
 		siteTree.moveUp("/foo/lala");
 		siteTree.save();
 		assertNotNull(siteTree.getNode("/foo/lala"));
 	}
+	
+	/**
+	 * Test moving a node down
+	 * 
+	 * @throws SiteTreeException if an error occurs
+	 * @throws IOException if an error occurs
+	 * @throws TransformerException if an error occurs
+	 */
 	final public void testMoveDown() throws SiteTreeException, IOException, TransformerException {
 		siteTree.moveDown("/foo");
 		siteTree.save();

@@ -38,6 +38,8 @@ public class IdentityTest extends AccessControlTest {
 
     /**
      * Tests the identity.
+     * 
+     * @throws AccessControlException if an error occurs
      */
     public void testIdentity() throws AccessControlException {
         Identity identity = new Identity();

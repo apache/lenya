@@ -126,6 +126,11 @@ public class FileGroupTest extends AccessControlTest {
     
     public static final String GROUP_ID = "testGroup";
     
+    /**
+     * Test getGroup
+     * 
+     * @return a <code>FileGroup</code>
+     */
     protected FileGroup getGroup() {
         File configurationDirectory = getConfigurationDirectory();
         System.out.println("Configuration directory: " + configurationDirectory);
